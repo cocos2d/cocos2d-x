@@ -313,22 +313,22 @@ public:
     /**@~english
      * Returns the TTF configuration object used by the Label.
      * @~chinese 
-     * 返回并配置对象使用的标签。
+     * 返回文本对象的TTF配置对象
      * @see `TTFConfig`
      */
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
-    /** @~english Sets a new bitmap font to Label  @~chinese 设置一个新的位图字体标签*/
+    /** @~english Sets a new bitmap font to Label  @~chinese 给文本设置一个新的位图字体*/
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO);
 
-    /** @~english Returns the bitmap font used by the Label. @~chinese Returns the bitmap font, informs by the Label.*/
+    /** @~english Returns the bitmap font used by the Label. @~chinese 返回当前文本使用的位图字体.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
     /**@~english
      * Sets a new char map configuration to Label.
      *
      * @~chinese 
-     * 设置一个新的字符映射配置标签。
+     * 给文本设置一个新的字符映射文件。
      * 
      * @see `createWithCharMap(const std::string&,int,int,int)`
      */
@@ -338,7 +338,7 @@ public:
      * Sets a new char map configuration to Label.
      *
      * @~chinese 
-     * 设置一个新的字符映射配置标签。
+     * 给文本设置一个新的字符映射文件
      * 
      * @see `createWithCharMap(Texture2D*,int,int,int)`
      */
@@ -348,7 +348,7 @@ public:
      * Sets a new char map configuration to Label.
      *
      * @~chinese 
-     * 设置一个新的字符映射配置标签。
+     * 给文本设置一个新的字符映射文件
      * 
      * @see `createWithCharMap(const std::string&)`
      */
@@ -358,41 +358,51 @@ public:
      * Sets a new system font to Label.
      *
      * @~chinese 
-     * 设置一个新的系统字体标签。
+     * 给文本设置一个新的系统字体
      * 
      * @param font @~english A font file or a font family name.
-     * @warning
-     * @~chinese A font file or A font family name.
-     * @warning
+     * @~chinese 一个字体文件或字体名称
      */
     virtual void setSystemFontName(const std::string& font);
 
-    /** @~english Returns the system font used by the Label. @~chinese 返回系统字体使用的标签。*/
+    /** @~english Returns the system font used by the Label. @~chinese 返回文本使用的系统字体。*/
     virtual const std::string& getSystemFontName() const { return _systemFont;}
 
-    /* @~english Sets the system font size of Label. @~chinese 设置系统字体大小的标签。*/
+    /* @~english Sets the system font size of Label. @~chinese 设置文本使用的系统字体大小。*/
     virtual void setSystemFontSize(float fontSize);
 
-    /** @~english Returns the bitmap font path used by the Label. @~chinese 返回标签使用的位图字体路径。*/
+    /** @~english Returns the bitmap font path used by the Label. @~chinese 返回文本使用的位图字体路径。*/
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
     /**
      * @warning @~english This method is not recommended for game developers.
-     * @~chinese 这个方法不推荐游戏开发者。
+     * @~chinese 这个方法不推荐游戏开发者调用,它是给编辑器用的。
      */
     virtual void requestSystemFontRefresh() { _systemFontDirty = true;}
 
     //  end of font methods
     /// @}
 
-    /** @~english Sets the text that this Label is to display. @~chinese 设置这个标签是显示的文本。*/
+    /** @~english Sets the text that this Label is to display. @~chinese 设置文本显示的字符串。*/
     virtual void setString(const std::string& text) override;
 
-    /** @~english Return the text the Label is displaying. @~chinese 返回标签显示的文本。*/
+    /** @~english Return the text the Label is displaying. @~chinese 返回文本显示的字符串。*/
     virtual const std::string& getString() const override {  return _originalUTF8String; }
 
+    /**
+     * @~english Get the string's display line number.
+     * @~chinese 获取文本显示的行数。
+     *
+     * @return @~english Label line number. @~chinese 文本行数。
+     */
     int getStringNumLines() const;
 
+    /**
+     * @~english Get the string length.
+     * @~chinese 获取字符串的长度
+     *
+     * @return @~english Label string length. @~chinese 文本的字符串长度
+     */
     int getStringLength() const;
 
     /**@~english
@@ -401,53 +411,51 @@ public:
      * The text color is different from the color of Node.
      *
      * @~chinese 
-     * 设置文本颜色的标签。
+     * 设置文本的字符串的颜色。
      * 
      * 文本的颜色不同于节点的颜色。
      * 
-     * @warning @~english Limiting use to only when the Label created with true type font or system font.
-     * @~chinese 限制使用只有当标签创建真正的字体或系统字体。
+     * @warning @~english Limiting usage when the Label created with true type font or system font.
+     * @~chinese 只有使用TTF字体或者系统字体创建的文本对象才可以调用这个方法。
      */
     virtual void setTextColor(const Color4B &color);
 
-    /** @~english Returns the text color of the Label. @~chinese 返回标签的文本颜色。*/
+    /** @~english Returns the text color of the Label. @~chinese 返回文本的字符串的颜色。*/
     const Color4B& getTextColor() const { return _textColor;}
 
     /**@~english
      * Enable shadow effect to Label.
      *
      * @~chinese 
-     * 使阴影效果标签。
+     * 激活文本的阴影效果
      * 
-     * @todo @~english Support blur for shadow effect.
-     * @~chinese 支持模糊阴影效果。
      */
     virtual void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
 
     /**@~english
      * Enable outline effect to Label.
      * @~chinese 
-     * 使轮廓效应标签。
+     * 激活文本的描边效果。
      * @warning @~english Limiting use to only when the Label created with true type font or system font.
-     * @~chinese 限制使用只有当标签创建真正的字体或系统字体。
+     * @~chinese 只有使用TTF字体或者系统字体创建的文本对象才可以调用这个方法。
      */
     virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
 
     /**@~english
     * Enable glow effect to Label.
      * @~chinese 
-     * 使发光效应标签。
+     * 激活文本的发光效果
     * @warning @~english Limiting use to only when the Label created with true type font.
-     * @~chinese 限制使用只有当标签创建真正的字体。
+     * @~chinese 只有使用TTF字体创建的文本对象才可以调用这个方法。
     */
     virtual void enableGlow(const Color4B& glowColor);
 
     /**@~english
      * Disable all effect to Label.
      * @~chinese 
-     * 禁用所有标签效应。
+     * 禁用所有文本特效。
      * @warning @~english Please use disableEffect(LabelEffect::ALL) instead of this API.
-     * @~chinese 请使用disableEffect(LabelEffect:全部)而不是这个API。
+     * @~chinese 请使用disableEffect(LabelEffect:ALL)而不是这个API。
      */
     virtual void disableEffect();
 
@@ -455,41 +463,41 @@ public:
      * Disable effect to Label.
      *
      * @~chinese 
-     * 禁用标签效应。
+     * 禁用文本特效。
      * 
      * @see `LabelEffect`
      */
     virtual void disableEffect(LabelEffect effect);
 
-    /** @~english Sets the Label's text horizontal alignment. @~chinese 设置标签的文本的水平对齐。*/
+    /** @~english Sets the Label's text horizontal alignment. @~chinese 设置文本的水平对齐。*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
-    /** @~english Returns the Label's text horizontal alignment. @~chinese 横向text ' s the Label Returns alignment。*/
+    /** @~english Returns the Label's text horizontal alignment. @~chinese 获取文本的对齐方式。*/
     TextHAlignment getTextAlignment() const { return _hAlignment;}
 
-    /** @~english Sets the Label's text alignment. @~chinese 设置标签的文本对齐方式。*/
+    /** @~english Sets the Label's text alignment. @~chinese 设置文本的水平和垂直对齐方式。*/
     void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
 
-    /** @~english Sets the Label's text horizontal alignment. @~chinese 设置标签的文本的水平对齐。*/
+    /** @~english Sets the Label's text horizontal alignment. @~chinese 设置文本的水平对齐。*/
     void setHorizontalAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment); }
 
-    /** @~english Returns the Label's text horizontal alignment. @~chinese 返回标签的文本的水平对齐。*/
+    /** @~english Returns the Label's text horizontal alignment. @~chinese 返回文本的水平对齐。*/
     TextHAlignment getHorizontalAlignment() const { return _hAlignment; }
 
-    /** @~english Sets the Label's text vertical alignment. @~chinese 设置标签的文本垂直对齐。*/
+    /** @~english Sets the Label's text vertical alignment. @~chinese 设置文本垂直对齐。*/
     void setVerticalAlignment(TextVAlignment vAlignment) { setAlignment(_hAlignment,vAlignment); }
 
-    /** @~english Returns the Label's text vertical alignment. @~chinese 返回标签的文本垂直对齐。*/
+    /** @~english Returns the Label's text vertical alignment. @~chinese 返回文本垂直对齐。*/
     TextVAlignment getVerticalAlignment() const { return _vAlignment; }
 
     /**@~english
      * Specify what happens when a line is too long for Label.
      *
      * @~chinese 
-     * 指定当一行太长标签。
+     * 指定当文本太长时，是否需要换行。
      * 
      * @param breakWithoutSpace @~english Lines are automatically broken between words if this value is false.
-     * @~chinese 线自动破碎的单词之间如果这个值是错误的。
+     * @~chinese 如果参数传false，那么当文本过长时会自动换行。
      */
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
@@ -497,10 +505,15 @@ public:
      * Makes the Label at most this line untransformed width.
      * The Label's max line width be used for force line breaks if the value not equal zero.
      * @~chinese 
-     * 使标签最多这行untransformed宽度。
-     * 标签的max线宽用于强制换行符,如果值不等于零。
+     * 设置文本的最大行宽。
+     * 如果文本的行宽不等于零的话，那么它可以用来强制换行
      */
     void setMaxLineWidth(float maxLineWidth);
+    /**
+     *@~english Return the maximize line width.
+     *@~chinese 获取文本的最大行宽
+     * @return @~english The maximize line width. @~chinese 文本的最大行宽
+     */
     float getMaxLineWidth() { return _maxLineWidth; }
 
     /**@~english
@@ -508,11 +521,17 @@ public:
      *
      * The Label's width be used for text align if the value not equal zero.
      * @~chinese 
-     * 使标签这个untransformed宽度。
+     * 设置文本的行宽
      * 
-     * 标签的宽度被用于文本对齐如果值不等于零。
+     * 如果行宽不为0，则它可以用来对齐文本。
      */
     void setWidth(float width) { setDimensions(width,_labelHeight);}
+    /**
+     * @~english Get the label width.
+     * @~chinese 返回文本的行宽
+     *
+     * @return @~english The line width. @~chinese 行宽
+     */
     float getWidth() const { return _labelWidth; }
 
     /**@~english
@@ -521,37 +540,60 @@ public:
      * The Label's height be used for text align if the value not equal zero.
      * The text will display of incomplete when the size of Label not enough to support display all text.
      * @~chinese 
-     * 使标签到底这untransformed高度。
+     * 设置文本的行高
      * 
-     * 标签的高度被用于文本对齐如果值不等于零。
-     * 不完整的文本将显示在标签的大小不足以支持显示所有文本。
+     * 如果行高不为0，则它可以用来对齐文本
+     * 如果文本内容大于文本的大小，那么可能会显示不完整
      */
     void setHeight(float height){ setDimensions(_labelWidth, height); }
+    /**
+     *@~english Get the label height.
+     *@~chinese 返回文本的行高
+     *
+     * @return @~english The line height. @~chinese 行高
+     */
     float getHeight() const { return _labelHeight; }
 
-    /** @~english Sets the untransformed size of the Label in a more efficient way.  @~chinese 集的untransformed大小标签以一种更有效的方式。*/
+    /** @~english Sets the untransformed size of the Label in a more efficient way.
+     * @~chinese 更高效地设置文本大小的方法。这个大小是未进行坐标变换的大小。
+     */
     void setDimensions(float width, float height);
+    /**
+     * @~english Get the dimension of label.
+     * @~chinese 获取文本的大小
+     *
+     * @return @~english the dimension in Size. @~chinese 文本大小
+     */
     const Size& getDimensions() const{ return _labelDimensions;}
 
-    /** @~english Update content immediately. @~chinese 立即更新内容。*/
+    /** @~english Update content immediately. @~chinese 立即更新文本内容。*/
     virtual void updateContent();
 
     /**@~english
      * Provides a way to treats each character like a Sprite.
      * @~chinese 
-     * 提供了一种方法来对待每个字符就像一个精灵。
+     * 提供了一种方法,可以把每个字符当作精灵来看待。
      * @warning @~english No support system font.
      * @~chinese 不支持系统字体。
      */
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** @~english Makes the Label to clip upper and lower margin for reduce height of Label. @~chinese 使标签夹上部和更低的利润率降低标签的高度。*/
+    /** @~english Makes the Label to clip upper and lower margin for reduce height of Label.
+     *@~chinese 设置是否裁剪文本上下边距，主要用来减少文本的调试。
+     */
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
 
+    /**
+     *@~english Determines whether clipping upper and lower margin of label.
+     *@~chinese 判断文本是否裁剪上下边距
+     *
+     * @return @~english Retuen true if enable clipping margin, otherwise return false.
+     * @~chinese 如果激活裁剪文本上下边框，则返回真，否则返回假。
+     */
     bool isClipMarginEnabled() const { return _clipEnabled; }
 
     /** @~english Sets the line height of the Label.
-     * @~chinese 设置行高的标签。
+     * @~chinese 设置文本的行高。
      * @warning @~english Not support system font.
      * @~chinese 不支持系统字体。
      * @since v3.2.0
@@ -561,9 +603,9 @@ public:
     /**@~english
      * Returns the line height of this Label.
      * @~chinese 
-     * 返回这个标签的行高。
+     * 返回这个文本的行高。
      * @warning @~english Not support system font.
-     * @~chinese Not support system font.
+     * @~chinese 不支持系统字体
      * @since v3.2.0
      */
     float getLineHeight() const;
@@ -572,7 +614,7 @@ public:
      * Sets the additional kerning of the Label.
      *
      * @~chinese 
-     * 设置额外的字距调整的标签。
+     * 设置文本的字符间距。
      * 
      * @warning @~english Not support system font.
      * @~chinese 不支持系统字体。
@@ -584,7 +626,7 @@ public:
      * Returns the additional kerning of the Label.
      *
      * @~chinese 
-     * Returns the additional kerning of the Label.
+     * 返回文本的字符间距
      * 
      * @warning @~english Not support system font.
      * @~chinese 不支持系统字体。
@@ -592,6 +634,12 @@ public:
      */
     float getAdditionalKerning() const;
 
+    /**
+     * @~english Get the font atlas
+     * @~chinese 返回一个FontAtlas对象指针
+     *
+     * @return @~english A FontAtlas pointer @~chinese FontAtlas指针
+     */
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
