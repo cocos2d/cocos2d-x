@@ -153,6 +153,9 @@ public:
     void AttachDepthStencilTarget(RenderTargetDepthStencil* rt);
     
     bool isDefaultFBO() const { return _isDefault; }
+    unsigned int getWidth() const { return _width; }
+    unsigned int getHeight() const { return _height; }
+
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
     virtual ~FrameBufferObject();

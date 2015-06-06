@@ -34,7 +34,20 @@
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
+Viewport Camera::_defaultViewport;
+Viewport::Viewport(float left, float bottom, float width, float height)
+: _left(left)
+, _bottom(bottom)
+, _width(width)
+, _height(height)
+{
+}
 
+Viewport::Viewport()
+{
+    _left = _bottom = 0.f;
+    _width = _height = 1.0f;
+}
 
 Camera* Camera::getDefaultCamera()
 {
@@ -496,6 +509,21 @@ void Camera::applyFrameBufferObject()
 void Camera::apply()
 {
     applyFrameBufferObject();
+    applyViewport();
+}
+
+void Camera::applyViewport()
+{
+    if(nullptr == _fbo)
+    {
+        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
+    }
+    else
+    {
+        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
+                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
+    }
+    
 }
 
 int Camera::getRenderOrder() const
