@@ -34,14 +34,17 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 #include "3d/CCAnimate3D.h"
 
+
 /**
  * @addtogroup base
  * @{
  */
 NS_CC_BEGIN
 
+
 /** @class Configuration
- * @brief Configuration contains some openGL variables
+ * @brief @~english Configuration contains some openGL variables
+ * @~chinese Configuration包含了一些openGL配置变量
  * @since v0.99.0
  * @js NA
  */
@@ -49,166 +52,266 @@ class CC_DLL Configuration : public Ref
 {
 public:
     
-    /** Returns a shared instance of Configuration.
+
+    /** @~english Returns a shared instance of Configuration.
      * 
-     * @return An autoreleased Configuration object.
+     * @~chinese 返回一个Configuration单例。
+     * 
+     * @return @~english An autoreleased Configuration object.
+     * @~chinese 一个autoreleased Configuration对象。
      */
     static Configuration *getInstance();
 
-    /** Purge the shared instance of Configuration.
+
+    /** @~english Purge the shared instance of Configuration.
+     * @~chinese 销毁Configuration单例。
      */
     static void destroyInstance();
 
+
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration();
+
 
     /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
 
 public:
-    /** Destructor
+
+    /** @~english Destructor
+     * @~chinese 析构函数
      * @js NA
      * @lua NA
      */
 	virtual ~Configuration();
 
-    /** OpenGL Max texture size.
+
+    /** @~english OpenGL Max texture size.
      * 
-     * @return The OpenGL Max texture size.
+     * @~chinese OpenGL最大纹理尺寸。
+     * 
+     * @return @~english The OpenGL Max texture size.
+     * @~chinese OpenGL最大纹理大小。
      */
 	int getMaxTextureSize() const;
 
-    /** OpenGL Max Modelview Stack Depth.
+
+    /** @~english OpenGL Max Modelview Stack Depth.
      *
-     * @return The OpenGL Max Modelview Stack Depth.
+     * @~chinese OpenGL最大视点矩阵堆栈深度。
+     * 
+     * @return @~english The OpenGL Max Modelview Stack Depth.
+     * @~chinese OpenGL最大视点矩阵堆栈深度。
      */
 	int getMaxModelviewStackDepth() const;
 
-    /** Returns the maximum texture units.
+
+    /** @~english Returns the maximum texture units.
      *
-     * @return The maximum texture units.
+     * @~chinese 返回的最大纹理单位。
+     * 
+     * @return @~english The maximum texture units.
+     * @~chinese 最大的纹理单位。
      * @since v2.0.0
      */
 	int getMaxTextureUnits() const;
 
-    /** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
+
+    /** @~english Whether or not the GPU supports NPOT (Non Power Of Two) textures.
      OpenGL ES 2.0 already supports NPOT (iOS).
      * 
-     * @return Is true if supports NPOT.
+     * @~chinese 是否GPU支持NPOT(非2的次方)的纹理。
+     * OpenGL ES 2.0已经支持NPOT(iOS)。
+     * 
+     * @return @~english Is true if supports NPOT.
+     * @~chinese 如果支持NPOT返回真。
      * @since v0.99.2
      */
 	bool supportsNPOT() const;
 
-    /** Whether or not PVR Texture Compressed is supported.
+
+    /** @~english Whether or not PVR Texture Compressed is supported.
      *
-     * @return Is true if supports PVR Texture Compressed.
+     * @~chinese 是否支持PVR纹理压缩格式。
+     * 
+     * @return @~english Is true if supports PVR Texture Compressed.
+     * @~chinese 如果支持PVR纹理压缩格式返回真。
      */
 	bool supportsPVRTC() const;
     
-    /** Whether or not ETC Texture Compressed is supported.
+
+    /** @~english Whether or not ETC Texture Compressed is supported.
      * 
      *
-     * @return Is true if supports ETC Texture Compressed.
+     * @~chinese 是否支持ETC纹理压缩格式。
+     * 
+     * 
+     * @return @~english Is true if supports ETC Texture Compressed.
+     * @~chinese 如果支持ETC纹理压缩格式返回真。
      */
     bool supportsETC() const;
     
-    /** Whether or not S3TC Texture Compressed is supported.
+
+    /** @~english Whether or not S3TC Texture Compressed is supported.
      *
-     * @return Is true if supports S3TC Texture Compressed.
+     * @~chinese 是否支持S3TC纹理压缩格式。
+     * 
+     * @return @~english Is true if supports S3TC Texture Compressed.
+     * @~chinese 如果支持S3TC纹理压缩格式返回真。
      */
     bool supportsS3TC() const;
     
-    /** Whether or not ATITC Texture Compressed is supported.
+
+    /** @~english Whether or not ATITC Texture Compressed is supported.
      *
-     * @return Is true if supports ATITC Texture Compressed.
+     * @~chinese 是否支持ATITC纹理压缩格式。
+     * 
+     * @return @~english Is true if supports ATITC Texture Compressed.
+     * @~chinese 如果支持ATITC纹理压缩格式返回真。
      */
     bool supportsATITC() const;
     
-    /** Whether or not BGRA8888 textures are supported.
+
+    /** @~english Whether or not BGRA8888 textures are supported.
      *
-     * @return Is true if supports BGRA8888 textures.
+     * @~chinese 是否支持BGRA8888纹理格式。
+     * 
+     * @return @~english Is true if supports BGRA8888 textures.
+     * @~chinese 如果支持BGRA8888纹理格式返回真。
      * @since v0.99.2
      */
 	bool supportsBGRA8888() const;
 
-    /** Whether or not glDiscardFramebufferEXT is supported.
-     * @return Is true if supports glDiscardFramebufferEXT.
+
+    /** @~english Whether or not glDiscardFramebufferEXT is supported.
+     * @~chinese 是否支持glDiscardFramebufferEXT。
+     * @return @~english Is true if supports glDiscardFramebufferEXT.
+     * @~chinese 如果支持glDiscardFramebufferEXT返回真。
      * @since v0.99.2
      */
 	bool supportsDiscardFramebuffer() const;
 
-    /** Whether or not shareable VAOs are supported.
+
+    /** @~english Whether or not shareable VAOs are supported.
      *
-     * @return Is true if supports shareable VAOs.
+     * @~chinese 是否可共享的支持共享VAO。
+     * 
+     * @return @~english Is true if supports shareable VAOs.
+     * @~chinese 如果支持共享VAO返回真。
      * @since v2.0.0
      */
 	bool supportsShareableVAO() const;
     
-    /** Max support directional light in shader, for Sprite3D.
+
+    /** @~english Max support directional light in shader, for Sprite3D.
      *
-     * @return Maximum supports directional light in shader.
+     * @~chinese 获取Sprite3D中shader支持的方向光最大数量。
+     * 
+     * @return @~english Maximum supports directional light in shader.
+     * @~chinese Sprite3D中shader支持的方向光最大数量。
      * @since v3.3
      */
     int getMaxSupportDirLightInShader() const;
     
-    /** Max support point light in shader, for Sprite3D.
+
+    /** @~english Max support point light in shader, for Sprite3D.
      *
-     * @return Maximum supports point light in shader.
+     * @~chinese 获取Sprite3D中shader支持的点光源最大数量。
+     * 
+     * @return @~english Maximum supports point light in shader.
+     * @~chinese Sprite3D中shader支持的点光源最大数量。
      * @since v3.3
      */
     int getMaxSupportPointLightInShader() const;
     
-    /** Max support spot light in shader, for Sprite3D.
+
+    /** @~english Max support spot light in shader, for Sprite3D.
      *
-     * @return Maximum supports spot light in shader.
+     * @~chinese 获取Sprite3D中shader支持的聚光灯光源最大数量。
+     * 
+     * @return @~english Maximum supports spot light in shader.
+     * @~chinese Sprite3D中shader支持的聚光灯光源最大数量。
      * @since v3.3
      */
     int getMaxSupportSpotLightInShader() const;
 
-    /** get 3d animate quality*/
+
+    /** @~english get 3d animate quality @~chinese 获得3d动画质量
+     * @return @~english 3d animate quality.
+     * @return @~english 3d动画质量。
+     */
     Animate3DQuality getAnimate3DQuality() const;
     
-    /** Returns whether or not an OpenGL is supported. 
+
+    /** @~english Returns whether or not an OpenGL is supported. 
      *
-     * @param searchName A given search name.
-     * @return Is true if an OpenGL is supported.
+     * @~chinese 返回一个是否支持某个OpenGL。
+     * 
+     * @param searchName @~english A given search name.
+     * @~chinese 一个给定的搜索的名字。
+     * @return @~english Is true if an OpenGL is supported.
+     * @~chinese 如果支持某个OpenGL返回真。
      */
     bool checkForGLExtension(const std::string &searchName) const;
 
-    /** Initialize method.
+
+    /** @~english Initialize method.
      *
-     * @return Is true if initialize success.
+     * @~chinese 初始化方法。
+     * 
+     * @return @~english Is true if initialize success.
+     * @~chinese 如果初始化成功返回真。
      */
     bool init();
 
-	/** Returns the value of a given key as a double.
+
+	/** @~english Returns the value of a given key as a double.
      *
-     * @param key A given key.
-     * @param defaultValue if not find the value, return the defaultValue.
+  * @~chinese 根据给定的键返回值
+  * 
+     * @param key @~english A given key.
+  * @~chinese 一个给定的键。
+     * @param defaultValue @~english if not find the value, return the defaultValue.
+  * @~chinese 如果找不到值，则返回默认值。
      * @return 
      */
 	const Value& getValue(const std::string& key, const Value& defaultValue = Value::Null) const;
 
-	/** Sets a new key/value pair  in the configuration dictionary.
+
+	/** @~english Sets a new key/value pair  in the configuration dictionary.
      *
-     * @param key A given key.
-     * @param value A given value.
+  * @~chinese 在配置字典中设置一个新的键值对。
+  * 
+     * @param key @~english A given key.
+  * @~chinese 一个给定的键。
+     * @param value @~english A given value.
+  * @~chinese 一个给定的值。
      */
 	void setValue(const std::string& key, const Value& value);
 
-    /** Returns the Configuration info.
+
+    /** @~english Returns the Configuration info.
      *
-     * @return The Configuration info.
+     * @~chinese 返回配置信息。
+     * 
+     * @return @~english The Configuration info.
+     * @~chinese 配置信息。
      */
     std::string getInfo() const;
 
-	/** Gathers OpenGL / GPU information.
+
+	/** @~english Gathers OpenGL / GPU information.
+  * @~chinese 收集OpenGL/GPU 信息。
      */
 	void gatherGPUInfo();
 
-	/** Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added.
+
+	/** @~english Loads a config file. If the keys are already present, then they are going to be replaced. Otherwise the new keys are added.
      * 
-     * @param filename Config file name.
+  * @~chinese 加载配置文件。如果键已经存在,那么将被替换。否则添加新的键。
+  * 
+     * @param filename @~english Config file name.
+  * @~chinese 配置文件名。
      */
 	void loadConfigFile(const std::string& filename);
 
