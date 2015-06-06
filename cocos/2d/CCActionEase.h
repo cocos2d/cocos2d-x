@@ -264,7 +264,7 @@ class CC_DLL EaseInOut : public EaseRateAction
 public:
     /** 
      @brief @~english Create the action with the inner action and the rate parameter.
-     * @~chinese 创建动作的内在动作和速度参数。
+     * @~chinese 创建动作的内部动作和速度参数。
      @param action @~english The pointer of the inner action.
      * @~chinese 内部动作。
      @param rate @~english The value of the rate parameter.
@@ -451,7 +451,7 @@ public:
      @param action @~english The pointer of the inner action.
      * @~chinese 内部动作。
      @return @~english A pointer of EaseSineOut action. If creation failed, return nil.
-     * @~chinese EaseSineOut of A对准动作。如果就业机会、尼罗河破产。
+     * @~chinese EaseSineOut动作的指针，如果创建失败，返回空指针。
     */
     static EaseSineOut* create(ActionInterval* action);
 
@@ -506,7 +506,7 @@ private:
 /** 
  @class EaseElastic
  @brief @~english EaseElastic base action
- * @~chinese EaseElastic是按弹性缓动的动作基类
+ * @~chinese EaseElastic是弹性缓动动作的基类
  @since v0.8.2
  @ingroup Actions
  */
@@ -728,7 +728,7 @@ private:
 /** 
  @class EaseBounce
  @brief @~english EaseBounce base action.
- * @~chinese EaseBounce是按弹跳动作缓动的动作基类。
+ * @~chinese EaseBounce是弹跳缓动动作的基类。
  @since v0.8.2
  @ingroup Actions
 */

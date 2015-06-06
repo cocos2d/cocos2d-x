@@ -97,7 +97,7 @@ private:
  @brief @~english Base class for Grid3D actions.
  * @~chinese 3D网格动作基类。
  @details @~english Grid3D actions can modify a non-tiled grid.
- * @~chinese 3D网格动作可以修改一个非瓷砖网格。
+ * @~chinese 3D网格动作可以修改一个非瓦片网格。
  */
 class CC_DLL Grid3DAction : public GridAction
 {
@@ -165,7 +165,7 @@ public:
 
 /**
 @brief @~english Base class for TiledGrid3D actions.
- * @~chinese 3D瓷砖网格动作的基类。
+ * @~chinese 3D瓦片网格动作的基类。
 */
 class CC_DLL TiledGrid3DAction : public GridAction
 {
@@ -185,11 +185,11 @@ public:
 
     /** 
      * @brief @~english Get the tile that belongs to a certain position of the grid.
-     * @~chinese 获取网格中特定位置的瓷砖。
+     * @~chinese 获取网格中特定位置的瓦片。
      * @param position @~english The position of the tile want to get.
      * @~chinese 网格中的一个位置。
      * @return @~english A quadrilateral of the tile. 
-     * @~chinese 一个四边形瓷砖。
+     * @~chinese 一个四边形瓦片。
      * @js tile
      * @lua NA
      */
@@ -204,11 +204,11 @@ public:
 
     /** 
      * @brief @~english Get the non-transformed tile that belongs to a certain position of the grid.
-     * @~chinese 得到网格中的某个位置的未变换瓷砖。
+     * @~chinese 得到网格中的某个位置的未变换瓦片。
      * @param position @~english The position of the tile want to get.
      * @~chinese 瓦想要的位置。
      * @return @~english A quadrilateral of the tile. 
-     * @~chinese 一个四边形的瓷砖。
+     * @~chinese 一个四边形的瓦片。
      * @js originalTile
      * @lua NA
      */
@@ -223,11 +223,11 @@ public:
 
     /** 
      * @brief @~english Set a new tile to a certain position of the grid.
-     * @~chinese 給网格中指定位置设置一个新的瓷砖。
+     * @~chinese 給网格中指定位置设置一个新的瓦片。
      * @param position @~english The position of the tile.
-     * @~chinese 瓷砖的位置。
+     * @~chinese 瓦片的位置。
      * @param coords @~english The quadrilateral of the new tile.
-     * @~chinese 新的四边形瓷砖。
+     * @~chinese 新的四边形瓦片。
      * @lua NA
      */
     void setTile(const Vec2& position, const Quad3& coords);
