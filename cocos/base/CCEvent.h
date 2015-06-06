@@ -111,7 +111,7 @@ public:
     
 protected:
 
-    /** @~english Sets current target  @~chinese Sets the current target*/
+    /** @~english Sets current target  @~chinese 设置当前目标*/
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
 	Type _type;     ///< Event type

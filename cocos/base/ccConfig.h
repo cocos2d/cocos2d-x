@@ -36,7 +36,7 @@ THE SOFTWARE.
  * cocos2d (cc) configuration file.
  * @~chinese 
  * @file
- * cocos2d(cc)配置的牵头机构。
+ * cocos2d(cc)配置文件。
 */
 
 
@@ -369,7 +369,7 @@ THE SOFTWARE.
  * 如果启用,将在cocos2d激活各种分析器。这个统计数据将被输出到控制台
  * 一旦每秒显示所需的平均时间(以毫秒为单位)来执行特定的例程(s)。
  * 仅用于调试目的。建议把它禁用。
- * 使将其设置为不同的值不是0。默认情况下禁用。
+ * 要启用可以将其设置为不为0的值。默认情况下禁用。
  */
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
@@ -461,7 +461,7 @@ THE SOFTWARE.
  * If value equals to public, these functions are public,
  * protected by default.
  * @~chinese CC_CONSTRUCTOR_ACCESS
- * 表明init函数访问修饰符。如果值等于protected,那么这些功能受到保护。
+ * 表明init函数访问修饰符。如果值等于protected,那么这些方法受到保护。
  * 如果值等于公众,这些功能是公开的,
  * 默认情况下保护。
  */
@@ -486,7 +486,7 @@ THE SOFTWARE.
  * Turn on debugging of allocators. This is slower, uses
  * more memory, and should not be used for production builds.
  * @~chinese CC_ENABLE_ALLOCATOR_DIAGNOSTICS
- * 打开调试分配器。这会很慢,使用更多的内存,不要勇于产品构建。
+ * 打开调试分配器。这会很慢,使用更多的内存,不要用于产品构建。
  */
 #ifndef CC_ENABLE_ALLOCATOR_DIAGNOSTICS
 # define CC_ENABLE_ALLOCATOR_DIAGNOSTICS CC_ENABLE_ALLOCATOR

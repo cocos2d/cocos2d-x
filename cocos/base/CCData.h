@@ -88,7 +88,7 @@ public:
     /**@~english
      * Overroads of operator=.
      * @~chinese 
-     * 重载等号操作符。
+     * 重载赋值操作符。
      */
     Data& operator= (const Data& other);
     
@@ -96,7 +96,7 @@ public:
     /**@~english
      * Overroads of operator=.
      * @~chinese 
-     * 重载等号操作符。
+     * 重载赋值操作符。
      */
     Data& operator= (Data&& other);
     

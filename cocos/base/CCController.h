@@ -47,7 +47,7 @@ class EventDispatcher;
 /**
  * @class Controller
  * @brief @~english A Controller object represents a connected physical game controller.
- * @~chinese 一个控制器对象表示一个与物理游戏连接的控制器。
+ * @~chinese 一个连接实体游戏的手柄。
  * @js NA
  */
 class Controller
@@ -152,7 +152,7 @@ public:
      * Start discovering new controllers.
      *
      * @~chinese 
-     * 开始发现新控制器。
+     * 开始搜索新控制器。
      * 
      * @warning @~english The API only work on the IOS platform. Empty implementation on other platform.
      * @~chinese 此API只在IOS平台上工作。其他平台为空实现。
@@ -164,7 +164,7 @@ public:
      * Stop the discovery process.
      *
      * @~chinese 
-     * 停止发现控制器。
+     * 停止搜索控制器。
      * 
      * @warning @~english The API only work on the IOS platform.Empty implementation on other platform.
      * @~chinese 此API只在IOS平台上工作。其他平台上为空实现。
@@ -195,7 +195,7 @@ public:
     /**@~english
      * Indicates whether the Controller is connected.
      * @~chinese 
-     * 指示是否连接控制器。
+     * 指示控制器是否是连接状态。
      */
     bool isConnected() const;
 
