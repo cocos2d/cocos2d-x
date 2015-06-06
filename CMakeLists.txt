@@ -202,6 +202,7 @@ if(LINUX OR MACOSX OR WINDOWS)
 
     cocos_find_package(FMODEX FMODEX REQUIRED)
     cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
+    cocos_find_package(GTK3 GTK3 REQUIRED)
   endif()
 
   if(WINDOWS)
