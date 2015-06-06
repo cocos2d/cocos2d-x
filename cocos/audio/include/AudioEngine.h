@@ -49,8 +49,11 @@ NS_CC_BEGIN
     namespace experimental{
 
 /**
- * @class AudioProfile
+ * @class @~english AudioProfile
  *
+ * @brief
+ * @~chinese AudioProfile
+ * 
  * @brief
  * @js NA
  */
@@ -62,12 +65,15 @@ public:
     //The maximum number of simultaneous audio instance.
     unsigned int maxInstances;
     
-    /* Minimum delay in between sounds */
+    /* @~english Minimum delay in between sounds  @~chinese 最小声音之间的延迟*/
     double minDelay;
     
-    /**
+    /**@~english
      * Defautl constructor
      *
+     * @~chinese 
+     * 默认构造函数
+     * 
      * @lua new
      */
     AudioProfile()
@@ -81,18 +87,22 @@ public:
 class AudioEngineImpl;
 
 /**
- * @class AudioEngine
+ * @class @~english AudioEngine
  *
- * @brief Offers a interface to play audio.
+ * @~chinese )
+ * 
+ * @brief @~english Offers a interface to play audio.
  *
- * @note Make sure to call AudioEngine::end() when the audio engine is not needed anymore to release resources.
+ * @~chinese 提供了一个音频播放接口。
+ * 
+ * @note @~english Make sure to call AudioEngine::end() when the audio engine is not needed anymore to release resources.
+ * @~chinese 当音频引擎不再需要时确保调用AudioEngine::end()以释放资源。
  * @js NA
  */
-
 class EXPORT_DLL AudioEngine
 {
 public:
-    /** AudioState enum,all possible states of an audio instance.*/
+    /** @~english AudioState enum,all possible states of an audio instance. @~chinese 音频状态枚举,音频的所有可能状态。*/
     enum class AudioState
     {
         ERROR  = -1,
@@ -107,177 +117,277 @@ public:
 
     static bool lazyInit();
 
-    /**
+    /**@~english
      * Release objects relating to AudioEngine.
      *
-     * @warning It must be called before the application exit.
+     * @~chinese 
+     * 释放音频引擎的相关对象.
+     * 
+     * @warning @~english It must be called before the application exit.
+     * @~chinese 在应用程序退出之前必须要调用它。
      */
     static void end();
     
-    /**  
+    /**  @~english
      * Gets the default profile of audio instances.
      *
-     * @return The default profile of audio instances.
+     * @~chinese 
+     * 得到音频的默认的配置。
+     * 
+     * @return @~english The default profile of audio instances.
+     * @~chinese 音频的默认的配置。
      */
     static AudioProfile* getDefaultProfile();
     
-    /** 
+    /** @~english
      * Play 2d sound.
      *
-     * @param filePath The path of an audio file.
-     * @param loop Whether audio instance loop or not.
-     * @param volume Volume value (range from 0.0 to 1.0).
-     * @param profile A profile for audio instance. When profile is not specified, default profile will be used.
-     * @return An audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
+     * @~chinese 
+     * Play 2d sound.
+     * 
+     * @param filePath @~english The path of an audio file.
+     * @~chinese 一个音频文件的路径。
+     * @param loop @~english Whether audio instance loop or not.
+     * @~chinese 音频是否循环播放。
+     * @param volume @~english Volume value (range from 0.0 to 1.0).
+     * @~chinese 音量值(范围从0.0到1.0)。
+     * @param profile @~english A profile for audio instance. When profile is not specified, default profile will be used.
+     * @~chinese 音频的一个配置文件。当没有指定配置文件,将使用默认的配置。
+     * @return @~english An audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
      *
+     * @~chinese 一个音频ID。它允许您动态地改变一个音频实例的行为。
+     * 
      * @see `AudioProfile`
      */
     static int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f, const AudioProfile *profile = nullptr);
     
-    /** 
+    /** @~english
      * Sets whether an audio instance loop or not.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @param loop Whether audio instance loop or not.
+     * @~chinese 
+     * 设置一个音频实例是否循环播放。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @param loop @~english Whether audio instance loop or not.
+     * @~chinese 是否循环播放。
      */
     static void setLoop(int audioID, bool loop);
 
-    /** 
+    /** @~english
      * Checks whether an audio instance is loop.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @return Whether or not an audio instance is loop.
+     * @~chinese 
+     * 检查一个音频实例是否循环播放。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @return @~english Whether or not an audio instance is loop.
+     * @~chinese 是否循环播放。
      */
     static bool isLoop(int audioID);
 
-    /** 
+    /** @~english
      * Sets volume for an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @param volume Volume value (range from 0.0 to 1.0).
+     * @~chinese 
+     * 设置一个音频实例的音量大小。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @param volume @~english Volume value (range from 0.0 to 1.0).
+     * @~chinese 音量值(范围从0.0到1.0)。
      */
     static void setVolume(int audioID, float volume);
 
-    /** 
+    /** @~english
      * Gets the volume value of an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @return Volume value (range from 0.0 to 1.0).
+     * @~chinese 
+     * 返回一个音频实例的音量值。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @return @~english Volume value (range from 0.0 to 1.0).
+     * @~chinese 音量值(范围从0.0到1.0)。
      */
     static float getVolume(int audioID);
 
-    /** 
+    /** @~english
      * Pause an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
+     * @~chinese 
+     * 暂停一个音频实例。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
      */
     static void pause(int audioID);
 
-    /** Pause all playing audio instances. */
+    /** @~english Pause all playing audio instances.  @~chinese 暂停所有正在播放的音频实例。 */
     static void pauseAll();
 
-    /** 
+    /** @~english
      * Resume an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
+     * @~chinese 
+     * 恢复一个已暂停的音频实例。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
      */
     static void resume(int audioID);
 
-    /** Resume all suspended audio instances. */
+    /** @~english Resume all suspended audio instances.  @~chinese 恢复所有暂停音频实例。*/
     static void resumeAll();
 
-    /** 
+    /** @~english
      * Stop an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
+     * @~chinese 
+     * 停止一个音频实例。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
      */
     static void stop(int audioID);
 
-    /** Stop all audio instances. */
+    /** @~english Stop all audio instances.  @~chinese 停止所有音频实例。*/
     static void stopAll();
 
-    /**
+    /**@~english
      * Sets the current playback position of an audio instance.
      *
-     * @param audioID   An audioID returned by the play2d function.
-     * @param sec       The offset in seconds from the start to seek to.
+     * @~chinese 
+     * 设置一个音频实例的当前播放头位置。
+     * 
+     * @param audioID   @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @param sec       @~english The offset in seconds from the start to seek to.
+     * @~chinese 以秒为单位的相对于开始位置的偏移量。
      * @return 
      */
     static bool setCurrentTime(int audioID, float sec);
 
-    /** 
+    /** @~english
      * Gets the current playback position of an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @return The current playback position of an audio instance.
+     * @~chinese 
+     * 返回一个音频实例的当前播放头位置。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @return @~english The current playback position of an audio instance.
+     * @~chinese 音频实例的当前播放头位置。
      */
     static float getCurrentTime(int audioID);
 
-    /** 
+    /** @~english
      * Gets the duration of an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @return The duration of an audio instance.
+     * @~chinese 
+     * 得到一个音频实例的持续时间。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @return @~english The duration of an audio instance.
+     * @~chinese 一个音频的持续时间。
      */
     static float getDuration(int audioID);
 
-    /** 
+    /** @~english
      * Returns the state of an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @return The status of an audio instance.
+     * @~chinese 
+     * 返回一个音频实例的状态。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @return @~english The status of an audio instance.
+     * @~chinese 音频实例的状态。
      */
     static AudioState getState(int audioID);
 
-    /** 
+    /** @~english
      * Register a callback to be invoked when an audio instance has completed playing.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @param callback
+     * @~chinese 
+     * 设置一个在音频实例播放完成时要进行的回调。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @param @~english callback
+     * @~chinese 回调
      */
     static void setFinishCallback(int audioID, const std::function<void(int,const std::string&)>& callback);
     
-    /**
+    /**@~english
      * Gets the maximum number of simultaneous audio instance of AudioEngine.
+     * @~chinese 
+     * 返回音频引擎的最大并发数。
      */
     static int getMaxAudioInstance() {return _maxInstances;}
     
-    /**
+    /**@~english
      * Sets the maximum number of simultaneous audio instance for AudioEngine.
      *
-     * @param maxInstances The maximum number of simultaneous audio instance.
+     * @~chinese 
+     * 设置音频引擎的最大并发数。
+     * 
+     * @param maxInstances @~english The maximum number of simultaneous audio instance.
+     * @~chinese 同时可播放的音频实例最大数量。
      */
     static bool setMaxAudioInstance(int maxInstances);
     
-    /** 
+    /** @~english
      * Uncache the audio data from internal buffer.
      * AudioEngine cache audio data on ios,mac, and win32 platform.
      *
-     * @warning This can lead to stop related audio first.
-     * @param filePath Audio file path.
+     * @~chinese 
+     * 从内部缓冲区取消一个音频数据的缓存。
+     * 音频引擎会在ios、mac和win32平台上缓存音频数据。
+     * 
+     * @warning @~english This can lead to stop related audio first.
+     * @~chinese 这可能导致停止相关的音频。
+     * @param filePath @~english Audio file path.
+     * @~chinese 音频文件路径。
      */
     static void uncache(const std::string& filePath);
     
-    /** 
+    /** @~english
      * Uncache all audio data from internal buffer.
      *
-     * @warning All audio will be stopped first.
+     * @~chinese 
+     * 从内部缓冲区取消所有音频缓存数据。
+     * 
+     * @warning @~english All audio will be stopped first.
+     * @~chinese 所有音频将被停止。
      */
     static void uncacheAll();
     
-    /**  
+    /**  @~english
      * Gets the audio profile by id of audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
-     * @return The audio profile.
+     * @~chinese 
+     * 通过音频ID返回它的配置。
+     * 
+     * @param audioID @~english An audioID returned by the play2d function.
+     * @~chinese 一个play2d函数返回的音频ID。
+     * @return @~english The audio profile.
+     * @~chinese 音频配置。
      */
     static AudioProfile* getProfile(int audioID);
 
-    /**  
+    /**  @~english
      * Gets an audio profile by name.
      *
-     * @param profileName A name of audio profile.
-     * @return The audio profile.
+     * @~chinese 
+     * 通过音频配置文件返回一个音频配置。
+     * 
+     * @param profileName @~english A name of audio profile.
+     * @~chinese 音频配置文件。
+     * @return @~english The audio profile.
+     * @~chinese 音频配置。
      */
     static AudioProfile* getProfile(const std::string &profileName);
 
