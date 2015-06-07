@@ -111,8 +111,16 @@ include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
+  ${COCOS2D_ROOT}/cocos/platform
+  ${COCOS2D_ROOT}/cocos/audio/include/
   Classes
 )
+if ( WIN32 )
+  include_directories(
+  ${COCOS2D_ROOT}/external/glfw3/include/win32
+  ${COCOS2D_ROOT}/external/win32-specific/gles/include/OGLES
+)
+endif( WIN32 )
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
