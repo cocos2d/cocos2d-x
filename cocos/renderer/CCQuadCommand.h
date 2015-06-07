@@ -43,9 +43,9 @@ NS_CC_BEGIN
  Every QuadCommand will have generate material ID by give textureID, glProgramState, Blend function
  if the material id is the same, these QuadCommands could be batched to save draw call.
  * @~chinese 
- * 该类用于渲染1个或者多个四边形，与TrianglesCommand类似。
+ * 该类用于渲染一个或者多个四边形，与TrianglesCommand类似。
  * 每个QuadCommand将使用textureID glProgramState、Blend来生成材质ID
- * 如果材料id是相同的,这些QuadCommands可以在同一批次渲染。
+ * 如果材料ID是相同的,这些QuadCommands可以在同一批次渲染。
  */
 class CC_DLL QuadCommand : public RenderCommand
 {
@@ -83,7 +83,24 @@ public:
     void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv, uint32_t flags);
 
-    /** Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
+    /**
+    @~english Deprecated function, the params is similar as the upper init function, with flags equals 0.
+    @~chinese Deprecated函数，函数与init功能类似，flags被设置为0
+    @param globalOrder @~english GlobalZOrder of the command.
+     * @~chinese 命令的GlobalZOrder。
+     @param textureID @~english The openGL handle of the used texture.
+     * @~chinese 纹理的openGL句柄。
+     @param shader @~english The specified glProgram and its uniform.
+     * @~chinese 指定的glProgram和uniform数值。
+     @param blendType @~english Blend function for the command.
+     * @~chinese Blend状态。
+     @param quads @~english Rendered quads for the command.
+     * @~chinese 待渲染的四边形数据。
+     @param quadCount @~english The number of quads when rendering.
+     * @~chinese 待渲染的四边形数量。
+     @param mv @~english ModelView matrix for the command.
+     * @~chinese model view矩阵。
+    */
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
     /**
@@ -93,7 +110,7 @@ public:
     void useMaterial() const;
     /**
     @~english Get the material id of command. 
-    @~chinese 得到材质id。
+    @~chinese 得到材质ID。
     @return
     @~english the material id.
     @~chinese 材质ID。
@@ -125,10 +142,10 @@ public:
     inline ssize_t getQuadCount() const { return _quadsCount; }
     /**
     @~english Get the glprogramstate. 
-    @~chinese 得到glprogramstate。
+    @~chinese 得到GLProgramState。
     @return
     @~english glprogramstate.
-    @~chinese glprogramstate。
+    @~chinese GLProgramState。
     */
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
     /**

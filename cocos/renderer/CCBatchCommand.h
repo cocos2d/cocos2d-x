@@ -73,7 +73,20 @@ public:
      * @~chinese 渲染命令是否使用3D模式。
     */
     void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
-    /**Deprecated function, you should call upper init function instead.*/
+    /**
+    @~english Deprecated function, you should call upper init function instead.
+    @~chinese Deprecated函数，你应该调用另外一个init函数, flags被设置为0.
+    @param globalZOrder @~english GlobalZOrder of the render command.
+     * @~chinese 命令的GlobalZOrder。
+    @param shader @~english Shader used for draw the texture atlas.
+     * @~chinese texture atlas的shader数据。
+    @param blendType @~english Blend function for texture atlas.
+     * @~chinese texture atlas的blend。
+    @param textureAtlas @~english Texture atlas, will contain both quads and texture for rendering.
+     * @~chinese texture atlas，包含渲染的四边形和纹理。
+    @param modelViewTransform @~english Model view transform used for rendering.
+     * @~chinese 渲染的model view矩阵。
+    */
     CC_DEPRECATED_ATTRIBUTE void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
     /**

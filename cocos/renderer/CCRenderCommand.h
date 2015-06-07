@@ -181,7 +181,7 @@ public:
     inline void set3D(bool value) { _is3D = value; }
     /**
     @~english Get the depth by current model view matrix. 
-    @~chinese 在目前的模型视图矩阵下的深度。
+    @~chinese 得到在目前的模型视图矩阵下的深度。
     @return
     @~english the depth value.
     @~chinese 深度值。
