@@ -51,6 +51,7 @@ MotionStreak::MotionStreak()
 , _vertices(nullptr)
 , _colorPointer(nullptr)
 , _texCoords(nullptr)
+, _opacity(0xFF)
 {
 }
 
@@ -126,7 +127,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR));
 
     setTexture(texture);
     setColor(color);
@@ -232,13 +233,12 @@ const BlendFunc& MotionStreak::getBlendFunc(void) const
 
 void MotionStreak::setOpacity(GLubyte opacity)
 {
-    CCASSERT(false, "Set opacity no supported");
+	_opacity = opacity;
 }
 
 GLubyte MotionStreak::getOpacity(void) const
 {
-    CCASSERT(false, "Opacity no supported");
-    return 0;
+	return _opacity;
 }
 
 void MotionStreak::setOpacityModifyRGB(bool bValue)
@@ -300,7 +300,7 @@ void MotionStreak::update(float delta)
             }else
                 newIdx2 = newIdx*8;
 
-            const GLubyte op = (GLubyte)(_pointState[newIdx] * 255.0f);
+            const GLubyte op = (GLubyte)(_pointState[newIdx] * _opacity);
             _colorPointer[newIdx2+3] = op;
             _colorPointer[newIdx2+7] = op;
         }
@@ -335,8 +335,8 @@ void MotionStreak::update(float delta)
         *((Color3B*)(_colorPointer + offset+4)) = _displayedColor;
 
         // Opacity
-        _colorPointer[offset+3] = 255;
-        _colorPointer[offset+7] = 255;
+        _colorPointer[offset+3] = _opacity;
+        _colorPointer[offset+7] = _opacity;
 
         // Generate polygon
         if(_nuPoints > 0 && _fastMode )
