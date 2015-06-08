@@ -13,17 +13,36 @@ enum {
     kTagParentNode = 1,
 };
 
+Box2DTests::Box2DTests()
+{
+    ADD_TEST_CASE(Box2DTest);
+}
+
 Box2DTest::Box2DTest()
 : _spriteTexture(nullptr)
 , world(nullptr)
 {
+
+}
+
+Box2DTest::~Box2DTest()
+{
+    CC_SAFE_DELETE(world);
+}
+
+bool Box2DTest::init()
+{
+    if (!TestCase::init())
+    {
+        return false;
+    }
 #if CC_ENABLE_BOX2D_INTEGRATION
     auto dispatcher = Director::getInstance()->getEventDispatcher();
-    
+
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(Box2DTest::onTouchesEnded, this);
     dispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-    
+
     // init physics
     this->initPhysics();
     // create reset button
@@ -46,26 +65,21 @@ Box2DTest::Box2DTest()
 
     auto label = Label::createWithTTF("Tap screen", "fonts/Marker Felt.ttf", 32.0f);
     addChild(label, 0);
-    label->setColor(Color3B(0,0,255));
-    label->setPosition(VisibleRect::center().x, VisibleRect::top().y-50);
-    
+    label->setColor(Color3B(0, 0, 255));
+    label->setPosition(VisibleRect::center().x, VisibleRect::top().y - 50);
+
     scheduleUpdate();
 #else
     auto label = Label::createWithTTF("Should define CC_ENABLE_BOX2D_INTEGRATION=1\n to run this test case",
-                                            "fonts/arial.ttf",
-                                            18);
+        "fonts/arial.ttf",
+        18);
     auto size = Director::getInstance()->getWinSize();
-    label->setPosition(size.width/2, size.height/2);
-    
+    label->setPosition(size.width / 2, size.height / 2);
+
     addChild(label);
 #endif
-}
 
-Box2DTest::~Box2DTest()
-{
-    CC_SAFE_DELETE(world);
-    
-    //delete _debugDraw;
+    return true;
 }
 
 void Box2DTest::initPhysics()
@@ -78,18 +92,6 @@ void Box2DTest::initPhysics()
     world->SetAllowSleeping(true);
 
     world->SetContinuousPhysics(true);
-
-//     _debugDraw = new (std::nothrow) GLESDebugDraw( PTM_RATIO );
-//     world->SetDebugDraw(_debugDraw);
-
-    uint32 flags = 0;
-    flags += b2Draw::e_shapeBit;
-    //        flags += b2Draw::e_jointBit;
-    //        flags += b2Draw::e_aabbBit;
-    //        flags += b2Draw::e_pairBit;
-    //        flags += b2Draw::e_centerOfMassBit;
-    //_debugDraw->SetFlags(flags);
-
 
     // Define the ground body.
     b2BodyDef groundBodyDef;
@@ -209,7 +211,6 @@ void Box2DTest::addNewSpriteAtPosition(Vec2 p)
 #endif
 }
 
-
 void Box2DTest::update(float dt)
 {
     //It is recommended that a fixed time step is used with Box2D for stability
@@ -239,27 +240,3 @@ void Box2DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
         addNewSpriteAtPosition( location );
     }
 }
-
-/*
-void Box2DTest::accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration)
-{    
-    static float prevX=0, prevY=0;
-
-//#define kFilterFactor 0.05f
-#define kFilterFactor 1.0f    // don't use filter. the code is here just as an example
-    
-    float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
-    float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-    
-    prevX = accelX;
-    prevY = accelY;
-    
-    // accelerometer values are in "Portrait" mode. Change them to Landscape left
-    // multiply the gravity by 10
-    b2Vec2 gravity( -accelY * 10, accelX * 10);
-    
-    world->SetGravity( gravity );
-}
-*/
-
- 

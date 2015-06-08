@@ -9,13 +9,13 @@ DEFINE_TEST_SUITE(Box2DTests);
 
 class Box2DTest : public TestCase
 {
-    cocos2d::Texture2D* _spriteTexture;    // weak ref
-    b2World* world;
-//    GLESDebugDraw* _debugDraw;
-
 public:
+    CREATE_FUNC(Box2DTest);
+
     Box2DTest();
     ~Box2DTest();
+
+    virtual bool init() override;
 
     void initPhysics();
     void createResetButton();
@@ -26,10 +26,12 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 #if CC_ENABLE_BOX2D_INTEGRATION
-protected:
-    Mat4 _modelViewMV;
+private:
+    cocos2d::Mat4 _modelViewMV;
     void onDraw();
     cocos2d::CustomCommand _customCommand;
+    cocos2d::Texture2D* _spriteTexture;
+    b2World* world;
 #endif
 } ;
 
