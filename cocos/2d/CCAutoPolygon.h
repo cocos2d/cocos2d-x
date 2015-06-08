@@ -35,48 +35,202 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _2d
+ * @{
+ */
+
+/**
+ * PolygonInfo is an object holding the required data to display Sprites。
+ * It can be a simple as a triangle, or as complex as a whole 3D mesh
+ */
 class CC_DLL PolygonInfo
 {
 public:
+    /// @name Creators
+    /// @{
+    /**
+     * Creates an empty Polygon info
+     * @memberof PolygonInfo
+     * @return PolygonInfo object
+     */
     PolygonInfo():
     triangles(),
     isVertsOwner(true),
     rect()
     {
     };
-    PolygonInfo(const PolygonInfo& other);
     
+    /**
+     * Create an polygoninfo from the data of another Polygoninfo
+     * @param other     another PolygonInfo to be copied
+     * @return duplicate of the other PolygonInfo
+     */
+    PolygonInfo(const PolygonInfo& other);
+    //  end of creators group
+    /// @}
+    
+    /**
+     * Copy the member of the other PolygonInfo
+     * @param other     another PolygonInfo to be copied
+     */
     PolygonInfo& operator= (const PolygonInfo &other);
     ~PolygonInfo();
     
+    /**
+     * set the data to be a pointer to a quad
+     * the member verts will not be released when this PolygonInfo destructs
+     * as the verts memory are managed by other objects
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad obje
+     */
     void setQuad(V3F_C4B_T2F_Quad *quad);
     
     Rect rect;
     std::string filename;
     TrianglesCommand::Triangles triangles;
     
+    /**
+     * get vertex count
+     * @return number of vertices
+     */
     const unsigned int getVertCount() const;
+    
+    /**
+     * get sum of all triangle area size
+     * @return sum of all triangle area size
+     */
     const float getArea() const;
     
 protected:
     bool isVertsOwner;
 };
 
+
+/**
+ * AutoPolygon is a helper Object
+ * AutoPolygon's purpose is to process an image into 2d polygon mesh in runtime
+ * It has functions for each step in the process, from tracing all the points, to triangulation
+ * the result can be then passed to Sprite::create() to create a Polygon Sprite
+ */
 class CC_DLL AutoPolygon
 {
 public:
+    /// @name Creators
+    /// @{
+    /**
+     * create an AutoPolygon and initialize it with an image file
+     * the image must be a 32bit PNG for current version 3.7
+     * @param   filename    a path to image file, e.g., "scene1/monster.png".
+     * @return  an AutoPolygon object;
+     */
     AutoPolygon(const std::string &filename);
+    
+    /**
+     * create an AutoPolygon object, 
+     * useful if you do not need to trace image, but for processing points
+     * @return  an AutoPolygon object;
+     */
     AutoPolygon();
+    //  end of creators group
+    /// @}
     ~AutoPolygon();
     
-    //using Ramer–Douglas–Peucker algorithm
-    std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
+    /**
+     * trace all the points along the outline of the image, 
+     * @warning must create AutoPolygon with filename to use this function
+     * @param   rect    a texture rect for specify an area of the image, use Rect::Zero for the size of the image, default to Rect::Zero
+     * @param   threshold   the value when alpha is greater than this value will be counted as opaque, default to 0.0
+     * @return  a vector of vec2 of all the points found in clockwise order
+     * @code
+     * auto ap = AutoPolygon("grossini.png");
+     * std::vector<Vec2> points = ap.trace();//default to size of the image and threshold 0.0
+     * @endcode
+     */
+     std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
+    
+    /**
+     * reduce the ammount of points so its faster for GPU to process and draw
+     * based on Ramer-Douglas-Puecker algorithm
+     * @param   points  a vector of Vec2 points as input
+     * @param   rect    a texture rect for specify an area of the image to avoid over reduction
+     * @param   epsilon the perpendicular distance where points smaller than this value will be discarded
+     * @return  a vector of Vec2 of the remaining points in clockwise order
+     * @code
+     * auto ap = AutoPolygon();
+     * std::vector<Vec2> reduced = ap.reduce(inputPoints, rect);//default epsilon is 2
+     * @endcode
+     */
     std::vector<Vec2> reduce(const std::vector<Vec2>& points, const Rect& rect, const float& epsilon = 2.0);
+    
+    /**
+     * expand the points along their edge, useful after you reduce the points that cuts into the sprite
+     * using ClipperLib
+     * @param   points  a vector of Vec2 points as input
+     * @param   rect    a texture rect for specify an area of the image, the expanded points will be clamped in this rect, ultimately resulting in a quad if the expansion is too great
+     * @param   epsilon the distance which the edges will expand
+     * @return  a vector of Vec2 as the result of the expansion
+     * @code
+     * auto ap = AutoPolygon();
+     * std::vector<Vec2> expanded = ap.expand(inputPoints, rect, 2.0);
+     * @endcode
+     */
     std::vector<Vec2> expand(const std::vector<Vec2>& points, const Rect& rect, const float& epsilon);
+    
+    /**
+     * Triangulate the input points into triangles for rendering
+     * using poly2tri
+     * @warning points must be closed loop, cannot have 2 points sharing the same position and cannot intersect itself
+     * @param   points  a vector of vec2 points as input
+     * @return  a Triangles object with points and indices
+     * @code
+     * auto ap = AutoPolygon();
+     * TrianglesCommand::Triangles myPolygons = ap.triangulate(myPoints);
+     * @endcode
+     */
     TrianglesCommand::Triangles triangulate(const std::vector<Vec2>& points);
+    
+    /**
+     * calculate the UV coordinates for each points based on a texture rect
+     * @warning This method requires the AutoPolygon object to know the texture file dimension
+     * @param   rect    a texture rect to specify where to map the UV
+     * @param   verts   a pointer to the verts array, served both as input and output verts
+     * @param   count   the count for the verts arrac
+     * @code
+     * auto ap = AutoPolygon("grossini.png");
+     * TrianglesCommand::Triangles myPolygons = ap.triangulate(myPoints);
+     * ap.calculateUV(rect, myPolygons.verts, 20);
+     * @endcode
+     */
     void calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_t& count);
     
+    /**
+     * a helper function, packing trace, reduce, expand, triangulate and calculate uv in one function
+     * @param   rect    texture rect, use Rect::ZERO for the size of the texture, default is Rect::ZERO
+     * @param   epsilon the value used to reduce and expand, default to 2.0
+     * @param   threshold   the value where bigger than the threshold will be counted as opaque, used in trace
+     * @return  a PolygonInfo, to use with sprite
+     * @code
+     * auto ap = AutoPolygon("grossini.png");
+     * PolygonInfo myInfo = ap.generateTriangles();//use all default values
+     * auto sp1 = Sprite::create(myInfo);
+     * polygonInfo myInfo2 = ap.generateTriangles(Rect::ZERO, 5.0, 0.1);//ap can be reused to generate another set of PolygonInfo with different settings
+     * auto sp2 = Sprite::create(myInfo2);
+     * @endcode
+     */
     PolygonInfo generateTriangles(const Rect& rect = Rect::ZERO, const float& epsilon = 2.0, const float& threshold = 0.05);
+    
+    /**
+     * a helper function, packing autoPolygon creation, trace, reduce, expand, triangulate and calculate uv in one function
+     * @warning if you want to repetitively generate polygons, consider create an AutoPolygon object, and use generateTriangles function, as it only reads the file once
+     * @param   filename     A path to image file, e.g., "scene1/monster.png".
+     * @param   rect    texture rect, use Rect::ZERO for the size of the texture, default is Rect::ZERO
+     * @param   epsilon the value used to reduce and expand, default to 2.0
+     * @param   threshold   the value where bigger than the threshold will be counted as opaque, used in trace
+     * @return  a PolygonInfo, to use with sprite
+     * @code
+     * auto sp = Sprite::create(AutoPolygon::generatePolygon("grossini.png"));
+     * @endcode
+     */
     static PolygonInfo generatePolygon(const std::string& filename, const Rect& rect = Rect::ZERO, const float epsilon = 2.0, const float threshold = 0.05);
 protected:
     Vec2 findFirstNoneTransparentPixel(const Rect& rect, const float& threshold);
