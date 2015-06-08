@@ -41,6 +41,7 @@ static void printProperties(Properties* properties, int indent);
 MaterialSystemTest::MaterialSystemTest()
 {
     ADD_TEST_CASE(Material_2DEffects);
+    ADD_TEST_CASE(Material_AutoBindings);
     ADD_TEST_CASE(Material_setTechnique);
     ADD_TEST_CASE(Material_clone);
     ADD_TEST_CASE(Material_MultipleSprite3D);
@@ -105,13 +106,110 @@ std::string Material_MultipleSprite3D::subtitle() const
 }
 
 //
-//
+// MARK: Material_2DEffects
 //
 void Material_2DEffects::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
 
     auto properties = Properties::createNonRefCounted("Materials/2d_effects.material#sample");
+
+    // Print the properties of every namespace within this one.
+    printProperties(properties, 0);
+
+    Material *mat1 = Material::createWithProperties(properties);
+
+    auto spriteBlur = Sprite::create("Images/grossini.png");
+    spriteBlur->setNormalizedPosition(Vec2(0.2f, 0.5f));
+    this->addChild(spriteBlur);
+    spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
+
+    auto spriteOutline = Sprite::create("Images/grossini.png");
+    spriteOutline->setNormalizedPosition(Vec2(0.4f, 0.5f));
+    this->addChild(spriteOutline);
+    spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
+
+    auto spriteNoise = Sprite::create("Images/grossini.png");
+    spriteNoise->setNormalizedPosition(Vec2(0.6f, 0.5f));
+    this->addChild(spriteNoise);
+    spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
+
+    auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
+    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8f, 0.5f));
+    this->addChild(spriteEdgeDetect);
+    spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
+
+    // properties is not a "Ref" object
+    CC_SAFE_DELETE(properties);
+}
+
+std::string Material_2DEffects::subtitle() const
+{
+    return "Testing effects on Sprite";
+}
+
+//
+// MARK: Material_AutoBindings
+//
+
+/*
+ * Custom material auto-binding resolver for terrain.
+ */
+class EffectAutoBindingResolver : public GLProgramState::AutoBindingResolver
+{
+    bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniform, const std::string& autoBinding);
+
+    void callbackRadius(GLProgram* glProgram, Uniform* uniform);
+    void callbackColor(GLProgram* glProgram, Uniform* uniform);
+};
+
+bool EffectAutoBindingResolver::resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniform, const std::string& autoBinding)
+{
+    if (autoBinding.compare("DYNAMIC_RADIUS")==0)
+    {
+        glProgramState->setUniformCallback(uniform, CC_CALLBACK_2(EffectAutoBindingResolver::callbackRadius, this));
+        return true;
+    }
+    else if (autoBinding.compare("OUTLINE_COLOR")==0)
+    {
+        glProgramState->setUniformCallback(uniform, CC_CALLBACK_2(EffectAutoBindingResolver::callbackColor, this));
+        return true;
+    }
+    return false;
+}
+
+void EffectAutoBindingResolver::callbackRadius(GLProgram* glProgram, Uniform* uniform)
+{
+    float f = CCRANDOM_0_1() * 10;
+    glProgram->setUniformLocationWith1f(uniform->location, f);
+}
+
+void EffectAutoBindingResolver::callbackColor(GLProgram* glProgram, Uniform* uniform)
+{
+    float r = CCRANDOM_0_1();
+    float g = CCRANDOM_0_1();
+    float b = CCRANDOM_0_1();
+
+    glProgram->setUniformLocationWith3f(uniform->location, r, g, b);
+}
+
+Material_AutoBindings::Material_AutoBindings()
+{
+    _resolver = new EffectAutoBindingResolver;
+}
+
+Material_AutoBindings::~Material_AutoBindings()
+{
+    delete _resolver;
+}
+
+
+void Material_AutoBindings::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+//    auto properties = Properties::createNonRefCounted("Materials/2d_effects.material#sample");
+    auto properties = Properties::createNonRefCounted("Materials/auto_binding_test.material#sample");
 
     // Print the properties of every namespace within this one.
     printProperties(properties, 0);
@@ -142,9 +240,9 @@ void Material_2DEffects::onEnter()
     CC_SAFE_DELETE(properties);
 }
 
-std::string Material_2DEffects::subtitle() const
+std::string Material_AutoBindings::subtitle() const
 {
-    return "Testing effects on Sprite";
+    return "Testing auto-bindings uniforms";
 }
 
 //

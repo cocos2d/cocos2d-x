@@ -812,7 +812,7 @@ void Node::setOrderOfArrival(int orderOfArrival)
     _orderOfArrival = orderOfArrival;
 }
 
-void Node::setUserObject(Ref *userObject)
+void Node::setUserObject(Ref* userObject)
 {
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
@@ -824,24 +824,29 @@ GLProgramState* Node::getGLProgramState() const
     return _glProgramState;
 }
 
-void Node::setGLProgramState(cocos2d::GLProgramState *glProgramState)
+void Node::setGLProgramState(cocos2d::GLProgramState* glProgramState)
 {
     if (glProgramState != _glProgramState)
     {
         CC_SAFE_RELEASE(_glProgramState);
         _glProgramState = glProgramState;
         CC_SAFE_RETAIN(_glProgramState);
+
+        if (_glProgramState)
+            _glProgramState->setNodeBinding(this);
     }
 }
 
 
-void Node::setGLProgram(GLProgram *glProgram)
+void Node::setGLProgram(GLProgram* glProgram)
 {
     if (_glProgramState == nullptr || (_glProgramState && _glProgramState->getGLProgram() != glProgram))
     {
         CC_SAFE_RELEASE(_glProgramState);
         _glProgramState = GLProgramState::getOrCreateWithGLProgram(glProgram);
         _glProgramState->retain();
+
+        _glProgramState->setNodeBinding(this);
     }
 }
 
@@ -880,9 +885,9 @@ void Node::childrenAlloc()
 
 Node* Node::getChildByTag(int tag) const
 {
-    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
+    CCASSERT(tag != Node::INVALID_TAG, "Invalid tag");
 
-    for (const auto& child : _children)
+    for (const auto child : _children)
     {
         if(child && child->_tag == tag)
             return child;
@@ -1414,6 +1419,11 @@ void Node::onEnter()
     if (_onEnterCallback)
         _onEnterCallback();
 
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onEnter();
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1493,6 +1503,11 @@ void Node::onExit()
     if (_onExitCallback)
         _onExitCallback();
     
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onExit();
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {

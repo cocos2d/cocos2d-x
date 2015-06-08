@@ -95,7 +95,7 @@ void FileServer::addResFileInfo(const char* filename, uint64_t u64)
     filetimeValue.SetString(filetime, _filecfgjson.GetAllocator());
     rapidjson::Value filenameValue(rapidjson::kStringType);
     filenameValue.SetString(filename,_filecfgjson.GetAllocator());
-    _filecfgjson.AddMember(filenameValue.GetString(), filetimeValue, _filecfgjson.GetAllocator());
+    _filecfgjson.AddMember(filenameValue, filetimeValue, _filecfgjson.GetAllocator());
 }
 
 void FileServer::removeResFileInfo(const char *filename)
