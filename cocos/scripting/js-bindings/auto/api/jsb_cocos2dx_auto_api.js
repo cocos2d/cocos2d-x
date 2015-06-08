@@ -19916,16 +19916,6 @@ getStateBlock : function (
 },
 
 /**
- * @method getTextures
- * @return {Array}
- */
-getTextures : function (
-)
-{
-    return new Array();
-},
-
-/**
  * @method initialize
  */
 initialize : function (
