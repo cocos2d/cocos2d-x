@@ -77,7 +77,13 @@ bool Terrain::initProperties()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     auto state = GLProgramState::create(shader);
-
+    _stateBlock = RenderState::StateBlock::create();
+    _stateBlock->setCullFace(true);
+    _stateBlock->setCullFaceSide(RenderState::CullFaceSide::CULL_FACE_SIDE_BACK);
+    _stateBlock->setDepthTest(true);
+    _stateBlock->setDepthWrite(true);
+    _stateBlock->setBlend(true);
+    CC_SAFE_RETAIN(_stateBlock);
     setGLProgramState(state);
     setDrawWire(false);
     setIsEnableFrustumCull(true);
@@ -104,30 +110,8 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
 #endif
-    GLboolean blendCheck = glIsEnabled(GL_BLEND);
-    if(blendCheck)
-    {
-        glDisable(GL_BLEND);
-    }
     GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
-    GLboolean depthMaskCheck;
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthMaskCheck);
-    if(!depthMaskCheck)
-    {
-        glDepthMask(GL_TRUE);
-    }
-    GLboolean CullFaceCheck =glIsEnabled(GL_CULL_FACE);
-    if(!CullFaceCheck)
-    {
-        glEnable(GL_CULL_FACE);
-    }
-    GLboolean depthTestCheck;
-    depthTestCheck = glIsEnabled(GL_DEPTH_TEST);
-    if(!depthTestCheck)
-    {
-        glEnable(GL_DEPTH_TEST);
-    }
     if(!_alphaMap)
     {
         glActiveTexture(GL_TEXTURE0);
@@ -160,7 +144,6 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         _CameraMatrix = camera->getViewMatrix();
     }
 
-
     if(_isCameraViewChanged )
     {
         auto camPos = camera->getPosition3D();
@@ -174,34 +157,13 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         //camera frustum culling
         _quadRoot->cullByCamera(camera,_terrainModelMatrix);
     }
+    _stateBlock->bind();
     _quadRoot->draw();
     if(_isCameraViewChanged)
     {
         _isCameraViewChanged = false;
     }
     glActiveTexture(GL_TEXTURE0);
-    if(depthTestCheck)
-    {
-    }else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
-    if(depthMaskCheck)
-    {
-    }else
-    {
-        glDepthMask(GL_FALSE);
-    }
-    if(CullFaceCheck)
-    {
-    }else
-    {
-        glEnable(GL_CULL_FACE);
-    }
-    if(blendCheck)
-    {
-        glEnable(GL_BLEND);
-    }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     if(_isDrawWire)//reset state.
     {
@@ -457,6 +419,7 @@ void Terrain::setIsEnableFrustumCull(bool bool_value)
 
 Terrain::~Terrain()
 {
+    CC_SAFE_RELEASE(_stateBlock);
     _alphaMap->release();
     _heightMapImage->release();
     delete _quadRoot;
