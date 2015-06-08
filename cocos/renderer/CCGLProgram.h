@@ -179,16 +179,14 @@ public:
         UNIFORM_COS_TIME,
         /**@~english Random number. @~chinese 随机数。*/
         UNIFORM_RANDOM01,
-        /** @{@~english
-        * Sampler 0-3, used for texture.
-         * @~chinese 
-         * 采样器 0-3, 用于纹理采样.
-        */
+        /** @~english Sampler 0, used for texture. @~chinese 采样器 0, 用于纹理采样.*/
         UNIFORM_SAMPLER0,
+        /** @~english Sampler 1, used for texture. @~chinese 采样器 1, 用于纹理采样.*/
         UNIFORM_SAMPLER1,
+        /** @~english Sampler 2, used for texture. @~chinese 采样器 2, 用于纹理采样.*/
         UNIFORM_SAMPLER2,
+        /** @~english Sampler 3, used for texture. @~chinese 采样器 3, 用于纹理采样.*/
         UNIFORM_SAMPLER3,
-        /**@}*/
         UNIFORM_MAX,
     };
 
@@ -263,14 +261,29 @@ public:
     @~chinese 内置shader。用于渲染UI的变灰效果。
     */
     static const char* SHADER_NAME_POSITION_GRAYSCALE;
-    /** @{@~english
-        Built in shader for label and label with effects.
+    /** @~english
+        Built in shader for label.
      * @~chinese 
-     * 内置shader。用于Label和Label特效的渲染。
+     * 内置shader。用于Label的渲染。
     */
     static const char* SHADER_NAME_LABEL_NORMAL;
+    /** @~english
+        Built in shader for label outline effects.
+     * @~chinese 
+     * 内置shader。用于Label描边的渲染。
+    */
     static const char* SHADER_NAME_LABEL_OUTLINE;
+    /** @~english
+        Built in shader for label based on DISTANCEFIELD.
+     * @~chinese 
+     * 内置shader。用于基于DISTANCEFIELD机制的Label的渲染。
+    */
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL;
+    /** @~english
+        Built in shader for label based on DISTANCEFIELD.
+     * @~chinese 
+     * 内置shader。用于基于DISTANCEFIELD机制的Label的光晕效果的渲染。
+    */
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
 
     /**
@@ -369,16 +382,14 @@ public:
     static const char* UNIFORM_NAME_COS_TIME;
     /**@~english Random number uniform. @~chinese Uniform值: 随机数。*/
     static const char* UNIFORM_NAME_RANDOM01;
-    /**
-    @{ @~englishSampler uniform 0-3, used for textures. @~chinese Uniform值: 采样器0-3。
-    */
+    /**@~englishSampler uniform 0, used for textures. @~chinese Uniform值: 采样器0。*/
     static const char* UNIFORM_NAME_SAMPLER0;
+    /**@~englishSampler uniform 1, used for textures. @~chinese Uniform值: 采样器1。*/
     static const char* UNIFORM_NAME_SAMPLER1;
+    /**@~englishSampler uniform 2, used for textures. @~chinese Uniform值: 采样器2。*/
     static const char* UNIFORM_NAME_SAMPLER2;
+    /**@~englishSampler uniform 3, used for textures. @~chinese Uniform值: 采样器3。*/
     static const char* UNIFORM_NAME_SAMPLER3;
-    /**
-    @}
-    */
     /**@~english Alpha test value uniform. @~chinese Uniform值: Alpha Test。*/
     static const char* UNIFORM_NAME_ALPHA_TEST_VALUE;
     /**
@@ -394,12 +405,15 @@ public:
     static const char* ATTRIBUTE_NAME_COLOR;
     /**@~english Attribute position. @~chinese 位置属性。*/
     static const char* ATTRIBUTE_NAME_POSITION;
-    /**@{ @~english Attribute Texcoord 0-3. @~chinese 纹理坐标属性(0-3).*/
+    /**@~english Attribute Texcoord 0. @~chinese 纹理坐标属性0.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD;
+    /**@~english Attribute Texcoord 1. @~chinese 纹理坐标属性1.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD1;
+    /**@~english Attribute Texcoord 2. @~chinese 纹理坐标属性2.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD2;
+    /**@~english Attribute Texcoord 3. @~chinese 纹理坐标属性3.*/
     static const char* ATTRIBUTE_NAME_TEX_COORD3;
-    /**@}*/
+
     /**@~english Attribute normal. @~chinese 法线属性。*/
     static const char* ATTRIBUTE_NAME_NORMAL;
     /**@~english Attribute blend weight. @~chinese Blend Weight属性。*/
@@ -416,36 +430,87 @@ public:
     /**@~english Destructor. @~chinese 析构函数。*/
     virtual ~GLProgram();
 
-    /** @{@~english
-    Create or Initializes the GLProgram with a vertex and fragment with bytes array.
+    /** @~english
+    Create the GLProgram with a vertex and fragment with bytes array.
      * @~chinese 
-     * 从给定的源代码字符串中创建和初始化GLProgram。
+     * 从给定的源代码字符串中创建GLProgram。
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShader源代码.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShader源代码.
+     @return @~english The result GLProgram. @~chinese 创建的GLProgram。
      * @js initWithString.
      * @lua initWithString.
      */
     static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+    /** @~english
+    Init the GLProgram with a vertex and fragment with bytes array.
+     * @~chinese 
+     * 从给定的源代码字符串中初始化GLProgram。
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShader源代码.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShader源代码.
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgram是否被成功初始化。
+     */
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+    /** @~english
+    Create the GLProgram with a vertex and fragment with bytes array.
+     * @~chinese 
+     * 从给定的源代码字符串中创建GLProgram。
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShader源代码.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShader源代码.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese 编译时的预定义值和宏。
+     @return @~english The result GLProgram. @~chinese 创建的GLProgram。
+     */
     static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines);
+    /** @~english
+    Init the GLProgram with a vertex and fragment with bytes array.
+     * @~chinese 
+     * 从给定的源代码字符串中初始化GLProgram。
+     @param vShaderByteArray @~english The source code of vertex shader. @~chinese VertexShader源代码.
+     @param fShaderByteArray @~english The source code of fragment shader. @~chinese FragmentShader源代码.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese 编译时的预定义值和宏。
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgram是否被成功初始化。
+     */
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines);
 
-    /**
-    @}
-    */
-    /** @{@~english
-    Create or Initializes the GLProgram with a vertex and fragment with contents of filenames.
+    /** @~english
+    Create the GLProgram with a vertex and fragment file.
      * @~chinese 
-     * 从给定的数据文件中创建和初始化GLProgram。
+     * 从给定的源代码文件中创建GLProgram。
+     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @return @~english The result GLProgram. @~chinese 创建的GLProgram。
      * @js init
      * @lua init
      */
     static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
+    /** @~english
+    Init the GLProgram with a vertex and fragment file.
+     * @~chinese 
+     * 从给定的源代码文件中初始化GLProgram。
+     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgram是否被成功初始化。
+     */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
-
+    /** @~english
+    Create the GLProgram with a vertex and fragment file.
+     * @~chinese 
+     * 从给定的源代码文件中创建GLProgram。
+     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese 编译时的预定义值和宏。
+     @return @~english The result GLProgram. @~chinese 创建的GLProgram。
+     */
     static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines);
+        /** @~english
+    Init the GLProgram with a vertex and fragment file.
+     * @~chinese 
+     * 从给定的源代码文件中初始化GLProgram。
+     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @param compileTimeDefines @~english compile macro and defines for shader. @~chinese 编译时的预定义值和宏。
+     @return @~english The GLprogram is inited correctly or not. @~chinese GLProgram是否被成功初始化。
+     */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines);
-    /**
-    @}
-    */
 
     /**
     @~english Get the uniform by string name in shader, return null if it does not exist.
