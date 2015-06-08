@@ -228,7 +228,11 @@ public:
      Built in shader for terrain
      */
     static const char* SHADER_3D_TERRAIN;
-
+    
+    /**
+     Built in shader for camera clear
+     */
+    static const char* SHADER_CAMERA_CLEAR;
     /**
     end of built shader types.
     @}

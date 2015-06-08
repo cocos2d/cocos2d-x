@@ -69,7 +69,7 @@ jsval spbonedata_to_jsval(JSContext* cx, const spBoneData* v)
     
     // root haven't parent
     JS::RootedValue parentVal(cx);
-    if (strcmp(v->name, "root"))
+    if (strcmp(v->name, "root") && v->parent)
         parentVal = spbonedata_to_jsval(cx, v->parent);
     
     bool ok = JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, c_string_to_jsval(cx, v->name)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
@@ -98,7 +98,7 @@ jsval spbone_to_jsval(JSContext* cx, spBone& v)
     
     // root haven't parent
     JS::RootedValue parentVal(cx);
-    if (strcmp(v.data->name, "root"))
+    if (strcmp(v.data->name, "root") && v.parent)
         parentVal = spbone_to_jsval(cx, *v.parent);
     
     bool ok = JS_DefineProperty(cx, tmp, "data", JS::RootedValue(cx, spbonedata_to_jsval(cx, v.data)), JSPROP_ENUMERATE | JSPROP_PERMANENT) &&

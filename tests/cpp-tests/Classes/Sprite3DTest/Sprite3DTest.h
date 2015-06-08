@@ -532,4 +532,26 @@ protected:
 #endif
 };
 
+/// issue 9767 setGLProgram
+class Issue9767 : public Sprite3DTestDemo
+{
+    enum class ShaderType
+    {
+        SHADER_TEX,
+        SHADER_COLOR,
+    };
+public:
+    CREATE_FUNC(Issue9767);
+    Issue9767();
+    ~Issue9767();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_SwitchShader(cocos2d::Ref* sender);
+    
+protected:
+    ShaderType          _shaderType;
+    cocos2d::Sprite3D*  _sprite;
+};
+
 #endif

@@ -257,8 +257,8 @@ void MarchingSquare::marchSquare(int startx, int starty)
         {
             //TODO: we triangulation cannot work collineer points, so we need to modify same point a little
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
-            points.back().x -= 0.00001;
-            points.back().y -= 0.00001;
+            points.back().x -= 0.00001f;
+            points.back().y -= 0.00001f;
             points.push_back(Vec2((float)curx, (float)height-cury)/ scaleFactor);
         }
         else{

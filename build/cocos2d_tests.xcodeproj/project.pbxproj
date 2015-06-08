@@ -60,6 +60,10 @@
 		15B3709819EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */; };
 		15B3709919EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */; };
 		15B3709A19EE5EED00ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
+		15B914481B156A3700C6B95B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
+		15B914491B15721400C6B95B /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		15B9144A1B15A18C00C6B95B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
+		15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -818,6 +822,8 @@
 		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
+		A0BD49FE1AFAFEE50046CCE3 /* Scene3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0BD49FC1AFAFEE50046CCE3 /* Scene3DTest.cpp */; };
+		A0BD49FF1AFAFEE50046CCE3 /* Scene3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0BD49FC1AFAFEE50046CCE3 /* Scene3DTest.cpp */; };
 		A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
@@ -1768,6 +1774,8 @@
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52C11783B01F0073F6A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		A0BD49FC1AFAFEE50046CCE3 /* Scene3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scene3DTest.cpp; sourceTree = "<group>"; };
+		A0BD49FD1AFAFEE50046CCE3 /* Scene3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene3DTest.h; sourceTree = "<group>"; };
 		A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenURLTest.cpp; path = OpenURLTest/OpenURLTest.cpp; sourceTree = "<group>"; };
 		A5030C3419D059DA000E78E7 /* OpenURLTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenURLTest.h; path = OpenURLTest/OpenURLTest.h; sourceTree = "<group>"; };
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
@@ -2259,6 +2267,7 @@
 				1AC35ADD18CECF0C00F37B72 /* ReleasePoolTest */,
 				1AC35AE018CECF0C00F37B72 /* RenderTextureTest */,
 				1AC35AE318CECF0C00F37B72 /* RotateWorldTest */,
+				A0BD49FB1AFAFEE50046CCE3 /* Scene3DTest */,
 				1AC35AE618CECF0C00F37B72 /* SceneTest */,
 				1AC35AE918CECF0C00F37B72 /* SchedulerTest */,
 				1AC35AEC18CECF0C00F37B72 /* ShaderTest */,
@@ -3990,6 +3999,15 @@
 			path = SpritePolygonTest;
 			sourceTree = "<group>";
 		};
+		A0BD49FB1AFAFEE50046CCE3 /* Scene3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0BD49FC1AFAFEE50046CCE3 /* Scene3DTest.cpp */,
+				A0BD49FD1AFAFEE50046CCE3 /* Scene3DTest.h */,
+			);
+			path = Scene3DTest;
+			sourceTree = "<group>";
+		};
 		A5030C3219D059AB000E78E7 /* OpenURLTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4424,6 +4442,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B914491B15721400C6B95B /* Shaders3D in Resources */,
+				15B914481B156A3700C6B95B /* Materials in Resources */,
 				1531B2501AE013DE0075DB94 /* Test.html in Resources */,
 				1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */,
 				157B08EC1A90864100B7BEA4 /* Particle3D in Resources */,
@@ -4471,6 +4491,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B9144A1B15A18C00C6B95B /* Materials in Resources */,
+				15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */,
 				1531B2511AE013F00075DB94 /* Test.html in Resources */,
 				1502702D1AD3BDBC0089CD03 /* TerrainTest in Resources */,
 				157B08ED1A90865600B7BEA4 /* Particle3D in Resources */,
@@ -4964,6 +4986,7 @@
 				1AC35C0918CECF0C00F37B72 /* IntervalTest.cpp in Sources */,
 				29080DA5191B595E0066F8DF /* UIButtonTest_Editor.cpp in Sources */,
 				29080DC3191B595E0066F8DF /* UIScene.cpp in Sources */,
+				A0BD49FE1AFAFEE50046CCE3 /* Scene3DTest.cpp in Sources */,
 				29080D9B191B595E0066F8DF /* CustomParticleWidget.cpp in Sources */,
 				29080D8D191B595E0066F8DF /* CocosGUIScene.cpp in Sources */,
 				5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */,
@@ -5112,6 +5135,7 @@
 				1AC35C6018CECF0C00F37B72 /* Paddle.cpp in Sources */,
 				29080DBE191B595E0066F8DF /* UIPageViewTest.cpp in Sources */,
 				1AC35BDC18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
+				A0BD49FF1AFAFEE50046CCE3 /* Scene3DTest.cpp in Sources */,
 				A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */,
 				1AC35B4C18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
 				1AC35C5218CECF0C00F37B72 /* testBasic.cpp in Sources */,
@@ -5771,6 +5795,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
@@ -5786,6 +5811,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
@@ -5874,6 +5900,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -5897,6 +5924,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (

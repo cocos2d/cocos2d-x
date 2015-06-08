@@ -41,7 +41,7 @@ bool UIButtonTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIButton/crossplatform_UIButton_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIButton/res.csb");
         Node* child = node->getChildByTag(4);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

@@ -36,7 +36,7 @@ bool UICheckBoxTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UICheckBox/crossplatform_UICheckBox_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UICheckBox/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

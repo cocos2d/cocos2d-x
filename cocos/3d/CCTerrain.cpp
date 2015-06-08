@@ -33,6 +33,7 @@ USING_NS_CC;
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
 
@@ -77,14 +78,14 @@ bool Terrain::initProperties()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     auto state = GLProgramState::create(shader);
-    _stateBlock = RenderState::StateBlock::create();
-    _stateBlock->setCullFace(true);
-    _stateBlock->setCullFaceSide(RenderState::CullFaceSide::CULL_FACE_SIDE_BACK);
-    _stateBlock->setDepthTest(true);
-    _stateBlock->setDepthWrite(true);
-    _stateBlock->setBlend(true);
-    CC_SAFE_RETAIN(_stateBlock);
+
     setGLProgramState(state);
+
+    _stateBlock->setBlend(false);
+    _stateBlock->setDepthWrite(true);
+    _stateBlock->setDepthTest(true);
+    _stateBlock->setCullFace(true);
+
     setDrawWire(false);
     setIsEnableFrustumCull(true);
     setAnchorPoint(Vec2(0,0));
@@ -99,6 +100,13 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
 
 void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 {
+    auto modelMatrix = getNodeToWorldTransform();
+    if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
+    {
+        _terrainModelMatrix = modelMatrix;
+        _quadRoot->preCalculateAABB(_terrainModelMatrix);
+    }
+    
     auto glProgram = getGLProgram();
     glProgram->use();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -110,12 +118,16 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     }
 #endif
+
+    _stateBlock->bind();
+
     GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
+
     if(!_alphaMap)
     {
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D,_detailMapTextures[0]->getName());
+        GL::bindTexture2D(_detailMapTextures[0]->getName());
         glUniform1i(_detailMapLocation[0],0);
         glUniform1i(_alphaIsHasAlphaMapLocation,0);
     }else
@@ -123,7 +135,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         for(int i =0;i<_maxDetailMapValue;i++)
         {
             glActiveTexture(GL_TEXTURE0+i);
-            glBindTexture(GL_TEXTURE_2D,_detailMapTextures[i]->getName());
+            GL::bindTexture2D(_detailMapTextures[i]->getName());
             glUniform1i(_detailMapLocation[i],i);
 
             glUniform1f(_detailMapSizeLocation[i],_terrainData._detailMaps[i]._detailMapSize);
@@ -132,7 +144,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         glUniform1i(_alphaIsHasAlphaMapLocation,1);
 
         glActiveTexture(GL_TEXTURE4);
-        glBindTexture(GL_TEXTURE_2D,_alphaMap->getName());
+        GL::bindTexture2D(_alphaMap->getName());
         glUniform1i(_alphaMapLocation,4);
     }
 
@@ -144,9 +156,12 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         _CameraMatrix = camera->getViewMatrix();
     }
 
+
     if(_isCameraViewChanged )
     {
         auto camPos = camera->getPosition3D();
+        auto camModelMat = camera->getNodeToWorldTransform();
+        camModelMat.transformPoint(&camPos);
         //set lod
         setChunksLOD(camPos);
     }
@@ -157,13 +172,13 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         //camera frustum culling
         _quadRoot->cullByCamera(camera,_terrainModelMatrix);
     }
-    _stateBlock->bind();
     _quadRoot->draw();
     if(_isCameraViewChanged)
     {
         _isCameraViewChanged = false;
     }
     glActiveTexture(GL_TEXTURE0);
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     if(_isDrawWire)//reset state.
     {
@@ -222,8 +237,12 @@ bool Terrain::initHeightMap(const char * heightMap)
 }
 
 Terrain::Terrain()
+: _alphaMap(nullptr)
+, _stateBlock(nullptr)
 {
-    _alphaMap = nullptr;
+    _stateBlock = RenderState::StateBlock::create();
+    CC_SAFE_RETAIN(_stateBlock);
+
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -420,6 +439,7 @@ void Terrain::setIsEnableFrustumCull(bool bool_value)
 Terrain::~Terrain()
 {
     CC_SAFE_RELEASE(_stateBlock);
+
     _alphaMap->release();
     _heightMapImage->release();
     delete _quadRoot;
@@ -842,7 +862,6 @@ void Terrain::reload()
         }
     }
 
-    CCLOG("recreate");
     initTextures();
     _chunkLodIndicesSet.clear();
     _chunkLodIndicesSkirtSet.clear();

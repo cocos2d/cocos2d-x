@@ -20,6 +20,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_extension_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_ui_auto.hpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_socketio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_websocket.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\XMLHTTPRequest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\ScriptingCore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\spidermonkey_specifics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\spine\jsb_cocos2dx_spine_manual.h" />
@@ -65,6 +67,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_extension_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_spine_auto.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_ui_auto.cpp" />
@@ -91,6 +94,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_socketio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\jsb_websocket.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\network\XMLHTTPRequest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\ScriptingCore.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\spine\jsb_cocos2dx_spine_manual.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\ui\jsb_cocos2dx_ui_manual.cpp" />

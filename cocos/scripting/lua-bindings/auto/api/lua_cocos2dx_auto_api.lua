@@ -242,6 +242,11 @@
 
 
 --------------------------------------------------------
+-- the cc Properties
+-- @field [parent=#cc] Properties#Properties Properties preloaded module
+
+
+--------------------------------------------------------
 -- the cc UserDefault
 -- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
 
@@ -1182,6 +1187,26 @@
 
 
 --------------------------------------------------------
+-- the cc RenderState
+-- @field [parent=#cc] RenderState#RenderState RenderState preloaded module
+
+
+--------------------------------------------------------
+-- the cc Pass
+-- @field [parent=#cc] Pass#Pass Pass preloaded module
+
+
+--------------------------------------------------------
+-- the cc Technique
+-- @field [parent=#cc] Technique#Technique Technique preloaded module
+
+
+--------------------------------------------------------
+-- the cc Material
+-- @field [parent=#cc] Material#Material Material preloaded module
+
+
+--------------------------------------------------------
 -- the cc TextureCache
 -- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
 
@@ -1212,6 +1237,11 @@
 
 
 --------------------------------------------------------
+-- the cc ParallaxNode
+-- @field [parent=#cc] ParallaxNode#ParallaxNode ParallaxNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc TMXObjectGroup
 -- @field [parent=#cc] TMXObjectGroup#TMXObjectGroup TMXObjectGroup preloaded module
 
@@ -1239,11 +1269,6 @@
 --------------------------------------------------------
 -- the cc TMXTiledMap
 -- @field [parent=#cc] TMXTiledMap#TMXTiledMap TMXTiledMap preloaded module
-
-
---------------------------------------------------------
--- the cc ParallaxNode
--- @field [parent=#cc] ParallaxNode#ParallaxNode ParallaxNode preloaded module
 
 
 --------------------------------------------------------

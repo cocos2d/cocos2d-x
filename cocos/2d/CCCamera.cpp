@@ -20,11 +20,18 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
  ****************************************************************************/
 #include "2d/CCCamera.h"
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -241,11 +248,42 @@ Vec2 Camera::project(const Vec3& src) const
     return screenPos;
 }
 
+Vec2 Camera::projectGL(const Vec3& src) const
+{
+    Vec2 screenPos;
+    
+    auto viewport = Director::getInstance()->getWinSize();
+    Vec4 clipPos;
+    getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
+    
+    CCASSERT(clipPos.w != 0.0f, "");
+    float ndcX = clipPos.x / clipPos.w;
+    float ndcY = clipPos.y / clipPos.w;
+    
+    screenPos.x = (ndcX + 1.0f) * 0.5f * viewport.width;
+    screenPos.y = (ndcY + 1.0f) * 0.5f * viewport.height;
+    return screenPos;
+}
+
 Vec3 Camera::unproject(const Vec3& src) const
 {
-    auto viewport = Director::getInstance()->getWinSize();
+    Vec3 dst;
+    unproject(Director::getInstance()->getWinSize(), &src, &dst);
+    return dst;
+}
 
-    Vec4 screen(src.x / viewport.width, ((viewport.height - src.y)) / viewport.height, src.z, 1.0f);
+Vec3 Camera::unprojectGL(const Vec3& src) const
+{
+    Vec3 dst;
+    unprojectGL(Director::getInstance()->getWinSize(), &src, &dst);
+    return dst;
+}
+
+void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
+{
+    CCASSERT(src && dst, "vec3 can not be null");
+    
+    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -258,14 +296,14 @@ Vec3 Camera::unproject(const Vec3& src) const
         screen.z /= screen.w;
     }
     
-    return Vec3(screen.x, screen.y, screen.z);
+    dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
+void Camera::unprojectGL(const Size& viewport, const Vec3* src, Vec3* dst) const
 {
     CCASSERT(src && dst, "vec3 can not be null");
     
-    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
+    Vec4 screen(src->x / viewport.width, src->y / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -358,6 +396,78 @@ void Camera::setScene(Scene* scene)
                 _scene->setCameraOrderDirty();
             }
         }
+    }
+}
+
+void Camera::clearBackground(float depth)
+{
+    GLboolean oldDepthTest;
+    GLint oldDepthFunc;
+    GLboolean oldDepthMask;
+    {
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glStencilMask(0);
+        oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
+        glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
+        glDepthMask(GL_TRUE);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_ALWAYS);
+    }
+    
+    //draw
+    static V3F_C4B_T2F_Quad quad;
+    quad.bl.vertices = Vec3(-1,-1,0);
+    quad.br.vertices = Vec3(1,-1,0);
+    quad.tl.vertices = Vec3(-1,1,0);
+    quad.tr.vertices = Vec3(1,1,0);
+    
+    quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = Color4B(0,0,0,1);
+    
+    quad.bl.texCoords = Tex2F(0,0);
+    quad.br.texCoords = Tex2F(1,0);
+    quad.tl.texCoords = Tex2F(0,1);
+    quad.tr.texCoords = Tex2F(1,1);
+    
+    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
+    auto programState = GLProgramState::getOrCreateWithGLProgram(shader);
+    programState->setUniformFloat("depth", 1.0);
+    programState->apply(Mat4());
+    GLshort indices[6] = {0, 1, 2, 3, 2, 1};
+    
+    {
+        GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &quad.tl.vertices);
+        
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), &quad.tl.colors);
+        
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &quad.tl.texCoords);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    }
+
+    
+    {
+        if(GL_FALSE == oldDepthTest)
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
+        glDepthFunc(oldDepthFunc);
+        if(GL_FALSE == oldDepthMask)
+        {
+            glDepthMask(GL_FALSE);
+        }
+        
+        glStencilMask(0xFFFFF);
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
 }
 

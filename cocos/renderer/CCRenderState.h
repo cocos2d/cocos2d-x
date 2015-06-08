@@ -31,7 +31,6 @@
 #include <functional>
 #include <cstdint>
 
-#include "renderer/CCTexture2D.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
@@ -65,14 +64,12 @@ public:
     std::string getName() const;
 
 
-    const Vector<Texture2D*>& getTextures() const;
-
-    /** Replaces the texture that is at the front of _textures array.
-     Added to be backwards compatible.
+    /** Texture that will use in the CC_Texture0 uniform.
+     Added to be backwards compatible. Use Samplers from .material instead.
      */
     void setTexture(Texture2D* texture);
 
-    /** Returns the texture that is at the front of the _textures array.
+    /** Returns the texture that is going to be used for CC_Texture0.
      Added to be backwards compatible.
      */
     Texture2D* getTexture() const;
@@ -352,6 +349,8 @@ public:
         uint32_t getHash() const;
         bool isDirty() const;
 
+        static StateBlock* _defaultState;
+
     protected:
         StateBlock();
         ~StateBlock();
@@ -359,6 +358,8 @@ public:
         void bindNoRestore();
         static void restore(long stateOverrideBits);
         static void enableDepthWrite();
+
+        void cloneInto(StateBlock* renderState) const;
 
         bool _cullFaceEnabled;
         bool _depthTestEnabled;
@@ -380,8 +381,6 @@ public:
 
         long _bits;
 
-        static StateBlock* _defaultState;
-
         mutable uint32_t _hash;
         mutable bool _hashDirty;
     };
@@ -393,6 +392,7 @@ protected:
     RenderState();
     ~RenderState();
     bool init(RenderState* parent);
+    void cloneInto(RenderState* state) const;
 
     mutable uint32_t _hash;
     mutable bool _hashDirty;
@@ -410,7 +410,7 @@ protected:
     // name, for filtering
     std::string _name;
 
-    Vector<Texture2D*> _textures;
+    Texture2D* _texture;
 };
 
 NS_CC_END

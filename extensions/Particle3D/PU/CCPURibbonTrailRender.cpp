@@ -369,10 +369,9 @@ PURibbonTrailRender* PURibbonTrailRender::clone()
     return tr;
 }
 
-void PURibbonTrailRender::copyAttributesTo( PURender *render )
+void PURibbonTrailRender::copyAttributesTo(PURibbonTrailRender *trailRender)
 {
-    PURender::copyAttributesTo(render);
-    PURibbonTrailRender *trailRender = static_cast<PURibbonTrailRender*>(render);
+    PURender::copyAttributesTo(trailRender);
     trailRender->setUseVertexColors(_useVertexColours);
     trailRender->setMaxChainElements(_maxChainElements);
     trailRender->setTrailLength(_trailLength);

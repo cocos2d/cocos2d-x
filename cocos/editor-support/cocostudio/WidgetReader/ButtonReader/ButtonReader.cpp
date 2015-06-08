@@ -706,12 +706,12 @@ namespace cocostudio
         {
             button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
         }
-        else if (!normalTexturePath.empty())
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", normalErrorFilePath.c_str())->getCString());
-            button->addChild(label);
-        }
+        //else if (!normalTexturePath.empty())
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", normalErrorFilePath.c_str())->getCString());
+        //    button->addChild(label);
+        //}
         
         bool pressedFileExist = false;
         std::string pressedErrorFilePath = "";
@@ -770,12 +770,12 @@ namespace cocostudio
         {
             button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
         }
-        else if (!pressedTexturePath.empty())
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", pressedErrorFilePath.c_str())->getCString());
-            button->addChild(label);
-        }
+        //else if (!pressedTexturePath.empty())
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", pressedErrorFilePath.c_str())->getCString());
+        //    button->addChild(label);
+        //}
         
         bool disabledFileExist = false;
         std::string disabledErrorFilePath = "";
@@ -834,12 +834,12 @@ namespace cocostudio
         {
             button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
         }
-        else if (!disabledTexturePath.empty())
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", disabledErrorFilePath.c_str())->getCString());
-            button->addChild(label);
-        }
+        //else if (!disabledTexturePath.empty())
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", disabledErrorFilePath.c_str())->getCString());
+        //    button->addChild(label);
+        //}
         
         std::string titleText = options->text()->c_str();
         button->setTitleText(titleText);
@@ -873,12 +873,12 @@ namespace cocostudio
             {
                 button->setTitleFontName(path);
             }
-            else
-            {
-                auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                button->addChild(label);
-            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    button->addChild(label);
+            //}
         }
         
         bool displaystate = options->displaystate() != 0;

@@ -478,16 +478,6 @@ protected:
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
     
-    /** 
-     *  Returns the fullpath for a given filename.
-     *  This is an alternative for fullPathForFilename
-     *  It returns empty string instead of the original filename when no file found for the given name.
-     *  @param filename The file name to look up for
-     *  @return The full path for the file, if not found, the return value will be an empty string
-     */
-    virtual std::string searchFullPathForFilename(const std::string& filename) const;
-    
-    
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
      *

@@ -29,7 +29,7 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
         var left_button = new ccui.Button();
-        left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
+        left_button.loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button.x = 240-50;
         left_button.y = 50;
         left_button.anchorX = 0.5;
@@ -38,7 +38,7 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
         this._mainNode.addChild(left_button, 999);
 
         var right_button = new ccui.Button();
-        right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
+        right_button.loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button.x = 240+50;
         right_button.y = 50;
         right_button.anchorX = 0.5;
@@ -86,7 +86,7 @@ var UICheckBoxEditorTest = UIBaseLayer.extend({
 var UICheckBoxOldTest = UICheckBoxEditorTest.extend({
     ctor: function () {
         this._super();
-        var root = this._parseUIFile("res/cocosui/CCS/CheckBox/checkbox_1.json");
+        var root = this._parseUIFile("ccs-res/cocosui/UIEditorTest/UICheckBox/checkbox_1.json");
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");
@@ -100,7 +100,7 @@ var UICheckBoxOldTest = UICheckBoxEditorTest.extend({
 var UICheckBoxNewTest = UICheckBoxEditorTest.extend({
     ctor: function () {
         this._super();
-        var root = ccs.load("res/cocosui/CCS/CheckBox/MainScene.json");
+        var root = ccs.load("ccs-res/cocosui/UIEditorTest/UICheckBox/MainScene.json");
         this._mainNode.addChild(root.node);
         var checkbox = ccui.helper.seekWidgetByName(root.node, "CheckBox_1");
         checkbox.addEventListener(this.selectedStateEvent,this);

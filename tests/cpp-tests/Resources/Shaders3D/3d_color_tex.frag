@@ -4,9 +4,10 @@ varying mediump vec2 TextureCoordOut;
 varying vec2 TextureCoordOut;
 #endif
 uniform vec4 u_color;
+uniform sampler2D u_sampler0;
 
 void main(void)
 {
-    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color;
+    gl_FragColor = texture2D(u_sampler0, TextureCoordOut) * u_color;
 }
 

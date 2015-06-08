@@ -154,12 +154,12 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
         fileExist = false;
     }
     
-    if (!fileExist)
-    {
-        auto label = Label::create();
-        label->setString(__String::createWithFormat("%s missed", filepath.c_str())->getCString());
-        custom->addChild(label);
-    }
+    //if (!fileExist)
+    //{
+    //    auto label = Label::create();
+    //    label->setString(__String::createWithFormat("%s missed", filepath.c_str())->getCString());
+    //    custom->addChild(label);
+    //}
     
 }
 

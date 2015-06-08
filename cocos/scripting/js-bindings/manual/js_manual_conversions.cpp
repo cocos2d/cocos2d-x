@@ -523,7 +523,7 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
     JSB_PRECONDITION2(str, cx, false, "Error encoding string");
     
     char *endptr;
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     __int64 ret = _strtoi64(str, &endptr, 10);
 #else
     long long ret = strtoll(str, &endptr, 10);
@@ -1337,7 +1337,7 @@ bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    
+    ret->reserve(len);
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
@@ -1368,7 +1368,7 @@ bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int
     
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
-    
+    ret->reserve(len);
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
@@ -1391,6 +1391,41 @@ bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int
         }
     }
     
+    return true;
+}
+
+bool jsval_to_std_vector_float( JSContext *cx, JS::HandleValue vp, std::vector<float>* ret)
+{
+    JS::RootedObject jsobj(cx);
+    bool ok = vp.isObject() && JS_ValueToObject( cx, vp, &jsobj );
+    JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
+    JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
+
+    uint32_t len = 0;
+    JS_GetArrayLength(cx, jsobj, &len);
+    ret->reserve(len);
+    for (uint32_t i=0; i < len; i++)
+    {
+        JS::RootedValue value(cx);
+        if (JS_GetElement(cx, jsobj, i, &value))
+        {
+            if (value.isNumber())
+            {
+                double number = 0.0;
+                ok = JS::ToNumber(cx, value, &number);
+                if (ok)
+                {
+                    ret->push_back(number);
+                }
+            }
+            else
+            {
+                JS_ReportError(cx, "not supported type in array");
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
@@ -2458,7 +2493,7 @@ jsval ssize_to_jsval(JSContext *cx, ssize_t v)
 
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v)
 {
-    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
     
     int i = 0;
     for (const std::string obj : v)
@@ -2476,7 +2511,7 @@ jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>&
 
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
 {
-    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
     
     int i = 0;
     for (const int obj : v)
@@ -2484,6 +2519,24 @@ jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v)
         JS::RootedValue arrElement(cx);
         arrElement = int32_to_jsval(cx, obj);
         
+        if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
+            break;
+        }
+        ++i;
+    }
+    return OBJECT_TO_JSVAL(jsretArr);
+}
+
+jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v)
+{
+    JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
+
+    int i = 0;
+    for (const float obj : v)
+    {
+        JS::RootedValue arrElement(cx);
+        arrElement = DOUBLE_TO_JSVAL(obj);
+
         if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
             break;
         }

@@ -77,7 +77,7 @@ public:
     /** @copydoc BillboardChain::setMaxChainElements */
     void setMaxChainElements(size_t maxElements);
     /** @copydoc BillboardChain::setNumberOfChains */
-    void setNumberOfChains(size_t numChains);
+    virtual void setNumberOfChains(size_t numChains) override;
     /** @copydoc BillboardChain::clearChain */
     void clearChain(size_t chainIndex);
 

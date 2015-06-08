@@ -35,7 +35,7 @@ var UIRichTextTest = UISceneEditor.extend({
             var widgetSize = this._widget.getContentSize();
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.setTitleText("switch");
             button.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + button.getContentSize().height * 2.5));
             button.addTouchEventListener(this.touchEvent,this);
@@ -53,9 +53,9 @@ var UIRichTextTest = UISceneEditor.extend({
             var re4 = new ccui.RichElementText(4, cc.color.GREEN, 255, "And green. ", "Helvetica", 10);
             var re5 = new ccui.RichElementText(5, cc.color.RED, 255, "Last one is red ", "Helvetica", 10);
 
-            var reimg = new ccui.RichElementImage(6, cc.color.WHITE, 255, "res/cocosui/sliderballnormal.png");
+            var reimg = new ccui.RichElementImage(6, cc.color.WHITE, 255, "ccs-res/cocosui/sliderballnormal.png");
 
-            ccs.armatureDataManager.addArmatureFileInfo("res/cocosui/100/100.ExportJson");
+            ccs.armatureDataManager.addArmatureFileInfo("ccs-res/cocosui/100/100.ExportJson");
             var pAr = new ccs.Armature("100");
             pAr.getAnimation().play("Animation1");
 

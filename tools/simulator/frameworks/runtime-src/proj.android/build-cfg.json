@@ -1,0 +1,16 @@
+{
+    "ndk_module_path" :[
+        "../../../../../",
+        "../../../../../cocos/",
+        "../../../../../external",
+        "../../../../../cocos/scripting"
+    ],
+    "copy_resources": [
+    ],
+    "must_copy_resources": [
+        {
+            "from": "../../../config.json",
+            "to": ""
+        }
+    ]
+}

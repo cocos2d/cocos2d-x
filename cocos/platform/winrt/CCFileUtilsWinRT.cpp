@@ -134,7 +134,10 @@ bool CCFileUtilsWinRT::isAbsolutePath(const std::string& strPath) const
 
 static Data getData(const std::string& filename, bool forString)
 {
-    CCASSERT(!filename.empty(), "Invalid filename!");
+    if (filename.empty())
+    {
+        CCASSERT(!filename.empty(), "Invalid filename!");
+    }
     
     Data ret;
     unsigned char* buffer = nullptr;

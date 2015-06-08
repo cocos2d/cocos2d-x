@@ -76,6 +76,9 @@ public:
     /** Returns the list of passes */
     const Vector<Pass*>& getPasses() const;
 
+    /** Returns a new clone of the Technique */
+    Technique* clone() const;
+
 protected:
     Technique();
     ~Technique();

@@ -38,6 +38,8 @@ class Node;
 enum {
     kComponentOnEnter,
     kComponentOnExit,
+    kComponentOnAdd,
+    kComponentOnRemove,
     kComponentOnUpdate
 };
 
@@ -58,6 +60,8 @@ public:
 
     virtual void onEnter();
     virtual void onExit();
+    virtual void onAdd();
+    virtual void onRemove();
     virtual void update(float delta);
     virtual bool serialize(void* r);
     virtual bool isEnabled() const;

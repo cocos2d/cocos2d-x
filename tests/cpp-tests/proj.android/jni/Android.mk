@@ -125,6 +125,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ShaderTest/ShaderTest.cpp \
 ../../Classes/ShaderTest/ShaderTest2.cpp \
 ../../Classes/SpineTest/SpineTest.cpp \
+../../Classes/Scene3DTest/Scene3DTest.cpp \
 ../../Classes/Sprite3DTest/DrawNode3D.cpp \
 ../../Classes/Sprite3DTest/Sprite3DTest.cpp \
 ../../Classes/SpritePolygonTest/SpritePolygonTest.cpp \

@@ -92,6 +92,23 @@ Pass::~Pass()
     CC_SAFE_RELEASE(_vertexAttribBinding);
 }
 
+Pass* Pass::clone() const
+{
+    auto pass = new (std::nothrow) Pass();
+    if (pass)
+    {
+        RenderState::cloneInto(pass);
+        pass->_glProgramState = _glProgramState->clone();
+        CC_SAFE_RETAIN(pass->_glProgramState);
+
+        pass->_vertexAttribBinding = _vertexAttribBinding;
+        CC_SAFE_RETAIN(pass->_vertexAttribBinding);
+
+        pass->autorelease();
+    }
+    return pass;
+}
+
 GLProgramState* Pass::getGLProgramState() const
 {
     return _glProgramState;
@@ -112,7 +129,7 @@ uint32_t Pass::getHash() const
 {
     if (_hashDirty || _state->isDirty()) {
         uint32_t glProgram = (uint32_t)_glProgramState->getGLProgram()->getProgram();
-        uint32_t textureid = (uint32_t)_textures.at(0)->getName();
+        uint32_t textureid = _texture ? _texture->getName() : -1;
         uint32_t stateblockid = _state->getHash();
 
         _hash = glProgram ^ textureid ^ stateblockid;

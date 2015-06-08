@@ -59,6 +59,7 @@ bool js_cocos2dx_experimental_SpritePolygon_setTexture(JSContext *cx, uint32_t a
         if (argc == 1) {
             cocos2d::Texture2D* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -98,6 +99,7 @@ bool js_cocos2dx_experimental_SpritePolygon_initWithTexture(JSContext *cx, uint3
     if (argc == 1) {
         cocos2d::Texture2D* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();

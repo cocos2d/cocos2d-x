@@ -109,10 +109,13 @@ bool Material::initWithFile(const std::string& validfilename)
     char* bytes = (char*)data.getBytes();
     bytes[data.getSize()-1]='\0';
 
-    Properties* properties = Properties::create(validfilename);
+    // Warning: properties is not a "Ref" object, must be manually deleted
+    Properties* properties = Properties::createNonRefCounted(validfilename);
 
     // get the first material
     parseProperties((strlen(properties->getNamespace()) > 0) ? properties : properties->getNextNamespace());
+
+    CC_SAFE_DELETE(properties);
     return true;
 }
 
@@ -195,9 +198,7 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "sampler") == 0)
-            parseSampler(pass, space);
-        else if (strcmp(name, "shader") == 0)
+        if (strcmp(name, "shader") == 0)
             parseShader(pass, space);
         else if (strcmp(name, "renderState") == 0)
             parseRenderState(pass, space);
@@ -213,10 +214,12 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
 }
 
 // cocos2d-x doesn't support Samplers yet. But will be added soon
-bool Material::parseSampler(Pass* pass, Properties* textureProperties)
+bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerProperties)
 {
+    CCASSERT(samplerProperties->getId(), "Sampler must have an id. The id is the uniform name");
+    
     // required
-    auto filename = textureProperties->getString("path");
+    auto filename = samplerProperties->getString("path");
 
     auto texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (!texture) {
@@ -231,14 +234,14 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
         // mipmap
         bool usemipmap = false;
-        const char* mipmap = getOptionalString(textureProperties, "mipmap", "false");
+        const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
         if (mipmap && strcasecmp(mipmap, "true")==0) {
             texture->generateMipmap();
             usemipmap = true;
         }
 
         // valid options: REPEAT, CLAMP
-        const char* wrapS = getOptionalString(textureProperties, "wrapS", "CLAMP_TO_EDGE");
+        const char* wrapS = getOptionalString(samplerProperties, "wrapS", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapS, "REPEAT")==0)
             texParams.wrapS = GL_REPEAT;
         else if(strcasecmp(wrapS, "CLAMP_TO_EDGE")==0)
@@ -248,7 +251,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
 
         // valid options: REPEAT, CLAMP
-        const char* wrapT = getOptionalString(textureProperties, "wrapT", "CLAMP_TO_EDGE");
+        const char* wrapT = getOptionalString(samplerProperties, "wrapT", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapT, "REPEAT")==0)
             texParams.wrapT = GL_REPEAT;
         else if(strcasecmp(wrapT, "CLAMP_TO_EDGE")==0)
@@ -258,7 +261,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
-        const char* minFilter = getOptionalString(textureProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        const char* minFilter = getOptionalString(samplerProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
             texParams.minFilter = GL_NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)
@@ -275,7 +278,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
             CCLOG("Invalid minFilter: %s", minFilter);
 
         // valid options: NEAREST, LINEAR
-        const char* magFilter = getOptionalString(textureProperties, "magFilter", "LINEAR");
+        const char* magFilter = getOptionalString(samplerProperties, "magFilter", "LINEAR");
         if (strcasecmp(magFilter, "NEAREST")==0)
             texParams.magFilter = GL_NEAREST;
         else if(strcasecmp(magFilter, "LINEAR")==0)
@@ -286,7 +289,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
         texture->setTexParameters(texParams);
     }
 
-    pass->_textures.pushBack(texture);
+    glProgramState->setUniformTexture(samplerProperties->getId(), texture);
     return true;
 }
 
@@ -318,7 +321,16 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
             property = shaderProperties->getNextProperty();
         }
 
-//        glProgramState->updateUniformsAndAttributes();
+        auto space = shaderProperties->getNextNamespace();
+        while (space)
+        {
+            const char* name = space->getNamespace();
+            if (strcmp(name, "sampler") == 0)
+            {
+                parseSampler(glProgramState, space);
+            }
+            space = shaderProperties->getNextNamespace();
+        }
     }
 
     return true;
@@ -326,6 +338,8 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
 
 bool Material::parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName)
 {
+    bool ret = true;
+
     auto type = properties->getType(uniformName);
 
     switch (type) {
@@ -335,11 +349,6 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
             programState->setUniformFloat(uniformName, f);
             break;
         }
-
-        case Properties::Type::STRING:
-            CCASSERT(false, "invalid type for a uniform");
-            return false;
-            break;
 
         case Properties::Type::VECTOR2:
         {
@@ -373,11 +382,15 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
             break;
         }
 
+        case Properties::Type::STRING:
         default:
-            return false;
+        {
+            // Assume this is a parameter auto-binding.
+            programState->setParameterAutoBinding(uniformName, properties->getString());
             break;
+        }
     }
-    return true;
+    return ret;
 }
 
 
@@ -417,6 +430,28 @@ Material::Material()
 
 Material::~Material()
 {
+}
+
+Material* Material::clone() const
+{
+    auto material = new (std::nothrow) Material();
+    if (material)
+    {
+        RenderState::cloneInto(material);
+
+        for (const auto& technique: _techniques)
+        {
+            auto t = technique->clone();
+            material->_techniques.pushBack(t);
+        }
+
+        // current technique
+        auto name = _currentTechnique->getName();
+        material->_currentTechnique = material->getTechniqueByName(name);
+
+        material->autorelease();
+    }
+    return material;
 }
 
 Technique* Material::getTechnique() const

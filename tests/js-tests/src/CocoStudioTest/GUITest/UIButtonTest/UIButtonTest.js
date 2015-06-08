@@ -27,7 +27,7 @@
 var UIButtonEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = this._parseUIFile("res/cocosui/CCS/Button/Button_1.json");
+        var root = this._parseUIFile("ccs-res/cocosui/UIEditorTest/UIButton/Button_1.json");
         this._mainNode.addChild(root);
 
         var back_label = ccui.helper.seekWidgetByName(root, "back");

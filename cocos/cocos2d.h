@@ -199,6 +199,9 @@ THE SOFTWARE.
     #include "platform/android/CCGLViewImpl-android.h"
     #include "platform/android/CCGL-android.h"
     #include "platform/android/CCStdC-android.h"
+//Enhance modification begin
+    #include "platform/android/CCEnhanceAPI-android.h"
+//Enhance modification end
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
@@ -254,14 +257,14 @@ THE SOFTWARE.
 #include "renderer/CCTextureAtlas.h"
 
 // tilemap_parallax_nodes
-#include "2d/CCFastTMXLayer.h"
-#include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCParallaxNode.h"
 #include "2d/CCTMXLayer.h"
 #include "2d/CCTMXObjectGroup.h"
 #include "2d/CCTMXTiledMap.h"
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTileMapAtlas.h"
+#include "2d/CCFastTMXLayer.h"
+#include "2d/CCFastTMXTiledMap.h"
 
 // component
 #include "2d/CCComponent.h"

@@ -118,7 +118,7 @@ public:
      *
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param drawLineToCenter Whether or not draw the line from the origin to center.
      * @param scaleX The scale value in x.
@@ -131,7 +131,7 @@ public:
      *
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param drawLineToCenter Whether or not draw the line from the origin to center.
      * @param color Set the circle color.
@@ -216,7 +216,7 @@ public:
     /** Draws a solid circle given the center, radius and number of segments.
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param scaleX The scale value in x.
      * @param scaleY The scale value in y.
@@ -228,7 +228,7 @@ public:
     /** Draws a solid circle given the center, radius and number of segments.
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param color The solid circle color.
      * @js NA

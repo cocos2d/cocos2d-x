@@ -234,6 +234,7 @@ void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos
     debugForNormalSprite->drawLine(positions[3], positions[0], Color4F::GREEN);
     debugForNormalSprite->drawLine(positions[0], positions[2], Color4F::GREEN);
     debugForNormalSprite->setVisible(false);
+    delete [] positions;
     
     TTFConfig ttfConfig("fonts/arial.ttf", 8);
     std::string temp = "Sprite:\nPixels drawn: ";

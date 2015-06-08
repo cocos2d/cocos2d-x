@@ -43,6 +43,7 @@ varying vec3 v_normal;
 #endif
 
 uniform vec4 u_color;
+uniform sampler2D u_sampler0;
 
 vec3 computeLighting(vec3 normalVector, vec3 lightDirection, vec3 lightColor, float attenuation)
 {
@@ -101,9 +102,9 @@ void main(void)
 #endif
 
 #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
-    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color * combinedColor;
+    gl_FragColor = texture2D(u_sampler0, TextureCoordOut) * u_color * combinedColor;
 #else
-    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * u_color;
+    gl_FragColor = texture2D(u_sampler0, TextureCoordOut) * u_color;
 #endif
 
 }
