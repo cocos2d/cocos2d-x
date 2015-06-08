@@ -207,7 +207,7 @@ struct CC_DLL Tex2F {
 
 /** @struct PointSprite
  * @brief @~english
- * Vec2 Sprite component.
+ * The point data of Sprite which contains position, color & szie.
  * @~chinese
  * 包含位置，颜色和大小信息的 Sprite 数据。
  */
@@ -476,9 +476,9 @@ struct CC_DLL V3F_T2F_Quad
  */
 struct CC_DLL BlendFunc
 {
-    /** @~english source blend function  @~chinese 源混合函数 */
+    /** @~english source blend factor  @~chinese 源混合因子 */
     GLenum src;
-    /** @~english destination blend function  @~chinese 模板混合函数 */
+    /** @~english destination blend factor  @~chinese 目标混合因子 */
     GLenum dst;
 
     /** @~english Blending disabled. Uses {GL_ONE, GL_ZERO}
@@ -591,7 +591,7 @@ struct CC_DLL AnimationFrameData
 /**@~english
  * types used for defining fonts properties (i.e. font name, size, stroke or shadow)
  * @~chinese 
- * 用于定义字体的属性的类(如字体名称、大小、描边或阴影)
+ * 用于定义字体属性的结构体(如字体名称、大小、描边或阴影)
  */
 
 /** @struct FontShadow
@@ -614,10 +614,10 @@ public:
      */
     bool   _shadowEnabled;
     /**@~english shadow x and y offset
-     * @~chinese 阴影的 x 与 y 轴便宜量。
+     * @~chinese 阴影的 x 与 y 轴偏移量。
      */
 	Size   _shadowOffset;
-    /**@~english shadow blurrines
+    /**@~english shadow blurriness
      * @~chinese 阴影的模糊度。
      */
 	float  _shadowBlur;
@@ -662,9 +662,9 @@ public:
 
 };
 
-/** @structFontDefinition
+/** @struct FontDefinition
  * @~english Font attributes.
- * @~chinese 定义字体基本属性的类。
+ * @~chinese 定义字体基本属性的结构体。
  */
 struct CC_DLL FontDefinition
 {
@@ -724,7 +724,7 @@ public:
 /**
  * @brief @~english Possible LabelEffect used by Label.
  *
- * @~chinese 可能被字体使用到的字体效果类型。
+ * @~chinese 可能被 `Label` 使用到的字体效果类型。
  * 
  */
 enum class LabelEffect {
