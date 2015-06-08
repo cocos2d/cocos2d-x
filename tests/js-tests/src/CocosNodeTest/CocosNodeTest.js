@@ -81,8 +81,13 @@ var CCNodeTest2 = TestNodeDemo.extend({
         sp1.y = winSize.height / 2;
         sp2.x = winSize.width / 4 * 3;
         sp2.y = winSize.height / 2;
-        this.addChild(sp1);
-        this.addChild(sp2);
+
+        var batch1 = new cc.SpriteBatchNode(s_pathSister1, 2);
+        batch1.addChild(sp1);
+        var batch2 = new cc.SpriteBatchNode(s_pathSister2, 2);
+        batch2.addChild(sp2);
+        this.addChild(batch1);
+        this.addChild(batch2);
 
         sp3.scale = 0.25;
         sp4.scale = 0.25;

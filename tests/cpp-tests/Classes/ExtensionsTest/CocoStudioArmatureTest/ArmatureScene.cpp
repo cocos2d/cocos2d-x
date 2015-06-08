@@ -64,6 +64,20 @@ std::string ArmatureBaseTest::title() const
     return "Armature Test Bed";
 }
 
+bool TestAsynchronousLoading::init()
+{
+    if (ArmatureBaseTest::init())
+    {
+        addAni("knight", Vec2(50, 200));
+//        addAni("weapon", Vec2(150, 200));
+        addAni("robot", Vec2(250, 200));
+        addAni("cyborg", Vec2(350, 200));
+        addAni("Dragon", Vec2(450, 200));
+        return true;
+    }
+    return false;
+}
+
 void TestAsynchronousLoading::onEnter()
 {
     ArmatureBaseTest::onEnter();
@@ -75,19 +89,48 @@ void TestAsynchronousLoading::onEnter()
     char pszPercent[255];
     sprintf(pszPercent, "%s %f", subtitle().c_str(), 0.0f);
     _subtitleLabel->setString(pszPercent);
+    
+    scheduleOnce(CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::rerun), 5.0f);
 
-    //! create a new thread to load data
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
-    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    //! create a new thread to load data
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+//    ArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, CC_SCHEDULE_SELECTOR(TestAsynchronousLoading::dataLoaded));
+}
+
+void TestAsynchronousLoading::addAni(const std::string &name, const Vec2 &point)
+{
+    auto armatureDataMgr = ArmatureDataManager::getInstance();
+    std::string fileName = "ccs-res/armature/" + name;
+    if (!armatureDataMgr->getAnimationData(name)) {
+        CCLOG("同步加载文件 %s", fileName.c_str());
+        armatureDataMgr->addArmatureFileInfo(fileName + ".png", fileName + ".plist", fileName + ".xml");
+    }
+    std::string armname = name;
+    if (armname == "knight")
+        armname = "Knight_f/Knight";
+    auto entityArmature = Armature::create(armname);
+    
+    addChild(entityArmature); //该行不开启  内存会一直涨
+    entityArmature->getAnimation()->playWithIndex(1);
+    entityArmature->setPosition(point);
+    //entityArmature->setVisible(false);  //该行开启后  内存会一直涨
+}
+
+void TestAsynchronousLoading::rerun(float dt)
+{
+    ArmatureDataManager::getInstance()->destroyInstance();
+    Director::getInstance()->getTextureCache()->removeAllTextures();
+    SpriteFrameCache::getInstance()->removeSpriteFrames();
+    Director::getInstance()->replaceScene(TestAsynchronousLoading::create());
 }
 
 std::string TestAsynchronousLoading::title() const

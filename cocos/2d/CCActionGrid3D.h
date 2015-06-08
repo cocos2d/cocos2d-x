@@ -81,16 +81,16 @@ public:
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese 获得振幅比率。
+     * @~chinese 获得振幅衰减率。
     @return @~english Return the amplitude rate of the effect.
      * @~chinese 返回振幅的比率。
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese 设置振幅比率。
+     * @~chinese 设置振幅衰减率。
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese 振幅比率。
+     * @~chinese 振幅衰减率。
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -386,16 +386,16 @@ public:
 
     /**
     @brief @~english Get the amplitude rate of ripple effect.
-     * @~chinese 获取波纹的振幅比率。
+     * @~chinese 获取波纹的振幅衰减率。
     @return @~english The amplitude rate of ripple effect.
-     * @~chinese 振幅比率。
+     * @~chinese 振幅衰减率。
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the amplitude rate of ripple effect.
-     * @~chinese 设置波纹的振幅比率。
+     * @~chinese 设置波纹的振幅衰减率。
     @param fAmplitudeRate @~english The amplitude rate of ripple effect.
-     * @~chinese 振幅比率。
+     * @~chinese 振幅衰减率。
     */
     inline void setAmplitudeRate(float fAmplitudeRate) { _amplitudeRate = fAmplitudeRate; }
 
@@ -436,7 +436,7 @@ protected:
     unsigned int _waves;
     /* @~english The amplitude of the ripple effect  @~chinese 波纹的振幅 */
     float _amplitude;
-    /* @~english The amplitude rate of the ripple effect  @~chinese 波纹的振幅比率 */
+    /* @~english The amplitude rate of the ripple effect  @~chinese 波纹的振幅衰减率 */
     float _amplitudeRate;
 
 private:
@@ -550,16 +550,16 @@ public:
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese 获得振幅比率。
+     * @~chinese 获得振幅衰减率。
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese 振幅比率。
+     * @~chinese 振幅衰减率。
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese 设置振幅比率。
+     * @~chinese 设置振幅衰减率。
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese 振幅比率。
+     * @~chinese 振幅衰减率。
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 
@@ -647,16 +647,16 @@ public:
 
     /**
     @brief @~english Get the amplitude rate of the effect.
-     * @~chinese 获取振幅比率。
+     * @~chinese 获取振幅衰减率。
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese 返回振幅比率。
+     * @~chinese 返回振幅衰减率。
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
     @brief @~english Set the ampliture rate of the effect.
-     * @~chinese 设置振幅比率。
+     * @~chinese 设置振幅衰减率。
     @param amplitudeRate @~english The value of amplitude rate will be set.
-     * @~chinese 振幅比率。
+     * @~chinese 振幅衰减率。
     */
     inline void setAmplitudeRate(float amplitudeRate) { _amplitudeRate = amplitudeRate; }
 

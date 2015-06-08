@@ -177,6 +177,12 @@ var ChipmunkSprite = ChipmunkBaseLayer.extend( {
 
         var sprite = new cc.PhysicsSprite(s_pathGrossini);
         sprite.setBody( body );
+
+        var child = new cc.Sprite(s_image_icon);
+        child.x = sprite.width / 2;
+        child.y = sprite.height / 2;
+        sprite.addChild(child);
+
         return sprite;
     },
 
