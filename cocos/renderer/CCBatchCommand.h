@@ -37,43 +37,77 @@ NS_CC_BEGIN
 class TextureAtlas;
 class GLProgram;
 /**
+@class BatchCommand
+@brief
+@~english
 Command used to draw batches in one TextureAtlas.
+ * @~chinese 
+ * 用于渲染TextureAtlas的命令，会在同一批次内执行完。
 */
 class CC_DLL BatchCommand : public RenderCommand
 {
 public:
-    /**Constructor.*/
+    /**
+    @~english Constructor. 
+    @~chinese 构造函数。
+    */
     BatchCommand();
-    /**Destructor.*/
+    /**
+    @~english Destructor. 
+    @~chinese 析构函数。
+    */
     ~BatchCommand();
-    /**Init the batch command.
-    @param globalZOrder GlobalZOrder of the render command.
-    @param shader Shader used for draw the texture atlas.
-    @param blendType Blend function for texture atlas.
-    @param textureAtlas Texture atlas, will contain both quads and texture for rendering.
-    @param modelViewTransform Model view transform used for rendering.
-    @param flags Indicate the render command should be rendered in 3D mode or not.
+    /**@~english Init the batch command.
+     * @~chinese 初始化。
+    @param globalZOrder @~english GlobalZOrder of the render command.
+     * @~chinese 命令的GlobalZOrder。
+    @param shader @~english Shader used for draw the texture atlas.
+     * @~chinese texture atlas的shader数据。
+    @param blendType @~english Blend function for texture atlas.
+     * @~chinese texture atlas的blend。
+    @param textureAtlas @~english Texture atlas, will contain both quads and texture for rendering.
+     * @~chinese texture atlas，包含渲染的四边形和纹理。
+    @param modelViewTransform @~english Model view transform used for rendering.
+     * @~chinese 渲染的model view矩阵。
+    @param flags @~english Indicate the render command should be rendered in 3D mode or not.
+     * @~chinese 渲染命令是否使用3D模式。
     */
     void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
-    /*Deprecated function, you should call upper init function instead.*/
+    /**
+    @~english Deprecated function, you should call upper init function instead.
+    @~chinese Deprecated函数，你应该调用另外一个init函数, flags被设置为0.
+    @param globalZOrder @~english GlobalZOrder of the render command.
+     * @~chinese 命令的GlobalZOrder。
+    @param shader @~english Shader used for draw the texture atlas.
+     * @~chinese texture atlas的shader数据。
+    @param blendType @~english Blend function for texture atlas.
+     * @~chinese texture atlas的blend。
+    @param textureAtlas @~english Texture atlas, will contain both quads and texture for rendering.
+     * @~chinese texture atlas，包含渲染的四边形和纹理。
+    @param modelViewTransform @~english Model view transform used for rendering.
+     * @~chinese 渲染的model view矩阵。
+    */
     CC_DEPRECATED_ATTRIBUTE void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
-    /**Execute the command, which will call openGL function to draw the texture atlas.*/
+    /**
+    @~english Execute the command, which will call openGL function to draw the texture atlas. 
+    @~chinese 执行命令,它将调用openGL函数绘制texture atlas。
+    */
     void execute();
 
 protected:
     //TODO: This member variable is not used. It should be removed.
     int32_t _materialID;
-    /**Texture ID used for texture atlas rendering.*/
+    /** Texture ID used for texture atlas rendering.*/
     GLuint _textureID;
-    /**Shaders used for rendering.*/
+    /** Shaders used for rendering.*/
     GLProgram* _shader;
-    /**Blend function for rendering.*/
+    /** Blend function for rendering.*/
     BlendFunc _blendType;
-    /**Texture atlas for rendering.*/
+    /** Texture atlas for rendering.*/
     TextureAtlas *_textureAtlas;
 
-    /**ModelView transform.*/
+    /** ModelView transform.*/
     Mat4 _mv;
 };
 NS_CC_END
