@@ -42,70 +42,93 @@ NS_CC_BEGIN
 
 class GLProgram;
 
-/** GLProgramCache
- Singleton that stores manages GLProgram objects (shaders)
+/** @class GLProgramCache
+@brief
+@~english Singleton that stores manages GLProgram objects (shaders)
+ * @~chinese GLProgramCache
+ * 单例对象,用于存储和管理GLProgram(shaders)。
  @since v2.0
  */
 class CC_DLL GLProgramCache : public Ref
 {
 public:
-    /**
+    /**@~english
     Constructor.
+     * @~chinese 
+     * 构造函数。
      * @js ctor
      */
     GLProgramCache();
-    /**
+    /**@~english
     Destructor.
+     * @~chinese 
+     * 析构函数。
      * @js NA
      * @lua NA
      */
     ~GLProgramCache();
 
-    /** returns the shared instance */
+    /** @~english returns the shared instance  @~chinese 返回单例对象。*/
     static GLProgramCache* getInstance();
 
-    /** purges the cache. It releases the retained instance. */
+    /** @~english purges the cache. It releases the retained instance.  @~chinese 清理单例对象。*/
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /**
+    @~english Deprecated function, get the instance, Use getInstance() instead. 
+    @~chinese Deprecate函数，用于返回单例，请使用getInstance()函数。
+    */
     CC_DEPRECATED_ATTRIBUTE static GLProgramCache* sharedShaderCache();
 
-    /** @deprecated Use destroyInstance() instead */
+    /**
+    @~english Deprecated function, destroy the instance, Use destroyInstance() instead.
+    @~chinese Deprecate函数，用于清理单例，请使用destroyInstance()函数。
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedShaderCache();
 
-    /** loads the default shaders */
+    /** 
+    @~english loads the default shaders.
+    @~chinese 加载默认的着色器。
+    */
     void loadDefaultGLPrograms();
     CC_DEPRECATED_ATTRIBUTE void loadDefaultShaders() { loadDefaultGLPrograms(); }
 
-    /** reload the default shaders */
+    /** 
+    @~english reload the default shaders.
+    @~chinese 重新加载默认的着色器。
+    */
     void reloadDefaultGLPrograms();
     CC_DEPRECATED_ATTRIBUTE void reloadDefaultShaders() { reloadDefaultGLPrograms(); }
 
-    /** returns a GL program for a given key 
+    /** @~english returns a GL program for a given key.
+     * @~chinese 按照名字获得对应的GLProgram。
+     @param key @~english The name of GLProgram. @~chinese GLProgram的名字。
+     @return @~english The GLProgram. @~chinese 对应的GLProgram。
      */
     GLProgram * getGLProgram(const std::string &key);
     CC_DEPRECATED_ATTRIBUTE GLProgram * getProgram(const std::string &key) { return getGLProgram(key); }
     CC_DEPRECATED_ATTRIBUTE GLProgram * programForKey(const std::string &key){ return getGLProgram(key); }
 
-    /** adds a GLProgram to the cache for a given name */
+    /** 
+    @~english adds a GLProgram to the cache for a given name.
+    @~chinese 用给定名字在cache中添加一个GLProgram。
+    @param key @~english The name of GLProgram. @~chinese GLProgram的名字。
+    @param program @~english GLProgram. @~chinese GLProgram。
+    */
     void addGLProgram(GLProgram* program, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
 
 private:
     /**
-    @{
         Init and load predefined shaders.
     */
     bool init();
     void loadDefaultGLProgram(GLProgram *program, int type);
-    /**
-    @}
-    */
 
-    /**Get macro define for lights in current openGL driver.*/
+    /** Get macro define for lights in current openGL driver.*/
     std::string getShaderMacrosForLight() const;
 
-    /**Predefined shaders.*/
+    /** Predefined shaders. */
     std::unordered_map<std::string, GLProgram*> _programs;
 };
 
