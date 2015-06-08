@@ -230,7 +230,7 @@ private:
         */
         std::vector<TerrainVertexData> _originalVertices;
         /*  @~english LOD indices
-            @~chinese LOD技术指标
+            @~chinese LOD索引
         */
         struct LOD
         {
@@ -550,13 +550,13 @@ protected:
     void onDraw(const Mat4& transform, uint32_t flags);
 
     /** @~english recursively set each chunk's LOD
-        @~chinese 递归集的每个块的LOD
+        @~chinese 递归的设置每个地形块的LOD
         @param cameraPos @~english  the camera postion in world space @~chinese 在世界空间中的摄像机位置
      **/
     void setChunksLOD(Vec3 cameraPos);
 
     /** @~english load Vertices from height filed for the whole terrain.
-        @~chinese 负荷顶点从高度申请全地形。
+        @~chinese 从高度图加载地形顶点。
      **/
     void loadVertices();
 

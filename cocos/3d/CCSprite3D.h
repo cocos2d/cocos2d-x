@@ -146,8 +146,8 @@ public:
         @~chinese 得到attachnode通过骨骼的名字
         @param boneName @~english  the bone name @~chinese 骨骼的名字
         @return @~english AttachNode of the bone, nullptr if not exist @~chinese 如果骨骼不存在返回nullptr
-	* /
-    AttachNode* getAttachNode(const std::string& boneName);
+    */
+        AttachNode* getAttachNode(const std::string& boneName);
 
     /** @~english remove attach node of a bone
         @~chinese 删除骨骼所连接的attach node
@@ -194,8 +194,8 @@ public:
     */
     const AABB& getAABB() const;
 
-    /** @~english Get AABB Recursively
-        @~chinese 递归得到AABB
+    /** @~english Get AABB Recursively,it will merge the aabb its own and all descendants
+        @~chinese 递归得到AABB(递归的合并自身及其孩子的AABB)
         @warning Because some times we may have an empty Sprite3D Node as parent, but
         the Sprite3D don't contain any meshes, so getAABB()
         will return a wrong value at that time.

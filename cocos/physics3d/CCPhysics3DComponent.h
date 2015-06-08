@@ -113,7 +113,7 @@ public:
     */
     void addToPhysicsWorld(Physics3DWorld* world);
 
-    /** @~english The node's transform in physics object space
+    /** @~english The translation in physics object space
         @~chinese 节点在物理对象空间的变换
         @param translateInPhysics @~english  the transfrom in physics object space @~chinese 在物理空间的变换
         @param rotInPhsyics @~english  the quaternion in physics object space @~chinese 在物理空间的四元数

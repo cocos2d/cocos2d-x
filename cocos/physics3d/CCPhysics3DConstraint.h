@@ -122,7 +122,7 @@ public:
     int getOverrideNumSolverIterations() const;
 
     /** @~english override the number of constraint solver iterations used to solve this constraint, -1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
-        @~chinese 覆盖约束求解的求解迭代次数，1将使用默认迭代次数
+        @~chinese 覆盖约束求解的求解迭代次数，-1将使用默认迭代次数
         @param overideNumIterations @~english  the number of constraint solver iterations @~chinese 约束求解的迭代次数
     */
     void setOverrideNumSolverIterations(int overideNumIterations);
