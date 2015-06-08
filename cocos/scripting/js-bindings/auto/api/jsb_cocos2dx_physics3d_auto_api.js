@@ -889,6 +889,16 @@ PhysicsSprite3D : function (
 cc.Physics3DWorld = {
 
 /**
+ * @method setGravity
+ * @param {vec3_object} arg0
+ */
+setGravity : function (
+vec3 
+)
+{
+},
+
+/**
  * @method stepSimulate
  * @param {float} arg0
  */
@@ -929,11 +939,9 @@ physics3dworlddes
 },
 
 /**
- * @method removePhysics3DConstraint
- * @param {cc.Physics3DConstraint} arg0
+ * @method removeAllPhysics3DObjects
  */
-removePhysics3DConstraint : function (
-physics3dconstraint 
+removeAllPhysics3DObjects : function (
 )
 {
 },
@@ -973,9 +981,21 @@ hitresult
 },
 
 /**
- * @method removeAllPhysics3DObjects
+ * @method getGravity
+ * @return {vec3_object}
  */
-removeAllPhysics3DObjects : function (
+getGravity : function (
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method removePhysics3DConstraint
+ * @param {cc.Physics3DConstraint} arg0
+ */
+removePhysics3DConstraint : function (
+physics3dconstraint 
 )
 {
 },
