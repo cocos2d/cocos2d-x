@@ -562,8 +562,11 @@
 
         widget.setUnifySizeEnabled(false);
 
+        var color = json["CColor"];
+        json["CColor"] = null;
+        widget.setTextColor(getColor(color));
         this.widgetAttributes(widget, json, widget.isIgnoreContentAdaptWithSize());
-
+        json["CColor"] = color;
         return widget;
 
     };
