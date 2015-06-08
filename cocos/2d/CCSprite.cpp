@@ -92,8 +92,6 @@ Sprite* Sprite::create(const PolygonInfo& info)
     if(sprite && sprite->initWithPolygon(info))
     {
         sprite->autorelease();
-//        auto clamp = Texture2D::TexParams{GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER};
-//        sprite->getTexture()->setTexParameters(clamp);
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -304,7 +302,6 @@ Sprite::~Sprite(void)
 {
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
-//    delete _polyInfo;
 }
 
 /*
