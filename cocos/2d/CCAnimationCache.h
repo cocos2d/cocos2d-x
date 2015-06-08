@@ -44,11 +44,16 @@ class Animation;
  * @{
  */
 
-/** Singleton that manages the Animations.
+/** @~english Singleton that manages the Animations.
 It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
 
 Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5, you should use this class instead.
 
+ * @~chinese 管理的动画的单例。
+ * 它用于缓存的动画。如果你想在缓存中保存你的动画，你应该使用这个类。
+ * 
+ * v0.99.5之前,推荐的方法是在Sprite保存它们。从v0.99.5后,你应该使用这个类来替代之前的做法。
+ * 
 @since v0.99.5
 @js cc.animationCache
 */
@@ -64,12 +69,14 @@ public:
      * @lua NA
      */
     ~AnimationCache();
-    /** Returns the shared instance of the Animation cache 
+    /** @~english Returns the shared instance of the Animation cache 
+     * @~chinese 返回动画缓存的共享实例
 	 @js NA
 	*/
     static AnimationCache* getInstance();
 
-    /** Purges the cache. It releases all the Animation objects and the shared instance.
+    /** @~english Purges the cache. It releases all the Animation objects and the shared instance.
+     * @~chinese 清除缓存。它会释放所有的动画对象和共享实例。
 		@js NA
      */
     static void destroyInstance();
@@ -82,16 +89,23 @@ public:
 
     bool init(void);
 
-    /** Adds a Animation with a name.
+    /** @~english Adds a Animation with a name.
      *
-     * @param animation An animation.
-     * @param name The name of animation.
+     * @~chinese 通过名字和动画添加到缓存。
+     * 
+     * @param animation @~english An animation.
+     * @~chinese 指定动画。
+     * @param name @~english The name of animation.
+     * @~chinese 动画的名字。
      */
     void addAnimation(Animation *animation, const std::string& name);
 
-    /** Deletes a Animation from the cache.
+    /** @~english Deletes a Animation from the cache.
      *
-     * @param name The name of animation.
+     * @~chinese 从缓存中删除一个动画。
+     * 
+     * @param name @~english The name of animation.
+     * @~chinese 动画的名字。
      */
     void removeAnimation(const std::string& name);
     /** @deprecated. Use removeAnimation() instead
@@ -100,11 +114,16 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const std::string& name){ removeAnimation(name);}
 
-    /** Returns a Animation that was previously added.
+    /** @~english Returns a Animation that was previously added.
      * If the name is not found it will return nil.
      * You should retain the returned copy if you are going to use it.
      *
-     * @return A Animation that was previously added. If the name is not found it will return nil.
+     * @~chinese 返回一个之前添加的动画。
+     * 如果没有找到它将返回空。
+     * 如果你要使用它，你应该retain返回的这个拷贝。
+     * 
+     * @return @~english A Animation that was previously added. If the name is not found it will return nil.
+     * @~chinese 一个之前添加的动画。如果没有找到这个名字它将返回空。
      */
     Animation* getAnimation(const std::string& name);
     /**
@@ -114,21 +133,28 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const std::string& name){ return getAnimation(name); }
 
-    /** Adds an animation from an NSDictionary.
+    /** @~english Adds an animation from an NSDictionary.
      * Make sure that the frames were previously loaded in the SpriteFrameCache.
-     * @param dictionary An NSDictionary.
-     * @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
+     * @~chinese 从NSDictionary添加一个动画。
+     * 确保SpriteFrameCache的帧在之前就加载过了。
+     * @param dictionary @~english An NSDictionary.
+     * @~chinese 一个指定的NSDictionary。
+     * @param plist @~english The path of the relative file,it use to find the plist path for load SpriteFrames.
+     * @~chinese 相对的文件路径,它将找到的plist路径来加载SpriteFrames。
      * @since v1.1
 	 @js NA
      */
     void addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist);
 
-    /** Adds an animation from a plist file.
+    /** @~english Adds an animation from a plist file.
      * Make sure that the frames were previously loaded in the SpriteFrameCache.
+     * @~chinese 从plist文件添加一个动画。
+     * 确保SpriteFrameCache的帧在之前就加载过了。
      * @since v1.1
      * @js addAnimations
      * @lua addAnimations
-     * @param plist An animation from a plist file.
+     * @param plist @~english An animation from a plist file.
+     * @~chinese 一个动画的plist文件。
      */
     void addAnimationsWithFile(const std::string& plist);
 
