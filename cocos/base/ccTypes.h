@@ -45,8 +45,10 @@ NS_CC_BEGIN
 struct Color4B;
 struct Color4F;
 
-/**
+/**@~english
  * RGB color composed of bytes 3 bytes.
+ * @~chinese 
+ * 由 3 个字节表示的 RGB 颜色数据。
  * @since v3.0
  */
 struct CC_DLL Color3B
@@ -83,8 +85,10 @@ struct CC_DLL Color3B
     static const Color3B GRAY;
 };
 
-/**
+/**@~english
  * RGBA color composed of 4 bytes.
+ * @~chinese 
+ * 由 4 个字节表示的 RGBA 颜色数据。
  * @since v3.0
  */
 struct CC_DLL Color4B
@@ -118,8 +122,10 @@ struct CC_DLL Color4B
 };
 
 
-/**
+/**@~english
  * RGBA color composed of 4 floats.
+ * @~chinese 
+ * 由 4 个浮点数表示的 RGBA 颜色数据。
  * @since v3.0
  */
 struct CC_DLL Color4F
@@ -157,9 +163,6 @@ struct CC_DLL Color4F
     static const Color4F GRAY;
 };
 
-/** A vertex composed of 2 floats: x, y
- @since v3.0
- */
 // struct Vertex2F
 // {
 //     Vertex2F(float _x, float _y) :x(_x), y(_y) {}
@@ -171,9 +174,6 @@ struct CC_DLL Color4F
 // };
 
 
-/** A vertex composed of 2 floats: x, y
- @since v3.0
- */
 // struct Vertex3F
 // {
 //     Vertex3F(float _x, float _y, float _z)
@@ -190,7 +190,10 @@ struct CC_DLL Color4F
 // };
 
 /** @struct Tex2F
+ * @brief @~english
  * A TEXCOORD composed of 2 floats: u, y
+ * @~chinese
+ * 两个浮点数表示的纹理坐标数据。
  * @since v3.0
  */
 struct CC_DLL Tex2F {
@@ -203,7 +206,10 @@ struct CC_DLL Tex2F {
 };
 
 /** @struct PointSprite
+ * @brief @~english
  * Vec2 Sprite component.
+ * @~chinese
+ * 包含位置，颜色和大小信息的 Sprite 数据。
  */
 struct CC_DLL PointSprite
 {
@@ -212,8 +218,10 @@ struct CC_DLL PointSprite
     GLfloat    size;       // 4 bytes
 };
 
-/** @struct Quad2
+/** @struct @~english Quad2
  * A 2D Quad. 4 * 2 floats.
+ * @~chinese Quad2
+ * 一个 2D 的矩形顶点数据。
  */
 struct CC_DLL Quad2
 {
@@ -223,8 +231,10 @@ struct CC_DLL Quad2
     Vec2        br;
 };
 
-/** @struct Quad3
+/** @struct @~english Quad3
  * A 3D Quad. 4 * 3 floats.
+ * @~chinese Quad3
+ * 一个 3D 的矩形顶点数据。
  */
 struct CC_DLL Quad3 {
     Vec3        bl;
@@ -234,72 +244,118 @@ struct CC_DLL Quad3 {
 };
 
 /** @struct V2F_C4B_T2F
+ * @brief @~english 
  * A Vec2 with a vertex point, a tex coord point and a color 4B.
+ * @~chinese
+ * Vec2 顶点坐标 + Color4B 颜色 + 纹理坐标
  */
 struct V2F_C4B_T2F
 {
-    /// vertices (2F)
+    /**@~english vertices (2F)
+     * @~chinese 顶点坐标 (2F)
+     */
     Vec2       vertices;
-    /// colors (4B)
+    /**@~english colors (4B)
+     * @~chinese 颜色 (4B)
+     */
     Color4B        colors;
-    /// tex coords (2F)
+    /**@~english tex coords (2F)
+     * @~chinese 纹理坐标 (2F)
+     */
     Tex2F          texCoords;
 };
 
 /** @struct V2F_C4B_PF
- *
+ * @brief @~english
+ * A Vec2 with a vertex point, a color 4B and point size.
+ * @~chinese 
+ * Vec2 顶点坐标 + Color4B 颜色 + 点的大小
  */
 struct V2F_C4B_PF
 {
-    /// vertices (2F)
+    /**@~english vertices (2F)
+     * @~chinese 顶点坐标 (2F)
+     */
     Vec2       vertices;
-    /// colors (4B)
+    /**@~english colors (4B)
+     * @~chinese 颜色 (4B)
+     */
     Color4B        colors;
-    /// pointsize
+    /**@~english pointsize
+     * @~chinese 点大小
+     */
     float      pointSize;
 };
 
 /** @struct V2F_C4F_T2F
+ * @brief @~english
  * A Vec2 with a vertex point, a tex coord point and a color 4F.
+ * @~chinese
+ * Vec2 顶点坐标 + Color4F 颜色 + 纹理坐标
  */
 struct CC_DLL V2F_C4F_T2F
 {
-    /// vertices (2F)
+    /**@~english vertices (2F)
+     * @~chinese 顶点坐标 (2F)
+     */
     Vec2       vertices;
-    /// colors (4F)
+    /**@~english colors (4F)
+     * @~chinese 颜色 (4F)
+     */
     Color4F        colors;
-    /// tex coords (2F)
+    /**@~english tex coords (2F)
+     * @~chinese 纹理坐标 (2F)
+     */
     Tex2F          texCoords;
 };
 
 /** @struct V3F_C4B_T2F
+ * @brief @~english
  * A Vec2 with a vertex point, a tex coord point and a color 4B.
+ * @~chinese
+ * Vec3 顶点坐标 + Color4B 颜色 + 纹理坐标
  */
 struct CC_DLL V3F_C4B_T2F
 {
-    /// vertices (3F)
+    /**@~english vertices (3F)
+     * @~chinese 顶点坐标 (3F)
+     */
     Vec3     vertices;            // 12 bytes
 
-    /// colors (4B)
+    /**@~english colors (4B)
+     * @~chinese 颜色 (4B)
+     */
     Color4B      colors;              // 4 bytes
 
-    // tex coords (2F)
+    /**@~english tex coords (2F)
+     * @~chinese 纹理坐标 (2F)
+     */
     Tex2F        texCoords;           // 8 bytes
 };
 
 /** @struct V3F_T2F
- * A Vec2 with a vertex point, a tex coord point.
+ * @brief @~english
+ * A Vec3 with a vertex point, a tex coord point.
+ * @~chinese
+ * Vec3 顶点坐标 + 纹理坐标
  */
 struct CC_DLL V3F_T2F
 {
-    /// vertices (2F)
+    /**@~english vertices (3F)
+     * @~chinese 顶点坐标 (3F)
+     */
     Vec3       vertices;
-    /// tex coords (2F)
+    /**@~english tex coords (2F)
+     * @~chinese 纹理坐标 (2F)
+     */
     Tex2F          texCoords;
 };
 
 /** @struct V2F_C4B_T2F_Triangle
- * A Triangle of V2F_C4B_T2F.
+ * @~english
+ * A Triangle of `V2F_C4B_T2F`.
+ * @~chinese
+ * 顶点数据为 `V2F_C4B_T2F` 的三角形。
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
@@ -309,82 +365,137 @@ struct CC_DLL V2F_C4B_T2F_Triangle
 };
 
 /** @struct V2F_C4B_T2F_Quad
- * A Quad of V2F_C4B_T2F.
+ * @brief @~english 
+ * A Quad of `V2F_C4B_T2F`.
+ * @~chinese
+ * 顶点数据为 `V2F_C4B_T2F` 的矩形。
  */
 struct CC_DLL V2F_C4B_T2F_Quad
 {
-    /// bottom left
+    /**@~english bottom left
+     * @~chinese 左下角
+     */
     V2F_C4B_T2F    bl;
-    /// bottom right
+    /**@~english bottom right
+     * @~chinese 右下角
+     */
     V2F_C4B_T2F    br;
-    /// top left
+    /**@~english top left
+     * @~chinese 左上角
+     */
     V2F_C4B_T2F    tl;
-    /// top right
+    /**@~english top right
+     * @~chinese 右上角
+     */
     V2F_C4B_T2F    tr;
 };
 
 /** @struct V3F_C4B_T2F_Quad
- * 4 Vertex3FTex2FColor4B.
+ * @brief @~english
+ * A Quad of `Vertex3FTex2FColor4B`.
+ * @~chinese
+ * 顶点数据为 `Vertex3FTex2FColor4B` 的矩形。
  */
 struct CC_DLL V3F_C4B_T2F_Quad
 {
-    /// top left
+    /**@~english top left
+     * @~chinese 左上角
+     */
     V3F_C4B_T2F    tl;
-    /// bottom left
+    /**@~english bottom left
+     * @~chinese 左下角
+     */
     V3F_C4B_T2F    bl;
-    /// top right
+    /**@~english top right
+     * @~chinese 右上角
+     */
     V3F_C4B_T2F    tr;
-    /// bottom right
+    /**@~english bottom right
+     * @~chinese 右下角
+     */
     V3F_C4B_T2F    br;
 };
 
 /** @struct V2F_C4F_T2F_Quad
- * 4 Vertex2FTex2FColor4F Quad.
+ * @brief @~english
+ * A Quad of `Vertex2FTex2FColor4F`.
+ * @~chinese
+ * 顶点数据为 `Vertex2FTex2FColor4F` 的矩形。
  */
 struct CC_DLL V2F_C4F_T2F_Quad
 {
-    /// bottom left
+    /**@~english bottom left
+     * @~chinese 左下角
+     */
     V2F_C4F_T2F    bl;
-    /// bottom right
+    /**@~english bottom right
+     * @~chinese 右下角
+     */
     V2F_C4F_T2F    br;
-    /// top left
+    /**@~english top left
+     * @~chinese 左上角
+     */
     V2F_C4F_T2F    tl;
-    /// top right
+    /**@~english top right
+     * @~chinese 右上角
+     */
     V2F_C4F_T2F    tr;
 };
 
 /** @struct V3F_T2F_Quad
- *
+ * @brief @~english
+ * A Quad with `V3F_T2F`
+ * @~chinese
+ * 顶点数据为 `V3F_T2F` 的矩形。
  */
 struct CC_DLL V3F_T2F_Quad
 {
-    /// bottom left
+    /**@~english bottom left
+     * @~chinese 左下角
+     */
     V3F_T2F    bl;
-    /// bottom right
+    /**@~english bottom right
+     * @~chinese 右下角
+     */
     V3F_T2F    br;
-    /// top left
+    /**@~english top left
+     * @~chinese 左上角
+     */
     V3F_T2F    tl;
-    /// top right
+    /**@~english top right
+     * @~chinese 右上角
+     */
     V3F_T2F    tr;
 };
 
 /** @struct BlendFunc
+ * @~english
  * Blend Function used for textures.
+ * @~chinese
+ * 用于纹理的混合函数。
  */
 struct CC_DLL BlendFunc
 {
-    /** source blend function */
+    /** @~english source blend function  @~chinese 源混合函数 */
     GLenum src;
-    /** destination blend function */
+    /** @~english destination blend function  @~chinese 模板混合函数 */
     GLenum dst;
 
-    /** Blending disabled. Uses {GL_ONE, GL_ZERO} */
+    /** @~english Blending disabled. Uses {GL_ONE, GL_ZERO}
+     * @~chinese 不进行混合。使用 {GL_ONE, GL_ZERO}
+     */
     static const BlendFunc DISABLE;
-    /** Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA} */
+    /** @~english Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+     * @~chinese 混合源颜色不变，混合目标颜色预乘 (1 - 源的透明度)。使用 {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+     */
     static const BlendFunc ALPHA_PREMULTIPLIED;
-    /** Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA} */
+    /** @~english Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+     * @~chinese 混合源颜色预乘透明度，混合目标颜色预乘 (1 - 源的透明度)。使用 {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+     */
     static const BlendFunc ALPHA_NON_PREMULTIPLIED;
-    /** Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE} */
+    /** @~english Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
+     * @~chinese 线性加亮混合。使用 {GL_SRC_ALPHA, GL_ONE}
+     */
     static const BlendFunc ADDITIVE;
 
     bool operator==(const BlendFunc &a) const
@@ -404,9 +515,13 @@ struct CC_DLL BlendFunc
 };
 
 /** @struct TextVAlignment
- * Vertical text alignment type.
+ * @~english Vertical text alignment type.
  *
- * @note If any of these enums are edited and/or reordered, update Texture2D.m.
+ * @~chinese
+ * 文本垂直对齐的类型。
+ * 
+ * @note @~english If any of these enums are edited and/or reordered, update Texture2D.m.
+ * @~chinese 如果这些枚举值被编辑或者重新排序，需要更新 Texture2D.m。
  */
 enum class CC_DLL TextVAlignment
 {
@@ -416,9 +531,14 @@ enum class CC_DLL TextVAlignment
 };
 
 /** @struct TextHAlignment
+ * @~english 
  * Horizontal text alignment type.
  *
- * @note If any of these enums are edited and/or reordered, update Texture2D.m.
+ * @~chinese
+ * 文本水平对齐的类型。
+ * 
+ * @note @~english If any of these enums are edited and/or reordered, update Texture2D.m.
+ * @~chinese 如果这些枚举值被编辑或者重新排序，需要更新 Texture2D.m。
  */
 enum class CC_DLL TextHAlignment
 {
@@ -430,22 +550,36 @@ enum class CC_DLL TextHAlignment
 // Types for animation in particle systems
 
 /** @struct T2F_Quad
+ * @~english
  * Texture coordinates for a quad.
+ * @~chinese 
+ * 矩形四个顶点的纹理坐标
  */
 struct CC_DLL T2F_Quad
 {
-    /// bottom left
+    /**@~english bottom left
+     * @~chinese 左下角
+     */
     Tex2F    bl;
-    /// bottom right
+    /**@~english bottom right
+     * @~chinese 右下角
+     */
     Tex2F    br;
-    /// top left
+    /** @~english top left
+     * @~chinese 左上角
+     */
     Tex2F    tl;
-    /// top right
+    /**@~english top right
+     * @~chinese 右上角
+     */
     Tex2F    tr;
 };
 
 /** @struct AnimationFrameData
+ * @~english
  * Struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad.
+ * @~chinese
+ * 为 `ParticleSystemQuad` 的动画而设计的包含像素的大小，纹理坐标，延迟时间的结构体。
  */
 struct CC_DLL AnimationFrameData
 {
@@ -454,12 +588,15 @@ struct CC_DLL AnimationFrameData
     Size size;
 };
 
-/**
- types used for defining fonts properties (i.e. font name, size, stroke or shadow)
+/**@~english
+ * types used for defining fonts properties (i.e. font name, size, stroke or shadow)
+ * @~chinese 
+ * 用于定义字体的属性的类(如字体名称、大小、描边或阴影)
  */
 
 /** @struct FontShadow
- * Shadow attributes.
+ * @~english Shadow attributes.
+ * @~chinese 字体的阴影效果属性。
  */
 struct CC_DLL FontShadow
 {
@@ -472,18 +609,27 @@ public:
         , _shadowOpacity(0)
     {}
 
-    /// true if shadow enabled
+    /**@~english true if shadow enabled
+     * @~chinese 如果阴影效果开启，则为 true；否则为 false。
+     */
     bool   _shadowEnabled;
-    /// shadow x and y offset
+    /**@~english shadow x and y offset
+     * @~chinese 阴影的 x 与 y 轴便宜量。
+     */
 	Size   _shadowOffset;
-    /// shadow blurrines
+    /**@~english shadow blurrines
+     * @~chinese 阴影的模糊度。
+     */
 	float  _shadowBlur;
-    /// shadow opacity
+    /**@~english shadow opacity
+     * @~chinese 阴影的不透明度。
+     */
 	float  _shadowOpacity;
 };
 
 /** @struct FontStroke
- * Stroke attributes.
+ * @~english Stroke attributes.
+ * @~chinese 字体的描边效果属性。
  */
 struct CC_DLL FontStroke
 {
@@ -497,19 +643,28 @@ public:
         , _strokeSize(0)
     {}
 
-    /// true if stroke enabled
+    /**@~english true if stroke enabled
+     * @~chinese 如果启用了描边效果，则为 true；否则为 false。
+     */
     bool      _strokeEnabled;
-    /// stroke color
+    /**@~english stroke color
+     * @~chinese 描边的颜色。
+     */
 	Color3B   _strokeColor;
-    /// stroke alpha
+    /**@~english stroke alpha
+     * @~chinese 描边的透明度。
+     */
     GLubyte   _strokeAlpha;
-    /// stroke size
+    /**@~english stroke size
+     * @~chinese 描边的大小。
+     */
     float     _strokeSize;
 
 };
 
-/** @struct FontDefinition
- * Font attributes.
+/** @structFontDefinition
+ * @~english Font attributes.
+ * @~chinese 定义字体基本属性的类。
  */
 struct CC_DLL FontDefinition
 {
@@ -527,30 +682,50 @@ public:
         , _fontAlpha(255)
     {}
 
-    /// font name
+    /**@~english font name
+     * @~chinese 字体名称。
+     */
     std::string           _fontName;
-    /// font size
+    /**@~english font size
+     * @~chinese 字体大小。
+     */
     int                   _fontSize;
-    /// horizontal alignment
+    /**@~english horizontal alignment
+     * @~chinese 水平对齐类型。
+     */
     TextHAlignment        _alignment;
-    /// vertical alignment
+    /**@~english vertical alignment
+     * @~chinese 垂直对齐类型。
+     */
     TextVAlignment _vertAlignment;
-    /// renering box
+    /**@~english renering box
+     * @~chinese 渲染盒大小。
+     */
     Size                  _dimensions;
-    /// font color
+    /**@~english font color
+     * @~chinese 字体颜色。
+     */
     Color3B               _fontFillColor;
-    /// font alpha
+    /**@~english font alpha
+     * @~chinese 字体透明度。
+     */
     GLubyte               _fontAlpha;
-    /// font shadow
+    /**@~english font shadow
+     * @~chinese 字体阴影效果。
+     */
     FontShadow            _shadow;
-    /// font stroke
+    /**@~english font stroke
+     * @~chinese 字体描边效果。
+     */
     FontStroke            _stroke;
 
 };
 
 /**
- * @brief Possible LabelEffect used by Label.
+ * @brief @~english Possible LabelEffect used by Label.
  *
+ * @~chinese 可能被字体使用到的字体效果类型。
+ * 
  */
 enum class LabelEffect {
     NORMAL,
@@ -561,7 +736,8 @@ enum class LabelEffect {
 };
 
 /** @struct Acceleration
- * The device accelerometer reports values for each axis in units of g-force.
+ * @~english The device accelerometer reports values for each axis in units of g-force.
+ * @~chinese 设备重力传感器传递的各个轴的数据。
  */
 class CC_DLL Acceleration
     : public Ref
