@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include <vector>
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+#include "renderer/CCRenderState.h"
 NS_CC_BEGIN
 
 /**
@@ -442,6 +443,7 @@ protected:
 
     ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
 protected:
+    RenderState::StateBlock * _stateBlock;
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
     Mat4 _CameraMatrix;
