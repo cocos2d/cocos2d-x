@@ -144,7 +144,6 @@ AutoPolygon::~AutoPolygon()
 
 std::vector<Vec2> AutoPolygon::trace(const Rect& rect, const float& threshold)
 {
-//    Rect realRect = getRealRect(rect);
     Vec2 first = findFirstNoneTransparentPixel(rect, threshold);
     return marchSquare(rect, first, threshold);
 }
@@ -173,23 +172,10 @@ Vec2 AutoPolygon::findFirstNoneTransparentPixel(const Rect& rect, const float& t
 
 unsigned char AutoPolygon::getAlphaByIndex(const unsigned int& i)
 {
-//    CCASSERT(i < _width*_height, "coordinate is out of range.");
-//    unsigned int x = i % (int)_rect.size.width;
-//    unsigned int y = i / (int)_rect.size.width;
-//     CCLOG("i=%d, x=%d,y=%d",i,x,y);
-//    x += _rect.origin.x;
-//    y += _height - _rect.origin.y - _rect.size.height;
-//    y = _height - _rect.origin.y -_rect.size.height + y;
-//    return getAlphaByPos(x, y);
     return *(_data+i*4+3);
 }
 unsigned char AutoPolygon::getAlphaByPos(const Vec2& i)
 {
-//    CCASSERT(x <= _width-1 && y <= _height-1, "coordinate is out of range.");
-//    if (x<_rect.origin.x || x>_rect.origin.x+_rect.size.width
-//        || y<_rect.origin.y || y>_rect.origin.y+_rect.size.height) {
-//        return 0;
-//    }
     return *(_data+((int)i.y*_width+(int)i.x)*4+3);
 }
 
@@ -378,8 +364,6 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
         {
             //TODO: we triangulation cannot work collineer points, so we need to modify same point a little
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
-//            _points.back().x -= 0.00001;
-//            _points.back().y -= 0.00001;
             _points.push_back(Vec2((float)(curx- rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
         }
         else{
@@ -394,14 +378,6 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
     } while(curx != startx || cury != starty);
     return _points;
 }
-
-//void AutoPolygon::printPoints()
-//{
-//    for(auto p : _points)
-//    {
-//        CCLOG("%.1f %.1f", p.x, _height-p.y);
-//    }
-//}
 
 float AutoPolygon::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end)
 {
@@ -480,7 +456,6 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
     float ep = clampf(epsilon, 0.0, maxEp/_scaleFactor/2);
     std::vector<Vec2> result = rdp(points, ep);
     
-//    auto resSize = result.size();
     auto last = result.back();
     if(last.y > result.front().y && last.getDistance(result.front()) < ep*0.5)
     {
@@ -501,7 +476,6 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     }
     ClipperLib::Path subj;
     ClipperLib::PolyTree solution;
-//    ClipperLib::Paths simple;
     ClipperLib::PolyTree out;
     for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); it++)
     {
@@ -516,14 +490,13 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
         p = p->GetNext();
     }
 
-//    //turn the result into simply polygon (AKA, fix overlap)
-//    ClipperLib::SimplifyPolygon(p->Contour, simple);
+    //turn the result into simply polygon (AKA, fix overlap)
     
     //clamp into the specified rect
     ClipperLib::Clipper cl= ClipperLib::Clipper();
     cl.StrictlySimple(true);
     cl.AddPath(p->Contour, ClipperLib::ptSubject, true);
-        //create the clipping rect
+    //create the clipping rect
     ClipperLib::Path clamp;
     clamp.push_back(ClipperLib::IntPoint(0, 0));
     clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor, 0));
@@ -636,7 +609,6 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_
      0,1                  1,1
      */
     
-//    Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(_filename);
     CCASSERT(_width && _height, "please specify width and height for this AutoPolygon instance");
     float texWidth  = _width;
     float texHeight = _height;
@@ -686,8 +658,7 @@ PolygonInfo AutoPolygon::generateTriangles(const Rect& rect, const float& epsilo
 }
 PolygonInfo AutoPolygon::generatePolygon(const std::string& filename, const Rect& rect, const float epsilon, const float threshold)
 {
-    auto AP = new AutoPolygon(filename);
-    auto ret = AP->generateTriangles(rect, epsilon, threshold);
-    delete AP;
+    auto ap =  AutoPolygon(filename);
+    auto ret = ap.generateTriangles(rect, epsilon, threshold);
     return ret;
 }

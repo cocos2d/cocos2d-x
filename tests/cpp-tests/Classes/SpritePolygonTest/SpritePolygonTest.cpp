@@ -1,11 +1,3 @@
-//
-//  SpritePolygonTest.cpp
-//  cocos2d_tests
-//
-//  Created by WuHao on 15/4/23.
-//
-//
-
 #include "SpritePolygonTest.h"
 #include "../testResource.h"
 #include "ui/CocosGUI.h"
@@ -146,8 +138,6 @@ SpritePolygonPerformance::SpritePolygonPerformance()
     scheduleUpdate();
     continuousHighDtTime = 0.0;
     waitingTime = 0.0;
-    
-//    _pinfo = PolygonInfo(AutoPolygon::generatePolygon(s_pathGrossini));
 }
 void SpritePolygonPerformance::updateLabel()
 {
@@ -283,7 +273,6 @@ void SpritePolygonTestSlider::makeSprites(const std::string* list, const int cou
 {
     auto vsize =Director::getInstance()->getVisibleSize();
     float offset = (vsize.width-100)/(count-1);
-//    float y = vsize.height/2;
     for(int i = 0; i < count; i++)
     {
         auto sp = makeSprite(list[i], Vec2(50+offset*i, y));
@@ -361,7 +350,6 @@ SpritePolygonTest4::SpritePolygonTest4()
     int count = 3;
     std::string list[] = {
         s_pathGrossini,
-//        "TileMaps/fixed-ortho-test2.png",
         "Images/grossinis_sister1.png",
         "Images/grossinis_sister2.png"
     };

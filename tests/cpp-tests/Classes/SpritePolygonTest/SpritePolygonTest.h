@@ -1,10 +1,10 @@
 #ifndef __cocos2d_tests__SpritePolygonTest__
+
 #include "../testBasic.h"
 #include "../BaseTest.h"
 #include "ui/CocosGUI.h"
+
 DEFINE_TEST_SUITE(SpritePolygonTest);
-
-
 
 class SpritePolygonTestCase : public TestCase
 {
