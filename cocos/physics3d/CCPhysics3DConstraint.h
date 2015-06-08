@@ -213,8 +213,8 @@ public:
     /** @~english create hinge constraint
         @~chinese 创建铰链约束
         @param rbA @~english  rigid body A @~chinese 刚体A
-        @param rbAFrame @~english  rigid body A's frame @~chinese 刚体的框架
-        @param useReferenceFrameA @~english  use frame A as reference @~chinese 使用框架作为参考
+        @param rbAFrame @~english  rigid body A's frame @~chinese 刚体的矩阵
+        @param useReferenceFrameA @~english  use frame A as reference @~chinese 使用矩阵作为参考
         @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese 返回一个自动释放的physics3dhingeconstraint。
     */
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Mat4& rbAFrame, bool useReferenceFrameA = false);
@@ -224,7 +224,7 @@ public:
         @param rbA @~english  rigid body A @~chinese 刚体A
         @param pivotInA @~english  pivot in rigid body A's local space @~chinese 在刚体A的局部空间内的枢轴
         @param axisInA @~english  axis in rigid body A's local space @~chinese 在刚体A的局部空间内的轴向
-        @param useReferenceFrameA @~english  use frame A as reference @~chinese 使用框架作为引用
+        @param useReferenceFrameA @~english  use frame A as reference @~chinese 使用矩阵作为引用
         @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese 返回一个自动释放的physics3dhingeconstraint。
     */
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotInA, const cocos2d::Vec3& axisInA, bool useReferenceFrameA = false);
@@ -246,8 +246,8 @@ public:
         @~chinese 创建铰链约束
         @param rbA @~english  rigid body A @~chinese 刚体A
         @param rbB @~english  rigid body B @~chinese 刚体B
-        @param rbAFrame @~english  rigid body A's frame @~chinese 刚体A的框架
-        @param rbBFrame @~english  rigid body B's frame @~chinese 刚体B的框架
+        @param rbAFrame @~english  rigid body A's frame @~chinese 刚体A的矩阵
+        @param rbBFrame @~english  rigid body B's frame @~chinese 刚体B的矩阵
         @param useReferenceFrameA @~english  use frame A as reference @~chinese 使用帧作为参考
         @return @~english return an autoreleased Physics3DHingeConstraint object. @~chinese 返回一个自动释放的physics3dhingeconstraint。
     */
@@ -267,8 +267,8 @@ public:
 
     /** @~english set frames for rigid body A and B
         @~chinese 为刚体A和B设置帧
-        @param frameA @~english  frame will be seted to rigid body A @~chinese 设置给刚体A的框架
-        @param frameB @~english  frame will be seted to rigid body B @~chinese 设置给刚体B的框架
+        @param frameA @~english  frame will be seted to rigid body A @~chinese 设置给刚体A的矩阵
+        @param frameB @~english  frame will be seted to rigid body B @~chinese 设置给刚体B的矩阵
     */
     void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
 
@@ -335,11 +335,11 @@ public:
     float getHingeAngle(const cocos2d::Mat4& transA, const cocos2d::Mat4& transB);
 
     /** @~english get A's frame
-        @~chinese 得到的框架
+        @~chinese 得到A的矩阵
     */
     cocos2d::Mat4 getAFrame() const;
     /** @~english get B's frame
-        @~chinese 得到B的框架
+        @~chinese 得到B的矩阵
     */
     cocos2d::Mat4 getBFrame() const;
     /** @~english get angular only
@@ -393,9 +393,9 @@ public:
 
         @param rbA @~english  rigid body A @~chinese 刚体A
         @param rbB @~english  rigid body B @~chinese 刚体B
-        @param frameInA @~english  frame in A's local space @~chinese 在A的局部空间框架
-        @param frameInB @~english  frame in B's local space @~chinese 在B的局部空间框架
-        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese 使用固定框架的线性范围
+        @param frameInA @~english  frame in A's local space @~chinese 在A的局部空间矩阵
+        @param frameInB @~english  frame in B's local space @~chinese 在B的局部空间矩阵
+        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese 使用固定矩阵的线性范围
     */
     static Physics3DSliderConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB ,bool useLinearReferenceFrameA);
 
@@ -440,7 +440,7 @@ public:
     */
     void setUpperAngLimit(float upperLimit);
     /** @~english use A's frame as linear refference
-        @~chinese 使用线性参考的框架
+        @~chinese 使用线性参考的矩阵
     */
     bool getUseLinearReferenceFrameA() const;
 
@@ -553,11 +553,11 @@ public:
     void setLimit(float swingSpan1,float swingSpan2,float twistSpan, float softness = 1.f, float biasFactor = 0.3f, float relaxationFactor = 1.0f);
 
     /** @~english get A's frame
-        @~chinese 得到的框架
+        @~chinese 得到的矩阵
     */
     cocos2d::Mat4 getAFrame() const;
     /** @~english get B's frame
-        @~chinese 得到B的框架
+        @~chinese 得到B的矩阵
     */
     cocos2d::Mat4 getBFrame() const;
 
@@ -621,7 +621,7 @@ public:
     cocos2d::Vec3 GetPointForAngle(float fAngleInRadians, float fLength) const;
 
     /** @~english set A and B's frame
-        @~chinese 集合A和B的框架
+        @~chinese 集合A和B的矩阵
     */
     virtual void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
 
@@ -662,16 +662,16 @@ public:
         @~chinese 建立6自由度约束
         @param rbA @~english  rigid body A @~chinese 刚体A
         @param rbB @~english  rigid body B @~chinese 刚体B
-        @param frameInA @~english  frame in A's local space @~chinese 在一个局部空间框架
-        @param frameInB @~english  frame in B's local space @~chinese 在B的局部空间框架
-        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese 使用固定框架的线性范围
+        @param frameInA @~english  frame in A's local space @~chinese 在A的局部空间矩阵
+        @param frameInB @~english  frame in B's local space @~chinese 在B的局部空间矩阵
+        @param useLinearReferenceFrameA @~english  use fixed frame A for linear limits @~chinese 使用固定矩阵的线性范围
     */
     static Physics3D6DofConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameA);
 
     /** @~english create 6 dof constraint
         @~chinese 建立6自由度约束
         @param rbB @~english  rigid body B @~chinese 刚体B
-        @param frameInB @~english  frame in B's local space @~chinese 在B的局部空间框架
+        @param frameInB @~english  frame in B's local space @~chinese 在B的局部空间矩阵
         @param useLinearReferenceFrameB @~english  use fixed frame B for linear limits @~chinese 使用固定的B帧的线性范围
     */
     static Physics3D6DofConstraint* create(Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameB);
