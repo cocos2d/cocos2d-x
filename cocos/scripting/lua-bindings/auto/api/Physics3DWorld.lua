@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  set gravity for the physics world 
+-- @function [parent=#Physics3DWorld] setGravity 
+-- @param self
+-- @param #vec3_table gravity
+-- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
+        
+--------------------------------
 --  Simulate one frame. 
 -- @function [parent=#Physics3DWorld] stepSimulate 
 -- @param self
@@ -24,10 +31,9 @@
 -- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
         
 --------------------------------
---  Remove a Physics3DConstraint. 
--- @function [parent=#Physics3DWorld] removePhysics3DConstraint 
+--  Remove all Physics3DObjects. 
+-- @function [parent=#Physics3DWorld] removeAllPhysics3DObjects 
 -- @param self
--- @param #cc.Physics3DConstraint constraint
 -- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
         
 --------------------------------
@@ -43,9 +49,16 @@
 -- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
         
 --------------------------------
---  Remove all Physics3DObjects. 
--- @function [parent=#Physics3DWorld] removeAllPhysics3DObjects 
+--  get current gravity 
+-- @function [parent=#Physics3DWorld] getGravity 
 -- @param self
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
+        
+--------------------------------
+--  Remove a Physics3DConstraint. 
+-- @function [parent=#Physics3DWorld] removePhysics3DConstraint 
+-- @param self
+-- @param #cc.Physics3DConstraint constraint
 -- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
         
 --------------------------------

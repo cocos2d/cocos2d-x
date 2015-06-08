@@ -2280,6 +2280,26 @@ void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObj
 JSClass  *jsb_cocos2d_Physics3DWorld_class;
 JSObject *jsb_cocos2d_Physics3DWorld_prototype;
 
+bool js_cocos2dx_physics3d_Physics3DWorld_setGravity(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_setGravity : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Vec3 arg0;
+        ok &= jsval_to_vector3(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_setGravity : Error processing arguments");
+        cobj->setGravity(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_setGravity : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_physics3d_Physics3DWorld_stepSimulate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -2357,32 +2377,20 @@ bool js_cocos2dx_physics3d_Physics3DWorld_init(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_init : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Physics3DConstraint* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint : Error processing arguments");
-        cobj->removePhysics3DConstraint(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeAllPhysics3DObjects();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_physics3d_Physics3DWorld_isDebugDrawEnabled(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2446,20 +2454,50 @@ bool js_cocos2dx_physics3d_Physics3DWorld_rayCast(JSContext *cx, uint32_t argc, 
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
-bool js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_physics3d_Physics3DWorld_getGravity(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_getGravity : Invalid Native Object");
     if (argc == 0) {
-        cobj->removeAllPhysics3DObjects();
+        cocos2d::Vec3 ret = cobj->getGravity();
+        jsval jsret = JSVAL_NULL;
+        jsret = vector3_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_getGravity : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Physics3DConstraint* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Physics3DConstraint*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint : Error processing arguments");
+        cobj->removePhysics3DConstraint(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DObject(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2766,15 +2804,17 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setGravity", js_cocos2dx_physics3d_Physics3DWorld_setGravity, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stepSimulate", js_cocos2dx_physics3d_Physics3DWorld_stepSimulate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("needCollisionChecking", js_cocos2dx_physics3d_Physics3DWorld_needCollisionChecking, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("collisionChecking", js_cocos2dx_physics3d_Physics3DWorld_collisionChecking, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_physics3d_Physics3DWorld_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removePhysics3DConstraint", js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllPhysics3DObjects", js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDebugDrawEnabled", js_cocos2dx_physics3d_Physics3DWorld_isDebugDrawEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllPhysics3DConstraints", js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DConstraints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("rayCast", js_cocos2dx_physics3d_Physics3DWorld_rayCast, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeAllPhysics3DObjects", js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getGravity", js_cocos2dx_physics3d_Physics3DWorld_getGravity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removePhysics3DConstraint", js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addPhysics3DObject", js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DObject, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDebugDrawEnable", js_cocos2dx_physics3d_Physics3DWorld_setDebugDrawEnable, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removePhysics3DObject", js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DObject, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
