@@ -1140,7 +1140,6 @@ PolygonInfo Sprite::getPolygonInfo() const
 
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
-//    delete _polyInfo;
     _polyInfo = info;
 }
 

@@ -600,8 +600,6 @@ protected:
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
 
-//    DrawNode *_debugDrawNode;
-
 
     //
     // Shared data
