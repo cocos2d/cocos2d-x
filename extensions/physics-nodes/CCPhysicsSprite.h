@@ -108,6 +108,7 @@ public:
 
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
+    virtual void syncPhysicsTransform() const;
 
     // overrides
     virtual const Vec2& getPosition() const override;
@@ -117,10 +118,9 @@ public:
     virtual void setPosition(const Vec2 &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
-    virtual void syncPhysicsTransform() const;
-    virtual const Mat4& getNodeToParentTransform() const override;
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void onEnter() override;
+    virtual void update(float delta) override;
 
 protected:
     const Vec2& getPosFromPhysics() const;

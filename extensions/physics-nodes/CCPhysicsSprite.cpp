@@ -393,22 +393,20 @@ void PhysicsSprite::syncPhysicsTransform() const
 #endif
 }
 
-// returns the transform matrix according the Chipmunk Body values
-const Mat4& PhysicsSprite::getNodeToParentTransform() const
+void PhysicsSprite::onEnter()
 {
-    syncPhysicsTransform();
-    
-	return _transform;
+    Node::onEnter();
+    scheduleUpdate();
 }
 
-void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void PhysicsSprite::update(float delta)
 {
-    if (isDirty())
-    {
-        syncPhysicsTransform();
-    }
+    Node::update(delta);
+    syncPhysicsTransform();
     
-    Sprite::draw(renderer, _transform, flags);
+    _transformDirty = false;
+    _transformUpdated = true;
+    setDirtyRecursively(true);
 }
 
 NS_CC_EXT_END
