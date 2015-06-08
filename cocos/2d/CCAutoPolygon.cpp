@@ -485,7 +485,13 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
     co.Execute(solution, epsilon);
     
+
     ClipperLib::PolyNode* p = solution.GetFirst();
+    if(!p)
+    {
+        log("AUTOPOLYGON: Clipper failed to expand the points");
+        return points;
+    }
     while(p->IsHole()){
         p = p->GetNext();
     }

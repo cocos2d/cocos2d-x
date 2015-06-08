@@ -105,6 +105,7 @@ public:
     CREATE_FUNC(SpritePolygonTestSlider);
     SpritePolygonTestSlider();
 protected:
+    cocos2d::Label *_epsilonLabel;
     cocos2d::Sprite* makeSprite(const std::string& filename, const cocos2d::Vec2& pos);
     void makeSprites(const std::string* list, const int count, const float y);
     cocos2d::TTFConfig _ttfConfig;

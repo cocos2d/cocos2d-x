@@ -266,7 +266,11 @@ SpritePolygonTestSlider::SpritePolygonTestSlider()
     slider->setPosition(Vec2(vsize.width/2, vsize.height/4/* + slider->getSize().height * 2.0f*/));
     
     slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
-    slider->setPercent(10);
+    slider->setPercent((int)(sqrtf(0.1)*100));
+    
+    _epsilonLabel = Label::createWithTTF(_ttfConfig, "Epsilon: 2.0");
+    addChild(_epsilonLabel);
+    _epsilonLabel->setPosition(Vec2(vsize.width/2, vsize.height/4 + 15));
     addChild(slider);
 }
 void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
@@ -298,6 +302,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
                 updateLabel(sp, pinfo);
             }
         }
+        _epsilonLabel->setString("Epsilon: "+ Value(epsilon).asString());
     }
 }
 
@@ -334,10 +339,9 @@ SpritePolygonTest3::SpritePolygonTest3()
         "Images/arrows.png",
         "Images/CyanTriangle.png",
         s_pathB2,
-        "Images/elephant1_Diffuse.png",
-        "Images/stars2.png"
+        "Images/elephant1_Diffuse.png"
     };
-    int count = 5;
+    int count = 4;
     makeSprites(list, count, vsize.height/2);
 }
 SpritePolygonTest4::SpritePolygonTest4()
