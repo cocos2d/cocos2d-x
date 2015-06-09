@@ -66,18 +66,6 @@ THE SOFTWARE.
 #include "CCScriptSupport.h"
 #endif
 
-#if CC_USE_PHYSICS
-#include "physics/CCPhysicsWorld.h"
-#endif
-
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-#include "physics3d/CCPhysics3DWorld.h"
-#endif
-
-#if CC_USE_NAVMESH
-#include "navmesh/CCNavMesh.h"
-#endif
-
 /**
  Position of the FPS
  
@@ -295,26 +283,8 @@ void Director::drawScene()
     
     if (_runningScene)
     {
-#if CC_USE_PHYSICS
-        auto physicsWorld = _runningScene->getPhysicsWorld();
-        if (physicsWorld && physicsWorld->isAutoStep())
-        {
-            physicsWorld->update(_deltaTime, false);
-        }
-#endif
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-        auto physics3DWorld = _runningScene->getPhysics3DWorld();
-        if (physics3DWorld)
-        {
-            physics3DWorld->stepSimulate(_deltaTime);
-        }
-#endif
-#if CC_USE_NAVMESH
-        auto navMesh = _runningScene->getNavMesh();
-        if (navMesh)
-        {
-            navMesh->update(_deltaTime);
-        }
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+        _runningScene->stepPhysicsAndNavigation(_deltaTime);
 #endif
         //clear draw stats
         _renderer->clearDrawStats();

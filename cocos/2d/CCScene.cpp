@@ -356,4 +356,28 @@ void Scene::addChildToPhysicsWorld(Node* child)
 
 #endif
 
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+void Scene::stepPhysicsAndNavigation(float deltaTime)
+{
+#if CC_USE_PHYSICS
+    if (_physicsWorld && _physicsWorld->isAutoStep())
+    {
+        _physicsWorld->update(deltaTime, false);
+    }
+#endif
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    if (_physics3DWorld)
+    {
+        _physics3DWorld->stepSimulate(deltaTime);
+    }
+#endif
+#if CC_USE_NAVMESH
+    if (_navMesh)
+    {
+        _navMesh->update(deltaTime);
+    }
+#endif
+}
+#endif
+
 NS_CC_END
