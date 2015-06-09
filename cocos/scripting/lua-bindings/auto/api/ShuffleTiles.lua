@@ -5,6 +5,19 @@
 -- @parent_module cc
 
 --------------------------------
+-- brief Initializes the action with grid size, random seed and duration.<br>
+-- param duration Specify the duration of the ShuffleTiles action. It's a value in seconds.<br>
+-- param gridSize Specify the size of the grid.<br>
+-- param seed Specify the random seed.<br>
+-- return If the Initialization success, return true; otherwise, return false.
+-- @function [parent=#ShuffleTiles] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #unsigned int seed
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#ShuffleTiles] getDelta 
 -- @param self
@@ -12,8 +25,11 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- creates the action with a random seed, the grid size and the duration<br>
--- param duration in seconds
+-- brief Create the action with grid size, random seed and duration.<br>
+-- param duration Specify the duration of the ShuffleTiles action. It's a value in seconds.<br>
+-- param gridSize Specify the size of the grid.<br>
+-- param seed Specify the random seed.<br>
+-- return If the creation success, return a pointer of ShuffleTiles action; otherwise, return nil.
 -- @function [parent=#ShuffleTiles] create 
 -- @param self
 -- @param #float duration
@@ -35,10 +51,16 @@
 -- @return ShuffleTiles#ShuffleTiles ret (return value: cc.ShuffleTiles)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#ShuffleTiles] update 
 -- @param self
 -- @param #float time
+-- @return ShuffleTiles#ShuffleTiles self (return value: cc.ShuffleTiles)
+        
+--------------------------------
+-- 
+-- @function [parent=#ShuffleTiles] ShuffleTiles 
+-- @param self
 -- @return ShuffleTiles#ShuffleTiles self (return value: cc.ShuffleTiles)
         
 return nil

@@ -407,8 +407,19 @@ class GitArchiver(object):
             repo_file_path = repo_file_path.strip('"')  # file path relative to current repo
             file_name = path.basename(repo_file_path)
 
+            # The symbolic link propertie is lost after extract the zip file
+            # Loop over files in the link dir and add them to file list
+            absfilepath = path.join(repo_abspath, repo_file_path)
+            if path.islink(absfilepath):
+                if path.isdir(absfilepath):
+                    list_dirs = os.walk(absfilepath)
+                    for root,dirs,files in list_dirs:
+                        for file in files:
+                            main_repo_file_path = os.path.relpath(path.join(root, file), self.main_repo_abspath)
+                            yield main_repo_file_path
+                    continue
             # Only list symlinks and files that don't start with git.
-            if (not path.islink(repo_file_path) and path.isdir(repo_file_path)):
+            elif path.isdir(repo_file_path):
                 continue
 
             main_repo_file_path = path.join(repo_path, repo_file_path)  # file path relative to the main repo

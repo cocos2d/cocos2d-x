@@ -1,9 +1,5 @@
-
-#ifndef CC_ALLOCATOR_GLOBAL_H
-#define CC_ALLOCATOR_GLOBAL_H
-
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -27,16 +23,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#ifndef CC_ALLOCATOR_GLOBAL_H
+#define CC_ALLOCATOR_GLOBAL_H
+/// @cond DO_NOT_SHOW
+
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorStrategyDefault.h"
 
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
 
-// @brief Make visible at the global scope.
+/** Make visible at the global scope.*/
 extern CC_ALLOCATOR_GLOBAL ccAllocatorGlobal;
 
 NS_CC_ALLOCATOR_END
 NS_CC_END
 
+/// @endcond
 #endif//CC_ALLOCATOR_GLOBAL_H

@@ -3,7 +3,6 @@
 
 #include "cocos2d.h"
 
-USING_NS_CC;
 
 typedef enum tagPaddleState 
 {
@@ -11,7 +10,7 @@ typedef enum tagPaddleState
     kPaddleStateUngrabbed
 } PaddleState; 
 
-class Paddle : public Sprite, public Clonable
+class Paddle : public cocos2d::Sprite, public cocos2d::Clonable
 {
     PaddleState        _state;
 
@@ -19,17 +18,17 @@ public:
     Paddle(void);
     virtual ~Paddle(void);
 
-    Rect getRect();
-    bool initWithTexture(Texture2D* aTexture);
+    cocos2d::Rect getRect();
+    bool initWithTexture(cocos2d::Texture2D* aTexture) override;
     virtual void onEnter() override;
     virtual void onExit() override;
-    bool containsTouchLocation(Touch* touch);
-    bool onTouchBegan(Touch* touch, Event* event);
-    void onTouchMoved(Touch* touch, Event* event);
-    void onTouchEnded(Touch* touch, Event* event);
-    virtual Paddle* clone() const;
+    bool containsTouchLocation(cocos2d::Touch* touch);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    virtual Paddle* clone() const override;
 
-    static Paddle* createWithTexture(Texture2D* aTexture);
+    static Paddle* createWithTexture(cocos2d::Texture2D* aTexture);
 };
 
 #endif

@@ -75,6 +75,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#SkeletonAnimation] initialize 
+-- @param self
+-- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
+        
+--------------------------------
+-- 
 -- @function [parent=#SkeletonAnimation] clearTracks 
 -- @param self
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)

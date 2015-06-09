@@ -29,6 +29,16 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * Oritened Bounding Box(OBB)
+ * @brief the OBB is similar to the AABB but the bounding box has the same direction as Sprite3D. so it's collistion detection more precise than AABB
+ * @js NA
+ */
 class CC_DLL OBB
 {
 public:
@@ -36,11 +46,15 @@ public:
 
     /*
      * Construct obb from oriented bounding box
+     *
+     * @lua NA
      */
     OBB(const AABB& aabb);
     
     /*
      * Construct obb from points
+     *
+     * @lua NA
      */
     OBB(const Vec3* verts, int num);
     
@@ -124,6 +138,9 @@ public:
     Vec3 _extentZ;  // _zAxis * _extents.z
     Vec3 _extents;  // obb length along each axis
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

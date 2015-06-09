@@ -10,3 +10,6 @@
 [submodule "tests/cpp-tests/Resources/ccs-res"]
         path = tests/cpp-tests/Resources/ccs-res
         url = git://github.com/dumganhar/ccs-res.git
+[submodule "web"]
+        path = web
+        url = git://github.com/cocos2d/cocos2d-html5.git

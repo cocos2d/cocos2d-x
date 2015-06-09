@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2015 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #ifndef __BASE_CC_PLATFORM_CONFIG_H__
 #define __BASE_CC_PLATFORM_CONFIG_H__
+/// @cond DO_NOT_SHOW
 
 /**
   Config of cocos2d-x project, per target platform.
@@ -50,8 +51,7 @@ THE SOFTWARE.
 #define CC_PLATFORM_EMSCRIPTEN        10
 #define CC_PLATFORM_TIZEN             11
 #define CC_PLATFORM_QT5               12
-#define CC_PLATFORM_WP8               13
-#define CC_PLATFORM_WINRT             14
+#define CC_PLATFORM_WINRT             13
 
 // Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -128,18 +128,11 @@ THE SOFTWARE.
     #define CC_TARGET_PLATFORM     CC_PLATFORM_QT5
 #endif
 
-// WinRT (Windows Store App)
+// WinRT (Windows 8.1 Store/Phone App)
 #if defined(WINRT)
     #undef  CC_TARGET_PLATFORM
     #define CC_TARGET_PLATFORM			CC_PLATFORM_WINRT
 #endif
-
-// WP8 (Windows Phone 8 App)
-#if defined(WP8)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM			CC_PLATFORM_WP8
-#endif
-
 
 //////////////////////////////////////////////////////////////////////////
 // post configure
@@ -156,5 +149,5 @@ THE SOFTWARE.
 #endif 
 #endif  // CC_PLATFORM_WIN32
 
+/// @endcond
 #endif  // __BASE_CC_PLATFORM_CONFIG_H__
-

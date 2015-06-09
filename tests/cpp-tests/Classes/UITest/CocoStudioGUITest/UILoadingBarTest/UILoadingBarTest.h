@@ -27,96 +27,88 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UILoadingBarTests);
+
 class UILoadingBarTest_Left : public UIScene
 {
 public:
+    CREATE_FUNC(UILoadingBarTest_Left);
+
     UILoadingBarTest_Left();
     ~UILoadingBarTest_Left();
-    bool init();
+    virtual bool init() override;
     void update(float delta);
-
-	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left)
     int _count;
 };
 
 class UILoadingBarTest_Right : public UIScene
 {
 public:
+    CREATE_FUNC(UILoadingBarTest_Right);
+
     UILoadingBarTest_Right();
     ~UILoadingBarTest_Right();
-    bool init();
+    virtual bool init() override;
     void update(float delta);
-
-	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right)
     int _count;
 };
 
 class UILoadingBarTest_Left_Scale9 : public UIScene
 {
 public:
+    CREATE_FUNC(UILoadingBarTest_Left_Scale9);
+
     UILoadingBarTest_Left_Scale9();
     ~UILoadingBarTest_Left_Scale9();
-    bool init();
+    virtual bool init() override;
     void update(float delta);
-
-	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Left_Scale9)
     int _count;
 };
 
 class UILoadingBarTest_Right_Scale9 : public UIScene
 {
 public:
+    CREATE_FUNC(UILoadingBarTest_Right_Scale9);
+
     UILoadingBarTest_Right_Scale9();
     ~UILoadingBarTest_Right_Scale9();
-    bool init();
+    virtual bool init() override;
     void update(float delta);
-
-	virtual void previousCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void restartCallback(Ref* sender, Widget::TouchEventType type) override;
-	virtual void nextCallback(Ref* sender, Widget::TouchEventType type) override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Right_Scale9)
     int _count;
 };
 
 class UILoadingBarTest_Scale9_State_Change : public UIScene
 {
 public:
+    CREATE_FUNC(UILoadingBarTest_Scale9_State_Change);
+
     UILoadingBarTest_Scale9_State_Change();
     ~UILoadingBarTest_Scale9_State_Change();
-    bool init();
+    virtual bool init() override;
 
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarTest_Scale9_State_Change)
     int _count;
 };
 
 class UILoadingBarReloadTexture : public UIScene
 {
 public:
+    CREATE_FUNC(UILoadingBarReloadTexture);
+
     UILoadingBarReloadTexture();
     ~UILoadingBarReloadTexture();
-    void update(float dt);
-    bool init();
+    void update(float dt) override;
+    virtual bool init() override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UILoadingBarReloadTexture);
     int _count;
     
 };

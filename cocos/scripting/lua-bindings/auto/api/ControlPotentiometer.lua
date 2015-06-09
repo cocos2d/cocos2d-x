@@ -180,7 +180,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlPotentiometer] ControlPotentiometer 
 -- @param self
 -- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)

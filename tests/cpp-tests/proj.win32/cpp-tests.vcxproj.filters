@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="win32">
@@ -345,12 +345,27 @@
     </Filter>
     <Filter Include="Classes\CocosStudio3DTest">
       <UniqueIdentifier>{e4104916-24d0-49b8-a864-d273ea13a248}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
       <UniqueIdentifier>{65be3b70-58d6-47f4-bc67-fac9ee134c42}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Physics3DTest">
+      <UniqueIdentifier>{31d7c504-94c7-43ab-818d-996f957a3741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\TerrainTest">
+      <UniqueIdentifier>{3f5069e6-78e5-4388-b614-04c0ea943b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\SpritePolygonTest">
+      <UniqueIdentifier>{b35cfbde-9e13-4981-8458-f7596f089bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\MaterialSystemTest">
+      <UniqueIdentifier>{4fd79779-ff32-4400-aa05-af4fd7f0f4a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Scene3DTest">
+      <UniqueIdentifier>{f7e74952-eece-467a-b27a-2e92db013997}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -905,7 +920,7 @@
     </ClCompile>
     <ClCompile Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
       <Filter>Classes\CocosStudio3DTest</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
@@ -920,6 +935,24 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TerrainTest\TerrainTest.cpp">
+      <Filter>Classes\TerrainTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp">
+      <Filter>Classes\Physics3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SpritePolygonTest\SpritePolygonTest.cpp">
+      <Filter>Classes\SpritePolygonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MaterialSystemTest\MaterialSystemTest.cpp">
+      <Filter>Classes\MaterialSystemTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scene3DTest\Scene3DTest.cpp">
+      <Filter>Classes\Scene3DTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1672,7 +1705,7 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
       <Filter>Classes\CocosStudio3DTest</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
@@ -1687,6 +1720,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TerrainTest\TerrainTest.h">
+      <Filter>Classes\TerrainTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h">
+      <Filter>Classes\Physics3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpritePolygonTest\SpritePolygonTest.h">
+      <Filter>Classes\SpritePolygonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MaterialSystemTest\MaterialSystemTest.h">
+      <Filter>Classes\MaterialSystemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scene3DTest\Scene3DTest.h">
+      <Filter>Classes\Scene3DTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

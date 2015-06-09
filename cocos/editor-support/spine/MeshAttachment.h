@@ -39,8 +39,7 @@
 extern "C" {
 #endif
 
-typedef struct spMeshAttachment spMeshAttachment;
-struct spMeshAttachment {
+typedef struct spMeshAttachment {
 	spAttachment super;
 	const char* path;
 
@@ -67,7 +66,7 @@ struct spMeshAttachment {
 	int edgesCount;
 	int* edges;
 	float width, height;
-};
+} spMeshAttachment;
 
 spMeshAttachment* spMeshAttachment_create (const char* name);
 void spMeshAttachment_updateUVs (spMeshAttachment* self);

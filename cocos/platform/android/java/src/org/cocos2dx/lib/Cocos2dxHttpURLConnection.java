@@ -28,6 +28,8 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.InflaterInputStream;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -260,8 +262,26 @@ public class Cocos2dxHttpURLConnection
     }
 
     static byte[] getResponseContent(HttpURLConnection http) {
-    	try {
-            DataInputStream in = new DataInputStream(http.getInputStream());
+        InputStream in;
+        try {            
+            in = http.getInputStream();
+            String contentEncoding = http.getContentEncoding();
+            if (contentEncoding != null) {
+                if(contentEncoding.equalsIgnoreCase("gzip")){
+                    in = new GZIPInputStream(http.getInputStream()); //reads 2 bytes to determine GZIP stream!
+                }
+                else if(contentEncoding.equalsIgnoreCase("deflate")){
+                    in = new InflaterInputStream(http.getInputStream());
+                }
+            }       
+        } catch (IOException e) {
+            in = http.getErrorStream();
+        } catch (Exception e) {
+            Log.e("Cocos2dxHttpURLConnection exception", e.toString());
+            return null;
+        }
+
+        try {
             byte[] buffer = new byte[1024];
             int size   = 0;
             ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
@@ -272,12 +292,13 @@ public class Cocos2dxHttpURLConnection
             byte retbuffer[] = bytestream.toByteArray();
             bytestream.close();
             return retbuffer;
-		} catch (Exception e) {
-			Log.e("Cocos2dxHttpURLConnection exception", e.toString());
-		}
+        } catch (Exception e) {
+            Log.e("Cocos2dxHttpURLConnection exception", e.toString());
+        }
+
         return null;
     }
-
+    
     static int getResponseCode(HttpURLConnection http) {
         int code = 0;
         try {

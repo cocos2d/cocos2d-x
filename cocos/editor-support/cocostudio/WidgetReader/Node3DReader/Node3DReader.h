@@ -46,7 +46,9 @@ namespace cocostudio
         ~Node3DReader();
         
         static Node3DReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
@@ -54,7 +56,8 @@ namespace cocostudio
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* node3DOptions);
         
     protected:
-        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffersForNode(const tinyxml2::XMLElement* objectData,
+                                                                                    flatbuffers::FlatBufferBuilder* builder);
         cocos2d::Vec3 getVec3Attribute(const tinyxml2::XMLAttribute* attribute) const;
     };
 }

@@ -52,7 +52,7 @@ size_t bufferWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
     Downloader::StreamData *streamBuffer = (Downloader::StreamData *)userdata;
     size_t written = size * nmemb;
     // Avoid pointer overflow
-	if (streamBuffer->offset + written <= static_cast<size_t>(streamBuffer->total))
+    if (streamBuffer->offset + written <= static_cast<size_t>(streamBuffer->total))
     {
         memcpy(streamBuffer->buffer + streamBuffer->offset, ptr, written);
         streamBuffer->offset += written;
@@ -259,11 +259,11 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
     const std::string outFileName = storagePath + TEMP_EXT;
     if (_supportResuming && resumeDownload && _fileUtils->isFileExist(outFileName))
     {
-        fDesc->fp = fopen(outFileName.c_str(), "ab");
+        fDesc->fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "ab");
     }
     else
     {
-        fDesc->fp = fopen(outFileName.c_str(), "wb");
+        fDesc->fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "wb");
     }
     if (!fDesc->fp)
     {
@@ -273,28 +273,77 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
     }
 }
 
-bool Downloader::prepareHeader(void *curl, const std::string &srcUrl) const
+Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void* header/* = nullptr */)
 {
-    curl_easy_setopt(curl, CURLOPT_URL, srcUrl.c_str());
-    curl_easy_setopt(curl, CURLOPT_HEADER, 1);
-    curl_easy_setopt(curl, CURLOPT_NOBODY, 1);
-    if (curl_easy_perform(curl) == CURLE_OK)
-        return true;
-    else
-        return false;
+    bool headerGiven = true;
+    HeaderInfo info;
+    info.valid = false;
+    
+    if (!header)
+    {
+        headerGiven = false;
+        header = curl_easy_init();
+    }
+    
+    curl_easy_setopt(header, CURLOPT_URL, srcUrl.c_str());
+    curl_easy_setopt(header, CURLOPT_HEADER, 1);
+    curl_easy_setopt(header, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(header, CURLOPT_NOSIGNAL, 1);
+    if (curl_easy_perform(header) == CURLE_OK)
+    {
+        char *url;
+        char *contentType;
+        curl_easy_getinfo(header, CURLINFO_EFFECTIVE_URL, &url);
+        curl_easy_getinfo(header, CURLINFO_CONTENT_TYPE, &contentType);
+        curl_easy_getinfo(header, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &info.contentSize);
+        curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &info.responseCode);
+        
+        if (contentType == nullptr || info.contentSize == -1 || info.responseCode >= 400)
+        {
+            info.valid = false;
+        }
+        else
+        {
+            info.url = url;
+            info.contentType = contentType;
+            info.valid = true;
+        }
+    }
+    
+    if (info.valid && _onHeader)
+    {
+        _onHeader(srcUrl, info);
+    }
+    else if (!info.valid)
+    {
+        info.contentSize = -1;
+        std::string msg = StringUtils::format("Can not get content size of file (%s) : Request header failed", srcUrl.c_str());
+        this->notifyError(ErrorCode::PREPARE_HEADER_ERROR, msg);
+    }
+    
+    if (!headerGiven) {
+        curl_easy_cleanup(header);
+    }
+    
+    return info;
 }
 
-long Downloader::getContentSize(const std::string &srcUrl) const
+long Downloader::getContentSize(const std::string &srcUrl)
 {
-    double contentLength = -1;
-    CURL *header = curl_easy_init();
-    if (prepareHeader(header, srcUrl))
-    {
-        curl_easy_getinfo(header, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &contentLength);
-    }
-    curl_easy_cleanup(header);
-    
-    return contentLength;
+    HeaderInfo info = prepareHeader(srcUrl);
+    return info.contentSize;
+}
+
+Downloader::HeaderInfo Downloader::getHeader(const std::string &srcUrl)
+{
+    return prepareHeader(srcUrl);
+}
+
+void Downloader::getHeaderAsync(const std::string &srcUrl, const HeaderCallback &callback)
+{
+    setHeaderCallback(callback);
+    auto t = std::thread(&Downloader::prepareHeader, this, srcUrl, nullptr);
+    t.detach();
 }
 
 void Downloader::downloadToBufferAsync(const std::string &srcUrl, unsigned char *buffer, const long &size, const std::string &customId/* = ""*/)
@@ -366,25 +415,26 @@ void Downloader::downloadToBuffer(const std::string &srcUrl, const std::string &
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        _fileUtils->removeFile(data.path + data.name + TEMP_EXT);
-        std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
+        std::string msg = StringUtils::format("Unable to download file to buffer: [curl error]%s", curl_easy_strerror(res));
         this->notifyError(msg, customId, res);
+    }
+    else
+    {
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            if (!ptr.expired())
+            {
+                std::shared_ptr<Downloader> downloader = ptr.lock();
+                
+                auto successCB = downloader->getSuccessCallback();
+                if (successCB != nullptr)
+                {
+                    successCB(data.url, "", data.customId);
+                }
+            }
+        });
     }
     
     curl_easy_cleanup(curl);
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-        if (!ptr.expired())
-        {
-            std::shared_ptr<Downloader> downloader = ptr.lock();
-            
-            auto successCB = downloader->getSuccessCallback();
-            if (successCB != nullptr)
-            {
-                successCB(data.url, "", data.customId);
-            }
-        }
-    });
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
@@ -482,11 +532,10 @@ void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string
         CURL *header = curl_easy_init();
         // Make a resume request
         curl_easy_setopt(header, CURLOPT_RESUME_FROM_LARGE, 0);
-        if (prepareHeader(header, units.begin()->second.srcUrl))
+        HeaderInfo headerInfo = prepareHeader(units.begin()->second.srcUrl, header);
+        if (headerInfo.valid)
         {
-            long responseCode;
-            curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &responseCode);
-            if (responseCode == HTTP_CODE_SUPPORT_RESUME)
+            if (headerInfo.responseCode == HTTP_CODE_SUPPORT_RESUME)
             {
                 _supportResuming = true;
             }
@@ -656,7 +705,6 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
     }
     
     // Clean up and close files
-    curl_multi_cleanup(multi_handle);
     for (auto it = _files.begin(); it != _files.end(); ++it)
     {
         FILE *f = (*it)->fp;
@@ -665,6 +713,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
         curl_multi_remove_handle(multi_handle, single);
         curl_easy_cleanup(single);
     }
+    curl_multi_cleanup(multi_handle);
     
     // Check unfinished files and notify errors, succeed files will be renamed from temporary file name to real name
     for (auto it = _progDatas.begin(); it != _progDatas.end(); ++it) {

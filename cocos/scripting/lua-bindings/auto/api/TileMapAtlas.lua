@@ -22,7 +22,7 @@
 -- @return TileMapAtlas#TileMapAtlas self (return value: cc.TileMapAtlas)
         
 --------------------------------
---  returns a tile from position x,y.<br>
+-- Returns a tile from position x,y.<br>
 -- For the moment only channel R is used
 -- @function [parent=#TileMapAtlas] getTileAt 
 -- @param self

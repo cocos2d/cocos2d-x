@@ -412,12 +412,12 @@ end
 function display.newSpriteFrame(source, ...)
     local frame
     if type(source) == "string" then
-        if string.byte(souce) == 35 then -- first char is #
-            souce = string.sub(souce, 2)
+        if string.byte(source) == 35 then -- first char is #
+            source = string.sub(source, 2)
         end
-        frame = spriteFrameCache:getSpriteFrame(souce)
+        frame = spriteFrameCache:getSpriteFrame(source)
         if not frame then
-            error(string.format("display.newSpriteFrame() - invalid frame name \"%s\"", tostring(souce)), 0)
+            error(string.format("display.newSpriteFrame() - invalid frame name \"%s\"", tostring(source)), 0)
         end
     elseif tolua.type(source) == "cc.Texture2D" then
         frame = cc.SpriteFrame:createWithTexture(source, ...)

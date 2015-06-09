@@ -320,7 +320,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
         return;
     }
     
-    contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
+    contact.setEventCode(PhysicsContact::EventCode::SEPARATE);
     contact.setWorld(this);
     _scene->getEventDispatcher()->dispatchEvent(&contact);
 }
@@ -817,11 +817,6 @@ void PhysicsWorld::step(float delta)
 
 void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
-    if (delta < FLT_EPSILON)
-    {
-        return;
-    }
-
     if(_updateBodyTransform || !_delayAddBodies.empty())
     {
         _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
@@ -832,10 +827,15 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         updateBodies();
     }
-
+    
     if (!_delayAddJoints.empty() || !_delayRemoveJoints.empty())
     {
         updateJoints();
+    }
+    
+    if (delta < FLT_EPSILON)
+    {
+        return;
     }
     
     if (userCall)
@@ -879,11 +879,11 @@ PhysicsWorld::PhysicsWorld()
 , _updateTime(0.0f)
 , _substeps(1)
 , _cpSpace(nullptr)
+, _updateBodyTransform(false)
 , _scene(nullptr)
 , _autoStep(true)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
-, _updateBodyTransform(false)
 {
     
 }

@@ -19,7 +19,7 @@ material mp_fire_02
 
             texture_unit
             {
-                texture mp_fire_02_2x2.dds
+                texture mp_fire_02_2x2.png
             }
         }
     }

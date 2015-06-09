@@ -477,6 +477,17 @@ void GLViewImpl::setIMEKeyboardState(bool /*bOpen*/)
 
 }
 
+void GLViewImpl::setCursorVisible( bool isVisible )
+{
+    if( _mainWindow == NULL )
+        return;
+    
+    if( isVisible )
+        glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    else
+        glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+}
+
 void GLViewImpl::setFrameZoomFactor(float zoomFactor)
 {
     CCASSERT(zoomFactor > 0.0f, "zoomFactor must be larger than 0");

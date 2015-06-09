@@ -111,21 +111,25 @@ void localStorageSetItem( const std::string& key, const std::string& value)
 }
 
 /** gets an item from the LS */
-std::string localStorageGetItem( const std::string& key )
+bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
 	assert( _initialized );
     JniMethodInfo t;
 
-    std::string ret;
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
+    {
         jstring jkey = t.env->NewStringUTF(key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
-        ret = JniHelper::jstring2string(jret);
+        outItem->assign(JniHelper::jstring2string(jret));
         t.env->DeleteLocalRef(jret);
         t.env->DeleteLocalRef(jkey);
         t.env->DeleteLocalRef(t.classID);
+        return true;
     }
-    return ret;
+    else
+    {
+        return false;
+    }
 }
 
 /** removes an item from the LS */
@@ -141,6 +145,18 @@ void localStorageRemoveItem( const std::string& key )
         t.env->DeleteLocalRef(t.classID);
     }
 
+}
+
+/** removes all items from the LS */
+void localStorageClear()
+{
+    assert( _initialized );
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "clear", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
 }
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

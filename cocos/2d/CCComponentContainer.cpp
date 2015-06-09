@@ -68,7 +68,7 @@ bool ComponentContainer::add(Component *com)
         CC_BREAK_IF(component);
         com->setOwner(_owner);
         _components->insert(com->getName(), com);
-        com->onEnter();
+        com->onAdd();
         ret = true;
     } while(0);
     return ret;
@@ -85,7 +85,7 @@ bool ComponentContainer::remove(const std::string& name)
         CC_BREAK_IF(iter == _components->end());
         
         auto com = iter->second;
-        com->onExit();
+        com->onRemove();
         com->setOwner(nullptr);
         
         _components->erase(iter);
@@ -105,7 +105,7 @@ bool ComponentContainer::remove(Component *com)
         {
             if (iter->second == com)
             {
-                com->onExit();
+                com->onRemove();
                 com->setOwner(nullptr);
                 _components->erase(iter);
                 break;
@@ -122,7 +122,7 @@ void ComponentContainer::removeAll()
     {
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
-            iter->second->onExit();
+            iter->second->onRemove();
             iter->second->setOwner(nullptr);
         }
         
@@ -154,6 +154,21 @@ void ComponentContainer::visit(float delta)
 bool ComponentContainer::isEmpty() const
 {
     return (_components == nullptr || _components->empty());
+}
+
+void ComponentContainer::onEnter()
+{
+    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    {
+        iter->second->onEnter();
+    }
+}
+void ComponentContainer::onExit()
+{
+    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    {
+        iter->second->onExit();
+    }
 }
 
 NS_CC_END

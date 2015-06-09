@@ -12,10 +12,6 @@
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
                "proj.ios_mac/PROJECT_NAME.xcodeproj",
-               "proj.wp8-xaml/PROJECT_NAME.sln",
-               "proj.wp8-xaml/App/PROJECT_NAME.csproj",
-               "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj",
-               "proj.wp8-xaml/AppComponent/PROJECT_NAMEComponent.vcxproj.filters",
                "proj.win8.1-universal/PROJECT_NAME.sln",
                "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
                "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",
@@ -23,7 +19,11 @@
                "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
                "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
                "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
-               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters"
+               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
+               "proj.win10/PROJECT_NAME.sln",
+               "proj.win10/App/PROJECT_NAME.vcxproj",
+               "proj.win10/App/PROJECT_NAME.vcxproj.filters",
+               "proj.win10/App/PROJECT_NAME_TemporaryKey.pfx"
             ]
          },
          "project_replace_project_name":{
@@ -34,9 +34,6 @@
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
-               "proj.wp8-xaml/App/PROJECT_NAME.csproj",
-               "proj.wp8-xaml/App/Properties/WMAppManifest.xml",
-               "proj.wp8-xaml/PROJECT_NAME.sln",
                "proj.win8.1-universal/PROJECT_NAME.sln",
                "proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
                "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
@@ -49,16 +46,23 @@
                "proj.android/AndroidManifest.xml",
                "proj.android/build.xml",
                "proj.android/res/values/strings.xml",
+               "proj.android-studio/settings.gradle",
                "proj.ios_mac/ios/main.m",
                "proj.ios_mac/ios/Prefix.pch",
                "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
+               "proj.win10/PROJECT_NAME.sln",
+               "proj.win10/App/PROJECT_NAME.vcxproj",
+               "proj.win10/App/PROJECT_NAME.vcxproj.filters",
+               "proj.win10/App/Package.appxmanifest",
                "CMakeLists.txt"
             ]
          },
          "project_replace_package_name":{
             "src_package_name":"org.cocos2dx.hellocpp",
             "files":[
-               "proj.android/AndroidManifest.xml"
+               "proj.android/AndroidManifest.xml",
+               "proj.android-studio/app/build.gradle",
+               "proj.android-studio/app/AndroidManifest.xml"
             ]
          },
          "project_replace_mac_bundleid": {

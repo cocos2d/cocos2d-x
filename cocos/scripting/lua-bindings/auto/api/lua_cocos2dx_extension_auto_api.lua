@@ -87,11 +87,6 @@
 
 
 --------------------------------------------------------
--- the cc ParticlePool
--- @field [parent=#cc] ParticlePool#ParticlePool ParticlePool preloaded module
-
-
---------------------------------------------------------
 -- the cc ParticleSystem3D
 -- @field [parent=#cc] ParticleSystem3D#ParticleSystem3D ParticleSystem3D preloaded module
 

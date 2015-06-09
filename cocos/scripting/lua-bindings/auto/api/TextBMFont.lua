@@ -67,7 +67,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#TextBMFont] TextBMFont 
 -- @param self
 -- @return TextBMFont#TextBMFont self (return value: ccui.TextBMFont)

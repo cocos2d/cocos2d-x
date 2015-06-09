@@ -1,9 +1,5 @@
-
-#ifndef CC_ALLOCATOR_STRATEGY_FIXED_BLOCK_H
-#define CC_ALLOCATOR_STRATEGY_FIXED_BLOCK_H
-
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -26,6 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#ifndef CC_ALLOCATOR_STRATEGY_FIXED_BLOCK_H
+#define CC_ALLOCATOR_STRATEGY_FIXED_BLOCK_H
+/// @cond DO_NOT_SHOW
 
 /****************************************************************************
                                     WARNING!
@@ -273,4 +273,5 @@ protected:
 NS_CC_ALLOCATOR_END
 NS_CC_END
 
+/// @endcond
 #endif//CC_ALLOCATOR_STRATEGY_FIXED_BLOCK_H

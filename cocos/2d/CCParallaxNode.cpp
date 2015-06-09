@@ -66,7 +66,7 @@ private:
 ParallaxNode::ParallaxNode()
 {
     _parallaxArray = ccArrayNew(5);        
-    _lastPosition = Vec2(-100,-100);
+    _lastPosition.set(-100.0f, -100.0f);
 }
 
 ParallaxNode::~ParallaxNode()

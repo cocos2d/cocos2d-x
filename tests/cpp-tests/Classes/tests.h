@@ -1,6 +1,7 @@
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
+#include "SpritePolygonTest/SpritePolygonTest.h"
 #include "UnitTest/UnitTest.h"
 #include "NewRendererTest/NewRendererTest.h"
 #include "ConsoleTest/ConsoleTest.h"
@@ -19,6 +20,7 @@
 #include "MenuTest/MenuTest.h"
 #include "ActionManagerTest/ActionManagerTest.h"
 #include "LayerTest/LayerTest.h"
+#include "Scene3DTest/Scene3DTest.h"
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
@@ -39,7 +41,7 @@
 #include "PerformanceTest/PerformanceTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NewAudioEngineTest/NewAudioEngineTest.h"
 #endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
@@ -74,13 +76,18 @@
 #include "ReleasePoolTest/ReleasePoolTest.h"
 
 #include "Sprite3DTest/Sprite3DTest.h"
+#include "TerrainTest/TerrainTest.h"
 #include "Camera3DTest/Camera3DTest.h"
 #include "BillBoardTest/BillBoardTest.h"
 #include "LightTest/LightTest.h"
 #include "Particle3DTest/Particle3DTest.h"
+#include "Physics3DTest/Physics3DTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"
 #include "CocosStudio3DTest/CocosStudio3DTest.h"
+#include "UITest/UITest.h"
+
+#include "MaterialSystemTest/MaterialSystemTest.h"
 
 #endif

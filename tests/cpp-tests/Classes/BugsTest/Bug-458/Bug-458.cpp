@@ -6,9 +6,11 @@
 #include "Bug-458.h"
 #include "QuestionContainerSprite.h"
 
+USING_NS_CC;
+
 bool Bug458Layer::init()
 {
-    if(BugsTestBaseLayer::init())
+    if(BugsTestBase::init())
     {
         // ask director the the window size
         auto size = Director::getInstance()->getWinSize();

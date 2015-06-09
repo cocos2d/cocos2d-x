@@ -26,10 +26,6 @@ THE SOFTWARE.
 #include "platform/CCStdC.h"
 #include "CCWinRTUtils.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-#include "platform/wp8/CCGLViewImpl-wp8.h"
-#endif
-
 #if defined(VLD_DEBUG_MEMORY)
 #include <vld.h>
 #endif

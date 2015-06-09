@@ -5,8 +5,23 @@
 -- @parent_module cc
 
 --------------------------------
--- creates the action<br>
--- param duration in seconds
+-- initializes the action<br>
+-- param duration In seconds.
+-- @function [parent=#JumpTo] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #vec2_table position
+-- @param #float height
+-- @param #int jumps
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Creates the action.<br>
+-- param duration Duration time, in seconds.<br>
+-- param position The jumping destination position.<br>
+-- param height The jumping height.<br>
+-- param jumps The jumping times.<br>
+-- return An autoreleased JumpTo object.
 -- @function [parent=#JumpTo] create 
 -- @param self
 -- @param #float duration
@@ -33,5 +48,11 @@
 -- @function [parent=#JumpTo] reverse 
 -- @param self
 -- @return JumpTo#JumpTo ret (return value: cc.JumpTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#JumpTo] JumpTo 
+-- @param self
+-- @return JumpTo#JumpTo self (return value: cc.JumpTo)
         
 return nil

@@ -4,51 +4,21 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "cocostudio/CocoStudio.h"
+#include "BaseTest.h"
 
-class SceneEditorTestScene : public TestScene
-{
-public: 
-	SceneEditorTestScene(bool bPortrait = false);
+DEFINE_TEST_SUITE(CocoStudioSceneEditTests);
 
-	virtual void runThisTest();
-
-	// The CallBack for back to the main menu scene
-	virtual void MainMenuCallback(cocos2d::Ref* pSender);
-};
-
-enum {
-	TEST_LOADSCENEEDITORFILE = 0,
-    TEST_SPIRTECOMPONENT,
-    TEST_ARMATURECOMPONENT,
-    TEST_UICOMPONENT,
-    TEST_TMXMAPCOMPONENT,
-    TEST_PARTICLECOMPONENT,
-    TEST_EFEECTCOMPONENT,
-    TEST_BACKGROUNDCOMPONENT,
-    TEST_ATTRIBUTECOMPONENT,
-    TEST_TRIGGER,
-	TEST_SCENEEDITOR_COUNT
-};
-
-class SceneEditorTestLayer : public cocos2d::Layer
+class SceneEditorTestBase : public TestCase
 {
 public:
-	virtual void onEnter() override;
-	virtual void onExit() override;
+	virtual bool init() override;
 
-	virtual std::string title();
-	virtual std::string subtitle();
-
-	virtual void restartCallback(cocos2d::Ref* pSender);
-	virtual void nextCallback(cocos2d::Ref* pSender);
-	virtual void backCallback(cocos2d::Ref* pSender);
-
-	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+	virtual std::string title() const override;
 
 protected:
-	MenuItemImage *restartItem;
-	MenuItemImage *nextItem;
-	MenuItemImage *backItem;
+    cocos2d::MenuItemImage* restartItem;
+    cocos2d::MenuItemImage* nextItem;
+    cocos2d::MenuItemImage* backItem;
     
 protected:
 	virtual void changeLoadTypeCallback(cocos2d::Ref *pSender);
@@ -65,13 +35,15 @@ protected:
     std::string _filePath;
 };
 
-class LoadSceneEdtiorFileTest : public SceneEditorTestLayer
+class LoadSceneEdtiorFileTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(LoadSceneEdtiorFileTest);
+
 	LoadSceneEdtiorFileTest();
 	~LoadSceneEdtiorFileTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -80,13 +52,15 @@ private:
 };
 
 
-class SpriteComponentTest : public SceneEditorTestLayer
+class SpriteComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(SpriteComponentTest);
+
 	SpriteComponentTest();
 	~SpriteComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -95,13 +69,15 @@ private:
 	void defaultPlay();
 };
 
-class ArmatureComponentTest : public SceneEditorTestLayer
+class ArmatureComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(ArmatureComponentTest);
+
 	ArmatureComponentTest();
 	~ArmatureComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -110,28 +86,32 @@ private:
 	void defaultPlay();
 };
 
-class UIComponentTest : public SceneEditorTestLayer
+class UIComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(UIComponentTest);
+
 	UIComponentTest();
 	~UIComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
-	void touchEvent(cocos2d::Ref *pSender, ui::Widget::TouchEventType type);
+	void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
 private:
 	void defaultPlay();
 };
 
-class TmxMapComponentTest : public SceneEditorTestLayer
+class TmxMapComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(TmxMapComponentTest);
+
 	TmxMapComponentTest();
 	~TmxMapComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -140,13 +120,15 @@ private:
 
 };
 
-class ParticleComponentTest : public SceneEditorTestLayer
+class ParticleComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(ParticleComponentTest);
+
 	ParticleComponentTest();
 	~ParticleComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -154,13 +136,15 @@ protected:
 	void defaultPlay();
 };
 
-class EffectComponentTest : public SceneEditorTestLayer
+class EffectComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(EffectComponentTest);
+
 	EffectComponentTest();
 	~EffectComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -170,13 +154,15 @@ private:
 	
 };
 
-class BackgroundComponentTest : public SceneEditorTestLayer
+class BackgroundComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(BackgroundComponentTest);
+
 	BackgroundComponentTest();
 	~BackgroundComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
@@ -184,13 +170,15 @@ private:
 	void defaultPlay();
 };
 
-class AttributeComponentTest : public SceneEditorTestLayer
+class AttributeComponentTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(AttributeComponentTest);
+
 	AttributeComponentTest();
 	~AttributeComponentTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
 	virtual void onEnter() override;
     virtual void onExit() override;
 	bool initData();
@@ -200,21 +188,23 @@ private:
 	void defaultPlay();
 };
 
-class TriggerTest : public SceneEditorTestLayer
+class TriggerTest : public SceneEditorTestBase
 {
 public:
+    CREATE_FUNC(TriggerTest);
+
 	TriggerTest();
 	~TriggerTest();
 
-    virtual std::string title();
+    virtual std::string title() const override;
     virtual void onEnter() override;
     virtual void onExit() override;
     
 	// default implements are used to call script callback if exist
-	virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
-    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
-    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
-    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+	virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// update of game
 	void gameLogic(float dt);

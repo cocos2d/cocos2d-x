@@ -29,12 +29,12 @@ THE SOFTWARE.
 #include <string>
 #include "base/CCData.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup data_storage
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 /**
  * UserDefault acts as a tiny database. You can save and get base type values by it.
@@ -50,108 +50,159 @@ public:
     // get value methods
 
     /**
-    @brief Get bool value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is false.
-    * @js NA
-    */
-    bool    getBoolForKey(const char* pKey);
-    /**
+     * Get bool value by key, if the key doesn't exist, will return false.
+     * You can set the default value, or it is false.
+     * @param key The key to get value.
+     * @return Bool value by `key`.
      * @js NA
      */
-    bool    getBoolForKey(const char* pKey, bool defaultValue);
+    bool    getBoolForKey(const char* key);
+    
     /**
-    @brief Get integer value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.
-    * @js NA
-    */
-    int     getIntegerForKey(const char* pKey);
-    /**
+     * Get bool value by key, if the key doesn't exist, will return passed default value.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
      * @js NA
      */
-    int     getIntegerForKey(const char* pKey, int defaultValue);
+    virtual bool getBoolForKey(const char* key, bool defaultValue);
+    
     /**
-    @brief Get float value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.0f.
-    * @js NA
-    */
-    float    getFloatForKey(const char* pKey);
-    /**
+     * Get integer value by key, if the key doesn't exist, will return 0.
+     * You can set the default value, or it is 0.
+     * @param key The key to get value.
+     * @return Integer value of the key.
      * @js NA
      */
-    float    getFloatForKey(const char* pKey, float defaultValue);
+    int     getIntegerForKey(const char* key);
+    
     /**
-    @brief Get double value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.0.
-    * @js NA
-    */
-    double  getDoubleForKey(const char* pKey);
-    /**
+     * Get bool value by key, if the key doesn't exist, will return passed default value.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
+     * @return Integer value of the key.
      * @js NA
      */
-    double  getDoubleForKey(const char* pKey, double defaultValue);
+    virtual int getIntegerForKey(const char* key, int defaultValue);
+    
     /**
-    @brief Get string value by key, if the key doesn't exist, a default value will return.
-    You can set the default value, or it is "".
-    * @js NA
-    */
-    std::string getStringForKey(const char* pKey);
-    /**
+     * Get float value by key, if the key doesn't exist, will return 0.0.
+     * @param key The key to get value.
+     * @return Float value of the key.
      * @js NA
      */
-    std::string getStringForKey(const char* pKey, const std::string & defaultValue);
+    float    getFloatForKey(const char* key);
+    
     /**
-     @brief Get binary data value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is null.
+     * Get float value by key, if the key doesn't exist, will return passed default value.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
+     * @return Float value of the key.
      * @js NA
-     * @lua NA
      */
-    Data getDataForKey(const char* pKey);
+    virtual float getFloatForKey(const char* key, float defaultValue);
+    
     /**
+     * Get double value by key, if the key doesn't exist, will return 0.0.
+     * @param key The key to get value.
+     * @return Double value of the key.
      * @js NA
-     * @lua NA
      */
-    Data getDataForKey(const char* pKey, const Data& defaultValue);
+    double  getDoubleForKey(const char* key);
+    
+    /**
+     * Get double value by key, if the key doesn't exist, will return passed default value.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
+     * @return Double value of the key.
+     * @js NA
+     */
+    virtual double getDoubleForKey(const char* key, double defaultValue);
+    
+    /**
+     * Get string value by key, if the key doesn't exist, will return an empty string.
+     * @param key The key to get value.
+     * @return String value of the key.
+     * @js NA
+     */
+    std::string getStringForKey(const char* key);
+    
+    /**
+     * Get string value by key, if the key doesn't exist, will return passed default value.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
+     * @return String value of the key.
+     * @js NA
+     */
+    virtual std::string getStringForKey(const char* key, const std::string & defaultValue);
+    
+    /**
+     * Get Data value by key, if the key doesn't exist, will return an empty Data.
+     * @param key The key to get value.
+     * @return Data value of the key.
+     * @js NA
+     */
+    Data getDataForKey(const char* key);
+    
+    /**
+     * Get Data value by key, if the key doesn't exist, will return an empty Data.
+     * @param key The key to get value.
+     * @param defaultValue The default value to return if the key doesn't exist.
+     * @return Data value of the key.
+     * @js NA
+     */
+    virtual Data getDataForKey(const char* key, const Data& defaultValue);
 
     // set value methods
 
     /**
-     @brief Set bool value by key.
+     * Set bool value by key.
+     * @param key The key to set.
+     * @param value A bool value to set to the key.
      * @js NA
      */
-    void    setBoolForKey(const char* pKey, bool value);
+    virtual void setBoolForKey(const char* key, bool value);
     /**
-     @brief Set integer value by key.
+     * Set integer value by key.
+     * @param key The key to set.
+     * @param value A integer value to set to the key.
      * @js NA
      */
-    void    setIntegerForKey(const char* pKey, int value);
+    virtual void setIntegerForKey(const char* key, int value);
     /**
-     @brief Set float value by key.
+     * Set float value by key.
+     * @param key The key to set.
+     * @param value A float value to set to the key.
      * @js NA
      */
-    void    setFloatForKey(const char* pKey, float value);
+    virtual void setFloatForKey(const char* key, float value);
     /**
-     @brief Set double value by key.
+     * Set double value by key.
+     * @param key The key to set.
+     * @param value A double value to set to the key.
      * @js NA
      */
-    void    setDoubleForKey(const char* pKey, double value);
+    virtual void setDoubleForKey(const char* key, double value);
     /**
-     @brief Set string value by key.
+     * Set string value by key.
+     * @param key The key to set.
+     * @param value A string value to set to the key.
      * @js NA
      */
-    void    setStringForKey(const char* pKey, const std::string & value);
+    virtual void setStringForKey(const char* key, const std::string & value);
     /**
-     @brief Set binary data value by key.
+     * Set Data value by key.
+     * @param key The key to set.
+     * @param value A Data value to set to the key.
      * @js NA
-     * @lua NA
      */
-    void    setDataForKey(const char* pKey, const Data& value);
+    virtual void setDataForKey(const char* key, const Data& value);
     /**
-     @brief Save content to xml file
+     * You should invoke this function to save values set by setXXXForKey().
      * @js NA
      */
-    void    flush();
+    virtual void flush();
 
-    /** returns the singleton 
+    /** Returns the singleton.
      * @js NA
      * @lua NA
      */
@@ -161,27 +212,42 @@ public:
      */
     static void destroyInstance();
 
-    /** deprecated. Use getInstace() instead 
+    /**
+    * You can inherit from platform dependent implementation of UserDefault, such as UserDefaultAndroid,
+    * and use this function to set delegate, then UserDefault will invoke delegate's implementation.
+    * For example, your store native data base or other format store.
+    *
+    * If you don't want to system default implementation after setting delegate, you can just pass nullptr
+    * to this function.
+    *
+    * @warm It will delete previous delegate
+    */
+    static void setDelegate(UserDefault *delegate);
+
+    /** @deprecated Use getInstace() instead.
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static UserDefault* sharedUserDefault();
-    /**
+    /**@deprecated Use destroyInstance() instead.
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedUserDefault();
-    /**
+    /** All supported platforms other iOS & Android use xml file to save values. This function is return the file path of the xml path.
      * @js NA
      */
     static const std::string& getXMLFilePath();
-    /**
+    /** All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.
+     * @return True if the xml file exists, flase if not.
      * @js NA
      */
     static bool isXMLFileExist();
 
-private:
+protected:
     UserDefault();
-    ~UserDefault();
+    virtual ~UserDefault();
+    
+private:
     
     static bool createXMLFile();
     static void initXMLFilePath();
@@ -191,9 +257,9 @@ private:
     static bool _isFilePathInitialized;
 };
 
-// end of data_storage group
-/// @}
 
 NS_CC_END
+// end of base group
+/** @} */
 
 #endif // __SUPPORT_CCUSERDEFAULT_H__

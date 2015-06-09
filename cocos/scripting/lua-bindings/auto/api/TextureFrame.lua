@@ -12,13 +12,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#TextureFrame] setNode 
--- @param self
--- @param #cc.Node node
--- @return TextureFrame#TextureFrame self (return value: ccs.TextureFrame)
-        
---------------------------------
--- 
 -- @function [parent=#TextureFrame] setTextureName 
 -- @param self
 -- @param #string textureName
@@ -35,6 +28,13 @@
 -- @function [parent=#TextureFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextureFrame] setNode 
+-- @param self
+-- @param #cc.Node node
+-- @return TextureFrame#TextureFrame self (return value: ccs.TextureFrame)
         
 --------------------------------
 -- 

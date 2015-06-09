@@ -37,6 +37,11 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+#include "physics3d/CCPhysics3DWorld.h"
+#include "physics3d/CCPhysics3DComponent.h"
+#endif
+
 NS_CC_BEGIN
 
 Scene::Scene()
@@ -44,6 +49,10 @@ Scene::Scene()
 : _physicsWorld(nullptr)
 #endif
 {
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    _physics3DWorld = nullptr;
+    _physics3dDebugCamera = nullptr;
+#endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
@@ -61,6 +70,10 @@ Scene::~Scene()
 {
 #if CC_USE_PHYSICS
     CC_SAFE_DELETE(_physicsWorld);
+#endif
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    CC_SAFE_RELEASE(_physics3DWorld);
+    CC_SAFE_RELEASE(_physics3dDebugCamera);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
@@ -151,27 +164,68 @@ void Scene::render(Renderer* renderer)
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
+        //clear background with max depth
+        camera->clearBackground(1.0);
         //visit the scene
         visit(renderer, transform, 0);
+        
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
+    
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
+    {
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
+        _physics3DWorld->debugDraw(renderer);
+        renderer->render();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+#endif
 
     Camera::_visitingCamera = nullptr;
 }
 
-#if CC_USE_PHYSICS
+void Scene::removeAllChildren()
+{
+    if (_defaultCamera)
+        _defaultCamera->retain();
+    
+    Node::removeAllChildren();
+    
+    if (_defaultCamera)
+    {
+        addChild(_defaultCamera);
+        _defaultCamera->release();
+    }
+}
+
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+void Scene::setPhysics3DDebugCamera(Camera* camera)
+{
+    CC_SAFE_RETAIN(camera);
+    CC_SAFE_RELEASE(_physics3dDebugCamera);
+    _physics3dDebugCamera = camera;
+}
+#endif
+
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
+#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
+#endif
 }
 
 void Scene::addChild(Node* child, int zOrder, const std::string &name)
 {
     Node::addChild(child, zOrder, name);
+#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
+#endif
 }
 
 Scene* Scene::createWithPhysics()
@@ -198,7 +252,15 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF( ! (director = Director::getInstance()) );
         
         this->setContentSize(director->getWinSize());
+#if CC_USE_PHYSICS
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
+#endif
+        
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+        Physics3DWorldDes info;
+        CC_BREAK_IF(! (_physics3DWorld = Physics3DWorld::create(&info)));
+        _physics3DWorld->retain();
+#endif
         
         // success
         ret = true;
@@ -208,11 +270,14 @@ bool Scene::initWithPhysics()
 
 void Scene::addChildToPhysicsWorld(Node* child)
 {
+#if CC_USE_PHYSICS
     if (_physicsWorld)
     {
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
         addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
         {
+            node->_physicsWorld = _physicsWorld;
+
             if (node->getPhysicsBody())
             {
                 _physicsWorld->addBody(node->getPhysicsBody());
@@ -226,6 +291,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
         
         addToPhysicsWorldFunc(child);
     }
+#endif
 }
 
 #endif

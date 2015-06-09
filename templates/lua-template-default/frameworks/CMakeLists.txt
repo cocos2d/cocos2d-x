@@ -34,6 +34,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
 
 option(DEBUG_MODE "Debug or release?" ON)
+option(USE_BULLET "Use bullet for physics3d library" ON)
 
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)
@@ -41,10 +42,16 @@ else(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
 
+if(USE_BULLET)
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+  add_definitions(-DCC_USE_PHYSICS=1)
+endif(USE_BULLET)
+
 
 # libcocos2d
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js releated targets")
 add_subdirectory(${COCOS2D_ROOT})
 
 
@@ -128,5 +135,7 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/3d ${APP_BIN_DIR}/Resources
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/physics3d ${APP_BIN_DIR}/Resources
   )
   

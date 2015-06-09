@@ -46,6 +46,7 @@ namespace flatbuffers
     struct IntFrame;
     struct BoolFrame;
     struct InnerActionFrame;
+    struct EasingData;
 }
 
 NS_TIMELINE_BEGIN
@@ -115,6 +116,8 @@ protected:
     Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::ScaleFrame* flatbuffers);
     Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::IntFrame* flatbuffers);
     Frame* loadInnerActionFrameWithFlatBuffers  (const flatbuffers::InnerActionFrame* flatbuffers);
+    
+    void loadEasingDataWithFlatBuffers(Frame* frame, const flatbuffers::EasingData* flatbuffers);
 
 protected:
 

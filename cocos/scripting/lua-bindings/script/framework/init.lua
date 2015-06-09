@@ -22,12 +22,6 @@ THE SOFTWARE.
 
 ]]
 
-__G__TRACKBACK__ = function(msg)
-    local msg = debug.traceback(msg, 3)
-    print(msg)
-    return msg
-end
-
 if type(DEBUG) ~= "number" then DEBUG = 0 end
 
 -- load framework

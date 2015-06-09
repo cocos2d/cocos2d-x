@@ -116,6 +116,7 @@ tags
 # Permit plugins to ship third-party libraries.
 !/plugin/plugins/*/proj.android/libs/*.jar
 !/plugin/plugins/*/proj.android/libs
+!/tools/bindings-generator/tools/win32/*
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

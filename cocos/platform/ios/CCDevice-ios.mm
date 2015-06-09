@@ -471,7 +471,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
         info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
         info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
-        info.strokeColorB           = textDefinition._stroke._strokeAlpha / 255.0f;
+        info.strokeColorA           = textDefinition._stroke._strokeAlpha / 255.0f;
         info.strokeSize             = textDefinition._stroke._strokeSize;
         info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
         info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;

@@ -38,13 +38,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#SkewFrame] apply 
--- @param self
--- @param #float percent
--- @return SkewFrame#SkewFrame self (return value: ccs.SkewFrame)
-        
---------------------------------
--- 
 -- @function [parent=#SkewFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)

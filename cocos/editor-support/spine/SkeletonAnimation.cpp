@@ -98,6 +98,10 @@ void SkeletonAnimation::initialize () {
 	stateInternal->disposeTrackEntry = disposeTrackEntry;
 }
 
+SkeletonAnimation::SkeletonAnimation ()
+		: SkeletonRenderer() {
+}
+
 SkeletonAnimation::SkeletonAnimation (spSkeletonData *skeletonData)
 		: SkeletonRenderer(skeletonData) {
 	initialize();

@@ -3,14 +3,16 @@
 
 #include "BugsTest.h"
 
-class Bug422Layer : public BugsTestBaseLayer
+class Bug422Layer : public BugsTestBase
 {
 public:
-    virtual bool init();
+    CREATE_FUNC(Bug422Layer);
+
+    virtual bool init() override;
 
     void reset();
     void check(Node* target);
-    void menuCallback(Ref* sender);
+    void menuCallback(cocos2d::Ref* sender);
 };
 
 #endif // __BUG_422_H__

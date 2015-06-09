@@ -40,20 +40,12 @@ NS_CC_BEGIN
 
 std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
 std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name);
 bool removeXamlElement(Platform::Object^ parent, Platform::Object^ element);
 bool replaceXamlElement(Platform::Object^ parent, Platform::Object^ add, Platform::Object^ remove);
-#endif
 
 std::string PlatformStringToString(Platform::String^ s);
 Platform::String^ PlatformStringFromString(const std::string& s);
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-// Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
-float ConvertDipsToPixels(float dips);
-float getScaledDPIValue(float v);
-#endif
 
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 
@@ -61,6 +53,14 @@ void CC_DLL CCLogIPAddresses();
 
 std::string CC_DLL getDeviceIPAddresses();
 
+std::string computeHashForFile(const std::string& filePath);
+
+// creates a  cache file path corresponding to given source file.
+// srcFilePath - source file.
+// cacheFilePath - cache file path to be used to save cache.
+// return true if file already exists
+bool createMappedCacheFile(/*In*/ const std::string& srcFilePath, /*Out*/ std::string& cacheFilePath, /*Optional*/ std::string ext = "");
+void destroyMappedCacheFile(const std::string& key);
 
 NS_CC_END
 

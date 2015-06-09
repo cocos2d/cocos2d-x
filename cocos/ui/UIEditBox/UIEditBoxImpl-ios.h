@@ -85,9 +85,9 @@ public:
     
     virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
-    virtual void setFontColor(const Color3B& color);
+    virtual void setFontColor(const Color4B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-    virtual void setPlaceholderFontColor(const Color3B& color);
+    virtual void setPlaceholderFontColor(const Color4B& color);
     virtual void setInputMode(EditBox::InputMode inputMode);
     virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);

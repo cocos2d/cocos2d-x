@@ -18,6 +18,8 @@ SimulatorConfig::SimulatorConfig()
     _screenSizeArray.push_back(SimulatorScreenSize("iPhone 3Gs (320x480)", 320, 480));
     _screenSizeArray.push_back(SimulatorScreenSize("iPhone 4 (640x960)", 640, 960));
     _screenSizeArray.push_back(SimulatorScreenSize("iPhone 5 (640x1136)", 640, 1136));
+    _screenSizeArray.push_back(SimulatorScreenSize("iPhone 6 (750x1334)", 750, 1334));
+    _screenSizeArray.push_back(SimulatorScreenSize("iPhone 6Plus (1242x2208)", 1242, 2208));
     _screenSizeArray.push_back(SimulatorScreenSize("iPad (768x1024)", 768, 1024));
     _screenSizeArray.push_back(SimulatorScreenSize("iPad Retina (1536x2048)", 1536, 2048));
     _screenSizeArray.push_back(SimulatorScreenSize("Android (480x800)", 480, 800));

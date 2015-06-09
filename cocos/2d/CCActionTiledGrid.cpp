@@ -325,8 +325,8 @@ void ShuffleTiles::startWithTarget(Node *target)
     {
         for ( int j = 0; j < _gridSize.height; ++j)
         {
-            tileArray->position = Vec2((float)i, (float)j);
-            tileArray->startPosition = Vec2((float)i, (float)j);
+            tileArray->position.set((float)i, (float)j);
+            tileArray->startPosition.set((float)i, (float)j);
             tileArray->delta = getDelta(Size(i, j));
             ++tileArray;
         }
@@ -694,7 +694,7 @@ void TurnOffTiles::update(float time)
     for (unsigned int i = 0; i < _tilesCount; i++ )
     {
         t = _tilesOrder[i];
-        Vec2 tilePos = Vec2( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
+        Vec2 tilePos( (unsigned int)(t / _gridSize.height), t % (unsigned int)_gridSize.height );
 
         if ( i < l )
         {

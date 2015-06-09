@@ -28,14 +28,13 @@ THE SOFTWARE.
 #endif
 #include <Windows.h>
 #include <wrl/client.h>
+#include <wrl/wrappers/corewrappers.h>
 #include <ppl.h>
 #include <ppltasks.h>
 #include <sstream>
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
-#endif
 
 NS_CC_BEGIN
 
@@ -106,7 +105,7 @@ Platform::String^ PlatformStringFromString(const std::string& s)
     return ref new Platform::String(ws.data(), ws.length());
 }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#if 0
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
 float ConvertDipsToPixels(float dips)
 {
@@ -120,7 +119,6 @@ float getScaledDPIValue(float v) {
 }
 #endif
 
-
 void CC_DLL CCLogIPAddresses()
 {
 #ifndef WP8_SHADER_COMPILER
@@ -133,7 +131,7 @@ void CC_DLL CCLogIPAddresses()
         if (hn->IPInformation != nullptr)
         {
             std::string s = PlatformStringToString(hn->DisplayName);
-            CCLog("IP Address: %s:", s.c_str());
+            log("IP Address: %s:", s.c_str());
         }
     }
 #endif
@@ -158,7 +156,6 @@ std::string CC_DLL getDeviceIPAddresses()
     return result.str();
 }
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name)
 {
     if (parent == nullptr || name == nullptr || name->Length() == 0)
@@ -253,43 +250,6 @@ bool replaceXamlElement(Platform::Object^ parent, Platform::Object^ add, Platfor
 
     return true;
 }
-#endif
-
-
-
-
-
-
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-
-// Function that reads from a binary file asynchronously.
-Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ filename)
-{
-	using namespace Windows::Storage;
-	using namespace Concurrency;
-		
-	auto folder = Windows::ApplicationModel::Package::Current->InstalledLocation;
-		
-	return create_task(folder->GetFileAsync(filename)).then([] (StorageFile^ file) 
-	{
-		return file->OpenReadAsync();
-	}).then([] (Streams::IRandomAccessStreamWithContentType^ stream)
-	{
-		unsigned int bufferSize = static_cast<unsigned int>(stream->Size);
-		auto fileBuffer = ref new Streams::Buffer(bufferSize);
-		return stream->ReadAsync(fileBuffer, bufferSize, Streams::InputStreamOptions::None);
-	}).then([] (Streams::IBuffer^ fileBuffer) -> Platform::Array<byte>^ 
-	{
-		auto fileData = ref new Platform::Array<byte>(fileBuffer->Length);
-		Streams::DataReader::FromBuffer(fileBuffer)->ReadBytes(fileData);
-		return fileData;
-	});
-}
-#else
-
-
 
 // Function that reads from a binary file asynchronously.
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path)
@@ -309,9 +269,73 @@ Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path)
 	});
 }
 
+std::string computeHashForFile(const std::string& filePath)
+{
+    std::string ret = filePath;
+    int pos = std::string::npos;
+    pos = ret.find_last_of('/');
 
+    if (pos != std::string::npos) {
+        ret = ret.substr(pos);
+    }
 
-#endif
+    pos = ret.find_last_of('.');
 
+    if (pos != std::string::npos) {
+        ret = ret.substr(0, pos);
+    }
+
+    CREATEFILE2_EXTENDED_PARAMETERS extParams = { 0 };
+    extParams.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
+    extParams.dwFileFlags = FILE_FLAG_RANDOM_ACCESS;
+    extParams.dwSecurityQosFlags = SECURITY_ANONYMOUS;
+    extParams.dwSize = sizeof(extParams);
+    extParams.hTemplateFile = nullptr;
+    extParams.lpSecurityAttributes = nullptr;
+
+    Microsoft::WRL::Wrappers::FileHandle file(CreateFile2(std::wstring(filePath.begin(), filePath.end()).c_str(), GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, &extParams));
+
+    if (file.Get() != INVALID_HANDLE_VALUE) {
+        FILE_BASIC_INFO  fInfo = { 0 };
+        if (GetFileInformationByHandleEx(file.Get(), FileBasicInfo, &fInfo, sizeof(FILE_BASIC_INFO))) {
+            std::stringstream ss;
+            ss << ret << "_";
+            ss << fInfo.CreationTime.QuadPart;
+            ss << fInfo.ChangeTime.QuadPart;
+            ret = ss.str();
+        }
+    }
+
+    return ret;
+}
+
+bool createMappedCacheFile(const std::string& srcFilePath, std::string& cacheFilePath, std::string ext)
+{
+    bool ret = false;
+    auto folderPath = FileUtils::getInstance()->getWritablePath();
+    cacheFilePath = folderPath + computeHashForFile(srcFilePath) + ext;
+    std::string prevFile = UserDefault::getInstance()->getStringForKey(srcFilePath.c_str());
+
+    if (prevFile == cacheFilePath) {
+        ret = FileUtils::getInstance()->isFileExist(cacheFilePath);
+    }
+    else {
+        FileUtils::getInstance()->removeFile(prevFile);
+    }
+
+    UserDefault::getInstance()->setStringForKey(srcFilePath.c_str(), cacheFilePath);
+    return ret;
+}
+
+void destroyMappedCacheFile(const std::string& key)
+{
+    std::string value = UserDefault::getInstance()->getStringForKey(key.c_str());
+    
+    if (!value.empty()) {
+        FileUtils::getInstance()->removeFile(value);
+    }
+
+    UserDefault::getInstance()->setStringForKey(key.c_str(), "");
+}
 
 NS_CC_END

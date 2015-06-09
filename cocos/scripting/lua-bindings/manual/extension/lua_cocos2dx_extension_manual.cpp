@@ -647,9 +647,9 @@ public:
                 LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX, (void*)&data,2,[&](lua_State* L,int numReturn){
                     CCASSERT(numReturn == 2, "tableCellSizeForIndex return count error");
                     ValueVector vec;
-                    width  = (float)tolua_tonumber(L, -1, 0);
+                    height  = (float)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
-                    height = (float)tolua_tonumber(L, -1, 0);
+                    width = (float)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
                 });
                 
@@ -1065,7 +1065,7 @@ static void extendParticleSystem3D(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-int lua_cocos2dx_extension_ParticlePool_getActiveParticleList(lua_State* tolua_S)
+int lua_cocos2dx_extension_ParticlePool_getActiveDataList(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ParticlePool* cobj = nullptr;
@@ -1085,7 +1085,7 @@ int lua_cocos2dx_extension_ParticlePool_getActiveParticleList(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ParticlePool_getActiveParticleList'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ParticlePool_getActiveDataList'", nullptr);
         return 0;
     }
 #endif
@@ -1095,10 +1095,10 @@ int lua_cocos2dx_extension_ParticlePool_getActiveParticleList(lua_State* tolua_S
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ParticlePool_getActiveParticleList'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ParticlePool_getActiveDataList'", nullptr);
             return 0;
         }
-        const ParticlePool::PoolList& ret = cobj->getActiveParticleList();
+        const ParticlePool::PoolList& ret = cobj->getActiveDataList();
         
         lua_newtable(tolua_S);
         if (ret.empty())
@@ -1135,7 +1135,7 @@ static void extendParticlePool(lua_State* tolua_S)
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        tolua_function(tolua_S, "getActiveParticleList", lua_cocos2dx_extension_ParticlePool_getActiveParticleList);
+        tolua_function(tolua_S, "getActiveDataList", lua_cocos2dx_extension_ParticlePool_getActiveDataList);
     }
     lua_pop(tolua_S, 1);
 }

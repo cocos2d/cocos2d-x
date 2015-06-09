@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
@@ -67,6 +68,10 @@ THE SOFTWARE.
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"
+#endif
+
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+#include "physics3d/CCPhysics3DWorld.h"
 #endif
 
 /**
@@ -107,6 +112,7 @@ Director* Director::getInstance()
 }
 
 Director::Director()
+: _isStatusLabelUpdated(true)
 {
 }
 
@@ -145,6 +151,8 @@ bool Director::init(void)
 
     _contentScaleFactor = 1.0f;
 
+    _console = new (std::nothrow) Console;
+
     // scheduler
     _scheduler = new (std::nothrow) Scheduler();
     // action manager
@@ -167,8 +175,7 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
-
-    _console = new (std::nothrow) Console;
+    RenderState::initialize();
 
     return true;
 }
@@ -248,8 +255,6 @@ void Director::setGLDefaultValues()
     CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // FIXME: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
-    // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
 }
@@ -291,6 +296,13 @@ void Director::drawScene()
         if (physicsWorld && physicsWorld->isAutoStep())
         {
             physicsWorld->update(_deltaTime, false);
+        }
+#endif
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+        auto physics3DWorld = _runningScene->getPhysics3DWorld();
+        if (physics3DWorld)
+        {
+            physics3DWorld->stepSimulate(_deltaTime);
         }
 #endif
         //clear draw stats
@@ -388,7 +400,7 @@ void Director::setOpenGLView(GLView *openGLView)
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
 
-        createStatsLabel();
+        _isStatusLabelUpdated = true;
 
         if (_openGLView)
         {
@@ -605,12 +617,7 @@ void Director::setProjection(Projection projection)
         case Projection::_2D:
         {
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            if(getOpenGLView() != nullptr)
-            {
-                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
-            }
-#endif
+
             Mat4 orthoMatrix;
             Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
             multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
@@ -625,15 +632,7 @@ void Director::setProjection(Projection projection)
             Mat4 matrixPerspective, matrixLookup;
 
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-            //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-            GLView* view = getOpenGLView();
-            if(getOpenGLView() != nullptr)
-            {
-                multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getOpenGLView()->getOrientationMatrix());
-            }
-#endif
+
             // issue #1334
             Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
@@ -717,12 +716,6 @@ static void GLToClipTransform(Mat4 *transformOut)
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
     auto projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to undo the rotation for Landscape orientation in order to get the correct positions
-    projection = Director::getInstance()->getOpenGLView()->getReverseOrientationMatrix() * projection;
-#endif
-
     auto modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     *transformOut = projection * modelview;
 }
@@ -938,16 +931,7 @@ void Director::restart()
 }
 
 void Director::reset()
-{
-    // cleanup scheduler
-    getScheduler()->unscheduleAll();
-    
-    // Remove all events
-    if (_eventDispatcher)
-    {
-        _eventDispatcher->removeAllEventListeners();
-    }
-    
+{    
     if (_runningScene)
     {
         _runningScene->onExit();
@@ -957,6 +941,15 @@ void Director::reset()
     
     _runningScene = nullptr;
     _nextScene = nullptr;
+
+    // cleanup scheduler
+    getScheduler()->unscheduleAll();
+    
+    // Remove all events
+    if (_eventDispatcher)
+    {
+        _eventDispatcher->removeAllEventListeners();
+    }
     
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
@@ -1001,6 +994,8 @@ void Director::reset()
     UserDefault::destroyInstance();
     
     GL::invalidateStateCache();
+
+    RenderState::finalize();
     
     destroyTextureCache();
 }
@@ -1112,6 +1107,12 @@ void Director::resume()
 // updates the FPS every frame
 void Director::showStats()
 {
+    if (_isStatusLabelUpdated)
+    {
+        createStatsLabel();
+        _isStatusLabelUpdated = false;
+    }
+
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
     static float prevDeltaTime  = 0.016f; // 60FPS
@@ -1257,7 +1258,7 @@ void Director::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != _contentScaleFactor)
     {
         _contentScaleFactor = scaleFactor;
-        createStatsLabel();
+        _isStatusLabelUpdated = true;
     }
 }
 

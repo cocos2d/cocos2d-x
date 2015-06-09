@@ -5,15 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#FadeIn] setReverseAction 
 -- @param self
 -- @param #cc.FadeTo ac
 -- @return FadeIn#FadeIn self (return value: cc.FadeIn)
         
 --------------------------------
--- creates the action<br>
--- param d in seconds
+-- Creates the action.<br>
+-- param d Duration time, in seconds.<br>
+-- return An autoreleased FadeIn object.
 -- @function [parent=#FadeIn] create 
 -- @param self
 -- @param #float d
@@ -37,5 +38,11 @@
 -- @function [parent=#FadeIn] reverse 
 -- @param self
 -- @return FadeTo#FadeTo ret (return value: cc.FadeTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#FadeIn] FadeIn 
+-- @param self
+-- @return FadeIn#FadeIn self (return value: cc.FadeIn)
         
 return nil

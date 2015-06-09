@@ -5,7 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+-- brief Initializes the action.<br>
+-- return Return true when the initialization success, otherwise return false.
+-- @function [parent=#ActionEase] initWithAction 
+-- @param self
+-- @param #cc.ActionInterval action
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- brief Get the pointer of the inner action.<br>
+-- return The pointer of the inner action.
 -- @function [parent=#ActionEase] getInnerAction 
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
@@ -36,7 +45,7 @@
 -- @return ActionEase#ActionEase ret (return value: cc.ActionEase)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#ActionEase] update 
 -- @param self
 -- @param #float time

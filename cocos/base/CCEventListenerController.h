@@ -29,16 +29,29 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCEventListener.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
 class Controller;
 
+/** @class EventListenerController
+ * @param Controller event listener.
+ * @js NA
+ */
 class EventListenerController : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a controller event listener.
+     *
+     * @return An autoreleased EventListenerController object.
+     */
 	static EventListenerController* create();
     
     /// Overrides
@@ -59,5 +72,8 @@ protected:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__EventListenerController__) */

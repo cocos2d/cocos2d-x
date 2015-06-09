@@ -40,7 +40,6 @@ MotionStreak::MotionStreak()
 , _startingPositionInitialized(false)
 , _texture(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _positionR(Vec2::ZERO)
 , _stroke(0.0f)
 , _fadeDelta(0.0f)
 , _minSeg(0.0f)
@@ -106,7 +105,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     ignoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
-    _positionR = Vec2::ZERO;
+    _positionR.setZero();
     _fastMode = true;
     _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
     _minSeg *= _minSeg;

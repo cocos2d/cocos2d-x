@@ -59,7 +59,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     DrawNode3D();
     virtual ~DrawNode3D();
-    virtual bool init();
+    virtual bool init() override;
     
 protected:
     struct V3F_C4B

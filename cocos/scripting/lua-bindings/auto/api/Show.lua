@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  Allocates and initializes the action 
+--  Allocates and initializes the action.<br>
+-- return  An autoreleased Show object.
 -- @function [parent=#Show] create 
 -- @param self
 -- @return Show#Show ret (return value: cc.Show)
@@ -17,7 +18,7 @@
 -- @return Show#Show ret (return value: cc.Show)
         
 --------------------------------
--- param time in seconds
+-- param time In seconds.
 -- @function [parent=#Show] update 
 -- @param self
 -- @param #float time
@@ -28,5 +29,11 @@
 -- @function [parent=#Show] reverse 
 -- @param self
 -- @return ActionInstant#ActionInstant ret (return value: cc.ActionInstant)
+        
+--------------------------------
+-- 
+-- @function [parent=#Show] Show 
+-- @param self
+-- @return Show#Show self (return value: cc.Show)
         
 return nil

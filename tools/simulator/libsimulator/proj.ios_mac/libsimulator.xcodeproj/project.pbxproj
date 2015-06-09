@@ -10,9 +10,6 @@
 		9F2F21BD1A635F1C006B8BF1 /* RuntimeCCSImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21B71A635F1C006B8BF1 /* RuntimeCCSImpl.cpp */; };
 		9F2F21BE1A635F1C006B8BF1 /* RuntimeCCSImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21B71A635F1C006B8BF1 /* RuntimeCCSImpl.cpp */; };
 		9F2F21BF1A635F1C006B8BF1 /* RuntimeCCSImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2F21B81A635F1C006B8BF1 /* RuntimeCCSImpl.h */; };
-		9F2F21C01A635F1C006B8BF1 /* RuntimeLuaImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21B91A635F1C006B8BF1 /* RuntimeLuaImpl.cpp */; };
-		9F2F21C11A635F1C006B8BF1 /* RuntimeLuaImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21B91A635F1C006B8BF1 /* RuntimeLuaImpl.cpp */; };
-		9F2F21C21A635F1C006B8BF1 /* RuntimeLuaImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2F21BA1A635F1C006B8BF1 /* RuntimeLuaImpl.h */; };
 		9F2F21C31A635F1C006B8BF1 /* RuntimeProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21BB1A635F1C006B8BF1 /* RuntimeProtocol.cpp */; };
 		9F2F21C41A635F1C006B8BF1 /* RuntimeProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F21BB1A635F1C006B8BF1 /* RuntimeProtocol.cpp */; };
 		9F2F21C51A635F1C006B8BF1 /* RuntimeProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F2F21BC1A635F1C006B8BF1 /* RuntimeProtocol.h */; };
@@ -86,9 +83,6 @@
 		9FB638A51A635BA300AAEC43 /* FileServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FB638551A635BA300AAEC43 /* FileServer.h */; };
 		9FB638A61A635BA300AAEC43 /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638561A635BA300AAEC43 /* Landscape_png.cpp */; };
 		9FB638A71A635BA300AAEC43 /* Landscape_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638561A635BA300AAEC43 /* Landscape_png.cpp */; };
-		9FB638A81A635BA300AAEC43 /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638571A635BA300AAEC43 /* lua_debugger.c */; };
-		9FB638A91A635BA300AAEC43 /* lua_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638571A635BA300AAEC43 /* lua_debugger.c */; };
-		9FB638AA1A635BA300AAEC43 /* lua_debugger.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FB638581A635BA300AAEC43 /* lua_debugger.h */; };
 		9FB638AB1A635BA300AAEC43 /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638591A635BA300AAEC43 /* PlayDisable_png.cpp */; };
 		9FB638AC1A635BA300AAEC43 /* PlayDisable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FB638591A635BA300AAEC43 /* PlayDisable_png.cpp */; };
 		9FB638AD1A635BA300AAEC43 /* PlayEnable_png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FB6385A1A635BA300AAEC43 /* PlayEnable_png.cpp */; };
@@ -170,8 +164,6 @@
 /* Begin PBXFileReference section */
 		9F2F21B71A635F1C006B8BF1 /* RuntimeCCSImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeCCSImpl.cpp; sourceTree = "<group>"; };
 		9F2F21B81A635F1C006B8BF1 /* RuntimeCCSImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeCCSImpl.h; sourceTree = "<group>"; };
-		9F2F21B91A635F1C006B8BF1 /* RuntimeLuaImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeLuaImpl.cpp; sourceTree = "<group>"; };
-		9F2F21BA1A635F1C006B8BF1 /* RuntimeLuaImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeLuaImpl.h; sourceTree = "<group>"; };
 		9F2F21BB1A635F1C006B8BF1 /* RuntimeProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RuntimeProtocol.cpp; sourceTree = "<group>"; };
 		9F2F21BC1A635F1C006B8BF1 /* RuntimeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeProtocol.h; sourceTree = "<group>"; };
 		9F2F21C61A635FFF006B8BF1 /* Runtime_ios-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "Runtime_ios-mac.mm"; sourceTree = "<group>"; };
@@ -227,8 +219,6 @@
 		9FB638541A635BA300AAEC43 /* FileServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileServer.cpp; sourceTree = "<group>"; };
 		9FB638551A635BA300AAEC43 /* FileServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileServer.h; sourceTree = "<group>"; };
 		9FB638561A635BA300AAEC43 /* Landscape_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Landscape_png.cpp; sourceTree = "<group>"; };
-		9FB638571A635BA300AAEC43 /* lua_debugger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lua_debugger.c; sourceTree = "<group>"; };
-		9FB638581A635BA300AAEC43 /* lua_debugger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_debugger.h; sourceTree = "<group>"; };
 		9FB638591A635BA300AAEC43 /* PlayDisable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayDisable_png.cpp; sourceTree = "<group>"; };
 		9FB6385A1A635BA300AAEC43 /* PlayEnable_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayEnable_png.cpp; sourceTree = "<group>"; };
 		9FB6385B1A635BA300AAEC43 /* Portrait_png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Portrait_png.cpp; sourceTree = "<group>"; };
@@ -413,8 +403,6 @@
 				9FB638541A635BA300AAEC43 /* FileServer.cpp */,
 				9FB638551A635BA300AAEC43 /* FileServer.h */,
 				9FB638561A635BA300AAEC43 /* Landscape_png.cpp */,
-				9FB638571A635BA300AAEC43 /* lua_debugger.c */,
-				9FB638581A635BA300AAEC43 /* lua_debugger.h */,
 				9FB638591A635BA300AAEC43 /* PlayDisable_png.cpp */,
 				9FB6385A1A635BA300AAEC43 /* PlayEnable_png.cpp */,
 				9FB6385B1A635BA300AAEC43 /* Portrait_png.cpp */,
@@ -425,8 +413,6 @@
 				9FB638601A635BA300AAEC43 /* Runtime.h */,
 				9F2F21B71A635F1C006B8BF1 /* RuntimeCCSImpl.cpp */,
 				9F2F21B81A635F1C006B8BF1 /* RuntimeCCSImpl.h */,
-				9F2F21B91A635F1C006B8BF1 /* RuntimeLuaImpl.cpp */,
-				9F2F21BA1A635F1C006B8BF1 /* RuntimeLuaImpl.h */,
 				9F2F21BB1A635F1C006B8BF1 /* RuntimeProtocol.cpp */,
 				9F2F21BC1A635F1C006B8BF1 /* RuntimeProtocol.h */,
 				9FB638611A635BA300AAEC43 /* Shine_png.cpp */,
@@ -555,7 +541,6 @@
 				9FF504BB1A5EA75D00AFDA55 /* PlayerServiceProtocol.h in Headers */,
 				9FF504B01A5EA75D00AFDA55 /* AppLang.h in Headers */,
 				9FB638981A635BA300AAEC43 /* wire_format_lite.h in Headers */,
-				9FB638AA1A635BA300AAEC43 /* lua_debugger.h in Headers */,
 				9FB638801A635BA300AAEC43 /* atomicops_internals_macosx.h in Headers */,
 				9FF504B31A5EA75D00AFDA55 /* PlayerFileDialogServiceProtocol.h in Headers */,
 				9FB6386D1A635BA300AAEC43 /* coded_stream.h in Headers */,
@@ -601,7 +586,6 @@
 				9FB638751A635BA300AAEC43 /* zero_copy_stream_impl_lite.h in Headers */,
 				9FB638941A635BA300AAEC43 /* template_util.h in Headers */,
 				9F2F21C51A635F1C006B8BF1 /* RuntimeProtocol.h in Headers */,
-				9F2F21C21A635F1C006B8BF1 /* RuntimeLuaImpl.h in Headers */,
 				9FB638831A635BA300AAEC43 /* atomicops_internals_x86_gcc.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -686,7 +670,6 @@
 				9FB6389A1A635BA300AAEC43 /* ConfigParser.cpp in Sources */,
 				9FB638B81A635BA300AAEC43 /* Shine_png.cpp in Sources */,
 				9FB638B51A635BA300AAEC43 /* Runtime.cpp in Sources */,
-				9F2F21C01A635F1C006B8BF1 /* RuntimeLuaImpl.cpp in Sources */,
 				9FB638AB1A635BA300AAEC43 /* PlayDisable_png.cpp in Sources */,
 				9FB638651A635BA300AAEC43 /* extension_set.cc in Sources */,
 				9FD6FC6C1A5D2A380028EDC6 /* PlayerMessageBoxServiceMac.mm in Sources */,
@@ -714,7 +697,6 @@
 				9FF504AD1A5EA75D00AFDA55 /* AppEvent.cpp in Sources */,
 				9FB638A61A635BA300AAEC43 /* Landscape_png.cpp in Sources */,
 				9FD6FC601A5D2A380028EDC6 /* DeviceEx-mac.mm in Sources */,
-				9FB638A81A635BA300AAEC43 /* lua_debugger.c in Sources */,
 				9FD6FC661A5D2A380028EDC6 /* PlayerFileDialogServiceMac.mm in Sources */,
 				9FB638BA1A635BA300AAEC43 /* VisibleRect.cpp in Sources */,
 				9FD6FC371A5D281D0028EDC6 /* SimulatorConfig.cpp in Sources */,
@@ -762,7 +744,6 @@
 				9FB638821A635BA300AAEC43 /* atomicops_internals_x86_gcc.cc in Sources */,
 				9FB6388D1A635BA300AAEC43 /* once.cc in Sources */,
 				9FB6387A1A635BA300AAEC43 /* repeated_field.cc in Sources */,
-				9FB638A91A635BA300AAEC43 /* lua_debugger.c in Sources */,
 				9FB638B01A635BA300AAEC43 /* Portrait_png.cpp in Sources */,
 				9FD6FC4E1A5D28260028EDC6 /* ProjectConfig.cpp in Sources */,
 				9FB638851A635BA300AAEC43 /* atomicops_internals_x86_msvc.cc in Sources */,
@@ -770,7 +751,6 @@
 				9FB638A71A635BA300AAEC43 /* Landscape_png.cpp in Sources */,
 				9FB638921A635BA300AAEC43 /* stringprintf.cc in Sources */,
 				9FB638971A635BA300AAEC43 /* wire_format_lite.cc in Sources */,
-				9F2F21C11A635F1C006B8BF1 /* RuntimeLuaImpl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +761,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -804,7 +785,6 @@
 					DEBUG,
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
-					"CC_LUA_ENGINE_ENABLED=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -819,6 +799,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../ $(SRCROOT)/../../../../cocos $(SRCROOT)/../../../../cocos/base $(SRCROOT)/../../../../cocos/physics $(SRCROOT)/../../../../cocos/math/kazmath $(SRCROOT)/../../../../cocos/2d $(SRCROOT)/../../../../cocos/ui $(SRCROOT)/../../../../cocos/network $(SRCROOT)/../../../../cocos/audio/include $(SRCROOT)/../../../../cocos/editor-support $(SRCROOT)/../../../../extensions $(SRCROOT)/../../../../external $(SRCROOT)/../../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../../external/lua/luajit/include $(SRCROOT)/../../../../external/lua/tolua $(SRCROOT)/../../../../cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../../cocos/scripting/lua-bindings/auto";
+				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 			};
 			name = Debug;
 		};
@@ -826,6 +807,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -845,10 +827,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
-					"CC_LUA_ENGINE_ENABLED=1",
+					"CC_LUA_ENGINE_ENABLED=0",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"COCOS2D_DEBUG=0",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -860,6 +842,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../../ $(SRCROOT)/../../../../cocos $(SRCROOT)/../../../../cocos/base $(SRCROOT)/../../../../cocos/physics $(SRCROOT)/../../../../cocos/math/kazmath $(SRCROOT)/../../../../cocos/2d $(SRCROOT)/../../../../cocos/ui $(SRCROOT)/../../../../cocos/network $(SRCROOT)/../../../../cocos/audio/include $(SRCROOT)/../../../../cocos/editor-support $(SRCROOT)/../../../../extensions $(SRCROOT)/../../../../external $(SRCROOT)/../../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../../external/lua/luajit/include $(SRCROOT)/../../../../external/lua/tolua $(SRCROOT)/../../../../cocos/scripting/lua-bindings/manual $(SRCROOT)/../../../../cocos/scripting/lua-bindings/auto";
+				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 			};
 			name = Release;
 		};
@@ -867,6 +850,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
@@ -888,6 +872,7 @@
 				);
 				INFOPLIST_PREFIX_HEADER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 			};
 			name = Debug;
 		};
@@ -895,10 +880,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				EXECUTABLE_PREFIX = "";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = mac/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -916,6 +903,7 @@
 				);
 				INFOPLIST_PREFIX_HEADER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 			};
 			name = Release;
 		};
@@ -923,6 +911,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					armv7,
+					arm64,
+				);
 				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
@@ -941,6 +933,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Debug;
 		};
@@ -948,7 +941,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					armv7,
+					arm64,
+				);
 				EXECUTABLE_PREFIX = "";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ios/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -967,6 +965,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Release;
 		};

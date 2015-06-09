@@ -124,7 +124,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#TableView] TableView 
 -- @param self
 -- @return TableView#TableView self (return value: cc.TableView)

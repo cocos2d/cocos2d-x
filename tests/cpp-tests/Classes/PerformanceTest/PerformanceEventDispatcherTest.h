@@ -4,17 +4,11 @@
 #ifndef __PERFORMANCE_EVENTDISPATCHER_TEST_H__
 #define __PERFORMANCE_EVENTDISPATCHER_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class EventDispatcherBasicLayer : public PerformBasicLayer
-{
-public:
-    EventDispatcherBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
-    
-    virtual void showCurrentTest();
-};
+DEFINE_TEST_SUITE(PerformceEventDispatcherTests);
 
-class PerformanceEventDispatcherScene : public Scene
+class PerformanceEventDispatcherScene : public TestCase
 {
 public:
     static const int TAG_TITLE = 100;
@@ -26,6 +20,7 @@ public:
         std::function<void()> func;
     };
     
+    virtual bool init() override;
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void generateTestFunctions() = 0;
     
@@ -39,26 +34,26 @@ public:
     // for the profiler
     virtual const char* testName();
     void updateQuantityLabel();
-    int getQuantityOfNodes() { return _quantityOfNodes; }
     void dumpProfilerInfo(float dt);
     
     // overrides
     virtual void update(float dt) override;
     
 protected:
+    static int quantityOfNodes;
+
     char   _profilerName[256];
     int    _lastRenderedCount;
-    int    _quantityOfNodes;
     int    _currentQuantityOfNodes;
     unsigned int _type;
     std::vector<TestFunction> _testFunctions;
     std::vector<Node*> _nodes;
-    std::vector<EventListener*> _fixedPriorityListeners;
-    MenuItemFont* _increase;
-    MenuItemFont* _decrease;
-    MenuItemFont* _startItem;
-    MenuItemFont* _stopItem;
-    MenuItemToggle* _toggle;
+    std::vector<cocos2d::EventListener*> _fixedPriorityListeners;
+    cocos2d::MenuItemFont* _increase;
+    cocos2d::MenuItemFont* _decrease;
+    cocos2d::MenuItemFont* _startItem;
+    cocos2d::MenuItemFont* _stopItem;
+    cocos2d::MenuItemToggle* _toggle;
 };
 
 class TouchEventDispatchingPerfTest : public PerformanceEventDispatcherScene
@@ -97,9 +92,7 @@ public:
     virtual std::string subtitle() const override;
     
 private:
-    std::vector<EventListener*> _customListeners;
+    std::vector<cocos2d::EventListener*> _customListeners;
 };
-
-void runEventDispatcherPerformanceTest();
 
 #endif /* defined(__PERFORMANCE_EVENTDISPATCHER_TEST_H__) */

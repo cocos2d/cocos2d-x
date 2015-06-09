@@ -32,6 +32,7 @@ public:
     void setUploadPort(int port);
     int getConsolePort();
     int getUploadPort();
+    int getDebugPort();
     bool isLanscape();
     bool isWindowTop();
     
@@ -42,6 +43,7 @@ public:
     
 private:
     ConfigParser(void);
+    void setDebugPort(int port);
     static ConfigParser *s_sharedConfigParserInstance;
     ScreenSizeArray _screenSizeArray;
     cocos2d::Size _initViewSize;
@@ -51,6 +53,7 @@ private:
     bool _isWindowTop;
     int _consolePort;
     int _uploadPort;
+    int _debugPort;
     string _bindAddress;
     
     rapidjson::Document _docRootjson;

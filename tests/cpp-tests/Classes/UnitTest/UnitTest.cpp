@@ -1,6 +1,8 @@
 #include "UnitTest.h"
 #include "RefPtrTest.h"
 
+USING_NS_CC;
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #if defined (__arm64__)
 #define USE_NEON64
@@ -34,95 +36,21 @@
 
 // For ' < o > ' multiply test scene.
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(TemplateVectorTest),
-    CL(TemplateMapTest),
-    CL(ValueTest),
-    CL(RefPtrTest),
-    CL(UTFConversionTest),
+UnitTests::UnitTests()
+{
+    ADD_TEST_CASE(TemplateVectorTest);
+    ADD_TEST_CASE(TemplateMapTest);
+    ADD_TEST_CASE(ValueTest);
+    ADD_TEST_CASE(RefPtrTest);
+    ADD_TEST_CASE(UTFConversionTest);
 #ifdef UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
-    CL(MathUtilTest)
+    ADD_TEST_CASE(MathUtilTest);
 #endif
 };
-
-static int sceneIdx = -1;
-static const int  MAX_LAYER = (sizeof(createFunctions) / sizeof(createFunctions[0]));
-
-static Layer* nextAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void UnitTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    addChild(nextAction());
-    Director::getInstance()->replaceScene(this);
-}
-
-void UnitTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void UnitTestDemo::onExit()
-{
-    BaseTest::onExit();
-}
 
 std::string UnitTestDemo::title() const
 {
     return "UnitTest";
-}
-
-std::string UnitTestDemo::subtitle() const
-{
-    return "";
-}
-
-void UnitTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) UnitTestScene();
-    s->addChild( restartAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void UnitTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) UnitTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void UnitTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) UnitTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 //---------------------------------------------------------------

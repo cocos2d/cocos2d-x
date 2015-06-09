@@ -45,13 +45,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ScaleFrame] apply 
--- @param self
--- @param #float percent
--- @return ScaleFrame#ScaleFrame self (return value: ccs.ScaleFrame)
-        
---------------------------------
--- 
 -- @function [parent=#ScaleFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)

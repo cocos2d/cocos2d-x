@@ -64,12 +64,12 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="编辑" id="k0V-hR-upN">
                         <items>
-                            <menuItem title="Undo" keyEquivalent="z" id="Ueo-Yj-fzm">
+                            <menuItem title="撤销" keyEquivalent="z" id="Ueo-Yj-fzm">
                                 <connections>
                                     <action selector="undo:" target="-1" id="Ex2-6U-hZI"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Redo" keyEquivalent="Z" id="x6z-iQ-VK2">
+                            <menuItem title="重做" keyEquivalent="Z" id="x6z-iQ-VK2">
                                 <connections>
                                     <action selector="redo:" target="-1" id="KEx-Aj-tYn"/>
                                 </connections>

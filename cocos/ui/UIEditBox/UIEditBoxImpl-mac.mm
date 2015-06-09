@@ -97,6 +97,7 @@
 @synthesize placeholderAttributes = placeholderAttributes_;
 @synthesize editState = editState_;
 @synthesize editBox = editBox_;
+@synthesize secure = secure_;
 
 - (id) getNSWindow
 {
@@ -125,6 +126,7 @@
     if (self)
     {
         editState_ = NO;
+        secure_ = NO;
         self.textField = [[[NSTextField alloc] initWithFrame:frameRect] autorelease];
         self.secureTextField = [[[NSSecureTextField alloc] initWithFrame:frameRect] autorelease];
 
@@ -163,6 +165,16 @@
     [[[self getNSWindow] contentView] doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
+-(void) setSecure:(BOOL)secure
+{
+    NSAssert(secure, @"Can only set this flag to true");
+    
+    secure_ = secure;
+        
+    [textField_.superview addSubview:secureTextField_];
+    [textField_ removeFromSuperview];
+}
+
 -(void) setPosition:(NSPoint) pos
 {
     NSRect frame = [textField_ frame];
@@ -183,10 +195,14 @@
 
 -(void) openKeyboard
 {
-    if ([textField_ superview]) {
+    NSView *contentView = [[self getNSWindow] contentView];
+    
+    if (!secure_) {
+        [contentView addSubview:textField_];
         [textField_ becomeFirstResponder];
     }
     else {
+        [contentView addSubview:secureTextField_];
         [secureTextField_ becomeFirstResponder];
     }
 }
@@ -370,16 +386,16 @@ void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
     }
 }
 
-void EditBoxImplMac::setFontColor(const Color3B& color)
+void EditBoxImplMac::setFontColor(const Color4B& color)
 {
-    NSColor *newColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
+    NSColor *newColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:color.a / 255.f];
     _sysEdit.textField.textColor = newColor;
     _sysEdit.secureTextField.textColor = newColor;
 }
-
-void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
+    
+void EditBoxImplMac::setPlaceholderFontColor(const Color4B& color)
 {
-    NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:1.0f];
+    NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:color.a / 255.f];
     [_sysEdit.placeholderAttributes setObject:nsColor forKey:NSForegroundColorAttributeName];
     
     /* reload placeholder */
@@ -412,8 +428,7 @@ void EditBoxImplMac::setInputFlag(EditBox::InputFlag inputFlag)
     switch (inputFlag)
     {
         case EditBox::InputFlag::PASSWORD:
-            [_sysEdit.textField.superview addSubview:_sysEdit.secureTextField];
-            [_sysEdit.textField removeFromSuperview];
+            _sysEdit.secure = YES;
             break;
         case EditBox::InputFlag::INITIAL_CAPS_WORD:
             CCLOGWARN("INITIAL_CAPS_WORD not implemented");

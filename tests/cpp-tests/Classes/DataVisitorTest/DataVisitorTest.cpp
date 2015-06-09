@@ -1,6 +1,12 @@
 #include "DataVisitorTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
+DataVisitorTests::DataVisitorTests()
+{
+    ADD_TEST_CASE(PrettyPrinterDemo);
+}
 std::string PrettyPrinterDemo::title() const
 {
     return "PrettyPrinter Test";
@@ -36,7 +42,7 @@ void PrettyPrinterDemo::addSprite()
 
 void PrettyPrinterDemo::onEnter()
 {
-    Layer::onEnter();
+    TestCase::onEnter();
     auto s = Director::getInstance()->getWinSize();
     
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 28);
@@ -74,13 +80,4 @@ void PrettyPrinterDemo::onEnter()
 //    dict = Director::getInstance()->getTextureCache()->snapshotTextures();
 //    dict->acceptVisitor(vistor);
 //    log("%s", vistor.getResult().c_str());
-}
-
-void DataVisitorTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) PrettyPrinterDemo();
-    layer->autorelease();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

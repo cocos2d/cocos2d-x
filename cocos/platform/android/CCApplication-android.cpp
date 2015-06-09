@@ -188,6 +188,10 @@ LanguageType Application::getCurrentLanguage()
     {
         ret = LanguageType::ROMANIAN;
     }
+    else if (0 == strcmp("bg", pLanguageName))
+    {
+        ret = LanguageType::BULGARIAN;
+    }
     return ret;
 }
 

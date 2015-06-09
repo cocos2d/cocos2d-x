@@ -37,6 +37,11 @@ enum class PointSide
     BEHIND_PLANE,
 };
 
+/**
+ * Defines plane
+ * @js NA
+ * @lua NA
+ **/
 class CC_DLL Plane
 {
 public:
@@ -96,8 +101,8 @@ public:
     PointSide getSide(const Vec3& point) const;
 
 protected:
-    Vec3 _normal;
-    float _dist;
+    Vec3 _normal; // the normal line of the plane
+    float _dist; // original displacement of the normal
 };
 
 NS_CC_END

@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="839e6be3-2571-47d8-910b-1d7386788d3b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>HelloCpp.WindowsPhone</DisplayName>
-    <PublisherDisplayName>dalestam</PublisherDisplayName>
+    <PublisherDisplayName>msopentech</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>

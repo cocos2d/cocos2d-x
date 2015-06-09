@@ -35,7 +35,8 @@ include(CocosBuildHelpers)
 
 # libcocos2d
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
-set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua-tests")
+set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua related targets")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
 
 # Some macro definitions

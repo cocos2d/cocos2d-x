@@ -65,7 +65,7 @@ void _spSkeletonJson_setError (spSkeletonJson* self, Json* root, const char* val
 	FREE(self->error);
 	strcpy(message, value1);
 	length = (int)strlen(value1);
-	if (value2) strncat(message + length, value2, 256 - length);
+	if (value2) strncat(message + length, value2, 255 - length);
 	MALLOC_STR(self->error, message);
 	if (root) Json_dispose(root);
 }
@@ -106,16 +106,19 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 	spAnimation* animation;
 	Json* frame;
 	float duration;
+	int timelinesCount = 0;
 
 	Json* bones = Json_getItem(root, "bones");
 	Json* slots = Json_getItem(root, "slots");
 	Json* ik = Json_getItem(root, "ik");
 	Json* ffd = Json_getItem(root, "ffd");
-	Json* drawOrder = Json_getItem(root, "draworder");
+	Json* drawOrder = Json_getItem(root, "drawOrder");
 	Json* events = Json_getItem(root, "events");
+	Json* flipX = Json_getItem(root, "flipx");
+	Json* flipY = Json_getItem(root, "flipy");
 	Json *boneMap, *slotMap, *ikMap, *ffdMap;
+	if (!drawOrder) drawOrder = Json_getItem(root, "draworder");
 
-	int timelinesCount = 0;
 	for (boneMap = bones ? bones->child : 0; boneMap; boneMap = boneMap->next)
 		timelinesCount += boneMap->size;
 	for (slotMap = slots ? slots->child : 0; slotMap; slotMap = slotMap->next)
@@ -124,8 +127,10 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 	for (ffdMap = ffd ? ffd->child : 0; ffdMap; ffdMap = ffdMap->next)
 		for (slotMap = ffdMap->child; slotMap; slotMap = slotMap->next)
 			timelinesCount += slotMap->size;
-	if (events) ++timelinesCount;
 	if (drawOrder) ++timelinesCount;
+	if (events) ++timelinesCount;
+	if (flipX) ++timelinesCount;
+	if (flipY) ++timelinesCount;
 
 	animation = spAnimation_create(root->name, timelinesCount);
 	animation->timelinesCount = 0;
@@ -214,6 +219,17 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
 					duration = timeline->frames[timelineArray->size * 3 - 3];
 					if (duration > animation->duration) animation->duration = duration;
+				} else if (strcmp(timelineArray->name, "flipX") == 0 || strcmp(timelineArray->name, "flipY") == 0) {
+					int x = strcmp(timelineArray->name, "flipX") == 0;
+					const char* field = x ? "x" : "y";
+					spFlipTimeline *timeline = spFlipTimeline_create(timelineArray->size, x);
+					timeline->boneIndex = boneIndex;
+					for (frame = timelineArray->child, i = 0; frame; frame = frame->next, ++i)
+						spFlipTimeline_setFrame(timeline, i, Json_getFloat(frame, "time", 0), Json_getInt(frame, field, 0));
+					animation->timelines[animation->timelinesCount++] = SUPER_CAST(spTimeline, timeline);
+					duration = timeline->frames[timelineArray->size * 2 - 2];
+					if (duration > animation->duration) animation->duration = duration;
+
 				} else {
 					spAnimation_dispose(animation);
 					_spSkeletonJson_setError(self, 0, "Invalid timeline type for a bone: ", timelineArray->name);
@@ -418,8 +434,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 
 	skeleton = Json_getItem(root, "skeleton");
 	if (skeleton) {
-		skeletonData->hash = Json_getString(skeleton, "hash", 0);
-		skeletonData->version = Json_getString(skeleton, "spine", 0);
+		MALLOC_STR(skeletonData->hash, Json_getString(skeleton, "hash", 0));
+		MALLOC_STR(skeletonData->version,  Json_getString(skeleton, "spine", 0));
 		skeletonData->width = Json_getFloat(skeleton, "width", 0);
 		skeletonData->height = Json_getFloat(skeleton, "height", 0);
 	}
@@ -450,6 +466,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 		boneData->scaleY = Json_getFloat(boneMap, "scaleY", 1);
 		boneData->inheritScale = Json_getInt(boneMap, "inheritScale", 1);
 		boneData->inheritRotation = Json_getInt(boneMap, "inheritRotation", 1);
+		boneData->flipX = Json_getInt(boneMap, "flipX", 0);
+		boneData->flipY = Json_getInt(boneMap, "flipY", 0);
 
 		skeletonData->bones[i] = boneData;
 		skeletonData->bonesCount++;

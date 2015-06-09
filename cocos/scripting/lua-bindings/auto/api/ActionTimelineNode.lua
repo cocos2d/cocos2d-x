@@ -24,14 +24,13 @@
 -- @return ActionTimelineNode#ActionTimelineNode self (return value: ccs.ActionTimelineNode)
         
 --------------------------------
--- @overload self, cc.Node, ccs.ActionTimeline         
--- @overload self         
--- @function [parent=#ActionTimelineNode] init
+-- 
+-- @function [parent=#ActionTimelineNode] init 
 -- @param self
 -- @param #cc.Node root
 -- @param #ccs.ActionTimeline action
 -- @return bool#bool ret (return value: bool)
-
+        
 --------------------------------
 -- 
 -- @function [parent=#ActionTimelineNode] setRoot 
@@ -46,6 +45,12 @@
 -- @param #cc.Node root
 -- @param #ccs.ActionTimeline action
 -- @return ActionTimelineNode#ActionTimelineNode ret (return value: ccs.ActionTimelineNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimelineNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

@@ -30,6 +30,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ComController] onRemove 
+-- @param self
+-- @return ComController#ComController self (return value: ccs.ComController)
+        
+--------------------------------
 -- 
 -- @function [parent=#ComController] update 
 -- @param self
@@ -41,6 +48,13 @@
 -- @function [parent=#ComController] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ComController] onAdd 
+-- @param self
+-- @return ComController#ComController self (return value: ccs.ComController)
         
 --------------------------------
 -- js ctor

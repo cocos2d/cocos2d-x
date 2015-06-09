@@ -24,14 +24,12 @@
 
 #include "UIWebViewTest.h"
 
-WebViewTest::WebViewTest()
-{
-    
-}
+USING_NS_CC;
+using namespace cocos2d::ui;
 
-WebViewTest::~WebViewTest()
+WebViewTests::WebViewTests()
 {
-
+    ADD_TEST_CASE(WebViewTest);
 }
 
 bool WebViewTest::init()
@@ -160,12 +158,10 @@ bool WebViewTest::onWebViewShouldStartLoading(experimental::ui::WebView *sender,
 void WebViewTest::onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFinishLoading, url is %s", url.c_str());
-
 }
 
 void WebViewTest::onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url)
 {
     CCLOG("onWebViewDidFailLoading, url is %s", url.c_str());
-
 }
 

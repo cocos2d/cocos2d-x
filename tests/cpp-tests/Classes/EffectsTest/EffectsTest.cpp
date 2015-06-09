@@ -1,6 +1,8 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagTextLayer = 1,
 
@@ -8,7 +10,6 @@ enum {
     kTagLabel = 2,
 };
 
-static int actionIdx=0; 
 static std::string effectsList[] =
 {
     "Shaky3D",
@@ -35,6 +36,15 @@ static std::string effectsList[] =
     "PageTurn3D",
 }; 
 
+EffectTests::EffectTests()
+{
+    int index = 0;
+    for (auto& effectName : effectsList)
+    {
+        addTestCase(effectName, [index](){return EffectBaseTest::create(index); });
+        index++;
+    }
+}
 
 class Shaky3DDemo : public Shaky3D 
 {
@@ -281,10 +291,9 @@ public:
 
 //------------------------------------------------------------------
 //
-// TextLayer
+// EffectBaseTest
 //
 //------------------------------------------------------------------
-#define MAX_LAYER    22
 
 ActionInterval* createEffect(int nIndex, float t)
 {
@@ -320,35 +329,20 @@ ActionInterval* createEffect(int nIndex, float t)
     return nullptr;
 }
 
-ActionInterval* getAction()
-{
-    auto pEffect = createEffect(actionIdx, 3);
-
-    return pEffect;
-} 
-
-void EffectTestScene::runThisTest()
-{
-    addChild(TextLayer::create());
-    Director::getInstance()->replaceScene(this);
-}
-
 #define SID_RESTART        1
 
-TextLayer::TextLayer(void)
-: BaseTest()
+EffectBaseTest::EffectBaseTest(int actionIdx)
 {
 	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
 	this->addChild(background,-20);
     
     _gridNodeTarget = NodeGrid::create();
-    auto effect = getAction();
+    auto effect = createEffect(actionIdx, 3); 
     _gridNodeTarget->runAction(effect);
     addChild(_gridNodeTarget, 0, kTagBackground);
     
     auto bg = Sprite::create(s_back3);
     _gridNodeTarget->addChild(bg, 0);
-//  bg->setAnchorPoint( Vec2::ZERO );
     bg->setPosition(VisibleRect::center());
 
     auto grossini = Sprite::create(s_pathSister2);
@@ -371,69 +365,16 @@ TextLayer::TextLayer(void)
     addChild(label);
     label->setTag( kTagLabel );
     
-    schedule( CC_SCHEDULE_SELECTOR(TextLayer::checkAnim) );
+    schedule( CC_SCHEDULE_SELECTOR(EffectBaseTest::checkAnim) );
 }
 
-void TextLayer::checkAnim(float dt)
+void EffectBaseTest::checkAnim(float dt)
 {
     //auto s2 = getChildByTag(kTagBackground);
     if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != nullptr)
         _gridNodeTarget->setGrid(nullptr);;
 }
 
-
-TextLayer::~TextLayer(void)
+EffectBaseTest::~EffectBaseTest(void)
 {
 }
-
-// TextLayer* TextLayer::node()
-// {
-//     return TextLayer::create();
-// }
-
-TextLayer* TextLayer::create()
-{
-    auto layer = new (std::nothrow) TextLayer();
-    layer->autorelease();
-    
-    return layer;
-}
-
-void TextLayer::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void TextLayer::newScene()
-{
-    auto s = new (std::nothrow) EffectTestScene();
-    auto child = TextLayer::create();
-    s->addChild(child);
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextLayer::restartCallback(Ref* sender)
-{
-    newScene();
-}
-
-void TextLayer::nextCallback(Ref* sender)
-{
-    // update the action index
-    actionIdx++;
-    actionIdx = actionIdx % MAX_LAYER;
-
-    newScene();
-}
-
-void TextLayer::backCallback(Ref* sender)
-{
-    // update the action index
-    actionIdx--;
-    int total = MAX_LAYER;
-    if( actionIdx < 0 )
-        actionIdx += total;    
-
-    newScene();
-} 

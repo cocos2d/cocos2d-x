@@ -311,12 +311,6 @@ def main():
     installer = CocosZipInstaller(workpath, os.path.join(workpath, 'external', 'config.json'), os.path.join(workpath, 'external', 'version.json'), "prebuilt_libs_version")
     installer.run(workpath, external_path, opts.remove_downloaded, opts.force_update, opts.download_only)
 
-    print("=======================================================")
-    print("==> Prepare to download lua runtime binaries")
-    runtime_path = os.path.join(workpath, 'templates', 'lua-template-runtime', 'runtime')
-    installer = CocosZipInstaller(workpath, os.path.join(runtime_path, 'config.json'), os.path.join(runtime_path, 'version.json'))
-    installer.run(workpath, runtime_path, opts.remove_downloaded, opts.force_update, opts.download_only)
-
 # -------------- main --------------
 if __name__ == '__main__':
     try:

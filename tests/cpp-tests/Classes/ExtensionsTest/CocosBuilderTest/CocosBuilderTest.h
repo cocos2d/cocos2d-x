@@ -1,11 +1,15 @@
 #ifndef _CCBIREADER_TEST_H_
 #define _CCBIREADER_TEST_H_
 
-#include "../../testBasic.h"
+#include "../../BaseTest.h"
 
-class CocosBuilderTestScene : public TestScene {
-    public: 
-        virtual void runThisTest();
+DEFINE_TEST_SUITE(CocosBuilderTests);
+
+class CocosBuilderTestScene : public TestCase {
+public:
+    CREATE_FUNC(CocosBuilderTestScene);
+
+    virtual bool init() override;
 };
 
 #endif

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,16 +26,14 @@
 #ifndef _CCFont_h_
 #define _CCFont_h_
 
+/// @cond DO_NOT_SHOW
+
 #include <string>
 #include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
 class FontAtlas;
-
-// fwd
-class FontAtlas;
-
 
 class CC_DLL Font : public Ref
 {
@@ -69,5 +67,5 @@ protected:
 
 NS_CC_END
 
-
+/// @endcond
 #endif

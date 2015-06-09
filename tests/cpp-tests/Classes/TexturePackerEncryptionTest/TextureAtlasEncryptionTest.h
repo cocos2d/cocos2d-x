@@ -2,24 +2,21 @@
 #define _TextureAtlasEncryption_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 #include <string>
 
-class TextureAtlasEncryptionDemo : public Layer
+DEFINE_TEST_SUITE(TextureAtlasEncryptionTests);
+
+class TextureAtlasEncryptionDemo : public TestCase
 {
 public:
+    CREATE_FUNC(TextureAtlasEncryptionDemo);
+
     virtual std::string title() const;
-    virtual std::string subtitle() const;
     virtual void onEnter() override;
 
 protected:
     std::string    _title;
-};
-
-class TextureAtlasEncryptionTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

@@ -25,9 +25,7 @@
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <dwrite.h>
-#endif
 #include <map>
 #include <string>
 #include <sstream>
@@ -613,14 +611,11 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
         return nullptr;
     }
 
-	return FileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", size);
+	return FileUtils::getInstance()->getFileData(fullpath.c_str(), "rb", size);
 }
 
 unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size) 
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	return nullptr;
-#else
     std::string aName(pFontName);
     unsigned char* pBuffer = nullptr;
     HRESULT hr = S_OK;
@@ -752,7 +747,6 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
     }
 
     return pBuffer;
-#endif
 }
 
 NS_CC_END

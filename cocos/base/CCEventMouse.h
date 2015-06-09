@@ -38,13 +38,22 @@
 #define MOUSE_BUTTON_7          6
 #define MOUSE_BUTTON_8          7
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
+/** @class EventMouse
+ * @brief The mouse event.
+ */
 class CC_DLL EventMouse : public Event
 {
 public:
     /**
-    * Different types of MouseEvent
+    * MouseEventType Different types of MouseEvent.
+    * @js NA
     */
     enum class MouseEventType
     {
@@ -55,13 +64,36 @@ public:
         MOUSE_SCROLL,
     };
 
+    /** Constructor.
+     *
+     * @param mouseEventCode A given mouse event type.
+     * @js ctor
+     */
     EventMouse(MouseEventType mouseEventCode);
 
-    /** Set mouse scroll data */
+    /** Set mouse scroll data.
+     * 
+     * @param scrollX The scroll data of x axis.
+     * @param scrollY The scroll data of y axis.
+     */
     inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
-    inline float getScrollX() { return _scrollX; };
-    inline float getScrollY() { return _scrollY; };
+    /** Get mouse scroll data of x axis.
+     * 
+     * @return The scroll data of x axis.
+     */
+    inline float getScrollX() const { return _scrollX; };
+    /** Get mouse scroll data of y axis.
+     *
+     * @return The scroll data of y axis.
+     */
+    inline float getScrollY() const { return _scrollY; };
 
+    /** Set the cursor position.
+     *
+     * @param x The x coordinate of cursor position.
+     * @param y The y coordinate of cursor position.
+     * @js setLocation
+     */
     inline void setCursorPosition(float x, float y) { 
         _x = x;
         _y = y;
@@ -75,24 +107,69 @@ public:
         }
     }
 
+    /** Set mouse button.
+     * 
+     * @param button a given mouse button.
+     * @js setButton
+     */
     inline void setMouseButton(int button) { _mouseButton = button; };
-    inline int getMouseButton() { return _mouseButton; };
-    inline float getCursorX() { return _x; };
-    inline float getCursorY() { return _y; };
+    /** Get mouse button.
+     *
+     * @return The mouse button.
+     * @js getButton
+     */
+    inline int getMouseButton() const { return _mouseButton; };
+    /** Get the cursor position of x axis.
+     *
+     * @return The x coordinate of cursor position.
+     * @js getLocationX
+     */
+    inline float getCursorX() const { return _x; };
+    /** Get the cursor position of y axis.
+     *
+     * @return The y coordinate of cursor position.
+     * @js getLocationY
+     */
+    inline float getCursorY() const { return _y; };
 
-    /** returns the current touch location in OpenGL coordinates */
+    /** Returns the current touch location in OpenGL coordinates.
+     *
+     * @return The current touch location in OpenGL coordinates.
+     */
     Vec2 getLocation() const;
-    /** returns the previous touch location in OpenGL coordinates */
+    /** Returns the previous touch location in OpenGL coordinates.
+     *
+     * @return The previous touch location in OpenGL coordinates.
+     * @js NA
+     */
     Vec2 getPreviousLocation() const;
-    /** returns the start touch location in OpenGL coordinates */
+    /** Returns the start touch location in OpenGL coordinates.
+     *
+     * @return The start touch location in OpenGL coordinates.
+     * @js NA
+     */
     Vec2 getStartLocation() const;
-    /** returns the delta of 2 current touches locations in screen coordinates */
+    /** Returns the delta of 2 current touches locations in screen coordinates.
+     *
+     * @return The delta of 2 current touches locations in screen coordinates.
+     */
     Vec2 getDelta() const;
-    /** returns the current touch location in screen coordinates */
+    /** Returns the current touch location in screen coordinates.
+     *
+     * @return The current touch location in screen coordinates.
+     */
     Vec2 getLocationInView() const;
-    /** returns the previous touch location in screen coordinates */
+    /** Returns the previous touch location in screen coordinates.
+     *
+     * @return The previous touch location in screen coordinates.
+     * @js NA
+     */
     Vec2 getPreviousLocationInView() const;
-    /** returns the start touch location in screen coordinates */
+    /** Returns the start touch location in screen coordinates.
+     *
+     * @return The start touch location in screen coordinates.
+     * @js NA
+     */
     Vec2 getStartLocationInView() const;
 
 
@@ -113,5 +190,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCMouseEvent__) */

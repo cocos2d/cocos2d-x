@@ -48,6 +48,11 @@ namespace cocostudio
         return instanceLoadingBar;
     }
     
+    void LoadingBarReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLoadingBar);
+    }
+    
     void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
@@ -298,12 +303,12 @@ namespace cocostudio
         {
             loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         }
-        else
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            loadingBar->addChild(label);
-        }
+        //else
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+        //    loadingBar->addChild(label);
+        //}
         
         int direction = options->direction();
         loadingBar->setDirection(LoadingBar::Direction(direction));

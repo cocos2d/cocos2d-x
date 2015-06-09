@@ -90,6 +90,24 @@ ActionInterval* ActionEase::getInnerAction()
 // EaseRateAction
 //
 
+EaseRateAction* EaseRateAction::create(ActionInterval* action, float rate)
+{
+    EaseRateAction *easeRateAction = new (std::nothrow) EaseRateAction();
+    if (easeRateAction)
+    {
+        if (easeRateAction->initWithAction(action, rate))
+        {
+            easeRateAction->autorelease();
+        }
+        else
+        {
+            CC_SAFE_RELEASE_NULL(easeRateAction);
+        }
+    }
+    
+    return easeRateAction;
+}
+
 bool EaseRateAction::initWithAction(ActionInterval *action, float rate)
 {
     if (ActionEase::initWithAction(action))

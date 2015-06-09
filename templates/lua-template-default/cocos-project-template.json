@@ -137,66 +137,16 @@
                 ]
             },
             {
-                "from": "tools/simulator/frameworks/runtime-src/Classes/lang",
+                "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
                 "to": "frameworks/runtime-src/Classes/ide-support",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
-                "to": "frameworks/runtime-src/proj.ios_mac/ios",
                 "exclude": [
-                    "RootViewController.*",
-                    "Info.plist"
+                    "RuntimeJsImpl.h",
+                    "RuntimeJsImpl.cpp"
                 ]
             },
             {
-                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
-                "to": "frameworks/runtime-src/proj.ios_mac/mac",
-                "exclude": [
-                    "Info.plist",
-                    "Icon.icns",
-                    "build-cfg.json"
-                ]
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/build-cfg.json",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/game.rc",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.cpp",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.h",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/res",
-                "to": "frameworks/runtime-src/proj.win32/res",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/resource.h",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.cpp",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.h",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
+                "from": "tools/simulator/frameworks/runtime-src/Classes/lua_module_register.h",
+                "to": "frameworks/runtime-src/Classes/"
             }
         ],
         "project_rename": {
@@ -223,6 +173,7 @@
                 "frameworks/runtime-src/proj.android/AndroidManifest.xml",
                 "frameworks/runtime-src/proj.android/build.xml",
                 "frameworks/runtime-src/proj.android/res/values/strings.xml",
+                "frameworks/runtime-src/proj.android-studio/settings.gradle",
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
@@ -232,7 +183,9 @@
         "project_replace_package_name": {
             "src_package_name": "org.cocos2dx.hellolua",
             "files": [
-                "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+                "frameworks/runtime-src/proj.android-studio/app/build.gradle",
+                "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml"
             ]
         },
         "project_replace_mac_bundleid": {

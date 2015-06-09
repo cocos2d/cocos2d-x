@@ -124,12 +124,21 @@ char* _readFile (const char* path, int* length);
 
 /**/
 
-typedef struct {
+typedef struct _spAnimationState {
 	spAnimationState super;
 	spEvent** events;
 
 	spTrackEntry* (*createTrackEntry) (spAnimationState* self);
 	void (*disposeTrackEntry) (spTrackEntry* entry);
+
+#ifdef __cplusplus
+	_spAnimationState() :
+		super(),
+		events(0),
+		createTrackEntry(0),
+		disposeTrackEntry(0) {
+	}
+#endif
 } _spAnimationState;
 
 spTrackEntry* _spTrackEntry_create (spAnimationState* self);

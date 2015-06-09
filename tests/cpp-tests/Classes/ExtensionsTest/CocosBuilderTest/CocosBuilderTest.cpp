@@ -30,46 +30,33 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocosbuilder;
 
-void CocosBuilderTestScene::runThisTest() {
-    /* Create an autorelease NodeLoaderLibrary. */
-    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
-    
-    ccNodeLoaderLibrary->registerNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
-
-    /* Create an autorelease CCBReader. */
-    cocosbuilder::CCBReader * ccbReader = new cocosbuilder::CCBReader(ccNodeLoaderLibrary);
-    
-    /* Read a ccbi file. */
-    auto node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
-    
-    ccbReader->release();
-
-    if(node != nullptr) {
-        this->addChild(node);
-    }
-
-    Director::getInstance()->replaceScene(this);
+CocosBuilderTests::CocosBuilderTests()
+{
+    ADD_TEST_CASE(CocosBuilderTestScene);
 }
 
+bool CocosBuilderTestScene::init() {
+    if (TestCase::init())
+    {
+        /* Create an autorelease NodeLoaderLibrary. */
+        auto nodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 
-//void CocosBuilderTestScene::runThisTest() {
-//    auto ccbiReaderLayer = CCBIReaderLayer::node();
-//    
-//    /* Create an autorelease NodeLoaderLibrary. */
-//    NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
-//    
-//    /* Create an autorelease CCBReader. */
-//    CCBReader * ccbReader = new (std::nothrow) CCBReader(ccNodeLoaderLibrary, ccbiReaderLayer, ccbiReaderLayer);
-//    ccbReader->autorelease();
-//    
-//    /* Read a ccbi file. */
-//    auto node = ccbReader->readNodeGraphFromFile("ccb/simple/pub/", "ccb/test.ccbi", ccbiReaderLayer);
-//    
-//    if(node != nullptr) {
-//        ccbiReaderLayer->addChild(node);
-//    }
-//    
-//    this->addChild(ccbiReaderLayer);
-//    
-//    Director::getInstance()->replaceScene(this);
-//}
+        nodeLoaderLibrary->registerNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
+
+        /* Create an autorelease CCBReader. */
+        cocosbuilder::CCBReader * ccbReader = new cocosbuilder::CCBReader(nodeLoaderLibrary);
+
+        /* Read a ccbi file. */
+        auto node = ccbReader->readNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi", this);
+
+        ccbReader->release();
+
+        if (node != nullptr) {
+            this->addChild(node);
+        }
+
+        return true;
+    }
+
+    return false;
+}

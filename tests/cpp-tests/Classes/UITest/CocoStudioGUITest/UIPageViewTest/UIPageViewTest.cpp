@@ -1,7 +1,17 @@
-
-
 #include "UIPageViewTest.h"
 #include "cocos2d.h"
+
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UIPageViewTests::UIPageViewTests()
+{
+    ADD_TEST_CASE(UIPageViewTest);
+    ADD_TEST_CASE(UIPageViewButtonTest);
+    ADD_TEST_CASE(UIPageViewCustomScrollThreshold);
+    ADD_TEST_CASE(UIPageViewTouchPropagationTest);
+    ADD_TEST_CASE(UIPageViewDynamicAddAndRemoveTest);
+}
 
 // UIPageViewTest
 UIPageViewTest::UIPageViewTest()

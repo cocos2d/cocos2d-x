@@ -54,8 +54,11 @@ extern "C"
     }
 #endif
 #endif
+
+#if CC_USE_PNG
 #include "png.h"
-    
+#endif //CC_USE_PNG
+
 #if CC_USE_TIFF
 #include "tiffio.h"
 #endif //CC_USE_TIFF
@@ -409,7 +412,8 @@ namespace
         ssize_t size;
         int offset;
     }tImageSource;
-    
+ 
+#ifdef CC_USE_PNG
     static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
     {
         tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
@@ -424,6 +428,7 @@ namespace
             png_error(png_ptr, "pngReaderCallback failed");
         }
     }
+#endif //CC_USE_PNG
 }
 
 Texture2D::PixelFormat getDevicePixelFormat(Texture2D::PixelFormat format)
@@ -635,7 +640,6 @@ bool Image::isS3TC(const unsigned char * data, ssize_t dataLen)
     
     if (strncmp(header->fileCode, "DDS", 3) != 0)
     {
-        CCLOG("cocos2d: the file is not a dds file!");
         return false;
     }
     return true;
@@ -647,7 +651,6 @@ bool Image::isATITC(const unsigned char *data, ssize_t dataLen)
     
     if (strncmp(&header->identifier[1], "KTX", 3) != 0)
     {
-        CCLOG("cocos3d: the file is not a ktx file!");
         return false;
     }
     return true;
@@ -742,6 +745,7 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     }
     else
     {
+        CCLOG("cocos2d: can't detect image format");
         return Format::UNKNOWN;
     }
 }
@@ -820,9 +824,108 @@ namespace
 #endif // CC_USE_JPEG
 }
 
+#ifdef CC_USE_WIC
+bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
+{
+    bool bRet = false;
+    WICImageLoader img;
+
+    if (img.decodeImageData(data, dataLen))
+    {
+        _width = img.getWidth();
+        _height = img.getHeight();
+        _hasPremultipliedAlpha = false;
+
+        WICPixelFormatGUID format = img.getPixelFormat();
+
+        if (memcmp(&format, &GUID_WICPixelFormat8bppGray, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::I8;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat8bppAlpha, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::AI88;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat24bppRGB, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::RGB888;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat32bppRGBA, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat32bppBGRA, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::BGRA8888;
+        }
+
+        _dataLen = img.getImageDataSize();
+
+        CCAssert(_dataLen > 0, "Image: Decompressed data length is invalid");
+
+        _data = new (std::nothrow) unsigned char[_dataLen];
+        bRet = (img.getImageData(_data, _dataLen) > 0);
+
+        if (_renderFormat == Texture2D::PixelFormat::RGBA8888) {
+            premultipliedAlpha();
+        }
+    }
+
+    return bRet;
+}
+
+bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat)
+{
+	// Save formats supported by WIC
+	WICPixelFormatGUID targetFormat = isToRGB ? GUID_WICPixelFormat24bppBGR : GUID_WICPixelFormat32bppBGRA;
+	unsigned char *pSaveData = nullptr;
+	int saveLen = _dataLen;
+	int bpp = 4;
+
+	if (targetFormat == GUID_WICPixelFormat24bppBGR && _renderFormat == Texture2D::PixelFormat::RGBA8888)
+	{
+		bpp = 3;
+		saveLen = _width * _height * bpp;
+		pSaveData = new unsigned char[saveLen];
+		int indL = 0, indR = 0;
+
+		while (indL < saveLen && indR < _dataLen)
+		{
+			memcpy(&pSaveData[indL], &_data[indR], 3);
+			indL += 3;
+			indR += 4;
+		}
+	}
+	else
+	{
+		pSaveData = new unsigned char[saveLen];
+		memcpy(pSaveData, _data, saveLen);
+	}
+
+	for (int ind = 2; ind < saveLen; ind += bpp) {
+		std::swap(pSaveData[ind - 2], pSaveData[ind]);
+	}
+
+	bool bRet = false;
+	WICImageLoader img;
+	bRet = img.encodeImageData(filePath, pSaveData, saveLen, targetFormat, _width, _height, containerFormat);
+
+	delete[] pSaveData;
+	return bRet;
+}
+
+
+#endif //CC_USE_WIC
+
 bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 {
-#if CC_USE_JPEG
+#if CC_USE_WIC
+    return decodeWithWIC(data, dataLen);
+#elif CC_USE_JPEG
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
     /* We use our private extension JPEG error handler.
@@ -909,12 +1012,16 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 
     return ret;
 #else
+    CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
     return false;
 #endif // CC_USE_JPEG
 }
 
 bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
 {
+#if CC_USE_WIC
+    return decodeWithWIC(data, dataLen);
+#elif CC_USE_PNG
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
     bool ret = false;
@@ -1061,6 +1168,10 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
     return ret;
+#else
+    CCLOG("png is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif //CC_USE_PNG
 }
 
 #if CC_USE_TIFF
@@ -1177,7 +1288,9 @@ namespace
 
 bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 {
-#if CC_USE_TIFF
+#if CC_USE_WIC
+    return decodeWithWIC(data, dataLen);
+#elif CC_USE_TIFF
     bool ret = false;
     do 
     {
@@ -1236,9 +1349,9 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
     } while (0);
     return ret;
 #else
-    CCLOG("tiff is not enabled, please enalbe it in ccConfig.h");
+    CCLOG("tiff is not enabled, please enable it in ccConfig.h");
     return false;
-#endif
+#endif //CC_USE_TIFF
 }
 
 namespace
@@ -2025,7 +2138,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 #if CC_USE_WEBP
 	bool ret = false;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CCLOG("WEBP image format not supported on WinRT or WP8");
 #else
 	do
@@ -2060,7 +2173,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         
         ret = true;
 	} while (0);
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	return ret;
 #else 
     CCLOG("webp is not enabled, please enable it in ccConfig.h");
@@ -2140,8 +2253,11 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
 
 bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
+#if CC_USE_WIC
+    return encodeWithWIC(filePath, isToRGB, GUID_ContainerFormatPng);
+#elif CC_USE_PNG
     bool ret = false;
-    do 
+    do
     {
         FILE *fp;
         png_structp png_ptr;
@@ -2149,7 +2265,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_colorp palette;
         png_bytep *row_pointers;
 
-        fp = fopen(filePath.c_str(), "wb");
+        fp = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb");
         CC_BREAK_IF(nullptr == fp);
 
         png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
@@ -2281,10 +2397,17 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         ret = true;
     } while (0);
     return ret;
+#else
+    CCLOG("png is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif // CC_USE_PNG
 }
+
 bool Image::saveImageToJPG(const std::string& filePath)
 {
-#if CC_USE_JPEG
+#if CC_USE_WIC
+    return encodeWithWIC(filePath, false, GUID_ContainerFormatJpeg);
+#elif CC_USE_JPEG
     bool ret = false;
     do 
     {
@@ -2298,7 +2421,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == nullptr);
+        CC_BREAK_IF((outfile = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb")) == nullptr);
         
         jpeg_stdio_dest(&cinfo, outfile);
 

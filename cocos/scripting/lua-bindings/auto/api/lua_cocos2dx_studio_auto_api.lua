@@ -252,6 +252,11 @@
 
 
 --------------------------------------------------------
+-- the ccs BlendFuncFrame
+-- @field [parent=#ccs] BlendFuncFrame#BlendFuncFrame BlendFuncFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs Timeline
 -- @field [parent=#ccs] Timeline#Timeline Timeline preloaded module
 

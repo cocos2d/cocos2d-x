@@ -49,7 +49,6 @@ set(COCOS_UI_SRC
   ui/UIWidget.cpp
   ui/UIEditBox/UIEditBox.cpp
   ui/UILayoutComponent.cpp
-  ui/shaders/UIShaders.cpp
   ${COCOS_UI_SPECIFIC_SRC}
 
 )

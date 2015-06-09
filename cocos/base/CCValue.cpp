@@ -756,7 +756,7 @@ static std::string visit(const Value& v, int depth)
     return ret.str();
 }
 
-std::string Value::getDescription()
+std::string Value::getDescription() const
 {
     std::string ret("\n");
     ret += visit(*this, 0);

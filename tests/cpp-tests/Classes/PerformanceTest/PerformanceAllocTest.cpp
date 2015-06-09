@@ -5,6 +5,9 @@
 
 #include <algorithm>
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
 #define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
@@ -32,21 +35,17 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-static std::function<PerformceAllocScene*()> createFunctions[] =
+PerformceAllocTests::PerformceAllocTests()
 {
-    CL(NodeCreateTest),
-    CL(NodeDeallocTest),
-    CL(SpriteCreateEmptyTest),
-    CL(SpriteCreateTest),
-    CL(SpriteDeallocTest),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+    ADD_TEST_CASE(NodeCreateTest);
+    ADD_TEST_CASE(NodeDeallocTest);
+    ADD_TEST_CASE(SpriteCreateEmptyTest);
+    ADD_TEST_CASE(SpriteCreateTest);
+    ADD_TEST_CASE(SpriteDeallocTest);
+}
 
 enum {
     kTagInfoLayer = 1,
-
-    kTagBase = 20000,
 };
 
 enum {
@@ -54,58 +53,28 @@ enum {
     kNodesIncrease = 500,
 };
 
-static int g_curCase = 0;
-
-////////////////////////////////////////////////////////
-//
-// AllocBasicLayer
-//
-////////////////////////////////////////////////////////
-
-AllocBasicLayer::AllocBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-{
-}
-
-void AllocBasicLayer::showCurrentTest()
-{
-    int nodes = ((PerformceAllocScene*)getParent())->getQuantityOfNodes();
-
-    auto scene = createFunctions[_curCase]();
-
-    g_curCase = _curCase;
-
-    if (scene)
-    {
-        scene->initWithQuantityOfNodes(nodes);
-
-        Director::getInstance()->replaceScene(scene);
-    }
-}
+int PerformceAllocScene::quantityOfNodes = kNodesIncrease;
 
 ////////////////////////////////////////////////////////
 //
 // PerformceAllocScene
 //
 ////////////////////////////////////////////////////////
+bool PerformceAllocScene::init()
+{
+    if (TestCase::init())
+    {
+        initWithQuantityOfNodes(quantityOfNodes);
+        return true;
+    }
+
+    return false;
+}
+
 void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     //srand(time());
     auto s = Director::getInstance()->getWinSize();
-
-    // Title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-
-    // Subtitle
-    std::string strSubTitle = subtitle();
-    if(strSubTitle.length())
-    {
-        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1);
-        l->setPosition(Vec2(s.width/2, s.height-80));
-    }
 
     lastRenderedCount = 0;
     currentQuantityOfNodes = 0;
@@ -146,10 +115,6 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
-
-    auto menuLayer = new (std::nothrow) AllocBasicLayer(true, MAX_LAYER, g_curCase);
-    addChild(menuLayer);
-    menuLayer->release();
 
     updateQuantityLabel();
     updateQuantityOfNodes();
@@ -468,13 +433,4 @@ std::string SpriteDeallocTest::subtitle() const
 const char*  SpriteDeallocTest::testName()
 {
     return "Sprite::~Sprite()";
-}
-
-///----------------------------------------
-void runAllocPerformanceTest()
-{
-    auto scene = createFunctions[g_curCase]();
-    scene->initWithQuantityOfNodes(kNodesIncrease);
-    
-    Director::getInstance()->replaceScene(scene);
 }

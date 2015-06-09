@@ -143,8 +143,8 @@ void FlipX3D::update(float time)
 
     Vec3 v0, v1, v, diff;
 
-    v0 = getOriginalVertex(Vec2(1, 1));
-    v1 = getOriginalVertex(Vec2(0, 0));
+    v0 = getOriginalVertex(Vec2(1.0f, 1.0f));
+    v1 = getOriginalVertex(Vec2());
 
     float    x0 = v0.x;
     float    x1 = v1.x;
@@ -154,19 +154,19 @@ void FlipX3D::update(float time)
     if ( x0 > x1 )
     {
         // Normal Grid
-        a = Vec2(0,0);
-        b = Vec2(0,1);
-        c = Vec2(1,0);
-        d = Vec2(1,1);
+        a.setZero();
+        b.set(0.0f, 1.0f);
+        c.set(1.0f, 0.0f);
+        d.set(1.0f, 1.0f);
         x = x0;
     }
     else
     {
         // Reversed Grid
-        c = Vec2(0,0);
-        d = Vec2(0,1);
-        a = Vec2(1,0);
-        b = Vec2(1,1);
+        c.setZero();
+        d.set(0.0f, 1.0f);
+        a.set(1.0f, 0.0f);
+        b.set(1.0f, 1.0f);
         x = x1;
     }
     
@@ -237,8 +237,8 @@ void FlipY3D::update(float time)
     
     Vec3    v0, v1, v, diff;
     
-    v0 = getOriginalVertex(Vec2(1, 1));
-    v1 = getOriginalVertex(Vec2(0, 0));
+    v0 = getOriginalVertex(Vec2(1.0f, 1.0f));
+    v1 = getOriginalVertex(Vec2());
     
     float    y0 = v0.y;
     float    y1 = v1.y;
@@ -248,19 +248,19 @@ void FlipY3D::update(float time)
     if (y0 > y1)
     {
         // Normal Grid
-        a = Vec2(0,0);
-        b = Vec2(0,1);
-        c = Vec2(1,0);
-        d = Vec2(1,1);
+        a.setZero();
+        b.set(0.0f, 1.0f);
+        c.set(1.0f, 0.0f);
+        d.set(1.0f, 1.0f);
         y = y0;
     }
     else
     {
         // Reversed Grid
-        b = Vec2(0,0);
-        a = Vec2(0,1);
-        d = Vec2(1,0);
-        c = Vec2(1,1);
+        b.setZero();
+        a.set(0.0f, 1.0f);
+        d.set(1.0f, 0.0f);
+        c.set(1.0f, 1.0f);
         y = y1;
     }
     
@@ -318,7 +318,7 @@ bool Lens3D::initWithDuration(float duration, const Size& gridSize, const Vec2& 
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {
-        _position = Vec2(-1, -1);
+        _position.set(-1.0f, -1.0f);
         setPosition(position);
         _radius = radius;
         _lensEffect = 0.7f;
@@ -725,13 +725,13 @@ void Twirl::update(float time)
         {
             Vec3 v = getOriginalVertex(Vec2(i ,j));
             
-            Vec2    avg = Vec2(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
+            Vec2 avg(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = avg.getLength();
             
             float amp = 0.1f * _amplitude * _amplitudeRate;
             float a = r * cosf( (float)M_PI/2.0f + time * (float)M_PI * _twirls * 2 ) * amp;
             
-            Vec2 d = Vec2(
+            Vec2 d(
                 sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x),
                 cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x));
             

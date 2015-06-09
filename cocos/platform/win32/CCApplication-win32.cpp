@@ -73,7 +73,7 @@ int Application::run()
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())
     {
-        return 0;
+        return 1;
     }
 
     auto director = Director::getInstance();
@@ -106,7 +106,7 @@ int Application::run()
         director = nullptr;
     }
     glview->release();
-    return true;
+    return 0;
 }
 
 void Application::setAnimationInterval(double interval)
@@ -193,6 +193,9 @@ LanguageType Application::getCurrentLanguage()
             break;
         case LANG_ROMANIAN:
             ret = LanguageType::ROMANIAN;
+            break;
+        case LANG_BULGARIAN:
+            ret = LanguageType::BULGARIAN;
             break;
     }
     

@@ -36,12 +36,21 @@ class ProgressTimer;
 class RenderTexture;
 
 /**
- * @addtogroup transition
+ * @addtogroup _2d
  * @{
+ */
+/** @class TransitionProgress
+ * @brief A base class of progress transition.
  */
 class CC_DLL TransitionProgress : public TransitionScene
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgress object.
+     */
     static TransitionProgress* create(float t, Scene* scene);
 
     //
@@ -68,12 +77,19 @@ protected:
 };
 
 
-/** TransitionRadialCCW transition.
+/** @class TransitionProgressRadialCCW
+ * @brief TransitionRadialCCW transition.
  A counter clock-wise radial transition to the next scene
  */
 class CC_DLL TransitionProgressRadialCCW : public TransitionProgress
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgressRadialCCW object.
+     */
     static TransitionProgressRadialCCW* create(float t, Scene* scene);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -92,12 +108,19 @@ protected:
 };
 
 
-/** TransitionRadialCW transition.
- A counter clock-wise radial transition to the next scene
+/** @class TransitionProgressRadialCW
+ * @brief TransitionRadialCW transition.
+ A counter clock-wise radial transition to the next scene.
 */
 class CC_DLL TransitionProgressRadialCW : public TransitionProgress
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgressRadialCW object.
+     */
     static TransitionProgressRadialCW* create(float t, Scene* scene);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -115,12 +138,19 @@ protected:
 
 };
 
-/** TransitionProgressHorizontal transition.
+/** @class TransitionProgressHorizontal
+  * @brief TransitionProgressHorizontal transition.
  A  clock-wise radial transition to the next scene
  */
 class CC_DLL TransitionProgressHorizontal : public TransitionProgress
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgressHorizontal object.
+     */
     static TransitionProgressHorizontal* create(float t, Scene* scene);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -137,9 +167,18 @@ protected:
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
 
+/** @class TransitionProgressVertical
+ * @brief TransitionProgressVertical transition.
+ */
 class CC_DLL TransitionProgressVertical : public TransitionProgress
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgressVertical object.
+     */
     static TransitionProgressVertical* create(float t, Scene* scene);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -156,9 +195,18 @@ protected:
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
 
+/** @class TransitionProgressInOut
+ * @brief TransitionProgressInOut transition.
+ */
 class CC_DLL TransitionProgressInOut : public TransitionProgress
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgressInOut object.
+     */
     static TransitionProgressInOut* create(float t, Scene* scene);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -177,9 +225,18 @@ protected:
     virtual void setupTransition() override;
 };
 
+/** @class TransitionProgressOutIn
+ * @brief TransitionProgressOutIn transition.
+ */
 class CC_DLL TransitionProgressOutIn : public TransitionProgress
 {
 public:
+    /** Creates a transition with duration and incoming scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @return An autoreleased TransitionProgressOutIn object.
+     */
     static TransitionProgressOutIn* create(float t, Scene* scene);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -197,7 +254,7 @@ protected:
 
 };
 
-// end of transition group
+// end of _2d group
 /// @}
 
 NS_CC_END

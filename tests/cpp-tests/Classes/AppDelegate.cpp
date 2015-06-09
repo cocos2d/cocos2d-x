@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -33,13 +33,13 @@
 USING_NS_CC;
 
 AppDelegate::AppDelegate()
-:_curTest(nullptr)
+: _testController(nullptr)
 {
 }
 
 AppDelegate::~AppDelegate()
 {
-//    SimpleAudioEngine::end();
+    //SimpleAudioEngine::end();
     cocostudio::ArmatureDataManager::destroyInstance();
 }
 
@@ -73,7 +73,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
     auto screenSize = glview->getFrameSize();
-
     auto designSize = Size(480, 320);
 
     auto fileUtils = FileUtils::getInstance();
@@ -103,7 +102,6 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UICheckBox");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UIImageView");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabel");
-//        searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabelAtlas");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILabelBMFont");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/BackgroundImage");
         searchPaths.push_back("ccs-res/hd/cocosui/UIEditorTest/UILayout/Color");
@@ -139,12 +137,10 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/scenetest/UIComponentTest");
         searchPaths.push_back("ccs-res/scenetest/TriggerTest");
         
-        
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIButton");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UICheckBox");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UIImageView");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabel");
-//        searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabelAtlas");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILabelBMFont");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/BackgroundImage");
         searchPaths.push_back("ccs-res/cocosui/UIEditorTest/UILayout/Color");
@@ -165,34 +161,17 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
         searchPaths.push_back("ActionTimeline");
         searchPaths.push_back("ccs-res/armature");
-
     }
     
     fileUtils->setSearchPaths(searchPaths);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-#else
-    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-#endif
-
-    auto scene = Scene::create();
-    auto layer = new (std::nothrow) TestController();
-    layer->autorelease();
-    layer->addConsoleAutoTest();
-    scene->addChild(layer);
-    director->runWithScene(scene);
-
+    
     // Enable Remote Console
     auto console = director->getConsole();
     console->listenOnTCP(5678);
-    Configuration *conf = Configuration::getInstance();
-    bool isAutoRun = conf->getValue("cocos2d.x.testcpp.autorun", Value(false)).asBool();
-    if(isAutoRun)
-    {
-        layer->startAutoRun();
-    }
+
+    _testController = TestController::getInstance();
     
     return true;
 }
@@ -200,21 +179,21 @@ bool AppDelegate::applicationDidFinishLaunching()
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    if (_testController)
+    {
+        _testController->onEnterBackground();
+    }
+    
     Director::getInstance()->stopAnimation();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    if (_testController)
+    {
+        _testController->onEnterForeground();
+    }
+    
     Director::getInstance()->startAnimation();
-}
-
-void AppDelegate::setCurrentTest(BaseTest* curTest)
-{
-    _curTest = curTest;
-}
-
-BaseTest* AppDelegate::getCurrentTest()
-{
-    return _curTest;
 }

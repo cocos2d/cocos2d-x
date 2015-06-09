@@ -8,7 +8,6 @@
 using namespace std;
 
 #include "cocos2d.h"
-#include "CCLuaStack.h"
 
 #define kCCRuntimeDebuggerNone      0
 #define kCCRuntimeDebuggerLDT       1
@@ -36,6 +35,7 @@ using namespace std;
 
 #define kProjectConfigConsolePort   6010
 #define kProjectConfigUploadPort    6020
+#define kProjectConfigDebugPort     5086
 
 class ProjectConfig
 {

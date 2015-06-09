@@ -29,9 +29,6 @@ function UIScene:init()
 
     self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = root:getChildByName("back")--getWidgetByName
-    back_label:setVisible(false)
-
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
             cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
@@ -711,9 +708,6 @@ function UILoadingBarLeftTest:initExtend()
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
-
     local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
@@ -836,9 +830,6 @@ function UILoadingBarRightTest:initExtend()
 
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
 
     local widgetSize = self._widget:getContentSize()
         
@@ -963,9 +954,6 @@ function UILoadingBarLeftScale9Test:initExtend()
 
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
 
     local widgetSize = self._widget:getContentSize()
         
@@ -1092,9 +1080,6 @@ function UILoadingBarRightScale9Test:initExtend()
 
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
 
     local widgetSize = self._widget:getContentSize()
         

@@ -5,9 +5,11 @@
 
 #include "Bug-350.h"
 
+USING_NS_CC;
+
 bool Bug350Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto size = Director::getInstance()->getWinSize();
         auto background = Sprite::create("Hello.png");

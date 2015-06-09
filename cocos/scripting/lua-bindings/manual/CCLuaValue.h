@@ -42,6 +42,11 @@ using std::memset;
 using std::memcpy;
 #endif
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 typedef int LUA_FUNCTION;
@@ -55,6 +60,7 @@ typedef LuaValueDict::const_iterator      LuaValueDictIterator;
 typedef std::list<LuaValue>               LuaValueArray;
 typedef LuaValueArray::const_iterator     LuaValueArrayIterator;
 
+/// @cond
 typedef enum {
     LuaValueTypeInt,
     LuaValueTypeFloat,
@@ -64,7 +70,9 @@ typedef enum {
     LuaValueTypeArray,
     LuaValueTypeObject
 } LuaValueType;
+/// @endcond
 
+/// @cond
 typedef union {
     int                 intValue;
     float               floatValue;
@@ -74,62 +82,197 @@ typedef union {
     LuaValueArray*    arrayValue;
     Ref*           ccobjectValue;
 } LuaValueField;
+/// @endcond
 
+/**
+ * Wrap different general types of data into a same specific type named LuaValue.
+ * The general types supported as follows:int,float,bool,std::string,const char*,LuaValueDict,LuaValueArray,Ref.
+ *
+ * @lua NA
+ * @js NA
+ */
 class LuaValue
 {
 public:
+    
+    /**
+     * Construct a LuaValue object by a int value.
+     *
+     * @param intValue a int value.
+     * @return a LuaValue object.
+     */
     static const LuaValue intValue(const int intValue);
+    
+    /**
+     * Construct a LuaValue object by a float value.
+     *
+     * @param floatValue a float value.
+     * @return a LuaValue object.
+     */
     static const LuaValue floatValue(const float floatValue);
+    
+    /**
+     * Construct a LuaValue object by a boolean value.
+     *
+     * @param booleanValue a bool value.
+     * @return a LuaValue object.
+     */
     static const LuaValue booleanValue(const bool booleanValue);
+    
+    /**
+     * Construct a LuaValue object by a string pointer.
+     *
+     * @param stringValue a string pointer.
+     * @return a LuaValue object.
+     */
     static const LuaValue stringValue(const char* stringValue);
+    
+    /**
+     * Construct a LuaValue object by a std::string object.
+     *
+     * @param stringValue a std::string object.
+     * @return a LuaValue object.
+     */
     static const LuaValue stringValue(const std::string& stringValue);
+    
+    /**
+     * Construct a LuaValue object by a LuaValueDict value.
+     *
+     * @param dictValue a LuaValueDict object.
+     * @return a LuaValue object.
+     */
     static const LuaValue dictValue(const LuaValueDict& dictValue);
+    
+    /**
+     * Construct a LuaValue object by a LuaValueArray value.
+     *
+     * @param arrayValue a LuaValueArray object.
+     * @return a LuaValue object.
+     */
     static const LuaValue arrayValue(const LuaValueArray& arrayValue);
+    
+    /**
+     * Construct a LuaValue object by a Ref object.
+     *
+     * @param ccobjectValue a Ref object.
+     * @param objectTypename a string pointer point to the typename of object.
+     * @return a LuaValue object.
+     */
     static const LuaValue ccobjectValue(Ref* ccobjectValue, const char* objectTypename);
+    
+    /**
+     * Construct a LuaValue object by a Ref object.
+     *
+     * @param ccobjectValue a Ref object.
+     * @param objectTypename a std::string object represent the typename of object.
+     * @return a LuaValue object.
+     */
     static const LuaValue ccobjectValue(Ref* ccobjectValue, const std::string& objectTypename);
     
+    
+    /**
+     * Default constuctor of LuaValue.
+     * Set the default value for _type(LuaValueTypeInt) and _ccobjectType(nullptr),and init the _field.
+     */
     LuaValue(void)
     : _type(LuaValueTypeInt)
     , _ccobjectType(nullptr)
     {
         memset(&_field, 0, sizeof(_field));
     }
+    
+    /**
+     * Copy constructor of Data.
+     */
     LuaValue(const LuaValue& rhs);
+    
+    /**
+     * Override of operator= .
+     */
     LuaValue& operator=(const LuaValue& rhs);
+    
+    /**
+     * Destructor.
+     */
     ~LuaValue(void);
     
+    /**
+     * Get the type of LuaValue object.
+     * 
+     * @return the type of LuaValue object.
+     */
     const LuaValueType getType(void) const {
         return _type;
     }
     
+    /**
+     * Get the typename of the Ref object.
+     *
+     * @return the refrence of _ccobjectType.
+     */
     const std::string& getObjectTypename(void) const {
         return *_ccobjectType;
     }
     
+    /**
+     * Get the int value of LuaValue object.
+     *
+     * @return the int value.
+     */
     int intValue(void) const {
         return _field.intValue;
     }
     
+    /**
+     * Get the float value of LuaValue object.
+     *
+     * @return the float value.
+     */
     float floatValue(void) const {
         return _field.floatValue;
     }
     
+    /**
+     * Get the boolean value of LuaValue object.
+     *
+     * @return the boolean value.
+     */
     bool booleanValue(void) const {
         return _field.booleanValue;
     }
     
+    /**
+     * Get the boolean value of LuaValue object.
+     *
+     * @return the refrence about string value.
+     */
     const std::string& stringValue(void) const {
         return *_field.stringValue;
     }
     
+    /**
+     * Get the LuaValueDict value of LuaValue object.
+     *
+     * @return the LuaValueDict value.
+     */
     const LuaValueDict& dictValue(void) const {
         return *_field.dictValue;
     }
     
+    /**
+     * Get the LuaValueArray value of LuaValue object.
+     *
+     * @return the LuaValueArray value.
+     */
     const LuaValueArray& arrayValue(void) const {
         return *_field.arrayValue;
     }
     
+    /**
+     * Get the Ref object of LuaValue object.
+     *
+     * @return the pointer point to a Ref object.
+     */
     Ref* ccobjectValue(void) const {
         return _field.ccobjectValue;
     }
@@ -144,4 +287,6 @@ private:
 
 NS_CC_END
 
+// end group
+/// @}
 #endif // __CC_LUA_VALUE_H_

@@ -233,7 +233,7 @@ bool NodeInRect::init()
 bool NodeInRect::detect()
 {
 	Node *pNode = SceneReader::getInstance()->getNodeByTag(_tag);
-	if (pNode != nullptr && abs(pNode->getPositionX() - _origin.x) <= _size.width && abs(pNode->getPositionY() - _origin.y) <= _size.height)
+	if (pNode != nullptr && std::abs(pNode->getPositionX() - _origin.x) <= _size.width && std::abs(pNode->getPositionY() - _origin.y) <= _size.height)
 	{
 		return true;
 	}
