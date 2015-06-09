@@ -37,12 +37,12 @@ NS_CC_BEGIN
 
 /**
 @brief @~english ShakyTiles3D action.
- * @~chinese ShakyTiles3D运动。
+ * @~chinese ShakyTiles3D动作。
 @details @~english This action is make the target node shake with many tiles.
         You can create the action by these parameters:
         duration, grid size, range, whether shake on the z axis.
- * @~chinese 这是一个使带有多个tile的目标节点摇动的运动。
- * 您可以用这些参数创建运动:
+ * @~chinese 这是一个让目标节点以多个瓦片的形式晃动的动作。
+ * 您可以用这些参数创建动作:
  * 持续时间、网格大小、范围、是否在z轴上动摇。
  */
 class CC_DLL ShakyTiles3D : public TiledGrid3DAction
@@ -50,9 +50,9 @@ class CC_DLL ShakyTiles3D : public TiledGrid3DAction
 public:
     /** 
     @brief @~english Create the action with a range, shake Z vertices, a grid and duration.
-    * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间创建ShakyTiles3D运动。
+    * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间创建ShakyTiles3D动作。
     @param duration @~english Specify the duration of the ShakyTiles3D action. It's a value in seconds.
-    * @~chinese 指定ShakyTiles3D运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定ShakyTiles3D动作的持续时间。这是一个以秒为单位的值。
     @param gridSize @~english Specify the size of the grid.
     * @~chinese 指定网格的大小。
     @param range @~english Specify the range of the shaky effect.
@@ -60,7 +60,7 @@ public:
     @param shakeZ @~english Specify whether shake on the z axis.
     * @~chinese 指定是否在z轴上动摇。
     @return @~english If the creation success, return a pointer of ShakyTiles3D action; otherwise, return nil.
-     * @~chinese 如果创建成功,返回一个指向ShakyTiles3D运动的指针;否则,返回空。
+     * @~chinese 如果创建成功,返回一个指向ShakyTiles3D动作的指针;否则,返回空。
     */
     static ShakyTiles3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
@@ -74,9 +74,9 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes the action with a range, shake Z vertices, grid size and duration.
-     * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间初始化ShakyTiles3D运动。
+     * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间初始化ShakyTiles3D动作。
     @param duration @~english Specify the duration of the ShakyTiles3D action. It's a value in seconds.
-     * @~chinese 指定ShakyTiles3D运动的持续时间。这是一个以秒为单位的值。
+     * @~chinese 指定ShakyTiles3D动作的持续时间。这是一个以秒为单位的值。
     @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     @param range @~english Specify the range of the shaky effect.
@@ -99,12 +99,12 @@ private:
 
 /**
 @brief @~english ShatteredTiles3D action.
- * @~chinese ShatteredTiles3D 运动。
+ * @~chinese ShatteredTiles3D 动作。
 @details @~english This action make the target node shattered with many tiles.
         You can create the action by these parameters:
         duration, grid size, range, whether shatter on the z axis.
-        * @~chinese 这是一个使带有多个tile的目标节点摇动的运动。
-        * 您可以用这些参数创建运动:
+        * @~chinese 这是一个让目标节点以多个瓦片的形式摇动的动作
+        * 您可以用这些参数创建动作:
         * 持续时间、网格大小、范围、是否在z轴上动摇。
 */
 class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
@@ -112,9 +112,9 @@ class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
 public:
     /** 
      * @brief @~english Create the action with a range, whether of not to shatter Z vertices, grid size and duration.
-     * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间创建运动。
+     * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间创建动作。
      * @param duration @~english Specify the duration of the ShatteredTiles3D action. It's a value in seconds.
-     * @~chinese 指定ShakyTiles3D运动的持续时间。这是一个以秒为单位的值。
+     * @~chinese 指定ShakyTiles3D动作的持续时间。这是一个以秒为单位的值。
      * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
      * @param range @~english Specify the range of the shatter effect.
@@ -136,9 +136,9 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes the action with a range, shatter Z vertices, grid size and duration.
-    * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间初始化运动。
+    * @~chinese 根据抖动范围、Z顶点是否抖动、网格大小和持续时间初始化动作。
     @param duration @~english Specify the duration of the ShatteredTiles3D action. It's a value in seconds.
-    * @~chinese 指定ShakyTiles3D运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定ShakyTiles3D动作的持续时间。这是一个以秒为单位的值。
     @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     @param range @~english Specify the range of the shatter effect.
@@ -162,12 +162,12 @@ private:
 struct Tile;
 /**
 @brief @~english ShuffleTiles action.
- * @~chinese ShuffleTiles 运动。
+ * @~chinese ShuffleTiles 动作。
 @details @~english This action make the target node shuffle with many tiles in random order.
         You can create the action by these parameters:
         duration, grid size, the random seed.
- * @~chinese 这是一个使带有多个tile的目标节点随机洗牌的运动。
- * 您可以用这些参数创建运动:
+ * @~chinese 这是一个让目标节点以多个瓦片的形式随机洗牌的动作
+ * 您可以用这些参数创建动作:
  * 持续时间、网格大小,随机种子。
 */
 class CC_DLL ShuffleTiles : public TiledGrid3DAction
@@ -175,9 +175,9 @@ class CC_DLL ShuffleTiles : public TiledGrid3DAction
 public:
     /** 
     * @brief @~english Create the action with grid size, random seed and duration.
-     * @~chinese 使用网格大小的,随机种子和持续时间创建运动。
+     * @~chinese 使用网格大小的,随机种子和持续时间创建动作。
     * @param duration @~english Specify the duration of the ShuffleTiles action. It's a value in seconds.
-    * @~chinese 指定ShuffleTile运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定ShuffleTile动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @param seed @~english Specify the random seed.
@@ -202,9 +202,9 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     * @brief @~english Initializes the action with grid size, random seed and duration.
-    * @~chinese 使用网格大小的,随机种子和持续时间初始化运动。
+    * @~chinese 使用网格大小的,随机种子和持续时间初始化动作。
     * @param duration @~english Specify the duration of the ShuffleTiles action. It's a value in seconds.
-    * @~chinese 指定ShuffleTile运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定ShuffleTile动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @param seed @~english Specify the random seed.
@@ -228,20 +228,20 @@ private:
 @brief @~english FadeOutTRTiles action.
  * @~chinese FadeOutTRTiles行动。
 @details @~english Fades out the target node with many tiles from Bottom-Left to Top-Right.
- * @~chinese 使带有多个tile的目标节点从左下部到右上淡出。
+* @~chinese 这是一个让目标节点以多个瓦片的形式从左下到右上淡出的动作。
  */
 class CC_DLL FadeOutTRTiles : public TiledGrid3DAction
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-     * @~chinese 使用网格大小和持续时间创建运动。
+     * @~chinese 使用网格大小和持续时间创建动作。
     * @param duration @~english Specify the duration of the FadeOutTRTiles action. It's a value in seconds.
-    * @~chinese 指定FadeOutTRTile运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定FadeOutTRTile动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @return @~english If the creation success, return a pointer of FadeOutTRTiles action; otherwise, return nil.
-     * @~chinese 如果创建成功,返回一个指向FadeOutTRTiles运动的指针;否则,返回空。
+     * @~chinese 如果创建成功,返回一个指向FadeOutTRTiles动作的指针;否则,返回空。
     */
     static FadeOutTRTiles* create(float duration, const Size& gridSize);
 
@@ -251,7 +251,7 @@ public:
     @param pos @~english The position index of the tile.
      * @~chinese tile的位置索引。
     @param time @~english The current percentage of the action.
-     * @~chinese 当前运动的百分比。
+     * @~chinese 当前动作的百分比。
     @return @~english Return the percentage the tile should be shown.
      * @~chinese 返回tile应该显示的百分比。
     */
@@ -297,22 +297,22 @@ private:
 
 /**
 @brief @~english FadeOutBLTiles action.
- * @~chinese FadeOutBLTiles运动。
+ * @~chinese FadeOutBLTiles动作。
 @details @~english Fades out the target node with many tiles from Top-Right to Bottom-Left.
-* @~chinese 使带有多个tile的目标节点从右上部到左下淡出。
+* @~chinese 这是一个让目标节点以多个瓦片的形式从右上到左下淡出的动作。
  */
 class CC_DLL FadeOutBLTiles : public FadeOutTRTiles
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese 使用网格大小和持续时间创建运动。
+    * @~chinese 使用网格大小和持续时间创建动作。
     * @param duration @~english Specify the duration of the FadeOutBLTiles action. It's a value in seconds.
-    * @~chinese 指定FadeOutBLTiles运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定FadeOutBLTiles动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @return @~english If the creation success, return a pointer of FadeOutBLTiles action; otherwise, return nil.
-    * @~chinese 如果创建成功,返回一个指向FadeOutBLTiles运动的指针;否则,返回空。
+    * @~chinese 如果创建成功,返回一个指向FadeOutBLTiles动作的指针;否则,返回空。
     */
     static FadeOutBLTiles* create(float duration, const Size& gridSize);
 
@@ -330,22 +330,22 @@ private:
 
 /**
 @brief @~english FadeOutUpTiles action.
- * @~chinese FadeOutUpTiles运动。
+ * @~chinese FadeOutUpTiles动作。
 @details @~english Fades out the target node with many tiles from bottom to top.
-* @~chinese 使带有多个tile的目标节点从下到上淡出。
+* @~chinese 这是一个让目标节点以多个瓦片的形式从下到上淡出的动作
  */
 class CC_DLL FadeOutUpTiles : public FadeOutTRTiles
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese  使用网格大小和持续时间创建运动。
+    * @~chinese  使用网格大小和持续时间创建动作。
     * @param duration @~english Specify the duration of the FadeOutUpTiles action. It's a value in seconds.
-    * @~chinese 指定FadeOutUpTiles运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定FadeOutUpTiles动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
     * @~chinese 指定网格的大小
     * @return @~english If the creation success, return a pointer of FadeOutUpTiles action; otherwise, return nil.
-    * @~chinese 如果创建成功,返回一个指向FadeOutUpTiles运动的指针;否则,返回空。
+    * @~chinese 如果创建成功,返回一个指向FadeOutUpTiles动作的指针;否则,返回空。
     */
     static FadeOutUpTiles* create(float duration, const Size& gridSize);
 
@@ -365,22 +365,22 @@ private:
 
 /**
 @brief @~english FadeOutDownTiles action.
- * @~chinese FadeOutDownTiles运动。
+ * @~chinese FadeOutDownTiles动作。
 @details @~english Fades out the target node with many tiles from top to bottom.
-* @~chinese 使带有多个tile的目标节点从上到下淡出。。
+* @~chinese 这是一个让目标节点以多个瓦片的形式从上到下淡出的动作
  */
 class CC_DLL FadeOutDownTiles : public FadeOutUpTiles
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese 使用网格大小和持续时间创建运动
+    * @~chinese 使用网格大小和持续时间创建动作
     * @param duration @~english Specify the duration of the FadeOutDownTiles action. It's a value in seconds.
-    * @~chinese 指定FadeOutDownTiles运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定FadeOutDownTiles动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @return @~english If the creation success, return a pointer of FadeOutDownTiles action; otherwise, return nil.
-    * @~chinese 如果创建成功,返回一个指向FadeOutDownTiles运动的指针;否则,返回空。
+    * @~chinese 如果创建成功,返回一个指向FadeOutDownTiles动作的指针;否则,返回空。
     */
     static FadeOutDownTiles* create(float duration, const Size& gridSize);
 
@@ -398,35 +398,35 @@ private:
 
 /**
 @brief @~english TurnOffTiles action.
- * @~chinese TurnOffTiles运动。
+ * @~chinese TurnOffTiles动作。
 @details @~english Turn off the target node with many tiles in random order.
- * @~chinese 随机关闭带有多个tile的目标节点。
+* @~chinese 这是一个让目标节点以多个瓦片的形式随机关闭的动作
  */
 class CC_DLL TurnOffTiles : public TiledGrid3DAction
 {
 public:
     /** 
     * @brief @~english Create the action with the grid size and the duration.
-    * @~chinese 使用网格大小和持续时间创建运动。
+    * @~chinese 使用网格大小和持续时间创建动作。
     * @param duration @~english Specify the duration of the TurnOffTiles action. It's a value in seconds.
-    * @~chinese 指定TurnOffTiles运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定TurnOffTiles动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @return @~english If the creation success, return a pointer of TurnOffTiles action; otherwise, return nil.
-    * @~chinese 如果创建成功,返回一个指向TurnOffTiles运动的指针;否则,返回空。
+    * @~chinese 如果创建成功,返回一个指向TurnOffTiles动作的指针;否则,返回空。
     */
     static TurnOffTiles* create(float duration, const Size& gridSize);
     /** 
     * @brief @~english Create the action with the grid size, the duration and random seed.
-    * @~chinese 使用网格大小，持续时间和随机种子创建运动。
+    * @~chinese 使用网格大小，持续时间和随机种子创建动作。
     * @param duration @~english Specify the duration of the TurnOffTiles action. It's a value in seconds.
-    * @~chinese 指定TurnOffTiles运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定TurnOffTiles动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @param seed @~english Specify the random seed.
      * @~chinese 指定随机种子。
     * @return @~english If the creation success, return a pointer of TurnOffTiles action; otherwise, return nil.
-    * @~chinese 如果创建成功,返回一个指向TurnOffTiles运动的指针;否则,返回空。
+    * @~chinese 如果创建成功,返回一个指向TurnOffTiles动作的指针;否则,返回空。
     */
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
@@ -467,9 +467,9 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     * @brief @~english Initializes the action with grid size, random seed and duration.
-    * @~chinese 使用网格大小，持续时间，随机种子初始化运动。
+    * @~chinese 使用网格大小，持续时间，随机种子初始化动作。
     * @param duration @~english Specify the duration of the TurnOffTiles action. It's a value in seconds.
-    * @~chinese 指定TurnOffTiles运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定TurnOffTiles动作的持续时间。这是一个以秒为单位的值。
     * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     * @param seed @~english Specify the random seed.
@@ -490,26 +490,26 @@ private:
 
 /**
 @brief @~english WavesTiles3D action.
- * @~chinese WavesTiles3D运动。
+ * @~chinese WavesTiles3D动作。
 @details @~english This action wave the target node with many tiles.
- * @~chinese 这是一个使带有多个tile的目标节点波动的运动。
+* @~chinese 这是一个让目标节点以多个瓦片的形式波动的动作
 */
 class CC_DLL WavesTiles3D : public TiledGrid3DAction
 {
 public:
     /** 
      * @brief @~english Create the action with a number of waves, the waves amplitude, the grid size and the duration.
-     * @~chinese 使用波数,波振幅,网格大小和持续时间来创建运动。
+     * @~chinese 使用波数,波振幅,网格大小和持续时间来创建动作。
      * @param duration @~english Specify the duration of the WavesTiles3D action. It's a value in seconds.
-     * @~chinese  指定WavesTiles3D运动的持续时间。这是一个以秒为单位的值。
+     * @~chinese  指定WavesTiles3D动作的持续时间。这是一个以秒为单位的值。
      * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
      * @param waves @~english Specify the waves count of the WavesTiles3D action.
-     * @~chinese 指定WavesTiles3D运动的波数。
+     * @~chinese 指定WavesTiles3D动作的波数。
      * @param amplitude @~english Specify the amplitude of the WavesTiles3D action.
-     * @~chinese 指定WavesTiles3D运动的振幅。
+     * @~chinese 指定WavesTiles3D动作的振幅。
      * @return @~english If the creation success, return a pointer of WavesTiles3D action; otherwise, return nil.
-     * @~chinese 如果创建成功,返回一个指向WavesTiles3D运动的指针;否则,返回空。
+     * @~chinese 如果创建成功,返回一个指向WavesTiles3D动作的指针;否则,返回空。
      */
     static WavesTiles3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
@@ -553,15 +553,15 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
     @brief @~english Initializes an action with duration, grid size, waves count and amplitude.
-    * @~chinese 使用波数,波振幅,网格大小和持续时间初始化运动。
+    * @~chinese 使用波数,波振幅,网格大小和持续时间初始化动作。
     @param duration @~english Specify the duration of the WavesTiles3D action. It's a value in seconds.
-    * @~chinese 指定WavesTiles3D运动的持续时间。这是一个以秒为单位的值。
+    * @~chinese 指定WavesTiles3D动作的持续时间。这是一个以秒为单位的值。
     @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
     @param waves @~english Specify the waves count of the WavesTiles3D action.
-    * @~chinese 指定WavesTiles3D运动的波数。
+    * @~chinese 指定WavesTiles3D动作的波数。
     @param amplitude @~english Specify the amplitude of the WavesTiles3D action.
-    * @~chinese 指定WavesTiles3D运动的振幅。
+    * @~chinese 指定WavesTiles3D动作的振幅。
     @return @~english If the initialization success, return true; otherwise, return false.
      * @~chinese 如果初始化成功,返回true,否则返回false。
     */
@@ -578,26 +578,26 @@ private:
 
 /**
 @brief @~english JumpTiles3D action.
- * @~chinese JumpTiles3D运动。
+ * @~chinese JumpTiles3D动作。
 @details @~english Move the tiles of a target node across the Z axis.
- * @~chinese 在Z轴上移动带有tile的目标节点。
+* @~chinese 这是一个让目标节点以多个瓦片的形式沿z轴移动的动作
 */
 class CC_DLL JumpTiles3D : public TiledGrid3DAction
 {
 public:
     /** 
      * @brief @~english Create the action with the number of jumps, the sin amplitude, the grid size and the duration.
-     * @~chinese 使用跳跃数，正弦振幅,网格大小和持续时间创建运动。
+     * @~chinese 使用跳跃数，正弦振幅,网格大小和持续时间创建动作。
      * @param duration @~english Specify the duration of the JumpTiles3D action. It's a value in seconds.
-     * @~chinese 指定JumpTiles3D运动的持续时间。这是一个以秒为单位的值。。
+     * @~chinese 指定JumpTiles3D动作的持续时间。这是一个以秒为单位的值。。
      * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
      * @param numberOfJumps @~english Specify the jump tiles count.
      * @~chinese 指定跳跃次数。
      * @param amplitude @~english Specify the amplitude of the JumpTiles3D action.
-     * @~chinese 指定JumpTiles3D运动的振幅。
+     * @~chinese 指定JumpTiles3D动作的振幅。
      * @return @~english If the creation success, return a pointer of JumpTiles3D action; otherwise, return nil.
-     * @~chinese 如果创建成功,返回一个指向JumpTiles3D运动的指针;否则,返回空。
+     * @~chinese 如果创建成功,返回一个指向JumpTiles3D动作的指针;否则,返回空。
      */
     static JumpTiles3D* create(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
@@ -641,15 +641,15 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes the action with the number of jumps, the sin amplitude, the grid size and the duration.
-     * @~chinese 使用跳跃数,波振幅,网格大小和持续时间初始化运动。。
+     * @~chinese 使用跳跃数,波振幅,网格大小和持续时间初始化动作。。
      * @param duration @~english Specify the duration of the JumpTiles3D action. It's a value in seconds.
-     * @~chinese 指定JumpTiles3D运动的持续时间。这是一个以秒为单位的值。
+     * @~chinese 指定JumpTiles3D动作的持续时间。这是一个以秒为单位的值。
      * @param gridSize @~english Specify the size of the grid.
      * @~chinese 指定网格的大小。
      * @param numberOfJumps @~english Specify the jump tiles count.
      * @~chinese 指定跳跃次数。
      * @param amplitude @~english Specify the amplitude of the JumpTiles3D action.
-     * @~chinese 指定JumpTiles3D运动的振幅。
+     * @~chinese 指定JumpTiles3D动作的振幅。
      * @return @~english If the initialization success, return true; otherwise, return false.
      * @~chinese 如果初始化成功,返回true,否则返回false。
      */
@@ -666,7 +666,7 @@ private:
 
 /**
 @brief @~english SplitRows action.
- * @~chinese SplitRows运动。
+ * @~chinese SplitRows动作。
 @details @~english Split the target node in many rows.
         Then move out some rows from left, move out the other rows from right.
  * @~chinese 将目标节点分割为多行。
@@ -677,13 +677,13 @@ class CC_DLL SplitRows : public TiledGrid3DAction
 public :
     /** 
      * @brief @~english Create the action with the number of rows and the duration.
-     * @~chinese 使用指定行数和持续时间创建运动。
+     * @~chinese 使用指定行数和持续时间创建动作。
      * @param duration @~english Specify the duration of the SplitRows action. It's a value in seconds.
-     * @~chinese 为SplitRows运动指定持续时间。这是一个以秒为单位的值。
+     * @~chinese 为SplitRows动作指定持续时间。这是一个以秒为单位的值。
      * @param rows @~english Specify the rows count should be splited.
      * @~chinese 指定应该分割的行数。
      * @return @~english If the creation success, return a pointer of SplitRows action; otherwise, return nil.
-     * @~chinese 如果创建成功,返回一个指向SplitRows运动指针;否则,返回空。
+     * @~chinese 如果创建成功,返回一个指向SplitRows动作指针;否则,返回空。
      */
     static SplitRows* create(float duration, unsigned int rows);
 
@@ -698,9 +698,9 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes the action with the number rows and the duration.
-     * @~chinese 使用指定行数和持续时间初始化运动。
+     * @~chinese 使用指定行数和持续时间初始化动作。
      * @param duration @~english Specify the duration of the SplitRows action. It's a value in seconds.
-     * @~chinese 为SplitRows运动指定持续时间。这是一个以秒为单位的值。
+     * @~chinese 为SplitRows动作指定持续时间。这是一个以秒为单位的值。
      * @param rows @~english Specify the rows count should be splited.
      * @~chinese 指定应该分割的行数。
      * @return @~english If the creation success, return true; otherwise, return false.
@@ -718,7 +718,7 @@ private:
 
 /**
 @brief @~english SplitCols action.
- * @~chinese SplitCols运动。
+ * @~chinese SplitCols动作。
 @details @~english Split the target node in many columns.
         Then move out some columns from top, move out the other columns from bottom.
  * @~chinese 将目标节点分割为多列。
@@ -730,13 +730,13 @@ public:
     
     /** 
      * @brief @~english Create the action with the number of columns and the duration.
-     * @~chinese 使用指定列数和持续时间创建运动。
+     * @~chinese 使用指定列数和持续时间创建动作。
      * @param duration @~english Specify the duration of the SplitCols action. It's a value in seconds.
-     * @~chinese 指为SplitCols运动指定持续时间。这是一个以秒为单位的值。
+     * @~chinese 指为SplitCols动作指定持续时间。这是一个以秒为单位的值。
      * @param cols @~english Specify the columns count should be splited.
      * @~chinese 指定应该分割的列数。
      * @return @~english If the creation success, return a pointer of SplitCols action; otherwise, return nil.
-     * @~chinese 如果创建成功,返回一个指向SplitCols运动的指针;否则,返回零。
+     * @~chinese 如果创建成功,返回一个指向SplitCols动作的指针;否则,返回零。
      */
     static SplitCols* create(float duration, unsigned int cols);
 
@@ -755,9 +755,9 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** 
      * @brief @~english Initializes the action with the number columns and the duration.
-     * @~chinese 使用指定列数和持续时间初始化运动。
+     * @~chinese 使用指定列数和持续时间初始化动作。
      * @param duration @~english Specify the duration of the SplitCols action. It's a value in seconds.
-     * @~chinese 为SplitCols运动指定持续时间。这是一个以秒为单位的值。
+     * @~chinese 为SplitCols动作指定持续时间。这是一个以秒为单位的值。
      * @param cols @~english Specify the columns count should be splited.
      * @~chinese 指定应该分割的列数。
      * @return @~english If the creation success, return true; otherwise, return false.

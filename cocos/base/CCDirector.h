@@ -45,7 +45,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/* @~english Forward declarations.  @~chinese 前向声明。*/
+/* Forward declarations.*/
 class LabelAtlas;
 //class GLView;
 class DirectorDelegate;
@@ -87,17 +87,17 @@ enum class MATRIX_STACK_TYPE
  - setting the projection (default one is 3D)
  
  Since the Director is a singleton, the standard way to use it is by calling:
- _ Director::getInstance()->methodName();
- * @~chinese 创建类和处理主窗口和管理如何以及何时执行场景。
+ * Director::getInstance()->methodName();
+ * @~chinese 导演类，负责创建和处理主窗口，以及管理场景执行。
  * 
  * 导演还负责:
- * ——初始化OpenGL上下文
- * ——设置OpenGL缓冲区深度(默认是0)
- * ——设置投影(默认是3d)
+ * -初始化OpenGL上下文
+ * -设置OpenGL缓冲区深度(默认是0)
+ * -设置投影(默认是3d)
  * 
  * Since the Director is a singleton, the standard way to use it is by calling:
  * 导演类是一个单例，标准的调用方法如下：
- * _ Director::getInstance()- > methodName();
+ * Director::getInstance()- > methodName();
  */
 class CC_DLL Director : public Ref
 {
@@ -241,7 +241,7 @@ public:
     /** @~english This object will be visited after the main scene is visited.
      * This object MUST implement the "visit" function.
      * Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
-     * @~chinese 这个对象将会在主场景访问完后访问。
+     * @~chinese 这个对象将会在主场景渲染完后渲染。
      * 这个对象必须实现“visit”功能。
      * 对于hook一个通知节点很有用,比如 Notifications (http://github.com/manucorporat/CCNotifications)
      * @since v0.99.5
@@ -716,7 +716,7 @@ protected:
     /* @~english content scale factor  @~chinese 内容比例因子*/
     float _contentScaleFactor;
 
-    /* @~english This object will be visited after the scene. Useful to hook a notification node  @~chinese 现场后将访问这个对象。有用的钩通知节点*/
+    /* @~english This object will be visited after the scene. Useful to hook a notification node  @~chinese 现场后将渲染这个对象。有用的钩通知节点*/
     Node *_notificationNode;
 
     /* @~english Renderer for the Director  @~chinese 渲染器的导演*/
@@ -744,8 +744,8 @@ protected:
  * @~chinese DisplayLinkDirector是一个导演,同步与显示器的刷新率计时器。
  * 
  * 特性和限制:
- * ——将计时器&图纸与显示器的刷新频率同步
- * ——只支持动画间隔为1
+ * —将计时器&图纸与显示器的刷新频率同步
+ * —只支持动画间隔为1
  * 
  @since v0.8.2
  */

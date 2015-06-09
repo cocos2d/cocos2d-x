@@ -44,7 +44,7 @@ NS_CC_BEGIN
         2. Override the virtual method updateTweenAction in the node.
 
         Then once you running ActionTween on the node, the method updateTweenAction will be invoked.
- * @~chinese 如果你想在某个节点上使用ActionTween。
+ * @~chinese 如果你想在某个节点上使用ActionTween,
  * 你应该遵循以下步骤实现节点:
  * 1。节点应该继承自ActionTweenDelegate。
  * 2。在节点中重写虚方法updateTweenAction。

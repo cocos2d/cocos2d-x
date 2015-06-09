@@ -51,7 +51,7 @@ class SpriteFrame;
  * - sprite frame name.
  * - # of delay units.
  * - offset
- * @~chinese 帧动画中的一帧，它包含了一些信息：精灵帧名，延迟单元，偏移。
+ * @~chinese 帧动画中的一帧，它包含了一些信息：精灵帧名，时间，偏移。
  
  @since v2.0
  */
@@ -73,12 +73,12 @@ public:
      * Creates the animation frame with a spriteframe, number of delay units and a notification user info.
      *
      * @~chinese 
-     * 使用精灵帧,延迟单位数和用户信息通知的数量创建动画帧。
+     * 使用精灵帧,时间和用户信息通知的数量创建动画帧。
      * 
      * @param spriteFrame @~english The animation frame with a spriteframe.
      * @~chinese 精灵帧。
      * @param delayUnits @~english Number of delay units.
-     * @~chinese 延迟单位数。
+     * @~chinese 时间。
      * @param userInfo @~english A notification user info.
      * @~chinese 用户信息通知。
      * @since 3.0
@@ -108,16 +108,16 @@ public:
 
     /** @~english Gets the units of time the frame takes.
      *
-     * @~chinese 获取帧花费的时间单元。
+     * @~chinese 获取帧花费的时间。
      * 
      * @return @~english The units of time the frame takes.
-     * @~chinese 帧花费的时间单元。
+     * @~chinese 帧花费的时间。
      */
     float getDelayUnits() const { return _delayUnits; };
     
     /** @~english Sets the units of time the frame takes.
      *
-     * @~chinese 设置帧花费的时间单元。
+     * @~chinese 设置帧花费的时间。
      * 
      * @param delayUnits @~english The units of time the frame takes.
      * @~chinese 。
@@ -163,7 +163,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~AnimationFrame();
     
     /** @~english initializes the animation frame with a spriteframe, number of delay units and a notification user info
-     * @~chinese 使用精灵帧,延迟单位数和用户信息通知的数量初始化动画帧。
+     * @~chinese 使用精灵帧,时间和用户信息通知的数量初始化动画帧。
      */
     bool initWithSpriteFrame(SpriteFrame* spriteFrame, float delayUnits, const ValueMap& userInfo);
 
@@ -172,7 +172,7 @@ protected:
     /** @~english SpriteFrameName to be used  @~chinese 待使用的SpriteFrameName*/
     SpriteFrame* _spriteFrame;
 
-    /**  @~english how many units of time the frame takes  @~chinese 帧花费的时间单位*/
+    /**  @~english how many units of time the frame takes  @~chinese 帧花费的时间*/
     float _delayUnits;
 
     /**  @~english A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. If UserInfo is nil, then no notification will be broadcast.  、
@@ -207,7 +207,7 @@ public:
     /* @~english Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
      * The frames will be added with one "delay unit".
      * @~chinese 使用一组SpriteFrame和帧间时长创建一个动画。
-     * 每个延时单位之间将会添加一个帧。
+     * 每个时间之间将会添加一个帧。
      * @since v0.99.5
      * @param arrayOfSpriteFrameNames @~english An array of SpriteFrame.
      * @~chinese 一组SpriteFrame。
@@ -235,7 +235,7 @@ public:
      * @~chinese 添加一个SpriteFrame到动画中。
      * 
      * @param frame @~english The frame will be added with one "delay unit".
-     * @~chinese 每隔延时时长，将会添加一帧。
+     * @~chinese 时间间隔，将会添加一帧。
      */
     void addSpriteFrame(SpriteFrame *frame);
 
@@ -243,7 +243,7 @@ public:
      * The frame will be added with one "delay unit".
      * Added to facilitate the migration from v0.8 to v0.9.
      * @~chinese 使用图片名添加一个帧。内部将会创建一个SpriteFrame并添加它。
-     * 每隔延时时长，将会添加一帧。
+     * 时间间隔，将会添加一帧。
      * Added to facilitate the migration from v0.8 to v0.9.
      * @param filename @~english The path of SpriteFrame.
      * @~chinese SpriteFrame的路径。
@@ -259,7 +259,7 @@ public:
      * The frame will be added with one "delay unit".
      * Added to facilitate the migration from v0.8 to v0.9.
      * @~chinese 使用纹理和对应矩形添加一个帧。内部将会创建一个SpriteFrame并添加它。
-     * 每隔延时时长，将会添加一帧。。
+     * 时间间隔，将会添加一帧。。
      * 
      * @param pobTexture @~english A frame with a texture.
      * @~chinese 帧纹理。
@@ -270,28 +270,28 @@ public:
 
     /** @~english Gets the total Delay units of the Animation. 
      *
-     * @~chinese 获取动画总延时时间单位。
+     * @~chinese 获取动画总时间。
      * 
      * @return @~english The total Delay units of the Animation.
-     * @~chinese 动画总延时时间单位。
+     * @~chinese 动画总时间。
      */
     float getTotalDelayUnits() const { return _totalDelayUnits; };
     
     /** @~english Sets the delay in seconds of the "delay unit".
      *
-     * @~chinese 设置延时单位时长，以秒为单位。
+     * @~chinese 总时间，以秒为单位。
      * 
      * @param delayPerUnit @~english The delay in seconds of the "delay unit".
-     * @~chinese 延时单位时长，以秒为单位。
+     * @~chinese 总时间，以秒为单位。
      */
     void setDelayPerUnit(float delayPerUnit) { _delayPerUnit = delayPerUnit; };
     
     /** @~english Gets the delay in seconds of the "delay unit".
      * 
-     * @~chinese 设置延时单位时长，以秒为单位。
+     * @~chinese 设置时间，以秒为单位。
      * 
      * @return @~english The delay in seconds of the "delay unit".
-     * @~chinese  延时单位时长，以秒为单位。
+     * @~chinese  时间，以秒为单位。
      */
     float getDelayPerUnit() const { return _delayPerUnit; };
 
@@ -385,10 +385,10 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithAnimationFrames(const Vector<AnimationFrame*>& arrayOfAnimationFrameNames, float delayPerUnit, unsigned int loops);
 
 protected:
-    /** @~english total Delay units of the Animation.  @~chinese 动画的总延迟单元。*/
+    /** @~english total Delay units of the Animation.  @~chinese 动画的总时间。*/
     float _totalDelayUnits;
 
-    /** @~english Delay in seconds of the "delay unit".  @~chinese “延迟单元，以秒为单位”。*/
+    /** @~english Delay in seconds of the "delay unit".  @~chinese “时间，以秒为单位”。*/
     float _delayPerUnit;
 
     /** @~english duration in seconds of the whole animation. It is the result of totalDelayUnits * delayPerUnit.  @~chinese 整个动画的时间，以秒为单位。这是totalDelayUnits * delayPerUnit的结果。*/

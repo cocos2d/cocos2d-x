@@ -49,7 +49,7 @@ It saves in a cache the animations. You should use this class if you want to sav
 
 Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5, you should use this class instead.
 
- * @~chinese 管理的动画的单例。
+ * @~chinese 管理动画的单例。
  * 它用于缓存的动画。如果你想在缓存中保存你的动画，你应该使用这个类。
  * 
  * v0.99.5之前,推荐的方法是在Sprite保存它们。从v0.99.5后,你应该使用这个类来替代之前的做法。
@@ -133,12 +133,12 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const std::string& name){ return getAnimation(name); }
 
-    /** @~english Adds an animation from an NSDictionary.
+    /** @~english Adds an animation from an VaulueMap.
      * Make sure that the frames were previously loaded in the SpriteFrameCache.
      * @~chinese 从NSDictionary添加一个动画。
      * 确保SpriteFrameCache的帧在之前就加载过了。
-     * @param dictionary @~english An NSDictionary.
-     * @~chinese 一个指定的NSDictionary。
+     * @param dictionary @~english An ValueMap.
+     * @~chinese 一个指定的ValueMap。
      * @param plist @~english The path of the relative file,it use to find the plist path for load SpriteFrames.
      * @~chinese 相对的文件路径,它将找到的plist路径来加载SpriteFrames。
      * @since v1.1
