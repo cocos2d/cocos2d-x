@@ -351,7 +351,7 @@ public:
      *
      * @~chinese 
      * 通过指定的 ID 或者名称来获取命名空间。该方法可以选择在
-     * 当前对象的所有命名空间和以及内部的命名空间中进行递归查找。
+     * 当前对象的所有命名空间以及内部的命名空间中进行递归查找。
      * 
      * @param id @~english The ID or name of the namespace to find.
      * @~chinese 命名空间的ID或名称。
@@ -415,7 +415,7 @@ public:
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's type.
      *
-     * @~chinese 属性的名称，如果为 NULL 则返回当前对象的类型。
+     * @~chinese 属性的名称，如果为 NULL 则获取当前对象的类型。
      * 
      * @return @~english The type of the property.
      * @~chinese 属性的类型。
@@ -476,7 +476,7 @@ public:
      * 获取布尔类型的属性值。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称。如果为 NULL，则返回当前对象的属性值。
+     * @~chinese 指定的属性名称。如果为 NULL，则获取当前对象的属性值。
      * @param defaultValue @~english the default value to return if the specified property does not exist within the properties file.
      * 
      * @~chinese 默认值，如果找不到指定的属性，则返回此默认值。
@@ -498,7 +498,7 @@ public:
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
      * 
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * 
      * @return @~english The value of the given property interpreted as an integer.
      *   Zero if the property does not exist or could not be scanned.
@@ -518,7 +518,7 @@ public:
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
      * 
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * 
      * @return @~english The value of the given property interpreted as a float.
      *   Zero if the property does not exist or could not be scanned.
@@ -538,7 +538,7 @@ public:
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
      * 
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * 
      * @return @~english The value of the given property interpreted as a long.
      *   Zero if the property does not exist or could not be scanned.
@@ -554,14 +554,14 @@ public:
      *
      * @~chinese 
      * 获取指定属性的矩阵值。
-     * 如果属性不存在，返回单位矩阵。
-     * 如果属性存在，但并非矩阵类型，则输出错误日志并返回单位矩阵。
+     * 如果属性不存在，返回参数 out 将被设置为单位矩阵。
+     * 如果属性存在，但并非矩阵类型，则输出错误日志并且 out 被设置为单位矩阵。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The matrix to set to this property's interpreted value.
      * 
-     * @~chinese 返回的矩阵值。
+     * @~chinese 返回类型参数，获取的矩阵值。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -569,21 +569,21 @@ public:
     bool getMat4(const char* name, Mat4* out) const;
 
     /**@~english
-     * Interpret the value of the given property as a Vector2.
-     * If the property does not exist, out will be set to Vector2(0.0f, 0.0f).
+     * Interpret the value of the given property as a Vec2.
+     * If the property does not exist, out will be set to Vec2(0.0f, 0.0f).
      * If the property exists but could not be scanned, an error will be logged and out will be set
-     * to Vector2(0.0f, 0.0f).
+     * to Vec2(0.0f, 0.0f).
      *
      * @~chinese 
      * 获取指定属性的 Vec2 值。
-     * 如果属性不存在，返回 (0.0f, 0.0f)。
-     * 如果属性存在，但并非 Vec2 类型，则输出错误日志并返回 (0.0f, 0.0f)。
+     * 如果属性不存在，返回参数 out 将被设置为 Vec2(0.0f, 0.0f)。
+     * 如果属性存在，但并非 Vec2 类型，则输出错误日志并且 out 被设置为 Vec2(0.0f, 0.0f)。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese 返回的 Vec2 实例。
+     * @~chinese 返回类型参数，获取的 Vec2 实例。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -591,21 +591,21 @@ public:
     bool getVec2(const char* name, Vec2* out) const;
 
     /**@~english
-     * Interpret the value of the given property as a Vector3.
-     * If the property does not exist, out will be set to Vector3(0.0f, 0.0f, 0.0f).
+     * Interpret the value of the given property as a Vec3.
+     * If the property does not exist, out will be set to Vec3(0.0f, 0.0f, 0.0f).
      * If the property exists but could not be scanned, an error will be logged and out will be set
-     * to Vector3(0.0f, 0.0f, 0.0f).
+     * to Vec3(0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
      * 获取指定属性的 Vec3 值。
-     * 如果属性不存在，返回 (0.0f, 0.0f, 0.0f)。
-     * 如果属性存在，但并非 Vec3 类型，则输出错误日志并返回 (0.0f, 0.0f, 0.0f)。
+     * 如果属性不存在，返回参数 out 将被设置为 Vec3(0.0f, 0.0f, 0.0f)。
+     * 如果属性存在，但并非 Vec3 类型，则输出错误日志并且 out 被设置为 Vec3(0.0f, 0.0f, 0.0f)。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese 返回的 Vec3 实例。
+     * @~chinese 返回类型参数，获取的 Vec3 实例。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -613,21 +613,21 @@ public:
     bool getVec3(const char* name, Vec3* out) const;
 
     /**@~english
-     * Interpret the value of the given property as a Vector4.
-     * If the property does not exist, out will be set to Vector4(0.0f, 0.0f, 0.0f, 0.0f).
+     * Interpret the value of the given property as a Vec4.
+     * If the property does not exist, out will be set to Vec4(0.0f, 0.0f, 0.0f, 0.0f).
      * If the property exists but could not be scanned, an error will be logged and out will be set
-     * to Vector4(0.0f, 0.0f, 0.0f, 0.0f).
+     * to Vec4(0.0f, 0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
      * 获取指定属性的 Vec4 值。
-     * 如果属性不存在，返回 (0.0f, 0.0f, 0.0f, 0.0f)。
-     * 如果属性存在，但并非 Vec3 类型，则输出错误日志并返回 (0.0f, 0.0f, 0.0f, 0.0f)。
+     * 如果属性不存在，返回参数 out 将被设置为 Vec4(0.0f, 0.0f, 0.0f, 0.0f)。
+     * 如果属性存在，但并非 Vec3 类型，则输出错误日志并且 out 被设置为 Vec4(0.0f, 0.0f, 0.0f, 0.0f)。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese 返回的 Vec4 实例。
+     * @~chinese 返回类型参数，获取的 Vec4 实例。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -642,14 +642,14 @@ public:
      *
      * @~chinese 
      * 获取指定属性的四元数。
-     * 如果属性不存在，返回 Quaternion()。
-     * 如果属性存在，但并非四元数类型，则输出错误日志并返回 Quaternion()。
+     * 如果属性不存在，返回参数 out 将被设置为 Quaternion()。
+     * 如果属性存在，但并非四元数类型，则输出错误日志并且 out 被设置为 Quaternion()。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The quaternion to set to this property's interpreted value.
      * 
-     * @~chinese 返回的四元数。
+     * @~chinese 返回类型参数，获取的四元数。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -657,23 +657,23 @@ public:
     bool getQuaternionFromAxisAngle(const char* name, Quaternion* out) const;
 
     /**@~english
-     * Interpret the value of the given property as an RGB color in hex and write this color to a Vector3.
+     * Interpret the value of the given property as an RGB color in hex and write this color to a Vec3.
      * E.g. 0xff0000 represents red and sets the vector to (1, 0, 0).
-     * If the property does not exist, out will be set to Vector3(0.0f, 0.0f, 0.0f).
+     * If the property does not exist, out will be set to Vec3(0.0f, 0.0f, 0.0f).
      * If the property exists but could not be scanned, an error will be logged and out will be set
-     * to Vector3(0.0f, 0.0f, 0.0f).
+     * to Vec3(0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
-     * 属性值按照 RGB 颜色解析并存储在 Vector3 对象中。
-     * 例如：0xff0000 代表红色，返回值为(1, 0, 0)。
-     * 如果属性不存在，返回值为 Vector3(0.0f, 0.0f, 0.0f)。
-     * 如果属性存在，但解析失败，则输出错误日志并返回 Vector3(0.0f, 0.0f, 0.0f)。
+     * 属性值按照 RGB 颜色解析并存储在 Vec3 对象中。
+     * 例如：0xff0000 代表红色，out 参数值为 Vec3(1, 0, 0)。
+     * 如果属性不存在，返回参数 out 将被设置为 Vec3(0.0f, 0.0f, 0.0f)。
+     * 如果属性存在，但解析失败，则输出错误日志并且 out 被设置为 Vec3(0.0f, 0.0f, 0.0f)。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese 返回的颜色值数据。
+     * @~chinese 返回类型参数，获取的颜色值数据。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -681,23 +681,23 @@ public:
     bool getColor(const char* name, Vec3* out) const;
 
     /**@~english
-     * Interpret the value of the given property as an RGBA color in hex and write this color to a Vector4.
+     * Interpret the value of the given property as an RGBA color in hex and write this color to a Vec4.
      * E.g. 0xff0000ff represents opaque red and sets the vector to (1, 0, 0, 1).
-     * If the property does not exist, out will be set to Vector4(0.0f, 0.0f, 0.0f, 0.0f).
+     * If the property does not exist, out will be set to Vec4(0.0f, 0.0f, 0.0f, 0.0f).
      * If the property exists but could not be scanned, an error will be logged and out will be set
-     * to Vector4(0.0f, 0.0f, 0.0f, 0.0f).
+     * to Vec4(0.0f, 0.0f, 0.0f, 0.0f).
      *
      * @~chinese 
-     * 属性值按照 RGBA 颜色解析并存储在 Vector4 对象中。
-     * 例如：0xff0000ff 代表不透明的红色，返回值为(1, 0, 0, 1)。
-     * 如果属性不存在，返回值为 Vector4(0.0f, 0.0f, 0.0f, 0.0f)。
-     * 如果属性存在，但解析失败，则输出错误日志并返回 Vector4(0.0f, 0.0f, 0.0f, 0.0f)。
+     * 属性值按照 RGBA 颜色解析并存储在 Vec4 对象中。
+     * 例如：0xff0000ff 代表不透明的红色，返回参数 out 将被设置为 Vec4(1, 0, 0, 1)。
+     * 如果属性不存在，返回参数 out 将被设置为 Vec4(0.0f, 0.0f, 0.0f, 0.0f)。
+     * 如果属性存在，但解析失败，则输出错误日志并且 out 被设置为 Vec4(0.0f, 0.0f, 0.0f, 0.0f)。
      * 
      * @param name @~english The name of the property to interpret, or NULL to return the current property's value.
-     * @~chinese 指定的属性名称，如果为 NULL 则返回当前对象的属性值。
+     * @~chinese 指定的属性名称，如果为 NULL 则获取当前对象的属性值。
      * @param out @~english The vector to set to this property's interpreted value.
      * 
-     * @~chinese 返回的颜色值数据。
+     * @~chinese 返回类型参数，获取的颜色值数据。
      * 
      * @return @~english True on success, false if the property does not exist or could not be scanned.
      * @~chinese 如果获取成功返回 true；否则返回 false。
@@ -763,14 +763,14 @@ public:
     void setVariable(const char* name, const char* value);
 
     /**@~english
-     * Attempts to parse the specified string as a Vector2 value.
+     * Attempts to parse the specified string as a Vec2 value.
      *
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
      * 尝试将指定的字符串解析为 Vec2 数据。
      * 
-     * 如果出错，则返回 false，返回值设置为 `Vec2::ZERO`。
+     * 如果出错，则返回 false，返回值参数 out 被设置为 `Vec2::ZERO`。
      * 
      * @param str @~english The string to parse.
      * @~chinese 要解析的字符串
@@ -778,20 +778,20 @@ public:
      *
      * @~chinese 解析出的 Vec2 实例。
      * 
-     * @return @~english True if a valid Vector2 was parsed, false otherwise.
+     * @return @~english True if a valid Vec2 was parsed, false otherwise.
      * @~chinese 如果解析成功，返回 true；否则返回 false。
      */
     static bool parseVec2(const char* str, Vec2* out);
 
     /**@~english
-     * Attempts to parse the specified string as a Vector3 value.
+     * Attempts to parse the specified string as a Vec3 value.
      *
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
      * 尝试将指定的字符串解析为 Vec3 数据。
      * 
-     * 如果出错，则返回 false，返回值设置为 `Vec3::ZERO`。
+     * 如果出错，则返回 false，返回值参数 out 被设置为 `Vec3::ZERO`。
      * 
      * @param str @~english The string to parse.
      * @~chinese 要解析的字符串
@@ -799,20 +799,20 @@ public:
      *
      * @~chinese 解析出的 Vec3 实例。
      * 
-     * @return @~english True if a valid Vector3 was parsed, false otherwise.
+     * @return @~english True if a valid Vec3 was parsed, false otherwise.
      * @~chinese 如果解析成功，返回 true；否则返回 false。
      */
     static bool parseVec3(const char* str, Vec3* out);
     
     /**@~english
-     * Attempts to parse the specified string as a Vector4 value.
+     * Attempts to parse the specified string as a Vec4 value.
      *
      * On error, false is returned and the output is set to all zero values.
      *
      * @~chinese 
      * 尝试将指定的字符串解析为 Vec4 数据。
      * 
-     * 如果出错，则返回 false，返回值设置为 `Vec4::ZERO`。
+     * 如果出错，则返回 false，返回值参数 out 被设置为 `Vec4::ZERO`。
      * 
      * @param str @~english The string to parse.
      * @~chinese 要解析的字符串
@@ -820,7 +820,7 @@ public:
      *
      * @~chinese 解析出的 Vec4 实例。
      * 
-     * @return @~english True if a valid Vector4 was parsed, false otherwise.
+     * @return @~english True if a valid Vec4 was parsed, false otherwise.
      * @~chinese 如果解析成功，返回 true；否则返回 false。
      */
     static bool parseVec4(const char* str, Vec4* out);
@@ -840,7 +840,7 @@ public:
      * 期望的格式为：四个逗号分隔的数值，前三个值表示轴，
      * 第四个值表示角度。
      * 
-     * 如果解析失败，则返回 false。返回的全部数据都设置为 0。
+     * 如果解析失败，则返回 false。返回值参数 out 的全部数据都设置为 0。
      * 
      * @param str @~english The string to parse.
      * @~chinese 要解析的字符串。
