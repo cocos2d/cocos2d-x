@@ -26,5 +26,5 @@ set(COCOS_RENDERER_SRC
   renderer/CCVertexIndexData.cpp
   renderer/ccGLStateCache.cpp
   renderer/ccShaders.cpp
-  renderer/CCFrameBufferObject.cpp
+  renderer/CCFrameBuffer.cpp
 )
