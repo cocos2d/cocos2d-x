@@ -40,15 +40,20 @@ extern "C" {
  * @{
  */
 
-/**
+/**@~english
  * The GLNode is wrapped to call the callback function about draw in the Lua.
+ * @~chinese 
+ * 封装GLNode是为了更友好地回调Lua层的draw函数。
  */
 class GLNode:public cocos2d::Node
 {
 public:
-    /**
-     * Destrutor.
+    /**@~english
+     * Destructor of GLNode.
      *
+     * @~chinese
+     * GLNode的析构函数。
+     * 
      * @lua NA
      * @js NA
      */
