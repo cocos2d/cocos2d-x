@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrameBufferObject.h"
+#include "renderer/CCFrameBuffer.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS

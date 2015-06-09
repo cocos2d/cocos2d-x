@@ -42,7 +42,7 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(CameraCullingDemo);
     ADD_TEST_CASE(FogTestDemo);
     ADD_TEST_CASE(CameraArcBallDemo);
-    ADD_TEST_CASE(CameraFrameBufferObjectTest);
+    ADD_TEST_CASE(CameraFrameBufferTest);
 }
 
 //------------------------------------------------------------------
@@ -1413,22 +1413,22 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
     }
 }
 
-CameraFrameBufferObjectTest::CameraFrameBufferObjectTest()
+CameraFrameBufferTest::CameraFrameBufferTest()
 {
     
 }
 
-CameraFrameBufferObjectTest::~CameraFrameBufferObjectTest()
+CameraFrameBufferTest::~CameraFrameBufferTest()
 {
     
 }
 
-std::string CameraFrameBufferObjectTest::title() const
+std::string CameraFrameBufferTest::title() const
 {
     return "Camera FrameBuffer Object Test";
 }
 
-void CameraFrameBufferObjectTest::onEnter()
+void CameraFrameBufferTest::onEnter()
 {
     auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
     auto size = Director::getInstance()->getWinSize();

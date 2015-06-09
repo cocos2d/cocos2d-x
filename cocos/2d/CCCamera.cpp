@@ -29,7 +29,7 @@
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCFrameBufferObject.h"
+#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 

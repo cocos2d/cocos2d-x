@@ -255,12 +255,12 @@ protected:
 #endif
 };
 
-class CameraFrameBufferObjectTest : public CameraBaseTest
+class CameraFrameBufferTest : public CameraBaseTest
 {
 public:
-    CREATE_FUNC(CameraFrameBufferObjectTest);
-    CameraFrameBufferObjectTest(void);
-    virtual ~CameraFrameBufferObjectTest(void);
+    CREATE_FUNC(CameraFrameBufferTest);
+    CameraFrameBufferTest(void);
+    virtual ~CameraFrameBufferTest(void);
     // overrides
     virtual std::string title() const override;
     

@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "renderer/CCFrameBufferObject.h"
+#include "renderer/CCFrameBuffer.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
