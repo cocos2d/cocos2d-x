@@ -151,7 +151,7 @@ public:
     /**
      * @~english Helper constructor to create an array of sequenceable actions.
      *
-     * @~chinese 用于创建一个可以按序列执行动作的Sequence动作对象的辅助构造函数系列
+     * @~chinese 用于创建一个可以按序列执行动作的Sequence动作对象的一系列辅助构造函数
      * 
      * @return @~english An autoreleased Sequence object.
      * @~chinese 一个自释放的Sequence动作对象，如果创建失败则返回空指针。
@@ -333,7 +333,7 @@ private:
 /** @class RepeatForever
  * @brief @~english Repeats an action forever.
  * To repeat the an action for a limited number of times use the Repeat action.
- * @~chinese 永远得重复一个动作。
+ * @~chinese 永远地重复一个动作。
  * 有限次数内重复一个动作请使用Repeat动作。
  * @warning @~english This action can't be Sequenceable because it is not an finite time action.
  * @~chinese 这个动作不能用来组成序列动作，因为它不是一个有限时间动作。

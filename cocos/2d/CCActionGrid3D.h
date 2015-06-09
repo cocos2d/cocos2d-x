@@ -83,7 +83,7 @@ public:
     @brief @~english Get the amplitude rate of the effect.
      * @~chinese 获得振幅衰减率。
     @return @~english Return the amplitude rate of the effect.
-     * @~chinese 返回振幅的比率。
+     * @~chinese 返回振幅衰减率。
     */
     inline float getAmplitudeRate() const { return _amplitudeRate; }
     /**
@@ -598,7 +598,7 @@ private:
 
 /**
 @brief @~english Waves action.
- * @~chinese 波行动。
+ * @~chinese 波浪特效动作。
  * @details @~english This action is used for take effect on the target node as waves.
         You can control the effect by these parameters:
         duration, grid size, waves count, amplitude,

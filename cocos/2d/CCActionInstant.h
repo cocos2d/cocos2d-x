@@ -348,7 +348,7 @@ public:
      * typedef void (Ref::*SEL_CallFunc)();
      * @~chinese 用下面的函数类型创建CallFunc动作
      * typedef void (Ref::*SEL_CallFunc)();
-     * @deprecated Use the std::function API instead.
+     * @deprecated @~english Use the std::function API instead. @~chinese 使用`std::function`API替代
      * @js NA
      * @lua NA
      */
