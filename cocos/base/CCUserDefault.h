@@ -62,9 +62,9 @@ public:
      * @~chinese 
      * 获取指定 key 的布尔型值，如果 key 不存在，则返回 false。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的 key。
      * @return @~english Bool value by `key`.
-     * @~chinese 关键字的布尔型值。
+     * @~chinese key 的布尔型值。
      * @js NA
      */
     bool    getBoolForKey(const char* key);
@@ -74,11 +74,11 @@ public:
      * @~chinese 
      * 获取指定 key 的布尔型值，如果 key 不存在，则返回指定的 defaultValue。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的 key。
      * @param defaultValue @~english The default value to return if the key doesn't exist.
-     * @~chinese 返回的默认值。如果关键字不存在，则返回此值。
+     * @~chinese 返回的默认值。如果 key 不存在，则返回此值。
      * @return @~english Bool value by `key`.
-     * @~chinese 关键字的布尔型值。
+     * @~chinese key 的布尔型值。
      * @js NA
      */
     virtual bool getBoolForKey(const char* key, bool defaultValue);
@@ -89,9 +89,9 @@ public:
      * @~chinese 
      * 获取指定 key 的整型值，如果 key 不存在，则返回 0。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的 key。
      * @return @~english Integer value of the key.
-     * @~chinese 关键字的整型值。
+     * @~chinese key 的整型值。
      * @js NA
      */
     int     getIntegerForKey(const char* key);
@@ -101,11 +101,11 @@ public:
      * @~chinese 
      * 获取指定 key 的整型值，如果 key 不存在，则返回指定的 defaultValue。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @param defaultValue @~english The default value to return if the key doesn't exist.
-     * @~chinese 返回的默认值。如果关键字不存在，则返回此值。
+     * @~chinese 返回的默认值。如果key不存在，则返回此值。
      * @return @~english Integer value of the key.
-     * @~chinese 关键字的整型值。
+     * @~chinese key的整型值。
      * @js NA
      */
     virtual int getIntegerForKey(const char* key, int defaultValue);
@@ -115,9 +115,9 @@ public:
      * @~chinese 
      * 获取指定 key 的浮点值，如果 key 不存在，则返回指定的 0.0。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @return @~english Float value of the key.
-     * @~chinese 关键字的浮点值。
+     * @~chinese key的浮点值。
      * @js NA
      */
     float    getFloatForKey(const char* key);
@@ -127,11 +127,11 @@ public:
      * @~chinese 
      * 获取指定 key 的浮点值，如果 key 不存在，则返回指定的 defaultValue。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @param defaultValue @~english The default value to return if the key doesn't exist.
-     * @~chinese 返回的默认值。如果关键字不存在，则返回此值。
+     * @~chinese 返回的默认值。如果key不存在，则返回此值。
      * @return @~english Float value of the key.
-     * @~chinese 关键字的浮点值。
+     * @~chinese key的浮点值。
      * @js NA
      */
     virtual float getFloatForKey(const char* key, float defaultValue);
@@ -141,9 +141,9 @@ public:
      * @~chinese 
      * 获取指定 key 的双精度浮点值，如果 key 不存在，则返回 0.0。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @return @~english Double value of the key.
-     * @~chinese 关键字的双精度浮点值。
+     * @~chinese key的双精度浮点值。
      * @js NA
      */
     double  getDoubleForKey(const char* key);
@@ -153,11 +153,11 @@ public:
      * @~chinese 
      * 获取指定 key 的双精度浮点值，如果 key 不存在，则返回指定的 defaultValue。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @param defaultValue @~english The default value to return if the key doesn't exist.
-     * @~chinese 返回的默认值。如果关键字不存在，则返回此值。
+     * @~chinese 返回的默认值。如果key不存在，则返回此值。
      * @return @~english Double value of the key.
-     * @~chinese 关键字的双精度浮点值。
+     * @~chinese key的双精度浮点值。
      * @js NA
      */
     virtual double getDoubleForKey(const char* key, double defaultValue);
@@ -167,9 +167,9 @@ public:
      * @~chinese 
      * 获取指定 key 的字符串值，如果 key 不存在，则返回空字符串。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @return @~english String value of the key.
-     * @~chinese 关键字的字符串值。
+     * @~chinese key的字符串值。
      * @js NA
      */
     std::string getStringForKey(const char* key);
@@ -179,11 +179,11 @@ public:
      * @~chinese 
      * 获取指定 key 的字符串值，如果 key 不存在，则返回指定的 defaultValue。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @param defaultValue @~english The default value to return if the key doesn't exist.
-     * @~chinese 返回的默认值。如果关键字不存在，则返回此值。
+     * @~chinese 返回的默认值。如果key不存在，则返回此值。
      * @return @~english String value of the key.
-     * @~chinese 关键字的字符串值。
+     * @~chinese key的字符串值。
      * @js NA
      */
     virtual std::string getStringForKey(const char* key, const std::string & defaultValue);
@@ -193,7 +193,7 @@ public:
      * @~chinese 
      * 获取指定 key 的数据，如果 key 不存在，则返回空的数据。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @return @~english Data value of the key.
      * @~chinese `Data` 数据对象。
      * @js NA
@@ -205,9 +205,9 @@ public:
      * @~chinese 
      * 获取指定 key 的数据，如果 key 不存在，则返回指定的默认值。
      * @param key @~english The key to get value.
-     * @~chinese 需要获取的关键字。
+     * @~chinese 需要获取的key。
      * @param defaultValue @~english The default value to return if the key doesn't exist.
-     * @~chinese 返回的默认值。如果关键字不存在，则返回此值。
+     * @~chinese 返回的默认值。如果key不存在，则返回此值。
      * @return @~english Data value of the key.
      * @~chinese `Data` 数据对象。
      * @js NA
@@ -217,66 +217,66 @@ public:
     // set value methods
 
     /**@~english
-     * Set bool value by key.
+     * Set bool value for key.
      * @~chinese 
-     * 为关键字设置布尔型值。
+     * 为key设置布尔型值。
      * @param key @~english The key to set.
-     * @~chinese 需要设置的关键字。
+     * @~chinese 需要设置的key。
      * @param value @~english A bool value to set to the key.
      * @~chinese 需要设置的值。
      * @js NA
      */
     virtual void setBoolForKey(const char* key, bool value);
     /**@~english
-     * Set integer value by key.
+     * Set integer value for key.
      * @~chinese 
-     * 为关键字设置整型值。
+     * 为key设置整型值。
      * @param key @~english The key to set.
-     * @~chinese 需要设置的关键字。
+     * @~chinese 需要设置的key。
      * @param value @~english A integer value to set to the key.
      * @~chinese 需要设置的值。
      * @js NA
      */
     virtual void setIntegerForKey(const char* key, int value);
     /**@~english
-     * Set float value by key.
+     * Set float value for key.
      * @~chinese 
-     * 为关键字设置浮点值。
+     * 为key设置浮点值。
      * @param key @~english The key to set.
-     * @~chinese 需要设置的关键字。
+     * @~chinese 需要设置的key。
      * @param value @~english A float value to set to the key.
      * @~chinese 需要设置的值。
      * @js NA
      */
     virtual void setFloatForKey(const char* key, float value);
     /**@~english
-     * Set double value by key.
+     * Set double value for key.
      * @~chinese 
-     * 为关键字设置双精度浮点值。
+     * 为key设置双精度浮点值。
      * @param key @~english The key to set.
-     * @~chinese 需要设置的关键字。
+     * @~chinese 需要设置的key。
      * @param value @~english A double value to set to the key.
      * @~chinese 需要设置的值。
      * @js NA
      */
     virtual void setDoubleForKey(const char* key, double value);
     /**@~english
-     * Set string value by key.
+     * Set string value for key.
      * @~chinese 
-     * 为关键字设置字符串值。
+     * 为key设置字符串值。
      * @param key @~english The key to set.
-     * @~chinese 需要设置的关键字。
+     * @~chinese 需要设置的key。
      * @param value @~english A string value to set to the key.
      * @~chinese 需要设置的值。
      * @js NA
      */
     virtual void setStringForKey(const char* key, const std::string & value);
     /**@~english
-     * Set Data value by key.
+     * Set Data value for key.
      * @~chinese 
-     * 为关键字设置 Data 数据。
+     * 为key设置 Data 数据。
      * @param key @~english The key to set.
-     * @~chinese 需要设置的关键字。
+     * @~chinese 需要设置的key。
      * @param value @~english A Data value to set to the key.
      * @~chinese 需要设置的值。
      * @js NA
@@ -306,7 +306,7 @@ public:
      * and use this function to set delegate, then UserDefault will invoke delegate's implementation.
      * For example, your store native data base or other format store.
      *
-     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
+     * After setting delegate, If you don't want to using it anymore, you can just pass nullptr
      * to this function.
      *
      * @~chinese 
@@ -330,13 +330,13 @@ public:
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedUserDefault();
-    /** @~english All supported platforms other iOS & Android use xml file to save values. This function is return the file path of the xml path.
-     * @~chinese 除了 iOS 和 Android 之外的所有支持的平台都使用 xml 文件保存数据。这个函数返回 xml 文件的路径。
+    /** @~english All supported platforms except iOS, Android & `CC_PLATFORM_WINRT` use xml file to save values. This function is return the file path of the xml path.
+     * @~chinese 除了 iOS，Android 和 `CC_PLATFORM_WINRT` 之外的所有支持的平台都使用 xml 文件保存数据。这个函数返回 xml 文件的路径。
      * @js NA
      */
     static const std::string& getXMLFilePath();
-    /** @~english All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.
-     * @~chinese 除了 iOS 和 Android 之外的所有支持的平台都使用 xml 文件保存数据。该函数检查 xml 文件是否存在。
+    /** @~english All supported platforms except iOS, Android & CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.
+     * @~chinese 除了 iOS，Android 和 `CC_PLATFORM_WINRT` 之外的所有支持的平台都使用 xml 文件保存数据。该函数检查 xml 文件是否存在。
      * @return @~english True if the xml file exists, flase if not.
      * @~chinese 如果 xml 文件存在则返回 true；否则返回 false。
      * @js NA
