@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "poly2tri/poly2tri.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
-#include "external/clipper/clipper.h"
+#include "clipper/clipper.h"
 #include <algorithm>
 #include <math.h>
 
