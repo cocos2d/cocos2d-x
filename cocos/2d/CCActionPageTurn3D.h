@@ -36,12 +36,18 @@ NS_CC_BEGIN
  */
 
 /**
- @brief This action simulates a page turn from the bottom right hand corner of the screen.
+ @brief @~english This action simulates a page turn from the bottom right hand corner of the screen.
  
- @details It's not much use by itself but is used by the PageTurnTransition.
+ * @~chinese 这个动作模拟一个页面从屏幕的右下角翻页的效果。
+ * 
+ @details @~english It's not much use by itself but is used by the PageTurnTransition.
          Based on an original paper by L Hong et al.
          http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
   
+ * @~chinese 用户使用它的场景并不多，但是PageTurnTransition类基于它来实现。
+ * 实现基于L Hong等人的原始论文。
+ * http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
+ * 
  @since v0.8.2
  */
 class CC_DLL PageTurn3D : public Grid3DAction
@@ -53,10 +59,14 @@ public:
     virtual GridBase* getGrid() override;
 
     /**
-    @brief Create an action with duration, grid size.
-    @param duration Specify the duration of the PageTurn3D action. It's a value in seconds.
-    @param gridSize Specify the size of the grid.
-    @return If the creation sucess, return a pointer of PageTurn3D action; otherwise, return nil.
+    @brief @~english Create an action with duration, grid size.
+     * @~chinese 使用持续时间，网格的大小创建一个动作。
+    @param duration @~english Specify the duration of the PageTurn3D action. It's a value in seconds.
+     * @~chinese 指定的持续时间，以秒为单位。
+    @param gridSize @~english Specify the size of the grid.
+     * @~chinese 指定网格的大小。
+    @return @~english If the creation sucess, return a pointer of PageTurn3D action; otherwise, return nil.
+     * @~chinese 如果创建成功,返回一个PageTurn3D动作指针，否则，返回空指针。
     */
     static PageTurn3D* create(float duration, const Size& gridSize);
 
