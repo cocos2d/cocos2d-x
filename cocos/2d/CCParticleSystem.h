@@ -78,6 +78,7 @@ typedef struct sParticle {
         float        radius;
         float        deltaRadius;
     } modeB;
+    Mat4 worldTransMat;
 
 }tParticle;
 
