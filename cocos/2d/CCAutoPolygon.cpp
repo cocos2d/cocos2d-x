@@ -35,6 +35,8 @@ THE SOFTWARE.
 
 USING_NS_CC;
 
+static unsigned short quadIndices[]={0,1,2, 3,2,1};
+
 PolygonInfo::PolygonInfo(const PolygonInfo& other):
 triangles(),
 isVertsOwner(true),
@@ -51,28 +53,11 @@ rect()
     memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount*sizeof(unsigned short));
 };
 
-void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
-{
-    if(nullptr != triangles.verts && isVertsOwner)
-    {
-        CC_SAFE_DELETE_ARRAY(triangles.verts);
-    }
-    
-    if(nullptr != triangles.indices)
-    {
-        CC_SAFE_DELETE_ARRAY(triangles.indices);
-    }
-    
-    isVertsOwner = false;
-    triangles.indices = new unsigned short[6]{0,1,2, 3,2,1};
-    triangles.vertCount = 4;
-    triangles.indexCount = 6;
-    triangles.verts = (V3F_C4B_T2F*)quad;
-}
 PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
 {
     if(this != &other)
     {
+        releaseVertsAndIndices();
         filename = other.filename;
         isVertsOwner = other.isVertsOwner;
         rect = other.rect;
@@ -85,18 +70,38 @@ PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
     }
     return *this;
 }
+
 PolygonInfo::~PolygonInfo()
 {
-    if(nullptr != triangles.verts && isVertsOwner)
+    releaseVertsAndIndices();
+}
+
+void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
+{
+    releaseVertsAndIndices();
+    isVertsOwner = false;
+    triangles.indices = quadIndices;
+    triangles.vertCount = 4;
+    triangles.indexCount = 6;
+    triangles.verts = (V3F_C4B_T2F*)quad;
+}
+
+void PolygonInfo::releaseVertsAndIndices()
+{
+    if(isVertsOwner)
     {
-        CC_SAFE_DELETE_ARRAY(triangles.verts);
-    }
-    
-    if(nullptr != triangles.indices)
-    {
-        CC_SAFE_DELETE_ARRAY(triangles.indices);
+        if(nullptr != triangles.verts)
+        {
+            CC_SAFE_DELETE_ARRAY(triangles.verts);
+        }
+        
+        if(nullptr != triangles.indices)
+        {
+            CC_SAFE_DELETE_ARRAY(triangles.indices);
+        }
     }
 }
+
 const unsigned int PolygonInfo::getVertCount() const
 {
     return (unsigned int)triangles.vertCount;
@@ -116,8 +121,6 @@ const float PolygonInfo::getArea() const
     }
     return area;
 }
-
-
 
 AutoPolygon::AutoPolygon(const std::string &filename)
 :_image(nullptr)
@@ -150,7 +153,6 @@ std::vector<Vec2> AutoPolygon::trace(const Rect& rect, const float& threshold)
 
 Vec2 AutoPolygon::findFirstNoneTransparentPixel(const Rect& rect, const float& threshold)
 {
-    Vec2 first(rect.origin);
 	bool found = false;
     Vec2 i;
     for(i.y = rect.origin.y; i.y < rect.origin.y+rect.size.height; i.y++)
@@ -174,9 +176,9 @@ unsigned char AutoPolygon::getAlphaByIndex(const unsigned int& i)
 {
     return *(_data+i*4+3);
 }
-unsigned char AutoPolygon::getAlphaByPos(const Vec2& i)
+unsigned char AutoPolygon::getAlphaByPos(const Vec2& pos)
 {
-    return *(_data+((int)i.y*_width+(int)i.x)*4+3);
+    return *(_data+((int)pos.y*_width+(int)pos.x)*4+3);
 }
 
 unsigned int AutoPolygon::getSquareValue(const unsigned int& x, const unsigned int& y, const Rect& rect, const float& threshold)
@@ -192,9 +194,6 @@ unsigned int AutoPolygon::getSquareValue(const unsigned int& x, const unsigned i
     unsigned int sv = 0;
     //NOTE: due to the way we pick points from texture, rect needs to be smaller, otherwise it goes outside 1 pixel
     auto fixedRect = Rect(rect.origin, rect.size-Size(2,2));
-    
-    
-    
     
     Vec2 tl = Vec2(x-1, y-1);
     sv += (fixedRect.containsPoint(tl) && getAlphaByPos(tl) > threshold)? 1 : 0;
@@ -485,7 +484,6 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
     co.Execute(solution, epsilon);
     
-
     ClipperLib::PolyNode* p = solution.GetFirst();
     if(!p)
     {
@@ -499,7 +497,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     //turn the result into simply polygon (AKA, fix overlap)
     
     //clamp into the specified rect
-    ClipperLib::Clipper cl= ClipperLib::Clipper();
+    ClipperLib::Clipper cl;
     cl.StrictlySimple(true);
     cl.AddPath(p->Contour, ClipperLib::ptSubject, true);
     //create the clipping rect
@@ -522,11 +520,6 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
         outPoints.push_back(Vec2(pt->X, pt->Y));
     }
     return outPoints;
-}
-
-bool AutoPolygon::isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2)
-{
-    return p1.cross(p2) >0 ? true : false;
 }
 
 TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& points)
