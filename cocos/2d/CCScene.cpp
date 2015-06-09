@@ -187,7 +187,7 @@ void Scene::render(Renderer* renderer)
 #endif
 
     Camera::_visitingCamera = nullptr;
-    FrameBufferObject::applyDefaultFBO();
+    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()

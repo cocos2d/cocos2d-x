@@ -30,9 +30,9 @@
 #include "base/CCEventType.h"
 
 NS_CC_BEGIN
-
-FrameBufferObject* FrameBufferObject::_defaultFBO = nullptr;
-std::set<FrameBufferObject*> FrameBufferObject::_frameBufferObjects;
+namespace experimental{
+FrameBuffer* FrameBuffer::_defaultFBO = nullptr;
+std::set<FrameBuffer*> FrameBuffer::_frameBuffers;
 
 RenderTargetBase::RenderTargetBase()
 {
@@ -266,7 +266,7 @@ RenderTargetDepthStencil* RenderTargetDepthStencil::create(unsigned int width, u
     }
 }
 
-bool FrameBufferObject::initWithGLView(GLView* view)
+bool FrameBuffer::initWithGLView(GLView* view)
 {
     if(view == nullptr)
     {
@@ -278,11 +278,11 @@ bool FrameBufferObject::initWithGLView(GLView* view)
     return true;
 }
 
-FrameBufferObject* FrameBufferObject::getOrCreateDefaultFBO(GLView* view)
+FrameBuffer* FrameBuffer::getOrCreateDefaultFBO(GLView* view)
 {
     if(nullptr == _defaultFBO)
     {
-        auto result = new (std::nothrow) FrameBufferObject();
+        auto result = new (std::nothrow) FrameBuffer();
         
         if(result && result->initWithGLView(view))
         {
@@ -300,7 +300,7 @@ FrameBufferObject* FrameBufferObject::getOrCreateDefaultFBO(GLView* view)
     return _defaultFBO;
 }
 
-void FrameBufferObject::applyDefaultFBO()
+void FrameBuffer::applyDefaultFBO()
 {
     if(_defaultFBO)
     {
@@ -308,17 +308,17 @@ void FrameBufferObject::applyDefaultFBO()
     }
 }
 
-void FrameBufferObject::clearAllFBOs()
+void FrameBuffer::clearAllFBOs()
 {
-    for (auto fbo : _frameBufferObjects)
+    for (auto fbo : _frameBuffers)
     {
         fbo->clearFBO();
     }
 }
 
-FrameBufferObject* FrameBufferObject::create(uint8_t fid, unsigned int width, unsigned int height)
+FrameBuffer* FrameBuffer::create(uint8_t fid, unsigned int width, unsigned int height)
 {
-    auto result = new (std::nothrow) FrameBufferObject();
+    auto result = new (std::nothrow) FrameBuffer();
     if(result && result->init(fid, width, height))
     {
         result->autorelease();
@@ -331,7 +331,7 @@ FrameBufferObject* FrameBufferObject::create(uint8_t fid, unsigned int width, un
     }
 }
 
-bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int height)
+bool FrameBuffer::init(uint8_t fid, unsigned int width, unsigned int height)
 {
     _fid = fid;
     _width = width;
@@ -365,7 +365,7 @@ bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int heigh
     return true;
 }
 
-FrameBufferObject::FrameBufferObject()
+FrameBuffer::FrameBuffer()
 : _clearColor(Color4F(0, 0, 0, 1))
 , _clearDepth(1.0)
 , _clearStencil(0)
@@ -378,10 +378,10 @@ FrameBufferObject::FrameBufferObject()
 , _dirtyFBOListener(nullptr)
 #endif
 {
-    _frameBufferObjects.insert(this);
+    _frameBuffers.insert(this);
 }
 
-FrameBufferObject::~FrameBufferObject()
+FrameBuffer::~FrameBuffer()
 {
     if(!isDefaultFBO())
     {
@@ -389,14 +389,14 @@ FrameBufferObject::~FrameBufferObject()
         CC_SAFE_RELEASE_NULL(_rtDepthStencil);
         glDeleteFramebuffers(1, &_fbo);
         _fbo = 0;
-        _frameBufferObjects.erase(this);
+        _frameBuffers.erase(this);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
 #endif
     }
 }
 
-void FrameBufferObject::clearFBO()
+void FrameBuffer::clearFBO()
 {
     applyFBO();
     glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
@@ -406,7 +406,7 @@ void FrameBufferObject::clearFBO()
     applyDefaultFBO();
 }
 
-void FrameBufferObject::AttachRenderTarget(RenderTargetBase* rt)
+void FrameBuffer::attachRenderTarget(RenderTargetBase* rt)
 {
     if(isDefaultFBO())
     {
@@ -425,7 +425,7 @@ void FrameBufferObject::AttachRenderTarget(RenderTargetBase* rt)
     _fboBindingDirty = true;
 }
 
-void FrameBufferObject::applyFBO()
+void FrameBuffer::applyFBO()
 {
     CHECK_GL_ERROR_DEBUG();
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
@@ -452,7 +452,7 @@ void FrameBufferObject::applyFBO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void FrameBufferObject::AttachDepthStencilTarget(RenderTargetDepthStencil* rt)
+void FrameBuffer::attachDepthStencilTarget(RenderTargetDepthStencil* rt)
 {
     if(isDefaultFBO())
     {
@@ -470,4 +470,5 @@ void FrameBufferObject::AttachDepthStencilTarget(RenderTargetDepthStencil* rt)
     _rtDepthStencil = rt;
     _fboBindingDirty = true;
 }
+} //end of namespace experimental
 NS_CC_END

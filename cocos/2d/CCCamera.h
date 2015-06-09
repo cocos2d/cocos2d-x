@@ -32,7 +32,10 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Scene;
-class FrameBufferObject;
+namespace experimental
+{
+    class FrameBuffer;
+}
 /**
  Viewport is a normalized to FrameBufferObject
  But for default FBO, the size is absolute.
@@ -256,7 +259,7 @@ public:
     /**
      Set FBO, which will attacha several render target for the rendered result.
     */
-    void setFrameBufferObject(FrameBufferObject* fbo);
+    void setFrameBufferObject(experimental::FrameBuffer* fbo);
     /**
      Set Viewport for camera.
      */
@@ -303,7 +306,7 @@ protected:
     friend class Director;
     Viewport _viewport;
     
-    FrameBufferObject* _fbo;
+    experimental::FrameBuffer* _fbo;
 protected:
     static Viewport _defaultViewport;
 public:

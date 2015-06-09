@@ -31,7 +31,11 @@
 #include <set>
 
 NS_CC_BEGIN
+
+class GLView;
 class EventListenerCustom;
+
+namespace experimental {
 
 class RenderTargetBase : public Ref
 {
@@ -126,12 +130,10 @@ protected:
 #endif
 };
 
-class GLView;
-
-class CC_DLL FrameBufferObject : public Ref
+class CC_DLL FrameBuffer : public Ref
 {
 public:
-    static FrameBufferObject* create(uint8_t fid, unsigned int width, unsigned int height);
+    static FrameBuffer* create(uint8_t fid, unsigned int width, unsigned int height);
     
     bool init(uint8_t fid, unsigned int width, unsigned int height);
 public:
@@ -149,16 +151,16 @@ public:
     
     RenderTargetBase* getRenderTarget() const { return _rt; }
     RenderTargetDepthStencil* getDepthStencilTarget() const { return _rtDepthStencil; }
-    void AttachRenderTarget(RenderTargetBase* rt);
-    void AttachDepthStencilTarget(RenderTargetDepthStencil* rt);
+    void attachRenderTarget(RenderTargetBase* rt);
+    void attachDepthStencilTarget(RenderTargetDepthStencil* rt);
     
     bool isDefaultFBO() const { return _isDefault; }
     unsigned int getWidth() const { return _width; }
     unsigned int getHeight() const { return _height; }
 
 CC_CONSTRUCTOR_ACCESS:
-    FrameBufferObject();
-    virtual ~FrameBufferObject();
+    FrameBuffer();
+    virtual ~FrameBuffer();
     bool initWithGLView(GLView* view);
 private:
     //openGL content for FrameBuffer
@@ -177,19 +179,20 @@ private:
     RenderTargetDepthStencil* _rtDepthStencil;
     bool _isDefault;
 public:
-    static FrameBufferObject* getOrCreateDefaultFBO(GLView* glView);
+    static FrameBuffer* getOrCreateDefaultFBO(GLView* glView);
     static void applyDefaultFBO();
     static void clearAllFBOs();
 private:
     //static GLuint _defaultFBO;
-    static FrameBufferObject* _defaultFBO;
-    static std::set<FrameBufferObject*> _frameBufferObjects;
+    static FrameBuffer* _defaultFBO;
+    static std::set<FrameBuffer*> _frameBuffers;
     
 private:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _dirtyFBOListener;
 #endif
 };
+} // end of namespace experimental
 
 NS_CC_END
 

@@ -60,8 +60,10 @@ class Renderer;
 class Camera;
 
 class Console;
-
-class FrameBufferObject;
+namespace experimental
+{
+    class FrameBuffer;
+}
 
 /**
  * @brief Matrix stack type.
@@ -597,7 +599,7 @@ protected:
     Renderer *_renderer;
     
     /* Default FrameBufferObject*/
-    FrameBufferObject* _defaultFBO;
+    experimental::FrameBuffer* _defaultFBO;
 
     /* Console for the director */
     Console *_console;

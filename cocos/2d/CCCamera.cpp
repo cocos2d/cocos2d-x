@@ -483,7 +483,7 @@ void Camera::clearBackground(float depth)
     }
 }
 
-void Camera::setFrameBufferObject(FrameBufferObject *fbo)
+void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
 {
     CC_SAFE_RETAIN(fbo);
     CC_SAFE_RELEASE_NULL(_fbo);
@@ -498,7 +498,7 @@ void Camera::applyFrameBufferObject()
 {
     if(nullptr == _fbo)
     {
-        FrameBufferObject::applyDefaultFBO();
+        experimental::FrameBuffer::applyDefaultFBO();
     }
     else
     {

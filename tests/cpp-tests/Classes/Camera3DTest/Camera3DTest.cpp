@@ -1433,7 +1433,7 @@ void CameraFrameBufferObjectTest::onEnter()
     auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
     auto size = Director::getInstance()->getWinSize();
     auto fboSize = Size(sizeInpixels.width * 1, sizeInpixels.height * 1.5);
-    auto fbo = FrameBufferObject::create(1, fboSize.width, fboSize.height);
+    auto fbo = experimental::FrameBuffer::create(1, fboSize.width, fboSize.height);
     
     CameraBaseTest::onEnter();
     //auto sprite = Sprite::createWithTexture(fbo);
@@ -1449,10 +1449,10 @@ void CameraFrameBufferObjectTest::onEnter()
     //    sprite->runAction(RepeatForever::create(animate));
     //}
     //sprite->setPosition(Vec2(100,100));
-    auto rt = RenderTarget::create(fboSize.width, fboSize.height);
-    auto rtDS = RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
-    fbo->AttachRenderTarget(rt);
-    fbo->AttachDepthStencilTarget(rtDS);
+    auto rt = experimental::RenderTarget::create(fboSize.width, fboSize.height);
+    auto rtDS = experimental::RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
+    fbo->attachRenderTarget(rt);
+    fbo->attachDepthStencilTarget(rtDS);
     auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
     sprite->setScale(0.3);
     sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
