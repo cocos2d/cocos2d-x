@@ -271,6 +271,9 @@
     <Filter Include="physics3d">
       <UniqueIdentifier>{e492faef-2169-4117-8d73-e0c66271fe25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\clipper">
+      <UniqueIdentifier>{ff65e340-b79d-4f87-9b4c-ed46bda5d20f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1821,15 +1824,6 @@
     <ClCompile Include="..\..\external\poly2tri\sweep\sweep_context.cc">
       <Filter>external\poly2tri\sweep</Filter>
     </ClCompile>
-    <ClCompile Include="MarchingSquare.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="SpritePolygon.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="SpritePolygonCache.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
     <ClCompile Include="..\physics3d\CCPhysics3D.cpp">
       <Filter>physics3d</Filter>
     </ClCompile>
@@ -1874,6 +1868,12 @@
     </ClCompile>
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="CCAutoPolygon.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\clipper\clipper.cpp">
+      <Filter>external\clipper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3614,15 +3614,6 @@
     <ClInclude Include="..\..\external\poly2tri\sweep\sweep_context.h">
       <Filter>external\poly2tri\sweep</Filter>
     </ClInclude>
-    <ClInclude Include="MarchingSquare.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="SpritePolygon.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="SpritePolygonCache.h">
-      <Filter>2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\physics3d\CCPhysics3D.h">
       <Filter>physics3d</Filter>
     </ClInclude>
@@ -3667,6 +3658,12 @@
     </ClInclude>
     <ClInclude Include="..\base\CCNinePatchImageParser.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="CCAutoPolygon.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\clipper\clipper.h">
+      <Filter>external\clipper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

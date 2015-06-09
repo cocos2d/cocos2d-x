@@ -27,9 +27,9 @@ THE SOFTWARE.
 
 #include "CCAutoPolygon.h"
 #include "poly2tri/poly2tri.h"
-#include "CCDirector.h"
-#include "CCTextureCache.h"
-#include "external/clipper/clipper.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
+#include "clipper/clipper.h"
 #include <algorithm>
 #include <math.h>
 
@@ -150,8 +150,8 @@ std::vector<Vec2> AutoPolygon::trace(const Rect& rect, const float& threshold)
 
 Vec2 AutoPolygon::findFirstNoneTransparentPixel(const Rect& rect, const float& threshold)
 {
-    Vec2 first;
-    bool found;
+    Vec2 first(rect.origin);
+	bool found = false;
     Vec2 i;
     for(i.y = rect.origin.y; i.y < rect.origin.y+rect.size.height; i.y++)
     {
@@ -408,7 +408,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::rdp(std::vector<cocos2d::Vec2> v, const 
     int index = -1;
     float dist = 0;
     //not looping first and last point
-    for(int i = 1; i < v.size()-1; i++)
+    for(size_t i = 1; i < v.size()-1; i++)
     {
         float cdist = perpendicularDistance(v[i], v.front(), v.back());
         if(cdist > dist)
@@ -559,7 +559,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
             auto p = (*ite)->GetPoint(i);
             auto v3 = Vec3(p->x, p->y, 0);
             bool found = false;
-            int j;
+            size_t j;
             size_t length = vdx;
             for(j = 0; j < length; j++)
             {
@@ -656,7 +656,7 @@ PolygonInfo AutoPolygon::generateTriangles(const Rect& rect, const float& epsilo
     p = expand(p, realRect, epsilon);
     auto tri = triangulate(p);
     calculateUV(realRect, tri.verts, tri.vertCount);
-    PolygonInfo ret = PolygonInfo();
+    PolygonInfo ret;
     ret.triangles = tri;
     ret.filename = _filename;
     ret.rect = realRect;
@@ -664,7 +664,7 @@ PolygonInfo AutoPolygon::generateTriangles(const Rect& rect, const float& epsilo
 }
 PolygonInfo AutoPolygon::generatePolygon(const std::string& filename, const Rect& rect, const float epsilon, const float threshold)
 {
-    auto ap =  AutoPolygon(filename);
+    AutoPolygon ap(filename);
     auto ret = ap.generateTriangles(rect, epsilon, threshold);
     return ret;
 }

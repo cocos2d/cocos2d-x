@@ -266,7 +266,7 @@ SpritePolygonTestSlider::SpritePolygonTestSlider()
     slider->setPosition(Vec2(vsize.width/2, vsize.height/4/* + slider->getSize().height * 2.0f*/));
     
     slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
-    slider->setPercent((int)(sqrtf(0.1)*100));
+    slider->setPercent((int)(sqrtf(1.0f/19.0f)*100));
     
     _epsilonLabel = Label::createWithTTF(_ttfConfig, "Epsilon: 2.0");
     addChild(_epsilonLabel);
@@ -289,7 +289,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
     if (type == cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
     {
         cocos2d::ui::Slider* slider = dynamic_cast<cocos2d::ui::Slider*>(pSender);
-        float epsilon = powf(slider->getPercent()/100.0,2)*20.0;
+        float epsilon = powf(slider->getPercent()/100.0,2)*19.0f + 1.0f;
         for(auto child : _children)
         {
             if(child->getName().size())
