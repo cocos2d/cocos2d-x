@@ -312,10 +312,6 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
             normal->setZero();
         }
         return 0;
-        if (normal)
-        {
-            normal->setZero();
-        }
     }else
     {
         float a = getImageHeight(i,j)*getScaleY();
@@ -547,7 +543,7 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     {
         lastRayPosition = rayPos;
         rayPos += rayStep;
-        if (normal.isZero
+        if (normal.isZero())
         {
             intersectionPoint = Vec3(0, 0, 0);
             return false;
