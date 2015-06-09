@@ -80,7 +80,7 @@ public:
      * 此搜索将递归所有子节点（部件）。
      * 
      * @param root @~english The be searched root widget.
-     * @~chinese 被搜索的跟节点.
+     * @~chinese 被搜索的根节点.
      *
      * @param name @~english The widget name.
      * @~chinese 需要搜索的name

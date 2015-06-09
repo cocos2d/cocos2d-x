@@ -38,7 +38,7 @@ namespace ui {
     class Scale9Sprite;
 /**
  * @brief @~english A widget to display images.
- * @~chinese ä¸?ä¸ªå°éƒ¨ä»¶æ˜¾ç¤ºå›¾åƒã€?
+ * @~chinese æ˜¾ç¤ºå›¾ç‰‡çš„å°éƒ¨ä»¶
  */
 class CC_GUI_DLL ImageView : public Widget
 {
@@ -50,7 +50,7 @@ public:
      * @~english
      * Default constructor
      * @~chinese 
-     * ¹¹Ôìº¯Êı
+     * æ„é€ å‡½æ•°
      *
      * @js ctor
      * @lua new
@@ -60,7 +60,7 @@ public:
     /**@~english
      * Default destructor
      * @~chinese 
-     * Îö¹¹º¯Êı
+     * ææ„å‡½æ•°
      *
      * @js NA
      * @lua NA
@@ -71,7 +71,7 @@ public:
      * @~english
      * Create a empty ImageView.
      * @~chinese 
-     * ´´½¨Ò»¸ö¿ÕµÄImageView¶ÔÏó
+     * åˆ›å»ºä¸€ä¸ªç©ºçš„ImageView
      */
     static ImageView* create();
     
@@ -80,15 +80,15 @@ public:
      * Create a  imageview  with a image name.
      *
      * @~chinese 
-     * ÓÃÒ»¸öÎÄ¼şÃû´´½¨Ò»¸öImageView¶ÔÏó
+     * æ ¹æ®å›¾ç‰‡åå­—åˆ›å»ºä¸€ä¸ªImageView
      * 
      * @param imageFileName @~english file name of texture.
-     * @~chinese ÎÆÀíÎÄ¼şµÄÃû×Ö
+     * @~chinese çº¹ç†çš„æ–‡ä»¶åå­—
      *
      * @param texType @see `Widget::TextureResType`
      *
      * @return @~english A ImageView instance.
-     * @~chinese ImageViewÊµÀı
+     * @~chinese ä¸€ä¸ªImageViewå®ä¾‹
      */
     static ImageView* create(const std::string& imageFileName, TextureResType texType = TextureResType::LOCAL);
     
@@ -98,10 +98,10 @@ public:
      * Load texture for imageview.
      *
      * @~chinese 
-     * ¼ÓÔØÎÆÀí
+     * ä¸ºImageViewå¯¹è±¡åŠ è½½çº¹ç†
      * 
      * @param fileName @~english file name of texture.
-     * @~chinese ÎÆÀíÎÄ¼şµÄÃû×Ö
+     * @~chinese çº¹ç†çš„æ–‡ä»¶å
      * @param texType @see `Widget::TextureResType`
      */
     void loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
@@ -111,8 +111,8 @@ public:
      * Updates the texture rect of the ImageView in points.
      * It will call setTextureRect:rotated:untrimmedSize with rotated = NO, and utrimmedSize = rect.size.
      * @~chinese
-     * ¸üĞÂImageViewÎÆÀí¾ØĞÎÄÚµÄµãÊı¾İ
-     * Ëü»áµ÷ÓÃsetTextureRect:rotated:untrimmedSize£¬rotatedÄ¬ÈÏÎªNo£¬utrimmedSizeÄ¬ÈÏÎª¾ØĞÎµÄ³ß´ç
+     * æ›´æ–°ImageViewçº¹ç†çŸ©å½¢çš„ç‚¹
+     * å®ƒå°†è°ƒç”¨setTextureRect:rotated:untrimmedSizeï¼Œrotatedé»˜è®¤ä¸ºNoï¼ŒutrimmedSizeé»˜è®¤ä¸ºrect.size
      */
     void setTextureRect(const Rect& rect);
 
@@ -121,10 +121,10 @@ public:
      * Enable scale9 renderer.
      *
      * @~chinese 
-     * ¿ªÆô9¹¬¸ñäÖÈ¾Ä£Ê½
+     * å¼€å¯scale9æ¸²æŸ“æ¨¡å¼
      * 
      * @param enabled @~english Set to true will use scale9 renderer, false otherwise.
-     * @~chinese ÉèÖÃÎªtrueÔò¿ªÆô9¹¬¸ñäÖÈ¾£¬ÎªfalseÔò¹Ø±Õ
+     * @~chinese ä¼ å…¥trueåˆ™å¼€å¯scale9æ¸²æŸ“ï¼Œfalseåˆ™å…³é—­
      */
     void setScale9Enabled(bool enabled);
 
@@ -132,9 +132,9 @@ public:
      * @~english
      * Query whether button is using scale9 renderer or not.
      * @~chinese 
-     * ÅĞ¶ÏÊÇ·ñ¿ªÆôÁË9¹¬¸ñäÖÈ¾
+     * æŸ¥è¯¢æ˜¯å¦å¼€å¯äº†scale9æ¸²æŸ“
      * @return @~english whether button use scale9 renderer or not.
-     * @~chinese ·µ»Øtrue»òfalse±íÊ¾ÊÇ·ñ¿ªÆô
+     * @~chinese æ˜¯å¦å¼€å¯äº†scale9æ¸²æŸ“
      */
     bool isScale9Enabled()const;
 
@@ -144,11 +144,11 @@ public:
      * The capInsets affects the ImageView's renderer only if `setScale9Enabled(true)` is called.
      *
      * @~chinese 
-     * ÉèÖÃImageViewµÄcapInsets
-     * Ö»ÓĞµ±`setScale9Enabled(true)`±»µ÷ÓÃÖ®ºó£¬¸ÃcapInsets²Å»áÓ°ÏìµÄImageViewµÄäÖÈ¾¡£
-     * 
+     * è®¾ç½®ImageViewçš„capInsets
+     * åªä¼šå½±å“å¼€å¯äº†scale9æ¸²æŸ“æ¨¡å¼çš„ImageView `setScale9Enabled(true)`
+     *
      * @param capInsets @~english capInsets for imageview
-     * @~chinese Õâ¸öImageViewµÄcapInset
+     * @~chinese ImageViewçš„capInset
      */
     void setCapInsets(const Rect &capInsets);
 
@@ -156,10 +156,10 @@ public:
      * @~english
      * Get ImageView's capInsets size.
      * @~chinese 
-     * »ñÈ¡Ò»¸öImageViewµÄcapInsets³ß´ç
+     * è·å–ImageViewçš„capInsetså°ºå¯¸
      *
      * @return @~english Query capInsets size in Rect
-     * @~chinese capInsets³ß´ç
+     * @~chinese capInsetså°ºå¯¸
      * @see `setCapInsets(const Rect&)`
      */
     const Rect& getCapInsets()const;
