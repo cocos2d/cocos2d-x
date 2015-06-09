@@ -50,7 +50,7 @@ CC_DLL extern const ValueMapIntKey ValueMapIntKeyNull;
 
 /*
  * @~english This class is provide as a wrapper of basic types, such as int and bool.
- * @~chinese 这个类提供wrapper的基本类型,如int和bool。
+ * @~chinese 这个类提供基本类型的wrapper,如int和bool。
  */
 class CC_DLL Value
 {
@@ -204,7 +204,7 @@ public:
      * @~english Checks if the Value is null.
      * @~chinese  检查值是否为null。
      * @return @~english True if the Value is null, false if not.
-     * @~chinese 真如果该值为null则为true,否则为false。
+     * @~chinese 如果该值为null则为true,否则为false。
      */
     inline bool isNull() const { return _type == Type::NONE; }
 
