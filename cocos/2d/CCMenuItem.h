@@ -389,7 +389,6 @@ public:
      * @param fontSize @~english The font size. @~chinese 字体大小。
      *
      * @js setFontSize
-     * @js NA
      */
     void setFontSizeObj(int fontSize);
     
@@ -397,7 +396,6 @@ public:
      * @~chinese 获取字体大小。
      * @return @~english The font size. @~chinese 字体大小。
      * @js getFontSize
-     * @js NA
      */
     int getFontSizeObj() const;
 
@@ -415,7 +413,6 @@ public:
      * @param fontName @~english The font name. @~chinese 字体名。
      *
      * @js setFontName
-     * @js NA
      */
     void setFontNameObj(const std::string& fontName);
 
@@ -424,8 +421,7 @@ public:
      *
      * @return @~english The font name. @~chinese 字体名。
      *
-     * @js getFontNameObj
-     * @js NA
+     * @js getFontName
      */
     const std::string& getFontNameObj() const;
 
@@ -620,6 +616,7 @@ public:
      *
      * @param normalImage @~english The normal image to display. @~chinese 正常状态显示的图片路径。
      * @param selectedImage @~english The selected image to display. @~chinese 选中状态显示的图片路径。
+     * @param callback @~english The callback be invoked if the item is actived. @~chinese 菜单项被激活时调用的回调。
      *
      * @return @~english A initialized MenuItemImage object which is marked as "autorelease".
      * @~chinese 一个初始化的图片菜单项，该节点会自动被标记为“autorelease”(自动释放).
