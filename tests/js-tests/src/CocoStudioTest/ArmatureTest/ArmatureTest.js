@@ -160,58 +160,20 @@ var ArmatureTestLayer = BaseTestLayer.extend({
 //
 //------------------------------------------------------------------
 var TestAsynchronousLoading = ArmatureTestLayer.extend({
-    ctor: function()
-    {
-        this._super();
-        this.addAni("knight", cc.p(50, 100));
-        this.addAni("robot", cc.p(250, 100));
-        this.addAni("cyborg", cc.p(350, 100));
-        this.addAni("Dragon", cc.p(450, 100));
-    },
-
-    addAni: function(name, point)
-    {
-        var fileName = "ccs-res/armature/" + name;
-        if (!ccs.armatureDataManager.getAnimationData(name)) {
-            cc.log("同步加载文件: " + fileName);
-            ccs.armatureDataManager.addArmatureFileInfo(fileName + ".png", fileName + ".plist", fileName + ".xml");
-        }
-        var armname = name;
-        if (armname == "knight")
-            armname = "Knight_f/Knight";
-        var entityArmature = new ccs.Armature(armname);
-        
-        //this.addChild(entityArmature); //该行不开启  内存会一直涨
-        entityArmature.getAnimation().playWithIndex(1);
-        entityArmature.setPosition(point);
-        //entityArmature.setVisible(false);  //该行开启后  内存会一直涨
-    },
     onEnter: function () {
         this._super();
         this.setMenuItemEnabled(false);
         var armatureDataManager = ccs.armatureDataManager;
-        // armatureDataManager.addArmatureFileInfoAsync(s_knight_png, s_knight_plist, s_knight_xml, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_weapon_png, s_weapon_plist, s_weapon_xml, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_robot_png, s_robot_plist, s_robot_xml, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_cyborg_png, s_cyborg_plist, s_cyborg_xml,this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_Dragon_png, s_Dragon_plist, s_Dragon_xml, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_Cowboy_json, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_hero_json, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_horse_json, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_bear_json, this.dataLoaded,  this);
-        // armatureDataManager.addArmatureFileInfoAsync(s_HeroAnimation_json, this.dataLoaded,  this);
-
-        this.scheduleOnce(this.rerun, 5);
-    },
-    rerun: function(dt)
-    {
-        ccs.armatureDataManager.clear();
-        cc.textureCache.removeAllTextures();
-        cc.spriteFrameCache.removeSpriteFrames();
-        var layer = new TestAsynchronousLoading();
-        var scene = new ArmatureTestScene(); 
-        scene.addChild(layer);
-        cc.director.runScene(scene);
+        armatureDataManager.addArmatureFileInfoAsync(s_knight_png, s_knight_plist, s_knight_xml, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_weapon_png, s_weapon_plist, s_weapon_xml, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_robot_png, s_robot_plist, s_robot_xml, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_cyborg_png, s_cyborg_plist, s_cyborg_xml,this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_Dragon_png, s_Dragon_plist, s_Dragon_xml, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_Cowboy_json, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_hero_json, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_horse_json, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_bear_json, this.dataLoaded,  this);
+        armatureDataManager.addArmatureFileInfoAsync(s_HeroAnimation_json, this.dataLoaded,  this);
     },
     setMenuItemEnabled: function (bool) {
         var menu = this.getChildByTag(BASE_TEST_MENU_TAG);

@@ -176,14 +176,7 @@ var TestController = cc.LayerGradient.extend({
                     return true;
                 }
             }, this);
-        }
-
-
-        var sprite = new cc.Sprite(ccbjs + "test.png");
-        sprite.anchorY = 0;
-        sprite.x = 0;
-        sprite.y = 0;
-        this.addChild(sprite, 20);
+       }
     },
     onEnter:function(){
         this._super();

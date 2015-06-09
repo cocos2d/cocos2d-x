@@ -37,15 +37,10 @@ class TestAsynchronousLoading : public ArmatureBaseTest
 public:
     CREATE_FUNC(TestAsynchronousLoading);
 
-    virtual bool init() override;
-    
 	virtual void onEnter() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
     virtual void restartTestCallback(cocos2d::Ref* pSender) override;
-    void addAni(const std::string &name, const Vec2 &point);
-    
-    void rerun(float dt);
 
 	void dataLoaded(float percent);
 };

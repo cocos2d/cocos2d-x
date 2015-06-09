@@ -212,7 +212,6 @@ var s_image_icon = "Images/Icon.png";
 var s_html5_logo = "Images/cocos-html5.png";
 
 var g_resources = [
-    ccbjs+"test.png",
     //global
     s_grossini_dance_atlas,
     s_pathFog,
