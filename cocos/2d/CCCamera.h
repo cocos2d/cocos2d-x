@@ -28,28 +28,11 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 
 class Scene;
-namespace experimental
-{
-    class FrameBuffer;
-}
-/**
- Viewport is a normalized to FrameBufferObject
- But for default FBO, the size is absolute.
- */
-struct CC_DLL Viewport
-{
-    Viewport(float left, float bottom, float width, float height);
-    Viewport();
-    
-    float _left;
-    float _bottom;
-    float _width;
-    float _height;
-};
 
 /**
  * Note: 
@@ -263,7 +246,7 @@ public:
     /**
      Set Viewport for camera.
      */
-    void setViewport(const Viewport& vp) { _viewport = vp; }
+    void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -304,14 +287,14 @@ protected:
     static Camera* _visitingCamera;
     
     friend class Director;
-    Viewport _viewport;
+    experimental::Viewport _viewport;
     
     experimental::FrameBuffer* _fbo;
 protected:
-    static Viewport _defaultViewport;
+    static experimental::Viewport _defaultViewport;
 public:
-    static const Viewport& getDefaultViewport() { return _defaultViewport; }
-    static void setDefaultViewport(const Viewport& vp) { _defaultViewport = vp; }
+    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
+    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 };
 
 NS_CC_END

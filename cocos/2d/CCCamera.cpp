@@ -34,20 +34,7 @@
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
-Viewport Camera::_defaultViewport;
-Viewport::Viewport(float left, float bottom, float width, float height)
-: _left(left)
-, _bottom(bottom)
-, _width(width)
-, _height(height)
-{
-}
-
-Viewport::Viewport()
-{
-    _left = _bottom = 0.f;
-    _width = _height = 1.0f;
-}
+experimental::Viewport Camera::_defaultViewport;
 
 Camera* Camera::getDefaultCamera()
 {
@@ -60,7 +47,7 @@ Camera* Camera::getDefaultCamera()
     return nullptr;
 }
 
-    Camera* Camera::create()
+Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
