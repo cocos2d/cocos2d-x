@@ -554,7 +554,8 @@ void ParticleSystem::initParticle(tParticle* particle)
     // position
     if (_positionType == PositionType::FREE)
     {
-        particle->startPos = this->convertToWorldSpace(Vec2::ZERO);
+        particle->startPos = _position;
+        particle->worldTransMat = this->getNodeToWorldTransform();
     }
     else if (_positionType == PositionType::RELATIVE)
     {
@@ -684,7 +685,7 @@ void ParticleSystem::update(float dt)
     Vec2 currentPosition;
     if (_positionType == PositionType::FREE)
     {
-        currentPosition = this->convertToWorldSpace(Vec2::ZERO);
+        currentPosition = _position;
     }
     else if (_positionType == PositionType::RELATIVE)
     {
@@ -692,8 +693,6 @@ void ParticleSystem::update(float dt)
     }
 
     {
-        Mat4 worldToNodeTM = getWorldToNodeTransform();
-        
         while (_particleIdx < _particleCount)
         {
             tParticle *p = &_particles[_particleIdx];
@@ -768,11 +767,11 @@ void ParticleSystem::update(float dt)
 
                 if (_positionType == PositionType::FREE)
                 {
-                    Vec3 p1(currentPosition.x,currentPosition.y,0),p2(p->startPos.x,p->startPos.y,0);
-                    worldToNodeTM.transformPoint(&p1);
-                    worldToNodeTM.transformPoint(&p2);
-                    p1 = p1 - p2;
-                    newPos = p->pos - Vec2(p1.x,p1.y);
+                    Vec2 diff = currentPosition - p->startPos;
+                    Vec2 tempPos = p->pos - diff;
+                    Vec3 p1(tempPos.x, tempPos.y, 0);
+                    p->worldTransMat.transformPoint(&p1);
+                    newPos = Vec2(p1.x, p1.y);
                 }
                 else if(_positionType == PositionType::RELATIVE)
                 {
