@@ -36,37 +36,46 @@ NS_CC_BEGIN
 
 class IndexBuffer;
 
-/**
+/**@class Primitive
+@brief
+@~english
  Primitive can support sending points, lines and triangles to glpipeline, which is an abstraction
  of primitive data.
+ * @~chinese 
+ * Primitive可以支持点,线和三角形的渲染, 是渲染基础图元的抽象。
  */
 class CC_DLL Primitive : public Ref
 {
 public:
-    /**
+    /**@~english
      Create an instance of primitive.
-     @param verts VertexData used in the primitive.
-     @param indices Optional index data.
-     @param type The type (Points, Lines, Triangles) used.
+     * @~chinese 
+     * 创建一个Primitive实例。
+     @param verts @~english VertexData used in the primitive.
+     * @~chinese 图元使用的VertexData。
+     @param indices @~english Optional index data, null will means that no indices needed.
+     * @~chinese 索引缓冲，如果是null，表示没有索引。
+     @param type @~english The type (Points, Lines, Triangles) used.
+     * @~chinese openGL中枚举的图元类型(点、线、三角形)。
      */
     static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
-    /**Get the vertexData.*/
+    /**@~english Get the vertexData. @~chinese 得到VertexData。*/
     const VertexData* getVertexData() const;
-    /**Get the optional index data, will return null if index data is not used.*/
+    /**@~english Get the optional index data, will return null if index data is not used. @~chinese 可选的索引数据,如果不使用索引数据将返回null。*/
     const IndexBuffer* getIndexData() const;
-    /**Get the primitive type.*/
+    /**@~english Get the primitive type. @~chinese 图元的类型。*/
     int getType() const { return _type; }
     
-    /**called by rendering framework, will send the data to GLPipeline.*/
+    /**@~english called by rendering framework, will send the data to GLPipeline. @~chinese 被渲染框架,将向GLPipeline发送数据。*/
     void draw();
     
-    /**Get the start index of primtive.*/
+    /**@~english Get the start index of primtive. @~chinese 绘制的起始索引位置。*/
     int getStart() const { return _start; }
-    /**Get the number of vertices or indices used for drawing.*/
+    /**@~english Get the number of vertices or indices used for drawing. @~chinese 用于绘制的顶点或者索引（如果有）的数目。*/
     int getCount() const { return _count; }
-    /**Setter for the start index.*/
+    /**@~english Setter for the start index. @~chinese 设置开始索引的位置。*/
     void setStart(int start) { _start = start; }
-    /**Setter for the count. */
+    /**@~english Setter for the count.  @~chinese 设置绘制的顶点或索引的个数。*/
     void setCount(int count) { _count = count; }
     
 protected:
