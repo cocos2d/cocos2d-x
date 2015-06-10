@@ -39,7 +39,8 @@ NS_CC_BEGIN
 class Event;
 
 /** @class EventListenerKeyboard
- * @brief Keyboard event listener.
+ * @brief @~english Keyboard event listener.
+ * @~chinese 键盘事件监听器。
  * @js cc._EventListenerKeyboard
  */
 class CC_DLL EventListenerKeyboard : public EventListener
@@ -47,9 +48,12 @@ class CC_DLL EventListenerKeyboard : public EventListener
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a keyboard event listener.
+    /** @~english Create a keyboard event listener.
      * 
-     * @return An autoreleased EventListenerKeyboard object.
+     * @~chinese 创建一个键盘事件监听器。
+     * 
+     * @return @~english An autoreleased EventListenerKeyboard object.
+     * @~chinese 一个自动释放的键盘事件监听器对象。
      */
     static EventListenerKeyboard* create();
     
