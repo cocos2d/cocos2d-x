@@ -143,6 +143,7 @@ def main():
                     'cocos2dx_3d.ini' : ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'), \
                     'cocos2dx_3d_ext.ini' : ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'), \
                     'cocos2dx_experimental_webView.ini' : ('cocos2dx_experimental_webView', 'jsb_cocos2dx_experimental_webView_auto'), \
+                    'cocos2dx_experimental_video.ini' : ('cocos2dx_experimental_video', 'jsb_cocos2dx_experimental_video_auto'), \
                     'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental'), \
                     'cocos2dx_physics3d.ini' : ('cocos2dx_physics3d', 'jsb_cocos2dx_physics3d_auto')
                     }

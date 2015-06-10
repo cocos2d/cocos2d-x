@@ -27,6 +27,7 @@ package org.cocos2dx.lib;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 import java.lang.Runnable;
 
@@ -379,28 +380,104 @@ public class Cocos2dxHelper {
     
     public static boolean getBoolForKey(String key, boolean defaultValue) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
-        return settings.getBoolean(key, defaultValue);
+        try {
+            return settings.getBoolean(key, defaultValue);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+
+            Map allValues = settings.getAll();
+            Object value = allValues.get(key);
+            if ( value instanceof String)
+            {
+                return  Boolean.parseBoolean(value.toString());
+            }
+            else if (value instanceof Integer)
+            {
+                int intValue = ((Integer) value).intValue();
+                return (intValue !=  0) ;
+            }
+            else if (value instanceof Float)
+            {
+                float floatValue = ((Float) value).floatValue();
+                return (floatValue != 0.0f);
+            }
+        }
+
+        return false;
     }
     
     public static int getIntegerForKey(String key, int defaultValue) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
-        return settings.getInt(key, defaultValue);
+        try {
+            return settings.getInt(key, defaultValue);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+
+            Map allValues = settings.getAll();
+            Object value = allValues.get(key);
+            if ( value instanceof String) {
+                return  Integer.parseInt(value.toString());
+            }
+            else if (value instanceof Float)
+            {
+                return ((Float) value).intValue();
+            }
+            else if (value instanceof Boolean)
+            {
+                boolean booleanValue = ((Boolean) value).booleanValue();
+                if (booleanValue)
+                    return 1;
+            }
+        }
+
+        return 0;
     }
     
     public static float getFloatForKey(String key, float defaultValue) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
-        return settings.getFloat(key, defaultValue);
+        try {
+            return settings.getFloat(key, defaultValue);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();;
+
+            Map allValues = settings.getAll();
+            Object value = allValues.get(key);
+            if ( value instanceof String) {
+                return  Float.parseFloat(value.toString());
+            }
+            else if (value instanceof Integer)
+            {
+                return ((Integer) value).floatValue();
+            }
+            else if (value instanceof Boolean)
+            {
+                boolean booleanValue = ((Boolean) value).booleanValue();
+                if (booleanValue)
+                    return 1.0f;
+            }
+        }
+
+        return 0.0f;
     }
     
     public static double getDoubleForKey(String key, double defaultValue) {
         // SharedPreferences doesn't support saving double value
-        SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
-        return settings.getFloat(key, (float)defaultValue);
+        return getFloatForKey(key, (float) defaultValue);
     }
     
     public static String getStringForKey(String key, String defaultValue) {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
-        return settings.getString(key, defaultValue);
+        try {
+            return settings.getString(key, defaultValue);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            
+            return settings.getAll().get(key).toString();
+        }
     }
     
     public static void setBoolForKey(String key, boolean value) {

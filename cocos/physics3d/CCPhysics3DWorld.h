@@ -90,6 +90,12 @@ public:
      */
     static Physics3DWorld* create(Physics3DWorldDes* info);
     
+    /** set gravity for the physics world */
+    void setGravity(const Vec3& gravity);
+    
+    /** get current gravity */
+    Vec3 getGravity() const;
+    
     /** Add a Physics3DObject. */
     void addPhysics3DObject(Physics3DObject* physicsObj);
     

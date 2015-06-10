@@ -5,14 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
---  Physics synchronize rendering. 
--- @function [parent=#PhysicsSprite3D] syncToPhysics 
+--  synchronize node transformation to physics. 
+-- @function [parent=#PhysicsSprite3D] syncNodeToPhysics 
 -- @param self
 -- @return PhysicsSprite3D#PhysicsSprite3D self (return value: cc.PhysicsSprite3D)
         
 --------------------------------
---  Rendering synchronize physics. 
--- @function [parent=#PhysicsSprite3D] syncToNode 
+--  synchronize physics transformation to node. 
+-- @function [parent=#PhysicsSprite3D] syncPhysicsToNode 
 -- @param self
 -- @return PhysicsSprite3D#PhysicsSprite3D self (return value: cc.PhysicsSprite3D)
         

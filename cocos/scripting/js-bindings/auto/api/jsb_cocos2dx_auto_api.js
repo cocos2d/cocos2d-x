@@ -10498,6 +10498,18 @@ getVertexAttribsFlags : function (
 },
 
 /**
+ * @method applyAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+applyAutoBinding : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method setUniformVec2
 * @param {int|String} int
 * @param {vec2_object|vec2_object} vec2
@@ -10544,11 +10556,31 @@ mat4
 },
 
 /**
+ * @method getNodeBinding
+ * @return {cc.Node}
+ */
+getNodeBinding : function (
+)
+{
+    return cc.Node;
+},
+
+/**
  * @method applyGLProgram
  * @param {mat4_object} arg0
  */
 applyGLProgram : function (
 mat4 
+)
+{
+},
+
+/**
+ * @method setNodeBinding
+ * @param {cc.Node} arg0
+ */
+setNodeBinding : function (
+node 
 )
 {
 },
@@ -10561,6 +10593,18 @@ mat4
 setUniformInt : function(
 str,
 int 
+)
+{
+},
+
+/**
+ * @method setParameterAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+setParameterAutoBinding : function (
+str, 
+str 
 )
 {
 },
@@ -19872,16 +19916,6 @@ getStateBlock : function (
 },
 
 /**
- * @method getTextures
- * @return {Array}
- */
-getTextures : function (
-)
-{
-    return new Array();
-},
-
-/**
  * @method initialize
  */
 initialize : function (
@@ -22170,16 +22204,6 @@ isEnabled : function (
 },
 
 /**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
  * @method getOwner
  * @return {cc.Node}
  */
@@ -22200,16 +22224,6 @@ init : function (
 },
 
 /**
- * @method setOwner
- * @param {cc.Node} arg0
- */
-setOwner : function (
-node 
-)
-{
-},
-
-/**
  * @method getName
  * @return {String}
  */
@@ -22217,6 +22231,16 @@ getName : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
 },
 
 /**

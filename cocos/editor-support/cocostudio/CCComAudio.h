@@ -59,6 +59,16 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	virtual void onAdd() override;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	virtual void onRemove() override;
     virtual bool isEnabled() const override;
     virtual void setEnabled(bool b) override;
     virtual bool serialize(void* r) override;
