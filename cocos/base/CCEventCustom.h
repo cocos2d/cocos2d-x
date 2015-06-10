@@ -45,8 +45,8 @@ public:
     /** 
      * @~english Constructor.
      * @~chinese 构造函数
-     * @param
-     * @~english eventName A given name of the custom event. 
+     * @param eventName
+     * @~english A given name of the custom event. 
      * @~chinese 设置一个自定义事件名称
      * @js ctor
      */
@@ -56,8 +56,8 @@ public:
      * @~english Sets user data. 
      * @~chinese 设置用户数据
      *
-     * @param
-     * @~english data The user data pointer, it's a void*. 
+     * @param data
+     * @~english  The user data pointer, it's a void*. 
      * @~chinese 用户数据指针。类型是void*
      */
     inline void setUserData(void* data) { _userData = data; };
