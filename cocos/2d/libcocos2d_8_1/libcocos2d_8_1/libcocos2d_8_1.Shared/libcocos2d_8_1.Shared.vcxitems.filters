@@ -1743,9 +1743,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.h">
-      <Filter>2d</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.h">
       <Filter>external\poly2tri\common</Filter>
     </ClInclude>
@@ -1766,12 +1763,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\poly2tri.h">
       <Filter>external\poly2tri</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.h">
-      <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderState.h">
       <Filter>renderer</Filter>
@@ -1828,6 +1819,12 @@
       <Filter>audioengine</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.h">
+      <Filter>external\clipper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -3397,9 +3394,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.cc">
       <Filter>external\poly2tri\common</Filter>
     </ClCompile>
@@ -3414,12 +3408,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.cc">
       <Filter>external\poly2tri\sweep</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.cpp">
-      <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderState.cpp">
       <Filter>renderer</Filter>
@@ -3479,6 +3467,12 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.cpp">
+      <Filter>external\clipper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -3741,6 +3735,9 @@
     </Filter>
     <Filter Include="physics3d">
       <UniqueIdentifier>{e6f8ab69-f66f-48be-a40f-e33c08e77516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\clipper">
+      <UniqueIdentifier>{22d0cde8-e68c-47a8-8822-9decf4b328a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
