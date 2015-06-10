@@ -323,7 +323,7 @@ public:
      * Set the speed of this physics world.
      *
      * @~chinese 
-     * 设置物理世界的速度。
+     * 设置物理世界的仿真执行速度。
      * 
      * @attention @~english if you setAutoStep(false), this won't work.
      * @~chinese 如果setAutoStep(false),那么这个函数将不起作用。
@@ -336,7 +336,7 @@ public:
      * Get the speed of this physics world.
      *
      * @~chinese 
-     * 得到物理世界的速度。
+     * 得到物理世界仿真执行速度
      * 
      * @return @~english A float number.
      * @~chinese 一个浮点数
