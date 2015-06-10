@@ -1844,6 +1844,9 @@ protected:
     PhysicsWorld* _physicsWorld; /** The PhysicsWorld associated with the node.*/
     int _physicsBodyAssociatedWith;  /** The count of PhysicsBody associated with the node and children.*/
     float _physicsRotationOffset;  /** Record the rotation value when invoke Node::setPhysicsBody.*/
+
+    float _offsetX;
+    float _offsetY;
 #endif
     
     // opacity controls

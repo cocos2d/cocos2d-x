@@ -710,14 +710,6 @@ const Vec2& Node::getAnchorPoint() const
 
 void Node::setAnchorPoint(const Vec2& point)
 {
-#if CC_USE_PHYSICS
-    if (_physicsBody != nullptr && !point.equals(Vec2::ANCHOR_MIDDLE))
-    {
-        CCLOG("Node warning: This node has a physics body, the anchor must be in the middle, you cann't change this to other value.");
-        return;
-    }
-#endif
-    
     if (! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
@@ -1419,6 +1411,11 @@ void Node::onEnter()
     if (_onEnterCallback)
         _onEnterCallback();
 
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onEnter();
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1498,6 +1495,11 @@ void Node::onExit()
     if (_onExitCallback)
         _onExitCallback();
     
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onExit();
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -2077,14 +2079,6 @@ void Node::setPhysicsBody(PhysicsBody* body)
         
         body->_node = this;
         body->retain();
-        
-        // physics rotation based on body position, but node rotation based on node anthor point
-        // it cann't support both of them, so I clear the anthor point to default.
-        if (!getAnchorPoint().equals(Vec2::ANCHOR_MIDDLE))
-        {
-            CCLOG("Node warning: setPhysicsBody sets anchor point to Vec2::ANCHOR_MIDDLE.");
-            setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        }
 
         _physicsBody = body;
         _physicsScaleStartX = _scaleX;
@@ -2123,10 +2117,16 @@ void Node::updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t pare
     if (_physicsBody && ((flags & FLAGS_DIRTY_MASK) || _physicsTransformDirty))
     {
         _physicsTransformDirty = false;
-        Vec3 vec3(_position.x, _position.y, 0);
+        
+        Vec3 vec3(_contentSize.width * 0.5f, _contentSize.height * 0.5f, 0);
         Vec3 ret;
-        parentTransform.transformPoint(vec3, &ret);
+        _modelViewTransform.transformPoint(vec3, &ret);
         _physicsBody->setPosition(Vec2(ret.x, ret.y));
+
+        parentTransform.getInversed().transformPoint(&ret);
+        _offsetX = ret.x - _position.x;
+        _offsetY = ret.y - _position.y;
+
         _physicsBody->setScale(scaleX / _physicsScaleStartX, scaleY / _physicsScaleStartY);
         _physicsBody->setRotation(_physicsRotation - _physicsRotationOffset);
     }
@@ -2148,7 +2148,7 @@ void Node::updateTransformFromPhysics(const Mat4& parentTransform, uint32_t pare
         Vec3 vec3(newPosition.x, newPosition.y, 0);
         Vec3 ret;
         parentTransform.getInversed().transformPoint(vec3, &ret);
-        setPosition(ret.x, ret.y);
+        setPosition(ret.x - _offsetX, ret.y - _offsetY);
     }
     _physicsRotation = _physicsBody->getRotation();
     setRotation(_physicsRotation - _parent->_physicsRotation + _physicsRotationOffset);

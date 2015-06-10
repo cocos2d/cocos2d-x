@@ -56,11 +56,11 @@ public:
     /** Set synchronization flag, see Physics3DComponent. */
     void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
     
-    /** Physics synchronize rendering. */
-    void syncToPhysics();
+    /** synchronize node transformation to physics. */
+    void syncNodeToPhysics();
     
-    /** Rendering synchronize physics. */
-    void syncToNode();
+    /** synchronize physics transformation to node. */
+    void syncPhysicsToNode();
     
 CC_CONSTRUCTOR_ACCESS:
     PhysicsSprite3D();

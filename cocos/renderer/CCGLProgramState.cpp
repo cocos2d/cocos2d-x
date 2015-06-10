@@ -359,7 +359,7 @@ GLProgramState* GLProgramState::getOrCreateWithShaders(const std::string& vertex
 
 GLProgramState::GLProgramState()
 : _uniformAttributeValueDirty(true)
-, _textureUnitIndex(1)
+, _textureUnitIndex(4)  // first 4 textures unites are reserved for CC_Texture0-3
 , _vertexAttribsFlags(0)
 , _glprogram(nullptr)
 , _nodeBinding(nullptr)

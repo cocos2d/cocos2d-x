@@ -19916,16 +19916,6 @@ getStateBlock : function (
 },
 
 /**
- * @method getTextures
- * @return {Array}
- */
-getTextures : function (
-)
-{
-    return new Array();
-},
-
-/**
  * @method initialize
  */
 initialize : function (
@@ -22214,16 +22204,6 @@ isEnabled : function (
 },
 
 /**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
  * @method getOwner
  * @return {cc.Node}
  */
@@ -22244,16 +22224,6 @@ init : function (
 },
 
 /**
- * @method setOwner
- * @param {cc.Node} arg0
- */
-setOwner : function (
-node 
-)
-{
-},
-
-/**
  * @method getName
  * @return {String}
  */
@@ -22261,6 +22231,16 @@ getName : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
 },
 
 /**

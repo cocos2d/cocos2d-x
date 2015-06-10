@@ -198,9 +198,7 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "sampler") == 0)
-            parseSampler(pass, space);
-        else if (strcmp(name, "shader") == 0)
+        if (strcmp(name, "shader") == 0)
             parseShader(pass, space);
         else if (strcmp(name, "renderState") == 0)
             parseRenderState(pass, space);
@@ -216,10 +214,12 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
 }
 
 // cocos2d-x doesn't support Samplers yet. But will be added soon
-bool Material::parseSampler(Pass* pass, Properties* textureProperties)
+bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerProperties)
 {
+    CCASSERT(samplerProperties->getId(), "Sampler must have an id. The id is the uniform name");
+    
     // required
-    auto filename = textureProperties->getString("path");
+    auto filename = samplerProperties->getString("path");
 
     auto texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (!texture) {
@@ -234,14 +234,14 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
         // mipmap
         bool usemipmap = false;
-        const char* mipmap = getOptionalString(textureProperties, "mipmap", "false");
+        const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
         if (mipmap && strcasecmp(mipmap, "true")==0) {
             texture->generateMipmap();
             usemipmap = true;
         }
 
         // valid options: REPEAT, CLAMP
-        const char* wrapS = getOptionalString(textureProperties, "wrapS", "CLAMP_TO_EDGE");
+        const char* wrapS = getOptionalString(samplerProperties, "wrapS", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapS, "REPEAT")==0)
             texParams.wrapS = GL_REPEAT;
         else if(strcasecmp(wrapS, "CLAMP_TO_EDGE")==0)
@@ -251,7 +251,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
 
         // valid options: REPEAT, CLAMP
-        const char* wrapT = getOptionalString(textureProperties, "wrapT", "CLAMP_TO_EDGE");
+        const char* wrapT = getOptionalString(samplerProperties, "wrapT", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapT, "REPEAT")==0)
             texParams.wrapT = GL_REPEAT;
         else if(strcasecmp(wrapT, "CLAMP_TO_EDGE")==0)
@@ -261,7 +261,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
-        const char* minFilter = getOptionalString(textureProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        const char* minFilter = getOptionalString(samplerProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
             texParams.minFilter = GL_NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)
@@ -278,7 +278,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
             CCLOG("Invalid minFilter: %s", minFilter);
 
         // valid options: NEAREST, LINEAR
-        const char* magFilter = getOptionalString(textureProperties, "magFilter", "LINEAR");
+        const char* magFilter = getOptionalString(samplerProperties, "magFilter", "LINEAR");
         if (strcasecmp(magFilter, "NEAREST")==0)
             texParams.magFilter = GL_NEAREST;
         else if(strcasecmp(magFilter, "LINEAR")==0)
@@ -289,7 +289,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
         texture->setTexParameters(texParams);
     }
 
-    pass->_textures.pushBack(texture);
+    glProgramState->setUniformTexture(samplerProperties->getId(), texture);
     return true;
 }
 
@@ -321,7 +321,16 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
             property = shaderProperties->getNextProperty();
         }
 
-//        glProgramState->updateUniformsAndAttributes();
+        auto space = shaderProperties->getNextNamespace();
+        while (space)
+        {
+            const char* name = space->getNamespace();
+            if (strcmp(name, "sampler") == 0)
+            {
+                parseSampler(glProgramState, space);
+            }
+            space = shaderProperties->getNextNamespace();
+        }
     }
 
     return true;

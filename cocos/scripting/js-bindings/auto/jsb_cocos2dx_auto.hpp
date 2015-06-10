@@ -3567,7 +3567,6 @@ bool js_cocos2dx_RenderState_getTexture(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_RenderState_bind(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getStateBlock(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_RenderState_getTextures(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_initialize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_finalize(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -3922,11 +3921,10 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_Component(JSContext *cx, uint32_t argc, jsval *vp);
 

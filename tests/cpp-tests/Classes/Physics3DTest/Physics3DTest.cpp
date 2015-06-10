@@ -210,7 +210,7 @@ void Physics3DTestDemo::shootBox( const cocos2d::Vec3 &des )
     this->addChild(sprite);
     sprite->setPosition3D(_camera->getPosition3D());
     sprite->setScale(0.5f);
-    sprite->syncToNode();
+    sprite->syncNodeToPhysics();
     
     //optimize, only sync node to physics
     sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE); //sync node to physics
@@ -239,7 +239,7 @@ bool BasicPhysics3DDemo::init()
     floor->setScaleZ(60);
     this->addChild(floor);
     floor->setCameraMask((unsigned short)CameraFlag::USER1);
-    floor->syncToNode();
+    floor->syncNodeToPhysics();
     //static object sync is not needed
     floor->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NONE);
     
@@ -263,7 +263,7 @@ bool BasicPhysics3DDemo::init()
                 auto sprite = PhysicsSprite3D::create("Sprite3DTest/box.c3t", &rbDes);
                 sprite->setTexture("Images/CyanSquare.png");
                 sprite->setPosition3D(Vec3(x, y, z));
-                sprite->syncToNode();
+                sprite->syncNodeToPhysics();
                 sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
                 sprite->setCameraMask((unsigned short)CameraFlag::USER1);
                 sprite->setScale(0.8f);
@@ -303,7 +303,7 @@ bool Physics3DKinematicDemo::init()
     floor->setPosition3D(Vec3(0.f, -1.f, 0.f));
     this->addChild(floor);
     floor->setCameraMask((unsigned short)CameraFlag::USER1);
-    floor->syncToNode();
+    floor->syncNodeToPhysics();
     //static object sync is not needed
     floor->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NONE);
 
@@ -354,7 +354,7 @@ bool Physics3DKinematicDemo::init()
                     sprite->setScale(1.0f / sprite->getContentSize().width);
                     this->addChild(sprite);
                     sprite->setPosition3D(Vec3(x, y, z));
-                    sprite->syncToNode();
+                    sprite->syncNodeToPhysics();
                     
                     sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
                 }
@@ -391,7 +391,7 @@ bool Physics3DConstraintDemo::init()
     sprite->setScale(0.4f);
     sprite->setPosition3D(Vec3(-20.f, 5.f, 0.f));
     //sync node position to physics
-    component->syncToNode();
+    component->syncNodeToPhysics();
     //physics controlled, we will not set position for it, so we can skip sync node position to physics
     component->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
     
@@ -414,7 +414,7 @@ bool Physics3DConstraintDemo::init()
     sprite->addComponent(component);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
-    component->syncToNode();
+    component->syncNodeToPhysics();
     rigidBody->setAngularVelocity(Vec3(0,3,0));
     constraint = Physics3DHingeConstraint::create(rigidBody, Vec3(4.f, 4.f, 0.5f), Vec3(0.f, 1.f, 0.f));
     physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
@@ -433,7 +433,7 @@ bool Physics3DConstraintDemo::init()
     sprite->addComponent(component);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
-    component->syncToNode();
+    component->syncNodeToPhysics();
     rigidBody->setLinearVelocity(Vec3(0,3,0));
     
     rbDes.mass = 0.0f;
@@ -447,7 +447,7 @@ bool Physics3DConstraintDemo::init()
     sprite->addComponent(component);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
-    component->syncToNode();
+    component->syncNodeToPhysics();
 
     Mat4 frameInA, frameInB;
     Mat4::createRotationZ(CC_DEGREES_TO_RADIANS(90), &frameInA);
@@ -471,7 +471,7 @@ bool Physics3DConstraintDemo::init()
     sprite->addComponent(component);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
-    component->syncToNode();
+    component->syncNodeToPhysics();
 
     Mat4::createRotationZ(CC_DEGREES_TO_RADIANS(90), &frameInA);
     frameInA.m[12] = 0.f;
@@ -493,7 +493,7 @@ bool Physics3DConstraintDemo::init()
     sprite->addComponent(component);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
-    component->syncToNode();
+    component->syncNodeToPhysics();
     frameInA.setIdentity();
     constraint = Physics3D6DofConstraint::create(rigidBody, frameInA, false);
     physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
@@ -592,7 +592,7 @@ bool Physics3DTerrainDemo::init()
     auto component = Physics3DComponent::create(rigidBody);
     terrain->addComponent(component);
     this->addChild(terrain);
-    component->syncToNode();
+    component->syncNodeToPhysics();
     component->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NONE);
 
 
@@ -619,7 +619,7 @@ bool Physics3DTerrainDemo::init()
                 sprite->setScale(1.0f / sprite->getContentSize().width);
                 sprite->setPosition3D(Vec3(x, y, z));
                 this->addChild(sprite);
-                sprite->syncToNode();
+                sprite->syncNodeToPhysics();
                 sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
             }
         }

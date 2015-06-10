@@ -30,6 +30,8 @@
 #include <queue>
 #include <mutex>
 #include "MediaStreamer.h"
+#include "ogg/ogg.h"
+#include "vorbis/vorbisfile.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -131,6 +133,22 @@ class MP3Reader : public AudioSourceReader
      bool _largeFileSupport;
      std::string _mappedWavFile;
  };
+
+class OGGReader : public AudioSourceReader
+{
+public:
+    OGGReader();
+    virtual ~OGGReader();
+
+    virtual bool initialize(const std::string& filePath) override;
+    virtual FileFormat getFileFormat() override { return FileFormat::WAV; }
+    virtual bool consumeChunk(AudioDataChunk& chunk) override;
+    virtual void produceChunk() override;
+    virtual void seekTo(const float ratio) override;
+
+private:
+    std::unique_ptr<OggVorbis_File> _vorbisFd;
+};
 
 }
 NS_CC_END

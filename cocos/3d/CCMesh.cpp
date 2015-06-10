@@ -283,6 +283,9 @@ void Mesh::setTexture(Texture2D* tex)
         auto technique = _material->_currentTechnique;
         for(auto& pass: technique->_passes)
         {
+            // FIXME: Ideally it should use glProgramState->setUniformTexture()
+            // and set CC_Texture0 that way. But trying to it, will trigger
+            // another bug
             pass->setTexture(tex);
         }
     }
@@ -350,6 +353,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
 
     _meshCommand.setSkipBatching(isTransparent);
+    _meshCommand.setTransparent(isTransparent);
 
     // set default uniforms for Mesh
     // 'u_color' and others
