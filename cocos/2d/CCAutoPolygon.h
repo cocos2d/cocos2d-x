@@ -55,10 +55,14 @@ public:
      * @return PolygonInfo object
      */
     PolygonInfo():
-    triangles(),
     isVertsOwner(true),
-    rect()
+    rect(cocos2d::Rect::ZERO),
+    filename("")
     {
+        triangles.verts = nullptr;
+        triangles.indices = nullptr;
+        triangles.vertCount = 0;
+        triangles.indexCount = 0;
     };
     
     /**
@@ -84,11 +88,7 @@ public:
      * @param quad  a pointer to the V3F_C4B_T2F_Quad obje
      */
     void setQuad(V3F_C4B_T2F_Quad *quad);
-    
-    Rect rect;
-    std::string filename;
-    TrianglesCommand::Triangles triangles;
-    
+
     /**
      * get vertex count
      * @return number of vertices
@@ -101,8 +101,15 @@ public:
      */
     const float getArea() const;
     
+    Rect rect;
+    std::string filename;
+    TrianglesCommand::Triangles triangles;
+    
 protected:
     bool isVertsOwner;
+    
+private:
+    void releaseVertsAndIndices();
 };
 
 
@@ -238,7 +245,7 @@ protected:
     unsigned int getSquareValue(const unsigned int& x, const unsigned int& y, const Rect& rect, const float& threshold);
 
     unsigned char getAlphaByIndex(const unsigned int& i);
-    unsigned char getAlphaByPos(const Vec2& i);
+    unsigned char getAlphaByPos(const Vec2& pos);
 
     int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
     cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
@@ -246,7 +253,6 @@ protected:
     std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v, const float& optimization);
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
-    bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
     //real rect is the size that is in scale with the texture file
     Rect getRealRect(const Rect& rect);
     
