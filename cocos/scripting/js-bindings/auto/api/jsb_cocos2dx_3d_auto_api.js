@@ -1405,14 +1405,16 @@ getTerrainSize : function (
 
 /**
  * @method getIntersectionPoint
- * @param {cc.Ray} arg0
- * @return {vec3_object}
- */
-getIntersectionPoint : function (
-ray 
+* @param {cc.Ray|cc.Ray} ray
+* @param {vec3_object} vec3
+* @return {bool|vec3_object}
+*/
+getIntersectionPoint : function(
+ray,
+vec3 
 )
 {
-    return cc.Vec3;
+    return false;
 },
 
 /**

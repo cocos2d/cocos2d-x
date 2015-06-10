@@ -65,6 +65,7 @@ private:
     AudioCache& operator=(const AudioCache&); 
 
 private:
+    bool _retry;
     bool _isReady;
     AudioInfo _audInfo;
     std::mutex _cbMutex;
