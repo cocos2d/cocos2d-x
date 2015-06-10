@@ -134,6 +134,11 @@ public:
      */
     Rect(float x, float y, float width, float height);
     /**
+     Constructor a rect.
+     * @js NA
+     */
+    Rect(const Vec2& pos, const Size& dimension);
+    /**
     Copy constructor.
      * @js NA
      * @lua NA
