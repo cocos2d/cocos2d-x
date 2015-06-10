@@ -36,37 +36,44 @@ NS_CC_BEGIN
 
 namespace ui {
     
-/**
- * VBox is just a convenient wrapper class for vertical layout type.
- * VBox lays out its children in a single vertical column.
- */
+/** @class VBox
+*@brief @~english VBox is just a convenient wrapper class for vertical layout type.
+ VBox lays out its children in a single vertical column.
+
+ @~chinese VBox仅仅是对垂直布局的一个简便的类封装。
+ VBox把它的子节点布局在一竖列中。
+*/
 class CC_GUI_DLL VBox : public Layout{
 public:
     
     /**
-     * Default constructor
+     * @~english Default constructor
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
     VBox();
     
     /**
-     * Default destructor
+     * @~english Default destructor
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
     virtual ~VBox();
     
     /**
-     * Create a empty VBox instance.
-     * @return A VBox instance pointer.
+     * @~english Create a empty VBox instance.
+     * @~chinese 创建一个空的VBox实例。
+     * @return @~english A VBox instance pointer. @~chinese VBox实例的指针。
      */
     static VBox* create();
     
     /**
-     * Create a VBox with a certain size.
-     *@param size The content size of the layout.
-     *@return A VBox instance pointer.
+     * @~english Create a VBox with a certain size.
+     * @~chinese 通过一个指定的区域大小创建VBox。
+     * @param size @~english The content size of the layout. @~chinese layout的内容区域大小。
+     * @return @~english A VBox instance pointer. @~chinese VBox实例的指针。
      */
     static VBox* create(const Size& size);
     
