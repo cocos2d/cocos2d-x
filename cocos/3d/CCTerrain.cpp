@@ -278,7 +278,7 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
         }
 }
 
-float Terrain::getHeight(float x, float z, Vec3 * normal)
+float Terrain::getHeight(float x, float z, Vec3 * normal) const
 {
     Vec2 pos(x,z);
 
@@ -307,6 +307,10 @@ float Terrain::getHeight(float x, float z, Vec3 * normal)
 
     if(image_x>=_imageWidth-1 || image_y >=_imageHeight-1 || image_x<0 || image_y<0)
     {
+        if (normal)
+        {
+            normal->setZero();
+        }
         return 0;
     }else
     {
@@ -327,12 +331,12 @@ float Terrain::getHeight(float x, float z, Vec3 * normal)
     }
 }
 
-float Terrain::getHeight(Vec2 pos, Vec3*Normal)
+float Terrain::getHeight(Vec2 pos, Vec3*Normal) const
 {
     return getHeight(pos.x,pos.y,Normal);
 }
 
-float Terrain::getImageHeight(int pixel_x,int pixel_y)
+float Terrain::getImageHeight(int pixel_x,int pixel_y) const
 {
     int byte_stride =1;
     switch (_heightMapImage->getRenderFormat())
@@ -472,7 +476,7 @@ Terrain::~Terrain()
 #endif
 }
 
-cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y)
+cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y) const
 {
     float a = getImageHeight(pixel_x,pixel_y)*getScaleY();
     float b = getImageHeight(pixel_x,pixel_y+1)*getScaleY();
@@ -486,7 +490,7 @@ cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y)
     return normal;
 }
 
-cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
+cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray) const
 {
     Vec3 dir = ray._direction;
     dir.normalize();
@@ -496,12 +500,14 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     Vec3 lastRayPosition =rayPos;
     rayPos += rayStep; 
     // Linear search - Loop until find a point inside and outside the terrain Vector3 
-    float height = getHeight(rayPos.x,rayPos.z); 
-
+    Vec3 normal;
+    float height = getHeight(rayPos.x, rayPos.z, &normal);
     while (rayPos.y > height)
     {
         lastRayPosition = rayPos; 
         rayPos += rayStep; 
+        if (normal.isZero())
+            return Vec3(0, 0, 0);
         height = getHeight(rayPos.x,rayPos.z); 
     } 
 
@@ -519,6 +525,47 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     } 
     Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
     return collisionPoint;
+}
+
+bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const
+{
+    Vec3 dir = ray._direction;
+    dir.normalize();
+    Vec3 rayStep = _terrainData._chunkSize.width*0.25*dir;
+    Vec3 rayPos = ray._origin;
+    Vec3 rayStartPosition = ray._origin;
+    Vec3 lastRayPosition = rayPos;
+    rayPos += rayStep;
+    // Linear search - Loop until find a point inside and outside the terrain Vector3 
+    Vec3 normal;
+    float height = getHeight(rayPos.x, rayPos.z, &normal);
+    while (rayPos.y > height)
+    {
+        lastRayPosition = rayPos;
+        rayPos += rayStep;
+        if (normal.isZero())
+        {
+            intersectionPoint = Vec3(0, 0, 0);
+            return false;
+        }
+        height = getHeight(rayPos.x, rayPos.z);
+    }
+
+    Vec3 startPosition = lastRayPosition;
+    Vec3 endPosition = rayPos;
+
+    for (int i = 0; i < 32; i++)
+    {
+        // Binary search pass 
+        Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
+        if (middlePoint.y < height)
+            endPosition = middlePoint;
+        else
+            startPosition = middlePoint;
+    }
+    Vec3 collisionPoint = (startPosition + endPosition) * 0.5f;
+    intersectionPoint = collisionPoint;
+    return true;
 }
 
 void Terrain::setMaxDetailMapAmount(int max_value)
