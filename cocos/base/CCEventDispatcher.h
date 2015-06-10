@@ -149,8 +149,8 @@ public:
      */
     void removeCustomEventListeners(const std::string& customEventName);
 
-    /** @~english Removes all listeners.
-     * @~chinese 删除所有的听众。
+    /** @~english Removes all event listeners.
+     * @~chinese 删除所有的事件监听器。
      */
     void removeAllEventListeners();
 
@@ -365,16 +365,16 @@ protected:
     /** @~english Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority  @~chinese 遍历场景图获取每一个节点的绘制顺序，该函数在以场景图优先级排序的事件监听器之前被调用*/
     void visitTarget(Node* node, bool isRootNode);
     
-    /** @~english Listeners map  @~chinese 监听器映射图*/
+    /** @~english Listeners map  @~chinese 监听器映射表*/
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
-    /** @~english The map of dirty flag  @~chinese 脏标志'(dirty flag)映射图*/
+    /** @~english The map of dirty flag  @~chinese 脏标志'(dirty flag)映射表*/
     std::unordered_map<EventListener::ListenerID, DirtyFlag> _priorityDirtyFlagMap;
     
-    /** @~english The map of node and event listeners  @~chinese 节点和事件监听器的映射图*/
+    /** @~english The map of node and event listeners  @~chinese 节点和事件监听器的映射表*/
     std::unordered_map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
     
-    /** @~english The map of node and its event priority  @~chinese 节点映射和它的事件优先级*/
+    /** @~english The map of node and its event priority  @~chinese 节点和它的事件优先级映射表*/
     std::unordered_map<Node*, int> _nodePriorityMap;
     
     /** @~english key: Global Z Order, value: Sorted Nodes  @~chinese key: 全局Z轴次序, value: 排好序的节点*/

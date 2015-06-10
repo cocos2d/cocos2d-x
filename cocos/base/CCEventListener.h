@@ -107,7 +107,7 @@ public:
     virtual EventListener* clone() = 0;
 
     /** @~english Enables or disables the listener.
-     * @~chinese 启用或禁用的监听器。
+     * @~chinese 启用或禁用监听器。
      * @note @~english Only listeners with `enabled` state will be able to receive events.
      *        When an listener was initialized, it's enabled by default.
      *        An event listener can receive events when it is enabled and is not paused.

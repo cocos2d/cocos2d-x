@@ -109,7 +109,7 @@ public:
      * @~chinese 设置连接状态。
      * 
      * @param True @~english if it's connected.
-     * @~chinese 设置为连接，值为true。
+     * @~chinese 如果已连接值设置为true。
      */
     void setConnectStatus(bool isConnected) {_isConnected = isConnected;}
     /** @~english Gets the connect status.
@@ -117,7 +117,7 @@ public:
      * @~chinese 获取连接状态。
      * 
      * @return @~english True if it's connected.
-     * @~chinese 如果已连接,值为true。
+     * @~chinese 如果已连接值设置为true。
      */
     bool isConnected() const { return _isConnected; }
     
