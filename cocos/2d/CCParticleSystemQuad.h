@@ -42,104 +42,116 @@ class EventCustom;
  */
 
 /** @class ParticleSystemQuad
- * @brief ParticleSystemQuad is a subclass of ParticleSystem.
+ * @brief @~english ParticleSystemQuad is a subclass of ParticleSystem.
+ *
+ * It includes all the features of ParticleSystem.
+ * 
+ * Special features and Limitations:    
+ * - Particle size can be any float number.
+ * - The system can be scaled.
+ * - The particles can be rotated.
+ * - It supports subrects.
+ * - It supports batched rendering since 1.1.
 
-It includes all the features of ParticleSystem.
-
-Special features and Limitations:    
-- Particle size can be any float number.
-- The system can be scaled.
-- The particles can be rotated.
-- It supports subrects.
-- It supports batched rendering since 1.1.
-@since v0.8
-@js NA
-*/
+ * @~chinese ParticleSystemQuad是ParticleSystem的一个子类。
+ * 它包含ParticleSystem的所有特性。
+ * 
+ * 特殊特性和限制:
+ * - 粒子大小可以是任意float数值。
+ * - 粒子系统可以缩放。
+ * - 粒子可以旋转。
+ * - 它支持subrects。
+ * - 从1.1版本起支持批处理渲染。
+ * @since v0.8
+ * @js NA
+ */
 class CC_DLL ParticleSystemQuad : public ParticleSystem
 {
 public:
 
-    /** Creates a Particle Emitter.
-     *
-     * @return An autoreleased ParticleSystemQuad object.
+    /** @~english Creates a particle emitter.
+     * @~chinese 创建一个粒子发射器。
+     * 
+     * @return @~english An autoreleased ParticleSystemQuad object.
+     * @~chinese 一个被标记为自动释放的ParticleSystemQuad对象。
      */
     static ParticleSystemQuad * create();
-    /** Creates a Particle Emitter with a number of particles.
+
+    /** @~english Creates a particle emitter with a number of particles.
+     * @~chinese 基于给定的粒子数创建粒子发射器。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 给定的粒子数。
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSystemQuad object.
+     * @return @~english An autoreleased ParticleSystemQuad object.
+     * @~chinese 一个被标记为自动释放的ParticleSystemQuad对象。
      */
     static ParticleSystemQuad * createWithTotalParticles(int numberOfParticles);
-    /** Creates an initializes a ParticleSystemQuad from a plist file.
-     This plist files can be created manually or with Particle Designer.
+
+    /** @~english Creates an particle emitter from a plist file.
+     * This plist files can be created manually or with Particle Designer.
      *
-     * @param filename Particle plist file name.
-     * @return An autoreleased ParticleSystemQuad object.
+     * @~chinese 基于给定的plist文件创建一个粒子发射器。
+     * 这个plist文件可以是手动创建，或者通过编辑器Particle Designer创建。
+     * 
+     * @param filename @~english Particle plist file name.
+     * @~chinese plist文件名称。
+     *
+     * @return @~english An autoreleased ParticleSystemQuad object.
+     * @~chinese 一个被标记为自动释放的ParticleSystemQuad对象。
      */
     static ParticleSystemQuad * create(const std::string& filename);
-    /** Creates a Particle Emitter with a dictionary.
+
+    /** @~english Creates a particle emitter with a dictionary.
      * 
-     * @param dictionary Particle dictionary.
-     * @return An autoreleased ParticleSystemQuad object.
+     * @~chinese 基于给定的数值映射创建一个粒子发射器。
+     * 
+     * @param dictionary @~english Particle dictionary.
+     * @~chinese 数值映射。
+     *
+     * @return @~english An autoreleased ParticleSystemQuad object.
+     * @~chinese 一个被标记为自动释放的ParticleSystemQuad对象。
      */
     static ParticleSystemQuad * create(ValueMap &dictionary);
 
-    /** Sets a new SpriteFrame as particle.
-    WARNING: this method is experimental. Use setTextureWithRect instead.
+    /** @~english Sets a new SpriteFrame as particle.
+     * @~chinese 设置一个新的SpriteFrame给粒子使用。
      *
-     * @param spriteFrame A given sprite frame as particle texture.
-    @since v0.99.4
-    */
+     * @warning: @~english this method is experimental. Use setTextureWithRect instead.
+     * @~chinese 警告:该函数是实验性的。请使用setTextureWithRect代替。
+     * 
+     * @param spriteFrame @~english A given sprite frame as particle texture.
+     * @~chinese 一个给定的精灵帧用作粒子的纹理。
+     * @since v0.99.4
+     */
     void setDisplayFrame(SpriteFrame *spriteFrame);
 
-    /** Sets a new texture with a rect. The rect is in Points.
-     @since v0.99.4
+    /** @~english Sets a new texture with a rect. The rect is in Points.
+     * @~chinese 设置一个新的纹理与矩形。矩形单位是点。
+     *
+     * @param texture @~english A given texture.
+     * @~chinese 一个给定的纹理。
+     * @param @~english rect A given rect, in points.
+     * @~chinese 一个给定的矩形.
+     *
+     * @since v0.99.4
      * @js NA
      * @lua NA
-     *
-     * @param texture A given texture.
-     8 @param rect A given rect, in points.
      */
     void setTextureWithRect(Texture2D *texture, const Rect& rect);
 
-    /** Listen the event that renderer was recreated on Android/WP8.
-     * @js NA
-     * @lua NA
-     *
-     * @param event the event that renderer was recreated on Android/WP8.
-     */
     void listenRendererRecreated(EventCustom* event);
-
-    /**
-     * @js NA
-     * @lua NA
-     */
+    
     virtual void setTexture(Texture2D* texture) override;
-    /**
-     * @js NA
-     * @lua NA
-     */
+    
     virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) override;
-    /**
-     * @js NA
-     * @lua NA
-     */
+    
     virtual void postStep() override;
-    /**
-     * @js NA
-     * @lua NA
-     */
+    
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void setBatchNode(ParticleBatchNode* batchNode) override;
-    /**
-     * @js NA
-     * @lua NA
-     */
+    
     virtual void setTotalParticles(int tp) override;
 
     virtual std::string getDescription() const override;
@@ -155,34 +167,10 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ParticleSystemQuad();
     
-    // Overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 protected:
-    /** initializes the indices for the vertices*/
-    void initIndices();
     
-    /** initializes the texture with a rectangle measured Points */
-    void initTexCoordsWithRect(const Rect& rect);
-    
-    /** Updates texture coords */
-    void updateTexCoords();
-
-    void setupVBOandVAO();
-    void setupVBO();
-    bool allocMemory();
-
-    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
-    GLushort            *_indices;      // indices
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-
-    QuadCommand _quadCommand;           // quad command
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };
