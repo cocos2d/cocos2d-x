@@ -36,6 +36,7 @@ THE SOFTWARE.
 USING_NS_CC;
 
 static unsigned short quadIndices[]={0,1,2, 3,2,1};
+const static float PRECISION = 10.0f;
 
 PolygonInfo::PolygonInfo(const PolygonInfo& other):
 triangles(),
@@ -478,11 +479,11 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     ClipperLib::PolyTree out;
     for(std::vector<Vec2>::const_iterator it = points.begin(); it<points.end(); it++)
     {
-        subj << ClipperLib::IntPoint(it->x, it->y);
+        subj << ClipperLib::IntPoint(it-> x* PRECISION, it->y * PRECISION);
     }
     ClipperLib::ClipperOffset co;
     co.AddPath(subj, ClipperLib::jtMiter, ClipperLib::etClosedPolygon);
-    co.Execute(solution, epsilon);
+    co.Execute(solution, epsilon * PRECISION);
     
     ClipperLib::PolyNode* p = solution.GetFirst();
     if(!p)
@@ -503,9 +504,9 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     //create the clipping rect
     ClipperLib::Path clamp;
     clamp.push_back(ClipperLib::IntPoint(0, 0));
-    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor, 0));
-    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor, rect.size.height/_scaleFactor));
-    clamp.push_back(ClipperLib::IntPoint(0, rect.size.height/_scaleFactor));
+    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor * PRECISION, 0));
+    clamp.push_back(ClipperLib::IntPoint(rect.size.width/_scaleFactor * PRECISION, rect.size.height/_scaleFactor * PRECISION));
+    clamp.push_back(ClipperLib::IntPoint(0, rect.size.height/_scaleFactor * PRECISION));
     cl.AddPath(clamp, ClipperLib::ptClip, true);
     cl.Execute(ClipperLib::ctIntersection, out);
     
@@ -517,7 +518,7 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     auto end = p2->Contour.end();
     for(std::vector<ClipperLib::IntPoint>::const_iterator pt = p2->Contour.begin(); pt < end; pt++)
     {
-        outPoints.push_back(Vec2(pt->X, pt->Y));
+        outPoints.push_back(Vec2(pt->X/PRECISION, pt->Y/PRECISION));
     }
     return outPoints;
 }
