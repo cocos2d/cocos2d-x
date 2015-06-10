@@ -34,24 +34,24 @@ THE SOFTWARE.
  * @{
  */
 
-/** Local Storage support for the JS Bindings.*/
+/** @~english Local Storage support for the JS Bindings. @~chinese 给JS绑定添加本地存储的支持。*/
 
-/** Initializes the database. If path is null, it will create an in-memory DB. */
+/** @~english Initializes the database. If path is null, it will create an in-memory DB.  @~chinese 初始化数据库。如果路径为空,它将创建一个内存数据库。*/
 void CC_DLL localStorageInit( const std::string& fullpath = "");
 
-/** Frees the allocated resources. */
+/** @~english Frees the allocated resources.  @~chinese 释放分配的资源。*/
 void CC_DLL localStorageFree();
 
-/** Sets an item in the JS. */
+/** @~english Sets an item in the JS.  @~chinese 在JS里面存储一个条目。*/
 void CC_DLL localStorageSetItem( const std::string& key, const std::string& value);
 
-/** Gets an item from the JS. */
+/** @~english Gets an item from the JS.  @~chinese 从JS里面提取一个条目。*/
 bool CC_DLL localStorageGetItem( const std::string& key, std::string *outItem );
 
-/** Removes an item from the JS. */
+/** @~english Removes an item from the JS.  @~chinese 从JS中删除一个条目。*/
 void CC_DLL localStorageRemoveItem( const std::string& key );
 
-/** Removes all items from the JS. */
+/** @~english Removes all items from the JS.  @~chinese 从JS中删除所有条目。*/
 void CC_DLL localStorageClear();
 
 // end group
