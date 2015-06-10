@@ -42,35 +42,56 @@ NS_CC_BEGIN
 
 class TextureAtlas;
 
-/** @brief AtlasNode is a subclass of Node that implements the RGBAProtocol and TextureProtocol protocol.
+/** @brief @~english AtlasNode is a subclass of Node that implements the RGBAProtocol and TextureProtocol protocol.
  * It knows how to render a TextureAtlas object.
  * If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode).
  * All features from Node are valid, plus the following features:
  * - opacity and RGB colors.
+ * @~chinese AtlasNodes是Node类的子类，它实现RGBAProtocol和TextureProtocol协议。
+ * 它知道如何渲染一个TextureAtlas对象。
+ * 如果你要渲染一个TextureAtlas，考虑子类化AtlasNode(或者说使用AtlasNode的子类)。
+ * 所有节点的功能都是有效的,另外还有以下特点:
+ * —透明度和RGB颜色。
  */
 class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
-	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render.
+	/** @~english creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render.
      *
-     * @param filename The path of Atlas file.
-     * @param tileWidth The width of the item.
-     * @param tileHeight The height of the item.
-     * @param itemsToRender The quantity of items to render.
+  * @~chinese 基于给定的atlas文件，每一项的宽高和数量创建一个AtlasNode对象。
+  * 
+     * @param filename @~english The path of Atlas file.
+  * @~chinese atlas文件的路径。
+     * @param tileWidth @~english The width of the item.
+  * @~chinese 每一项的宽度。
+     * @param tileHeight @~english The height of the item.
+  * @~chinese 每一项项的高度。
+     * @param itemsToRender @~english The quantity of items to render.
+  * @~chinese 数量。
      */
 	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
-    /** updates the Atlas (indexed vertex array).
+    /** @~english updates the Atlas (indexed vertex array).
     * Shall be overridden in subclasses.
+     * @~chinese 更新atlas(顶点数组索引)。
+     * 应当在子类中重写这个函数
     */
     virtual void updateAtlasValues();
     
-    /** Set an buffer manager of the texture vertex. */
+    /** @~english Set an buffer manager of the texture vertex.
+     * @~chinese 设置一个纹理顶点的缓冲管理器。
+     * @param textureAtlas @~english an buffer manager of the texture vertex.
+     * @~chinese 一个指定的纹理顶点的缓冲管理器
+     */
+
     void setTextureAtlas(TextureAtlas* textureAtlas);
     
-    /** Return the buffer manager of the texture vertex. 
+    /** @~english Return the buffer manager of the texture vertex. 
      *
-     * @return Return A TextureAtlas.
+     * @~chinese 返回一个纹理顶点的缓冲管理器。
+     * 
+     * @return @~english Return A TextureAtlas.
+     * @~chinese 返回一个TextureAtlas。
      */
     TextureAtlas* getTextureAtlas() const;
     
@@ -104,10 +125,14 @@ CC_CONSTRUCTOR_ACCESS:
     AtlasNode();
     virtual ~AtlasNode();
 
-    /** Initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    /** @~english Initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render
+     * @~chinese 基于给定的atlas文件，每一项的宽高和数量初始化一个AtlasNode对象。
+     */
     bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
     
-    /** Initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    /** @~english Initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render
+     * @~chinese 基于给定的纹理，每一项的宽高和数量初始化一个AtlasNode对象。
+     */
     bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
 protected:
@@ -120,28 +145,28 @@ protected:
 
     /** Chars per row. */
     int    _itemsPerRow;
-    /** Chars per column. */
+    /** Chars per column.*/
     int    _itemsPerColumn;
 
-    /** Width of each char. */
+    /** Width of each char.*/
     int    _itemWidth;
-    /** Height of each char. */
+    /** Height of each char.*/
     int    _itemHeight;
     
     Color3B    _colorUnmodified;
     
     TextureAtlas* _textureAtlas;
-    /** Protocol variables. */
+    /** Protocol variables.*/
     bool _isOpacityModifyRGB;
     BlendFunc _blendFunc;
 
-    /** Quads to draw. */
+    /** Quads to draw.*/
     ssize_t _quadsToDraw;
-    /** Color uniform. */
+    /** Color uniform.*/
     GLint    _uniformColor;
     /** This varible is only used for LabelAtlas FPS display. So plz don't modify its value. */
     bool _ignoreContentScaleFactor;
-    /** Quad command. */
+    /** Quad command.*/
     QuadCommand _quadCommand;
 
 private:
