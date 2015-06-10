@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -40,8 +40,8 @@ namespace ui {
 *@brief @~english RelativeBox is just a convenient wrapper class for relative layout type.
  RelativeBox lays out its children relative to a widget or a position.
 
- @~chinese RelativeBox½öÊÇ¹ØÁª²¼¾ÖÀàĞÍµÄ¼ò±ã·â×°¡£
- RelativeBox °ÑËüµÄ×Ó½Úµã²¼¾Ö¹ØÁªÓÚÒ»¸öwidget»òÕßÒ»¸öÎ»ÖÃ¡£
+ @~chinese RelativeBoxä»…æ˜¯å…³è”å¸ƒå±€ç±»å‹çš„ç®€ä¾¿å°è£…ã€‚
+ RelativeBox æŠŠå®ƒçš„å­èŠ‚ç‚¹å¸ƒå±€å…³è”äºä¸€ä¸ªwidgetæˆ–è€…ä¸€ä¸ªä½ç½®ã€‚
 */
 class CC_GUI_DLL RelativeBox : public Layout{
     
@@ -50,7 +50,7 @@ public:
     
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -58,7 +58,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -66,16 +66,16 @@ public:
     
     /**
      * @~english Create an empty RelativeBox instance.
-     * @~chinese ´´½¨Ò»¸ö¿ÕµÄRelativeBoxÊµÀı¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„RelativeBoxå®ä¾‹ã€‚
      * @return @~english A RelativeBox instance. @~chinese 
      */
     static RelativeBox* create();
     
     /**
      * @~english Create a RelativeBox with a fixed size.
-     * @~chinese Í¨¹ıÒ»¸ö¹Ì¶¨³ß´ç´´½¨RelativeBox¡£
-     * @param size @~english Size in `Size`. @~chinese ³ß´ç´óĞ¡¡£
-     * @return @~english A RelativeBox instance. @~chinese  RelativeBoxÊµÀı¡£
+     * @~chinese é€šè¿‡ä¸€ä¸ªå›ºå®šå°ºå¯¸åˆ›å»ºRelativeBoxã€‚
+     * @param size @~english Size in `Size`. @~chinese å°ºå¯¸å¤§å°ã€‚
+     * @return @~english A RelativeBox instance. @~chinese  RelativeBoxå®ä¾‹ã€‚
      */
     static RelativeBox* create(const Size& size);
     

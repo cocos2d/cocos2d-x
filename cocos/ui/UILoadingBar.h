@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -41,8 +41,8 @@ namespace ui {
 *@brief @~english Visual indicator of progress in some operation.
  Displays a bar to the user representing how far the operation has progressed.
 
- @~chinese ÔÚÒ»Ğ©²Ù×÷ÖĞ½øĞĞĞéÄâ½ø¶ÈÌõµÄÏÔÊ¾¡£
- ÏÔÊ¾¸øÓÃ»§Ò»¸öÌõ±íÊ¾²Ù×÷ÒÑ¾­Íê³ÉÁË¶àÉÙ¡£
+ @~chinese åœ¨ä¸€äº›æ“ä½œä¸­è¿›è¡Œè™šæ‹Ÿè¿›åº¦æ¡çš„æ˜¾ç¤ºã€‚
+ æ˜¾ç¤ºç»™ç”¨æˆ·ä¸€ä¸ªæ¡è¡¨ç¤ºæ“ä½œå·²ç»å®Œæˆäº†å¤šå°‘ã€‚
 */
 class CC_GUI_DLL LoadingBar : public Widget
 {
@@ -61,7 +61,7 @@ public:
 
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -69,7 +69,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -77,7 +77,7 @@ public:
     
     /**
      * @~english Create an empty LoadingBar.
-     * @~chinese ´´½¨Ò»¸ö¿ÕµÄLoadingBar¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„LoadingBarã€‚
      * @return @~english A LoadingBar instance. @~chinese 
      */
     static LoadingBar* create();
@@ -85,21 +85,21 @@ public:
      
     /**
      * @~english Create a LoadingBar with a texture name and a predefined progress value.
-     * @~chinese Ê¹ÓÃÒ»¸öÎÆÀíºÍÒ»¸ö½ø¶È°Ù·Ö±È´´½¨Ò»¸öLoadingBar¡£
-     * @param textureName @~english LoadingBar background texture name. @~chinese LoadingBar±³¾°ÎÆÀí¡£
-     * @param percentage @~english A percentage in float. @~chinese ÏÔÊ¾µÄ½ø¶È°Ù·Ö±È¡£
-     * @return @~english A LoadingBar instance. @~chinese Ò»¸öLoadingBarÊµÀı¡£
+     * @~chinese ä½¿ç”¨ä¸€ä¸ªçº¹ç†å’Œä¸€ä¸ªè¿›åº¦ç™¾åˆ†æ¯”åˆ›å»ºä¸€ä¸ªLoadingBarã€‚
+     * @param textureName @~english LoadingBar background texture name. @~chinese LoadingBarèƒŒæ™¯çº¹ç†ã€‚
+     * @param percentage @~english A percentage in float. @~chinese æ˜¾ç¤ºçš„è¿›åº¦ç™¾åˆ†æ¯”ã€‚
+     * @return @~english A LoadingBar instance. @~chinese ä¸€ä¸ªLoadingBarå®ä¾‹ã€‚
      */
     static LoadingBar* create(const std::string& textureName, float percentage = 0);
     
     
     /**
      * @~english Create a LoadingBar with a texture name along with its texture type and a predefined progress value.
-     * @~chinese Ê¹ÓÃÒ»¸öÎÆÀí¡¢ÎÆÀíÀàĞÍºÍÒ»¸ö½ø¶È°Ù·Ö±È´´½¨Ò»¸öLoadingBar¡£
-     * @param textureName @~english LoadingBar background texture name. @~chinese LoadingBar±³¾°ÎÆÀí¡£
-     * @param texType @~english LoadingBar background texture type. @~chinese LoadingBar±³¾°ÎÆÀíÀàĞÍ¡£
-     * @param percentage @~english A percentage in float, default value is 0. @~chinese ÏÔÊ¾µÄ½ø¶È°Ù·Ö±È¡£
-     * @return @~english A LoadingBar instance. @~chinese Ò»¸öLoadingBarÊµÀı¡£
+     * @~chinese ä½¿ç”¨ä¸€ä¸ªçº¹ç†ã€çº¹ç†ç±»å‹å’Œä¸€ä¸ªè¿›åº¦ç™¾åˆ†æ¯”åˆ›å»ºä¸€ä¸ªLoadingBarã€‚
+     * @param textureName @~english LoadingBar background texture name. @~chinese LoadingBarèƒŒæ™¯çº¹ç†ã€‚
+     * @param texType @~english LoadingBar background texture type. @~chinese LoadingBarèƒŒæ™¯çº¹ç†ç±»å‹ã€‚
+     * @param percentage @~english A percentage in float, default value is 0. @~chinese æ˜¾ç¤ºçš„è¿›åº¦ç™¾åˆ†æ¯”ã€‚
+     * @return @~english A LoadingBar instance. @~chinese ä¸€ä¸ªLoadingBarå®ä¾‹ã€‚
      */
     static LoadingBar* create(const std::string& textureName,
                               TextureResType texType,
@@ -107,71 +107,71 @@ public:
     
     /**
      * @~english Change the progress direction of LoadingBar.
-     * @~chinese ¸Ä±ä½ø¶ÈÏÔÊ¾·½Ïò¡£
+     * @~chinese æ”¹å˜è¿›åº¦æ˜¾ç¤ºæ–¹å‘ã€‚
      * @see Direction  `LEFT` means progress left to right, `RIGHT` otherwise.
-     * @param direction @~english Direction @~chinese ÏÔÊ¾·½Ïò¡£
+     * @param direction @~english Direction @~chinese æ˜¾ç¤ºæ–¹å‘ã€‚
      */
     void setDirection(Direction direction);
     
     /**
      * @~english Get the progress direction of LoadingBar.
-     * @~chinese »ñÈ¡½ø¶ÈÏÔÊ¾·½Ïò¡£
+     * @~chinese è·å–è¿›åº¦æ˜¾ç¤ºæ–¹å‘ã€‚
      * @see Direction  `LEFT` means progress left to right, `RIGHT` otherwise.
-     * @return @~english LoadingBar progress direction. @~chinese ÏÔÊ¾·½Ïò¡£
+     * @return @~english LoadingBar progress direction. @~chinese æ˜¾ç¤ºæ–¹å‘ã€‚
      */
     Direction getDirection()const;
     
     /**
      * @~english Load texture for LoadingBar.
-     * @~chinese LoadingBarÔØÈë±³¾°ÎÆÀí¡£
-     * @param texture   @~english File name of texture. @~chinese ÎÆÀíÃû³Æ¡£
-     * @param texType   @~english Texture resource type,@see TextureResType. @~chinese ÎÆÀí×ÊÔ´ÀàĞÍ¡£
+     * @~chinese LoadingBarè½½å…¥èƒŒæ™¯çº¹ç†ã€‚
+     * @param texture   @~english File name of texture. @~chinese çº¹ç†åç§°ã€‚
+     * @param texType   @~english Texture resource type,@see TextureResType. @~chinese çº¹ç†èµ„æºç±»å‹ã€‚
      */
     void loadTexture(const std::string& texture,TextureResType texType = TextureResType::LOCAL);
     
     /**
      * @~english Changes the progress value of LoadingBar.
-     * @~chinese ¸Ä±äLoadingBarµÄµ±Ç°½ø¶È¡£
-     * @param percent   @~english Percent value from 1 to 100. @~chinese ½ø¶ÈÖµ´Ó1µ½100.
+     * @~chinese æ”¹å˜LoadingBarçš„å½“å‰è¿›åº¦ã€‚
+     * @param percent   @~english Percent value from 1 to 100. @~chinese è¿›åº¦å€¼ä»1åˆ°100.
      */
     void setPercent(float percent);
     
     /**
      * @~english Get the progress value of LoadingBar.
-     * @~chinese »ñÈ¡LoadingBarµ±Ç°µÄ½ø¶È¡£
-     * @return @~english Progress value from 1 to 100. @~chinese ½ø¶ÈÖµ´Ó1µ½100.
+     * @~chinese è·å–LoadingBarå½“å‰çš„è¿›åº¦ã€‚
+     * @return @~english Progress value from 1 to 100. @~chinese è¿›åº¦å€¼ä»1åˆ°100.
      */
     float getPercent() const;
     
     /**
      * @~english Enable scale9 renderer.
-     * @~chinese ÊÇ·ñ¿ªÆôäÖÈ¾Æ÷Ëõ·Å¡£
-     * @param enabled @~english Set to true will use scale9 renderer, false otherwise. @~chinese True±íÊ¾¿ªÆôäÖÈ¾Æ÷Ëõ·Å£¬·´Ö®¹Ø±Õ¡£
+     * @~chinese æ˜¯å¦å¼€å¯æ¸²æŸ“å™¨ç¼©æ”¾ã€‚
+     * @param enabled @~english Set to true will use scale9 renderer, false otherwise. @~chinese Trueè¡¨ç¤ºå¼€å¯æ¸²æŸ“å™¨ç¼©æ”¾ï¼Œåä¹‹å…³é—­ã€‚
      */
     void setScale9Enabled(bool enabled);
     
     
     /**
      * @~english Query whether LoadingBar is using scale9 renderer or not.
-     * @~chinese ÇëÇóLoadingBarÊÇ·ñ¿ªÆôÁËäÖÈ¾Æ÷Ëõ·Å¡£
-     * @return @~english Whether LoadingBar uses scale9 renderer or not. @~chinese True±íÊ¾¿ªÆôäÖÈ¾Æ÷Ëõ·Å£¬·´Ö®¹Ø±Õ¡£
+     * @~chinese è¯·æ±‚LoadingBaræ˜¯å¦å¼€å¯äº†æ¸²æŸ“å™¨ç¼©æ”¾ã€‚
+     * @return @~english Whether LoadingBar uses scale9 renderer or not. @~chinese Trueè¡¨ç¤ºå¼€å¯æ¸²æŸ“å™¨ç¼©æ”¾ï¼Œåä¹‹å…³é—­ã€‚
      */
     bool isScale9Enabled()const;
     
     /**
      * @~english Set capInsets for LoadingBar.
      * This setting only take effect when enable scale9 renderer.
-     * @~chinese ÉèÖÃCapInsets¡£
-     * Ö»ÓĞµ±¿ªÆôäÖÈ¾Æ÷Ëõ·Åºó²ÅĞèÒªÉèÖÃ¡£
-     * @param capInsets @~english CapInset in `Rect`. @~chinese CapInsetµÄ¾ØĞÎÇøÓò¡£
+     * @~chinese è®¾ç½®CapInsetsã€‚
+     * åªæœ‰å½“å¼€å¯æ¸²æŸ“å™¨ç¼©æ”¾åæ‰éœ€è¦è®¾ç½®ã€‚
+     * @param capInsets @~english CapInset in `Rect`. @~chinese CapInsetçš„çŸ©å½¢åŒºåŸŸã€‚
      */
     void setCapInsets(const Rect &capInsets);
     
     
     /**
      * @~english Query LoadingBar's capInsets.
-     * @~chinese ÇëÇóLoadingBarµÄcapInsets¡£
-     * @return @~english CapInsets of LoadingBar. @~chinese CapInsetµÄ¾ØĞÎÇøÓò¡£
+     * @~chinese è¯·æ±‚LoadingBarçš„capInsetsã€‚
+     * @return @~english CapInsets of LoadingBar. @~chinese CapInsetçš„çŸ©å½¢åŒºåŸŸã€‚
      */
     const Rect& getCapInsets()const;
     

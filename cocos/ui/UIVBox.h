@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -40,15 +40,15 @@ namespace ui {
 *@brief @~english VBox is just a convenient wrapper class for vertical layout type.
  VBox lays out its children in a single vertical column.
 
- @~chinese VBox½ö½öÊÇ¶Ô´¹Ö±²¼¾ÖµÄÒ»¸ö¼ò±ãµÄÀà·â×°¡£
- VBox°ÑËüµÄ×Ó½Úµã²¼¾ÖÔÚÒ»ÊúÁĞÖĞ¡£
+ @~chinese VBoxä»…ä»…æ˜¯å¯¹å‚ç›´å¸ƒå±€çš„ä¸€ä¸ªç®€ä¾¿çš„ç±»å°è£…ã€‚
+ VBoxæŠŠå®ƒçš„å­èŠ‚ç‚¹å¸ƒå±€åœ¨ä¸€ç«–åˆ—ä¸­ã€‚
 */
 class CC_GUI_DLL VBox : public Layout{
 public:
     
     /**
      * @~english Default constructor
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -56,7 +56,7 @@ public:
     
     /**
      * @~english Default destructor
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -64,16 +64,16 @@ public:
     
     /**
      * @~english Create a empty VBox instance.
-     * @~chinese ´´½¨Ò»¸ö¿ÕµÄVBoxÊµÀı¡£
-     * @return @~english A VBox instance pointer. @~chinese VBoxÊµÀıµÄÖ¸Õë¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„VBoxå®ä¾‹ã€‚
+     * @return @~english A VBox instance pointer. @~chinese VBoxå®ä¾‹çš„æŒ‡é’ˆã€‚
      */
     static VBox* create();
     
     /**
      * @~english Create a VBox with a certain size.
-     * @~chinese Í¨¹ıÒ»¸öÖ¸¶¨µÄÇøÓò´óĞ¡´´½¨VBox¡£
-     * @param size @~english The content size of the layout. @~chinese layoutµÄÄÚÈİÇøÓò´óĞ¡¡£
-     * @return @~english A VBox instance pointer. @~chinese VBoxÊµÀıµÄÖ¸Õë¡£
+     * @~chinese é€šè¿‡ä¸€ä¸ªæŒ‡å®šçš„åŒºåŸŸå¤§å°åˆ›å»ºVBoxã€‚
+     * @param size @~english The content size of the layout. @~chinese layoutçš„å†…å®¹åŒºåŸŸå¤§å°ã€‚
+     * @return @~english A VBox instance pointer. @~chinese VBoxå®ä¾‹çš„æŒ‡é’ˆã€‚
      */
     static VBox* create(const Size& size);
     

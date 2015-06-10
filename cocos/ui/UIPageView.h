@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -55,7 +55,7 @@ typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 /** @class PageView
 *@brief @~english Layout manager that allows the user to flip left and right through pages of data.
  
- @~chinese LayoutµÄ¹ÜÀíÆ÷£¬¿ÉÒÔÈÃÓÃ»§ÔÚ¶à¸öLayoutÖ®¼ä×óÓÒÇĞ»»ÏÔÊ¾¡£
+ @~chinese Layoutçš„ç®¡ç†å™¨ï¼Œå¯ä»¥è®©ç”¨æˆ·åœ¨å¤šä¸ªLayoutä¹‹é—´å·¦å³åˆ‡æ¢æ˜¾ç¤ºã€‚
 */
 class CC_GUI_DLL PageView : public Layout
 {
@@ -82,13 +82,13 @@ public:
     
     /**
      * @~english PageView page turn event callback.
-     * @~chinese Ò³Ãæ·­Ò³Ê±µÄÊÂ¼ş»Øµ÷¡£
+     * @~chinese é¡µé¢ç¿»é¡µæ—¶çš„äº‹ä»¶å›è°ƒã€‚
      */
     typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
 
     /**
      * @~english Default constructor
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -96,7 +96,7 @@ public:
     
     /**
      * @~english Default destructor
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -104,101 +104,101 @@ public:
     
     /**
      * @~english Create an empty PageView.
-     * @~chinese ´´½¨Ò»¸ö¿ÕµÄPageView¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„PageViewã€‚
      * @return @~english A PageView instance.
      */
     static PageView* create();
     
     /**
      * @~english Add a widget as a page of PageView in a given index.
-     * @~chinese °ÑÒ»¸öwidgetÌí¼Óµ½Ö¸¶¨µÄPageViewÒ³ÖĞ¡£
-     * @param widget    @~english Widget to be added to pageview. @~chinese ±»Ìí¼Óµ½PageViewÖĞµÄWidget¡£
-     * @param pageIdx   @~english A given index. @~chinese Ò³Ë÷Òı¡£
-     * @param forceCreate   @~english If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it. @~chinese Èç¹ûforceCreateÎªTrue£¬²¢ÇÒÖ¸¶¨Ò³²»´æÔÚ£¬½«»á´´½¨Ò»¸öÄ¬ÈÏÒ³²¢°Ñwidget¼ÓÈë¡£
+     * @~chinese æŠŠä¸€ä¸ªwidgetæ·»åŠ åˆ°æŒ‡å®šçš„PageViewé¡µä¸­ã€‚
+     * @param widget    @~english Widget to be added to pageview. @~chinese è¢«æ·»åŠ åˆ°PageViewä¸­çš„Widgetã€‚
+     * @param pageIdx   @~english A given index. @~chinese é¡µç´¢å¼•ã€‚
+     * @param forceCreate   @~english If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it. @~chinese å¦‚æœforceCreateä¸ºTrueï¼Œå¹¶ä¸”æŒ‡å®šé¡µä¸å­˜åœ¨ï¼Œå°†ä¼šåˆ›å»ºä¸€ä¸ªé»˜è®¤é¡µå¹¶æŠŠwidgetåŠ å…¥ã€‚
      */
     void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
      * @~english Insert a page into the end of PageView.
-     * @~chinese ÍùPageViewµÄ×îºó²åÈëÒ»Ò³¡£
-     * @param page @~english Page to be inserted. @~chinese ±»²åÈëµÄÒ³¡£
+     * @~chinese å¾€PageViewçš„æœ€åæ’å…¥ä¸€é¡µã€‚
+     * @param page @~english Page to be inserted. @~chinese è¢«æ’å…¥çš„é¡µã€‚
      */
     void addPage(Layout* page);
     
     /**
      * @~english Insert a page into PageView at a given index.
-     * @~chinese ÔÚÖ¸¶¨Î»ÖÃ²åÈëÒ»Ò³¡£
-     * @param page  @~english Page to be inserted. @~chinese ±»²åÈëµÄÒ³¡£
-     * @param idx   @~english A given index. @~chinese Ò³Ë÷ÒıºÅ¡£
+     * @~chinese åœ¨æŒ‡å®šä½ç½®æ’å…¥ä¸€é¡µã€‚
+     * @param page  @~english Page to be inserted. @~chinese è¢«æ’å…¥çš„é¡µã€‚
+     * @param idx   @~english A given index. @~chinese é¡µç´¢å¼•å·ã€‚
      */
     void insertPage(Layout* page, int idx);
     
     /**
      * @~english Remove a page of PageView.
-     * @~chinese ´ÓPageViewÖĞÒÆ³ıÒ»Ò³¡£
-     * @param page  @~english Page to be removed. @~chinese ±»ÒÆ³ıµÄÒ³¡£
+     * @~chinese ä»PageViewä¸­ç§»é™¤ä¸€é¡µã€‚
+     * @param page  @~english Page to be removed. @~chinese è¢«ç§»é™¤çš„é¡µã€‚
      */
     void removePage(Layout* page);
 
     /**
      * @~english Remove a page at a given index of PageView.
-     * @~chinese ÒÆ³ıÖ¸¶¨Î»ÖÃµÄÒ³¡£
-     * @param index  @~english A given index. @~chinese Ò³Ë÷ÒıºÅ¡£
+     * @~chinese ç§»é™¤æŒ‡å®šä½ç½®çš„é¡µã€‚
+     * @param index  @~english A given index. @~chinese é¡µç´¢å¼•å·ã€‚
      */
     void removePageAtIndex(ssize_t index);
     
     
     /**
      * @~english Remove all pages of the PageView.
-     * @~chinese ÒÆ³ıPageViewÖĞËùÓĞÒ³¡£
+     * @~chinese ç§»é™¤PageViewä¸­æ‰€æœ‰é¡µã€‚
      */
     void removeAllPages();
     
     /**
      * @~english Scroll to a page with a given index.
-     * @~chinese ¹ö¶¯µ½Ò»¸öÖ¸¶¨µÄÒ³¡£
-     * @param idx   @~english A given index in the PageView. @~chinese Ò³Ë÷ÒıºÅ¡£ 
+     * @~chinese æ»šåŠ¨åˆ°ä¸€ä¸ªæŒ‡å®šçš„é¡µã€‚
+     * @param idx   @~english A given index in the PageView. @~chinese é¡µç´¢å¼•å·ã€‚ 
      */
     void scrollToPage(ssize_t idx);
     
     /**
      * @~english Gets current displayed page index.
-     * @~chinese »ñÈ¡µ±Ç°ÏÔÊ¾Ò³µÄË÷ÒıºÅ¡£
-     * @return @~english current page index. @~chinese µ±Ç°Ò³Ë÷ÒıºÅ¡£
+     * @~chinese è·å–å½“å‰æ˜¾ç¤ºé¡µçš„ç´¢å¼•å·ã€‚
+     * @return @~english current page index. @~chinese å½“å‰é¡µç´¢å¼•å·ã€‚
      */
     ssize_t getCurPageIndex() const;
     
      
     /**
      * @~english Get all the pages in the PageView.
-     * @~chinese »ñÈ¡ËùÓĞÒ³µÄÁĞ±í¡£
-     * @return @~english A vector of Layout pionters. @~chinese Ò»¸öLayoutÖ¸ÕëÊı×é¡£
+     * @~chinese è·å–æ‰€æœ‰é¡µçš„åˆ—è¡¨ã€‚
+     * @return @~english A vector of Layout pionters. @~chinese ä¸€ä¸ªLayoutæŒ‡é’ˆæ•°ç»„ã€‚
      */
     Vector<Layout*>& getPages();
     
     
     /**
      * @~english Get a page at a given index
-     * @~chinese »ñÈ¡Ö¸¶¨µÄÒ³¡£
-     * @param index @~english A given index. @~chinese Ò³Ë÷ÒıºÅ¡£
-     * @return @~english A layout pointer in PageView container. @~chinese Ò»¸öÒÑÔÚPageViewÖĞµÄlayoutÖ¸Õë¡£
+     * @~chinese è·å–æŒ‡å®šçš„é¡µã€‚
+     * @param index @~english A given index. @~chinese é¡µç´¢å¼•å·ã€‚
+     * @return @~english A layout pointer in PageView container. @~chinese ä¸€ä¸ªå·²åœ¨PageViewä¸­çš„layoutæŒ‡é’ˆã€‚
      */
     Layout* getPage(ssize_t index);
     
     /**
      * @~english Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     * @~chinese Ìí¼ÓÒ»¸öÒ³ÃæÇĞ»»Ê±µÄ»Øµ÷º¯Êı£¬µ±Ò³ÃæÇĞ»»Ê±±»µ÷ÓÃ¡£
+     * @~chinese æ·»åŠ ä¸€ä¸ªé¡µé¢åˆ‡æ¢æ—¶çš„å›è°ƒå‡½æ•°ï¼Œå½“é¡µé¢åˆ‡æ¢æ—¶è¢«è°ƒç”¨ã€‚
      * @deprecated Use `PageView::addEventListener` instead.
-     * @param target @~english A pointer of `Ref*` type.¡¡@~chinese Ò»¸öRefÀàĞÍÖ¸Õë¡£
-     * @param selector @~english A member function pointer with signature of `SEL_PageViewEvent`.¡¡@~chinese »Øµ÷º¯Êı¡£
+     * @param target @~english A pointer of `Ref*` type.ã€€@~chinese ä¸€ä¸ªRefç±»å‹æŒ‡é’ˆã€‚
+     * @param selector @~english A member function pointer with signature of `SEL_PageViewEvent`.ã€€@~chinese å›è°ƒå‡½æ•°ã€‚
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
 
     
     /**
      * @~english Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     * @~chinese Ìí¼ÓÒ»¸öÒ³ÃæÇĞ»»Ê±µÄ»Øµ÷º¯Êı£¬µ±Ò³ÃæÇĞ»»Ê±±»µ÷ÓÃ¡£
-     * @param callback @~english A page turning callback. @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese æ·»åŠ ä¸€ä¸ªé¡µé¢åˆ‡æ¢æ—¶çš„å›è°ƒå‡½æ•°ï¼Œå½“é¡µé¢åˆ‡æ¢æ—¶è¢«è°ƒç”¨ã€‚
+     * @param callback @~english A page turning callback. @~chinese å›è°ƒå‡½æ•°ã€‚
      */
     void addEventListener(const ccPageViewCallback& callback);
     
@@ -218,31 +218,31 @@ public:
 
     /**   
      * @~english If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
-     * @~chinese Èç¹ûÃ»ÓĞÖ¸¶¨¸ÃÖµ£¬pageView»áÔÚ¹öµ½Ò³ÃæÒ»°ëÊ±ÇĞ»»µ½ÏÂÒ»Ò³¡£
-     * @param threshold  @~english A threshold in float. @~chinese ÇĞ»»Ò³ÃæÃÅÏŞÖµ¡£
+     * @~chinese å¦‚æœæ²¡æœ‰æŒ‡å®šè¯¥å€¼ï¼ŒpageViewä¼šåœ¨æ»šåˆ°é¡µé¢ä¸€åŠæ—¶åˆ‡æ¢åˆ°ä¸‹ä¸€é¡µã€‚
+     * @param threshold  @~english A threshold in float. @~chinese åˆ‡æ¢é¡µé¢é—¨é™å€¼ã€‚
      */
     void setCustomScrollThreshold(float threshold);
 
     /**
      * @~english Query the custom scroll threshold of the PageView.
-     * @~chinese ÇëÇóÉè¶¨µÄÇĞ»»Ò³ÃæÃÅÏŞÖµ¡£
-     * @return @~english Custom scroll threshold in float. @~chinese ÇĞ»»Ò³ÃæÃÅÏŞÖµ¡£
+     * @~chinese è¯·æ±‚è®¾å®šçš„åˆ‡æ¢é¡µé¢é—¨é™å€¼ã€‚
+     * @return @~english Custom scroll threshold in float. @~chinese åˆ‡æ¢é¡µé¢é—¨é™å€¼ã€‚
      */
     float getCustomScrollThreshold()const;
 
     /**
      * @~english Set using user defined scroll page threshold or not.
      * If you set it to false, then the default scroll threshold is pageView.width / 2
-     * @~chinese ÊÇ·ñÊ¹ÓÃÓÃ»§ÉèÖÃµÄÇĞ»»Ò³ÃæÃÅÏŞÖµ¡£
-     * Èç¹ûÉèÎªfalse£¬ÄÇÃ´pageView»áÔÚ¹öµ½Ò³ÃæÒ»°ëÊ±ÇĞ»»µ½ÏÂÒ»Ò³¡£
-     * @param flag @~english True if using custom scroll threshold, false otherwise. @~chinese ÇĞ»»Ò³ÃæÃÅÏŞÖµ¡£
+     * @~chinese æ˜¯å¦ä½¿ç”¨ç”¨æˆ·è®¾ç½®çš„åˆ‡æ¢é¡µé¢é—¨é™å€¼ã€‚
+     * å¦‚æœè®¾ä¸ºfalseï¼Œé‚£ä¹ˆpageViewä¼šåœ¨æ»šåˆ°é¡µé¢ä¸€åŠæ—¶åˆ‡æ¢åˆ°ä¸‹ä¸€é¡µã€‚
+     * @param flag @~english True if using custom scroll threshold, false otherwise. @~chinese åˆ‡æ¢é¡µé¢é—¨é™å€¼ã€‚
      */
     void setUsingCustomScrollThreshold(bool flag);
 
     /**
      * @~english Query whether use user defined scroll page threshold or not.
-     * @~chinese ÇëÇóÊÇ·ñÊ¹ÓÃÓÃ»§×Ô¶¨ÒåÒ³ÃæÇĞ»»ÃÅÏŞÖµ¡£
-     * @return @~english True if using custom scroll threshold, false otherwise. @~chinese True±íÃ÷Ê¹ÓÃÓÃ»§ÉèÖÃµÄÒ³ÃæÇĞ»»ÃÅÏŞÖµ¡£·´Ö®²»Ê¹ÓÃ¡£
+     * @~chinese è¯·æ±‚æ˜¯å¦ä½¿ç”¨ç”¨æˆ·è‡ªå®šä¹‰é¡µé¢åˆ‡æ¢é—¨é™å€¼ã€‚
+     * @return @~english True if using custom scroll threshold, false otherwise. @~chinese Trueè¡¨æ˜ä½¿ç”¨ç”¨æˆ·è®¾ç½®çš„é¡µé¢åˆ‡æ¢é—¨é™å€¼ã€‚åä¹‹ä¸ä½¿ç”¨ã€‚
      */
     bool isUsingCustomScrollThreshold()const;
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -40,8 +40,8 @@ namespace ui {
 *@brief @~english Rich text element base class.
  It defines the basic common properties for all rich text element.
  
- @~chinese ¸»ÎÄ±¾ÔªËØ»ùÀà¡£
- Ëü¶¨ÒåÁËËùÓĞµÄ¸»ÎÄ±¾ÔªËØµÄÍ¨ÓÃÊôĞÔ¡£
+ @~chinese å¯Œæ–‡æœ¬å…ƒç´ åŸºç±»ã€‚
+ å®ƒå®šä¹‰äº†æ‰€æœ‰çš„å¯Œæ–‡æœ¬å…ƒç´ çš„é€šç”¨å±æ€§ã€‚
 */
 class CC_GUI_DLL RichElement : public Ref
 {
@@ -58,7 +58,7 @@ public:
     
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -66,7 +66,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -75,11 +75,11 @@ public:
     
     /**
      * @~english Initialize a rich element with different arguments.
-     * @~chinese Í¨¹ı²»Í¬µÄ²ÎÊı³õÊ¼»¯Ò»¸ö¸»ÎÄ±¾ÔªËØ¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in @see `Color3B`. @~chinese ÑÕÉ«Öµ¡£ 
-     * @param opacity @~english A opacity value in `GLubyte`. @~chinese ²»Í¸Ã÷¶È¡£
-     * @return @~english True if initialize success, false otherwise. @~chinese True±íÃ÷³õÊ¼»¯³É¹¦£¬·´Ö®Ê§°Ü¡£
+     * @~chinese é€šè¿‡ä¸åŒçš„å‚æ•°åˆå§‹åŒ–ä¸€ä¸ªå¯Œæ–‡æœ¬å…ƒç´ ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in @see `Color3B`. @~chinese é¢œè‰²å€¼ã€‚ 
+     * @param opacity @~english A opacity value in `GLubyte`. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @return @~english True if initialize success, false otherwise. @~chinese Trueè¡¨æ˜åˆå§‹åŒ–æˆåŠŸï¼Œåä¹‹å¤±è´¥ã€‚
      */
     bool init(int tag, const Color3B& color, GLubyte opacity);
 protected:
@@ -93,7 +93,7 @@ protected:
 /** @class RichElementText
 *@brief @~english Rich element for displaying text.
 
- @~chinese ÓÃÒÔÏÔÊ¾ÎÄ±¾µÄRichElementText¡£
+ @~chinese ç”¨ä»¥æ˜¾ç¤ºæ–‡æœ¬çš„RichElementTextã€‚
 */
 class CC_GUI_DLL RichElementText : public RichElement
 {
@@ -101,7 +101,7 @@ public:
     
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -110,7 +110,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -118,28 +118,28 @@ public:
     
     /**
      * @~english Initialize a RichElementText with various arguments.
-     * @~chinese Í¨¹ı¶à¸ö±äÁ¿³õÊ¼»¯Ò»¸öRichElementTextÀà¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in Color3B. @~chinese ÑÕÉ«Öµ¡£
-     * @param opacity @~english A opacity in GLubyte. @~chinese ²»Í¸Ã÷¶È¡£
-     * @param text @~english Content string. @~chinese ÎÄ±¾ÄÚÈİ¡£
-     * @param fontName @~english Content font name. @~chinese ÎÄ±¾×ÖÌåÃû³Æ¡£
-     * @param fontSize @~english Content font size. @~chinese ÎÄ±¾×ÖÌå´óĞ¡¡£
-     * @return @~english True if initialize scucess, false otherwise. @~chinese True±íÃ÷³õÊ¼»¯³É¹¦£¬·´Ö®Ê§°Ü¡£
+     * @~chinese é€šè¿‡å¤šä¸ªå˜é‡åˆå§‹åŒ–ä¸€ä¸ªRichElementTextç±»ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in Color3B. @~chinese é¢œè‰²å€¼ã€‚
+     * @param opacity @~english A opacity in GLubyte. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @param text @~english Content string. @~chinese æ–‡æœ¬å†…å®¹ã€‚
+     * @param fontName @~english Content font name. @~chinese æ–‡æœ¬å­—ä½“åç§°ã€‚
+     * @param fontSize @~english Content font size. @~chinese æ–‡æœ¬å­—ä½“å¤§å°ã€‚
+     * @return @~english True if initialize scucess, false otherwise. @~chinese Trueè¡¨æ˜åˆå§‹åŒ–æˆåŠŸï¼Œåä¹‹å¤±è´¥ã€‚
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 
     
     /**
      * @~english Create a RichElementText with various arguments.
-     * @~chinese Í¨¹ı¶à¸ö±äÁ¿´´½¨Ò»¸öRichElementTextÀà¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in Color3B. @~chinese ÑÕÉ«Öµ¡£
-     * @param opacity @~english A opacity in GLubyte. @~chinese ²»Í¸Ã÷¶È¡£
-     * @param text @~english Content string. @~chinese ÎÄ±¾ÄÚÈİ¡£
-     * @param fontName @~english Content font name. @~chinese ÎÄ±¾×ÖÌåÃû³Æ¡£
-     * @param fontSize @~english Content font size. @~chinese ÎÄ±¾×ÖÌå´óĞ¡¡£
-     * @return @~english RichElementText instance. @~chinese ¸»ÎÄ±¾ÀàÊµÀı¡£
+     * @~chinese é€šè¿‡å¤šä¸ªå˜é‡åˆ›å»ºä¸€ä¸ªRichElementTextç±»ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in Color3B. @~chinese é¢œè‰²å€¼ã€‚
+     * @param opacity @~english A opacity in GLubyte. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @param text @~english Content string. @~chinese æ–‡æœ¬å†…å®¹ã€‚
+     * @param fontName @~english Content font name. @~chinese æ–‡æœ¬å­—ä½“åç§°ã€‚
+     * @param fontSize @~english Content font size. @~chinese æ–‡æœ¬å­—ä½“å¤§å°ã€‚
+     * @return @~english RichElementText instance. @~chinese å¯Œæ–‡æœ¬ç±»å®ä¾‹ã€‚
      */
     static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 protected:
@@ -153,7 +153,7 @@ protected:
 /** @class RichElementImage
 *@brief @~english Rich element for displaying images.
 
- @~chinese ÓÃÒÔÏÔÊ¾Í¼Æ¬µÄRichElementImage¡£
+ @~chinese ç”¨ä»¥æ˜¾ç¤ºå›¾ç‰‡çš„RichElementImageã€‚
 */
 class CC_GUI_DLL RichElementImage : public RichElement
 {
@@ -161,7 +161,7 @@ public:
     
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      *
@@ -171,7 +171,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -180,24 +180,24 @@ public:
     
     /**
      * @~english Initialize a RichElementImage with various arguments.
-     * @~chinese Í¨¹ı¶à¸ö±äÁ¿³õÊ¼»¯Ò»¸öRichElementImageÀà¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in Color3B. @~chinese ÑÕÉ«Öµ¡£
-     * @param opacity @~english A opacity in GLubyte. @~chinese ²»Í¸Ã÷¶È¡£
-     * @param filePath @~english A image file name. @~chinese Í¼Æ¬ÎÄ¼şÃû¡£
-     * @return @~english True if initialize success, false otherwise. @~chinese True±íÃ÷³õÊ¼»¯³É¹¦£¬·´Ö®Ê§°Ü¡£
+     * @~chinese é€šè¿‡å¤šä¸ªå˜é‡åˆå§‹åŒ–ä¸€ä¸ªRichElementImageç±»ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in Color3B. @~chinese é¢œè‰²å€¼ã€‚
+     * @param opacity @~english A opacity in GLubyte. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @param filePath @~english A image file name. @~chinese å›¾ç‰‡æ–‡ä»¶åã€‚
+     * @return @~english True if initialize success, false otherwise. @~chinese Trueè¡¨æ˜åˆå§‹åŒ–æˆåŠŸï¼Œåä¹‹å¤±è´¥ã€‚
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
 
     
     /**
      * @~english Create a RichElementImage with various arguments.
-     * @~chinese Í¨¹ı¶à¸ö±äÁ¿´´½¨Ò»¸öRichElementImageÀà¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in Color3B. @~chinese ÑÕÉ«Öµ¡£
-     * @param opacity @~english A opacity in GLubyte. @~chinese ²»Í¸Ã÷¶È¡£
-     * @param filePath @~english A image file name. @~chinese Í¼Æ¬ÎÄ¼şÃû¡£
-     * @return @~english A RichElementImage instance. @~chinese Ò»¸öRichElementImageÊµÀı¡£
+     * @~chinese é€šè¿‡å¤šä¸ªå˜é‡åˆ›å»ºä¸€ä¸ªRichElementImageç±»ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in Color3B. @~chinese é¢œè‰²å€¼ã€‚
+     * @param opacity @~english A opacity in GLubyte. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @param filePath @~english A image file name. @~chinese å›¾ç‰‡æ–‡ä»¶åã€‚
+     * @return @~english A RichElementImage instance. @~chinese ä¸€ä¸ªRichElementImageå®ä¾‹ã€‚
      */
     static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
 protected:
@@ -210,7 +210,7 @@ protected:
 /** @class RichElementCustomNode
 *@brief @~english Rich element for displaying custom node type.
 
- @~chinese ÓÃÒÔÏÔÊ¾×Ô¶¨Òå½ÚµãÀàĞÍµÄRichElementCustomNode¡£
+ @~chinese ç”¨ä»¥æ˜¾ç¤ºè‡ªå®šä¹‰èŠ‚ç‚¹ç±»å‹çš„RichElementCustomNodeã€‚
 */
 class CC_GUI_DLL RichElementCustomNode : public RichElement
 {
@@ -218,7 +218,7 @@ public:
     
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -227,7 +227,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -236,23 +236,23 @@ public:
     
     /**
      * @~english Initialize a RichElementCustomNode with various arguments.
-     * @~chinese Í¨¹ı¶à¸ö±äÁ¿³õÊ¼»¯Ò»¸öRichElementCustomNodeÀà¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in Color3B. @~chinese ÑÕÉ«Öµ¡£
-     * @param opacity @~english A opacity in GLubyte. @~chinese ²»Í¸Ã÷¶È¡£
-     * @param customNode @~english A custom node pointer. @~chinese ×Ô¶¨Òå½ÚµãÖ¸Õë¡£
-     * @return @~english True if initialize success, false otherwise. @~chinese True±íÃ÷³õÊ¼»¯³É¹¦£¬·´Ö®Ê§°Ü¡£
+     * @~chinese é€šè¿‡å¤šä¸ªå˜é‡åˆå§‹åŒ–ä¸€ä¸ªRichElementCustomNodeç±»ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in Color3B. @~chinese é¢œè‰²å€¼ã€‚
+     * @param opacity @~english A opacity in GLubyte. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @param customNode @~english A custom node pointer. @~chinese è‡ªå®šä¹‰èŠ‚ç‚¹æŒ‡é’ˆã€‚
+     * @return @~english True if initialize success, false otherwise. @~chinese Trueè¡¨æ˜åˆå§‹åŒ–æˆåŠŸï¼Œåä¹‹å¤±è´¥ã€‚
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
     
     /**
      * @~english Create a RichElementCustomNode with various arguments.
-     * @~chinese Í¨¹ı¶à¸ö±äÁ¿´´½¨Ò»¸öRichElementCustomNodeÀà¡£
-     * @param tag @~english A integer tag value. @~chinese ±êÇ©Öµ¡£
-     * @param color @~english A color in Color3B. @~chinese ÑÕÉ«Öµ¡£
-     * @param opacity @~english A opacity in GLubyte. @~chinese ²»Í¸Ã÷¶È¡£
-     * @param customNode @~english A custom node pointer. @~chinese ×Ô¶¨Òå½ÚµãÖ¸Õë¡£
-     * @return @~english A RichElementCustomNode instance. @~chinese True±íÃ÷³õÊ¼»¯³É¹¦£¬·´Ö®Ê§°Ü¡£
+     * @~chinese é€šè¿‡å¤šä¸ªå˜é‡åˆ›å»ºä¸€ä¸ªRichElementCustomNodeç±»ã€‚
+     * @param tag @~english A integer tag value. @~chinese æ ‡ç­¾å€¼ã€‚
+     * @param color @~english A color in Color3B. @~chinese é¢œè‰²å€¼ã€‚
+     * @param opacity @~english A opacity in GLubyte. @~chinese ä¸é€æ˜åº¦ã€‚
+     * @param customNode @~english A custom node pointer. @~chinese è‡ªå®šä¹‰èŠ‚ç‚¹æŒ‡é’ˆã€‚
+     * @return @~english A RichElementCustomNode instance. @~chinese Trueè¡¨æ˜åˆå§‹åŒ–æˆåŠŸï¼Œåä¹‹å¤±è´¥ã€‚
      */
     static RichElementCustomNode* create(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
 protected:
@@ -264,8 +264,8 @@ protected:
 *@brief @~english A container for displaying various RichElements.
  We could use it to display texts with images easily.
 
- @~chinese Ò»¸öÏÔÊ¾¶à¸öRichElementµÄÈİÆ÷Àà¡£
- ÎÒÃÇ¿ÉÒÔÊ¹ÓÃËüºÜÈİÒ×ÏÔÊ¾´øÍ¼Æ¬µÄÎÄ±¾¡£
+ @~chinese ä¸€ä¸ªæ˜¾ç¤ºå¤šä¸ªRichElementçš„å®¹å™¨ç±»ã€‚
+ æˆ‘ä»¬å¯ä»¥ä½¿ç”¨å®ƒå¾ˆå®¹æ˜“æ˜¾ç¤ºå¸¦å›¾ç‰‡çš„æ–‡æœ¬ã€‚
 */
 class CC_GUI_DLL RichText : public Widget
 {
@@ -273,7 +273,7 @@ public:
     
     /**
      * @~english Default constructor.
-     * @~chinese Ä¬ÈÏ¹¹ÔìÆ÷
+     * @~chinese é»˜è®¤æ„é€ å™¨
      * @js ctor
      * @lua new
      */
@@ -281,7 +281,7 @@ public:
     
     /**
      * @~english Default destructor.
-     * @~chinese Ä¬ÈÏÎö¹¹Æ÷
+     * @~chinese é»˜è®¤ææ„å™¨
      * @js NA
      * @lua NA
      */
@@ -289,52 +289,52 @@ public:
     
     /**
      * @~english Create a empty RichText.
-     * @~chinese ´´½¨Ò»¸ö¿ÕµÄRichText¡£
-     * @return @~english RichText instance. @~chinese RichTextÊµÀı¡£
+     * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„RichTextã€‚
+     * @return @~english RichText instance. @~chinese RichTextå®ä¾‹ã€‚
      */
     static RichText* create();
     
     /**
      * @~english Insert a RichElement at a given index.
-     * @~chinese ÔÚÖ¸¶¨Î»ÖÃ²åÈëÒ»¸öRichElement¡£
-     * @param element @~english A RichElement type. @~chinese Ò»¸öRichElementÀà¡£
-     * @param index @~english A given index. @~chinese Ë÷ÒıÖµ¡£
+     * @~chinese åœ¨æŒ‡å®šä½ç½®æ’å…¥ä¸€ä¸ªRichElementã€‚
+     * @param element @~english A RichElement type. @~chinese ä¸€ä¸ªRichElementç±»ã€‚
+     * @param index @~english A given index. @~chinese ç´¢å¼•å€¼ã€‚
      */
     void insertElement(RichElement* element, int index);
     
     /**
      * @~english Add a RichElement at the end of RichText.
-     * @~chinese ÔÚÈİÆ÷×îºó²åÈëÒ»¸öRichElement¡£
-     * @param element @~english A RichElement instance. @~chinese Ò»¸öRichElementÀà¡£
+     * @~chinese åœ¨å®¹å™¨æœ€åæ’å…¥ä¸€ä¸ªRichElementã€‚
+     * @param element @~english A RichElement instance. @~chinese ä¸€ä¸ªRichElementç±»ã€‚
      */
     void pushBackElement(RichElement* element);
     
     /**
      * @~english Remove a RichElement at a given index.
-     * @~chinese ÒÆ³ıÖ¸¶¨Î»ÖÃµÄRichElement¡£
-     * @param index @~english A integer index value. @~chinese Ë÷ÒıÖµ¡£
+     * @~chinese ç§»é™¤æŒ‡å®šä½ç½®çš„RichElementã€‚
+     * @param index @~english A integer index value. @~chinese ç´¢å¼•å€¼ã€‚
      */
     void removeElement(int index);
     
     /**
      * @~english Remove specific RichElement.
-     * @~chinese ÒÆ³ıÒ»¸öRichElement¡£
-     * @param element @~english A RichElement type. @~chinese Ò»¸öRichElementÀàÖ¸Õë¡£
+     * @~chinese ç§»é™¤ä¸€ä¸ªRichElementã€‚
+     * @param element @~english A RichElement type. @~chinese ä¸€ä¸ªRichElementç±»æŒ‡é’ˆã€‚
      */
     void removeElement(RichElement* element);
     
     /**
      * @~english Set vertical space between each RichElement.
-     * @~chinese ÉèÖÃÃ¿¸öRichElementµÄ´¹Ö±¼ä¸ô¡£
-     * @param space @~english Point in float. @~chinese ´¹Ö±¼ä¸ôÖµ¡£
+     * @~chinese è®¾ç½®æ¯ä¸ªRichElementçš„å‚ç›´é—´éš”ã€‚
+     * @param space @~english Point in float. @~chinese å‚ç›´é—´éš”å€¼ã€‚
      */
     void setVerticalSpace(float space);
     
     /**
      * @~english Rearrange all RichElement in the RichText.
      * It's usually called internally.
-     * @~chinese ÖØĞÂÅÅÁĞËùÓĞµÄRichElement¡£
-     * ³£ÄÚ²¿µ÷ÓÃ¡£
+     * @~chinese é‡æ–°æ’åˆ—æ‰€æœ‰çš„RichElementã€‚
+     * å¸¸å†…éƒ¨è°ƒç”¨ã€‚
      */
     void formatText();
 
