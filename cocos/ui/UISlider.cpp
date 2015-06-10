@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "ui/UIScale9Sprite.h"
 #include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -381,16 +382,9 @@ void Slider::setPercent(int percent)
     }
 }
     
-bool Slider::hitTest(const cocos2d::Vec2 &pt)
+bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, std::vector<Vec3> *p)
 {
-    Vec2 nsp = this->_slidBallNormalRenderer->convertToNodeSpace(pt);
-    Size ballSize = this->_slidBallNormalRenderer->getContentSize();
-    Rect ballRect = Rect(0,0, ballSize.width, ballSize.height);
-    if (ballRect.containsPoint(nsp))
-    {
-        return true;
-    }
-    return false;
+    return _slidBallNormalRenderer->hitTest(pt, camera, p);
 }
 
 bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
@@ -398,8 +392,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
-        Vec2 nsp = convertToNodeSpace(_touchBeganPosition);
-        setPercent(getPercentWithBallPos(nsp.x));
+        setPercent(getPercentWithBallPos(_touchBeganPosition));
         percentChangedEvent();
     }
     return pass;
@@ -408,8 +401,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
 void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
     _touchMovePosition = touch->getLocation();
-    Vec2 nsp = convertToNodeSpace(_touchMovePosition);
-    setPercent(getPercentWithBallPos(nsp.x));
+    setPercent(getPercentWithBallPos(_touchMovePosition));
     percentChangedEvent();
 }
 
@@ -423,9 +415,12 @@ void Slider::onTouchCancelled(Touch *touch, Event *unusedEvent)
     Widget::onTouchCancelled(touch, unusedEvent);
 }
 
-float Slider::getPercentWithBallPos(float px)const
+float Slider::getPercentWithBallPos(const Vec2 &pt)
 {
-    return ((px/_barLength)*100.0f);
+    std::vector<Vec3> p;
+    if (false == Node::hitTest(pt, _hittedByCamera, &p))
+    CC_ASSERT(1 == p.size());
+    return ((p[0].x/_barLength)*100.0f);
 }
 
 void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent selector)

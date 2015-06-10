@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCMenu.h"
+#include "2d/CCCamera.h"
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCEventListenerTouch.h"
@@ -539,26 +540,21 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 MenuItem* Menu::getItemForTouch(Touch *touch)
 {
     Vec2 touchLocation = touch->getLocation();
-
-    if (!_children.empty())
+    auto camera = Camera::getVisitingCamera();
+    
+    if (!_children.empty() && nullptr != camera)
     {
         for (auto iter = _children.crbegin(); iter != _children.crend(); ++iter)
         {
             MenuItem* child = dynamic_cast<MenuItem*>(*iter);
-            if (child && child->isVisible() && child->isEnabled())
+            if (child && child->isVisible() &&
+                child->isEnabled() &&
+                child->hitTest(touchLocation, camera, nullptr))
             {
-                Vec2 local = child->convertToNodeSpace(touchLocation);
-                Rect r = child->rect();
-                r.origin.setZero();
-                
-                if (r.containsPoint(local))
-                {
-                    return child;
-                }
+                return child;
             }
         }
     }
-
     return nullptr;
 }
 

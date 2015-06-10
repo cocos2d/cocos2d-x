@@ -57,6 +57,7 @@ class Material;
 class PhysicsBody;
 class PhysicsWorld;
 #endif
+class Camera;
 
 /**
  * @addtogroup _2d
@@ -1706,6 +1707,23 @@ public:
     /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
     unsigned short getCameraMask() const { return _cameraMask; }
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
+    
+    /**
+     * Checks a GL screen point is in content rectangle space.
+     *
+     * The content rectangle defined by origin(0,0) and content size.
+     * This function convert GL screen point to near and far planes as points Pn and Pf,
+     * then calculate the intersect point P which the line PnPf intersect with content rectangle.
+     * If P in content rectangle means this node be hitted.
+     *
+     * @param pt        The point in GL screen space.
+     * @param camera    Which camera used to unproject pt to near/far planes.
+     * @parma p         Point to a Vec3 vector for store the intersect points, if don't need them set to nullptr.
+     * @return true if the point is in content rectangle, flase otherwise.
+     *
+     * @note If any derived class don't use content rectangle to do hitting test, override this function.
+     */
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, std::vector<Vec3> *p);
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();

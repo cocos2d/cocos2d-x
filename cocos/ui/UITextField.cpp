@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 #include "base/ccUTF8.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -380,24 +381,18 @@ void TextField::setTouchAreaEnabled(bool enable)
     _useTouchArea = enable;
 }
     
-bool TextField::hitTest(const Vec2 &pt)
+bool TextField::hitTest(const Vec2 &pt, const Camera* camera, std::vector<Vec3> *p)
 {
-    if (_useTouchArea)
+    if (false == _useTouchArea)
     {
-        Vec2 nsp = convertToNodeSpace(pt);
-        Rect bb = Rect(-_touchWidth * _anchorPoint.x, -_touchHeight * _anchorPoint.y, _touchWidth, _touchHeight);
-        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width
-            && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
-        {
-            return true;
-        }
-    }
-    else
-    {
-        return Widget::hitTest(pt);
+        return Widget::hitTest(pt, camera, nullptr);
     }
     
-    return false;
+    Size old = getContentSize();
+    setContentSize(Size(_touchWidth, _touchHeight));
+    bool ret = Widget::hitTest(pt, camera, nullptr);
+    setContentSize(old);
+    return ret;
 }
     
 Size TextField::getTouchSize()const

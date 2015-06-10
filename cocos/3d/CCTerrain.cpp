@@ -173,6 +173,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         _quadRoot->cullByCamera(camera,_terrainModelMatrix);
     }
     _quadRoot->draw();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     if(_isCameraViewChanged)
     {
         _isCameraViewChanged = false;

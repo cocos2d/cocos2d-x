@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccShaders.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -154,6 +155,7 @@ _positionType(PositionType::ABSOLUTE),
 _actionTag(0),
 _customSize(Size::ZERO),
 _hitted(false),
+_hittedByCamera(nullptr),
 _touchListener(nullptr),
 _flippedX(false),
 _flippedY(false),
@@ -749,9 +751,13 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (isVisible() && isEnabled() && isAncestorsEnabled() && isAncestorsVisible(this) )
     {
         _touchBeganPosition = touch->getLocation();
-        if(hitTest(_touchBeganPosition) && isClippingParentContainsPoint(_touchBeganPosition))
+        auto camera = Camera::getVisitingCamera();
+        if(hitTest(_touchBeganPosition, camera, nullptr))
         {
-            _hitted = true;
+            _hittedByCamera = camera;
+            if (isClippingParentContainsPoint(_touchBeganPosition)) {
+                _hitted = true;
+            }
         }
     }
     if (!_hitted)
@@ -783,9 +789,10 @@ void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
 
 void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
+    CCASSERT(_hittedByCamera, "");
     _touchMovePosition = touch->getLocation();
 
-    setHighlighted(hitTest(_touchMovePosition));
+    setHighlighted(hitTest(_touchMovePosition, _hittedByCamera, nullptr));
 
     /*
      * Propagate touch events to its parents
@@ -800,6 +807,7 @@ void Widget::onTouchMoved(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
+    CCASSERT(_hittedByCamera, "");
     _touchEndPosition = touch->getLocation();
 
     /*
@@ -825,6 +833,7 @@ void Widget::onTouchEnded(Touch *touch, Event *unusedEvent)
 
 void Widget::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
+    CCASSERT(_hittedByCamera, "");
     setHighlighted(false);
     cancelUpEvent();
 }
@@ -914,18 +923,6 @@ void Widget::addCCSEventListener(const ccWidgetEventCallback &callback)
     this->_ccEventCallback = callback;
 }
 
-bool Widget::hitTest(const Vec2 &pt)
-{
-    Vec2 nsp = convertToNodeSpace(pt);
-    Rect bb;
-    bb.size = _contentSize;
-    if (bb.containsPoint(nsp))
-    {
-        return true;
-    }
-    return false;
-}
-
 bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
 {
     _affectByClipping = false;
@@ -955,7 +952,7 @@ bool Widget::isClippingParentContainsPoint(const Vec2 &pt)
     if (clippingParent)
     {
         bool bRet = false;
-        if (clippingParent->hitTest(pt))
+        if (clippingParent->hitTest(pt, _hittedByCamera, nullptr))
         {
             bRet = true;
         }

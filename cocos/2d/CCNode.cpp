@@ -2312,6 +2312,51 @@ void Node::disableCascadeColor()
     }
 }
 
+bool Node::hitTest(const Vec2& pt, const Camera *camera, std::vector<Vec3> *p)
+{
+    if (nullptr == camera || _contentSize.width <= 0 || _contentSize.height <= 0)
+    {
+        return false;
+    }
+    
+    // first, convert pt to near/far plane, get Pn and Pf
+    Vec3 Pn(pt.x, pt.y, -1), Pf(pt.x, pt.y, 1);
+    Pn = camera->unprojectGL(Pn);
+    Pf = camera->unprojectGL(Pf);
+    
+    //  then convert Pn and Pf to node space
+    auto w2nTrans = getWorldToNodeTransform();
+    w2nTrans.transformPoint(&Pn);
+    w2nTrans.transformPoint(&Pf);
+
+    // Pn and Pf define a line Q(t) = D + t * E which D = Pn
+    auto E = Pf - Pn;
+    
+    // second, get three points which define content plane
+    //  these points define a plane P(u, w) = A + uB + wC
+    Vec3 A = Vec3::ZERO;
+    Vec3 B(_contentSize.width, 0, 0);
+    Vec3 C(0, _contentSize.height, 0);
+    
+    //  the line Q(t) intercept with plane P(u, w)
+    //  calculate the intercept point P = Q(t)
+    //      (BxC).A - (BxC).D
+    //  t = -----------------
+    //          (BxC).E
+    Vec3 BxC;
+    Vec3::cross(B, C, &BxC);
+    auto BxCdotE = BxC.dot(E);
+    if (BxCdotE == 0) {
+        return false;
+    }
+    auto t = (BxC.dot(A) - BxC.dot(Pn)) / BxCdotE;
+    Vec3 P = Pn + t * E;
+    if (p) {
+        p->push_back(P);
+    }
+    return (0 < P.x && P.x < _contentSize.width && 0 < P.y && P.y < _contentSize.height) ? true : false;
+}
+
 // MARK: Camera
 void Node::setCameraMask(unsigned short mask, bool applyChildren)
 {
