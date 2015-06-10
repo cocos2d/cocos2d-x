@@ -231,7 +231,7 @@ void CCPhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Chipmunk Body values
-CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
+const CCAffineTransform& CCPhysicsSprite::nodeToParentTransform()
 {
     // Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
@@ -309,7 +309,7 @@ void CCPhysicsSprite::setRotation(float fRotation)
 }
 
 // returns the transform matrix according the Box2D Body values
-CCAffineTransform CCPhysicsSprite::nodeToParentTransform()
+const CCAffineTransform& CCPhysicsSprite::nodeToParentTransform()
 {
     b2Vec2 pos  = m_pB2Body->GetPosition();
 	

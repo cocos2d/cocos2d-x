@@ -126,7 +126,7 @@ public:
     virtual void update(float dt);
     virtual void draw();
 
-    virtual CCAffineTransform nodeToParentTransform();
+    virtual const CCAffineTransform& nodeToParentTransform();
 
     virtual void onEnter();
     virtual void onExit();

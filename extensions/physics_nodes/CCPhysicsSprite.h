@@ -110,7 +110,7 @@ public:
     virtual void setPosition(const CCPoint &position);
     virtual float getRotation();
     virtual void setRotation(float fRotation);
-    virtual CCAffineTransform nodeToParentTransform();
+    virtual const CCAffineTransform& nodeToParentTransform();
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     /** Body accessor when using regular Chipmunk */
