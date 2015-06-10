@@ -2261,10 +2261,10 @@ static int lua_cocos2dx_Node_enumerateChildren(lua_State* tolua_S)
             int* luaID = node ? &node->_luaID : nullptr;
             toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)node,"cc.Node");
             bool ret = LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
-            LuaEngine::getInstance()->removeScriptHandler(handler);
+            
             return ret;
         });
-        
+        LuaEngine::getInstance()->removeScriptHandler(handler);
         lua_settop(tolua_S, 1);
         return 1;
     }
