@@ -277,7 +277,7 @@ public:
      * After the projection transformation, visible content has x- and y-coordinates ranging from -1 to 1,
      * and a z-coordinate ranging from 0 to 1. 
      * @~chinese 
-     * 基于Fov来构建一个投影矩阵。
+     * 基于Fov来构建一个透视投影矩阵。
      * 
      * 投影空间指的是空间从视点空间应用投影变换后的空间。
      * 投影变换后,可见内容的x和y的坐标值位于－1到1之前，Z位于0到1之间,
@@ -299,7 +299,7 @@ public:
      * Creates an orthographic projection matrix.
      *
      * @~chinese 
-     * 创建一个正射投影矩阵。
+     * 创建一个正交投影矩阵。
      * 
      * @param width @~english The width of the view.
      * @~chinese 视图的宽度。
@@ -556,10 +556,10 @@ public:
      * Adds the specified matrix to this matrix.
      *
      * @~chinese 
-     * 用this矩阵加上一个给定的矩阵。
+     * 与一个给定的矩阵相加，并将结果存入this中。
      * 
      * @param mat @~english The matrix to add.
-     * @~chinese 要加上的矩阵。
+     * @~chinese 要加的矩阵。
      */
     void add(const Mat4& mat);
 
@@ -719,7 +719,7 @@ public:
      * Inverts this matrix.
      *
      * @~chinese 
-     * 对这个矩阵求逆，保存在this中。
+     * 对矩阵求逆，并保存在this中。
      * 
      * @return @~english true if the the matrix can be inverted, false otherwise.
      * @~chinese 如果矩阵可以求逆，返回真,否则返回假。
@@ -737,7 +737,7 @@ public:
      * Determines if this matrix is equal to the identity matrix.
      *
      * @~chinese 
-     * 确定是否这个矩阵等于单位矩阵。
+     * 确定这个矩阵是否等于单位矩阵。
      * 
      * @return @~english true if the matrix is an identity matrix, false otherwise.
      * @~chinese 如果矩阵是一个单位矩阵,则返回真，否则返回假。
@@ -748,7 +748,7 @@ public:
      * Multiplies the components of this matrix by the specified scalar.
      *
      * @~chinese 
-     * 对矩阵的每一个元素乘以scalar，保存在this中。
+     * 对矩阵的每一个元素乘以scalar，并保存在this中。
      * 
      * @param scalar @~english The scalar value.
      * @~chinese 标量值。
@@ -1110,14 +1110,14 @@ public:
     /**@~english
      * Sets this matrix to the identity matrix.
      * @~chinese 
-     * 这个矩阵设置为单位矩阵。
+     * 将矩阵设置为单位矩阵。
      */
     void setIdentity();
 
     /**@~english
      * Sets all elements of the current matrix to zero.
      * @~chinese 
-     * 当前矩阵的所有元素设置为零。
+     * 将矩阵的所有元素设置为零。
      */
     void setZero();
 
@@ -1330,7 +1330,7 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * 计算这个矩阵与给定的矩阵的相加。
+     * 返回this矩阵加上mat矩阵的结果。
      * 
      * 注意:这并不修改这个矩阵。
      * 
@@ -1360,7 +1360,7 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * 计算这个矩阵的与给定的矩阵的相减。
+     * 返回this矩阵减去mat矩阵的结果。
      * 
      * 注意:这并不修改这个矩阵。
      * 
@@ -1375,7 +1375,7 @@ public:
      * Subtracts the given matrix from this matrix.
      * 
      * @~chinese 
-     * 从这个矩阵减去给定的矩阵。
+     * this矩阵减去给定的矩阵。
      * 
      * @param mat @~english The matrix to subtract.
      * @~chinese 要减去的矩阵。
@@ -1405,7 +1405,7 @@ public:
      * Note: this does not modify this matrix.
      * 
      * @~chinese 
-     * 计算this矩阵左乘给定的矩阵的乘积。
+     * 返回this矩阵左乘给定的矩阵的乘积。
      * 
      * 注意:这并不修改这个矩阵。
      * 
