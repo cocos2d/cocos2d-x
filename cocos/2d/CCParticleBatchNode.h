@@ -1,4 +1,4 @@
-/*@~english
+/*
  * Copyright (C) 2009 Matt Oswald
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2010-2012 cocos2d-x.org
@@ -65,18 +65,18 @@ class ParticleSystem;
  * - Initialize the ParticleBatchNode with the texture and enough capacity for all the particle systems
  * - Initialize all particle systems and add them as child to the batch node
  *
- * @~chinese ParticleBatchNode和批处理节点一样，如果它包含有子节点，它会在一次OpenGL call调用里绘制所有子节点。
+ * @~chinese ParticleBatchNode和批处理节点（SpriteBatchNode）一样，如果它包含有子节点，它会在一次OpenGL call调用里绘制所有子节点。
  * (通常被称为“批处理”)。
  * 
  * 一个ParticleBatchNode只可以引用一个纹理(一个图像文件,或一个纹理贴图集)。
  * ParticleSystems对象引用的纹理和ParticleBatchNode是同一个的时候才可以添加到ParticleBatchNode。
- * 所有添加到ParticleBatchNode的ParticleSystems都会在同一个OpenGL ES调用里被绘制。
+ * 所有添加到ParticleBatchNode的ParticleSystems都会在同一个OpenGL ES渲染指令里被绘制。
  * 如果ParticleSystems没有被添加ParticleBatchNode，那么每一个ParticleSystems都需要调用一次OpenGL ES绘图,这是低效率的。
  * 
  * 
  * 限制:
  * - 目前只支持ParticleSystemQuad
- * - 所有的系统都需要用相同的参数,包含混合模式、走样、纹理
+ * - 所有的系统都需要用相同的参数,包含混合模式、抗锯齿、纹理
  * 
  * 最有效的用法：
  * - 使用纹理及一个足够容纳所有粒子系统的容量初始化一个ParticleBatchNode。
@@ -119,15 +119,15 @@ public:
      * @param system @~english A given particle system.
      * @~chinese 一个给定的粒子系统节点。
      * @param index @~english The insert index.
-     * @~chinese 索引。
+     * @~chinese 节点列表中的位置。
      */
     void insertChild(ParticleSystem* system, int index);
 
     /** @~english Remove a child of the ParticleBatchNode.
-     * @~chinese 按给定的索引删除一个ParticleBatchNode的子节点。
+     * @~chinese 删除位于子节点列表中给定位置的一个ParticleBatchNode的子节点。
      * 
      * @param index @~english The index of the child.
-     * @~chinese 子节点的索引。
+     * @~chinese 子节点的位置。
      * @param doCleanup @~english True if all actions and callbacks on this node should be removed, false otherwise.
      * @~chinese true 这个节点的所有动作和回调将被删除； false 不删除节点的动作及回调。
      */
@@ -139,7 +139,7 @@ public:
      * @~chinese 禁用指定的一个粒子系统。
      * 
      * @param particleIndex @~english The index of the particle.
-     * @~chinese 粒子系统的索引。
+     * @~chinese 粒子系统在子节点列表中的位置。
      */
     void disableParticle(int particleIndex);
 

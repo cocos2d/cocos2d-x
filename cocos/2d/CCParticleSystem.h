@@ -150,7 +150,7 @@ It is possible to customize any of the above mentioned properties in runtime. Ex
  * - - 粒子使用的纹理
  * 
  * Cocos2d还支持Particle Designer编辑生成的粒子(http://particledesigner.71squared.com）
- * 在粒子半径模式设计使用一个固定的发射率30 hz。不能保证在cocos2d之后,
+ * 在粒子半径模式设计使用一个固定的发射率30 hz。在cocos2d中无法保证这点,
  * cocos2d使用另一种方法,但结果是几乎相同的。
  * 
  * Cocos2d除了支持Particle Designer所有属性还支持有以下属性:
@@ -187,7 +187,7 @@ public:
     };
     
     /** @~english PositionType,Possible types of particle positions.
-     * @~chinese PositionType，粒子位置类型。
+     * @~chinese PositionType，粒子定位模式。
      * @js cc.ParticleSystem.TYPE_FREE
      */
     enum class PositionType
