@@ -52,8 +52,8 @@ public:
     /**
     * @~english Allocates and initializes a bone.
     * @~chinese 分配并且初始化一段骨头。
-    * @param name  @~english If name is not null, then set name to the bone's name
-    * @~chinese 如果非空，则将该参数设为骨头的名称
+    * @param name  @~english If name is not null, then set name to the bone's name.
+    * @~chinese 如果非空，则将该参数设为骨头的名称。
     * @return @~english An initialized bone which is marked as "autorelease".
     * @~chinese 一段初始化的骨头，该骨头会自动被标记为“autorelease”（自动释放）。
     */
@@ -69,15 +69,10 @@ public:
      * @lua NA
      */
     virtual ~Bone(void);
-
-    /**
-     * @~english Initializes an empty Bone with nothing init.
-     * @~chinese 初始化一段空骨头，没有其他被初始化。
-     */
     virtual bool init() override;
 
     /**
-     * @~english Initializes a Bone with the specified name
+     * @~english Initializes a Bone with the specified name.
      * @~chinese 以指定的名称初始化一段骨头。
      * @param name @~english Bone's name.
      * @~chinese 骨头的名称。
@@ -85,37 +80,34 @@ public:
     virtual bool init(const std::string& name);
 
     /**
-     * @~english Add display and use displayData to init the display.
-     * If index already have a display, then replace it.
-     * If index is current display index, then also change display to _index
-     * @~chinese 为骨头增加显示，并使用显示属性数据来初始化显示性。
-     * 如果索引处已有显示，则将其覆盖。
-     * 如果索引为当前显示索引，则同时将显示更改为_index处显示。
-     *
-     * @param @~english displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a `SpriteDisplayData` param
-     * @~chinese 显示数据，包含显示信息，例如显示种类。
-     * 要创建一个精灵显示，则创建一个`SpriteDisplayData`参数。
-     * @param index @~english the index of the display you want to replace or add to
-     *          -1 : append display from back
-     * @~chinese 要添加或覆盖的显示的索引。为-1时将显示添加至最后。
+     * @see DisplayManager::addDisplay(DisplayData *displayData, int index).
      */
     void addDisplay(DisplayData *displayData, int index);
 
+    /**
+    * @see DisplayManager::addDisplay(DisplayData *displayData, int index).
+    */
     void addDisplay(cocos2d::Node *display, int index);
 
+    /**
+    * @see DisplayManager::removeDisplay(int index).
+    */
     void removeDisplay(int index);
 
+    /** @deprecated Use `changeDisplayWithIndex(int index, bool force)` instead */
     CC_DEPRECATED_ATTRIBUTE void changeDisplayByIndex(int index, bool force);
+    /** @deprecated Use `changeDisplayWithName(const std::string& name, bool force)` instead */
     CC_DEPRECATED_ATTRIBUTE void changeDisplayByName(const std::string& name, bool force);
 
+    /** @see `DisplayManager::changeDisplayWithIndex(int index, bool force)` */
     void changeDisplayWithIndex(int index, bool force);
+    /** @see `DisplayManager::changeDisplayWithName(const std::string& name, bool force)` */
     void changeDisplayWithName(const std::string& name, bool force);
 
     /**
      * @~english Add a child to this bone, and it will let this child call `setParent(Bone *parent)` function to set self to it's parent
-     * @~chinese 为当前骨头添加一段子骨头，同时该子骨头会调用`setParent(Bone *parent)`函数来将当前骨头设为其父骨头。
-     * @param child @~english the child you want to add
+     * @~chinese 为当前骨头添加一段子骨头，同时该子骨头会调用`setParent(Bone *parent)`来将当前骨头设为其父骨头。
+     * @param child @~english The child you want to add
      * @~chinese 要添加的子骨头。
      */
     void addChildBone(Bone *child);
@@ -161,39 +153,59 @@ public:
 
     void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
     void updateDisplayedOpacity(GLubyte parentOpacity) override;
-
-    /**
-    * @~english Update color to render display
-    * @~chinese 更新颜色以渲染显示
-    */
     virtual void updateColor() override;
 
     /**
     * @~english Update zorder
-    * @~chinese 更新Z顺序
+    * @~chinese 更新Z排序
     */
     void updateZOrder();
 
     virtual void setLocalZOrder(int zOrder) override;
 
+    /**
+    * @~english Get tween of bone.
+    * @~chinese 获取补间属性。
+    * @return @~english Tween.
+    * @~chinese 补间
+    */
     Tween *getTween();
 
     /*
-     * @~english Whether or not the bone's transform property changed. if true, the bone will update the transform.
-     * @~chinese 骨头的变形属性是否已改变，如果为真，骨头将会更新变形。
+     * @~english Set whether or not the bone's transform property changed. if true, the bone will update the transform.
+     * @~chinese 设置骨头的变形属性是否已改变，如果为真，骨头将会更新变形。
+     * @param dirty @~english  Is the transform property changed.
+     * @~chinese 是否改变。
      */
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
+
+    /*
+    * @~english Whether or not the bone's transform property changed.
+    * @~chinese 骨头的变形属性是否已改变，如果为真，骨头将会更新变形。
+    * @return @~english Is dirty.
+    * @~chinese 是否已改变
+    */
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
+    /**
+    * @~english Returns the armature affine transform matrix. The matrix is in Pixels.
+    * @~chinese 返回节点到骨骼坐标仿射变换矩阵。矩阵单位是像素。
+    * @return @~english Transformation matrix, in pixels. 
+    * @~chinese 节点到骨骼坐标仿射变换矩阵。
+    */
     virtual cocos2d::Mat4 getNodeToArmatureTransform() const;
     virtual cocos2d::Mat4 getNodeToWorldTransform() const override;
 
+    /** @see `DisplayManager::getDisplayRenderNode()` */
     cocos2d::Node *getDisplayRenderNode();
+    /** @see `DisplayManager::getDisplayRenderNodeType()` */
     DisplayType getDisplayRenderNodeType();
 
     /*
      * @~english Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
      * @~chinese 获取骨头的碰撞体，数组中的对象为碰撞体。
+     * @return @~english The ColliderBody list in this bone.
+     * @~chinese 骨头的碰撞体。
      */
     virtual ColliderDetector* getColliderDetector() const;
 
@@ -202,45 +214,126 @@ public:
     virtual ColliderFilter *getColliderFilter();
 #endif
 
+    /*
+    * @~english Set bone data.
+    * @~chinese 设置骨头数据。
+    * @param boneData @~english Bone data.
+    * @~chinese 骨头数据。
+    */
     virtual void setBoneData(BoneData *boneData);
+    /*
+    * @~english Get bone data.
+    * @~chinese 获取骨头数据。
+    * @return @~english Bone data.
+    * @~chinese 骨头数据。
+    */
     virtual BoneData *getBoneData() const;
 
+    /*
+    * @~english Set armature.
+    * @~chinese 设置骨骼。
+    * @param boneData @~english Armature.
+    * @~chinese 骨骼。
+    */
     virtual void setArmature(Armature *armature);
+    /*
+    * @~english Get armature.
+    * @~chinese 获取骨骼。
+    * @return @~english Armature.
+    * @~chinese 骨骼。
+    */
     virtual Armature *getArmature() const;
 
+    /*
+    * @~english Set child armature.
+    * @~chinese 设置子骨骼。
+    * @param boneData @~english Child armature.
+    * @~chinese 子骨骼。
+    */
     virtual void setChildArmature(Armature *childArmature);
+    /*
+    * @~english Get childe armature.
+    * @~chinese 获取子骨骼。
+    * @return @~english Child armature.
+    * @~chinese 子骨骼。
+    */
     virtual Armature *getChildArmature() const;
 
+    /*
+    * @~english Get display manager.
+    * @~chinese 获取显示管理器。
+    * @return @~english Display manager.
+    * @~chinese 显示管理器。
+    */
     virtual DisplayManager *getDisplayManager() const { return _displayManager; }
+
     /**
-     *  @lua NA
+     * @lua NA
+     * @~english Set whether or not ignore the movement bone data.
+     * @~chinese 设置是否忽略活动骨头的数据。
+     * @param ignore @~english  Is ignore.
+     * @~chinese 是否忽略。
      */
     virtual void setIgnoreMovementBoneData(bool ignore) { _ignoreMovementBoneData = ignore; }
+    /*
+    * @~english Whether or not ignore the movement bone data.
+    * @~chinese 是否忽略活动骨头的数据。
+    * @return @~english Is ignore.
+    * @~chinese 是否忽略。
+    */
     virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
 
     /*
-     * This function is deprecated, please use isIgnoreMovementBoneData()
+     * @deprecated Use `isIgnoreMovementBoneData()` instead
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
 
     
     /*
-     * @~english Set blend function
+     * @~english Set blend function.
      * @~chinese 设置混合函数。
+     * @param blendFunc @~english Blend function.
+     * @~chinese 混合函数。
      */
     virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
+    /*
+    * @~english Get blend function.
+    * @~chinese 获取混合函数。
+    * @return @~english Blend function.
+    * @~chinese 混合函数。
+    */
     virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
 
     /*
-     * @~english Set if blend function is dirty 
+     * @~english Set if blend function is dirty.
      * @~chinese 混合函数为脏时设置。
+     * @param dirty @~english Is dirty.
+     * @~chinese 是否脏。
      */
     virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
+    /*
+    * @~english Get is blend function dirty.
+    * @~chinese 获取混合函数是否为脏。
+    * @return @~english Is dirty.
+    * @~chinese 是否脏。
+    */
     virtual bool isBlendDirty(void) { return _blendDirty; }
 
+    /*
+    * @~english Get tween frame data.
+    * @~chinese 获取补间关键帧数据。
+    * @return @~english Tween frame data.
+    * @~chinese 补间关键帧数据。
+    */
     virtual FrameData *getTweenData() const { return _tweenData; }
 
+    /*
+    * @~english Get world info.
+    * @~chinese 获取世界信息。
+    * @return @~english World info.
+    * @~chinese 世界信息。
+    */
     virtual BaseData *getWorldInfo() const { return _worldInfo; }
 protected:
     void applyParentTransform(Bone *parent);

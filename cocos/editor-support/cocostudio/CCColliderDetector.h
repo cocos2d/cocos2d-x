@@ -92,6 +92,12 @@ public:
     ColliderBody(ContourData *contourData);
     ~ColliderBody();
 
+    /*
+    * @~english Get contour data.
+    * @~chinese 获取轮廓数据。
+    * @return @~english Contour data.
+    * @~chinese 轮廓数据。
+    */
     inline ContourData *getContourData() { return _contourData; }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT 
@@ -106,6 +112,13 @@ public:
     virtual void setShape(cpShape *shape) { _shape = shape; }
     virtual cpShape *getShape() const { return _shape; }
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
+
+    /*
+    * @~english Get calculated vertex list.
+    * @~chinese 获取顶点列表。
+    * @return @~english Calculated vertex list.
+    * @~chinese 顶点列表。
+    */
     virtual const std::vector<cocos2d::Vec2> &getCalculatedVertexList() const { return _calculatedVertexList; }
 #endif
 
@@ -135,7 +148,23 @@ private:
 class CC_STUDIO_DLL ColliderDetector : public cocos2d::Ref
 {
 public:
+
+    /**
+    * @~english Allocates and initializes a ColliderDetector.
+    * @~chinese 分配并且初始化碰撞检测器。
+    * @return @~english An initialized ColliderDetector which is marked as "autorelease".
+    * @~chinese 初始化的碰撞检测器，会自动被标记为“autorelease”（自动释放）。
+    */
     static ColliderDetector *create();
+
+    /**
+    * @~english Allocates and initializes a ColliderDetector by a bone.
+    * @~chinese 使用一段骨头分配并且初始化碰撞检测器。
+    * @param bone  @~english A bone for initialize the ColliderDetector.
+    * @~chinese 初始化碰撞检测器的骨头。
+    * @return @~english An initialized ColliderDetector which is marked as "autorelease".
+    * @~chinese 初始化的碰撞检测器，会自动被标记为“autorelease”（自动释放）。
+    */
     static ColliderDetector *create(Bone *bone);
 public:
 	/**
@@ -148,20 +177,83 @@ public:
      */
     ~ColliderDetector(void);
 
+    /**
+    * @~english Init ColliderDetector.
+    * @~chinese 初始化碰撞检测器。
+    * @return @~english Is initialize succeed.
+    * @~chinese 是否初始化成功。
+    */
     virtual bool init();
+
+    /**
+    * @~english Init ColliderDetector by a bone.
+    * @~chinese 是用一段骨头初始化碰撞检测器。
+    * @param bone @~english A bone for initialize the ColliderDetector.
+    * @~chinese 初始化碰撞检测器的骨头。
+    * @return @~english Is initialize succeed.
+    * @~chinese 是否初始化成功。
+    */
     virtual bool init(Bone *bone);
 
+    /**
+    * @~english Add contour data to the ColliderDetector.
+    * @~chinese 为碰撞检测器添加轮廓数据。
+    * @param contourData @~english The contour data to be added.
+    * @~chinese 要添加的轮廓数据。
+    */
     void addContourData(ContourData *contourData);
+
+    /**
+    * @~english Add contour datas to the ColliderDetector.
+    * @~chinese 为碰撞检测器添加一组轮廓数据。
+    * @param contourData @~english The contour datas to be added.
+    * @~chinese 要添加的一组轮廓数据。
+    */
     void addContourDataList(cocos2d::Vector<ContourData*> &contourDataList);
 
+    /**
+    * @~english Remove a contour data.
+    * @~chinese 移除轮廓数据。
+    * @param contourData @~english The contour data to be removed.
+    * @~chinese 要移除的轮廓数据。
+    */
     void removeContourData(ContourData *contourData);
+
+    /**
+    * @~english Remove all contour data.
+    * @~chinese 移除所有轮廓数据。
+    */
     void removeAll();
 
+    /**
+    * @~english Returns the armature affine transform matrix. The matrix is in Pixels.
+    * @~chinese 使用变换矩阵仿射轮廓数据。矩阵单位是像素。
+    * @param t @~english Transformation matrix, in pixels.
+    * @~chinese 变换矩阵。
+    */
     void updateTransform(cocos2d::Mat4 &t);
 
+    /**
+    * @~english Set is the ColliderDetector active.
+    * @~chinese 设置碰撞检测器是否激活。
+    * @param active @~english Is the ColliderDetector active.
+    * @~chinese 是否激活。
+    */
     void setActive(bool active);
+    /**
+    * @~english Get is the ColliderDetector active.
+    * @~chinese 获取碰撞检测器是否激活。
+    * @return @~english Is the ColliderDetector active.
+    * @~chinese 是否激活。
+    */
     bool getActive();
 
+    /**
+    * @~english Get the collider bodies.
+    * @~chinese 获取碰撞体列表。
+    * @return @~english Collider bodies.
+    * @~chinese 碰撞体列表。
+    */
     const cocos2d::Vector<ColliderBody*>& getColliderBodyList();
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT 
@@ -169,7 +261,20 @@ public:
     virtual ColliderFilter *getColliderFilter();
 #endif
 
+    /**
+    * @~english Set the bone.
+    * @~chinese 设置骨头。
+    * @param bone @~english The bone.
+    * @~chinese 骨头。
+    */
     virtual void setBone(Bone *bone) { _bone = bone; }
+
+    /**
+    * @~english Get the bone.
+    * @~chinese 获取骨头。
+    * @return @~english The bone.
+    * @~chinese 骨头。
+    */
     virtual Bone *getBone() const { return _bone; }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

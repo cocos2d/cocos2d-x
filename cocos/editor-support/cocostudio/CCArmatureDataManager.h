@@ -52,7 +52,18 @@ public:
     /** @deprecated Use destoryInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destroyInstance(); };
     
+    /**
+    * @~english Get singleton.
+    * @~chinese 获取单例。
+    * @return @~english Singleton of `ArmatureDataManager`.
+    * @~chinese 骨骼数据管理器的单例。
+    */
     static ArmatureDataManager *getInstance();
+
+    /**
+    * @~english Destory singleton.
+    * @~chinese 销毁单例。
+    */
     static void destroyInstance();
     
 private:
@@ -69,137 +80,201 @@ private:
 public:
 
     /**
-     * @~english  Init ArmatureDataManager
-     * @~chinese 初始化骨骼数据管理器
+     * @~english  Init ArmatureDataManager.
+     * @~chinese 初始化骨骼数据管理器。
+     * @return @~english Is initialize succeed.
+     * @~chinese 是否初始化成功。
      */
     virtual bool init();
 
     /**
-    * @~english Add armature data
-    * @~chinese 增加骨骼数据
-    * @param id @~english The id of the armature data
-    * @~chinese 骨骼数据标识
-    * @param @~english armatureData ArmatureData *
-    * @~chinese 骨骼数据
+    * @~english Add armature data.
+    * @~chinese 增加骨骼数据。
+    * @param id @~english The id of the armature data.
+    * @~chinese 骨骼数据标识。
+    * @param armatureData @~english ArmatureData *.
+    * @~chinese 骨骼数据。
+    * @param configFilePath @~english Path of config file.
+    * @~chinese 配置文件路径。
     */
     void addArmatureData(const std::string& id, ArmatureData *armatureData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	@~english get armature data
-     * @~chinese 获取骨骼数据
-     *	@param	@~english id the id of the armature data you want to get
-     * @~chinese 要获取骨骼数据的标识
-     *  @return	@~english ArmatureData *
-     * @~chinese 骨骼数据
+     * @~english get armature data.
+     * @~chinese 获取骨骼数据。
+     * @param id @~english The id of the armature data you want to get.
+     * @~chinese 要获取骨骼数据的标识。
+     * @return @~english ArmatureData.
+     * @~chinese 骨骼数据。
      */
     ArmatureData *getArmatureData(const std::string& id);
 
     /**
-     *	@brief	@~english remove armature data
+     * @~english Remove armature data.
      * @~chinese 移除骨骼数据
-     *	@param	id @~english the id of the armature data you want to get
+     * @param	id @~english the id of the armature data you want to get
      * @~chinese 要移除骨骼数据的标识
      */
     void removeArmatureData(const std::string& id);
 
     /**
-     *	@brief	@~english add animation data
-     * @~chinese 增加动画数据
-     *	@param id @~english the id of the animation data
-     * @~chinese 动画数据的标识
-     *  @return @~english AnimationData *
-     * @~chinese 动画数据
+     * @brief	@~english Add animation data.
+     * @~chinese 增加动画数据。
+     * @param id @~english The id of the animation data.
+     * @~chinese 动画数据的标识。
+     * @return @~english AnimationData.
+     * @~chinese 动画数据。
+     * @param configFilePath @~english Path of config file.
+     * @~chinese 配置文件路径。
      */
     void addAnimationData(const std::string& id, AnimationData *animationData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	@~english get animation data from _animationDatas(Dictionary)
-     * @~chinese 从_animationDatas(Dictionary)中获取动画数据
-     *	@param id @~english the id of the animation data you want to get
-     * @~chinese 要获取动画数据的标识
-     * @return @~english AnimationData *
-     * @~chinese 动画数据
+     * @brief @~english Get animation data from _animationDatas(Dictionary).
+     * @~chinese 从_animationDatas(Dictionary)中获取动画数据。
+     * @param id @~english The id of the animation data you want to get.
+     * @~chinese 要获取动画数据的标识。
+     * @return @~english AnimationData.
+     * @~chinese 动画数据。
      */
     AnimationData *getAnimationData(const std::string& id);
 
     /**
-     *	@brief	@~english remove animation data
-     * @~chinese 移除动画数据
-     *	@param id @~english the id of the animation data
-     * @~chinese 要移除动画数据的标识
+     * @~english Remove animation data.
+     * @~chinese 移除动画数据。
+     * @param id @~english The id of the animation data.
+     * @~chinese 要移除动画数据的标识。
      */
     void removeAnimationData(const std::string& id);
 
     /**
-     *	@brief	@~english add texture data
-     * @~chinese 增加材质数据
-     *	@param id @~english the id of the texture data
-     * @~chinese 材质数据的标识
+     * @~english Add texture data.
+     * @~chinese 增加材质数据。
+     * @param id @~english The id of the texture data.
+     * @~chinese 材质数据的标识。
+     * @param textureData @~english Texture data.
+     * @~chinese 材质数据。
+     * @param configFilePath @~english Path of config file.
+     * @~chinese 配置文件路径。
      */
     void addTextureData(const std::string& id, TextureData *textureData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	@~english get texture data
-     * @~chinese 获取材质数据
-     *	@param id @~english the id of the texture data you want to get
-     * @~chinese 要获取材质数据的标识
-     *  @return @~english TextureData *
-     * @~chinese 材质数据
+     * @~english Get texture data.
+     * @~chinese 获取材质数据。
+     * @param id @~english The id of the texture data you want to get.
+     * @~chinese 要获取材质数据的标识。
+     * @return @~english Texture data.
+     * @~chinese 材质数据。
      */
     TextureData *getTextureData(const std::string& id);
 
     /**
-     *	@brief	@~english remove texture data
-     * @~chinese 移除材质数据
-     *	@param id @~english the id of the texture data you want to get
-     * @~chinese 要移除材质数据的标识
+     * @~english Remove texture data.
+     * @~chinese 移除材质数据。
+     * @param id @~english The id of the texture data you want to get.
+     * @~chinese 要移除材质数据的标识。
      */
     void removeTextureData(const std::string& id);
 
     /**
-     *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理
+     * @~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
+     * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理。
+     * @param configFilePath @~english Path of config file.
+     * @~chinese 配置文件路径。
      */
     void addArmatureFileInfo(const std::string& configFilePath);
 
     /**
-     *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     *			It will load data in a new thread
+     *	@~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
+     *	It will load data in a new thread
      * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理，将在新线程中加载数据。
+     * @param configFilePath @~english Path of config file.
+     * @~chinese 配置文件路径。
+     * @param target @~english The target of the callback.
+     * @~chinese 回调方法目标对象。
+     * @param selector @~english The selector to be checked.
+     * @~chinese 回调方法选择器。
      */
     void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
-     *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     * @~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
      * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理。
+     * @param imagePath @~english Path of image.
+     * @~chinese 图片路径。
+     * @param plistPath @~english Path of plist.
+     * @~chinese plist路径。
+     * @param configFilePath @~english Path of config file.
+     * @~chinese 配置文件路径。
      */
     void addArmatureFileInfo(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath);
 
     /**
-    *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+    * @~english Add ArmatureFileInfo, it is managed by `ArmatureDataManager`.
     *			It will load data in a new thread
     * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理，将在新线程中加载数据。
+    * @param imagePath @~english Path of image.
+    * @~chinese 图片路径。
+    * @param plistPath @~english Path of plist.
+    * @~chinese plist路径。
+    * @param configFilePath @~english Path of config file.
+    * @~chinese 配置文件路径。
+    * @param target @~english The target of the callback.
+    * @~chinese 回调方法目标对象。
+    * @param selector @~english The selector to be checked.
+    * @~chinese 回调方法选择器。
     */
     void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
-     *	@brief	@~english Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
-     * @~chinese 为CCSpriteFrameCache添加精灵帧，将会保存显示名称及相关图片名称。
+     * @~english Add sprite frame to `CCSpriteFrameCache`, it will save display name and it's relative image name.
+     * @~chinese 为`CCSpriteFrameCache`添加精灵帧，将会保存显示名称及相关图片名称。
+     * @param plistPath @~english Path of plist.
+     * @~chinese plist路径。
+     * @param imagePath @~english Path of image.
+     * @~chinese 图片路径。
+     * @param configFilePath @~english Path of config file.
+     * @~chinese 配置文件路径。
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath, const std::string& configFilePath = "");
 
+    /**
+    * @~english Remove ArmatureFileInfo.
+    * @~chinese 移除骨骼文件信息。
+    * @param configFilePath @~english Path of config file.
+    * @~chinese 配置文件路径。
+    */
     virtual void removeArmatureFileInfo(const std::string& configFilePath);
 
-
     /**
-     *	@brief	@~english Judge whether or not need auto load sprite file
+     *	@~english Judge whether or not need auto load sprite file.
      * @~chinese 判断是否需要自动加载精灵文件。
      */
     bool isAutoLoadSpriteFile();
 
-
+    /**
+    * @~english  Get data of Armature.
+    * @~chinese 获取骨骼数据。
+    * @return @~english Map of Armature data.
+    * @~chinese 骨骼数据map。
+    */
     const cocos2d::Map<std::string, ArmatureData*>&     getArmatureDatas() const;
+
+    /**
+    * @~english  Get data of Animation.
+    * @~chinese 获取动画数据。
+    * @return @~english Map of Animation data.
+    * @~chinese 动画数据map。
+    */
     const cocos2d::Map<std::string, AnimationData*>&    getAnimationDatas() const;
+
+    /**
+    * @~english  Get data of Texture.
+    * @~chinese 获取材质数据。
+    * @return @~english Map of Texture data.
+    * @~chinese 材质数据map。
+    */
     const cocos2d::Map<std::string, TextureData*>&      getTextureDatas() const;
 
 protected:

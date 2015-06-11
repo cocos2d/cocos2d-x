@@ -122,28 +122,95 @@ public:
     /**
      * @~english You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
-     * @~chinese 此方法不应被调用，除非你知道要做的事情。更新进程，包含当前进程，当前帧等等。
+     * @~chinese 此方法不应被调用，除非你知道要做的事情。更新进度，包含当前进度，当前帧等等。
      *
      * @param dt @~english The duration since last update
      * @~chinese 从上次updat到现在的时间间隔。
      */
     virtual void update(float dt);
 
+    /**
+    * @~english Get current frame index.
+    * @~chinese 获取当前帧索引。
+    * @return @~english Current frame index.
+    * @~chinese 当前帧索引。
+    */
     virtual int getCurrentFrameIndex();
 
+    /**
+    * @~english Set process scale.
+    * @~chinese 设置进度缩放值。
+    * @param processScale @~english Process scale.
+    * @~chinese 进度缩放值。
+    */
     virtual void setProcessScale(float processScale) { _processScale = processScale; }
+    /**
+    * @~english Get process scale.
+    * @~chinese 获取进度缩放值。
+    * @return @~english Process scale.
+    * @~chinese 进度缩放值。
+    */
     virtual float getProcessScale() const { return _processScale; }
 
+    /**
+    * @~english Set is pause.
+    * @~chinese 设置是否暂停。
+    * @param pause @~english Is pause.
+    * @~chinese 是否暂停。
+    */
     virtual void setIsPause(bool pause) { _isPause = pause; }
+    /**
+    * @~english Get is pause.
+    * @~chinese 获取是否暂停。
+    * @return @~english Is pause.
+    * @~chinese 是否暂停。
+    */
     virtual bool isPause() const { return _isPause; }
 
+    /**
+    * @~english Set is complete.
+    * @~chinese 设置是否完成。
+    * @param complete @~english Is complete.
+    * @~chinese 是否完成。
+    */
     virtual void setIsComplete(bool complete) { _isComplete = complete; }
+    /**
+    * @~english Get is complete.
+    * @~chinese 获取是否完成。
+    * @return @~english Is complete.
+    * @~chinese 是否完成。
+    */
     virtual bool isComplete() const { return _isComplete; }
 
+    /**
+    * @~english Set is playing.
+    * @~chinese 设置是否在播放。
+    * @param complete @~english Is playing.
+    * @~chinese 是否在播放。
+    */
     virtual void setIsPlaying(bool playing) { _isPlaying = playing; }
+    /**
+    * @~english Set is playing.
+    * @~chinese 设置是否在播放。
+    * @return @~english Is playing.
+    * @~chinese 是否在播放。
+    */
     virtual bool isPlaying() const { return _isPlaying; }
 
+    /**
+    * @~english Get current percent.
+    * @~chinese 获取当前进度。
+    * @return @~english Current percent.
+    * @~chinese 当前进度。
+    */
     virtual float getCurrentPercent() const { return _currentPercent; }
+
+    /**
+    * @~english Get raw duration.
+    * @~chinese 获取原始总长。
+    * @return @~english Raw duration.
+    * @~chinese 原始总长。
+    */
     virtual int getRawDuration() const { return _rawDuration; }
 
 protected:

@@ -113,11 +113,6 @@ public:
      * @lua NA
      */
     virtual ~Armature(void);
-
-    /**
-    * @~english Init the empty armature.
-    * @~chinese 初始化空骨骼。
-    */
     virtual bool init() override;
 
     /**
@@ -133,7 +128,7 @@ public:
     * @~chinese 用指定的名称初始化骨骼。
     * @param name @~english Armature name.
     * @~chinese 骨骼名称。
-    * @param parentBone  @~english The armature will set the parentBone as its parent.
+    * @param parentBone @~english The armature will set the parentBone as its parent.
     * @~chinese 骨骼将以该参数作为父骨头。
     */
     virtual bool init(const std::string& name, Bone *parentBone);
@@ -147,6 +142,7 @@ public:
      * @~chinese 以该参数作为名称的骨头将作为骨头被添加后的父骨头。如果该参数为空，骨头被添加后将以骨骼作为父骨头。
      */
     virtual void addBone(Bone *bone, const std::string& parentName);
+
     /**
      * @~english Get a bone with the specified name.
      * @~chinese 以指定的名称获取一段骨头。
@@ -154,6 +150,7 @@ public:
      * @~chinese 要获取骨头的名称。
      */
     virtual Bone *getBone(const std::string& name) const;
+
     /**
      * @~english Change a bone's parent with the specified parent name.
      * @~chinese 根据指定的名称，更改一段骨头的父骨头。
@@ -163,6 +160,7 @@ public:
      * @~chinese 新父骨头的名称。
      */
     virtual void changeBoneParent(Bone *bone, const std::string& parentName);
+
     /**
      * @~english Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
      * @~chinese 根据指定的名称，移除一段骨头。根据参数，将会决定是否对子骨头进行递归移除。
@@ -233,6 +231,7 @@ public:
     * @~chinese 骨骼动画。
     */
     virtual void setAnimation(ArmatureAnimation *animation);
+
     /**
     * @~english Get animation of armature.
     * @~chinese 获得骨骼设置的动画。
@@ -240,6 +239,7 @@ public:
     * @~chinese 骨骼动画。
     */
     virtual ArmatureAnimation *getAnimation() const;
+
     /**
     * @~english Get is the armature is transformed.
     * @~chinese 获得骨骼是否已经进行坐标变换。
@@ -250,16 +250,11 @@ public:
 
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
-    /**
-    * @~english Set collider filter for bones.
-    * @~chinese 为所有骨头设置碰撞过滤。
-    * @param filter @~english Collider filter.
-    * @~chinese 碰撞过滤。
-    */
     virtual void setColliderFilter(ColliderFilter *filter);
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     CC_DEPRECATED_ATTRIBUTE virtual void drawContour();
 #endif
+
     /**
     * @~english Set armature data for armature.
     * @~chinese 为骨骼设置数据。
@@ -267,6 +262,7 @@ public:
     * @~chinese 骨骼数据。
     */
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
+
     /**
     * @~english Get armature data of armature.
     * @~chinese 获取骨骼数据。
@@ -291,10 +287,36 @@ public:
     */
     virtual Bone *getParentBone() const;
 
+    /**
+    * @~english Set version for armature.
+    * @~chinese 为骨骼设置版本号。
+    * @param version @~english Armature version.
+    * @~chinese 骨骼版本号。
+    */
     virtual void setVersion(float version) { _version = version; }
+
+    /**
+    * @~english Get version of armature.
+    * @~chinese 获取骨骼的版本号。
+    * @return @~english Armature version.
+    * @~chinese 骨骼版本号。
+    */
     virtual float getVersion() const { return _version; }
 
+    /**
+    * @~english Set BatchNode for armature.
+    * @~chinese 为骨骼设置批次节点。
+    * @param batchNode @~english BatchNode.
+    * @~chinese 批次节点。
+    */
     virtual void setBatchNode(BatchNode *batchNode) { _batchNode = batchNode; }
+
+    /**
+    * @~english Get BatchNode of armature.
+    * @~chinese 获取骨骼的批次节点。
+    * @return @~english BatchNode.
+    * @~chinese 批次节点。
+    */
     virtual BatchNode *getBatchNode() const { return _batchNode; }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

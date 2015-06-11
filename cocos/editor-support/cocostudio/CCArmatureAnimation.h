@@ -97,32 +97,31 @@ public:
     */
     virtual bool init(Armature *armature);
 
-    /**
-    * @~english Scale animation play speed. This method is deprecated, please use setSpeedScale.
-    * @~chinese 设置动画播放速度缩放值. 该方法已过时，请使用`setSpeedScale`。
-    * @param animationScale @~english Scale value.
-    * @~chinese 动画播放速度缩放值。
-    */
+    /** @deprecated Use `setSpeedScale(float speedScale)` instead */
     CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
+    /** @deprecated Use `getSpeedScale()` instead */
     CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
 
     /**
-     * @~english Scale animation play speed.
-     * @~chinese 缩放动画播放速度。
-     * @param speedScale @~english Scale value.
-     * @~chinese 动画播放速度缩放值。
-     */
+    * @~english Scale animation play speed.
+    * @~chinese 缩放动画播放速度。
+    * @param speedScale @~english Scale value.
+    * @~chinese 动画播放速度缩放值。
+    */
     virtual void setSpeedScale(float speedScale);
-    virtual float getSpeedScale() const;
 
-    //! The animation update speed
-    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {}
+    /**
+    * @~english Get animation play speed scale.
+    * @~chinese 获取动画播放速度缩放值。
+    * @return @~english Scale value.
+    * @~chinese 动画播放速度缩放值。
+    */
+    virtual float getSpeedScale() const;
 
     using ProcessBase::play;
     /**
     * @~english Play animation by animation name.
     * @~chinese 根据动画名称播放动画。
-    *
     * @param  animationName  @~english The animation name you want to play
     * @~chinese 要播放的动画名称。
     * @param  durationTo @~english The frames between two animation changing-over.
@@ -141,17 +140,31 @@ public:
     */
     virtual void play(const std::string& animationName, int durationTo = -1,  int loop = -1);
 
-    /**
-     * @~english Play animation by index, the other param is the same to `play`.
-     * @~chinese 根据帧索引播放动画，其余参数含义见`play`。已过期，请使用`playWithIndex`。
-     * @deprecated, please use playWithIndex
-     * @param  animationIndex  @~english the animation index you want to play.
-     * @~chinese 要播放的动画起始帧索引。
-     */
+    /** @deprecated Use `playWithIndex(int animationIndex,  int durationTo, int loop)` instead */
     CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+
+    /**
+    * @~english Play animation by index, the other param is the same to `play`.
+    * @~chinese 根据帧索引播放动画，其余参数含义见`play`。
+    * @param  animationIndex  @~english the animation index you want to play.
+    * @~chinese 要播放的动画起始帧索引。
+    */
     virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
+    /**
+    * @~english Update movementList and play animation, the other param is the same to `play`.
+    * @~chinese 刷新动画列表并播放动画，其余参数含义见`play`。
+    * @param movementNames @~english New movement names.
+    * @~chinese 新的动画列表名称集合。
+    */
     virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
+
+    /**
+    * @~english Update movementList and play animation, the other param is the same to `play`.
+    * @~chinese 刷新动画列表并播放动画，其余参数含义见`play`。
+    * @param movementIndexes @~english New movement indexes.
+    * @~chinese 新的动画列表索引集合。
+    */
     virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
@@ -168,34 +181,28 @@ public:
      *           gotoAndPlay(0);
      *           gotoAndPlay(15);
      *@endcode
+     * @param frameIndex @~english Index of frame.
+     * @~chinese 要跳转的帧索引。
      */
     virtual void gotoAndPlay(int frameIndex);
 
     /**
      * @~english Go to specified frame and pause current movement.
      * @~chinese 跳转至指定的帧并暂停当前动作。
+     * @param frameIndex @~english Index of frame.
+     * @~chinese 要跳转的帧索引。
      */
     virtual void gotoAndPause(int frameIndex);
 
-    /**
-    * @~english Pause the Process
-    * @~chinese 暂停进程
-    */
     virtual void pause() override;
-    /**
-    * @~english Resume the Process
-    * @~chinese 继续进程
-    */
     virtual void resume() override;
-    /**
-    * @~english Stop the Process
-    * @~chinese 停止进程
-    */
     virtual void stop() override;
 
     /**
-    * @~english Get movement count
-    * @~chinese 获得动作数量
+    * @~english Get movement count.
+    * @~chinese 获得动作数量。
+    * @return @~english Movement count.
+    * @~chinese 动作数量。
     */
     ssize_t getMovementCount() const;
 
@@ -209,23 +216,35 @@ public:
      */
     std::string getCurrentMovementID() const;
 
-    /**
-     * @~english Set armature's movement event callback function
-     * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
-     * @~chinese 设置骨骼的动作事件回调函数， 要对该事件取消关联，请调用`setMovementEventCallFunc(nullptr, nullptr);`
-     */
+    /** @deprecated Use `setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener)` instead */
     CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Ref *target, SEL_MovementEventCallFunc callFunc);
-
-    /**
-    * @~english Set armature's movement event callback function
-    * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
-    * @~chinese 设置骨骼的动作事件回调函数， 要对该事件取消关联，请调用`setMovementEventCallFunc(nullptr, nullptr);`
-    */
+    /** @deprecated Use `setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener)` instead */
     CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
     
+    /**
+    * @~english Set armature's movement event callback function.
+    * To disconnect this event, just `setMovementEventCallFunc(nullptr, nullptr)`;
+    * @~chinese 设置骨骼的动作事件回调函数， 要对该事件取消关联，请调用`setMovementEventCallFunc(nullptr, nullptr);`
+    * @param frameIndex @~english Movement event callback function.
+    * @~chinese 动作事件回调函数。
+    */
     void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
+
+    /**
+    * @~english Set armature's frame event callback function.
+    * To disconnect this event, just `setFrameEventCallFunc(nullptr, nullptr)`;
+    * @~chinese 设置骨骼的帧事件回调函数， 要对该事件取消关联，请调用`setFrameEventCallFunc(nullptr, nullptr);`
+    * @param frameIndex @~english Frame event callback function.
+    * @~chinese 帧事件回调函数。
+    */
     void setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
 
+    /**
+    * @~english Set animation data.
+    * @~chinese 设置动画数据。
+    * @param data @~english Animation data.
+    * @~chinese 动画数据。
+    */
     virtual void setAnimationData(AnimationData *data) 
     {
         if (_animationData != data)
@@ -235,6 +254,13 @@ public:
             _animationData = data; 
         }
     }
+
+    /**
+    * @~english Get animation data.
+    * @~chinese 获取动画数据。
+    * @return @~english Animation data.
+    * @~chinese 动画数据。
+    */
     virtual AnimationData *getAnimationData() const { return _animationData; }
 
 

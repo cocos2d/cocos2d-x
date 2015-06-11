@@ -48,12 +48,38 @@ struct AnimationInfo
 class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 {
 public:
+    /**
+    * @~english Allocates and initializes an `ActionTimelineData`.
+    * @~chinese 分配并且初始化一段`ActionTimelineData`。
+    * @param actionTag @~english Action tag.
+    * @~chinese 动作TAG。
+    * @return @~english An initialized `ActionTimelineData` which is marked as "autorelease".
+    * @~chinese 一段初始化的`ActionTimelineData`，该`ActionTimelineData`会自动被标记为“autorelease”（自动释放）。
+    */
     static ActionTimelineData* create(int actionTag);
 
+    /**
+    * @~english Set action tag.
+    * @~chinese 设置动作TAG。
+    * @param actionTag @~english Action tag.
+    * @~chinese 动作TAG。
+    */
     virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
+    /**
+    * @~english Get action tag.
+    * @~chinese 获取动作TAG。
+    * @return @~english Action tag.
+    * @~chinese 动作TAG。
+    */
     virtual int getActionTag() const { return _actionTag; }
 CC_CONSTRUCTOR_ACCESS:
     ActionTimelineData();
+    /**
+    * @~english Initializes an `ActionTimelineData`.
+    * @~chinese 初始化一段`ActionTimelineData`。
+    * @param actionTag  @~english Action tag.
+    * @~chinese 动作TAG。
+    */
     virtual bool init(int actionTag);
 protected:
     int _actionTag;
@@ -65,11 +91,27 @@ class CC_STUDIO_DLL ActionTimeline : public cocos2d::Action
 public:
     friend class Frame;
 
+    /**
+    * @~english Allocates and initializes an `ActionTimeline`.
+    * @~chinese 分配并且初始化一段`ActionTimeline`。
+    * @param actionTag @~english Action tag.
+    * @~chinese 动作TAG。
+    * @return @~english An initialized `ActionTimeline` which is marked as "autorelease".
+    * @~chinese 一段初始化的`ActionTimeline`，该`ActionTimelineData`会自动被标记为“autorelease”（自动释放）。
+    */
     static ActionTimeline* create();
 
     ActionTimeline();
     virtual ~ActionTimeline();
 
+    /**
+    * @~english Play specified animation.
+    * @~chinese 播放指定的动画。
+    * @param animationName @~english Name of specified animation.
+    * @~chinese 指定动画的名称。
+    * @param loop @~english Is play loop.
+    * @~chinese 是否循环播放。
+    */
     virtual void play(std::string animationName, bool loop);
 
     virtual bool init();
@@ -137,65 +179,128 @@ public:
 
     /** @~english Set the animation speed, this will speed up or slow down the speed. 
     * @~chinese 设置动画速度，使动画加速或减速。
+    * @param speed @~english Animation speed.
+    * @~chinese 动画播放速度。
     */
     virtual void  setTimeSpeed(float speed) { _timeSpeed = speed; }
 
     /** @~english Get current animation speed.
      *   @~chinese 获取当前动画速度。
+     * @return @~english Animation speed.
+     * @~chinese 动画播放速度。
      */
     virtual float getTimeSpeed() const { return _timeSpeed; }
 
-    /** @~english duration of the whole action.
-    *   @~chinese 整体动画时长。
+    /** @~english Set duration of the whole action.
+    *   @~chinese 设置整体动画时长。
+    * @param duration @~english Animation duration.
+    * @~chinese 动画时长。
     */
     virtual void setDuration(int duration) { _duration = duration; }
+    /** @~english Get duration of the whole action.
+    *   @~chinese 获取动画时长。
+    * @return @~english Animation duration.
+    * @~chinese 动画时长。
+    */
     virtual int  getDuration() const { return _duration; }
 
-    /** @~english Start frame index of this action.
+    /** @~english Get start frame index of this action.
     *   @~chinese 动画的起始帧索引。
+    * @return @~english Start frame index.
+    * @~chinese 起始帧索引。
     */
     virtual int getStartFrame() const { return _startFrame; }
 
-    /** @~english End frame of this action..
+    /** @~english End frame of this action.
     *   When action play to this frame, if action is not loop, then it will stop,  or it will play from start frame again. 
     *   @~chinese 动画的结束帧索引。
     *   当动画播放到该帧时，如果非循环播放，则动画停止。否则会从起始帧从头播放。
+    * @return @~english End frame.
+    * @~chinese 结束帧索引。
     */
     virtual int  getEndFrame() const { return _endFrame; }
 
     /** @~english Set current frame index, this will cause action plays to this frame. 
     *   @~chinese 设置当前帧索引，将会使动画播放至该帧。
+    * @param frameIndex @~english Current frame index.
+    * @~chinese 当前帧索引。
     */
     virtual void setCurrentFrame(int frameIndex);
     /** @~english Get current frame. 
     *   @~chinese 获取当前帧索引。
+    * @return @~english Current frame index.
+    * @~chinese 当前帧索引。
     */
     virtual int  getCurrentFrame() const { return _currentFrame; }
 
-    /** @~english add Timeline to ActionTimeline.
+    /** @~english Add Timeline to ActionTimeline.
     *   @~chinese 将时间表加入动画时间表。
+    * @param timeline @~english Timeline.
+    * @~chinese 时间表。
     */
     virtual void addTimeline(Timeline* timeline);
+    /** @~english Remove Timeline to ActionTimeline.
+    *   @~chinese 将时间表从动画时间表中移除。
+    * @param timeline @~english Timeline.
+    * @~chinese 时间表。
+    */
     virtual void removeTimeline(Timeline* timeline);
 
+    /** @~english Get timelines.
+    *   @~chinese 获取时间表列表。
+    * @return @~english Timelines.
+    * @~chinese 时间表列表。
+    */
     virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
     
     /** AnimationInfo*/
+    /** @~english Add animationInfo.
+    *   @~chinese 增加动画信息。
+    * @param animationInfo @~english Animation info.
+    * @~chinese 动画信息。
+    */
     virtual void addAnimationInfo(const AnimationInfo& animationInfo);
+    /** @~english Remove animationInfo.
+    *   @~chinese 移除动画信息。
+    * @param animationName @~english Name of animation info.
+    * @~chinese 动画信息的名称。
+    */
     virtual void removeAnimationInfo(std::string animationName);
+    /** @~english Is animationInfo exists.
+    *   @~chinese 是否动画信息存在。
+    * @param animationName @~english Name of animation info.
+    * @~chinese 动画信息的名称。
+    * @return @~english Is exists.
+    * @~chinese 是否存在。
+    */
     virtual bool IsAnimationInfoExists(const std::string& animationName);
+    /** @~english Get animationInfo.
+    *   @~chinese 获取动画信息。
+    * @param animationInfo @~english Animation info name.
+    * @~chinese 动画信息的名称。
+    */
     virtual AnimationInfo getAnimationInfo(const std::string& animationName);
 
-    /** @~english Set ActionTimeline's frame event callback function .
+    /** @~english Set ActionTimeline's frame event callback function.
     *   @~chinese 设置动画时间表的帧事件回调函数。
+    * @param listener @~english Callback function .
+    * @~chinese 回调函数。
     */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
+    /** @~english Clear ActionTimeline's frame event callback function.
+    *   @~chinese 清除动画时间表的帧事件回调函数。
+    */
     void clearFrameEventCallFunc();
 
-    /** @~english Last frame callback will call when arriving last frame .
+    /** @~english Last frame callback will call when arriving last frame.
     *   @~chinese 动画播放至最后一帧时，将会调用最后一帧的回调。
+    * @param listener @~english Callback function .
+    * @~chinese 回调函数。
     */
     void setLastFrameCallFunc(std::function<void()> listener);
+    /** @~english Clear last frame callback.
+    *   @~chinese 清除动画播放至最后一帧时调用最后一帧的回调。
+    */
     void clearLastFrameCallFunc();
 
     /** Inherit from Action. */

@@ -93,16 +93,35 @@ public:
 	/** @deprecated Use getInstance() instead */
 	CC_DEPRECATED_ATTRIBUTE static DataReaderHelper *sharedDataReaderHelper() { return DataReaderHelper::getInstance(); }
 
+    /**
+    * @~english Get singleton.
+    * @~chinese 获取单例。
+    * @return @~english Singleton of `DataReaderHelper`.
+    * @~chinese 数据读取器的单例。
+    */
 	static DataReaderHelper *getInstance();
 
     /**
      * @~english Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
      * @~chinese 缩放位置数据，作用于多分辨率适配。在已经读取的数据上不起作用。
+     * @param scale @~english The scale for position data.
+     * @~chinese 位置数据缩放值。
      */
     static void setPositionReadScale(float scale);
+    /**
+    * @~english Get the scale for the position data, used for multiresolution adapter
+    * It won't effect the data already read.
+    * @~chinese 获取位置数据的缩放值，作用于多分辨率适配。在已经读取的数据上不起作用。
+    * @return @~english The scale for position data.
+    * @~chinese 位置数据缩放值。
+    */
     static float getPositionReadScale();
 
+    /**
+    * @~english Clear and destory singleton.
+    * @~chinese 退出并销毁单例。
+    */
     static void purge();
 public:
 	/**
@@ -115,11 +134,34 @@ public:
      */
     ~DataReaderHelper();
 
+    /**
+    * @~english Add data from file.
+    * @~chinese 从文件读取并添加数据。
+    * @param filePath @~english The path of file.
+    * @~chinese 文件的路径。
+    */
     void addDataFromFile(const std::string& filePath);
+
+    /**
+    * @~english Add data from file asynchronous.
+    * @~chinese 异步从文件读取并添加数据。
+    * @param filePath @~english The path of file.
+    * @~chinese 文件的路径。
+    */
     void addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
+    /**
+    * @~english Add data callback asynchronous.
+    * @~chinese 异步添加数据回调。
+    */
     void addDataAsyncCallBack(float dt);
 
+    /**
+    * @~english Remove config file.
+    * @~chinese 移除控制文件。
+    * @param configFile @~english The path of config file.
+    * @~chinese 控制文件的路径。
+    */
     void removeConfigFile(const std::string& configFile);
 public:
 
@@ -128,8 +170,10 @@ public:
      * When you add a new xml, the data already saved will be keeped.
      * @~chinese 把从Dragon Bone flash工具导出的XML转换为数据并保存。添加新的xml时，已保存的数据将保留。
      *
-     * @param xmlPath @~english The cache of the xml
-     * @~chinese xml缓存
+     * @param xmlPath @~english The cache of the xml.
+     * @~chinese xml缓存。
+     * @param dataInfo @~english data info.
+     * @~chinese 数据信息。
      */
     static void addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo = nullptr);
 
@@ -137,15 +181,22 @@ public:
 
     /**
      * @~english Decode Armature Datas from xml export from Dragon Bone flash tool
-     * @~chinese 将Dragon Bone flash工具导出的XML中的数据解码。
+     * @~chinese 将Dragon Bone flash工具导出的XML中的骨骼数据解码。
      */
     static ArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo);
+    /**
+    * @~english Decode bone Datas from xml export from Dragon Bone flash tool
+    * @~chinese 将Dragon Bone flash工具导出的XML中的骨头数据解码。
+    */
     static BoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML, DataInfo *dataInfo);
+    /**
+    * @~english Decode bone display Datas from xml export from Dragon Bone flash tool
+    * @~chinese 将Dragon Bone flash工具导出的XML中的骨头显示数据解码。
+    */
     static DisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo);
-
     /**
     * @~english Decode ArmatureAnimation Datas from xml export from Dragon Bone flash tool
-    * @~chinese 将Dragon Bone flash工具导出的XML中的骨骼数据解码。
+    * @~chinese 将Dragon Bone flash工具导出的XML中的骨骼动画数据解码。
     */
     static AnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML, DataInfo *dataInfo);
     static MovementData *decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData, DataInfo *dataInfo);

@@ -47,16 +47,37 @@ public:
 	/** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper(){ return SpriteFrameCacheHelper::getInstance(); }
 
+    /**
+    * @~english Get singleton.
+    * @~chinese 获取单例。
+    * @return @~english Singleton of `SpriteFrameCacheHelper`.
+    * @~chinese 骨骼数据管理器的单例。
+    */
     static SpriteFrameCacheHelper *getInstance();
 
+    /**
+    * @~english Destory singleton.
+    * @~chinese 销毁单例。
+    */
     static void purge();
 public:
 
     /**
-     *	@brief	@~english Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     * @~english Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name.
      * @~chinese 为CCSpriteFrameCache添加精灵帧，将会保存显示名称及相关图片名称。
+     * @param plistPath @~english Path of plist.
+     * @~chinese plist路径。
+     * @param imagePath @~english Path of image.
+     * @~chinese 图片路径。
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
+
+    /**
+    * @~english Remove sprite frame from CCSpriteFrameCache.
+    * @~chinese 为CCSpriteFrameCache移除精灵帧。
+    * @param plistPath @~english Path of plist.
+    * @~chinese plist路径。
+    */
     void removeSpriteFrameFromFile(const std::string& plistPath);
 
 private:

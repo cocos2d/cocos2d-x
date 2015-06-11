@@ -98,13 +98,49 @@ public:
      */
     virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
+    /*
+    * @~english Set animation.
+    * @~chinese 设置动画。
+    * @param animation @~english The animation.
+    * @~chinese 动画。
+    */
     inline void setAnimation(ArmatureAnimation *animation) { _animation = animation; }
+    /*
+    * @~english Get animation.
+    * @~chinese 获取动画。
+    * @return @~english The animation.
+    * @~chinese 动画。
+    */
     inline ArmatureAnimation *getAnimation() const { return _animation; }
 
+    /**
+    * @~english Go to specified frame and play current movement.
+    * @~chinese 跳转至指定的帧并从该帧开始播放当前动作。
+    * @param frameIndex @~english Index of frame.
+    * @~chinese 要跳转的帧索引。
+    */
     virtual void gotoAndPlay(int frameIndex);
+    /**
+    * @~english Go to specified frame and pause current movement.
+    * @~chinese 跳转至指定的帧并暂停当前动作。
+    * @param frameIndex @~english Index of frame.
+    * @~chinese 要跳转的帧索引。
+    */
     virtual void gotoAndPause(int frameIndex);
 
+    /*
+    * @~english Set movBoneData.
+    * @~chinese 设置活动骨头数据。
+    * @param data @~english The movBoneData.
+    * @~chinese 活动骨头数据。
+    */
     virtual void setMovementBoneData(MovementBoneData *data) { _movementBoneData = data; }
+    /*
+    * @~english Get movBoneData.
+    * @~chinese 获取活动骨头数据。
+    * @return @~english The movBoneData.
+    * @~chinese 活动骨头数据。
+    */
     virtual const MovementBoneData *getMovementBoneData() const { return _movementBoneData; }
 protected:
 
