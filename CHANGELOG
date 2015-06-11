@@ -3,7 +3,6 @@ cocos2d-x-3.7  ??
     [NEW]           3rd: updated rapidjson to v1.0.2
     [NEW]           3d: added physics3d support
     [NEW]           console: support build & run Android Studio project
-    [NEW]           Audio: added support on WP8.1, now it supports wav format
     [NEW]           C++: added ActionFloat
     [NEW]           C++: supported physical keyboard on WinRT
     [NEW]           C++: added Android Studio support
@@ -16,15 +15,22 @@ cocos2d-x-3.7  ??
     [NEW]           3d: add opengl version project/unproject function in camera.
     [NEW]           ui: button add BMFont title support
     [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+    [NEW]           audio: added support on WP8.1, now it supports wav format
     [NEW]           audio: Added MP3 support to winrt audio
+    [NEW]           audio: Added OGG support to winrt audio
     [NEW]           win10: Added Windows 10.0 Universal App(UWP) support.
     
+    [FIX]           Label: Improve rendering of letter's inner shapes when outline is used.
+    [FIX]           network: Win32 CURL doesn't support zlib.
+    [FIX]           studio: Fix ActionNode memory leaks.
+    [FIX]           studio: Fix CocoLoader destructor memory release bug.
     [FIX]           network: Fix memory leak of HttpClient on iOS and Mac platform.
-    [FIX]           android++: Improve UserDefault's robustness, now the converting behavior is the same as iOS platform.
+    [FIX]           android: Improve UserDefault's robustness, now the converting behavior is the same as iOS platform.
+    [FIX]           android: Fix VideoPlayer on Android ignore search paths.
     [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
     [FIX]           audio: Fixed audio can't resume if it is interrupted by an incoming phone call.
     [FIX]           audio: Fixed SimpleAudioEngine::playEffect() lagged on Android 5.0.x
-    [FIX]           ui: TextField scale factor is wrong with multiline text.
+    [FIX]           ui: Text scale factor is wrong with multiline text.
     [FIX]           3d: skybox can't move to other position except origin point in world space
     [FIX]           3d: terrain can't move to other position except origin point in world space
     [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
@@ -35,6 +41,7 @@ cocos2d-x-3.7  ??
     [FIX]           Label: position is wrong if label content is changed after invoking `getLetter(letterIndex)`
     [FIX]           Label: shadow effect cause OpenGL error on iOS
     [FIX]           Label: outline effect doesn't match characters well
+    [FIX]           Label: Fixed system font label line height calculation is wrong  on Android.
     [FIX]           ProgressTimer: `setSprite()` doesn't take effect
     [FIX]           Sprite3D: setGLProgram() does not work
     [FIX]           Sprite3D: transition breaks when there is a Sprite3D in the scene

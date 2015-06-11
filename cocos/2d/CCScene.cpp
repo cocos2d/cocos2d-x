@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCFrameBuffer.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
@@ -159,7 +160,7 @@ void Scene::onProjectionChanged(EventCustom* event)
 
 static bool camera_cmp(const Camera* a, const Camera* b)
 {
-    return a->getDepth() < b->getDepth();
+    return a->getRenderOrder() < b->getRenderOrder();
 }
 
 void Scene::render(Renderer* renderer)
@@ -186,7 +187,7 @@ void Scene::render(Renderer* renderer)
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-        
+        camera->apply();
         //clear background with max depth
         camera->clearBackground(1.0);
         //visit the scene
@@ -215,6 +216,7 @@ void Scene::render(Renderer* renderer)
 #endif
 
     Camera::_visitingCamera = nullptr;
+    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()
@@ -254,13 +256,17 @@ void Scene::setNavMeshDebugCamera(Camera *camera)
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
+#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
+#endif
 }
 
 void Scene::addChild(Node* child, int zOrder, const std::string &name)
 {
     Node::addChild(child, zOrder, name);
+#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
+#endif
 }
 
 Scene* Scene::createWithPhysics()
@@ -293,8 +299,6 @@ bool Scene::initWithPhysics()
         
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         Physics3DWorldDes info;
-        //TODO: FIX ME
-        //info.isDebugDrawEnabled = true;
         CC_BREAK_IF(! (_physics3DWorld = Physics3DWorld::create(&info)));
         _physics3DWorld->retain();
 #endif
@@ -318,29 +322,6 @@ void Scene::addChildToPhysicsWorld(Node* child)
             if (node->getPhysicsBody())
             {
                 _physicsWorld->addBody(node->getPhysicsBody());
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
-    }
-#endif
-    
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    if (_physics3DWorld)
-    {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            static std::string comName = Physics3DComponent::getPhysics3DComponentName();
-            auto com = static_cast<Physics3DComponent*>(node->getComponent(comName));
-            if (com)
-            {
-                com->addToPhysicsWorld(_physics3DWorld);
             }
             
             auto& children = node->getChildren();

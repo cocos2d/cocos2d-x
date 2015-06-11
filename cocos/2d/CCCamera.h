@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 
@@ -57,10 +58,9 @@ enum class CameraFlag
     USER7 = 1 << 7,
     USER8 = 1 << 8,
 };
-
 /**
-* Defines a camera .
-*/
+ * Defines a camera .
+ */
 class CC_DLL Camera :public Node
 {
     friend class Scene;
@@ -200,12 +200,17 @@ public:
     /**
      * set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      */
-    void setDepth(int depth);
+    void setDepth(int8_t depth);
     
     /**
      * get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      */
-    int getDepth() const { return _depth; }
+    int8_t getDepth() const { return _depth; }
+    
+    /**
+     get rendered order
+     */
+    int getRenderOrder() const;
     
     /**
      * Get the frustum's far plane.
@@ -230,9 +235,22 @@ public:
      * Get the default camera of the current running scene.
      */
     static Camera* getDefaultCamera();
-    
+    /**
+     Before rendering scene with this camera, the background need to be cleared.
+     */
     void clearBackground(float depth);
-    
+    /**
+     Apply the FBO, RenderTargets and viewport.
+     */
+    void apply();
+    /**
+     Set FBO, which will attacha several render target for the rendered result.
+    */
+    void setFrameBufferObject(experimental::FrameBuffer* fbo);
+    /**
+     Set Viewport for camera.
+     */
+    void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -249,7 +267,8 @@ CC_CONSTRUCTOR_ACCESS:
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
-    
+    void applyFrameBufferObject();
+    void applyViewport();
 protected:
 
     Scene* _scene; //Scene camera belongs to
@@ -268,8 +287,17 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
-    int  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
+    int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
+    
+    experimental::Viewport _viewport;
+    
+    experimental::FrameBuffer* _fbo;
+protected:
+    static experimental::Viewport _defaultViewport;
+public:
+    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
+    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 };
 
 NS_CC_END

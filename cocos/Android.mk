@@ -183,6 +183,7 @@ renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
 renderer/CCVertexIndexData.cpp \
 renderer/ccGLStateCache.cpp \
+renderer/CCFrameBuffer.cpp \
 renderer/ccShaders.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCDeprecated.cpp \

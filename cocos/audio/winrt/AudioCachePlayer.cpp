@@ -37,6 +37,7 @@ inline void ThrowIfFailed(HRESULT hr)
 // AudioCache
 AudioCache::AudioCache()
     : _isReady(false)
+    , _retry(false)
     , _fileFullPath("")
     , _srcReader(nullptr)
     , _fileFormat(FileFormat::UNKNOWN)
@@ -57,6 +58,10 @@ AudioCache::~AudioCache()
 
 void AudioCache::readDataTask()
 {
+    if (_isReady) {
+        return;
+    }
+
     std::wstring path(_fileFullPath.begin(), _fileFullPath.end());
 
     if (nullptr != _srcReader) {
@@ -68,30 +73,33 @@ void AudioCache::readDataTask()
     {
     case FileFormat::WAV:
         _srcReader = new (std::nothrow) WAVReader();
-        if (_srcReader && _srcReader->initialize(_fileFullPath)) {
-            _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
-            _audInfo._wfx = _srcReader->getWaveFormatInfo();
-            _isReady = true;
-            invokeCallbacks();
-        }
         break;
 
     case FileFormat::OGG:
+        _srcReader = new (std::nothrow) OGGReader();
         break;
 
     case FileFormat::MP3:
         _srcReader = new (std::nothrow) MP3Reader();
-        if (_srcReader && _srcReader->initialize(_fileFullPath)) {
-            _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
-            _audInfo._wfx = _srcReader->getWaveFormatInfo();
-            _isReady = true;
-            invokeCallbacks();
-        }
+
         break;
 
     case FileFormat::UNKNOWN:
     default:
         break;
+    }
+
+    if (_srcReader && _srcReader->initialize(_fileFullPath)) {
+        _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
+        _audInfo._wfx = _srcReader->getWaveFormatInfo();
+        _isReady = true;
+        _retry = false;
+        invokeCallbacks();
+    }
+
+    if (!_isReady) {
+        _retry = true;
+        log("Failed to read input file: %s.\n", _fileFullPath.c_str());
     }
 }
 
@@ -105,6 +113,10 @@ void AudioCache::addCallback(const std::function<void()> &callback)
         _callbacks.push_back(callback);
     }
     _cbMutex.unlock();
+
+    if (_retry) {
+        readDataTask();
+    }
 }
 
 void AudioCache::invokeCallbacks()
@@ -290,6 +302,9 @@ void AudioPlayer::setVolume(float volume)
         if (FAILED(_xaMasterVoice->SetVolume(volume))) {
             error();
         }
+        else {
+            _volume = volume;
+        }
     }
 }
 
@@ -371,7 +386,7 @@ bool AudioPlayer::_play(bool resume)
 
         if (_state == AudioPlayerState::PAUSED && !resume || nullptr == _xaSourceVoice) break;
 
-        if (FAILED(_xaSourceVoice->Start())) {
+        if (FAILED(_xaMasterVoice->SetVolume(_volume)) || FAILED(_xaSourceVoice->Start())) {
             error();
         }
         else {

@@ -199,10 +199,10 @@ class CocosZipInstaller(object):
             print("==> Extraction done!")
 
     def ask_to_delete_downloaded_zip_file(self):
-        ret = self.get_input_value("==> Do you want to keep '%s'? So you don't have to download it later. (yes/no): " % self._filename)
+        ret = self.get_input_value("==> Would you like to save '%s'? So you don't have to download it later. [Yes/no]: " % self._filename)
         ret = ret.strip()
         if ret != 'yes' and ret != 'y' and ret != 'no' and ret != 'n':
-            print("==> Cache the dependency libraries by default")
+            print("==> Saving the dependency libraries by default")
             return False
         else:
             return True if ret == 'no' or ret == 'n' else False

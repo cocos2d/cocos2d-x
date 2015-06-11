@@ -25,9 +25,9 @@ cocos2d-x is:
 Git user attention
 -----------------------
 
-1. clone the repo from GitHub.
+1. Clone the repo from GitHub.
 
-         $ git clone git@github.com:cocos2d/cocos2d-x.git
+         $ git clone https://github.com/cocos2d/cocos2d-x.git
 
 2. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
 
