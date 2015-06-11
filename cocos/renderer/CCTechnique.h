@@ -43,7 +43,18 @@ class Pass;
 class GLProgramState;
 class Material;
 
-/// Technique
+/**
+ * @addtogroup support
+ * @{
+ */
+
+/**
+ * @class Technique
+ * @brief
+ * @~english
+ * Material contains one or more techniques. Each technique can contains one or more passes. And material can active one technique for drawing.
+ * @~chinese 材质包含一个或者多个Technique，每个Technique可以包含一个或者多个Pass，材质在使用时可以激活一个Technique。
+ */
 class CC_DLL Technique : public RenderState
 {
     friend class Material;
@@ -53,30 +64,62 @@ class CC_DLL Technique : public RenderState
     friend class Mesh;
 
 public:
-    /** Creates a new Technique with a GLProgramState.
-     Method added to support legacy code
+    /** @~english Creates a new Technique with a GLProgramState. Method added to support legacy code.
+     * @~chinese 用GLProgramState创建一个新的Technique，加入该方法主要为保持旧代码的兼容性。
+     * @param parent @~english Material who owns this technique. @~chinese 拥有这个Technique的材质。
+     * @param state @~english GLProgramState used to create the technique. @~chinese 用来创建technique的GLProgramState。
+     * @return @~english Created Technique. @~chinese 新创建的Technique。
      */
     static Technique* createWithGLProgramState(Material* parent, GLProgramState* state);
+    
+    /**
+     * @~english Create Technique.
+     * @~chinese 创建新的Technique。
+     * @param parent @~english Material who owns this technique. @~chinese 拥有这个Technique的材质。
+     * @return @~english Created Technique. @~chinese 新创建的Technique。
+     */
     static Technique* create(Material* parent);
 
-    /** Adds a new pass to the Technique.
-     Order matters. First added, first rendered
+    /** 
+     * @~english Adds a new pass to the Technique. Order matters. First added, first rendered
+     * @~chinese 添加一个pass, 其中pass的渲染顺序按添加顺序。
+     * @param pass @~english Added pass. @~chinese 待添加的pass。
      */
     void addPass(Pass* pass);
 
-    /** Returns the name of the Technique */
+    /** 
+     * @~english Gets the name of the Technique 
+     * @~chinese 获取Technique的名称。
+     * @return @~english Technique name. @~chinese Technique的名称。
+     */
     std::string getName() const;
 
-    /** Returns the Pass at given index */
+    /**
+     * @~english Gets the Pass at given index.
+     * @~chinese 获取给定索引处的Pass。
+     * @return @~english Pass at specific index. @~chinese 指定索引处的Pass。
+     */
     Pass* getPassByIndex(ssize_t index) const;
 
-    /** Returns the number of Passes in the Technique */
+    /**
+     * @~english Gets the number of Passes in the Technique.
+     * @~chinese 获取Technique中Pass的数量。
+     * @return @~english Number of Pass. @~chinese Pass的数量。
+     */
     ssize_t getPassCount() const;
 
-    /** Returns the list of passes */
+    /**
+     * @~english Gets the list of passes.
+     * @~chinese 获取Pass列表。
+     * @return @~english List of Pass. @~chinese Pass列表。
+     */
     const Vector<Pass*>& getPasses() const;
 
-    /** Returns a new clone of the Technique */
+    /**
+     * @~english Gets a new clone of the Technique.
+     * @~chinese 获取Technique的拷贝。
+     * @return @~english Copy of Technique. @~chinese Techinque的拷贝。
+     */
     Technique* clone() const;
 
 protected:
@@ -89,6 +132,11 @@ protected:
     std::string _name;
     Vector<Pass*> _passes;
 };
+
+/**
+ end of support group
+ @}
+ */
 
 NS_CC_END
 
