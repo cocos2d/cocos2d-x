@@ -329,262 +329,291 @@ namespace ui {
          */
         void setVerticalEdge(VerticalEdge vEage);
 
-        /**@~english
+        /**
+         * @~english
          * Query left margin of owner relative to its parent.
          * @~chinese 
-         * 相对于其父查询左边框的所有者。
-         *@return @~english Left margin in float.
-         * @~chinese 左边框在浮动。
+         * 获取所有者的左边距
+         * @return @~english Left margin in float.
+         * @~chinese 左边距浮点数
          */
         float getLeftMargin()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change left margin of owner relative to its parent.
          * @~chinese 
-         * 相对于其父改变左边框的所有者。
-         *@param margin @~english Margin in float.
-         * @~chinese 在浮动幅度。
+         * 设置所有者的左边距
+         * @param margin @~english Margin in float.
+         * @~chinese 左边距浮点数
          */
         void setLeftMargin(float margin);
 
-        /**@~english
+        /**
+         * @~english
          * Query the right margin of owner relative to its parent.
          * @~chinese 
-         * 查询的权利相对于母公司的所有者。
-         *@return @~english Right margin in float.
-         * @~chinese 右边距在浮动。
+         * 获取所有者的右边距
+         * @return @~english Right margin in float.
+         * @~chinese 右边距浮点数
          */
         float getRightMargin()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change right margin of owner relative to its parent.
          * @~chinese 
-         * 改变正确的相对于母公司的所有者。
-         *@param margin @~english Margin in float.
-         * @~chinese 在浮动幅度。
+         * 设置所有者的右边距
+         * @param margin @~english Margin in float.
+         * @~chinese 右边距浮点数
          */
         void setRightMargin(float margin);
 
-        /**@~english
+        /**
+         * @~english
          * Query the top margin of owner relative to its parent.
          * @~chinese 
-         * 查询业主的顶边相对于母公司。
-         *@return @~english Top margin in float.
-         * @~chinese 在浮顶边。
+         * 获取所有者的上边距
+         * @return @~english Top margin in float.
+         * @~chinese 上边距浮点数
          */
         float getTopMargin()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change the top margin of owner relative to its parent.
          * @~chinese 
-         * 改变老板的顶边相对于母公司。
-         *@param margin @~english Margin in float.
-         * @~chinese 在浮动幅度。
+         * 设置所有者的上边距
+         * @param margin @~english Margin in float.
+         * @~chinese 上边距浮点数
          */
         void setTopMargin(float margin);
 
-        /**@~english
+        /**
+         * @~english
          * Query the bottom margin of owner relative to its parent.
          * @~chinese 
-         * 查询底部相对于母公司的所有者。
-         *@return @~english Bottom margin in float.
-         * @~chinese 底部边距在浮动。
+         * 获取所有者的下边距
+         * @return @~english Bottom margin in float.
+         * @~chinese 下边距浮点数
          */
         float getBottomMargin()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change the bottom margin of owner relative to its parent.
          * @~chinese 
-         * 改变老板的底部边距相对于母公司。
-         *@param margin @~english in float.
-         * @~chinese 在浮动。
+         * 设置所有者的下边距
+         * @param margin @~english in float.
+         * @~chinese 下边距浮点数
          */
         void setBottomMargin(float margin);
 
-        /**@~english
+        /**
+         * @~english
          * Query owner's content size.
          * @~chinese 
-         * 查询内容所有者的大小。
-         *@return @~english Owner's content size.
-         * @~chinese 主人的内容大小。
+         * 获取所有者内容的尺寸
+         * @return @~english Owner's content size.
+         * @~chinese 所有者的内容尺寸
          */
         const Size& getSize()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change the content size of owner.
          * @~chinese 
-         * 更改的内容所有者的大小。
-         *@param size @~english Content size in @see `Size`.
-         * @~chinese 内容大小
+         * 更改所有者的内容尺寸
+         * @param size @~english Content size in @see `Size`.
+         * @~chinese 内容尺寸
          */
         void setSize(const Size& size);
 
-        /**@~english
+        /**
+         * @~english
          * Query whether percent width is enabled or not.
          * @~chinese 
-         * 查询是否启用百分比宽度。
-         *@return @~english True if percent width is enabled, false, otherwise.
-         * @~chinese 真如果启用了百分比宽度,假,否则。
+         * 查询是否启用了百分比控制宽度
+         * @return @~english True if percent width is enabled, false, otherwise.
+         * @~chinese 如果启用则返回true，否则返回false
          */
         bool isPercentWidthEnabled()const;
 
-        /**@~english
+        /**
+         * @~english
          * Toggle enable percent width.
          * @~chinese 
-         * 切换使百分比宽度。
-         *@param isUsed @~english True if percent width is enabled, false otherwise.
-         * @~chinese 否则真如果启用了百分比宽度,假。
+         * 百分比控制宽度的开关
+         * @param isUsed @~english True if percent width is enabled, false otherwise.
+         * @~chinese 如果传入true则开启百分比控制宽度，传入false则为关闭
          */
         void setPercentWidthEnabled(bool isUsed);
 
-        /**@~english
+        /**
+         * @~english
          * Query content size width of owner.
          * @~chinese 
-         * 查询内容所有者的大小宽度。
-         *@return @~english Content size width in float.
-         * @~chinese 内容大小宽度在浮动。
+         * 查询所有者的内容宽度。
+         * @return @~english Content size width in float.
+         * @~chinese 内容宽度浮点数。
          */
         float getSizeWidth()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change content size width of owner.
          * @~chinese 
-         * 内容所有者的大小宽度变化。
-         *@param width @~english Content size width in float.
-         * @~chinese 内容大小宽度在浮动。
+         * 设置所有者的内容宽度
+         * @param width @~english Content size width in float.
+         * @~chinese 内容宽度浮点数
          */
         void setSizeWidth(float width);
 
-        /**@~english
+        /**
+         * @~english
          * Query percent width of owner.
          * @~chinese 
-         * 查询百分比宽度的所有者。
-         *@return @~english percent width in float.
-         * @~chinese 在浮动百分比宽度。
+         * 查询所有者的百分比宽度。
+         * @return @~english percent width in float.
+         * @~chinese 百分比宽度浮点数。
          */
         float getPercentWidth()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change percent width of owner.
          * @~chinese 
-         * 变化百分比宽度的所有者。
-         *@param percentWidth @~english Percent Width in float.
-         * @~chinese 在浮动百分比宽度。
+         * 设置所有者的百分比宽度
+         * @param percentWidth @~english Percent Width in float.
+         * @~chinese 百分比宽度浮点数
          */
         void setPercentWidth(float percentWidth);
 
-        /**@~english
-         * Query whehter percent height is enabled or not.
+        /**
+         * @~english
+         * Query whether percent height is enabled or not.
          * @~chinese 
-         * 启用查询whehter百分比高度。
-         *@return @~english True if percent height is enabled, false otherwise.
-         * @~chinese 否则真如果启用了百分比高,假。
+         * 查询是否启用百分比控制高度
+         * @return @~english True if percent height is enabled, false otherwise.
+         * @~chinese 如果启用则返回true，否则返回false
          */
         bool isPercentHeightEnabled()const;
 
-        /**@~english
+        /**
+         * @~english
          * Toggle enable percent height.
          * @~chinese 
-         * 切换使高度百分比。
-         *@param isUsed @~english True if percent height is enabled, false otherwise.
-         * @~chinese 否则真如果启用了百分比高,假。
+         * 百分比控制高度的开关
+         * @param isUsed @~english True if percent height is enabled, false otherwise.
+         * @~chinese 传入true则开启百分比控制高度，否则为关闭
          */
         void setPercentHeightEnabled(bool isUsed);
 
-        /**@~english
+        /**
+         * @~english
          * Query size height of owner.
          * @~chinese 
-         * 查询大小老板的高度。
-         *@return @~english Size height in float.
-         * @~chinese 大小高度浮动。
+         * 查询所有者的高度大小
+         * @return @~english Size height in float.
+         * @~chinese 高度浮点数
          */
         float getSizeHeight()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change size height of owner.
          * @~chinese 
-         * 改变大小老板的高度。
-         *@param height @~english Size height in float.
-         * @~chinese 大小高度浮动。
+         * 改变所有者的高度
+         * @param height @~english Size height in float.
+         * @~chinese 高度(浮点数)
          */
         void setSizeHeight(float height);
 
-        /**@~english
-         * Query percent hieght of owner.         
+        /**
+         * @~english
+         * Query percent height of owner.
          * @~chinese 
-         * 查询百分比高度的所有者。
-         *@return @~english Percent height in float.
-         * @~chinese 高度浮动百分比。
+         * 获取所有者的百分比高度
+         * @return @~english Percent height in float.
+         * @~chinese 高度百分比(浮点数)
          */
         float getPercentHeight()const;
 
-        /**@~english
+        /**
+         * @~english
          * Change percent height value of owner.
          * @~chinese 
-         * 变化百分比高度所有者的价值。
-         *@param percentHeight @~english Percent height in float.
-         * @~chinese 高度浮动百分比。
+         * 设置高度百分比
+         * @param percentHeight @~english Percent height in float.
+         * @~chinese 高度百分比(浮点数)
          */
         void setPercentHeight(float percentHeight);
 
-        /**@~english
+        /**
+         * @~english
          * Query whether stretch width is enabled or not.
          * @~chinese 
-         * 查询是否启用伸展宽度。
-         *@return @~english True if stretch width is enabled, false otherwise.
-         * @~chinese 否则真如果启用了拉伸宽度,假。
+         * 查询是否启用自动伸缩宽度。
+         * @return @~english True if stretch width is enabled, false otherwise.
+         * @~chinese 如果启用了则返回true，否则返回false
          */
         bool isStretchWidthEnabled()const;
 
-        /**@~english
+        /**
+         * @~english
          * Toggle enable stretch width.
          * @~chinese 
-         * 切换使伸展宽度。
-         *@param isUsed @~english True if enable stretch width, false otherwise.
-         * @~chinese 如果启用伸展宽度,否则假。
+         * 启用关闭自动伸缩宽度的开关
+         * @param isUsed @~english True if enable stretch width, false otherwise.
+         * @~chinese 如果传入true则开启，传入false则关闭
          */
         void setStretchWidthEnabled(bool isUsed);
 
-        /**@~english
+        /**
+         * @~english
          * Query whether stretch height is enabled or not.
          * @~chinese 
-         * 查询是否启用了拉伸高度。
-         *@return @~english True if stretch height is enabled, false otherwise.
-         * @~chinese 否则真如果启用了拉伸高度,假。
+         * 查询是否启用自动伸缩高度
+         * @return @~english True if stretch height is enabled, false otherwise.
+         * @~chinese 如果启用了则返回true，否则返回false
          */
         bool isStretchHeightEnabled()const;
 
-        /**@~english
+        /**
+         * @~english
          * Toggle enable stretch height.
          * @~chinese 
-         * 切换使拉伸高度。
-         *@param isUsed @~english True if stretch height is enabled, false otherwise.
-         * @~chinese 否则真如果启用了拉伸高度,假。
+         * 启用关闭自动伸缩高度的开关
+         * @param isUsed @~english True if stretch height is enabled, false otherwise.
+         * @~chinese 如果传入true则开启，传入false则关闭
          */
         void setStretchHeightEnabled(bool isUsed);
         
-        /**@~english
+        /**
+         * @~english
          * Toggle enable percent only.
          * @~chinese 
-         * 切换使百分比。
-         *@param enable @~english True if percent only is enabled, false otherwise.
-         * @~chinese 否则真如果百分比只启用了,假。
+         * 仅仅使用百分比的开关
+         * @param enable @~english True if percent only is enabled, false otherwise.
+         * @~chinese 传入true则仅使用百分比数据，false则可使用点数据
          */
         void setPercentOnlyEnabled(bool enable);
 
-        /**@~english
+        /**
+         * @~english
          * Toggle active enabled of LayoutComponent's owner.
          * @~chinese 
-         * 切换活跃LayoutComponent启用的所有者。
-         *@param enable @~english True if active layout component, false otherwise.
-         * @~chinese 真的如果积极布局组件,否则假。
+         * LayoutComponent所有者是否激活的开关
+         * @param enable @~english True if active layout component, false otherwise.
+         * @~chinese 如果传入true则激活，否则关闭
          */
         void setActiveEnabled(bool enable);
 
-        /**@~english
+        /**
+         * @~english
          * Refresh layout of the owner.
          * @~chinese 
-         * 刷新布局的所有者。
+         * 刷新所有者的布局信息。
          */
         void refreshLayout();
 

@@ -42,8 +42,10 @@ class Widget;
 class RelativeLayoutParameter;
 
 /**
- *@brief Base class for managing layout.
- * All the concret layout manager should inherit from this class.
+ * @brief @~english Base class for managing layout.
+ * All the concrete layout manager should inherit from this class.
+ * @~chinese 管理layout的基类
+ * 所有layout的管理器都应该从这个类继承出去
  */
 class CC_GUI_DLL LayoutManager : public Ref
 {
@@ -52,7 +54,10 @@ public:
     LayoutManager(){};
     
     /**
+     * @~english
      * The interface does the actual layouting work.
+     * @~chinese 
+     * 实际执行布局任务的接口
      */
     virtual void doLayout(LayoutProtocol *layout) = 0;
     
@@ -60,8 +65,11 @@ public:
 };
 
 /**
- *@brief Linear vertical layouting class.
- * Note: This class is used only by @see `Layout` class.
+ * @brief @~english Linear vertical layouting class.
+ * @~chinese 垂直线性布局的类
+ *
+ * @~english Note: This class is used only by @see `Layout` class.
+ * @~chinese 注：这个类是仅由用于“Layout”类
  * @lua NA
  * @js NA
  */
@@ -77,8 +85,11 @@ private:
 };
 
 /**
- *@brief Linear horizontal layouting class.
- *Note: This class is used only by @see `Layout` class.
+ * @brief @~english Linear horizontal layouting class.
+ * @~chinese 线性横向布局类。
+ *
+ * Note: This class is used only by @see @~english `Layout` class.
+ * @~chinese 注：这个类是仅由用于“Layout”类
  * @lua NA
  * @js NA
  */
@@ -94,8 +105,11 @@ private:
 };
 
 /**
- *@brief Relative layouting class.
- *Note: This class is used only by `Layout` class.
+ * @brief @~english Relative layouting class.
+ * @~chinese 相对布局类。
+ *
+ * Note: This class is used only by `Layout` class.
+ * @~chinese 注：这个类是仅由用于“Layout”类
  * @lua NA
  * @js NA
  */
