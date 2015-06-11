@@ -159,7 +159,7 @@ public:
     
     /**
      * @~english get light type
-     * @~chinese 获取光源类型
+     * @~chinese 获取灯光类型
      * @return @~english light type. @~chinese 光源类型
      */
     virtual LightType getLightType() const override { return LightType::DIRECTIONAL; }
@@ -192,7 +192,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 /** @class PointLight
  * @brief @~english Point light has a position, and sends rays in all directions.
- * @~chinese 点光源有一个位置，并且向四周发射光线。
+ * @~chinese 点光源类型的灯光有一个位置，并且向四周发射光线。
  @js NA
  */
 class CC_DLL PointLight : public BaseLight
@@ -200,32 +200,32 @@ class CC_DLL PointLight : public BaseLight
 public:
     /**
      * @~english Creates a point light.
-     * @~chinese 创建一个点光源
+     * @~chinese 创建一个点光源类型的灯光
      * @param position @~english The light's position. @~chinese 光源的位置
      * @param color @~english The light's color. @~chinese 光源的颜色
      * @param range @~english The light's range. @~chinese 光源的范围
      *
-     * @return @~english The new point light. @~chinese 新创建的光源
+     * @return @~english The new point light. @~chinese 新创建的灯光
      */
     static PointLight* create(const Vec3 &position, const Color3B &color, float range);
     
     /**
      * @~english get light type
-     * @~chinese 获取光源类型
-     * @return @~english light type. @~chinese 光源类型
+     * @~chinese 获取灯光类型
+     * @return @~english light type. @~chinese 灯光类型
      */
     virtual LightType getLightType() const override { return LightType::POINT; }
     
     /** 
      * @~english get light range
-     * @~chinese 获取光源的范围
-     * @return @~english light' range. @~chinese 光源的范围
+     * @~chinese 获取灯光的范围
+     * @return @~english light' range. @~chinese 灯光的范围
      */
     float getRange() const { return _range; }
     /**
      * @~english get light range
-     * @~chinese 获取光源的范围
-     * @return @~english light' range. @~chinese 光源的范围
+     * @~chinese 获取灯光的范围
+     * @return @~english light' range. @~chinese 灯光的范围
      */
     void setRange(float range) { _range = range; }
     
@@ -261,13 +261,13 @@ public:
     
     /**
      * @~english get light type
-     * @~chinese 获取光源类型
-     * @return @~english light type. @~chinese 光源类型
+     * @~chinese 获取灯光类型
+     * @return @~english light type. @~chinese 灯光类型
      */
     virtual LightType getLightType() const override { return LightType::SPOT; }
     
     /**
-     * @~english Sets the light direction in parent, the direction is local transform's -z axis. @~chinese 设置光源在父空间的方向，光源的方向为局部坐标系的-z轴
+     * @~english Sets the light direction in parent, the direction is local transform's -z axis. @~chinese 设置灯光在父空间的方向，灯光的方向为局部坐标系的-z轴
      *
      * @param dir @~english The Direction in parent. @~chinese 光源在父空间的方向，
      */
@@ -374,8 +374,8 @@ public:
     
     /**
      * @~english get light type
-     * @~chinese 获取光源类型
-     * @return @~english light type. @~chinese 光源类型
+     * @~chinese 获取灯光类型
+     * @return @~english light type. @~chinese 灯光类型
      */
     virtual LightType getLightType() const override { return LightType::AMBIENT; }
     
