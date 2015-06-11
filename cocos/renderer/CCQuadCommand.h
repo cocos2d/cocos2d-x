@@ -35,50 +35,134 @@
 
 NS_CC_BEGIN
 
-/** 
+/**
+@class QuadCommand
+@brief
+@~english
  Command used to render one or more Quads, similar to TrianglesCommand.
  Every QuadCommand will have generate material ID by give textureID, glProgramState, Blend function
  if the material id is the same, these QuadCommands could be batched to save draw call.
+ * @~chinese 
+ * 该类用于渲染一个或者多个四边形，与TrianglesCommand类似。
+ * 每个QuadCommand将使用textureID glProgramState、Blend来生成材质ID
+ * 如果材料ID是相同的,这些QuadCommands可以在同一批次渲染。
  */
 class CC_DLL QuadCommand : public RenderCommand
 {
 public:
-    /**Constructor.*/
+    /**
+    @~english Constructor. 
+    @~chinese 构造函数。
+    */
     QuadCommand();
-    /**Destructor.*/
+    /**
+    @~english Destructor. 
+    @~chinese 析构函数。
+    */
     ~QuadCommand();
     
-    /** Initializes the command.
-     @param globalOrder GlobalZOrder of the command.
-     @param textureID The openGL handle of the used texture.
-     @param shader The specified glProgram and its uniform.
-     @param blendType Blend function for the command.
-     @param quads Rendered quads for the command.
-     @param quadCount The number of quads when rendering.
-     @param mv ModelView matrix for the command.
-     @param flags to indicate that the command is using 3D rendering or not.
+    /** @~english Initializes the command.
+     * @~chinese 初始化渲染命令。
+     @param globalOrder @~english GlobalZOrder of the command.
+     * @~chinese 命令的GlobalZOrder。
+     @param textureID @~english The openGL handle of the used texture.
+     * @~chinese 纹理的openGL句柄。
+     @param shader @~english The specified glProgram and its uniform.
+     * @~chinese 指定的glProgram和uniform数值。
+     @param blendType @~english Blend function for the command.
+     * @~chinese Blend状态。
+     @param quads @~english Rendered quads for the command.
+     * @~chinese 待渲染的四边形数据。
+     @param quadCount @~english The number of quads when rendering.
+     * @~chinese 待渲染的四边形数量。
+     @param mv @~english ModelView matrix for the command.
+     * @~chinese model view矩阵。
+     @param flags @~english to indicate that the command is using 3D rendering or not.
+     * @~chinese 是否使用3d渲染。
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv, uint32_t flags);
 
-    /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
+    /**
+    @~english Deprecated function, the params is similar as the upper init function, with flags equals 0.
+    @~chinese Deprecated函数，函数与init功能类似，flags被设置为0
+    @param globalOrder @~english GlobalZOrder of the command.
+     * @~chinese 命令的GlobalZOrder。
+     @param textureID @~english The openGL handle of the used texture.
+     * @~chinese 纹理的openGL句柄。
+     @param shader @~english The specified glProgram and its uniform.
+     * @~chinese 指定的glProgram和uniform数值。
+     @param blendType @~english Blend function for the command.
+     * @~chinese Blend状态。
+     @param quads @~english Rendered quads for the command.
+     * @~chinese 待渲染的四边形数据。
+     @param quadCount @~english The number of quads when rendering.
+     * @~chinese 待渲染的四边形数量。
+     @param mv @~english ModelView matrix for the command.
+     * @~chinese model view矩阵。
+    */
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
-    /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
+    /**
+    @~english Apply the texture, shaders, programs, blend functions to GPU pipeline. 
+    @~chinese 将纹理、shader, program, 和blend应用到GPU渲染管线。
+    */
     void useMaterial() const;
-    /**Get the material id of command.*/
+    /**
+    @~english Get the material id of command. 
+    @~chinese 得到材质ID。
+    @return
+    @~english the material id.
+    @~chinese 材质ID。
+    */
     inline uint32_t getMaterialID() const { return _materialID; }
-    /**Get the openGL texture handle.*/
+    /**
+    @~english Get the openGL texture handle. 
+    @~chinese 得到纹理的openGL句柄。
+    @return
+    @~english openGL texture handle.
+    @~chinese 纹理的openGL句柄。
+    */
     inline GLuint getTextureID() const { return _textureID; }
-    /**Get the pointer of the rendered quads.*/
+    /**
+    @~english Get the pointer of the rendered quads. 
+    @~chinese 得到四边形的数据。
+    @return 
+    @~english the pointer of the rendered quads.
+    @~chinese 四边形数据的指针。
+    */
     inline V3F_C4B_T2F_Quad* getQuads() const { return _quads; }
-    /**Get the number of quads for rendering.*/
+    /**
+    @~english Get the number of quads for rendering. 
+    @~chinese 获得四边形的个数。
+    @return
+    @~english the number of quads.
+    @~chinese 四边形的个数。
+    */
     inline ssize_t getQuadCount() const { return _quadsCount; }
-    /**Get the glprogramstate.*/
+    /**
+    @~english Get the glprogramstate. 
+    @~chinese 得到GLProgramState。
+    @return
+    @~english glprogramstate.
+    @~chinese GLProgramState。
+    */
     inline GLProgramState* getGLProgramState() const { return _glProgramState; }
-    /**Get the blend function.*/
+    /**
+    @~english Get the blend function. 
+    @~chinese 得到混合功能。
+    @return
+    @~english blend function.
+    @~chinese 混合功能。
+    */
     inline BlendFunc getBlendType() const { return _blendType; }
-    /**Get the model view matrix.*/
+    /**
+    @~english Get the model view matrix. 
+    @~chinese 得到模型视图矩阵。
+    @return
+    @~english model view matrix.
+    @~chinese model view矩阵。
+    */
     inline const Mat4& getModelView() const { return _mv; }
     
 protected:

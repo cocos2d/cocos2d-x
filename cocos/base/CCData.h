@@ -31,6 +31,7 @@
 #include <string>   // for ssize_t on linux
 #include "platform/CCStdC.h" // for ssize_t on window
 
+
 /**
  * @addtogroup base
  * @js NA
@@ -43,99 +44,129 @@ class CC_DLL Data
     friend class Properties;
     
 public:
-    /**
-     * @~english This parameter is defined for convenient reference if a null Data object is needed.
-     * @~chinese ¶¨Òå¸Ã²ÎÊıµÄ×÷ÓÃÊÇ£¬µ±ĞèÒªÊ¹ÓÃ¿ÕµÄÊı¾İ¶ÔÏóÊ±£¬Ìá¹©Ò»¸ö·½±ãµÄÒıÓÃ¡£
+
+    /**@~english
+     * This parameter is defined for convenient reference if a null Data object is needed.
+     * @~chinese 
+     * è¿™ä¸ªå‚æ•°è¢«å®šä¹‰ä¸ºnull Dataå¯¹è±¡ï¼Œä»¥æ–¹ä¾¿éœ€è¦æ—¶è¿›è¡Œå¼•ç”¨ã€‚
      */
     static const Data Null;
     
-    /**
-     * @~english Constructor of Data.
-     * @~chinese Êı¾İ¹¹Ôìº¯Êı¡£
+
+    /**@~english
+     * Constructor of Data.
+     * @~chinese 
+     * Dataçš„æ„é€ å‡½æ•°ã€‚
      */
     Data();
     
-    /**
-    * @~english Copy constructor of Data.
-    * @~chinese Êı¾İ¿½±´¹¹Ôìº¯Êı¡£
-    */
+
+    /**@~english
+     * Copy constructor of Data.
+     * @~chinese 
+     * Dataçš„æ‹·è´æ„é€ å‡½æ•°ã€‚
+     */
     Data(const Data& other);
     
-    /**
-    * @~english Copy constructor of Data.
-    * @~chinese Êı¾İ¿½±´¹¹Ôìº¯Êı¡£
-    */
+
+    /**@~english
+     * Copy constructor of Data.
+     * @~chinese 
+     * Dataçš„æ‹·è´æ„é€ å‡½æ•°ã€‚
+     */
     Data(Data&& other);
     
-    /**
-    * @~english Destructor of Data.
-    * @~chinese Êı¾İÎö¹¹º¯Êı¡£
-    */
+
+    /**@~english
+     * Destructor of Data.
+     * @~chinese 
+     * Dataçš„ææ„å‡½æ•°ã€‚
+     */
     ~Data();
     
-    /**
-    * @~english Overroads of operator=.
-    * @~chinese ÖØÔØ=ÔËËã·û¡£
-    */
+
+    /**@~english
+     * Overroads of operator=.
+     * @~chinese 
+     * é‡è½½èµ‹å€¼æ“ä½œç¬¦ã€‚
+     */
     Data& operator= (const Data& other);
     
-    /**
-    * @~english Overroads of operator=.
-    * @~chinese ÖØÔØ=ÔËËã·û¡£
-    */
+
+    /**@~english
+     * Overroads of operator=.
+     * @~chinese 
+     * é‡è½½èµ‹å€¼æ“ä½œç¬¦ã€‚
+     */
     Data& operator= (Data&& other);
     
-    /**
-     * @~english Gets internal bytes of Data. It will return the pointer directly used in Data, so don't delete it.
-     * @~chinese »ñÈ¡Êı¾İµÄÄÚ²¿×Ö½ÚÖ¸Õë¡£½«·µ»ØÊı¾İÄÚ²¿ÓÃÀ´Ö±½ÓÊ¹ÓÃµÄÖ¸Õë£¬Òò´Ë²»ÒªÉ¾³ı¡£
+
+    /**@~english
+     * Gets internal bytes of Data. It will retrun the pointer directly used in Data, so don't delete it.
+     *
+     * @~chinese 
+     * è·å–Dataçš„å†…éƒ¨å­—èŠ‚ã€‚å®ƒå°†ä¼šè¿”å›ä¸€ä¸ªDataä¸­ç›´æ¥ä½¿ç”¨çš„æŒ‡é’ˆ,æ‰€ä»¥ä¸è¦åˆ é™¤å®ƒã€‚
+     * 
      * @return @~english Pointer of bytes used internal in Data.
-     * @~chinese Êı¾İÄÚ²¿Ê¹ÓÃµÄ×Ö½ÚÖ¸Õë¡£
+     * @~chinese Dataä¸­å†…éƒ¨ä½¿ç”¨çš„æŒ‡é’ˆã€‚
      */
     unsigned char* getBytes() const;
     
-    /**
-     * @~english Gets the size of the bytes.
-     * @~chinese  »ñµÃ×Ö½Ú´óĞ¡
+
+    /**@~english
+     * Gets the size of the bytes.
+     *
+     * @~chinese 
+     * è·å–å­—èŠ‚çš„å¤§å°ã€‚
+     * 
      * @return @~english The size of bytes of Data.
-     * @~chinese  Êı¾İµÄ×Ö½Ú´óĞ¡¡£
+     * @~chinese å­—èŠ‚çš„æ•°æ®çš„å¤§å°ã€‚
      */
     ssize_t getSize() const;
     
-    /** 
-     *  @~english Copies the buffer pointer and its size.
-     * @~chinese ¸´ÖÆ»º³åÇøÖ¸Õë¼°Æä´óĞ¡
-     *  @note @~english  This method will copy the whole buffer.
+
+    /** @~english Copies the buffer pointer and its size.
+     * @~chinese æ‹·è´ç¼“å†²æŒ‡é’ˆå’Œå®ƒçš„å¤§å°ã€‚
+     *  @note @~english This method will copy the whole buffer.
      *        Developer should free the pointer after invoking this method.
-     * @~chinese ¸Ã·½·¨½«¸´ÖÆÕû¸ö»º³åÇø¡£ÔÚµ÷ÓÃ¸Ã·½·¨ºóÓ¦µ±ÊÍ·ÅÖ¸Õë¡£
+     * @~chinese è¯¥æ–¹æ³•å°†å¤åˆ¶æ•´ä¸ªç¼“å†²åŒºã€‚
+     * å¼€å‘äººå‘˜åº”è¯¥åœ¨è°ƒç”¨è¿™ä¸ªæ–¹æ³•åé‡Šæ”¾æŒ‡é’ˆã€‚
      *  @see Data::fastSet
      */
     void copy(const unsigned char* bytes, const ssize_t size);
     
-    /** 
-     *   @~english  Fast set the buffer pointer and its size. Please use it carefully.
-     * @~chinese ¿ìËÙÉèÖÃ»º³åÇøÖ¸ÕëºÍ³ß´ç£¬Çë½÷É÷Ê¹ÓÃ¡£
-     *  @param bytes @~english  The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
+
+    /** @~english Fast set the buffer pointer and its size. Please use it carefully.
+     * @~chinese å¿«é€Ÿè®¾ç½®ç¼“å†²åŒºæŒ‡é’ˆå’Œå®ƒçš„å¤§å°ã€‚è¯·å°å¿ƒä½¿ç”¨å®ƒã€‚
+     *  @param bytes @~english The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',
      *         since in the destructor of Data, the buffer will be deleted by 'free'.
-     * @~chinese »º³åÇøÖ¸Õë£¬×¢ÒâÒ»¶¨ÒªÓÃ'malloc'»ò'calloc'½øĞĞ·ÖÅä¿Õ¼ä£¬ÒòÎªÔÚÊı¾İµÄÎö¹¹º¯ÊıÖĞ»º³åÇø±»'free'ÊÍ·Å¡£
-     *  @note @~english  1. This method will move the ownship of 'bytes'pointer to Data,
+     * @~chinese ç¼“å†²åŒºçš„æŒ‡é’ˆ,æ³¨æ„,ä¸€å®šè¦ç”±â€œmallocâ€æˆ–â€œcallocâ€åˆ†é…
+     * å› ä¸ºåœ¨Dataçš„ææ„å‡½æ•°ä¸­,ç¼“å†²åŒºå°†è¢«â€œfreeâ€åˆ é™¤ã€‚
+     *  @note @~english 1. This method will move the ownship of 'bytes'pointer to Data,
      *        2. The pointer should not be used outside after it was passed to this method.
-     * @~chinese 1. ¸Ã·½·¨½«×ªÒÆÊı¾İµÄ×Ö½ÚÖ¸ÕëËùÓĞÈ¨¡£
-     * 2. ÔÚÖ¸Õë´«Èë¸Ã·½·¨ºó£¬²»Ó¦ÔÚÍâ²¿µ÷ÓÃ¸ÃÖ¸Õë¡£
+     * @~chinese 1ã€‚è¯¥æ–¹æ³•ç§»åŠ¨bufferæŒ‡é’ˆçš„æ‰€æœ‰æƒ,
+     * 2ã€‚è¿™ä¸ªæŒ‡é’ˆä¸åº”åœ¨ä¼ é€’ç»™è¿™ä¸ªæ–¹æ³•åå†è¿›è¡Œä½¿ç”¨ã€‚
      *  @see Data::copy
      */
     void fastSet(unsigned char* bytes, const ssize_t size);
     
-    /** 
-     * @~english  Clears data, free buffer and reset data size.
-     * @~chinese Çå³ıÊı¾İ£¬ÊÍ·Å»º³åÇø²¢ÖØÖÃÊı¾İ´óĞ¡¡£
+
+    /** @~english
+     * Clears data, free buffer and reset data size.
+     * @~chinese 
+     * æ¸…é™¤æ•°æ®,é‡Šæ”¾ç¼“å†²åŒºå’Œé‡ç½®æ•°æ®å¤§å°ã€‚
      */
     void clear();
     
-    /** 
-     * @~english Check whether the data is null.
-     * @~chinese ¼ì²éÊı¾İÊÇ·ñÎª¿Õ¡£
+
+    /** @~english
+     * Check whether the data is null.
+     *
+     * @~chinese 
+     * æ£€æŸ¥æ•°æ®æ˜¯å¦ä¸ºç©ºã€‚
+     * 
      * @return @~english True if the the Data is null, false if not.
-     * @~chinese Êı¾İÎª¿Õ·µ»ØÕæ£¬·ñÔòÎª¼Ù¡£
+     * @~chinese å¦‚æœæ•°æ®ä¸ºç©ºè¿”å›çœŸ,å¦‚æœä¸æ˜¯è¿”å›å‡ã€‚
      */
     bool isNull() const;
     
@@ -149,6 +180,7 @@ private:
 
 
 NS_CC_END
+
 
 /** @} */
 #endif // __CCDATA_H__

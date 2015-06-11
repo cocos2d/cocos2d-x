@@ -65,9 +65,12 @@ NS_CC_BEGIN
 namespace ui {
 
 
-/**
+/**@~english
  * Get current cocos GUI module version string.
- *@return A string representation of GUI module version number
+ * @~chinese 
+ * 获取当前GUI模块的版本字符串。
+ *@return @~english A string representation of GUI module version number
+ * @~chinese 一个字符串，用来表示GUI模块版本号
  */
 CC_GUI_DLL const char* CocosGUIVersion();
 
