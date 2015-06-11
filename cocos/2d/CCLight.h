@@ -64,7 +64,7 @@ enum class LightFlag
 
 /** @class BaseLight
  * @brief @~english BaseLight is the parent of all the lights. cocos2d-x supports 4 types of lights, directional light, point light, spot light and ambient light. Each light has an light flag, objects whose light mask & (1<<lightFlag) is not zero will be lighted by this light.
- * @~chinese BaseLight 是所有灯光的基类，cocos2d-x支持4种灯光，方向光、点光源、聚光灯和环境光。每个光源都有一个灯光标记lightflag, 只有当物体的灯光掩码lightmask与(1<<lightFlag)做与运算不为0的时候这个物体才会被该灯光照亮。
+ * @~chinese BaseLight 是所有灯光的基类，cocos2d-x支持4种灯光，方向光、点光源、聚光灯和环境光。每个灯光都有一个灯光标记lightflag, 只有当物体的灯光掩码lightmask与(1<<lightFlag)做与运算不为0的时候这个物体才会被该灯光照亮。
 @js NA
 */
 class CC_DLL BaseLight : public Node
@@ -142,7 +142,7 @@ protected:
 
 /** @class DirectionLight
  * @brief @~english DirectionLight simulates light that is being emitted from a source that is infinitely far away. This means that all shadows cast by this light will be parallel. The sunlight is typical directional light.
- * @~chinese 方向光模拟无限远的光源，它意味着这种灯光投射的影子是平行的，太阳光是个典型的方向光。
+ * @~chinese 方向光模拟无限远的灯光，它意味着这种灯光投射的影子是平行的，太阳光是个典型的方向光。
  @js NA
  */
 class CC_DLL DirectionLight : public BaseLight
@@ -151,16 +151,16 @@ public:
     /**
      * @~english Creates a direction light. The DirectionLight inherits from Node indirectly. The Node also contains a local space. The direction of directional light is the -z of local space.
      * @~chinese 创建一个方向光。方向光间接从Node继承，Node中包含局部坐标，而方向光的方向就是灯光的局部坐标系的-z方向。
-     * @param direction @~english The light's direction. @~chinese 光源的方向
+     * @param direction @~english The light's direction. @~chinese 灯光的方向
      * @param color @~english The light's color. @~chinese 灯光颜色
-     * @return @~english Created directional light. @~chinese 新创建的方向光源
+     * @return @~english Created directional light. @~chinese 新创建的方向灯光
      */
     static DirectionLight* create(const Vec3 &direction, const Color3B &color);
     
     /**
      * @~english get light type
      * @~chinese 获取灯光类型
-     * @return @~english light type. @~chinese 光源类型
+     * @return @~english light type. @~chinese 灯光类型
      */
     virtual LightType getLightType() const override { return LightType::DIRECTIONAL; }
     
@@ -201,9 +201,9 @@ public:
     /**
      * @~english Creates a point light.
      * @~chinese 创建一个点光源类型的灯光
-     * @param position @~english The light's position. @~chinese 光源的位置
-     * @param color @~english The light's color. @~chinese 光源的颜色
-     * @param range @~english The light's range. @~chinese 光源的范围
+     * @param position @~english The light's position. @~chinese 灯光的位置
+     * @param color @~english The light's color. @~chinese 灯光的颜色
+     * @param range @~english The light's range. @~chinese 灯光的范围
      *
      * @return @~english The new point light. @~chinese 新创建的灯光
      */
@@ -269,7 +269,7 @@ public:
     /**
      * @~english Sets the light direction in parent, the direction is local transform's -z axis. @~chinese 设置灯光在父空间的方向，灯光的方向为局部坐标系的-z轴
      *
-     * @param dir @~english The Direction in parent. @~chinese 光源在父空间的方向，
+     * @param dir @~english The Direction in parent. @~chinese 灯光在父空间的方向，
      */
     void setDirection(const Vec3 &dir);
     
