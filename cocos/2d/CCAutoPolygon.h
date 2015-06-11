@@ -96,6 +96,12 @@ public:
     const unsigned int getVertCount() const;
     
     /**
+     * get triangles count
+     * @return number of triangles
+     */
+    const unsigned int getTriaglesCount() const;
+    
+    /**
      * get sum of all triangle area size
      * @return sum of all triangle area size
      */
@@ -122,8 +128,6 @@ private:
 class CC_DLL AutoPolygon
 {
 public:
-    /// @name Creators
-    /// @{
     /**
      * create an AutoPolygon and initialize it with an image file
      * the image must be a 32bit PNG for current version 3.7
@@ -133,13 +137,8 @@ public:
     AutoPolygon(const std::string &filename);
     
     /**
-     * create an AutoPolygon object, 
-     * useful if you do not need to trace image, but for processing points
-     * @return  an AutoPolygon object;
+     * Destructor of AutoPolygon.
      */
-    AutoPolygon();
-    //  end of creators group
-    /// @}
     ~AutoPolygon();
     
     /**

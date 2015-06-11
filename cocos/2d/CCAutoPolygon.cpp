@@ -108,6 +108,11 @@ const unsigned int PolygonInfo::getVertCount() const
     return (unsigned int)triangles.vertCount;
 }
 
+const unsigned int PolygonInfo::getTriaglesCount() const
+{
+    return (unsigned int)triangles.indexCount/3;
+}
+
 const float PolygonInfo::getArea() const
 {
     float area = 0;

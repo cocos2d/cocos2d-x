@@ -211,9 +211,9 @@ void SpritePolygonPerformance::incrementStats()
 }
 void SpritePolygonPerformanceTestDynamic::initIncrementStats()
 {
-    _incVert = (int)_pinfo.getVertCount();
-    _incTri = (int)_pinfo.triangles.indexCount/3;
-    _incPix = (int)_pinfo.getArea();
+    _incVert = _pinfo.getVertCount();
+    _incTri = _pinfo.getTriaglesCount();
+    _incPix = _pinfo.getArea();
 }
 
 SpritePolygonPerformanceTestDynamic::SpritePolygonPerformanceTestDynamic()

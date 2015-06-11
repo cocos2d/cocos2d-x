@@ -3,7 +3,6 @@ cocos2d-x-3.7  ??
     [NEW]           3rd: updated rapidjson to v1.0.2
     [NEW]           3d: added physics3d support
     [NEW]           console: support build & run Android Studio project
-    [NEW]           Audio: added support on WP8.1, now it supports wav format
     [NEW]           C++: added ActionFloat
     [NEW]           C++: supported physical keyboard on WinRT
     [NEW]           C++: added Android Studio support
@@ -16,9 +15,15 @@ cocos2d-x-3.7  ??
     [NEW]           3d: add opengl version project/unproject function in camera.
     [NEW]           ui: button add BMFont title support
     [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+    [NEW]           audio: added support on WP8.1, now it supports wav format
     [NEW]           audio: Added MP3 support to winrt audio
+    [NEW]           audio: Added OGG support to winrt audio
     [NEW]           win10: Added Windows 10.0 Universal App(UWP) support.
     
+    [FIX]           Label: Improve rendering of letter's inner shapes when outline is used.
+    [FIX]           network: Win32 CURL doesn't support zlib.
+    [FIX]           studio: Fix ActionNode memory leaks.
+    [FIX]           studio: Fix CocoLoader destructor memory release bug.
     [FIX]           network: Fix memory leak of HttpClient on iOS and Mac platform.
     [FIX]           android: Improve UserDefault's robustness, now the converting behavior is the same as iOS platform.
     [FIX]           android: Fix VideoPlayer on Android ignore search paths.
