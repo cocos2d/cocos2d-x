@@ -111,7 +111,7 @@ public:
     /**@~english
      * Widget size type for layout.
      * @~chinese 
-     * 布局系统中的控件大小类型。
+     * 布局系统中的控件尺寸类型。
      */
     enum class SizeType
     {
@@ -497,7 +497,7 @@ public:
      * @see `PositionType`
      *
      * @return @~english The position type of widget
-     * @~chinese 的位置类型
+     * @~chinese 位置类型
      */
     PositionType getPositionType() const;
 
@@ -718,7 +718,7 @@ public:
      * 获取控件的尺寸
      * 
      * @return @~english Widget content size.
-     * @~chinese 控件内容大小。
+     * @~chinese 控件内容尺寸。
      */
     CC_DEPRECATED_ATTRIBUTE const Size& getSize() const;
     
@@ -853,7 +853,7 @@ public:
      * Set true will ignore user defined content size which means 
      * the widget size is always equal to the return value of `getVirtualRendererSize`.
      * @~chinese 
-     * 切换是否忽略用户定义的控件尺寸。
+     * 设置是否忽略用户定义通过`setContentSize`设定的控件尺寸。
      * 设置为true将忽略用户定义的尺寸，意味着控件尺寸永远等于`getVirtualRendererSize`的返回值。
      * 
      * @param ignore @~english Set member variabl _ignoreSize to ignore
@@ -897,9 +897,9 @@ public:
     /**@~english
      * Get the virtual renderer's size
      * @~chinese 
-     * 获取虚拟渲染节点的大小
+     * 获取虚拟渲染节点的尺寸
      * @return @~english Widget virtual renderer size.
-     * @~chinese 虚拟渲染节点的大小。
+     * @~chinese 虚拟渲染节点的尺寸。
      */
     virtual Size getVirtualRendererSize() const;
     
