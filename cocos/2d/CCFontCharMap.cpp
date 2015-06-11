@@ -42,8 +42,8 @@ FontCharMap * FontCharMap::create(const std::string& plistFile)
 
     std::string textureFilename = relPathStr + dict["textureFilename"].asString();
 
-    unsigned int width = dict["itemWidth"].asInt() / CC_CONTENT_SCALE_FACTOR();
-    unsigned int height = dict["itemHeight"].asInt() / CC_CONTENT_SCALE_FACTOR();
+    unsigned int width = dict["itemWidth"].asInt();
+    unsigned int height = dict["itemHeight"].asInt();
     unsigned int startChar = dict["firstChar"].asInt();
 
     Texture2D *tempTexture = Director::getInstance()->getTextureCache()->addImage(textureFilename);
@@ -102,19 +102,16 @@ int * FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, 
 {
     outNumLetters = static_cast<int>(text.length());
     
-    if (!outNumLetters)
-        return 0;
+    if (outNumLetters <= 0)
+        return nullptr;
     
-    int *sizes = new int[outNumLetters];
-    if (!sizes)
-        return 0;
+    auto kernings = new int[outNumLetters];
+    if (!kernings)
+        return nullptr;
     
-    for (int c = 0; c < outNumLetters; ++c)
-    {
-        sizes[c] = 0;
-    }
+    memset(kernings, 0, outNumLetters * sizeof(int));
     
-    return sizes;
+    return kernings;
 }
 
 FontAtlas * FontCharMap::createFontAtlas()
@@ -123,21 +120,22 @@ FontAtlas * FontCharMap::createFontAtlas()
     if (!tempAtlas)
         return nullptr;
     
-    Size s = _texture->getContentSize();
-
+    Size s = _texture->getContentSizeInPixels();
     int itemsPerColumn = (int)(s.height / _itemHeight);
     int itemsPerRow = (int)(s.width / _itemWidth);
 
     tempAtlas->setCommonLineHeight(_itemHeight);
-    
+
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
+
     FontLetterDefinition tempDefinition;
     tempDefinition.textureID = 0;
     tempDefinition.offsetX  = 0.0f;
     tempDefinition.offsetY  = 0.0f;
     tempDefinition.validDefinition = true;
-    tempDefinition.width    = _itemWidth;
-    tempDefinition.height   = _itemHeight;
-    tempDefinition.xAdvance = _itemWidth * CC_CONTENT_SCALE_FACTOR();
+    tempDefinition.width = _itemWidth / contentScaleFactor;
+    tempDefinition.height = _itemHeight / contentScaleFactor;
+    tempDefinition.xAdvance = _itemWidth;
 
     int charId = _mapStartChar;
     for (int row = 0; row < itemsPerColumn; ++row)
@@ -146,8 +144,8 @@ FontAtlas * FontCharMap::createFontAtlas()
         {
             tempDefinition.letteCharUTF16 = charId;
 
-            tempDefinition.U        = _itemWidth * col;
-            tempDefinition.V        = _itemHeight * row;           
+            tempDefinition.U = _itemWidth * col / contentScaleFactor;
+            tempDefinition.V = _itemHeight * row / contentScaleFactor;
 
             tempAtlas->addLetterDefinition(tempDefinition);
             charId++;
