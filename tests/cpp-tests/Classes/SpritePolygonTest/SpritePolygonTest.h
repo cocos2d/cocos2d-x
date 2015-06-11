@@ -73,9 +73,9 @@ protected:
     virtual void incrementStats();
     
     void initIncrementStats();
-    int _incVert;
-    int _incTri;
-    int _incPix;
+    unsigned int _incVert;
+    unsigned int _incTri;
+    unsigned int _incPix;
 };
 
 class SpritePolygonPerformanceTestDynamic : public SpritePolygonPerformance
