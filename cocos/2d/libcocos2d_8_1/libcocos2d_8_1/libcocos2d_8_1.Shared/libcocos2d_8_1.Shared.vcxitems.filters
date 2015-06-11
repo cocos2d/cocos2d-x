@@ -1822,7 +1822,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.hpp">
       <Filter>external\clipper</Filter>
     </ClInclude>
   </ItemGroup>
