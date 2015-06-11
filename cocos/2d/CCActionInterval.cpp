@@ -2106,7 +2106,7 @@ TintBy* TintBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) TintBy();
-    a->initWithDuration(_duration, (GLubyte)_deltaR, (GLubyte)_deltaG, (GLubyte)_deltaB);
+    a->initWithDuration(_duration, _deltaR, _deltaG, _deltaB);
     a->autorelease();
     return a;
 }

@@ -1,6 +1,6 @@
 cocos2d-x authors & contributors
 
-(ordered by the join in time)
+(ordered by join time)
 
 Core Developers:
     Ricardo Quesada
@@ -68,6 +68,9 @@ Developers:
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
+
+    stari4ek
+        Fix VideoPlayer on Android ignore search paths
 
     FlagellumDei
         Center the window correctly on windows
@@ -833,6 +836,7 @@ Developers:
         
     flashjay
         Remove deprecated code in lua tests & template
+        luaLoadChunksFromZip should just remove .lua or .luac extension
         
     zukkun
         Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit
@@ -1126,6 +1130,9 @@ Developers:
         
     tankorsmash
         Fixed the bug that ProgressTimer::setSprite() doesn't take effect
+
+    namezero111111
+        ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
 
 Retired Core Developers:
     WenSheng Yang

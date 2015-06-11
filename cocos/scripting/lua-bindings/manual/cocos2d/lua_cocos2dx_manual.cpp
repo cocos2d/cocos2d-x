@@ -7511,6 +7511,69 @@ static void extendCamera(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+int lua_cocos2dx_Properties_createNonRefCounted(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Properties",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Properties:createNonRefCounted");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Properties_createNonRefCounted'", nullptr);
+            return 0;
+        }
+        cocos2d::Properties* ret = cocos2d::Properties::createNonRefCounted(arg0);
+        object_to_luaval<cocos2d::Properties>(tolua_S, "cc.Properties",(cocos2d::Properties*)ret);
+        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Properties:createNonRefCounted",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Properties_createNonRefCounted'.",&tolua_err);
+#endif
+    return 0;
+}
+
+static int lua_collect_Properties (lua_State* tolua_S)
+{
+    cocos2d::Properties* self = (cocos2d::Properties*) tolua_tousertype(tolua_S,1,0);
+    CC_SAFE_DELETE(self);
+    return 0;
+}
+
+static void extendProperties(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.Properties");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "createNonRefCounted", lua_cocos2dx_Properties_createNonRefCounted);
+    }
+    lua_pop(tolua_S, 1);
+    
+    luaL_getmetatable(tolua_S, "cc.Properties");
+    if (lua_istable(tolua_S, -1))
+    {
+        tolua_function(tolua_S, ".collector", lua_collect_Properties);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_manual(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -7567,6 +7630,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendTextureCache(tolua_S);
     extendGLView(tolua_S);
     extendCamera(tolua_S);
+    extendProperties(tolua_S);
     return 0;
 }
 

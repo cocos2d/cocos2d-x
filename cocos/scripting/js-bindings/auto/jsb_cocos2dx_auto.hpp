@@ -2044,12 +2044,16 @@ void js_register_cocos2dx_GLProgramState(JSContext *cx, JS::HandleObject global)
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_getVertexAttribsFlags(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramState_applyAutoBinding(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_setUniformVec2(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_setUniformVec3(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_setVertexAttribCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_apply(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramState_getNodeBinding(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_applyGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramState_setNodeBinding(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_setUniformInt(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramState_setParameterAutoBinding(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_setUniformVec2v(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_getUniformCount(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramState_applyAttributes(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3358,14 +3362,15 @@ bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getDepthInView(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_clearBackground(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_initDefault(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_clearBackground(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setScene(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_projectGL(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getViewMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getNearPlane(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_project(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3562,7 +3567,6 @@ bool js_cocos2dx_RenderState_getTexture(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_RenderState_bind(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getStateBlock(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_RenderState_getTextures(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_initialize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_finalize(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -3917,11 +3921,10 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_Component(JSContext *cx, uint32_t argc, jsval *vp);
 

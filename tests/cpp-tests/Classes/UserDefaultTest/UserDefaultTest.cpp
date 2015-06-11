@@ -33,7 +33,7 @@ void logData(const char* key)
 {
     Data data = UserDefault::getInstance()->getDataForKey(key);
     T* buffer = (T*) data.getBytes();
-    int length = data.getSize() / sizeof(T);
+    ssize_t length = data.getSize() / sizeof(T);
 
     std::ostringstream ss;
     ss << setprecision(2) << std::fixed;

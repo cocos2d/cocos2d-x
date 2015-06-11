@@ -10498,6 +10498,18 @@ getVertexAttribsFlags : function (
 },
 
 /**
+ * @method applyAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+applyAutoBinding : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method setUniformVec2
 * @param {int|String} int
 * @param {vec2_object|vec2_object} vec2
@@ -10544,11 +10556,31 @@ mat4
 },
 
 /**
+ * @method getNodeBinding
+ * @return {cc.Node}
+ */
+getNodeBinding : function (
+)
+{
+    return cc.Node;
+},
+
+/**
  * @method applyGLProgram
  * @param {mat4_object} arg0
  */
 applyGLProgram : function (
 mat4 
+)
+{
+},
+
+/**
+ * @method setNodeBinding
+ * @param {cc.Node} arg0
+ */
+setNodeBinding : function (
+node 
 )
 {
 },
@@ -10561,6 +10593,18 @@ mat4
 setUniformInt : function(
 str,
 int 
+)
+{
+},
+
+/**
+ * @method setParameterAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+setParameterAutoBinding : function (
+str, 
+str 
 )
 {
 },
@@ -18494,21 +18538,13 @@ mat4
 },
 
 /**
- * @method initOrthographic
+ * @method clearBackground
  * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
  */
-initOrthographic : function (
-float, 
-float, 
-float, 
+clearBackground : function (
 float 
 )
 {
-    return false;
 },
 
 /**
@@ -18552,13 +18588,21 @@ getType : function (
 },
 
 /**
- * @method clearBackground
+ * @method initOrthographic
  * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
  */
-clearBackground : function (
+initOrthographic : function (
+float, 
+float, 
+float, 
 float 
 )
 {
+    return false;
 },
 
 /**
@@ -18579,6 +18623,18 @@ setScene : function (
 scene 
 )
 {
+},
+
+/**
+ * @method projectGL
+ * @param {vec3_object} arg0
+ * @return {vec2_object}
+ */
+projectGL : function (
+vec3 
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -19857,16 +19913,6 @@ getStateBlock : function (
 )
 {
     return cc.RenderState::StateBlock;
-},
-
-/**
- * @method getTextures
- * @return {Array}
- */
-getTextures : function (
-)
-{
-    return new Array();
 },
 
 /**
@@ -22158,16 +22204,6 @@ isEnabled : function (
 },
 
 /**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
  * @method getOwner
  * @return {cc.Node}
  */
@@ -22188,16 +22224,6 @@ init : function (
 },
 
 /**
- * @method setOwner
- * @param {cc.Node} arg0
- */
-setOwner : function (
-node 
-)
-{
-},
-
-/**
  * @method getName
  * @return {String}
  */
@@ -22205,6 +22231,16 @@ getName : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
 },
 
 /**

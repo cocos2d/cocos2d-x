@@ -17,7 +17,7 @@ void main()
     vec4 sample = texture2D(CC_Texture0, v_texCoord);
     float fontAlpha = sample.a; 
     float outlineAlpha = sample.r; 
-    if (outlineAlpha > 0.0){ 
+    if ((fontAlpha + outlineAlpha) > 0.0){
         vec4 color = u_textColor * fontAlpha + u_effectColor * (1.0 - fontAlpha);
         gl_FragColor = v_fragmentColor * vec4( color.rgb,max(fontAlpha,outlineAlpha)*color.a);
     }
