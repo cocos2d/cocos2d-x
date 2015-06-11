@@ -1023,6 +1023,162 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles);
 
 protected:
+    virtual void updateBlendFunc();
+
+    /** whether or not the particles are using blend additive.
+     If enabled, the following blending function will be used.
+     @code
+     source blend function = GL_SRC_ALPHA;
+     dest blend function = GL_ONE;
+     @endcode
+     */
+    bool _isBlendAdditive;
+
+    /** whether or not the node will be auto-removed when it has no particles left.
+     By default it is false.
+     @since v0.8
+     */
+    bool _isAutoRemoveOnFinish;
+
+    std::string _plistFile;
+    //! time elapsed since the start of the system (in seconds)
+    float _elapsed;
+
+    // Different modes
+    //! Mode A:Gravity + Tangential Accel + Radial Accel
+    struct {
+        /** Gravity value. Only available in 'Gravity' mode. */
+        Vec2 gravity;
+        /** speed of each particle. Only available in 'Gravity' mode.  */
+        float speed;
+        /** speed variance of each particle. Only available in 'Gravity' mode. */
+        float speedVar;
+        /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
+        float tangentialAccel;
+        /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
+        float tangentialAccelVar;
+        /** radial acceleration of each particle. Only available in 'Gravity' mode. */
+        float radialAccel;
+        /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
+        float radialAccelVar;
+        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
+        bool rotationIsDir;
+    } modeA;
+
+    //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
+    struct {
+        /** The starting radius of the particles. Only available in 'Radius' mode. */
+        float startRadius;
+        /** The starting radius variance of the particles. Only available in 'Radius' mode. */
+        float startRadiusVar;
+        /** The ending radius of the particles. Only available in 'Radius' mode. */
+        float endRadius;
+        /** The ending radius variance of the particles. Only available in 'Radius' mode. */
+        float endRadiusVar;
+        /** Number of degrees to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
+        float rotatePerSecond;
+        /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
+        float rotatePerSecondVar;
+    } modeB;
+
+    //! Array of particles
+    tParticle *_particles;
+
+    //Emitter name
+    std::string _configName;
+
+    // color modulate
+    //    BOOL colorModulate;
+
+    //! How many particles can be emitted per second
+    float _emitCounter;
+
+    //!  particle idx
+    int _particleIdx;
+
+    // Optimization
+    //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
+    //SEL                        updateParticleSel;
+
+    /** weak reference to the SpriteBatchNode that renders the Sprite */
+    ParticleBatchNode* _batchNode;
+
+    // index of system in batch node array
+    int _atlasIndex;
+
+    //true if scaled or rotated
+    bool _transformSystemDirty;
+    // Number of allocated particles
+    int _allocatedParticles;
+
+    /** Is the emitter active */
+    bool _isActive;
+    
+    /** Quantity of particles that are being simulated at the moment */
+    int _particleCount;
+    /** How many seconds the emitter will run. -1 means 'forever' */
+    float _duration;
+    /** sourcePosition of the emitter */
+    Vec2 _sourcePosition;
+    /** Position variance of the emitter */
+    Vec2 _posVar;
+    /** life, and life variation of each particle */
+    float _life;
+    /** life variance of each particle */
+    float _lifeVar;
+    /** angle and angle variation of each particle */
+    float _angle;
+    /** angle variance of each particle */
+    float _angleVar;
+
+    /** Switch between different kind of emitter modes:
+     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
+     - kParticleModeRadius: uses radius movement + rotation
+     */
+    Mode _emitterMode;
+
+    /** start size in pixels of each particle */
+    float _startSize;
+    /** size variance in pixels of each particle */
+    float _startSizeVar;
+    /** end size in pixels of each particle */
+    float _endSize;
+    /** end size variance in pixels of each particle */
+    float _endSizeVar;
+    /** start color of each particle */
+    Color4F _startColor;
+    /** start color variance of each particle */
+    Color4F _startColorVar;
+    /** end color and end color variation of each particle */
+    Color4F _endColor;
+    /** end color variance of each particle */
+    Color4F _endColorVar;
+    //* initial angle of each particle
+    float _startSpin;
+    //* initial angle of each particle
+    float _startSpinVar;
+    //* initial angle of each particle
+    float _endSpin;
+    //* initial angle of each particle
+    float _endSpinVar;
+    /** emission rate of the particles */
+    float _emissionRate;
+    /** maximum particles of the system */
+    int _totalParticles;
+    /** conforms to CocosNodeTexture protocol */
+    Texture2D* _texture;
+    /** conforms to CocosNodeTexture protocol */
+    BlendFunc _blendFunc;
+    /** does the alpha value modify color */
+    bool _opacityModifyRGB;
+    /** does FlippedY variance of each particle */
+    int _yCoordFlipped;
+
+
+    /** particles movement type: Free or Grouped
+     @since v0.8
+     */
+    PositionType _positionType;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);
