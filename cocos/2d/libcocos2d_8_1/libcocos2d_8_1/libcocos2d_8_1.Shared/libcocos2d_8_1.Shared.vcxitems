@@ -495,6 +495,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGLProgram.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGLProgramCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGLProgramState.h" />
@@ -1077,6 +1078,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGLProgram.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGLProgramCache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGLProgramState.cpp" />
