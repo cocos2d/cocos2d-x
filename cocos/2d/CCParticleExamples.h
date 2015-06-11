@@ -37,33 +37,35 @@ NS_CC_BEGIN
  */
 
 /** @class ParticleFire
- * @brief A fire particle system.
+ * @brief @~english A fire particle system.
+ * @~chinese 一个火焰粒子系统.
  */
 class CC_DLL ParticleFire : public ParticleSystemQuad
 {
 public:
-    /** Create a fire particle system.
+    /** @~english Create a fire particle system.
      *
-     * @return An autoreleased ParticleFire object.
+     * @~chinese 创建一个火焰粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleFire object.
+     * @~chinese 一个标记为自动释放的ParticleFire对象。
      */
     static ParticleFire* create();
-    /** Create a fire particle system withe a fixed number of particles.
+
+    /** @~english Create a fire particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleFire object.
+     * @~chinese 创建一个给定粒子数量的火焰粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleFire object.
+     * @~chinese 一个标记为自动释放的ParticleFire对象。
      * @js NA
      */
     static ParticleFire* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleFire(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleFire(){}
 
     bool init() override { return initWithTotalParticles(250); }
@@ -74,33 +76,35 @@ private:
 };
 
 /** @class ParticleFireworks
- * @brief A fireworks particle system.
+ * @brief @~english A fireworks particle system.
+ * @~chinese 一个烟花粒子系统。
  */
 class CC_DLL ParticleFireworks : public ParticleSystemQuad
 {
 public:
-    /** Create a fireworks particle system.
+    /** @~english Create a fireworks particle system.
      *
-     * @return An autoreleased ParticleFireworks object.
+     * @~chinese 创建一个烟花粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleFireworks object.
+     * @~chinese 一个标记为自动释放的ParticleFireworks对象。
      */
     static ParticleFireworks* create();
-    /** Create a fireworks particle system withe a fixed number of particles.
+
+    /** @~english Create a fireworks particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleFireworks object.
+     * @~chinese 创建一个给定粒子数量的烟花粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleFireworks object.
+     * @~chinese 一个标记为自动释放的ParticleFireworks对象。
      * @js NA
      */
     static ParticleFireworks* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleFireworks(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleFireworks(){}
 
     bool init(){ return initWithTotalParticles(1500); }
@@ -112,33 +116,35 @@ private:
 };
 
 /** @class ParticleSun
- * @brief A sun particle system.
+ * @brief @~english A sun particle system.
+ * @~chinese 一个太阳粒子系统。
  */
 class CC_DLL ParticleSun : public ParticleSystemQuad
 {
 public:
-    /** Create a sun particle system.
+    /** @~english Create a sun particle system.
      *
-     * @return An autoreleased ParticleSun object.
+     * @~chinese 创建一个太阳粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleSun object.
+     * @~chinese 一个标记为自动释放的ParticleSun对象。
      */
     static ParticleSun* create();
-    /** Create a sun particle system withe a fixed number of particles.
+
+    /** @~english Create a sun particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSun object.
+     * @~chinese 创建一个给定粒子数量的太阳粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleSun object.
+     * @~chinese 一个标记为自动释放的ParticleSun对象。
      * @js NA
      */
     static ParticleSun* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleSun(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleSun(){}
 
     bool init(){ return initWithTotalParticles(350); }
@@ -150,33 +156,35 @@ private:
 };
 
 /** @class ParticleGalaxy
- * @brief A galaxy particle system.
+ * @brief @~english A galaxy particle system.
+ * @~chinese 一个星系粒子系统。
  */
 class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 {
 public:
-    /** Create a galaxy particle system.
+    /** @~english Create a galaxy particle system.
      *
-     * @return An autoreleased ParticleGalaxy object.
+     * @~chinese 创建一个星系粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleGalaxy object.
+     * @~chinese 一个标记为自动释放的ParticleGalaxy对象。
      */
     static ParticleGalaxy* create();
-    /** Create a galaxy particle system withe a fixed number of particles.
+
+    /** @~english Create a galaxy particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleGalaxy object.
+     * @~chinese 创建一个给定粒子数量的星系粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleGalaxy object.
+     * @~chinese 一个标记为自动释放的ParticleGalaxy对象。
      * @js NA
      */
     static ParticleGalaxy* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleGalaxy(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleGalaxy(){}
 
     bool init(){ return initWithTotalParticles(200); }
@@ -188,33 +196,35 @@ private:
 };
 
 /** @class ParticleFlower
- * @brief A flower particle system.
+ * @brief @~english A flower particle system.
+ * @~chinese 一个花束粒子系统。
  */
 class CC_DLL ParticleFlower : public ParticleSystemQuad
 {
 public:
-    /** Create a flower particle system.
+    /** @~english Create a flower particle system.
      *
-     * @return An autoreleased ParticleFlower object.
+     * @~chinese 创建一个花束粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleFlower object.
+     * @~chinese 一个标记为自动释放的ParticleFlower对象。
      */
     static ParticleFlower* create();
-    /** Create a flower particle system withe a fixed number of particles.
+
+    /** @~english Create a flower particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleFlower object.
+     * @~chinese 创建一个给定粒子数量的花束粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleFlower object.
+     * @~chinese 一个标记为自动释放的ParticleFlower对象。
      * @js NA
      */
     static ParticleFlower* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleFlower(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleFlower(){}
 
     bool init(){ return initWithTotalParticles(250); }
@@ -225,33 +235,35 @@ private:
 };
 
 /** @class ParticleMeteor
- * @brief A meteor particle system.
+ * @brief @~english A meteor particle system.
+ * @~chinese 一个流星粒子系统。
  */
 class CC_DLL ParticleMeteor : public ParticleSystemQuad
 {
 public:
-    /** Create a meteor particle system.
+    /** @~english Create a meteor particle system.
      *
-     * @return An autoreleased ParticleMeteor object.
+     * @~chinese 创建一个流星粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleMeteor object.
+     * @~chinese 一个标记为自动释放的ParticleMeteor对象。
      */
     static ParticleMeteor * create();
-    /** Create a meteor particle system withe a fixed number of particles.
+
+    /** @~english Create a meteor particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleMeteor object.
+     * @~chinese 创建一个给定粒子数量的流星粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleMeteor object.
+     * @~chinese 一个标记为自动释放的ParticleMeteor对象。
      * @js NA
      */
     static ParticleMeteor* createWithTotalParticles(int numberOfParticles);
     
-CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
+CC_CONSTRUCTOR_ACCESS:  
     ParticleMeteor(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleMeteor(){}
 
     bool init(){ return initWithTotalParticles(150); }
@@ -262,33 +274,35 @@ private:
 };
 
 /** @class ParticleSpiral
- * @brief An spiral particle system.
+ * @brief @~english An spiral particle system.
+ * @~chinese 一个漩涡粒子系统。
  */
 class CC_DLL ParticleSpiral : public ParticleSystemQuad
 {
 public:
-    /** Create a spiral particle system.
+    /** @~english Create a spiral particle system.
      *
-     * @return An autoreleased ParticleSpiral object.
+     * @~chinese 创建一个漩涡粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleSpiral object.
+     * @~chinese 一个标记为自动释放的ParticleSpiral对象。
      */
     static ParticleSpiral* create();
-    /** Create a spiral particle system withe a fixed number of particles.
+
+    /** @~english Create a spiral particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSpiral object.
+     * @~chinese 创建一个给定粒子数量的漩涡粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleSpiral object.
+     * @~chinese 一个标记为自动释放的ParticleSpiral对象。
      * @js NA
      */
     static ParticleSpiral* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleSpiral(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleSpiral(){}
 
     bool init(){ return initWithTotalParticles(500); }
@@ -300,33 +314,35 @@ private:
 };
 
 /** @class ParticleExplosion
- * @brief An explosion particle system.
+ * @brief @~english An explosion particle system.
+ * @~chinese 一个爆炸粒子系统。
  */
 class CC_DLL ParticleExplosion : public ParticleSystemQuad
 {
 public:
-    /** Create a explosion particle system.
+    /** @~english Create a explosion particle system.
      *
-     * @return An autoreleased ParticleExplosion object.
+     * @~chinese 创建一个爆炸粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleExplosion object.
+     * @~chinese 一个标记为自动释放的ParticleExplosion对象。
      */
     static ParticleExplosion* create();
-    /** Create a explosion particle system withe a fixed number of particles.
+
+    /** @~english Create a explosion particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleExplosion object.
+     * @~chinese 创建一个给定粒子数量的爆炸粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleExplosion object.
+     * @~chinese 一个标记为自动释放的ParticleExplosion对象。
      * @js NA
      */
     static ParticleExplosion* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleExplosion(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleExplosion(){}
 
     bool init(){ return initWithTotalParticles(700); }
@@ -337,33 +353,35 @@ private:
 };
 
 /** @class ParticleSmoke
- * @brief An smoke particle system.
+ * @brief @~english An smoke particle system.
+ * @~chinese 一个烟粒子系统。
  */
 class CC_DLL ParticleSmoke : public ParticleSystemQuad
 {
 public:
-    /** Create a smoke particle system.
+    /** @~english Create a smoke particle system.
      *
-     * @return An autoreleased ParticleSmoke object.
+     * @~chinese 创建一个烟粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleSmoke object.
+     * @~chinese 一个标记为自动释放的ParticleSmoke对象。
      */
     static ParticleSmoke* create();
-    /** Create a smoke particle system withe a fixed number of particles.
+
+    /** @~english Create a smoke particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSmoke object.
+     * @~chinese 创建一个给定粒子数量的烟粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleSmoke object.
+     * @~chinese 一个标记为自动释放的ParticleSmoke对象。
      * @js NA
      */
     static ParticleSmoke* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleSmoke(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleSmoke(){}
 
     bool init(){ return initWithTotalParticles(200); }
@@ -374,33 +392,35 @@ private:
 };
 
 /** @class ParticleSnow
- * @brief An snow particle system.
+ * @brief @~english An snow particle system.
+ * @~chinese 一个雪粒子系统。
  */
 class CC_DLL ParticleSnow : public ParticleSystemQuad
 {
 public:
-    /** Create a snow particle system.
+    /** @~english Create a snow particle system.
      *
-     * @return An autoreleased ParticleSnow object.
+     * @~chinese 创建一个雪粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleSnow object.
+     * @~chinese 一个标记为自动释放的ParticleSnow对象。
      */
     static ParticleSnow* create();
-    /** Create a snow particle system withe a fixed number of particles.
+
+    /** @~english Create a snow particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSnow object.
+     * @~chinese 创建一个给定粒子数量的雪粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleSnow object.
+     * @~chinese 一个标记为自动释放的ParticleSnow对象。
      * @js NA
      */
     static ParticleSnow* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleSnow(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleSnow(){}
 
     bool init(){ return initWithTotalParticles(700); }
@@ -411,33 +431,35 @@ private:
 };
 
 /** @class ParticleRain
- * @brief A rain particle system.
+ * @brief @~english A rain particle system.
+ * @~chinese 一个雨粒子系统。
  */
 class CC_DLL ParticleRain : public ParticleSystemQuad
 {
 public:
-    /** Create a rain particle system.
+    /** @~english Create a rain particle system.
      *
-     * @return An autoreleased ParticleRain object.
+     * @~chinese 创建一个雨粒子系统。
+     * 
+     * @return @~english An autoreleased ParticleRain object.
+     * @~chinese 一个标记为自动释放的ParticleRain对象。
      */
     static ParticleRain* create();
-    /** Create a rain particle system withe a fixed number of particles.
+
+    /** @~english Create a rain particle system withe a fixed number of particles.
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleRain object.
+     * @~chinese 创建一个给定粒子数量的雨粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数量。
+     * @return @~english An autoreleased ParticleRain object.
+     * @~chinese 一个标记为自动释放的ParticleRain对象。
      * @js NA
      */
     static ParticleRain* createWithTotalParticles(int numberOfParticles);
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleRain(){}
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleRain(){}
 
     bool init(){ return initWithTotalParticles(1000); }

@@ -41,8 +41,9 @@ NS_CC_BEGIN
 class ParticleBatchNode;
 
 /** @struct sParticle
-Structure that contains the values of each particle.
-*/
+ * @~english Structure that contains the values of each particle.
+ * @~chinese 包含粒子属性的结构体。
+ */
 typedef struct sParticle {
     Vec2     pos;
     Vec2     startPos;
@@ -61,7 +62,8 @@ typedef struct sParticle {
     unsigned int    atlasIndex;
 
     /** @struct modeA
-     Mode A: gravity, direction, radial accel, tangential accel.
+     * @~english Mode A: gravity mode.
+     * @~chinese 模式A:重力模式。
      */
     struct {
         Vec2        dir;
@@ -70,7 +72,8 @@ typedef struct sParticle {
     } modeA;
 
     /** @struct modeB
-     Mode B: radius mode.
+     * @~english Mode B: radius mode.
+     * @~chinese 模式B:半径模式。
      */
     struct {
         float        angle;
@@ -86,12 +89,11 @@ typedef struct sParticle {
 class Texture2D;
 
 /** @class ParticleSystem
- * @brief Particle System base class.
+ * @brief @~english Particle System base class.
 Attributes of a Particle System:
 - emission rate of the particles
 - Gravity Mode (Mode A):
 - gravity
-- direction
 - speed +-  variance
 - tangential acceleration +- variance
 - radial acceleration +- variance
@@ -123,12 +125,47 @@ Cocos2d supports all the variables used by Particle Designer plus a bit more:
 
 It is possible to customize any of the above mentioned properties in runtime. Example:
 
-@code
-emitter.radialAccel = 15;
-emitter.startSpin = 0;
-@endcode
-
-*/
+ * @~chinese 粒子系统基类。
+ * 粒子系统的属性:
+ * - 粒子的发射速率
+ * - 重力模式:
+ *   - 重力
+ *   - 速率 +- 浮动值
+ *   - 切向加速度 +- 浮动值
+ *   - 径向加速度 +- 浮动值
+ * - 半径模式:
+ *   - 粒子开始时的半径 +- 浮动值
+ *   - 粒子结束时的半径 +- 浮动值
+ *   - 粒子旋转角度 +- 浮动值
+ * - 通用属性:
+ *   - 粒子存活时间 +- 浮动值
+ *   - 开始时旋转角度 +- 浮动值
+ *   - 结束时旋转角度 +- 浮动值
+ *   - 开始时粒子大小 +- 浮动值
+ *   - 结束时粒子大小 +- 浮动值
+ *   - 开始颜色 +- 浮动值
+ *   - 最终颜色 +- 浮动值
+ *   - 粒子存活时间 +- 浮动值
+ *   - GL混合模式
+ *   - 粒子使用的纹理
+ * 
+ * Cocos2d还支持Particle Designer编辑生成的粒子(http://particledesigner.71squared.com）
+ * 在粒子半径模式设计使用一个固定的发射率30 hz。在cocos2d中无法保证这点,
+ * cocos2d使用另一种方法,但结果是几乎相同的。
+ * 
+ * Cocos2d除了支持Particle Designer所有属性还支持有以下属性:
+ * - 旋转的粒子(当使用ParticleSystemQuad时)
+ * - 切向加速度(重力模式)
+ * - 径向加速度(重力模式)
+ * - 半径方向(半径模式)(Particle Designer仅支持由外向内方向)
+ * 
+ * 可以在运行时定制任何上述属性。例子:
+ * 
+ * @code
+ * emitter.radialAccel = 15;
+ * emitter.startSpin = 0;
+ * @endcode
+ */
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef RELATIVE
@@ -139,7 +176,8 @@ emitter.startSpin = 0;
 class CC_DLL ParticleSystem : public Node, public TextureProtocol
 {
 public:
-    /** Mode
+    /** @~english Mode
+     * @~chinese 模式
      * @js cc.ParticleSystem.MODE_GRAVITY;
      */
     enum class Mode
@@ -148,241 +186,368 @@ public:
         RADIUS,
     };
     
-    /** PositionType
-     Possible types of particle positions.
+    /** @~english PositionType,Possible types of particle positions.
+     * @~chinese PositionType，粒子定位模式。
      * @js cc.ParticleSystem.TYPE_FREE
      */
     enum class PositionType
     {
-        FREE, /** Living particles are attached to the world and are unaffected by emitter repositioning. */
+        /** @~english Living particles are attached to the world and are unaffected by emitter repositioning. 
+         * @~chinese 自由模式，粒子附属于世界，不随粒子发射器位置改变而改变。
+         */
+        FREE, 
         
-        RELATIVE, /** Living particles are attached to the world but will follow the emitter repositioning.
-                   Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.*/
+        /** @~english Living particles are attached to the world but will follow the emitter repositioning.
+         * Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
+         * @~chinese 相对模式，粒子附属于世界，但会跟随粒子发射器位置改变而移动。
+         */
+        RELATIVE, 
         
-        GROUPED, /** Living particles are attached to the emitter and are translated along with it. */
+        /** @~english Living particles are attached to the emitter and are translated along with it. 
+         * @~chinese 分组模式，粒子附属于粒子发射器，并跟随发射器移动。
+         */
+        GROUPED, 
 
     };
     
-    //* @enum
     enum {
-        /** The Particle emitter lives forever. */
+        /** @~english The Particle emitter lives forever.  @~chinese 粒子发射器将一直存在。*/
         DURATION_INFINITY = -1,
         
-        /** The starting size of the particle is equal to the ending size. */
+        /** @~english The starting size of the particle is equal to the ending size.  @~chinese 从粒子的起始大小等于结束时大小。*/
         START_SIZE_EQUAL_TO_END_SIZE = -1,
         
-        /** The starting radius of the particle is equal to the ending radius. */
+        /** @~english The starting radius of the particle is equal to the ending radius.  @~chinese 粒子起始半径等于结束时半径。*/
         START_RADIUS_EQUAL_TO_END_RADIUS = -1,
     };
     
-    /** Creates an initializes a ParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-     @since v2.0
+    /** @~english Creates an initializes a ParticleSystem from a plist file.
+     * This plist files can be created manually or with Particle Designer:
+     * http://particledesigner.71squared.com
      *
-     * @param plistFile Particle plist file name.
-     * @return An autoreleased ParticleSystem object.
+     * @~chinese 基于一个plist配置文件创建一个粒子系统。
+     * 这个plist文件可以是手动创建，或者通过编辑器Particle Designer:
+     * 链接:http://particledesigner.71squared.com
+     * @since v2.0
+     *
+     * @param plistFile @~english Particle plist file path.
+     * @~chinese 粒子plist配置文件路径。
+     *
+     * @return @~english An autoreleased ParticleSystem object.
+     * @~chinese 一个被标记为自动释放的ParticleSystem对象。
      */
     static ParticleSystem * create(const std::string& plistFile);
 
-    /** Create a system with a fixed number of particles.
+    /** @~english Create a system with a fixed number of particles.
+     * @~chinese 基于给定的粒子数量创建一个粒子系统。
+     * 
+     * @param numberOfParticles @~english A given number of particles.
+     * @~chinese 粒子数。
      *
-     * @param numberOfParticles A given number of particles.
-     * @return An autoreleased ParticleSystemQuad object.
+     * @return @~english An autoreleased ParticleSystemQuad object.
+     * @~chinese 一个autoreleased ParticleSystemQuad对象。
      * @js NA
      */
     static ParticleSystem* createWithTotalParticles(int numberOfParticles);
 
-    /** Add a particle to the emitter.
-     *
-     * @return True if add success.
-     * @js ctor
+    /** @~english Add a particle to the emitter.
+     * @~chinese 往粒子发射器添加一个粒子。
+     * 
+     * @return @~english True if add success.
+     * @~chinese 如果添加成功返回true。
      */
     bool addParticle();
-    /** Initializes a particle.
+
+    /** @~english Initializes a particle.
+     * @~chinese 初始化粒子。
      * 
-     * @param particle A given particle pointer.
+     * @param particle @~english A given particle pointer.
+     * @~chinese 一个给定的粒子指针。
      */
     void initParticle(tParticle* particle);
-    /** Stop emitting particles. Running particles will continue to run until they die.
+
+    /** @~english Stop emitting particles. Running particles will continue to run until they die.
+     * @~chinese 停止发射粒子。正在运行中的粒子将继续运行,直到结束。
      */
     void stopSystem();
-    /** Kill all living particles.
+
+    /** @~english Kill all living particles.
+     * @~chinese 清除当前存活的所有粒子。
      */
     void resetSystem();
-    /** Whether or not the system is full.
-     *
-     * @return True if the system is full.
+
+    /** @~english Whether or not the system is full.
+     * @~chinese 粒子系统是否已经满了。
+     * 
+     * @return @~english True if the system is full.
+     * @~chinese 如果系统已经满了返回true。
      */
     bool isFull();
 
-    /** Update the verts position data of particle,
+    /** @~english Update the verts position data of particle,
      should be overridden by subclasses. 
      *
-     * @param particle A certain particle.
-     * @param newPosition A new position.
+     * @~chinese 更新粒子的顶点的位置数据,
+     * 应该被子类覆盖。
+     * 
+     * @param particle @~english A certain particle.
+     * @~chinese 一定的粒子。
+     * @param newPosition @~english A new position.
+     * @~chinese 一个新的位置。
      */
     virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition);
-    /** Update the VBO verts buffer which does not use batch node,
-     should be overridden by subclasses. */
+
+    /** @~english Update the VBO verts buffer which does not use batch node.
+     * @~chinese 更新VBO顶点缓冲,不使用批处理节点
+     */
     virtual void postStep();
 
-    /** Call the update mathod with no time..
+    /** @~english Call the update mathod with no time.
+     * @~chinese 以没有给定时间的方式调用update函数。
      */
     virtual void updateWithNoTime();
 
-    /** Whether or not the particle system removed self on finish.
-     *
-     * @return True if the particle system removed self on finish.
+    /** @~english Whether or not the particle system removed self on finish.
+     * @~chinese 获取粒子系统在结束时是否移除自己。
+     * 
+     * @return @~english True if the particle system removed self on finish.
+     * @~chinese true，粒子系统在结束时将移除自己。
      */
     virtual bool isAutoRemoveOnFinish() const;
     
-    /** Set the particle system auto removed it self on finish.
-     *
-     * @param var True if the particle system removed self on finish.
+    /** @~english Set the particle system auto removed it self on finish.
+     * @~chinese 设置粒子系统在结束时是否移除自己。
+     * 
+     * @param var @~english True if the particle system removed self on finish.
+     * @~chinese true，粒子系统在结束时将移除自己。
      */
     virtual void setAutoRemoveOnFinish(bool var);
 
     // mode A
-    /** Gets the garvity.
-     *
-     * @return The gravity.
+    /** @~english Gets the garvity.
+     * @~chinese 获取重力设置。
+     * 
+     * @return @~english The gravity.
+     * @~chinese 重力。
      */
     virtual const Vec2& getGravity();
-    /** Sets the gravity.
-     *
-     * @param g The gravity.
+
+    /** @~english Sets the gravity.
+     * @~chinese 设置重力。
+     * 
+     * @param g @~english The gravity.
+     * @~chinese 重力。
      */
     virtual void setGravity(const Vec2& g);
-    /** Gets the speed.
-     *
-     * @return The speed.
+
+    /** @~english Gets the speed.
+     * @~chinese 获取速度基准值。
+     * 
+     * @return @~english The speed.
+     * @~chinese 速度基准值。
      */
     virtual float getSpeed() const;
-    /** Sets the speed.
-     *
-     * @param speed The speed.
+
+    /** @~english Sets the speed.
+     * @~chinese 设置速度基准值。
+     * 
+     * @param speed @~english The speed.
+     * @~chinese 速度基准值。
      */
     virtual void setSpeed(float speed);
-    /** Gets the speed variance.
-     *
-     * @return The speed variance.
+
+    /** @~english Gets the speed variance.
+     * @~chinese 获取速度浮动值。
+     * 
+     * @return @~english The speed variance.
+     * @~chinese 速度浮动值。
      */
     virtual float getSpeedVar() const;
-    /** Sets the speed variance.
-     *
-     * @param speed The speed variance.
+
+    /** @~english Sets the speed variance.
+     * @~chinese 设置速度浮动值。
+     * 
+     * @param speed @~english The speed variance.
+     * @~chinese 速度浮动值。
      */
     virtual void setSpeedVar(float speed);
-    /** Gets the tangential acceleration.
-     *
-     * @return The tangential acceleration.
+
+    /** @~english Gets the tangential acceleration.
+     * @~chinese 获取切向加速度基准值。
+     * 
+     * @return @~english The tangential acceleration.
+     * @~chinese 切向加速度基准值。
      */
     virtual float getTangentialAccel() const;
-    /** Sets the tangential acceleration.
-     *
-     * @param t The tangential acceleration.
+
+    /** @~english Sets the tangential acceleration.
+     * @~chinese 设置切向加速度基准值。
+     * 
+     * @param t @~english The tangential acceleration.
+     * @~chinese 切向加速度基准值。
      */
     virtual void setTangentialAccel(float t);
-    /** Gets the tangential acceleration variance.
-     *
-     * @return The tangential acceleration variance.
+
+    /** @~english Gets the tangential acceleration variance.
+     * @~chinese 获取切向加速度浮动值。
+     * 
+     * @return @~english The tangential acceleration variance.
+     * @~chinese 切向加速度浮动值
      */
     virtual float getTangentialAccelVar() const;
-    /** Sets the tangential acceleration variance.
-     *
-     * @param t The tangential acceleration variance.
+
+    /** @~english Sets the tangential acceleration variance.
+     * @~chinese 设置切向加速度浮动值。
+     * 
+     * @param t @~english The tangential acceleration variance.
+     * @~chinese 切向加速度浮动值。
      */
     virtual void setTangentialAccelVar(float t);
-    /** Gets the radial acceleration.
-     *
-     * @return The radial acceleration.
+
+    /** @~english Gets the radial acceleration.
+     * @~chinese 获取径向加速度基准值。
+     * 
+     * @return @~english The radial acceleration.
+     * @~chinese 径向加速度基准值。
      */
     virtual float getRadialAccel() const;
-    /** Sets the radial acceleration.
-     *
-     * @param t The radial acceleration.
+
+    /** @~english Sets the radial acceleration.
+     * @~chinese 设置径向加速度基准值。
+     * 
+     * @param t @~english The radial acceleration.
+     * @~chinese 径向加速度基准值。
      */
     virtual void setRadialAccel(float t);
-    /** Gets the radial acceleration variance.
-     *
-     * @return The radial acceleration variance.
+
+    /** @~english Gets the radial acceleration variance.
+     * @~chinese 获取径向加速度浮动值。
+     * 
+     * @return @~english The radial acceleration variance.
+     * @~chinese 径向加速度浮动值。
      */
     virtual float getRadialAccelVar() const;
-    /** Sets the radial acceleration variance.
-     *
-     * @param t The radial acceleration variance.
+
+    /** @~english Sets the radial acceleration variance.
+     * @~chinese 设置径向加速度浮动值。
+     * 
+     * @param t @~english The radial acceleration variance.
+     * @~chinese 径向加速度浮动值。
      */
     virtual void setRadialAccelVar(float t);
-    /** Whether or not the rotation of each particle to its direction.
+
+    /** @~english Whether or not the rotation of each particle to its direction.
      *
-     * @return True if the rotation is the direction.
+     * @~chinese 是否每个粒子的旋转方向。
+     * 
+     * @return @~english True if the rotation is the direction.
+     * @~chinese 如果旋转方向。
      */
     virtual bool getRotationIsDir() const;
-    /** Sets the rotation of each particle to its direction.
+
+    /** @~english Sets the rotation of each particle to its direction.
      *
-     * @param t True if the rotation is the direction.
+     * @~chinese 设置粒子的旋转方向是否。
+     * 
+     * @param t @~english True if the rotation is the direction.
+     * @~chinese 如果旋转方向。
      */
     virtual void setRotationIsDir(bool t);
+
     // mode B
-    /** Gets the start radius.
-     *
-     * @return The start radius.
+    /** @~english Gets the start radius.
+     * @~chinese 获取开始时半径基准值。
+     * 
+     * @return @~english The start radius.
+     * @~chinese 半径基准值。
      */
     virtual float getStartRadius() const;
-    /** Sets the start radius.
-     *
-     * @param startRadius The start radius.
+
+    /** @~english Sets the start radius.
+     * @~chinese 设置开始时半径基准值。
+     * 
+     * @param startRadius @~english The start radius.
+     * @~chinese 开始时半径基准值。
      */
     virtual void setStartRadius(float startRadius);
-    /** Gets the start radius variance.
-     *
-     * @return The start radius variance.
+
+    /** @~english Gets the start radius variance.
+     * @~chinese 获取开始时半径浮动值。
+     * 
+     * @return @~english The start radius variance.
+     * @~chinese 半径浮动值。
      */
     virtual float getStartRadiusVar() const;
-    /** Sets the start radius variance.
-     *
-     * @param startRadiusVar The start radius variance.
+
+    /** @~english Sets the start radius variance.
+     * @~chinese 设置开始时半径浮动值。
+     * 
+     * @param startRadiusVar @~english The start radius variance.
+     * @~chinese 半径浮动值。
      */
     virtual void setStartRadiusVar(float startRadiusVar);
-    /** Gets the end radius.
-     *
-     * @return The end radius.
+
+    /** @~english Gets the end radius.
+     * @~chinese 获取结束时半径基准值。
+     * 
+     * @return @~english The end radius.
+     * @~chinese 半径基准值。
      */
     virtual float getEndRadius() const;
-    /** Sets the end radius.
-     *
-     * @param endRadius The end radius.
+
+    /** @~english Sets the end radius.
+     * @~chinese 设置结束时半径基准值。
+     * 
+     * @param endRadius @~english The end radius.
+     * @~chinese 半径基准值。
      */
     virtual void setEndRadius(float endRadius);
-    /** Gets the end radius variance.
-     *
-     * @return The end radius variance.
+
+    /** @~english Gets the end radius variance.
+     * @~chinese 获取结束时半径浮动值。
+     * 
+     * @return @~english The end radius variance.
+     * @~chinese 半径浮动值。
      */
     virtual float getEndRadiusVar() const;
-    /** Sets the end radius variance.
-     *
-     * @param endRadiusVar The end radius variance.
+
+    /** @~english Sets the end radius variance.
+     * @~chinese 设置结束时半径浮动值。
+     * 
+     * @param endRadiusVar @~english The end radius variance.
+     * @~chinese 半径浮动值。
      */
     virtual void setEndRadiusVar(float endRadiusVar);
-    /** Gets the number of degrees to rotate a particle around the source pos per second.
-     *
-     * @return The number of degrees to rotate a particle around the source pos per second.
+
+    /** @~english Gets the number of degrees to rotate a particle around the source pos per second.
+     * @~chinese 获取粒子围绕粒子源每秒旋转角度基准值。
+     * 
+     * @return @~english The number of degrees to rotate a particle around the source pos per second.
+     * @~chinese 旋转角度基准值。
      */
     virtual float getRotatePerSecond() const;
-    /** Sets the number of degrees to rotate a particle around the source pos per second.
-     *
-     * @param degrees The number of degrees to rotate a particle around the source pos per second.
+
+    /** @~english Sets the number of degrees to rotate a particle around the source pos per second.
+     * @~chinese 设置粒子围绕粒子源每秒旋转角度基准值。
+     * 
+     * @param degrees @~english The number of degrees to rotate a particle around the source pos per second.
+     * @~chinese 旋转角度基准值。
      */
     virtual void setRotatePerSecond(float degrees);
-    /** Gets the rotate per second variance.
-     *
-     * @return The rotate per second variance.
+
+    /** @~english Gets the rotate per second variance.
+     * @~chinese 获取粒子围绕粒子源每秒旋转角度浮动值。
+     * 
+     * @return @~english The rotate per second variance.
+     * @~chinese 旋转角度浮动值。
      */
     virtual float getRotatePerSecondVar() const;
-    /** Sets the rotate per second variance.
-     *
-     * @param degrees The rotate per second variance.
+
+    /** @~english Sets the rotate per second variance.
+     * @~chinese 设置粒子围绕粒子源每秒旋转角度浮动值。
+     * 
+     * @param degrees @~english The rotate per second variance.
+     * @~chinese 旋转角度浮动值。
      */
     virtual void setRotatePerSecondVar(float degrees);
 
@@ -391,309 +556,442 @@ public:
     virtual void setScaleX(float newScaleX) override;
     virtual void setScaleY(float newScaleY) override;
 
-    /** Whether or not the particle system is active.
-     *
-     * @return True if the particle system is active.
+    /** @~english Whether or not the particle system is active.
+     * @~chinese 获取粒子系统是否激活。
+     * 
+     * @return @~english True if the particle system is active.
+     * @~chinese 如果粒子系统是激活的返回true。
      */
     virtual bool isActive() const;
-    /** Whether or not the particle system is blend additive.
-     *
-     * @return True if the particle system is blend additive.
+
+    /** @~english Whether or not the particle system is blend additive.
+     * @~chinese 粒子系统是否混合添加剂。
+     * 
+     * @return @~english True if the particle system is blend additive.
+     * @~chinese 如果粒子系统混合添加剂。
      */
     virtual bool isBlendAdditive() const;
-    /** Sets the particle system blend additive.
-     *
-     * @param value True if the particle system is blend additive.
+
+    /** @~english Sets the particle system blend additive.
+     * @~chinese 设置粒子系统混合。
+     * 
+     * @param value @~english True if the particle system is blend additive.
+     * @~chinese 如果粒子系统混合添加剂。
      */
     virtual void setBlendAdditive(bool value);
 
-    /** Gets the batch node.
-     *
-     * @return The batch node.
+    /** @~english Gets the batch node.
+     * @~chinese 获取粒子批处理节点。
+     * 
+     * @return @~english The batch node.
+     * @~chinese 粒子批处理节点。
      */
     virtual ParticleBatchNode* getBatchNode() const;
-    /** Sets the batch node.
-     *
-     * @param batchNode The batch node.
+
+    /** @~english Sets the batch node.
+     * @~chinese 设置粒子批处理节点。
+     * 
+     * @param batchNode @~english The batch node.
+     * @~chinese 粒子批处理节点。
      */
     virtual void setBatchNode(ParticleBatchNode* batchNode);
     
-    /** Gets the index of system in batch node array.
-     *
-     * @return The index of system in batch node array.
+    /** @~english Gets the index of system in batch node array.
+     * @~chinese 获取粒子系统在批节点里的索引。
+     * 
+     * @return @~english The index of system in batch node array.
+     * @~chinese 索引值。
      */
     inline int getAtlasIndex() const { return _atlasIndex; };
-    /** Sets the index of system in batch node array.
-     *
-     * @param index The index of system in batch node array.
+
+    /** @~english Sets the index of system in batch node array.
+     * @~chinese 设置粒子系统在批节点里的索引。
+     * 
+     * @param index @~english The index of system in batch node array.
+     * @~chinese 索引值。
      */
     inline void setAtlasIndex(int index) { _atlasIndex = index; };
 
-    /** Gets the Quantity of particles that are being simulated at the moment.
-     *
-     * @return The Quantity of particles that are being simulated at the moment.
+    /** @~english Gets the Quantity of particles that are being simulated at the moment.
+     * @~chinese 得到当前粒子数量。
+     * 
+     * @return @~english The Quantity of particles that are being simulated at the moment.
+     * @~chinese 当前粒子数量。
      */
     inline unsigned int getParticleCount() const { return _particleCount; };
     
-    /** Gets how many seconds the emitter will run. -1 means 'forever'.
-     *
-     * @return The seconds that the emitter will run. -1 means 'forever'.
+    /** @~english Gets how many seconds the emitter will run. -1 means 'forever'.
+     * @~chinese 获取发射器运行时间。
+     * 
+     * @return @~english The seconds that the emitter will run. -1 means 'forever'.
+     * @~chinese 发射器运行时间（单位秒），-1表示一直运行。
      */
     inline float getDuration() const { return _duration; };
-    /** Sets how many seconds the emitter will run. -1 means 'forever'.
-     *
-     * @param duration The seconds that the emitter will run. -1 means 'forever'.
+
+    /** @~english Sets how many seconds the emitter will run. 
+     * @~chinese 设置发射器运行时间。
+     * 
+     * @param duration @~english The seconds that the emitter will run. -1 means 'forever'.
+     * @~chinese 发射器运行时间（单位秒），-1表示一直运行。
      */
     inline void setDuration(float duration) { _duration = duration; };
     
-    /** Gets the source position of the emitter.
-     *
-     * @return The source position of the emitter.
+    /** @~english Gets the source position of the emitter.
+     * @~chinese 获取发射器位置基准值。
+     * 
+     * @return @~english The source position of the emitter.
+     * @~chinese 发射器位置基准值。
      */
     inline const Vec2& getSourcePosition() const { return _sourcePosition; };
-    /** Sets the source position of the emitter.
-     *
-     * @param pos The source position of the emitter.
+
+    /** @~english Sets the source position of the emitter.
+     * @~chinese 设置发射器位置基准值。
+     * 
+     * @param pos @~english The source position of the emitter.
+     * @~chinese 发射器位置基准值。
      */
     inline void setSourcePosition(const Vec2& pos) { _sourcePosition = pos; };
     
-    /** Gets the position variance of the emitter.
-     *
-     * @return The position variance of the emitter.
+    /** @~english Gets the position variance of the emitter.
+     * @~chinese 获取发射器位置浮动值。
+     * 
+     * @return @~english The position variance of the emitter.
+     * @~chinese 发射器位置浮动值。
      */
     inline const Vec2& getPosVar() const { return _posVar; };
-    /** Sets the position variance of the emitter.
-     *
-     * @param pos The position variance of the emitter.
+
+    /** @~english Sets the position variance of the emitter.
+     * @~chinese 设置发射器位置浮动值。
+     * 
+     * @param pos @~english The position variance of the emitter.
+     * @~chinese 发射器位置浮动值。
      */
     inline void setPosVar(const Vec2& pos) { _posVar = pos; };
 
-    /** Gets the life of each particle.
-     *
-     * @return The life of each particle.
+    /** @~english Gets the life of each particle.
+     * @~chinese 获取粒子存活时间基准值。
+     * 
+     * @return @~english The life of each particle.
+     * @~chinese 粒子存活时间基准值。
      */
     inline float getLife() const { return _life; };
-    /** Sets the life of each particle.
-     *
-     * @param life The life of each particle.
+
+    /** @~english Sets the life of each particle.
+     * @~chinese 设置粒子存活时间基准值。
+     * 
+     * @param life @~english The life of each particle.
+     * @~chinese 粒子存活时间基准值。
      */
     inline void setLife(float life) { _life = life; };
 
-    /** Gets the life variance of each particle.
-     *
-     * @return The life variance of each particle.
+    /** @~english Gets the life variance of each particle.
+     * @~chinese 获取粒子存活时间浮动值。
+     * 
+     * @return @~english The life variance of each particle.
+     * @~chinese 粒子存活时间浮动值。
      */
     inline float getLifeVar() const { return _lifeVar; };
-    /** Sets the life variance of each particle.
-     *
-     * @param lifeVar The life variance of each particle.
+
+    /** @~english Sets the life variance of each particle.
+     * @~chinese 设置粒子存活时间浮动值。
+     * 
+     * @param lifeVar @~english The life variance of each particle.
+     * @~chinese 粒子存活时间浮动值。
      */
     inline void setLifeVar(float lifeVar) { _lifeVar = lifeVar; };
 
-    /** Gets the angle of each particle. 
-     *
-     * @return The angle of each particle.
+    /** @~english Gets the angle of each particle. 
+     * @~chinese 获取粒子发射角度基准值。
+     * 
+     * @return @~english The angle of each particle.
+     * @~chinese 粒子发射角度基准值。
      */
     inline float getAngle() const { return _angle; };
-    /** Sets the angle of each particle.
-     *
-     * @param angle The angle of each particle.
+
+    /** @~english Sets the angle of each particle.
+     * @~chinese 设置粒子发射角度基准值。
+     * 
+     * @param angle @~english The angle of each particle.
+     * @~chinese 粒子发射角度基准值。
      */
     inline void setAngle(float angle) { _angle = angle; };
 
-    /** Gets the angle variance of each particle.
-     *
-     * @return The angle variance of each particle.
+    /** @~english Gets the angle variance of each particle.
+     * @~chinese 获取粒子发射角度浮动值。
+     * 
+     * @return @~english The angle variance of each particle.
+     * @~chinese 粒子发射角度浮动值。
      */
     inline float getAngleVar() const { return _angleVar; };
-    /** Sets the angle variance of each particle.
-     *
-     * @param angleVar The angle variance of each particle.
+
+    /** @~english Sets the angle variance of each particle.
+     * @~chinese 设置粒子发射角度浮动值。
+     * 
+     * @param angleVar @~english The angle variance of each particle.
+     * @~chinese 粒子发射角度浮动值。
      */
     inline void setAngleVar(float angleVar) { _angleVar = angleVar; };
     
-    /** Switch between different kind of emitter modes:
-     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration.
-     - kParticleModeRadius: uses radius movement + rotation.
-     *
-     * @return The mode of the emitter.
+    /** @~english Gets the mode of the emitter.
+     * @~chinese 获取发射器模式。
+     * 
+     * @return @~english The mode of the emitter.
+     * @~chinese 发射器的模式。
      */
     inline Mode getEmitterMode() const { return _emitterMode; };
-    /** Sets the mode of the emitter.
-     *
-     * @param mode The mode of the emitter.
+
+    /** @~english Sets the mode of the emitter.
+     * @~chinese 设置粒子系统发射器模式。
+     * 
+     * @param mode @~english The mode of the emitter.
+     * @~chinese 发射器模式。
      */
     inline void setEmitterMode(Mode mode) { _emitterMode = mode; };
     
-    /** Gets the start size in pixels of each particle.
-     *
-     * @return The start size in pixels of each particle.
+    /** @~english Gets the start size in pixels of each particle.
+     * @~chinese 获取粒子开始时粒子大小基准值(以像素为单位)。
+     * 
+     * @return @~english The start size in pixels of each particle.
+     * @~chinese 粒子大小基准值(以像素为单位)。
      */
     inline float getStartSize() const { return _startSize; };
-    /** Sets the start size in pixels of each particle.
-     *
-     * @param startSize The start size in pixels of each particle.
+
+    /** @~english Sets the start size in pixels of each particle.
+     * @~chinese 设置粒子开始时粒子大小基准值(以像素为单位)。
+     * 
+     * @param startSize @~english The start size in pixels of each particle.
+     * @~chinese 粒子大小基准值(以像素为单位)。
      */
     inline void setStartSize(float startSize) { _startSize = startSize; };
 
-    /** Gets the start size variance in pixels of each particle.
-     *
-     * @return The start size variance in pixels of each particle.
+    /** @~english Gets the start size variance in pixels of each particle.
+     * @~chinese 获取粒子开始时粒子大小浮动值(以像素为单位)。
+     * 
+     * @return @~english The start size variance in pixels of each particle.
+     * @~chinese 粒子大小浮动值(以像素为单位)。
      */
     inline float getStartSizeVar() const { return _startSizeVar; };
-    /** Sets the start size variance in pixels of each particle.
-     *
-     * @param sizeVar The start size variance in pixels of each particle.
+
+    /** @~english Sets the start size variance in pixels of each particle.
+     * @~chinese 设置粒子开始时粒子大小浮动值(以像素为单位)。
+     * 
+     * @param sizeVar @~english The start size variance in pixels of each particle.
+     * @~chinese 粒子大小浮动值(以像素为单位)。
      */
     inline void setStartSizeVar(float sizeVar) { _startSizeVar = sizeVar; };
 
-    /** Gets the end size in pixels of each particle.
-     *
-     * @return The end size in pixels of each particle.
+    /** @~english Gets the end size in pixels of each particle.
+     * @~chinese 获取粒子结束时粒子大小基准值(以像素为单位)。
+     * 
+     * @return @~english The end size in pixels of each particle.
+     * @~chinese 粒子大小基准值(以像素为单位)。
      */
     inline float getEndSize() const { return _endSize; };
-    /** Sets the end size in pixels of each particle.
-     *
-     * @param endSize The end size in pixels of each particle.
+
+    /** @~english Sets the end size in pixels of each particle.
+     * @~chinese 设置粒子结束时粒子大小基准值(以像素为单位)。
+     * 
+     * @param endSize @~english The end size in pixels of each particle.
+     * @~chinese 粒子大小基准值(以像素为单位)。
      */
     inline void setEndSize(float endSize) { _endSize = endSize; };
 
-    /** Gets the end size variance in pixels of each particle.
-     *
-     * @return The end size variance in pixels of each particle.
+    /** @~english Gets the end size variance in pixels of each particle.
+     * @~chinese 获取粒子结束时粒子大小浮动值。
+     * 
+     * @return @~english The end size variance in pixels of each particle.
+     * @~chinese 粒子大小浮动值。
      */
     inline float getEndSizeVar() const { return _endSizeVar; };
-    /** Sets the end size variance in pixels of each particle.
-     *
-     * @param sizeVar The end size variance in pixels of each particle.
+
+    /** @~english Sets the end size variance in pixels of each particle.
+     * @~chinese 设置粒子结束时粒子大小浮动值。
+     * 
+     * @param sizeVar @~english The end size variance in pixels of each particle.
+     * @~chinese 粒子大小浮动值。
      */
     inline void setEndSizeVar(float sizeVar) { _endSizeVar = sizeVar; };
 
-    /** Gets the start color of each particle.
-     *
-     * @return The start color of each particle.
+    /** @~english Gets the start color of each particle.
+     * @~chinese 获取粒子开始时颜色基准值。
+     * 
+     * @return @~english The start color of each particle.
+     * @~chinese 颜色基准值。
      */
     inline const Color4F& getStartColor() const { return _startColor; };
-    /** Sets the start color of each particle.
-     *
-     * @param color The start color of each particle.
+
+    /** @~english Sets the start color of each particle.
+     * @~chinese 设置粒子开始时颜色基准值。
+     * 
+     * @param color @~english The start color of each particle.
+     * @~chinese 颜色基准值。
      */
     inline void setStartColor(const Color4F& color) { _startColor = color; };
 
-    /** Gets the start color variance of each particle.
-     *
-     * @return The start color variance of each particle.
+    /** @~english Gets the start color variance of each particle.
+     * @~chinese 获取粒子开始时颜色浮动值。
+     * 
+     * @return @~english The start color variance of each particle.
+     * @~chinese 颜色浮动值。
      */
     inline const Color4F& getStartColorVar() const { return _startColorVar; };
-    /** Sets the start color variance of each particle.
-     *
-     * @param color The start color variance of each particle.
+
+    /** @~english Sets the start color variance of each particle.
+     * @~chinese 设置粒子开始时颜色浮动值。
+     * 
+     * @param color @~english The start color variance of each particle.
+     * @~chinese 颜色浮动值。
      */
     inline void setStartColorVar(const Color4F& color) { _startColorVar = color; };
 
-    /** Gets the end color and end color variation of each particle.
-     *
-     * @return The end color and end color variation of each particle.
+    /** @~english Gets the end color and end color variation of each particle.
+     * @~chinese 获取粒子结束时颜色基准值。
+     * 
+     * @return @~english The end color and end color variation of each particle.
+     * @~chinese 颜色基准值。
      */
     inline const Color4F& getEndColor() const { return _endColor; };
-    /** Sets the end color and end color variation of each particle.
-     *
-     * @param color The end color and end color variation of each particle.
+
+    /** @~english Sets the end color and end color variation of each particle.
+     * @~chinese 设置粒子结束时颜色基准值。
+     * 
+     * @param color @~english The end color and end color variation of each particle.
+     * @~chinese 颜色基准值。
      */
     inline void setEndColor(const Color4F& color) { _endColor = color; };
 
-    /** Gets the end color variance of each particle.
-     *
-     * @return The end color variance of each particle.
+    /** @~english Gets the end color variance of each particle.
+     * @~chinese 获取粒子结束时颜色浮动值。
+     * 
+     * @return @~english The end color variance of each particle.
+     * @~chinese 颜色浮动值。
      */
     inline const Color4F& getEndColorVar() const { return _endColorVar; };
-    /** Sets the end color variance of each particle.
-     *
-     * @param color The end color variance of each particle.
+
+    /** @~english Sets the end color variance of each particle.
+     * @~chinese 设置粒子结束时颜色浮动值。
+     * 
+     * @param color @~english The end color variance of each particle.
+     * @~chinese 颜色浮动值。
      */
     inline void setEndColorVar(const Color4F& color) { _endColorVar = color; };
 
-    /** Gets the start spin of each particle.
-     *
-     * @return The start spin of each particle.
+    /** @~english Gets the start spin of each particle.
+     * @~chinese 获取粒子开始时旋转角度基准值。
+     * 
+     * @return @~english The start spin of each particle.
+     * @~chinese 旋转角度基准值。
      */
     inline float getStartSpin() const { return _startSpin; };
-    /** Sets the start spin of each particle.
-     *
-     * @param spin The start spin of each particle.
+
+    /** @~english Sets the start spin of each particle.
+     * @~chinese 设置粒子开始时旋转角度基准值。
+     * 
+     * @param spin @~english The start spin of each particle.
+     * @~chinese 旋转角度基准值。
      */
     inline void setStartSpin(float spin) { _startSpin = spin; };
 
-    /** Gets the start spin variance of each particle.
-     *
-     * @return The start spin variance of each particle.
+    /** @~english Gets the start spin variance of each particle.
+     * @~chinese 获取粒子开始时旋转角度浮动值。
+     * 
+     * @return @~english The start spin variance of each particle.
+     * @~chinese 旋转角度浮动值。
      */
     inline float getStartSpinVar() const { return _startSpinVar; };
-    /** Sets the start spin variance of each particle.
-     *
-     * @param pinVar The start spin variance of each particle.
+
+    /** @~english Sets the start spin variance of each particle.
+     * @~chinese 设置粒子开始时旋转角度浮动值。
+     * 
+     * @param pinVar @~english The start spin variance of each particle.
+     * @~chinese 旋转角度浮动值。
      */
     inline void setStartSpinVar(float pinVar) { _startSpinVar = pinVar; };
 
-    /** Gets the end spin of each particle.
-     *
-     * @return The end spin of each particle.
+    /** @~english Gets the end spin of each particle.
+     * @~chinese 获取粒子结束时旋转角度基准值。
+     * 
+     * @return @~english The end spin of each particle.
+     * @~chinese 旋转角度基准值。
      */
     inline float getEndSpin() const { return _endSpin; };
-    /** Sets the end spin of each particle.
-     *
-     * @param endSpin The end spin of each particle.
+
+    /** @~english Sets the end spin of each particle.
+     * @~chinese 设置粒子结束时旋转角度基准值。
+     * 
+     * @param endSpin @~english The end spin of each particle.
+     * @~chinese 旋转角度基准值。
      */
     inline void setEndSpin(float endSpin) { _endSpin = endSpin; };
 
-    /** Gets the end spin variance of each particle.
-     *
-     * @return The end spin variance of each particle.
+    /** @~english Gets the end spin variance of each particle.
+     * @~chinese 获取粒子结束时旋转角度的浮动值。
+     * 
+     * @return @~english The end spin variance of each particle.
+     * @~chinese 旋转角度浮动值。
      */
     inline float getEndSpinVar() const { return _endSpinVar; };
-    /** Sets the end spin variance of each particle.
-     *
-     * @param endSpinVar The end spin variance of each particle.
+
+    /** @~english Sets the end spin variance of each particle.
+     * @~chinese 设置粒子结束时旋转角度的浮动值。
+     * 
+     * @param endSpinVar @~english The end spin variance of each particle.
+     * @~chinese 旋转角度浮动值。
      */
     inline void setEndSpinVar(float endSpinVar) { _endSpinVar = endSpinVar; };
 
-    /** Gets the emission rate of the particles.
+    /** @~english Gets the emission rate of the particles.
      *
-     * @return The emission rate of the particles.
+     * @~chinese 得到了粒子的发射速率。
+     * 
+     * @return @~english The emission rate of the particles.
+     * @~chinese 粒子的发射速率。
      */
     inline float getEmissionRate() const { return _emissionRate; };
-    /** Sets the emission rate of the particles.
-     *
-     * @param rate The emission rate of the particles.
+
+    /** @~english Sets the emission rate of the particles.
+     * @~chinese 设置粒子的发射速率。
+     * 
+     * @param rate @~english The emission rate of the particles.
+     * @~chinese 粒子的发射速率。
      */
     inline void setEmissionRate(float rate) { _emissionRate = rate; };
 
-    /** Gets the maximum particles of the system.
-     *
-     * @return The maximum particles of the system.
+    /** @~english Gets the maximum particles of the system.
+     * @~chinese 获取粒子系统的粒子数最大限度。
+     * 
+     * @return @~english The maximum particles of the system.
+     * @~chinese 粒子数最大限度。
      */
     virtual int getTotalParticles() const;
-    /** Sets the maximum particles of the system.
-     *
-     * @param totalParticles The maximum particles of the system.
+
+    /** @~english Sets the maximum particles of the system.
+     * @~chinese 设置粒子系统的粒子数最大限度。
+     * 
+     * @param totalParticles @~english The maximum particles of the system.
+     * @~chinese 粒子数最大限度。
      */
     virtual void setTotalParticles(int totalParticles);
 
-    /** does the alpha value modify color */
     inline void setOpacityModifyRGB(bool opacityModifyRGB) override { _opacityModifyRGB = opacityModifyRGB; };
     inline bool isOpacityModifyRGB() const override { return _opacityModifyRGB; };
     CC_DEPRECATED_ATTRIBUTE inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
-    /** Gets the particles movement type: Free or Grouped.
-     @since v0.8
+    /** @~english Gets the particles movement type: Free or Grouped.
+     * @~chinese 获取粒子运动类型:自由或分组。
+     * @since v0.8
      *
-     * @return The particles movement type.
+     * @return @~english The particles movement type.
+     * @~chinese 粒子的运动类型。
      */
     inline PositionType getPositionType() const { return _positionType; };
-    /** Sets the particles movement type: Free or Grouped.
-    @since v0.8
+
+    /** @~english Sets the particles movement type: Free or Grouped.
+     * @~chinese 设置粒子运动类型:自由或分组。
      *
-     * @param type The particles movement type.
+     * @param type @~english The particles movement type.
+     * @~chinese 粒子的运动类型。
+     * @since v0.8
      */
     inline void setPositionType(PositionType type) { _positionType = type; };
     
@@ -702,19 +1000,8 @@ public:
     virtual void onExit() override;
     virtual void update(float dt) override;
     virtual Texture2D* getTexture() const override;
-    virtual void setTexture(Texture2D *texture) override;
-    /**
-    *@code
-    *When this function bound into js or lua,the parameter will be changed
-    *In js: var setBlendFunc(var src, var dst)
-    *In lua: local setBlendFunc(local src, local dst)
-    *@endcode
-    */
+    virtual void setTexture(Texture2D *texture) override;    
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
-    /**
-    * @js NA
-    * @lua NA
-    */
     virtual const BlendFunc &getBlendFunc() const override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -722,191 +1009,20 @@ CC_CONSTRUCTOR_ACCESS:
      * @js ctor
      */
     ParticleSystem();
-    /**
-     * @js NA
-     * @lua NA
-     */
+    
     virtual ~ParticleSystem();
 
-    /** initializes a ParticleSystem*/
     bool init() override;
-    /** initializes a ParticleSystem from a plist file.
-     This plist files can be created manually or with Particle Designer:
-     http://particledesigner.71squared.com/
-     @since v0.99.3
-     */
+    
     bool initWithFile(const std::string& plistFile);
     
-    /** initializes a QuadParticleSystem from a Dictionary.
-     @since v0.99.3
-     */
     bool initWithDictionary(ValueMap& dictionary);
     
-    /** initializes a particle system from a NSDictionary and the path from where to load the png
-     @since v2.1
-     */
     bool initWithDictionary(ValueMap& dictionary, const std::string& dirname);
     
-    //! Initializes a system with a fixed number of particles
     virtual bool initWithTotalParticles(int numberOfParticles);
 
 protected:
-    virtual void updateBlendFunc();
-
-    /** whether or not the particles are using blend additive.
-     If enabled, the following blending function will be used.
-     @code
-     source blend function = GL_SRC_ALPHA;
-     dest blend function = GL_ONE;
-     @endcode
-     */
-    bool _isBlendAdditive;
-
-    /** whether or not the node will be auto-removed when it has no particles left.
-     By default it is false.
-     @since v0.8
-     */
-    bool _isAutoRemoveOnFinish;
-
-    std::string _plistFile;
-    //! time elapsed since the start of the system (in seconds)
-    float _elapsed;
-
-    // Different modes
-    //! Mode A:Gravity + Tangential Accel + Radial Accel
-    struct {
-        /** Gravity value. Only available in 'Gravity' mode. */
-        Vec2 gravity;
-        /** speed of each particle. Only available in 'Gravity' mode.  */
-        float speed;
-        /** speed variance of each particle. Only available in 'Gravity' mode. */
-        float speedVar;
-        /** tangential acceleration of each particle. Only available in 'Gravity' mode. */
-        float tangentialAccel;
-        /** tangential acceleration variance of each particle. Only available in 'Gravity' mode. */
-        float tangentialAccelVar;
-        /** radial acceleration of each particle. Only available in 'Gravity' mode. */
-        float radialAccel;
-        /** radial acceleration variance of each particle. Only available in 'Gravity' mode. */
-        float radialAccelVar;
-        /** set the rotation of each particle to its direction Only available in 'Gravity' mode. */
-        bool rotationIsDir;
-    } modeA;
-
-    //! Mode B: circular movement (gravity, radial accel and tangential accel don't are not used in this mode)
-    struct {
-        /** The starting radius of the particles. Only available in 'Radius' mode. */
-        float startRadius;
-        /** The starting radius variance of the particles. Only available in 'Radius' mode. */
-        float startRadiusVar;
-        /** The ending radius of the particles. Only available in 'Radius' mode. */
-        float endRadius;
-        /** The ending radius variance of the particles. Only available in 'Radius' mode. */
-        float endRadiusVar;
-        /** Number of degrees to rotate a particle around the source pos per second. Only available in 'Radius' mode. */
-        float rotatePerSecond;
-        /** Variance in degrees for rotatePerSecond. Only available in 'Radius' mode. */
-        float rotatePerSecondVar;
-    } modeB;
-
-    //! Array of particles
-    tParticle *_particles;
-
-    //Emitter name
-    std::string _configName;
-
-    // color modulate
-    //    BOOL colorModulate;
-
-    //! How many particles can be emitted per second
-    float _emitCounter;
-
-    //!  particle idx
-    int _particleIdx;
-
-    // Optimization
-    //CC_UPDATE_PARTICLE_IMP    updateParticleImp;
-    //SEL                        updateParticleSel;
-
-    /** weak reference to the SpriteBatchNode that renders the Sprite */
-    ParticleBatchNode* _batchNode;
-
-    // index of system in batch node array
-    int _atlasIndex;
-
-    //true if scaled or rotated
-    bool _transformSystemDirty;
-    // Number of allocated particles
-    int _allocatedParticles;
-
-    /** Is the emitter active */
-    bool _isActive;
-    
-    /** Quantity of particles that are being simulated at the moment */
-    int _particleCount;
-    /** How many seconds the emitter will run. -1 means 'forever' */
-    float _duration;
-    /** sourcePosition of the emitter */
-    Vec2 _sourcePosition;
-    /** Position variance of the emitter */
-    Vec2 _posVar;
-    /** life, and life variation of each particle */
-    float _life;
-    /** life variance of each particle */
-    float _lifeVar;
-    /** angle and angle variation of each particle */
-    float _angle;
-    /** angle variance of each particle */
-    float _angleVar;
-
-    /** Switch between different kind of emitter modes:
-     - kParticleModeGravity: uses gravity, speed, radial and tangential acceleration
-     - kParticleModeRadius: uses radius movement + rotation
-     */
-    Mode _emitterMode;
-
-    /** start size in pixels of each particle */
-    float _startSize;
-    /** size variance in pixels of each particle */
-    float _startSizeVar;
-    /** end size in pixels of each particle */
-    float _endSize;
-    /** end size variance in pixels of each particle */
-    float _endSizeVar;
-    /** start color of each particle */
-    Color4F _startColor;
-    /** start color variance of each particle */
-    Color4F _startColorVar;
-    /** end color and end color variation of each particle */
-    Color4F _endColor;
-    /** end color variance of each particle */
-    Color4F _endColorVar;
-    //* initial angle of each particle
-    float _startSpin;
-    //* initial angle of each particle
-    float _startSpinVar;
-    //* initial angle of each particle
-    float _endSpin;
-    //* initial angle of each particle
-    float _endSpinVar;
-    /** emission rate of the particles */
-    float _emissionRate;
-    /** maximum particles of the system */
-    int _totalParticles;
-    /** conforms to CocosNodeTexture protocol */
-    Texture2D* _texture;
-    /** conforms to CocosNodeTexture protocol */
-    BlendFunc _blendFunc;
-    /** does the alpha value modify color */
-    bool _opacityModifyRGB;
-    /** does FlippedY variance of each particle */
-    int _yCoordFlipped;
-
-
-    /** particles movement type: Free or Grouped
-     @since v0.8
-     */
-    PositionType _positionType;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);
