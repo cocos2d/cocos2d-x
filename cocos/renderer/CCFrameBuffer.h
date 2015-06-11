@@ -52,7 +52,7 @@ struct CC_DLL Viewport
     float _height;
 };
     
-class RenderTargetBase : public Ref
+class CC_DLL RenderTargetBase : public Ref
 {
 public:
     enum class Type
@@ -80,7 +80,7 @@ protected:
     
 };
 
-class RenderTarget : public RenderTargetBase
+class CC_DLL RenderTarget : public RenderTargetBase
 {
 public:
     
@@ -100,7 +100,7 @@ protected:
 #endif
 };
 
-class RenderTargetRenderBuffer : public RenderTargetBase
+class CC_DLL RenderTargetRenderBuffer : public RenderTargetBase
 {
 public:
     
@@ -122,7 +122,7 @@ protected:
 #endif
 };
 
-class RenderTargetDepthStencil : public RenderTargetBase
+class CC_DLL RenderTargetDepthStencil : public RenderTargetBase
 {
 public:
     
