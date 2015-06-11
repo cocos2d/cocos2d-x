@@ -1044,6 +1044,7 @@ protected:
     //! time elapsed since the start of the system (in seconds)
     float _elapsed;
 
+    /// @cond DO_NOT_SHOW
     // Different modes
     //! Mode A:Gravity + Tangential Accel + Radial Accel
     struct {
@@ -1081,6 +1082,8 @@ protected:
         float rotatePerSecondVar;
     } modeB;
 
+    /// @endcond
+    
     //! Array of particles
     tParticle *_particles;
 
