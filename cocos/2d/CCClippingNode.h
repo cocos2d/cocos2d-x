@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2012      Pierre-David Bélanger
+/*Copyright (c) 2012      Pierre-David Bélanger
  * Copyright (c) 2012      cocos2d-x.org
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
  *
@@ -22,7 +21,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ * 
  */
 
 #ifndef __MISCNODE_CCCLIPPING_NODE_H__
@@ -38,78 +37,115 @@ NS_CC_BEGIN
  *  @addtogroup _2d
  *  @{
  */
-/** ClippingNode is a subclass of Node.
+/** @~english ClippingNode is a subclass of Node.
  * It draws its content (childs) clipped using a stencil.
  * The stencil is an other Node that will not be drawn.
  * The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
+ * @~chinese ClippingNode是Node的一个子类。
+ * 它使用一个模板来裁剪绘制内容。
+ * 模板是一个其他节点,不会被绘制。
+ * 使用模板的alpha部分来进行裁剪(通过调整alphaThreshold)。
  */
 class CC_DLL ClippingNode : public Node
 {
 public:
-    /** Creates and initializes a clipping node without a stencil.
+    /** @~english Creates and initializes a clipping node without a stencil.
      *
-     * @return An autorelease ClippingNode.
+     * @~chinese 创建并初始化一个裁剪节点，不带模板。
+     * 
+     * @return @~english An autorelease ClippingNode.
+     * @~chinese 一个自动释放的ClippingNode对象。
      */
     static ClippingNode* create();
     
-    /** Creates and initializes a clipping node with an other node as its stencil.
+    /** @~english Creates and initializes a clipping node with an other node as its stencil.
      * The stencil node will be retained.
-     * @param stencil The stencil node.
+     * @~chinese 使用另一个节点作为模板创建并初始化一个裁剪节点。
+     * 模板节点将被retain。
+     * @param stencil @~english The stencil node.
+     * @~chinese 模板节点。
      */
     static ClippingNode* create(Node *stencil);
 
-    /** The Node to use as a stencil to do the clipping.
+    /** @~english The Node to use as a stencil to do the clipping.
      * The stencil node will be retained.
      * This default to nil.
      *
-     * @return The stencil node.
+     * @~chinese 作为模板进行裁剪的节点。
+     * 模板节点将被retain。
+     * 这个默认为空。
+     * 
+     * @return @~english The stencil node.
+     * @~chinese 模板节点。
      */
     Node* getStencil() const;
     
-    /** Set the Node to use as a stencil to do the clipping.
+    /** @~english Set the Node to use as a stencil to do the clipping.
      *
-     * @param stencil The Node to use as a stencil to do the clipping.
+     * @~chinese 设置一个作为模板进行裁剪的节点
+     * 
+     * @param stencil @~english The Node to use as a stencil to do the clipping.
+     * @~chinese 作为模板进行裁剪的节点。
      */
     void setStencil(Node *stencil);
 
-    /** If stencil has no childre it will not be drawn.
+    /** @~english If stencil has no childre it will not be drawn.
      * If you have custom stencil-based node with stencil drawing mechanics other then children-based,
      * then this method should return true every time you wish stencil to be visited.
      * By default returns true if has any children attached.
      *
-     * @return If you have custom stencil-based node with stencil drawing mechanics other then children-based,
-     *         then this method should return true every time you wish stencil to be visited.
-     *         By default returns true if has any children attached.
+     * @~chinese 如果模板没有子节点，将不会被绘制。
+     * 如果你有自定义的基于模板的节点而不是基于子节点,
+     * 如果你希望模板被绘制的话，那么这个方法每一次都会返回true。
+     * 如果关联了子节点将会默认返回true。
+     * 
      * @js NA
      */
     virtual bool hasContent() const;
 
-    /** The alpha threshold.
+    /** @~english The alpha threshold.
      * The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.
      * Should be a float between 0 and 1.
      * This default to 1 (so alpha test is disabled).
      *
-     * @return The alpha threshold value,Should be a float between 0 and 1.
+     * @~chinese 透明度阈值。
+     * 只有当透明度大于alphaThreshold的内容才会被绘制。
+     * 应该是一个在0和1之间的浮点数。
+     * 这个默认为1(所以alpha测试是禁用的)。
+     * 
+     * @return @~english The alpha threshold value,Should be a float between 0 and 1.
+     * @~chinese 透明度阈值,应该是一个在0和1之间的浮点数。
      */
     GLfloat getAlphaThreshold() const;
     
-    /** Set the alpha threshold. 
+    /** @~english Set the alpha threshold. 
      * 
-     * @param alphaThreshold The alpha threshold.
+     * @~chinese 设置透明度阈值。
+     * 
+     * @param alphaThreshold @~english The alpha threshold.
+     * @~chinese 透明度阈值。
      */
     void setAlphaThreshold(GLfloat alphaThreshold);
     
-    /** Inverted. If this is set to true,
+    /** @~english Inverted. If this is set to true,
      * the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
      * This default to false.
      *
-     * @return If the clippingNode is Inverted, it will be return true.
+     * @~chinese 如果设置为真的话就反转
+     * 模板反转,所以内容绘制的地方模板不会进行绘制。
+     * 默认为假。
+     * 
+     * @return @~english If the clippingNode is Inverted, it will be return true.
+     * @~chinese 如果clippingNode反转,它将返回true。
      */
     bool isInverted() const;
     
-    /** Set the ClippingNode whether or not invert.
+    /** @~english Set the ClippingNode whether or not invert.
      *
-     * @param inverted A bool Type,to set the ClippingNode whether or not invert.
+     * @~chinese 设置ClippingNode是否反转。
+     * 
+     * @param inverted @~english A bool Type,to set the ClippingNode whether or not invert.
+     * @~chinese bool类型,用于设置ClippingNode是否反转。
      */
     void setInverted(bool inverted);
 
@@ -143,17 +179,21 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ClippingNode();
 
-    /** Initializes a clipping node without a stencil.
+    /** @~english Initializes a clipping node without a stencil.
+     * @~chinese 不是呀模板初始化一个裁剪节点。
      */
     virtual bool init() override;
     
-    /** Initializes a clipping node with an other node as its stencil.
+    /** @~english Initializes a clipping node with an other node as its stencil.
      The stencil node will be retained, and its parent will be set to this clipping node.
+     * @~chinese 使用另一个节点作为模板初始化一个裁剪节点。
+     * 模板节点将被retain,它的父节点将会设置到这个裁剪节点。
      */
     virtual bool init(Node *stencil);
 
 protected:
-    /**draw fullscreen quad to clear stencil bits
+    /**@~english draw fullscreen quad to clear stencil bits
+     * @~chinese 画全屏四模板位
     */
     void drawFullScreenQuadClearStencil();
 
@@ -190,7 +230,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);
 };
-/** @} */
+/** @~english @}  @~chinese @ }*/
 NS_CC_END
 
 #endif // __MISCNODE_CCCLIPPING_NODE_H__
