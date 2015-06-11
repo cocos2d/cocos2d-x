@@ -37,43 +37,57 @@ class GridBase;
  *  @{
  */
 
-/**
- * @brief Base class for Grid Node.
+/** @class NodeGrid
+ * @brief @~english Base class for Grid Node,the grid action's management class.
+ * @~chinese 网格节点,网格动作的管理节点。网格节点的网格动作作用于所有子孙节点。
  */
 
 class CC_DLL NodeGrid : public Node
 {
 public:
-    /** Create a Grid Node.
+    /** @~english Create a grid node.
      *
-     * @return An autorelease Grid Node.
+     * @~chinese 创建一个网格节点。
+     * 
+     * @return @~english An autorelease Grid Node.
+     * @~chinese 一个autorelease网格节点。
      */
     static NodeGrid* create();
     
-    /** Get a Grid Node. 
+    /** @~english Gets the grid action of NodeGrid. 
      *
-     * @return Return a GridBase.
+     * @~chinese 获取网格节点的网格动作。
+     * 
+     * @return @~english Return a GridBase.
+     * @~chinese 返回网格动作GridBase。
      */
     GridBase* getGrid() { return _nodeGrid; }
+
     /**
      * @js NA
      */
     const GridBase* getGrid() const { return _nodeGrid; }
 
-    /**
+    /**@~english
      * Changes a grid object that is used when applying effects.
      *
-     * @param grid  A Grid object that is used when applying effects.
+     * @~chinese 
+     * 设置网格节点的网格动作。
+     * 
+     * @param grid  @~english A Grid object that is used when applying effects.
+     * @~chinese 一个网格动作对象。
      */
     void setGrid(GridBase *grid);
     
-    /** Set the Grid Target. 
+    /** @~english Set the Grid Target. 
      *
-     * @param target A Node is used to set the Grid Target.
+     * @~chinese 设置受网格动作作用的一个额外节点。
+     * 
+     * @param target @~english A Node is used to set the Grid Target.
+     * @~chinese 目标节点。
      */
     void setTarget(Node *target);
 
-    // overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
 CC_CONSTRUCTOR_ACCESS:

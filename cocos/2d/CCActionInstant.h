@@ -39,8 +39,9 @@ NS_CC_BEGIN
  */
 
 /** @class ActionInstant
-* @brief Instant actions are immediate actions. They don't have a duration like the IntervalAction actions.
-**/
+ * @brief @~english Instant actions are immediate actions. They don't have a duration like the ActionInterval actions.
+ * @~chinese 即时动作是会立即被执行的动作。他们没有持续时间动作（ActionInterval）的持续时间属性。
+ **/
 class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
 {
 public:
@@ -60,34 +61,31 @@ public:
     }
 
     virtual bool isDone() const override;
-    /**
-     * @param dt In seconds.
-     */
+    
     virtual void step(float dt) override;
-    /**
-     * @param time In seconds.
-     */
+    
     virtual void update(float time) override;
 };
 
 /** @class Show
-* @brief Show the node.
-**/
+ * @brief @~english Show the node instantly.
+ * @~chinese 显示动作用来立即显示一个节点。
+ **/
 class CC_DLL Show : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action.
+    /** @~english Allocates and initializes the action.
      *
-     * @return  An autoreleased Show object.
+     * @~chinese 创建并初始化动作。
+     * 
+     * @return @~english  An autoreleased Show object.
+     * @~chinese 一个自释放的Show动作对象。
      */
     static Show * create();
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual ActionInstant* reverse() const override;
     virtual Show* clone() const override;
@@ -101,23 +99,24 @@ private:
 };
 
 /** @class Hide
-* @brief Hide the node.
-*/
+ * @brief @~english Hide the node.
+ * @~chinese 隐藏动作用来立即隐藏一个节点
+ */
 class CC_DLL Hide : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action.
+    /** @~english Allocates and initializes the action.
      *
-     * @return An autoreleased Hide object.
+     * @~chinese 创建并初始化动作。
+     * 
+     * @return @~english An autoreleased Hide object.
+     * @~chinese 一个自释放的Hide动作对象。
      */
     static Hide * create();
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual ActionInstant* reverse() const override;
     virtual Hide* clone() const override;
@@ -131,23 +130,24 @@ private:
 };
 
 /** @class ToggleVisibility
-* @brief Toggles the visibility of a node.
-*/
+ * @brief @~english Toggles the visibility of a node.
+ * @~chinese ToggleVisibility动作用来切换一个节点的可见性。
+ */
 class CC_DLL ToggleVisibility : public ActionInstant
 {
 public:
-    /** Allocates and initializes the action.
+    /** @~english Allocates and initializes the action.
      *
-     * @return An autoreleased ToggleVisibility object.
+     * @~chinese 创建并初始化动作。
+     * 
+     * @return @~english An autoreleased ToggleVisibility object.
+     * @~chinese 一个自释放的ToggleVisibility动作对象。
      */
     static ToggleVisibility * create();
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual ToggleVisibility* reverse() const override;
     virtual ToggleVisibility* clone() const override;
@@ -161,24 +161,26 @@ private:
 };
 
 /** @class RemoveSelf
-* @brief Remove the node.
-*/
+ * @brief @~english Remove the node.
+ * @~chinese RemoveSelf动作用来删除执行动作的节点。
+ */
 class CC_DLL RemoveSelf : public ActionInstant
 {
 public:
-    /** Create the action.
+    /** @~english Create the action.
      *
-     * @param isNeedCleanUp Is need to clean up, the default value is true.
-     * @return An autoreleased RemoveSelf object.
+     * @~chinese 创建动作。
+     * 
+     * @param isNeedCleanUp @~english Is need to clean up, the default value is true.
+     * @~chinese 是否需要清理，默认值是true。
+     * @return @~english An autoreleased RemoveSelf object.
+     * @~chinese 一个自释放的RemoveSelf动作对象。
      */
     static RemoveSelf * create(bool isNeedCleanUp = true);
 
     //
     // Override
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual RemoveSelf* clone() const override;
     virtual RemoveSelf* reverse() const override;
@@ -187,7 +189,7 @@ CC_CONSTRUCTOR_ACCESS:
     RemoveSelf() : _isNeedCleanUp(true){}
     virtual ~RemoveSelf(){}
 
-    /** init the action */
+    /** @~english init the action  @~chinese 初始化动作 */
     bool init(bool isNeedCleanUp);
 
 protected:
@@ -198,25 +200,27 @@ private:
 };
 
 /** @class FlipX
-* @brief Flips the sprite horizontally.
-* @since v0.99.0
-*/
+ * @brief @~english Flips the sprite horizontally.
+ * @~chinese FlipX可以立即水平翻转一个精灵。
+ * @since v0.99.0
+ */
 class CC_DLL FlipX : public ActionInstant
 {
 public:
-    /** Create the action.
+    /** @~english Create the action.
      *
-     * @param x Flips the sprite horizontally if true.
-     * @return  An autoreleased FlipX object.
+     * @~chinese 创建动作。
+     * 
+     * @param x @~english Flips the sprite horizontally if true.
+     * @~chinese 如果为true则水平翻转精灵，值为false时则恢复精灵原始状态。
+     * @return @~english  An autoreleased FlipX object.
+     * @~chinese 一个自释放的FlipX对象。
      */
     static FlipX * create(bool x);
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual FlipX* reverse() const override;
     virtual FlipX* clone() const override;
@@ -225,7 +229,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipX() :_flipX(false) {}
     virtual ~FlipX() {}
 
-    /** init the action */
+    /** @~english init the action  @~chinese 初始化动作 */
     bool initWithFlipX(bool x);
 
 protected:
@@ -236,25 +240,27 @@ private:
 };
 
 /** @class FlipY
-* @brief Flips the sprite vertically.
-* @since v0.99.0
-*/
+ * @brief @~english Flips the sprite vertically.
+ * @~chinese FlipY可以立即垂直翻转一个精灵。
+ * @since v0.99.0
+ */
 class CC_DLL FlipY : public ActionInstant
 {
 public:
-    /** Create the action.
+    /** @~english Create the action.
      *
-     * @param y Flips the sprite vertically if true.
-     * @return An autoreleased FlipY object.
+     * @~chinese 创建动作。
+     * 
+     * @param y @~english Flips the sprite vertically if true.
+     * @~chinese 如果为true则垂直翻转精灵，值为false时则恢复精灵原始状态。
+     * @return @~english An autoreleased FlipY object.
+     * @~chinese 一个自释放的FlipY对象。
      */
     static FlipY * create(bool y);
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual FlipY* reverse() const override;
     virtual FlipY* clone() const override;
@@ -263,7 +269,7 @@ CC_CONSTRUCTOR_ACCESS:
     FlipY() :_flipY(false) {}
     virtual ~FlipY() {}
 
-    /** init the action */
+    /** @~english init the action  @~chinese 初始化动作 */
     bool initWithFlipY(bool y);
 
 protected:
@@ -274,25 +280,27 @@ private:
 };
 
 /** @class Place
-* @brief Places the node in a certain position.
-*/
+ * @brief @~english Places the node in a certain position.
+ * @~chinese Place动作可以将节点放置在特定位置。
+ */
 class CC_DLL Place : public ActionInstant //<NSCopying>
 {
 public:
 
-    /** Creates a Place action with a position.
+    /** @~english Creates a Place action with a position.
      *
-     * @param pos  A certain position.
-     * @return  An autoreleased Place object.
+     * @~chinese 用位置参数创建一个动作。
+     * 
+     * @param pos  @~english A certain position.
+     * @~chinese 一个特定的位置。
+     * @return @~english  An autoreleased Place object.
+     * @~chinese 一个自释放的Place对象。
      */
     static Place * create(const Vec2& pos);
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual Place* reverse() const override;
     virtual Place* clone() const override;
@@ -301,7 +309,7 @@ CC_CONSTRUCTOR_ACCESS:
     Place(){}
     virtual ~Place(){}
 
-    /** Initializes a Place action with a position */
+    /** @~english Initializes a Place action with a position  @~chinese 用一个位置初始化动作 */
     bool initWithPosition(const Vec2& pos);
 
 protected:
@@ -313,48 +321,63 @@ private:
 
 
 /** @class CallFunc
-* @brief Calls a 'callback'.
-*/
+ * @brief @~english Calls a 'callback'.
+ * @~chinese 调用一个回调函数。
+ */
 class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 {
 public:
-    /** Creates the action with the callback of type std::function<void()>.
-     This is the preferred way to create the callback.
+    /** @~english Creates the action with the callback of type `std::function<void()>`.
+     * This is the preferred way to create the callback.
      * When this funtion bound in js or lua ,the input param will be changed.
-     * In js: var create(var func, var this, var [data]) or var create(var func).
      * In lua:local create(local funcID).
      *
-     * @param func  A callback function need to be excuted.
-     * @return  An autoreleased CallFunc object.
+     * @~chinese 用一个回调函数创建CallFunc动作，回调函数的类型是`std::function<void()>`。
+     * 这是创建回调函数的首选方法。
+     * 这个API绑定在js或lua中，输入参数会被改变。
+     * lua: local create(local funcID).
+     * 
+     * @param func  @~english A callback function need to be executed.
+     * @~chinese 需要被执行的回调函数。
+     * @return @~english  An autoreleased CallFunc object.
+     * @~chinese 一个自释放的CallFunc对象。
      */
     static CallFunc * create(const std::function<void()>& func);
 
-    /** Creates the action with the callback
-
-     typedef void (Ref::*SEL_CallFunc)();
-     @deprecated Use the std::function API instead.
+    /** @~english Creates the action with the callback
+     * typedef void (Ref::*SEL_CallFunc)();
+     * @~chinese 用下面的函数类型创建CallFunc动作
+     * typedef void (Ref::*SEL_CallFunc)();
+     * @deprecated @~english Use the std::function API instead. @~chinese 使用`std::function`API替代
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Ref* target, SEL_CallFunc selector);
 
 public:
-    /** Executes the callback.
+    /** @~english Executes the callback.
+     * @~chinese 执行回调。
      */
     virtual void execute();
 
-    /** Get the selector target.
+    /** @~english Get the selector target.
      *
-     * @return The selector target.
+     * @~chinese 获取回调函数的执行主体。
+     * 
+     * @return @~english The selector target.
+     * @~chinese 回调函数的执行主体。
      */
     inline Ref* getTargetCallback()
     {
         return _selectorTarget;
     }
 
-    /** Set the selector target.
+    /** @~english Set the selector target.
      *
-     * @param sel The selector target.
+     * @~chinese 设置回调函数的执行主体。
+     * 
+     * @param sel @~english The selector target.
+     * @~chinese 回调函数的执行主体。
      */
     inline void setTargetCallback(Ref* sel)
     {
@@ -368,9 +391,6 @@ public:
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual CallFunc* reverse() const override;
     virtual CallFunc* clone() const override;
@@ -384,19 +404,22 @@ CC_CONSTRUCTOR_ACCESS:
     }
     virtual ~CallFunc();
 
-    /** initializes the action with the callback
-     typedef void (Ref::*SEL_CallFunc)();
-     @deprecated Use the std::function API instead.
+    /** @~english Initializes the action with the callback
+     * typedef void (Ref::*SEL_CallFunc)();
+     * @~chinese 用下面的函数类型初始化操CallFunc动作
+     * typedef void (Ref::*SEL_CallFunc)();
+     * @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
     
-    /** initializes the action with the std::function<void()>
+    /** @~english initializes the action with the `std::function<void()>`
+     * @~chinese 用`std::function<void()>`回调函数初始化动作
      * @lua NA
      */
     bool initWithFunction(const std::function<void()>& func);
 
 protected:
-    /** Target that will be called */
+    /** @~english Target that will be called  @~chinese 回调函数的执行主体 */
     Ref*   _selectorTarget;
 
     union
@@ -405,7 +428,7 @@ protected:
         SEL_CallFuncN    _callFuncN;
     };
     
-    /** function that will be called */
+    /** @~english function that will be called  @~chinese 回调函数*/
     std::function<void()> _function;
 
 private:
@@ -413,25 +436,32 @@ private:
 };
 
 /** @class CallFuncN
-* @brief Calls a 'callback' with the node as the first argument. N means Node.
-* @js NA
-*/
+ * @brief @~english Calls a 'callback' with the node as the first argument. N means Node.
+ * @~chinese 使用节点作为第一个参数调用回调函数的CallFuncN动作。N代表节点。
+ * @js NA
+ */
 class CC_DLL CallFuncN : public CallFunc
 {
 public:
-    /** Creates the action with the callback of type std::function<void()>.
-     This is the preferred way to create the callback.
+    /** @~english Creates the action with the callback of type `std::function<void()>`.
+     * This is the preferred way to create the callback.
      *
-     * @param func  A callback function need to be excuted.
-     * @return  An autoreleased CallFuncN object.
+     * @~chinese 用一个回调函数创建CallFunc动作，回调函数的类型是`std::function<void()>`。
+     * 这是创建回调的首选方法。
+     * 
+     * @param func  @~english A callback function need to be excuted.
+     * @~chinese 将会被执行的回调函数。
+     * @return @~english  An autoreleased CallFuncN object.
+     * @~chinese 一个自释放的CallFuncN对象。
      */
     static CallFuncN * create(const std::function<void(Node*)>& func);
 
-    /** Creates the action with the callback.
-
-    typedef void (Ref::*SEL_CallFuncN)(Node*);
-     @deprecated Use the std::function API instead.
-    */
+    /** @~english Creates the action with the callback.
+     * typedef void (Ref::*SEL_CallFuncN)(Node*);
+     * @~chinese 用下面的方法创建CallFuncN动作。
+     * typedef void (Ref::*SEL_CallFuncN)(Node*);
+     * @deprecated Use the std::function API instead.
+     */
     CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Ref* target, SEL_CallFuncN selector);
 
     //
@@ -444,18 +474,19 @@ CC_CONSTRUCTOR_ACCESS:
     CallFuncN():_functionN(nullptr){}
     virtual ~CallFuncN(){}
 
-    /** initializes the action with the std::function<void(Node*)> */
+    /** @~english initializes the action with the `std::function<void(Node*)>`  @~chinese 用`std::function<void(Node*)>`初始化动作 */
     bool initWithFunction(const std::function<void(Node*)>& func);
     
-    /** initializes the action with the callback
-     
-     typedef void (Ref::*SEL_CallFuncN)(Node*);
-     @deprecated Use the std::function API instead.
+    /** @~english initializes the action with the callback
+     * typedef void (Ref::*SEL_CallFuncN)(Node*);
+     * @~chinese 用下面的回调类型初始化动作
+     * typedef void (Ref::*SEL_CallFuncN)(Node*);
+     * @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
 protected:
-    /** function that will be called with the "sender" as the 1st argument */
+    /** @~english function that will be called with the "sender" as the 1st argument  @~chinese 回调函数，将包含`sender`作为第一个参数 */
     std::function<void(Node*)> _functionN;
 
 private:
@@ -464,19 +495,27 @@ private:
 
 /** @class __CCCallFuncND
  * @deprecated Please use CallFuncN instead.
- * @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data.
+ * @brief @~english Calls a 'callback' with the node as the first argument and the 2nd argument is data.
  * ND means: Node and Data. Data is void *, so it could be anything.
+ * @~chinese 使用节点作为第一个参数，数据作为第二个参数来调用回调的__CCCallFuncND动作。
+ * ND的意思是：节点和数据。数据类型是void *，所以它可以是任何东西。
  * @js NA
  */
 class CC_DLL  __CCCallFuncND : public CallFunc
 {
 public:
-    /** Creates the action with the callback and the data to pass as an argument.
+    /** @~english Creates the action with the callback and the data to pass as an argument.
      *
-     * @param target    A certain target.
-     * @param selector  The callback need to be excuted.
-     * @param d Data, is void* type.
-     * @return An autoreleased __CCCallFuncND object.
+     * @~chinese 以目标节点，回调函数和数据作为参数来创建动作。
+     * 
+     * @param target    @~english A certain target.
+     * @~chinese 目标节点。
+     * @param selector  @~english The callback need to be excuted.
+     * @~chinese 回调函数。
+     * @param d @~english Data, is void* type.
+     * @~chinese 数据，类型是void *。
+     * @return @~english An autoreleased __CCCallFuncND object.
+     * @~chinese 一个自释放的__CCCallFuncND对象。
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Ref* target, SEL_CallFuncND selector, void* d);
     
@@ -490,7 +529,7 @@ CC_CONSTRUCTOR_ACCESS:
     __CCCallFuncND() {}
     virtual ~__CCCallFuncND() {}
     
-    /** initializes the action with the callback and the data to pass as an argument */
+    /** @~english initializes the action with the callback and the data to pass as an argument  @~chinese 以目标节点，回调函数和数据作为参数来初始化动作 */
     bool initWithTarget(Ref* target, SEL_CallFuncND selector, void* d);
 
 protected:
@@ -503,22 +542,30 @@ private:
 
 
 /** @class __CCCallFuncO
- @deprecated Please use CallFuncN instead.
- @brief Calls a 'callback' with an object as the first argument. O means Object.
- @since v0.99.5
- @js NA
+ * @deprecated Please use CallFuncN instead.
+ * @brief @~english Calls a 'callback' with an object as the first argument. O means Object.
+ * @~chinese 以一个对象作为回调函数的第一个参数的__CCCallFuncO动作。O意味着对象。
+ * @since v0.99.5
+ * @js NA
  */
 
 class CC_DLL __CCCallFuncO : public CallFunc
 {
 public:
-    /** Creates the action with the callback.
-        typedef void (Ref::*SEL_CallFuncO)(Ref*);
+    /** @~english Creates the action with the callback.
+     * typedef void (Ref::*SEL_CallFuncO)(Ref*);
      *
-     * @param target    A certain target.
-     * @param selector  The callback need to be excuted.
-     * @param object    An object as the callback's first argument.
-     * @return An autoreleased __CCCallFuncO object.
+     * @~chinese 使用目标节点，回调函数和对象创建动作
+     * typedef void (Ref::*SEL_CallFuncO)(Ref*);
+     * 
+     * @param target    @~english A certain target.
+     * @~chinese 一个特定的目标节点。
+     * @param selector  @~english The callback need to be excuted.
+     * @~chinese 回调函数。
+     * @param object    @~english An object as the callback's first argument.
+     * @~chinese 作为回调函数的第一个参数的对象。
+     * @return @~english An autoreleased __CCCallFuncO object.
+     * @~chinese 一个自释放的 __CCCallFuncO对象。
      */
     CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Ref* target, SEL_CallFuncO selector, Ref* object);
     //
@@ -533,14 +580,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     __CCCallFuncO();
     virtual ~__CCCallFuncO();
-    /** initializes the action with the callback
 
-     typedef void (Ref::*SEL_CallFuncO)(Ref*);
-     */
     bool initWithTarget(Ref* target, SEL_CallFuncO selector, Ref* object);
     
 protected:
-    /** object to be passed as argument */
     Ref* _object;
     SEL_CallFuncO _callFuncO;
 
