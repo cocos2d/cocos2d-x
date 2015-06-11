@@ -1053,6 +1053,8 @@
         "cocos/renderer/CCBatchCommand.h", 
         "cocos/renderer/CCCustomCommand.cpp", 
         "cocos/renderer/CCCustomCommand.h", 
+        "cocos/renderer/CCFrameBuffer.cpp", 
+        "cocos/renderer/CCFrameBuffer.h", 
         "cocos/renderer/CCGLProgram.cpp", 
         "cocos/renderer/CCGLProgram.h", 
         "cocos/renderer/CCGLProgramCache.cpp", 
