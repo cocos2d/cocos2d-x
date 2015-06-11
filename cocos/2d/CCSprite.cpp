@@ -445,17 +445,6 @@ void Sprite::debugDraw(bool on)
         }
         draw->setVisible(true);
         draw->clear();
-        //draw all points
-        auto positions = new (std::nothrow) Vec2[_polyInfo.triangles.vertCount];
-        Vec2 *pos = &positions[0];
-        auto verts = _polyInfo.triangles.verts;
-        auto end =  &verts[_polyInfo.triangles.vertCount];
-        for(V3F_C4B_T2F *v = verts; v != end; pos++, v++)
-        {
-            pos->x = v->vertices.x;
-            pos->y = v->vertices.y;
-        }
-        draw->drawPoints(positions, (unsigned int)_polyInfo.triangles.vertCount, 8, Color4F(0.0f, 1.0f, 1.0f, 1.0f));
         //draw lines
         auto last = _polyInfo.triangles.indexCount/3;
         auto _indices = _polyInfo.triangles.indices;
@@ -475,7 +464,6 @@ void Sprite::debugDraw(bool on)
             to = _verts[_indices[i*3]].vertices;
             draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
         }
-        CC_SAFE_DELETE_ARRAY(positions);
     }
     else
     {

@@ -3662,7 +3662,7 @@
     <ClInclude Include="CCAutoPolygon.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\clipper\clipper.h">
+    <ClInclude Include="..\..\external\clipper\clipper.hpp">
       <Filter>external\clipper</Filter>
     </ClInclude>
   </ItemGroup>
