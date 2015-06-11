@@ -51,7 +51,18 @@ class GLProgramState;
 class Node;
 class Properties;
 
-/// Material
+/**
+ * @addtogroup support
+ * @{
+ */
+
+/**
+ * @class Material
+ * @brief
+ * @~english
+ * Material defines the apperance of the objects. It contains shaders, uniform values, and OpenGL states. Material can be create from files.
+ * @~chinese 材质定义了物体的外观，它包含使用的shader，uniform的值以及OpenGL状态。材质可以从文件创建。
+ */
 class CC_DLL Material : public RenderState
 {
     friend class Node;
@@ -63,62 +74,95 @@ class CC_DLL Material : public RenderState
 
 public:
     /**
-     * Creates a Material using the data from the Properties object defined at the specified URL,
+     * @~english Creates a Material using the data from the Properties object defined at the specified URL,
      * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
      * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
+     * @~chinese 从定义很多属性的材质文件创建一个材质，材质文件的格式是这样的，"<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
+     * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
+     * @param path @~english The URL pointing to the Properties object defining the material. @~chinese 材质文件的路径。
      *
-     * @param url The URL pointing to the Properties object defining the material.
-     *
-     * @return A new Material or NULL if there was an error.
+     * @return @~english A new Material or NULL if there was an error. @~chinese 新创建的材质，如果失败返回空指针。
      */
     static Material* createWithFilename(const std::string& path);
 
-    /** Creates a Material with a GLProgramState.
+    /** @~english Creates a Material with a GLProgramState.
      It will only contain one Technique and one Pass.
      Added in order to support legacy code.
+     * @~chinese 用GLProgramState创建新的材质。新创建的材质只包含一个Technique和一个Pass，这个主要是为了跟之前的版本兼容。
+     * @param programState @~english programState used to create material. @~chinese 用来创建材质的programState。
      */
     static Material* createWithGLStateProgram(GLProgramState* programState);
 
     /**
-     * Creates a material from the specified properties object.
-     *
-     * @param materialProperties The properties object defining the
-     *      material (must have namespace equal to 'material').
-     * @return A new Material.
+     * @~english Creates a material from the specified properties object.
+     * @~chinese 用Properties对象来创建材质。
+     * @param materialProperties @~english The properties object defining the
+     *      material (must have namespace equal to 'material'). @~chinese 属性对象，定义了材质（名字空间中必须有‘material’）。
+     * @return @~english A new Material. @~chinese 新创建的材质。
      */
     static Material* createWithProperties(Properties* materialProperties);
 
-    /// returns the material name
+    /**
+     * @~english Gets the material name
+     * @~chinese 获取材质名称。
+     * @return @~english Material name. @~chinese 材质名称。
+     */
     std::string getName() const;
-    /// sets the material name
+    /**
+     * @~english Sets the material name
+     * @~chinese 设置材质名称。
+     * @param name @~english Material name. @~chinese 材质名称。
+     */
     void setName(const std::string& name);
 
-    /** Returns a Technique by its name.
-     returns `nullptr` if the Technique can't be found.
+    /** @~english Gets a Technique by its name.
+     * @~chinese 通过名称获取一个Technique。
+     * @param name @~english Technique name. @~chinese Technique名称。
+     * @return @~english `nullptr` if the Technique can't be found. @~chinese 找到的Technique，否则返回空指针。
      */
     Technique* getTechniqueByName(const std::string& name);
 
-    /** Returns a Technique by index. 
-     returns `nullptr` if the index is invalid.
+    /** @~english Gets a Technique by index.
+     * @~chinese 通过索引获取一个Technique。
+     * @param index @~english technique index. @~chinese Technique索引。
+     * @return @~english `nullptr` if the index is invalid. @~chinese 找到的Technique，索引无效时返回空指针。
      */
     Technique* getTechniqueByIndex(ssize_t index);
 
-    /** Returns the Technique used by the Material */
+    /** @~english Gets the Technique used by the Material.
+     * @~chinese 获取Material在使用的Technique。
+     * @return @~english Technique used by material. @~chinese 使用的Technique。
+     */
     Technique* getTechnique() const;
 
-    /** Returns the list of Techniques */
+    /** @~english Gets the list of Techniques.
+     * @~chinese 获取Technique列表。
+     * @return @~english Technique list. @~chinese Technique列表。
+     */
     const Vector<Technique*>& getTechniques() const;
 
-    /** Returns the number of Techniques in the Material. */
+    /** @~english Gets the number of Techniques in the Material.
+     * @~chinese 获取Technique的数目。
+     * @return @~english Technique number. @~chinese Technique数目。
+     */
     ssize_t getTechniqueCount() const;
 
-    /** Adds a Technique into the Material */
+    /** @~english Adds a Technique into the Material.
+     * @~chinese 添加一个Technique。
+     * @param technique @~english Technique being added. @~chinese 被添加的Technique。
+     */
     void addTechnique(Technique* technique);
 
-    /** Sets the current technique */
+    /** @~english Sets the current technique.
+     * @~chinese 设置当前使用的Technique。
+     * @param techniqueName @~english Technique name being current technique. @~chinese 设置为当前Technique的名称。
+     */
     void setTechnique(const std::string& techniqueName);
 
-    /** returns a clone (deep-copy) of the material */
+    /** @~english Clone (deep-copy) of the material.
+     * @~chinese 拷贝材质（深度拷贝）。
+     * @return @~english Copy of material. @~chinese 材质的拷贝。
+     */
     Material* clone() const;
 
 protected:
@@ -151,6 +195,11 @@ protected:
     // weak reference
     Node* _target;
 };
+
+/**
+ end of support group
+ @}
+ */
 
 NS_CC_END
 

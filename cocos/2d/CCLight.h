@@ -29,6 +29,11 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _2d
+ * @{
+ */
+
 enum class LightType
 {
     DIRECTIONAL = 0,
@@ -57,7 +62,9 @@ enum class LightFlag
     LIGHT15 = 1 << 15,
 };
 
-/**
+/** @class BaseLight
+ * @brief @~english BaseLight is the parent of all the lights. cocos2d-x supports 4 types of lights, directional light, point light, spot light and ambient light. Each light has an light flag, objects whose light mask & (1<<lightFlag) is not zero will be lighted by this light.
+ * @~chinese BaseLight 是所有灯光的基类，cocos2d-x支持4种灯光，方向光、点光源、聚光灯和环境光。每个光源都有一个灯光标记lightflag, 只有当物体的灯光掩码lightmask与(1<<lightFlag)做与运算不为0的时候这个物体才会被该灯光照亮。
 @js NA
 */
 class CC_DLL BaseLight : public Node
@@ -65,23 +72,55 @@ class CC_DLL BaseLight : public Node
 public:
     
     /**
-     * Get the light type,light type MUST be one of LightType::DIRECTIONAL ,
+     * @~english Get the light type,light type MUST be one of LightType::DIRECTIONAL ,
      * LightType::POINT, LightType::SPOT, LightType::AMBIENT.
+     * @~chinese 获取灯光的类型，灯光类型为LightType::DIRECTIONAL、LightType::POINT、LightType::SPOT、LightType::AMBIENT之一。
+     * @return @~english light type. @~chinese 灯光类型
      */
     virtual LightType getLightType() const = 0;
     
-    /** intensity getter and setter */
+    /** 
+     * @~english Get light intensity
+     * @~chinese 获取灯光强度
+     * @return @~english light intensity. @~chinese 灯光强度
+     */
     float getIntensity() const { return _intensity; }
+    
+    /**
+     * @~english Set light intensity
+     * @~chinese 设置灯光强度
+     * @param intensity @~english intensity of light. @~chinese 灯光强度
+     */
     void setIntensity(float intensity);
     
-    /**light flag getter and setter*/
+    /**
+     * @~english Get light flag.
+     * @~chinese 获取灯光标记
+     * @return @~english light flag. @~chinese 灯光标记
+     */
     LightFlag getLightFlag() const { return _lightFlag; }
+    
+    /**
+     * @~english Set light flag. Objects whose light mask & (1<<lightFlag) is not zero will be lighted by this light.
+     * @~chinese 设置灯光标记。只有当物体的灯光掩码lightmask与(1<<lightFlag)做与运算不为0的时候这个物体才会被该灯光照亮。
+     * @param flag @~english light flag. @~chinese 灯光标记
+     */
     void setLightFlag(LightFlag flag) { _lightFlag = flag; }
     
     /**
-     * light enabled getter and setter.
+     * @~english Set light enabled or disabled.
+     * @~chinese 设置灯光的使能开关
+     * @param enabled @~english true means enabled, false make the light disabled
+     * @~chinese true为使能，false使该灯光失效
      */
     void setEnabled(bool enabled) { _enabled = enabled; }
+    
+    /**
+     * @~english is the light enabled or not.
+     * @~chinese 灯光是否使能
+     * @return @~english is the light enabled
+     * @~chinese 灯光是否使能
+     */
     bool isEnabled() const { return _enabled; }
     
     //override
@@ -101,38 +140,47 @@ protected:
     bool        _enabled;
 };
 
-/**
-@js NA
-*/
+/** @class DirectionLight
+ * @brief @~english DirectionLight simulates light that is being emitted from a source that is infinitely far away. This means that all shadows cast by this light will be parallel. The sunlight is typical directional light.
+ * @~chinese 方向光模拟无限远的光源，它意味着这种灯光投射的影子是平行的，太阳光是个典型的方向光。
+ @js NA
+ */
 class CC_DLL DirectionLight : public BaseLight
 {
 public:
     /**
-     * Creates a direction light.
-     * @param direction The light's direction
-     * @param color The light's color.
-     *
-     * @return The new direction light.
+     * @~english Creates a direction light. The DirectionLight inherits from Node indirectly. The Node also contains a local space. The direction of directional light is the -z of local space.
+     * @~chinese 创建一个方向光。方向光间接从Node继承，Node中包含局部坐标，而方向光的方向就是灯光的局部坐标系的-z方向。
+     * @param direction @~english The light's direction. @~chinese 光源的方向
+     * @param color @~english The light's color. @~chinese 灯光颜色
+     * @return @~english Created directional light. @~chinese 新创建的方向光源
      */
     static DirectionLight* create(const Vec3 &direction, const Color3B &color);
     
-    //get light type
+    /**
+     * @~english get light type
+     * @~chinese 获取光源类型
+     * @return @~english light type. @~chinese 光源类型
+     */
     virtual LightType getLightType() const override { return LightType::DIRECTIONAL; }
     
     /**
-     * Sets the Direction in parent.
-     *
-     * @param dir The Direction in parent.
+     * @~english Sets the Direction of light in parent space.
+     * @~chinese 设置方向光在父空间的方向
+     * @param dir @~english The Direction in parent. @~chinese 设置方向光在父空间的方向
      */
     void setDirection(const Vec3 &dir);
     
     /**
-     * Returns the Direction in parent.
+     * @~english Gets the direction of light in parent space
+     * @~chinese 获取方向光在父空间的方向
+     * @return @~english Direction in parent. @~chinese 方向光在父空间的方向
      */
     Vec3 getDirection() const;
     
     /**
-     * Returns direction in world.
+     * @~english Gets light's direction in word
+     * @~chinese 获取方向光在世界空间的方向
      */
     Vec3 getDirectionInWorld() const;
     
@@ -142,27 +190,43 @@ CC_CONSTRUCTOR_ACCESS:
     
 };
 
-/**
-@js NA
-*/
+/** @class PointLight
+ * @brief @~english Point light has a position, and sends rays in all directions.
+ * @~chinese 点光源有一个位置，并且向四周发射光线。
+ @js NA
+ */
 class CC_DLL PointLight : public BaseLight
 {
 public:
     /**
-     * Creates a point light.
-     * @param position The light's position
-     * @param color The light's color.
-     * @param range The light's range.
+     * @~english Creates a point light.
+     * @~chinese 创建一个点光源
+     * @param position @~english The light's position. @~chinese 光源的位置
+     * @param color @~english The light's color. @~chinese 光源的颜色
+     * @param range @~english The light's range. @~chinese 光源的范围
      *
-     * @return The new point light.
+     * @return @~english The new point light. @~chinese 新创建的光源
      */
     static PointLight* create(const Vec3 &position, const Color3B &color, float range);
     
-    //get light type
+    /**
+     * @~english get light type
+     * @~chinese 获取光源类型
+     * @return @~english light type. @~chinese 光源类型
+     */
     virtual LightType getLightType() const override { return LightType::POINT; }
     
-    /** get or set range */
+    /** 
+     * @~english get light range
+     * @~chinese 获取光源的范围
+     * @return @~english light' range. @~chinese 光源的范围
+     */
     float getRange() const { return _range; }
+    /**
+     * @~english get light range
+     * @~chinese 获取光源的范围
+     * @return @~english light' range. @~chinese 光源的范围
+     */
     void setRange(float range) { _range = range; }
     
 CC_CONSTRUCTOR_ACCESS:
@@ -173,86 +237,110 @@ protected:
     float _range;
 };
 
-/**
-@js NA
-*/
+/** @class SpotLight
+ * @brief @~english Spot light is a special light that all light rays are restricted to a cone of light. The lights on the stage are ofen this type.
+ * @~chinese 聚光灯是一种特殊类型的灯光，所有光线都约束在一个光锥内，舞台上的聚光灯一般是这种类型。
+ @js NA
+ */
 class CC_DLL SpotLight : public BaseLight
 {
 public:
     /**
-     * Creates a spot light.
-     * @param direction The light's direction
-     * @param position The light's position
-     * @param color The light's color.
-     * @param innerAngle The light's inner angle (in radians).
-     * @param outerAngle The light's outer angle (in radians).
-     * @param range The light's range.
+     * @~english Creates a spot light.
+     * @~chinese 创建一个聚光灯
+     * @param direction @~english The light's direction. @~chinese 聚光灯方向
+     * @param position @~english The light's position. @~chinese 聚光灯的位置
+     * @param color @~english The light's color. @~chinese 聚光灯的颜色
+     * @param innerAngle @~english The light's inner angle (in radians). @~chinese 聚光灯的内角（单位弧度）
+     * @param outerAngle @~english The light's outer angle (in radians). @~chinese 聚光灯外角（单位弧度）
+     * @param range @~english The light's range. @~chinese 聚光灯范围
      *
-     * @return The new spot light.
+     * @return @~english The new spot light. @~chinese 新创建的灯光
      */
     static SpotLight* create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
     
-    //get light type
+    /**
+     * @~english get light type
+     * @~chinese 获取光源类型
+     * @return @~english light type. @~chinese 光源类型
+     */
     virtual LightType getLightType() const override { return LightType::SPOT; }
     
     /**
-     * Sets the Direction in parent.
+     * @~english Sets the light direction in parent, the direction is local transform's -z axis. @~chinese 设置光源在父空间的方向，光源的方向为局部坐标系的-z轴
      *
-     * @param dir The Direction in parent.
+     * @param dir @~english The Direction in parent. @~chinese 光源在父空间的方向，
      */
     void setDirection(const Vec3 &dir);
     
     /**
-     * Returns the Direction in parent.
+     * @~english Gets the light direction in parent space. Light direction is the -z axis of local transform.
+     * @~chinese 获取灯光在父空间的方向。灯光方向是局部空间的-z轴朝向
+     * @return @~english light direction in parent space. @~chinese 灯光在父空间的方向
      */
     Vec3 getDirection() const;
     
     /**
-     * Returns direction in world.
+     * @~english Gets direction in world, light direction is -z axis in local space.
+     * @~chinese 获取时间坐标系下灯光的朝向，灯光方向是局部坐标系下的-z朝向。
+     * @return @~english light direction in world space. @~chinese 灯光在世界坐标系的方向。
      */
     Vec3 getDirectionInWorld() const;
     
     /**
-     * Sets the range of point or spot light.
+     * @~english Sets the range of point or spot light.
+     * @~chinese 设置灯光的范围
      *
-     * @param range The range of point or spot light.
+     * @param range @~english The range of point or spot light. @~chinese 点光源或者聚光灯的范围。
      */
     void setRange(float range) { _range = range; }
     
     /**
-     * Returns the range of point or spot light.
-     *
-     * @return The range of the point or spot light.
+     * @~english Gets the range of point or spot light.
+     * @~chinese 获取灯光的范围
+     * @return @~english The range of the point or spot light. @~chinese 点光源或者聚光灯的范围。
      */
     float getRange() const { return _range; }
     /**
-     * Sets the inner angle of a spot light (in radians).
-     *
-     * @param angle The angle of spot light (in radians).
+     * @~english Sets the inner angle of a spot light (in radians).
+     * @~chinese 设置聚光灯的内角（单位弧度）。
+     * @param angle @english The inner angle of spot light (in radians). @chinese 聚光灯的内角。
      */
     void setInnerAngle(float angle);
     
     /**
-     * Returns the inner angle the spot light (in radians).
+     * @~english Gets the inner angle of spot light (in radians). 
+     * @~chinese 获取聚光灯的内角（单位弧度）。
+     * @return @~english inner angle of spot light. @~chinese 聚光灯的内角。
      */
     float getInnerAngle() const { return _innerAngle; }
     
-    /** get cos innerAngle */
+    /** 
+     * @~english Gets cos of innerAngle.
+     * @~chinese 获取内角的cos值。
+     * @return @~english cos of inner angle. @~chinese 内角的cos值。
+     */
     float getCosInnerAngle() const { return _cosInnerAngle; }
     
     /**
-     * Sets the outer angle of a spot light (in radians).
-     *
-     * @param outerAngle The angle of spot light (in radians).
+     * @~english Sets the outer angle of a spot light (in radians).
+     * @~chinese 设置聚光灯的外角（单位弧度）。
+     * @param outerAngle @~english The angle of spot light (in radians). @~chinese 聚光灯的外角（单位弧度）。
      */
     void setOuterAngle(float angle);
     
     /**
-     * Returns the outer angle of the spot light (in radians).
+     * @~english Gets the outter angle of the spot light (in radians).
+     * @~chinese 获取聚光灯的外角（单位弧度）。
+     * @return @~english outter angle of spot light. @~chinese 聚光灯的外角。
      */
     float getOuterAngle() const { return _outerAngle; }
     
-    /** get cos outAngle */
+   /**
+    * @~english Gets cos of outter angle.
+    * @~chinese 获取外角的cos值。
+    * @return @~english cos of outter angle. @~chinese 外角的cos值。
+    */
     float getCosOuterAngle() const { return _cosOuterAngle; }
     
 CC_CONSTRUCTOR_ACCESS:
@@ -267,27 +355,37 @@ protected:
     float _cosOuterAngle;
 };
 
-/**
-@js NA
-*/
+/** @class AmbientLight
+ * @brief @~english Ambient light simulates the light in the enviorment, it emits to all direction with the same intensity.
+ * @~chinese 环境灯光用来模拟环境中的光照，它向四周均匀发射。
+ @js NA
+ */
 class CC_DLL AmbientLight : public BaseLight
 {
 public:
     /**
-     * Creates a ambient light.
-     * @param color The light's color.
+     * @~english Creates a ambient light.
+     * @~chinese 创建环境光
+     * @param color @~english The light's color. @~chinese 灯光颜色
      *
-     * @return The new ambient light.
+     * @return @~english The new ambient light. @~chinese 创建的环境灯光
      */
     static AmbientLight* create(const Color3B &color);
     
-    //get light type
+    /**
+     * @~english get light type
+     * @~chinese 获取光源类型
+     * @return @~english light type. @~chinese 光源类型
+     */
     virtual LightType getLightType() const override { return LightType::AMBIENT; }
     
 CC_CONSTRUCTOR_ACCESS:
     AmbientLight();
     virtual ~AmbientLight();
 };
+
+// end of _2d group
+/// @}
 
 NS_CC_END
 
