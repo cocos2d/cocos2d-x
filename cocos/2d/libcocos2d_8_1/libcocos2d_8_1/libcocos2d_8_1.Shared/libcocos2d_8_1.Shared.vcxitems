@@ -191,7 +191,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h" />
