@@ -194,11 +194,20 @@
         {
             name: "FileData",
             handle: function(options, resourcePath){
-                var frame = new ccs.TextureFrame();
-                var texture = options["TextureFile"];
+                var frame, texture, plist, path, spriteFrame;
+                frame = new ccs.TextureFrame();
+                texture = options["TextureFile"];
                 if(texture != null) {
-                    var path = texture["Path"];
-                    var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
+                    plist = texture["Plist"];
+                    path = texture["Path"];
+                    spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
+                    if(!spriteFrame && plist){
+                        if(cc.loader.getRes(resourcePath + plist)){
+                            cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
+                        }else{
+                            cc.log("%s need to be preloaded", resourcePath + plist);
+                        }
+                    }
                     if(spriteFrame == null){
                         path = resourcePath + path;
                     }
