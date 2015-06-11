@@ -174,7 +174,26 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 protected:
+    /** initializes the indices for the vertices*/
+    void initIndices();
     
+    /** initializes the texture with a rectangle measured Points */
+    void initTexCoordsWithRect(const Rect& rect);
+    
+    /** Updates texture coords */
+    void updateTexCoords();
+
+    void setupVBOandVAO();
+    void setupVBO();
+    bool allocMemory();
+
+    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
+    GLushort            *_indices;      // indices
+    GLuint              _VAOname;
+    GLuint              _buffersVBO[2]; //0: vertex  1: indices
+
+    QuadCommand _quadCommand;           // quad command
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);
 };
