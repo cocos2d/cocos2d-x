@@ -43,8 +43,8 @@ namespace ui {
  * - unselected state
  * @~chinese 
  * 复选框事件类型,有两种类型:
- * - 选中状态
- * - 未选中状态
+ * - 选中事件
+ * - 未选中事件
  * @deprecated use `CheckBox::EventType` instead
  */
 typedef enum
@@ -87,7 +87,7 @@ public:
     /**@~english
      * A callback which will be called after certain CheckBox event issue.
      * @~chinese 
-     * 一个回调函数,它将在某些复选框事件触发后被调用。
+     * 一个回调函数,它将在某个复选框事件触发后被调用。
      * @see `CheckBox::EventType`
      */
     typedef std::function<void(Ref*,CheckBox::EventType)> ccCheckBoxCallback;
