@@ -140,6 +140,10 @@ public:
      */
     void setTextureWithRect(Texture2D *texture, const Rect& rect);
 
+    /** @~english Listen the event that renderer was recreated on Android/WP8.
+     *  Don't call this manually. 
+     * @~chinese 在Android/WP8平台上监听纹理重新加载事件的回调，不要手动调用这个方法。
+     */
     void listenRendererRecreated(EventCustom* event);
     
     virtual void setTexture(Texture2D* texture) override;
