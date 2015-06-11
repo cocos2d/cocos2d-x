@@ -12,10 +12,11 @@ class Box2DTest : public TestCase
 public:
     CREATE_FUNC(Box2DTest);
 
+    virtual bool init() override;
+
+#if CC_ENABLE_BOX2D_INTEGRATION
     Box2DTest();
     ~Box2DTest();
-
-    virtual bool init() override;
 
     void initPhysics();
     void createResetButton();
@@ -25,7 +26,6 @@ public:
     void update(float dt) override;
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
-#if CC_ENABLE_BOX2D_INTEGRATION
 private:
     cocos2d::Mat4 _modelViewMV;
     void onDraw();

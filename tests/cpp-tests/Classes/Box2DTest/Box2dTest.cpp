@@ -18,18 +18,6 @@ Box2DTests::Box2DTests()
     ADD_TEST_CASE(Box2DTest);
 }
 
-Box2DTest::Box2DTest()
-: _spriteTexture(nullptr)
-, world(nullptr)
-{
-
-}
-
-Box2DTest::~Box2DTest()
-{
-    CC_SAFE_DELETE(world);
-}
-
 bool Box2DTest::init()
 {
     if (!TestCase::init())
@@ -80,6 +68,19 @@ bool Box2DTest::init()
 #endif
 
     return true;
+}
+
+#if CC_ENABLE_BOX2D_INTEGRATION
+Box2DTest::Box2DTest()
+    : _spriteTexture(nullptr)
+    , world(nullptr)
+{
+
+}
+
+Box2DTest::~Box2DTest()
+{
+    CC_SAFE_DELETE(world);
 }
 
 void Box2DTest::initPhysics()
@@ -144,7 +145,6 @@ void Box2DTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     //
     Scene::draw(renderer, transform, flags);
 
-#if CC_ENABLE_BOX2D_INTEGRATION
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
@@ -157,10 +157,8 @@ void Box2DTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     renderer->addCommand(&_customCommand);
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-#endif
 }
 
-#if CC_ENABLE_BOX2D_INTEGRATION
 void Box2DTest::onDraw()
 {
     Director* director = Director::getInstance();
@@ -171,7 +169,7 @@ void Box2DTest::onDraw()
     world->DrawDebugData();
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, oldMV);
 }
-#endif
+
 
 void Box2DTest::addNewSpriteAtPosition(Vec2 p)
 {
@@ -240,3 +238,5 @@ void Box2DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
         addNewSpriteAtPosition( location );
     }
 }
+
+#endif
