@@ -68,7 +68,7 @@ typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
  * @warning @~english The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use  `TableView` instead.
  * ListView is a subclass of  `ScrollView`, so it shares many features of ScrollView.
  * @~chinese 在ListView控件列表项不支持复用节点，如果你有大量的数据需要显示，请使用`TableView`代替。
- * ListView控件是ScrollView的子类，所以它的共享了ScrollView的特点。
+ * ListView控件是ScrollView的子类，所以它继承了ScrollView的特点。
  */
 class CC_GUI_DLL ListView : public ScrollView
 {
@@ -160,7 +160,7 @@ public:
      * @~english
      * Insert a default item(create by a cloned model) at the end of the listview.
      * @~chinese 
-     * 插入一个默认项（通过克隆模式创建）的ListView的结尾。
+     * 插入一个默认项（通过克隆模式创建）到ListView的尾部。
      */
     void pushBackDefaultItem();
     
