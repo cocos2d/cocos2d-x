@@ -1,5 +1,4 @@
-/*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+/* cocos2d for iPhone: http://www.cocos2d-iphone.org
  * cocos2d-x: http://www.cocos2d-x.org
  *
  * Copyright (c) 2012 Pierre-David Bélanger
@@ -40,49 +39,64 @@ NS_CC_BEGIN
  */
 
 /**
-@brief Clipping Rectangle Node.
-@details A node that clipped with specified rectangle.
+@brief @~english Clipping Rectangle Node.
+ * @~chinese 裁剪矩形节点。
+@details @~english A node that clipped with specified rectangle.
+ * @~chinese 一个使用指定矩形裁剪的节点。
 @js NA
 */
 class CC_DLL ClippingRectangleNode : public Node
 {    
 public:
     /**
-    @brief Create node with specified clipping region.
-    @param clippingRegion Specify the clipping rectangle.
-    @return If the creation success, return a pointer of ClippingRectangleNode; otherwise return nil.
+    @brief @~english Create node with specified clipping region.
+     * @~chinese 创建一个指定裁剪区域的节点。
+    @param clippingRegion @~english Specify the clipping rectangle.
+     * @~chinese 指定裁剪矩形。
+    @return @~english If the creation success, return a pointer of ClippingRectangleNode; otherwise return nil.
+     * @~chinese 如果创建成功,返回一个指向ClippingRectangleNode的指针;否则返回空。
     */
     static ClippingRectangleNode* create(const Rect& clippingRegion);
     /**
-    @brief Create a clipping rectangle node.
-    @return If the creation success, return a pointer of ClippingRectangleNode; otherwise return nil.
+    @brief @~english Create a clipping rectangle node.
+     * @~chinese 创建一个裁剪矩形节点。
+    @return @~english If the creation success, return a pointer of ClippingRectangleNode; otherwise return nil.
+     * @~chinese 如果创建成功,返回一个指向ClippingRectangleNode的指针;否则返回空。
     */
     static ClippingRectangleNode* create();
     
     /**
-    @brief Get the clipping rectangle.
-    @return The clipping rectangle.
+    @brief @~english Get the clipping rectangle.
+     * @~chinese 获取裁剪矩形。
+    @return @~english The clipping rectangle.
+     * @~chinese 裁剪矩形。
     */
     const Rect& getClippingRegion() const {
         return _clippingRegion;
     }
     /**
-    @brief Set the clipping rectangle.
-    @param clippingRegion Specify the clipping rectangle.
+    @brief @~english Set the clipping rectangle.
+     * @~chinese 设置裁剪矩形。
+    @param clippingRegion @~english Specify the clipping rectangle.
+     * @~chinese 指定的裁剪矩形。
     */
     void setClippingRegion(const Rect& clippingRegion);
     
     /**
-    @brief Get whether the clipping is enabled or not.
-    @return Whether the clipping is enabled or not. Default is true.
+    @brief @~english Get whether the clipping is enabled or not.
+     * @~chinese 获取是否启用了裁剪。
+    @return @~english Whether the clipping is enabled or not. Default is true.
+     * @~chinese 裁剪是否开启，默认是开启的。
     */
     const bool isClippingEnabled() const {
         return _clippingEnabled;
     }
 
     /**
-    @brief Enable/Disable the clipping.
-    @param enabled Pass true to enable clipping. Pass false to disable clipping.
+    @brief @~english Enable/Disable the clipping.
+     * @~chinese 启用/禁用裁剪。
+    @param enabled @~english Pass true to enable clipping. Pass false to disable clipping.
+     * @~chinese true为开启裁剪，false为关闭裁剪。
     */
     void setClippingEnabled(bool enabled) {
         _clippingEnabled = enabled;
