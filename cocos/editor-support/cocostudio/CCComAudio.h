@@ -104,7 +104,7 @@ public:
     virtual bool isEnabled() const override;
 
     /**  
-     * @brief @~english enables or disables the ComAudio.
+     * @brief @~english Enables or disables the ComAudio.
      * @~chinese 启用或禁用声音组件。
      * @param enabled @~english true enable the ComAudio, false disabled the ComAudio. 
      * @~chinese true，启用声音组件 false，禁用声音组件。
@@ -112,7 +112,7 @@ public:
     virtual void setEnabled(bool b) override;
 
     /**
-     * @brief @~english deserialization export data of cocos studio 1.x scene editor.
+     * @brief @~english Deserialization export data of cocos studio 1.x scene editor.
      * @~chinese 反序列化cocos studio 1.x 场景编辑器导出的数据。
      * @param r @~english SerData object point.
      * @~chinese SerData对象指针。
@@ -321,7 +321,6 @@ public:
      * @brief @~english Preload a compressed audio file.
      * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
      * @~chinese 预加载音效文件。
-     *
      * @param pszFilePath @~english The path of the effect file. 
      * @~chinese 音效文件路径。
      * @js NA
@@ -331,7 +330,6 @@ public:
     /**
      * @brief @~english Unload the preloaded effect from internal buffer.
      * @~chinese 卸载预加载到内存中的音效文件。
-     *
      * @param pszFilePath @~english The path of the effect file.
      * @~chinese 音效文件的路径。
      */
@@ -346,7 +344,7 @@ public:
     /**
      * @brief @~english Get file path.
      * @~chinese 获取路径。
-     * @return @~english file path.
+     * @return @~english File path.
      * @~chinese 声音文件。
      */
     const char* getFile();

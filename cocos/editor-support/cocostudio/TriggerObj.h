@@ -57,7 +57,7 @@ public:
     /**
      * @brief @~english initialize a BaseTriggerCondition.
      * @~chinese 初始化触发器条件。
-     * @return @~english true initialize successfully false failed to initialize.
+     * @return @~english true Initialize successfully false failed to initialize.
      * @~chinese true 初始化成功，否则false。
      */
     virtual bool init();
@@ -73,7 +73,7 @@ public:
     /**
      * @brief @~english Deserialization json data of cocos studio 1.x scene editor.
      * @~chinese 反序列化cocos studio 1.x 场景编辑器导出的数据。
-     * @param val @~english json object point.
+     * @param val @~english Json object point.
      * @~chinese json对象指针。
      */
     virtual void serialize(const rapidjson::Value &val);
@@ -81,9 +81,9 @@ public:
     /**
      * @brief @~english Deserialization binary data of cocos studio 1.x scene editor.
      * @~chinese 反序列化cocos studio 1.x导出的二进制数据。
-     * @param cocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。
-     * @param cocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据node对象。
      */
     virtual void serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode);
@@ -118,7 +118,7 @@ public:
     /**
      * @brief @~english initialize a BaseTriggerAction.
      * @~chinese 初始化触发器动作。
-     * @return @~english true initialize successfully false failed to initialize.
+     * @return @~english true Initialize successfully false failed to initialize.
      * @~chinese true 初始化成功，否则false。
      */
     virtual bool init();
@@ -132,7 +132,7 @@ public:
     /**
      * @brief @~english Deserialization json data of cocos studio 1.x scene editor.
      * @~chinese 反序列化cocos studio 1.x 场景编辑器导出的数据。
-     * @param val @~english json object point.
+     * @param val @~english Json object point.
      * @~chinese json对象指针。
      */
     virtual void serialize(const rapidjson::Value &val);
@@ -140,15 +140,15 @@ public:
     /**
      * @brief @~english Deserialization binary data of cocos studio 1.x scene editor.
      * @~chinese 反序列化cocos studio 1.x导出的二进制数据。
-     * @param cocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。
-     * @param cocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据node对象。
      */
     virtual void serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode);
 
     /**
-     * @brief @~english it is called when the trigger action is removed , you can override this method to implement free the resources here.
+     * @brief @~english It is called when the trigger action is removed , you can override this method to implement free the resources here.
      * @~chinese 触发器被移除的时候被调用，可以重载这个方法把资源释放到这里。
      */
     virtual void removeAll();

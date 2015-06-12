@@ -119,7 +119,7 @@ public:
     virtual bool isEnabled() const override;
 
     /**  
-     * @brief @~english enables or disables the ComAudio.
+     * @brief @~english Enables or disables the ComAudio.
      * @~chinese 启用或禁用声音组件。
      * @param enabled @~english true enable the ComAudio, false disabled the ComAudio. 
      * @~chinese true，启用声音组件 false，禁用声音组件。

@@ -67,7 +67,7 @@ CC_CONSTRUCTOR_ACCESS:
 public:
 
     /** 
-     * @brief @~english whether or not it will receive Touch events.
+     * @brief @~english Whether or not it will receive Touch events.
      * @~chinese 是否接收触摸事件。
      * @return @~english true receive touch events, false don't receive touch events.
      * @~chinese true 接收触摸事件，false 不接受触摸时间。
@@ -75,7 +75,7 @@ public:
     virtual bool isTouchEnabled() const;
 
     /** 
-     * @brief @~english enable / disable touch events with this property.
+     * @brief @~english Enable / disable touch events with this property.
      * @~chinese 调用该方法来启用或者禁用触摸事件。
      * @param value @~english true enable touch events false disable touch events.
      * @~chinese true 启用触摸事件 false 禁用触摸事件。
@@ -83,7 +83,7 @@ public:
     virtual void setTouchEnabled(bool value);
 
     /** 
-     * @brief @~english whether or not it will receive accelerometer events.
+     * @brief @~english Whether or not it will receive accelerometer events.
      * @~chinese 是否接收加速计事件。
      * @return @~english true receive accelerometer events, false don't receive accelerometer events.
      * @~chinese true 接收加速计事件，false 不接受加速计事件。
@@ -91,7 +91,7 @@ public:
     virtual bool isAccelerometerEnabled() const;
 
     /** 
-     * @brief @~english enable / disable accelerometer events with this property.
+     * @brief @~english Enable / disable accelerometer events with this property.
      * @~chinese 调用该方法来启用或者禁用加速计事件。
      * @param value @~english true enable accelerometer events false disable accelerometer events.
      * @~chinese true 启用加速计事件 false 禁用加速计事件。
@@ -99,7 +99,7 @@ public:
     virtual void setAccelerometerEnabled(bool value);
 
     /** 
-     * @brief @~english whether or not it will receive keyboard or keypad events.
+     * @brief @~english Whether or not it will receive keyboard or keypad events.
      * @~chinese 是否接收键盘或虚拟键盘事件。
      * @return @~english true receive keyboard or keypad events, false don't receive keyboard or keypad events.
      * @~chinese true 接收键盘或虚拟键盘事件，false 不接受键盘或虚拟键盘事件。
@@ -107,7 +107,7 @@ public:
     virtual bool isKeypadEnabled() const;
 
     /** 
-     * @brief @~english enable / disable keyboard or keypad events with this property.
+     * @brief @~english Enable / disable keyboard or keypad events with this property.
      * @~chinese 调用该方法来启用或者禁用键盘或虚拟键盘事件。
      * @param value @~english true enable keyboard or keypad events false disable keyboard or keypad events.
      * @~chinese true 启用键盘或虚拟键盘事件 false 禁用键盘或虚拟键盘事件。
@@ -115,31 +115,31 @@ public:
     virtual void setKeypadEnabled(bool value);
 
     /** 
-     * @brief @~english set dispatchMode with this property.
+     * @brief @~english Set dispatchMode with this property.
      * @~chinese 设置消息分发方式。
-     * @param mode @~english dispatch mode include all at once and one by one.
+     * @param mode @~english Dispatch mode include all at once and one by one.
      * @~chinese 设置分发模式， 多点触摸和单点触摸。
     */
     virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
 
     /** 
-     * @brief @~english get dispatch mode.
+     * @brief @~english Get dispatch mode.
      * @~chinese 获取消息分发方式。
-     * @return @~english return dispatch mode, all at once or one by one.
+     * @return @~english Return dispatch mode, all at once or one by one.
      * @~chinese 获取分发模式，多点触摸或者单点触摸。
     */
     virtual cocos2d::Touch::DispatchMode getTouchMode() const;
 
     /**
-     * @brief @~english set receive touch priority with this property.
+     * @brief @~english Set receive touch priority with this property.
      * @~chinese 设置触摸事件接收优先级。
-     * @param priority @~english receive touch priority.
+     * @param priority @~english Receive touch priority.
      * @~chinese 触摸事件接收优先级。
     */
     virtual void setTouchPriority(int priority);
 
     /**
-     * @brief @~english get receive touch priority with this property.
+     * @brief @~english Get receive touch priority with this property.
      * @~chinese 设置触摸事件接收优先级。
     */
     virtual int  getTouchPriority() const;
@@ -147,7 +147,7 @@ public:
     /** 
      * @brief @~english Callback function for accelerate began.
      * @~chinese 加速计回调函数
-     * @param accelerationValue @~english acceleration infomation.
+     * @param accelerationValue @~english Acceleration infomation.
      * @~chinese 加速计信息。
      * @js NA
      */

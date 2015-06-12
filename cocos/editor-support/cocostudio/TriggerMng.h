@@ -55,21 +55,21 @@ public:
     ~ArmatureMovementDispatcher(void);
 public:
     /**
-     * @brief @~english add armature event callback function for trigger object.
+     * @brief @~english Add armature event callback function to trigger object.
      * @~chinese 为触发器对象增加事件回调。
-     * @param pTarget @~english trigger object point.
+     * @param pTarget @~english Trigger object point.
      * @~chinese 触发器对象指针。
-     * @param mecf @~english callback function.
+     * @param mecf @~english Callback function.
      * @~chinese 回调函数。
      */
     void addAnimationEventCallBack(cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
 
     /**
-     * @brief @~english remove armature event callback function for trigger object.
+     * @brief @~english Remove armature event callback function from trigger object.
      * @~chinese 为触发器对象移除事件回调。
-     * @param pTarget @~english trigger object point.
+     * @param pTarget @~english Trigger object point.
      * @~chinese 触发器对象指针。
-     * @param mecf @~english callback function.
+     * @param mecf @~english Callback function.
      * @~chinese 回调函数。
      */
     void removeAnnimationEventCallBack(cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
@@ -91,12 +91,6 @@ private:
 
 };
 
- /** 
- @类名 TriggerMng
- @主题 触发器系统管理器
- @细节 负责根据cocos studio 1.x编辑器导出数据构建触发器，负责事件分发，管理所有触发器的生命周期
- @组 触发器
- */
 /** 
  * @class TriggerMng
  * @brief @~english Trigger manager.
@@ -119,19 +113,19 @@ public:
 
 public:
     /**
-     * @brief @~english get instance point of TriggerMng.
+     * @brief @~english Get instance point of TriggerMng.
      * @~chinese TriggerMng单例指针。
      */
     static TriggerMng* getInstance();
 
     /**
-     * @brief @~english destroy instance point of TriggerMng.
+     * @brief @~english Destroy instance point of TriggerMng.
      * @~chinese 销毁TriggerMng单例指针。
      */
     static void destroyInstance();
 
     /**
-     * @brief @~english get version string of TriggerMng.
+     * @brief @~english Get version string of TriggerMng.
      * @~chinese TriggerMng版本号字符串。
      */
     static const char* triggerMngVersion();
@@ -209,7 +203,7 @@ public:
     bool isEmpty(void) const;
 
     /**
-     * @brief @~english Add armature event callback for trigger object.
+     * @brief @~english Add armature event callback to trigger object.
      * @~chinese 为触发器对象增加事件回调。
      * @param pTarget @~english Trigger object point.
      * @~chinese 触发器对象指针。

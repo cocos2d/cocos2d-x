@@ -32,7 +32,7 @@ namespace cocostudio {
 
 /** 
  * @class SceneReader
- * @brief @~english reader of parsing export data of cocos studio 1.x scene reader.
+ * @brief @~english Reader of parsing export data of cocos studio 1.x scene reader.
  * @~chinese cocos studio 1.x 场景编辑器导出数据解析器。
 */
 class CC_STUDIO_DLL SceneReader
@@ -59,13 +59,13 @@ public:
     };
 
     /**
-     * @brief @~english get instance point of SceneReader.
+     * @brief @~english Get instance point of SceneReader.
      * @~chinese SceneReader单例指针。
      */
     static SceneReader* getInstance();
 
     /**
-     * @brief @~english destroy instance point of SceneReader.
+     * @brief @~english Destroy instance point of SceneReader.
      * @~chinese 销毁SceneReader单例指针。
      *  @js purge
      *  @lua destroySceneReader
@@ -73,17 +73,17 @@ public:
     static void destroyInstance();
 
     /**
-     * @brief @~english get version string of SceneReader.
+     * @brief @~english Get version string of SceneReader.
      * @~chinese SceneReader版本号字符串。
      */
     static const char* sceneReaderVersion();
 
     /**
-     * @brief @~english create a scene by json or binary file path and type of attach component.
+     * @brief @~english Create a scene by json or binary file path and type of attach component.
      * @~chinese 根据二进制或者json路径和结构树构建类型，创建场景。
-     * @param fileName @~english json or binary file path
+     * @param fileName @~english Json or binary file path
      * @~chinese json或者二进制文件路径
-     * @param attachComponent @~english type of attach component
+     * @param attachComponent @~english Type of attach component
      * @~chinese 对象结构树构建类型
      *  @js purge
      *  @lua destroySceneReader
@@ -91,25 +91,25 @@ public:
     cocos2d::Node* createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent = AttachComponentType::EMPTY_NODE);
 
     /**
-     * @brief @~english call selector after each of the components created.
+     * @brief @~english Call selector after each of the components created.
      * @~chinese 设置每个组件创建完毕后回调方法。
-     * @param @~english callback function of selector
+     * @param @~english Callback function of selector
      * @~chinese selector 回调方法
      */
     void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
 
     /**
-     * @brief @~english get Node point by tag.
+     * @brief @~english Get Node point by tag.
      * @~chinese 根据nTag获取场景对象结构树node指针。
-     * @param tag @~english tag of node.
+     * @param tag @~english Tag of node.
      * @~chinese node的tag。
-     * @return @~english node point by tag.
+     * @return @~english Node point by tag.
      * @~chinese 根据tag返回node指针。
      */
     cocos2d::Node* getNodeByTag(int nTag);
 
     /**
-     * @brief @~english get the type of attach component.
+     * @brief @~english Get the type of attach component.
      * @~chinese 获取场景对象结构树构建类型。
      */
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
@@ -130,19 +130,19 @@ CC_CONSTRUCTOR_ACCESS:
     
 private:
     /**
-     * @brief @~english get component name by class name.
+     * @brief @~english Get component name by class name.
      * @~chinese 根据类名获取组件名称，构建场景树调用。
-     * @param @~english component name
+     * @param @~english Component name
      * @~chinese 组件名称
      */
     std::string getComponentClassName(const std::string& name);
 
     /**
-     * @brief @~english create component point by class name.
+     * @brief @~english Create component point by class name.
      * @~chinese 根据类名创建组件。
-     * @param classname @~english class name.
+     * @param classname @~english Class name.
      * @~chinese 类名。
-     * @return @~english component point.
+     * @return @~english Component point.
      * @~chinese 组件指针。
      */
     cocos2d::Component* createComponent(const std::string classname);
@@ -150,23 +150,23 @@ private:
     /**
      * @brief @~english Create node object and add it to parent node by json file path.
      * @~chinese 创建场景结构树node对象。
-     * @param dict @~english json object.
+     * @param dict @~english Json object.
      * @~chinese json对象。
-     * @param parent @~english parent node point.
+     * @param parent @~english Parent node point.
      * @~chinese 父类node指针。
-     * @param attachComponent @~english type of attach component
+     * @param attachComponent @~english Type of attach component
      * @~chinese 对象结构树构建类型
-     * @return @~english node object point.
+     * @return @~english Node object point.
      * @~chinese node对象指针。
      */
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);
 
     /**
-     * @brief @~english set property of node.
+     * @brief @~english Set property of node.
      * @~chinese 设置node对象属性。
-     * @param dict @~english json object.
+     * @param dict @~english Json object.
      * @~chinese json对象。
-     * @param node @~english node point.
+     * @param node @~english Node point.
      * @~chinese node指针。
      */
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
@@ -174,9 +174,9 @@ private:
      /**
      * @brief @~english Parse export json data of cocos studio 1.x Scene Editor and assign to doc.
      * @~chinese 解析cocos studio 1.x 场景编辑器导出json数据，判断json的有效性，给json对象doc赋值。
-     * @param fileName @~english json file path.
+     * @param fileName @~english Json file path.
      * @~chinese json路径。
-     * @param doc @~english json data object
+     * @param doc @~english Json data object
      * @~chinese json数据对象。
      * @return @~english true parse successfully, false failed to parse.
      * @~chinese true 解析成功，否则false。
@@ -186,15 +186,15 @@ private:
     /**
      * @brief @~english Create node object and add it to parent node by binary file path.
      * @~chinese 创建场景结构树node对象。
-     * @param cocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。
-     * @param cocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据node对象。
-     * @param parent @~english parent node point.
+     * @param parent @~english Parent node point.
      * @~chinese 父node指针。
-     * @param attachComponent @~english type of attach component
+     * @param attachComponent @~english Type of attach component
      * @~chinese 对象结构树构建类型
-     * @return @~english node object point.
+     * @return @~english Node object point.
      * @~chinese node对象指针。
      */
     cocos2d::Node* createObject(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node* parent, AttachComponentType attachComponent);
@@ -202,11 +202,11 @@ private:
     /**
      * @brief @~english Create node object and add it to parent node by binary file path.
      * @~chinese 创建场景结构树node对象。
-     * @param cocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。
-     * @param cocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
+     * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据node对象。
-     * @param node @~english node point.
+     * @param node @~english Node point.
      * @~chinese node指针。
      */
     void setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node *node);
@@ -214,11 +214,11 @@ private:
     /**
      * @brief @~english get Node point by tag based on its parent node point.
      * @~chinese 根据tag和parent指针，在parent的孩子中间根据tag匹配获取node指针。
-     * @param parent @~english parent node point.
+     * @param parent @~english Parent node point.
      * @~chinese 父node指针。
-     * @param tag @~english tag of node.
+     * @param tag @~english Tag of node.
      * @~chinese node的tag。
-     * @return @~english node point by tag.
+     * @return @~english Node point by tag.
      * @~chinese 根据tag返回node指针。
      */
     cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
