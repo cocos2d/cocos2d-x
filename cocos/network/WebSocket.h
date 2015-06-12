@@ -55,7 +55,7 @@ class WsMessage;
 /**
  * @ WebSocket 
  * @brief @~english WebSocket is wrapper of the libwebsockets-protocol, let the developer could call the websocket easily.
- * @~chinese WebSocket是libwebsockets-protocol一层封闭，可以让开发者方便的调用websocket的功能。
+ * @~chinese WebSocket是libwebsockets-protocol的高层封装，可以让开发者能方便的调用websocket的功能。
  */
 class CC_DLL WebSocket
 {
@@ -123,7 +123,7 @@ public:
         /**
          * @~english This function to be called after the client connection complete a handshake with the remote server.
          *This means that the WebSocket connection is ready to send and receive data.
-         * @~chinese 这个函数在客户端完成和远程服务器完成握手后被调用，这意味着WebSocket已经准备好发送和接收数据了。
+         * @~chinese 这个函数在客户端完成和远程服务器握手后被调用，这意味着WebSocket已经准备好发送和接收数据了。
          * @param ws @~english The WebSocket object connected. @~chinese 连接上的WebSocket。
          */
         virtual void onOpen(WebSocket* ws) = 0;

@@ -72,7 +72,7 @@ public:
      * Get defaultEngine of LuaEngine, it was deprecated.
      *
      * @~chinese 
-     * 获取LuaEngine的默认实例,将被弃用。
+     * 获取LuaEngine的默认实例,已弃用。
      * 
      * @return @~english the instance of LuaEngine.
      * @~chinese LuaEngine的实例。
