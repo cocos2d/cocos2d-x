@@ -25,6 +25,15 @@ THE SOFTWARE.
 #ifndef __EDITOR_SUPPORT_COCOSTUDIO_H__
 #define __EDITOR_SUPPORT_COCOSTUDIO_H__
 
+//
+// all cocos2d include files
+//
+
+//
+// all cocos studio 1.x 和 2.x 所有头文件
+//
+
+
 #include "cocostudio/CCActionFrame.h"
 #include "cocostudio/CCActionFrameEasing.h"
 #include "cocostudio/CCActionManagerEx.h"
