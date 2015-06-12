@@ -92,7 +92,7 @@ public:
      * @~english
      * Construct a Margin instance with left, top, right and bottom margins.
      * @~chinese 
-     * 视同左,上,右,下边距构造一个Margin实例。
+     * 使用左,上,右,下边距构造一个Margin实例。
      *
      * @param l @~english Left margin in float.
      * @~chinese 左边距
@@ -311,7 +311,7 @@ protected:
  * Every element want to have layout parameter should inherit from this class.
  * @~chinese 
  * 获取一个LayoutParameter的协议
- * 每一个有有布局参数的元素都应该继承自这个类..
+ * 每一个带有布局参数的元素都应该继承自这个类。
  */
 class CC_GUI_DLL LayoutParameterProtocol
 {

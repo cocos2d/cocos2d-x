@@ -69,7 +69,7 @@ public:
  * @~chinese 垂直线性布局的类
  *
  * @~english Note: This class is used only by @see `Layout` class.
- * @~chinese 注：这个类是仅由用于“Layout”类
+ * @~chinese 注：这个类是只能由@see `Layout`类使用
  * @lua NA
  * @js NA
  */
@@ -89,7 +89,7 @@ private:
  * @~chinese 线性横向布局类。
  *
  * Note: This class is used only by @see @~english `Layout` class.
- * @~chinese 注：这个类是仅由用于“Layout”类
+ * @~chinese 注：这个类是只能由@see `Layout`类使用
  * @lua NA
  * @js NA
  */
@@ -109,7 +109,7 @@ private:
  * @~chinese 相对布局类。
  *
  * Note: This class is used only by `Layout` class.
- * @~chinese 注：这个类是仅由用于“Layout”类
+ * @~chinese 注：这个类是只能由@see `Layout`类使用
  * @lua NA
  * @js NA
  */

@@ -39,7 +39,7 @@ namespace ui {
      * @brief @~english A component class used for layout.
      * The LayoutComponent holds all the data for layouting.
      * @~chinese 用于layout的组件类。
-     * LayoutComponent持有的所有数据。
+     * LayoutComponent保存的所有用于布局的数据。
      */
     class CC_GUI_DLL LayoutComponent : public Component
     {
@@ -85,7 +85,7 @@ namespace ui {
          * @~chinese 
          * 将LayoutComponent绑定到一个指定的节点。
          * 如果节点已经绑定一个名叫__LAYOUT_COMPONENT_NAME的LayoutComponent,则只返回LayoutComponent。
-         * 否则,创建一个新的LayoutComponent LayoutComponent和绑定到节点。
+         * 否则，创建一个新的LayoutComponent并绑定LayoutComponent到节点。
          * @param node @~english A Node* instance pointer.
          * @~chinese 一个节点指针
          * @return @~english The binded LayoutComponent instance pointer.
@@ -126,8 +126,8 @@ namespace ui {
          * Percent content size is used to adapt node's content size based on parent's content size.
          * If set to true then node's content size will be changed based on the value setted by @see setPercentContentSize
          * @~chinese 
-         * 根据父母的内容大小按百分比调整节点的内容大小。
-         * 如果设置为true，则改变基础值，@see setPercentContentSize
+         * 根据父节点的内容大小按百分比调整节点的内容大小。
+         * 如果设置为true，则基于父节点来改变自身的大小，@see setPercentContentSize
          *
          * @param isUsed @~english True to enable percent content size, false otherwise.
          * @~chinese 启用则返回true，未启用则返回false。
@@ -152,7 +152,7 @@ namespace ui {
          * @~chinese 
          * 设置百分比大小。
          * 值应该在0 - 1之间, 0意味着子节点的内容大小为0
-         * 1意味着子节点的内容大小和其父母一样。
+         * 1意味着子节点的内容大小和其父节点一样。
          * @param percent @~english The percent (x,y) of the node in [0-1] scope.
          * @~chinese 百分比(x,y)，在(0 - 1)范围内。
          */
