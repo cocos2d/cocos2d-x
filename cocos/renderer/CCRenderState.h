@@ -349,6 +349,16 @@ public:
         uint32_t getHash() const;
         bool isDirty() const;
 
+        /** 
+         * Invalidates the default StateBlock.
+         *
+         * Only call it if you are calling GL calls directly.
+         * This function will turn on all the dirty flags of the default state.
+         * By doing that, the next time a StateBlock::restore() is called,
+         * it will restore to the default value the default StateBlock.
+         */
+        static void invalidate();
+
         static StateBlock* _defaultState;
 
     protected:

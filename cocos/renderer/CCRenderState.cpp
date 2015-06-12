@@ -731,6 +731,14 @@ uint32_t RenderState::StateBlock::getHash() const
     return 0x12345678;
 }
 
+void RenderState::StateBlock::invalidate()
+{
+    CCASSERT(_defaultState, "_default state not created yet. Cannot be invalidated");
+
+    _defaultState->_bits = RS_ALL_ONES;
+    _defaultState->restore(0);
+}
+
 void RenderState::StateBlock::setBlend(bool enabled)
 {
     _blendEnabled = enabled;
