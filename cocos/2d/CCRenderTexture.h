@@ -46,11 +46,11 @@ class EventCustom;
  * simply construct a render target, call begin on it, call visit on any cocos
  * scenes or objects to render them, and call end. For convenience, render texture
  * adds a sprite as it's display child with the results, so you can simply add
- * the render texture to your scene and treat it like any other CocosNode.
+ * the render texture to your scene and treat it like any other Node.
  * There are also functions for saving the render texture to disk in PNG or JPG format.
  * @~chinese RenderTexture是一个通用的渲染节点。要在其中进行渲染，只需简单的构造一个 RenderTexture 对象，
  * 然后调用 begin 方法，再调用需要渲染的场景或对象，最终调用 end 方法即可。
- * 为了方便起见，RenderTexture 添加了一个 Sprite 作为显示结果的节点，你可以将这个 Sprite 做为一个 CocosNode 添加
+ * 为了方便起见，RenderTexture 添加了一个 Sprite 作为显示结果的节点，你可以将这个 Sprite 做为一个 Node 添加
  * 到任何场景中进行渲染与显示。
  * 此外，还可以通过接口将渲染的结果保存为 PNG 或 JPG 格式文件。
  * @since v0.8.1
@@ -60,7 +60,7 @@ class CC_DLL RenderTexture : public Node
 public:
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
-     * @~chinese 使用指定的宽度，高度，像素格式和深度模板格式初始化一个RenderTexture对象。
+     * @~chinese 使用指定的宽度，高度，像素格式和模板格式初始化一个RenderTexture对象。
      * 
      * @param w @~english The RenderTexture object width.
      * @~chinese RenderTexture对象的宽度。
@@ -69,7 +69,7 @@ public:
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @~chinese 像素格式(只有RGB和RGBA格式可用)。
      * @param depthStencilFormat @~english The depthStencil format.
-     * @~chinese 深度模板格式。
+     * @~chinese 模板格式。
      */
     static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
@@ -139,7 +139,7 @@ public:
     /** @~english Starts rendering to the texture while clearing the texture first.
      * This is more efficient then calling -clear first and then -begin. 
      *
-     * @~chinese 使用指定的颜色，深度以及深度模板清理纹理，并开始渲染。
+     * @~chinese 使用指定的颜色，深度以及模板清理纹理，并开始渲染。
      * 这个函数实现比先调用 clear 再调用 begin 更高效。
      * 
      * @param r @~english Red.
@@ -183,7 +183,7 @@ public:
 
     /** @~english Clears the texture with a specified depth value. 
      *
-     * @~chinese 使用指定的深度清除纹理。
+     * @~chinese 使用指定的深度清除深度缓存。
      * 
      * @param depthValue @~english A specified depth value.
      * @~chinese 一个指定的深度值。
@@ -192,7 +192,7 @@ public:
 
     /** @~english Clears the texture with a specified stencil value.
      *
-     * @~chinese 使用指定的模板清除纹理。
+     * @~chinese 使用指定的值清除模板缓存。
      * 
      * @param stencilValue @~english A specified stencil value.
      * @~chinese 指定的模板。
@@ -202,7 +202,7 @@ public:
     /* @~english Creates a new Image from with the texture's data.
      * Caller is responsible for releasing it by calling delete.
      *
-     * @~chinese 从渲染的纹理数据生成一个 Image 实例。
+     * @~chinese 从纹理数据生成一个 Image 实例。
      * 使用这个函数需要负责销毁该 Image 实例。
      * 
      * @param flipImage @~english Whether or not to flip image.
@@ -240,8 +240,8 @@ public:
      *
      * @~chinese 保存纹理到一个文件中。可能是JPG或PNG格式。该文件将被保存在“文档”文件夹。
      * 如果操作成功返回true。
-     * 注:因为v3.x，saveToFile将生成一个自定义命令，该命令将在 redner->render() 中被调用。
-     * 因此，如果在一个事件处理程序中，调用这个函数的实际保存文件将在下一帧被使用。如果这时我们切换到一个不同的场景，游戏会崩溃。
+     * 注:因为v3.x，saveToFile将生成一个自定义命令，该命令将在 render->render() 中被调用。
+     * 因此，如果在一个事件处理程序中，调用这个函数保存的文件在下一帧被使用。这时我们切换到一个不同的场景，游戏会崩溃。
      * 为了解决这个问题，在这个函数执行完之后调用一次 Director::getInstance()->getRenderer()->render()。
      * 
      * @param filename @~english The file name.
@@ -423,7 +423,7 @@ public:
      * the constructor is public again.
      * @~chinese 应该为 protected。
      * 但由于在 PowerVR + 安卓环境的 bug，
-     * 构造函数使用了 public。
+     * 所以构造函数还是 public。
      * @js ctor
      */
     RenderTexture();
@@ -449,7 +449,7 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
-     * @~chinese 使用指定的宽度，高度，像素格式和深度模板格式初始化一个RenderTexture对象。
+     * @~chinese 使用指定的宽度，高度，像素格式和模板格式初始化一个RenderTexture对象。
      * 
      * @param w @~english The RenderTexture object width.
      * @~chinese RenderTexture对象的宽度。
@@ -458,7 +458,7 @@ public:
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @~chinese 像素格式(只有RGB和RGBA格式可用)。
      * @param depthStencilFormat @~english The depthStencil format.
-     * @~chinese 深度模板格式。
+     * @~chinese 模板格式。
      * @return @~english If successed,it will return true.
      * @~chinese 如果成功,它将返回true。
      */

@@ -54,17 +54,12 @@ class Physics3DWorld;
  * Scene and Node are almost identical with the difference that Scene has its
  * anchor point (by default) at the center of the screen.
  * 
- * For the moment Scene has no other logic than that, but in future releases it might have
- * additional logic.
- * 
  * It is a good practice to use a Scene as the parent of all your nodes.
  *  
  * Scene will create a default camera for you.
  * @~chinese 场景是 Node 的子类，仅作为一个抽象的概念。
  * 
  * 场景和节点是几乎相同，区别在于默认情况下场景的锚点在屏幕的中心。
- * 
- * 目前场景没有其他的逻辑处理，未来可能会有额外的逻辑处理。
  * 
  * 推荐使用一个场景做为父节点，场景将为您创建一个默认的相机。
 */
@@ -76,7 +71,7 @@ public:
      * @~chinese 创建一个新场景对象。
      * 
      * @return @~english An autoreleased Scene object.
-     * @~chinese 一个场景对象（已经被 autorelease）。
+     * @~chinese 一个 autorelease 的场景对象。
      */
     static Scene *create();
 
@@ -87,7 +82,7 @@ public:
      * @param size @~english The predefined size of scene.
      * @~chinese 预定义的场景的大小。
      * @return @~english An autoreleased Scene object.
-     * @~chinese 一个场景对象（已经被 autorelease）。
+     * @~chinese 一个 autorelease 的场景对象。
      * @js NA
      */
     static Scene *createWithSize(const Size& size);
@@ -129,7 +124,6 @@ public:
      */
     void render(Renderer* renderer);
     
-    /** @~english override function  @~chinese 覆盖的函数*/
     virtual void removeAllChildren() override;
     
 CC_CONSTRUCTOR_ACCESS:

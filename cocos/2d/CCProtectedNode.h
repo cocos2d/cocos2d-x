@@ -43,7 +43,7 @@ NS_CC_BEGIN
  *@brief @~english A inner node type mainly used for UI module.
  * It is useful for composing complex node type and it's children are protected.
  * @~chinese 主要用于UI模块的内部节点类型。
- * 用于组合出复杂的节点类型。所有的子节点都为 protected 成员数据。
+ * 用于组合出复杂的节点类型。所有的子节点都为 protected。
  */
 class  CC_DLL ProtectedNode : public Node
 {
@@ -66,7 +66,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * 以z值为0添加一个子节点。
+     * 添加一个 Z 值为 0 的子节点。
      * 
      * 如果当前节点正在运行，那么 'onEnter' 和 'onEnterTransitionDidFinish' 会被立即调用。
      * 
@@ -80,7 +80,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * 添加了与当前节点 z 值一致的子节点。
+     * 添加一个 z 值为 localZOrder 的子节点。
      * 
      * 如果当前节点正在运行，那么 'onEnter' 和 'onEnterTransitionDidFinish' 会被立即调用。
      * 
@@ -119,7 +119,7 @@ public:
      * @~chinese 一个用于标识节点的整数。
      * 
      * @return @~english a Node object whose tag equals to the input parameter.
-     * @~chinese tag 值与参数相同的子节点实例。
+     * @~chinese tag 值与输入参数相同的子节点实例。
      */
     virtual Node * getProtectedChildByTag(int tag);
     
@@ -164,7 +164,7 @@ public:
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
      * @~chinese 
-     * 移除所有子节点，并清理所有节点相关的操作。
+     * 移除所有子节点，当 cleanup 为 true 时清理所有节点相关的操作，否则不清理。
      * 
      * @param cleanup   @~english true if all running actions on all children nodes should be cleanup, false oterwise.
      * @~chinese 如果为 true，将清理子节点相关的 action 和回调。

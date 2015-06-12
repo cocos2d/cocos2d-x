@@ -100,10 +100,10 @@ public:
      */
     inline Sprite* getSprite() const { return _sprite; }
     
-    /** @brief @~english Set the initial percentage values. 
+    /** @brief @~english Set the percentage values. 
      *         @~chinese 设置进度条显示的百分比。
      *
-     * @param percentage @~english The initial percentage values.
+     * @param percentage @~english The percentage values.
      *                   @~chinese 百分比值。
      */
     void setPercentage(float percentage);
@@ -112,7 +112,7 @@ public:
      *         @~chinese 设置进度条使用的 Sprite 对象。
      *
      * @param sprite @~english The sprite as the shape.
-     *               @~chinese Sprite 对象。
+     *               @~chinese 需要使用的 Sprite 对象。
      */
     void setSprite(Sprite *sprite);
     
