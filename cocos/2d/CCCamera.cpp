@@ -33,6 +33,7 @@
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCFrameBuffer.h"
+#include "renderer/CCRenderState.h"
 
 NS_CC_BEGIN
 
@@ -409,14 +410,22 @@ void Camera::clearBackground(float depth)
     {
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
         glStencilMask(0);
+        RenderState::StateBlock::_defaultState->setStencilWrite(0);
+
         oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
         glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
         glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
+
         glDepthMask(GL_TRUE);
+        RenderState::StateBlock::_defaultState->setDepthWrite(true);
+
         glEnable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+
         glDepthFunc(GL_ALWAYS);
+        RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_ALWAYS);
     }
-    
+
     //draw
     static V3F_C4B_T2F_Quad quad;
     quad.bl.vertices = Vec3(-1,-1,0);
@@ -461,14 +470,18 @@ void Camera::clearBackground(float depth)
         if(GL_FALSE == oldDepthTest)
         {
             glDisable(GL_DEPTH_TEST);
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
         }
         glDepthFunc(oldDepthFunc);
         if(GL_FALSE == oldDepthMask)
         {
             glDepthMask(GL_FALSE);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
         }
         
         glStencilMask(0xFFFFF);
+        RenderState::StateBlock::_defaultState->setStencilWrite(0xFFFFF);
+
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
 }
