@@ -39,7 +39,7 @@ namespace ui {
 
 /**
  * @brief @~english Margin of widget's in point. Margin value should be positive.
- * @~chinese 部件的边距。
+ * @~chinese 控件的边距。
  * @lua NA
  */
 class CC_GUI_DLL Margin
@@ -189,7 +189,7 @@ public:
      * 布局参数类型。
      * 主要有两种类型:
      *  - 线性:元素将根据边距布置。
-     *  - 相对:元素将根据边距和相对部件的名字来布置
+     *  - 相对:元素将根据边距和相对控件的名字来布置
      */
     enum class Type
     {
@@ -547,10 +547,10 @@ public:
      * Set widget name your widget want to relative to.
      *
      * @~chinese 
-     * 设置部件要相对小部件的名称。
+     * 设置相对于控件的名称。
      * 
      * @param name @~english Relative widget name.
-     * @~chinese 相对小部件的名称。
+     * @~chinese 相对控件的名称。
      */
     void setRelativeToWidgetName(const std::string& name);
     
@@ -558,9 +558,9 @@ public:
      * @~english
      * Get the relative widget name.
      * @~chinese 
-     * 得到相对的小部件的名称。
+     * 得到相对的控件的名称。
      * @return @~english name A relative widget name in string.
-     * @~chinese 相对小部件名称字符串
+     * @~chinese 相对控件名称字符串
      */
     const std::string& getRelativeToWidgetName() const;
     
