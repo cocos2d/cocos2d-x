@@ -56,23 +56,43 @@ protected:
 };
 
 /**
+@class GroupCommand
+@brief
+@~english
  GroupCommand is used to group several command together, and more, it can be nestd.
  So it is used to generate the hierarchy for the rendcommands. Evey group command will be assigned by a group ID.
+ * @~chinese 
+ GroupCommand用于将多个渲染命令打包成一个命令，而且可以嵌套。
+ 所以GroupCommand主要用来构建渲染命令的层级结构。
+ 每一个GroupCommand会分配到一个组ID。
  */
 class CC_DLL GroupCommand : public RenderCommand
 {
 public:
-    /**@{
-     Constructor and Destructor.
+    /**@~english
+     Constructor.
+     * @~chinese 
+     * 构造函数。
      */
     GroupCommand();
+    /**@~english
+     Destructor.
+     * @~chinese 
+     * 析构函数。
+     */
     ~GroupCommand();
-    /**@}*/
     
-    /**Init function for group command*/
+    /**
+    @~english Init function for group command.
+    @~chinese 初始化GroupCommand。
+    @param globalOrder @~english The globalZOrder of render command. @~chinese 命令的globalZOrder。
+    */
     void init(float globalOrder);
     
-    /**called by renderer, get the group ID.*/
+    /**
+    @~english called by renderer, get the group ID. 
+    @~chinese 被渲染器调用,得到组ID。
+    */
     inline int getRenderQueueID() const {return _renderQueueID;}
     
 protected:

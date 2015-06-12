@@ -44,22 +44,42 @@ class GLProgram;
 class GLProgramState;
 
 /**
+@class GLProgramStateCache
+@brief
+@~english
  Some GLprogram state could be shared. GLProgramStateCache is used to cache this, and will reuse the
  old GLProgramState, which will accelerate the creation of game objects such as sprites, particles etc.
+ * @~chinese 
+ 一些GLProgramState可以被共用，这个类用于保存共用的GLProgramState的Cache，并且重用。
+ 该机制可以加速粒子系统和精灵的创建。
  */
 class CC_DLL GLProgramStateCache
 {
 public:
-    /**Get the GLProgramStateCache singleton instance.*/
+    /**
+    @~english Get the GLProgramStateCache singleton instance. 
+    @~chinese 得到GLProgramStateCache单例实例。
+    */
     static GLProgramStateCache* getInstance();
-    /**Destroy the GLProgramStateCache singleton.*/
+    /**
+    @~english Destroy the GLProgramStateCache singleton. 
+    @~chinese 删除GLProgramStateCache单例对象。*/
     static void destroyInstance();
     
-    /**Get the shared GLProgramState by the owner GLProgram.*/
+    /**
+    @~english Get the shared GLProgramState by the owner GLProgram. 
+    @~chinese 以GLProgram作为Key值，检索共享的GLProgramState。
+    */
     GLProgramState* getGLProgramState(GLProgram* program);
-    /**Remove all the cached GLProgramState.*/
+    /**
+    @~english Remove all the cached GLProgramState. 
+    @~chinese 清除所有缓存的GLProgramState。
+    */
 	void removeAllGLProgramState();
-    /**Remove unused GLProgramState.*/
+    /**
+    @~english Remove unused GLProgramState. 
+    @~chinese 删除未使用的GLProgramState。
+    */
     void removeUnusedGLProgramState();
 
 protected:
