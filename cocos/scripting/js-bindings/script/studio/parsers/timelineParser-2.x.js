@@ -121,6 +121,8 @@
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
+
+        setLayoutComponent(node, json);
     };
 
     parser.parseChild = function(node, children, resourcePath){
@@ -327,6 +329,11 @@
         if (color != null)
             widget.setColor(getColor(color));
 
+        setLayoutComponent(widget, json);
+    };
+
+    var setLayoutComponent = function(widget, json){
+        
         var layoutComponent = ccui.LayoutComponent.bindLayoutComponent(widget);
         if(!layoutComponent)
             return;
@@ -562,8 +569,11 @@
 
         widget.setUnifySizeEnabled(false);
 
+        var color = json["CColor"];
+        json["CColor"] = null;
+        widget.setTextColor(getColor(color));
         this.widgetAttributes(widget, json, widget.isIgnoreContentAdaptWithSize());
-
+        json["CColor"] = color;
         return widget;
 
     };
@@ -1131,13 +1141,10 @@
         var volume = json["Volume"] || 0;
         cc.audioEngine.setMusicVolume(volume);
         //var name = json["Name"];
-        var resPath = "";
-        if(cc.loader.resPath)
-            resPath = (cc.loader.resPath + "/").replace(/\/\/$/, "/");
 
         loadTexture(json["FileData"], resourcePath, function(path, type){
             cc.loader.load(path, function(){
-                cc.audioEngine.playMusic(resPath + path, loop);
+                cc.audioEngine.playMusic(path, loop);
             });
         });
 
@@ -1235,6 +1242,7 @@
                 node.getAnimation().play(currentAnimationName, -1, isLoop);
 
         });
+        node.setColor(getColor(json["CColor"]));
         return node;
     };
 

@@ -21,11 +21,12 @@ Box2dTestBedSuite::Box2dTestBedSuite()
 {
     for (int entryId = 0; entryId < g_totalEntries; ++entryId)
     {
-        addTestCase(g_testEntries[entryId].name, [&](){
+        addTestCase(g_testEntries[entryId].name, [entryId](){
             return Box2dTestBed::createWithEntryID(entryId);
         });
     }
 }
+
 //------------------------------------------------------------------
 //
 // Box2dTestBed
@@ -52,6 +53,10 @@ Box2dTestBed* Box2dTestBed::createWithEntryID(int entryId)
 
 bool Box2dTestBed::initWithEntryID(int entryId)
 {
+    if (!TestCase::init())
+    {
+        return false;
+    }
     auto director = Director::getInstance();
 	Vec2 visibleOrigin = director->getVisibleOrigin();
 	Size visibleSize = director->getVisibleSize();

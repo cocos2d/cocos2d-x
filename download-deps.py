@@ -125,9 +125,11 @@ class CocosZipInstaller(object):
         block_size_per_second = 0
         old_time = time()
 
+        status = ""
         while True:
             buffer = u.read(block_sz)
             if not buffer:
+                print("%s%s" % (" " * len(status), "\r")),
                 break
 
             file_size_dl += len(buffer)
@@ -136,16 +138,14 @@ class CocosZipInstaller(object):
             new_time = time()
             if (new_time - old_time) > 1:
                 speed = block_size_per_second / (new_time - old_time) / 1000.0
-                status = ""
                 if file_size != 0:
                     percent = file_size_dl * 100. / file_size
                     status = r"Downloaded: %6dK / Total: %dK, Percent: %3.2f%%, Speed: %6.2f KB/S " % (file_size_dl / 1000, file_size / 1000, percent, speed)
                 else:
                     status = r"Downloaded: %6dK, Speed: %6.2f KB/S " % (file_size_dl / 1000, speed)
-
-                status = status + chr(8)*(len(status)+1)
                 print(status),
                 sys.stdout.flush()
+                print("\r"),
                 block_size_per_second = 0
                 old_time = new_time
 
