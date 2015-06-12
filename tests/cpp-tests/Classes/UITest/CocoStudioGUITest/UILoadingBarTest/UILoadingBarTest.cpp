@@ -35,9 +35,11 @@ bool UILoadingBarTest_Left::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add the alert
-        Text* alert = Text::create("LoadingBar left", "fonts/Marker Felt.ttf", 30);
+        Text* alert = Text::create("Test LoadingBar Change Direction",
+                                   "fonts/Marker Felt.ttf", 30);
         alert->setColor(Color3B(159, 168, 176));
-        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
         _uiLayer->addChild(alert);
         
         // Create the loading bar
@@ -45,22 +47,37 @@ bool UILoadingBarTest_Left::init()
         loadingBar->setTag(0);
         loadingBar->setPosition(Vec2(widgetSize.width / 2.0f,
                                       widgetSize.height / 2.0f + loadingBar->getContentSize().height / 4.0f));
+
+        auto loadingBarCopy = (LoadingBar*)loadingBar->clone();
+        loadingBarCopy->setTag(1);
+        loadingBarCopy->setPosition(loadingBar->getPosition()
+                                    + Vec2(0, -40));
+        loadingBarCopy->setDirection(LoadingBar::Direction::RIGHT);
+
         Button* button = Button::create("cocosui/animationbuttonnormal.png",
                                         "cocosui/animationbuttonpressed.png");
         button->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 50));
         button->setTitleText("Click to change direction!");
-        //        button->addTouchEventListener(this, toucheventselector(UIButtonTest::touchEvent));
-        button->addTouchEventListener([=](Ref*, Widget::TouchEventType type){
-            if (type == Widget::TouchEventType::ENDED) {
-                if (loadingBar->getDirection() == LoadingBar::Direction::LEFT) {
+
+        button->addTouchEventListener([=](Ref*, Widget::TouchEventType type)
+        {
+            if (type == Widget::TouchEventType::ENDED)
+            {
+                if (loadingBar->getDirection() == LoadingBar::Direction::LEFT)
+                {
                     loadingBar->setDirection(LoadingBar::Direction::RIGHT);
-                }else{
+                    loadingBarCopy->setDirection(LoadingBar::Direction::LEFT);
+                }
+                else
+                {
                     loadingBar->setDirection(LoadingBar::Direction::LEFT);
+                    loadingBarCopy->setDirection(LoadingBar::Direction::RIGHT);
                 }
             }
         });
+         _uiLayer->addChild(loadingBar,1);
+        _uiLayer->addChild(loadingBarCopy,2);
         _uiLayer->addChild(button);
-        _uiLayer->addChild(loadingBar);
         
         return true;
     }
@@ -75,7 +92,9 @@ void UILoadingBarTest_Left::update(float delta)
         _count = 0;
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
+    LoadingBar* loadingBarCopy = static_cast<LoadingBar*>(_uiLayer->getChildByTag(1));
     loadingBar->setPercent(_count);
+    loadingBarCopy->setPercent(_count);
 }
 
 // UILoadingBarTest_Right

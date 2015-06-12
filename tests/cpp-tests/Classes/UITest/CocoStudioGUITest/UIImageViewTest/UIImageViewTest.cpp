@@ -60,11 +60,16 @@ bool UIImageViewTest_Scale9::init()
         // Create the imageview
         ImageView* imageView = ImageView::create("cocosui/buttonHighlighted.png");
         imageView->setScale9Enabled(true);
-        imageView->setContentSize(Size(300, 115));
-        imageView->setPosition(Vec2(widgetSize.width / 2.0f,
+        imageView->setContentSize(Size(200, 115));
+        imageView->setPosition(Vec2(widgetSize.width / 2.0f - 100,
                                      widgetSize.height / 2.0f));
         
-        _uiLayer->addChild(imageView);                
+        _uiLayer->addChild(imageView);
+
+        auto imageCopy = imageView->clone();
+        imageCopy->setPosition(Vec2(widgetSize.width / 2.0f + 100,
+                                    widgetSize.height / 2.0f));
+        _uiLayer->addChild(imageCopy);
         
         return true;
     }
