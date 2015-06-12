@@ -1,4 +1,5 @@
 #include "jsb_cocos2dx_experimental_video_auto.hpp"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "cocos2d_specifics.hpp"
 #include "UIVideoPlayer.h"
 
@@ -453,3 +454,4 @@ void register_all_cocos2dx_experimental_video(JSContext* cx, JS::HandleObject ob
     js_register_cocos2dx_experimental_video_VideoPlayer(cx, ns);
 }
 
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
