@@ -50,11 +50,6 @@ CC_CONSTRUCTOR_ACCESS:
     ComRender(void);
 
     /**
-    @主题 渲染组件构造函数
-    @参数 node 包装渲染对象指针
-    @参数 comName 渲染组件名称
-    */
-    /**
      * @brief @~english ComRender constructor.
      * @~chinese 渲染组件构造函数。
      * @param node @~english Node point 

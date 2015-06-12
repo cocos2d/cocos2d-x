@@ -32,8 +32,8 @@ THE SOFTWARE.
 #include "CocoLoader.h"
 
 /** 
- * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+ * @brief @~english Declare the current component class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数实现，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
 */
 #define DECLARE_CLASS_COMPONENT_INFO \
     public: \
@@ -41,7 +41,7 @@ THE SOFTWARE.
         static cocos2d::Ref* createInstance(void); \
         
 /** 
- * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
+ * @brief @~english Implement the current component class name to ObjectFactory, for reflection to create objects.
  * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
 */
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
@@ -52,8 +52,8 @@ THE SOFTWARE.
         cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 /** 
- * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+ * @brief @~english Implement the current component class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数实现，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
 */
 #define CREATE_CLASS_COMPONENT_INFO(className) \
         cocos2d::ObjectFactory::TInfo(#className, &className::createInstance)

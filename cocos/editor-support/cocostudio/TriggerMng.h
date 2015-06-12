@@ -35,43 +35,59 @@ namespace cocostudio {
 
 class TriggerObj;
 
- /** 
- @类名 ArmatureMovementDispatcher
- @主题 Armature运行状态事件分发器
- @细节 把Armature的运行状态发送给触发器，用来判断条件判断与动作触发
- @组 触发器
- */
+/** 
+ * @class ArmatureMovementDispatcher
+ * @brief @~english Armature action state dispatcher.
+ * @~chinese  Armature运行状态事件分发器。
+*/
 class CC_STUDIO_DLL ArmatureMovementDispatcher : public cocos2d::Ref
 {
 public:
-	ArmatureMovementDispatcher(void);
-	~ArmatureMovementDispatcher(void);
+    /**
+     * @brief @~english ArmatureMovementDispatcher constructor.
+     * @~chinese ArmatureMovementDispatcher构造函数。
+     */
+    ArmatureMovementDispatcher(void);
+    /**
+     * @brief @~english ArmatureMovementDispatcher destructor.
+     * @~chinese ArmatureMovementDispatcher析构函数。
+     */
+    ~ArmatureMovementDispatcher(void);
 public:
     /**
-    @主题 为触发器对象增加事件回调
-    @参数 pTarget 触发器对象指针
-    @参数 mecf 回调函数
-    @返回 无
-    */
-    void addAnimationEventCallBack(cocos2d::Ref*pTarget, SEL_MovementEventCallFunc mecf);
+     * @brief @~english add armature event callback function for trigger object.
+     * @~chinese 为触发器对象增加事件回调。
+     * @param pTarget @~english trigger object point.
+     * @~chinese 触发器对象指针。
+     * @param mecf @~english callback function.
+     * @~chinese 回调函数。
+     */
+    void addAnimationEventCallBack(cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
+
     /**
-    @主题 移除触发器对象事件回调
-    @参数 pTarget 触发器对象指针
-    @参数 mecf 回调函数
-    @返回 无
-    */
-    void removeAnnimationEventCallBack(cocos2d::Ref*pTarget, SEL_MovementEventCallFunc mecf);
+     * @brief @~english remove armature event callback function for trigger object.
+     * @~chinese 为触发器对象移除事件回调。
+     * @param pTarget @~english trigger object point.
+     * @~chinese 触发器对象指针。
+     * @param mecf @~english callback function.
+     * @~chinese 回调函数。
+     */
+    void removeAnnimationEventCallBack(cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
+
     /**
-    @主题 提供给Armature进行事件回调的方法
-    @参数 armature Armature指针
-    @参数 movementType 移动事件类型
-    @参数 movementID 动作ID
-    @返回 无
-    */
+     * @brief @~english Animation event callback function.
+     * @~chinese Armature事件回调的方法。
+     * @param armature @~english Armature object point.
+     * @~chinese 1.x骨骼动画对象指针。
+     * @param movementType @~english Armature movement type.
+     * @~chinese 1.x骨骼动画移动类型。
+     * @param movementID @~english Armature movement action id.
+     * @~chinese 1.x骨骼动画动作ID。
+     */
     void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
     
 private:
-	std::unordered_map<cocos2d::Ref*, SEL_MovementEventCallFunc> *_mapEventAnimation;
+    std::unordered_map<cocos2d::Ref*, SEL_MovementEventCallFunc> *_mapEventAnimation;
 
 };
 
@@ -81,131 +97,177 @@ private:
  @细节 负责根据cocos studio 1.x编辑器导出数据构建触发器，负责事件分发，管理所有触发器的生命周期
  @组 触发器
  */
+/** 
+ * @class TriggerMng
+ * @brief @~english Trigger manager.
+ * @~chinese  Armature运行状态事件分发器。
+*/
 class CC_STUDIO_DLL TriggerMng
 {
 public:
     /**
-    @主题 TriggerMng构造函数
-    */
+     * @brief @~english TriggerMng constructor.
+     * @~chinese TriggerMng构造函数。
+     */
     TriggerMng(void);
+
     /**
-    @主题 TriggerMng析构函数
-    */
+     * @brief @~english TriggerMng destructor.
+     * @~chinese TriggerMng析构函数。
+     */
     virtual ~TriggerMng(void);
 
 public:
     /**
-    @主题 获取TriggerMng单例指针
-    @返回 TriggerMng单例指针
-    */
+     * @brief @~english get instance point of TriggerMng.
+     * @~chinese TriggerMng单例指针。
+     */
     static TriggerMng* getInstance();
+
     /**
-    @主题 销毁TriggerMng单例指针
-    @返回 无
-    */
+     * @brief @~english destroy instance point of TriggerMng.
+     * @~chinese 销毁TriggerMng单例指针。
+     */
     static void destroyInstance();
+
     /**
-    @主题 返回TriggerMng版本
-    @返回 TriggerMng版本号字符串
-    */
+     * @brief @~english get version string of TriggerMng.
+     * @~chinese TriggerMng版本号字符串。
+     */
     static const char* triggerMngVersion();
     
 public:
-    /**
-    @主题 解析cocos studio 1.x导出的json对象，构建触发器系统
-    @参数 root cocos studio 1.x导出的json对象
-    @返回 无
-    */
+     /**
+     * @brief @~english Parse export json data of cocos studio 1.x Scene Editor.
+     * @~chinese 解析cocos studio 1.x 场景编辑器导出json数据。
+     * @param root @~english json data object
+     * @~chinese json数据对象。
+     */
     void parse(const rapidjson::Value &root);
+
     /**
-    @主题 解析cocos studio 1.x导出的二进制数据，构建触发器系统
-    @参数 cocoLoader cocos studio 1.x导出二进制数据加载器对象
-    @参数 cocoNode cocos studio 1.x导出二进制数据node对象
-    @返回 无
-    */
+     * @brief @~english Parse binary data of cocos studio 1.x scene editor.
+     * @~chinese 解析cocos studio 1.x导出的二进制数据。
+     * @param pCocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
+     * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。
+     * @param pCocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
+     * @~chinese cocos studio 1.x场景编辑器导出二进制数据node对象。
+     */
     void parse(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
+
     /**
-    @主题 移除所有触发器
-    @返回 无
-    */
+     * @brief @~english remove all triggers.
+     * @~chinese 移除所有触发器。
+     */
     void removeAll(void);
+
     /**
-    @主题 根据触发器事件id,获取绑定到这个id上的所有触发器
-    @参数 event 触发器事件id
-    @返回 绑定到事件id的所有触发器
-    */
+     * @brief @~english Get triggers with event id.
+     * @~chinese 根据触发器事件id,获取绑定到这个id上的所有触发器。
+     * @param event @~english Event id.
+     * @~chinese 事件id。
+     * @return @~english Trigger vector.
+     * @~chinese 触发器数组。
+     */
     cocos2d::Vector<TriggerObj*>* get(unsigned int event) const;
-   /**
-    @主题 根据触发器id,获取触发器
-    @参数 id 触发器id
-    @返回 获取触发器
-    */
+
+    /**
+     * @brief @~english Get trigger with trigger id.
+     * @~chinese 根据触发器id,获取触发器。
+     * @param id @~english Trigger unique id.
+     * @~chinese 触发器唯一id。
+     * @return @~english Trigger point.
+     * @~chinese 获取触发器指针。
+     */
     TriggerObj* getTriggerObj(unsigned int id) const;
+
     /**
-    @主题 根据触发器指针，移除触发器
-    @参数 Obj 触发器指针
-    @返回 true成功移除，否则false
-    */
+     * @brief @~english Remove trigger with trigger point.
+     * @~chinese 根据触发器指针，移除触发器。
+     * @param Obj @~english Trigger point.
+     * @~chinese 触发器指针。
+     * @return @~english true remove successfully false failed to remove .
+     * @~chinese true成功移除，否则false。
+     */
     bool removeTriggerObj(TriggerObj *Obj);
+
     /**
-    @主题 根据触发器id，移除触发器
-    @参数 id 触发器id
-    @返回 true成功移除，否则false
-    */
+     * @brief @~english Remove trigger with trigger unique id.
+     * @~chinese 根据触发器id，移除触发器。
+     * @param id @~english Trigger unique id.
+     * @~chinese 触发器唯一id。
+     * @return @~english true remove successfully false failed to remove .
+     * @~chinese true成功移除，否则false。
+     */
     bool removeTriggerObj(unsigned int id);
-    /**
-    @主题 是否为没有触发器
-    @返回 true 没有触发器，否则false
-    */
+
+    /** @brief @~english Returns whether _triggerObjs is empty (i.e. whether its size is 0).
+     * @~chinese 返回_triggerObjs Vector是否为空(即无论其大小为0)。
+     * @return @~english true _triggerObjs isn't empty false empty .
+     * @~chinese true 没有触发器，否则false。
+     */
     bool isEmpty(void) const;
 
     /**
-    @主题 为触发器对象绑定Armature事件回调，从而当Armature有事件发生，触发器对象也可以获得
-    @参数 pAr Armature
-    @参数 pTarget 触发器对象指针
-    @参数 mecf 回调函数
-    @返回 无
-    */
+     * @brief @~english Add armature event callback for trigger object.
+     * @~chinese 为触发器对象增加事件回调。
+     * @param pTarget @~english Trigger object point.
+     * @~chinese 触发器对象指针。
+     * @param mecf @~english Callback function.
+     * @~chinese 回调函数。
+     */
     void addArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
+
     /**
-    @主题 移除绑定在Armature的触发器对象事件回调
-    @参数 pAr Armature
-    @参数 pTarget 触发器对象指针
-    @参数 mecf 回调函数
-    @返回 无
-    */
+     * @brief @~english Remove armature event callback function with armature point, trigger point, callback function.
+     * @~chinese 为触发器对象移除事件回调。
+     * @param pTarget @~english Trigger object point.
+     * @~chinese 触发器对象指针。
+     * @param mecf @~english Callback function.
+     * @~chinese 回调函数。
+     */
     void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
+
     /**
-    @主题 移除绑定到指定Armature的触发器事件回调
-    @参数 pAr Armature
-    @返回 无
-    */
+     * @brief @~english Remove all event callback functions binding to armature point.
+     * @~chinese 移除绑定到Armature所有事件回调。
+     * @param pAr @~english Armature point.
+     * @~chinese 1.x骨骼动画指针。
+     */
     void removeArmatureAllMovementCallBack(Armature *pAr);
+
     /**
-    @主题 移除绑定到所有Armature的触发器事件回调
-    @参数 pAr Armature
-    @返回 无
-    */
+     * @brief @~english Remove all armature event callback functions. 
+     * @~chinese 移除Armature所有事件回调。
+     */
     void removeAllArmatureMovementCallBack();
+
     /**
-    @主题 分发触发器事件
-    @参数 tEvent 触发器事件
-    @返回 无
-    */
+     * @brief @~english Dispatch trigger events. 
+     * @~chinese  分发触发器事件。
+     * @param tEvent @~english Trigger event.
+     * @~chinese 触发器事件。
+     */
     void dispatchEvent(cocos2d::EventCustom* tEvent);
+
     /**
-    @主题 移除触发器事件监听器
-    @参数 listener 触发器监听器
-    @返回 无
-    */
+     * @brief @~english Remove trigger event listener. 
+     * @~chinese 移除触发器事件监听器。
+     * @param listener @~english Trigger event listener.
+     * @~chinese 触发器事件监听器。
+     */
     void removeEventListener(cocos2d::EventListener* listener);
-   /**
-    @主题 增加触发器事件监听器，并制定接收优先级
-    @参数 listener 触发器监听器
-    @参数 fixedPriority 触发器监听器接收优先级
-    @返回 无
-    */
+
+    /**
+     * @brief @~english Add a trigger event listener ith the fixed priority.
+     * @~chinese 增加触发器事件监听器，并指定优先级。
+     * @param listener @~english Trigger event listener.
+     * @~chinese 触发器事件监听器。
+     * @param fixedPriority @~english The fixed priority of the listener
+     * @~chinese 监听器优先级
+     */
     void addEventListenerWithFixedPriority(cocos2d::EventListener* listener, int fixedPriority);
+
 private:
     /**
     @主题 根据cocos studio 1.x导出的二进制对象转换为json对象，用于lua调用
@@ -214,6 +276,16 @@ private:
     @参数 pCocoNode cocos studio 1.x导出二进制数据node对象
     @返回 无
     */
+    /**
+     * @brief @~english Transform binary object into a json object, assign to document.
+     * @~chinese 根据cocos studio 1.x导出的二进制对象转换为json对象，并赋值给document。
+     * @param document @~english Json data object
+     * @~chinese json数据对象。
+     * @param pCocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
+     * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。
+     * @param pCocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
+     * @~chinese cocos studio 1.x场景编辑器导出二进制数据node对象。
+     */
     void buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
 
 private:
