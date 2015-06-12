@@ -22,10 +22,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @~chinese 
- * cocos2d for iPhone http://www.cocos2d-iphone.org:
- * cocos2d-x http://www.cocos2d-x.org:
- * 
  */
 
 #ifndef __MISCNODE_CCCLIPPING_RECTANGLE_NODE_H__

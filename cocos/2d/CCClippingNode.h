@@ -64,6 +64,8 @@ public:
      * 模板节点将被retain。
      * @param stencil @~english The stencil node.
      * @~chinese 模板节点。
+     * @return @~english An autorelease ClippingNode.
+     * @~chinese 一个自动释放的ClippingNode对象。
      */
     static ClippingNode* create(Node *stencil);
 
@@ -131,11 +133,10 @@ public:
      * the stencil is inverted, so the content is drawn where the stencil is NOT drawn.
      * This default to false.
      *
-     * @~chinese 如果设置为真的话就反转
-     * 模板反转,所以内容绘制的地方模板不会进行绘制。
+     * @~chinese 如果设置为真的话模板反转，内容被绘制的部分是对应模板不可见的部分。
      * 默认为假。
      * 
-     * @return @~english If the clippingNode is Inverted, it will be return true.
+     * @return @~english If the clippingNode is inverted, it will be return true.
      * @~chinese 如果clippingNode反转,它将返回true。
      */
     bool isInverted() const;
@@ -180,7 +181,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ClippingNode();
 
     /** @~english Initializes a clipping node without a stencil.
-     * @~chinese 不是呀模板初始化一个裁剪节点。
+     * @~chinese 不带模板地初始化一个裁剪节点。
      */
     virtual bool init() override;
     

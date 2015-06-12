@@ -278,14 +278,14 @@ CC_CONSTRUCTOR_ACCESS:
     ~Camera();
     
     /**@~english
-     * Set the scene,this method shall not be invoke manually
+     * Set the scene,this method should not be invoke manually
      * @~chinese 
-     * 设置场景,这种方法不应该手动调用
+     * 设置场景,这个方法不应该手动调用
      */
     void setScene(Scene* scene);
     
     /**@~english set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
-     * @~chinese 对投影矩阵设置额外的矩阵,WP8使用时，调用的时候它会乘以投影矩阵*/
+     * @~chinese 对投影矩阵设置额外的矩阵,在WP8平台使用时，调用的时候它会乘以投影矩阵*/
     void setAdditionalProjection(const Mat4& mat);
     
     /** @~english init camera  @~chinese 初始化相机*/
