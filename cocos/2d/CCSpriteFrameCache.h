@@ -107,10 +107,12 @@ public:
     bool init();
 
     /** @~english Adds multiple Sprite Frames from a plist file.
-     * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png.
+     * A texture will be loaded automatically.
+     * When texture file is not specified in plist file, the texture name will composed by replacing the .plist suffix with .png.
      * If you want to use another texture, you should use the `addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)` method.
      * @~chinese 从 plist 文件添加多个 SpriteFrame。
-     * 会自动加载相应的纹理。plist 文件的扩展名替换为 .png 即为纹理文件的名称。
+     * 会自动加载相应的纹理。
+     * 当 plist 文件中未指定使用的 texture 文件时，plist 文件的扩展名替换为 .png 即为纹理文件的名称。
      * 如果需要使用指定的纹理文件，请使用 `addSpriteFramesWithFile(const std::string& plist,const std::string& textureFileName)` 方法。
      * @param plist @~english Plist file name.
      * @~chinese plist 文件路径。
@@ -161,7 +163,7 @@ public:
      If the name already exists, then the contents of the old name will be replaced with the new one.
      *
      * @~chinese 添加一个 SpriteFrame 并指定其名称。
-     * 如果名称已经存在，那么会更新对应的 SpriteFrame。
+     * 如果名称已经存在，那么将其对应的 SpriteFrame 更换为 frame 参数的值。
      * 
      * @param frame @~english A certain sprite frame.
      * @~chinese 指定的 SpriteFrame。
@@ -222,7 +224,7 @@ public:
      * @since v0.99.5
      *
      * @param plist @~english The name of the plist that needs to removed.
-     * @~chinese 需要删除的 plist 文件路径。
+     * @~chinese 需要删除 SpriteFrame 所使用的 plist 文件路径。
      */
     void removeSpriteFramesFromFile(const std::string& plist);
 
@@ -233,8 +235,8 @@ public:
      * @~chinese 将指定的 plist 文件内容中的 SpriteFrame 从缓存中删除。
      * 调用这个方法可以方便的从缓存中删除指定的 plist 中的 SpriteFrame。
      * 
-     * @param plist_content @~english The string of the plist content that needs to removed.
-     * @~chinese 需要删除的 plist 文件内容。
+     * @param plist_content @~english The string of the plist content used to find the corresponding SpriteFrame.
+     * @~chinese 需要删除的 SpriteFrame 所使用的 plist 文件内容。
      * @js NA
      */
     void removeSpriteFramesFromFileContent(const std::string& plist_content);
@@ -245,8 +247,8 @@ public:
      * 调用这个方法可以方便的从缓存中删除使用指定纹理的 SpriteFrame。
      * @since v0.995.
      *
-     * @param texture @~english The texture that needs to removed.
-     * @~chinese 需要删除的纹理。
+     * @param texture @~english The texture used to find the corresponding SpriteFrame.
+     * @~chinese 需要删除的 SpriteFrame 所使用的纹理。
      */
     void removeSpriteFramesFromTexture(Texture2D* texture);
 

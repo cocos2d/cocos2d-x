@@ -117,6 +117,10 @@ public:
      * @~chinese 
      * 返回 x,y 位置的格子。
      * 目前只使用 R 通道
+     * @param position @~english The position of the tile will be get.
+     * @~chinese 需要获取的 tile 的位置。
+     * @return @~english The color of the found tile.
+     * @~chinese 查找到的 tile 的颜色。
      */
     Color3B getTileAt(const Vec2& position) const;
     /**@~english
@@ -125,12 +129,20 @@ public:
      * @~chinese 
      * 返回 x,y 位置的格子。
      * 目前只使用 R 通道
+     * @param position @~english The position of the tile will be get.
+     * @~chinese 需要获取的 tile 的位置。
+     * @return @~english The color of the found tile.
+     * @~chinese 查找到的 tile 的颜色。
      */
     CC_DEPRECATED_ATTRIBUTE Color3B tileAt(const Vec2& position) const { return getTileAt(position); };
     /** @~english sets a tile at position x,y.
     For the moment only channel R is used
      * @~chinese 设置 x,y 位置的格子。
      * 目前只使用 R 通道
+     * @param tile @~english The color of the tile will be set.
+     * @~chinese 需要设置的 tile 的颜色。
+     * @param position @~english The position of the tile will be get.
+     * @~chinese 需要设置的 tile 的位置。
     */
     void setTile(const Color3B& tile, const Vec2& position);
     /** @~english dealloc the map from memory  @~chinese 释放地图的内存。*/
