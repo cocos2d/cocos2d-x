@@ -40,15 +40,17 @@ NS_CC_BEGIN
 
 class Ref;
 
-/** 
+/** @~english
   * Interface that defines how to clone an Ref.
+ * @~chinese 
+ * 定义如何 clone 一个 Ref 对象的虚基类。
   * @lua NA
   * @js NA
   */
 class CC_DLL Clonable
 {
 public:
-    /** Returns a copy of the Ref. */
+    /** @~english Returns a copy of the Ref.  @~chinese 返回一个 Ref 对象的副本。*/
     virtual Clonable* clone() const = 0;
     
     /**
@@ -57,7 +59,8 @@ public:
      */
     virtual ~Clonable() {};
 
-    /** Returns a copy of the Ref.
+    /** @~english Returns a copy of the Ref.
+     * @~chinese 返回一个 Ref 对象的副本。
      * @deprecated Use clone() instead.
      */
     CC_DEPRECATED_ATTRIBUTE Ref* copy() const
@@ -68,25 +71,32 @@ public:
     }
 };
 
-/**
+/**@~english
  * Ref is used for reference count manangement. If a class inherits from Ref,
  * then it is easy to be shared in different places.
+ * @~chinese 
+ * Ref 是用于引用计数管理的基类。
+ * 如果一个类继承自 Ref，那么在不同的地方共享其实例化对象将变的很简单。
  * @js NA
  */
 class CC_DLL Ref
 {
 public:
-    /**
+    /**@~english
      * Retains the ownership.
      *
      * This increases the Ref's reference count.
      *
+     * @~chinese 
+     * 保留 Ref 对象的所有权。
+     * 会将 Ref 对象的引用计数 +1。
+     * 
      * @see release, autorelease
      * @js NA
      */
     void retain();
 
-    /**
+    /**@~english
      * Releases the ownership immediately.
      *
      * This decrements the Ref's reference count.
@@ -94,12 +104,18 @@ public:
      * If the reference count reaches 0 after the descrement, this Ref is
      * destructed.
      *
+     * @~chinese 
+     * 释放 Ref 对象的所有权。
+     * 会将 Ref 对象的引用计数 -1。
+     * 
+     * 如果引用计数 -1 之后变为了 0，那么这个 Ref 对象将被析构。
+     * 
      * @see retain, autorelease
      * @js NA
      */
     void release();
 
-    /**
+    /**@~english
      * Releases the ownership sometime soon automatically.
      *
      * This descrements the Ref's reference count at the end of current
@@ -108,35 +124,55 @@ public:
      * If the reference count reaches 0 after the descrement, this Ref is
      * destructed.
      *
-     * @returns The Ref itself.
+     * @~chinese 
+     * 在下一帧自动释放 Ref 对象的所有权。
+     * 
+     * 将 Ref 对象添加到自动释放池中，引用计数会在自动释放池释放时 -1。
+     * 
+     * 如果引用计数 -1 之后变为了 0，那么这个 Ref 对象将被析构。
+     * 
+     * @returns @~english The Ref itself.
      *
+     * @~chinese Ref 对象本身。
+     * 
      * @see AutoreleasePool, retain, release
      * @js NA
      * @lua NA
      */
     Ref* autorelease();
 
-    /**
+    /**@~english
      * Returns the Ref's current reference count.
      *
-     * @returns The Ref's reference count.
+     * @~chinese 
+     * 获取当前的引用计数。
+     * 
+     * @returns @~english The Ref's reference count.
+     * @~chinese Ref 对象的引用计数。
      * @js NA
      */
     unsigned int getReferenceCount() const;
 
 protected:
-    /**
+    /**@~english
      * Constructor
      *
      * The Ref's reference count is 1 after construction.
+     * @~chinese 
+     * 构造函数
+     * 
+     * 构造完成后引用计数为 1。
      * @js NA
      */
     Ref();
 
 public:
-    /**
+    /**@~english
      * Destructor
      *
+     * @~chinese 
+     * 析构函数
+     * 
      * @js NA
      * @lua NA
      */
@@ -193,6 +229,6 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 
 NS_CC_END
 // end of base group
-/** @} */
+/// @}
 
 #endif // __BASE_CCREF_H__

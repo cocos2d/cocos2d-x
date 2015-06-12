@@ -36,14 +36,18 @@
 NS_CC_BEGIN
 
 /** @class EventAcceleration
- * @brief Accelerometer event.
+ * @brief @~english Accelerometer event.
+ * @~chinese 加速度事件。
  */
 class CC_DLL EventAcceleration : public Event
 {
 public:
-    /** Constructor.
+    /** @~english Constructor.
      *
-     * @param acc A given Acceleration.
+     * @~chinese 构造函数。
+     * 
+     * @param acc @~english A given Acceleration.
+     * @~chinese 一个给定的加速度。
      */
     EventAcceleration(const Acceleration& acc);
     

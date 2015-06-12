@@ -36,19 +36,26 @@ NS_CC_BEGIN
  */
 
 /**
-@brief Progress to percentage.
-@details This action show the target node from current percentage to the specified percentage.
+@brief @~english Progress to percentage.
+ * @~chinese 百分比进度条。
+@details @~english This action show the target node from current percentage to the specified percentage.
         You should specify the destination percentage when creating the action.
+ * @~chinese 这一动作显示了目标节点从当前百分比到指定的百分比。
+ * 你应该在创建动作的时候指定目标百分比。
 @since v0.99.1
 */
 class CC_DLL ProgressTo : public ActionInterval
 {
 public:
     /** 
-     * @brief Create and initializes with a duration and a destination percentage.
-     * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
-     * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
+     * @brief @~english Create and initializes with a duration and a destination percentage.
+     * @~chinese 使用持续时间和目标百分比来创建和初始化。
+     * @param duration @~english Specify the duration of the ProgressTo action. It's a value in seconds.
+     * @~chinese 指定ProgressTo动作的持续时间。这是一个以秒为单位的值。
+     * @param percent @~english Specify the destination percentage.
+     * @~chinese 指定目标百分比。
+     * @return @~english If the creation sucess, return a pointer of ProgressTo action; otherwise, return nil.
+     * @~chinese 如果创建成功,返回一个ProgressTo动作的指针;否则,返回空。
      */
     static ProgressTo* create(float duration, float percent);
 
@@ -65,10 +72,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ProgressTo() {}
 
     /** 
-     * @brief Initializes with a duration and destination percentage. 
-     * @param duration Specify the duration of the ProgressTo action. It's a value in seconds.
-     * @param percent Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
+     * @brief @~english Initializes with a duration and destination percentage. 
+     * @~chinese 使用持续时间和目标百分比来初始化。
+     * @param duration @~english Specify the duration of the ProgressTo action. It's a value in seconds.
+     * @~chinese 指定ProgressTo动作的持续时间。这是一个以秒为单位的值。
+     * @param percent @~english Specify the destination percentage.
+     * @~chinese 指定目标百分比。
+     * @return @~english If the creation sucess, return true; otherwise, return false.
+     * @~chinese 如果创建成功,返回true,否则返回false。
      */
     bool initWithDuration(float duration, float percent);
 
@@ -81,18 +92,24 @@ private:
 };
 
 /**
-@brief Progress from a percentage to another percentage.
+@brief @~english Progress from a percentage to another percentage.
+ * @~chinese 从一个百分比到另一个百分比的进度。
 @since v0.99.1
 */
 class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
     /** 
-     * @brief Create and initializes the action with a duration, a "from" percentage and a "to" percentage.
-     * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
-     * @param fromPercentage Specify the source percentage.
-     * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
+     * @brief @~english Create and initializes the action with a duration, a "from" percentage and a "to" percentage.
+     * @~chinese 使用持续时间，“开始百分比”和“结束百分比”来创建和初始化。
+     * @param duration @~english Specify the duration of the ProgressFromTo action. It's a value in seconds.
+     * @~chinese 指定ProgressFromTo动作的持续时间。这是一个以秒为单位的值。
+     * @param fromPercentage @~english Specify the source percentage.
+     * @~chinese 指定开始百分比。
+     * @param toPercentage @~english Specify the destination percentage.
+     * @~chinese 指定结束百分比。
+     * @return @~english If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
+     * @~chinese 如果创建成功，返回一个ProgressFromTo动作的指针，否则返回false。
      */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
@@ -109,11 +126,16 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ProgressFromTo() {}
 
     /**
-     * @brief Initializes the action with a duration, a "from" percentage and a "to" percentage.
-     * @param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.
-     * @param fromPercentage Specify the source percentage.
-     * @param toPercentage Specify the destination percentage.
-     * @return If the creation sucess, return true; otherwise, return false.
+     * @brief @~english Initializes the action with a duration, a "from" percentage and a "to" percentage.
+     * @~chinese 使用持续时间，“开始百分比”和“结束百分比”来初始化。
+     * @param duration @~english Specify the duration of the ProgressFromTo action. It's a value in seconds.
+     * @~chinese 指定ProgressFromTo动作的持续时间。这是一个以秒为单位的值。
+     * @param fromPercentage @~english Specify the source percentage.
+     * @~chinese 指定开始百分比。
+     * @param toPercentage @~english Specify the destination percentage.
+     * @~chinese 指定结束百分比。
+     * @return @~english If the creation sucess, return true; otherwise, return false.
+     * @~chinese 如果创建成功,返回true,否则返回false。
      */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 

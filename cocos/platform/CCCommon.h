@@ -36,18 +36,22 @@ NS_CC_BEGIN
  * @{
  */
 
-/**
+/**@~english
  * lua can not deal with ...
+ * @~chinese 
+ * lua不能处理变长参数。
  */
 void CC_DLL LuaLog(const char * format);
 
 /**
-@brief Pop out a message box
+@brief @~english Pop out a message box
+ * @~chinese 弹出一个消息框
 */
 void CC_DLL MessageBox(const char * msg, const char * title);
 
 /**
-@brief Enum the language type supported now
+@brief @~english Enum the language type supported now
+* @~chinese 支持语言的枚举类型
 */
 enum class LanguageType
 {

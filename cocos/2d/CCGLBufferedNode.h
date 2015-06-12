@@ -43,21 +43,36 @@ public:
      */
     virtual ~GLBufferedNode();
 
-    /**@{
+    /**@~english
      * Load the given data into this Node's GL Buffer. Needed for WebGL, as it does not support client-side arrays.
+     * @~chinese
+     * 加载给定数据到该节点的GL缓冲区。WebGL需要调用该接口,因为它不支持客户端数组。
+     *
+     * @param buf @~english The buffer data object pointer. @~chinese 缓冲区数据对象指针。
+     * @param bufSize @~english The buffer size. @~chinese 缓冲区对象的大小。
+     * @param slot @~english The slot index. @~chinese 缓冲区对象插槽索引
      */
     void setGLBufferData(void *buf, GLuint bufSize, int slot);
+
+    /**
+     *@~english Load the given index data into this Node's GL buffer at the given slot.
+     *@~chinese 在给定插槽处，设置给定大小的索引数据缓冲区对象。
+     *
+     * @param buf @~english The buffer data object pointer. @~chinese 缓冲区数据对象指针。
+     * @param bufSize @~english The buffer size. @~chinese 缓冲区对象的大小。
+     * @param slot @~english The slot index. @~chinese 缓冲区对象插槽索引。
+     */
     void setGLIndexData(void *buf, GLuint bufSize, int slot);
-    /**@}*/
-    /** Allocate 4 buffer objs per node, and index into them as slots.*/
+
+    /** @~english Allocate 4 buffer objs per node, and index into them as slots. @~chinese 每个节点分配4个缓冲区对象,。*/
     #define BUFFER_SLOTS 4
-    /**Handle for vertex buffers.*/
+    /**@~english Handle for vertex buffers. @~chinese 缓冲区对象句柄。*/
     GLuint _bufferObject[BUFFER_SLOTS];
-    /**Size in bytes for vertex buffers.*/
+    /**@~english Size in bytes for vertex buffers. @~chinese 顶点缓冲区字节大小。*/
     GLuint _bufferSize[BUFFER_SLOTS];
-    /**Handle for index buffers.*/
+    /**@~english Handle for index buffers. @~chinese 索引缓冲区句柄。*/
     GLuint _indexBufferObject[BUFFER_SLOTS];
-    /**Size in bytes for index buffers.*/
+    /**@~english Size in bytes for index buffers. @~chinese 索引缓冲区字节大小。*/
     GLuint _indexBufferSize[BUFFER_SLOTS];
 };
 #endif // __CC_GL_BUFFERED_NODE__

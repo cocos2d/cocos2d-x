@@ -38,26 +38,38 @@ class Texture2D;
  * @{
  */
 
-/** FBO class that grabs the the contents of the screen */
+/** @~english FBO class that grabs the the contents of the screen  @~chinese 帧缓冲区对象抓取器类(Grabber),它可以用来抓取屏幕上绘制的内容*/
 class Grabber : public Ref
 {
 public:
-    /**
-    Constructor.
+    /**@~english
+     * Constructor.
+     * @~chinese 
+     * 构造函数。
      * @js ctor
      */
     Grabber(void);
-    /**
-    Destructor.
+    /**@~english
+     * Destructor.
+     * @~chinese 
+     * 析构函数。
      * @js NA
      * @lua NA
      */
     ~Grabber(void);
-    /**Init the grab structure, will set the texture as the FBO color attachment.*/
+    /**@~english Init the grab structure, will set the texture as the FBO color attachment.
+     * @~chinese 初始化抓取器,把纹理设置成帧缓冲区对象的颜色附件。
+     */
     void grab(Texture2D *texture);
-    /**Begin capture the screen, which will save the old FBO, clear color, and set the new FBO, clear the background.*/
+
+    /**@~english Begin capture the screen, which will save the old FBO, clear color, and set the new FBO, clear the background.
+     * @~chinese 开始抓取屏幕,它将会保存旧的帧缓冲区对象,清除颜色缓冲区,并设置新的帧缓冲区对象,同时清除背景。
+     */
     void beforeRender(Texture2D *texture);
-    /**After capture, will reset the old FBO and clear color.*/
+
+    /**@~english After capture, will reset the old FBO and clear color.
+     * @~chinese 在屏幕抓取之后,将重置旧的帧缓冲区对象并清除颜色缓冲区。
+     */
     void afterRender(Texture2D *texture);
 
 protected:
