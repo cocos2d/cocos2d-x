@@ -44,7 +44,7 @@ class Quaternion;
  * the elements of the vector represent a position in 3D space.
  *
  * @~chinese 
- * 定义了一个三元浮点向量。
+ * 定义了一个三维浮点向量。
  * 
  * 当用作表面法向量时，该向量应该归一化。
  * 用作方向向量的时候可能会保持原向量的大小不变。 
@@ -230,34 +230,34 @@ public:
     static void cross(const Vec3& v1, const Vec3& v2, Vec3* dst);
 
     /**
-     * @~english Returns the distance between this vector and v.
-     * @~chinese 返回本向量与向量v的距离。
+     * @~english Returns the distance between this point and v.
+     * @~chinese 返回这个点与目标点的距离。
      * 
-     * @param v @~english The other vector. @~chinese 另一个向量。
+     * @param v @~english The other point. @~chinese 另一个点。
      * 
-     * @return @~english The distance between this vector and v.
-     * @~chinese 本向量到向量v的距离。
+     * @return @~english The distance between this point and v.
+     * @~chinese 这个点与目标点v的距离。
      * 
      * @see distanceSquared
      */
     float distance(const Vec3& v) const;
 
     /** @~english
-     * Returns the squared distance between this vector and v.
+     * Returns the squared distance between this point and v.
      *
      * When it is not necessary to get the exact distance between
-     * two vectors (for example, when simply comparing the
-     * distance between different vectors), it is advised to use
+     * two points (for example, when simply comparing the
+     * distance between different points), it is advised to use
      * this method instead of distance.
      *
-     * @~chinese 返回本向量与向量v的距离的平方。
-     * 如果不需要得到两个向量之间的准确距离， 例如只是比较不同向量之间的距离大小的时候， 
+     * @~chinese 返回本这个点与目标点v的距离的平方。
+     * 如果不需要得到两个点之间的准确距离， 例如只是比较两点之间的距离大小的时候， 
      * 建议使用这个函数来代替distance函数。
      * 
-     * @param v @~english The other vector. @~chinese 另一个向量。
+     * @param v @~english The other point. @~chinese 另一个点。
      * 
-     * @return @~english The squared distance between this vector and v.
-     * @~chinese 这个向量和v的距离的平方。
+     * @return @~english The squared distance between this point and v.
+     * @~chinese 这个这个点与目标点v的距离的平方。
      * @see distance
      */
     float distanceSquared(const Vec3& v) const;
