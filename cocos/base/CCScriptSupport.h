@@ -73,7 +73,7 @@ public:
      * create a ScriptHandlerEntry instance by the handler.
      *
      * @~chinese 
-     * 创根据一个handler创建一个ScriptHandlerEntry实例。
+     * 创根据handler创建一个ScriptHandlerEntry实例。
      * 
      * @param handler @~english corresponding to the Lua function pointer.
      * @~chinese Lua函数的引用id。
