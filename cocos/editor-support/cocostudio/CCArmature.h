@@ -75,31 +75,31 @@ public:
 
     /**
     * @~english Allocates and initializes an armature.
-    * @~chinese 分配并且初始化一套骨骼。
+    * @~chinese 分配并且初始化骨骼动画对象。
     * @return @~english An initialized armature which is marked as "autorelease".
-    * @~chinese 一套初始化的骨骼，该骨骼会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化过并且设置为自动释放的骨骼动画对象。
     */
     static Armature *create();
 
     /**
     * @~english Allocates an armature, and use the `ArmatureData` named name in `ArmatureDataManager` to initializes the armature.
-    * @~chinese 分配一套骨骼，并使用`ArmatureDataManager`中以name命名的`ArmatureData`对其进行初始化。
+    * @~chinese 分配骨骼动画对象，并使用`ArmatureDataManager`中以name命名的`ArmatureData`对其进行初始化。
     * @param name  @~english Armature will use the name to find the `ArmatureData` to initializes it.
     * @~chinese 骨骼将以该name来查找`ArmatureData`来对骨骼进行初始化。
     * @return @~english An initialized armature which is marked as "autorelease".
-    * @~chinese 一套初始化的骨骼，该骨骼会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化过并且设置为自动释放的骨骼动画对象。
     */
     static Armature *create(const std::string& name);
 
     /**
     * @~english Allocates an armature, and use the `ArmatureData` named name in `ArmatureDataManager` to initializes the armature.
-    * @~chinese 分配一套骨骼，并使用`ArmatureDataManager`中以name命名的`ArmatureData`对其进行初始化。
+    * @~chinese 分配骨骼动画对象，并使用`ArmatureDataManager`中以name命名的`ArmatureData`对其进行初始化。
     * @param name  @~english Armature will use the name to find the `ArmatureData` to initializes it.
     * @~chinese 骨骼将以name来查找`ArmatureData`来对骨骼进行初始化。
     * @param parentBone  @~english The armature will set the parentBone as its parent.
     * @~chinese 骨骼将以parentBone作为父骨头。
     * @return @~english An initialized armature which is marked as "autorelease".
-    * @~chinese 一套初始化的骨骼，该骨骼会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化过并且设置为自动释放的骨骼动画对象。
     */
     static Armature *create(const std::string& name, Bone *parentBone);
 

@@ -36,7 +36,7 @@ class Bone;
 
 /**
  *  @~english DisplayManager manages Bone's display
- * @~chinese 显示管理器管理骨头的显示。
+ * @~chinese 显示管理器，管理骨头的显示。
  *  @js NA
  *  @lua NA
  */

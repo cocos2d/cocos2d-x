@@ -50,11 +50,11 @@ class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 public:
     /**
     * @~english Allocates and initializes an `ActionTimelineData`.
-    * @~chinese 分配并且初始化一段`ActionTimelineData`。
+    * @~chinese 分配并且初始化一段`ActionTimelineData`对象。
     * @param actionTag @~english Action tag.
     * @~chinese 动作TAG。
     * @return @~english An initialized `ActionTimelineData` which is marked as "autorelease".
-    * @~chinese 一段初始化的`ActionTimelineData`，该`ActionTimelineData`会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化过并且设置为自动释放的`ActionTimelineData`对象。
     */
     static ActionTimelineData* create(int actionTag);
 
@@ -93,11 +93,11 @@ public:
 
     /**
     * @~english Allocates and initializes an `ActionTimeline`.
-    * @~chinese 分配并且初始化一段`ActionTimeline`。
+    * @~chinese 分配并且初始化一段`ActionTimeline`对象。
     * @param actionTag @~english Action tag.
     * @~chinese 动作TAG。
     * @return @~english An initialized `ActionTimeline` which is marked as "autorelease".
-    * @~chinese 一段初始化的`ActionTimeline`，该`ActionTimelineData`会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化过并且设置为自动释放的`ActionTimeline`对象。
     */
     static ActionTimeline* create();
 
@@ -117,9 +117,9 @@ public:
     virtual bool init();
 
     /** @~english Goto the specified frame index, and start playing from this index.
-    * @~chinese 跳转至指定帧索引，并从该索引开始播放动画。
+    * @~chinese 跳转到指定帧并从该帧开始播放动画。
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese 动画将从该索引位置开始播放。
+     * @~chinese 动画将从此帧开始播放。
      */
     virtual void gotoFrameAndPlay(int startIndex);
 
@@ -133,22 +133,22 @@ public:
     virtual void gotoFrameAndPlay(int startIndex, bool loop);
 
     /** @~english Goto the specified frame index, and start playing from start index, end at end index.
-    * @~chinese 跳转至指定帧索引，并从该开始索引开始播放动画，在结束索引处停止播放
+    * @~chinese 跳转到指定帧并从该帧开始播放动画，播放到指定的结束帧位置停止。
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese 动画将从该索引位置开始播放。
+     * @~chinese 动画将从此帧开始播放。
      * @param endIndex @~english The animation will end at this index.
-     * @~chinese 动画将从该索引位置停止播放。
+     * @~chinese 动画播放到此帧结束。
      * @param loop @~english Whether or not the animation need loop. 
      * @~chinese 动画是否循环播放。
      */
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, bool loop);
 
     /** @~english Goto the specified frame index, and start playing from start index, end at end index.
-    * @~chinese 跳转至指定帧索引，并从该开始索引开始播放动画，在结束索引处停止播放
+    * @~chinese跳转到指定帧，并且从起始帧开始播放，到结束帧停止。
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese 动画将从该索引位置开始播放。
+     * @~chinese 动画将从此帧开始播放。
      * @param endIndex @~english The animation will end at this index.
-     * @~chinese 动画将从该索引位置停止播放。
+     * @~chinese 动画播放到此帧结束。
      * @param currentFrameIndex @~english set current frame index. 
      * @~chinese 设置当前帧索引。
      * @param loop @~english Whether or not the animation need loop. 
@@ -157,9 +157,9 @@ public:
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop);
 
     /** @~english Goto the specified frame index, and pause at this index.
-    * @~chinese 跳转至指定帧索引，并在该索引处暂停。
+    * @~chinese 跳转到指定帧并且暂停在该帧。
      * @param startIndex @~english The animation will pause at this index.
-     * @~chinese 动画会在该索引处暂停。
+     * @~chinese 动画将暂停在该帧。
      */
     virtual void gotoFrameAndPause(int startIndex);
 
@@ -234,22 +234,22 @@ public:
     virtual int  getCurrentFrame() const { return _currentFrame; }
 
     /** @~english Add Timeline to ActionTimeline.
-    *   @~chinese 将时间表加入动画时间表。
+    *   @~chinese 将时间轴加入动画时间轴。
     * @param timeline @~english Timeline.
-    * @~chinese 时间表。
+    * @~chinese 时间轴。
     */
     virtual void addTimeline(Timeline* timeline);
     /** @~english Remove Timeline to ActionTimeline.
-    *   @~chinese 将时间表从动画时间表中移除。
+    *   @~chinese 将时间轴从动画时间轴中移除。
     * @param timeline @~english Timeline.
-    * @~chinese 时间表。
+    * @~chinese 时间轴。
     */
     virtual void removeTimeline(Timeline* timeline);
 
     /** @~english Get timelines.
-    *   @~chinese 获取时间表列表。
+    *   @~chinese 获取时间轴列表。
     * @return @~english Timelines.
-    * @~chinese 时间表列表。
+    * @~chinese 时间轴列表。
     */
     virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
     
@@ -282,13 +282,13 @@ public:
     virtual AnimationInfo getAnimationInfo(const std::string& animationName);
 
     /** @~english Set ActionTimeline's frame event callback function.
-    *   @~chinese 设置动画时间表的帧事件回调函数。
+    *   @~chinese 设置动画时间轴的帧事件回调函数。
     * @param listener @~english Callback function .
     * @~chinese 回调函数。
     */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
     /** @~english Clear ActionTimeline's frame event callback function.
-    *   @~chinese 清除动画时间表的帧事件回调函数。
+    *   @~chinese 清除动画时间轴的帧事件回调函数。
     */
     void clearFrameEventCallFunc();
 

@@ -153,7 +153,7 @@ public:
     * @~english Allocates and initializes a ColliderDetector.
     * @~chinese 分配并且初始化碰撞检测器。
     * @return @~english An initialized ColliderDetector which is marked as "autorelease".
-    * @~chinese 初始化的碰撞检测器，会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 初始化并且设置为自动释放的碰撞检测器对象。
     */
     static ColliderDetector *create();
 
@@ -163,7 +163,7 @@ public:
     * @param bone  @~english A bone for initialize the ColliderDetector.
     * @~chinese 初始化碰撞检测器的骨头。
     * @return @~english An initialized ColliderDetector which is marked as "autorelease".
-    * @~chinese 初始化的碰撞检测器，会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 初始化并且设置为自动释放的碰撞检测器对象。
     */
     static ColliderDetector *create(Bone *bone);
 public:

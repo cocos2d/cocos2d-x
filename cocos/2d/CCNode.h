@@ -1342,7 +1342,7 @@ public:
 
     /**
      * @~english Schedules for lua script.
-     * @~chinese Lua script的时间表
+     * @~chinese Lua script的时间轴
      * @js NA
      *
      * @param handler @~english The key to search lua function. @~chinese 用来寻找Lua函数的key 

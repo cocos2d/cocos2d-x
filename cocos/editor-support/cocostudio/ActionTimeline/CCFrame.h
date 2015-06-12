@@ -106,31 +106,31 @@ public:
 
     /**
     * @~english Set tween type.
-    * @~chinese 设置缓动种类。
+    * @~chinese 设置补间种类。
     * @param tweenType @~english Tween type.
-    * @~chinese 缓动种类。
+    * @~chinese 补间种类。
     */
     virtual void setTweenType(const tweenfunc::TweenType& tweenType) { _tweenType = tweenType; }
     /**
     * @~english Get tween type.
-    * @~chinese 获取缓动种类。
+    * @~chinese 获取补间种类。
     * @return @~english Tween type.
-    * @~chinese 缓动种类。
+    * @~chinese 补间种类。
     */
     virtual tweenfunc::TweenType getTweenType() const { return _tweenType; }
     
     /**
     * @~english Set tween params, to make easing with params, need `setTweenType(TweenType::CUSTOM_EASING)`.
-    * @~chinese 设置缓动参数。要使用缓动参数，需要调用`setTweenType(TweenType::CUSTOM_EASING)`。
+    * @~chinese 设置补间参数。要使用补间参数，需要调用`setTweenType(TweenType::CUSTOM_EASING)`。
     * @param tweenType @~english Tween params.
-    * @~chinese 缓动参数。
+    * @~chinese 补间参数。
     */
     virtual void setEasingParams(const std::vector<float>& easingParams);
     /**
     * @~english Set tween params.
-    * @~chinese 获取缓动参数。
+    * @~chinese 获取补间参数。
     * @return @~english Tween params.
-    * @~chinese 缓动参数。
+    * @~chinese 补间参数。
     */
     virtual const std::vector<float>& getEasingParams() const;
     
@@ -148,9 +148,9 @@ public:
 
     /**
     * @~english Calculate attribute by tween percent.
-    * @~chinese 根据当前缓动百分比计算当前属性。
+    * @~chinese 根据当前补间百分比计算当前属性。
     * @param nextFrame @~english percent.
-    * @~chinese 缓动百分比。
+    * @~chinese 补间百分比。
     */
     virtual void apply(float percent);
 
@@ -703,16 +703,16 @@ public:
 
     /**
     * @~english Set z order.
-    * @~chinese 设置z顺序。
+    * @~chinese 设置z轴次序。
     * @param zorder @~english Z order.
-    * @~chinese z顺序。
+    * @~chinese z轴次序。
     */
     inline void setZOrder(int zorder) { _zorder = zorder;}
     /**
     * @~english Get z order.
-    * @~chinese 获取z顺序。
+    * @~chinese 获取z轴次序。
     * @return @~english Z order.
-    * @~chinese z顺序。
+    * @~chinese z轴次序。
     */
     inline int getZOrder() const { return _zorder; }
 

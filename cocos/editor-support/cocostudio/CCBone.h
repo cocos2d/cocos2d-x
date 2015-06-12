@@ -43,19 +43,19 @@ class CC_STUDIO_DLL Bone : public cocos2d::Node
 public:
     /**
     * @~english Allocates and initializes a bone.
-    * @~chinese 分配并且初始化一段骨头。
+    * @~chinese 分配并初始化一个骨头对象。
     * @return @~english An initialized bone which is marked as "autorelease".
-    * @~chinese 一段初始化的骨头，该骨头会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化并且设置为自动释放的骨头对象。
     */
     static Bone *create();
 
     /**
     * @~english Allocates and initializes a bone.
-    * @~chinese 分配并且初始化一段骨头。
+    * @~chinese 分配并初始化一个骨头对象。
     * @param name  @~english If name is not null, then set name to the bone's name.
     * @~chinese 如果非空，则将该参数设为骨头的名称。
     * @return @~english An initialized bone which is marked as "autorelease".
-    * @~chinese 一段初始化的骨头，该骨头会自动被标记为“autorelease”（自动释放）。
+    * @~chinese 一个初始化并且设置为自动释放的骨头对象。
     */
     static Bone *create(const std::string& name);
 
@@ -307,9 +307,9 @@ public:
 
     /*
      * @~english Set if blend function is dirty.
-     * @~chinese 混合函数为脏时设置。
+     * @~chinese 设置混合函数是否为dirty。
      * @param dirty @~english Is dirty.
-     * @~chinese 是否脏。
+     * @~chinese 是否dirty。
      */
     virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
     /*
