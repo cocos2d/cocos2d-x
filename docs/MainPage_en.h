@@ -1,5 +1,5 @@
 /*!
-@cond GEN_REFERENCE_BOOK
+@cond GEN_REFERENCE_BOOK_EN
 
 @mainpage cocos2d-x
 

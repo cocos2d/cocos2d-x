@@ -28,7 +28,6 @@ THE SOFTWARE.
 #define __CCPARALLAX_NODE_H__
 
 #include "2d/CCNode.h"
-/*#include "ccArray.h"*/
 
 NS_CC_BEGIN
 
@@ -40,41 +39,42 @@ struct _ccArray;
  */
 
 /** @class ParallaxNode
- * @brief ParallaxNode: A node that simulates a parallax scroller
-
-The children will be moved faster / slower than the parent according the the parallax ratio.
-
-*/
+ * @brief @~english ParallaxNode: A node that simulates a parallax scroller.
+ * The children will be moved faster / slower than the parent according the the parallax ratio.
+ *
+ * @~chinese ParallaxNode:一个模拟视差移动效果的节点。
+ * 孩子节点移动的快慢依据视差比例而定。
+ */
 class CC_DLL ParallaxNode : public Node
 {
 public:
-    /** Create a Parallax node. 
+    /** @~english Create a Parallax node. 
      *
-     * @return An autoreleased ParallaxNode object.
+     * @~chinese 创建一个视差节点。
+     * 
+     * @return @~english A initialized ParallaxNode object which is marked as "autorelease".
+     * @~chinese 一个初始化的ParallaxNode对象，该对象会自动被标记为“autorelease”(自动释放).
      */
     static ParallaxNode * create();
 
-    // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
 
-    /** Adds a child to the container with a local z-order, parallax ratio and position offset.
+    /** @~english Adds a child to the container with a local z-order, parallax ratio and position offset.
      *
-     * @param child A child node.
-     * @param z Z order for drawing priority.
-     * @param parallaxRatio A given parallax ratio.
-     * @param positionOffset A given position offset.
+     * @~chinese 添加一个子节点到视差节点中。
+     * 
+     * @param child @~english A child node.
+     * @~chinese 一个子节点。
+     * @param z @~english Z order for drawing priority.
+     * @~chinese Z轴顺序。
+     * @param parallaxRatio @~english A given parallax ratio.
+     * @~chinese 一个给定的视差比率。
+     * @param positionOffset @~english A given position offset.
+     * @~chinese 一个给定的位置偏移量。
      */
     void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
 
-    /** Sets an array of layers for the Parallax node.
-     *
-     * @param parallaxArray An array of layers for the Parallax node.
-     */
     void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
-    /** Returns the array of layers of the Parallax node.
-     *
-     * @return An array of layers for the Parallax node.
-     */
     struct _ccArray* getParallaxArray() { return _parallaxArray; }
     const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
 
@@ -88,16 +88,7 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    /** Adds a child to the container with a z-order, a parallax ratio and a position offset
-     It returns self, so you can chain several addChilds.
-     @since v0.8
-     * @js ctor
-     */
     ParallaxNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParallaxNode();
 
 protected:

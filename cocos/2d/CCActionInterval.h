@@ -47,40 +47,62 @@ class EventCustom;
  */
 
 /** @class ActionInterval
-@brief An interval action is an action that takes place within a certain period of time.
-It has an start time, and a finish time. The finish time is the parameter
-duration plus the start time.
-
-These ActionInterval actions have some interesting properties, like:
-- They can run normally (default)
-- They can run reversed with the reverse method
-- They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
-
-For example, you can simulate a Ping Pong effect running the action normally and
-then running it again in Reverse mode.
-
-Example:
-
-Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
-*/
+ * @brief @~english An interval action is an action that takes place within a certain period of time.
+ * It has an start time, and a finish time. The finish time is the parameter duration plus the start time.
+ * 
+ * These ActionInterval actions have some interesting properties, like:
+ * - They can run normally (default)
+ * - They can run reversed with the reverse method
+ * - They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
+ * 
+ * For example, you can simulate a Ping Pong effect running the action normally and
+ * then running it again in Reverse mode.
+ * 
+ * Example:
+ * 
+ * @~chinese 时间间隔动作（ActionInterval）是一个在一段时间内执行的动作。
+ * 它有一个开始时间和完成时间。完成时间等于起始时间加上持续时间
+ * 
+ * 这些ActionInterval动作有一些有趣的特性,如:
+ * - 他们可以正常运行(默认)
+ * - 他们可以通过逆转方法逆转运行效果
+ * - 他们在运行时可以通过加速度（Accelerate），加速减速（AccelDeccel）和速度（Speed）等动作来修改它的运行时间轴。
+ * 
+ * 例如，你想要模拟乒乓球效果，可以执行一个动作再反向执行一次同样的动作
+ * 
+ * 例子:
+ * 
+ * @code
+ * Action *pingPongAction = Sequence::actions(action, action->reverse(), nullptr);
+ * @endcode
+ */
 class CC_DLL ActionInterval : public FiniteTimeAction
 {
 public:
-    /** How many seconds had elapsed since the actions started to run.
+    /** @~english How many seconds had elapsed since the actions started to run.
      *
-     * @return The seconds had elapsed since the ations started to run.
+     * @~chinese 获取从动作开始运行已经过去了多长时间。
+     * 
+     * @return @~english The seconds had elapsed since the ations started to run.
+     * @~chinese 从动作开始运行已经过去了多长时间。
      */
     inline float getElapsed(void) { return _elapsed; }
 
-    /** Sets the ampliture rate, extension in GridAction
+    /** @~english Sets the amplitude rate, extension in GridAction
      *
-     * @param amp   The ampliture rate.
+     * @~chinese 设置振幅衰减率，用于GridAction的扩展
+     * 
+     * @param amp   @~english The ampliture rate.
+     * @~chinese 振幅衰减率。
      */
     void setAmplitudeRate(float amp);
     
-    /** Gets the ampliture rate, extension in GridAction
+    /** @~english Gets the ampliture rate, extension in GridAction
      *
-     * @return  The ampliture rate.
+     * @~chinese 获取振幅衰减率，用于GridAction的扩展
+     * 
+     * @return @~english  The ampliture rate.
+     * @~chinese 振幅衰减率。
      */
     float getAmplitudeRate(void);
 
@@ -88,9 +110,6 @@ public:
     // Overrides
     //
     virtual bool isDone(void) const override;
-    /**
-     * @param dt in seconds
-     */
     virtual void step(float dt) override;
     virtual void startWithTarget(Node *target) override;
     virtual ActionInterval* reverse() const override
@@ -106,23 +125,36 @@ public:
     }
 
 CC_CONSTRUCTOR_ACCESS:
-    /** initializes the action */
+    /** @~english initializes the action with the duration.
+     * @~chinese 使用持续时间初始化动作 
+     * @param d @~english The duration @~chinese 持续时间
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
+     */
     bool initWithDuration(float d);
 
 protected:
     float _elapsed;
-    bool   _firstTick;
+    bool _firstTick;
 };
 
 /** @class Sequence
- * @brief Runs actions sequentially, one after another.
+ * @brief @~english Runs actions sequentially, one after another.
+ * @~chinese 顺序动作（Sequnce）可以顺序得一个接着一个运行内部动作序列。
  */
 class CC_DLL Sequence : public ActionInterval
 {
 public:
-    /** Helper constructor to create an array of sequenceable actions.
+    /// @{ Constructor functions
+    /// @brief @~english @~chinese 构造函数
+
+    /**
+     * @~english Helper constructor to create an array of sequenceable actions.
      *
-     * @return An autoreleased Sequence object.
+     * @~chinese 用于创建一个可以按序列执行动作的Sequence动作对象的一系列辅助构造函数
+     * 
+     * @return @~english An autoreleased Sequence object.
+     * @~chinese 一个自释放的Sequence动作对象，如果创建失败则返回空指针。
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
@@ -144,32 +176,46 @@ public:
     static Sequence* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** Helper constructor to create an array of sequenceable actions given an array.
+    /** @~english Helper constructor to create an array of sequenceable actions given an array.
+     * @~chinese 使用指定动作数组来创建可以按序列执行的Sequence动作对象。
      * @code
      * When this funtion bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      *
-     * @param arrayOfActions An array of sequenceable actions.
-     * @return An autoreleased Sequence object.
+     * @param arrayOfActions @~english An array of sequenceable actions.
+     * @~chinese 动作数组。
+     * @return @~english An autoreleased Sequence object.
+     * @~chinese 一个自释放Sequence对象，如果创建失败则返回空指针。
      */
     static Sequence* create(const Vector<FiniteTimeAction*>& arrayOfActions);
-    /** Helper constructor to create an array of sequence-able actions.
+    /** @~english Helper constructor to create an array of sequence-able actions.
      *
-     * @param action1 The first sequenceable action.
-     * @param args The va_list variable.
-     * @return An autoreleased Sequence object.
+     * @~chinese 用动作列表创建可以按序列执行的Sequence动作对象。
+     * 
+     * @param action1 @~english The first sequenceable action.
+     * @~chinese 动作序列中的第一个动作。
+     * @param args @~english The variable list variable.
+     * @~chinese 动作列表变量。
+     * @return @~english An autoreleased Sequence object.
+     * @~chinese 一个自释放的Sequence对象，如果创建失败则返回空指针。
      * @js NA
      */
     static Sequence* createWithVariableList(FiniteTimeAction *action1, va_list args);
-    /** Creates the action.
-     * @param actionOne The first sequenceable action.
-     * @param actionTwo The second sequenceable action.
-     * @return An autoreleased Sequence object.
+    /** @~english Creates the action with two actions.
+     * @~chinese 用两个动作创建Sequence动作。
+     * @param actionOne @~english The first sequenceable action.
+     * @~chinese 第一个动作。
+     * @param actionTwo @~english The second sequenceable action.
+     * @~chinese 第二个动作。
+     * @return @~english An autoreleased Sequence object.
+     * @~chinese 一个自释放Sequence动作对象，如果创建失败则返回空指针。
      * @js NA
      */
     static Sequence* createWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo);
+
+    /// @} Constructor functions
 
     //
     // Overrides
@@ -178,16 +224,13 @@ public:
     virtual Sequence* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
-    /**
-     * @param t In seconds.
-     */
     virtual void update(float t) override;
     
 CC_CONSTRUCTOR_ACCESS:
     Sequence() {}
     virtual ~Sequence(void);
 
-    /** initializes the action */
+    /** @~english initializes the action  @~chinese 用两个动作初始化动作 */
     bool initWithTwoActions(FiniteTimeAction *pActionOne, FiniteTimeAction *pActionTwo);
 
 protected:
@@ -200,23 +243,33 @@ private:
 };
 
 /** @class Repeat
- * @brief Repeats an action a number of times.
+ * @brief @~english Repeats an action a number of times.
  * To repeat an action forever use the RepeatForever action.
+ * @~chinese 重复动作（Repeat）可以按一定次数重复一个动作。
+ * 使用RepeatForever动作来永远重复一个动作。
  */
 class CC_DLL Repeat : public ActionInterval
 {
 public:
-    /** Creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30).
+    /** @~english Creates a Repeat action. Parameter `times` is an unsigned integer between 1 and pow(2,30).
      *
-     * @param action The action needs to repeat.
-     * @param times The repeat times.
-     * @return An autoreleased Repeat object.
+     * @~chinese 创建一个重复动作，`times`参数是一个取值在1和`pow(2, 30)`之间的整数。
+     * 
+     * @param action @~english The action needs to repeat.
+     * @~chinese 需要重复的目标动作。
+     * @param times @~english The repeat times.
+     * @~chinese 重复次数。
+     * @return @~english An autoreleased Repeat object.
+     * @~chinese 一个自释放的Repeat对象，如果创建失败则返回空指针。
      */
     static Repeat* create(FiniteTimeAction *action, unsigned int times);
 
-    /** Sets the inner action.
+    /** @~english Sets the inner action.
      *
-     * @param action The inner action.
+     * @~chinese 设置内部动作。
+     * 
+     * @param action @~english The inner action.
+     * @~chinese 内部动作。
      */
     inline void setInnerAction(FiniteTimeAction *action)
     {
@@ -228,9 +281,12 @@ public:
         }
     }
 
-    /** Gets the inner action.
+    /** @~english Gets the inner action.
      *
-     * @return The inner action.
+     * @~chinese 获取内部动作。
+     * 
+     * @return @~english The inner action.
+     * @~chinese 内部动作。
      */
     inline FiniteTimeAction* getInnerAction()
     {
@@ -244,9 +300,6 @@ public:
     virtual Repeat* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
-    /**
-     * @param dt In seconds.
-     */
     virtual void update(float dt) override;
     virtual bool isDone(void) const override;
     
@@ -254,7 +307,15 @@ CC_CONSTRUCTOR_ACCESS:
     Repeat() {}
     virtual ~Repeat();
 
-    /** initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30) */
+    /** @~english initializes a Repeat action. Times is an unsigned integer between 1 and pow(2,30)  
+     * @~chinese 初始化Repeat动作。`times`参数是一个取值在1和`pow(2, 30)`之间的整数。
+     * @param pAction @~english The action needs to repeat.
+     * @~chinese 需要重复的目标动作。
+     * @param times @~english The repeat times.
+     * @~chinese 重复次数。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
+     */
     bool initWithAction(FiniteTimeAction *pAction, unsigned int times);
 
 protected:
@@ -262,7 +323,7 @@ protected:
     unsigned int _total;
     float _nextDt;
     bool _actionInstant;
-    /** Inner action */
+    /** @~english Inner action  @~chinese 内部动作 */
     FiniteTimeAction *_innerAction;
 
 private:
@@ -270,23 +331,33 @@ private:
 };
 
 /** @class RepeatForever
- * @brief Repeats an action for ever.
- To repeat the an action for a limited number of times use the Repeat action.
- * @warning This action can't be Sequenceable because it is not an IntervalAction.
+ * @brief @~english Repeats an action forever.
+ * To repeat the an action for a limited number of times use the Repeat action.
+ * @~chinese 永远地重复一个动作。
+ * 有限次数内重复一个动作请使用Repeat动作。
+ * @warning @~english This action can't be Sequenceable because it is not an finite time action.
+ * @~chinese 这个动作不能用来组成序列动作，因为它不是一个有限时间动作。
  */
 class CC_DLL RepeatForever : public ActionInterval
 {
 public:
-    /** Creates the action.
+    /** @~english Creates the action with an inner action.
      *
-     * @param action The action need to repeat forever.
-     * @return An autoreleased RepeatForever object.
+     * @~chinese 用内部动作创建一个RepeatForever动作。
+     * 
+     * @param action @~english The action need to repeat forever.
+     * @~chinese 内部动作，这个动作会永远重复。
+     * @return @~english An autoreleased RepeatForever object.
+     * @~chinese 一个自释放的RepeatForever动作，如果创建失败则返回空指针。
      */
     static RepeatForever* create(ActionInterval *action);
 
-    /** Sets the inner action.
+    /** @~english Sets the inner action.
      *
-     * @param action The inner action.
+     * @~chinese 设置内部动作。
+     * 
+     * @param action @~english The inner action.
+     * @~chinese 内部动作。
      */
     inline void setInnerAction(ActionInterval *action)
     {
@@ -298,9 +369,12 @@ public:
         }
     }
 
-    /** Gets the inner action.
+    /** @~english Gets the inner action.
      *
-     * @return The inner action.
+     * @~chinese 获取内部动作。
+     * 
+     * @return @~english The inner action.
+     * @~chinese 内部动作。
      */
     inline ActionInterval* getInnerAction()
     {
@@ -313,9 +387,6 @@ public:
     virtual RepeatForever* clone() const override;
     virtual RepeatForever* reverse(void) const override;
     virtual void startWithTarget(Node* target) override;
-    /**
-     * @param dt In seconds.
-     */
     virtual void step(float dt) override;
     virtual bool isDone(void) const override;
     
@@ -325,11 +396,11 @@ CC_CONSTRUCTOR_ACCESS:
     {}
     virtual ~RepeatForever();
 
-    /** initializes the action */
+    /** @~english initializes the action  @~chinese 用内部动作初始化动作 */
     bool initWithAction(ActionInterval *action);
 
 protected:
-    /** Inner action */
+    /** @~english Inner action  @~chinese 内部动作 */
     ActionInterval *_innerAction;
 
 private:
@@ -337,19 +408,26 @@ private:
 };
 
 /** @class Spawn
- * @brief Spawn a new action immediately
+ * @brief @~english Spawn a group of actions
+ * @~chinese 同步动作（Spawn）用于同步执行一组动作
  */
 class CC_DLL Spawn : public ActionInterval
 {
 public:
-    /** Helper constructor to create an array of spawned actions.
-     * @code
+    /// @{ Constructor functions
+    /// @brief @~english @~chinese 构造函数
+
+    /** @~english Helper constructor to create an array of spawned actions.
      * When this funtion bound to the js or lua, the input params changed.
-     * in js  :var   create(var   object1,var   object2, ...)
+     * @~chinese 创建包含一组同步动作的Spawn动作的辅助构造函数。
+     * 当这个函数绑定到js和lua中，参数会发生变化
+     *
+     * @code
      * in lua :local create(local object1,local object2, ...)
      * @endcode
      *
-     * @return An autoreleased Spawn object.
+     * @return @~english An autoreleased Spawn object.
+     * @~chinese 一个自释放Spawn对象，如果创建失败则返回空指针。
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
@@ -371,30 +449,45 @@ public:
     static Spawn* create(FiniteTimeAction *action1, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** Helper constructor to create an array of spawned actions. 
+    /** @~english Helper constructor to create an array of spawned actions. 
      *
-     * @param action1   The first sequenceable action.
-     * @param args  The va_list variable.
-     * @return  An autoreleased Spawn object.
+     * @~chinese 用一个动作列表创建Spawn动作。
+     * 
+     * @param action1   @~english The first inner action.
+     * @~chinese 第一个同步的内部动作。
+     * @param args  @~english The va_list variable.
+     * @~chinese 动作列表变量.
+     * @return @~english  An autoreleased Spawn object.
+     * @~chinese 一个自释放的Spawn对象，如果创建失败则返回空指针。
      * @js NA
      */
     static Spawn* createWithVariableList(FiniteTimeAction *action1, va_list args);
 
-    /** Helper constructor to create an array of spawned actions given an array.
+    /** @~english Helper constructor to create an array of spawned actions given an array.
      *
-     * @param arrayOfActions    An array of spawned actions.
-     * @return  An autoreleased Spawn object.
+     * @~chinese 用一个给定数组创建一个Spawn动作。
+     * 
+     * @param arrayOfActions    @~english An array of spawned actions.
+     * @~chinese 一个同步动作数组。
+     * @return @~english  An autoreleased Spawn object.
+     * @~chinese 一个自释放的Spawn对象，如果创建失败则返回空指针。
      */
     static Spawn* create(const Vector<FiniteTimeAction*>& arrayOfActions);
 
-    /** Creates the Spawn action.
+    /** @~english Creates the Spawn action with two spawned actions.
      *
-     * @param action1   The first spawned action.
-     * @param action2   THe second spawned action.
-     * @return An autoreleased Spawn object.
+     * @~chinese 用两个同步动作创建Spawn动作。
+     * 
+     * @param action1   @~english The first spawned action.
+     * @~chinese 第一个同步动作。
+     * @param action2   @~english THe second spawned action.
+     * @~chinese 第二个同步动作。
+     * @return @~english An autoreleased Spawn object.
+     * @~chinese 一个自释放的Spawn对象，如果创建失败则返回空指针。
      * @js NA
      */
     static Spawn* createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
+    /// @}
 
     //
     // Overrides
@@ -403,16 +496,21 @@ public:
     virtual Spawn* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     Spawn() {}
     virtual ~Spawn();
 
-    /** initializes the Spawn action with the 2 actions to spawn */
+    /** @~english initializes the Spawn action with the 2 actions to spawn  
+     * @~chinese 用两个同步动作初始化Spawn动作
+     * @param action1   @~english The first spawned action.
+     * @~chinese 第一个同步动作。
+     * @param action2   @~english THe second spawned action.
+     * @~chinese 第二个同步动作。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
+     */
     bool initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
 protected:
@@ -424,36 +522,56 @@ private:
 };
 
 /** @class RotateTo
- * @brief Rotates a Node object to a certain angle by modifying it's rotation attribute.
- The direction will be decided by the shortest angle.
-*/ 
+ * @brief @~english Rotates a Node object to a certain angle by modifying it's rotation attribute.
+ * The direction will be decided by the shortest angle.
+ * @~chinese RotateTo动作用来旋转一个节点对象到一定角度，通过逐帧修改它的`rotation`属性。
+ * 旋转方向将由最短的角度决定。
+ */ 
 class CC_DLL RotateTo : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action with separate rotation angles.
+    /** @~english
+     * Creates the action with duration and separate rotation angles.
      *
-     * @param duration Duration time, in seconds.
-     * @param dstAngleX In degreesCW.
-     * @param dstAngleY In degreesCW.
-     * @return An autoreleased RotateTo object.
+     * @~chinese 
+     * 用持续时间与X,Y轴独立的旋转角度来创建RotateTo动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param dstAngleX @~english Destination angle x in degrees.
+     * @~chinese X轴的目标角度，以角度值计。
+     * @param dstAngleY @~english Destination angle y in degrees.
+     * @~chinese Y轴的目标角度，以角度值计
+     * @return @~english An autoreleased RotateTo object.
+     * @~chinese 一个自释放的RotateTo对象，如果创建失败则返回空指针。
      */
     static RotateTo* create(float duration, float dstAngleX, float dstAngleY);
 
-    /** 
-     * Creates the action.
+    /** @~english
+     * Creates the action with duration and destination angle.
      *
-     * @param duration Duration time, in seconds.
-     * @param dstAngle In degreesCW.
-     * @return An autoreleased RotateTo object.
+     * @~chinese 
+     * 用持续时间和目标角度创建RotateTo动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param dstAngle @~english Destination angle in degrees.
+     * @~chinese 目标角度，以角度值计。
+     * @return @~english An autoreleased RotateTo object.
+     * @~chinese 一个自释放的RotateTo对象，如果创建失败则返回空指针。
      */
     static RotateTo* create(float duration, float dstAngle);
 
-    /** 
+    /** @~english
      * Creates the action with 3D rotation angles.
-     * @param duration Duration time, in seconds.
-     * @param dstAngle3D A Vec3 angle.
-     * @return An autoreleased RotateTo object.
+     * @~chinese 
+     * 创建一个旋转到三维旋转角度的RotateTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param dstAngle3D @~english A Vec3 angle.
+     * @~chinese 三维旋转角度。
+     * @return @~english An autoreleased RotateTo object.
+     * @~chinese 一个自释放的RotateTo对象，如果创建失败则返回空指针。
      */
     static RotateTo* create(float duration, const Vec3& dstAngle3D);
 
@@ -463,31 +581,49 @@ public:
     virtual RotateTo* clone() const override;
     virtual RotateTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     RotateTo();
     virtual ~RotateTo() {}
 
-    /** 
+    /** @~english
      * initializes the action
-     * @param duration in seconds
-     * @param dstAngleX in degreesCW
-     * @param dstAngleY in degreesCW
+     * @~chinese 
+     * 初始化动作
+     * @param duration @~english Duration in seconds
+     * @~chinese 持续时间，以秒为单位
+     * @param dstAngleX @~english Destination angle x in degrees.
+     * @~chinese X轴的目标角度，以角度值计。
+     * @param dstAngleY @~english Destination angle y in degrees.
+     * @~chinese Y轴的目标角度，以角度值计。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
      */
     bool initWithDuration(float duration, float dstAngleX, float dstAngleY);
-    /**
+    /**@~english
      * initializes the action
-     * @param duration in seconds
+     * @~chinese 
+     * 初始化动作
+     * @param duration @~english Duration in seconds
+     * @~chinese 持续时间，以秒为单位
+     * @param dstAngle3D @~english A Vec3 angle.
+     * @~chinese 三维旋转角度。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
      */
     bool initWithDuration(float duration, const Vec3& dstAngle3D);
 
-    /** 
-     * calculates the start and diff angles
-     * @param dstAngle in degreesCW
+    /** @~english
+     * Calculates the start and diff angles
+     * @~chinese 
+     * 计算开始和旋转角度差值。
+     * @param startAngle @~english Start angle in degrees
+     * @~chinese 起始角度，以角度值计，用于保存计算结果
+     * @param diffAngle @~english Angle difference between start angle and destination angle in degrees
+     * @~chinese 起始角度和目标角度之间的差值，以角度值计，用于保存计算结果
+     * @param dstAngle @~english Destination angle in degrees
+     * @~chinese 目标角度，以角度值计
      */
     void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
     
@@ -502,34 +638,54 @@ private:
 };
 
 /** @class RotateBy
- * @brief Rotates a Node object clockwise a number of degrees by modifying it's rotation attribute.
+ * @brief @~english Rotates a Node object clockwise a number of degrees by modifying it's rotation attribute.
+ * @~chinese RotateBy动作可以顺时针旋转一个节点对象，通过修改它的旋转属性。
 */
 class CC_DLL RotateBy : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
+    /** @~english
+     * Creates the action with duration and delta angle to rotate.
      *
-     * @param duration Duration time, in seconds.
-     * @param deltaAngle In degreesCW.
-     * @return An autoreleased RotateBy object.
+     * @~chinese 
+     * 用持续时间和旋转角度创建RotateBy动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaAngle @~english Delta angle in degrees.
+     * @~chinese 旋转角度。
+     * @return @~english An autoreleased RotateBy object.
+     * @~chinese 一个自释放的RotateBy对象，如果创建失败则返回空指针。
      */
     static RotateBy* create(float duration, float deltaAngle);
-    /**
+    /**@~english
      * Creates the action with separate rotation angles.
      *
-     * @param duration Duration time, in seconds.
-     * @param deltaAngleZ_X In degreesCW.
-     * @param deltaAngleZ_Y In degreesCW.
-     * @return An autoreleased RotateBy object.
-     * @warning The physics body contained in Node doesn't support rotate with different x and y angle.
+     * @~chinese 
+     * 用X，Y轴独立的旋转角度创建RotateBy动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaAngleZ_X @~english Delta angle x in degrees.
+     * @~chinese X轴旋转角度，以角度值计。
+     * @param deltaAngleZ_Y @~english Delta angle y n degreesCW.
+     * @~chinese Y轴旋转角度，以角度值计。
+     * @return @~english An autoreleased RotateBy object.
+     * @~chinese 一个自释放的RotateBy对象，如果创建失败则返回空指针。
+     * @warning @~english The physics body contained in Node doesn't support rotate with different x and y angle.
+     * @~chinese 包含的物理身体的节点不支持用x和y轴分离的旋转角度。
      */
     static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
-    /** Creates the action with 3D rotation angles.
+    /** @~english Creates the action with 3D rotation angles.
      *
-     * @param duration Duration time, in seconds.
-     * @param deltaAngle3D A Vec3 angle.
-     * @return An autoreleased RotateBy object.
+     * @~chinese 用持续时间和三维旋转角度创建RotateBy动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaAngle3D @~english A Vec3 angle.
+     * @~chinese 三维旋转角度。
+     * @return @~english An autoreleased RotateBy object.
+     * @~chinese 一个自释放的RotateBy对象，如果创建失败则返回空指针。
      */
     static RotateBy* create(float duration, const Vec3& deltaAngle3D);
 
@@ -539,23 +695,42 @@ public:
     virtual RotateBy* clone() const override;
     virtual RotateBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     RotateBy();
     virtual ~RotateBy() {}
 
-    /** initializes the action */
+    /** @~english initializes the action  @~chinese 用持续时间和旋转角度初始化动作 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaAngle @~english Delta angle in degrees.
+     * @~chinese 旋转角度。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
+     */
     bool initWithDuration(float duration, float deltaAngle);
     /** 
-     * @warning The physics body contained in Node doesn't support rotate with different x and y angle.
-     * @param deltaAngleZ_X in degreesCW
-     * @param deltaAngleZ_Y in degreesCW
+     * @warning @~english The physics body contained in Node doesn't support rotate with different x and y angle.
+     * @~chinese 包含的物理身体的节点不支持用x和y轴分离的旋转角度。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaAngleZ_X @~english Delta angle x in degrees.
+     * @~chinese X轴旋转角度，以角度值计。
+     * @param deltaAngleZ_Y @~english Delta angle y n degreesCW.
+     * @~chinese Y轴旋转角度，以角度值计。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
      */
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    /**
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaAngle3D @~english A Vec3 angle.
+     * @~chinese 三维旋转角度。
+     * @return @~english Return true if initialized successfully, otherwise return false.
+     * @~chinese 如果初始化成功则返回true，否则返回false
+     */
     bool initWithDuration(float duration, const Vec3& deltaAngle3D);
     
 protected:
@@ -568,29 +743,44 @@ private:
 };
 
 /** @class MoveBy
- * @brief Moves a Node object x,y pixels by modifying it's position attribute.
+ * @brief @~english Moves a Node object by x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Several MoveBy actions can be concurrently called, and the resulting
  movement will be the sum of individual movements.
+ * @~chinese MoveBy动作通过修改一个目标节点的位置属性将它移动x，y像素。
+ * X轴和Y轴位移是相对于节点位置的，
+ * 几个MoveBy操作可以并行，由此产生的位移将是所有个体位移的总和。
  @since v2.1beta2-custom
  */
 class CC_DLL MoveBy : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
+    /** @~english
+     * Creates the action with duration and delta position.
      *
-     * @param duration Duration time, in seconds.
-     * @param deltaPosition The delta distance in 2d, it's a Vec2 type.
-     * @return An autoreleased MoveBy object.
+     * @~chinese 
+     * 用持续时间和位移创建MoveBy动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaPosition @~english The delta distance in 2d, it's a Vec2 type.
+     * @~chinese 位移，Vec2类型。
+     * @return @~english An autoreleased MoveBy object.
+     * @~chinese 一个自释放的MoveBy对象。
      */
     static MoveBy* create(float duration, const Vec2& deltaPosition);
-    /**
-     * Creates the action.
+    /**@~english
+     * Creates the action with duration and 3d delta position.
      *
-     * @param duration Duration time, in seconds.
-     * @param deltaPosition The delta distance in 3d, it's a Vec3 type.
-     * @return An autoreleased MoveBy object.
+     * @~chinese 
+     * 用持续时间和三维位移创建MoveBy动作。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaPosition @~english The delta distance in 3d, it's a Vec3 type.
+     * @~chinese 三维位移，Vec3类型。
+     * @return @~english An autoreleased MoveBy object.
+     * @~chinese 一个自释放的MoveBy对象。
      */
     static MoveBy* create(float duration, const Vec3& deltaPosition);
 
@@ -600,16 +790,12 @@ public:
     virtual MoveBy* clone() const override;
     virtual MoveBy* reverse(void) const  override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time in seconds
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     MoveBy():_is3D(false) {}
     virtual ~MoveBy() {}
 
-    /** initializes the action */
     bool initWithDuration(float duration, const Vec2& deltaPosition);
     bool initWithDuration(float duration, const Vec3& deltaPosition);
 
@@ -624,26 +810,38 @@ private:
 };
 
 /** @class MoveTo
- * @brief Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+ * @brief @~english Moves a Node object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
  Several MoveTo actions can be concurrently called, and the resulting
  movement will be the sum of individual movements.
+ * @~chinese MoveTo动作通过修改一个目标节点的位置属性将它移动到特定位置。
+ * 几个MoveTo操作可以并行，由此产生的运动将是所有个体运动的总和。
  @since v2.1beta2-custom
  */
 class CC_DLL MoveTo : public MoveBy
 {
 public:
-    /** 
-     * Creates the action.
-     * @param duration Duration time, in seconds.
-     * @param position The destination position in 2d.
-     * @return An autoreleased MoveTo object.
+    /** @~english
+     * Creates the action with duration and 2d position.
+     * @~chinese 
+     * 用持续时间和二维世界目标位置创建MoveTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param position @~english The destination position in 2d.
+     * @~chinese 二维世界的目标位置。
+     * @return @~english An autoreleased MoveTo object.
+     * @~chinese 一个自释放的MoveTo对象。
      */
     static MoveTo* create(float duration, const Vec2& position);
-    /**
-     * Creates the action.
-     * @param duration Duration time, in seconds.
-     * @param position The destination position in 3d.
-     * @return An autoreleased MoveTo object.
+    /**@~english
+     * Creates the action with duration and 3d position.
+     * @~chinese 
+     * 用持续时间和三维世界目标位置创建MoveTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param position @~english The destination position in 3d.
+     * @~chinese 三维世界目标位置。
+     * @return @~english An autoreleased MoveTo object.
+     * @~chinese 一个自释放MoveTo对象。
      */
     static MoveTo* create(float duration, const Vec3& position);
 
@@ -658,15 +856,7 @@ CC_CONSTRUCTOR_ACCESS:
     MoveTo() {}
     virtual ~MoveTo() {}
 
-    /** 
-     * initializes the action
-     * @param duration in seconds
-     */
     bool initWithDuration(float duration, const Vec2& position);
-    /**
-     * initializes the action
-     * @param duration in seconds
-     */
     bool initWithDuration(float duration, const Vec3& position);
 
 protected:
@@ -677,18 +867,25 @@ private:
 };
 
 /** @class SkewTo
- * @brief Skews a Node object to given angles by modifying it's skewX and skewY attributes
+ * @brief @~english Skews a Node object to given angles by modifying it's skewX and skewY attributes
+ * @~chinese SkewTo动作通过修改skewX和skewY属性倾斜一个节点对象到特定的倾斜角度
 @since v1.0
 */
 class CC_DLL SkewTo : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
-     * @param t Duration time, in seconds.
-     * @param sx Skew x angle.
-     * @param sy Skew y angle.
-     * @return An autoreleased SkewTo object.
+    /** @~english
+     * Creates the SkewTo action with the duration, x and y axis target skew parameters.
+     * @~chinese 
+     * 用持续时间，X和Y轴目标倾斜角来创建SkewTo动作。
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param sx @~english Skew x angle.
+     * @~chinese X轴目标倾斜角度。
+     * @param sy @~english Skew y angle.
+     * @~chinese Y轴目标倾斜角度。
+     * @return @~english An autoreleased SkewTo object.
+     * @~chinese 一个自释放的SkewTo对象。
      */
     static SkewTo* create(float t, float sx, float sy);
 
@@ -698,17 +895,11 @@ public:
     virtual SkewTo* clone() const override;
     virtual SkewTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     SkewTo();
     virtual ~SkewTo() {}
-    /**
-     * @param t In seconds.
-     */
     bool initWithDuration(float t, float sx, float sy);
 
 protected:
@@ -726,18 +917,25 @@ private:
 };
 
 /** @class SkewBy
-* @brief Skews a Node object by skewX and skewY degrees.
+* @brief @~english Skews a Node object by skewX and skewY degrees.
+ * @~chinese SkewBy动作可以以一定角度倾斜一个节点。
 @since v1.0
 */
 class CC_DLL SkewBy : public SkewTo
 {
 public:
-    /** 
-     * Creates the action.
-     * @param t Duration time, in seconds.
-     * @param deltaSkewX Skew x delta angle.
-     * @param deltaSkewY Skew y delta angle.
-     * @return An autoreleased SkewBy object.
+    /** @~english
+     * Creates the SkewBy action with the duration, x and y axis delta skew parameters.
+     * @~chinese 
+     * 用持续时间，X和Y轴倾斜角创建动作。
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaSkewX @~english Skew x delta angle.
+     * @~chinese X轴倾斜角。
+     * @param deltaSkewY @~english Skew y delta angle.
+     * @~chinese Y轴倾斜角。
+     * @return @~english An autoreleased SkewBy object.
+     * @~chinese 一个自释放的SkewBy对象。
      */
     static SkewBy* create(float t, float deltaSkewX, float deltaSkewY);
 
@@ -751,9 +949,6 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     SkewBy() {}
     virtual ~SkewBy() {}
-    /**
-     * @param t In seconds.
-     */
     bool initWithDuration(float t, float sx, float sy);
 
 private:
@@ -761,18 +956,26 @@ private:
 };
 
 /** @class JumpBy
- * @brief Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
+ * @brief @~english Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
+ * @~chinese JumpBy动作可以模拟抛物线跳运动移动一个节点对象。
 */
 class CC_DLL JumpBy : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
-     * @param duration Duration time, in seconds.
-     * @param position The jumping distance.
-     * @param height The jumping height.
-     * @param jumps The jumping times.
-     * @return An autoreleased JumpBy object.
+    /** @~english
+     * Creates the JumpBy action with duration, jumping distance, jumping height and number of jumps.
+     * @~chinese 
+     * 用持续时间，跳跃距离，跳跃高度和次数创建JumpBy动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param position @~english The jumping distance.
+     * @~chinese 跳跃的距离。
+     * @param height @~english The jumping height.
+     * @~chinese 跳跃的高度。
+     * @param jumps @~english The jumping times.
+     * @~chinese 跳跃次数。
+     * @return @~english An autoreleased JumpBy object.
+     * @~chinese 一个自释放的JumpBy对象。
      */
     static JumpBy* create(float duration, const Vec2& position, float height, int jumps);
 
@@ -782,19 +985,12 @@ public:
     virtual JumpBy* clone() const override;
     virtual JumpBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     JumpBy() {}
     virtual ~JumpBy() {}
 
-    /** 
-     * initializes the action
-     * @param duration in seconds
-     */
     bool initWithDuration(float duration, const Vec2& position, float height, int jumps);
 
 protected:
@@ -809,18 +1005,26 @@ private:
 };
 
 /** @class JumpTo
- * @brief Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute.
+ * @brief @~english Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute.
+ * @~chinese JumpTo动作可以模拟抛物线跳运动移动一个节点对象到特定的位置。
 */ 
 class CC_DLL JumpTo : public JumpBy
 {
 public:
-    /** 
-     * Creates the action.
-     * @param duration Duration time, in seconds.
-     * @param position The jumping destination position.
-     * @param height The jumping height.
-     * @param jumps The jumping times.
-     * @return An autoreleased JumpTo object.
+    /** @~english
+     * Creates the JumpTo action with duration, destination position, jumping height and number of jumps.
+     * @~chinese 
+     * 用持续时间，目的地位置，跳跃高度和次数创建JumpTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param position @~english The jumping destination position.
+     * @~chinese 跳跃的目的地的位置。
+     * @param height @~english The jumping height.
+     * @~chinese 跳跃的高度。
+     * @param jumps @~english The jumping times.
+     * @~chinese 跳跃的次数。
+     * @return @~english An autoreleased JumpTo object.
+     * @~chinese 一个自释放的JumpTo对象。
      */
     static JumpTo* create(float duration, const Vec2& position, float height, int jumps);
 
@@ -835,10 +1039,6 @@ CC_CONSTRUCTOR_ACCESS:
     JumpTo() {}
     virtual ~JumpTo() {}
 
-    /** 
-     * initializes the action
-     * @param duration In seconds.
-     */
     bool initWithDuration(float duration, const Vec2& position, float height, int jumps);
 
 protected:
@@ -848,7 +1048,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };
 
-/** @struct Bezier configuration structure
+/** @struct @~english Bezier configuration structure
+ * @~chinese Bezier曲线配置结构体
  */
 typedef struct _ccBezierConfig {
     //! end position of the bezier
@@ -860,15 +1061,20 @@ typedef struct _ccBezierConfig {
 } ccBezierConfig;
 
 /** @class BezierBy
- * @brief An action that moves the target with a cubic Bezier curve by a certain distance.
+ * @brief @~english An action that moves the target with a cubic Bezier curve by a certain distance.
+ * @~chinese BezierBy动作可以将一个节点沿三次贝塞尔曲线移动一定距离。
  */
 class CC_DLL BezierBy : public ActionInterval
 {
 public:
-    /** Creates the action with a duration and a bezier configuration.
-     * @param t Duration time, in seconds.
-     * @param c Bezier config.
-     * @return An autoreleased BezierBy object.
+    /** @~english Creates the action with a duration and a bezier configuration.
+     * @~chinese 用持续时间和贝塞尔曲线配置创建BezierBy动作。
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param c @~english Bezier config.
+     * @~chinese 贝塞尔曲线配置。
+     * @return @~english An autoreleased BezierBy object.
+     * @~chinese 一个自释放的BezierBy对象。
      * @code
      * When this function bound to js or lua,the input params are changed.
      * in js: var create(var t,var table)
@@ -883,18 +1089,22 @@ public:
     virtual BezierBy* clone() const override;
     virtual BezierBy* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     BezierBy() {}
     virtual ~BezierBy() {}
 
-    /** 
+    /** @~english
      * initializes the action with a duration and a bezier configuration
-     * @param t in seconds
+     * @~chinese 
+     * 用持续时间和贝塞尔曲线配置初始化BezierBy动作。
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param c @~english Bezier config.
+     * @~chinese 贝塞尔曲线配置。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float t, const ccBezierConfig& c);
 
@@ -908,16 +1118,21 @@ private:
 };
 
 /** @class BezierTo
- * @brief An action that moves the target with a cubic Bezier curve to a destination point.
+ * @brief @~english An action that moves the target with a cubic Bezier curve to a destination point.
+ * @~chinese BezierTo动作可以将一个节点沿三次贝塞尔曲线移动到特定位置。
  @since v0.8.2
  */
 class CC_DLL BezierTo : public BezierBy
 {
 public:
-    /** Creates the action with a duration and a bezier configuration.
-     * @param t Duration time, in seconds.
-     * @param c Bezier config.
-     * @return An autoreleased BezierTo object.
+    /** @~english Creates the action with a duration and a bezier configuration.
+     * @~chinese 用持续时间和贝塞尔曲线配置创建BezierTo动作。
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param c @~english Bezier config.
+     * @~chinese 贝塞尔曲线配置。
+     * @return @~english An autoreleased BezierTo object.
+     * @~chinese 一个自释放的BezierTo对象。
      * @code
      * when this function bound to js or lua,the input params are changed
      * in js: var create(var t,var table)
@@ -936,8 +1151,17 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     BezierTo() {}
     virtual ~BezierTo() {}
-    /**
-     * @param t In seconds.
+    
+    /** @~english
+     * initializes the action with a duration and a bezier configuration
+     * @~chinese 
+     * 用持续时间和贝塞尔曲线配置初始化BezierTo动作。
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param c @~english Bezier config.
+     * @~chinese 贝塞尔曲线配置。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float t, const ccBezierConfig &c);
 
@@ -949,37 +1173,58 @@ private:
 };
 
 /** @class ScaleTo
- @brief Scales a Node object to a zoom factor by modifying it's scale attribute.
- @warning This action doesn't support "reverse".
- @warning The physics body contained in Node doesn't support this action.
+ @brief @~english Scales a Node object to a zoom factor by modifying it's scale attribute.
+ * @~chinese ScaleTo动作通过修改scale属性让一个节点对象的缩放到特定大小。
+ @warning @~english This action doesn't support "reverse".
+ * @~chinese 这个动作不支持“逆转”（reverse）。
+ @warning @~english The physics body contained in Node doesn't support this action.
+ * @~chinese 包含的物理身体的节点不支持这一动作。
  */
 class CC_DLL ScaleTo : public ActionInterval
 {
 public:
-    /** 
+    /** @~english
      * Creates the action with the same scale factor for X and Y.
-     * @param duration Duration time, in seconds.
-     * @param s Scale factor of x and y.
-     * @return An autoreleased ScaleTo object.
+     * @~chinese 
+     * 用持续时间和X和Y轴相同的缩放比例创建ScaleTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param s @~english Scale factor of x and y.
+     * @~chinese X和Y轴的缩放比例。
+     * @return @~english An autoreleased ScaleTo object.
+     * @~chinese 一个自释放的ScaleTo对象。
      */
     static ScaleTo* create(float duration, float s);
 
-    /** 
+    /** @~english
      * Creates the action with and X factor and a Y factor.
-     * @param duration Duration time, in seconds.
-     * @param sx Scale factor of x.
-     * @param sy Scale factor of y.
-     * @return An autoreleased ScaleTo object.
+     * @~chinese 
+     * 用持续时间和X和Y轴分别的缩放比例创建ScaleTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param sx @~english Scale factor of x.
+     * @~chinese X轴缩放比例。
+     * @param sy @~english Scale factor of y.
+     * @~chinese Y轴的缩放比例。
+     * @return @~english An autoreleased ScaleTo object.
+     * @~chinese 一个自释放的ScaleTo对象。
      */
     static ScaleTo* create(float duration, float sx, float sy);
 
-    /** 
+    /** @~english
      * Creates the action with X Y Z factor.
-     * @param duration Duration time, in seconds.
-     * @param sx Scale factor of x.
-     * @param sy Scale factor of y.
-     * @param sz Scale factor of z.
-     * @return An autoreleased ScaleTo object.
+     * @~chinese 
+     * 用持续时间和X，Y，Z轴分别的缩放比例创建ScaleTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param sx @~english Scale factor of x.
+     * @~chinese X轴缩放比例。
+     * @param sy @~english Scale factor of y.
+     * @~chinese Y轴缩放比例。
+     * @param sz @~english Scale factor of z.
+     * @~chinese Z轴缩放比例。
+     * @return @~english An autoreleased ScaleTo object.
+     * @~chinese 一个自释放的ScaleTo对象。
      */
     static ScaleTo* create(float duration, float sx, float sy, float sz);
 
@@ -989,28 +1234,52 @@ public:
     virtual ScaleTo* clone() const override;
     virtual ScaleTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ScaleTo() {}
     virtual ~ScaleTo() {}
 
-    /** 
-     * initializes the action with the same scale factor for X and Y
-     * @param duration in seconds
+    /** @~english
+     * Initialize the action with the same scale factor for X and Y.
+     * @~chinese 
+     * 用持续时间和X和Y轴相同的缩放比例初始化ScaleTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param s @~english Scale factor of x and y.
+     * @~chinese X和Y轴的缩放比例。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float duration, float s);
-    /** 
-     * initializes the action with and X factor and a Y factor 
-     * @param duration in seconds
+    /** @~english
+     * Initialize the action with and X factor and a Y factor.
+     * @~chinese 
+     * 用持续时间和X和Y轴分别的缩放比例初始化ScaleTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param sx @~english Scale factor of x.
+     * @~chinese X轴缩放比例。
+     * @param sy @~english Scale factor of y.
+     * @~chinese Y轴的缩放比例。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float duration, float sx, float sy);
-    /** 
-     * initializes the action with X Y Z factor 
-     * @param duration in seconds
+    /** @~english
+     * Initializes the action with X Y Z factor 
+     * @~chinese 
+     * 用持续时间和X，Y，Z轴分别的缩放比例初始化ScaleTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param sx @~english Scale factor of x.
+     * @~chinese X轴缩放比例。
+     * @param sy @~english Scale factor of y.
+     * @~chinese Y轴缩放比例。
+     * @param sz @~english Scale factor of z.
+     * @~chinese Z轴缩放比例。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float duration, float sx, float sy, float sz);
 
@@ -1033,36 +1302,56 @@ private:
 };
 
 /** @class ScaleBy
- * @brief Scales a Node object a zoom factor by modifying it's scale attribute.
- @warning The physics body contained in Node doesn't support this action.
+ * @brief @~english Scales a Node object a zoom factor by modifying it's scale attribute.
+ * @~chinese ScaleTo动作通过修改scale属性让一个节点对象的缩放到特定比例，相对于当前大小。
+ @warning @~english The physics body contained in Node doesn't support this action.
+ * @~chinese 包含的物理身体的节点不支持这一动作。
 */
 class CC_DLL ScaleBy : public ScaleTo
 {
 public:
-    /** 
+    /** @~english
      * Creates the action with the same scale factor for X and Y.
-     * @param duration Duration time, in seconds.
-     * @param s Scale factor of x and y.
-     * @return An autoreleased ScaleBy object.
+     * @~chinese 
+     * 用持续时间和X和Y轴相同的缩放比例创建ScaleBy动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param s @~english Scale factor of x and y.
+     * @~chinese X和Y轴的缩放比例。
+     * @return @~english An autoreleased ScaleBy object.
+     * @~chinese 一个自释放的ScaleBy对象。
      */
     static ScaleBy* create(float duration, float s);
 
-    /** 
+    /** @~english
      * Creates the action with and X factor and a Y factor.
-     * @param duration Duration time, in seconds.
-     * @param sx Scale factor of x.
-     * @param sy Scale factor of y.
-     * @return An autoreleased ScaleBy object.
+     * @~chinese 
+     * 用持续时间和X和Y轴分别的缩放比例创建ScaleBy动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param sx @~english Scale factor of x.
+     * @~chinese X轴缩放比例。
+     * @param sy @~english Scale factor of y.
+     * @~chinese Y轴的缩放比例。
+     * @return @~english An autoreleased ScaleBy object.
+     * @~chinese 一个自释放的ScaleBy对象。
      */
     static ScaleBy* create(float duration, float sx, float sy);
 
-    /** 
+    /** @~english
      * Creates the action with X Y Z factor.
-     * @param duration Duration time, in seconds.
-     * @param sx Scale factor of x.
-     * @param sy Scale factor of y.
-     * @param sz Scale factor of z.
-     * @return An autoreleased ScaleBy object.
+     * @~chinese 
+     * 用持续时间和X，Y，Z轴分别的缩放比例创建ScaleBy动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param sx @~english Scale factor of x.
+     * @~chinese X轴缩放比例。
+     * @param sy @~english Scale factor of y.
+     * @~chinese Y轴缩放比例。
+     * @param sz @~english Scale factor of z.
+     * @~chinese Z轴缩放比例。
+     * @return @~english An autoreleased ScaleBy object.
+     * @~chinese 一个自释放的ScaleBy对象。
      */
     static ScaleBy* create(float duration, float sx, float sy, float sz);
 
@@ -1082,16 +1371,22 @@ private:
 };
 
 /** @class Blink
- * @brief Blinks a Node object by modifying it's visible attribute.
+ * @brief @~english Blinks a Node object by modifying it's visible attribute.
+ * @~chinese Blink可以通过修改节点的visible属性让节点对象有不断闪现的效果。
 */
 class CC_DLL Blink : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
-     * @param duration Duration time, in seconds.
-     * @param blinks Blink times.
-     * @return An autoreleased Blink object.
+    /** @~english
+     * Creates the action with duration and number of blinks.
+     * @~chinese 
+     * 用持续时间和闪现次数创建Blink动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param blinks @~english Blink times.
+     * @~chinese 闪现次数。
+     * @return @~english An autoreleased Blink object.
+     * @~chinese 一个自释放的Blink动作。
      */
     static Blink* create(float duration, int blinks);
 
@@ -1100,9 +1395,6 @@ public:
     //
     virtual Blink* clone() const override;
     virtual Blink* reverse() const override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop() override;
@@ -1111,9 +1403,16 @@ CC_CONSTRUCTOR_ACCESS:
     Blink() {}
     virtual ~Blink() {}
 
-    /** 
-     * initializes the action 
-     * @param duration in seconds
+    /** @~english
+     * initializes the action with duration and number of blinks.
+     * @~chinese 
+     * 用持续时间和闪现次数初始化Blink动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param blinks @~english Blink times.
+     * @~chinese 闪现次数。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float duration, int blinks);
     
@@ -1127,17 +1426,24 @@ private:
 
 
 /** @class FadeTo
- * @brief Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
- @warning This action doesn't support "reverse"
+ * @brief @~english Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
+ * @~chinese FadeTo（渐变）可以将一个实现了RGBAProtocol协议的对象从当前透明度渐变到指定透明度。
+ @warning @~english This action doesn't support "reverse"
+ * @~chinese 这个动作不支持“逆转”（reverse）
  */
 class CC_DLL FadeTo : public ActionInterval
 {
 public:
-    /** 
+    /** @~english
      * Creates an action with duration and opacity.
-     * @param duration Duration time, in seconds.
-     * @param opacity A certain opacity, the range is from 0 to 255.
-     * @return An autoreleased FadeTo object.
+     * @~chinese 
+     * 使用持续时间和目标透明度创建FadeTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param opacity @~english A certain opacity, the range is from 0 to 255.
+     * @~chinese 目标透明度，范围从0到255。
+     * @return @~english An autoreleased FadeTo object.
+     * @~chinese 一个自释放的FadeTo对象。
      */
     static FadeTo* create(float duration, GLubyte opacity);
 
@@ -1147,18 +1453,22 @@ public:
     virtual FadeTo* clone() const override;
     virtual FadeTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     FadeTo() {}
     virtual ~FadeTo() {}
 
-    /** 
+    /** @~english
      * initializes the action with duration and opacity 
-     * @param duration in seconds
+     * @~chinese 
+     * 使用持续时间和目标透明度初始化FadeTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param opacity @~english A certain opacity, the range is from 0 to 255.
+     * @~chinese 目标透明度，范围从0到255。
+     * @return @~english Return true if successfully initialized, otherwise return false
+     * @~chinese 如果初始化成功返回true，否则返回false。
      */
     bool initWithDuration(float duration, GLubyte opacity);
 
@@ -1172,16 +1482,22 @@ private:
 };
 
 /** @class FadeIn
- * @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
+ * @brief @~english Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
+ * @~chinese FadeIn（淡入）动作可以让一个实现RGBAProtocol协议的对象淡入，它使节点的当前透明度渐变到255。
+ * 这一动作的“反向”是FadeOut（淡出）动作
  */
 class CC_DLL FadeIn : public FadeTo
 {
 public:
-    /** 
-     * Creates the action.
-     * @param d Duration time, in seconds.
-     * @return An autoreleased FadeIn object.
+    /** @~english
+     * Creates the action with duration.
+     * @~chinese 
+     * 用持续时间创建FadeIn动作。
+     * @param d @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @return @~english An autoreleased FadeIn object.
+     * @~chinese 一个自释放FadeIn对象。
      */
     static FadeIn* create(float d);
 
@@ -1193,6 +1509,9 @@ public:
     virtual FadeTo* reverse(void) const override;
 
     /**
+     * @~english Set the reverse action.
+     * @~chinese 设置逆转动作。
+     * @param ac @~english The reverse action @~chinese 逆转动作
      * @js NA
      */
     void setReverseAction(FadeTo* ac);
@@ -1207,15 +1526,22 @@ private:
 };
 
 /** @class FadeOut
- * @brief Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
+ * @brief @~english Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
+ * @~chinese FadeOut（淡出）动作可以让一个实现RGBAProtocol协议的对象淡出，它使节点的当前透明度渐变到0。
+ * 这一动作的“反向”是FadeIn（淡入）动作
 */
 class CC_DLL FadeOut : public FadeTo
 {
 public:
-    /** 
-     * Creates the action.
-     * @param d Duration time, in seconds.
+    /** @~english
+     * Creates the action with duration.
+     * @~chinese 
+     * 用持续时间创建FadeOut动作。
+     * @param d @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @return @~english An autoreleased FadeOut object.
+     * @~chinese 一个自释放FadeOut对象。
      */
     static FadeOut* create(float d);
 
@@ -1227,6 +1553,9 @@ public:
     virtual FadeTo* reverse(void) const override;
 
     /**
+     * @~english Set the reverse action.
+     * @~chinese 设置逆转动作。
+     * @param ac @~english The reverse action @~chinese 逆转动作
      * @js NA
      */
     void setReverseAction(FadeTo* ac);
@@ -1240,27 +1569,41 @@ private:
 };
 
 /** @class TintTo
- * @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
- @warning This action doesn't support "reverse"
+ * @brief @~english Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
+ * @~chinese TintTo动作可以让一个实现NodeRGB协议的对象变色到特定颜色。
+ @warning @~english This action doesn't support "reverse"
+ * @~chinese 这个动作不支持“逆转”（reverse）
  @since v0.7.2
 */
 class CC_DLL TintTo : public ActionInterval
 {
 public:
-    /** 
+    /** @~english
      * Creates an action with duration and color.
-     * @param duration Duration time, in seconds.
-     * @param red Red Color, from 0 to 255.
-     * @param green Green Color, from 0 to 255.
-     * @param blue Blue Color, from 0 to 255.
-     * @return An autoreleased TintTo object.
+     * @~chinese 
+     * 用持续时间和目标颜色创建TintTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param red @~english Red Color, from 0 to 255.
+     * @~chinese 颜色的红色通道值，从0到255。
+     * @param green @~english Green Color, from 0 to 255.
+     * @~chinese 颜色的绿色通道值，从0到255。
+     * @param blue @~english Blue Color, from 0 to 255.
+     * @~chinese 颜色的蓝色通道值，从0到255。
+     * @return @~english An autoreleased TintTo object.
+     * @~chinese 一个自释放的TintTo对象。
      */
     static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
-    /**
+    /**@~english
      * Creates an action with duration and color.
-     * @param duration Duration time, in seconds.
-     * @param color It's a Color3B type.
-     * @return An autoreleased TintTo object.
+     * @~chinese 
+     * 用持续时间和目标颜色创建TintTo动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param color @~english It's a Color3B type color.
+     * @~chinese 一个Color3B类型颜色。
+     * @return @~english An autoreleased TintTo object.
+     * @~chinese 一个自释放的TintTo对象。
      */
     static TintTo* create(float duration, const Color3B& color);
 
@@ -1270,16 +1613,12 @@ public:
     virtual TintTo* clone() const override;
     virtual TintTo* reverse(void) const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     TintTo() {}
     virtual ~TintTo() {}
 
-    /** initializes the action with duration and color */
     bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
 
 protected:
@@ -1291,19 +1630,27 @@ private:
 };
 
 /** @class TintBy
- @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
+ @brief @~english Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
+ * @~chinese TintBy动作可以让一个实现NodeRGB协议的对象按一定差值改变其颜色。
  @since v0.7.2
  */
 class CC_DLL TintBy : public ActionInterval
 {
 public:
-    /** 
+    /** @~english
      * Creates an action with duration and color.
-     * @param duration Duration time, in seconds.
-     * @param deltaRed Delta red color.
-     * @param deltaGreen Delta green color.
-     * @param deltaBlue Delta blue color.
-     * @return An autoreleased TintBy object.
+     * @~chinese 
+     * 用持续时间和目标颜色创建TintBy动作。
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param deltaRed @~english Delta red color.
+     * @~chinese 颜色差值的红色通道值，从0到255。
+     * @param deltaGreen @~english Delta green color.
+     * @~chinese 颜色差值的绿色通道值，从0到255。
+     * @param deltaBlue @~english Delta blue color.
+     * @~chinese 颜色差值的蓝色通道值，从0到255。
+     * @return @~english An autoreleased TintBy object.
+     * @~chinese 一个自释放的TintBy对象。
      */
     static TintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
@@ -1313,16 +1660,12 @@ public:
     virtual TintBy* clone() const override;
     virtual TintBy* reverse() const override;
     virtual void startWithTarget(Node *target) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     TintBy() {}
     virtual ~TintBy() {}
 
-    /** initializes the action with duration and color */
     bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
 
 protected:
@@ -1339,24 +1682,26 @@ private:
 };
 
 /** @class DelayTime
- * @brief Delays the action a certain amount of seconds.
+ * @brief @~english Delays the action a certain amount of seconds.
+ * @~chinese DelayTime是延迟动作，可以让Sequence中的动作执行延迟一段时间。
 */
 class CC_DLL DelayTime : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
-     * @param d Duration time, in seconds.
-     * @return An autoreleased DelayTime object.
+    /** @~english
+     * Creates the action with delayed duration.
+     * @~chinese 
+     * 用延迟时间创建DelayTime动作。
+     * @param d @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @return @~english An autoreleased DelayTime object.
+     * @~chinese 一个自释放的DelayTime对象。
      */
     static DelayTime* create(float d);
 
     //
     // Overrides
     //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual DelayTime* reverse() const override;
     virtual DelayTime* clone() const override;
@@ -1370,20 +1715,28 @@ private:
 };
 
 /** @class ReverseTime
- * @brief Executes an action in reverse order, from time=duration to time=0
+ * @brief @~english Executes an action in reverse order, from time=duration to time=0
  
- @warning Use this action carefully. This action is not
+ * @~chinese ReverseTime动作会用逆转的时间轴执行一个目标动作，逆转后的时间轴从time=duration到time=0
+ * 
+ @warning @~english Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
-*/
+ * @~chinese 要小心使用这个操作。这种动作不可以被包含在Sequence动作中。
+ * 可以把它作为默认的“逆转”的方法，但在“逆转”范围外使用是不推荐的。
+ */
 class CC_DLL ReverseTime : public ActionInterval
 {
 public:
-    /** Creates the action.
+    /** @~english Creates the action with the inner action.
      *
-     * @param action a certain action.
-     * @return An autoreleased ReverseTime object.
+     * @~chinese 使用内部动作创建ReverseTime动作。
+     * 
+     * @param action @~english a certain action.
+     * @~chinese 内部动作。
+     * @return @~english An autoreleased ReverseTime object.
+     * @~chinese 一个自释放的ReverseTime对象。
      */
     static ReverseTime* create(FiniteTimeAction *action);
 
@@ -1394,16 +1747,12 @@ public:
     virtual ReverseTime* clone() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ReverseTime();
     virtual ~ReverseTime(void);
 
-    /** initializes the action */
     bool initWithAction(FiniteTimeAction *action);
 
 protected:
@@ -1415,26 +1764,37 @@ private:
 
 class Texture2D;
 /** @class Animate
- * @brief Animates a sprite given the name of an Animation.
+ * @brief @~english Animates a sprite given the Animation.
+ * @~chinese Animate动作可以使用Animation（动画）对象播放一个精灵动画。
  */
 class CC_DLL Animate : public ActionInterval
 {
 public:
-    /** Creates the action with an Animation and will restore the original frame when the animation is over.
+    /** @~english Creates the action with an Animation and will restore the original frame when the animation is over.
      *
-     * @param animation A certain animation.
-     * @return An autoreleased Animate object.
+     * @~chinese 使用Animation（动画）对象创建一个Animate对象，目标精灵的初始帧将在动画结束后被恢复。
+     * 
+     * @param animation @~english A certain animation.
+     * @~chinese Animation（动画）对象。
+     * @return @~english An autoreleased Animate object.
+     * @~chinese 一个自释放Animate对象。
      */
     static Animate* create(Animation *animation);
 
-    /** Sets the Animation object to be animated 
+    /** @~english Sets the Animation object to be animated 
      * 
-     * @param animation certain animation.
+     * @~chinese 设置动画对象
+     * 
+     * @param animation @~english certain animation.
+     * @~chinese Animation（动画）对象。
      */
     void setAnimation( Animation* animation );
-    /** returns the Animation object that is being animated 
+    /** @~english returns the Animation object that is being animated 
      *
-     * @return Gets the animation object that is being animated.
+     * @~chinese 获取动画对象
+     * 
+     * @return @~english Gets the animation object that is being animated.
+     * @~chinese 动画对象
      */
     Animation* getAnimation() { return _animation; }
     const Animation* getAnimation() const { return _animation; }
@@ -1446,16 +1806,12 @@ public:
     virtual Animate* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
-    /**
-     * @param t In seconds.
-     */
     virtual void update(float t) override;
     
 CC_CONSTRUCTOR_ACCESS:
     Animate();
     virtual ~Animate();
 
-    /** initializes the action with an Animation and will restore the original frame when the animation is over */
     bool initWithAnimation(Animation *animation);
 
 protected:
@@ -1472,28 +1828,40 @@ private:
 };
 
 /** @class TargetedAction
- * @brief Overrides the target of an action so that it always runs on the target
+ * @brief @~english Overrides the target of an action so that it always runs on the target
  * specified at action creation rather than the one specified by runAction.
+ * @~chinese TargetedAction可以让内部动作强制在目标节点上执行，而不是调用`runAction`函数时指定的节点。
  */
 class CC_DLL TargetedAction : public ActionInterval
 {
 public:
-    /** Create an action with the specified action and forced target.
+    /** @~english Create an action with the specified action and forced target.
      * 
-     * @param target The target needs to override.
-     * @param action The action needs to override.
-     * @return An autoreleased TargetedAction object.
+     * @~chinese 使用固定目标和内部动作创建TargetedAction动作。
+     * 
+     * @param target @~english The target.
+     * @~chinese 该动作的固定目标节点.
+     * @param action @~english The action.
+     * @~chinese 内部动作。
+     * @return @~english An autoreleased TargetedAction object.
+     * @~chinese 一个自释放的TargetedAction对象。
      */
     static TargetedAction* create(Node* target, FiniteTimeAction* action);
 
-    /** Sets the target that the action will be forced to run with.
+    /** @~english Sets the target that the action will be forced to run with.
      *
-     * @param forcedTarget The target that the action will be forced to run with.
+     * @~chinese 设置固定目标节点，内部动作将强制在这个目标节点上执行。
+     * 
+     * @param forcedTarget @~english The target that the action will be forced to run with.
+     * @~chinese 固定目标节点。
      */
     void setForcedTarget(Node* forcedTarget);
-    /** returns the target that the action is forced to run with. 
+    /** @~english returns the target that the action is forced to run with. 
      *
-     * @return The target that the action is forced to run with.
+     * @~chinese 获取固定目标节点，内部动作将强制在这个目标节点上执行。
+     * 
+     * @return @~english The target that the action is forced to run with.
+     * @~chinese 固定目标节点。
      */
     Node* getForcedTarget() { return _forcedTarget; }
     const Node* getForcedTarget() const { return _forcedTarget; }
@@ -1505,16 +1873,12 @@ public:
     virtual TargetedAction* reverse() const  override;
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     TargetedAction();
     virtual ~TargetedAction();
 
-    /** Init an action with the specified action and forced target */
     bool initWithTarget(Node* target, FiniteTimeAction* action);
 
 protected:
@@ -1527,31 +1891,36 @@ private:
 
 /**
  * @class ActionFloat
- * @brief Action used to animate any value in range [from,to] over specified time interval
+ * @brief @~english Action used to animate any value in range [from,to] over specified time interval
+ * @~chinese ActionFloat可以将任何值在一定时间间隔内从指定的起始值改变为指定的最终值
  */
 class CC_DLL ActionFloat : public ActionInterval
 {
 public:
-    /**
+    /**@~english
      *  Callback function used to report back result
+     * @~chinese 
+     * 用于报告结果的回调函数
      */
     typedef std::function<void(float value)> ActionFloatCallback;
 
-    /**
-     * Creates FloatAction with specified duration, from value, to value and callback to report back
-     * results
-     * @param duration of the action
-     * @param from value to start from
-     * @param to value to be at the end of the action
-     * @param callback to report back result
-     *
-     * @return An autoreleased ActionFloat object
+    /**@~english
+     * Creates FloatAction with specified duration, from value, to value and callback to report back results
+     * @~chinese 
+     * 用持续时间、起始值、最终值和回调函数来创建ActionFloat动作
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间，以秒为单位。
+     * @param from @~english value to start from
+     * @~chinese 起始值
+     * @param to @~english value to be at the end of the action
+     * @~chinese 最终值
+     * @param callback @~english Callback to report back result
+     * @~chinese 报告结果的回调函数
+     * @return @~english An autoreleased ActionFloat object
+     * @~chinese 一个自释放的ActionFloat对象
      */
     static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
 
-    /**
-     * Overrided ActionInterval methods
-     */
     void startWithTarget(Node* target) override;
     void update(float delta) override;
     ActionFloat* reverse() const override;
@@ -1564,14 +1933,10 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithDuration(float duration, float from, float to, ActionFloatCallback callback);
 
 protected:
-    /* From value */
     float _from;
-    /* To value */
     float _to;
-    /* delta time */
     float _delta;
 
-    /* Callback to report back results */
     ActionFloatCallback _callback;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ActionFloat);
