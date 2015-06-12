@@ -1,4 +1,5 @@
 #include "jsb_cocos2dx_physics3d_auto.hpp"
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "cocos2d_specifics.hpp"
 #include "CCPhysics3D.h"
 
@@ -6796,3 +6797,4 @@ void register_all_cocos2dx_physics3d(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_physics3d_Physics3DShape(cx, ns);
 }
 
+#endif //#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
