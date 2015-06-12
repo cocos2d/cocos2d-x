@@ -417,7 +417,7 @@ void ClippingNode::onBeforeVisit()
     // it should never prevent something else to be drawn,
     // only disabling depth buffer update should do
     glDepthMask(GL_FALSE);
-    RenderState::StateBlock::_defaultState->setDepthTest(false);
+    RenderState::StateBlock::_defaultState->setDepthWrite(false);
 
     ///////////////////////////////////
     // CLEAR STENCIL BUFFER

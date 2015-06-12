@@ -419,10 +419,7 @@ void Layout::drawFullScreenQuadClearStencil()
 void Layout::onAfterDrawStencil()
 {
     glDepthMask(_currentDepthWriteMask);
-    RenderState::StateBlock::_defaultState->setStencilFunction(
-                                                               RenderState::STENCIL_EQUAL,
-                                                               _mask_layer_le,
-                                                               _mask_layer_le);
+    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask);
 
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     RenderState::StateBlock::_defaultState->setStencilFunction(
