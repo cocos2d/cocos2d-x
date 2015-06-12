@@ -32,11 +32,12 @@
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
-
+experimental::Viewport Camera::_defaultViewport;
 
 Camera* Camera::getDefaultCamera()
 {
@@ -49,7 +50,7 @@ Camera* Camera::getDefaultCamera()
     return nullptr;
 }
 
-    Camera* Camera::create()
+Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
@@ -91,13 +92,14 @@ Camera::Camera()
 , _cameraFlag(1)
 , _frustumDirty(true)
 , _depth(-1)
+, _fbo(nullptr)
 {
     _frustum.setClipZ(true);
 }
 
 Camera::~Camera()
 {
-    
+    CC_SAFE_RELEASE_NULL(_fbo);
 }
 
 const Mat4& Camera::getProjectionMatrix() const
@@ -337,7 +339,7 @@ float Camera::getDepthInView(const Mat4& transform) const
     return depth;
 }
 
-void Camera::setDepth(int depth)
+void Camera::setDepth(int8_t depth)
 {
     if (_depth != depth)
     {
@@ -469,6 +471,64 @@ void Camera::clearBackground(float depth)
         glStencilMask(0xFFFFF);
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
+}
+
+void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
+{
+    CC_SAFE_RETAIN(fbo);
+    CC_SAFE_RELEASE_NULL(_fbo);
+    _fbo = fbo;
+    if(_scene)
+    {
+        _scene->setCameraOrderDirty();
+    }
+}
+
+void Camera::applyFrameBufferObject()
+{
+    if(nullptr == _fbo)
+    {
+        experimental::FrameBuffer::applyDefaultFBO();
+    }
+    else
+    {
+        _fbo->applyFBO();
+    }
+}
+
+void Camera::apply()
+{
+    applyFrameBufferObject();
+    applyViewport();
+}
+
+void Camera::applyViewport()
+{
+    if(nullptr == _fbo)
+    {
+        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
+    }
+    else
+    {
+        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
+                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
+    }
+    
+}
+
+int Camera::getRenderOrder() const
+{
+    int result(0);
+    if(_fbo)
+    {
+        result = _fbo->getFID()<<8;
+    }
+    else
+    {
+        result = 127 <<8;
+    }
+    result += _depth;
+    return result;
 }
 
 NS_CC_END

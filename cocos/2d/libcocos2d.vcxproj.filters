@@ -1866,8 +1866,9 @@
     <ClCompile Include="..\renderer\CCVertexAttribBinding.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCNinePatchImageParser.cpp">
-      <Filter>base</Filter>
+    <ClCompile Include="..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="CCAutoPolygon.cpp">
       <Filter>2d</Filter>
@@ -3656,8 +3657,9 @@
     <ClInclude Include="..\renderer\CCVertexAttribBinding.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCNinePatchImageParser.h">
-      <Filter>base</Filter>
+    <ClInclude Include="..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\renderer\CCFrameBuffer.h">
+      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="CCAutoPolygon.h">
       <Filter>2d</Filter>

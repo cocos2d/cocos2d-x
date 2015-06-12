@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -1842,6 +1842,9 @@
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\base\CCUserDefault-winrt.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -3659,6 +3662,9 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\renderer\CCVertexAttribBinding.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCFrameBuffer.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\base\CCProperties.h">

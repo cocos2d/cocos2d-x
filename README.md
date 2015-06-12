@@ -32,12 +32,11 @@ Git user attention
 2. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
 
          $ cd cocos2d-x
-         $ python download-deps.py
+         cocos2d-x $ python download-deps.py
 
 3. After running `download-deps.py`.
 
-         $ cd cocos2d-x
-         $ git submodule update --init
+         cocos2d-x $ git submodule update --init
 
 How to start a new game
 -----------------------
