@@ -39,14 +39,26 @@ THE SOFTWARE.
 namespace   cocos2d {
 
 struct AffineTransform;
-/**@{
- Conversion between mat4*4 and AffineTransform.
- @param m The Mat4*4 pointer.
- @param t Affine transform.
+/**@~english
+ Conversion from AffineTransform to mat4*4.
+ * @~chinese 
+ * 从仿射变换转换到4X4的openGL矩阵。
+ @param t @~english Affine transform.
+ * @~chinese 仿射变换。
+ * @param m @~english The Mat4*4 pointer.
+ * @~chinese 4X4矩阵。
  */
 CC_DLL void CGAffineToGL(const AffineTransform &t, GLfloat *m);
+/**@~english
+ Conversion from mat4*4 to AffineTransform.
+ * @~chinese 
+ * 从4X4的openGL矩阵转换到仿射变换。
+ @param m @~english The Mat4*4 pointer.
+ * @~chinese 4X4矩阵。
+ @param t @~english Affine transform.
+ * @~chinese 仿射变换。
+ */
 CC_DLL void GLToCGAffine(const GLfloat *m, AffineTransform *t);
-/**@}*/
 }//namespace   cocos2d 
 /**
  end of base group
