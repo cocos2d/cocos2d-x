@@ -187,10 +187,10 @@ public:
     
     /**
      * @brief @~english Insert a custom widget into ListView at a given index.
-     * @~chinese 插入自定义窗口小部件到ListView中指定索引处。
+     * @~chinese 插入自定义窗口小控件到ListView中指定索引处。
      * 
      * @param item @~english A widget pointer to be inserted.
-     * @~chinese 要插入的一个小部件指针。
+     * @~chinese 要插入的一个小控件指针。
      *
      * @param index @~english A given index in ssize_t.
      * @~chinese 指定索引
@@ -235,7 +235,7 @@ public:
      * @~chinese 给定的索引
      *
      * @return @~english A widget instance.
-     * @~chinese 一个小部件实例。
+     * @~chinese 一个小控件实例。
      */
     Widget* getItem(ssize_t index)const;
     
@@ -246,7 +246,7 @@ public:
      * 返回ListView中的所有项目。
      *
      * @returns @~english A vector of widget pointers.
-     * @~chinese 一个部件指针向量。
+     * @~chinese 一个控件指针数组。
      */
     Vector<Widget*>& getItems();
     
@@ -255,12 +255,12 @@ public:
      * Return the index of specified widget.
      *
      * @~chinese 
-     * 返回指定窗口小部件的索引。
+     * 返回指定窗口小控件的索引。
      * 
      * @param item  @~english A widget pointer.
-     * @~chinese 一个小部件指针。
+     * @~chinese 一个控件指针。
      * @return @~english The index of a given widget in ListView.
-     * @~chinese 给定部件在ListView的索引。
+     * @~chinese 给定控件在ListView的索引。
      */
     ssize_t getIndex(Widget* item) const;
     
