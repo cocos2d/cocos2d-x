@@ -39,291 +39,290 @@ namespace cocos2d {
 
 namespace cocostudio {
 
-/**
- *  @lua NA
- */
- /** 
- @类名 InputDelegate
- @主题 逻辑组件获取输入接口辅助类
- @细节 定义获取输入接口，被逻辑组件继承重载，从而方便逻辑组件获取输入。
- @组 组件
- */
 /** 
  * @class InputDelegate
  * @brief @~english InputDelegate.
  * @~chinese 输入代理。
- * @details @~english 
- * @~chinese 定义获取输入接口，被逻辑组件继承重载，从而方便逻辑组件获取输入。
+ * @details @~english component input delegate include touch, accelerometer, keypad
+ * @~chinese 组件输入代理，被逻辑组件继承重载，从而方便逻辑组件获取输入。
  *  @lua NA.
 */
 class CC_STUDIO_DLL InputDelegate
 {
 CC_CONSTRUCTOR_ACCESS:
     /**
+     * @brief @~english InputDelegate constructor.
+     * @~chinese 输入代理构造函数。
      * @js ctor
      */
     InputDelegate(void);
+
     /**
+     * @brief @~english InputDelegate destructor.
+     * @~chinese 输入代理析构函数。
      * @js NA
      */
     virtual ~InputDelegate(void);
     
 public:
-    /**
-    @主题 触摸是否可用
-    @返回 true 可以接收到触摸事件 否则接受不到
+
+    /** 
+     * @brief @~english whether or not it will receive Touch events.
+     * @~chinese 是否接收触摸事件。
+     * @return @~english true receive touch events, false don't receive touch events.
+     * @~chinese true 接收触摸事件，false 不接受触摸时间。
     */
     virtual bool isTouchEnabled() const;
-    /**
-    @主题 设置触摸可用
-    @参数 value true 开启触摸事件接收否则不开启
-    @返回 无
+
+    /** 
+     * @brief @~english enable / disable touch events with this property.
+     * @~chinese 调用该方法来启用或者禁用触摸事件。
+     * @param value @~english true enable touch events false disable touch events.
+     * @~chinese true 启用触摸事件 false 禁用触摸事件。
     */
     virtual void setTouchEnabled(bool value);
-    /**
-    @主题 加速计是否可用
-    @返回 true 可以接收到加速计事件 否则接受不到
+
+    /** 
+     * @brief @~english whether or not it will receive accelerometer events.
+     * @~chinese 是否接收加速计事件。
+     * @return @~english true receive accelerometer events, false don't receive accelerometer events.
+     * @~chinese true 接收加速计事件，false 不接受加速计事件。
     */
     virtual bool isAccelerometerEnabled() const;
-    /**
-    @主题 设置加速计可用
-    @参数 value true 开启加速计事件接收否则不开启
-    @返回 无
+
+    /** 
+     * @brief @~english enable / disable accelerometer events with this property.
+     * @~chinese 调用该方法来启用或者禁用加速计事件。
+     * @param value @~english true enable accelerometer events false disable accelerometer events.
+     * @~chinese true 启用加速计事件 false 禁用加速计事件。
     */
     virtual void setAccelerometerEnabled(bool value);
-    /**
-    @主题 键盘是否可用
-    @返回 true 可以接收到加速计事件 否则接受不到
+
+    /** 
+     * @brief @~english whether or not it will receive keyboard or keypad events.
+     * @~chinese 是否接收键盘或虚拟键盘事件。
+     * @return @~english true receive keyboard or keypad events, false don't receive keyboard or keypad events.
+     * @~chinese true 接收键盘或虚拟键盘事件，false 不接受键盘或虚拟键盘事件。
     */
     virtual bool isKeypadEnabled() const;
-    /**
-    @主题 设置键盘可用
-    @参数 value true 开启键盘事件接收否则不开启
-    @返回 无
+
+    /** 
+     * @brief @~english enable / disable keyboard or keypad events with this property.
+     * @~chinese 调用该方法来启用或者禁用键盘或虚拟键盘事件。
+     * @param value @~english true enable keyboard or keypad events false disable keyboard or keypad events.
+     * @~chinese true 启用键盘或虚拟键盘事件 false 禁用键盘或虚拟键盘事件。
     */
     virtual void setKeypadEnabled(bool value);
-    /**
-    @主题 设置触摸事件接收类型
-    @参数 mode ALL_AT_ONCE 多个触摸事件一次接收  ONE_BY_ONE 多个触摸时间一个接着一个接收
-    @返回 无
+
+    /** 
+     * @brief @~english set dispatchMode with this property.
+     * @~chinese 设置消息分发方式。
+     * @param mode @~english dispatch mode include all at once and one by one.
+     * @~chinese 设置分发模式， 多点触摸和单点触摸。
     */
     virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
-    /**
-    @主题 获取触摸事件接收类型
-    @返回 ALL_AT_ONCE 多个触摸事件一次接收  ONE_BY_ONE 多个触摸时间一个接着一个接收
+
+    /** 
+     * @brief @~english get dispatch mode.
+     * @~chinese 获取消息分发方式。
+     * @return @~english return dispatch mode, all at once or one by one.
+     * @~chinese 获取分发模式，多点触摸或者单点触摸。
     */
     virtual cocos2d::Touch::DispatchMode getTouchMode() const;
+
     /**
-    @主题 设置触摸事件接收优先级
-    @参数 priority 优先级数值
-    @返回 无
+     * @brief @~english set receive touch priority with this property.
+     * @~chinese 设置触摸事件接收优先级。
+     * @param priority @~english receive touch priority.
+     * @~chinese 触摸事件接收优先级。
     */
     virtual void setTouchPriority(int priority);
+
     /**
-    @主题 获取触摸事件接收优先级
-    @返回 触摸事件接收优先级数值
+     * @brief @~english get receive touch priority with this property.
+     * @~chinese 设置触摸事件接收优先级。
     */
     virtual int  getTouchPriority() const;
- /** @deprecated Please override onAcceleration */
-    /**
+
+    /** 
+     * @brief @~english Callback function for accelerate began.
+     * @~chinese 加速计回调函数
+     * @param accelerationValue @~english acceleration infomation.
+     * @~chinese 加速计信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 2.x 接收加速计虚函数，3.x不建议使用此接口
-    @参数 accelerationValue 加速计所产生的数据
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(cocos2d::Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
-    // Deprecated touch callbacks.
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchBegan 
+      @js NA
      */
-     /**
-    @主题 cocos2d-x 2.x 接收触摸开始虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchMoved 
+      @js NA
      */
-   /**
-    @主题 cocos2d-x 2.x 接收触摸滑动虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchEnded 
+      @js NA
      */
-   /**
-    @主题 cocos2d-x 2.x 接收触摸停止虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchCancelled 
+      @js NA
      */
-    /**
-    @主题 cocos2d-x 2.x 接收触摸取消虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(cocos2d::Touch *pTouch, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchesBegan 
+      @js NA
      */
-    /**
-    @主题 cocos2d-x 2.x 接收多点触摸开始虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchesMoved 
+      @js NA
      */
-    /**
-    @主题 cocos2d-x 2.x 接收多点触摸滑动虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchesEnded 
+      @js NA
      */
-    /**
-    @主题 cocos2d-x 2.x 接收多点触摸结束虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    /**
-     * @js NA
+
+     /** 
+      @deprecated Please override onTouchesCancelled 
+      @js NA
      */
-    /**
-    @主题 cocos2d-x 2.x 接收多点触摸取消虚函数，3.x不建议使用此接口
-    @参数 pTouch 触摸所产生的数据 
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(cocos2d::__Set *pTouches, cocos2d::Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
-    /**
+
+    /** 
+     * @brief @~english Callback funtion for acceleration.
+     * @~chinese 加速计事件回调函数。
+     * @param acc @~english Acceleration information.
+     * @~chinese 加速计信息。
+     * @param event @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收加速计虚函数
-    @参数 acc 加速计所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event) {};
+
     /**
+     * @brief @~english Callback function for key pressed.
+     * @~chinese 按键按下去时的回调函数
+     * @param keyCode @~english KeyCode information.
+     * @~chinese 键码信息。
+     * @param event @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收键盘按下虚函数
-    @参数 keyCode 按下按键
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
-    /**
+
+    /** 
+     * @brief @~english Callback function for key released.
+     * @~chinese 按键释放时的回调函数
+     * @param keyCode @~english KeyCode information.
+     * @~chinese 键码信息。
+     * @param event @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
-     */
-    /**
-    @主题 cocos2d-x 3.x 接收键盘抬起虚函数
-    @参数 keyCode 抬起按键
-    @参数 pEvent 事件类型 
-    @返回 无
     */
     virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
-    /**
+
+    /** 
+     * @brief @~english Callback function for touch began.
+     * @~chinese 触摸开始时的回调函数
+     * @param touch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param event @~english Event information.
+     * @~chinese 事件信息。
+     * @return @~english if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
+     * @~chinese 如果返回false,那么onTouchMoved、onTouchEnded onTouchCancelled永远不会被调用
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收触摸开始虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+
     /**
+     * @brief @~english Callback function for touch moved.
+     * @~chinese 触摸移动时的回调函数
+     * @param pTouch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收触摸滑动虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+
     /**
+     * @brief @~english Callback function for touch ended.
+     * @~chinese 触摸结束时的回调函数
+     * @param pTouch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收触摸结束虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
+
     /**
+     * @brief @~english Callback function for touch cancelled.
+     * @~chinese 触摸取消时的回调函数
+     * @param pTouch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收触摸取消虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
+
     /**
+     * @brief @~english Callback function for multiple touches began.
+     * @~chinese 多点触摸开始时的回调函数
+     * @param pTouches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收多点触摸开始虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
+
     /**
+     * @brief @~english Callback function for multiple touches moved.
+     * @~chinese 多点触摸移动时的回调函数
+     * @param pTouches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收多点触摸滑动虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
-    /**
+
+     /**
+     * @brief @~english Callback function for multiple touches ended.
+     * @~chinese 多点触摸结束时的回调函数
+     * @param pTouches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收多点触摸结束虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
-    /**
+
+     /**
+     * @brief @~english Callback function for multiple touches cancelled.
+     * @~chinese 多点触摸取消时的回调函数
+     * 
+     * @param pTouches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param pEvent @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
-    /**
-    @主题 cocos2d-x 3.x 接收多点触摸取消虚函数
-    @参数 touch 触摸所产生的数据
-    @参数 pEvent 事件类型 
-    @返回 无
-    */
     virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
 protected:   
