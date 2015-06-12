@@ -31,12 +31,13 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
- /** 
- @类名 ComAudio
- @主题 声音组件
- @细节 保存声音文件路径，封装播放背景音乐，效果接口，方便以组件式编程，配合解析cocos studio 1.x场景编辑器导出的数据
- @组 组件
- */
+/** 
+ * @class ComAudio
+ * @brief @~english ComAudio.
+ * @~chinese 自定义声音组件.
+ * @details @~english offers a very simple interface to play background music & sound effects.
+ * @~chinese 提供播放音效和背景音乐的一系列接口.
+*/
 class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
 
@@ -44,240 +45,325 @@ class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 
 public:
     /**
+     * @brief @~english ComAudio constructor.
+     * @~chinese 声音组件构造函数。
      * @js ctor
      */
-    /**
-    @主题 声音组件构造函数
-    */
     ComAudio(void);
     /**
+     * @brief @~english ComAudio destructor.
+     * @~chinese 声音组件析构函数。
      * @js NA
      * @lua NA
      */
-    /**
-    @主题 声音组件析构函数
-    */
     virtual ~ComAudio(void);
     
 public:
     /**
-    @主题 初始化声音组件
-    @返回 true 初始化成功，否则false
-    */
+     * @brief @~english initialize a ComAudio.
+     * @~chinese 初始化声音组件。
+     * @return @~english true initialize successfully false failed to initialize.
+     * @~chinese true 初始化成功，否则false。
+     */
     virtual bool init() override;
+
     /**
+     * @brief @~english Event callback that is invoked every time when Node enters the 'stage'.
+     * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
+     * During onEnter you can't access a "sister/brother" node.
+     * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
+     * @~chinese 每次当Node进入“stage”时才调用事件回调。
+     * 如果Node进入“stage”状态时伴随着一个转换（transition）,那么事件将会在这个转换开始的时候被调用。
+     * 在onEnter过程中，你不能够接入“sister/brother”兄妹节点。
+     * 如果你重写了onEnter方法，你应该调用它的父类，e.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
-    /**
-    @主题 node调用onEnter的时候，会调用组件的onEnter
-    @返回 无
-    */
     virtual void onEnter() override;
+
     /**
+     * @brief @~english Event callback that is invoked every time the Node leaves the 'stage'.
+     * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
+     * During onExit you can't access a sibling node.
+     * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
+     * @~chinese 每次当Node离开“stage”时才调用事件回调。
+     * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换结束的时候被调用。
+     * 在onEnter过程中中你不能够接入一个兄妹节点。
+     * 如果你重写onExit, 你应该调用它的父类, e.g., Node::onExit().
      * @js NA
      * @lua NA
      */
-    /**
-    @主题 node调用onExit的时候，会调用组件的onExit
-    @返回 无
-    */
     virtual void onExit() override;
-    /**
-    @主题 判断声音组件是否可用
-    @返回 可用返回true，否则返回false
-    */
+
+    /** 
+     * @brief @~english Returns whether or not the ComAudio is enabled.
+     * @~chinese 返回声音组件是否被启用。
+     * @return @~english Whether or not the ComAudio is enabled. 
+     * @~chinese 声音组件是否被启用。
+     */
     virtual bool isEnabled() const override;
-    /**
-    @主题 设置当前声音组件是否可用
-    @参数 b true为可用，false为不可用
-    @返回 无
-    */
+
+    /**  
+     * @brief @~english enables or disables the ComAudio.
+     * @~chinese 启用或禁用声音组件。
+     * @param enabled @~english true enable the menu ComAudio, false disabled the ComAudio. 
+     * @~chinese true，启用声音组件 false，禁用声音组件。
+     */
     virtual void setEnabled(bool b) override;
+
     /**
-    @主题 根据cocos studio 1.x 场景编辑器导出的json数据反序列化本身
-    @参数 r SerData对象指针
-    @返回 true 反序列化成功，false 反序列化失败
-    */
+     * @brief @~english deserialization export data of cocos studio 1.x scene editor.
+     * @~chinese 反序列化cocos studio 1.x 场景编辑器导出的数据。
+     * @param r @~english SerData object point.
+     * @~chinese SerData对象指针。
+     * @return @~english true deserialize successfully false failed to deserialize.
+     * @~chinese true 反序列化成功，否则false。
+     */
     virtual bool serialize(void* r) override;
-   /**
-    @主题 创建声音组件
-    @返回 声音组件指针
-    */
+    /**
+     * @brief @~english Allocates and initializes a create.
+     * @~chinese 分配并且初始化声音组件。
+     * @return @~english A initialized node which is marked as "autorelease".
+     * @~chinese 一个初始化的声音组件，该节点会自动被标记为“autorelease”(自动释放)。
+     */
     static ComAudio* create(void);
    
 public:
-   /**
-    @主题 释放声音引擎对象，停止播放所有背景音与音效
-    @返回 无
-    */
+    /**
+     * @brief @~english Release the shared Engine object.
+     * @~chinese 释放音效引擎实例。
+     * @warning @~english It must be called before the application exit, or it will lead to memory leaks.
+     * @~chinese 在游戏退出时需要调用这个方法，不然的话会导致内存泄漏。
+     */
     void end();
+
     /**
-    @主题 预加载背景音乐
-    @参数 pszFilePath 背景音乐路径
-    @返回 无
-    */
+     * @brief @~english Preload background music.
+     * @~chinese 预加载背景音乐。
+     * @param pszFilePath @~english The path of the background music file.
+     * @~chinese 背景音乐的文件路径。
+     */
     void preloadBackgroundMusic(const char* pszFilePath);
+
     /**
-    @主题 播放背景音乐，如果发现没有预加载此音乐，会先预加载，然后执行播放
-    @参数 pszFilePath 背景音乐路径
-    @参数 bLoop true 循环播放 false 播放一次
-    @返回 无
-    */
+     * @~brief @~english Play background music.
+     * @~chinese 播放背景音乐。
+     * 
+     * @param pszFilePath @~english The path of the background music file,or the FileName of T_SoundResInfo.
+     * @~chinese 背景音乐的文件路径或T_SoundResInfo中的FileName字段。
+     * @param loop @~english Whether the background music loop or not.
+     * @~chinese 背景音乐是否循环播放。
+     */
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
+
     /**
-    @主题 播放背景音乐，如果发现没有预加载此音乐，会先预加载，然后播放，根据成员变量_loop判断是否循环播放
-    @参数 pszFilePath 背景音乐路径
-    @返回 无
-    */
+     * @~brief @~english Play background music based _loop of property. 
+     * @~chinese 播放背景音乐。
+     * @param pszFilePath @~english The path of the background music file,or the FileName of T_SoundResInfo.
+     * @~chinese 背景音乐的文件路径或T_SoundResInfo中的FileName字段。
+     */
     void playBackgroundMusic(const char* pszFilePath);
+
     /**
-    @主题 根据_filePath与_loop来播放背景音乐
-    @返回 无
-    */
+     * @~brief @~english Play background music based _loop and _filePath of property. 
+     * @~chinese 播放背景音乐。
+     */
     void playBackgroundMusic();
+
     /**
-    @主题 停止播放背景音乐并是否释放音乐缓存
-    @参数 bReleaseData true 停止并释放缓存 false 仅停止播放
-    @返回 无
-    */
+     * @brief @~english Stop playing background music.
+     * @~chinese 停止播放背景音乐。
+     * @param releaseData @~english If release the background music data or not.As default value is false.
+     * @~chinese 是否释放背景音乐的数据，默认值为false。
+     */
     void stopBackgroundMusic(bool bReleaseData);
+
     /**
-    @主题 停止播放背景音乐
-    @返回 无
-    */
+     * @brief @~english Stop playing background music.
+     * @~chinese 停止播放背景音乐。
+     */
     void stopBackgroundMusic();
+
     /**
-    @主题 暂停播放背景音乐
-    @返回 无
-    */
+     * @brief @~english Pause playing background music.
+     * @~chinese 暂停播放背景音乐。
+     */
     void pauseBackgroundMusic();
+
     /**
-    @主题 恢复暂停，继续播放背景音乐
-    @返回 无
-    */
+     * @brief @~english Resume playing background music.
+     * @~chinese 恢复播放背景音乐。
+     */
     void resumeBackgroundMusic();
+
     /**
-    @主题 倒带播放背景音乐
-    @返回 无
-    */
+     * @brief @~english Rewind playing background music.
+     * @~chinese 将背景音乐倒回起始点播放。
+     */
     void rewindBackgroundMusic();
+
     /**
-    @主题 背景音乐是否可以将要播放
-    @返回 true 可以播放 false 将不能播放
-    */
+     * @brief @~english Indicates whether any background music can be played or not.
+     * @~chinese 是否会播放背景音乐。
+     * @return true @~english if background music can be played, otherwise false.
+     * @~chinese 如果背景音乐会被播放返回true，否则返回false。
+     */
     bool willPlayBackgroundMusic();
+
     /**
-    @主题 背景音乐是否正在播放
-    @返回 true 正在播放 否则 false
-    */
+     * @brief @~english Indicates whether the background music is playing.
+     * @~chinese 背景音乐是否在播放。
+     * @return true @~english if the background music is playing, otherwise false.
+     * @~chinese 正在播放返回true，否则返回false。
+     */
     bool isBackgroundMusicPlaying();
+
     /**
-    @主题 获取背景音乐音量
-    @返回 背景音乐的音量
-    */
+     * @brief @~english The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * @~chinese 获取背景音乐的音量，音量的值的范围为0.0到1.0。
+     */
     float getBackgroundMusicVolume();
-    /**
-    @主题 设置背景音乐音量
-    @参数 volume 音量大小
-    @返回 无
-    */
+
+
     void setBackgroundMusicVolume(float volume);
+
     /**
-    @主题 获取效果音乐音量
-    @返回 背景效果的音量
-    */
+     * @brief @~english The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * @~chinese 获取音效的音量大小,音量大小范围为0.0到1.0。
+     */
     float getEffectsVolume();
+
     /**
-    @主题 设置效果音乐音量
-    @参数 volume 音量大小
-    @返回 无
-    */
+     * @brief @~english Set the volume of sound effects.
+     * @~chinese 设置音效的音量大小。
+     * @param volume @~english must be within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * @~chinese 音效的音量大小，范围为0.0到1.0。
+     */
     void setEffectsVolume(float volume);
+
     /**
-    @主题 播放效果音乐，如果发现没有预加载此音乐，会先预加载，然后播放
-    @参数 pszFilePath 效果音乐路径
-    @参数 bLoop true 循环播放 false 播放一次
-    @返回 效果音乐ID
-    */
+     * @brief @~english Play sound effect with a file path and loop.
+     * @~chinese 播放音效
+     * @param pszFilePath @~english The path of the effect file. 
+     * @~chinese 音效文件的路径。
+     * @param bLoop @~english Determines whether to loop the effect playing or not. 
+     * @~chinese 是否循环播放,默认为false,不循环。
+     * @return @~english The sound id. 
+     * @~chinese 声音id。
+     */
     unsigned int playEffect(const char* pszFilePath, bool bLoop);
+
     /**
-    @主题 播放效果音乐，如果发现没有预加载此音乐，会先预加载，然后播放，根据成员变量_loop判断是否循环播放
-    @参数 pszFilePath 背景音乐路径
-    @返回 效果音乐ID
-    */
+     * @brief @~english Play sound effect with a file path and _loop of property
+     * @~chinese 播放音效
+     * @param pszFilePath @~english The path of the effect file. 
+     * @~chinese 音效文件的路径。
+     * @param bLoop @~english Determines whether to loop the effect playing or not. 
+     * @~chinese 是否循环播放,默认为false,不循环。
+     * @return @~english The sound id. 
+     * @~chinese 声音id。
+     */
     unsigned int playEffect(const char* pszFilePath);
+
     /**
-    @主题 根据_filePath与_loop来播放播放音乐
-    @返回 效果音乐ID
-    */
+     * @brief @~english Play sound effect with _filePath and _loop of property
+     * @~chinese 播放音效
+     * @return @~english The sound id. 
+     * @~chinese 声音id。
+     */
     unsigned int playEffect();
+
     /**
-    @主题 暂停播放效果音乐
-    @参数 nSoundID 效果音乐ID
-    @返回 无
-    */
+     * @brief @~english Pause playing sound effect.
+     * @~chinese 暂停播放指定音效。
+     * @param nSoundId @~english The return value of function playEffect.
+     * @~chinese 音效id。
+     */
     void pauseEffect(unsigned int nSoundId);
+
     /**
-    @主题 暂停所有效果音乐
-    @返回 无
-    */
+     * @brief @~english Pause all playing sound effect.
+     * @~chinese 暂停所有播放的音效。
+     */
     void pauseAllEffects();
+
     /**
-    @主题 恢复暂停效果音乐，继续播放
-    @参数 nSoundID 效果音乐ID
-    @返回 无
-    */
+     * @brief @~english Resume playing sound effect.
+     * @~chinese 恢复暂停播放指定的音效。
+     * @param nSoundId @~english The return value of function playEffect.
+     * @~chinese playEffect返回的资源id。
+     */
     void resumeEffect(unsigned int nSoundId);
+
     /**
-    @主题 恢复暂停的所有效果音乐，继续播放
-    @返回 无
-    */
+     * @brief @~english Resume all playing sound effect.
+     * @~chinese 恢复所有暂停的音效。
+     */
     void resumeAllEffects();
+
     /**
-    @主题 停止播放效果音乐
-    @参数 nSoundID 效果音乐ID
-    @返回 无
-    */
+     * @brief @~english Stop playing sound effect.
+     * @~chinese 停止播放指定的音效。
+     *
+     * @param nSoundId @~english The return value of function playEffect.
+     * @~chinese playEffect返回的资源id。
+     */
     void stopEffect(unsigned int nSoundId);
+
     /**
-    @主题 停止所有效果音乐
-    @返回 无
-    */
+     * @brief @~english Stop all playing sound effects.
+     * @~chinese 停止所有播放的音效。
+     */
     void stopAllEffects();
+
     /**
-    @主题 预加载效果音乐
-    @参数 pszFilePath 背景音乐路径
-    @返回 无
-    */
+     * @brief @~english Preload a compressed audio file.
+     * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
+     * @~chinese 预加载音效文件。
+     *
+     * @param pszFilePath @~english The path of the effect file. 
+     * @~chinese 音效文件路径。
+     * @js NA
+     */
     void preloadEffect(const char* pszFilePath);
+
     /**
-    @主题 释放预加载效果音乐缓存
-    @参数 pszFilePath 背景音乐路径
-    @返回 无
-    */
+     * @brief @~english Unload the preloaded effect from internal buffer.
+     * @~chinese 卸载预加载到内存中的音效文件。
+     *
+     * @param pszFilePath @~english The path of the effect file.
+     * @~chinese 音效文件的路径。
+     */
     void unloadEffect(const char* pszFilePath);
+
     /**
-    @主题 设置音乐路径
-    @参数 pszFilePath 音乐路径
-    @返回 无
-    */
+     * @brief @~english Set file path.
+     * @~chinese 设置路径。
+     */
     void setFile(const char* pszFilePath);
+
     /**
-    @主题 获取音乐路径
-    @返回 _filePath 音乐路径
-    */
+     * @brief @~english Get file path.
+     * @~chinese 获取路径。
+     * @return @~english file path.
+     * @~chinese 声音文件。
+     */
     const char* getFile();
-    /**
-    @主题 设置是否循环
-    @参数 bLoop 是否循环
-    @返回 无
-    */
+
+    /**  
+     * @brief @~english Sets hether or not the sound is loop.
+     * @~chinese 设置声音是否循环。
+     * @param bLoop @~english true ComAudio is loop, false ComAudio is not loop. 
+     * @~chinese true，开启声音组件循环 false，声音组件不循环。
+     */
     void setLoop(bool bLoop);
-    /**
-    @主题 判断是否循环
-    @返回 true 循环 false 不循环
-    */
+
+    /** 
+     * @brief @~english Returns whether or not the sound is loop.
+     * @~chinese 返回声音组件是否循环。
+     * @return @~english Whether or not the ComAudio is loop. 
+     * @~chinese 声音组件是否循环。
+     */
     bool isLoop();
 private:
 	std::string _filePath;

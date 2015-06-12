@@ -32,10 +32,11 @@ THE SOFTWARE.
 
 namespace cocostudio {
 
-/** @class ComAttribute
+/** 
+ * @class ComAttribute
  * @brief @~english ComAttribute.
  * @~chinese 自定义属性组件.
- * @details @~english store and access data by key-value, and load exporting data of cocos studio 1.x Scene Editor.
+ * @details @~english Store and access data by key-value, and load exporting data of cocos studio 1.x Scene Editor.
  * @~chinese 以key-value键值对方式存储与获取数据, 解析cocos studio 1.x场景编辑器导出的数据.
 */
 class CC_STUDIO_DLL ComAttribute : public cocos2d::Component
@@ -43,13 +44,13 @@ class CC_STUDIO_DLL ComAttribute : public cocos2d::Component
     DECLARE_CLASS_COMPONENT_INFO
 public:
     /**
-     * @~english ComAttribute constructor.
+     * @brief @~english ComAttribute constructor.
      * @~chinese 自定义属性构造函数。
      * @js ctor
      */
     ComAttribute(void);
     /**
-     * @~english ComAttribute destructor.
+     * @brief @~english ComAttribute destructor.
      * @~chinese 自定义属性析构函数。
      * @js NA
      * @lua NA
@@ -58,7 +59,7 @@ public:
     
 public:
     /**
-     * @~english Allocates and initializes a ComAttribute.
+     * @brief @~english Allocates and initializes a ComAttribute.
      * @~chinese 分配并且初始化自定义组件。
      * @return @~english A initialized node which is marked as "autorelease".
      * @~chinese 一个初始化的自定义组件，该节点会自动被标记为“autorelease”(自动释放)。
@@ -66,7 +67,7 @@ public:
     static ComAttribute* create(void);
 
     /**
-     * @~english initialize a ComAttribute.
+     * @brief @~english Initialize a ComAttribute.
      * @~chinese 初始化自定义组件。
      * @return @~english true initialize successfully false failed to initialize.
      * @~chinese true 初始化成功，否则false。
@@ -74,7 +75,7 @@ public:
     virtual bool init() override;
 
     /**
-     * @~english deserialization export data of cocos studio 1.x scene editor.
+     * @brief @~english Deserialization export data of cocos studio 1.x scene editor.
      * @~chinese 反序列化cocos studio 1.x 场景编辑器导出的数据。
      * @param r @~english SerData object point.
      * @~chinese SerData对象指针。
@@ -84,7 +85,7 @@ public:
     virtual bool serialize(void* r) override;
 
     /**
-     * @~english set int value for key.
+     * @brief @~english Set int value for key.
      * @~chinese 设置属性名为为key，类型为int的数值。
      * @param key @~english the key to set.
      * @~chinese 需要设置的key。
@@ -94,7 +95,7 @@ public:
     void setInt(const std::string& key, int value);
 
     /**
-     * @~english set float value for key.
+     * @brief @~english Set float value for key.
      * @~chinese 设置属性名为为key，类型为float的数值。
      * @param key @~english the key to set.
      * @~chinese 需要设置的key。
@@ -104,7 +105,7 @@ public:
     void setFloat(const std::string& key, float value);
 
     /**
-     * @~english set bool value for key.
+     * @brief @~english Set bool value for key.
      * @~chinese 设置属性名为为key，类型为bool的数值。
      * @param key @~english the key to set.
      * @~chinese 需要设置的key。
@@ -114,7 +115,7 @@ public:
     void setBool(const std::string& key, bool value);
 
     /**
-     * @~english set string value for key.
+     * @brief @~english Set string value for key.
      * @~chinese 设置属性名为为key，类型为string的数值。
      * @param key @~english the key to set.
      * @~chinese 需要设置的key。
@@ -124,7 +125,7 @@ public:
     void setString(const std::string& key, const std::string& value);
 
     /**
-     * @~english get int value by key, if the key doesn't exist, will return passed default value.
+     * @brief @~english Get int value by key, if the key doesn't exist, will return passed default value.
      * @~chinese 获取指定 key 的整型值，如果 key 不存在，则返回指定的 def。
      * @param key @~english the key to get value.
      * @~chinese 需要获取的key。
@@ -136,7 +137,7 @@ public:
     int getInt(const std::string& key, int def = 0) const;
 
     /**
-     * @~english get float value by key, if the key doesn't exist, will return passed default value.
+     * @brief @~english Get float value by key, if the key doesn't exist, will return passed default value.
      * @~chinese 获取指定 key 的字符串，如果 key 不存在，则返回指定的 def。
      * @param key @~english the key to get value.
      * @~chinese 需要获取的key。
@@ -148,7 +149,7 @@ public:
     float getFloat(const std::string& key, float def = 0.0f) const;
 
     /**
-     * @~english get bool value by key, if the key doesn't exist, will return passed default value.
+     * @brief @~english Get bool value by key, if the key doesn't exist, will return passed default value.
      * @~chinese 获取指定 key 的字符串，如果 key 不存在，则返回指定的 def。
      * @param key @~english the key to get value.
      * @~chinese 需要获取的key。
@@ -160,7 +161,7 @@ public:
     bool getBool(const std::string& key, bool def = false) const;
 
     /**
-     * @~english get string value by key, if the key doesn't exist, will return passed default value.
+     * @brief @~english Get string value by key, if the key doesn't exist, will return passed default value.
      * @~chinese 获取指定 key 的字符串，如果 key 不存在，则返回指定的 def。
      * @param key @~english the key to get value.
      * @~chinese 需要获取的key。
@@ -172,7 +173,7 @@ public:
     std::string getString(const std::string& key, const std::string& def = "") const;
 
      /**
-     * @~english parse export json data of cocos studio 1.x Scene Editor and assign to _doc.
+     * @brief @~english Parse export json data of cocos studio 1.x Scene Editor and assign to _doc.
      * @~chinese 解析cocos studio 1.x 场景编辑器导出json数据，判断json的有效性，给json对象_doc赋值。
      * @param jsonFile @~english json file path.
      * @~chinese json路径。
