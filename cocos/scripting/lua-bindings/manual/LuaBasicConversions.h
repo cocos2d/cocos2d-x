@@ -56,8 +56,8 @@ cocos2d::log(__VA_ARGS__);                                                  \
  * If the value of the given index is nil, retrun value also is true.
  *
  * @~chinese 
- * 如果给定合法的Lua栈索引上的userdata的type名字和type一样返回true,否则返回false。
- * 如果def != 0,lo可能大于指数Lua栈顶索,并且返回值为true。
+ * 如果给定合法的Lua栈索引上的userdata的类型名字和type一样返回true,否则返回false。
+ * 如果def != 0,lo可能大于指数Lua栈顶索引,并且返回值为true。
  * 如果给定Lua栈索引上的值是nil,返回值也为true。
  * 
  * @param L @~english the current lua_State.
@@ -66,7 +66,7 @@ cocos2d::log(__VA_ARGS__);                                                  \
  * @~chinese Lua栈索引。
  * @param type @~english the typename used to judge.
  * @~chinese 用于判断的类型名字。
- * @param def @~english whether has default value.
+ * @param def @~english whether has default value,0 means have not default value,otherwise have default values.
  * @~chinese 是否有默认值, 0表示没有默认值，否则有默认值。
  * @return @~english Return true if the typename of userdata at the given accepteable index of stack is equal to type, otherwise return false.
  * @~chinese 如果给定合法的Lua栈索引上userdata的类型名字等于type,或者lo大于栈顶索引但有默认值，或者栈上的值为nil, 都会返回true，否则返回false。
@@ -80,7 +80,9 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * The following function are all used to convert the Lua values at the given acceptable index to the corresponding c++ values.
  * If the Lua values can be converted the return value is true, otherwise return false.
  * If it happens error during the conversion process, it outputs the error msg in the console to provide infromation about the name of calling function, the typename of value at the given acceptable index, and so on.
- * @~chinese sfsafasf
+ * @~chinese 以下的函数都是用来将指定Lua索引上的Lua值转成对应的c++值。
+ * 如果Lua值可以被转换，返回true,否则返回false.
+ * 如果在转换过程中发生了错误，将会在控制台输出错误信息，错误信息里包含了调用函数，指定Lua索引Lua值的类型名字等信息。
  @{
  **/
 
@@ -199,7 +201,7 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * @~chinese 
  * 从给定Lua栈索引上获取一个boolean值。
  * 如果给定Lua栈索引值类型为boolean返回true,否则返回false。
- * 任何不等于falsea或nil的Lua值,获取的值将true，否则为false。
+ * 任何不等于false或nil的Lua值,获取的值将true，否则为false。
  * 如果lo是无效的索引,获取的值也为false。
  * 
  * @param L @~english the current lua_State.
@@ -304,7 +306,7 @@ extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* func
  * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *
  * @~chinese 
- * 从给定Lua栈索引上获取一个long值。
+ * 从给定Lua栈索引上获取一个ssize_t值。
  * 如果给定Lua栈索引上是一个数字或一个可以转为数字的字符串,返回true,否则返回false。
  * 
  * @param L @~english the current lua_State.
@@ -468,7 +470,7 @@ extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMate
  * @~chinese 
  * 从给定Lua栈索引上获取一个AffineTransform对象。
  * 如果给定Lua栈索引上是一个table，返回true，否则返回false。
- * 如果table有“a”、“b”、“c”,“d”,“tx”和“ty”键并且对应的值不为nil,那么这些值会赋值给PhysicsMaterial对象对应的成员变量。否则,对应的成员变值设置为0。
+ * 如果table有“a”、“b”、“c”,“d”,“tx”和“ty”键并且对应的值不为nil,那么这些值会赋值给AffineTransform对象对应的成员变量。否则,对应的成员变值设置为0。
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
@@ -491,7 +493,7 @@ extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outV
  * @~chinese 
  * 从给定Lua栈索引上获取一个FontDefinition对象。
  * 如果给定Lua栈索引上是一个table，返回true，否则返回false。
- * 如果table中有“fontName”,“fontSize”,‘fontAlignmentH’,‘fontAlignmentV’,‘fontFillColor’,‘fontDimensions’,‘shadowEnabled’和‘strokeEnabled键并且对应的值不为nil,那么这些值会赋值给PhysicsMaterial对象对应的成员变量。否则,对应的成员变值设置为0。
+ * 如果table中有“fontName”,“fontSize”,‘fontAlignmentH’,‘fontAlignmentV’,‘fontFillColor’,‘fontDimensions’,‘shadowEnabled’和‘strokeEnabled键并且对应的值不为nil,那么这些值会赋值给FontDefinition对象对应的成员变量。否则,对应的成员变值设置为0。
  * 如果table中“shadowEnabled”和“strokeEnabled”对应的值为true,将会查找更多的键及对应的值，如‘shadowOffset’,‘shadowBlur’,‘shadowOpacity’,‘strokeColor’,‘strokeSize’。
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
@@ -791,7 +793,7 @@ CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_array_of_Point(lua_State* L
  * @param ret @~english a cocos2d::Vector of type T objects.
  * @~chinese 指向cocos2d::Vector对象的指针,用于储存从Lua中获取的值。
  * @return @~english Return false if argc equal to 0 , L equal to nullptr or the Lua userdata at the index isn't `cc.Ref` type, otherwise return true.
- * @~chinese 当argc等于0，L为nullptr或者Lua栈索引上的userdata不是"cc.ref"类型，返回值为false,否则返回true。
+ * @~chinese 当argc等于0，L为nullptr或者Lua栈索引上的userdata不是"cc.Ref"类型，返回值为false,否则返回true。
  */
 template <class T>
 bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* ret)
@@ -896,17 +898,17 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
 /**@~english
- * Get a pointer points to a std::vector<std::int> from a Lua array table in the stack.
+ * Get a pointer points to a std::vector<int> from a Lua array table in the stack.
  *
  * @~chinese 
- * 从给定Lua栈索引上获取一个std::vector<std::int>
+ * 从给定Lua栈索引上获取一个std::vector<int>
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
  * @param lo @~english the given acceptable index of stack.
  * @~chinese Lua栈索引。
  * @param ret @~english a pointer points to a std::vector<int>.
- * @~chinese 指向std::vector<std::int>的指针。
+ * @~chinese 指向std::vector<int>的指针。
  * @param funcName @~english the name of calling function, it is used for error output in the debug model.
  * @~chinese 调用函数名字，调试模式下错误信息的输出会用到这个函数名字。
  * @return @~english Return true if the value at the given acceptable index of stack is a table, otherwise return false.
@@ -1004,8 +1006,8 @@ extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const c
  * The type of Lua value at the index should be a Lua table.
  *
  * @~chinese 
- * 从给定Lua栈索引上获取一个cocos2d::ValueMap对象
- * 给定Lua栈索引上的应该是一个table
+ * 从给定Lua栈索引上获取一个cocos2d::ValueMap对象。
+ * 给定Lua栈索引上的应该是一个table。
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
@@ -1470,7 +1472,7 @@ extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
  *
  * @~chinese 
  * 将一个cocos2d::PhysicsRayCastInfo对象转换成Lua table,然后将其压入Lua栈中。
- * table的格式如下:{shape=userdata,start= vec2_table1, ended=vec2_table2, contact=vec2_table3, normal=vec2_table4, fraction=numberValue}
+ * table的格式如下:{shape=userdata,start=vec2_table1, ended=vec2_table2, contact=vec2_table3, normal=vec2_table4, fraction=numberValue}
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
@@ -1550,7 +1552,7 @@ extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
  *
  * @~chinese 
  * 将一个cocos2d::BlendFunc对象转换成Lua table,然后将其压入Lua栈中。
- * table的格式如下:{ src = numberValue1,dst = numberValue2 }
+ * table的格式如下:{ src=numberValue1,dst=numberValue2 }
  * 
  * @param L @~english the current lua_State.
  * @~chinese 当前lua_State。
@@ -1670,7 +1672,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
  *
  * @~chinese 
  * 将一个cocos2d::Map<std::string, T>转换成Lua table,然后将其压入Lua栈中。
- * table的格式如下:{ name1 = userdata1 name2 = userdata2,……,nameMapSize = userdataMapSize }
+ * table的格式如下:{name1=userdata1, name2=userdata2, ..., nameMapSize=userdataMapSize}
  * cocos2d::Map中的Type T对象需要为Ref类型。
  * 
  * @param L @~english the current lua_State.
