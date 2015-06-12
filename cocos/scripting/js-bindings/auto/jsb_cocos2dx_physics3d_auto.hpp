@@ -1,3 +1,5 @@
+#include "base/ccConfig.h"
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #ifndef __cocos2dx_physics3d_h__
 #define __cocos2dx_physics3d_h__
 
@@ -341,5 +343,6 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_getAngularLowerLimit(JSContex
 bool js_cocos2dx_physics3d_Physics3D6DofConstraint_setAngularUpperLimit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_physics3d_Physics3D6DofConstraint_Physics3D6DofConstraint(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_physics3d_h__
+#endif //#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
