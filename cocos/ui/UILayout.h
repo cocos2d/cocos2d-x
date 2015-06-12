@@ -90,7 +90,7 @@ public:
      * @~chinese 获取Layout内所有的元素。
      * 
      * @return @~english A vector of Node pointers.
-     * @~chinese 一个包含节点的指针的向量。
+     * @~chinese 一个包含节点的指针的数组。
      */
     virtual const Vector<Node*>& getLayoutElements()const = 0;
     
@@ -121,7 +121,7 @@ public:
  * - Vertical layout: child elements are arranged vertically.
  * - Relative layout: child elements are arranged relative to certain rules.
  *
- * @~chinese 一个包含部件的容器。
+ * @~chinese 一个包含控件的容器。
  * 子节点可以根据布局类型重新排序,它还可以开启剪裁,设置背景图像和颜色。
  * 
  * 主要有四种类型的布局:
@@ -491,7 +491,7 @@ public:
      * @~english
      * Returns the "class name" of widget.
      * @~chinese 
-     * 返回“类名”的小部件。
+     * 返回组件的类名
      */
     virtual std::string getDescription() const override;
     
@@ -524,8 +524,8 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @~chinese 
-     * 根据z order和标签添加一个孩子到容器
-     * 如果孩子被添加到一个正在运行的节点,“onEnter”和“onEnterTransitionDidFinish”将立即被执行。
+     * 根据z order和标签添加一个子节点到容器
+     * 如果子节点被添加到一个正在运行的节点,“onEnter”和“onEnterTransitionDidFinish”将立即被执行。
      * 
      * @param child @~english A child node
      * @~chinese 一个子节点
@@ -546,7 +546,7 @@ public:
      * Removes all children from the container with a cleanup.
      *
      * @~chinese 
-     * 从容器中删除所有的孩子。
+     * 从容器中删除所有的子节点。
      * 
      * @see `removeAllChildrenWithCleanup(bool)`
      */
@@ -570,7 +570,7 @@ public:
      * @~english
      * force refresh widget layout
      * @~chinese 
-     * 强制刷新部件的布局
+     * 强制刷新控件的布局
      */
     virtual void forceDoLayout();
     
@@ -578,7 +578,7 @@ public:
      * @~english
      * request to refresh widget layout
      * @~chinese 
-     * 请求刷新部件的布局
+     * 请求刷新控件的布局
      */
     void requestDoLayout();
     
@@ -625,14 +625,14 @@ public:
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
      *  If the widget is not in a layout, it will return itself
      * @~chinese 
-     * 当一个部件是在layout中，你可以调用这个方法来获得指定的方向中的下一个焦点部件。
-     * 如果没有在布局小部件,它将返回自己
+     * 当一个控件是在layout中，你可以调用这个方法来获得指定的方向中的下一个焦点控件。
+     * 如果没有在布局控件,它将返回自己
      * @param direction @~english the direction to look for the next focused widget in a layout
-     * @~chinese 寻找下一个方向上的焦点部件
+     * @~chinese 寻找下一个方向上的焦点控件
      * @param current  @~english the current focused widget
-     * @~chinese 当前的焦点部件
+     * @~chinese 当前的焦点控件
      * @return @~english the next focused widget in a layout
-     * @~chinese layout中的下一个焦点部件
+     * @~chinese layout中的下一个焦点控件
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
     
@@ -640,13 +640,13 @@ public:
      * @~english
      * To specify a user-defined functor to decide which child widget of the layout should get focused
      * @~chinese 
-     * 要指定一个用户定义的函来决定哪些布局的子节点部件应该得到焦点
+     * 要指定一个用户定义的函来决定哪些布局的子节点控件应该得到焦点
      * @param FocusDirection @~english the finding direction
      * @~chinese 查找的方向
      * @param this @~english previous focused widget
-     * @~chinese 之前的焦点部件
+     * @~chinese 之前的焦点控件
      * @return @~english return the index of widget in the layout
-     * @~chinese 返回找到的部件
+     * @~chinese 返回找到的控件
      */
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
 
@@ -712,7 +712,7 @@ protected:
      * @param dir @~english next focused widget direction
      * @~chinese 接下来查找焦点的方向
      * @return @~english The index of child widget in the container
-     * @~chinese 子部件在容器中的索引
+     * @~chinese 子控件在容器中的索引
      */
      int findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
@@ -726,7 +726,7 @@ protected:
      * @param dir @~english next focused widget direction
      * @~chinese 接下来查找焦点的方向
      * @return @~english The index of child widget in the container
-     * @~chinese 子部件在容器中的索引
+     * @~chinese 子控件在容器中的索引
      */
     int findFarthestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
@@ -734,13 +734,13 @@ protected:
      * @~english
      * calculate the nearest distance between the baseWidget and the children of the layout
      * @~chinese 
-     * 计算基本部件和layout的子节点之间的最近距离
+     * 计算基本控件和layout的子节点之间的最近距离
      *
      * @param the @~english base widget which will be used to calculate the distance between the layout's children and itself
-     * @~chinese 将被用于计算layout的子节点和自身之间的距离的基本部件
+     * @~chinese 将被用于计算layout的子节点和自身之间的距离的基本控件
      *
      * @return @~english return the nearest distance between the baseWidget and the layout's children
-     * @~chinese 返回基本部件和最近的layout的子节点之间的距离
+     * @~chinese 返回基本控件和最近的layout的子节点之间的距离
      */
     float calculateNearestDistance(Widget* baseWidget);
     
@@ -748,13 +748,13 @@ protected:
      * @~english
      * calculate the farthest distance between the baseWidget and the children of the layout
      * @~chinese 
-     * 计算基本部件和layout的子节点之间的最近距离
+     * 计算基本控件和layout的子节点之间的最近距离
      *
      * @param the @~english base widget which will be used to calculate the distance between the layout's children and itself
-     * @~chinese 将被用于计算layout的子节点和自身之间的距离的基本部件
+     * @~chinese 将被用于计算layout的子节点和自身之间的距离的基本控件
      *
      * @return @~english return the farthest distance between the baseWidget and the layout's children
-     * @~chinese 返回基本部件和最近的layout的子节点之间的距离
+     * @~chinese 返回基本控件和最近的layout的子节点之间的距离
      */
     float calculateFarthestDistance(Widget* baseWidget);
     
@@ -770,7 +770,7 @@ protected:
      * @~english
      * find the first non-layout widget in this layout
      * @~chinese 
-     * 发现在这个layout中的第一个非布局部件
+     * 查找这个布局中第一个不是 layout 类型的控件
      */
     Widget *findFirstNonLayoutWidget();
     
@@ -778,7 +778,7 @@ protected:
      * @~english
      * find the first focus enabled widget index in the layout, it will recursive searching the child widget
      * @~chinese 
-     * 发现在layout中的第一个启用焦点控件的部件索引，它会递归搜索子部件
+     * 发现在layout中的第一个启用焦点的控件索引，它会递归搜索子控件
      */
     int findFirstFocusEnabledWidgetIndex();
     
@@ -793,7 +793,7 @@ protected:
      * @~english
      * get the center point of a widget in world space
      * @~chinese 
-     * 得到一个部件在世界空间中心点
+     * 得到一个控件在世界空间中心点
      */
     Vec2 getWorldCenterPoint(Widget* node)const;
     
@@ -805,9 +805,9 @@ protected:
      * @param dir  @~english the direction.
      * @~chinese 方向。
      * @param current  @~english the current focused widget
-     * @~chinese 当前焦点的部件
+     * @~chinese 当前焦点的控件
      * @return @~english the next focused widget
-     * @~chinese 下一个焦点部件
+     * @~chinese 下一个焦点控件
      */
     Widget* getNextFocusedWidget(FocusDirection direction,Widget *current);
     
@@ -819,9 +819,9 @@ protected:
      * @param dir  @~english the direction.
      * @~chinese 方向。
      *@param current  @~english the current focused widget
-     * @~chinese 当前焦点部件
+     * @~chinese 当前焦点控件
      *@return @~english the next focused widget
-     * @~chinese 下一个焦点部件
+     * @~chinese 下一个焦点控件
      */
     Widget* getPreviousFocusedWidget(FocusDirection direction, Widget *current);
     
@@ -847,7 +847,7 @@ protected:
      * @~english Lookup any parent widget with a layout type as the direction,
      * if the layout is loop focused, then return true, otherwise
      * It returns false
-     * @~chinese 查找任何父部件的布局类型、方向,
+     * @~chinese 查找任何父控件的布局类型、方向,
      * 如果开启了循环焦点,则返回true,否则返回false
      */
     bool  isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction)const;
