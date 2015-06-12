@@ -120,10 +120,11 @@ public:
      * @~chinese true 反序列化成功，否则false。
      */
     virtual bool serialize(void* r) override;
+
     /**
      * @brief @~english Allocates and initializes a create.
      * @~chinese 分配并且初始化声音组件。
-     * @return @~english A initialized node which is marked as "autorelease".
+     * @return @~english A initialized ComAudio which is marked as "autorelease".
      * @~chinese 一个初始化的声音组件，该节点会自动被标记为“autorelease”(自动释放)。
      */
     static ComAudio* create(void);

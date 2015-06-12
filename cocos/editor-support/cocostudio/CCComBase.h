@@ -31,17 +31,19 @@ THE SOFTWARE.
 #include "base/ObjectFactory.h"
 #include "CocoLoader.h"
 
- /** 
- @主题 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象
- */
+/** 
+ * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+*/
 #define DECLARE_CLASS_COMPONENT_INFO \
     public: \
         static cocos2d::ObjectFactory::TInfo Type; \
         static cocos2d::Ref* createInstance(void); \
         
- /** 
- @主题 工厂类ObjectFactory注册函数实现，被用于组件源文件，把当前组件类名注册到ObjectFactory，用于反射创建对象
- */
+/** 
+ * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+*/
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
         { \
@@ -49,18 +51,20 @@ THE SOFTWARE.
         } \
         cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
- /** 
- @主题 显式把className的类注册到ObjectFactory，用于反射创建对象
- */
+/** 
+ * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+*/
 #define CREATE_CLASS_COMPONENT_INFO(className) \
         cocos2d::ObjectFactory::TInfo(#className, &className::createInstance)
 
- /** 
- @结构体名 SerData
- @主题 序列化数据结构
- @细节 配合解析cocos studio 1.x场景编辑器导出的二进制数据
- @组 组件
- */
+/** 
+ * @class SerData
+ * @brief @~english Data of serialization and de-serialization.
+ * @~chinese 序列化数据结构.
+ * @details @~english Binary data object of cocos studio 1.x Scene Editor export.
+ * @~chinese cocos studio 1.x场景编辑器导出的二进制数据.
+*/
 struct CC_STUDIO_DLL SerData
 {
     const rapidjson::Value *_rData;

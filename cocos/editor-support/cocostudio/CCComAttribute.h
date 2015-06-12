@@ -61,7 +61,7 @@ public:
     /**
      * @brief @~english Allocates and initializes a ComAttribute.
      * @~chinese 分配并且初始化自定义组件。
-     * @return @~english A initialized node which is marked as "autorelease".
+     * @return @~english A initialized ComAttribute which is marked as "autorelease".
      * @~chinese 一个初始化的自定义组件，该节点会自动被标记为“autorelease”(自动释放)。
      */
     static ComAttribute* create(void);
