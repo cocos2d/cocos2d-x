@@ -50,7 +50,7 @@ class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 public:
     /**
     * @~english Allocates and initializes an `ActionTimelineData`.
-    * @~chinese 分配并且初始化一段`ActionTimelineData`对象。
+    * @~chinese 分配并且初始化一个`ActionTimelineData`对象。
     * @param actionTag @~english Action tag.
     * @~chinese 动作TAG。
     * @return @~english An initialized `ActionTimelineData` which is marked as "autorelease".
@@ -76,7 +76,7 @@ CC_CONSTRUCTOR_ACCESS:
     ActionTimelineData();
     /**
     * @~english Initializes an `ActionTimelineData`.
-    * @~chinese 初始化一段`ActionTimelineData`。
+    * @~chinese 初始化一个`ActionTimelineData`对象。
     * @param actionTag  @~english Action tag.
     * @~chinese 动作TAG。
     */
@@ -93,7 +93,7 @@ public:
 
     /**
     * @~english Allocates and initializes an `ActionTimeline`.
-    * @~chinese 分配并且初始化一段`ActionTimeline`对象。
+    * @~chinese 分配并且初始化一个`ActionTimeline`对象。
     * @param actionTag @~english Action tag.
     * @~chinese 动作TAG。
     * @return @~english An initialized `ActionTimeline` which is marked as "autorelease".
@@ -124,7 +124,7 @@ public:
     virtual void gotoFrameAndPlay(int startIndex);
 
     /** @~english Goto the specified frame index, and start playing from this index.
-    * @~chinese 跳转至指定帧索引，并从该索引开始播放动画。
+    * @~chinese 跳转至指定索引的帧，并从该帧开始播放动画。
      * @param startIndex @~english The animation will play from this index.
      * @~chinese 动画将从该索引位置开始播放。
      * @param loop @~english Whether or not the animation need loop. 
@@ -213,10 +213,10 @@ public:
 
     /** @~english End frame of this action.
     *   When action play to this frame, if action is not loop, then it will stop,  or it will play from start frame again. 
-    *   @~chinese 动画的结束帧索引。
+    *   @~chinese 动画的结束帧。
     *   当动画播放到该帧时，如果非循环播放，则动画停止。否则会从起始帧从头播放。
     * @return @~english End frame.
-    * @~chinese 结束帧索引。
+    * @~chinese 结束帧。
     */
     virtual int  getEndFrame() const { return _endFrame; }
 

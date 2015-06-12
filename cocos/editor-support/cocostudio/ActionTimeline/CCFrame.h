@@ -61,16 +61,16 @@ public:
 
     /**
     * @~english Set timeline.
-    * @~chinese 设置时间线。
+    * @~chinese 设置时间轴。
     * @param timeline @~english Timeline.
-    * @~chinese 时间线。
+    * @~chinese 时间轴。
     */
     virtual void setTimeline(Timeline* timeline) { _timeline = timeline; }
     /**
     * @~english Get timeline.
-    * @~chinese 获取时间线。
+    * @~chinese 获取时间轴。
     * @return @~english Timeline.
-    * @~chinese 时间线。
+    * @~chinese 时间轴。
     */
     virtual Timeline* getTimeline() const { return _timeline; }
 

@@ -44,11 +44,11 @@ public:
     bool init() override;
 
     /** @~english Initialize with root node and actiontimeline.
-    *   @~chinese 使用根节点和时间线动画初始化。
+    *   @~chinese 使用根节点和时间轴动画初始化。
     * @param root @~english Root node.
     * @~chinese 根节点。
     * @param action @~english Action time line.
-    * @~chinese 时间线动画。
+    * @~chinese 时间轴动画。
     * @return @~english Is init succeed.
     * @~chinese 是否初始化成功。
     */
@@ -68,15 +68,15 @@ public:
     virtual cocos2d::Node* getRoot();
     
     /** @~english Set action time line.
-    *   @~chinese 设置时间线动画。
+    *   @~chinese 设置时间轴动画。
     * @param action @~english Action time line.
-    * @~chinese 时间线动画。
+    * @~chinese 时间轴动画。
     */
     virtual void setActionTimeline(ActionTimeline* action);
     /** @~english Get action time line.
-    *   @~chinese 获取时间线动画。
+    *   @~chinese 获取时间轴动画。
     * @return @~english Action time line.
-    * @~chinese 时间线动画。
+    * @~chinese 时间轴动画。
     */
     virtual ActionTimeline* getActionTimeline();
     
