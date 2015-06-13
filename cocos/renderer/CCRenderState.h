@@ -188,7 +188,7 @@ public:
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
      */
-    class StateBlock : public Ref
+    class CC_DLL StateBlock : public Ref
     {
         friend class RenderState;
         friend class Pass;
