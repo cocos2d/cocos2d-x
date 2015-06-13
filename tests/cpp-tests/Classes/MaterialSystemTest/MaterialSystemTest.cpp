@@ -433,11 +433,19 @@ void Material_invalidate::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 
 
         glFrontFace((GLenum)GL_CW);
         CHECK_GL_ERROR_DEBUG();
-//
-//        glDisable(GL_BLEND);
-//        CHECK_GL_ERROR_DEBUG();
 
-        RenderState::StateBlock::invalidate();
+        glDisable(GL_BLEND);
+        CHECK_GL_ERROR_DEBUG();
+
+        // a non-optimal way is to pass all bits, but that would be very inefficient
+//        RenderState::StateBlock::invalidate(RenderState::StateBlock::RS_ALL_ONES);
+
+        RenderState::StateBlock::invalidate(RenderState::StateBlock::RS_DEPTH_TEST |
+                                            RenderState::StateBlock::RS_DEPTH_WRITE |
+                                            RenderState::StateBlock::RS_CULL_FACE |
+                                            RenderState::StateBlock::RS_CULL_FACE_SIDE |
+                                            RenderState::StateBlock::RS_FRONT_FACE |
+                                            RenderState::StateBlock::RS_BLEND);
     };
 
     renderer->addCommand(&_customCommand);

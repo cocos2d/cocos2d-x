@@ -349,6 +349,25 @@ public:
         uint32_t getHash() const;
         bool isDirty() const;
 
+        /** StateBlock bits to be used with invalidate */
+        enum
+        {
+            RS_BLEND = (1 << 0),
+            RS_BLEND_FUNC = (1 << 1),
+            RS_CULL_FACE = (1 << 2),
+            RS_DEPTH_TEST = (1 << 3),
+            RS_DEPTH_WRITE = (1 << 4),
+            RS_DEPTH_FUNC = (1 << 5),
+            RS_CULL_FACE_SIDE = (1 << 6),
+            RS_STENCIL_TEST = (1 << 7),
+            RS_STENCIL_WRITE = (1 << 8),
+            RS_STENCIL_FUNC = (1 << 9),
+            RS_STENCIL_OP = (1 << 10),
+            RS_FRONT_FACE = (1 << 11),
+            
+            RS_ALL_ONES = 0xFFFFFFFF,
+        };
+
         /** 
          * Invalidates the default StateBlock.
          *
@@ -357,7 +376,7 @@ public:
          * By doing that, the next time a StateBlock::restore() is called,
          * it will restore to the default value the default StateBlock.
          */
-        static void invalidate();
+        static void invalidate(long stateBits);
 
         static StateBlock* _defaultState;
 

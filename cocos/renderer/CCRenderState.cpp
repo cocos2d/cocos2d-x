@@ -37,25 +37,6 @@ NS_CC_BEGIN
 
 RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
 
-// Render state override bits
-enum
-{
-    RS_BLEND = (1 << 0),
-    RS_BLEND_FUNC = (1 << 1),
-    RS_CULL_FACE = (1 << 2),
-    RS_DEPTH_TEST = (1 << 3),
-    RS_DEPTH_WRITE = (1 << 4),
-    RS_DEPTH_FUNC = (1 << 5),
-    RS_CULL_FACE_SIDE = (1 << 6),
-    RS_STENCIL_TEST = (1 << 7),
-    RS_STENCIL_WRITE = (1 << 8),
-    RS_STENCIL_FUNC = (1 << 9),
-    RS_STENCIL_OP = (1 << 10),
-    RS_FRONT_FACE = (1 << 11),
-
-    RS_ALL_ONES = 0xFFFFFFFF,
-};
-
 
 RenderState::RenderState()
 : _texture(nullptr)
@@ -731,11 +712,11 @@ uint32_t RenderState::StateBlock::getHash() const
     return 0x12345678;
 }
 
-void RenderState::StateBlock::invalidate()
+void RenderState::StateBlock::invalidate(long stateBits)
 {
     CCASSERT(_defaultState, "_default state not created yet. Cannot be invalidated");
 
-    _defaultState->_bits = RS_ALL_ONES;
+    _defaultState->_bits = stateBits;
     _defaultState->restore(0);
 }
 
