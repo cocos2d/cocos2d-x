@@ -151,46 +151,46 @@ public:
     void sendImmediate(HttpRequest* request);
     
     /**@~english
-     * Set the timeout value for connecting.
+     * Set the timeout value for connecting in seconds.
      *
      * @~chinese 
-     * 设置连接超时时间。
+     * 以秒为单位设置连接超时时间。
      * 
-     * @param value @~english the timeout value for connecting.
-     * @~chinese 连接超时时间。
+     * @param value @~english the timeout value for connecting in seconds.
+     * @~chinese 以秒为单位的连接超时时间。
      */
     void setTimeoutForConnect(int value);
     
     /**@~english
-     * Get the timeout value for connecting.
+     * Get the timeout value for connecting in seconds.
      *
      * @~chinese 
-     * 获取连接超时时间。
+     * 获取以秒为单痊的连接超时时间。
      * 
-     * @return @~english the timeout value for connecting.
-     * @~chinese 连接超时时间。
+     * @return @~english the timeout value for connecting in seconds.
+     * @~chinese 以秒为单位的连接超时时间。
      */
     int getTimeoutForConnect();
     
     /**@~english
-     * Set the timeout value for reading.
+     * Set the timeout value for reading in seconds.
      *
      * @~chinese 
-     * 设置read超时时间。
+     * 设置以秒为单位的read超时时间。
      * 
-     * @param value @~english the timeout value for reading.
-     * @~chinese read超时时间。
+     * @param value @~english the timeout value for reading in seconds.
+     * @~chinese 以秒为单位的read超时时间。
      */
     void setTimeoutForRead(int value);
 
     /**@~english
-     * Get the timeout value for reading.
+     * Get the timeout value for reading in seconds.
      *
      * @~chinese 
-     * 获得read超时时间。
+     * 获得以秒为单位的read超时时间。
      * 
-     * @return @~english the timeout value for reading.
-     * @~chinese read超时时间。
+     * @return @~english the timeout value for reading in seconds.
+     * @~chinese 以秒为单位的read超时时间。
      */
     int getTimeoutForRead();
     
@@ -206,10 +206,10 @@ public:
     HttpCookie* getCookie() const {return _cookie; }
     
     /**@~english
-     *Get the _cookieFileMutex
+     *Get the _cookieFileMutex that represents the std::mutex of the cookie files
      *
      *@~chinese
-     *获取_cookieFileMutex
+     *获取cookie文件互斥量_cookieFileMutex
      *
      * @return @~english the std::mutex 
      * @~chinese std::mutex
@@ -217,10 +217,10 @@ public:
     std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
     
     /**@~english
-     *Get the _sslCaFileMutex
+     *Get the _sslCaFileMutex that represents the std::mutex of the SSL files
      *
      *@~chinese
-     *_sslCaFileMutex
+     *获取SSL文件互斥量_cookieFileMutex
      *
      * @return @~english the std::mutex 
      * @~chinese std::mutex
@@ -234,14 +234,14 @@ private:
     /**@~english
      * Init pthread mutex, semaphore, and create new thread for http requests
      * @~chinese 
-     * Init pthread互斥信号量,为http请求创建新线程
+     * 初始化pthread互斥信号量,为http请求创建新线程
      * @return @~english bool
-     * @~chinese 保龄球
+     * @~chinese bool值
      */
     bool lazyInitThreadSemphore();
     void networkThread();
     void networkThreadAlone(HttpRequest* request, HttpResponse* response);
-    /** @~english Poll function called from main thread to dispatch callbacks when http requests finished  @~chinese 调查从主线程发送调用回调函数,当http请求完成**/
+
     void dispatchResponseCallbacks();
     
     void processResponse(HttpResponse* response, char* responseMessage);

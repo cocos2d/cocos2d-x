@@ -49,10 +49,9 @@ typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse*
 
 /** @~english
  * Defines the object which users must packed for HttpClient::send(HttpRequest*) method.
- * Please refer to tests/test-cpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp as a sample
  * @~chinese 
  * 一个请求数据封装类，用于HttpClient::send。
- * 请参考tests/test-cpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp
+ * @see tests/test-cpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp
  * @since v2.0.2
  *
  * @lua NA
@@ -86,12 +85,11 @@ public:
      *   Because HttpRequest object will be used between UI thead and network thread,
          requestObj->autorelease() is forbidden to avoid crashes in AutoreleasePool
          new/retain/release still works, which means you need to release it manually
-         Please refer to HttpRequestTest.cpp to find its usage.
      * @~chinese 
      * 构造函数。
      * 因为HttpRequest对象将会在UI线程和网络线程中使用，所以requestObj->autorelease()是被禁止的，这样可以避免AutoreleasePool中的崩溃。
      * new/retain/release还是有效，这意味着你需要手动的调用release函数。
-     * 请参考httprequest.cpp查找详细的用法。
+     * @see httprequest.cpp。
      */
     HttpRequest()
     {

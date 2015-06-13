@@ -39,9 +39,8 @@ namespace network {
 
 /** 
  * @brief @~english A HttpResponse class is wrapped to the related responsed data came back from the HttpClient.
- * Please refer to samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp.
  * @~chinese HttpResponse是对HttpClient返回的响应数据的封装。
- * 请参考samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp。
+ * @see samples/TestCpp/Classes/ExtensionTest/NetworkTest/HttpClientTest.cpp.
  * @since v2.0.2.
  * @lua NA
  */
@@ -118,11 +117,11 @@ public:
         
     /** @~english
      * To see if the HttpReqeust is returned successfully.
-     * Althrough users can judge if (http response code =＝ 200), we want an easier way.
+     * Althrough users can judge if (http response code == 200), we want an easier way.
      * If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details.
      * @~chinese 
      * 判断HttpReqeust是否返回成功。
-     * 虽然用户可以通过判断(response code =＝ 200)来判断,但我们也需要一种更简单的方法。
+     * 虽然用户可以通过(response code == 200)是否成立来判断,但我们也需要一种更简单的方法。
      * 如果返回失败,可以通过调用getResponseCode和getErrorBuffer获取更多的细节。
      * @return @~english bool the flag that represent whether the http request return sucesssfully or not.
      * @~chinese 判断HttpReqeust是否返回成功的标记。
