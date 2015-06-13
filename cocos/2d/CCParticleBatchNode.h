@@ -4,7 +4,7 @@
  * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (c) 2011      Zynga Inc.
  * Copyright (c) 2011      Marco Tillemans
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2015 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -25,7 +25,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ * 
  */
 #ifndef __CCPARTICLEBATCHNODE_H__
 #define __CCPARTICLEBATCHNODE_H__
@@ -48,12 +48,12 @@ class ParticleSystem;
 #define kParticleDefaultCapacity 500
 
 /** @class ParticleBatchNode
- * @brief ParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
+ * @brief @~english ParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
  * (often known as "batch draw").
  *
  * A ParticleBatchNode can reference one and only one texture (one image file, one texture atlas).
- * Only the ParticleSystems that are contained in that texture can be added to the SpriteBatchNode.
- * All ParticleSystems added to a SpriteBatchNode are drawn in one OpenGL ES draw call.
+ * Only the ParticleSystems that are contained in that texture can be added to the ParticleBatchNode.
+ * All ParticleSystems added to a ParticleBatchNode are drawn in one OpenGL ES draw call.
  * If the ParticleSystems are not added to a ParticleBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
  *
  *
@@ -64,59 +64,98 @@ class ParticleSystem;
  * Most efficient usage
  * - Initialize the ParticleBatchNode with the texture and enough capacity for all the particle systems
  * - Initialize all particle systems and add them as child to the batch node
+ *
+ * @~chinese ParticleBatchNode和批处理节点（SpriteBatchNode）一样，如果它包含有子节点，它会在一次OpenGL call调用里绘制所有子节点。
+ * (通常被称为“批处理”)。
+ * 
+ * 一个ParticleBatchNode只可以引用一个纹理(一个图像文件,或一个纹理贴图集)。
+ * ParticleSystems对象引用的纹理和ParticleBatchNode是同一个的时候才可以添加到ParticleBatchNode。
+ * 所有添加到ParticleBatchNode的ParticleSystems都会在同一个OpenGL ES渲染指令里被绘制。
+ * 如果ParticleSystems没有被添加ParticleBatchNode，那么每一个ParticleSystems都需要调用一次OpenGL ES绘图,这是低效率的。
+ * 
+ * 
+ * 限制:
+ * - 目前只支持ParticleSystemQuad
+ * - 所有的系统都需要用相同的参数,包含混合模式、抗锯齿、纹理
+ * 
+ * 最有效的用法：
+ * - 使用纹理及一个足够容纳所有粒子系统的容量初始化一个ParticleBatchNode。
+ * - 初始化粒子系统，然后将它们作为孩子节点添加到ParticleBatchNode。
  * @since v1.1
  */
-
 class CC_DLL ParticleBatchNode : public Node, public TextureProtocol
 {
 public:
-    /** Create the particle system with Texture2D, a capacity of particles, which particle system to use.
+    /** @~english Create the particle system with Texture2D, a capacity of particles, which particle system to use.
+     * @~chinese 使用给定的纹理及粒子系统容量创建并初始化一个粒子批处理节点。
+     * 
+     * @param tex @~english A given texture.
+     * @~chinese 一个给定的纹理。
+     * @param capacity @~english A capacity of particles.
+     * @~chinese 粒子系统容量。
      *
-     * @param tex A given texture.
-     * @param capacity A capacity of particles.
-     * @return An autoreleased ParticleBatchNode object.
+     * @return @~english A initialized ParticleBatchNode object which is marked as "autorelease".
+     * @~chinese 一个初始化的ParticleBatchNode对象，该对象会自动被标记为“autorelease”(自动释放).
      * @js NA
      */
     static ParticleBatchNode* createWithTexture(Texture2D *tex, int capacity = kParticleDefaultCapacity);
 
-    /** Create the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles.
+    /** @~english Create the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles.
+     * @~chinese 使用给定的图片文件及粒子系统容量创建并一个粒子批处理节点。
+     * 
+     * @param fileImage @~english A given file path.
+     * @~chinese 一个给定的图片文件的路径。
+     * @param capacity @~english A capacity of particles.
+     * @~chinese 粒子系统容量。
      *
-     * @param fileImage A given file name.
-     * @param capacity A capacity of particles.
-     * @return An autoreleased ParticleBatchNode object.
+     * @return @~english A initialized ParticleBatchNode object which is marked as "autorelease".
+     * @~chinese 一个初始化的ParticleBatchNode对象，该对象会自动被标记为“autorelease”(自动释放).
      */
     static ParticleBatchNode* create(const std::string& fileImage, int capacity = kParticleDefaultCapacity);
 
-    /** Inserts a child into the ParticleBatchNode.
-     *
-     * @param system A given particle system.
-     * @param index The insert index.
+    /** @~english Inserts a child into the ParticleBatchNode.
+     * @~chinese 插入一个ParticleSystem子节点到ParticleBatchNode。
+     * 
+     * @param system @~english A given particle system.
+     * @~chinese 一个给定的粒子系统节点。
+     * @param index @~english The insert index.
+     * @~chinese 节点列表中的位置。
      */
     void insertChild(ParticleSystem* system, int index);
 
-    /** Remove a child of the ParticleBatchNode.
-     *
-     * @param index The index of the child.
-     * @param doCleanup True if all actions and callbacks on this node should be removed, false otherwise.
+    /** @~english Remove a child of the ParticleBatchNode.
+     * @~chinese 删除位于子节点列表中给定位置的一个ParticleBatchNode的子节点。
+     * 
+     * @param index @~english The index of the child.
+     * @~chinese 子节点的位置。
+     * @param doCleanup @~english True if all actions and callbacks on this node should be removed, false otherwise.
+     * @~chinese true 这个节点的所有动作和回调将被删除； false 不删除节点的动作及回调。
      */
     void removeChildAtIndex(int index, bool doCleanup);
+
     void removeAllChildrenWithCleanup(bool doCleanup) override;
 
-    /** Disables a particle by inserting a 0'd quad into the texture atlas.
-     *
-     * @param particleIndex The index of the particle.
+    /** @~english Disables a particle by inserting a 0'd quad into the texture atlas.
+     * @~chinese 禁用指定的一个粒子系统。
+     * 
+     * @param particleIndex @~english The index of the particle.
+     * @~chinese 粒子系统在子节点列表中的位置。
      */
     void disableParticle(int particleIndex);
 
-    /** Gets the texture atlas used for drawing the quads.
-     *
-     * @return The texture atlas used for drawing the quads.
+    /** @~english Gets the texture atlas used for drawing the quads.
+     * @~chinese 获取绘制顶点的纹理贴图集。
+     * 
+     * @return @~english The texture atlas used for drawing the quads.
+     * @~chinese 纹理贴图集。
      */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
     
-    /** Sets the texture atlas used for drawing the quads.
-     *
-     * @param atlas The texture atlas used for drawing the quads.
+    /** @~english Sets the texture atlas used for drawing the quads.
+     * @~chinese 设置绘制顶点的纹理贴图集。
+     * 
+     * @param atlas @~english The texture atlas used for drawing the quads.
+     * @~chinese 纹理贴图集。
      */
     inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
     
@@ -131,35 +170,16 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual Texture2D* getTexture(void) const override;
     virtual void setTexture(Texture2D *texture) override;
-    /**
-    * @code
-    * When this function bound into js or lua,the parameter will be changed
-    * In js: var setBlendFunc(var src, var dst)
-    * @endcode
-    * @lua NA
-    */
+    
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
-    /**
-    * @js NA
-    * @lua NA
-    */
     virtual const BlendFunc& getBlendFunc(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    /**
-     * @js ctor
-     */
     ParticleBatchNode();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~ParticleBatchNode();
     
-    /** initializes the particle system with Texture2D, a capacity of particles */
     bool initWithTexture(Texture2D *tex, int capacity);
     
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
     bool initWithFile(const std::string& fileImage, int capacity);
     
 private:
@@ -170,12 +190,9 @@ private:
     int addChildHelper(ParticleSystem* child, int z, int aTag, const std::string &name, bool setTag);
     void addChildByTagOrName(ParticleSystem* child, int z, int tag, const std::string &name, bool setTag);
     void updateBlendFunc(void);
-    /** the texture atlas used for drawing the quads */
+    
     TextureAtlas* _textureAtlas;
-
-    /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
-    // quad command
     BatchCommand _batchCommand;
 };
 

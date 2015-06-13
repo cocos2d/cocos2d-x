@@ -36,37 +36,51 @@ NS_CC_BEGIN
  */
 namespace ui {
 
-/**
+/**@~english
  * HBox is just a convenient wrapper class for horizontal layout type.
  * HBox lays out its children in a single horizontal row.
+ * @~chinese 
+ * HBox只是一个水平布局包装类。
+ * HBox里面所有的孩子节点都会水平排列成一行
  */
 class CC_GUI_DLL HBox : public Layout{
 public:
     
-    /**
+    /**@~english
      * Default constructor
+     * @~chinese 
+     * 默认构造函数
      * @js ctor
      * @lua new
      */
     HBox();
     
-    /**
+    /**@~english
      * Default destructor
+     * @~chinese 
+     * 默认析构函数
      * @js NA
      * @lua NA
      */
     virtual ~HBox();
     
-    /**
+    /**@~english
      * Create a empty HBox instance.
-     * @return A HBox instance pointer.
+     * @~chinese 
+     * 创建一个空的HBox实例。
+     * @return @~english A HBox instance pointer.
+     * @~chinese 一个HBox实例
      */
     static HBox* create();
     
-    /**
+    /**@~english
      *Create a HBox with a certain size.
-     *@param size The content size of the layout.
-     *@return A HBox instance pointer.
+     * @~chinese 
+     * 创建一个给定大小的HBox实例
+     *@param size @~english The content size of the layout.
+     * @~chinese 布局器的大小。
+     *@return @~english A HBox instance pointer.
+     * @~chinese 一个HBox实例
      */
     static HBox* create(const Size& size);
     
