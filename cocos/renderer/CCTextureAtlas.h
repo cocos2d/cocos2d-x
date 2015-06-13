@@ -288,7 +288,7 @@ public:
     void fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount);
 
     /** @~english Draws n quads.
-     * N can't be greater than the capacity of the Atlas.
+     * n can't be greater than the capacity of the Atlas.
      * @~chinese 绘制 n 个矩形数据。
      * n 不能大于矩形数据的个数上限。
      * @param n @~english The amount of the quads will be drawn.
@@ -297,7 +297,7 @@ public:
     void drawNumberOfQuads(ssize_t n);
 
     /** @~english Draws n quads from an index (offset).
-     * N + start can't be greater than the capacity of the atlas.
+     * n + start can't be greater than the capacity of the atlas.
      * @~chinese 绘制指定索引值位置之后的 n 个矩形数据。
      * n + start 不能大于矩形数据的个数上限。
      * @param numberOfQuads @~english The amount of the quads will be drawn.
@@ -330,8 +330,8 @@ public:
      */
     inline void setDirty(bool bDirty) { _dirty = bDirty; }
 
-    /**@~english Get quads total amount.
-     * @~chinese 获得矩形数据的总个数。
+    /**@~english Get the description of the object.
+     * @~chinese 获取对象的描述信息。
      * @js NA
      * @lua NA
      */
@@ -392,13 +392,15 @@ protected:
     GLuint              _VAOname;
     GLuint              _buffersVBO[2]; //0: vertex  1: indices
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-    /** @~english quantity of quads that are going to be drawn  @~chinese 数量要绘制的四胞胎*/
+    /** @~english quantity of quads that are going to be drawn  @~chinese 要绘制的矩形数据个数。*/
     ssize_t _totalQuads;
-    /** @~english quantity of quads that can be stored with the current texture atlas size  @~chinese 量,或小型四轮车of stored with the current质地atlas规模*/
+    /** @~english quantity of quads that can be stored with the current texture atlas size.
+     * @~chinese 可以绘制的矩形数据个数上限。
+     */
     ssize_t _capacity;
-    /** @~english Texture of the texture atlas  @~chinese 纹理的纹理地图集*/
+    /** @~english Texture of the texture atlas  @~chinese 使用的纹理。*/
     Texture2D* _texture;
-    /** @~english Quads that are going to be rendered  @~chinese 将呈现四胞胎*/
+    /** @~english Quads that are going to be rendered  @~chinese 保存所有的矩形数据。*/
     V3F_C4B_T2F_Quad* _quads;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA

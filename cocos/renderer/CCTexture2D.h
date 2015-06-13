@@ -69,7 +69,7 @@ class GLProgram;
  * @~chinese Texture2D 类。这个类可以轻松地从图片，文本或者数据创建 OpenGL 2D 纹理。
  * 创建的 Texture2D 对象的宽与高总是保持为 2 的幂次方。
  * 实际纹理的图像大小可能小于创建的纹理大小。比如：contentSize != (pixelsWide, pixelsHigh) 和 (maxS, maxT) != (1.0,1.0)。
- * 要知道生成的纹理对象内容是上下颠倒的。
+ * 注意：生成的纹理对象内容是上下颠倒的。
  */
 class CC_DLL Texture2D : public Ref
 #ifdef EMSCRIPTEN
@@ -238,7 +238,7 @@ public:
      * - 生成8位纹理: `Texture2D::PixelFormat:A8` (只有当你使用单色时才能使用此格式)
      * 
      * 它是如何工作的?
-     * - 如果是一个 RGBA (包含 alpha 通道) 图像，则将使用默认的像素格式(它可以是一个8位,16位或32位的纹理)
+     * - 如果是一个 RGBA (包含 alpha 通道) 图像，则使用默认的像素格式(它可以是一个8位,16位或32位的纹理)
      * - 如果是一个 RGB (没有 alpha 通道) 图像，那么：当默认的像素格式为 RGBA8888 时，RGBA8888 (32位) 将被使用。否则，RGB565(16位纹理)将被使用。
      * 
      * 这个参数对 PVR/PVR.CCZ 图像是无效的。
@@ -247,8 +247,8 @@ public:
      */
     static void setDefaultAlphaPixelFormat(Texture2D::PixelFormat format);
 
-    /** @~english Returns the alpha pixel format.
-     * @~chinese 返回 alpha 通道的像素格式。
+    /** @~english Returns the default alpha pixel format.
+     * @~chinese 返回默认的 alpha 通道像素格式。
      * @since v0.8
      */
     static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
@@ -267,7 +267,7 @@ public:
      * 
      * @~chinese 
      * 因为在运行时无法知道 PVR 图像是否需要进行 alpha 预乘,
-     * 可以在加载时，决定是否进行 alpha 预乘。
+     * 所以需要在加载时，决定是否进行 alpha 预乘。
      * 
      * 在默认情况下是禁用的。
      * 
@@ -290,7 +290,9 @@ public:
     /**@~english
      * Get texutre name, dimensions and coordinates message by a string.
      * @~chinese 
-     * 获取纹理名称，大小和坐标信息。
+     * 以字符串形式获取纹理名称，大小和坐标信息。
+     * @return @~english The string include texture name, dimensions and coordinates message.
+     * @~chinese 包含纹理名称，大小和坐标信息的字符串。
      * @js NA
      * @lua NA
      */
@@ -304,9 +306,9 @@ public:
 	void releaseGLTexture();
 
     /** @~english Initializes a Texture2D object with data.
-     * @~chinese 使用指定呃数据初始化 Texture2D 对象。
+     * @~chinese 使用指定的数据初始化 Texture2D 对象。
      * @param data @~english Specifies a pointer to the image data in memory.
-     * @~chinese 指定一个内存中的图像数据指针。
+     * @~chinese 图像数据的指针。
      * @param dataLen @~english The image data length.
      * @~chinese 图像数据的长度。
      * @param pixelFormat @~english The image pixelFormat.
@@ -327,7 +329,7 @@ public:
     /** @~english Initializes with mipmaps. 
      * @~chinese 使用 mipmaps 图像初始化。
      * @param mipmaps @~english Specifies a pointer to the mipmaps image data in memory.
-     * @~chinese 指定一个内存中的 mipmaps 图像数据指针。
+     * @~chinese mipmaps 图像数据的指针。
      * @param mipmapsNum @~english The mipmaps number.
      * @~chinese mipmaps 图像数据的长度。
      * @param pixelFormat @~english The image pixelFormat.
@@ -344,7 +346,7 @@ public:
     /** @~english Update with texture data.
      * @~chinese 使用指定的数据更新纹理。
      * @param data @~english Specifies a pointer to the image data in memory.
-     * @~chinese 指定一个内存中的图像数据指针。
+     * @~chinese 图像数据的指针。
      * @param offsetX @~english Specifies a texel offset in the x direction within the texture array.
      * @~chinese 纹理数据中的 x 轴的偏移量。
      * @param offsetY @~english Specifies a texel offset in the y direction within the texture array.
@@ -449,20 +451,20 @@ public:
      * If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
      *
      * @~chinese 设置 min 过滤器，mag 过滤器，wrap s 和 wrap t 这些纹理参数。
-     * 如果纹理大小为 NPOT(非 2 的幂次方)，那么只能使用 GL_CLAMP_TO_EDGE 和 GL_TEXTURE_WRAP_{S,T}。
+     * 如果纹理大小为 NPOT(非 2 的幂次方)，那么只能在 GL_TEXTURE_WRAP_{S,T} 中使用 GL_CLAMP_TO_EDGE。
      * 
      * @warning @~english Calling this method could allocate additional texture memory.
      * @code 
      * When this function bound into js or lua,the input parameter will be changed
-     * In js: var setBlendFunc(var arg1, var arg2, var arg3, var arg4)
-     * In lua: local setBlendFunc(local arg1, local arg2, local arg3, local arg4)
+     * In js: var setTexParameters(var arg1, var arg2, var arg3, var arg4)
+     * In lua: local setTexParameters(local arg1, local arg2, local arg3, local arg4)
      * @endcode
      *
      * @~chinese 调用该方法会分配额外的纹理内存。
      * @code 
      * 当此方法绑定到 js 或者 lua 中，参数需要变为：
-     * js 中: var setBlendFunc(var arg1, var arg2, var arg3, var arg4)
-     * lua 中: local setBlendFunc(local arg1, local arg2, local arg3, local arg4)
+     * js 中: var setTexParameters(var arg1, var arg2, var arg3, var arg4)
+     * lua 中: local setTexParameters(local arg1, local arg2, local arg3, local arg4)
      * @endcode
      * @since v0.8
      */
