@@ -34,8 +34,10 @@ THE SOFTWARE.
 #include "WICImageLoader-winrt.h"
 #endif
 
-// premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
+/** @~english premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
 // such as RGB888, RGB5A1
+    @~chinese 透明像素复合 如果我们在Texture2D中使用其他的像素格式（如：RGB888, RGB5A1），效果就会出错
+*/
 #define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
     (unsigned)(((unsigned)((unsigned char)(vr) * ((unsigned char)(va) + 1)) >> 8) | \
     ((unsigned)((unsigned char)(vg) * ((unsigned char)(va) + 1) >> 8) << 8) | \
@@ -50,7 +52,8 @@ NS_CC_BEGIN
  */
 
 /**
- @brief Structure which can tell where mipmap begins and how long is it
+ @brief @~english Structure which can tell where mipmap begins and how long is it
+ * @~chinese 用来辨别mipmap起始位置和长度的结构体
  */
 typedef struct _MipmapInfo
 {
@@ -73,7 +76,7 @@ public:
      */
     virtual ~Image();
 
-    /** Supported formats for Image */
+    /** @~english Supported formats for Image  @~chinese 支持的图片格式*/
     enum class Format
     {
         //! JPEG
@@ -94,30 +97,39 @@ public:
         ATITC,
         //! TGA
         TGA,
-        //! Raw Data
+        //! 原始数据
         RAW_DATA,
-        //! Unknown format
+        //! 未知格式
         UNKNOWN
     };
 
     /**
-    @brief Load the image from the specified path.
-    @param path   the absolute file path.
-    @return true if loaded correctly.
+    @brief @~english Load the image from the specified path.
+     * @~chinese 从指定的路径加载图片
+    @param path   @~english the absolute file path.
+     * @~chinese 文件的绝对路径
+    @return @~english true if loaded correctly.
+     * @~chinese 如果正确加载则返回true
     */
     bool initWithImageFile(const std::string& path);
 
     /**
-    @brief Load image from stream buffer.
-    @param data  stream buffer which holds the image data.
-    @param dataLen  data length expressed in (number of) bytes.
-    @return true if loaded correctly.
+    @brief @~english Load image from stream buffer.
+     * @~chinese 从流缓冲区加载图片
+    @param data  @~english stream buffer which holds the image data.
+     * @~chinese 存放图片数据的流缓冲区
+    @param dataLen  @~english data length expressed in (number of) bytes.
+     * @~chinese 数据的字节数
+    @return @~english true if loaded correctly.
+     * @~chinese 如果正确加载则返回true
     * @js NA
     * @lua NA
     */
     bool initWithImageData(const unsigned char * data, ssize_t dataLen);
 
-    // @warning kFmtRawData only support RGBA8888
+    /** @~english Load image from raw data @~chinese 从原始数据中加载图片
+    // @warning kFmtRawData @~english only support RGBA8888 @~english 只支持RGBA8888
+    */
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
     // Getters
@@ -138,18 +150,26 @@ public:
 
 
     /**
-     @brief    Save Image data to the specified file, with specified format.
-     @param    filePath        the file's absolute path, including file suffix.
-     @param    isToRGB        whether the image is saved as RGB format.
+     @brief    @~english Save Image data to the specified file, with specified format.
+     * @~chinese 以指定的格式把图片数据保存到指定的文件中
+     @param    filePath        @~english the file's absolute path, including file suffix.
+     * @~chinese 包括文件后缀的绝对路径
+     @param    isToRGB        @~english whether the image is saved as RGB format.
+     * @~chinese 图片是否以RGB格式保存。
      */
     bool saveToFile(const std::string &filename, bool isToRGB = true);
     
     
-    /** treats (or not) PVR files as if they have alpha premultiplied.
+    /** @~english treats (or not) PVR files as if they have alpha premultiplied.
      Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
      possible load them as if they have (or not) the alpha channel premultiplied.
      
      By default it is disabled.
+     * @~chinese 设置PVR文件是否进行透明像素混合。
+     * 因为不可能知道在运行时PVR图像是否已有alpha通道的混合,
+     * 可能加载它们时有(或没有)透明通道混合。
+     * 
+     * 在默认情况下是禁用的。
      */
     static void setPVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
@@ -178,8 +198,10 @@ protected:
     
 protected:
     /**
-     @brief Determine how many mipmaps can we have.
+     @brief @~english Determine how many mipmaps can we have.
      Its same as define but it respects namespaces
+     * @~chinese 决定mipmap允许的最大数量
+     * 这个和使用define是一样的，只不过它遵守命名空间的规则
      */
     static const int MIPMAP_MAX = 16;
     unsigned char *_data;
@@ -202,11 +224,15 @@ protected:
     Image & operator=(const Image&);
     
     /*
-     @brief The same result as with initWithImageFile, but thread safe. It is caused by
+     @brief @~english The same result as with initWithImageFile, but thread safe. It is caused by
      loadImage() in TextureCache.cpp.
-     @param fullpath  full path of the file.
-     @param imageType the type of image, currently only supporting two types.
-     @return  true if loaded correctly.
+     * @~chinese 它和使用initWithImageFile的结果是一样的，只不过线程相对安全。它在源文件TextureCache.cpp中被 loadImage()调用
+     @param fullpath  @~english full path of the file.
+     * @~chinese 文件的完整路径。
+     @param imageType @~english the type of image, currently only supporting two types.
+     * @~chinese 图片类型，当前只支持两个类型
+     @return  @~english true if loaded correctly.
+     * @~chinese 如果正确加载则返回true
      */
     bool initWithImageFileThreadSafe(const std::string& fullpath);
     
