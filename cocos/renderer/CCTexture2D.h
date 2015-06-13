@@ -594,13 +594,13 @@ public:
     
     /** @~english Set a shader program to the texture.
      * It's used by drawAtPoint and drawInRect
-     * @~chinese 设置一个纹理所使用的 shader。
+     * @~chinese 设置一个纹理所使用的 GLProgram。
      * 在 `drawAtPoint` 和 `drawInRect` 中使用。
      */
     void setGLProgram(GLProgram* program);
 
-    /** @~english Get a shader program from the texture.
-     * @~chinese 获取纹理所使用的 shader。
+    /** @~english Get a shader program from the texture for `drawAtPoint` & `drawInRect`.
+     * @~chinese 获取`drawAtPoint` 和 `drawInRect` 使用的GLProgram。
      */
     GLProgram* getGLProgram() const;
 

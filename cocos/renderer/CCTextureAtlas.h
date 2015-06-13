@@ -400,7 +400,7 @@ protected:
     ssize_t _capacity;
     /** @~english Texture of the texture atlas  @~chinese 使用的纹理。*/
     Texture2D* _texture;
-    /** @~english Quads that are going to be rendered  @~chinese 保存所有的矩形数据。*/
+    /** @~english Quads that are going to be rendered  @~chinese 将会被绘制的矩形数据。*/
     V3F_C4B_T2F_Quad* _quads;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
