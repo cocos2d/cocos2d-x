@@ -36,7 +36,8 @@
 NS_CC_BEGIN
 
 /** @class EventListenerAcceleration
- * @brief Acceleration event listener.
+ * @brief @~english Acceleration event listener.
+ * @~chinese 加速计事件监听器。
  * @js NA
  */
 class CC_DLL EventListenerAcceleration : public EventListener
@@ -44,14 +45,19 @@ class CC_DLL EventListenerAcceleration : public EventListener
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a acceleration EventListener.
+    /** @~english Create a acceleration EventListener.
      *
-     * @param callback The acceleration callback method.
-     * @return An autoreleased EventListenerAcceleration object.
+     * @~chinese 创建一个加速计事件监听器。
+     * 
+     * @param callback @~english The acceleration callback method.
+     * @~chinese 加速计事件的回调方法。
+     * @return @~english An autoreleased EventListenerAcceleration object.
+     * @~chinese 一个自动释放的加速计事件对象。
      */
     static EventListenerAcceleration* create(const std::function<void(Acceleration*, Event*)>& callback);
     
-    /** Destructor.
+    /** @~english Destructor.
+     * @~chinese 析构函数。
      */
     virtual ~EventListenerAcceleration();
     
@@ -60,8 +66,23 @@ public:
     virtual bool checkAvailable() override;
     
 CC_CONSTRUCTOR_ACCESS:
+    /**@~english
+     * Constructor
+     * @~chinese 
+     * 构造函数
+     * @js ctor
+     */
     EventListenerAcceleration();
-    
+
+    /** @~english init a acceleration EventListener.
+     *
+     * @~chinese 初始化一个加速计事件监听器。
+     * 
+     * @param callback @~english The acceleration callback method.
+     * @~chinese 加速计事件的回调方法。
+     * @return @~english true is init successful.
+     * @~chinese 初始化成功返回true
+     */
     bool init(const std::function<void(Acceleration*, Event* event)>& callback);
     
 private:

@@ -39,7 +39,8 @@ NS_CC_BEGIN
 class Touch;
 
 /** @class EventListenerTouchOneByOne
- * @brief Single touch event listener.
+ * @brief @~english Single touch event listener.
+ * @~chinese 单点触摸事件监听器。
  * @js cc._EventListenerTouchOneByOne
  */
 class CC_DLL EventListenerTouchOneByOne : public EventListener
@@ -47,24 +48,35 @@ class CC_DLL EventListenerTouchOneByOne : public EventListener
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a one by one touch event listener.
+    /** @~english Create a one by one touch event listener.
+     * @~chinese 创建单点触摸事件监听器。
+     * @return @~english An autoreleased EventListenerTouchOneByOne object.
+     * @~chinese 一个自动释放的单点触摸监听器对象。
      */
     static EventListenerTouchOneByOne* create();
     
-    /**
+    /**@~english
      * Destructor.
+     * @~chinese 
+     * 析构函数。
      * @js NA
      */
     virtual ~EventListenerTouchOneByOne();
     
-    /** Whether or not to swall touches.
+    /** @~english Whether or not to swall touches.
      *
-     * @param needSwallow True if needs to swall touches.
+     * @~chinese 是否吞噬触摸事件。
+     * 
+     * @param needSwallow @~english True if needs to swall touches.
+     * @~chinese 设置为true则吞噬触摸事件。
      */
     void setSwallowTouches(bool needSwallow);
-    /** Is swall touches or not.
+    /** @~english Is swall touches or not.
      *
-     * @return True if needs to swall touches.
+     * @~chinese Is swall touches the or not.
+     * 
+     * @return @~english True if needs to swall touches.
+     * @~chinese 是否吞噬触摸事件。
      */
     bool isSwallowTouches();
     
@@ -95,19 +107,24 @@ private:
 };
 
 /** @class EventListenerTouchAllAtOnce
- * @brief Multiple touches event listener.
+ * @brief @~english Multiple touches event listener.
+ * @~chinese 多点触摸事件监听器。
  */
 class CC_DLL EventListenerTouchAllAtOnce : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a all at once event listener.
+    /** @~english Create a all at once event listener.
      *
-     * @return An autoreleased EventListenerTouchAllAtOnce object.
+     * @~chinese 创建多点触摸事件监听器。
+     * 
+     * @return @~english An autoreleased EventListenerTouchAllAtOnce object.
+     * @~chinese 一个自动释放的多点触摸监听器对象。
      */
     static EventListenerTouchAllAtOnce* create();
-    /** Destructor.
+    /** @~english Destructor.
+     * @~chinese 析构函数。
      * @js NA
      */
     virtual ~EventListenerTouchAllAtOnce();

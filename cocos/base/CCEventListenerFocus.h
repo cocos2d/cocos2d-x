@@ -40,20 +40,25 @@ namespace ui {
 }
 
 /** @class EventListenerFocus
- * @brief Focus event listener.
+ * @brief @~english Focus event listener.
+ * @~chinese 焦点事件监听器。
  */
 class CC_DLL EventListenerFocus : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a focus event listener.
+    /** @~english Create a focus event listener.
      *
-     * @return An autoreleased EventListenerFocus object.
+     * @~chinese Create a focus event listener.
+     * 
+     * @return @~english An autoreleased EventListenerFocus object.
+     * @~chinese 一个自动释放的焦点监听器对象。
      */
     static EventListenerFocus* create();
     
-    /** Destructor.
+    /** @~english Destructor.
+     * @~chinese 析构函数。
      * @js NA
      */
     virtual ~EventListenerFocus();
