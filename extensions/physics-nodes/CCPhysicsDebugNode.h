@@ -31,12 +31,20 @@ struct cpSpace;
 
 NS_CC_EXT_BEGIN
 
-/**
+/** @class PhysicsDebugNode
+ * @~english
  * A BaseData that draws the components of a physics engine.
  
  * Supported physics engines:
  * - Chipmunk
  * - Objective-Chipmunk
+ *
+ * @~chinese 一个绘制物理引擎相关组件的调试节点。
+ * 
+ * 支持的物理引擎:
+ * — Chipmunk
+ * — Objective-Chipmunk
+ *
  * @since v2.1
  * @lua NA
  */
@@ -45,19 +53,35 @@ class CC_EX_DLL PhysicsDebugNode : public DrawNode
 {
 
 public:
-    /** Create a debug node for a regular Chipmunk space. */
+    /** @~english Create a debug node for a regular Chipmunk space.  
+     * @~chinese 为给定的chipmunk物理空间创建一个调试节点。
+     */
     static PhysicsDebugNode* create(cpSpace *space);
+
     /**
      * @js ctor
      */
     PhysicsDebugNode();
+
     /**
      * @js NA
      */
     virtual ~PhysicsDebugNode();
     
-
+    /** @~english Gets the physics space of Chipmunk. 
+     * @~chinese 获取调试节点关联的Chipmunk物理空间。
+     *
+     * @return @~english a physics space of Chipmunk. 
+     * @~chinese 一个Chipmunk物理空间。
+     */
     cpSpace* getSpace() const;
+
+    /** @~english Sets the physics space of Chipmunk. 
+     * @~chinese 给调试节点关联一个Chipmunk物理空间。
+     *
+     * @param space @~english a physics space of Chipmunk. 
+     * @~chinese 一个Chipmunk物理空间。
+     */
     void setSpace(cpSpace *space);
     
     // Overrides
