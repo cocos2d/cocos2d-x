@@ -96,8 +96,8 @@ public:
     Node* readCCBFromFile(const char *pszFileName,CCBReader* pCCBReader,bool bSetOwner = false);
     
     /**@~english
-     * Get the true type name of pNode.
-     * By using the dynamic_cast function, we could get the true type name of pNode.
+     * Get the real type name of pNode.
+     * By using the dynamic_cast function, we could get the real type name of pNode.
      *
      * @~chinese 
      * 获取pNode的真实类型名。
@@ -105,7 +105,7 @@ public:
      * 
      * @param pNode @~english the Node object used to query.
      * @~chinese 用于查询的Node对象指针。
-     * @return @~english a string pointer point to the true type name or return "No Support".
+     * @return @~english a string pointer point to the real type name or return "No Support".
      * @~chinese 返回一个真实类型名或者“No Support”。
      * @js NA
      */
@@ -114,7 +114,7 @@ public:
     /**@~english
      * Set relationship between the Lua callback function reference id handle and the node.
      * According to the different controlEvents values,we would choose different ScriptHandlerMgr::HandlerTyp.
-     * When node receive the events information should be passed on to Lua, it would find the Lua callback funtion by the handle.Then, push the related data into Lua stack.
+     * When node receive the events information should be passed into Lua, it would find the Lua callback funtion by the handle.Then, push the related data into Lua stack.
      * Finally. call the Lua function.
      * 
      * @~chinese 
