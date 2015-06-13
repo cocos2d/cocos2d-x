@@ -39,45 +39,116 @@ NS_CC_BEGIN
  * @{
  */
 
-/**
- * A physics helper class.
- *
+/** @class PhysicsHelper
+ * @brief @~english A physics helper class.
  * Support for conversion between the chipmunk types and cocos types, eg: cpVect to Vec2, cpVect to Size, cpFloat to float.
+ * @~chinese 一个物理助手类。
+ * 支持chipmunk和cocos2d-x引擎间相关类型的转换，例如cpVect <--> Vec2, cpVect <--> Size, cpFloat <--> float.
  */
 class PhysicsHelper
 {
 public:
-    /** Make cpVect type convert to Vec2 type. */
+    /**
+     * @~english Make cpVect type convert to Vec2 type.
+     * @~chinese 通过给定的cpVect对象转换得到Vec2对象。
+     *
+     * @param vec @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type Vec2, converted from cpVect. 
+     * @~chinese 返回一个Vec2对象，转换来自一个cpVect对象。
+     */
     static Vec2 cpv2point(const cpVect& vec) { return Vec2(vec.x, vec.y); }
 
-    /** Make Vec2 type convert to cpVect type. */
+    /**
+     * @~english Make Vec2 type convert to cpVect type.
+     * @~chinese 通过给定的Vec2对象转换得到cpVect对象。
+     *
+     * @param point @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type cpVect, converted from Vec2. 
+     * @~chinese 返回一个cpVect对象，转换来自一个Vec2对象。
+     */
     static cpVect point2cpv(const Vec2& point) { return cpv(point.x, point.y); }
     
-    /** Make cpVect type convert to Size type. */
+    /**
+     * @~english Make cpVect type convert to Size type.
+     * @~chinese 通过给定的cpVect对象转换得到Size对象。
+     *
+     * @param vec @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type Size, converted from cpVect. 
+     * @~chinese 返回一个Size对象，转换来自一个cpVect对象。
+     */
     static Size cpv2size(const cpVect& vec) { return Size(vec.x, vec.y); }
     
-    /** Make Size type convert to cpVect type. */
+    /**
+     * @~english Make Size type convert to cpVect type.
+     * @~chinese 通过给定的Size对象转换得到Vec2对象。
+     *
+     * @param size @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type cpVect, converted from Size. 
+     * @~chinese 返回一个cpVect对象，转换来自一个Size对象。
+     */
     static cpVect size2cpv(const Size& size) { return cpv(size.width, size.height); }
     
-    /** Make cpFloat type convert to float type. */
+    /**
+     * @~english Make cpFloat type convert to float type.
+     * @~chinese 通过给定的cpFloat类型数值转换得到浮点数值。
+     *
+     * @param f @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type float, converted from cpFloat. 
+     * @~chinese 返回一个浮点数值，转换来自一个cpFloat类型数值。
+     */
     static float cpfloat2float(cpFloat f) { return f; }
     
-    /** Make float type convert to cpFloat type. */
+    /**
+     * @~english Make float type convert to cpFloat type.
+     * @~chinese 通过给定的浮点数值转换得到cpFloat类型数值。
+     *
+     * @param f @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type cpFloat, converted from float. 
+     * @~chinese 返回一个cpFloat类型数值，转换来自一个浮点数值。
+     */
     static cpFloat float2cpfloat(float f) { return f; }
     
-    /** Make Rect type convert to cpBB type. */
+    /**
+     * @~english Make Rect type convert to cpBB type.
+     * @~chinese 通过给定的Rect对象转换得到cpBB对象。
+     *
+     * @param rect @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type cpBB, converted from Rect. 
+     * @~chinese 返回一个cpBB对象，转换来自一个Rect对象。
+     */
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
     
-    /** Make cpBB type convert to Rect type. */
+    /**
+     * @~english Make cpBB type convert to Rect type.
+     * @~chinese 通过给定的cpBB对象转换得到Rect对象。
+     *
+     * @param vec @~english The Object to convert. @~chinese 要转换的对象。
+     *
+     * @return @~english A value of type Rect, converted from cpBB. 
+     * @~chinese 返回一个Rect对象，转换来自一个cpBB对象。
+     */
     static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r -  bb.l, bb.t - bb.b); }
     
     /** 
-     Make cpVect array convert to Vec2 array.
-     
-     @param cpvs The be converted object, it's a cpVect array.
-     @param out The coverted object, it's a Vec2 array.
-     @param count It's cpvs array length.
-     @return The out object's pointer.
+     * @~english Make cpVect array convert to Vec2 array.
+     * @~chinese 通过给定的cpVect对象数组转换得到Vec2对象数组。
+     * 
+     * @param cpvs @~english The be converted object, it's a cpVect array.
+     * @~chinese 要转换的对象，一个cpVect对象数组。
+     * @param out @~english The coverted object, it's a Vec2 array.
+     * @~chinese 转换后的对象，一个Vec2对象数组。
+     * @param count @~english It's cpvs array length.
+     * @~chinese cpVect对象数组的元素个数。
+     *
+     * @return @~english The out object's pointer. 
+     * @~chinese 输出对象数组的指针。
      */
     static Vec2* cpvs2points(const cpVect* cpvs, Vec2* out, int count)
     {
@@ -90,12 +161,17 @@ public:
     }
     
     /**
-     Make Vec2 array convert to cpVect array.
-     
-     @param points The be converted object, it's a Vec2 array.
-     @param out The coverted object, it's a cpVect array.
-     @param count It's points array length.
-     @return The out object's pointer.
+     * @~english Make Vec2 array convert to cpVect array.
+     * 
+     * @param points @~english The be converted object, it's a Vec2 array.
+     * @~chinese 要转换的对象，一个Vec2对象数组。
+     * @param out @~english The coverted object, it's a cpVect array.
+     * @~chinese 转换后的对象，一个cpVect对象数组。
+     * @param count @~english It's points array length.
+     * @~chinese Vec2对象数组的元素个数。
+     *
+     * @return @~english The out object's pointer. 
+     * @~chinese 输出对象数组的指针。
      */
     static cpVect* points2cpvs(const Vec2* points, cpVect* out, int count)
     {
