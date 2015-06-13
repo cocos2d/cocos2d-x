@@ -37,7 +37,19 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
 
+/**
+ * @~english Manifest is an abstraction of the assets list. 
+ * It's initialized and parsed with a manifest file.
+ * It contains all defined assets, and can be compared to generate difference between local and remote manifest.
+ * @~chinese Manifest是资源列表的抽象。
+ * 它可以通过一个manifest文件来初始化并解析出资源列表信息。
+ * 它包含所有manifest文件中定义的资源，并且可以用来比较本地和远程manifest资源的差异，以便后续的更新过程中使用。
+ */
 class CC_EX_DLL Manifest : public Ref
 {
 public:
@@ -310,6 +322,11 @@ private:
     
     rapidjson::Document _json;
 };
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 #endif /* defined(__Manifest__) */

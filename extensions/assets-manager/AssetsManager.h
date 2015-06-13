@@ -35,9 +35,15 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
+
 class AssetsManagerDelegateProtocol;
 
-/*@~english
+/** 
+ * @~english
  *  This class is used to auto update resources, such as pictures or scripts.
  *  The updated package should be a zip file. And in the server there should be a file which contains version code.
  * @~chinese 
@@ -284,6 +290,13 @@ private:
     std::string keyOfDownloadedVersion() const;
 };
 
+/** 
+ * @~english
+ *  This class is the delegate for receving events during update process of AssetsManager.
+ * @~chinese 
+ * 该类是用于在AssetsManager更新过程中接收事件的代理
+ * @see AssetsManager
+ */
 class AssetsManagerDelegateProtocol
 {
 public:
@@ -321,6 +334,11 @@ public:
 // Deprecated declaration
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END;
 

@@ -32,6 +32,11 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
+
 class EventAssetsManagerEx;
 class AssetsManagerEx;
 
@@ -113,6 +118,11 @@ protected:
     
     //friend class luaEventListenerAssetsManagerEx;
 };
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 

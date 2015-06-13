@@ -1048,7 +1048,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
 };
 
-/** @struct @~english Bezier configuration structure
+/** @struct ccBezierConfig @~english Bezier configuration structure
  * @~chinese Bezier曲线配置结构体
  */
 typedef struct _ccBezierConfig {

@@ -36,6 +36,11 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
+
 /**@~english
  * Downloader class is a util class for downloading files from a server.
  * It uses lib curl as its base network library.
@@ -474,6 +479,11 @@ private:
 };
 
 int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 

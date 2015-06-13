@@ -41,6 +41,11 @@
 NS_CC_EXT_BEGIN
 
 /**
+ * @addtogroup AssetsManager
+ * @{
+ */
+
+/**
  * @brief @~english This class is used for resources hot update, you can update images or scripts during runtime of the game.
  * Compare to AssetsManager class, it's a upgraded version. 
  * It's based on manifest configuration files to compare between local version and remote version, 
@@ -363,6 +368,11 @@ private:
     //! Marker for whether the assets manager is inited
     bool _inited;
 };
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 

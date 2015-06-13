@@ -32,8 +32,17 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
+
 class AssetsManagerEx;
 
+/**
+ * @~english EventAssetsManagerEx is the event class which will be distributed during AssetsManagerEx updating process
+ * @~chinese EventAssetsManagerEx是AssetsManagerEx在更新过程中分发的事件类型
+ */
 class CC_EX_DLL EventAssetsManagerEx : public cocos2d::EventCustom
 {
 public:
@@ -172,6 +181,11 @@ private:
     
     float _percentByFile;
 };
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 
