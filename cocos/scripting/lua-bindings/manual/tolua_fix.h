@@ -39,7 +39,7 @@ TOLUA_API void toluafix_open(lua_State* L);
  * @param p_refid @~english the pointer points to the Lua reference id of the ptr.
  * @~chinese 指向ptr的reference id成员变量的指针。
  * @param ptr @~english the pointer points to the Ref object.
- * @~chinese Ref对象指会。
+ * @~chinese Ref对象指针。
  * @param type @~english the type name of the ptr.
  * @~chinese ptr的类型名称。
  * @return @~english -1 if the p_refid equal to nullptr or ptr equal to nullptr, otherwise return 0.

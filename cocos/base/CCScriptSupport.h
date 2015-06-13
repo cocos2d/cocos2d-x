@@ -331,7 +331,7 @@ struct BasicScriptData
 /**@~english
  * For Lua, the SchedulerScriptData is used to find the Lua function pointer by the handler, then call the Lua function by push the elapse into the Lua stack as a parameter when scheduler update event is triggered.
  * @~chinese 
- * @~chinese 对于Lua, SchedulerScriptData也是一个数据封装类。它通过handler找到对应的Lua函数，然后将elpase压入Lua堆栈作为Lua函数的参数。
+ * @~chinese 对于Lua, SchedulerScriptData也是一个数据封装类。当定时器update事件被触发时，它通过handler找到对应的Lua函数，然后将elpase压入Lua堆栈作为Lua函数的参数。
  * @js NA
  * @lua NA
  */
@@ -371,7 +371,7 @@ struct SchedulerScriptData
 /**@~english
  * For Lua, the TouchesScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touches data and actionType into the Lua stack as the parameters when the touches event is triggered.
  * @~chinese 
- * 对于Lua, TouchesScriptData封装了touches相关数据，其中，nativeObject用于查找对于Lua函数的handler,然后将touches数据和actionType压入Lua堆栈作为Lua函数的参数。
+ * 对于Lua, TouchesScriptData封装了touches相关数据。当touches事件被触发，它将通过nativeObject查找对于Lua函数的handler,然后将touches数据和actionType压入Lua堆栈作为Lua函数参数调用Lua函数。
  * @js NA
  * @lua NA
  */
@@ -424,7 +424,7 @@ struct TouchesScriptData
 /**@~english
  * For Lua, the TouchScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touch data and actionType convered to string type into the Lua stack as the parameters when the touch event is triggered.
  * @~chinese 
- * 对于Lua, TouchScriptData封装了touch相关数据，其中，nativeObject用于查找对于Lua函数的handler,然后将touch数据和actionType压入Lua堆栈作为Lua函数的参数。
+ * 对于Lua, TouchScriptData封装了touch相关数据。当touch事件被触发，它将通过nativeObject查找对于Lua函数的handler,然后将touch数据和actionType压入Lua堆栈作为Lua函数的参数调用Lua函数。
  * @js NA
  * @lua NA
  */
@@ -478,7 +478,7 @@ struct TouchScriptData
 /**@~english
  * For Lua, the KeypadScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push the actionType convered to string type into the Lua stack as the parameters when the Keypad event is triggered.
  * @~chinese 
- * 对于Lua，KeypadScriptData封装了关于Keypad信息的相关数据，其中，nativeObject用于查找对应Lua函数的handler,然后将actionType转成对应的字符串压入Lua堆栈做为Lua函数的参数。
+ * 对于Lua，KeypadScriptData封装了关于Keypad信息的相关数据。当Keypad事件被触发，它将通过nativeObject查找对应Lua函数的handler,然后将actionType转成对应的字符串压入Lua堆栈做为Lua函数的参数调用Lua函数。
  * @js NA
  * @lua NA
  */
@@ -514,9 +514,8 @@ struct KeypadScriptData
 
 /**@~english
  * For Lua, the CommonScriptData is used to find the Lua function pointer by the handler, then call the Lua function by push the eventName, eventSource(if it not nullptr), eventSourceClassName(if it is nullptr or "", and the eventSource is not nullptr,would give the default string "cc.Ref") into the Lua stack as the parameter when the common event such as is triggered.
- * @~chinese 
- * For Lua, the CommonScriptData is 2 find the Lua function pointer by the handler, and then call the Lua function by push the eventName, eventSource (if it not nullptr), eventSourceClassName (if it is nullptr or "", and the eventSource is not nullptr, order difference the default string" cc. Ref ") into the Lua stack as the parameter when the common event to the as is triggered.
- * 对于Lua，CommonScriptData封装了一般数据。当一般事件触发时，它将通过handler找到对应的Lua函数指针，然后将eventName，eventSource(如果不为空)，eventSourceClassName(如果eventSourceClassName不为nullptr，并且eventSourceClassName为空或者""，它将会将默认地将"cc.Ref"压入到Lua栈中)压入Lua栈中作为Lua函数的参数。
+ * @~chinese
+ * 对于Lua，CommonScriptData封装了一般数据。当一般事件触发时，它将通过handler找到对应的Lua函数指针，然后将eventName，eventSource(如果不为空)，eventSourceClassName(如果eventSourceClassName不为nullptr，并且eventSourceClassName为空或者""，它将会将默认地将"cc.Ref"压入到Lua栈中)压入Lua栈中作为Lua函数的参数调用Lua函数。
  * @js NA
  * @lua NA
  */
@@ -618,8 +617,9 @@ struct ScriptEvent
  * It will affect the lifecycle of ScriptEngine instance, the autorelease pool will be destroyed before destructing ScriptEngine.
  * So a crash will appear on Win32 if you click the close button.
  * @~chinese 
- * 由于ScriptEngineProtocol对象通过setScriptEngine设置后将一直存在，所以它不需要从Ref派生。
+ * 由于ScriptEngineProtocol对象在AppDelegate.cpp中通过setScriptEngine设置后将一直存在，所以它不需要从Ref派生。
  * 并且它将会影响到脚本引擎实例的生命期，而autorelease pool会在脚本引擎被析构前调用。
+ * 如果你点击关闭按钮，在win32平台上会出现崩溃。
  * @js NA
  * @lua NA
  */
@@ -703,7 +703,7 @@ public:
      * @param filename @~english String object holding the filename of the script file that is to be executed.
      * @~chinese 脚本文件的文件名。
      * @return @~english 0 if it happen the error or it hasn't return value, otherwise it return the value by calling the lua function.
-     * @~chinese 如果碰到错误或者执行结果没有返回值返回0，否则返回调用Lua函数返回值。
+     * @~chinese 如果碰到错误或者调用的Lua函数没有返回值，返回0；否则返回调用Lua函数的返回值。
      */
     virtual int executeScriptFile(const char* filename) = 0;
     
@@ -723,7 +723,7 @@ public:
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
     /**@~english
-     * When some events triggered in the c++ also needs to pass on to script ,call this func.The ScriptEvent contains the data need to passed into the script.
+     * When some events triggered in the c++ also needs to pass into script ,call this func.The ScriptEvent contains the data need to passed into the script.
      *
      *
      * @~chinese 
@@ -744,19 +744,23 @@ public:
     virtual bool handleAssert(const char *msg) = 0;
     
     /** @~english
-     * Useless for Lua.
+     * Set whether the call comes from the script or not, only use for the js.
      *
      * @~chinese 
-     * Lua不需要用到这个函数。
+     * 设置这个调用是否是由脚本层触发的，只用于js。
+     * @param callFromScript @~english whether the call comes from the script or not.
+     * @~chinese 调用是否用脚本层触发。
      */
     virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
     
     /** @~english
-     * Useless for Lua.
+     * Get the flag that represents whether the call comes from the script or not,only use for the js.
      *
      * @~chinese 
-     * Lua不需要用到这个函数。
+     * 获取调用是否是由脚本层触发的标记，只用于js。
      * 
+     * @return @~english false.
+     * @~chinese false。
      * @lua NA
      * @js NA
      */
