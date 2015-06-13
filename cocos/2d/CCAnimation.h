@@ -401,7 +401,8 @@ protected:
     bool _restoreOriginalFrame;
 
     /** @~english how many times the animation is going to loop. 0 means animation is not animated. 1, animation is executed one time, ...
-     * @~chinese 动画循环次数。0表示动画不执行。1表示动画执行一次,……
+     * @~chinese 动画循环次数。0表示动画不执行。1表示动画执行一次,…… 
+     */
     unsigned int _loops;
     
 private:
