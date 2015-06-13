@@ -42,7 +42,7 @@ THE SOFTWARE.
         
 /** 
  * @brief @~english Implement the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+ * @~chinese 工厂类ObjectFactory注册函数声明，被用于组件源文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
 */
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
@@ -52,8 +52,8 @@ THE SOFTWARE.
         cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
 /** 
- * @brief @~english Implement the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese 工厂类ObjectFactory注册函数实现，被用于组件头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+ * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 显式将当前组件类名注册到ObjectFactory，用于反射创建对象.
 */
 #define CREATE_CLASS_COMPONENT_INFO(className) \
         cocos2d::ObjectFactory::TInfo(#className, &className::createInstance)

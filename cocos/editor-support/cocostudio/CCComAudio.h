@@ -72,10 +72,10 @@ public:
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
-     * @~chinese 每次当Node进入“stage”时才调用事件回调。
-     * 如果Node进入“stage”状态时伴随着一个转换（transition）,那么事件将会在这个转换开始的时候被调用。
-     * 在onEnter过程中，你不能够接入“sister/brother”兄妹节点。
-     * 如果你重写了onEnter方法，你应该调用它的父类，e.g., Node::onEnter().
+     * @~chinese 每次Node进入显示区域时产生的回调事件。
+     * 如果node进入显示区域时伴随着一个转换动画，那么事件将会在转换动画开始的时候被调用。
+     * 在onEnter过程中，你不能够访问“sister/brother”兄妹节点。
+     * 如果你重载了onEnter方法，你应该调用它的父类，e.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
@@ -86,10 +86,10 @@ public:
      * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-     * @~chinese 每次当Node离开“stage”时才调用事件回调。
-     * 如果Node离开“stage”状态时伴随着一个转换（transition）, 那么事件将会在这个转换结束的时候被调用。
-     * 在onEnter过程中中你不能够接入一个兄妹节点。
-     * 如果你重写onExit, 你应该调用它的父类, e.g., Node::onExit().
+     * @~chinese 每次Node退出显示区域时产生的回调事件。
+     * 如果node离开显示区域时伴随着一个转换动画，那么事件将会在转换动画结束的时候被调用。
+     * 在onExit过程中,你不能够访问一个平级节点。
+     * 如果你重载onExit, 你应该调用它的父类, e.g., Node::onExit().
      * @js NA
      * @lua NA
      */

@@ -79,7 +79,7 @@ public:
     static const char* sceneReaderVersion();
 
     /**
-     * @brief @~english Create a scene by json or binary file path and type of attach component.
+     * @brief @~english Create a scene with json or binary file path and type of attach component.
      * @~chinese 根据二进制或者json路径和结构树构建类型，创建场景。
      * @param fileName @~english Json or binary file path
      * @~chinese json或者二进制文件路径
@@ -100,7 +100,7 @@ public:
 
     /**
      * @brief @~english Get Node point by tag.
-     * @~chinese 根据nTag获取场景对象结构树node指针。
+     * @~chinese 根据nTag获取node指针。
      * @param tag @~english Tag of node.
      * @~chinese node的tag。
      * @return @~english Node point by tag.
@@ -130,15 +130,15 @@ CC_CONSTRUCTOR_ACCESS:
     
 private:
     /**
-     * @brief @~english Get component name by class name.
-     * @~chinese 根据类名获取组件名称，构建场景树调用。
+     * @brief @~english Get component name with class name.
+     * @~chinese 根据类名获取组件名称。
      * @param @~english Component name
      * @~chinese 组件名称
      */
     std::string getComponentClassName(const std::string& name);
 
     /**
-     * @brief @~english Create component point by class name.
+     * @brief @~english Create component point with class name.
      * @~chinese 根据类名创建组件。
      * @param classname @~english Class name.
      * @~chinese 类名。
@@ -148,7 +148,7 @@ private:
     cocos2d::Component* createComponent(const std::string classname);
 
     /**
-     * @brief @~english Create node object and add it to parent node by json file path.
+     * @brief @~english Create node object and add it to parent node with json file path.
      * @~chinese 创建场景结构树node对象。
      * @param dict @~english Json object.
      * @~chinese json对象。
@@ -200,7 +200,7 @@ private:
     cocos2d::Node* createObject(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node* parent, AttachComponentType attachComponent);
 
     /**
-     * @brief @~english Create node object and add it to parent node by binary file path.
+     * @brief @~english Create node object and add it to parent node with binary file path.
      * @~chinese 创建场景结构树node对象。
      * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
      * @~chinese cocos studio 1.x场景编辑器导出二进制数据加载器对象。

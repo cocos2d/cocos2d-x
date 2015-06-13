@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 /** 
  * @brief @~english Implement the current trigger class name to ObjectFactory, for reflection to create objects.
- * @~chinese 工厂类ObjectFactory注册函数实现，被用于触发器头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+ * @~chinese 工厂类ObjectFactory注册函数实现，被用于触发器源文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
 */
 #define IMPLEMENT_CLASS_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \

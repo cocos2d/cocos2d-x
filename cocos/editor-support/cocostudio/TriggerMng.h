@@ -253,7 +253,7 @@ public:
     void removeEventListener(cocos2d::EventListener* listener);
 
     /**
-     * @brief @~english Add a trigger event listener ith the fixed priority.
+     * @brief @~english Add a trigger event listener with the fixed priority.
      * @~chinese 增加触发器事件监听器，并指定优先级。
      * @param listener @~english Trigger event listener.
      * @~chinese 触发器事件监听器。
