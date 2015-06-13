@@ -45,7 +45,9 @@ class PhysicsWorld;
  */
 
 /**
- * @brief An PhysicsJoint object connects two physics bodies together.
+@class PhysicsJoint
+ * @brief @~english An PhysicsJoint object connects two physics bodies together.
+ * @~chinese 一个PhysicsJoint(物理关节)对象用于将两个刚体连接在一起。
  */
 class CC_DLL PhysicsJoint
 {
@@ -54,48 +56,62 @@ protected:
     virtual ~PhysicsJoint() = 0;
 
 public:
-    /**Get physics body a connected to this joint.*/
+    /**
+    @~english Get the first physics body a connected to this joint. 
+    @~chinese 得到连接到这个关节的第一个物理刚体。
+    */
     inline PhysicsBody* getBodyA() const { return _bodyA; }
     
-    /**Get physics body b connected to this joint.*/
+    /**
+    @~english Get the second physics body b connected to this joint. 
+    @~chinese 得到连接到这个关节的第二个物理刚体。
+    */
     inline PhysicsBody* getBodyB() const { return _bodyB; }
 
-    /**Get the physics world.*/
+    /**@~english Get the physics world. @~chinese 获取物理世界。*/
     inline PhysicsWorld* getWorld() const { return _world; }
     
-    /**
+    /**@~english
      * Get this joint's tag.
      *
-     * @return An interger number.
+     * @~chinese 
+     * 得到关节的tag。
+     * 
+     * @return @~english An interger number.
+     * @~chinese tag值。
      */
     inline int getTag() const { return _tag; }
     
-    /**
+    /**@~english
      * Set this joint's tag.
      *
-     * @param tag An interger number that identifies a PhysicsJoint.
+     * @~chinese 
+     * 设置tag。
+     * 
+     * @param tag @~english An interger number that identifies a PhysicsJoint.
+     * @~chinese tag的值。
      */
     inline void setTag(int tag) { _tag = tag; }
     
-    /** Determines if the joint is enable. */
+    /** @~english Determines if the joint is enable.  @~chinese 关节是否处于开启状态。*/
     inline bool isEnabled() const { return _enable; }
 
-    /** Enable/Disable the joint. */
+    /** @~english Enable or disable the joint. @~chinese 启用或者禁用关节。*/
     void setEnable(bool enable);
     
-    /** Determines if the collsion is enable. */
+    /** @~english Determines if the collsion is enable.  @~chinese 碰撞体是否启用。*/
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     
-    /** Enable/disable the collision between two bodies. */
+    /** @~english Enable or disable collision. @~chinese 启用或者禁用碰撞体。
     void setCollisionEnable(bool enable);
     
-    /** Remove the joint from the world. */
+    /** @~english Remove the joint from the world.  @~chinese 删除关节。*/
     void removeFormWorld();
 
-    /** Set the max force between two bodies. */
+    /** @~english Set the max force between two bodies.  @~chinese 设置两个物理刚体之间的最大力量。*/
     void setMaxForce(float force);
     
-    /** Get the max force setting. */
+    /** @~english Get the max force setting.  @~chinese 得到物理刚体之间的最大力量。*/
     float getMaxForce() const { return _maxForce; }
 
 protected:
@@ -103,7 +119,7 @@ protected:
 
     bool initJoint();
     
-    /** Create constraints for this type joint */
+    /** @~english Create constraints for this type joint  @~chinese 为这类联合创建约束*/
     virtual bool createConstraints() { return false; }
 
     std::vector<cpConstraint*> _cpConstraints;
@@ -125,17 +141,26 @@ protected:
 };
 
 /**
-* @brief A fixed joint fuses the two bodies together at a reference point. Fixed joints are useful for creating complex shapes that can be broken apart later.
+@class PhysicsJointFixed
+* @brief 
+@~english A fixed joint fuses the two bodies together at a reference point. Fixed joints are useful for creating complex shapes that can be broken apart later.
+ @~chinese 固定关节把两个物理刚体连接到一起。它可以用于创建复杂的形状，这些形状在后面可以被破环成独立的刚体。
 */
 class CC_DLL PhysicsJointFixed : public PhysicsJoint
 {
 public:
-    /** Create a fixed joint.
+    /** @~english Create a fixed joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param anchr It's the pivot position.
-     @return A object pointer.
+     * @~chinese 创建一个固定关节。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param anchr @~english It's the pivot position.
+     * @~chinese 连接点的位置。
+     @return @~english A object pointer.
+     * @~chinese 固定物体关节。
      */
     static PhysicsJointFixed* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr);
 
@@ -149,53 +174,71 @@ protected:
 };
 
 /**
-* @brief A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
+@class PhysicsJointLimit
+* @brief @~english A limit joint imposes a maximum distance between the two bodies, as if they were connected by a rope.
+ * @~chinese PhysicsJointLimit限制了两个物体之间的最大距离，就好像他们被一根绳子连接起来一样。
 */
 class CC_DLL PhysicsJointLimit : public PhysicsJoint
 {
 public:
-    /** Create a limit joint.
+    /** @~english Create a limit joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param anchr1 Anchr1 is the anchor point on body a.
-     @param anchr2 Anchr2 is the anchor point on body b.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointLimit。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param anchr1 @~english Anchr1 is the anchor point on body a.
+     * @~chinese 连接第一个刚体的点。
+     @param anchr2 @~english Anchr2 is the anchor point on body b.
+     * @~chinese 连接第二个刚体的点。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointLimit。
      */
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
     
-    /** Create a limit joint.
+    /** @~english Create a limit joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param anchr1 Anchr1 is the anchor point on body a.
-     @param anchr2 Anchr2 is the anchor point on body b.
-     @param min Define the allowed min distance of the anchor points.
-     @param max Define the allowed max distance of the anchor points.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointLimit。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param anchr1 @~english Anchr1 is the anchor point on body a.
+     * @~chinese 连接第一个刚体的点。
+     @param anchr2 @~english Anchr2 is the anchor point on body b.
+     * @~chinese 连接第二个刚体的点。
+     @param min @~english Define the allowed min distance of the anchor points.
+     * @~chinese 两个连接点的最小距离。
+     @param max @~english Define the allowed max distance of the anchor points.
+     * @~chinese 两个连接点的最大距离。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointLimit。
      */
     static PhysicsJointLimit* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float min, float max);
 
-    /** Get the anchor point on body a.*/
+    /** @~english Get the anchor point on body a. @~chinese 得到连接第一个刚体的点。*/
     Vec2 getAnchr1() const;
     
-    /** Set the anchor point on body a.*/
+    /** @~english Set the anchor point on body a. @~chinese 设置连接第一个刚体的点。*/
     void setAnchr1(const Vec2& anchr1);
     
-    /** Get the anchor point on body b.*/
+    /** @~english Get the anchor point on body b. @~chinese 得到连接第二个刚体的点。*/
     Vec2 getAnchr2() const;
     
-    /** Set the anchor point on body b.*/
+    /** @~english Set the anchor point on body b. @~chinese 设置连接第二个刚体的点。*/
     void setAnchr2(const Vec2& anchr2);
     
-    /** Get the allowed min distance of the anchor points.*/
+    /** @~english Get the allowed min distance of the anchor points. @~chinese 得到两个连接点的最小距离。*/
     float getMin() const;
-    /** Set the min distance of the anchor points.*/
+    /** @~english Set the min distance of the anchor points. @~chinese 设置两个连接点的最小距离。*/
     void setMin(float min);
   
-    /** Get the allowed max distance of the anchor points.*/
+    /** @~english Get the allowed max distance of the anchor points. @~chinese 得到两个连接点的最大距离。*/
     float getMax() const;
-    /** Set the max distance of the anchor points.*/
+    /** @~english Set the max distance of the anchor points. @~chinese 设置两个连接点的最大距离。*/
     void setMax(float max);
 
     virtual bool createConstraints() override;
@@ -211,27 +254,43 @@ protected:
 };
 
 /**
-* @brief A pin joint allows the two bodies to independently rotate around the anchor point as if pinned together.
+@class PhysicsJointPin
+* @brief 
+@~english A pin joint allows the two bodies to independently rotate around the anchor point as if pinned together.
+ * @~chinese PhysicsJointPin允许两个物体独立旋转，就好像他们被钉在一起一样。
 */
 class CC_DLL PhysicsJointPin : public PhysicsJoint
 {
 public:
-    /** Create a pin joint.
+    /** @~english Create a pin joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param pivot It's the pivot position.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointPin。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param pivot @~english It's the pivot position.
+     * @~chinese 连接点的位置。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointPin。
      */
     static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& pivot);
 
-    /** Create a pin joint.
+    /** @~english Create a pin joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param anchr1 Anchr1 is the anchor point on body a.
-     @param anchr2 Anchr2 is the anchor point on body b.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointPin。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param anchr1 @~english Anchr1 is the anchor point on body a.
+     * @~chinese 连接的第一个刚体的点。
+     @param anchr2 @~english Anchr2 is the anchor point on body b.
+     * @~chinese 连接的第二个刚体的点。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointPin。
      */
     static PhysicsJointPin* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
 
@@ -246,23 +305,35 @@ protected:
     Vec2 _anchr2;
 };
 
-/** Set the fixed distance with two bodies */
+/** 
+@class PhysicsJointDistance
+@brief
+@~english Set the fixed distance with two bodies  
+@~chinese 该关节用于在两个刚体之间设置一个固定距离。
+*/
 class CC_DLL PhysicsJointDistance : public PhysicsJoint
 {
 public:
-    /** Create a fixed distance joint.
+    /** @~english Create a fixed distance joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param anchr1 Anchr1 is the anchor point on body a.
-     @param anchr2 Anchr2 is the anchor point on body b.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointDistance。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param anchr1 @~english Anchr1 is the anchor point on body a.
+     * @~chinese 连接的第一个刚体的点。
+     @param anchr2 @~english Anchr2 is the anchor point on body b.
+     * @~chinese 连接的第二个刚体的点。
+     @return @~english A object pointer.
+     * @~chinese 返回创建一个PhysicsJointDistance。
      */
     static PhysicsJointDistance* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2);
 
-    /** Get the distance of the anchor points.*/
+    /** @~english Get the distance of the anchor points. @~chinese 得到连接点之间的距离。*/
     float getDistance() const;
-    /** Set the distance of the anchor points.*/
+    /** @~english Set the distance of the anchor points. @~chinese 设置连接点之间的距离。*/
     void setDistance(float distance);
     virtual bool createConstraints() override;
 
@@ -274,50 +345,64 @@ protected:
     Vec2 _anchr2;
 };
 
-/** Connecting two physics bodies together with a spring. */
+/** 
+@class PhysicsJointSpring
+@brief
+@~english Connecting two physics bodies together with a spring.  
+@~chinese PhysicsJointSpring用于连接两个刚体，其效果相当于一个弹簧。
+*/
 class CC_DLL PhysicsJointSpring : public PhysicsJoint
 {
 public:
-    /** Create a fixed distance joint.
+    /** @~english Create a spring joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param anchr1 Anchr1 is the anchor point on body a.
-     @param anchr2 Anchr2 is the anchor point on body b.
-     @param stiffness It's the spring constant.
-     @param damping It's how soft to make the damping of the spring.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointSpring。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param anchr1 @~english Anchr1 is the anchor point on body a.
+     * @~chinese 连接的第一个刚体的点。
+     @param anchr2 @~english Anchr2 is the anchor point on body b.
+     * @~chinese 连接的第二个刚体的点。
+     @param stiffness @~english It's the spring constant.
+     * @~chinese 关节的弹力系数。
+     @param damping @~english It's how soft to make the damping of the spring.
+     * @~chinese 关节的阻尼。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointSpring。
      */
     static PhysicsJointSpring* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& anchr1, const Vec2& anchr2, float stiffness, float damping);
 
-    /** Get the anchor point on body a.*/
+    /** @~english Get the anchor point on body a. @~chinese 得到连接的第一个刚体的点。*/
     Vec2 getAnchr1() const;
 
-    /** Set the anchor point on body a.*/
+    /** @~english Set the anchor point on body a. @~chinese 设置连接的第一个刚体的点。*/
     void setAnchr1(const Vec2& anchr1);
 
-    /** Get the anchor point on body b.*/
+    /** @~english Get the anchor point on body b. @~chinese 得到连接的第二个刚体的点。*/
     Vec2 getAnchr2() const;
 
-    /** Set the anchor point on body b.*/
+    /** @~english Set the anchor point on body b. @~chinese 设置连接的第二个刚体的点。*/
     void setAnchr2(const Vec2& anchr2);
     
-    /** Get the distance of the anchor points.*/
+    /** @~english Get the distance of the anchor points. @~chinese 得到连接点之间的距离。*/
     float getRestLength() const;
     
-    /** Set the distance of the anchor points.*/
+    /** @~english Set the distance of the anchor points. @~chinese 设置连接点之间的距离。*/
     void setRestLength(float restLength);
     
-    /** Get the spring constant.*/
+    /** @~english Get the spring constant. @~chinese 得到弹力常数。*/
     float getStiffness() const;
     
-    /** Set the spring constant.*/
+    /** @~english Set the spring constant. @~chinese 设置弹力常数。*/
     void setStiffness(float stiffness);
     
-    /** Get the spring soft constant.*/
+    /** @~english Get the spring soft constant. @~chinese 得到阻尼系数。*/
     float getDamping() const;
     
-    /** Set the spring soft constant.*/
+    /** @~english Set the spring soft constant. @~chinese 设置阻尼系数。*/
     void setDamping(float damping);
     
     virtual bool createConstraints() override;
@@ -332,37 +417,50 @@ protected:
     float _damping;
 };
 
-/** Attach body a to a line, and attach body b to a dot. */
+/** 
+@class PhysicsJointGroove
+@brief
+@~english Attach body a to a line, and attach body b to a dot.  
+@~chinese 把第一个物体A连接到一条线上，把第二个物体连接到一个点上。
+*/
 class CC_DLL PhysicsJointGroove : public PhysicsJoint
 {
 public:
-    /** Create a groove joint.
+    /** @~english Create a groove joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param grooveA The line begin position.
-     @param grooveB The line end position.
-     @param anchr2 Anchr2 is the anchor point on body b.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointGroove。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param grooveA @~english The line begin position.
+     * @~chinese 连接的第一个刚体的线的第一个端点。
+     @param grooveB @~english The line end position.
+     * @~chinese 连接的第一个刚体的线的第二个端点。
+     @param anchr2 @~english Anchr2 is the anchor point on body b.
+     * @~chinese 连接的第二个刚体的点。
+     @return @~english A object pointer.
+     * @~chinese 得到PhysicsJointGroove。
      */
     static PhysicsJointGroove* construct(PhysicsBody* a, PhysicsBody* b, const Vec2& grooveA, const Vec2& grooveB, const Vec2& anchr2);
 
-    /** Get the line begin position*/
+    /** @~english Get the line begin position @~chinese 得到第一个物体连接线的第一个端点。*/
     Vec2 getGrooveA() const;
 
-    /** Set the line begin position*/
+    /** @~english Set the line begin position @~chinese 设置第一个物体连接线的第一个端点。*/
     void setGrooveA(const Vec2& grooveA);
     
-    /** Get the line end position*/
+    /** @~english Get the line end position @~chinese 得到第一个物体连接线的第二个端点。*/
     Vec2 getGrooveB() const;
     
-    /** Set the line end position*/
+    /** @~english Set the line end position @~chinese 设置得到第一个物体连接线的第二个端点。*/
     void setGrooveB(const Vec2& grooveB);
     
-    /** Get the anchor point on body b.*/
+    /** @~english Get the anchor point on body b. @~chinese 得到连接的第二个刚体的点。*/
     Vec2 getAnchr2() const;
     
-    /** Set the anchor point on body b.*/
+    /** @~english Set the anchor point on body b. @~chinese 设置连接的第二个刚体的点。*/
     void setAnchr2(const Vec2& anchr2);
     
     virtual bool createConstraints() override;
@@ -376,36 +474,48 @@ protected:
     Vec2 _anchr2;
 };
 
-/** Likes a spring joint, but works with rotary. */
+/** 
+@class PhysicsJointRotarySpring
+@brief
+@~english Likes a spring joint, but works with rotary.  
+@~chinese 与PhysicsJointSpring,但是刚体可以自由旋转。
+*/
 class CC_DLL PhysicsJointRotarySpring : public PhysicsJoint
 {
 public:
-    /** Create a damped rotary spring joint.
+    /** @~english Create a damped rotary spring joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param stiffness It's the spring constant.
-     @param damping It's how soft to make the damping of the spring.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointRotarySpring。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param stiffness @~english It's the spring constant.
+     * @~chinese 关节的弹力系数。
+     @param damping @~english It's how soft to make the damping of the spring.
+     * @~chinese 关节的阻尼。
+     @return @~english A object pointer.
+     * @~chinese 派发了瞄准。
      */
     static PhysicsJointRotarySpring* construct(PhysicsBody* a, PhysicsBody* b, float stiffness, float damping);
 
-    /** Get the relative angle in radians from the body a to b.*/
+    /** @~english Get the relative angle in radians from the body a to b. @~chinese 得到两个刚体物体之间的相对弧度角。*/
     float getRestAngle() const;
 
-    /** Set the relative angle in radians from the body a to b.*/
+    /** @~english Set the relative angle in radians from the body a to b. @~chinese 设置两个刚体物体之间的相对弧度角。*/
     void setRestAngle(float restAngle);
 
-    /** Get the spring constant.*/
+    /** @~english Get the spring constant. @~chinese 得到弹力系数。*/
     float getStiffness() const;
     
-    /** Set the spring constant.*/
+    /** @~english Set the spring constant. @~chinese 设置弹力系数。*/
     void setStiffness(float stiffness);
     
-    /** Get the spring soft constant.*/
+    /** @~english Get the spring soft constant. @~chinese 得到阻尼系数。*/
     float getDamping() const;
 
-    /** Set the spring soft constant.*/
+    /** @~english Set the spring soft constant. @~chinese 设置阻尼系数。*/
     void setDamping(float damping);
     
     virtual bool createConstraints() override;
@@ -418,38 +528,53 @@ protected:
     float _damping;
 };
 
-/** Likes a limit joint, but works with rotary. */
+/** 
+@~english Likes a limit joint, but works with rotary.  
+@~chinese 与PhysicsJointLimit类似，但是刚体可以自由旋转。
+*/
 class CC_DLL PhysicsJointRotaryLimit : public PhysicsJoint
 {
 public:
-    /** Create a limit rotary joint.
+    /** @~english Create a limit rotary joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param min It's min rotation limit in radians.
-     @param max It's max rotation limit in radians.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointRotaryLimit。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param min @~english It's min rotation limit in radians.
+     * @~chinese 两个物体之间的最小旋转角度。
+     @param max @~english It's max rotation limit in radians.
+     * @~chinese 两个物体之间的最大旋转角度。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointRotaryLimit。
      */
     static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b, float min, float max);
 
-    /** Create a limit rotary joint.
+    /** @~english Create a limit rotary joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointRotaryLimit。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointRotaryLimit。
      */
     static PhysicsJointRotaryLimit* construct(PhysicsBody* a, PhysicsBody* b);
 
-    /** Get the min rotation limit.*/
+    /** @~english Get the min rotation limit. @~chinese 得到最小旋转角度。*/
     float getMin() const;
     
-    /** Set the min rotation limit.*/
+    /** @~english Set the min rotation limit. @~chinese 设置最小旋转角度。*/
     void setMin(float min);
     
-    /** Get the max rotation limit.*/
+    /** @~english Get the max rotation limit. @~chinese 得到最大旋转角度。*/
     float getMax() const;
     
-    /** Set the max rotation limit.*/
+    /** @~english Set the max rotation limit. @~chinese 设置最大旋转角度。*/
     void setMax(float max);
     
     virtual bool createConstraints() override;
@@ -462,36 +587,46 @@ protected:
     float _max;
 };
 
-/** Works like a socket wrench. */
+/** 
+@~english Works like a socket wrench.  
+@~chinese PhysicsJointRatchet工作就像一个套筒扳手。
+*/
 class CC_DLL PhysicsJointRatchet : public PhysicsJoint
 {
 public:
-    /** Create a ratchet joint.
+    /** @~english Create a ratchet joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param phase Phase is the initial offset to use when deciding where the ratchet angles are.
-     @param ratchet Ratchet is the distance between "clicks".
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointRatchet。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的是身体。
+     @param b @~english B is the body to connect.
+     * @~chinese B是身体连接。
+     @param phase @~english Phase is the initial offset to use when deciding where the ratchet angles are.
+     * @~chinese 阶段的初始偏移量使用当决定棘轮角度在哪里。
+     @param ratchet @~english Ratchet is the distance between "clicks".
+     * @~chinese 棘轮是“点击”之间的距离。
+     @return @~english A object pointer.
+     * @~chinese 派发了瞄准。
      */
     static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
 
-    /** Get the ratchet angle.*/
+    /** @~english Get the ratchet angle. @~chinese 棘轮角。*/
     float getAngle() const;
     
-    /** Set the ratchet angle.*/
+    /** @~english Set the ratchet angle. @~chinese 设置棘轮角。*/
     void setAngle(float angle);
     
-    /** Get the initial offset.*/
+    /** @~english Get the initial offset. @~chinese 获得的初始偏移量。*/
     float getPhase() const;
     
-    /** Set the initial offset.*/
+    /** @~english Set the initial offset. @~chinese 设置初始偏移量。*/
     void setPhase(float phase);
     
-    /** Get the distance between "clicks".*/
+    /** @~english Get the distance between "clicks". @~chinese “点击”之间的距离。*/
     float getRatchet() const;
 
-    /** Set the distance between "clicks".*/
+    /** @~english Set the distance between "clicks". @~chinese “点击”之间的距离。*/
     void setRatchet(float ratchet);
     virtual bool createConstraints() override;
 
@@ -503,30 +638,40 @@ protected:
     float _ratchet;
 };
 
-/** Keeps the angular velocity ratio of a pair of bodies constant. */
+/** 
+@~english Keeps the angular velocity ratio of a pair of bodies constant.  
+@~chinese 让两个刚体之间的旋转角速度保持一个常数。
+*/
 class CC_DLL PhysicsJointGear : public PhysicsJoint
 {
 public:
-    /** Create a gear joint.
+    /** @~english Create a gear joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param phase Phase is the initial angular offset of the two bodies.
-     @param ratio Ratio is always measured in absolute terms.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointGear。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param phase @~english Phase is the initial angular offset of the two bodies.
+     * @~chinese 两个物体的初始角度差。
+     @param ratio @~english Ratio is always measured in absolute terms.
+     * @~chinese 两个物体的旋转角速度比。
+     @return @~english A object pointer.
+     * @~chinese 返回的PhysicsJointGear。
      */
     static PhysicsJointGear* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratio);
 
-    /** Get the angular offset of the two bodies.*/
+    /** @~english Get the angular offset of the two bodies. @~chinese 得到两个物体的初始角度差。*/
     float getPhase() const;
     
-    /** Set the angular offset of the two bodies.*/
+    /** @~english Set the angular offset of the two bodies. @~chinese 设置两个物体的初始角度差。*/
     void setPhase(float phase);
     
-    /** Get the ratio.*/
+    /** @~english Get the ratio. @~chinese 得到旋转角速度比率。*/
     float getRatio() const;
     
-    /** Set the ratio.*/
+    /** @~english Set the ratio. @~chinese 设置旋转角速度比率。*/
     void setRatio(float ratchet);
 
     virtual bool createConstraints() override;
@@ -539,23 +684,32 @@ protected:
     float _ratio;
 };
 
-/** Keeps the relative angular velocity of a pair of bodies constant. */
+/** 
+@~english Keeps the relative angular velocity of a pair of bodies constant.  
+@~chinese PhysicsJointMotor用于保证两个物体的相对角速度时一个常数。
+*/
 class CC_DLL PhysicsJointMotor : public PhysicsJoint
 {
 public:
-    /** Create a motor joint.
+    /** @~english Create a motor joint.
      
-     @param a A is the body to connect.
-     @param b B is the body to connect.
-     @param rate Rate is the desired relative angular velocity.
-     @return A object pointer.
+     * @~chinese 创建一个PhysicsJointMotor。
+     * 
+     @param a @~english A is the body to connect.
+     * @~chinese 连接的第一个刚体。
+     @param b @~english B is the body to connect.
+     * @~chinese 连接的第二个刚体。
+     @param rate @~english Rate is the desired relative angular velocity.
+     * @~chinese 两个物体的相对角速度
+     @return @~english A object pointer.
+     * @~chinese 返回PhysicsJointMotor。
      */
     static PhysicsJointMotor* construct(PhysicsBody* a, PhysicsBody* b, float rate);
 
-    /** Get the relative angular velocity.*/
+    /** @~english Get the relative angular velocity. @~chinese 得到相对角速度。*/
     float getRate() const;
     
-    /** Set the relative angular velocity.*/
+    /** @~english Set the relative angular velocity. @~chinese 设置相对角速度。*/
     void setRate(float rate);
     virtual bool createConstraints() override;
 
