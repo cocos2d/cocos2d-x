@@ -1,4 +1,4 @@
-/*
+/******************************************************************
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
  * Copyright (c) 2013-2014 Chukong Technologies Inc.
@@ -20,7 +20,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */
+ ******************************************************************/
 
 #ifndef __SCRIPTING_CORE_H__
 #define __SCRIPTING_CORE_H__
@@ -54,6 +54,41 @@ public:
     void update(float d);
 };
 
+/**
+ * @addtogroup JSB
+ * @{
+ */
+
+/**
+ * @brief @~english ScriptingCore is the main class which manages interaction with JavaScript environment
+ * @~chinese ScriptingCore是管理与JavaScript环境交互的核心类
+ * @detail @~english It creates the JavaScript context and its global object.
+ * It also manages object bindings between C++ scope and JavaScript scope, 
+ * for most cocos2d classes, if you create an object in JavaScript scope, it will also create a C++ object,
+ * ScriptingCore will manage a proxy between them and synchronize the life cycle.
+ * It can: 
+ * - Execute JavaScript functions in different ways with different parameters
+ * - Evaluate JavaScript commands or string
+ * - Execute a JavaScript file
+ * - Clean a JavaScript file cache
+ * - Clean all JavaScript files
+ * - Cleanup or reset the JavaScript context
+ * - Invoke garbage collection of JavaScript context
+ * - etc...
+ * @~chinese 它创建JavaScript上下文和全局对象。
+ * 它还管理C++环境和JavaScript环境对象之间的绑定，
+ * 对于大多数cocos2d类，如果在JavaScript环境内创建一个对象，它还将同时创建一个c++对象,
+ * ScriptingCore将为不同环境下对象管理一个代理并同步不同环境下的生命周期。
+ * 它可以:
+ * - 以不同的方式与不同的参数执行JavaScript函数
+ * - 执行JavaScript命令或字符串
+ * - 执行一个JavaScript文件
+ * - 清理一个JavaScript文件缓存
+ * - 清理所有的JavaScript文件缓存
+ * - 清理或重置JavaScript上下文
+ * - 调用JavaScript上下文的垃圾收集
+ * - 等等...
+ */
 class ScriptingCore : public cocos2d::ScriptEngineProtocol
 {
 private:
@@ -70,6 +105,13 @@ private:
 public:
     ~ScriptingCore();
 
+    /**@~english
+     * ScriptingCore is a singleton class, you can retrieve its instance with this function.
+     * @~chinese 
+     * ScriptingCore是一个单例类，你可以用这个函数获取它的实例。
+     * @return @~english The ScriptingCore instance.
+     * @~chinese ScriptingCore实例。
+     */
     static ScriptingCore *getInstance() {
         static ScriptingCore* pInstance = NULL;
         if (pInstance == NULL) {
@@ -78,183 +120,561 @@ public:
         return pInstance;
     };
 
+    /**@~english
+     * Gets the script type, for ScriptingCore, it will return `cocos2d::kScriptTypeJavascript`
+     * @~chinese 
+     * 获取脚本类型，它将返回`cocos2d::kScriptTypeJavascript`
+     * @return `cocos2d::kScriptTypeJavascript`
+     */
     virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
 
     /**
-     @brief Remove Object from lua state
-     @param object to remove
+     * @brief @~english Removes the C++ object's linked JavaScript proxy object from JavaScript context
+     * @~chinese 从JavaScript上下文中删除指定C++对象的JavaScript代理对象
+     * @param obj @~english Object to be removed
+     * @~chinese 需要被删除的对象
      */
     virtual void removeScriptObjectByObject(cocos2d::Ref* obj);
 
     /**
-     @brief Execute script code contained in the given string.
-     @param codes holding the valid script code that should be executed.
-     @return 0 if the string is excuted correctly.
-     @return other if the string is excuted wrongly.
+     * @brief @~english Useless in ScriptingCore, please use evalString
+     * @~chinese 在ScriptingCore中无用，请使用evalString
+     * @see evalString
      */
     virtual int executeString(const char* codes) { return 0; }
+
+    /**
+     * @brief @~english Pause scheduled tasks and actions for an object proxy.
+     * @~chinese 暂停代理对象所指向的节点的所有任务和动作。
+     * @param p @~english The object proxy
+     * @~chinese 代理对象
+     */
     void pauseSchedulesAndActions(js_proxy_t* p);
+    /**
+     * @brief @~english Resume scheduled tasks and actions for an object proxy.
+     * @~chinese 恢复代理对象所指向的节点的所有任务和动作。
+     * @param p @~english The object proxy
+     * @~chinese 代理对象
+     */
     void resumeSchedulesAndActions(js_proxy_t* p);
+    /**
+     * @brief @~english Cleanup scheduled tasks and actions for an object proxy.
+     * @~chinese 清除代理对象所指向的节点的所有任务和动作。
+     * @param p @~english The object proxy
+     * @~chinese 代理对象
+     */
     void cleanupSchedulesAndActions(js_proxy_t* p);
 
     /**
-     @brief Execute a script file.
-     @param filename String object holding the filename of the script file that is to be executed
+     * @brief @~english Useless in ScriptingCore, please use runScript
+     * @~chinese 在ScriptingCore中无用,请使用runScript
+     * @see runScript
      */
     virtual  int executeScriptFile(const char* filename) { return 0; }
-
     /**
-     @brief Execute a scripted global function.
-     @brief The function should not take any parameters and should return an integer.
-     @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
-     @return The integer value returned from the script function.
+     * @brief @~english Useless in ScriptingCore, please use executeFunctionWithOwner
+     * @~chinese 在ScriptingCore中无用,请使用executeFunctionWithOwner
+     * @see executeFunctionWithOwner
      */
     virtual int executeGlobalFunction(const char* functionName) { return 0; }
 
     virtual int sendEvent(cocos2d::ScriptEvent* message) override;
-    
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
-
+    /**
+     * @brief @~english Useless in ScriptingCore
+     * @~chinese 在ScriptingCore中无用
+     * @return @~english false
+     * @~chinese false
+     */
     virtual bool handleAssert(const char *msg) { return false; }
 
-    virtual void setCalledFromScript(bool callFromScript) { _callFromScript = callFromScript; };
-    virtual bool isCalledFromScript() { return _callFromScript; };
+    virtual void setCalledFromScript(bool callFromScript) override { _callFromScript = callFromScript; };
+    virtual bool isCalledFromScript() override { return _callFromScript; };
     
+    /**
+     * @brief @~english Execute a js function with a JavaScript object as parameter.
+     * By passing a native object, ScriptingCore will found its JavaScript object with the proxy. 
+     * Then the function will be invoked with the native object's js proxy as caller.
+     * @~chinese 以一个JavaScript对象作为参数执行一个js函数。
+     * 通过传递一个C++原生对象，ScriptingCore将会找到它的JavaScript代理对象。
+     * 然后将使用代理对象作为js调用者调用指定的JS函数。
+     * @param nativeObj @~english The caller object's C++ proxy.
+     *                  @~chinese 调用者对象的c++代理对象。
+     * @param name      @~english The function name.
+     *                  @~chinese 函数的名字。
+     * @param obj       @~english The JavaScript object as parameter.
+     *                  @~chinese 作为参数的JavaScript对象。
+     * @return @~english Return the js function's boolean result if successfully invoked, otherwise return false.
+     * @~chinese 如果调用成功返回js函数的布尔结果，否则返回false。
+     */
     bool executeFunctionWithObjectData(void* nativeObj, const char *name, JSObject *obj);
 
+    /**
+     * @brief @~english Execute a js function with a JavaScript caller, function name, arguments count and arguments.
+     * @~chinese 用一个JavaScript调用者，函数名，参数数量和参数执行一个js函数。
+     * @param owner     @~english The caller object.
+     *                  @~chinese 调用者对象。
+     * @param name      @~english The function name.
+     *                  @~chinese 函数的名字。
+     * @param argc      @~english The arguments count.
+     *                  @~chinese 参数数量。
+     * @param vp        @~english The arguments.
+     *                  @~chinese 参数。
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
+     */
     bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp);
-    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal);
-    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args);
-    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal);
-
-    void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback);
-    void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback, const JS::HandleValueArray& vp, JS::MutableHandleValue retVal);
 
     /**
-     * will eval the specified string
-     * @param string The string with the javascript code to be evaluated
-     * @param outVal The jsval that will hold the return value of the evaluation.
-     * Can be NULL.
+     * @brief @~english Execute a js function with a JavaScript caller, function name, arguments count, arguments and a return value.
+     * @~chinese 用一个JavaScript调用者，函数名，参数数量，参数和返回值执行一个js函数。
+     * @param owner     @~english The caller object.
+     *                  @~chinese 调用者对象。
+     * @param name      @~english The function name.
+     *                  @~chinese 函数的名字。
+     * @param argc      @~english The arguments count.
+     *                  @~chinese 参数数量。
+     * @param vp        @~english The arguments.
+     *                  @~chinese 参数。
+     * @param retVal    @~english The js object to save the return value.
+     *                  @~chinese 用来保存返回值的js对象。
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
+     */
+    bool executeFunctionWithOwner(jsval owner, const char *name, uint32_t argc, jsval *vp, JS::MutableHandleValue retVal);
+
+    /**
+     * @brief @~english Execute a js function with a JavaScript caller, function name, arguments array.
+     * This is more reliable in js memory management
+     * @~chinese 用一个JavaScript调用者，函数名和参数数组执行一个js函数。
+     * 这对于js内存管理来说更加可靠
+     * @param owner     @~english The caller object.
+     *                  @~chinese 调用对象。
+     * @param name      @~english The function name.
+     *                  @~chinese 函数的名字。
+     * @param args      @~english The arguments array.
+     *                  @~chinese 参数数组。
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
+     */
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args);
+
+    /**
+     * @brief @~english Execute a js function with a JavaScript caller, function name, arguments array and a return value.
+     * This is more reliable in js memory management
+     * @~chinese 用一个JavaScript调用者，函数名，参数数组和一个返回值执行一个js函数。
+     * 这对于js内存管理来说更加可靠
+     * @param owner     @~english The caller object.
+     *                  @~chinese 调用对象。
+     * @param name      @~english The function name.
+     *                  @~chinese 函数的名字。
+     * @param args      @~english The arguments array.
+     *                  @~chinese 参数数组。
+     * @param retVal    @~english The js object to save the return value.
+     *                  @~chinese 用来保存返回值的js对象。
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
+     */
+    bool executeFunctionWithOwner(jsval owner, const char *name, const JS::HandleValueArray& args, JS::MutableHandleValue retVal);
+
+    /**
+     * @brief @~english Execute a js function with a js this object and the js function object.
+     * @~chinese 用js this对象和一个js函数对象执行这个js函数。
+     * @param thisObj   @~english The js this object.
+     *                  @~chinese js this对象。
+     * @param callback  @~english The js function object.
+     *                  @~chinese js函数对象。
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
+     */
+    void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback);
+    /**
+     * @brief @~english Execute a js function with a js this object, the js function object, arguments and a return value.
+     * @~chinese 用js this对象和一个js函数对象执行这个js函数。
+     * @param thisObj   @~english The js this object.
+     *                  @~chinese js this对象。
+     * @param callback  @~english The js function object.
+     *                  @~chinese js函数对象。
+     * @param vp        @~english The arguments array.
+     *                  @~chinese 参数数组。
+     * @param retVal    @~english The js object to save the return value.
+     *                  @~chinese 用来保存返回值的js对象。
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
+     */
+    void executeJSFunctionWithThisObj(JS::HandleValue thisObj, JS::HandleValue callback, const JS::HandleValueArray& vp, JS::MutableHandleValue retVal);
+
+    /**@~english
+     * Evaluate the specified js code string
+     * @~chinese 
+     * 执行指定的JS代码字符串
+     * @param string    @~english The string with the javascript code to be evaluated
+     * @~chinese javascript代码的字符串
+     * @param outVal    @~english The jsval that will hold the return value of the evaluation.
+     * @~chinese 将持有的返回值的jsval。
+     * @param filename  @~english The filename
+     * @~chinese 文件名
+     * @param cx        @~english The js context
+     * @~chinese js上下文对象
+     * @param global    @~english The js global object
+     * @~chinese js的全局对象
+     * @return @~english Return true if successfully invoked, otherwise return false.
+     * @~chinese 调用成功时返回true，否则返回false。
      */
     bool evalString(const char *string, jsval *outVal, const char *filename = NULL, JSContext* cx = NULL, JSObject* global = NULL);
     
     /**
-     @brief get script object for the given path
-     @param given script path
-     @return script object
+     @brief @~english Get script object for the given path
+     * @~chinese 为给定的js脚本路径获取脚本对象
+     @param path @~english The script file path
+     * @~chinese 脚本文件路径
+     @return @~english Script object
+     * @~chinese 脚本对象
      */
     JSScript* getScript(const char *path);
 
-    /**
-     * will compile the specified string
-     * @param string The path of the script to be run
+    /**@~english
+     * Compile the specified js file
+     * @~chinese 
+     * 编译指定路径下的js文件
+     * @param string    @~english The path of the script to to compiled
+     * @~chinese 脚本文件的路径
+     * @param global    @~english The js global object
+     * @~chinese js的全局对象
+     * @param cx        @~english The js context
+     * @~chinese js上下文
      */
     void compileScript(const char *path, JSObject* global = NULL, JSContext* cx = NULL);
 
-    /**
-     * will run the specified string
-     * @param string The path of the script to be run
+    /**@~english
+     * Run the specified js file
+     * @~chinese 
+     * 执行指定的js文件
+     * @param string @~english The path of the script to be executed
+     * @~chinese 脚本文件的路径
+     * @return @~english Return true if succeed, otherwise return false.
+     * @~chinese 成功时返回true，否则返回false。
      */
     bool runScript(const char *path);
+    /**@~english
+     * Run the specified js file
+     * @~chinese 
+     * 执行指定的js文件
+     * @param string @~english The path of the script to be executed
+     * @~chinese 脚本文件的路径
+     * @return @~english Return true if succeed, otherwise return false.
+     * @~chinese 成功时返回true，否则返回false。
+     */
     bool runScript(const char *path, JS::HandleObject global, JSContext* cx = NULL);
 
-    /**
-     * will clean script object the specified string
+    /**@~english
+     * Clean script object for the specified js file
+     * @~chinese 
+     * 清除的js文件对应的脚本缓存对象
+     * @param string @~english The path of the js file to be cleaned
+     * @~chinese 脚本文件的路径
      */
     void cleanScript(const char *path);
     
+    /**@~english
+     * Gets the cached script objects for all executed js file
+     * @~chinese 
+     * 获取所有已执行的js文件的缓存脚本对象
+     * @return @~english The cached script object map
+     * @~chinese 缓存脚本对象表
+     */
     std::unordered_map<std::string, JSScript*> &getFileScript();
-     /**
-     * will clean all script object
+    /**@~english
+     * Clean all script objects
+     * @~chinese 
+     * 清除所有脚本对象缓存
      */
     void cleanAllScript();
     
-    /**
-     * initialize everything
+    /**@~english
+     * Initialize everything, including the js context, js global object etc.
+     * @~chinese 
+     * 初始化所有的东西，包括js上下文，js全局对象等。
      */
     void start();
 
-    /**
-     * cleanup everything
+    /**@~english
+     * Cleanup everything
+     * @~chinese 
+     * 清除一切
      */
     void cleanup();
 
-    /**
-     * cleanup everything then initialize everything
+    /**@~english
+     * Cleanup everything then initialize everything
+     * @~chinese 
+     * 清理然后重新初始化所有的一切
      */
     void reset();
 
-    /**
-     * will add the register_sth callback to the list of functions that need to be called
-     * after the creation of the context
+    /**@~english
+     * Add the register_sth callback to the list of functions that need to be called after the creation of the context.
+     * It's normally used to register script bindings in the js context for bound classes
+     * @~chinese 
+     * 添加register_sth回调函数到列表中，列表中的所有回调都会在js上下文创建后被调用。
+     * 它通常用于将已绑定的类注册到js上下文中。
+     * @param callback @~english The callback to register something to the js context
+     * @~chinese 用于注册绑定的回调函数
      */
     void addRegisterCallback(sc_register_sth callback);
 
-    /**
-     * Will create a new context. If one is already there, it will destroy the old context
-     * and create a new one.
+    /**@~english
+     * Create a new context. If one is already there, it will destroy the old context and create a new one.
+     * @~chinese 
+     * 创建一个新的js上下文。如果一个旧的上下文已经存在，它将摧毁旧的上下文并创建一个新的。
      */
     void createGlobalContext();
 
+    /**@~english
+     * Removes all rooted object in the given js context, rooted object won't be garbage collected.
+     * @~chinese 
+     * 在给定的js环境中删除所有的根对象，根对象不会被垃圾回收机制回收。
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     */
     static void removeAllRoots(JSContext *cx);
 
-
+    /**@~english
+     * Simulate a touch event and dispatch it to a js object.
+     * @~chinese 
+     * 模拟一个触摸事件，并将其分派到一个javascript对象。
+     * @param eventType @~english The touch event type
+     * @~chinese 触摸事件类型
+     * @param pTouch @~english The touch object
+     * @~chinese 触点对象
+     * @param obj @~english The js object
+     * @~chinese js对象
+     * @param retval @~english The return value of the touch event callback
+     * @~chinese 触摸事件回调的返回值
+     * @return @~english Return 1 if succeed, otherwise return 0.
+     * @~chinese 如果成功,返回1,否则返回0。
+     */
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
                                 cocos2d::Touch *pTouch, JSObject *obj, JS::MutableHandleValue retval);
+    /**@~english
+     * Simulate a touch event and dispatch it to a js object.
+     * @~chinese 
+     * 模拟一个触摸事件，并将其分派到一个javascript对象。
+     * @param eventType @~english The touch event type
+     * @~chinese 触摸事件类型
+     * @param pTouch @~english The touch object
+     * @~chinese 触点对象
+     * @param obj @~english The js object
+     * @~chinese js对象
+     * @return @~english Return 1 if succeed, otherwise return 0.
+     * @~chinese 如果成功,返回1,否则返回0。
+     */
     int executeCustomTouchEvent(cocos2d::EventTouch::EventCode eventType,
                                 cocos2d::Touch *pTouch, JSObject *obj);
+    /**@~english
+     * Simulate a multi touch event and dispatch it to a js object.
+     * @~chinese 
+     * 模拟一个多点触摸事件，并将其分派到一个javascript对象。
+     * @param eventType @~english The touch event type
+     * @~chinese 触摸事件类型
+     * @param touches @~english Touchs list for multitouch
+     * @~chinese 多点触点对象
+     * @param obj @~english The js object
+     * @~chinese js对象
+     * @return @~english Return 1 if succeed, otherwise return 0.
+     * @~chinese 如果成功,返回1,否则返回0。
+     */
     int executeCustomTouchesEvent(cocos2d::EventTouch::EventCode eventType,
                                   const std::vector<cocos2d::Touch*>& touches, JSObject *obj);
-    /**
-     * @return the global context
+    /**@~english
+     * Gets the current global context.
+     * @~chinese 
+     * 获取当前全局js上下文。
+     * @return @~english the global context
+     * @~chinese 全局js上下文
      */
     JSContext* getGlobalContext() {
         return _cx;
     };
 
-    /**
-     * @param cx
-     * @param message
-     * @param report
+    /**@~english
+     * Report an error in the js context
+     * @~chinese 
+     * 在js上下文报告一个错误
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param message @~english The error message
+     * @~chinese 错误消息
+     * @param report @~english The js error report object
+     * @~chinese js错误报告对象
      */
     static void reportError(JSContext *cx, const char *message, JSErrorReport *report);
 
-    /**
-     * Log something using CCLog
-     * @param cx
-     * @param argc
-     * @param vp
+    /**@~english
+     * Log something to the js context using CCLog.
+     * @~chinese 
+     * 在js上下文打印一个log信息
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
+     * @return @~english Return true if succeed, otherwise return false.
+     * @~chinese 成功时返回true，否则返回false。
      */
     static bool log(JSContext *cx, uint32_t argc, jsval *vp);
 
+    /**@~english
+     * Sets a js value to the targeted js obejct's reserved slot, which is not exposed to script environment.
+     * @~chinese 
+     * 设置一个js值到目标js对象的预留存储槽，这些值将不会被暴露于脚本环境。
+     * @param i @~english The slot index
+     * @~chinese 存储槽位置索引
+     * @param obj @~english The targeted object
+     * @~chinese 目标对象
+     * @param value @~english The js value to set to the slot
+     * @~chinese 需要被存储的js值
+     * @return @~english Return true if succeed, otherwise return false.
+     * @~chinese 成功时返回true，否则返回false。
+     */
     bool setReservedSpot(uint32_t i, JSObject *obj, jsval value);
 
-    /**
-     * run a script from script :)
+    /**@~english
+     * Runs a script from script environment, it should be invoked from script environment
+     * Bound to `__jsc__.executeScript` and `window.executeScript`
+     * @~chinese 
+     * 从脚本环境中运行一个脚本，它应该从脚本中被调用
+     * 被绑定到`__jsc__.executeScript`和`window.executeScript`
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
+     * @return @~english Return true if succeed, otherwise return false.
+     * @~chinese 成功时返回true，否则返回false。
      */
     static bool executeScript(JSContext *cx, uint32_t argc, jsval *vp);
-
-    /**
-     * Force a cycle of GC
-     * @param cx
-     * @param argc
-     * @param vp
+    /**@~english
+     * Forces a cycle of garbage collection, it should be invoked from script environment
+     * Bound to `__jsc__.garbageCollect` and `window.garbageCollect`
+     * @~chinese 
+     * 强制执行一次垃圾回收，它应该从脚本中被调用
+     * 绑定到`__jsc__.garbageCollect`和`window.garbageCollect`
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
      */
     static bool forceGC(JSContext *cx, uint32_t argc, jsval *vp);
+    /**@~english
+     * Dump all named rooted objects, it should be invoked from script environment
+     * Bound to `__jsc__.dumpRoot`
+     * @~chinese 
+     * 打印所有有名根对象，它应该从脚本中被调用
+     * 绑定到`__jsc__.dumpRoot`
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
+     */
     static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
+    /**@~english
+     * Adds a js object to root so that it won't be touched by the garbage collection, it should be invoked from script environment
+     * Bound to `__jsc__.addGCRootObject`
+     * @~chinese 
+     * 添加一个js对象到根内存中，这样它就不会被垃圾回收机制所影响。它应该从脚本中被调用
+     * 绑定到`__jsc__.addGCRootObject`
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
+     */
     static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
+    /**@~english
+     * Removes a js object from root, it should be invoked from script environment
+     * Bound to `__jsc__.removeGCRootObject`
+     * @~chinese 
+     * 从根内存中删除一个js，它应该从脚本中被调用
+     * 绑定到`__jsc__.removeGCRootObject`
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
+     */
     static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
-    
+    /**@~english
+     * Check whether a js object's C++ proxy is still valid, it should be invoked from script environment
+     * Bound to `window.__isObjectValid`
+     * @~chinese 
+     * 检查一个js对象的c++代理是否仍然有效，它应该从脚本中被调用
+     * 绑定到`window.__isObjectValid`
+     * @param cx @~english The js context
+     * @~chinese js上下文
+     * @param argc @~english The arguments count
+     * @~chinese 参数数量
+     * @param vp @~english The arguments
+     * @~chinese 参数
+     */
     static bool isObjectValid(JSContext *cx, uint32_t argc, jsval *vp);
 
-    /**
-     * enable the debug environment
+    /**@~english
+     * Log a string to the debug environment.
+     * Enable the debug environment so that it can be invoked.
+     * @~chinese 
+     * 打印一个字符串到调试环境。
+     * 启用调试环境，以便它可以被调用。
+     * @param str @~english The message to log
+     * @~chinese 消息日志
      */
     void debugProcessInput(const std::string& str);
+    /**@~english
+     * Enable the debug environment, mozilla Firefox's remote debugger or Code IDE can connect to it.
+     * @~chinese 
+     * 启用调试环境，mozilla Firefox的远程调试器或Code IDE可以连接它。
+     * @param port @~english The port to connect with the debug enviroment, default value is 5086
+     * @~chinese 调试环境连接端口，默认值是5086
+     */
     void enableDebugger(unsigned int port = 5086);
+    /**@~english
+     * Gets the debug environment's global object
+     * @~chinese 
+     * 获取调试环境的全局对象
+     * @return @~english The debug environment's global object
+     * @~chinese 调试环境的全局对象
+     */
     JSObject* getDebugGlobal() { return _debugGlobal.ref().get(); }
+    /**@~english
+     * Gets the global object
+     * @~chinese 
+     * 获取全局对象
+     * @return @~english The global object
+     * @~chinese 全局对象
+     */
     JSObject* getGlobalObject() { return _global.ref().get(); }
 
+    /**@~english
+     * Checks whether a C++ function is overrided in js prototype chain
+     * @~chinese 
+     * 检查是否一个c++函数在js继承链中被覆盖
+     * @param obj @~english The js object
+     * @~chinese js对象
+     * @param name @~english The function name
+     * @~chinese 函数名
+     * @param native @~english The native function
+     * @~chinese 本机函数
+     * @return @~english The global object
+     * @~chinese 全局对象
+     */
     bool isFunctionOverridedInJS(JS::HandleObject obj, const std::string& name, JSNative native);
     
 private:
@@ -298,5 +718,13 @@ jsval getJSObject(JSContext* cx, T* nativeObj)
 }
 
 void removeJSObject(JSContext* cx, void* nativeObj);
+
+/**@~english
+ * // JSB
+ * @}
+ * @~chinese 
+ * / / JSB
+ * @ }
+ */
 
 #endif /* __SCRIPTING_CORE_H__ */
