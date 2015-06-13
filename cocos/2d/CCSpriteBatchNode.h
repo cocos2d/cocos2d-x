@@ -141,11 +141,11 @@ public:
     /** @~english Returns an array with the descendants (children, gran children, etc.).
      * This is specific to BatchNode. In order to use the children, use getChildren() instead.
      * 
-     * @~chinese 返回子节点树的平铺数组（子节点，子节点的子节点...）。
+     * @~chinese 返回包含子节点树中所有子节点的数组（子节点，子节点的子节点...）。
      * 这是 SpriteBatchNode 的定制接口。如果要获取子节点，请使用 getChildren()。
      * 
      * @return @~english An array with the descendants (children, gran children, etc.).
-     * @~chinese 子节点树的平铺数组。
+     * @~chinese 包含子节点树中所有子节点的数组。
      */
     inline const std::vector<Sprite*>& getDescendants() const { return _descendants; }
 
@@ -271,10 +271,10 @@ public:
     virtual std::string getDescription() const override;
 
     /** @~english Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.
-     * This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.
+     * This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.
      * For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont).
      * @~chinese 从指定的 Sprite 对象获取 Atlas 数据并插入到指定的索引值位置，Sprite 对象不会被添加为子节点。
-     * 只有当需要处理很大的 AtlasSrite 并且其中大部分 Sprite 都不会更新的情况，可以调用这个方法。
+     * 只有当需要处理很大的 AtlasSprite 并且其中大部分 Sprite 都不会更新的情况，可以调用这个方法。
      * 例如：一个 tile map(TMXMap) 或者包含很多字符的 label (LableBMFont)。
      */
     void insertQuadFromSprite(Sprite *sprite, ssize_t index);

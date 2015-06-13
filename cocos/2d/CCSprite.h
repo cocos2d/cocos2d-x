@@ -276,6 +276,8 @@ public:
      *  It will call `setTextureRect()` with the texture's content size.
      * @~chinese Sprite
      * 此函数会获取纹理的大小并调用 `setTextureRect()`
+     * @param filename @~english The file path of the image file.
+     * @~chinese 图片文件的路径。
      */
     virtual void setTexture(const std::string &filename );
 
@@ -301,12 +303,18 @@ public:
      */
     virtual void setTextureRect(const Rect& rect);
 
-    /** @~english @overload
+    /** @overload @~english
      *
      * It will update the texture coordinates and the vertex rectangle.
-     * @~chinese @overload
+     * @~chinese
      * 
      * 更新 Sprite 的顶点坐标和纹理坐标。
+     * @param rect @~english The used rect of the texture.
+     * @~chinese 使用的纹理矩形区域。
+     * @param rotated @~english Whether rotate or not.
+     * @~chinese 是否旋转。
+     * @param untrimmedSize @~english The size before trimmed.
+     * @~chinese 裁剪前的大小。
      */
     virtual void setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize);
 
@@ -380,7 +388,7 @@ public:
      * Whether or not the Sprite needs to be updated in the Atlas.
      *
      * @~chinese 
-     * 是否需要更新Sprite在 Atlas。
+     * Sprite是否需要在atlas里面更新。
      * 
      * @return @~english True if the sprite needs to be updated in the Atlas, false otherwise.
      * @~chinese 如果需要更新，返回 true；否则返回 false
@@ -452,7 +460,7 @@ public:
     /**@~english
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      * @~chinese 
-     * 获取 Sprite 的偏移位置。可能是由编辑器自动计算产生的值。
+     * 获取 Sprite 的偏移位置。Zwoptex 等编辑器可以自动计算这个值。
      */
     inline const Vec2& getOffsetPosition() const { return _offsetPosition; }
 
