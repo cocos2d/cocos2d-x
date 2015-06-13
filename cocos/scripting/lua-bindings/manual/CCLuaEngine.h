@@ -152,8 +152,8 @@ public:
      * 
      * @param moduleFileName @~english String object holding the filename of the script file that is to be executed.
      * @~chinese 脚本文件的文件名。
-     * @return @~english 0 if the string is excuted correctly or other if the string is excuted wrongly.
-     * @~chinese 如果excuted正确,返回0。如果excuted错误则返回其它值。
+     * @return @~english 0 if the string is executed correctly or other if the string is executed wrongly.
+     * @~chinese 如果执行正确,返回0，否则返回其它值。
      */
 
     virtual int reload(const char* moduleFileName);
@@ -210,7 +210,7 @@ public:
      * 
      * @param codes @~english holding the valid script code that should be executed.
      * @~chinese 需被执行的脚本代码字符串。
-     * @return @~english 0 if the string is excuted correctly,other if the string is excuted wrongly.
+     * @return @~english 0 if the string is executed correctly,other if the string is executed wrongly.
      * @~chinese 执行成功返回0，否则返回其它值。
      */
 
@@ -262,7 +262,7 @@ public:
      * 处理断言信息。
      * 
      * @return @~english return true if current _callFromLua of LuaStack is not equal to 0 otherwise return false.
-     * @~chinese 返回true,如果当前LuaStack的_callFromLua不等于0,否则返回假。
+     * @~chinese 返回true,如果当前LuaStack的_callFromLua不等于0,否则返回false。
      */
 
     virtual bool handleAssert(const char *msg) override;
