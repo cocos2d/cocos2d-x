@@ -60,7 +60,7 @@ class CC_DLL RenderTexture : public Node
 public:
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
-     * @~chinese 使用指定的宽度，高度，像素格式和模板格式初始化一个RenderTexture对象。
+     * @~chinese 使用指定的宽度，高度，像素格式和深度模板格式初始化一个RenderTexture对象。
      * 
      * @param w @~english The RenderTexture object width.
      * @~chinese RenderTexture对象的宽度。
@@ -69,7 +69,7 @@ public:
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @~chinese 像素格式(只有RGB和RGBA格式可用)。
      * @param depthStencilFormat @~english The depthStencil format.
-     * @~chinese 模板格式。
+     * @~chinese 深度模板格式。
      */
     static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
@@ -449,7 +449,7 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
     /** @~english Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
-     * @~chinese 使用指定的宽度，高度，像素格式和模板格式初始化一个RenderTexture对象。
+     * @~chinese 使用指定的宽度，高度，像素格式和深度模板格式初始化一个RenderTexture对象。
      * 
      * @param w @~english The RenderTexture object width.
      * @~chinese RenderTexture对象的宽度。
@@ -458,7 +458,7 @@ public:
      * @param format @~english In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @~chinese 像素格式(只有RGB和RGBA格式可用)。
      * @param depthStencilFormat @~english The depthStencil format.
-     * @~chinese 模板格式。
+     * @~chinese 深度模板格式。
      * @return @~english If successed,it will return true.
      * @~chinese 如果成功,它将返回true。
      */
