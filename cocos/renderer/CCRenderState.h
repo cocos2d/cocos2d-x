@@ -371,10 +371,12 @@ public:
         /** 
          * Invalidates the default StateBlock.
          *
-         * Only call it if you are calling GL calls directly.
-         * This function will turn on all the dirty flags of the default state.
-         * By doing that, the next time a StateBlock::restore() is called,
-         * it will restore to the default value the default StateBlock.
+         * Only call it if you are calling GL calls directly. Invoke this function
+         * at the end of your custom draw call.
+         * This function restores the default render state its defaults values.
+         * Since this function might call GL calls, it must be called in a GL context is present.
+         *
+         * @param stateBits Bitwise-OR of the states that needs to be invalidated
          */
         static void invalidate(long stateBits);
 
