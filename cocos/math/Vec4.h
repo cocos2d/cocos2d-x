@@ -225,7 +225,7 @@ public:
      * @param v @~english The other point. @~chinese 另一个点。
      * 
      * @return @~english The squared distance between this point and v.
-     * @~chinese 这个这个点与目标点v的距离的平方。
+     * @~chinese 这个点与目标点v的距离的平方。
      * @see distance
      */
     float distanceSquared(const Vec4& v) const;
@@ -351,7 +351,7 @@ public:
      * @~chinese 将本向量的各分量减指定向量的对应分量值并保存。
      * 
      * @param v @~english The vector to subtract.
-     * @~chinese 向量减数。
+     * @~chinese 用于减去的向量。
      */
     void subtract(const Vec4& v);
 
@@ -367,7 +367,7 @@ public:
      * @param v2 @~english The second vector.
      * @~chinese 第二个向量。
      * @param dst @~english The destination vector.
-     * @~chinese 向量差。
+     * @~chinese 结果向量。
      */
     static void subtract(const Vec4& v1, const Vec4& v2, Vec4* dst);
 
@@ -400,9 +400,9 @@ public:
      * @~chinese 向量减法，求向量与给定向量v的差
      * 注意:这并不修改原向量的值。
      * 
-     * @param v @~english The vector to minus. @~chinese 向量减数。
+     * @param v @~english The vector to minus. @~chinese 用于减去的向量。
      *
-     * @return @~english The vector difference. @~chinese 向量差。
+     * @return @~english The vector difference. @~chinese 结果向量。
      */
     inline const Vec4 operator-(const Vec4& v) const;
 
@@ -410,19 +410,19 @@ public:
      * @~english Subtracts the given vector from this vector.
      * @~chinese 向量减法，求向量与给定向量v的差，将结果保存在该向量中并返回。
      * 
-     * @param v @~english The vector to subtract. @~chinese 向量减数。
+     * @param v @~english The vector to subtract. @~chinese 用于减去的向量。
      * 
-     * @return @~english This vector, after the subtraction occurs. @~chinese 向量差。
+     * @return @~english This vector, after the subtraction occurs. @~chinese 结果向量。
      */
     inline Vec4& operator-=(const Vec4& v);
 
     /**@~english
      * Calculates the negation of this vector.
      * Note: this does not modify this vector.
-     * @~chinese 求负向量。
+     * @~chinese 计算向量的负值。
      * 注意:这并不修改原向量的值。
      * 
-     * @return @~english The negation of this vector. @~chinese 负向量。
+     * @return @~english The negation of this vector. @~chinese 向量的负值。
      */
     inline const Vec4 operator-() const;
 

@@ -385,7 +385,7 @@ public:
      * Subtracts this vector and the specified vector as (this - v)
      * and stores the result in this vector.
      *
-     * @~chinese 将本向量的各分量减指定向量的对应分量值并保存。
+     * @~chinese 将本向量的各分量减指定向量的对应分量值并保存在本向量中。
      * 
      * @param v @~english The vector to subtract.
      * @~chinese 向量减数。
@@ -404,7 +404,7 @@ public:
      * @param v2 @~english The second vector.
      * @~chinese 第二个向量。
      * @param dst @~english The destination vector.
-     * @~chinese 向量差。
+     * @~chinese 结果向量。
      */
     static void subtract(const Vec3& v1, const Vec3& v2, Vec3* dst);
 
@@ -423,7 +423,7 @@ public:
      * @param target @~english target value.
      * @~chinese 目标向量。
      * @param elapsedTime @~english elapsed time between calls.
-     * @~chinese 消逝时间。
+     * @~chinese 消逝时间（单位：秒）。
      * @param responseTime @~english response time (in the same units as elapsedTime).
      * @~chinese 响应时间(时间单位和elapsedTime一致)。
      */
@@ -472,9 +472,9 @@ public:
      * @~chinese 向量减法，求向量与给定向量v的差
      * 注意:这并不修改原向量的值。
      * 
-     * @param v @~english The vector to minus. @~chinese 向量减数。
+     * @param v @~english The vector to minus. @~chinese 用于减去的向量。
      *
-     * @return @~english The vector difference. @~chinese 向量差。
+     * @return @~english The vector difference. @~chinese 结果向量。
      */
     inline const Vec3 operator-(const Vec3& v) const;
 
@@ -482,7 +482,7 @@ public:
      * @~english Subtracts the given vector from this vector.
      * @~chinese 向量减法，求向量与给定向量v的差，将结果保存在该向量中并返回。
      * 
-     * @param v @~english The vector to subtract. @~chinese 向量减数。
+     * @param v @~english The vector to subtract. @~chinese 用于减去的向量。
      * 
      * @return @~english This vector, after the subtraction occurs. @~chinese 向量差。
      */
@@ -491,7 +491,7 @@ public:
     /**@~english
      * Calculates the negation of this vector.
      * Note: this does not modify this vector.
-     * @~chinese 求负向量。
+     * @~chinese 计算向量的负值。
      * 注意:这并不修改原向量的值。
      * 
      * @return @~english The negation of this vector. @~chinese 负向量。

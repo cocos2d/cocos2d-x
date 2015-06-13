@@ -360,7 +360,7 @@ public:
      * @~chinese 将本向量的各分量减指定向量的对应分量值并保存。
      * 
      * @param v @~english The vector to subtract.
-     * @~chinese 向量减数。
+     * @~chinese 用于减去的向量。
      */
     inline void subtract(const Vec2& v);
 
@@ -430,9 +430,9 @@ public:
      * @~chinese 向量减法，求向量与给定向量v的差
      * 注意:这并不修改原向量的值。
      * 
-     * @param v @~english The vector to minus. @~chinese 向量减数。
+     * @param v @~english The vector to minus. @~chinese 用于减去的向量。
      *
-     * @return @~english The vector difference. @~chinese 向量差。
+     * @return @~english The vector difference. @~chinese 结果向量。
      */
     inline const Vec2 operator-(const Vec2& v) const;
 
@@ -440,9 +440,9 @@ public:
      * @~english Subtracts the given vector from this vector.
      * @~chinese 向量减法，求向量与给定向量v的差，将结果保存在该向量中并返回。
      * 
-     * @param v @~english The vector to subtract. @~chinese 向量减数。
+     * @param v @~english The vector to subtract. @~chinese 用于减去的向量。
      * 
-     * @return @~english This vector, after the subtraction occurs. @~chinese 向量差。
+     * @return @~english This vector, after the subtraction occurs. @~chinese 结果向量。
      */
     inline Vec2& operator-=(const Vec2& v);
 
