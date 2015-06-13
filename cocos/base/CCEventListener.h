@@ -147,7 +147,7 @@ protected:
      *        2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
      * @~chinese 1) 固定优先级的监听器不会有暂停.  如果个一个固定优先级的监听器不想接收事件,调用
      *           `setEnabled(false)` 代替.
-     *           2) 在节点(`Node`)的 onEnter 和 onExit 方法中, 监听器的暂停状态  关联的节点将会自动更新.
+     *           2) 在节点(`Node`)的 onEnter 和 onExit 方法中, 将会自动更新关联节点的监听器的暂停状态.
      */
     inline void setPaused(bool paused) { _paused = paused; };
 
