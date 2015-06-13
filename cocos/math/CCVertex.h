@@ -35,12 +35,24 @@
 
 NS_CC_BEGIN
 
-/** @file CCVertex.h */
+/** @file CCVertex.h*/
 
-/** converts a line to a polygon */
+/** @~english converts a line to a polygon  @~chinese 将一系列的线转换为多边形*/
 void CC_DLL ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned int offset, unsigned int nuPoints);
 
-/** returns whether or not the line intersects */
+/** 
+@~english returns whether or not the line intersects，the two line are AB and CD
+@~chinese 计算两条线AB和CD的交点
+@param Ax @~english x coordinate of A. @~chinese A点的x坐标。
+@param Ay @~english y coordinate of A. @~chinese A点的y坐标。
+@param Bx @~english x coordinate of B. @~chinese B点的x坐标。
+@param By @~english y coordinate of B. @~chinese B点的y坐标。
+@param Cx @~english x coordinate of C. @~chinese C点的x坐标。
+@param Cy @~english y coordinate of C. @~chinese C点的y坐标。
+@param Dx @~english x coordinate of D. @~chinese D点的x坐标。
+@param Dy @~english y coordinate of D. @~chinese D点的y坐标。
+@return @~english the relative positon of the intersection point on line AB @~chinese 交点的位置（通过在AB上的相对位置来指定）
+*/
 bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,
                              float Cx, float Cy,
