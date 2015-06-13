@@ -111,4 +111,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Material_invalidate : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_invalidate);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+
+    cocos2d::CustomCommand _customCommand;
+};
+
 
