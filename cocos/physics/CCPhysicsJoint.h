@@ -478,7 +478,7 @@ protected:
 @class PhysicsJointRotarySpring
 @brief
 @~english Likes a spring joint, but works with rotary.  
-@~chinese 与PhysicsJointSpring,但是刚体可以自由旋转。
+@~chinese 与PhysicsJointSpring类似，但是刚体可以自由旋转。
 */
 class CC_DLL PhysicsJointRotarySpring : public PhysicsJoint
 {
@@ -589,7 +589,7 @@ protected:
 
 /** 
 @~english Works like a socket wrench.  
-@~chinese PhysicsJointRatchet工作就像一个套筒扳手。
+@~chinese PhysicsJointRatchet就像一个连接器一样涌来连接两个身体。
 */
 class CC_DLL PhysicsJointRatchet : public PhysicsJoint
 {
@@ -599,15 +599,15 @@ public:
      * @~chinese 创建一个PhysicsJointRatchet。
      * 
      @param a @~english A is the body to connect.
-     * @~chinese 连接的是身体。
+     * @~chinese 要被连接的身体A。
      @param b @~english B is the body to connect.
-     * @~chinese B是身体连接。
+     * @~chinese 要被连接的身体B。
      @param phase @~english Phase is the initial offset to use when deciding where the ratchet angles are.
      * @~chinese 阶段的初始偏移量使用当决定棘轮角度在哪里。
      @param ratchet @~english Ratchet is the distance between "clicks".
      * @~chinese 棘轮是“点击”之间的距离。
      @return @~english A object pointer.
-     * @~chinese 派发了瞄准。
+     * @~chinese 创建成功返回PhysicsJointRatchet对象，否则返回空指针。
      */
     static PhysicsJointRatchet* construct(PhysicsBody* a, PhysicsBody* b, float phase, float ratchet);
 
@@ -686,7 +686,7 @@ protected:
 
 /** 
 @~english Keeps the relative angular velocity of a pair of bodies constant.  
-@~chinese PhysicsJointMotor用于保证两个物体的相对角速度时一个常数。
+@~chinese PhysicsJointMotor用于保证两个物体的相对角速度是一个常数。
 */
 class CC_DLL PhysicsJointMotor : public PhysicsJoint
 {

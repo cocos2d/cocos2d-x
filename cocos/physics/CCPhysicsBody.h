@@ -81,7 +81,7 @@ public:
      * 质量的默认值是1.0。
      * 力矩的默认值200。
      @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* create();
    
@@ -94,7 +94,7 @@ public:
      @param mass @~english This body's mass.
      * @~chinese 刚体质量。
      @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* create(float mass);
     
@@ -109,13 +109,12 @@ public:
      @param moment @~english This body's moment.
      * @~chinese 刚体力矩。
      @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* create(float mass, float moment);
     
     /** @~english
      Create a body contains a circle.
-     
      * @~chinese 
      * 创建一个包含圆形的刚体。
      * 
@@ -124,25 +123,25 @@ public:
      * @param   material @~english A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @~chinese PhysicsMaterial对象,默认值是PHYSICSSHAPE_MATERIAL_DEFAULT。
      * @param   offset @~english A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
-     * @~chinese Vec2对象,从身体的重心偏移身体局部坐标。
+     * @~chinese Vec2对象，表示形状在刚体的本地坐标系中相对重心的偏移量。
      @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一年autoreleased PhysicsBody品对准。
+     * @~chinese 一个自释放的PhysicsBody对象指针。
      */
     static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     /** @~english
      * Create a body contains a box shape.
      *
      * @~chinese 
-     * 创建一个身体包含一个盒子的形状。
+     * 创建一个矩形形状的物理刚体。
      * 
      * @param   size @~english Size contains this box's width and height.
-     * @~chinese 大小包含这个盒子的宽度和高度。
+     * @~chinese 大小包含这个矩形的宽度和高度。
      * @param   material @~english A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @~chinese PhysicsMaterial对象,默认值是PHYSICSSHAPE_MATERIAL_DEFAULT。
      * @param   offset @~english A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
-     * @~chinese 刚体重心在刚体局部度坐标系的偏移量，它是一个Vec2对象。
+     * @~chinese 刚体形状在刚体局部坐标系中相对于重心的偏移量，它是一个Vec2对象。
      * @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
@@ -158,9 +157,9 @@ public:
      * @param   material @~english A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @~chinese PhysicsMaterial对象,默认值是PHYSICSSHAPE_MATERIAL_DEFAULT。
      * @param   offset @~english A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
-     * @~chinese 刚体重心在刚体局部度坐标系的偏移量，它是一个Vec2对象。
+     * @~chinese 刚体形状在刚体局部坐标系中相对重心的偏移量，它是一个Vec2对象。
      * @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
@@ -168,18 +167,18 @@ public:
      * Create a body contains a EdgeSegment shape. 
      
      * @~chinese 
-     * 创建一个包含EdgeSegment形状的刚体。
+     * 创建一个包含线段形状的刚体。
      * 
      * @param   a @~english It's the edge's begin position.
-     * @~chinese 边缘的开始位置。
+     * @~chinese 线段起点的位置。
      * @param   b @~english It's the edge's end position.
-     * @~chinese 边缘的结束位置。
+     * @~chinese 线段终点的位置。
      * @param   material @~english A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @~chinese PhysicsMaterial对象,默认值是PHYSICSSHAPE_MATERIAL_DEFAULT。
      * @param   border @~english It's a edge's border width.
      * @~chinese 边缘的边框宽度。
      * @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createEdgeSegment(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
@@ -187,18 +186,18 @@ public:
      * Create a body contains a EdgeBox shape. 
 
      * @~chinese 
-     * 创建一个包含EdgeBox形状的刚体。
+     * 创建一个包含空心矩形形状的刚体。
      * 
      * @param   size @~english Size contains this box's width and height.
-     * @~chinese 包含EdgeBox宽高的Size对象。
+     * @~chinese 包含空心矩形宽高的Size对象。
      * @param   material @~english A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @~chinese PhysicsMaterial对象,默认值是PHYSICSSHAPE_MATERIAL_DEFAULT。
      * @param   border @~english It's a edge's border width.
      * @~chinese 边缘的边框宽度。
      * @param   offset @~english A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
-     * @~chinese 刚体重心在刚体局部度坐标系的偏移量，它是一个Vec2对象。
+     * @~chinese 刚体形状在刚体局部坐标系中相对重心的偏移量，它是一个Vec2对象。
      * @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
     
@@ -206,7 +205,7 @@ public:
      * Create a body contains a EdgePolygon shape. 
      
      * @~chinese 
-     * 创建一个包含EdgePolygon形状的刚体。
+     * 创建一个包含空心多边形形状的刚体。
      * 
      * @param   points @~english Points is an array of Vec2 structs defining a convex hull with a clockwise winding.
      * @~chinese 以顺时间方向采集到的凸多边形顶点数组。
@@ -217,7 +216,7 @@ public:
      * @param   border @~english It's a edge's border width.
      * @~chinese 边缘的边框宽度。
      * @return @~english  An autoreleased PhysicsBody object pointer.
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createEdgePolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
@@ -236,7 +235,7 @@ public:
      * @param   border @~english It's a edge's border width.
      * @~chinese 边缘的边框宽度。
      * @return @~english  An autoreleased PhysicsBody object pointer.     
-     * @~chinese 一个autoreleased PhysicsBody对象。
+     * @~chinese 一个自释放的PhysicsBody对象。
      */
     static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
@@ -298,7 +297,7 @@ public:
      * Get the first shape of the body shapes.
      
      * @~chinese 
-     * 获取刚体形状的第一个形状。
+     * 获取刚体的第一个形状。
      * 
      @return @~english The first shape in this body.
      * @~chinese 刚体的第一个形状。
@@ -338,7 +337,7 @@ public:
      @param force @~english The force is applies to this body.
      * @~chinese 施加于刚体的力。
      @param offset @~english A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
-     * @~chinese 刚体的重心在世界坐标的偏移，它是一个Vec2对象。
+     * @~chinese 所施加的力相对于刚体的重心在世界坐标的偏移量，它是一个Vec2对象。
      */
     virtual void applyForce(const Vect& force, const Vec2& offset);
 
@@ -353,7 +352,7 @@ public:
      * Applies a immediate force to body.
      
      * @~chinese 
-     * 给刚体施加一个立即起效的力。
+     * 给刚体施加一个立即起效的冲量。
      * 
      * @param impulse @~english The impulse is applies to this body.
      * @~chinese 应用于刚体的脉冲。
@@ -363,7 +362,7 @@ public:
     /**@~english
      * Applies a immediate force to body.
      * @~chinese 
-     * 给刚体施加一个立即起效的力。
+     * 给刚体施加一个立即起效的冲量。
      * 
      * @param impulse @~english The impulse is applies to this body.
      * @~chinese 应用于刚体的脉冲。
@@ -512,12 +511,12 @@ public:
     /** @~english
      * Set the group of body.
      *
-     * Collision groups let you specify an integral group index. You can have all fixtures with the same group index always collide (positive index) or never collide (negative index).
+     * Collision groups let you specify an integral group index. You can have all shapes with the same group index always collide (positive index) or never collide (negative index).
      * It have high priority than bit masks.
      * @~chinese 
      * 设置刚体组。
      * 
-     * 碰撞组让你可以指定一个整型索引，你可以让具有同样组索引的辛者固定装置总是碰撞(正索引)或总不碰撞(负值)。
+     * 碰撞组让你可以指定一个整型索引，你可以让具有同样组索引的形状总是碰撞(正索引)或总不碰撞(负值)。
      * 它比掩码值有更高的优先级。
      */
     void setGroup(int group);
@@ -643,7 +642,7 @@ public:
      * 
      * 它是用来模拟液体或空气摩擦力对刚体的影响。
      * @param damping @~english The value is 0.0f to 1.0f.
-     * @~chinese f值是0.0f到1.0f。
+     * @~chinese f取值的范围是0.0f到1.0f。
      */
     inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
     
@@ -714,7 +713,7 @@ public:
     /** @~english Convert the local point to world.  @~chinese 将本地坐标转换成世界坐标。*/
     Vec2 local2World(const Vec2& point);
 
-    /** @~english Get the rigid body of chipmunk.  @~chinese 获取刚体的chipmunk。*/
+    /** @~english Get the rigid body of chipmunk.  @~chinese 获取chipmunk中的刚体。*/
     cpBody* getCPBody() { return _cpBody; }
     
 protected:
