@@ -41,12 +41,17 @@ TOLUA_API int register_all_cocos2dx_spine_manual(lua_State* L);
  * @{
  */
 
-/**
+/**@~english
  * Call this function can import the lua bindings for the spine module.
- * After registering, we could call the related spine code conveniently in the lua.
+ * After registering, we could call the related spine code conveniently in the lua.eg,sp.SkeletonAnimation:create("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5).
  * If you don't want to use the spine module in the lua, you only don't call this registering function.
  * If you don't register the spine module, the package size would become smaller .
  * The current mechanism,this registering function is called in the lua_module_register.h
+ * @~chinese 
+ * 调用这个函数可以将Spine模块绑定到Lua层。
+ * 调用这个注册函数后，我们可以方便地在Lua层调用Spine的相关代码，例如：sp.SkeletonAnimation:create("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5)。
+ * 如果你不想使用Spine模块，那么你就无需调用这个注册函数。这种情况下，最终包的大小也会变得更小一些。
+ * 目前的机制,这个函数在lua_module_register.h中被调用。
  */
 TOLUA_API int register_spine_module(lua_State* L);
 
