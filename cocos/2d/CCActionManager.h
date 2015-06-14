@@ -53,10 +53,10 @@ struct _hashElement;
     - When you want to run an action where the target is different from a Node. 
     - When you want to pause / resume the actions.
  
- * @~chinese ActionManager是一个单例类，管理的所有动作。
+ * @~chinese ActionManager是一个单例类，管理所有动作。
  * 通常你不需要直接使用这个类。99%的情况下，你将使用Node的接口，它提供了更友好的封装
  * 但也有一些情况下，你可能需要使用这个单例。
- * 例子:
+ * 示例:
  * - 当你想要运行一个动作，但目标不是节点类型。
  * - 当你想要暂停/恢复动作。
  * 
@@ -106,7 +106,7 @@ public:
      All the actions that belongs to the target will be removed.
      *
      * @~chinese 从一个特定的目标删除所有动作。
-     * 属于该目标的所有的行动将被删除。
+     * 属于该目标的所有的动作将被删除。
      * 
      * @param target    @~english A certain target.
      * @~chinese 一个特定的目标。
