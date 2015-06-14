@@ -68,7 +68,17 @@ typedef std::function<void(Ref*)> ccNodeLoadCallback;
 class CC_STUDIO_DLL CSLoader
 {
 public:
+    /**
+    * @~english Get singleton.
+    * @~chinese 获取单例。
+    * @return @~english Singleton of `CSLoader`.
+    * @~chinese `CSLoader`的单例。
+    */
     static CSLoader* getInstance();
+    /**
+    * @~english Destory singleton.
+    * @~chinese 销毁单例。
+    */
     static void destroyInstance();
     
     CSLoader();
@@ -77,7 +87,25 @@ public:
     
     void init();
     
+    /**
+    * @~english Create node from binary file.
+    * @~chinese 从二进制文件中创建节点。
+    * @param filename @~english File name.
+    * @~chinese 文件名称。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     static cocos2d::Node* createNode(const std::string& filename);
+    /**
+    * @~english Create node from binary file and run specified callback function after creating.
+    * @~chinese 从二进制文件中创建节点，在创建完成后调用指定的回调函数。
+    * @param filename @~english File name.
+    * @~chinese 文件名称。
+    * @param filename @~english Specified callback function.
+    * @~chinese 指定的回调函数。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
 
@@ -86,19 +114,92 @@ public:
     static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop);
      */
     
+    /**
+    * @~english Create node from json file.
+    * @~chinese 从Json文件中创建节点。
+    * @param filename @~english Json file name.
+    * @~chinese Json文件名称。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* createNodeFromJson(const std::string& filename);
+    /**
+    * @~english Load node from json file.
+    * @~chinese 从Json文件中载入节点。
+    * @param filename @~english Json file name.
+    * @~chinese Json文件名称。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);
+    /**
+    * @~english Load node from json string.
+    * @~chinese 从Json字符串中载入节点。
+    * @param content @~english Json string.
+    * @~chinese Json字符串。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* loadNodeWithContent(const std::string& content);
     
+    /*
+    * @~english Set is record json path.
+    * @~chinese 设置是否记录Json路径。
+    * @param record @~english Is record json path.
+    * @~chinese 是否记录Json路径。
+    */
     void setRecordJsonPath(bool record) { _recordJsonPath = record; }
+    /*
+    * @~english Get is record json path.
+    * @~chinese 获取是否记录Json路径。
+    * @return @~english Is record json path.
+    * @~chinese 是否记录Json路径。
+    */
     bool isRecordJsonPath() const { return _recordJsonPath; }
     
+    /*
+    * @~english Set json path.
+    * @~chinese 设置Json路径。
+    * @param record @~english Json path.
+    * @~chinese Json路径。
+    */
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
+    /*
+    * @~english Get json path.
+    * @~chinese 获取Json路径。
+    * @return @~english Json path.
+    * @~chinese Json路径。
+    */
     std::string getJsonPath() const { return _jsonPath; }
     
+    /**
+    * @~english Create node from flatbuffer binary file.
+    * @~chinese 从flatbuffer二进制文件中创建节点。
+    * @param filename @~english File name.
+    * @~chinese 文件名称。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename);
+    /**
+    * @~english Create node from flatbuffer binary file.
+    * @~chinese 从flatbuffer二进制文件中创建节点。
+    * @param filename @~english File name.
+    * @~chinese 文件名称。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName);
+    /**
+    * @~english Create node from nodetree.
+    * @~chinese 从节点树中创建节点。
+    * @param nodetree @~english Node tree.
+    * @~chinese 节点树。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree);
+
     
     bool bindCallback(const std::string& callbackName,
                       const std::string& callbackType,
@@ -108,7 +209,23 @@ public:
     void registReaderObject(const std::string& className,
                             ObjectFactory::Instance ins);
     
+    /**
+    * @~english Create node from flatbuffer binary file(for simulator).
+    * @~chinese 从flatbuffer二进制文件中创建节点(为模拟器)。
+    * @param filename @~english File name.
+    * @~chinese 文件名称。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* createNodeWithFlatBuffersForSimulator(const std::string& filename);
+    /**
+    * @~english Create node from nodetree(for simulator).
+    * @~chinese 从节点树中创建节点(为模拟器)。
+    * @param nodetree @~english Node tree.
+    * @~chinese 节点树。
+    * @return @~english Created node.
+    * @~chinese 创建出的节点。
+    */
     cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
 
 protected:

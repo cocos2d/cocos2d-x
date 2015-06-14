@@ -74,19 +74,33 @@ class CC_STUDIO_DLL Armature : public cocos2d::Node, public cocos2d::BlendProtoc
 public:
 
     /**
-    * Allocates and initializes an armature.
-    * @return An initialized armature which is marked as "autorelease".
+    * @~english Allocates and initializes an armature.
+    * @~chinese 分配并且初始化骨骼动画对象。
+    * @return @~english An initialized armature which is marked as "autorelease".
+    * @~chinese 一个初始化过并且设置为自动释放的骨骼动画对象。
     */
     static Armature *create();
 
     /**
-    * Allocates an armature, and use the ArmatureData named name in ArmatureDataManager to initializes the armature.
-    *
-    * @param  name Armature will use the name to find the ArmatureData to initializes it.
-    * @return A initialized armature which is marked as "autorelease".
+    * @~english Allocates an armature, and use the `ArmatureData` named name in `ArmatureDataManager` to initializes the armature.
+    * @~chinese 分配骨骼动画对象，并使用`ArmatureDataManager`中以name命名的`ArmatureData`对其进行初始化。
+    * @param name  @~english Armature will use the name to find the `ArmatureData` to initializes it.
+    * @~chinese 骨骼将以该name来查找`ArmatureData`来对骨骼进行初始化。
+    * @return @~english An initialized armature which is marked as "autorelease".
+    * @~chinese 一个初始化过并且设置为自动释放的骨骼动画对象。
     */
     static Armature *create(const std::string& name);
 
+    /**
+    * @~english Allocates an armature, and use the `ArmatureData` named name in `ArmatureDataManager` to initializes the armature.
+    * @~chinese 分配骨骼动画对象，并使用`ArmatureDataManager`中以name命名的`ArmatureData`对其进行初始化。
+    * @param name  @~english Armature will use the name to find the `ArmatureData` to initializes it.
+    * @~chinese 骨骼将以name来查找`ArmatureData`来对骨骼进行初始化。
+    * @param parentBone  @~english The armature will set the parentBone as its parent.
+    * @~chinese 骨骼将以parentBone作为父骨头。
+    * @return @~english An initialized armature which is marked as "autorelease".
+    * @~chinese 一个初始化过并且设置为自动释放的骨骼动画对象。
+    */
     static Armature *create(const std::string& name, Bone *parentBone);
 
 public:
@@ -99,96 +113,139 @@ public:
      * @lua NA
      */
     virtual ~Armature(void);
-
-    /**
-     * Init the empty armature
-     */
     virtual bool init() override;
 
     /**
-     * Init an armature with specified name
-     * @param name Armature name
-     */
+    * @~english Init an armature with specified name.
+    * @~chinese 用指定的名称初始化骨骼。
+    * @param name @~english Armature name.
+    * @~chinese 骨骼名称。
+    */
     virtual bool init(const std::string& name);
 
-    virtual bool init(const std::string& name, Bone *parentBone);
     /**
-     * Add a Bone to this Armature,
-     *
-     * @param bone  The Bone you want to add to Armature
-     * @param parentName   The parent Bone's name you want to add to . If it's  nullptr, then set Armature to its parent
+    * @~english Init an armature with specified name.
+    * @~chinese 用指定的名称初始化骨骼。
+    * @param name @~english Armature name.
+    * @~chinese 骨骼名称。
+    * @param parentBone @~english The armature will set the parentBone as its parent.
+    * @~chinese 骨骼将以该参数作为父骨头。
+    */
+    virtual bool init(const std::string& name, Bone *parentBone);
+
+    /**
+     * @~english Add a bone to this Armature.
+     * @~chinese 将一段骨头添加至骨骼中。
+     * @param bone  @~english The bone you want to add to Armature.
+     * @~chinese 要添加的骨头。
+     * @param parentName @~english The parent Bone's name you want to add to. If it's nullptr, then set Armature to its parent.
+     * @~chinese 以该参数作为名称的骨头将作为骨头被添加后的父骨头。如果该参数为空，骨头被添加后将以骨骼作为父骨头。
      */
     virtual void addBone(Bone *bone, const std::string& parentName);
+
     /**
-     * Get a bone with the specified name
-     *
-     * @param name The bone's name you want to get
+     * @~english Get a bone with the specified name.
+     * @~chinese 以指定的名称获取一段骨头。
+     * @param name @~english The bone's name you want to get.
+     * @~chinese 要获取骨头的名称。
      */
     virtual Bone *getBone(const std::string& name) const;
+
     /**
-     * Change a bone's parent with the specified parent name.
-     *
-     * @param bone The bone you want to change parent
-     * @param parentName The new parent's name.
+     * @~english Change a bone's parent with the specified parent name.
+     * @~chinese 根据指定的名称，更改一段骨头的父骨头。
+     * @param bone @~english The bone you want to change parent.
+     * @~chinese 要更改的一段骨头。
+     * @param parentName @~english The new parent's name.
+     * @~chinese 新父骨头的名称。
      */
     virtual void changeBoneParent(Bone *bone, const std::string& parentName);
+
     /**
-     * Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
-     *
-     * @param bone The bone you want to remove
-     * @param recursion Determine whether remove the bone's child  recursion.
+     * @~english Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
+     * @~chinese 根据指定的名称，移除一段骨头。根据参数，将会决定是否对子骨头进行递归移除。
+     * @param bone @~english The bone you want to remove.
+     * @~chinese 要移除的骨头。
+     * @param recursion @~english Determine whether remove the bone's child recursion.
+     * @~chinese 是否递归移除。
      */
     virtual void removeBone(Bone *bone, bool recursion);
 
     /**
-     * Get Armature's bone dictionary
-     * @return Armature's bone dictionary
+     * @~english Get Armature's bone dictionary.
+     * @~chinese 获取骨头列表。
+     * @return @~english Armature's bone dictionary.
+     * @~chinese 骨头列表。
      */
     const cocos2d::Map<std::string, Bone*>& getBoneDic() const;
 
     /**
-     * This boundingBox will calculate all bones' boundingBox every time
-     */
+    * @~english Get armature's boundingBox by calculating all bones' boundingBox.
+    * @~chinese 通过计算所有骨头的外边框，得到整套骨骼的外边框。
+    * @return @~english Armature's boundingBox.
+    * @~chinese 骨骼的外边框。
+    */
     virtual cocos2d::Rect getBoundingBox() const override;
 
+    /**
+    * @~english Get a bone containing the specified point.
+    * @~chinese 获取一段包含指定坐标点的骨头。
+    * @param x @~english Specified point x.
+    * @~chinese 指定点的X坐标。
+    * @param y @~english Specified point y.
+    * @~chinese 指定点的Y坐标。
+    * @return @~english The bone containing the specified point, if no bone found, return null.
+    * @~chinese 包含该点的骨骼，如果没有骨骼被找到，返回空。
+    */
     Bone *getBoneAtPoint(float x, float y) const;
 
     // overrides
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, uint32_t parentFlags) override;
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
     virtual void update(float dt) override;
-
     virtual void onEnter() override;
     virtual void onExit() override; 
-
     virtual const cocos2d::Mat4& getNodeToParentTransform() const override;
-    /**
-     *  @js NA
-     *  @lua NA
-     */
     inline void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
-    /**
-     *  @js NA
-     *  @lua NA
-     */
     inline const cocos2d::BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
 	
 
     /**
-     * Set contentsize and Calculate anchor point.
+     * @~english Set contentsize and Calculate anchor point.
+     * @~chinese 设置大小并计算锚点。
      */
     virtual void updateOffsetPoint();
     virtual void setAnchorPoint(const cocos2d::Vec2& point) override;
     virtual const cocos2d::Vec2& getAnchorPointInPoints() const override;
+
+    /**
+    * @~english Get offset points of bones.
+    * @~chinese 获取骨头的坐标偏移量。
+    */
     virtual const cocos2d::Vec2& getOffsetPoints() const;
 
+    /**
+    * @~english Set animation for armature.
+    * @~chinese 为骨骼设置动画。
+    * @param animation @~english Armature animation.
+    * @~chinese 骨骼动画。
+    */
     virtual void setAnimation(ArmatureAnimation *animation);
+
+    /**
+    * @~english Get animation of armature.
+    * @~chinese 获得骨骼设置的动画。
+    * @return @~english Animation of armature.
+    * @~chinese 骨骼动画。
+    */
     virtual ArmatureAnimation *getAnimation() const;
-    
+
+    /**
+    * @~english Get is the armature is transformed.
+    * @~chinese 获得骨骼是否已经进行坐标变换。
+    * @return @~english Is the armature is transformed.
+    * @~chinese 骨骼是否已经进行坐标变换。
+    */
     virtual bool getArmatureTransformDirty() const;
 
 
@@ -198,18 +255,68 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void drawContour();
 #endif
 
-
+    /**
+    * @~english Set armature data for armature.
+    * @~chinese 为骨骼设置数据。
+    * @param armatureData @~english Armature data.
+    * @~chinese 骨骼数据。
+    */
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
+
+    /**
+    * @~english Get armature data of armature.
+    * @~chinese 获取骨骼数据。
+    * @return @~english Armature data.
+    * @~chinese 骨骼数据。
+    */
     virtual ArmatureData *getArmatureData() const { return _armatureData; }
 
-
+    /**
+    * @~english Set parent bone for armature.
+    * @~chinese 为骨骼设置父骨头。
+    * @param parentBone @~english Parent bone.
+    * @~chinese 父骨头。
+    */
     virtual void setParentBone(Bone *parentBone);
+
+    /**
+    * @~english Get parent bone of armature.
+    * @~chinese 获取骨骼的父骨头。
+    * @return @~english Parent bone.
+    * @~chinese 骨骼数据。
+    */
     virtual Bone *getParentBone() const;
 
+    /**
+    * @~english Set version for armature.
+    * @~chinese 为骨骼设置版本号。
+    * @param version @~english Armature version.
+    * @~chinese 骨骼版本号。
+    */
     virtual void setVersion(float version) { _version = version; }
+
+    /**
+    * @~english Get version of armature.
+    * @~chinese 获取骨骼的版本号。
+    * @return @~english Armature version.
+    * @~chinese 骨骼版本号。
+    */
     virtual float getVersion() const { return _version; }
 
+    /**
+    * @~english Set BatchNode for armature.
+    * @~chinese 为骨骼设置批次节点。
+    * @param batchNode @~english BatchNode.
+    * @~chinese 批次节点。
+    */
     virtual void setBatchNode(BatchNode *batchNode) { _batchNode = batchNode; }
+
+    /**
+    * @~english Get BatchNode of armature.
+    * @~chinese 获取骨骼的批次节点。
+    * @return @~english BatchNode.
+    * @~chinese 批次节点。
+    */
     virtual BatchNode *getBatchNode() const { return _batchNode; }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT

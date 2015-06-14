@@ -44,8 +44,10 @@ class CC_STUDIO_DLL Tween : public ProcessBase
 {
 public:
     /**
-     * Create with a Bone
-     * @param bone the Bone Tween will bind to
+     * @~english Create with a Bone
+     * @~chinese 用一段骨头来创建缓动
+     * @param bone @~english the Bone Tween will bind to
+     * @~chinese 用来绑定缓动的一段骨头
      */
     static Tween *create(Bone *bone);
 public:
@@ -53,43 +55,92 @@ public:
     virtual ~Tween(void);
 
     /**
-     * Init with a Bone
-     * @param bone the Bone Tween will bind to
+     * @~english Init with a Bone
+     * @~chinese 用一段骨头来初始化缓动
+     * @param bone @~english the Bone Tween will bind to
+     * @~chinese 用来绑定缓动的一段骨头
      */
     virtual bool init(Bone *bone);
 
     using ProcessBase::play;
     /**
-     * Start the Process
+     * @~english Start the Process
      *
-     * @param  movementBoneData  the MovementBoneData include all FrameData
-     * @param  durationTo the number of frames changing to this animation needs.
-     * @param  durationTween  the number of frames this animation actual last.
-     *
-     * @param  loop   whether the animation is loop
+     * @param  movementBoneData  @~english the MovementBoneData include all FrameData
+     * @~chinese 活动骨头数据，包含所有帧数据
+     * @param  durationTo @~english the number of frames changing to this animation needs.
+     * @~chinese 改变到该动画需要的总帧数。
+     * @param  durationTween  @~english the number of frames this animation actual last.
+     * @~chinese 该段动画实际包含的总帧数
+     * @param  loop @~english   whether the animation is loop
      *
      *         loop < 0 : use the value from MovementData get from Action Editor
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
+     * @~chinese 动画是否循环。
+     *         loop < 0 : 使用从动作编辑器中获得的活动数据中的的值
+     *         loop = 0 : 动画不循环
+     *         loop > 0 : 动画循环
      *
-     * @param  tweenEasing    tween easing is used for calculate easing effect
+     * @param  tweenEasing  @~english    tween easing is used for calculate easing effect
      *
      *         TWEEN_EASING_MAX : use the value from MovementData get from Action Editor
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
      *         2  : fade in and out
-     *
+     * @~chinese 帧补间缓动用来计算缓动效果
+     *         TWEEN_EASING_MAX : 使用从动作编辑器中获得的活动数据中的的值
+     *         -1 : 淡出
+     *         0  : 线性
+     *         1  : 淡入
+     *         2  : 淡入淡出
      */
     virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
+    /*
+    * @~english Set animation.
+    * @~chinese 设置动画。
+    * @param animation @~english The animation.
+    * @~chinese 动画。
+    */
     inline void setAnimation(ArmatureAnimation *animation) { _animation = animation; }
+    /*
+    * @~english Get animation.
+    * @~chinese 获取动画。
+    * @return @~english The animation.
+    * @~chinese 动画。
+    */
     inline ArmatureAnimation *getAnimation() const { return _animation; }
 
+    /**
+    * @~english Go to specified frame and play current movement.
+    * @~chinese 跳转至指定的帧并从该帧开始播放当前动作。
+    * @param frameIndex @~english Index of frame.
+    * @~chinese 要跳转的帧索引。
+    */
     virtual void gotoAndPlay(int frameIndex);
+    /**
+    * @~english Go to specified frame and pause current movement.
+    * @~chinese 跳转至指定的帧并暂停当前动作。
+    * @param frameIndex @~english Index of frame.
+    * @~chinese 要跳转的帧索引。
+    */
     virtual void gotoAndPause(int frameIndex);
 
+    /*
+    * @~english Set movBoneData.
+    * @~chinese 设置活动骨头数据。
+    * @param data @~english The movBoneData.
+    * @~chinese 活动骨头数据。
+    */
     virtual void setMovementBoneData(MovementBoneData *data) { _movementBoneData = data; }
+    /*
+    * @~english Get movBoneData.
+    * @~chinese 获取活动骨头数据。
+    * @return @~english The movBoneData.
+    * @~chinese 活动骨头数据。
+    */
     virtual const MovementBoneData *getMovementBoneData() const { return _movementBoneData; }
 protected:
 
