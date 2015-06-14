@@ -46,7 +46,7 @@ class NodeGrid;
 
 /** 
  * @brief @~english TransitionEaseScene can ease the actions of the scene protocol.
- * @~chinese TransitionEaseScene类可以使场景动画协议更灵活。
+ * @~chinese TransitionEaseScene类可以使场景运行ease动作。
  * @since v0.8.2
  * @js NA
 */
@@ -59,13 +59,13 @@ public:
     virtual ~TransitionEaseScene() {}
 
     /** @~english Returns the Ease action that will be performed on a linear action.
-     * @~chinese 返回缓解行动将执行在一个线性的行动。
+     * @~chinese 返回一个线性的缓动动作。
      * @since v0.8.2
      *
      * @param action @~english A given interval action.
-     * @~chinese 返回在一个线性动作上执行更灵活的动作。
+     * @~chinese 在一个指定的持续性动作。
      * @return @~english The Ease action that will be performed on a linear action.
-     * @~chinese 返回在一个线性动作上执行更灵活的动作。
+     * @~chinese 返回一个线性的缓动动作。
      */
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) = 0;
 };
@@ -94,7 +94,7 @@ public:
     
     /** @~english Creates a base transition with duration and incoming scene.
      *
-     * @~chinese 创建一个基本的具有持续时间和进入场景的转换(transition)。
+     * @~chinese 基于给定的持续时间和待进入场景创建一个转换过渡场景(transition)。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -159,7 +159,7 @@ class CC_DLL TransitionSceneOriented : public TransitionScene
 public:
     /** @~english Creates a transition with duration, incoming scene and orientation.
      * 
-     * @~chinese 创建一个基本的具有持续时间和进入场景的转换(transition)。
+     * @~chinese 基于给定的持续时间和待进入场景创建一个转换过渡场景(transition)。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -236,7 +236,7 @@ class CC_DLL TransitionJumpZoom : public TransitionScene
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 创建一个缩小跳着切出场景, 同时跳着放大传入场景过渡。
+     * @~chinese 创建一个缩小跳着切出场景, 同时跳着放大传入过渡场景。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -271,7 +271,7 @@ class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseSc
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 从左侧传入场景。
+     * @~chinese 基于给定的持续时间和待进入场景创建一个转换过渡场景(transition)。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -321,7 +321,7 @@ class CC_DLL TransitionMoveInR : public TransitionMoveInL
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 从右侧传入场景。
+     * @~chinese 基于给定的持续时间和待进入场景创建一个转换过渡场景(transition)。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -435,10 +435,10 @@ public:
 
     /** @~english Returns the action that will be performed by the incoming and outgoing scene.
      *
-     * @~chinese 返回传入/传出 scene 要执行的 action。
+     * @~chinese 返回传入/传出场景要执行的动作。
      * 
      * @return @~english The action that will be performed by the incoming and outgoing scene.
-     * @~chinese 返回传入/传出 scene 要执行的 action。
+     * @~chinese 返回传入/传出场景要执行的动作。
      */
     virtual ActionInterval* action(void);
 
@@ -483,7 +483,7 @@ public:
      */
     static TransitionSlideInR* create(float t, Scene* scene);
 
-    /** @~english Returns the action that will be performed by the incoming and outgoing scene.  @~chinese 返回传入/传出 scene 要执行的 action。*/
+    /** @~english Returns the action that will be performed by the incoming and outgoing scene.  @~chinese 返回传入/传出 scene 要执行的动作。*/
     virtual ActionInterval* action(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -522,7 +522,7 @@ public:
      */
     static TransitionSlideInB* create(float t, Scene* scene);
 
-    /** @~english returns the action that will be performed by the incoming and outgoing scene  @~chinese 返回传入/传出 scene 要执行的 action*/
+    /** @~english returns the action that will be performed by the incoming and outgoing scene  @~chinese 返回传入/传出场景要执行的动作*/
     virtual ActionInterval* action(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -561,7 +561,7 @@ public:
      */
     static TransitionSlideInT* create(float t, Scene* scene);
 
-    /** @~english returns the action that will be performed by the incoming and outgoing scene  @~chinese 返回传入/传出 scene 要执行的 action*/
+    /** @~english returns the action that will be performed by the incoming and outgoing scene  @~chinese 返回传入/传出场景要执行的动作*/
     virtual ActionInterval* action(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -1132,10 +1132,10 @@ public:
 
     /** @~english Returns the action that will be performed.
      *
-     * @~chinese 返回将要被执行的action。
+     * @~chinese 返回将要被执行的动作。
      * 
      * @return @~english The action that will be performed.
-     * @~chinese 将要被执行的action。
+     * @~chinese 将要被执行的动作。
      */
     virtual ActionInterval* action();
 
@@ -1220,12 +1220,12 @@ public:
 
     /** @~english Returns the action that will be performed with size.
      *
-     * @~chinese 返回将要被执行的action。
+     * @~chinese 返回将要被执行的动作。
      * 
      * @param size @~english A given size.
      * @~chinese 一个给定的大小。
      * @return @~english The action that will be performed.
-     * @~chinese 将要被执行的action
+     * @~chinese 将要被执行的动作
      */
     virtual ActionInterval* actionWithSize(const Size& size);
 

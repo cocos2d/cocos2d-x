@@ -47,7 +47,7 @@ class CC_DLL TransitionProgress : public TransitionScene
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个过渡.
+     * @~chinese 使用持续时间、传入的场景创建一个过渡.
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -93,7 +93,7 @@ class CC_DLL TransitionProgressRadialCCW : public TransitionProgress
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个逆时针放射状过渡。
+     * @~chinese 使用持续时间、传入的场景创建一个逆时针放射状过渡。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -131,7 +131,7 @@ class CC_DLL TransitionProgressRadialCW : public TransitionProgress
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个逆时针放射状过渡。
+     * @~chinese 使用持续时间、传入的场景创建一个逆时针放射状过渡。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -168,7 +168,7 @@ class CC_DLL TransitionProgressHorizontal : public TransitionProgress
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个过渡。
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -202,7 +202,7 @@ class CC_DLL TransitionProgressVertical : public TransitionProgress
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个过渡。
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -236,7 +236,7 @@ class CC_DLL TransitionProgressInOut : public TransitionProgress
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个过渡。
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
@@ -272,7 +272,7 @@ class CC_DLL TransitionProgressOutIn : public TransitionProgress
 public:
     /** @~english Creates a transition with duration and incoming scene.
      *
-     * @~chinese 使用 duration、传入的scene 创建一个过渡。
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
      * 
      * @param t @~english Duration time, in seconds.
      * @~chinese 持续时间,以秒为单位。
