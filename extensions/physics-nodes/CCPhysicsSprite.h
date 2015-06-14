@@ -74,30 +74,40 @@ public:
      * @~chinese 基于给定的纹理创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定纹理的大小，刚体相对精灵的偏移等于（0，0）。
      *
+     * @param texture @~english A pointer to a Texture2D object. 
+     * @~chinese 一个Texture2D对象的指针。
+     *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
      * @~chinese 一个初始化的物理精灵，这个精灵会自动被标记为“autorelease”(自动释放)。
      */
-    static PhysicsSprite* createWithTexture(Texture2D *pTexture);
+    static PhysicsSprite* createWithTexture(Texture2D *texture);
 
     /** @~english Creates a physics sprite with a texture and a rect.
      * The offset will be (0,0).
      * @~chinese 基于给定的纹理及矩形创建一个关联了物理刚体的精灵。。
      * 物理刚体的大小等于给定的矩形，刚体相对精灵的偏移等于（0，0）。
      *
+     * @param texture @~english A pointer to a Texture2D object. 
+     * @~chinese 一个Texture2D对象的指针。
+     * @param rect @~english A subrect of the texture. @~chinese 纹理的部分区域。
+     *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
      * @~chinese 一个初始化的物理精灵，这个精灵会自动被标记为“autorelease”(自动释放)。
      */
-    static PhysicsSprite* createWithTexture(Texture2D *pTexture, const Rect& rect);
+    static PhysicsSprite* createWithTexture(Texture2D *texture, const Rect& rect);
 
     /** @~english Creates a physics sprite with an sprite frame. 
      * The rect used will be the size of the sprite frame.
      * @~chinese 基于给定的精灵帧创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定纹理的大小，刚体相对精灵的偏移等于（0，0）。
      *
+     * @param spriteFrame @~english A sprite frame object.
+     * @~chinese 一个SpriteFrame(精灵帧)对象。
+     *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
      * @~chinese 一个初始化的物理精灵，这个精灵会自动被标记为“autorelease”(自动释放)。
      */
-    static PhysicsSprite* createWithSpriteFrame(SpriteFrame *pSpriteFrame);
+    static PhysicsSprite* createWithSpriteFrame(SpriteFrame *spriteFrame);
 
     /** @~english Creates a physics sprite with an sprite frame name.
      * An SpriteFrame will be fetched from the SpriteFrameCache by name.
@@ -107,11 +117,14 @@ public:
      * 将通过精灵帧名称从SpriteFrameCache取得一个SpriteFrame（精灵帧）。
      * 如果对应的精灵帧不存在将引发一个异常。
      *
+     * @param spriteFrameName @~english the name of sprite frame.
+     * @~chinese 精灵帧名称。
+     *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
      * @~chinese 一个初始化的物理精灵，这个精灵会自动被标记为“autorelease”(自动释放)。
      * @since v0.9
      */
-    static PhysicsSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
+    static PhysicsSprite* createWithSpriteFrameName(const char *spriteFrameName);
 
     /** @~english Creates a physics sprite with an image file path.
      * The rect used will be the size of the image.
@@ -120,10 +133,12 @@ public:
      * @~chinese 基于给定的图片文件路径创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定图片的大小，刚体相对精灵的偏移等于（0，0）。
      *
+     * @param filePath @~english an image file path. @~chinese 图片文件路径。
+     *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
      * @~chinese 一个初始化的物理精灵，这个精灵会自动被标记为“autorelease”(自动释放)。
      */
-    static PhysicsSprite* create(const char *pszFileName);
+    static PhysicsSprite* create(const char *filePath);
 
     /** @~english Creates a physics sprite with an image file path and a rect.
      * The offset will be (0,0).
@@ -131,10 +146,13 @@ public:
      * @~chinese 基于给定的图片文件路径及矩形创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定矩形的大小，刚体相对精灵的偏移等于（0，0）。
      *
+     * @param filePath @~english an image file path. @~chinese 图片文件路径。
+     * @param rect @~english A subrect of the image file. @~chinese 图片文件的部分区域。
+     *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
      * @~chinese 一个初始化的物理精灵，这个精灵会自动被标记为“autorelease”(自动释放)。
      */
-    static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
+    static PhysicsSprite* create(const char *filePath, const Rect& rect);
 
     PhysicsSprite();
 
@@ -149,7 +167,7 @@ public:
     bool isIgnoreBodyRotation() const;
 
     /** @~english Keep the sprite's rotation separate from the body.  
-     * @~chinese 获取精灵的旋转和物理刚体的旋转是否分离。
+     * @~chinese 设置精灵的旋转和物理刚体的旋转是否分离。
      *
      * @param true if the sprite's rotation separate from the body.false，other wise.
      * @~chinese 如果设置为true，则精灵的旋转和刚体是分离的。

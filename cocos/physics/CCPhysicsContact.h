@@ -265,7 +265,7 @@ public:
      * Return false from the callback to make world ignore the collision this step or true to process it normally. 
      * Additionally, you may override collision values, restitution, or surface velocity values.
      *
-     * @~chinese 碰撞的两个形状相互接触。
+     * @~chinese 碰撞过程中两个形状的每一次相互接触时的回调。
      * 返回false的话，物理世界将忽略这一次的接触。负责正常处理两个形状的这一次接触。
      * 你可以在这个回调中自定义碰撞属性，例如弹力、表面速度等。
      */
@@ -347,7 +347,7 @@ protected:
 
 /** @class EventListenerPhysicsContactWithGroup
  * @brief @~english This event listener only be called when shapeA or shapeB is in the group your specified.
- * @~chinese 碰撞事件监听器，只可以给定分组的形状之间的碰撞事件。
+ * @~chinese 碰撞事件监听器，只可以监听给定分组的形状之间的碰撞事件。
  */
 class CC_DLL EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 {

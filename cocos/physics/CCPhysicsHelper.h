@@ -55,7 +55,7 @@ public:
      * @param vec @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type Vec2, converted from cpVect. 
-     * @~chinese 返回一个Vec2对象，转换来自一个cpVect对象。
+     * @~chinese 返回转换结果，一个Vec2对象。
      */
     static Vec2 cpv2point(const cpVect& vec) { return Vec2(vec.x, vec.y); }
 
@@ -66,7 +66,7 @@ public:
      * @param point @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type cpVect, converted from Vec2. 
-     * @~chinese 返回一个cpVect对象，转换来自一个Vec2对象。
+     * @~chinese 返回转换结果，一个cpVect对象。
      */
     static cpVect point2cpv(const Vec2& point) { return cpv(point.x, point.y); }
     
@@ -77,7 +77,7 @@ public:
      * @param vec @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type Size, converted from cpVect. 
-     * @~chinese 返回一个Size对象，转换来自一个cpVect对象。
+     * @~chinese 返回转换结果，一个Size对象。
      */
     static Size cpv2size(const cpVect& vec) { return Size(vec.x, vec.y); }
     
@@ -88,7 +88,7 @@ public:
      * @param size @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type cpVect, converted from Size. 
-     * @~chinese 返回一个cpVect对象，转换来自一个Size对象。
+     * @~chinese 返回转换结果，一个cpVect对象。
      */
     static cpVect size2cpv(const Size& size) { return cpv(size.width, size.height); }
     
@@ -99,7 +99,7 @@ public:
      * @param f @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type float, converted from cpFloat. 
-     * @~chinese 返回一个浮点数值，转换来自一个cpFloat类型数值。
+     * @~chinese 返回转换结果，一个浮点数值。
      */
     static float cpfloat2float(cpFloat f) { return f; }
     
@@ -110,7 +110,7 @@ public:
      * @param f @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type cpFloat, converted from float. 
-     * @~chinese 返回一个cpFloat类型数值，转换来自一个浮点数值。
+     * @~chinese 返回转换结果，一个cpFloat类型数值。
      */
     static cpFloat float2cpfloat(float f) { return f; }
     
@@ -121,7 +121,7 @@ public:
      * @param rect @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type cpBB, converted from Rect. 
-     * @~chinese 返回一个cpBB对象，转换来自一个Rect对象。
+     * @~chinese 返回转换结果，一个cpBB对象。
      */
     static cpBB rect2cpbb(const Rect& rect) { return cpBBNew(rect.origin.x, rect.origin.y, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height); }
     
@@ -132,7 +132,7 @@ public:
      * @param vec @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type Rect, converted from cpBB. 
-     * @~chinese 返回一个Rect对象，转换来自一个cpBB对象。
+     * @~chinese 返回转换结果，一个Rect对象。
      */
     static Rect cpbb2rect(const cpBB& bb) { return Rect(bb.l, bb.b, bb.r -  bb.l, bb.t - bb.b); }
     
