@@ -64,8 +64,8 @@ const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT;
  */
 
 /**
- * @brief @~english A shape for body. You do not create PhysicsWorld objects directly, instead, you can view PhysicsBody to see how to create it.
- * @~chinese 一个刚体的形状。你不直接创建PhysicsWorld对象，但是你可以查看PhysicsBody看如何创建它。
+ * @brief @~english A shape for body, you can view PhysicsBody to see how to create it.
+ * @~chinese 一个刚体的形状，你可以查看PhysicsBody看如何创建它。
  */
 class CC_DLL PhysicsShape : public Ref
 {
@@ -430,7 +430,7 @@ public:
      * @~chinese 
      * 设置形状的碰撞组。
      * 
-     * 碰撞组是一个整型分组索引。你可以用同一组指数都装置总是碰撞(积极的指数)或从不碰撞(负折射率)。
+     * 碰撞组是一个整型分组索引。你可以用同一组指数都装置总是碰撞(正数)或从不碰撞(负数)。
      * @param group @~english An interger number, it have high priority than bit masks.
      * @~chinese 整型值，它比字节掩码有更高的优先级。
      */
