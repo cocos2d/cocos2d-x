@@ -47,7 +47,7 @@ NS_CC_EXT_BEGIN
  * - If you update the rotation or position manually, the physics body will be updated
  * - You can't enble both Chipmunk support and Box2d support at the same time. Only one can be enabled at compile time
  *
- * @~chinese 一个继承于Spreite并关联了一个物理刚体的子类。
+ * @~chinese 一个继承于Sprite并关联了一个物理刚体的子类。
  * 可基于以下物理引擎:
  * - Chipmunk:定义CC_ENABLE_CHIPMUNK_INTEGRATION宏并设置为非零。
  * - Objective-Chipmunk：定义CC_ENABLE_CHIPMUNK_INTEGRATION宏并设置为非零。
@@ -73,7 +73,7 @@ public:
      * The offset will be (0,0).
      * @~chinese 基于给定的纹理创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定纹理的大小，刚体相对精灵的偏移等于（0，0）。
-     *
+     * 
      * @param texture @~english A pointer to a Texture2D object. 
      * @~chinese 一个Texture2D对象的指针。
      *
@@ -86,7 +86,7 @@ public:
      * The offset will be (0,0).
      * @~chinese 基于给定的纹理及矩形创建一个关联了物理刚体的精灵。。
      * 物理刚体的大小等于给定的矩形，刚体相对精灵的偏移等于（0，0）。
-     *
+     * 
      * @param texture @~english A pointer to a Texture2D object. 
      * @~chinese 一个Texture2D对象的指针。
      * @param rect @~english A subrect of the texture. @~chinese 纹理的部分区域。
@@ -100,7 +100,7 @@ public:
      * The rect used will be the size of the sprite frame.
      * @~chinese 基于给定的精灵帧创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定纹理的大小，刚体相对精灵的偏移等于（0，0）。
-     *
+     * 
      * @param spriteFrame @~english A sprite frame object.
      * @~chinese 一个SpriteFrame(精灵帧)对象。
      *
@@ -112,11 +112,10 @@ public:
     /** @~english Creates a physics sprite with an sprite frame name.
      * An SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
-     *
      * @~chinese 基于给定的精灵帧名称创建一个关联了物理刚体的精灵。
      * 将通过精灵帧名称从SpriteFrameCache取得一个SpriteFrame（精灵帧）。
      * 如果对应的精灵帧不存在将引发一个异常。
-     *
+     * 
      * @param spriteFrameName @~english the name of sprite frame.
      * @~chinese 精灵帧名称。
      *
@@ -129,10 +128,9 @@ public:
     /** @~english Creates a physics sprite with an image file path.
      * The rect used will be the size of the image.
      * The offset will be (0,0).
-     *
      * @~chinese 基于给定的图片文件路径创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定图片的大小，刚体相对精灵的偏移等于（0，0）。
-     *
+     * 
      * @param filePath @~english an image file path. @~chinese 图片文件路径。
      *
      * @return PhysicsSprite* @~english A initialized physics sprite which is marked as "autorelease".
@@ -142,10 +140,9 @@ public:
 
     /** @~english Creates a physics sprite with an image file path and a rect.
      * The offset will be (0,0).
-     *
      * @~chinese 基于给定的图片文件路径及矩形创建一个关联了物理刚体的精灵。
      * 物理刚体的大小等于给定矩形的大小，刚体相对精灵的偏移等于（0，0）。
-     *
+     * 
      * @param filePath @~english an image file path. @~chinese 图片文件路径。
      * @param rect @~english A subrect of the image file. @~chinese 图片文件的部分区域。
      *
