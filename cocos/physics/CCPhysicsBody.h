@@ -367,7 +367,7 @@ public:
      * @param impulse @~english The impulse is applies to this body.
      * @~chinese 应用于刚体的脉冲。
      * @param offset @~english A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
-     * @~chinese 刚体的重心在世界坐标的偏移，它是一个Vec2对象。
+     * @~chinese 所施加的力相对于刚体的重心在世界坐标的偏移量，它是一个Vec2对象。
      */
     virtual void applyImpulse(const Vect& impulse, const Vec2& offset);
     
