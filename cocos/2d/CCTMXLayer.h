@@ -76,7 +76,7 @@ struct _ccCArray;
  * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  * @since v0.8.1
  * @~english Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in TMXXMLParser.h.
- * @~chinese 瓦片可以有tile flags附加属性。目前只有水平翻转和垂直翻转用到。这些bit flags在TMXXMLParser.h中定义.
+ * @~chinese 瓦片可以有flags附加属性。目前只有水平翻转和垂直翻转用到。这些flags在TMXXMLParser.h中定义.
  * @since 1.1
  */
 
@@ -206,7 +206,7 @@ public:
      * @~chinese 设置给定坐标、flags的瓦片的gid(gid =瓦片全局id)
      * 瓦片GID可以使用方法“tileGIDAt”来获得，或使用TMX编辑器 -> Tileset Mgr +1.
      * 如果一个瓦片已经放在那个位置,那么它将被删除.
-     * 使用flags如果瓦片flags需要更改.
+     * 如果瓦片的flags需要更改，请使用withFlags的方法。
      * 
      * @param gid @~english The tile gid.
      * @~chinese 瓦片gid.
@@ -233,7 +233,7 @@ public:
      * @param tileCoordinate @~english The tile coordinate.
      * @~chinese 瓦片坐标.
      * @return @~english The position in points of a given tile coordinate.
-     * @~chinese 给定瓦片坐标点的位置.
+     * @~chinese 指定瓦片坐标点的位置.
      */
 	Vec2 getPositionAt(const Vec2& tileCoordinate);
 
@@ -359,19 +359,19 @@ public:
     
     /** @~english Layer orientation, which is the same as the map orientation.
      *
-     * @~chinese  获取Layer定向(同地图定向)
+     * @~chinese  获取Layer方向(同地图方向)
      * 
      * @return @~english Layer orientation, which is the same as the map orientation.
-     * @~chinese  Layer定向(同地图定向)
+     * @~chinese  Layer方向(同地图方向)
      */
     inline int getLayerOrientation() const { return _layerOrientation; };
     
     /** @~english Set layer orientation, which is the same as the map orientation.
      *
-     * @~chinese 设置 Layer定向(同地图定向)
+     * @~chinese 设置 Layer方向(同地图方向)
      * 
      * @param orientation @~english Layer orientation,which is the same as the map orientation.
-     * @~chinese  Layer定向(同地图定向)
+     * @~chinese  Layer方向(同地图方向)
      */
     inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
     
@@ -430,14 +430,12 @@ protected:
     Vec2 getPositionForStaggeredAt(const Vec2& pos);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
-    /* @~english optimization methods  @~chinese 优化方法*/
-
+    /* optimization methods  @~chinese 优化方法*/
     Sprite* appendTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
-    /* @~english The layer recognizes some special properties, like cc_vertez  @~chinese 《公约》承认解决some special返回家园并归还其财产、cc_vertez like*/
-
+    /* @~english The layer recognizes some special properties, like cc_vertez  @~chinese 层识别一些特殊的属性，比如cc_vertez*/
     void parseInternalProperties();
     void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);
@@ -450,6 +448,7 @@ protected:
 
     //! name of the layer
     std::string _layerName;
+    
     //! TMX Layer supports opacity
     unsigned char _opacity;
     
@@ -464,23 +463,22 @@ protected:
     // used for retina display
     float _contentScaleFactor;
     
-    /** @~english size of the layer in tiles  @~chinese 层瓦片的大小*/
-
+    /** @~english size of the layer in tiles  @~chinese 以瓦片为单位的层大小*/
     Size _layerSize;
-    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese 地图大小的瓦片(从瓦片的大小可能会有所不同)*/
-
+    
+    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese 地图瓦片的大小(从瓦片的大小可能会有所不同)*/
     Size _mapTileSize;
-    /** @~english pointer to the map of tiles  @~chinese 指针的地图瓦片*/
-
+    
+    /** @~english pointer to the map of tiles  @~chinese 指向地图瓦片的指针*/
     uint32_t* _tiles;
-    /** @~english Tileset information for the layer  @~chinese 确定信息层*/
-
+    
+    /** @~english Tileset information for the layer  @~chinese 层的地形信息*/
     TMXTilesetInfo* _tileSet;
-    /** @~english Layer orientation, which is the same as the map orientation  @~chinese 层取向,它是一样的地图定位*/
-
+    
+    /** @~english Layer orientation, which is the same as the map orientation  @~chinese 层方向，它与地图方向相同*/
     int _layerOrientation;
-    /** @~english properties from the layer. They can be added using Tiled  @~chinese 从层属性.他们可以添加使用瓦片*/
-
+    
+    /** @~english properties from the layer. They can be added using Tiled  @~chinese 层属性。他们可以使用瓦片进行添加*/
     ValueMap _properties;
 };
 

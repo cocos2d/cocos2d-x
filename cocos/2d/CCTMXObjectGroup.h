@@ -166,16 +166,15 @@ public:
     
 protected:
     /** @~english name of the group  @~chinese 组的名称*/
-
     std::string _groupName;
-    /** @~english offset position of child objects  @~chinese 抵消子对象的位置*/
-
+    
+    /** @~english offset position of child objects  @~chinese 子对象的偏移位置*/
     Vec2 _positionOffset;
-    /** @~english list of properties stored in a dictionary  @~chinese 的属性列表存储在一个字典*/
-
+    
+    /** @~english list of properties stored in a dictionary  @~chinese 存储在一个字典中的属性列表*/
     ValueMap _properties;
-    /** @~english array of the objects  @~chinese 对象的数组*/
-
+    
+    /** @~english array of the objects  @~chinese 对象数组*/
     ValueVector _objects;
 };
 

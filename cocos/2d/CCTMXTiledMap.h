@@ -44,19 +44,19 @@ class TMXMapInfo;
  */
 
 
-/** @~english Possible orientations of the TMX map.  @~chinese TMXmap的方位。*/
+/** Possible orientations of the TMX map.*/
 enum
 {
-    /** @~english Orthogonal orientation.  @~chinese 直角鸟瞰定向(orientation)。 */
+    /** Orthogonal orientation. */
     TMXOrientationOrtho,
 
-    /** @~english Hexagonal orientation.  @~chinese  六边形定向(orientation)。 */
+    /** Hexagonal orientation. */
     TMXOrientationHex,
 
-    /** @~english Isometric orientation.  @~chinese 持等距斜视定向(orientation)。*/
+    /** Isometric orientation. */
     TMXOrientationIso,
     
-    /** @~english Isometric staggered orientation.  @~chinese 等距交错定向。*/
+    /** Isometric staggered orientation. */
     TMXOrientationStaggered,
 };
 
@@ -268,7 +268,7 @@ public:
 
     /** @~english The map's size property measured in tiles. 
      *
-     * @~chinese 获取以tiles数量为基准的地图尺寸
+     * @~chinese 获取以tiles作为单位的地图尺寸
      * 
      * @return @~english The map's size property measured in tiles.
      * @~chinese 以tiles数量为基准的地图尺寸。
@@ -304,19 +304,19 @@ public:
 
     /** @~english Map orientation. 
      *
-     * @~chinese 获取地图定向(orientation)
+     * @~chinese 获取地图方向(orientation)
      * 
      * @return @~english Map orientation.
-     * @~chinese 地图定向(orientation)
+     * @~chinese 地图方向(orientation)
      */
     inline int getMapOrientation() const { return _mapOrientation; };
     
     /** @~english Set map orientation. 
      *
-     * @~chinese 设置地图定向(orientation)
+     * @~chinese 设置地图方向(orientation)
      * 
      * @param mapOrientation @~english The map orientation.
-     * @~chinese 地图定向(orientation)
+     * @~chinese 地图方向(orientation)
      */
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
@@ -362,7 +362,7 @@ public:
     };
     
     /** @~english Get the description.
-     * @~chinese 得到了描述。
+     * @~chinese 获取描述。
      * @js NA
      */
     virtual std::string getDescription() const override;
@@ -389,9 +389,9 @@ protected:
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 
-    /** @~english the map's size property measured in tiles  @~chinese 地图的大小属性用瓦片*/
+    /** @~english the map's size property measured in tiles  @~chinese 以瓦片为单位的地图大小*/
     Size _mapSize;
-    /** @~english the tiles's size property measured in pixels  @~chinese 瓦片的大小属性以像素*/
+    /** @~english the tiles's size property measured in pixels  @~chinese 以像素为单位的瓦片大小*/
     Size _tileSize;
     /** @~english map orientation  @~chinese 地图定位*/
     int _mapOrientation;
