@@ -7,7 +7,7 @@ Copyright (c) 2013-2014 Chukong Technologies Inc.
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documenation files (the "Software"), to deal
+of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
@@ -73,7 +73,7 @@ namespace experimental{
  * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  
  * @~chinese FastTMXLayer用来表示TMX layer，
- * 继承自SpriteBatchNode。tiles使用TextureAtlas进行渲染。
+ * 继承自SpriteBatchNode。tiles默认使用TextureAtlas进行渲染。
  * 如果运行时修改一个tile，那么tile将变成一个Sprite，反之，则不会有Sprite对象被创建。
  * 使用Sprite对象作为Tile的好处是:
  * -  tiles(即Sprite)可以通过完善的API进行旋转/缩放/移动
@@ -274,10 +274,10 @@ public:
     
     /** @~english Tileset information for the layer.
      *
-     * @~chinese 确定信息层。
+     * @~chinese 获取层的tileset信息。
      * 
      * @return @~english Tileset information for the layer.
-     * @~chinese 确定信息层。
+     * @~chinese 层的tileset信息。
      */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
     
@@ -296,19 +296,19 @@ public:
     
     /** @~english Layer orientation, which is the same as the map orientation.
      *
-     * @~chinese  获取Layer定向(同地图定向)
+     * @~chinese  获取Layer方向(同地图方向)
      * 
      * @return @~english Layer orientation, which is the same as the map orientation.
-     * @~chinese  Layer定向(同地图定向)
+     * @~chinese  Layer方向(同地图方向)
      */
     inline int getLayerOrientation() const { return _layerOrientation; };
     
     /** @~english Set Layer orientation, which is the same as the map orientation. 
      *
-     * @~chinese 设置 Layer定向(同地图定向)
+     * @~chinese 设置 Layer方向(同地图方向)
      * 
      * @param orientation @~english Layer orientation,which is the same as the map orientation.
-     * @~chinese  Layer定向(同地图定向)
+     * @~chinese  Layer方向(同地图方向)
      */
     inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
     
@@ -412,11 +412,11 @@ protected:
     //! name of the layer
     std::string _layerName;
 
-    /** @~english size of the layer in tiles  @~chinese 层瓷砖的大小*/
+    /** @~english size of the layer in tiles  @~chinese 以瓦片为单位的层的大小*/
     Size _layerSize;
-    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese 地图大小的瓷砖(从瓷砖的大小可能会有所不同)*/
+    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese 地图瓦片的大小(瓦片的大小可能会有所不同)*/
     Size _mapTileSize;
-    /** @~english pointer to the map of tiles  @~chinese 指针的地图瓦片*/
+    /** @~english pointer to the map of tiles  @~chinese 指向地图瓦片的指针*/
     uint32_t* _tiles;
     /** @~english Tileset information for the layer  @~chinese 确定信息层*/
     TMXTilesetInfo* _tileSet;

@@ -39,7 +39,7 @@ Copyright (c) 2013-2015 Chukong Technologies
  * Define a create function for a specific type, such as Layer.
  *
  * @param __TYPE__  @~english class type to add create(), such as Layer.
- * @~chinese 提供类类型用于添加create()函数,例如Layer。
+ * @~chinese 对一个指定类型定义一个create函数，比如Layer。
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \

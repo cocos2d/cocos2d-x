@@ -215,55 +215,55 @@ public:
 
     /** @~english The map's size property measured in tiles. 
      *
-     * @~chinese 获取以tiles数量为基准的地图尺寸
+     * @~chinese 获取以tiles数量为单位的地图尺寸
      * 
      * @return @~english The map's size property measured in tiles.
-     * @~chinese 以tiles数量为基准的地图尺寸。
+     * @~chinese 以tiles数量为单位的地图尺寸。
      */
     inline const Size& getMapSize() const { return _mapSize; };
     
     /** @~english Set the map's size property measured in tiles.
      *
-     * @~chinese 设置以tiles数量为基准的地图尺寸。
+     * @~chinese 设置以tiles数量为单位的地图尺寸。
      * 
      * @param mapSize @~english The map's size property measured in tiles.
-     * @~chinese 以tiles数量为基准的地图尺寸。
+     * @~chinese 以tiles数量为单位的地图尺寸。
      */
     inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
 
     /** @~english The tiles's size property measured in pixels.
      *
-     * @~chinese 获取以像素点为基准的tile尺寸属性。
+     * @~chinese 获取以像素点为单位的tile尺寸属性。
      * 
      * @return @~english The tiles's size property measured in pixels.
-     * @~chinese 以像素点为基准的tile尺寸属性。
+     * @~chinese 以像素点为单位的tile尺寸属性。
      */
     inline const Size& getTileSize() const { return _tileSize; };
     
     /** @~english Set the tiles's size property measured in pixels. 
      *
-     * @~chinese 设置以像素点为基准的tile尺寸属性。
+     * @~chinese 设置以像素点为单位的tile尺寸属性。
      * 
      * @param tileSize @~english The tiles's size property measured in pixels.
-     * @~chinese 以像素点为基准的tile尺寸属性。
+     * @~chinese 以像素点为单位的tile尺寸属性。
      */
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
 
     /** @~english Get map orientation. 
      *
-     * @~chinese 获取地图定向(orientation)
+     * @~chinese 获取地图方向(orientation)
      * 
      * @return @~english Map orientation.
-     * @~chinese 地图定向(orientation)
+     * @~chinese 地图方向(orientation)
      */
     inline int getMapOrientation() const { return _mapOrientation; };
     
     /** @~english Set map orientation. 
      *
-     * @~chinese 设置地图定向(orientation)
+     * @~chinese 设置地图方向(orientation)
      * 
      * @param mapOrientation @~english The map orientation.
-     * @~chinese 地图定向(orientation)
+     * @~chinese 地图方向(orientation)
      */
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
@@ -309,7 +309,7 @@ public:
     };
 
     /** @~english Get the description.
-     * @~chinese 得到了描述。
+     * @~chinese 获取描述。
      * @js NA
      */
     virtual std::string getDescription() const override;
@@ -335,11 +335,11 @@ protected:
     TMXTilesetInfo * tilesetForLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void buildWithMapInfo(TMXMapInfo* mapInfo);
 
-    /** @~english the map's size property measured in tiles  @~chinese 地图的大小属性用瓷砖*/
+    /** @~english the map's size property measured in tiles  @~chinese 以瓦片为单位的地图大小*/
     Size _mapSize;
-    /** @~english the tiles's size property measured in pixels  @~chinese 瓷砖的大小属性以像素*/
+    /** @~english the tiles's size property measured in pixels  @~chinese 以像素为单位的瓦片大小*/
     Size _tileSize;
-    /** @~english map orientation  @~chinese 地图定位*/
+    /** @~english map orientation  @~chinese 地图方向*/
     int _mapOrientation;
     /** @~english object groups  @~chinese 对象组*/
     Vector<TMXObjectGroup*> _objectGroups;

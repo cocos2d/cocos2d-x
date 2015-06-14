@@ -259,7 +259,7 @@ public:
      * Sets the current playback position of an audio instance.
      *
      * @~chinese 
-     * 设置一个音频实例的当前播放头位置。
+     * 设置一个音频实例的当前播放位置。
      * 
      * @param audioID   @~english An audioID returned by the play2d function.
      * @~chinese 一个play2d函数返回的音频ID。
@@ -273,12 +273,12 @@ public:
      * Gets the current playback position of an audio instance.
      *
      * @~chinese 
-     * 返回一个音频实例的当前播放头位置。
+     * 返回一个音频实例的当前播放位置。
      * 
      * @param audioID @~english An audioID returned by the play2d function.
      * @~chinese 一个play2d函数返回的音频ID。
      * @return @~english The current playback position of an audio instance.
-     * @~chinese 音频实例的当前播放头位置。
+     * @~chinese 音频实例的当前播放位置。
      */
     static float getCurrentTime(int audioID);
 
