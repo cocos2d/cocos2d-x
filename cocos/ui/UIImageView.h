@@ -132,6 +132,8 @@ protected:
     virtual void onSizeChanged() override;
     
     virtual void adaptRenderers() override;
+    void loadTexture(SpriteFrame* spriteframe);
+    void setupTexture();
     
     void imageTextureScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
@@ -141,7 +143,6 @@ protected:
     bool _prevIgnoreSize;
     Rect _capInsets;
     Scale9Sprite* _imageRenderer;
-    std::string _textureFile;
     TextureResType _imageTexType;
     Size _imageTextureSize;
     bool _imageRendererAdaptDirty;
