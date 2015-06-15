@@ -82,6 +82,7 @@
 #include "LightTest/LightTest.h"
 #include "Particle3DTest/Particle3DTest.h"
 #include "Physics3DTest/Physics3DTest.h"
+#include "NavMeshTest/NavMeshTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"

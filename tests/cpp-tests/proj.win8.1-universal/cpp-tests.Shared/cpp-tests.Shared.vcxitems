@@ -110,6 +110,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\MenuTest\MenuTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\MotionStreakTest\MotionStreakTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewRendererTest\NewRendererTest.cpp" />
@@ -377,6 +378,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\MenuTest\MenuTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\MotionStreakTest\MotionStreakTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\MutiTouchTest\MutiTouchTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewRendererTest\NewRendererTest.h" />
