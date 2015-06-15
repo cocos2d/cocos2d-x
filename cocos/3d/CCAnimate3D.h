@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -38,45 +38,85 @@ NS_CC_BEGIN
 class Bone3D;
 class Sprite3D;
 
+/**
+* @addtogroup _3d
+* @{
+*/
 
+/**
+ * @enum Animate3DQuality
+ * @brief @~english This enum control the animation's quality.
+ * @~chinese 该枚举用于控制动画的质量
+ */
 enum class Animate3DQuality
 {
-    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
-    QUALITY_LOW,               // low animation quality, it'll be more efficient.
-    QUALITY_HIGH,              // high animation quality.
+    /**
+     * @~english It'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
+     * @~chinese 忽略动画播放时的曲线求解（插值），动画会有卡顿，仅能加速动画过渡时间
+     **/
+    QUALITY_NONE = 0, 
+
+    /**
+    * @~english Low animation quality, it'll be more efficient.
+    * @~chinese 低动画质量，较高动画质量而言，效率更高
+    **/
+    QUALITY_LOW, 
+
+    /**
+    * @~english High animation quality, which also means more cpu time occupy.
+    * @~chinese 高动画质量，效果最好，同时也意味着更多的CPU时间占用
+    **/
+    QUALITY_HIGH,              
 };
 
-/**
- * @addtogroup _3d
- * @{
- */
+
 
 /**
- * @brief Animate3D, Animates a Sprite3D given with an Animation3D
+ * @class Animate3D
+ * @brief @~english Animate3D, Animates a Sprite3D given with an Animation3D
+ * @~chinese Animate3D 通过指定的Animation3D创建的动作，用以给Sprite3D播放动画
  */
 class CC_DLL Animate3D: public ActionInterval
 {
 public:
     
-    /**create Animate3D using Animation.*/
+    /**
+     * @~english Create Animate3D using Animation.
+     * @~chinese 使用Animation3D来创建Animate3D对象
+     * @param animation @~english The specified Animation3D object.
+     * @~chinese 指定的Animation3D对象
+     * @return @~english The Animate3D object.
+     * @~chinese 被创建的Animate3D对象
+     */
     static Animate3D* create(Animation3D* animation);
     
     /**
-     * create Animate3D
-     * @param animation used to generate animate3D
-     * @param formTime 
-     * @param duration Time the Animate3D lasts
-     * @return Animate3D created using animate
+     * @~english create Animate3D
+     * @~chinese 通过Animation3D对象，开始时间，以及持续时间来构造Animate3D
+     * @param @~english Animation used to generate animate3D
+     * @~chinese 指定的Animation3D对象
+     * @param @~english FormTime. 
+     * @~chinese 开始时间
+     * @param @~english Duration Time the Animate3D lasts.
+     * @~chinese 动画播放的持续时间
+     * @return @~english The Animate3D object.
+     * @~chinese 被创建的Animate3D对象
      */
     static Animate3D* create(Animation3D* animation, float fromTime, float duration);
     
     /**
-     * create Animate3D by frame section, [startFrame, endFrame)
-     * @param animation used to generate animate3D
-     * @param startFrame
-     * @param endFrame
-     * @param frameRate default is 30 per second
-     * @return Animate3D created using animate
+     * @~english Create Animate3D by frame section, [startFrame, endFrame)
+     * @~chinese 通过Animation3D，起始帧，结束帧，以及帧率来创建Animate3D对象
+     * @param animation @~english Animation used to generate animate3D
+     * @~chinese Animation3D对象
+     * @param @~english startFrame The start frame.
+     * @~chinese 起始帧
+     * @param endFrame @~english The end frame
+     * @~chinese 结束帧
+     * @param frameRate @~english The frameRate, default is 30 per second
+     * @~chinese 帧率，默认是三十帧每秒
+     * @return @~english Animate3D created using animate
+     * @~chinese 被创建的Animate3D对象
      */
     static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
     
@@ -91,32 +131,91 @@ public:
     
     virtual void update(float t) override;
     
-    /**get & set speed, negative speed means playing reverse */
+    /**
+     * @~english Get speed, negative speed means playing reverse 
+     * @~chinese 获取播放速度，负数的速度意味着动画正在倒放
+     * @return @~english The speed
+     * @~chinese 速度
+     */
     float getSpeed() const;
+
+    /**
+    * @~english Set speed, negative speed means playing reverse
+    * @~chinese 设置播放速度，负数的速度意味着动画将会倒放
+    * @param speed @~english the speed
+    * @~chinese 速度
+    */
     void setSpeed(float speed);
     
-    /**get & set blend weight, weight must positive*/
+    /**
+     * Get the blend weight
+     * @~chinese 获取动画混合权重
+     * @return the blend weight
+     * @~chinese 
+     */
     float getWeight() const { return _weight; }
+
+    /**
+     * @~english Set the blend weight. It is internally used currently. For example, Sprite3D is playing an Animate3D,
+     * and then another Animate3D is going to be played. This function will be used to make the transition from on 
+     * Animate3D to another smoothly. 
+     * @~chinese 设置动画混合权重，该函数目前仅在内部使用，举例来说，当一个Sprite3D对象处在播放一个动画同时另一个动画即将要被播放的情形下，
+     * 该函数将被用来调整从一个动画到另一个动画之间的过渡.
+     * @param weight @~english The blend weight, the blend weight must be positive
+     * @~chinese 权重，权值必须为正
+     */
     void setWeight(float weight);
     
-    /**get & set origin interval*/
+    /**
+     * @~english Set origin interval.
+     * @~chinese 设置初始播放间隔
+     * @param interval @~english The new interval
+     * @~chinese 新的播放间隔
+     */
     void setOriginInterval(float interval);
+
+    /**
+    * @~english Get origin interval
+    * @~chinese 获取初始播放间隔
+    * @return @~english Get the origin interval.
+    * @~chinese 播放间隔
+    */
     float getOriginInterval() const {return _originInterval; }
     
-    /** get animate transition time between 3d animations */
+    /**
+     * @~english Get animate transition time between 3d animations
+     * @~chinese 获取动画之间的过渡时间
+     * @return @~english The tarnsition time.
+     * @~chinese 过渡时间
+     */
     static float getTransitionTime() { return _transTime; }
     
-    /** set animate transition time between 3d animations */
+    /**
+     * @~english Set animate transition time between 3d animations
+     * @~chinese 设置动画之间的过渡时间
+     * @param transTime @~english The transition time
+     * @~chinese 新过渡时间
+     */
     static void setTransitionTime(float transTime) { if (transTime >= 0.f) _transTime = transTime; }
     
     /**get & set play reverse, these are deprecated, use set negative speed instead*/
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
-    /**set animate quality*/
+    /**
+     * @~english Set the animate quality, see also Animate3DQuality
+     * @~chinese 设置动画质量，关于动画质量的详情请见Animate3DQuality枚举
+     * @param quality @~english The animate quality
+     * @~chinese 动画质量的枚举
+     * */
     void setQuality(Animate3DQuality quality);
     
-    /**get animate quality*/
+    /**
+     * @~english Get animate quality, see also Animate3DQuality
+     * @~chinese 获取当前动画的动画质量，光宇动画质量的详情请见Animate3DQuality枚举
+     * @return @~english The animate quality
+     * @~chinese 动画质量的枚举
+     **/
     Animate3DQuality getQuality() const;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -124,11 +223,50 @@ CC_CONSTRUCTOR_ACCESS:
     Animate3D();
     virtual ~Animate3D();
     
+    /**
+    * @~english Remove this action from map
+    * @~chinese 从map中删除当前action
+    */
     void removeFromMap();
     
-    /** init method */
+    /** 
+     * @~english Init method, init from the specified animation.
+     * @~chinese 通过指定的Animation3D对象初始化
+     * @param animation @~english The specified animation.
+     * @~chinese 指定的Animation3D对象
+     * @return @~english Return true if success, otherwise return false.
+     * @~chinese 当初始化成功时返回true,反之返回false
+     */
     bool init(Animation3D* animation);
+
+    /** 
+     * @~english Init method, init from the start time and duration.
+     * @~chinese 初始化函数，通过开始时间以及持续时间初始化
+     * @param animation @~english The specified animation.
+     * @~chinese 指定的Animation3D对象
+     * @param fromTime @~english The start time.
+     * @~chinese 开始时间
+     * @param duration @~english The animate's duration
+     * @~chinese 动画持续时间
+     * @return @~english Return true if success, otherwise return false.
+     * @~chinese 当初始化成功时返回true,反之返回false
+     */
     bool init(Animation3D* animation, float fromTime, float duration);
+
+    /**
+    * @~english Init with frames
+    * @~chinese 通过起始帧，结束帧，帧率来创建动画
+    * @param animation @~english The specified animation
+    * @~chinese 指定的Animation3D对象
+    * @param startFrame @~english The start frame
+    * @~chinese 起始帧
+    * @param endFrame @~english The end frame
+    * @~chinese 结束帧
+    * @param frameRate @~english The frame rate
+    * @~chinese 帧率
+    * @return @~english Return true if success, otherwise return false.
+    * @~chinese 当初始化成功时返回true,反之返回false
+    */
     bool initWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate);
     
 protected:

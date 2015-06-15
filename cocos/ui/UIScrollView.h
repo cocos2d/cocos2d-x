@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -39,8 +39,10 @@ class EventFocusListener;
 namespace ui {
 
 /**
- *Scrollview scroll event type.
- *@deprecated use @see `ScrollView::EventType` instead.
+ * @enum ScrollviewEventType
+ * @brief @~english Scrollview scroll event type.
+ * @~chinese 滚动视图的滚动事件类型
+ * @deprecated use @see `ScrollView::EventType` instead.
  */
 typedef enum
 {
@@ -56,15 +58,18 @@ typedef enum
 }ScrollviewEventType;
 
 /**
- * A callback which would be called when a ScrollView is scrolling.
+ * @~english A callback which would be called when a ScrollView is scrolling.
+ * @~chinese 当滚动视图滚动时会触发的回调函数
  *@deprecated Use @see `ccScrollViewCallback` instead.
  */
 typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 #define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
 
 /**
- * Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
+ * @class ScrollView
+ * @brief @~english Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
  * It holds a inner `Layout` container for storing child items hironzontally or vertically.
+ * @~chinese 一个能够被用户触摸滚动的一个层次型布局容器视图，允许其尺寸大于屏幕显示的物理尺寸，其内部维护有一个布局用于水平的或垂直的存放子节点
  */
 class CC_GUI_DLL ScrollView : public Layout
 {
@@ -73,18 +78,38 @@ class CC_GUI_DLL ScrollView : public Layout
 
 public:
     /**
-     * ScrollView scroll direction type.
+     * @enum Direction
+     * @brief @~english ScrollView scroll direction type.
+     * @~chinese 滚动视图的滚动方向
      */
     enum class Direction
     {
+        /**
+         * @~english User can not scroll the view.
+         * @~chinese 禁止滚动
+         **/
         NONE,
+        /**
+        * @~english User can scroll the view vertically.
+        * @~chinese 竖直滚动
+        **/
         VERTICAL,
+        /**
+        * @~english User can scroll the view horizontally.
+        * @~chinese 水平滚动
+        **/
         HORIZONTAL,
+        /**
+        * @~english User can scroll the view both horizontally and vertically.
+        * @~chinese 水平与竖直滚动
+        **/
         BOTH
     };
 
     /**
-     * Scrollview scroll event type.
+     * @enum EventType
+     * @brief @~english Scrollview scroll event type.
+     * @~chinese 滚动视图的滚动事件
      */
     enum class EventType
     {
@@ -100,223 +125,287 @@ public:
     };
 
     /**
-     * A callback which would be called when a ScrollView is scrolling.
+     * @~english A callback which would be called when a ScrollView is scrolling.
+     * @~chinese 在滚动视图滚动时被触发的回调函数
      */
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
 
     /**
-     * Default constructor
+     * @~english Default constructor
+     * @~chinese 默认构造函数
      * @js ctor
      * @lua new
      */
     ScrollView();
 
     /**
-     * Default destructor
+     * @~english Default destructor
+     * @~chinese 默认析构函数
      * @js NA
      * @lua NA
      */
     virtual ~ScrollView();
 
     /**
-     * Create an empty ScrollView.
-     * @return A ScrollView instance.
+     * @~english Create an empty ScrollView.
+     * @~chinese 创建一个空的滚动视图
+     * @return @~english A ScrollView instance.
+     * @~chinese 被创建的滚动视图的对象
      */
     static ScrollView* create();
 
     /**
-     * Changes scroll direction of scrollview.
-     *
+     * @~english Changes scroll direction of scrollview.
+     * @~chinese 改变滚动视图的方向
      * @see `Direction`
-     * @param dir Scroll direction enum.
+     * @param dir @~english Scroll direction enum.
+     * @~chinese 滚动方向的枚举
      */
     virtual void setDirection(Direction dir);
 
     /**
-     * Query scroll direction of scrollview.
-     *
-     * @see `Direction`      Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
-     *
-     * @return Scrollview scroll direction.
+     * @~english Query scroll direction of scrollview.
+     * @~chinese 获取滚动视图的滚动方向
+     * @see `Direction`      @~english Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
+     * @~chinese Direction::VERTICAL意味着竖直滚动，Direction::HORIZONTAL意味着水平滚动
+     * @return @~english Scrollview scroll direction.
+     * @~chinese 滚动视图可滚动方向
      */
     Direction getDirection()const;
 
     /**
-     * Get inner container of scrollview.
+     * @~english Get inner container of scrollview.
      *
      * Inner container is a child of scrollview.
-     *
-     * @return Inner container pointer.
+     * @~chinese 获取滚动视图的内部布局容器，该布局容器为滚动视图的子节点 
+     * @return @~english Inner container pointer.
      */
     Layout* getInnerContainer()const;
 
     /**
-     * Scroll inner container to bottom boundary of scrollview.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to bottom boundary of scrollview.
+     * @~chinese 将内部的布局容器滚动到滚动视图的底部边界
+     * @param second @~english Time in seconds.
+     * @~chinese 该动作所需时间，以秒计
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 该动作进行时，滚动速度是否会衰减
      */
     void scrollToBottom(float second, bool attenuated);
 
     /**
-     * Scroll inner container to top boundary of scrollview.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to top boundary of scrollview.
+     * @~chinese 将内部布局容器滚动到滚动视图的顶部边界
+     * @param second @~english Time in seconds.
+     * @~chinese 该动作所需的时间，以秒计
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 该动作进行时，滚动速度是否会衰减
      */
     void scrollToTop(float second, bool attenuated);
 
     /**
-     * Scroll inner container to left boundary of scrollview.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to left boundary of scrollview.
+     * @~chinese 将内部容器滚动到滚动视图的左端边界
+     * @param second @~english Time in seconds.
+     * @~chinese 动作执行所需时间，以秒计
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToLeft(float second, bool attenuated);
 
     /**
-     * Scroll inner container to right boundary of scrollview.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to right boundary of scrollview.
+     * @~chinese 将内部布局容器滚动到滚动视图的右端边界
+     * @param second @~english Time in seconds.
+     * @~chinese 动作执行所需时间，以秒计
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToRight(float time, bool attenuated);
 
     /**
-     * Scroll inner container to top and left boundary of scrollview.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to top and left boundary of scrollview.
+     * @~chinese 滚动内部布局容器到滚动视图的左上角
+     * @param second @~english Time in seconds.
+     * @~chinese 动作执行所需时间，以秒计
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToTopLeft(float second, bool attenuated);
 
     /**
-     * Scroll inner container to top and right boundary of scrollview.
-     * @param second Time in seconds.
+     * @~english Scroll inner container to top and right boundary of scrollview.
+     * @~chinese 滚动内部布局容器到滚动使徒的右上角
+     * @param second @~english Time in seconds.
+     * @~chinese 动作所需时间，以秒计
      * @param attenuated Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToTopRight(float time, bool attenuated);
 
     /**
-     * Scroll inner container to bottom and left boundary of scrollview.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to bottom and left boundary of scrollview.
+     * @~chinese 滚动内部布局容器到视图的左下角
+     * @param second @~english Time in seconds.
+     * @~chinese 动作执行所需时间，以秒计
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToBottomLeft(float second, bool attenuated);
 
     /**
-     * Scroll inner container to bottom and right boundary of scrollview.
-     * @param second Time in seconds
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to bottom and right boundary of scrollview.
+     * @~chinese 滚动内部布局容器到视图的右下角
+     * @param second @~english Time in seconds
+     * @~chinese 动作执行所需时间
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToBottomRight(float time, bool attenuated);
 
     /**
-     * Scroll inner container to vertical percent position of scrollview.
-     * @param percent A value between 0 and 100.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to vertical percent position of scrollview.
+     * @~chinese 按百分比竖直滚动内部布局容器
+     * @param percent @~english A value between 0 and 100.
+     * @~chinese 百分比，从0至100
+     * @param second @~english Time in seconds.
+     * @~chinese 动作执行时间
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToPercentVertical(float percent, float second, bool attenuated);
 
     /**
-     * Scroll inner container to horizontal percent position of scrollview.
-     * @param percent A value between 0 and 100.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to horizontal percent position of scrollview.
+     * @~chinese 按百分比水平滚动内部布局容器
+     * @param percent @~english A value between 0 and 100.
+     * @~chinese 百分比，从0至100
+     * @param second @~english Time in seconds.
+     * @~chinese 动作执行时间
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToPercentHorizontal(float percent, float second, bool attenuated);
 
     /**
-     * Scroll inner container to both direction percent position of scrollview.
-     * @param percent A value between 0 and 100.
-     * @param second Time in seconds.
-     * @param attenuated Whether scroll speed attenuate or not.
+     * @~english Scroll inner container to both direction percent position of scrollview.
+     * @~chinese 在竖直方向和水平方向分别按一定的百分比滚动内部布局容器
+     * @param percent @~english A value between 0 and 100.
+     * @~chinese 百分比，x分量代表水平百分比，y分两代表竖直百分比
+     * @param second @~english Time in seconds.
+     * @~chinese 动作所需时间
+     * @param attenuated @~english Whether scroll speed attenuate or not.
+     * @~chinese 滚动速度是否发生衰减
      */
     void scrollToPercentBothDirection(const Vec2& percent, float second, bool attenuated);
 
     /**
-     * Move inner container to bottom boundary of scrollview.
+     * @~english Move inner container to bottom boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图底端
      */
     void jumpToBottom();
 
     /**
-     * Move inner container to top boundary of scrollview.
+     * @~english Move inner container to top boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图顶端
      */
     void jumpToTop();
 
     /**
-     * Move inner container to left boundary of scrollview.
+     * @~english Move inner container to left boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图左端
      */
     void jumpToLeft();
 
     /**
-     * Move inner container to right boundary of scrollview.
+     * @~english Move inner container to right boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图右端
      */
     void jumpToRight();
 
     /**
-     * Move inner container to top and left boundary of scrollview.
+     * @~english Move inner container to top and left boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图的左上角
      */
     void jumpToTopLeft();
 
     /**
-     * Move inner container to top and right boundary of scrollview.
+     * @~english Move inner container to top and right boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图的右上角
      */
     void jumpToTopRight();
 
     /**
-     * Move inner container to bottom and left boundary of scrollview.
+     * @~english Move inner container to bottom and left boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图的左下角
      */
     void jumpToBottomLeft();
 
     /**
-     * Move inner container to bottom and right boundary of scrollview.
+     * @~english Move inner container to bottom and right boundary of scrollview.
+     * @~chinese 将内部布局容器移至视图的右下角
      */
     void jumpToBottomRight();
 
     /**
-     * Move inner container to vertical percent position of scrollview.
-     * @param percent A value between 0 and 100.
+     * @~english Move inner container to vertical percent position of scrollview.
+     * @~chinese 按一定的百分比竖直滚动视图内的布局容器
+     * @param percent @~english A value between 0 and 100.
+     * @~chinese 百分比，从0至100
      */
     void jumpToPercentVertical(float percent);
 
     /**
-     * Move inner container to horizontal percent position of scrollview.
-     * @param percent   A value between 0 and 100.
+     * @~english Move inner container to horizontal percent position of scrollview.
+     * @~chinese 按一定的百分比竖直滚动视图内的布局容器
+     * @param percent   @~english A value between 0 and 100.
+     * @~chinese 百分比，从0至100
      */
     void jumpToPercentHorizontal(float percent);
 
     /**
-     * Move inner container to both direction percent position of scrollview.
-     * @param percent   A value between 0 and 100.
+     * @~english Move inner container to both direction percent position of scrollview.
+     * @~chinese 竖直方向和水平方向分别按一定的百分比滚动容器
+     * @param percent  @~english  A value between 0 and 100.
+     * @~chinese x分量为水平方向的百分比，y分量为竖直方向的百分比
      */
     void jumpToPercentBothDirection(const Vec2& percent);
 
     /**
-     * Change inner container size of scrollview.
+     * @~english Change inner container size of scrollview.
      *
      * Inner container size must be larger than or equal scrollview's size.
-     *
-     * @param size Inner container size.
+     * @~chinese 更改内部布局容器的尺寸大小，内部容器的尺寸必须大于或等于滚动视图的尺寸
+     * @param size @~english Inner container size.
+     * @~chinese 内部容器的尺寸
      */
     void setInnerContainerSize(const Size &size);
 
     /**
-     * Get inner container size of scrollview.
+     * @~english Get inner container size of scrollview.
      *
      * Inner container size must be larger than or equal scrollview's size.
-     *
-     * @return The inner container size.
+     * @~chinese 获取内部容器的尺寸，内部容器的尺寸必须大于或等于滚动视图的尺寸
+     * @return @~english The inner container size.
+     * @~chinese 内部容器的尺寸
      */
 	const Size& getInnerContainerSize() const;
 
     /**
-     * Add callback function which will be called  when scrollview event triggered.
+     * @~english Add callback function which will be called  when scrollview event triggered.
+     * @~chinese 添加一个回调函数，该回调函数将会在视图发生滚动时触发
      * @deprecated Use @see `addEventListener` instead.
-     * @param target A pointer of `Ref*` type.
-     * @param selector A member function pointer with type of `SEL_ScrollViewEvent`.
+     * @param target @~english A pointer of `Ref*` type.
+     * @~english Ref* 指针
+     * @param selector @~english A member function pointer with type of `SEL_ScrollViewEvent`.
+     * @~chinese `SEL_ScrollViewEvent`类型的成员函数指针
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
 
     /**
-     * Add callback function which will be called  when scrollview event triggered.
-     * @param callback A callback function with type of `ccScrollViewCallback`.
+     * @~english Add callback function which will be called  when scrollview event triggered.
+     * @~chinese 添加一个回调函数，该回调函数将在滚动事件触发时被调用
+     * @param callback @~english A callback function with type of `ccScrollViewCallback`.
+     * @~chinese `ccScrollViewCallback` 类型的回调函数
      */
     virtual void addEventListener(const ccScrollViewCallback& callback);
 
@@ -342,51 +431,58 @@ public:
 
 
     /**
-     * @brief Toggle bounce enabled when scroll to the edge.
-     *
-     * @param enabled True if enable bounce, false otherwise.
+     * @brief @~english Toggle bounce enabled when scroll to the edge.
+     * @~chinese 设置当滚动到边界时，是否内部容器发生弹回(bounce)效果
+     * @param enabled @~english True if enable bounce, false otherwise.
+     * @~chinese 是否发生弹回(bounce)效果
      */
     void setBounceEnabled(bool enabled);
 
     /**
-     * @brief Query bounce state.
-     *
-     * @return True if bounce is enabled, false otherwise.
+     * @brief @~english Query bounce state.
+     * @~chinese 获取弹回(bounce)状态
+     * @return @~english True if bounce is enabled, false otherwise.
+     * @~chinese 开启弹回时返回true，反之返回false
      */
     bool isBounceEnabled() const;
 
     /**
-     * @brief Toggle whether enable scroll inertia while scrolling.
-     *
-     * @param enabled True if enable inertia, false otherwise.
+     * @brief @~english Toggle whether enable scroll inertia while scrolling.
+     * @~chinese 设置是否开启滚动惯性
+     * @param enabled @~english True if enable inertia, false otherwise.
+     * @~chinese 设为true将开启滚动惯性，反之不开启
      */
     void setInertiaScrollEnabled(bool enabled);
 
     /**
-     * @brief Query inertia scroll state.
-     *
-     * @return True if inertia is enabled, false otherwise.
+     * @brief @~english Query inertia scroll state.
+     * @~chinese 获取滚动视图是否开启滚动惯性
+     * @return @~english True if inertia is enabled, false otherwise.
+     * @~chinese 滚动惯性开启时返回true，反之返回false
      */
     bool isInertiaScrollEnabled() const;
 
     /**
-     * Set layout type for scrollview.
-     *
+     * @~english Set layout type for scrollview.
+     * 设置滚动视图的布局类型
      * @see `Layout::Type`
-     * @param type  Layout type enum.
+     * @param type  @~english Layout type enum.
+     * @~chinese 布局类型的枚举
      */
     virtual void setLayoutType(Type type) override;
 
     /**
-     * Get the layout type for scrollview.
-     *
+     * @~english Get the layout type for scrollview.
+     * @~chinese 获取滚动视图的当前布局类型
      * @see `Layout::Type`
-     * @return LayoutType
+     * @return @~english LayoutType
+     * @~chinese 布局类型
      */
     virtual Type getLayoutType() const override;
 
     /**
-     * Return the "class name" of widget.
+     * @~english Return the "class name" of widget.
+     * @~chinese 返回类型名
      */
     virtual std::string getDescription() const override;
 
@@ -396,11 +492,15 @@ public:
     virtual void onEnter() override;
 
     /**
-     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
+     *  @~english When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
      *  If the widget is not in a layout, it will return itself
-     *@param direction the direction to look for the next focused widget in a layout
-     *@param current  the current focused widget
-     *@return the next focused widget in a layout
+     * @~chinese 当一个控件是布局时，你可以调用此方法获取指定方向上下一个有焦点的控件，如果当前控件不是布局，将返回自身
+     * @param direction @~english The direction to look for the next focused widget in a layout
+     * @~chinese 指定方向
+     * @param current  @~english The current focused widget
+     * @~chinese 当前焦点的控件
+     * @return @~english The next focused widget in a layout
+     * @~chinese 下一个有焦点的控件
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -39,7 +39,9 @@ class Label;
 namespace ui {
     
 /**
- * A widget for displaying BMFont label.
+ * @class TextBMFont
+ * @brief @~english A widget for displaying BMFont label.
+ * @~chinese 用以显示位图字体的空间
  */    
 class CC_GUI_DLL TextBMFont : public Widget
 {
@@ -48,43 +50,89 @@ class CC_GUI_DLL TextBMFont : public Widget
     
 public:
     /**
-     * Default constructor
+     * @~english Default constructor
+     * @~chinese 默认构造函数
      * @js ctor
      * @lua new
      */
     TextBMFont();
     
     /**
-     * Default destructor
+     * @~english Default destructor
+     * @~chinese 默认析构函数
      * @js NA
      * @lua NA
      */
     virtual ~TextBMFont();
     
     /**
-     * Allocates and initializes.
+     * @~english Create TextBMFont object.
+     * @~chinese 创建TextBMFont对象
+     * @return @~english The TextBMFont Object.
+     * @~chinese 被创建的TextBMFont对象
      */
     static TextBMFont* create();
     
+    /**
+    * @~english Create TextBMFont object byspecified text and bitmap font name
+    * @~chinese 通过指定的文本，以及位图字体的路径，创建TextBMFont对象
+    * @param text @~english The text string
+    * @~chinese 文本的字符串形式
+    * @param filename @~english The BitMap font file path
+    * @~chinese 位图字体的文件路径
+    * @return @~english The TextBMFont Object.
+    * @~chinese 被创建的TextBMFont对象
+    */
     static TextBMFont* create(const std::string& text, const std::string& filename);
     
-    /** init a bitmap font atlas with an initial string and the FNT file */
+    /**
+     * @~english Set BitMap font file
+     * @~chinese 设置位图字体文件
+     * @param fileName @~english BitMap font file name
+     * @~chinese 位图字体文件名路径
+     */
     void setFntFile(const std::string& fileName);
     
-    /** set string value for labelbmfont*/
+    /**
+     * @~english Set string value for TextBMFont
+     * @~chinese 设置TextBMFont显示的字符串
+     * @param string @~english The String value.
+     * @~chinese 字符串
+     */
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& value){this->setString(value);}
+
+    /**
+    * @~english Set string value for TextBMFont
+    * @~chinese 设置TextBMFont显示的字符串
+    * @param string @~english The String value.
+    * @~chinese 字符串
+    */
     void setString(const std::string& value);
     
-    /** get string value for labelbmfont*/
+    /**
+     * @~english Get string value for TextBMFont.
+     * @~chinese 获取TextBMFont当前显示的字符串
+     * @return @~english The string value.
+     * @~chinese 字符串
+     */
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+
+    /**
+    * @~english Get string value for TextBMFont.
+    * @~chinese 获取TextBMFont当前显示的字符串
+    * @return @~english The string value.
+    * @~chinese 字符串
+    */
     const std::string& getString()const;
     
     /**
-     * Gets the string length of the label.
-     * Note: This length will be larger than the raw string length,
+     * @~english Gets the string length of the label.
+     * @~chinese 获取字符串长度
+     * @note @~english This length will be larger than the raw string length,
      * if you want to get the raw string length, you should call this->getString().size() instead
-     *
-     * @return  string length.
+     * @~chinese 该长度会比原始字符串长度要大，若需要原始字符串长度，请调用this->getString().size()
+     * @return  @~english The string length.
+     * @~chinese 字符串长度
      */
     ssize_t getStringLength()const;
 
