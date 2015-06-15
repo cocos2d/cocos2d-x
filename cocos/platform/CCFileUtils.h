@@ -298,7 +298,7 @@ public:
      * 设置filenameLookup字典。
      * 
      *  @param pFilenameLookupDict @~english The dictionary for replacing filename.
-     * @~chinese 替换的文件名字典。
+     * @~chinese 用于替换文件名的字典。
      *  @since v2.1
      */
     virtual void setFilenameLookupDictionary(const ValueMap& filenameLookupDict);
@@ -306,7 +306,7 @@ public:
     /**@~english
      *  Gets full path from a file name and the path of the relative file.
      * @~chinese 
-     * 从一个相对文件的文件名和路径得到完整路径。
+     * 从一个文件名和相对的路径文件得到完整路径。
      *  @param filename @~english The file name.
      * @~chinese 文件的名字。
      *  @param pszRelativeFile @~english The path of the relative file.
@@ -315,7 +315,7 @@ public:
      *          e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
      *               Return: /User/path1/path2/hello.pvr (If there a a key(hello.png)-value(hello.pvr) in FilenameLookup dictionary. )
      *
-     * @~chinese 的完整路径。
+     * @~chinese 这个给定文件名的完整文件路径。
         例如. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
      *  Return: /User/path1/path2/hello.pvr (如果在FilenameLookup字典中有这个键值对(hello.png)-value(hello.pvr))
      * 
@@ -522,7 +522,7 @@ public:
      *  @note @~english If a relative path was passed in, it will be inserted a default root path at the beginning.
      * @~chinese 如果传递进来的参数是一个相对路径，将会在其开头加上一个默认的根路径
      *  @param filename @~english The path of the file, it could be a relative or absolute path.
-     * @~chinese 文件的路径。可以使绝对路径，也可以是相对路径
+     * @~chinese 文件的路径。可以是绝对路径，也可以是相对路径
      *  @return @~english True if the file exists, false if not.
      * @~chinese 如果文件存在返回true，否则返回false
      */
@@ -554,7 +554,7 @@ public:
      * 检查一个路径是否是目录。
      * 
      *  @param dirPath @~english The path of the directory, it could be a relative or an absolute path.
-     * @~chinese 目录的路径。可以使绝对路径，也可以是相对路径
+     * @~chinese 目录的路径。可以是绝对路径，也可以是相对路径
      *  @return @~english True if the directory exists, false if not.
      * @~chinese 如果目录存在返回true，否则返回false
      */
@@ -739,7 +739,7 @@ protected:
      *  std::string fullPathForFilename(const char*);
      *
      * @~chinese 基于键值查找文件名的Dictionary变量
-     * 这是在这些内部方法中使用：
+     * 它是在内部被以下方法使用到：
      * 
      * std::string fullPathForFilename(const char*);
      * 

@@ -44,7 +44,7 @@ enum class ResolutionPolicy
 {
     /** @~english The entire application is visible in the specified area without trying to preserve the original aspect ratio.
      * Distortion can occur, and the application may appear stretched or compressed.
-     * @~chinese 指定的区域整个应用程序是可见,并且没有试图维持原来的宽高比。
+     * @~chinese 整个应用程序在指定的区域是可见的,并且没有试图维持原来的宽高比。
      * 可能会发生变形,应用程序会出现拉伸或压缩。
      */
     EXACT_FIT,
@@ -56,14 +56,14 @@ enum class ResolutionPolicy
     NO_BORDER,
     /** @~english The entire application is visible in the specified area without distortion while maintaining the original
      * aspect ratio of the application. Borders can appear on two sides of the application.
-     * @~chinese 指定的区域整个应用程序是可见 不会变形,同时保持原
-     * 应用程序的宽高比。但是在应用的两边可能会出现边界。
+     * @~chinese 整个应用程序在指定的区域是可见的 不会变形,同时保持原
+     * 应用程序的宽高比。但是在应用的两边可能会出现黑边。
      */
     SHOW_ALL,
     /** @~english The application takes the height of the design resolution size and modifies the width of the internal
      * canvas so that it fits the aspect ratio of the device.
      * No distortion will occur however you must make sure your application works on different
-     * aspect ratios.
+     * aspect ratIOS.
      * @~chinese 应用程序将会采用设计分辨率的高度，并修改画布内部的宽度
      * 以达到和设备一致的比例
      * 没有变形会发生但是你必须确保你的应用程序能够在不同宽高比例下正常显示。
@@ -72,7 +72,7 @@ enum class ResolutionPolicy
     /** @~english The application takes the width of the design resolution size and modifies the height of the internal
      * canvas so that it fits the aspect ratio of the device.
      * No distortion will occur however you must make sure your application works on different
-     * aspect ratios.
+     * aspect ratIOS.
      * @~chinese 应用程序将会采用设计分辨率的宽度，并修改画布内部的高度
      * 以达到和设备一致的比例。
      * 没有变形会发生但是你必须确保你的应用程序能够在不同宽高比例下正常显示。
@@ -107,7 +107,7 @@ NS_CC_BEGIN
  */
 /**
  * @brief @~english By GLView you can operate the frame information of EGL view through some function.
- * @~chinese 通过一些函数GLView可以操作的EGL视图的界面信息。
+ * @~chinese 通过GLView的一些函数可以操作EGL视图的界面信息。
  */
 class CC_DLL GLView : public Ref
 {
@@ -140,14 +140,14 @@ public:
      */
     virtual void setIMEKeyboardState(bool open) = 0;
     
-    /** @~english When the window is closed, it will return false if the platforms is Ios or Android.
+    /** @~english When the window is closed, it will return false if the platforms is IOS or Android.
      * If the platforms is windows or Mac,it will return true.
      *
-     * @~chinese 当窗口已关闭时,如果Ios和Android平台。它将返回false
+     * @~chinese 当窗口已关闭时,如果是IOS和Android平台。它将返回false
      * 如果windows或Mac平台,它将返回true。
      * 
-     * @return @~english In ios and android it will return false,if in windows or Mac it will return true.
-     * @~chinese 在ios和android,它将返回false,如果在windows或Mac,它将返回true。
+     * @return @~english In IOS and Android it will return false,if in windows or Mac it will return true.
+     * @~chinese 在IOS和Android平台,它将返回false,如果在windows或Mac,它将返回true。
      */
     virtual bool windowShouldClose() { return false; };
 
@@ -252,10 +252,10 @@ public:
      */
     virtual int getRetinaFactor() const { return 1; }
 
-    /** @~english Only works on ios platform. Set Content Scale of the Factor.  @~chinese 只有在ios平台上工作。设置内容缩放系数。*/
+    /** @~english Only works on IOS platform. Set Content Scale of the Factor.  @~chinese 只有在IOS平台上工作。设置内容缩放系数。*/
     virtual bool setContentScaleFactor(float scaleFactor) { return false; }
     
-    /** @~english Only works on ios platform. Get Content Scale of the Factor.  @~chinese 只有在ios平台上工作。获取内容缩放系数。*/
+    /** @~english Only works on IOS platform. Get Content Scale of the Factor.  @~chinese 只有在IOS平台上工作。获取内容缩放系数。*/
     virtual float getContentScaleFactor() const { return 1.0; }
     
     /** @~english Returns whether or not the view is in Retina Display mode.
