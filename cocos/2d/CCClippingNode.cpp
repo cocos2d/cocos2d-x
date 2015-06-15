@@ -429,13 +429,7 @@ void ClippingNode::onBeforeVisit()
     //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
     //     if in inverted mode: set the current layer value to 1 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, mask_layer, mask_layer);
-
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
-    RenderState::StateBlock::_defaultState->setStencilOperation(
-                                                                !_inverted ? RenderState::STENCIL_OP_ZERO : RenderState::STENCIL_OP_REPLACE,
-                                                                RenderState::STENCIL_OP_KEEP,
-                                                                RenderState::STENCIL_OP_KEEP);
 
     // draw a fullscreen solid rectangle to clear the stencil buffer
     //ccDrawSolidRect(Vec2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));

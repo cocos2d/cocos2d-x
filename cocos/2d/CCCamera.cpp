@@ -410,20 +410,14 @@ void Camera::clearBackground(float depth)
     {
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
         glStencilMask(0);
-        RenderState::StateBlock::_defaultState->setStencilWrite(0);
 
         oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
         glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
         glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
 
         glDepthMask(GL_TRUE);
-        RenderState::StateBlock::_defaultState->setDepthWrite(true);
-
         glEnable(GL_DEPTH_TEST);
-        RenderState::StateBlock::_defaultState->setDepthTest(true);
-
         glDepthFunc(GL_ALWAYS);
-        RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_ALWAYS);
     }
 
     //draw
@@ -470,18 +464,23 @@ void Camera::clearBackground(float depth)
         if(GL_FALSE == oldDepthTest)
         {
             glDisable(GL_DEPTH_TEST);
-            RenderState::StateBlock::_defaultState->setDepthTest(false);
         }
         glDepthFunc(oldDepthFunc);
+
         if(GL_FALSE == oldDepthMask)
         {
             glDepthMask(GL_FALSE);
-            RenderState::StateBlock::_defaultState->setDepthWrite(false);
         }
-        
+
+        /* IMPORTANT: We only need to update the states that are not restored.
+         Since we don't know what was the previous value of the mask, we update the RenderState
+         after setting it.
+         The other values don't need to be updated since they were restored to their original values
+         */
         glStencilMask(0xFFFFF);
         RenderState::StateBlock::_defaultState->setStencilWrite(0xFFFFF);
 
+        /* BUG: RenderState does not support glColorMask yet. */
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
 }
