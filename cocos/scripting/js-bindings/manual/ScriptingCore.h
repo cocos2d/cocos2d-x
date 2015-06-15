@@ -311,7 +311,7 @@ public:
      * @param string    @~english The string with the javascript code to be evaluated
      * @~chinese javascript代码的字符串
      * @param outVal    @~english The jsval that will hold the return value of the evaluation.
-     * @~chinese 将持有的返回值的jsval。
+     * @~chinese 将用来保存返回值的jsval。
      * @param filename  @~english The filename
      * @~chinese 文件名
      * @param cx        @~english The js context
@@ -370,7 +370,7 @@ public:
     /**@~english
      * Clean script object for the specified js file
      * @~chinese 
-     * 清除的js文件对应的脚本缓存对象
+     * 清除js文件对应的脚本缓存对象
      * @param string @~english The path of the js file to be cleaned
      * @~chinese 脚本文件的路径
      */
@@ -399,9 +399,9 @@ public:
     void start();
 
     /**@~english
-     * Cleanup everything
+     * Cleanup everything, including script cache, js context, global object etc.
      * @~chinese 
-     * 清除一切
+     * 清除所有脚本对象缓存，js上下文，全局对象，等等。
      */
     void cleanup();
 
@@ -665,13 +665,13 @@ public:
     /**@~english
      * Checks whether a C++ function is overrided in js prototype chain
      * @~chinese 
-     * 检查是否一个c++函数在js继承链中被覆盖
+     * 检查一个c++函数是否在js继承链中被覆盖
      * @param obj @~english The js object
      * @~chinese js对象
      * @param name @~english The function name
      * @~chinese 函数名
      * @param native @~english The native function
-     * @~chinese 本机函数
+     * @~chinese 原生C++函数
      * @return @~english The global object
      * @~chinese 全局对象
      */

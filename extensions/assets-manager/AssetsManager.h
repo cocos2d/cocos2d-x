@@ -62,7 +62,7 @@ public:
          - timeout
          - ...
          * @~chinese 网络错误，可能的原因有：
-         * — 网络unavaivable
+         * — 网络不可用
          * — 超时
          * — ...
          */

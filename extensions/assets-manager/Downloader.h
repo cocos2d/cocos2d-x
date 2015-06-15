@@ -355,7 +355,7 @@ public:
      * @param size @~english The size of the buffer
      * @~chinese 缓冲区的大小
      * @param customId @~english The custom id to identify the file
-     * @~chinese 自定义id来识别文件
+     * @~chinese 用来识别文件的自定义id
      */
     void downloadToBufferAsync(const std::string &srcUrl, unsigned char *buffer, const long &size, const std::string &customId = "");
     
@@ -368,7 +368,7 @@ public:
      * @param size @~english The size of the buffer
      * @~chinese 缓冲区的大小
      * @param customId @~english The custom id to identify the file
-     * @~chinese 自定义id来识别文件
+     * @~chinese 用来识别文件的自定义id
      */
     void downloadToBufferSync(const std::string &srcUrl, unsigned char *buffer, const long &size, const std::string &customId = "");
 
@@ -379,7 +379,7 @@ public:
      * @param storagePath @~english The local storage path
      * @~chinese 本地存储路径
      * @param customId @~english The custom id to identify the file
-     * @~chinese 自定义id来识别文件
+     * @~chinese 用来识别文件的自定义id
      */
     void downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
 
@@ -390,7 +390,7 @@ public:
      * @param storagePath @~english The local storage path
      * @~chinese 本地存储路径
      * @param customId @~english The custom id to identify the file
-     * @~chinese 自定义id来识别文件
+     * @~chinese 用来识别文件的自定义id
      */
     void downloadSync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId = "");
     
