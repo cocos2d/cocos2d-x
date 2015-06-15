@@ -28,64 +28,98 @@ extern "C" {
  * @{
  */
 
-/**
+/**@~english
  * Build a bridge between Java and Lua script.
  * This mechanism make Lua and Java call each other easily.
+ * @~chinese 
+ * 构建一个Java和Lua之间的桥梁。
+ * 它使Java和Lua间可以方便地互相调用。
  */
 class LuaJavaBridge
 {
 public:
     ///@cond
-    /**
+    /**@~english
      * Bind callStaticMethod of LuaJavaBridge to Lua.
      * In current mechanism,we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
      * Meanwhile the callStaticMethod of LuaObjcBridge binding function is wrapped in the luaj.lua
+     * @~chinese d
+     * 绑定LuaJavaBridge的callStaticMethod到Lua中。
+     * 当前的机制下,我们可以在Lua脚本中直接调用LuaJavaBridge.callStaticMethod(className, methodName, args)
+     * 同时,callStaticMethod绑定在luaj.lua还进行了一层封装。
      */
     static void luaopen_luaj(lua_State *L);
     ///@endcond
 
-    /**
-     * Add a reference count for the Lua functionId,and save this reference in the Lua table named luaj_function_id_retain.
+    /**@~english
+     * Add a reference count for the Lua functionId(+1),and save this reference in the Lua table named luaj_function_id_retain.
      * 
-     * @param functionId the id of Lua function.
-     * @return the reference count of the functionId if luaj_function_id_retain table exists and the corresponding value for functionId exists, otherwise return 0.
+     * @~chinese 
+     * 增加functionId的引用计数(+1)，同时把这个值存在luaj_function_id_retain table中。
+     * 
+     * @param functionId @~english the reference id of Lua function.
+     * @~chinese Lua函数的引用id。
+     * @return @~english the reference count of the functionId if luaj_function_id_retain table exists and the corresponding value for functionId exists, otherwise return 0.
      *
+     * @~chinese 如果在luaj_function_id_retain table中可以找到对应functionId的引用计数值,引用计数加1，返回更新后的引用计数,否则返回0。
+     * 
      * @lua NA
      * @js NA
      */
     static int retainLuaFunctionById(int functionId);
 
-    /**
-     * Release a reference count for the Lua functionId, If the reference count is still greater than 0,save this reference in the Lua table named luaj_function_id_retain.
+    /**@~english
+     * Release a reference count for the Lua functionId(-1).If the reference count is still greater than 0,save this reference in the Lua table named luaj_function_id_retain.
      * Otherwise, remove the refrence about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
      * 
-     * @param functionId the id of Lua function.
-     * @return the reference count of the functionId if the luaj_function_id table, the luaj_function_id_retain table and the corresponding value for functionId exists a reference count for the Lua functionId is still greater than 0,and otherwise return 0.
+     * @~chinese 
+     * 。
+     * 减少functionId对应的引用计数(-1)。如果更新后的引用计数还是大于0，那么更新luaj_function_id_retain中对应的值。否则,通过设置对应的值设置为nil移除关于functionId在luaj_function_id table和luaj_function_id_retain table的引用。
+     * 
+     * @param functionId @~english the reference id of Lua function.
+     * @~chinese Lua函数的引用id。
+     * @return @~english the retain count or 0.
      *
+     * @~chinese 引用计数或0。
+     * 
      * @lua NA
      * @js NA
      */
     static int releaseLuaFunctionById(int functionId);
 
-    /**
+    /**@~english
      * Call the Lua function corresponding to the functionId with the string pointer arg.
      * 
-     * @param functionId the values corresponding to the Lua function.
-     * @param arg the string pointer point to the argument.
-     * @return a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
+     * @~chinese 
+     * 以arg为函数参数，调用functionId对应的Lua函数指针。
+     * 
+     * @param functionId @~english the reference id to the Lua function.
+     * @~chinese Lua函数的引用id。
+     * @param arg @~english the string pointer point to the argument.
+     * @~chinese 作为函数参数的字符串指针。
+     * @return @~english a number value returned from the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
      *
+     * @~chinese 调用成功，返回Lua函数的返回值。否则，返回-1或LUA_ERRRUN,LUA_ERRMEM LUA_ERRERR三个错误码其中一个的相反数。
+     * 
      * @lua NA
      * @js NA
      */
     static int callLuaFunctionById(int functionId, const char *arg);
 
-    /**
+    /**@~english
      * Call a global Lua function named functionName with the string pointer arg.
      * 
-     * @param functionName the name of global function.
-     * @param arg the string pointer point to the argument.
-     * @return a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
+     * @~chinese 
+     * 以arg为函数参数，调用一个名字为functionName的Lua全局函数。
+     * 
+     * @param functionName @~english the name of global function.
+     * @~chinese 全局函数名。
+     * @param arg @~english the string pointer point to the argument.
+     * @~chinese 作为函数参数的字符串指针。
+     * @return @~english a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
      *
+     * @~chinese 调用成功，返回Lua函数的返回值。否则，返回-1或LUA_ERRRUN,LUA_ERRMEM LUA_ERRERR三个错误码其中一个的相反数。
+     * 
      * @lua NA
      * @js NA
      */
