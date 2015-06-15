@@ -20,7 +20,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
+ ****************************************************************************/
 #ifndef _CCCAMERA_H__
 #define _CCCAMERA_H__
 
@@ -28,6 +31,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 
@@ -54,13 +58,14 @@ enum class CameraFlag
     USER7 = 1 << 7,
     USER8 = 1 << 8,
 };
-
 /**
-* Defines a camera .
-*/
+ * Defines a camera .
+ */
 class CC_DLL Camera :public Node
 {
     friend class Scene;
+    friend class Director;
+    friend class EventDispatcher;
 public:
     /**
     * The type of camera.
@@ -128,30 +133,60 @@ public:
     /**get view projection matrix*/
     const Mat4& getViewProjectionMatrix() const;
     
-    /* convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
+    /* convert the specified point in 3D world-space coordinates into the screen-space coordinates.
      *
+     * Origin point at left top corner in screen-space.
      * @param src The world-space position.
      * @return The screen-space position.
      */
     Vec2 project(const Vec3& src) const;
     
-    /**
-     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+    /* convert the specified point in 3D world-space coordinates into the GL-screen-space coordinates.
      *
+     * Origin point at left bottom corner in GL-screen-space.
+     * @param src The 3D world-space position.
+     * @return The GL-screen-space position.
+     */
+    Vec2 projectGL(const Vec3& src) const;
+    
+    /**
+     * Convert the specified point of screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left top corner in screen-space.
      * @param src The screen-space position.
-     * @return The world-space position.
+     * @return The 3D world-space position.
      */
     Vec3 unproject(const Vec3& src) const;
-
-    /**
-     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
-     *
-     * @param viewport The viewport size to use.
-     * @param src The screen-space position.
-     * @param dst The world-space position.
-     */
-    void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
     
+    /**
+     * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left bottom corner in GL-screen-space.
+     * @param src The GL-screen-space position.
+     * @return The 3D world-space position.
+     */
+    Vec3 unprojectGL(const Vec3& src) const;
+    
+    /**
+     * Convert the specified point of screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left top corner in screen-space.
+     * @param size The window size to use.
+     * @param src  The screen-space position.
+     * @param dst  The 3D world-space position.
+     */
+    void unproject(const Size& size, const Vec3* src, Vec3* dst) const;
+    
+    /**
+     * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left bottom corner in GL-screen-space.
+     * @param size The window size to use.
+     * @param src  The GL-screen-space position.
+     * @param dst  The 3D world-space position.
+     */
+    void unprojectGL(const Size& size, const Vec3* src, Vec3* dst) const;
+
     /**
      * Is this aabb visible in frustum
      */
@@ -165,12 +200,17 @@ public:
     /**
      * set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      */
-    void setDepth(int depth);
+    void setDepth(int8_t depth);
     
     /**
      * get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      */
-    int getDepth() const { return _depth; }
+    int8_t getDepth() const { return _depth; }
+    
+    /**
+     get rendered order
+     */
+    int getRenderOrder() const;
     
     /**
      * Get the frustum's far plane.
@@ -195,9 +235,22 @@ public:
      * Get the default camera of the current running scene.
      */
     static Camera* getDefaultCamera();
-    
+    /**
+     Before rendering scene with this camera, the background need to be cleared.
+     */
     void clearBackground(float depth);
-    
+    /**
+     Apply the FBO, RenderTargets and viewport.
+     */
+    void apply();
+    /**
+     Set FBO, which will attacha several render target for the rendered result.
+    */
+    void setFrameBufferObject(experimental::FrameBuffer* fbo);
+    /**
+     Set Viewport for camera.
+     */
+    void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -214,7 +267,8 @@ CC_CONSTRUCTOR_ACCESS:
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
-    
+    void applyFrameBufferObject();
+    void applyViewport();
 protected:
 
     Scene* _scene; //Scene camera belongs to
@@ -233,10 +287,17 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
-    int  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
+    int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
     
-    friend class Director;
+    experimental::Viewport _viewport;
+    
+    experimental::FrameBuffer* _fbo;
+protected:
+    static experimental::Viewport _defaultViewport;
+public:
+    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
+    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 };
 
 NS_CC_END

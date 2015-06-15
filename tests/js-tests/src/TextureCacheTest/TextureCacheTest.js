@@ -192,7 +192,6 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     _title:"Remote Texture Test",
     _subtitle:"",
     _remoteTex: "http://cn.cocos2d-x.org/image/logo.png",
-    _sprite : null,
     onEnter:function () {
         this._super();
         if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
@@ -205,19 +204,21 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     },
 
     startDownload: function() {
-        cc.textureCache.addImageAsync(this._remoteTex, this.texLoaded, this);
+        var imageUrlArray = ["http://www.cocos2d-x.org/s/upload/v35.jpg", "http://www.cocos2d-x.org/s/upload/testin.jpg", "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg", "http://cn.cocos2d-x.org/image/logo.png"];
+
+        for (var i = 0; i < imageUrlArray.length; i++) {
+            cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
+        }
     },
 
     texLoaded: function(texture) {
         if (texture instanceof cc.Texture2D) {
-            cc.log("Remote texture loaded: " + this._remoteTex);
-            if (this._sprite) {
-                this.removeChild(this._sprite);
-            }
-            this._sprite = new cc.Sprite(texture);
-            this._sprite.x = cc.winSize.width/2;
-            this._sprite.y = cc.winSize.height/2;
-            this.addChild(this._sprite);
+            cc.log("Remote texture loaded");
+            
+            var sprite = new cc.Sprite(texture);
+            sprite.x = cc.winSize.width/2;
+            sprite.y = cc.winSize.height/2;
+            this.addChild(sprite);
         }
         else {
             cc.log("Fail to load remote texture");

@@ -199,23 +199,28 @@ void ActionTimeline::step(float delta)
     }
 
     _time += delta * _timeSpeed;
-    
-    if(_time < _endFrame * _frameInternal)
+    const float endtoffset = _time - _endFrame * _frameInternal;
+
+    if (endtoffset < _frameInternal)
     {
         _currentFrame = (int)(_time / _frameInternal);
         stepToFrame(_currentFrame);
+        if (endtoffset >= 0 && _lastFrameListener != nullptr) // last frame 
+            _lastFrameListener();
     }
     else
     {
-        if(_lastFrameListener != nullptr)
-            _lastFrameListener();
-        
         _playing = _loop;
-        if(!_playing)
+        if (!_playing)
         {
             _time = _endFrame * _frameInternal;
-            _currentFrame = (int)(_time / _frameInternal);
-            stepToFrame(_currentFrame);
+            if (_currentFrame != _endFrame)
+            {
+                _currentFrame = _endFrame;
+                stepToFrame(_currentFrame);
+                if (_lastFrameListener != nullptr)  // last frame 
+                    _lastFrameListener();
+            }
         }
         else
             gotoFrameAndPlay(_startFrame, _endFrame, _loop);

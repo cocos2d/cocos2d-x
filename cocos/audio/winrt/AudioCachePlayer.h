@@ -58,11 +58,14 @@ public:
     void seek(const float ratio);
 
 protected:
+    void invokeCallbacks();
+    
+private:
     AudioCache(const AudioCache&);
     AudioCache& operator=(const AudioCache&); 
-    void invokeCallbacks();
 
 private:
+    bool _retry;
     bool _isReady;
     AudioInfo _audInfo;
     std::mutex _cbMutex;

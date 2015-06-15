@@ -3,18 +3,43 @@ var UIVideoPlayerTest = UIScene.extend({
     onEnter: function(){
         UIScene.prototype.onEnter.call(this);
 
-        var video = new ccui.VideoPlayer("cocosui/UITest/movie.mp4");
+        var video = new ccui.VideoPlayer("http://benchmark.cocos2d-x.org/cocosvideo.mp4");
         video.setContentSize(320, 240);
         video.setPosition(800/2, 450/2);
         video.setScale(0.5);
         window.video = video;
         this.addChild(video);
 
+        video.setEventListener(ccui.VideoPlayer.EventType.PLAYING, function(sender){
+            cc.log("VideoPlayer PLAYING");
+        });
+        video.setEventListener(ccui.VideoPlayer.EventType.PAUSED, function(sender){
+            cc.log("VideoPlayer PAUSED");
+        });
+        video.setEventListener(ccui.VideoPlayer.EventType.STOPPED, function(sender){
+            cc.log("VideoPlayer STOPPED");
+        });
+        video.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function(sender){
+            cc.log("VideoPlayer COMPLETED");
+        });
+
+        ccui.VideoPlayer.EventType = {
+            PLAYING: "play",
+            PAUSED: "pause",
+            STOPPED: "stop",
+            COMPLETED: "complete"
+        };
         var list = [
-            { name: "PLAY", func: function(){
-                    cc.log("play!");
-                    video.play();
-             }},
+            { name: "PLAYWEB", func: function(){
+                cc.log("play!");
+                video.setURL("http://benchmark.cocos2d-x.org/cocosvideo.mp4");
+                video.play();
+            }},
+            { name: "PLAYNATIVE", func: function(){
+                cc.log("play!");
+                video.setURL("res/cocosvideo.mp4");
+                video.play();
+            }},
             { name: "STOP", func: function(){
                     cc.log("stop!");
                     video.stop();
@@ -38,7 +63,7 @@ var UIVideoPlayerTest = UIScene.extend({
             }},
             { name: "Full Screen", func: function(){
                     cc.log("setFullScreenEnabled!");
-                    video.setFullScreenEnabled();
+                    video.setFullScreenEnabled(true);
             }},
             { name: "Scale", func: function(){
                 var scale = ((Math.random() * 0.5 + 0.2) * 100 | 0) / 100;
@@ -60,7 +85,7 @@ var UIVideoPlayerTest = UIScene.extend({
         var layer = this;
         list.forEach(function(item, i){
             var but = new ccui.Button();
-            but.setPosition( 140 + (i / 5 | 0) * 500, 300 - (i % 5) * 35);
+            but.setPosition( 140 + (i / 6 | 0) * 500, 300 - (i % 6) * 35);
             but.setTitleText(item.name);
             but.setZoomScale(0.3);
             but.setPressedActionEnabled(true);

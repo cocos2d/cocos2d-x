@@ -107,7 +107,7 @@ public:
         std::string url;
         std::string contentType;
         double contentSize;
-        double responseCode;
+        long responseCode;
     };
     
     typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
@@ -138,6 +138,8 @@ public:
     HeaderCallback getHeaderCallback() const { return _onHeader; };
     
     long getContentSize(const std::string &srcUrl);
+    
+    HeaderInfo getHeader(const std::string &srcUrl);
     
     void getHeaderAsync(const std::string &srcUrl, const HeaderCallback &callback);
     
@@ -170,9 +172,6 @@ protected:
 
     void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, bool resumeDownload, FileDescriptor *fDesc, ProgressData *pData);
     
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    HeaderInfo prepare(const std::string &srcUrl);
-#endif
     HeaderInfo prepareHeader(const std::string &srcUrl, void* header = nullptr);
     
     void downloadToBuffer(const std::string &srcUrl, const std::string &customId, const StreamData &buffer, const ProgressData &data);

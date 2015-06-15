@@ -302,22 +302,22 @@ public:
      * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
      * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
      **/
-    float getHeight(float x, float z, Vec3 * normal= nullptr);
+    float getHeight(float x, float z, Vec3 * normal= nullptr) const;
 
     /**get specified position's height mapping to the terrain,use bi-linear interpolation method
      * @param pos the position (X,Z)
      * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
      * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
      **/
-    float getHeight(Vec2 pos, Vec3*Normal = nullptr);
+    float getHeight(Vec2 pos, Vec3*Normal = nullptr) const;
 
     /**get the normal of the specified pistion in terrain
      * @return the normal vector of the specified position of the terrain.
      * @note the fast normal calculation may not get precise normal vector.
      **/
-    Vec3 getNormal(int pixelX, int pixelY);
+    Vec3 getNormal(int pixelX, int pixelY) const;
     /**get height from the raw height filed*/
-    float getImageHeight(int pixelX, int pixelY);
+    float getImageHeight(int pixelX, int pixelY) const;
     /**show the wireline instead of the surface,Debug Use only.
      * @Note only support desktop platform
      **/
@@ -344,7 +344,15 @@ public:
      * Ray-Terrain intersection.
      * @return the intersection point
      */
-    Vec3 getIntersectionPoint(const Ray & ray);
+    Vec3 getIntersectionPoint(const Ray & ray) const;
+
+   /**
+    * Ray-Terrain intersection.
+    * @param ray to hit the terrain
+    * @param intersectionPoint hit point if hitted
+    * @return true if hit, false otherwise
+    */
+    bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
 
     /**
      * set the MaxDetailAmount.

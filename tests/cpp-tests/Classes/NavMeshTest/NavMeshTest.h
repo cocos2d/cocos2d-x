@@ -85,6 +85,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
+    virtual void onEnter() override;
+    
 protected:
 
     virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
@@ -106,6 +108,8 @@ public:
     virtual bool init() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+    virtual void onEnter() override;
 
 protected:
 

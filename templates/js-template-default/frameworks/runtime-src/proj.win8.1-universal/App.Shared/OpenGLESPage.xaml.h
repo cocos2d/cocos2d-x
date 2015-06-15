@@ -21,6 +21,8 @@
 #include "OpenGLES.h"
 #include "OpenGLESPage.g.h"
 #include <memory>
+#include <condition_variable>
+#include <mutex>
 
 #include "Cocos2dRenderer.h"
 
@@ -39,15 +41,19 @@ namespace cocos2d
         void OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
         void OnSwapChainPanelSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP) || _MSC_VER >= 1900
+        void OnBackButtonPressed(Platform::Object^ sender, Windows::Phone::UI::Input::BackPressedEventArgs^ args);
+#endif
         void GetSwapChainPanelSize(GLsizei* width, GLsizei* height);
         void CreateRenderSurface();
         void DestroyRenderSurface();
         void RecoverFromLostDevice();
+        void TerminateApp();
         void StartRenderLoop();
         void StopRenderLoop();
 
         OpenGLES* mOpenGLES;
-        std::shared_ptr<cocos2d::Cocos2dRenderer> m_renderer;
+        std::shared_ptr<cocos2d::Cocos2dRenderer> mRenderer;
 
         Windows::Foundation::Size mSwapChainPanelSize;
         Concurrency::critical_section mSwapChainPanelSizeCriticalSection;
@@ -60,19 +66,25 @@ namespace cocos2d
         Windows::Foundation::IAsyncAction^ mRenderLoopWorker;
 
         // Track user input on a background worker thread.
-        Windows::Foundation::IAsyncAction^ m_inputLoopWorker;
-        Windows::UI::Core::CoreIndependentInputSource^ m_coreInput;
+        Windows::Foundation::IAsyncAction^ mInputLoopWorker;
+        Windows::UI::Core::CoreIndependentInputSource^ mCoreInput;
 
         // Independent input handling functions.
         void OnPointerPressed(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerMoved(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
         void OnPointerReleased(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
+		void OnKeyPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
+		void OnKeyReleased(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
+		void OnCharacterReceived(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CharacterReceivedEventArgs^ args);
 
         void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
 
-        float m_dpi;
-        bool m_deviceLost;
-        Windows::Graphics::Display::DisplayOrientations m_orientation;
+        float mDpi;
+        bool mDeviceLost;
+        bool mVisible;
+        Windows::Graphics::Display::DisplayOrientations mOrientation;
 
+        std::mutex mSleepMutex;
+        std::condition_variable mSleepCondition;
     };
 }

@@ -523,7 +523,7 @@ void UILayoutComponentTest_Editor::onResizeContainer(Ref* sender)
                 switchButton->setEnabled(true);
                 switchButton->setBright(true);
             }
-        }, 0.025, 39, 0, "1");
+        }, 0.025f, 39, 0, "1");
     } 
     else
     {
@@ -539,6 +539,6 @@ void UILayoutComponentTest_Editor::onResizeContainer(Ref* sender)
                 switchButton->setEnabled(true);
                 switchButton->setBright(true);
             }
-        }, 0.025, 39, 0, "2");
+        }, 0.025f, 39, 0, "2");
     }
 }

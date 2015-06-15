@@ -568,7 +568,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\navmesh\CCNavMeshAgent.cpp" />
     <ClCompile Include="..\navmesh\CCNavMeshDebugDraw.cpp" />
     <ClCompile Include="..\navmesh\CCNavMeshObstacle.cpp" />
-    <ClCompile Include="..\navmesh\CCNavMeshTool.cpp" />
+    <ClCompile Include="..\navmesh\CCNavMeshUtils.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
@@ -598,6 +598,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\platform\win32\CCStdC-win32.cpp" />
     <ClCompile Include="..\renderer\CCBatchCommand.cpp" />
     <ClCompile Include="..\renderer\CCCustomCommand.cpp" />
+    <ClCompile Include="..\renderer\CCFrameBuffer.cpp" />
     <ClCompile Include="..\renderer\CCGLProgram.cpp" />
     <ClCompile Include="..\renderer\CCGLProgramCache.cpp" />
     <ClCompile Include="..\renderer\CCGLProgramState.cpp" />
@@ -1161,7 +1162,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\navmesh\CCNavMeshAgent.h" />
     <ClInclude Include="..\navmesh\CCNavMeshDebugDraw.h" />
     <ClInclude Include="..\navmesh\CCNavMeshObstacle.h" />
-    <ClInclude Include="..\navmesh\CCNavMeshTool.h" />
+    <ClInclude Include="..\navmesh\CCNavMeshUtils.h" />
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
@@ -1200,6 +1201,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\platform\win32\compat\stdint.h" />
     <ClInclude Include="..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\renderer\CCFrameBuffer.h" />
     <ClInclude Include="..\renderer\CCGLProgram.h" />
     <ClInclude Include="..\renderer\CCGLProgramCache.h" />
     <ClInclude Include="..\renderer\CCGLProgramState.h" />

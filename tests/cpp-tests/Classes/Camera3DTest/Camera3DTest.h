@@ -255,5 +255,16 @@ protected:
 #endif
 };
 
+class CameraFrameBufferTest : public CameraBaseTest
+{
+public:
+    CREATE_FUNC(CameraFrameBufferTest);
+    CameraFrameBufferTest(void);
+    virtual ~CameraFrameBufferTest(void);
+    // overrides
+    virtual std::string title() const override;
+    
+    virtual void onEnter() override;
+};
 
 #endif

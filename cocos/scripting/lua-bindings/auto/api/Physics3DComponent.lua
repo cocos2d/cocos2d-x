@@ -5,6 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- synchronize node transformation to physics
+-- @function [parent=#Physics3DComponent] syncNodeToPhysics 
+-- @param self
+-- @return Physics3DComponent#Physics3DComponent self (return value: cc.Physics3DComponent)
+        
+--------------------------------
 -- add this component to physics world, called by scene
 -- @function [parent=#Physics3DComponent] addToPhysicsWorld 
 -- @param self
@@ -12,14 +18,8 @@
 -- @return Physics3DComponent#Physics3DComponent self (return value: cc.Physics3DComponent)
         
 --------------------------------
--- align node and physics according to physics object
--- @function [parent=#Physics3DComponent] syncToPhysics 
--- @param self
--- @return Physics3DComponent#Physics3DComponent self (return value: cc.Physics3DComponent)
-        
---------------------------------
--- align node and physics according to node
--- @function [parent=#Physics3DComponent] syncToNode 
+-- synchronize physics transformation to node
+-- @function [parent=#Physics3DComponent] syncPhysicsToNode 
 -- @param self
 -- @return Physics3DComponent#Physics3DComponent self (return value: cc.Physics3DComponent)
         
