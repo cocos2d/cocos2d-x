@@ -31,12 +31,19 @@ THE SOFTWARE.
 #include "TriggerMng.h"
 #include "cocostudio/CocosStudioExport.h"
 
-
+/** 
+ * @brief @~english Declare the current trigger class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数声明，被用于触发器头文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+*/
 #define DECLARE_CLASS_INFO \
     public: \
         static cocos2d::ObjectFactory::TInfo Type; \
         static cocos2d::Ref* createInstance(void); \
-        
+
+/** 
+ * @brief @~english Implement the current trigger class name to ObjectFactory, for reflection to create objects.
+ * @~chinese 工厂类ObjectFactory注册函数实现，被用于触发器源文件，把当前组件类名注册到ObjectFactory，用于反射创建对象.
+*/
 #define IMPLEMENT_CLASS_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
         { \
@@ -46,7 +53,12 @@ THE SOFTWARE.
         } \
         cocos2d::ObjectFactory::TInfo className::Type(#className, &className::createInstance); \
 
-
+/** 
+ * @brief @~english Trigger manager send events to trigger action and condition.
+ * @~chinese 触发器管理器发送事件，从而引发条件判断，动作执行。
+ * @param event @~english event id.
+ * @~chinese 事件id。
+*/
 void CC_STUDIO_DLL sendEvent(unsigned int event);
 
 
