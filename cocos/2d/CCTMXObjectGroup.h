@@ -39,9 +39,12 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief TMXObjectGroup represents the TMX object group.
+
+/** @brief @~english TMXObjectGroup represents the TMX object group.
+ * @~chinese TMXObjectGroup用来表示TMX对象组。
  * @since v0.99.0
  */
+
 class CC_DLL TMXObjectGroup : public Ref
 {
 public:
@@ -49,98 +52,135 @@ public:
      * @js ctor
      */
     TMXObjectGroup();
+
     /**
      * @js NA
      * @lua NA
      */
     virtual ~TMXObjectGroup();
     
-    /** Get the group name. 
+    /** @~english Get the group name. 
      *
-     * @return The group name.
+     * @~chinese 获取组名称。
+     * 
+     * @return @~english The group name.
+     * @~chinese 组名称。
      */
     inline const std::string& getGroupName() const { return _groupName; }
     
-    /** Set the group name. 
+    /** @~english Set the group name. 
      *
-     * @param groupName A string,it is used to set the group name.
+     * @~chinese 设置组名称。
+     * 
+     * @param groupName @~english A string,it is used to set the group name.
+     * @~chinese 一个字符串,它是用来设置组名称。
      */
     inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
 
-    /** Return the value for the specific property name. 
+    /** @~english Return the value for the specific property name. 
      *
-     * @param propertyName The specific property name.
-     * @return Return the value for the specific property name.
+     * @~chinese 获取指定属性名的值。
+     * 
+     * @param propertyName @~english The specific property name.
+     * @~chinese 特定的属性名。
+     * @return @~english Return the value for the specific property name.
+     * @~chinese 返回指定属性名的值。
      * @js NA
      */
     Value getProperty(const std::string& propertyName) const;
     
     CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
-    /** Return the dictionary for the specific object name.
+    /** @~english Return the dictionary for the specific object name.
      * It will return the 1st object found on the array for the given name.
      *
-     * @return Return the dictionary for the specific object name.
+     * @~chinese 获取指定对象名的字典。
+     * 它将返回的是符号指定名字的数组中第一个对象。
+     * 
+     * @return @~english Return the dictionary for the specific object name.
+     * @~chinese 返回指定对象名的字典。
      */
     ValueMap getObject(const std::string& objectName) const;
     
     CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
-    /** Gets the offset position of child objects. 
+    /** @~english Gets the offset position of child objects. 
      *
-     * @return The offset position of child objects.
+     * @~chinese 获取子对象的偏移位置。
+     * 
+     * @return @~english The offset position of child objects.
+     * @~chinese 子对象的偏移位置。
      */
     inline const Vec2& getPositionOffset() const { return _positionOffset; };
     
-    /** Sets the offset position of child objects. 
+    /** @~english Sets the offset position of child objects. 
      *
-     * @param offset The offset position of child objects.
+     * @~chinese 设置子对象的偏移位置。
+     * 
+     * @param offset @~english The offset position of child objects.
+     * @~chinese 子对象的偏移位置。
      */
     inline void setPositionOffset(const Vec2& offset) { _positionOffset = offset; };
     
-    /** Gets the list of properties stored in a dictionary. 
+    /** @~english Gets the list of properties stored in a dictionary. 
      *
-     * @return The list of properties stored in a dictionary.
+     * @~chinese 获取存储在字典中的属性队列。
+     * 
+     * @return @~english The list of properties stored in a dictionary.
+     * @~chinese 存储在字典中的属性队列。
      */
     inline const ValueMap& getProperties() const { return _properties; };
     inline ValueMap& getProperties() { return _properties; };
     
-    /** Sets the list of properties.
+    /** @~english Sets the list of properties.
      *
-     * @param properties The list of properties.
+     * @~chinese 设置属性队列。
+     * 
+     * @param properties @~english The list of properties.
+     * @~chinese 属性队列。
      */
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
-    /** Gets the array of the objects. 
+    /** @~english Gets the array of the objects. 
      *
-     * @return The array of the objects.
+     * @~chinese 获取对象数组。
+     * 
+     * @return @~english The array of the objects.
+     * @~chinese 对象数组.
      */
     inline const ValueVector& getObjects() const { return _objects; };
     inline ValueVector& getObjects() { return _objects; };
     
-    /** Sets the array of the objects.
+    /** @~english Sets the array of the objects.
      *
-     * @param objects The array of the objects.
+     * @~chinese 设置对象数组。
+     * 
+     * @param objects @~english The array of the objects.
+     * @~chinese 对象数组。
      */
     inline void setObjects(const ValueVector& objects) {
         _objects = objects;
     };
     
 protected:
-    /** name of the group */
+    /** @~english name of the group  @~chinese 组的名称*/
     std::string _groupName;
-    /** offset position of child objects */
+    
+    /** @~english offset position of child objects  @~chinese 子对象的偏移位置*/
     Vec2 _positionOffset;
-    /** list of properties stored in a dictionary */
+    
+    /** @~english list of properties stored in a dictionary  @~chinese 存储在一个字典中的属性列表*/
     ValueMap _properties;
-    /** array of the objects */
+    
+    /** @~english array of the objects  @~chinese 对象数组*/
     ValueVector _objects;
 };
 
 // end of tilemap_parallax_nodes group
 /** @} */
+
 
 NS_CC_END
 
