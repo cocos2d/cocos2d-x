@@ -41,7 +41,7 @@ namespace ui {
 *@brief @~english Visual indicator of progress in some operation.
  Displays a bar to the user representing how far the operation has progressed.
 
- @~chinese 在一些操作中进行虚拟进度条的显示。
+ @~chinese 在一些操作中可视化指示进度条。
  显示给用户一个条表示操作已经完成了多少。
 */
 class CC_GUI_DLL LoadingBar : public Widget
@@ -145,16 +145,16 @@ public:
     
     /**
      * @~english Enable scale9 renderer.
-     * @~chinese 是否开启渲染器缩放。
-     * @param enabled @~english Set to true will use scale9 renderer, false otherwise. @~chinese True表示开启渲染器缩放，反之关闭。
+     * @~chinese 是否开启九宫格渲染。
+     * @param enabled @~english Set to true will use scale9 renderer, false otherwise. @~chinese True表示开启九宫格渲染，反之关闭。
      */
     void setScale9Enabled(bool enabled);
     
     
     /**
      * @~english Query whether LoadingBar is using scale9 renderer or not.
-     * @~chinese 请求LoadingBar是否开启了渲染器缩放。
-     * @return @~english Whether LoadingBar uses scale9 renderer or not. @~chinese True表示开启渲染器缩放，反之关闭。
+     * @~chinese 请求LoadingBar是否开启了九宫格渲染。
+     * @return @~english Whether LoadingBar uses scale9 renderer or not. @~chinese True表示开启九宫格渲染，反之关闭。
      */
     bool isScale9Enabled()const;
     
@@ -162,7 +162,7 @@ public:
      * @~english Set capInsets for LoadingBar.
      * This setting only take effect when enable scale9 renderer.
      * @~chinese 设置CapInsets。
-     * 只有当开启渲染器缩放后才需要设置。
+     * 只有当开启九宫格渲染后才需要设置。
      * @param capInsets @~english CapInset in `Rect`. @~chinese CapInset的矩形区域。
      */
     void setCapInsets(const Rect &capInsets);
