@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -63,12 +63,33 @@ protected:
 	FrameEasingType _type;
 	float _fValue;
 public:
-	ActionFrameEasing();
-	virtual ~ActionFrameEasing();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionFrameEasing();
 
-	float bounceTime(float t);
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionFrameEasing();
 
-	float easeValue(float t);
+    /**
+    * @~english Calculate bounce time
+    * @~chinese 计算跳动时间
+    *
+    * @param @~english current duration @~chinese 当前时长
+    */
+    float bounceTime(float t);
+
+    /**
+    * @~english Calculate ease value
+    * @~chinese 计算缓动数值
+    *
+    * @param @~english current duration @~chinese 当前时长
+    */
+    float easeValue(float t);
 };
 
 }

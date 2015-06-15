@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -98,105 +98,119 @@ class CC_STUDIO_DLL ActionFrame: public cocos2d::Ref
 
 public:
 
-	/**
-	* Default constructor
-	*/
-	ActionFrame();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionFrame();
+
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionFrame();
 
 	/**
-	* Default destructor
-	*/
-	virtual ~ActionFrame();
-
-	/**
-	* Changes the index of action frame
-	*
-	* @param index   the index of action frame
+	* @~english Changes the index of action frame.
+    * @~chinese 改变动作帧的索引值.
+    *
+	* @param index   @~english the index of action frame @~chinese 动作帧索引值
 	*/
 	void setFrameIndex(int index);
 
 	/**
-	* Gets the index of action frame
-	*
-	* @return the index of action frame
+	* @~english Gets the index of action frame.
+    * @~chinese 获取动作帧的索引值.
+    *
+	* @return @~english the index of action frame @~chinese 动作帧的索引值
 	*/
 	int getFrameIndex();
 
 	/**
-	* Changes the time of action frame
-	*
-	* @param fTime  the time of action frame
+	* @~english Changes the time of action frame.
+    * @~chinese 改变动作帧时间.
+    *
+	* @param fTime  @~english the time of action frame @~chinese 动作帧时间
 	*/
 	void setFrameTime(float fTime);
 
 	/**
-	* Gets the time of action frame
-	*
-	* @return fTime  the time of action frame
+	* @~english Gets the time of action frame.
+    * @~chinese 获取动作帧时间.
+    *
+	* @return fTime  @~english the time of action frame @~chinese 动作帧时间
 	*/
 	float getFrameTime();
 
 	/**
-	* Changes the type of action frame
-	*
-	* @param frameType   the type of action frame
+	* @~english Changes the type of action frame.
+    * @~chinese 改变动作帧类型.
+    *
+	* @param frameType   @~english the type of action frame @~chinese 动作帧类型
 	*/
 	void setFrameType(int frameType);
 
 	/**
-	* Gets the type of action frame
-	*
-	* @return the type of action frame
+	* @~english Gets the type of action frame.
+    * @~chinese 获取动作帧类型.
+    *
+	* @return @~english the type of action frame @~chinese 动作帧类型
 	*/
 	int getFrameType();
 
 	/**
-	* Changes the easing type.
-	*
-	* @param easingType the easing type.
+	* @~english Changes the easing type.
+    * @~chinese 改变缓动类型.
+    *
+	* @param easingType @~english the easing type. @~chinese 缓动类型
 	*/
 	void setEasingType(int easingType);
 
 	/**
-	* Gets the easing type.
-	*
-	* @return the easing type.
+	* @~english Gets the easing type.
+    * @~chinese 获取缓动类型.
+    *
+	* @return @~english the easing type. @~chinese 缓动类型
 	*/
 	int getEasingType();
 
 	/**
-	* Gets the ActionInterval of ActionFrame.
+	* @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
+    *
+	* @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
 	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @return ActionInterval
+	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 	/**
-	* Gets the ActionInterval of ActionFrame.
+    * @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
+    *
+    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
+    *
+	* @parame srcFrame   @~english the source ActionFrame @~chinese 源动作帧
 	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @parame duration   the source ActionFrame
-	*
-	* @return ActionInterval
-	*/
+    * @return @~english ActionInterval @~chinese 动作间隔
+    */
 	virtual cocos2d::ActionInterval* getAction(float duration,ActionFrame* srcFrame);
 
 	/**
-	*Set the ActionInterval easing parameter.
-	*
-	*@parame parameter   the parameter for frame ease
+	* @~english Set the ActionInterval easing parameter.
+    * @~chinese 设定动作间隔缓动参数.
+    *
+	* @parame parameter   @~english the parameter for frame ease @~chinese 帧缓动参数
 	*
 	*/
 	virtual void setEasingParameter(std::vector<float>& parameter);
 protected:
 	/**
-	* Gets the Easing Action of ActionFrame.
+	* @~english Gets the Easing Action of ActionFrame.
+    * @~chinese 获取动作帧的缓动参数.
+    *
+	* @parame action   @~english the duration time of ActionFrame @~chinese 动作帧持续时间
 	*
-	* @parame action   the duration time of ActionFrame
-	*
-	* @return ActionInterval
+	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
 	virtual cocos2d::ActionInterval* getEasingAction(cocos2d::ActionInterval* action);
 protected:
@@ -215,36 +229,41 @@ class CC_STUDIO_DLL ActionMoveFrame:public ActionFrame
 {
 public:
 
-	/**
-	* Default constructor
-	*/
-	ActionMoveFrame();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionMoveFrame();
+
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionMoveFrame();
 
 	/**
-	* Default destructor
-	*/
-	virtual ~ActionMoveFrame();
-
-	/**
-	* Changes the move action position.
-	*
-	* @param the move action position.
+    * @~english Changes the move action position.
+    * @~chinese 改变位移动作位置.
+    *
+	* @param pos  @~english the move action position. @~chinese 位移动作位置
 	*/
 	void setPosition(cocos2d::Vec2 pos);
 
-	/**
-	* Gets the move action position.
-	*
-	* @return the move action position.
+    /**
+    * @~english Gets the move action position.
+    * @~chinese 获取位移动作位置.
+    *
+	* @return @~english the move action position. @~chinese 位移动作位置
 	*/
 	cocos2d::Vec2 getPosition();
 
 	/**
-	* Gets the ActionInterval of ActionFrame.
+	* @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔.
+    *
+	* @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
 	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @return ActionInterval
+	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
@@ -259,50 +278,57 @@ class CC_STUDIO_DLL ActionScaleFrame:public ActionFrame
 {
 public:
 
-	/**
-	* Default constructor
-	*/
-	ActionScaleFrame();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionScaleFrame();
+
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionScaleFrame();
 
 	/**
-	* Default destructor
-	*/
-	virtual ~ActionScaleFrame();
-
-	/**
-	* Changes the scale action scaleX.
-	*
-	* @param the scale action scaleX.
+	* @~english Changes the scale action scaleX.
+    * @~chinese 改变缩放动作的X轴缩放因子.
+    *
+	* @param @~english the scale action scaleX. @~chinese X轴缩放因子
 	*/
 	void setScaleX(float scaleX);
 
 	/**
-	* Gets the scale action scaleX.
-	*
-	* @return the scale action scaleX.
+	* @~english Gets the scale action scaleX.
+    * @~chinese 获取缩放动作的X轴缩放因子.
+    *
+	* @return @~english the scale action scaleX. @~chinese 缩放动作的X轴缩放因子
 	*/
 	float getScaleX();
 
 	/**
-	* Changes the scale action scaleY.
-	*
-	* @param rotation the scale action scaleY.
-	*/
+    * @~english Changes the scale action scaleY.
+    * @~chinese 改变缩放动作的Y轴缩放因子.
+    *
+    * @param @~english the scale action scaleY. @~chinese Y轴缩放因子
+    */
 	void setScaleY(float scaleY);
 
 	/**
-	* Gets the scale action scaleY.
-	*
-	* @return the the scale action scaleY.
-	*/
+    * @~english Gets the scale action scaleY.
+    * @~chinese 获取缩放动作的Y轴缩放因子.
+    *
+    * @return @~english the scale action scaleY. @~chinese 缩放动作的Y轴缩放因子
+    */
 	float getScaleY();
 
 	/**
-	* Gets the ActionInterval of ActionFrame.
+	* @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
 	*
-	* @parame duration   the duration time of ActionFrame
+	* @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
 	*
-	* @return ActionInterval
+	* @return @~english ActionInterval @~chinese 动作间隔
 	*/
 	virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
@@ -317,48 +343,54 @@ class CC_STUDIO_DLL ActionRotationFrame:public ActionFrame
 {
 public:
 
-	/**
-	* Default constructor
-	*/
-	ActionRotationFrame();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionRotationFrame();
+
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionRotationFrame();
 
 	/**
-	* Default destructor
-	*/
-	virtual ~ActionRotationFrame();
-
-	/**
-	* Changes rotate action rotation.
-	*
-	* @param rotation rotate action rotation.
+	* @~english Changes rotate action rotation.
+    * @~chinese 改变旋转动作的旋转角度.
+    *
+	* @param rotation   @~english rotate action rotation. @~chinese 旋转动作的旋转角度.
 	*/
 	void setRotation(float rotation);
 
 	/**
-	* Gets the rotate action rotation.
-	*
-	* @return the rotate action rotation.
+	* @~english Gets the rotate action rotation.
+    * @~chinese 获取旋转动作的旋转角度.
+    *
+	* @return @~english the rotate action rotation. @~chinese 旋转动作的旋转角度.
 	*/
 	float getRotation();
 
-	/**
-	* Gets the ActionInterval of ActionFrame.
-	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @return ActionInterval
-	*/
-	virtual cocos2d::ActionInterval* getAction(float duration);
-	/**
-	* Gets the ActionInterval of ActionFrame.
-	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @parame duration   the source ActionFrame
-	*
-	* @return ActionInterval
-	*/
-	virtual cocos2d::ActionInterval* getAction(float duration,ActionFrame* srcFrame);
+    /**
+    * @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
+    *
+    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+    *
+    * @return @~english ActionInterval @~chinese 动作间隔
+    */
+    virtual cocos2d::ActionInterval* getAction(float duration);
+    /**
+    * @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
+    *
+    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的动作持续时间
+    *
+    * @parame srcFrame   @~english the source ActionFrame @~chinese 源动作帧
+    *
+    * @return @~english ActionInterval @~chinese 动作间隔
+    */
+    virtual cocos2d::ActionInterval* getAction(float duration, ActionFrame* srcFrame);
 public:
 	float _rotation;
 };
@@ -370,38 +402,43 @@ class CC_STUDIO_DLL ActionFadeFrame:public ActionFrame
 {
 public:
 
-	/**
-	* Default constructor
-	*/
-	ActionFadeFrame();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionFadeFrame();
+
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionFadeFrame();
 
 	/**
-	* Default destructor
-	*/
-	virtual ~ActionFadeFrame();
-
-	/**
-	* Changes the fade action opacity.
-	*
-	* @param opacity the fade action opacity
+	* @~english Changes the fade action opacity.
+    * @~chinese 改变淡入淡出动作的不透明度.
+    *
+	* @param opacity @~english the fade action opacity @~chinese 淡入淡出动作的不透明度
 	*/
 	void setOpacity(int opacity);
 
 	/**
-	* Gets the fade action opacity.
-	*
-	* @return the fade action opacity.
+	* @~english Gets the fade action opacity.
+    * @~chinese 获取淡入淡出动作的不透明度.
+    *
+	* @return @~english the fade action opacity. @~chinese 淡入淡出动作的不透明度.
 	*/
 	int getOpacity();
 
-	/**
-	* Gets the ActionInterval of ActionFrame.
-	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @return ActionInterval
-	*/
-	virtual cocos2d::ActionInterval* getAction(float duration);
+    /**
+    * @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
+    *
+    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+    *
+    * @return @~english ActionInterval @~chinese 动作间隔
+    */
+    virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
 	float _opacity;
 };
@@ -414,38 +451,43 @@ class CC_STUDIO_DLL ActionTintFrame:public ActionFrame
 
 public:
 
-	/**
-	* Default constructor
-	*/
-	ActionTintFrame();
+    /**
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
+    ActionTintFrame();
+
+    /**
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
+    virtual ~ActionTintFrame();
 
 	/**
-	* Default destructor
-	*/
-	virtual ~ActionTintFrame();
-
-	/**
-	* Changes the tint action color.
-	*
-	* @param ccolor the tint action color
+	* @~english Changes the tint action color.
+    * @~chinese 改变颜色渐变动画的颜色.
+    *
+	* @param ccolor  @~english the tint action color @~chinese 颜色渐变动画的颜色
 	*/
 	void setColor(cocos2d::Color3B ccolor);
 
 	/**
-	* Gets the tint action color.
-	*
-	* @return the tint action color.
+	* @~english Gets the tint action color.
+    * @~chinese 获取颜色动画的颜色.
+    *
+	* @return @~english the tint action color. @~chinese 颜色动画的颜色.
 	*/
 	cocos2d::Color3B getColor();
 
-	/**
-	* Gets the ActionInterval of ActionFrame.
-	*
-	* @parame duration   the duration time of ActionFrame
-	*
-	* @return ActionInterval
-	*/
-	virtual cocos2d::ActionInterval* getAction(float duration);
+    /**
+    * @~english Gets the ActionInterval of ActionFrame.
+    * @~chinese 获取动作帧的动作间隔
+    *
+    * @parame duration   @~english the duration time of ActionFrame @~chinese 动作帧的持续时间
+    *
+    * @return @~english ActionInterval @~chinese 动作间隔
+    */
+    virtual cocos2d::ActionInterval* getAction(float duration);
 protected:
 	cocos2d::Color3B _color;
 };
