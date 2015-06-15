@@ -5205,6 +5205,26 @@ bool js_cocos2dx_Scene_render(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Scene_render : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_Scene_stepPhysicsAndNavigation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scene_stepPhysicsAndNavigation : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Scene_stepPhysicsAndNavigation : Error processing arguments");
+        cobj->stepPhysicsAndNavigation(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Scene_stepPhysicsAndNavigation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Scene_onProjectionChanged(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5399,6 +5419,7 @@ void js_register_cocos2dx_Scene(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("setCameraOrderDirty", js_cocos2dx_Scene_setCameraOrderDirty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("render", js_cocos2dx_Scene_render, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stepPhysicsAndNavigation", js_cocos2dx_Scene_stepPhysicsAndNavigation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onProjectionChanged", js_cocos2dx_Scene_onProjectionChanged, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithSize", js_cocos2dx_Scene_initWithSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDefaultCamera", js_cocos2dx_Scene_getDefaultCamera, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

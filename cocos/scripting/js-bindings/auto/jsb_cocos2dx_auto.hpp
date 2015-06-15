@@ -252,6 +252,7 @@ void js_register_cocos2dx_Scene(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Scene_setCameraOrderDirty(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_render(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Scene_stepPhysicsAndNavigation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_onProjectionChanged(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_initWithSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp);
