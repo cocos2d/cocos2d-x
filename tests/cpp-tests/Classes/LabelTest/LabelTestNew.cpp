@@ -78,6 +78,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10773Test);
     ADD_TEST_CASE(LabelIssue11576Test);
     ADD_TEST_CASE(LabelIssue11699Test);
+    ADD_TEST_CASE(LabelIssue12259Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -412,7 +413,7 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition(Vec2(s.width/2, s.height / 2));
 
-    auto label3 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    auto label3 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
     addChild(label3, 0, kTagBitmapAtlas3);
     label3->setPosition(Vec2(s.width/2, 100));
 
@@ -1302,13 +1303,13 @@ std::string LabelCharMapTest::subtitle() const
 //------------------------------------------------------------------
 LabelCharMapColorTest::LabelCharMapColorTest()
 {
-    auto label1 = Label::createWithCharMap( "fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    auto label1 = Label::createWithCharMap( "fonts/tuffy_bold_italic-charmap.plist");
     addChild(label1, 0, kTagSprite1);
     label1->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     label1->setPosition( Vec2(10,100) );
     label1->setOpacity( 200 );
 
-    auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.png", 48, 64, ' ');
+    auto label2 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
     addChild(label2, 0, kTagSprite2);
     label2->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     label2->setPosition( Vec2(10,200) );
@@ -1933,4 +1934,41 @@ std::string LabelIssue11699Test::title() const
 std::string LabelIssue11699Test::subtitle() const
 {
     return "Outline should match with the characters exactly.";
+}
+
+LabelIssue12259Test::LabelIssue12259Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello", "fonts/arial.ttf", 100);
+    label->setDimensions(0, 70);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    auto drawNode = DrawNode::create();
+    auto labelSize = label->getContentSize();
+    auto origin = Director::getInstance()->getWinSize();
+
+    origin.width = origin.width / 2 - (labelSize.width / 2);
+    origin.height = origin.height / 2 - (labelSize.height / 2);
+
+    Vec2 vertices[4] =
+    {
+        Vec2(origin.width, origin.height),
+        Vec2(labelSize.width + origin.width, origin.height),
+        Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
+        Vec2(origin.width, labelSize.height + origin.height)
+    };
+    drawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
+    addChild(drawNode);
+}
+
+std::string LabelIssue12259Test::title() const
+{
+    return "Test for Issue #12259";
+}
+
+std::string LabelIssue12259Test::subtitle() const
+{
+    return "the texture of character should be cropped.";
 }

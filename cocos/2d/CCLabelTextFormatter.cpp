@@ -316,7 +316,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         auto labelHeightPixel = theLabel->_labelHeight * contentScaleFactor;
         if (totalHeight > labelHeightPixel)
         {
-            int numLines = labelHeightPixel / theLabel->_commonLineHeight;
+            int numLines = MIN(ceil(labelHeightPixel / theLabel->_commonLineHeight), theLabel->_currNumLines);
             totalHeight = numLines * theLabel->_commonLineHeight;
         }
         switch (theLabel->_vAlignment)
@@ -379,7 +379,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             nextFontPositionY -= theLabel->_commonLineHeight;
             
             theLabel->recordPlaceholderInfo(i);
-            if(nextFontPositionY < theLabel->_commonLineHeight)
+            if(nextFontPositionY < 0.f)
                 break;
 
             lineStart = true;

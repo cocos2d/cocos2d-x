@@ -32,7 +32,7 @@
 #include "base/ccTypes.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

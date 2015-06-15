@@ -12,6 +12,7 @@ android {
     }
 
     sourceSets.main {
+        aidl.srcDir "../java/src"
         java.srcDir "../java/src"
         manifest.srcFile "AndroidManifest.xml"
     }

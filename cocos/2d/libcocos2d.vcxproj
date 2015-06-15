@@ -565,6 +565,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\math\Vec2.cpp" />
     <ClCompile Include="..\math\Vec3.cpp" />
     <ClCompile Include="..\math\Vec4.cpp" />
+    <ClCompile Include="..\navmesh\CCNavMesh.cpp" />
+    <ClCompile Include="..\navmesh\CCNavMeshAgent.cpp" />
+    <ClCompile Include="..\navmesh\CCNavMeshDebugDraw.cpp" />
+    <ClCompile Include="..\navmesh\CCNavMeshObstacle.cpp" />
+    <ClCompile Include="..\navmesh\CCNavMeshUtils.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
@@ -1153,6 +1158,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\math\Vec2.h" />
     <ClInclude Include="..\math\Vec3.h" />
     <ClInclude Include="..\math\Vec4.h" />
+    <ClInclude Include="..\navmesh\CCNavMesh.h" />
+    <ClInclude Include="..\navmesh\CCNavMeshAgent.h" />
+    <ClInclude Include="..\navmesh\CCNavMeshDebugDraw.h" />
+    <ClInclude Include="..\navmesh\CCNavMeshObstacle.h" />
+    <ClInclude Include="..\navmesh\CCNavMeshUtils.h" />
     <ClInclude Include="..\network\HttpClient.h" />
     <ClInclude Include="..\network\HttpRequest.h" />
     <ClInclude Include="..\network\HttpResponse.h" />
@@ -1337,6 +1347,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     </ProjectReference>
     <ProjectReference Include="..\..\external\bullet\proj.win32\libbullet.vcxproj">
       <Project>{012dff48-a13f-4f52-b07b-f8b9d21ce95b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\external\recast\proj.win32\librecast.vcxproj">
+      <Project>{41e34993-647e-4282-8384-4ab1ae31a452}</Project>
     </ProjectReference>
     <ProjectReference Include="..\editor-support\spine\proj.win32\libSpine.vcxproj">
       <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>

@@ -26,7 +26,7 @@
  ****************************************************************************/
 
 #include "jsb_cocos2dx_physics3d_manual.h"
-
+#include "base/ccConfig.h"
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 
 #include "jsb_cocos2dx_physics3d_auto.hpp"

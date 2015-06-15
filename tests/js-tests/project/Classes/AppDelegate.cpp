@@ -115,8 +115,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
 
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     sc->addRegisterCallback(register_all_cocos2dx_physics3d);
     sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
+#endif
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);

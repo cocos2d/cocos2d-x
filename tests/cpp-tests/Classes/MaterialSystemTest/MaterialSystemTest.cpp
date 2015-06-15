@@ -26,6 +26,7 @@
 #include "MaterialSystemTest.h"
 
 #include <ctime>
+#include <spine/spine-cocos2dx.h>
 
 #include "../testResource.h"
 #include "cocos2d.h"
@@ -47,6 +48,7 @@ MaterialSystemTest::MaterialSystemTest()
     ADD_TEST_CASE(Material_MultipleSprite3D);
     ADD_TEST_CASE(Material_Sprite3DTest);
     ADD_TEST_CASE(Material_parsePerformance);
+    ADD_TEST_CASE(Material_invalidate);
 }
 
 std::string MaterialSystemBaseTest::title() const
@@ -379,6 +381,74 @@ void Material_parsePerformance::onEnter()
 std::string Material_parsePerformance::subtitle() const
 {
     return "Testing parsing performance";
+}
+//
+//
+//
+void Material_invalidate::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+    // ORC
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setNormalizedPosition(Vec2(0.3,0.3));
+
+    auto rotate = RotateBy::create(5, Vec3(0,360,0));
+    auto repeat = RepeatForever::create(rotate);
+    sprite->runAction(repeat);
+
+    // SPINE
+    auto skeletonNode = spine::SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
+    skeletonNode->setAnimation(0, "walk", true);
+    skeletonNode->setSkin("goblin");
+
+    skeletonNode->setScale(0.25);
+    skeletonNode->setNormalizedPosition(Vec2(0.6,0.3));
+    this->addChild(skeletonNode);
+}
+
+std::string Material_invalidate::subtitle() const
+{
+    return "Testing RenderState::StateBlock::invalidate()";
+}
+
+void Material_invalidate::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
+{
+    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.func = []() {
+        glDisable(GL_DEPTH_TEST);
+        CHECK_GL_ERROR_DEBUG();
+
+        glDepthMask(false);
+        CHECK_GL_ERROR_DEBUG();
+
+        glEnable(GL_CULL_FACE);
+        CHECK_GL_ERROR_DEBUG();
+
+        glCullFace((GLenum)GL_FRONT);
+        CHECK_GL_ERROR_DEBUG();
+
+        glFrontFace((GLenum)GL_CW);
+        CHECK_GL_ERROR_DEBUG();
+
+        glDisable(GL_BLEND);
+        CHECK_GL_ERROR_DEBUG();
+
+        // a non-optimal way is to pass all bits, but that would be very inefficient
+//        RenderState::StateBlock::invalidate(RenderState::StateBlock::RS_ALL_ONES);
+
+        RenderState::StateBlock::invalidate(RenderState::StateBlock::RS_DEPTH_TEST |
+                                            RenderState::StateBlock::RS_DEPTH_WRITE |
+                                            RenderState::StateBlock::RS_CULL_FACE |
+                                            RenderState::StateBlock::RS_CULL_FACE_SIDE |
+                                            RenderState::StateBlock::RS_FRONT_FACE |
+                                            RenderState::StateBlock::RS_BLEND);
+    };
+
+    renderer->addCommand(&_customCommand);
 }
 
 // MARK: Helper functions

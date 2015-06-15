@@ -96,6 +96,7 @@ cc.game.onStart = function(){
         searchPaths.push('script');
         searchPaths.push('src');
         var paths = [
+            'res/resjs',
             'res',
             'res/scenetest',
             'res/scenetest/ArmatureComponentTest',
