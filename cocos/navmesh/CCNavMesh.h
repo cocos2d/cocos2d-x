@@ -40,7 +40,7 @@
 #include "navmesh/CCNavMeshAgent.h"
 #include "navmesh/CCNavMeshDebugDraw.h"
 #include "navmesh/CCNavMeshObstacle.h"
-#include "navmesh/CCNavMeshTool.h"
+#include "navmesh/CCNavMeshUtils.h"
 
 
 NS_CC_BEGIN

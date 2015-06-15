@@ -1887,7 +1887,7 @@
     <ClCompile Include="..\navmesh\CCNavMeshObstacle.cpp">
       <Filter>navmesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\navmesh\CCNavMeshTool.cpp">
+    <ClCompile Include="..\navmesh\CCNavMeshUtils.cpp">
       <Filter>navmesh</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCNinePatchImageParser.cpp">
@@ -3699,7 +3699,7 @@
     <ClInclude Include="..\navmesh\CCNavMeshObstacle.h">
       <Filter>navmesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\navmesh\CCNavMeshTool.h">
+    <ClInclude Include="..\navmesh\CCNavMeshUtils.h">
       <Filter>navmesh</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCNinePatchImageParser.h">

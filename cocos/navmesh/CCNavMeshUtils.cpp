@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "navmesh/CCNavMeshTool.h"
+#include "navmesh/CCNavMeshUtils.h"
 #if CC_USE_NAVMESH
 
 #include "recast/Detour/DetourCommon.h"
