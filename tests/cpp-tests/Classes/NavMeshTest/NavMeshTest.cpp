@@ -322,11 +322,16 @@ bool NavMeshBasicTestDemo::init()
     menu->setPosition(Vec2::ZERO);
     addChild(menu);
 
+    return true;
+}
+
+void NavMeshBasicTestDemo::onEnter()
+{
+    NavMeshBaseTestDemo::onEnter();
+    
     Physics3DWorld::HitResult result;
     getPhysics3DWorld()->rayCast(Vec3(0.0f, 50.0f, 0.0f), Vec3(0.0f, -50.0f, 0.0f), &result);
     createAgent(result.hitPosition);
-
-    return true;
 }
 
 NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo(void)
@@ -387,12 +392,17 @@ bool NavMeshAdvanceTestDemo::init()
     auto menu = Menu::create(menuItem0, menuItem1, menuItem2, nullptr);
     menu->setPosition(Vec2::ZERO);
     addChild(menu);
+    
+    return true;
+}
 
+void NavMeshAdvanceTestDemo::onEnter()
+{
+    NavMeshBaseTestDemo::onEnter();
+    
     Physics3DWorld::HitResult result;
     getPhysics3DWorld()->rayCast(Vec3(0.0f, 50.0f, 0.0f), Vec3(0.0f, -50.0f, 0.0f), &result);
     createAgent(result.hitPosition);
-
-    return true;
 }
 
 std::string NavMeshAdvanceTestDemo::title() const
