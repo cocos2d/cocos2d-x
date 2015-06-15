@@ -380,6 +380,21 @@ public:
          */
         static void invalidate(long stateBits);
 
+        /**
+         * Restores the global Render State to the default state
+         *
+         * The difference between `invalidate()` and `restore()`, is that `restore()` will
+         * restore the global Render State based on its current state. Only the
+         * states that were changed will be restored.
+         *
+         * Rule of thumb:
+         
+         - call `restore()` if you want to restore to the default state after using `StateBlock`.
+         - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
+
+         */
+        static void restore(long stateOverrideBits);
+
         static StateBlock* _defaultState;
 
     protected:
@@ -387,7 +402,6 @@ public:
         ~StateBlock();
 
         void bindNoRestore();
-        static void restore(long stateOverrideBits);
         static void enableDepthWrite();
 
         void cloneInto(StateBlock* renderState) const;
