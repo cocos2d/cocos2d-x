@@ -2609,6 +2609,26 @@
 		B665E43B1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1F01AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.cpp */; };
 		B665E43C1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1F11AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.h */; };
 		B665E43D1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1F11AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.h */; };
+		B677B0C91B18492D006762CB /* CCNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0BF1B18492D006762CB /* CCNavMesh.cpp */; };
+		B677B0CA1B18492D006762CB /* CCNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0BF1B18492D006762CB /* CCNavMesh.cpp */; };
+		B677B0CB1B18492D006762CB /* CCNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C01B18492D006762CB /* CCNavMesh.h */; };
+		B677B0CC1B18492D006762CB /* CCNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C01B18492D006762CB /* CCNavMesh.h */; };
+		B677B0CD1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */; };
+		B677B0CE1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */; };
+		B677B0CF1B18492D006762CB /* CCNavMeshAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C21B18492D006762CB /* CCNavMeshAgent.h */; };
+		B677B0D01B18492D006762CB /* CCNavMeshAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C21B18492D006762CB /* CCNavMeshAgent.h */; };
+		B677B0D11B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */; };
+		B677B0D21B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */; };
+		B677B0D31B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */; };
+		B677B0D41B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */; };
+		B677B0D51B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */; };
+		B677B0D61B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */; };
+		B677B0D71B18492D006762CB /* CCNavMeshObstacle.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */; };
+		B677B0D81B18492D006762CB /* CCNavMeshObstacle.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */; };
+		B677B0D91B18492D006762CB /* CCNavMeshUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C71B18492D006762CB /* CCNavMeshUtils.cpp */; };
+		B677B0DA1B18492D006762CB /* CCNavMeshUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C71B18492D006762CB /* CCNavMeshUtils.cpp */; };
+		B677B0DB1B18492D006762CB /* CCNavMeshUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C81B18492D006762CB /* CCNavMeshUtils.h */; };
+		B677B0DC1B18492D006762CB /* CCNavMeshUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C81B18492D006762CB /* CCNavMeshUtils.h */; };
 		B68778F81A8CA82E00643ABF /* CCParticle3DAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B68778F01A8CA82E00643ABF /* CCParticle3DAffector.cpp */; };
 		B68778F91A8CA82E00643ABF /* CCParticle3DAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B68778F01A8CA82E00643ABF /* CCParticle3DAffector.cpp */; };
 		B68778FA1A8CA82E00643ABF /* CCParticle3DAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B68778F11A8CA82E00643ABF /* CCParticle3DAffector.h */; };
@@ -3459,6 +3479,88 @@
 		B6D38B8F1AC3AFAC00043997 /* CCTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6D38B881AC3AFAC00043997 /* CCTextureCube.cpp */; };
 		B6D38B901AC3AFAC00043997 /* CCTextureCube.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D38B891AC3AFAC00043997 /* CCTextureCube.h */; };
 		B6D38B911AC3AFAC00043997 /* CCTextureCube.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D38B891AC3AFAC00043997 /* CCTextureCube.h */; };
+		B6DD2FA71B04825B00E47F5F /* DebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7A1B04825B00E47F5F /* DebugDraw.cpp */; };
+		B6DD2FA81B04825B00E47F5F /* DebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7A1B04825B00E47F5F /* DebugDraw.cpp */; };
+		B6DD2FA91B04825B00E47F5F /* DebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F7B1B04825B00E47F5F /* DebugDraw.h */; };
+		B6DD2FAA1B04825B00E47F5F /* DebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F7B1B04825B00E47F5F /* DebugDraw.h */; };
+		B6DD2FAB1B04825B00E47F5F /* DetourDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7C1B04825B00E47F5F /* DetourDebugDraw.cpp */; };
+		B6DD2FAC1B04825B00E47F5F /* DetourDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7C1B04825B00E47F5F /* DetourDebugDraw.cpp */; };
+		B6DD2FAD1B04825B00E47F5F /* DetourDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F7D1B04825B00E47F5F /* DetourDebugDraw.h */; };
+		B6DD2FAE1B04825B00E47F5F /* DetourDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F7D1B04825B00E47F5F /* DetourDebugDraw.h */; };
+		B6DD2FAF1B04825B00E47F5F /* RecastDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7E1B04825B00E47F5F /* RecastDebugDraw.cpp */; };
+		B6DD2FB01B04825B00E47F5F /* RecastDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7E1B04825B00E47F5F /* RecastDebugDraw.cpp */; };
+		B6DD2FB11B04825B00E47F5F /* RecastDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F7F1B04825B00E47F5F /* RecastDebugDraw.h */; };
+		B6DD2FB21B04825B00E47F5F /* RecastDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F7F1B04825B00E47F5F /* RecastDebugDraw.h */; };
+		B6DD2FB31B04825B00E47F5F /* RecastDump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F801B04825B00E47F5F /* RecastDump.cpp */; };
+		B6DD2FB41B04825B00E47F5F /* RecastDump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F801B04825B00E47F5F /* RecastDump.cpp */; };
+		B6DD2FB51B04825B00E47F5F /* RecastDump.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F811B04825B00E47F5F /* RecastDump.h */; };
+		B6DD2FB61B04825B00E47F5F /* RecastDump.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F811B04825B00E47F5F /* RecastDump.h */; };
+		B6DD2FB71B04825B00E47F5F /* DetourAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F831B04825B00E47F5F /* DetourAlloc.cpp */; };
+		B6DD2FB81B04825B00E47F5F /* DetourAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F831B04825B00E47F5F /* DetourAlloc.cpp */; };
+		B6DD2FB91B04825B00E47F5F /* DetourAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F841B04825B00E47F5F /* DetourAlloc.h */; };
+		B6DD2FBA1B04825B00E47F5F /* DetourAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F841B04825B00E47F5F /* DetourAlloc.h */; };
+		B6DD2FBB1B04825B00E47F5F /* DetourAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F851B04825B00E47F5F /* DetourAssert.h */; };
+		B6DD2FBC1B04825B00E47F5F /* DetourAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F851B04825B00E47F5F /* DetourAssert.h */; };
+		B6DD2FBD1B04825B00E47F5F /* DetourCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F861B04825B00E47F5F /* DetourCommon.cpp */; };
+		B6DD2FBE1B04825B00E47F5F /* DetourCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F861B04825B00E47F5F /* DetourCommon.cpp */; };
+		B6DD2FBF1B04825B00E47F5F /* DetourCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F871B04825B00E47F5F /* DetourCommon.h */; };
+		B6DD2FC01B04825B00E47F5F /* DetourCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F871B04825B00E47F5F /* DetourCommon.h */; };
+		B6DD2FC11B04825B00E47F5F /* DetourMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F881B04825B00E47F5F /* DetourMath.h */; };
+		B6DD2FC21B04825B00E47F5F /* DetourMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F881B04825B00E47F5F /* DetourMath.h */; };
+		B6DD2FC31B04825B00E47F5F /* DetourNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F891B04825B00E47F5F /* DetourNavMesh.cpp */; };
+		B6DD2FC41B04825B00E47F5F /* DetourNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F891B04825B00E47F5F /* DetourNavMesh.cpp */; };
+		B6DD2FC51B04825B00E47F5F /* DetourNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8A1B04825B00E47F5F /* DetourNavMesh.h */; };
+		B6DD2FC61B04825B00E47F5F /* DetourNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8A1B04825B00E47F5F /* DetourNavMesh.h */; };
+		B6DD2FC71B04825B00E47F5F /* DetourNavMeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8B1B04825B00E47F5F /* DetourNavMeshBuilder.cpp */; };
+		B6DD2FC81B04825B00E47F5F /* DetourNavMeshBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8B1B04825B00E47F5F /* DetourNavMeshBuilder.cpp */; };
+		B6DD2FC91B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8C1B04825B00E47F5F /* DetourNavMeshBuilder.h */; };
+		B6DD2FCA1B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8C1B04825B00E47F5F /* DetourNavMeshBuilder.h */; };
+		B6DD2FCB1B04825B00E47F5F /* DetourNavMeshQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8D1B04825B00E47F5F /* DetourNavMeshQuery.cpp */; };
+		B6DD2FCC1B04825B00E47F5F /* DetourNavMeshQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8D1B04825B00E47F5F /* DetourNavMeshQuery.cpp */; };
+		B6DD2FCD1B04825B00E47F5F /* DetourNavMeshQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8E1B04825B00E47F5F /* DetourNavMeshQuery.h */; };
+		B6DD2FCE1B04825B00E47F5F /* DetourNavMeshQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F8E1B04825B00E47F5F /* DetourNavMeshQuery.h */; };
+		B6DD2FCF1B04825B00E47F5F /* DetourNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8F1B04825B00E47F5F /* DetourNode.cpp */; };
+		B6DD2FD01B04825B00E47F5F /* DetourNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8F1B04825B00E47F5F /* DetourNode.cpp */; };
+		B6DD2FD11B04825B00E47F5F /* DetourNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F901B04825B00E47F5F /* DetourNode.h */; };
+		B6DD2FD21B04825B00E47F5F /* DetourNode.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F901B04825B00E47F5F /* DetourNode.h */; };
+		B6DD2FD31B04825B00E47F5F /* DetourStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F911B04825B00E47F5F /* DetourStatus.h */; };
+		B6DD2FD41B04825B00E47F5F /* DetourStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F911B04825B00E47F5F /* DetourStatus.h */; };
+		B6DD2FD51B04825B00E47F5F /* DetourCrowd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F931B04825B00E47F5F /* DetourCrowd.cpp */; };
+		B6DD2FD61B04825B00E47F5F /* DetourCrowd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F931B04825B00E47F5F /* DetourCrowd.cpp */; };
+		B6DD2FD71B04825B00E47F5F /* DetourCrowd.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F941B04825B00E47F5F /* DetourCrowd.h */; };
+		B6DD2FD81B04825B00E47F5F /* DetourCrowd.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F941B04825B00E47F5F /* DetourCrowd.h */; };
+		B6DD2FD91B04825B00E47F5F /* DetourLocalBoundary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F951B04825B00E47F5F /* DetourLocalBoundary.cpp */; };
+		B6DD2FDA1B04825B00E47F5F /* DetourLocalBoundary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F951B04825B00E47F5F /* DetourLocalBoundary.cpp */; };
+		B6DD2FDB1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F961B04825B00E47F5F /* DetourLocalBoundary.h */; };
+		B6DD2FDC1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F961B04825B00E47F5F /* DetourLocalBoundary.h */; };
+		B6DD2FDD1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F971B04825B00E47F5F /* DetourObstacleAvoidance.cpp */; };
+		B6DD2FDE1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F971B04825B00E47F5F /* DetourObstacleAvoidance.cpp */; };
+		B6DD2FDF1B04825B00E47F5F /* DetourObstacleAvoidance.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F981B04825B00E47F5F /* DetourObstacleAvoidance.h */; };
+		B6DD2FE01B04825B00E47F5F /* DetourObstacleAvoidance.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F981B04825B00E47F5F /* DetourObstacleAvoidance.h */; };
+		B6DD2FE11B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F991B04825B00E47F5F /* DetourPathCorridor.cpp */; };
+		B6DD2FE21B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F991B04825B00E47F5F /* DetourPathCorridor.cpp */; };
+		B6DD2FE31B04825B00E47F5F /* DetourPathCorridor.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9A1B04825B00E47F5F /* DetourPathCorridor.h */; };
+		B6DD2FE41B04825B00E47F5F /* DetourPathCorridor.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9A1B04825B00E47F5F /* DetourPathCorridor.h */; };
+		B6DD2FE51B04825B00E47F5F /* DetourPathQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F9B1B04825B00E47F5F /* DetourPathQueue.cpp */; };
+		B6DD2FE61B04825B00E47F5F /* DetourPathQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F9B1B04825B00E47F5F /* DetourPathQueue.cpp */; };
+		B6DD2FE71B04825B00E47F5F /* DetourPathQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9C1B04825B00E47F5F /* DetourPathQueue.h */; };
+		B6DD2FE81B04825B00E47F5F /* DetourPathQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9C1B04825B00E47F5F /* DetourPathQueue.h */; };
+		B6DD2FE91B04825B00E47F5F /* DetourProximityGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F9D1B04825B00E47F5F /* DetourProximityGrid.cpp */; };
+		B6DD2FEA1B04825B00E47F5F /* DetourProximityGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F9D1B04825B00E47F5F /* DetourProximityGrid.cpp */; };
+		B6DD2FEB1B04825B00E47F5F /* DetourProximityGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9E1B04825B00E47F5F /* DetourProximityGrid.h */; };
+		B6DD2FEC1B04825B00E47F5F /* DetourProximityGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9E1B04825B00E47F5F /* DetourProximityGrid.h */; };
+		B6DD2FED1B04825B00E47F5F /* DetourTileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA01B04825B00E47F5F /* DetourTileCache.cpp */; };
+		B6DD2FEE1B04825B00E47F5F /* DetourTileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA01B04825B00E47F5F /* DetourTileCache.cpp */; };
+		B6DD2FEF1B04825B00E47F5F /* DetourTileCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA11B04825B00E47F5F /* DetourTileCache.h */; };
+		B6DD2FF01B04825B00E47F5F /* DetourTileCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA11B04825B00E47F5F /* DetourTileCache.h */; };
+		B6DD2FF11B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA21B04825B00E47F5F /* DetourTileCacheBuilder.cpp */; };
+		B6DD2FF21B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA21B04825B00E47F5F /* DetourTileCacheBuilder.cpp */; };
+		B6DD2FF31B04825B00E47F5F /* DetourTileCacheBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */; };
+		B6DD2FF41B04825B00E47F5F /* DetourTileCacheBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */; };
+		B6DD2FF51B04825B00E47F5F /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
+		B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
+		B6DD2FF71B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
+		B6DD2FF81B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -4892,6 +4994,16 @@
 		B665E1EF1AA80A6500DDB1C5 /* CCPUVortexAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUVortexAffector.h; path = Particle3D/PU/CCPUVortexAffector.h; sourceTree = "<group>"; };
 		B665E1F01AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUVortexAffectorTranslator.cpp; path = Particle3D/PU/CCPUVortexAffectorTranslator.cpp; sourceTree = "<group>"; };
 		B665E1F11AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUVortexAffectorTranslator.h; path = Particle3D/PU/CCPUVortexAffectorTranslator.h; sourceTree = "<group>"; };
+		B677B0BF1B18492D006762CB /* CCNavMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMesh.cpp; path = ../cocos/navmesh/CCNavMesh.cpp; sourceTree = "<group>"; };
+		B677B0C01B18492D006762CB /* CCNavMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMesh.h; path = ../cocos/navmesh/CCNavMesh.h; sourceTree = "<group>"; };
+		B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshAgent.cpp; path = ../cocos/navmesh/CCNavMeshAgent.cpp; sourceTree = "<group>"; };
+		B677B0C21B18492D006762CB /* CCNavMeshAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshAgent.h; path = ../cocos/navmesh/CCNavMeshAgent.h; sourceTree = "<group>"; };
+		B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshDebugDraw.cpp; path = ../cocos/navmesh/CCNavMeshDebugDraw.cpp; sourceTree = "<group>"; };
+		B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshDebugDraw.h; path = ../cocos/navmesh/CCNavMeshDebugDraw.h; sourceTree = "<group>"; };
+		B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshObstacle.cpp; path = ../cocos/navmesh/CCNavMeshObstacle.cpp; sourceTree = "<group>"; };
+		B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshObstacle.h; path = ../cocos/navmesh/CCNavMeshObstacle.h; sourceTree = "<group>"; };
+		B677B0C71B18492D006762CB /* CCNavMeshUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshUtils.cpp; path = ../cocos/navmesh/CCNavMeshUtils.cpp; sourceTree = "<group>"; };
+		B677B0C81B18492D006762CB /* CCNavMeshUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshUtils.h; path = ../cocos/navmesh/CCNavMeshUtils.h; sourceTree = "<group>"; };
 		B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormal.frag; sourceTree = "<group>"; };
 		B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormalTex.frag; sourceTree = "<group>"; };
 		B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
@@ -5324,6 +5436,47 @@
 		B6D38B951AC3B45600043997 /* ccShader_3D_Particle.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Particle.vert; sourceTree = "<group>"; };
 		B6D38B961AC3B45600043997 /* ccShader_3D_Skybox.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Skybox.frag; sourceTree = "<group>"; };
 		B6D38B971AC3B45600043997 /* ccShader_3D_Skybox.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Skybox.vert; sourceTree = "<group>"; };
+		B6DD2F7A1B04825B00E47F5F /* DebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugDraw.cpp; sourceTree = "<group>"; };
+		B6DD2F7B1B04825B00E47F5F /* DebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugDraw.h; sourceTree = "<group>"; };
+		B6DD2F7C1B04825B00E47F5F /* DetourDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourDebugDraw.cpp; sourceTree = "<group>"; };
+		B6DD2F7D1B04825B00E47F5F /* DetourDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourDebugDraw.h; sourceTree = "<group>"; };
+		B6DD2F7E1B04825B00E47F5F /* RecastDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastDebugDraw.cpp; sourceTree = "<group>"; };
+		B6DD2F7F1B04825B00E47F5F /* RecastDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecastDebugDraw.h; sourceTree = "<group>"; };
+		B6DD2F801B04825B00E47F5F /* RecastDump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastDump.cpp; sourceTree = "<group>"; };
+		B6DD2F811B04825B00E47F5F /* RecastDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecastDump.h; sourceTree = "<group>"; };
+		B6DD2F831B04825B00E47F5F /* DetourAlloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourAlloc.cpp; sourceTree = "<group>"; };
+		B6DD2F841B04825B00E47F5F /* DetourAlloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourAlloc.h; sourceTree = "<group>"; };
+		B6DD2F851B04825B00E47F5F /* DetourAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourAssert.h; sourceTree = "<group>"; };
+		B6DD2F861B04825B00E47F5F /* DetourCommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourCommon.cpp; sourceTree = "<group>"; };
+		B6DD2F871B04825B00E47F5F /* DetourCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourCommon.h; sourceTree = "<group>"; };
+		B6DD2F881B04825B00E47F5F /* DetourMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourMath.h; sourceTree = "<group>"; };
+		B6DD2F891B04825B00E47F5F /* DetourNavMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourNavMesh.cpp; sourceTree = "<group>"; };
+		B6DD2F8A1B04825B00E47F5F /* DetourNavMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourNavMesh.h; sourceTree = "<group>"; };
+		B6DD2F8B1B04825B00E47F5F /* DetourNavMeshBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourNavMeshBuilder.cpp; sourceTree = "<group>"; };
+		B6DD2F8C1B04825B00E47F5F /* DetourNavMeshBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourNavMeshBuilder.h; sourceTree = "<group>"; };
+		B6DD2F8D1B04825B00E47F5F /* DetourNavMeshQuery.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourNavMeshQuery.cpp; sourceTree = "<group>"; };
+		B6DD2F8E1B04825B00E47F5F /* DetourNavMeshQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourNavMeshQuery.h; sourceTree = "<group>"; };
+		B6DD2F8F1B04825B00E47F5F /* DetourNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourNode.cpp; sourceTree = "<group>"; };
+		B6DD2F901B04825B00E47F5F /* DetourNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourNode.h; sourceTree = "<group>"; };
+		B6DD2F911B04825B00E47F5F /* DetourStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourStatus.h; sourceTree = "<group>"; };
+		B6DD2F931B04825B00E47F5F /* DetourCrowd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourCrowd.cpp; sourceTree = "<group>"; };
+		B6DD2F941B04825B00E47F5F /* DetourCrowd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourCrowd.h; sourceTree = "<group>"; };
+		B6DD2F951B04825B00E47F5F /* DetourLocalBoundary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourLocalBoundary.cpp; sourceTree = "<group>"; };
+		B6DD2F961B04825B00E47F5F /* DetourLocalBoundary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourLocalBoundary.h; sourceTree = "<group>"; };
+		B6DD2F971B04825B00E47F5F /* DetourObstacleAvoidance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourObstacleAvoidance.cpp; sourceTree = "<group>"; };
+		B6DD2F981B04825B00E47F5F /* DetourObstacleAvoidance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourObstacleAvoidance.h; sourceTree = "<group>"; };
+		B6DD2F991B04825B00E47F5F /* DetourPathCorridor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourPathCorridor.cpp; sourceTree = "<group>"; };
+		B6DD2F9A1B04825B00E47F5F /* DetourPathCorridor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourPathCorridor.h; sourceTree = "<group>"; };
+		B6DD2F9B1B04825B00E47F5F /* DetourPathQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourPathQueue.cpp; sourceTree = "<group>"; };
+		B6DD2F9C1B04825B00E47F5F /* DetourPathQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourPathQueue.h; sourceTree = "<group>"; };
+		B6DD2F9D1B04825B00E47F5F /* DetourProximityGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourProximityGrid.cpp; sourceTree = "<group>"; };
+		B6DD2F9E1B04825B00E47F5F /* DetourProximityGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourProximityGrid.h; sourceTree = "<group>"; };
+		B6DD2FA01B04825B00E47F5F /* DetourTileCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourTileCache.cpp; sourceTree = "<group>"; };
+		B6DD2FA11B04825B00E47F5F /* DetourTileCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCache.h; sourceTree = "<group>"; };
+		B6DD2FA21B04825B00E47F5F /* DetourTileCacheBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourTileCacheBuilder.cpp; sourceTree = "<group>"; };
+		B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCacheBuilder.h; sourceTree = "<group>"; };
+		B6DD2FA51B04825B00E47F5F /* fastlz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fastlz.c; sourceTree = "<group>"; };
+		B6DD2FA61B04825B00E47F5F /* fastlz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastlz.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -5430,6 +5583,7 @@
 				1A57033E180BD0490088DEC7 /* external */,
 				1551A341158F2AB200E66CFE /* Frameworks */,
 				46A170851807CE87005B8026 /* math */,
+				B6DD2F351B04805400E47F5F /* navmesh */,
 				1AAF5360180E3374000584C8 /* network */,
 				46A170611807CE7A005B8026 /* physics */,
 				B6CAAFD11AF9A98E00B9B856 /* physics3d */,
@@ -5928,6 +6082,7 @@
 			isa = PBXGroup;
 			children = (
 				68B39B391B1C5C670084F72C /* clipper */,
+				B6DD2F731B04820C00E47F5F /* recast */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
 				15FB20781AE7C57D00C31518 /* poly2tri */,
 				382383E11A258FA7002C4610 /* flatbuffers */,
@@ -8520,6 +8675,116 @@
 			path = MiniCLTask;
 			sourceTree = "<group>";
 		};
+		B6DD2F351B04805400E47F5F /* navmesh */ = {
+			isa = PBXGroup;
+			children = (
+				B677B0BF1B18492D006762CB /* CCNavMesh.cpp */,
+				B677B0C01B18492D006762CB /* CCNavMesh.h */,
+				B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */,
+				B677B0C21B18492D006762CB /* CCNavMeshAgent.h */,
+				B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */,
+				B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */,
+				B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */,
+				B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */,
+				B677B0C71B18492D006762CB /* CCNavMeshUtils.cpp */,
+				B677B0C81B18492D006762CB /* CCNavMeshUtils.h */,
+			);
+			name = navmesh;
+			sourceTree = "<group>";
+		};
+		B6DD2F731B04820C00E47F5F /* recast */ = {
+			isa = PBXGroup;
+			children = (
+				B6DD2F791B04825B00E47F5F /* DebugUtils */,
+				B6DD2F821B04825B00E47F5F /* Detour */,
+				B6DD2F921B04825B00E47F5F /* DetourCrowd */,
+				B6DD2F9F1B04825B00E47F5F /* DetourTileCache */,
+				B6DD2FA41B04825B00E47F5F /* fastlz */,
+			);
+			name = recast;
+			sourceTree = "<group>";
+		};
+		B6DD2F791B04825B00E47F5F /* DebugUtils */ = {
+			isa = PBXGroup;
+			children = (
+				B6DD2F7A1B04825B00E47F5F /* DebugDraw.cpp */,
+				B6DD2F7B1B04825B00E47F5F /* DebugDraw.h */,
+				B6DD2F7C1B04825B00E47F5F /* DetourDebugDraw.cpp */,
+				B6DD2F7D1B04825B00E47F5F /* DetourDebugDraw.h */,
+				B6DD2F7E1B04825B00E47F5F /* RecastDebugDraw.cpp */,
+				B6DD2F7F1B04825B00E47F5F /* RecastDebugDraw.h */,
+				B6DD2F801B04825B00E47F5F /* RecastDump.cpp */,
+				B6DD2F811B04825B00E47F5F /* RecastDump.h */,
+			);
+			name = DebugUtils;
+			path = ../external/recast/DebugUtils;
+			sourceTree = "<group>";
+		};
+		B6DD2F821B04825B00E47F5F /* Detour */ = {
+			isa = PBXGroup;
+			children = (
+				B6DD2F831B04825B00E47F5F /* DetourAlloc.cpp */,
+				B6DD2F841B04825B00E47F5F /* DetourAlloc.h */,
+				B6DD2F851B04825B00E47F5F /* DetourAssert.h */,
+				B6DD2F861B04825B00E47F5F /* DetourCommon.cpp */,
+				B6DD2F871B04825B00E47F5F /* DetourCommon.h */,
+				B6DD2F881B04825B00E47F5F /* DetourMath.h */,
+				B6DD2F891B04825B00E47F5F /* DetourNavMesh.cpp */,
+				B6DD2F8A1B04825B00E47F5F /* DetourNavMesh.h */,
+				B6DD2F8B1B04825B00E47F5F /* DetourNavMeshBuilder.cpp */,
+				B6DD2F8C1B04825B00E47F5F /* DetourNavMeshBuilder.h */,
+				B6DD2F8D1B04825B00E47F5F /* DetourNavMeshQuery.cpp */,
+				B6DD2F8E1B04825B00E47F5F /* DetourNavMeshQuery.h */,
+				B6DD2F8F1B04825B00E47F5F /* DetourNode.cpp */,
+				B6DD2F901B04825B00E47F5F /* DetourNode.h */,
+				B6DD2F911B04825B00E47F5F /* DetourStatus.h */,
+			);
+			name = Detour;
+			path = ../external/recast/Detour;
+			sourceTree = "<group>";
+		};
+		B6DD2F921B04825B00E47F5F /* DetourCrowd */ = {
+			isa = PBXGroup;
+			children = (
+				B6DD2F931B04825B00E47F5F /* DetourCrowd.cpp */,
+				B6DD2F941B04825B00E47F5F /* DetourCrowd.h */,
+				B6DD2F951B04825B00E47F5F /* DetourLocalBoundary.cpp */,
+				B6DD2F961B04825B00E47F5F /* DetourLocalBoundary.h */,
+				B6DD2F971B04825B00E47F5F /* DetourObstacleAvoidance.cpp */,
+				B6DD2F981B04825B00E47F5F /* DetourObstacleAvoidance.h */,
+				B6DD2F991B04825B00E47F5F /* DetourPathCorridor.cpp */,
+				B6DD2F9A1B04825B00E47F5F /* DetourPathCorridor.h */,
+				B6DD2F9B1B04825B00E47F5F /* DetourPathQueue.cpp */,
+				B6DD2F9C1B04825B00E47F5F /* DetourPathQueue.h */,
+				B6DD2F9D1B04825B00E47F5F /* DetourProximityGrid.cpp */,
+				B6DD2F9E1B04825B00E47F5F /* DetourProximityGrid.h */,
+			);
+			name = DetourCrowd;
+			path = ../external/recast/DetourCrowd;
+			sourceTree = "<group>";
+		};
+		B6DD2F9F1B04825B00E47F5F /* DetourTileCache */ = {
+			isa = PBXGroup;
+			children = (
+				B6DD2FA01B04825B00E47F5F /* DetourTileCache.cpp */,
+				B6DD2FA11B04825B00E47F5F /* DetourTileCache.h */,
+				B6DD2FA21B04825B00E47F5F /* DetourTileCacheBuilder.cpp */,
+				B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */,
+			);
+			name = DetourTileCache;
+			path = ../external/recast/DetourTileCache;
+			sourceTree = "<group>";
+		};
+		B6DD2FA41B04825B00E47F5F /* fastlz */ = {
+			isa = PBXGroup;
+			children = (
+				B6DD2FA51B04825B00E47F5F /* fastlz.c */,
+				B6DD2FA61B04825B00E47F5F /* fastlz.h */,
+			);
+			name = fastlz;
+			path = ../external/recast/fastlz;
+			sourceTree = "<group>";
+		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
 			isa = PBXGroup;
 			children = (
@@ -8621,12 +8886,15 @@
 				50ABBD3E1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				B6CAB34F1AF9AA1A00B9B856 /* gim_geom_types.h in Headers */,
 				15AE1A7719AAD40300C27E9E /* b2EdgeAndPolygonContact.h in Headers */,
+				B6DD2FD11B04825B00E47F5F /* DetourNode.h in Headers */,
 				15AE18F719AAD35000C27E9E /* CCBatchNode.h in Headers */,
 				15AE181419AAD2F700C27E9E /* CCAnimationCurve.h in Headers */,
 				50ABBE631925AB6F00A911A9 /* CCEventListenerAcceleration.h in Headers */,
 				B665E4281AA80A6600DDB1C5 /* CCPUUtil.h in Headers */,
 				B665E2601AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandlerTranslator.h in Headers */,
 				15AE1C1419AAE2C600C27E9E /* CCPhysicsSprite.h in Headers */,
+				B6DD2FE71B04825B00E47F5F /* DetourPathQueue.h in Headers */,
+				B6DD2FBB1B04825B00E47F5F /* DetourAssert.h in Headers */,
 				46A170EE1807CECA005B8026 /* CCPhysicsShape.h in Headers */,
 				B6CAB3D91AF9AA1A00B9B856 /* btSolverBody.h in Headers */,
 				15AE1A5C19AAD40300C27E9E /* b2Timer.h in Headers */,
@@ -8665,12 +8933,14 @@
 				B665E2841AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandler.h in Headers */,
 				B6CAB52D1AF9AA1A00B9B856 /* btSerializer.h in Headers */,
 				B665E3E01AA80A6600DDB1C5 /* CCPUSimpleSpline.h in Headers */,
+				B6DD2FAD1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				B665E42C1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffector.h in Headers */,
 				B665E3B41AA80A6500DDB1C5 /* CCPURendererTranslator.h in Headers */,
 				B6CAAFF01AF9A9E100B9B856 /* CCPhysics3DDebugDrawer.h in Headers */,
 				1A57006B180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				B665E3BC1AA80A6500DDB1C5 /* CCPURibbonTrailRender.h in Headers */,
 				B6CAB3371AF9AA1A00B9B856 /* btQuantization.h in Headers */,
+				B677B0CB1B18492D006762CB /* CCNavMesh.h in Headers */,
 				B6CAB4371AF9AA1A00B9B856 /* btGpu3DGridBroadphaseSharedCode.h in Headers */,
 				B665E2A81AA80A6500DDB1C5 /* CCPUEventHandlerTranslator.h in Headers */,
 				4D76BE3C1A4AAF0A00102962 /* CCActionTimelineNode.h in Headers */,
@@ -8684,6 +8954,7 @@
 				15AE1BD319AAE01E00C27E9E /* CCControlPotentiometer.h in Headers */,
 				15AE1B6E19AADA9900C27E9E /* UIHelper.h in Headers */,
 				B230ED7319B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
+				B6DD2FB11B04825B00E47F5F /* RecastDebugDraw.h in Headers */,
 				B6CAB2F71AF9AA1A00B9B856 /* btTriangleBuffer.h in Headers */,
 				B665E2D41AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.h in Headers */,
 				15AE187F19AAD33D00C27E9E /* CCBKeyframe.h in Headers */,
@@ -8701,7 +8972,9 @@
 				15AE182A19AAD2F700C27E9E /* CCMeshSkin.h in Headers */,
 				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
+				B6DD2FDB1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
 				B6CAB3491AF9AA1A00B9B856 /* gim_clip_polygon.h in Headers */,
+				B677B0DB1B18492D006762CB /* CCNavMeshUtils.h in Headers */,
 				B6CAAFE41AF9A9E100B9B856 /* CCPhysics3D.h in Headers */,
 				15AE1A7F19AAD40300C27E9E /* b2DistanceJoint.h in Headers */,
 				B665E3301AA80A6500DDB1C5 /* CCPUOnCountObserverTranslator.h in Headers */,
@@ -8753,6 +9026,8 @@
 				15AE191219AAD35000C27E9E /* CCProcessBase.h in Headers */,
 				15AE1BB619AADFEF00C27E9E /* SocketIO.h in Headers */,
 				B665E2F41AA80A6500DDB1C5 /* CCPULineEmitterTranslator.h in Headers */,
+				B6DD2FB91B04825B00E47F5F /* DetourAlloc.h in Headers */,
+				B6DD2FF71B04825B00E47F5F /* fastlz.h in Headers */,
 				B665E2D81AA80A6500DDB1C5 /* CCPUJetAffector.h in Headers */,
 				1A570093180BC5A10088DEC7 /* CCActionTween.h in Headers */,
 				B6CAB3CF1AF9AA1A00B9B856 /* btSequentialImpulseConstraintSolver.h in Headers */,
@@ -8826,6 +9101,7 @@
 				15AE1B6C19AADA9900C27E9E /* UIWidget.h in Headers */,
 				B665E2681AA80A6500DDB1C5 /* CCPUDoExpireEventHandlerTranslator.h in Headers */,
 				15FB208B1AE7C57D00C31518 /* utils.h in Headers */,
+				B6DD2FB51B04825B00E47F5F /* RecastDump.h in Headers */,
 				B6CAB3411AF9AA1A00B9B856 /* gim_bitset.h in Headers */,
 				15AE180E19AAD2F700C27E9E /* CCAnimate3D.h in Headers */,
 				1A5701B3180BCB590088DEC7 /* CCFontFNT.h in Headers */,
@@ -8843,6 +9119,7 @@
 				B6CAB3E91AF9AA1A00B9B856 /* btDiscreteDynamicsWorld.h in Headers */,
 				B6CAB2F31AF9AA1A00B9B856 /* btTetrahedronShape.h in Headers */,
 				B6CAB4231AF9AA1A00B9B856 /* btMLCPSolverInterface.h in Headers */,
+				B6DD2FE31B04825B00E47F5F /* DetourPathCorridor.h in Headers */,
 				50ED2BE019BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */,
 				B6CAB5011AF9AA1A00B9B856 /* btConvexHullComputer.h in Headers */,
 				15AE197119AAD35700C27E9E /* CCFrame.h in Headers */,
@@ -8934,6 +9211,7 @@
 				B665E3081AA80A6500DDB1C5 /* CCPUMeshSurfaceEmitterTranslator.h in Headers */,
 				15AE184219AAD2F700C27E9E /* CCSprite3D.h in Headers */,
 				B665E3181AA80A6500DDB1C5 /* CCPUObserverTranslator.h in Headers */,
+				B6DD2FC91B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */,
 				B6CAB5111AF9AA1A00B9B856 /* btMatrix3x3.h in Headers */,
 				B665E3201AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.h in Headers */,
 				B665E2A01AA80A6500DDB1C5 /* CCPUEventHandler.h in Headers */,
@@ -8982,6 +9260,7 @@
 				B6CAB50B1AF9AA1A00B9B856 /* btHashMap.h in Headers */,
 				15AE1A6719AAD40300C27E9E /* b2World.h in Headers */,
 				B6CAB3571AF9AA1A00B9B856 /* gim_math.h in Headers */,
+				B677B0D71B18492D006762CB /* CCNavMeshObstacle.h in Headers */,
 				15AE199B19AAD39600C27E9E /* PageViewReader.h in Headers */,
 				B665E2A41AA80A6500DDB1C5 /* CCPUEventHandlerManager.h in Headers */,
 				15AE1A6219AAD40300C27E9E /* b2Fixture.h in Headers */,
@@ -9008,6 +9287,7 @@
 				15AE188519AAD33D00C27E9E /* CCBSequence.h in Headers */,
 				15FB20951AE7C57D00C31518 /* cdt.h in Headers */,
 				B665E3541AA80A6500DDB1C5 /* CCPUOnQuotaObserver.h in Headers */,
+				B6DD2FDF1B04825B00E47F5F /* DetourObstacleAvoidance.h in Headers */,
 				B6CAB4F11AF9AA1A00B9B856 /* Win32ThreadSupport.h in Headers */,
 				50643BE219BFCF1800EF68ED /* CCPlatformConfig.h in Headers */,
 				B29A7DF519EE1B7700872B35 /* Skeleton.h in Headers */,
@@ -9017,6 +9297,7 @@
 				5034CA49191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				292DB14119B4574100A80320 /* UIEditBoxImpl.h in Headers */,
 				B29A7DD919EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
+				B6DD2FC11B04825B00E47F5F /* DetourMath.h in Headers */,
 				50CB247919D9C5A100687767 /* AudioEngine-inl.h in Headers */,
 				1A01C68C18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
 				B6CAB0001AF9A9E100B9B856 /* CCPhysicsSprite3D.h in Headers */,
@@ -9040,6 +9321,7 @@
 				15AE1A5419AAD40300C27E9E /* b2GrowableStack.h in Headers */,
 				15AE1B4E19AADA9900C27E9E /* UIListView.h in Headers */,
 				1A570284180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
+				B6DD2FD71B04825B00E47F5F /* DetourCrowd.h in Headers */,
 				5034CA2B191D591100CE6051 /* ccShader_PositionTextureA8Color.vert in Headers */,
 				B665E2041AA80A6500DDB1C5 /* CCPUAlignAffectorTranslator.h in Headers */,
 				B6CAB3A11AF9AA1A00B9B856 /* btKinematicCharacterController.h in Headers */,
@@ -9064,6 +9346,7 @@
 				B665E3501AA80A6500DDB1C5 /* CCPUOnPositionObserverTranslator.h in Headers */,
 				B68778FA1A8CA82E00643ABF /* CCParticle3DAffector.h in Headers */,
 				15AE1BA019AADFDF00C27E9E /* UILayout.h in Headers */,
+				B677B0CF1B18492D006762CB /* CCNavMeshAgent.h in Headers */,
 				1A570294180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				B665E4081AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitter.h in Headers */,
 				B6CAB28B1AF9AA1A00B9B856 /* btCapsuleShape.h in Headers */,
@@ -9241,6 +9524,7 @@
 				B6CAB1FF1AF9AA1A00B9B856 /* btDispatcher.h in Headers */,
 				15AE188B19AAD33D00C27E9E /* CCControlLoader.h in Headers */,
 				B29A7DF719EE1B7700872B35 /* Attachment.h in Headers */,
+				B6DD2FA91B04825B00E47F5F /* DebugDraw.h in Headers */,
 				15FB208D1AE7C57D00C31518 /* poly2tri.h in Headers */,
 				B6CAB3091AF9AA1A00B9B856 /* btTriangleMesh.h in Headers */,
 				B6CAB4AF1AF9AA1A00B9B856 /* SpuCollisionTaskProcess.h in Headers */,
@@ -9257,10 +9541,12 @@
 				B6CAB1E31AF9AA1A00B9B856 /* btBulletDynamicsCommon.h in Headers */,
 				382384311A259112002C4610 /* ParticleReader.h in Headers */,
 				B6CAB3BD1AF9AA1A00B9B856 /* btGeneric6DofSpringConstraint.h in Headers */,
+				B6DD2FBF1B04825B00E47F5F /* DetourCommon.h in Headers */,
 				B665E3D01AA80A6600DDB1C5 /* CCPUScriptCompiler.h in Headers */,
 				5034CA35191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				15AE1BB219AADFEF00C27E9E /* HttpClient.h in Headers */,
 				B6CAB3FD1AF9AA1A00B9B856 /* btMultiBodyConstraint.h in Headers */,
+				B6DD2FF31B04825B00E47F5F /* DetourTileCacheBuilder.h in Headers */,
 				15AE197619AAD35700C27E9E /* CCTimelineMacro.h in Headers */,
 				50ABBE6F1925AB6F00A911A9 /* CCEventListenerKeyboard.h in Headers */,
 				15AE1A5619AAD40300C27E9E /* b2Math.h in Headers */,
@@ -9338,7 +9624,9 @@
 				B665E2881AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandlerTranslator.h in Headers */,
 				B665E2441AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.h in Headers */,
 				B665E2281AA80A6500DDB1C5 /* CCPUBillboardChain.h in Headers */,
+				B6DD2FD31B04825B00E47F5F /* DetourStatus.h in Headers */,
 				15AE18A919AAD33D00C27E9E /* CCSpriteLoader.h in Headers */,
+				B677B0D31B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */,
 				15AE198419AAD36400C27E9E /* WidgetReaderProtocol.h in Headers */,
 				B6CAB53D1AF9AA1A00B9B856 /* cl_MiniCL_Defs.h in Headers */,
 				50ABBEC91925AB6F00A911A9 /* firePngData.h in Headers */,
@@ -9471,6 +9759,7 @@
 				B6CAB2EB1AF9AA1A00B9B856 /* btStaticPlaneShape.h in Headers */,
 				3EACC9A219F5014D00EB3C5E /* CCCamera.h in Headers */,
 				B6CAB5331AF9AA1A00B9B856 /* btTransformUtil.h in Headers */,
+				B6DD2FEF1B04825B00E47F5F /* DetourTileCache.h in Headers */,
 				50ABBECD1925AB6F00A911A9 /* s3tc.h in Headers */,
 				B6CAB3651AF9AA1A00B9B856 /* btContinuousConvexCollision.h in Headers */,
 				15AE1BD119AAE01E00C27E9E /* CCControlHuePicker.h in Headers */,
@@ -9479,7 +9768,10 @@
 				50ABBE771925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
 				5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
 				B665E4341AA80A6600DDB1C5 /* CCPUVertexEmitter.h in Headers */,
+				B6DD2FEB1B04825B00E47F5F /* DetourProximityGrid.h in Headers */,
+				B6DD2FC51B04825B00E47F5F /* DetourNavMesh.h in Headers */,
 				50ABC0171926664800A911A9 /* CCImage.h in Headers */,
+				B6DD2FCD1B04825B00E47F5F /* DetourNavMeshQuery.h in Headers */,
 				50ABBDA91925AB4100A911A9 /* CCRenderCommand.h in Headers */,
 				B6CAB3791AF9AA1A00B9B856 /* btGjkEpaPenetrationDepthSolver.h in Headers */,
 				50ABBD951925AB4100A911A9 /* CCGLProgramState.h in Headers */,
@@ -9587,8 +9879,10 @@
 				B6CAB4061AF9AA1A00B9B856 /* btMultiBodyDynamicsWorld.h in Headers */,
 				ED74D76A1A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */,
 				5034CA40191D591100CE6051 /* ccShader_Position_uColor.vert in Headers */,
+				B6DD2FD41B04825B00E47F5F /* DetourStatus.h in Headers */,
 				B665E2891AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandlerTranslator.h in Headers */,
 				15AE184719AAD2F700C27E9E /* CCSprite3DMaterial.h in Headers */,
+				B6DD2FC21B04825B00E47F5F /* DetourMath.h in Headers */,
 				B6CAB5101AF9AA1A00B9B856 /* btList.h in Headers */,
 				15AE1BFC19AAE01E00C27E9E /* CCControlUtils.h in Headers */,
 				15AE193519AAD35100C27E9E /* CCActionObject.h in Headers */,
@@ -9604,7 +9898,9 @@
 				B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */,
 				50643BE319BFCF1800EF68ED /* CCPlatformConfig.h in Headers */,
 				B665E27D1AA80A6500DDB1C5 /* CCPUDoScaleEventHandler.h in Headers */,
+				B6DD2FE81B04825B00E47F5F /* DetourPathQueue.h in Headers */,
 				B6CAB29E1AF9AA1A00B9B856 /* btConeShape.h in Headers */,
+				B677B0D81B18492D006762CB /* CCNavMeshObstacle.h in Headers */,
 				15AE181F19AAD2F700C27E9E /* CCBundle3DData.h in Headers */,
 				15AE193119AAD35100C27E9E /* CCActionManagerEx.h in Headers */,
 				15AE185B19AAD31200C27E9E /* CDOpenALSupport.h in Headers */,
@@ -9628,6 +9924,7 @@
 				B6CAB32E1AF9AA1A00B9B856 /* btGImpactMassUtil.h in Headers */,
 				B6CAB43C1AF9AA1A00B9B856 /* btGpu3DGridBroadphaseSharedTypes.h in Headers */,
 				50643BD619BFAEDA00EF68ED /* CCPlatformDefine.h in Headers */,
+				B6DD2FCE1B04825B00E47F5F /* DetourNavMeshQuery.h in Headers */,
 				1A570068180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
 				B29A7E1E19EE1B7700872B35 /* PolygonBatch.h in Headers */,
 				B6CAB4E61AF9AA1A00B9B856 /* SpuSampleTaskProcess.h in Headers */,
@@ -9643,6 +9940,7 @@
 				B665E4311AA80A6600DDB1C5 /* CCPUVelocityMatchingAffectorTranslator.h in Headers */,
 				B6CAB2C21AF9AA1A00B9B856 /* btEmptyShape.h in Headers */,
 				B665E3C51AA80A6600DDB1C5 /* CCPUScaleAffectorTranslator.h in Headers */,
+				B6DD2FF81B04825B00E47F5F /* fastlz.h in Headers */,
 				B665E4351AA80A6600DDB1C5 /* CCPUVertexEmitter.h in Headers */,
 				B665E2451AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.h in Headers */,
 				B6CAB3381AF9AA1A00B9B856 /* btQuantization.h in Headers */,
@@ -9700,6 +9998,7 @@
 				B6CAB5341AF9AA1A00B9B856 /* btTransformUtil.h in Headers */,
 				1A570088180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				15AE1B9319AADA9A00C27E9E /* UIHelper.h in Headers */,
+				B677B0DC1B18492D006762CB /* CCNavMeshUtils.h in Headers */,
 				50ABBD9E1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
 				B665E2111AA80A6500DDB1C5 /* CCPUBaseForceAffector.h in Headers */,
 				B665E30D1AA80A6500DDB1C5 /* CCPUNoise.h in Headers */,
@@ -9758,6 +10057,7 @@
 				50ABBD571925AB0000A911A9 /* TransformUtils.h in Headers */,
 				B665E2711AA80A6500DDB1C5 /* CCPUDoFreezeEventHandlerTranslator.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
+				B677B0D41B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */,
 				B6CAB2341AF9AA1A00B9B856 /* btCollisionWorld.h in Headers */,
 				1A57011E180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				B6CAB4A21AF9AA1A00B9B856 /* PosixThreadSupport.h in Headers */,
@@ -9810,13 +10110,16 @@
 				B665E3E51AA80A6600DDB1C5 /* CCPUSineForceAffector.h in Headers */,
 				182C5CE81A9D725400C30D34 /* UserCameraReader.h in Headers */,
 				15AE1A4C19AAD3D500C27E9E /* b2EdgeShape.h in Headers */,
+				B6DD2FB21B04825B00E47F5F /* RecastDebugDraw.h in Headers */,
 				B6CAB39C1AF9AA1A00B9B856 /* btVoronoiSimplexSolver.h in Headers */,
 				B6CAB2701AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.h in Headers */,
 				1A5701B4180BCB590088DEC7 /* CCFontFNT.h in Headers */,
+				B6DD2FBC1B04825B00E47F5F /* DetourAssert.h in Headers */,
 				15AE18D419AAD33D00C27E9E /* CCParticleSystemQuadLoader.h in Headers */,
 				B665E3411AA80A6500DDB1C5 /* CCPUOnEventFlagObserverTranslator.h in Headers */,
 				B6CAB5041AF9AA1A00B9B856 /* btDefaultMotionState.h in Headers */,
 				B6CAB52A1AF9AA1A00B9B856 /* btScalar.h in Headers */,
+				B6DD2FF41B04825B00E47F5F /* DetourTileCacheBuilder.h in Headers */,
 				B29A7DFA19EE1B7700872B35 /* Json.h in Headers */,
 				3823842B1A2590F9002C4610 /* NodeReader.h in Headers */,
 				B6CAB3241AF9AA1A00B9B856 /* btGeometryOperations.h in Headers */,
@@ -9830,6 +10133,7 @@
 				15AE18CB19AAD33D00C27E9E /* CCMenuLoader.h in Headers */,
 				B665E4011AA80A6600DDB1C5 /* CCPUSphereCollider.h in Headers */,
 				B6CAB31E1AF9AA1A00B9B856 /* btContactProcessing.h in Headers */,
+				B6DD2FC61B04825B00E47F5F /* DetourNavMesh.h in Headers */,
 				1A5701BC180BCB5A0088DEC7 /* CCLabel.h in Headers */,
 				B665E2D51AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.h in Headers */,
 				1A5701C0180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
@@ -9848,6 +10152,7 @@
 				B6CAB4EE1AF9AA1A00B9B856 /* vectormath2bullet.h in Headers */,
 				15AE1BBA19AADFF000C27E9E /* HttpClient.h in Headers */,
 				B6CAB2241AF9AA1A00B9B856 /* btCollisionConfiguration.h in Headers */,
+				B6DD2FCA1B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */,
 				292DB14619B4574100A80320 /* UIEditBoxImpl-android.h in Headers */,
 				B6CAB49E1AF9AA1A00B9B856 /* PlatformDefinitions.h in Headers */,
 				B665E2DD1AA80A6500DDB1C5 /* CCPUJetAffectorTranslator.h in Headers */,
@@ -9881,6 +10186,7 @@
 				15AE196219AAD35100C27E9E /* CCSSceneReader.h in Headers */,
 				1A01C69518F57BE800EFE3A6 /* CCFloat.h in Headers */,
 				B665E2011AA80A6500DDB1C5 /* CCPUAlignAffector.h in Headers */,
+				B6DD2FEC1B04825B00E47F5F /* DetourProximityGrid.h in Headers */,
 				B6CAB49C1AF9AA1A00B9B856 /* HeapManager.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				B6CAB25C1AF9AA1A00B9B856 /* btHashedSimplePairCache.h in Headers */,
@@ -9920,8 +10226,10 @@
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
 				15AE198F19AAD36E00C27E9E /* CheckBoxReader.h in Headers */,
 				B665E3911AA80A6500DDB1C5 /* CCPUPlaneCollider.h in Headers */,
+				B6DD2FAE1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				382384011A258FA7002C4610 /* util.h in Headers */,
 				18956BB51A9DFBFD006E9155 /* Particle3DReader.h in Headers */,
+				B6DD2FD81B04825B00E47F5F /* DetourCrowd.h in Headers */,
 				B6CAB34A1AF9AA1A00B9B856 /* gim_clip_polygon.h in Headers */,
 				B665E3F91AA80A6600DDB1C5 /* CCPUSlaveEmitterTranslator.h in Headers */,
 				B665E2551AA80A6500DDB1C5 /* CCPUDoAffectorEventHandler.h in Headers */,
@@ -9958,12 +10266,14 @@
 				1A57020B180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				B665E2211AA80A6500DDB1C5 /* CCPUBehaviourManager.h in Headers */,
 				15AE195219AAD35100C27E9E /* CCDecorativeDisplay.h in Headers */,
+				B6DD2FAA1B04825B00E47F5F /* DebugDraw.h in Headers */,
 				15AE196619AAD35100C27E9E /* CCTween.h in Headers */,
 				15AE194619AAD35100C27E9E /* CCComAttribute.h in Headers */,
 				B6CAB5181AF9AA1A00B9B856 /* btMotionState.h in Headers */,
 				B6CAAFE51AF9A9E100B9B856 /* CCPhysics3D.h in Headers */,
 				B6CAB1F41AF9AA1A00B9B856 /* btCollisionAlgorithm.h in Headers */,
 				382384241A2590DA002C4610 /* GameMapReader.h in Headers */,
+				B6DD2FDC1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
 				15AE1ABD19AAD40300C27E9E /* b2PolygonAndCircleContact.h in Headers */,
 				15AE1AA819AAD40300C27E9E /* b2Island.h in Headers */,
 				B665E2391AA80A6500DDB1C5 /* CCPUBoxEmitterTranslator.h in Headers */,
@@ -9984,6 +10294,7 @@
 				15FB20961AE7C57D00C31518 /* cdt.h in Headers */,
 				15AE1AC919AAD40300C27E9E /* b2Joint.h in Headers */,
 				382383EF1A258FA7002C4610 /* flatbuffers.h in Headers */,
+				B677B0CC1B18492D006762CB /* CCNavMesh.h in Headers */,
 				B6D38B911AC3AFAC00043997 /* CCTextureCube.h in Headers */,
 				B665E2811AA80A6500DDB1C5 /* CCPUDoScaleEventHandlerTranslator.h in Headers */,
 				15AE196819AAD35100C27E9E /* CCUtilMath.h in Headers */,
@@ -10038,6 +10349,7 @@
 				B6CAB1F81AF9AA1A00B9B856 /* btDbvt.h in Headers */,
 				B665E35D1AA80A6500DDB1C5 /* CCPUOnRandomObserver.h in Headers */,
 				1A570281180BCC900088DEC7 /* CCSprite.h in Headers */,
+				B6DD2FD21B04825B00E47F5F /* DetourNode.h in Headers */,
 				1A570285180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
 				15AE193B19AAD35100C27E9E /* CCArmatureDataManager.h in Headers */,
 				1A570289180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
@@ -10080,6 +10392,7 @@
 				1A5702ED180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				15AE195E19AAD35100C27E9E /* CCSkin.h in Headers */,
 				B6CAB3CC1AF9AA1A00B9B856 /* btPoint2PointConstraint.h in Headers */,
+				B6DD2FE01B04825B00E47F5F /* DetourObstacleAvoidance.h in Headers */,
 				B6CAB5081AF9AA1A00B9B856 /* btGeometryUtil.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				15FB20771AE7BF8600C31518 /* CCAutoPolygon.h in Headers */,
@@ -10147,6 +10460,7 @@
 				15AE1BBE19AADFF000C27E9E /* SocketIO.h in Headers */,
 				B665E3351AA80A6500DDB1C5 /* CCPUOnEmissionObserver.h in Headers */,
 				B665E3811AA80A6500DDB1C5 /* CCPUParticleSystem3DTranslator.h in Headers */,
+				B6DD2FBA1B04825B00E47F5F /* DetourAlloc.h in Headers */,
 				B6CAB4D21AF9AA1A00B9B856 /* SpuConvexPenetrationDepthSolver.h in Headers */,
 				B665E2151AA80A6500DDB1C5 /* CCPUBaseForceAffectorTranslator.h in Headers */,
 				1A01C69B18F57BE800EFE3A6 /* CCSet.h in Headers */,
@@ -10178,8 +10492,10 @@
 				B6CAB3761AF9AA1A00B9B856 /* btGjkEpa2.h in Headers */,
 				182C5CD91A98F30500C30D34 /* Sprite3DReader.h in Headers */,
 				50ABBE301925AB6F00A911A9 /* ccConfig.h in Headers */,
+				B6DD2FE41B04825B00E47F5F /* DetourPathCorridor.h in Headers */,
 				15AE195819AAD35100C27E9E /* CCInputDelegate.h in Headers */,
 				B6CAB3281AF9AA1A00B9B856 /* btGImpactBvh.h in Headers */,
+				B6DD2FB61B04825B00E47F5F /* RecastDump.h in Headers */,
 				50ABBDAC1925AB4100A911A9 /* CCRenderCommandPool.h in Headers */,
 				B6CAB24C1AF9AA1A00B9B856 /* btConvexPlaneCollisionAlgorithm.h in Headers */,
 				B665E3CD1AA80A6600DDB1C5 /* CCPUScaleVelocityAffectorTranslator.h in Headers */,
@@ -10278,6 +10594,7 @@
 				299CF1FE19A434BC00C378C1 /* ccRandom.h in Headers */,
 				B665E3BD1AA80A6500DDB1C5 /* CCPURibbonTrailRender.h in Headers */,
 				50ABBDBC1925AB4100A911A9 /* CCTextureAtlas.h in Headers */,
+				B6DD2FC01B04825B00E47F5F /* DetourCommon.h in Headers */,
 				B6CAAFE91AF9A9E100B9B856 /* CCPhysics3DComponent.h in Headers */,
 				15AE182319AAD2F700C27E9E /* CCBundleReader.h in Headers */,
 				182C5CB51A95964F00C30D34 /* Node3DReader.h in Headers */,
@@ -10315,6 +10632,7 @@
 				B6CAB3001AF9AA1A00B9B856 /* btTriangleIndexVertexArray.h in Headers */,
 				B6CAB3881AF9AA1A00B9B856 /* btPersistentManifold.h in Headers */,
 				B68779031A8CA82E00643ABF /* CCParticle3DRender.h in Headers */,
+				B6DD2FF01B04825B00E47F5F /* DetourTileCache.h in Headers */,
 				15AE195A19AAD35100C27E9E /* CCProcessBase.h in Headers */,
 				15AE193D19AAD35100C27E9E /* CCArmatureDefine.h in Headers */,
 				B6CAB37A1AF9AA1A00B9B856 /* btGjkEpaPenetrationDepthSolver.h in Headers */,
@@ -10388,6 +10706,7 @@
 				15AE18D219AAD33D00C27E9E /* CCNodeLoaderListener.h in Headers */,
 				15AE184D19AAD30800C27E9E /* SimpleAudioEngine.h in Headers */,
 				B665E3551AA80A6500DDB1C5 /* CCPUOnQuotaObserver.h in Headers */,
+				B677B0D01B18492D006762CB /* CCNavMeshAgent.h in Headers */,
 				B665E3C91AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.h in Headers */,
 				B665E3FD1AA80A6600DDB1C5 /* CCPUSphere.h in Headers */,
 				B68778FB1A8CA82E00643ABF /* CCParticle3DAffector.h in Headers */,
@@ -10544,6 +10863,7 @@
 				15AE189D19AAD33D00C27E9E /* CCNodeLoader.cpp in Sources */,
 				B665E2461AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.cpp in Sources */,
 				B68779041A8CA82E00643ABF /* CCParticleSystem3D.cpp in Sources */,
+				B6DD2FB71B04825B00E47F5F /* DetourAlloc.cpp in Sources */,
 				5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
 				50ABC0611926664800A911A9 /* CCCommon-mac.mm in Sources */,
 				50ABBDB11925AB4100A911A9 /* ccShaders.cpp in Sources */,
@@ -10569,6 +10889,7 @@
 				B6CAB41F1AF9AA1A00B9B856 /* btMLCPSolver.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
 				B665E40A1AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitterTranslator.cpp in Sources */,
+				B677B0D91B18492D006762CB /* CCNavMeshUtils.cpp in Sources */,
 				50ABBDA71925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				B665E35E1AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.cpp in Sources */,
 				B6CAB2931AF9AA1A00B9B856 /* btCompoundShape.cpp in Sources */,
@@ -10644,6 +10965,7 @@
 				B6CAB4D91AF9AA1A00B9B856 /* SpuMinkowskiPenetrationDepthSolver.cpp in Sources */,
 				B665E3CE1AA80A6600DDB1C5 /* CCPUScriptCompiler.cpp in Sources */,
 				15AE18E819AAD35000C27E9E /* CCActionManagerEx.cpp in Sources */,
+				B677B0CD1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */,
 				B29A7DDB19EE1B7700872B35 /* Event.c in Sources */,
 				15AE191B19AAD35000C27E9E /* CCTransformHelp.cpp in Sources */,
 				15AE190319AAD35000C27E9E /* CCComRender.cpp in Sources */,
@@ -10665,6 +10987,7 @@
 				B6CAB2451AF9AA1A00B9B856 /* btConvexConvexAlgorithm.cpp in Sources */,
 				15AE1B9D19AADFDF00C27E9E /* UIVBox.cpp in Sources */,
 				B665E2B61AA80A6500DDB1C5 /* CCPUForceFieldAffector.cpp in Sources */,
+				B6DD2FD51B04825B00E47F5F /* DetourCrowd.cpp in Sources */,
 				1A570079180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1A7019AAD40300C27E9E /* b2Contact.cpp in Sources */,
 				15AE18A619AAD33D00C27E9E /* CCScrollViewLoader.cpp in Sources */,
@@ -10672,6 +10995,7 @@
 				15AE184419AAD2F700C27E9E /* CCSprite3DMaterial.cpp in Sources */,
 				50ABBE591925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,
 				B665E2FA1AA80A6500DDB1C5 /* CCPUMaterialManager.cpp in Sources */,
+				B6DD2FAF1B04825B00E47F5F /* RecastDebugDraw.cpp in Sources */,
 				B29A7DDF19EE1B7700872B35 /* IkConstraintData.c in Sources */,
 				B665E3921AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.cpp in Sources */,
 				1A57007D180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
@@ -10689,6 +11013,7 @@
 				B665E3CA1AA80A6600DDB1C5 /* CCPUScaleVelocityAffectorTranslator.cpp in Sources */,
 				1A57008D180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
 				B665E26E1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandlerTranslator.cpp in Sources */,
+				B6DD2FF11B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */,
 				B665E1FE1AA80A6500DDB1C5 /* CCPUAlignAffector.cpp in Sources */,
 				B665E2961AA80A6500DDB1C5 /* CCPUEmitterManager.cpp in Sources */,
 				1A570091180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
@@ -10725,11 +11050,13 @@
 				B6CAAFF61AF9A9E100B9B856 /* CCPhysics3DShape.cpp in Sources */,
 				B6CAB3071AF9AA1A00B9B856 /* btTriangleMesh.cpp in Sources */,
 				B29A7E1319EE1B7700872B35 /* Bone.c in Sources */,
+				B677B0C91B18492D006762CB /* CCNavMesh.cpp in Sources */,
 				B665E1F61AA80A6500DDB1C5 /* CCPUAffectorManager.cpp in Sources */,
 				292DB14919B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */,
 				B6CAB2511AF9AA1A00B9B856 /* btEmptyCollisionAlgorithm.cpp in Sources */,
 				15AE181019AAD2F700C27E9E /* CCAnimation3D.cpp in Sources */,
 				1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */,
+				B6DD2FDD1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */,
 				1A570112180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				B6CAB4B11AF9AA1A00B9B856 /* SpuContactManifoldCollisionAlgorithm.cpp in Sources */,
 				15AE186D19AAD31D00C27E9E /* SimpleAudioEngine_objc.m in Sources */,
@@ -10744,6 +11071,7 @@
 				382383FE1A258FA7002C4610 /* idl_parser.cpp in Sources */,
 				1A57011F180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				B665E26A1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandler.cpp in Sources */,
+				B6DD2FD91B04825B00E47F5F /* DetourLocalBoundary.cpp in Sources */,
 				15AE187A19AAD33D00C27E9E /* CCBAnimationManager.cpp in Sources */,
 				15AE1B6D19AADA9900C27E9E /* UIHelper.cpp in Sources */,
 				15AE1A8A19AAD40300C27E9E /* b2PulleyJoint.cpp in Sources */,
@@ -10756,6 +11084,7 @@
 				B6CAB2D51AF9AA1A00B9B856 /* btOptimizedBvh.cpp in Sources */,
 				50CB247B19D9C5A100687767 /* AudioEngine-inl.mm in Sources */,
 				1A5701A1180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
+				B6DD2FC71B04825B00E47F5F /* DetourNavMeshBuilder.cpp in Sources */,
 				B29A7DFF19EE1B7700872B35 /* Json.c in Sources */,
 				B6CAB3111AF9AA1A00B9B856 /* btUniformScalingShape.cpp in Sources */,
 				15AE1A8619AAD40300C27E9E /* b2MouseJoint.cpp in Sources */,
@@ -10769,6 +11098,7 @@
 				1A5701B1180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				B6CAB4A51AF9AA1A00B9B856 /* SequentialThreadSupport.cpp in Sources */,
 				15AE181619AAD2F700C27E9E /* CCAttachNode.cpp in Sources */,
+				B6DD2FE91B04825B00E47F5F /* DetourProximityGrid.cpp in Sources */,
 				B29A7DED19EE1B7700872B35 /* IkConstraint.c in Sources */,
 				18956BB21A9DFBFD006E9155 /* Particle3DReader.cpp in Sources */,
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
@@ -10799,6 +11129,7 @@
 				B6CAB3D51AF9AA1A00B9B856 /* btSolve2LinearConstraint.cpp in Sources */,
 				B6CAB2591AF9AA1A00B9B856 /* btHashedSimplePairCache.cpp in Sources */,
 				382F7ADC1AB1292A002EBECF /* CCObjectExtensionData.cpp in Sources */,
+				B6DD2FAB1B04825B00E47F5F /* DetourDebugDraw.cpp in Sources */,
 				15AE191719AAD35000C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				B665E2E21AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp in Sources */,
 				B6CAB2A31AF9AA1A00B9B856 /* btConvexHullShape.cpp in Sources */,
@@ -10823,6 +11154,7 @@
 				3EACC9A419F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				B6CAB4C91AF9AA1A00B9B856 /* SpuCollisionShapes.cpp in Sources */,
 				B6CAB38B1AF9AA1A00B9B856 /* btPolyhedralContactClipping.cpp in Sources */,
+				B677B0D51B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
 				B665E42E1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffectorTranslator.cpp in Sources */,
 				1A5701E2180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
 				B6CAB5351AF9AA1A00B9B856 /* btVector3.cpp in Sources */,
@@ -10886,6 +11218,7 @@
 				B665E3FE1AA80A6600DDB1C5 /* CCPUSphereCollider.cpp in Sources */,
 				B6CAB3591AF9AA1A00B9B856 /* gim_memory.cpp in Sources */,
 				B665E25A1AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.cpp in Sources */,
+				B6DD2FB31B04825B00E47F5F /* RecastDump.cpp in Sources */,
 				B6CAB2BB1AF9AA1A00B9B856 /* btCylinderShape.cpp in Sources */,
 				15AE1BD019AAE01E00C27E9E /* CCControlHuePicker.cpp in Sources */,
 				B6CAAFFA1AF9A9E100B9B856 /* CCPhysics3DWorld.cpp in Sources */,
@@ -10926,6 +11259,7 @@
 				B29A7DF319EE1B7700872B35 /* AttachmentLoader.c in Sources */,
 				B6CAB3331AF9AA1A00B9B856 /* btGImpactShape.cpp in Sources */,
 				382383F01A258FA7002C4610 /* flatc.cpp in Sources */,
+				B6DD2FA71B04825B00E47F5F /* DebugDraw.cpp in Sources */,
 				B665E31A1AA80A6500DDB1C5 /* CCPUOnClearObserver.cpp in Sources */,
 				1A57028A180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
 				15AE18E619AAD35000C27E9E /* CCActionFrameEasing.cpp in Sources */,
@@ -10946,6 +11280,7 @@
 				1A570296180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				B29A7E1B19EE1B7700872B35 /* SkeletonJson.c in Sources */,
 				50ABBE351925AB6F00A911A9 /* CCConsole.cpp in Sources */,
+				B6DD2FED1B04825B00E47F5F /* DetourTileCache.cpp in Sources */,
 				B665E3FA1AA80A6600DDB1C5 /* CCPUSphere.cpp in Sources */,
 				50ABBEAF1925AB6F00A911A9 /* CCUserDefault.cpp in Sources */,
 				15AE1BCB19AAE01E00C27E9E /* CCControlButton.cpp in Sources */,
@@ -11015,6 +11350,7 @@
 				B665E3621AA80A6500DDB1C5 /* CCPUOnTimeObserver.cpp in Sources */,
 				15AE18DF19AAD35000C27E9E /* TriggerBase.cpp in Sources */,
 				15AE1A7219AAD40300C27E9E /* b2ContactSolver.cpp in Sources */,
+				B6DD2FE11B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */,
 				B665E2BE1AA80A6500DDB1C5 /* CCPUGeometryRotator.cpp in Sources */,
 				3823841A1A2590D2002C4610 /* ComAudioReader.cpp in Sources */,
 				15AE1BC519AAE00000C27E9E /* AssetsManager.cpp in Sources */,
@@ -11047,6 +11383,7 @@
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				15AE190719AAD35000C27E9E /* CCDatas.cpp in Sources */,
 				1A01C69C18F57BE800EFE3A6 /* CCString.cpp in Sources */,
+				B6DD2FCB1B04825B00E47F5F /* DetourNavMeshQuery.cpp in Sources */,
 				B6CAB26D1AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.cpp in Sources */,
 				B6CAB3251AF9AA1A00B9B856 /* btGImpactBvh.cpp in Sources */,
 				B665E2721AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.cpp in Sources */,
@@ -11100,6 +11437,7 @@
 				15AE18FA19AAD35000C27E9E /* CCColliderDetector.cpp in Sources */,
 				50ABBEA71925AB6F00A911A9 /* CCTouch.cpp in Sources */,
 				15AE191319AAD35000C27E9E /* CCSGUIReader.cpp in Sources */,
+				B6DD2FBD1B04825B00E47F5F /* DetourCommon.cpp in Sources */,
 				15AE186819AAD31D00C27E9E /* CDXMacOSXSupport.mm in Sources */,
 				B665E3221AA80A6500DDB1C5 /* CCPUOnCollisionObserver.cpp in Sources */,
 				15AE191519AAD35000C27E9E /* CCSkin.cpp in Sources */,
@@ -11143,6 +11481,7 @@
 				B665E2921AA80A6500DDB1C5 /* CCPUEmitter.cpp in Sources */,
 				15B3708419EE414C00ABE682 /* Downloader.cpp in Sources */,
 				50ABC0631926664800A911A9 /* CCDevice-mac.mm in Sources */,
+				B677B0D11B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */,
 				15AE1A2819AAD3D500C27E9E /* b2Collision.cpp in Sources */,
 				15AE1B6719AADA9900C27E9E /* UIScale9Sprite.cpp in Sources */,
 				292DB14319B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */,
@@ -11182,6 +11521,7 @@
 				B665E4021AA80A6600DDB1C5 /* CCPUSphereColliderTranslator.cpp in Sources */,
 				15AE1A3619AAD3D500C27E9E /* b2PolygonShape.cpp in Sources */,
 				D0FD03531A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
+				B6DD2FE51B04825B00E47F5F /* DetourPathQueue.cpp in Sources */,
 				B665E39A1AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.cpp in Sources */,
 				50ABBD9B1925AB4100A911A9 /* ccGLStateCache.cpp in Sources */,
 				15AE188119AAD33D00C27E9E /* CCBReader.cpp in Sources */,
@@ -11227,12 +11567,15 @@
 				B6CAB3811AF9AA1A00B9B856 /* btMinkowskiPenetrationDepthSolver.cpp in Sources */,
 				B6CAB4AD1AF9AA1A00B9B856 /* SpuCollisionTaskProcess.cpp in Sources */,
 				50ABBE9F1925AB6F00A911A9 /* CCScheduler.cpp in Sources */,
+				B6DD2FC31B04825B00E47F5F /* DetourNavMesh.cpp in Sources */,
+				B6DD2FCF1B04825B00E47F5F /* DetourNode.cpp in Sources */,
 				15AE1C1119AAE2C600C27E9E /* CCPhysicsDebugNode.cpp in Sources */,
 				B665E2521AA80A6500DDB1C5 /* CCPUDoAffectorEventHandler.cpp in Sources */,
 				50ABC0151926664800A911A9 /* CCImage.cpp in Sources */,
 				50ABBE231925AB6F00A911A9 /* base64.cpp in Sources */,
 				B665E3AA1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
 				15AE1B5D19AADA9900C27E9E /* UITextBMFont.cpp in Sources */,
+				B6DD2FF51B04825B00E47F5F /* fastlz.c in Sources */,
 				B665E3561AA80A6500DDB1C5 /* CCPUOnQuotaObserverTranslator.cpp in Sources */,
 				382384361A259126002C4610 /* ProjectNodeReader.cpp in Sources */,
 				B665E37A1AA80A6500DDB1C5 /* CCPUParticleSystem3D.cpp in Sources */,
@@ -11310,6 +11653,7 @@
 				B665E38F1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
 				B665E21B1AA80A6500DDB1C5 /* CCPUBehaviour.cpp in Sources */,
 				B6CAB2CA1AF9AA1A00B9B856 /* btMinkowskiSumShape.cpp in Sources */,
+				B6DD2FE61B04825B00E47F5F /* DetourPathQueue.cpp in Sources */,
 				B665E38B1AA80A6500DDB1C5 /* CCPUPlane.cpp in Sources */,
 				B665E2731AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.cpp in Sources */,
 				15AE1C0519AAE01E00C27E9E /* CCTableViewCell.cpp in Sources */,
@@ -11332,6 +11676,7 @@
 				B665E35B1AA80A6500DDB1C5 /* CCPUOnRandomObserver.cpp in Sources */,
 				50ABC0161926664800A911A9 /* CCImage.cpp in Sources */,
 				B665E3AB1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
+				B6DD2FE21B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */,
 				1A01C6A518F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
 				292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				B6CAB4BC1AF9AA1A00B9B856 /* SpuGatheringCollisionDispatcher.cpp in Sources */,
@@ -11353,11 +11698,13 @@
 				50ABBE561925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
 				382F7ADD1AB1292A002EBECF /* CCObjectExtensionData.cpp in Sources */,
 				15AE183D19AAD2F700C27E9E /* CCSkeleton3D.cpp in Sources */,
+				B6DD2FF21B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */,
 				503DD8E11926736A00CD74DD /* CCApplication-ios.mm in Sources */,
 				15AE1AAC19AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
 				B6CAB20C1AF9AA1A00B9B856 /* btQuantizedBvh.cpp in Sources */,
 				B6CAB3F21AF9AA1A00B9B856 /* btSimpleDynamicsWorld.cpp in Sources */,
 				15AE18C719AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
+				B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */,
 				50ABC01A1926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				B29A7E1C19EE1B7700872B35 /* SkeletonJson.c in Sources */,
 				B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */,
@@ -11389,6 +11736,7 @@
 				B29A7E0C19EE1B7700872B35 /* Atlas.c in Sources */,
 				15AE185E19AAD31200C27E9E /* CocosDenshion.m in Sources */,
 				B665E2071AA80A6500DDB1C5 /* CCPUBaseCollider.cpp in Sources */,
+				B6DD2FB01B04825B00E47F5F /* RecastDebugDraw.cpp in Sources */,
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
@@ -11487,6 +11835,7 @@
 				50ABBE761925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				15AE1AD219AAD40300C27E9E /* b2RopeJoint.cpp in Sources */,
 				B29A7DCC19EE1B7700872B35 /* Skeleton.c in Sources */,
+				B6DD2FEE1B04825B00E47F5F /* DetourTileCache.cpp in Sources */,
 				B6CAB2B41AF9AA1A00B9B856 /* btConvexShape.cpp in Sources */,
 				15AE1A4919AAD3D500C27E9E /* b2CircleShape.cpp in Sources */,
 				15AE184119AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
@@ -11508,6 +11857,7 @@
 				15AE1A3E19AAD3D500C27E9E /* b2CollidePolygon.cpp in Sources */,
 				15AE1AB219AAD40300C27E9E /* b2CircleContact.cpp in Sources */,
 				B29A7E2619EE1B7700872B35 /* Attachment.c in Sources */,
+				B6DD2FDA1B04825B00E47F5F /* DetourLocalBoundary.cpp in Sources */,
 				15AE18C119AAD33D00C27E9E /* CCLayerColorLoader.cpp in Sources */,
 				50ABBD551925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				B665E2CF1AA80A6500DDB1C5 /* CCPUInterParticleCollider.cpp in Sources */,
@@ -11515,6 +11865,7 @@
 				15AE193619AAD35100C27E9E /* CCArmature.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
 				15AE1AC419AAD40300C27E9E /* b2FrictionJoint.cpp in Sources */,
+				B6DD2FDE1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */,
 				15AE1BEC19AAE01E00C27E9E /* CCControlColourPicker.cpp in Sources */,
 				B6CAB2361AF9AA1A00B9B856 /* btCompoundCollisionAlgorithm.cpp in Sources */,
 				382383FD1A258FA7002C4610 /* idl_gen_text.cpp in Sources */,
@@ -11558,6 +11909,7 @@
 				B6CAB3341AF9AA1A00B9B856 /* btGImpactShape.cpp in Sources */,
 				B6CAB4C61AF9AA1A00B9B856 /* boxBoxDistance.cpp in Sources */,
 				1A57008E180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
+				B677B0CE1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */,
 				B6CAB2A01AF9AA1A00B9B856 /* btConvex2dShape.cpp in Sources */,
 				1A570092180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				1A570099180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
@@ -11565,6 +11917,7 @@
 				B6CAAFF31AF9A9E100B9B856 /* CCPhysics3DObject.cpp in Sources */,
 				B665E2931AA80A6500DDB1C5 /* CCPUEmitter.cpp in Sources */,
 				50ABBD4D1925AB0000A911A9 /* MathUtil.cpp in Sources */,
+				B6DD2FCC1B04825B00E47F5F /* DetourNavMeshQuery.cpp in Sources */,
 				50ABBE3E1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
 				B6CAB4B21AF9AA1A00B9B856 /* SpuContactManifoldCollisionAlgorithm.cpp in Sources */,
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
@@ -11586,6 +11939,7 @@
 				B6CAB3F81AF9AA1A00B9B856 /* btMultiBody.cpp in Sources */,
 				503DD8E21926736A00CD74DD /* CCCommon-ios.mm in Sources */,
 				292DB14A19B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */,
+				B677B0D61B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
 				B6CAB2561AF9AA1A00B9B856 /* btGhostObject.cpp in Sources */,
 				15AE1A9419AAD40300C27E9E /* b2BlockAllocator.cpp in Sources */,
 				B29A7E3C19EE1B7700872B35 /* Animation.c in Sources */,
@@ -11607,6 +11961,7 @@
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				15AE192B19AAD35100C27E9E /* TriggerObj.cpp in Sources */,
 				B6CAAFEB1AF9A9E100B9B856 /* CCPhysics3DConstraint.cpp in Sources */,
+				B677B0D21B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */,
 				4D76BE3B1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */,
 				15AE198519AAD36400C27E9E /* WidgetReader.cpp in Sources */,
 				B665E36B1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.cpp in Sources */,
@@ -11646,6 +12001,7 @@
 				B665E3771AA80A6500DDB1C5 /* CCPUParticleFollowerTranslator.cpp in Sources */,
 				B6CAB4CA1AF9AA1A00B9B856 /* SpuCollisionShapes.cpp in Sources */,
 				15AE1B7C19AADA9A00C27E9E /* UISlider.cpp in Sources */,
+				B6DD2FC41B04825B00E47F5F /* DetourNavMesh.cpp in Sources */,
 				B6CAAFFB1AF9A9E100B9B856 /* CCPhysics3DWorld.cpp in Sources */,
 				B665E3471AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.cpp in Sources */,
 				B6CAB2A41AF9AA1A00B9B856 /* btConvexHullShape.cpp in Sources */,
@@ -11718,6 +12074,7 @@
 				503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */,
 				15AE197719AAD35700C27E9E /* CCActionTimeline.cpp in Sources */,
 				15AE19B419AAD39700C27E9E /* TextAtlasReader.cpp in Sources */,
+				B6DD2FA81B04825B00E47F5F /* DebugDraw.cpp in Sources */,
 				B665E2A31AA80A6500DDB1C5 /* CCPUEventHandlerManager.cpp in Sources */,
 				B6CAB3601AF9AA1A00B9B856 /* gim_tri_collision.cpp in Sources */,
 				15AE194019AAD35100C27E9E /* CCBone.cpp in Sources */,
@@ -11744,9 +12101,11 @@
 				B6CAB1FA1AF9AA1A00B9B856 /* btDbvtBroadphase.cpp in Sources */,
 				15AE1A4319AAD3D500C27E9E /* b2DynamicTree.cpp in Sources */,
 				15AE1A3A19AAD3D500C27E9E /* b2BroadPhase.cpp in Sources */,
+				B6DD2FC81B04825B00E47F5F /* DetourNavMeshBuilder.cpp in Sources */,
 				B665E42B1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffector.cpp in Sources */,
 				B665E3371AA80A6500DDB1C5 /* CCPUOnEmissionObserverTranslator.cpp in Sources */,
 				15AE19B619AAD39700C27E9E /* TextBMFontReader.cpp in Sources */,
+				B6DD2FBE1B04825B00E47F5F /* DetourCommon.cpp in Sources */,
 				15AE1BFD19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
 				B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				38F5263F1A48363B000DB7F7 /* ArmatureNodeReader.cpp in Sources */,
@@ -11842,6 +12201,7 @@
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				50ABBEC61925AB6F00A911A9 /* etc1.cpp in Sources */,
 				50ABBE8C1925AB6F00A911A9 /* CCNS.cpp in Sources */,
+				B6DD2FAC1B04825B00E47F5F /* DetourDebugDraw.cpp in Sources */,
 				B29A7DE019EE1B7700872B35 /* IkConstraintData.c in Sources */,
 				B6CAB40C1AF9AA1A00B9B856 /* btMultiBodyJointMotor.cpp in Sources */,
 				B6CAB2D21AF9AA1A00B9B856 /* btMultiSphereShape.cpp in Sources */,
@@ -11932,9 +12292,11 @@
 				B6CAB3821AF9AA1A00B9B856 /* btMinkowskiPenetrationDepthSolver.cpp in Sources */,
 				B6CAB3641AF9AA1A00B9B856 /* btContinuousConvexCollision.cpp in Sources */,
 				52B47A2F1A5349A3004E4C60 /* HttpAsynConnection.m in Sources */,
+				B6DD2FB41B04825B00E47F5F /* RecastDump.cpp in Sources */,
 				B665E23B1AA80A6500DDB1C5 /* CCPUCircleEmitter.cpp in Sources */,
 				15AE1B8019AADA9A00C27E9E /* UITextAtlas.cpp in Sources */,
 				15AE195919AAD35100C27E9E /* CCProcessBase.cpp in Sources */,
+				B6DD2FB81B04825B00E47F5F /* DetourAlloc.cpp in Sources */,
 				B665E3FF1AA80A6600DDB1C5 /* CCPUSphereCollider.cpp in Sources */,
 				15AE18D319AAD33D00C27E9E /* CCParticleSystemQuadLoader.cpp in Sources */,
 				B6CAB4CE1AF9AA1A00B9B856 /* SpuContactResult.cpp in Sources */,
@@ -11948,6 +12310,7 @@
 				15AE195719AAD35100C27E9E /* CCInputDelegate.cpp in Sources */,
 				B6CAB32A1AF9AA1A00B9B856 /* btGImpactCollisionAlgorithm.cpp in Sources */,
 				15AE1B8A19AADA9A00C27E9E /* UIImageView.cpp in Sources */,
+				B6DD2FD61B04825B00E47F5F /* DetourCrowd.cpp in Sources */,
 				50ABBD391925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
 				B6CAB5421AF9AA1A00B9B856 /* MiniCL.cpp in Sources */,
 				B6CAB4AE1AF9AA1A00B9B856 /* SpuCollisionTaskProcess.cpp in Sources */,
@@ -12036,6 +12399,7 @@
 				50ABBD5D1925AB0000A911A9 /* Vec3.cpp in Sources */,
 				B6CAB2061AF9AA1A00B9B856 /* btOverlappingPairCache.cpp in Sources */,
 				38B8E2D619E66581002D7CE7 /* CSLoader.cpp in Sources */,
+				B677B0CA1B18492D006762CB /* CCNavMesh.cpp in Sources */,
 				B665E3B31AA80A6500DDB1C5 /* CCPURendererTranslator.cpp in Sources */,
 				B6CAAFE71AF9A9E100B9B856 /* CCPhysics3DComponent.cpp in Sources */,
 				B6CAB2141AF9AA1A00B9B856 /* btActivatingCollisionAlgorithm.cpp in Sources */,
@@ -12066,6 +12430,7 @@
 				D0FD034C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */,
 				B665E31F1AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.cpp in Sources */,
 				B665E4331AA80A6600DDB1C5 /* CCPUVertexEmitter.cpp in Sources */,
+				B677B0DA1B18492D006762CB /* CCNavMeshUtils.cpp in Sources */,
 				B665E3C71AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.cpp in Sources */,
 				B6CAB26E1AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.cpp in Sources */,
 				50ABBED01925AB6F00A911A9 /* TGAlib.cpp in Sources */,
@@ -12083,7 +12448,9 @@
 				B6CAB3121AF9AA1A00B9B856 /* btUniformScalingShape.cpp in Sources */,
 				1A1645B3191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
 				15B3708519EE414C00ABE682 /* Downloader.cpp in Sources */,
+				B6DD2FEA1B04825B00E47F5F /* DetourProximityGrid.cpp in Sources */,
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
+				B6DD2FD01B04825B00E47F5F /* DetourNode.cpp in Sources */,
 				B6CAB2DE1AF9AA1A00B9B856 /* btScaledBvhTriangleMeshShape.cpp in Sources */,
 				15AE180D19AAD2F700C27E9E /* CCAnimate3D.cpp in Sources */,
 				B6CAB1EE1AF9AA1A00B9B856 /* btBroadphaseProxy.cpp in Sources */,

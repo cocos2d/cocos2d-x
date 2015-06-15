@@ -2026,6 +2026,16 @@ renderer
 },
 
 /**
+ * @method stepPhysicsAndNavigation
+ * @param {float} arg0
+ */
+stepPhysicsAndNavigation : function (
+float 
+)
+{
+},
+
+/**
  * @method onProjectionChanged
  * @param {cc.EventCustom} arg0
  */

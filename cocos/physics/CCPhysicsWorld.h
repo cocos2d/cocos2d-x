@@ -80,7 +80,9 @@ typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsQueryRec
 typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 
 /**
- * @addtogroup core
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_2d
  * @{
  */
 
@@ -415,6 +417,8 @@ protected:
 extern const float CC_DLL PHYSICS_INFINITY;
 
 /** @} */
+/** @} */
+
 NS_CC_END
 
 #endif // CC_USE_PHYSICS

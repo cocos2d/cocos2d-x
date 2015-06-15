@@ -41,7 +41,7 @@ void ClippingRectangleNode::onBeforeVisitScissor()
 {
     if (_clippingEnabled) {
         glEnable(GL_SCISSOR_TEST);
-        
+
         float scaleX = _scaleX;
         float scaleY = _scaleY;
         Node *parent = this->getParent();

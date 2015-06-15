@@ -1,3 +1,5 @@
+#include "base/ccConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #ifndef __cocos2dx_experimental_video_h__
 #define __cocos2dx_experimental_video_h__
 
@@ -29,5 +31,6 @@ bool js_cocos2dx_experimental_video_VideoPlayer_isPlaying(JSContext *cx, uint32_
 bool js_cocos2dx_experimental_video_VideoPlayer_seekTo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_VideoPlayer(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_experimental_video_h__
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

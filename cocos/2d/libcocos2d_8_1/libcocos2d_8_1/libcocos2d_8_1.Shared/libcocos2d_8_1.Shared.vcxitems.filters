@@ -1783,6 +1783,16 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.h">
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.h">
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.h">
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.h">
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.h">
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.h" />
@@ -3402,6 +3412,17 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.cpp">
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.cpp">
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.cpp">
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.cpp">
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.cpp">
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\AudioEngine.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.cpp" />

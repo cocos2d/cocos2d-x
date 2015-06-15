@@ -38,7 +38,7 @@ THE SOFTWARE.
 #endif
 
 /**
-* @addtogroup core
+* @addtogroup audio
 * @{
 */
 
