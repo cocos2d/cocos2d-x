@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "math/Vec4.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
