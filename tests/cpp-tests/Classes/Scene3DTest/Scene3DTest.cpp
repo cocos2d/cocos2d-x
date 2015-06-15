@@ -213,7 +213,6 @@ bool Scene3DTestScene::init()
         ////////////////////////////////////////////////////////////////////////
         // create world 3D scene, this scene has two camera
         _worldScene = Node::create();
-        // disable default camera
         // create a camera to look the skybox
         ca = _gameCameras[CAMERA_WORLD_3D_SKYBOX] =
             Camera::createPerspective(60,
