@@ -7,7 +7,7 @@
 @defgroup network           Network
 @defgroup physics           Physics
 @defgroup physics_2d        Physics 2D
-@defgroup platform          Platform
+@defgroup platform          Platform Specific
 @defgroup renderer          Renderer
 @defgroup storage           Storage
 @defgroup ui                UI Nodes
