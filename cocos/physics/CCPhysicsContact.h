@@ -57,6 +57,8 @@ typedef struct CC_DLL PhysicsContactData
 /**
  * @addtogroup physics
  * @{
+ * @addtogroup physics_2d
+ * @{
  */
 
 /**
@@ -307,6 +309,7 @@ protected:
     virtual ~EventListenerPhysicsContactWithGroup();
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

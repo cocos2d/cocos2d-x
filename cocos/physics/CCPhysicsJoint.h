@@ -42,6 +42,8 @@ class PhysicsWorld;
 /**
  * @addtogroup physics
  * @{
+ * @addtogroup physics_2d
+ * @{
  */
 
 /**
@@ -567,6 +569,8 @@ protected:
 };
 
 /** @} */
+/** @} */
+
 
 NS_CC_END
 

@@ -61,6 +61,9 @@ const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT;
 /**
  *  @addtogroup physics
  *  @{
+ *  @addtogroup physics_2d
+ *  @{
+
  */
 
 /**
@@ -718,6 +721,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

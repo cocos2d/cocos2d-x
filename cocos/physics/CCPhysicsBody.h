@@ -50,6 +50,8 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
 /**
  * @addtogroup physics
  * @{
+ * @addtogroup physics_2d
+ * @{
  */
 
 /**
@@ -560,6 +562,8 @@ protected:
 };
 
 /** @} */
+/** @} */
+
 
 NS_CC_END
 
