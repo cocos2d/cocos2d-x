@@ -892,12 +892,14 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
     {
         path += "/";
     }
-
-    std::string newpath = std::string(path);
-    auto iter = std::find(_searchPathArray.begin(), _searchPathArray.end(), newpath);
+    
+    auto iter = std::find(_searchPathArray.begin(), _searchPathArray.end(), searchpath);
     if (iter != _searchPathArray.cend())
     {
-        _searchPathArray.erase(iter);
+        if (front)
+            _searchPathArray.erase(iter);
+        else
+            return;
     }
 
     if (front) {
