@@ -348,16 +348,7 @@ void Layout::onBeforeVisitStencil()
     RenderState::StateBlock::_defaultState->setDepthWrite(false);
 
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    RenderState::StateBlock::_defaultState->setStencilFunction(
-                                                               RenderState::STENCIL_NEVER,
-                                                               mask_layer,
-                                                               mask_layer);
-
     glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
-    RenderState::StateBlock::_defaultState->setStencilOperation(
-                                                                RenderState::STENCIL_OP_ZERO,
-                                                                RenderState::STENCIL_OP_KEEP,
-                                                                RenderState::STENCIL_OP_KEEP);
 
 
     this->drawFullScreenQuadClearStencil();
