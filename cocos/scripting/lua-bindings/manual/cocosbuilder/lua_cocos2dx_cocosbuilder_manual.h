@@ -39,12 +39,17 @@ TOLUA_API int register_all_cocos2dx_cocosbuilder_manual(lua_State* tolua_S);
  * @{
  */
 
-/**
+/**@~english
  * Call this function can import the lua bindings for the cocosbuilder module.
  * After registering, we could call the related cocosbuilder code conveniently in the lua.eg,.cc.CCBProxy:create().
  * If you don't want to use the cocosbuilder module in the lua, you only don't call this registering function.
  * If you don't register the cocosbuilder module, the package size would become smaller .
  * The current mechanism,this registering function is called in the lua_module_register.h
+ * @~chinese 
+ * 调用这个函数可以将cocosbuilder模块绑定到Lua层。
+ * 调用这个注册函数后，我们可以方便地在Lua层调用cocosbuilder相关的代码，例如：cc.CCBProxy:create().
+ * 如果你不想使用cocosbuilder模块，那么你就无需调用这个注册函数。这种情况下，最终包的大小也会变得更小一些。
+ * 目前的机制,这个函数在lua_module_register.h中被调用。
  */
 TOLUA_API int register_cocosbuilder_module(lua_State* tolua_S);
 

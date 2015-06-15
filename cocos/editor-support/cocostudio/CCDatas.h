@@ -65,7 +65,8 @@ public: \
 namespace cocostudio {
 
 /**
- * The base node include a lot of attributes.
+ * @~english The base node include a lot of attributes.
+ * @~chinese 根节点包含很多属性。
  * @js NA
  * @lua NA
  */
@@ -85,20 +86,35 @@ public:
     ~BaseData(void);
 
     /*
-    * Copy data from node
-    * @param  node A BaseData to copy data
+    * @~english Copy data from node.
+    * @~chinese 从节点复制数据。
+    * @param node @~english A `BaseData` to be copied.
+    * @~chinese 要复制的`BaseData`对象。
     */
     virtual void copy(const BaseData *node);
 
     /*
-    * Calculate two BaseData's between value(to - from) and set to self
-    *
-    * @param  from   from BaseData
-    * @param  to     to BaseData
+    * @~english Calculate two `BaseData`'s between value(to - from) and set to self.
+    * @~chinese 计算两个`BaseData`的间距，并设置到自身。
+    * @param from @~english from `BaseData`. @~chinese 自`BaseData`。
+    * @param to @~english to `BaseData`. @~chinese 到`BaseData`。
     */
     virtual void subtract(BaseData *from, BaseData *to, bool limit);
 
+    /*
+    * @~english Set color.
+    * @~chinese 设置颜色。
+    * @param color @~english Color. 
+    * @~chinese 颜色。
+    */
     virtual void setColor(const cocos2d::Color4B &color);
+
+    /*
+    * @~english Get color.
+    * @~chinese 获取颜色。
+    * @return @~english Color.
+    * @~chinese 颜色。
+    */
     virtual cocos2d::Color4B getColor();
 public:
     float x;					//! position x attribute
@@ -143,6 +159,14 @@ class CC_STUDIO_DLL DisplayData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM_NO_INIT(DisplayData)
 
+    /*
+    * @~english Change display to texutre.
+    * @~chinese 将显示更换至材质。。
+    * @param displayName @~english Display name.
+    * @~chinese 显示名称。
+    * @return @~english New display name.
+    * @~chinese 新的显示名称。
+    */
     static const std::string changeDisplayToTexture(const std::string& displayName);
 public:
 	/**
@@ -155,6 +179,12 @@ public:
      */
     virtual ~DisplayData(void) {}
 
+    /*
+    * @~english Copy data from displayData.
+    * @~chinese 从显示数据复制数据。
+    * @param node @~english A `DisplayData` to be copied.
+    * @~chinese 要复制的`DisplayData`对象。
+    */
     virtual void copy(DisplayData *displayData);
 
     DisplayType displayType;	//! mark which type your display is
@@ -181,6 +211,12 @@ public:
      */
     virtual ~SpriteDisplayData() {};
 
+    /*
+    * @~english Copy data from displayData.
+    * @~chinese 从显示数据复制数据。
+    * @param node @~english A `DisplayData` to be copied.
+    * @~chinese 要复制的`DisplayData`对象。
+    */
     void copy(DisplayData *displayData);
 public:
     BaseData skinData;
@@ -229,9 +265,11 @@ public:
 
 
 /**
-* BoneData used to init a Bone.
+* @~english BoneData used to init a Bone.
 * BoneData keeps a DisplayData list, a Bone can have many display to change.
 * The display information saved in the DisplayData
+* @~chinese 用来初始化一段骨头的骨头数据。含有一个显示数据列表，骨头可以据据此进行多个显示的切换。
+* 显示数据中包含显示信息。
 * @js NA
 * @lua NA
 */
@@ -252,7 +290,22 @@ public:
 
     virtual bool init();
 
+    /*
+    * @~english Add displayData.
+    * @~chinese 增加显示数据。
+    * @param displayData @~english A `DisplayData` to be added.
+    * @~chinese 要增加的`DisplayData`对象。
+    */
     void addDisplayData(DisplayData *displayData);
+
+    /*
+    * @~english Get displayData.
+    * @~chinese 获取显示数据。
+    * @param index @~english The displayData's index.
+    * @~chinese 显示数据的索引。
+    * @return @~english The displayData.
+    * @~chinese 显示数据。
+    */
     DisplayData *getDisplayData(int index);
 public:
     std::string name;                //! the bone's name
@@ -263,9 +316,11 @@ public:
 
 
 /**
-* ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
+* @~english ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
 * When we create a Armature, we need to get each Bone's BoneData as it's init information.
-* So we can get a BoneData from the Dictionary saved in the ArmatureData.
+* So we can get a `BoneData` from the Dictionary saved in the ArmatureData.
+* @~chinese 骨骼数据保存骨骼的名称和骨骼中的`CCBone`对象们所需的骨头数据，当创建骨骼的时候，需要获得每段骨头的骨头数据作为其初始化信息。
+* 因此可以从骨骼数据中保存的`BoneData`集合中获取其中的骨头数据。
 * @js NA
 * @lua NA
 */
@@ -285,7 +340,23 @@ public:
     ~ArmatureData();
 
     bool init();
+
+    /*
+    * @~english Add boneData.
+    * @~chinese 增加骨头数据。
+    * @param boneData @~english A `BoneData` to be added.
+    * @~chinese 要增加的`BoneData`对象。
+    */
     void addBoneData(BoneData *boneData);
+
+    /*
+    * @~english Get boneData.
+    * @~chinese 获取骨头数据。
+    * @param boneName @~english The boneData's name.
+    * @~chinese 骨头数据的名称。
+    * @return @~english The boneData.
+    * @~chinese 骨头数据。
+    */
     BoneData *getBoneData(const std::string& boneName);
 public:
     std::string name;
@@ -330,6 +401,12 @@ public:
      */
     ~FrameData();
 
+    /*
+    * @~english Copy data from node.
+    * @~chinese 从节点复制数据。
+    * @param node @~english A `BaseData` to be copied.
+    * @~chinese 要复制的`BaseData`对象。
+    */
     virtual void copy(const BaseData *baseData);
 public:
     int frameID;
@@ -379,7 +456,22 @@ public:
 
     virtual bool init();
 
+    /*
+    * @~english Add frameData.
+    * @~chinese 增加帧数据。
+    * @param boneData @~english A `FrameData` to be added.
+    * @~chinese 要增加的`FrameData`对象。
+    */
     void addFrameData(FrameData *frameData);
+
+    /*
+    * @~english Get frameData.
+    * @~chinese 获取帧数据。
+    * @param index @~english The frameData's index.
+    * @~chinese 帧数据的索引。
+    * @return @~english The frameData.
+    * @~chinese 帧数据。
+    */
     FrameData *getFrameData(int index);
 public:
     float delay;             //! movement delay percent, this value can produce a delay effect
@@ -409,7 +501,22 @@ public:
      */
     ~MovementData(void);
 
+    /*
+    * @~english Add movBoneData.
+    * @~chinese 增加活动骨头数据。
+    * @param movBoneData @~english A `MovementBoneData` to be added.
+    * @~chinese 要增加的`MovementBoneData`对象。
+    */
     void addMovementBoneData(MovementBoneData *movBoneData);
+
+    /*
+    * @~english Get movBoneData.
+    * @~chinese 获取活动骨头数据。
+    * @param boneName @~english The boneData's name.
+    * @~chinese 活动骨头数据的名称。
+    * @return @~english The movBoneData.
+    * @~chinese 活动骨头数据。
+    */
     MovementBoneData *getMovementBoneData(const std::string& boneName);
 public:
     std::string name;
@@ -471,8 +578,30 @@ public:
      */
     ~AnimationData(void);
 
+    /*
+    * @~english Add movement data.
+    * @~chinese 增加活动数据。
+    * @param movData @~english A `MovementData` to be added.
+    * @~chinese 要增加的`MovementData`对象。
+    */
     void addMovement(MovementData *movData);
+
+    /*
+    * @~english Get movement data.
+    * @~chinese 获取活动数据。
+    * @param movementName @~english The movement data's name.
+    * @~chinese 活动数据的名称。
+    * @return @~english The movement data.
+    * @~chinese 活动数据。
+    */
     MovementData *getMovement(const std::string& movementName);
+
+    /*
+    * @~english Get movement data's count.
+    * @~chinese 获取活动数据的总数。
+    * @return @~english Movement data's count.
+    * @~chinese 活动数据的总数。
+    */
     ssize_t getMovementCount();
 public:
     std::string name;
@@ -503,6 +632,12 @@ public:
     ~ContourData(void);
 
     virtual bool init();
+    /*
+    * @~english Add vertext.
+    * @~chinese 增加顶点。
+    * @param vertex @~english A vertex to be added.
+    * @~chinese 要增加的顶点。
+    */
     virtual void addVertex(cocos2d::Vec2 &vertex);
 public:
     std::vector<cocos2d::Vec2> vertexList;	//! Save contour vertex info, vertex saved in a Vec2
@@ -533,7 +668,22 @@ public:
 
     virtual bool init();
 
+    /*
+    * @~english Add contour data.
+    * @~chinese 增加轮廓数据。
+    * @param contourData @~english A `ContourData` to be added.
+    * @~chinese 要增加的`ContourData`对象。
+    */
     void addContourData(ContourData *contourData);
+
+    /*
+    * @~english Get contour data.
+    * @~chinese 获取轮廓数据。
+    * @param index @~english The contour data's index.
+    * @~chinese 轮廓数据的索引。
+    * @return @~english The contour data.
+    * @~chinese 轮廓数据。
+    */
     ContourData *getContourData(int index);
 public:
 

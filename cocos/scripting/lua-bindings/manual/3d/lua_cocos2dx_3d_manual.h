@@ -37,12 +37,18 @@ extern "C" {
  * @{
  */
 
-/**
- * Call this function can import the lua bindings for the cocos3d module.
- * After registering, we could call the related cocos3d code conveniently in the lua.eg,.cc.Sprite3D:create(modlepath).
+/**@~english
+ * Call this function can import the lua bindings for the 3D module of cocos2d-x.
+ * After registering, we could call the related 3D code conveniently in the lua.eg,.cc.Sprite3D:create(modlepath).
  * If you don't want to use the cocos3d module in the lua, you only don't call this registering function.
- * If you don't register the cocos3d module, the package size would become smaller .
+ * If you don't register the 3D module, the package size would become smaller .
  * The current mechanism,this function is called in the lua_module_register.h
+ * @~chinese 
+ * 调用这个函数可以将cocos2d-x中的3d模块绑定到Lua层。
+ * 调用这个注册函数后，我们可以方便地在Lua层调用相关的3D代码，例如：cc.Sprite3D:create(modlepath).
+ * 如果你不想使用3D模块，那么你就无需调用这个注册函数。
+ * 如果你没有注册3D模块,最终包的大小会变得更小。
+ * 目前的机制,这个函数在lua_module_register.h中被调用。
  */
 TOLUA_API int  register_cocos3d_module(lua_State* L);
 

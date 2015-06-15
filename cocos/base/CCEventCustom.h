@@ -36,33 +36,50 @@
 NS_CC_BEGIN
 
 /** @class EventCustom
- * @brief Custom event.
+ * @brief @~english Custom event.
+ * @~chinese 用户自定义事件
  */
 class CC_DLL EventCustom : public Event
 {
 public:
-    /** Constructor.
-     *
-     * @param eventName A given name of the custom event.
+    /** 
+     * @~english Constructor.
+     * @~chinese 构造函数
+     * @param eventName
+     * @~english A given name of the custom event. 
+     * @~chinese 设置一个自定义事件名称
      * @js ctor
      */
     EventCustom(const std::string& eventName);
     
-    /** Sets user data.
+    /**
+     * @~english Sets user data. 
+     * @~chinese 设置用户数据
      *
-     * @param data The user data pointer, it's a void*.
+     * @param data
+     * @~english  The user data pointer, it's a void*. 
+     * @~chinese 用户数据指针。类型是void*
      */
     inline void setUserData(void* data) { _userData = data; };
     
-    /** Gets user data.
+    /**
+     * @~english Gets user data. 
+     * @~chinese 获取用户数据
      *
-     * @return The user data pointer, it's a void*.
+     * @return
+     * @~english The user data pointer, it's a void*. 
+     * @~chinese 用户数据指针。类型是void*
      */
     inline void* getUserData() const { return _userData; };
     
-    /** Gets event name.
+    /**
+     *@~english Gets event name. 
+     *@~chinese 获取事件名称
      *
-     * @return The name of the event.
+     *
+     * @return
+     * @~english The name of the event. 
+     * @~chinese 获取自定义事件名
      */
     inline const std::string& getEventName() const { return _eventName; };
 protected:
