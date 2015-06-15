@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -45,7 +45,7 @@ NS_CC_BEGIN
 /**
  * @addtogroup _3d
  * @{
- */
+*/
 
 class Physics3DObject;
 class Physics3DConstraint;
@@ -55,8 +55,9 @@ class Physics3DShape;
 class Renderer;
 
 /**
- * @brief The description of Physics3DWorld.
- */
+ * @brief @~english The description of Physics3DWorld.
+   @~chinese Physics3DWorld的描述信息
+*/
 struct CC_DLL Physics3DWorldDes
 {
     bool           isDebugDrawEnabled; //using physics debug draw?, false by default
@@ -69,89 +70,113 @@ struct CC_DLL Physics3DWorldDes
 };
 
 /**
- * @brief The physics information container, include Physics3DObjects, Physics3DConstraints, collision information and so on.
- */
+ * @brief @~english The physics information container, include Physics3DObjects, Physics3DConstraints, collision information and so on.
+   @~chinese 物理信息的容器，包括Physics3DObjects ， Physics3DConstraints ，碰撞等信息。
+*/
 class CC_DLL Physics3DWorld : public Ref
 {
     friend class Physics3DComponent;
 public:
-    
+
     struct HitResult
     {
         cocos2d::Vec3 hitPosition;
         cocos2d::Vec3 hitNormal;
         Physics3DObject* hitObj;
     };
-    
-    /**
-     * Creates a Physics3DWorld with Physics3DWorldDes. 
-     *
-     * @return An autoreleased Physics3DWorld object.
-     */
+
+    /** @~english Creates a Physics3DWorld with Physics3DWorldDes.
+     @~chinese 创建一个physics3dworld与physics3dworlddes。
+     * @return @~english An autoreleased Physics3DWorld object. @~chinese 一个自动释放的physics3dworld对象。
+    */
     static Physics3DWorld* create(Physics3DWorldDes* info);
-    
-    /** Add a Physics3DObject. */
+
+    /** @~english Add a Physics3DObject.
+    @~chinese 添加一个physics3dobject。
+    */
     void addPhysics3DObject(Physics3DObject* physicsObj);
-    
-    /** Remove a Physics3DObject. */
+
+    /** @~english Remove a Physics3DObject.
+    @~chinese 删除一个physics3dobject。
+    */
     void removePhysics3DObject(Physics3DObject* physicsObj);
-    
-    /** Remove all Physics3DObjects. */
+
+    /** @~english Remove all Physics3DObjects.
+    @~chinese 删除所有physics3dobjects。
+    */
     void removeAllPhysics3DObjects();
-    
-    /** Add a Physics3DConstraint. */
+
+    /** @~english Add a Physics3DConstraint.
+    @~chinese 添加一个physics3dconstraint。
+    */
     void addPhysics3DConstraint(Physics3DConstraint* constraint, bool disableCollisionsBetweenLinkedObjs = true);
-    
-    /** Remove a Physics3DConstraint. */
+
+    /** @~english Remove a Physics3DConstraint.
+    @~chinese 删除一个physics3dconstraint。
+    */
     void removePhysics3DConstraint(Physics3DConstraint* constraint);
-    
-    /** Remove all Physics3DConstraint. */
+
+    /** @~english Remove all Physics3DConstraint.
+    @~chinese 删除所有physics3dconstraint。
+    */
     void removeAllPhysics3DConstraints();
-    
-    /** Simulate one frame. */
+
+    /** @~english Simulate one frame.
+    @~chinese 模拟一架。
+    */
     void stepSimulate(float dt);
-    
-    /** Enable or disable debug drawing. */
+
+    /** @~english Enable or disable debug drawing.
+    @~chinese 启用或禁用调试绘图。
+    */
     void setDebugDrawEnable(bool enableDebugDraw);
-    
-    /** Check debug drawing is enabled. */
+
+    /** @~english Check debug drawing is enabled.
+    @~chinese 检查调试绘图功能。
+    */
     bool isDebugDrawEnabled() const;
-    
-    /** Internal method, the updater of debug drawing, need called each frame. */
+
+    /** @~english Internal method, the updater of debug drawing, need called each frame.
+    @~chinese 内部方法，更新调试绘图，需要每帧调用。
+    */
     void debugDraw(cocos2d::Renderer* renderer);
-    
-    /** Get the list of Physics3DObjects. */
+
+    /** @~english Get the list of Physics3DObjects.
+    @~chinese 得到physics3dobjects列表。
+    */
     const std::vector<Physics3DObject*>& getPhysicsObjects() const { return _objects; }
-    
-    /**
-     * Ray cast method
-     * @param startPos The start position of ray.
-     * @param endPos The end position of ray.
-     * @param result the result of ray cast.
+
+    /** @~english Ray cast method
+     @~chinese 光线投射法
+     * @param startPos @~english  The start position of ray. @~chinese 射线的起始位置。
+     * @param endPos @~english  The end position of ray. @~chinese 射线的结束位置。
+     * @param result @~english  the result of ray cast. @~chinese 射线结果投。
      */
     bool rayCast(const cocos2d::Vec3& startPos, const cocos2d::Vec3& endPos, HitResult* result);
-    
-    /** Performs a swept shape cast on all objects in the Physics3DWorld. */
+
+    /** @~english Performs a swept shape cast on all objects in the Physics3DWorld.
+    @~chinese 执行掠形铸在physics3dworld所有对象。
+    */
     bool sweepShape(Physics3DShape* shape, const cocos2d::Mat4& startTransform, const cocos2d::Mat4& endTransform, HitResult* result);
-    
+
 CC_CONSTRUCTOR_ACCESS:
-    
+
     Physics3DWorld();
     virtual ~Physics3DWorld();
-    
+
     bool init(Physics3DWorldDes* info);
-    
+
     Physics3DObject* getPhysicsObject(const btCollisionObject* btObj);
 
     void collisionChecking();
     bool needCollisionChecking();
-    
+
 protected:
     std::vector<Physics3DObject*>      _objects;
     std::vector<Physics3DComponent*>   _physicsComponents; //physics3d components
     bool _needCollisionChecking;
     bool _collisionCheckingFlag;
-    
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btDynamicsWorld* _btPhyiscsWorld;
     btDefaultCollisionConfiguration* _collisionConfiguration;

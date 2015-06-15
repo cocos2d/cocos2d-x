@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -37,13 +37,14 @@ class btCollisionShape;
 
 NS_CC_BEGIN
 /**
- * @addtogroup _3d
- * @{
- */
+    @addtogroup _3d
+    @{
+*/
 
 /**
- * @brief Create a physical shape(box, sphere, cylinder, capsule, convexhull, mesh and heightfield)
- */
+    @brief @~english Create a physical shape(box, sphere, cylinder, capsule, convexhull, mesh and heightfield)
+    @~chinese 创建一个物理形状（盒，球面，柱面，胶囊剂，凸形轮廓，网和heightfield ）
+*/
 class CC_DLL Physics3DShape : public Ref
 {
 public:
@@ -59,101 +60,106 @@ public:
         HEIGHT_FIELD,
         COMPOUND
     };
-    
-    /**
-     * get shape type
-     */
+
+    /** @~english get shape type
+        @~chinese 得到的形状类型
+    */
     virtual ShapeType getShapeType() const;
-    
-    /**
-     * create box shape
-     * @param extent The extent of sphere.
-     */
+
+    /** @~english create box shape
+        @~chinese 创建箱体形状
+        @param extent @~english  The extent of sphere. @~chinese 球体的程度。
+    */
     static Physics3DShape* createBox(const cocos2d::Vec3& extent);
-    
-    /**
-     * create sphere shape
-     * @param radius The radius of sphere.
-     */
+
+    /** @~english create sphere shape
+        @~chinese 创建球体形状
+        @param radius @~english  The radius of sphere. @~chinese 球半径。
+    */
     static Physics3DShape* createSphere(float radius);
-    
-    /**
-     * create cylinder shape
-     * @param radius The radius of cylinder.
-     * @param height The height.
-     */
+
+    /** @~english create cylinder shape
+        @~chinese 创建圆柱体
+        @param radius @~english  The radius of cylinder. @~chinese 圆柱体的半径。
+        @param height @~english  The height. @~chinese 高度。
+    */
     static Physics3DShape* createCylinder(float radius, float height);
-    
-    /**
-     * create capsule shape
-     * @param radius The radius of casule.
-     * @param height The height (cylinder part).
-     */
+
+    /** @~english create capsule shape
+        @~chinese 创建胶囊的形状
+        @param radius @~english  The radius of casule. @~chinese 对胶囊的半径。
+        @param height @~english  The height (cylinder part). @~chinese 高度（筒）。
+    */
     static Physics3DShape* createCapsule(float radius, float height);
 
-    /**
-     * create convex hull
-     * @param points The vertices of convex hull
-     * @param numPoints The number of vertices.
-     */
-    static Physics3DShape* createConvexHull(const cocos2d::Vec3 *points, int numPoints);
+    /** @~english create convex hull
+        @~chinese 创建凸壳
+        @param points @~english  The vertices of convex hull @~chinese 凸壳的顶点
+        @param numPoints @~english  The number of vertices. @~chinese 顶点个数。
+    */
+    static Physics3DShape* createConvexHull(const cocos2d::Vec3* points, int numPoints);
 
-    /**
-     * create mesh
-     * @param triangles The pointer of triangle list
-     * @param numTriangles The number of triangles.
-     */
-    static Physics3DShape* createMesh(const cocos2d::Vec3 *triangles, int numTriangles);
+    /** @~english create mesh
+        @~chinese 创建网格
+        @param triangles @~english  The pointer of triangle list @~chinese 三角形列表的指针
+        @param numTriangles @~english  The number of triangles. @~chinese 三角形数。
 
-    /**
-     * create heightfield
-     * @param heightStickWidth The Width of heightfield
-     * @param heightStickLength The Length of heightfield.
-     * @param heightfieldData The Data of heightfield.
-     * @param minHeight The minHeight of heightfield.
-     * @param maxHeight The maxHeight of heightfield.
-     * @param flipQuadEdges if flip QuadEdges
-     */
+    */
+    static Physics3DShape* createMesh(const cocos2d::Vec3* triangles, int numTriangles);
+
+    /** @~english create heightfield
+        @~chinese 创建地形
+        @param heightStickWidth @~english  The Width of heightfield @~chinese 对地形的宽度
+        @param heightStickLength @~english  The Length of heightfield. @~chinese 对地形的长度。
+        @param heightfieldData @~english  The Data of heightfield. @~chinese 对地形数据。
+        @param minHeight @~english  The minHeight of heightfield. @~chinese 对地形的minheight。
+        @param maxHeight @~english  The maxHeight of heightfield. @~chinese 对地形的最大高度。
+        @param flipQuadEdges @~english  if flip QuadEdges @~chinese 如果quadedges翻转
+
+    */
     static Physics3DShape* createHeightfield(int heightStickWidth,int heightStickLength
-        , const void* heightfieldData, float heightScale
-        , float minHeight, float maxHeight
-        , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
+            , const void* heightfieldData, float heightScale
+            , float minHeight, float maxHeight
+            , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
 
-    /**
-     * create Compound Shape
-     * @param shapes The list of child shape
-     */
-    static Physics3DShape* createCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
+    /** @~english create Compound Shape
+        @~chinese 创建复合形状
+        @param shapes @~english  The list of child shape @~chinese 儿童形状列表
+    */
+    static Physics3DShape* createCompoundShape(const std::vector<std::pair<Physics3DShape*, Mat4>>& shapes);
 
-    
+
 #if CC_ENABLE_BULLET_INTEGRATION
-    btCollisionShape* getbtShape() const { return _btShape; }
+    btCollisionShape* getbtShape() const
+    {
+        return _btShape;
+    }
 #endif
-    
+
 protected:
     Physics3DShape();
     ~Physics3DShape();
-    
+
     bool initBox(const cocos2d::Vec3& ext);
     bool initSphere(float radius);
     bool initCylinder(float radius, float height);
     bool initCapsule(float radius, float height);
-    bool initConvexHull(const cocos2d::Vec3 *points, int numPoints);
-    bool initMesh(const cocos2d::Vec3 *triangles, int numTriangles);
+    bool initConvexHull(const cocos2d::Vec3* points, int numPoints);
+    bool initMesh(const cocos2d::Vec3* triangles, int numTriangles);
     bool initHeightfield(int heightStickWidth,int heightStickLength
-        , const void* heightfieldData, float heightScale
-        , float minHeight, float maxHeight
-        , bool useFloatDatam, bool flipQuadEdges
-        , bool useDiamondSubdivision);
-    bool initCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
-    
-    
+                         , const void* heightfieldData, float heightScale
+                         , float minHeight, float maxHeight
+                         , bool useFloatDatam, bool flipQuadEdges
+                         , bool useDiamondSubdivision);
+    bool initCompoundShape(const std::vector<std::pair<Physics3DShape*, Mat4>>& shapes);
+
+
     ShapeType _shapeType; //shape type
-    
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btCollisionShape*  _btShape;
-    unsigned char *_heightfieldData;
-    std::vector<Physics3DShape *> _compoundChildShapes;
+    unsigned char* _heightfieldData;
+    std::vector<Physics3DShape*> _compoundChildShapes;
 #endif
 };
 

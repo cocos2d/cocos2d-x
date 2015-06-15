@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -39,107 +39,138 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup _3d
- * @{
- */
+    @addtogroup _3d
+    @{
+*/
 
- /**
- * the maximum amount of the chunkes
- **/
+/**
+    the maximum amount of the chunkes
+**/
 #define MAX_CHUNKES 256
 
-  /**
-    * Terrain
-    * Defines a Terrain that is capable of rendering large landscapes from 2D heightmap images.
-    * Terrains can be constructed from several different internal formats heightmap sources:
-    *  1. RGB888
-    *  2. RGBA8888
-    *  3. Luminance(gray-scale)8
-    *  
-    *  Terrain use TerrainData struct to initialize.the TerrainData struct warp 
-    *  all parameters that Terrain initialization need.
-    *  TerrainData provide several handy constructor for users
-    *  
-    * Surface detail is provided via texture splatting, where multiple Detail texture layers can be added
-    * along with alpha map to define how different Detail texture blend with each other. These DetailTexture
-    * can be defined in TerrainData. The number of supported Detail texture is Four. although typically 2-3 levels is
-    * sufficient. For simple usage ,surface detail also is provided via simple Texture.
-    * 
-    * Internally, Terrain is divide into smaller, more manageable chunks, which can be culled
-    * separately for more efficient rendering. The size of the terrain chunks can be controlled
-    * via the chunkSize property in TerrainData.
-    * 
-    * Chunks are managed under the QuadTree.As DE FACTO terminal Node of the QuadTree;
-    * let us cull chunks efficientlly to reduce drawCall amount And reduce the VBOs'Size that pass to the GPU.
-    * 
-    * Level of detail (LOD) is supported using a technique that is similar to texture mipmapping -- called GeoMapping.
-    * A distance-to-camera based test used to decide
-    * the appropriate LOD for a terrain chunk. The number of LOD levels is 0 by default (which
-    * means only the base level is used),the maxium number of LOD levels is 4. Of course ,you can hack the value individually.
-    * 
-    * Finally, when LOD is enabled, cracks can begin to appear between terrain Chunks of
-    * different LOD levels. An acceptable solution might be to simply reduce the lower LOD(high detail,smooth) chunks border,
-    * And let the higher LOD(rough) chunks to seamlessly connect it.
-    * 
-    * We can use ray-terrain intersection to pick a point of the terrain;
-    * Also we can get an arbitrary point of the terrain's height and normal vector for convenience .
-    **/
+/** @class Terrain
+    @brief @~english Defines a Terrain that is capable of rendering large landscapes from 2D heightmap images.
+    Terrains can be constructed from several different internal formats heightmap sources:
+     1. RGB888
+     2. RGBA8888
+     3. Luminance(gray-scale)8
+
+     Terrain use TerrainData struct to initialize.the TerrainData struct warp
+     all parameters that Terrain initialization need.
+     TerrainData provide several handy constructor for users
+
+    Surface detail is provided via texture splatting, where multiple Detail texture layers can be added
+    along with alpha map to define how different Detail texture blend with each other. These DetailTexture
+    can be defined in TerrainData. The number of supported Detail texture is Four. although typically 2-3 levels is
+    sufficient. For simple usage ,surface detail also is provided via simple Texture.
+
+    Internally, Terrain is divide into smaller, more manageable chunks, which can be culled
+    separately for more efficient rendering. The size of the terrain chunks can be controlled
+    via the chunkSize property in TerrainData.
+
+    Chunks are managed under the QuadTree.As DE FACTO terminal Node of the QuadTree;
+    let us cull chunks efficientlly to reduce drawCall amount And reduce the VBOs'Size that pass to the GPU.
+
+    Level of detail (LOD) is supported using a technique that is similar to texture mipmapping -- called GeoMapping.
+    A distance-to-camera based test used to decide
+    the appropriate LOD for a terrain chunk. The number of LOD levels is 0 by default (which
+    means only the base level is used),the maxium number of LOD levels is 4. Of course ,you can hack the value individually.
+
+    Finally, when LOD is enabled, cracks can begin to appear between terrain Chunks of
+    different LOD levels. An acceptable solution might be to simply reduce the lower LOD(high detail,smooth) chunks border,
+    And let the higher LOD(rough) chunks to seamlessly connect it.
+
+    We can use ray-terrain intersection to pick a point of the terrain;
+    Also we can get an arbitrary point of the terrain's height and normal vector for convenience .
+    @~chinese 定义一个地形，它能够从2D图像高度图生成。
+    地形可以从几个不同的内部格式高度图来构成：
+     1. RGB888
+     2. RGBA8888
+     3.亮度（灰度等级）8
+
+    表面细节是通过多个细节的纹理叠加实现
+  **/
 class CC_DLL Terrain : public Node
 {
 public:
 
-    /**the crack fix type. use to fix the gaps between different LOD chunks */
-    enum class CrackFixedType{
+    /** @~english the crack fix type. use to fix the gaps between different LOD chunks
+        @~chinese 裂纹修复类型。用来修复不同LOD块之间的间隙
+    */
+    enum class CrackFixedType
+    {
         SKIRT,
         INCREASE_LOWER,
     };
 
-   /**
-    *DetailMap
-    *this struct maintain a detail map data ,including source file ,detail size.
-    *the DetailMap can use for terrain splatting
-    **/
-    struct CC_DLL DetailMap{
+    /**
+        DetailMap
+        this struct maintain a detail map data ,including source file ,detail size.
+        the DetailMap can use for terrain splatting
+     **/
+    struct CC_DLL DetailMap
+    {
         /*Constructors*/
         DetailMap();
-        DetailMap(const char * detailMapSrc, float size = 35);
+        DetailMap(const char* detailMapSrc, float size = 35);
         /*detail Image source file path*/
         std::string _detailMapSrc;
         /*detailMapSize determine how many tiles that Terrain represent*/
         float _detailMapSize;
     };
 
-   /**
-    *TerrainData
-    *This TerrainData struct warp all parameter that Terrain need to create
+    /**
+        TerrainData
+        This TerrainData struct warp all parameter that Terrain need to create
     */
     struct CC_DLL TerrainData
     {
-        /**empty constructor*/
+        /** @~english empty constructor
+            @~chinese 空的构造函数
+        */
         TerrainData();
-        /**constructor, this constructor construct a simple terrain which only have 1 detailmap*/
-        TerrainData(const char* heightMapsrc, const char * textureSrc, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
-        /**constructor, this constructor construct a terrain which have 4 detailmaps, 1 alpha map*/
-        TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
-        /**constructor, this constructor construct a terrain which have 3 detailmaps, 1 alpha map*/
-        TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
-        /**
-        *deterimine the chunk size,chunk is the minimal subdivision of the Terrain
+        /** @~english constructor, this constructor construct a simple terrain which only have 1 detailmap
+            @~chinese 构造函数，该构造函数构造一个简单的地形，只有1 detailmap
+        */
+        TerrainData(const char* heightMapsrc, const char* textureSrc, const Size& chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
+        /** @~english constructor, this constructor construct a terrain which have 4 detailmaps, 1 alpha map
+            @~chinese 构造函数，该构造函数构造一个地形，有4个detailmaps，1个Alpha地图
+        */
+        TerrainData(const char* heightMapsrc, const char* alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size& chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
+        /** @~english constructor, this constructor construct a terrain which have 3 detailmaps, 1 alpha map
+            @~chinese 构造函数，该构造函数构造一个地形，有3个detailmaps，1个Alpha地图
+        */
+        TerrainData(const char* heightMapsrc, const char* alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const Size& chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
+        /** @~english deterimine the chunk size,chunk is the minimal subdivision of the Terrain
+            @~chinese 确定块大小，块是地形的最小细分
         */
         Size _chunkSize;
-        /**height Map source path*/
+        /** @~english height Map source path
+            @~chinese 高度图的源路径
+        */
         std::string _heightMapSrc;
-        /**the source path of the alpha map*/
+        /** @~english the source path of the alpha map
+            @~chinese alpha通道贴图的源路径
+        */
         char* _alphaMapSrc;
-        /**detail maps*/
+        /** @~english detail maps
+            @~chinese 详细的地图
+        */
         DetailMap _detailMaps[4];
-        /**terrain Maximum height*/
+        /** @~english terrain Maximum height
+            @~chinese 地形最大高度
+        */
         float _mapHeight;
-        /**terrain scale factor,you can combine setScale later.*/
+        /** @~english terrain scale factor,you can combine setScale later.
+            @~chinese 地形因子，你可以结合setScale以后。
+        */
         float _mapScale;
-        /**the amount of detailmap*/
+        /** @~english the amount of detailmap
+            @~chinese 对detailmap量
+        */
         int _detailMapAmount;
-        /**the skirt height ratio, only effect when terrain use skirt to fix crack*/
+        /** @~english the skirt height ratio, only effect when terrain use skirt to fix crack
+            @~chinese 裙边的高度比，仅当地形使用裙边类型修复裂缝时有效
         float _skirtHeightRatio;
     };
 private:
@@ -163,12 +194,12 @@ private:
         ChunkIndices _chunkIndices;
     };
     /*
-    *terrain vertices internal data format
+        terrain vertices internal data format
     **/
     struct TerrainVertexData
     {
         /*constructor*/
-        TerrainVertexData(){};
+        TerrainVertexData() {};
         TerrainVertexData(Vec3 v1, Tex2F v2)
         {
             _position = v1;
@@ -182,260 +213,374 @@ private:
 
     struct QuadTree;
     /*
-    *the terminal node of quad, use to subdivision terrain mesh and LOD
+        the terminal node of quad, use to subdivision terrain mesh and LOD
     **/
     struct Chunk
     {
-        /**Constructor*/
+        /** @~english Constructor
+            @~chinese 构造函数
+        */
         Chunk();
-        /**destructor*/
+        /** @~english destructor
+            @~chinese 析构函数
+        */
         ~Chunk();
-        /*vertices*/
+        /*  @~english vertices
+            @~chinese 顶点
+        */
         std::vector<TerrainVertexData> _originalVertices;
-        /*LOD indices*/
-        struct LOD{
+        /*  @~english LOD indices
+            @~chinese LOD索引
+        */
+        struct LOD
+        {
             std::vector<GLushort> _indices;
         };
         GLuint _vbo;
-        ChunkIndices _chunkIndices; 
-        /**we now support four levels of detail*/
+        ChunkIndices _chunkIndices;
+        /** @~english we now support four levels of detail
+            @~chinese 我们现在支持四个级别的详细
+        */
         LOD _lod[4];
-        /**AABB in local space*/
+        /** @~english AABB in local space
+            @~chinese 在局部空间AABB
+        */
         AABB _aabb;
-        /**setup Chunk data*/
-        void generate(int map_width, int map_height, int m, int n, const unsigned char * data);
-        /**calculateAABB*/
+        /** @~english setup Chunk data
+            @~chinese 设置数据块
+        */
+        void generate(int map_width, int map_height, int m, int n, const unsigned char* data);
+        /** @~english calculateAABB
+            @~chinese calculateaabb
+        */
         void calculateAABB();
-        /**internal use draw function*/
+        /** @~english internal use draw function
+            @~chinese 内部使用的绘制函数
+        */
         void bindAndDraw();
-        /**finish opengl setup*/
+        /** @~english finish opengl setup
+            @~chinese OpenGL设置完成
+        */
         void finish();
-        /*use linear-sample vertices for LOD mesh*/
+        /*  @~english use linear-sample vertices for LOD mesh
+            @~chinese 使用线性采样LOD网格顶点
+        */
         void updateVerticesForLOD();
-        /*updateIndices */
+        /*  @~english updateIndices
+            @~chinese updateindices
+        */
         void updateIndicesLOD();
 
         void updateIndicesLODSkirt();
 
-        /**calculate the average slop of chunk*/
+        /** @~english calculate the average slop of chunk
+            @~chinese 计算块的平均斜率
+        */
         void calculateSlope();
-        /**current LOD of the chunk*/
+        /** @~english current LOD of the chunk
+            @~chinese 当前的块LOD
+        */
         int _currentLod;
 
         int _oldLod;
 
         int _neighborOldLOD[4];
         /*the left,right,front,back neighbors*/
-        Chunk * _left;
-        Chunk * _right;
-        Chunk * _front;
-        Chunk * _back;
+        Chunk* _left;
+        Chunk* _right;
+        Chunk* _front;
+        Chunk* _back;
 
-        QuadTree * _parent;
+        QuadTree* _parent;
 
-        /**the position X in terrain space*/
+        /** @~english the position X in terrain space
+            @~chinese 位置x在地形空间
+        */
         int _posX;
-        /**the position Y in terrain space*/
+        /** @~english the position Y in terrain space
+            @~chinese 位置在地形空间
+        */
         int _posY;
-        /**parent terrain*/
-        Terrain * _terrain;
-        /**chunk size*/
+        /** @~english parent terrain
+            @~chinese 父母的地形
+        */
+        Terrain* _terrain;
+        /** @~english chunk size
+            @~chinese 块的大小
+        */
         Size _size;
-        /**chunk's estimated slope*/
+        /** @~english chunk's estimated slope
+            @~chinese 大块的斜率估计值
+        */
         float _slope;
         std::vector<TerrainVertexData> _currentVertices;
     };
 
-   /**
-    *QuadTree
-    * @breif use to hierarchically frustum culling and set LOD
-    **/
+    /**
+        QuadTree
+        @breif use to hierarchically frustum culling and set LOD
+     **/
     struct QuadTree
     {
-        /**constructor*/
-        QuadTree(int x, int y, int width, int height, Terrain * terrain);
-        /**destructor*/
+        /** @~english constructor
+            @~chinese 构造函数
+        */
+        QuadTree(int x, int y, int width, int height, Terrain* terrain);
+        /** @~english destructor
+            @~chinese 析构函数
+        */
         ~QuadTree();
-        /**recursively draw*/
+        /** @~english recursively draw
+            @~chinese 递归画
+        */
         void draw();
-        /**recursively set itself and its children is need to draw*/
+        /** @~english recursively set itself and its children is need to draw
+            @~chinese 递归的绘制自己和它的孩子
+        */
         void resetNeedDraw(bool value);
-        /**recursively potential visible culling*/
-        void cullByCamera(const Camera * camera, const Mat4 & worldTransform);
-        /**precalculate the AABB(In world space) of each quad*/
-        void preCalculateAABB(const Mat4 & worldTransform);
-        QuadTree * _tl;
-        QuadTree * _tr;
-        QuadTree * _bl;
-        QuadTree * _br;
-        /**A flag present current quadTree node whether a terminal node,the terminal node is de facto the chunck*/
+        /** @~english recursively potential visible culling
+            @~chinese 递归重置可见性
+        */
+        void cullByCamera(const Camera* camera, const Mat4& worldTransform);
+        /** @~english precalculate the AABB(In world space) of each quad
+            @~chinese 预先计算的AABB（世界空间）
+        */
+        void preCalculateAABB(const Mat4& worldTransform);
+        QuadTree* _tl;
+        QuadTree* _tr;
+        QuadTree* _bl;
+        QuadTree* _br;
+
         bool _isTerminal;
-        Chunk * _chunk;
+        Chunk* _chunk;
         int _posX;
         int _posY;
         int _height;
         int _width;
-        QuadTree * _parent;
-        /**AABB's cache (in local space)*/
+        QuadTree* _parent;
+        /** @~english AABB's cache (in local space)
+            @~chinese AABB的缓存（局部空间）
+        */
         AABB _localAABB;
-        /**AABB's cache (in world space)*/
+        /** @~english AABB's cache (in world space)
+            @~chinese AABB的缓存（世界空间）
+        */
         AABB _worldSpaceAABB;
-        Terrain * _terrain;
-        /** a flag determine whether a quadTree node need draw*/
+        Terrain* _terrain;
+        /** @~english  a flag determine whether a quadTree node need draw
+            @~chinese 一个标志确定是否需要绘制四叉树节点
+        */
         bool _needDraw;
     };
     friend QuadTree;
     friend Chunk;
 public:
-    /*init function*/
-    /**initialize all Properties which terrain need */
+
+    /** @~english initialize all Properties which terrain need
+        @~chinese 初始化所有地形需要的属性
+    */
     bool initProperties();
-    /**initialize heightMap data */
+
+    /** @~english initialize heightMap data
+        @~chinese 高度图数据初始化
+    */
     bool initHeightMap(const char* heightMap);
-    /**initialize alphaMap ,detailMaps textures*/
+
+    /** @~english initialize alphaMap ,detailMaps textures
+        @~chinese 初始化alphamap，detailmaps纹理
+    */
     bool initTextures();
-    /**create entry*/
-    static Terrain * create(TerrainData &parameter, CrackFixedType fixedType = CrackFixedType::INCREASE_LOWER);
-    /**get specified position's height mapping to the terrain,use bi-linear interpolation method
-     * @param x the X position
-     * @param y the Z position
-     * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
-     * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
-     **/
-    float getHeight(float x, float z, Vec3 * normal= nullptr);
 
-    /**get specified position's height mapping to the terrain,use bi-linear interpolation method
-     * @param pos the position (X,Z)
-     * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
-     * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
-     **/
-    float getHeight(Vec2 pos, Vec3*Normal = nullptr);
+    /** @~english create and initialize terrain
+        @~chinese 创建和初始化的地形
+        @param parameter @~english  all parameter that Terrain need to create @~chinese 创建地形需要的所有参数
+        @param fixedType @~english  the crack fix type. use to fix the gaps between different LOD chunks @~chinese 裂纹修复型，用来修复不同LOD块之间的间隙
+        @return @~english A initialized terrain which is marked as "autorelease @~chinese 一个初始化的地形被标记为“自动释放
+    */
+    static Terrain* create(TerrainData& parameter, CrackFixedType fixedType = CrackFixedType::INCREASE_LOWER);
 
-    /**get the normal of the specified pistion in terrain
-     * @return the normal vector of the specified position of the terrain.
-     * @note the fast normal calculation may not get precise normal vector.
+    /** @~english get specified position's height mapping to the terrain,use bi-linear interpolation method
+        @~chinese 获取指定位置的高度映射到地形，使用双线性插值方法
+        @param x @~english  the X position @~chinese X的位置
+        @param y @~english  the Z position @~chinese Z位置
+        @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese 在指定位置的法线矢量地形。如果这个参数为空或nullptr，正常计算应跳过。
+        @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese 地形的指定位置的高度值，如果（x，z）位置的地形边界，它将返回0；
+     **/
+    float getHeight(float x, float z, Vec3* normal= nullptr);
+
+    /** @~english get specified position's height mapping to the terrain,use bi-linear interpolation method
+        @~chinese 获取指定位置的高度映射到地形，使用双线性插值方法
+        @param pos @~english  the position (X,Z) @~chinese 的位置（x，z）
+        @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese 在指定位置的法线矢量地形。如果这个参数为空或nullptr，正常计算应跳过。
+        @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese 地形的指定位置的高度值，如果（x，z）位置的地形边界，它将返回0；
+     **/
+    float getHeight(Vec2 pos, Vec3* Normal = nullptr);
+
+    /** @~english get the normal of the specified pistion in terrain
+        @~chinese 得到指定位置的法线
+        @return @~english the normal vector of the specified position of the terrain. @~chinese 地形的指定位置的法向量。
+        @note the fast normal calculation may not get precise normal vector.
      **/
     Vec3 getNormal(int pixelX, int pixelY);
-    /**get height from the raw height filed*/
+
+    /** @~english get height from the raw height filed
+        @~chinese 得到高度
+        @param pixelX @~english  the position of x in raw height @~chinese X在原高度的位置
+        @param pixelY @~english  the position of y in raw height @~chinese Y在原高度的位置
+        @return @~english the height of position(x,y) @~chinese 位置（x，y）的高度
+    */
     float getImageHeight(int pixelX, int pixelY);
-    /**show the wireline instead of the surface,Debug Use only.
-     * @Note only support desktop platform
+
+    /** @~english show the wireline instead of the surface,Debug Use only
+        @~chinese 显示线框模式，调试使用
+        @param value @~english  the switching vale of method. @~chinese 方法的切。
+        @Note only support desktop platform
      **/
     void setDrawWire(bool boolValue);
-    /**
-     * Set threshold distance of each LOD level,must equal or gereater than the chunk size
-     * @Note when invoke initHeightMap, the LOD distance will be automatic calculated.
-     */
+
+    /** @~english Set threshold distance of each LOD level,must equal or gereater than the chunk size
+        @~chinese 每个级别设置阈值的距离，必须等于或大于块大小gereater
+        @param lod1 @~english  the threshold of LOD level 1 @~chinese LOD 1级阈值
+        @param lod2 @~english  the threshold of LOD level 2 @~chinese LOD 2级阈值
+        @param lod3 @~english  the threshold of LOD level 3 @~chinese LOD 3级阈值
+        @Note when invoke initHeightMap, the LOD distance will be automatic calculated.
+    */
     void setLODDistance(float lod1, float lod2, float lod3);
 
-    /**Switch frustum Culling Flag
-     * @Note frustum culling will remarkable improve your terrain rendering performance. 
-     */
+    /** @~english Switch frustum Culling Flag
+        @~chinese 视锥剔除标志开关
+        @param boolValue @~english  the switching vale of method. @~chinese 方法的切换阀。
+        @Note frustum culling will remarkable improve your terrain rendering performance.
+    */
     void setIsEnableFrustumCull(bool boolValue);
 
-    /** set the alpha map*/
-    void setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture);
-    /**set the Detail Map */
+    /** @~english  set the alpha map
+        @~chinese 设置alpha地图
+        @param newAlphaMapTexture @~english  a texture2d to be used as alpha map. @~chinese 一个Texture2D作为α-地图。
+    */
+    void setAlphaMap(cocos2d::Texture2D* newAlphaMapTexture);
+
+    /** @~english set the Detail Map
+        @~chinese 设置详细的地图
+        @param index @~english  the index of detailmap to be seted. @~chinese 对detailmap指数被设定。
+        @param detailMap @~english  the detailMap to be seted. @~chinese 要建立的detailmap。
+    */
     void setDetailMap(unsigned int index, DetailMap detailMap);
 
     // Overrides, internal use only
-    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-    /**
-     * Ray-Terrain intersection.
-     * @return the intersection point
-     */
-    Vec3 getIntersectionPoint(const Ray & ray);
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 
-    /**
-     * set the MaxDetailAmount.
-     */
+    /** @~english Ray-Terrain intersection.
+        @~chinese 射线地形相交。
+        @param ray @~english  the ray used for intersection @~chinese 射线用于交叉口
+        @return @~english the intersection point @~chinese 交叉点
+    */
+    Vec3 getIntersectionPoint(const Ray& ray);
+
+    /** @~english set the MaxDetailAmount.
+        @~chinese 设置maxdetailamount。
+        @param maxValue @~english  the maximum of detail map @~chinese 细节图最大
+    */
     void setMaxDetailMapAmount(int maxValue);
 
-    /**
-     * Convert a world Space position (X,Z) to terrain space position (X,Z)
-     */
+    /** @~english Convert a world Space position (X,Z) to terrain space position (X,Z)
+        @~chinese 将一个世界空间位置（x，z）地形的空间位置（x，z）
+        @param worldSpace @~english  a world space position will be converted @~chinese 一个世界空间位置将被转换
+        @return @~english a terrain space position @~chinese 地形的空间位置
+    */
     Vec2 convertToTerrainSpace(Vec2 worldSpace);
 
-    /**
-     * reset the heightmap data.
-     */
-    void resetHeightMap(const char * heightMap);
+    /** @~english reset the heightmap data.
+        @~chinese 复位高度图数据。
+        @param heightmap @~english  the new height map @~chinese 新的高度图
+    */
+    void resetHeightMap(const char* heightMap);
 
-    /**
-     * get the terrain's mininal height.
-     */
+    /** @~english get the terrain's mininal height.
+        @~chinese 得到地形的最小高度。
+        @return @~english the min height of map @~chinese 图的最小高度
+    */
     float getMinHeight();
 
-    /**
-     * get the terrain's maximum height.
-     */
+    /** @~english get the terrain's maximum height.
+        @~chinese 得到地形的最大高度。
+        @return @~english the max height of map @~chinese 地图的最大高度
+    */
     float getMaxHeight();
 
-    /**
-     * get the terrain's AABB(in world space)
-     */
+    /** @~english get the terrain's AABB(in world space)
+        @~chinese 得到地形的AABB（世界空间）
+        @return @~english the AABB of map @~chinese 地图的AABB
+    */
     AABB getAABB();
 
-    /**
-     * set the skirt height ratio
-     */
+    /** @~english set the skirt height ratio
+        @~chinese 把裙子的高度比
+        @param ratio @~english  the ratio of skirt height @~chinese 裙座高度比
+    */
     void setSkirtHeightRatio(float ratio);
 
-    /**
-     * get the terrain's quad tree which is also the root node.
-     */
-    QuadTree * getQuadTree();
+    /** @~english get the terrain's quad tree which is also the root node.
+        @~chinese 得到地形的四叉树的根节点。
+        @return @~english the terrain's quad tree @~chinese 地形的四叉树
+    */
+    QuadTree* getQuadTree();
 
+    /** @~english reload sky box after GLESContext reconstructed.
+        @~chinese 天空盒glescontext重装后重建。
+    */
     void reload();
-    
-    /**
-     * get the terrain's size
-     */
+
+    /** @~english get the terrain's size
+        @~chinese 得到地形的大小
+        @return @~english the size of terrain @~chinese 地形的大小
+    */
     Size getTerrainSize() const { return Size(_imageWidth, _imageHeight); }
-    
-    /**
-     * get the terrain's height data
-     */
+
+    /** @~english get the terrain's height data
+        @~chinese 得到的地形高度数据
+        @return @~english the terrain's height data @~chinese 地形高度数据
+    */
     std::vector<float> getHeightData() const;
-    
+
 protected:
-    
+
     Terrain();
     virtual ~Terrain();
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const Mat4& transform, uint32_t flags);
 
-    /**
-     * recursively set each chunk's LOD
-     * @param cameraPos the camera postion in world space
+    /** @~english recursively set each chunk's LOD
+        @~chinese 递归的设置每个地形块的LOD
+        @param cameraPos @~english  the camera postion in world space @~chinese 在世界空间中的摄像机位置
      **/
     void setChunksLOD(Vec3 cameraPos);
 
-    /**
-     * load Vertices from height filed for the whole terrain.
+    /** @~english load Vertices from height filed for the whole terrain.
+        @~chinese 从高度图加载地形顶点。
      **/
     void loadVertices();
 
-    /**
-     * calculate Normal Line for each Vertex
+    /** @~english calculate Normal Line for each Vertex
+        @~chinese 计算每个顶点的法线
      **/
     void calculateNormal();
 
     //override
     virtual void onEnter() override;
 
-    /**
-     * cache all unifrom loactions in GLSL.
+    /** @~english cache all unifrom loactions in GLSL.
+        @~chinese 缓存GLSL中所有uniform的位置。
      **/
     void cacheUniformAttribLocation();
 
     //IBO generate & cache
-    ChunkIndices lookForIndicesLODSkrit(int selfLod, bool * result);
+    ChunkIndices lookForIndicesLODSkrit(int selfLod, bool* result);
 
-    ChunkIndices lookForIndicesLOD(int neighborLod[4], int selfLod, bool * result);
+    ChunkIndices lookForIndicesLOD(int neighborLod[4], int selfLod, bool* result);
 
-    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
+    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort* indices, int size);
 
-    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort* indices, int size);
 
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
@@ -444,13 +589,13 @@ protected:
     bool _isCameraViewChanged;
     TerrainData _terrainData;
     bool _isDrawWire;
-    unsigned char * _data;
+    unsigned char* _data;
     float _lodDistance[3];
-    Texture2D * _detailMapTextures[4];
-    Texture2D * _alphaMap;
+    Texture2D* _detailMapTextures[4];
+    Texture2D* _alphaMap;
     CustomCommand _customCommand;
-    QuadTree * _quadRoot;
-    Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
+    QuadTree* _quadRoot;
+    Chunk* _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> _vertices;
     std::vector<GLushort> _indices;
     int _imageWidth;
@@ -458,7 +603,7 @@ protected:
     Size _chunkSize;
     bool _isEnableFrustumCull;
     int _maxDetailMapValue;
-    cocos2d::Image * _heightMapImage;
+    cocos2d::Image* _heightMapImage;
     Mat4 _oldCameraModelMatrix;
     Mat4 _terrainModelMatrix;
     GLuint _normalLocation;
