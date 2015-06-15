@@ -109,17 +109,17 @@ public:
     
     /**
      * @~english Set light enabled or disabled.
-     * @~chinese 设置灯光的使能开关
+     * @~chinese 设置灯光的开关
      * @param enabled @~english true means enabled, false make the light disabled
-     * @~chinese true为使能，false使该灯光失效
+     * @~chinese true为开启灯光，false使该灯光失效
      */
     void setEnabled(bool enabled) { _enabled = enabled; }
     
     /**
      * @~english is the light enabled or not.
-     * @~chinese 灯光是否使能
+     * @~chinese 灯光是否开启
      * @return @~english is the light enabled
-     * @~chinese 灯光是否使能
+     * @~chinese 灯光是否开启
      */
     bool isEnabled() const { return _enabled; }
     

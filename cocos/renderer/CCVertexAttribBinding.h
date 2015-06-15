@@ -73,7 +73,7 @@ public:
      * be returned. If OpenGL VAOs are enabled, the a new VAO will be created and
      * stored in the returned VertexAttribBinding, otherwise a client-side
      * array of vertex attribute bindings will be stored.
-     * @~chinese 用MeshVertexData和GLProgramState创建一个顶点属性绑定。 如果与给定的MeshVertexData和GLProgramState对应的顶点属性绑定已经存在，直接返回该顶点绑定，否则创建一个新的顶点属性绑定。如果硬件支持VAO，新创建的顶点属性绑定中将创建一个VAO，否则在绘制时采用软件模式使能顶点属性。
+     * @~chinese 用MeshVertexData和GLProgramState创建一个顶点属性绑定。 如果与给定的MeshVertexData和GLProgramState对应的顶点属性绑定已经存在，直接返回该顶点绑定，否则创建一个新的顶点属性绑定。如果硬件支持VAO，新创建的顶点属性绑定中将创建一个VAO，否则在绘制时采用VBO的普通方式开启顶点属性。
      * @param mesh @~english The mesh. @~chinese 用来绑定的网格。
      * @param effect @~english The effect. @~chinese GLProgrameState对象。
      * 
