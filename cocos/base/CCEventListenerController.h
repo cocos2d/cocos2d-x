@@ -40,7 +40,8 @@ class Event;
 class Controller;
 
 /** @class EventListenerController
- * @param Controller event listener.
+ * @param Controller @~english event listener.
+ * @~chinese 游戏手柄控制器事件监听器。
  * @js NA
  */
 class EventListenerController : public EventListener
@@ -48,9 +49,12 @@ class EventListenerController : public EventListener
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a controller event listener.
+    /** @~english Create a controller event listener.
      *
-     * @return An autoreleased EventListenerController object.
+     * @~chinese 创建一个游戏手柄控制器事件监听器。
+     * 
+     * @return @~english An autoreleased EventListenerController object.
+     * @~chinese 一个自动释放的游戏手柄控制器监听器对象。
      */
 	static EventListenerController* create();
     

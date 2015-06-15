@@ -41,50 +41,64 @@ struct FontDefinition;
 
 /**
  * @class Device
- * @brief 
+ * @brief  @~english A class for providing platform specific features.
+ * @~chinese 一个用来处理不同平台的独有特性的类。
  */
 class CC_DLL Device
 {
 public:
-    /** Defines the alignment of text. */
+    /** @~english Defines the alignment of text.  @~chinese 定义文本的对齐方式。*/
     enum class TextAlign
     {
-        CENTER        = 0x33, /** Horizontal center and vertical center. */
-        TOP           = 0x13, /** Horizontal center and vertical top. */
-        TOP_RIGHT     = 0x12, /** Horizontal right and vertical top. */
-        RIGHT         = 0x32, /** Horizontal right and vertical center. */
-        BOTTOM_RIGHT  = 0x22, /** Horizontal right and vertical bottom. */
-        BOTTOM        = 0x23, /** Horizontal center and vertical bottom. */
-        BOTTOM_LEFT   = 0x21, /** Horizontal left and vertical bottom. */
-        LEFT          = 0x31, /** Horizontal left and vertical center. */
-        TOP_LEFT      = 0x11, /** Horizontal left and vertical top. */
+        CENTER        = 0x33, /** @~english Horizontal center and vertical center. @~chinese 水平居中和垂直居中 */
+        TOP           = 0x13, /** @~english Horizontal center and vertical top. @~chinese 水平居中和垂直居上*/
+        TOP_RIGHT     = 0x12, /** @~english Horizontal right and vertical top. @~chinese 水平居右和垂直居上*/
+        RIGHT         = 0x32, /** @~english Horizontal right and vertical center. @~chinese 水平居右和垂直居中*/
+        BOTTOM_RIGHT  = 0x22, /** @~english Horizontal right and vertical bottom. @~chinese 水平居右和垂直居下*/
+        BOTTOM        = 0x23, /** @~english Horizontal center and vertical bottom. @~chinese 水平居中和垂直居下*/
+        BOTTOM_LEFT   = 0x21, /** @~english Horizontal left and vertical bottom. @~chinese 水平居左和垂直居下*/
+        LEFT          = 0x31, /** @~english Horizontal left and vertical center. @~chinese 水平居左和垂直居中*/
+        TOP_LEFT      = 0x11, /** @~english Horizontal left and vertical top. @~chinese 水平居左和垂直居上*/
     };
 
-    /**
+    /**@~english
      *  Gets the DPI of device
-     *  @return The DPI of device.
+     * @~chinese 
+     * 设备的每个英寸的点数(DPI)
+     *  @return @~english The DPI of device.
+     * @~chinese 设备的DPI。
      */
     static int getDPI();
     
-    /**
+    /**@~english
      * To enable or disable accelerometer.
+     * @~chinese 
+     * 启用或禁用加速度计。
      */
     static void setAccelerometerEnabled(bool isEnabled);
 
-    /**
+    /**@~english
      *  Sets the interval of accelerometer.
+     * @~chinese 
+     * 设置加速度计的间隔。
      */
     static void setAccelerometerInterval(float interval);
 
-    /**
+    /**@~english
      * Controls whether the screen should remain on.
      * 
-     * @param keepScreenOn One flag indicating that the screen should remain on.
+     * @~chinese 
+     * 控制屏幕是否应该保持唤醒状态。
+     * 
+     * @param keepScreenOn @~english One flag indicating that the screen should remain on.
+     * @~chinese 一个标志,指示屏幕上是否保持唤醒状态。
      */
     static void setKeepScreenOn(bool keepScreenOn);
 
-    /**
+    /**@~english
      * Gets texture data for text.
+     * @~chinese 
+     * 文本的纹理数据。
      */
     static Data getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha);
 

@@ -136,6 +136,7 @@ public:
     /**
      @{
      @name Properties
+     @brief @~english @~chinese 属性
      */
 
     /** 
@@ -152,6 +153,8 @@ public:
     /**
      @{
      @name Constructor, Destructor and Initializers
+     @brief @~english 
+     @~chinese 构造函数，析构函数和初始化函数
      */
 
     /**
@@ -178,6 +181,8 @@ public:
     /**
      @{
      @name Setters & Getters for Graphic Peroperties
+     @brief @~english 
+     @~chinese 图形属性值的获取函数和设置函数
      */
 
     /**
@@ -900,6 +905,7 @@ public:
 
     /// @{
     /// @name Children and Parent
+    /// @brief @~english @~chinese 父子节点关系
 
     /**
      * @~english Adds a child to the container with z-order as 0.
@@ -988,13 +994,15 @@ public:
     inline T getChildByName(const std::string& name) const { return static_cast<T>(getChildByName(name)); }
     /** 
      * @~english Search the children of the receiving node to perform processing for nodes which share a name.
+     * @~chinese 在子节点中寻找匹配名字或正则表达式的节点并对这些节点执行回调函数。
      *
-     * @param name The name to search for, supports c++11 regular expression.
-     * Search syntax options:
-     * `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
-     * `..`: The search should move up to the node's parent. Can only be placed at the end of string.
-     * `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
+     * @param name @~english The name to search for, supports c++11 regular expression.
+     * @~chinese 用于搜索的搜索字符串，支持C++11正则表达式
      *
+     * @~english Search syntax options:
+     * - `//`: Can only be placed at the begin of the search string. This indicates that it will search recursively.
+     * - `..`: The search should move up to the node's parent. Can only be placed at the end of string.
+     * - `/` : When placed anywhere but the start of the search string, this indicates that the search should move to the node's children.
      * @code
      * enumerateChildren("//MyName", ...): This searches the children recursively and matches any node with the name `MyName`.
      * enumerateChildren("[[:alnum:]]+", ...): This search string matches every node of its children.
@@ -1003,16 +1011,29 @@ public:
      * and whose parent is named `Abby`.
      * enumerateChildren("//Abby/Normal", ...): This searches recursively and returns any node whose name is `Normal` and whose
      * parent is named `Abby`.
-     * @~chinese 
+     * @endcode
+     * 
+     * @~chinese 搜索语法说明:
+     * - `//`: 当搜索字符串以两个斜杠开头的时候，搜索会递归进行，搜索当前节点的整个子节点树。
+     * - `..`: 当搜索字符串以两个点结束的时候，搜索会查询当前节点的父节点
+     * - `/` : 当搜索字符串内部（不在开头）包含单个斜杠，它将搜索指向其子节点
+     * @code
+     * enumerateChildren("//MyName", ...): 查询整个子节点树并匹配所有名字为`MyName`的节点。
+     * enumerateChildren("[[:alnum:]]+", ...): 这个正则表达式将匹配所有有名字的直接子节点。
+     * enumerateChildren("A[[:digit:]]", ...): 这个正则表达式将匹配所有名字为`A0`, `A1`, ..., `A9`的子节点。
+     * enumerateChildren("Abby/Normal", ...): 匹配名为Abby的直接子节点的名为Normal的子节点。
+     * enumerateChildren("//Abby/Normal", ...): 查询整个子节点树并匹配所有名字为Normal并且父节点名字为Abby的节点。
      * @endcode
      *
-     * @warning Only support alpha or number for name, and not support unicode.
+     * @warning @~english Only support alphabet or number for name, and not support unicode.
+     * @~chinese name参数只支持字母或数字，不支持unicode字符
      *
-     * @param callback A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
+     * @param callback @~english A callback function to execute on nodes that match the `name` parameter. The function takes the following arguments:
      *  `node` 
      *      A node that matches the name
      *  And returns a boolean result. Your callback can return `true` to terminate the enumeration.
-     *
+     * @~chinese 回调函数，所有匹配到的节点都会被这个回调函数执行，这个回调函数的参数是`node`：匹配到的节点。并且返回一个布尔值。
+     * 开发者可以在自己定义的回调函数中返回`true`来终结enumerateChildren的搜索过程
      * @since v3.2
      */
     virtual void enumerateChildren(const std::string &name, std::function<bool(Node* node)> callback) const;
@@ -1146,6 +1167,7 @@ public:
     
     /// @{
     /// @name Tag & User data
+    /// @brief @~english @~chinese 标签和用户数据
 
     /**
      * @~english Returns a tag that is used to identify the node easily.
@@ -1260,9 +1282,10 @@ public:
 
     /// @{
     /// @name GLProgram
+    /// @brief @~english @~chinese OpenGL着色器程序
     /**
      * @~english Return the GLProgram (shader) currently used for this node.
-     * @~chinese 返回当前用于这个节点的GLProgram (shader) 
+     * @~chinese 返回当前用于这个节点的着色器程序 (shader) 
      *
      * @return @~english The GLProgram (shader) currently used for this node. @~chinese 当前用于这个节点的GLProgram (shader) 
      */
@@ -1332,6 +1355,7 @@ public:
 
     /// @{
     /// @name Event Callbacks
+    /// @brief @~english @~chinese 事件回调函数
 
     /**
      * @~english Event callback that is invoked every time when Node enters the 'stage'.
@@ -1461,6 +1485,7 @@ public:
 
     /// @{
     /// @name Actions
+    /// @brief @~english @~chinese 动作
 
     /**
      * @~english Sets the ActionManager object that is used by all actions.
@@ -1560,6 +1585,7 @@ public:
 
     /// @{
     /// @name Scheduler and Timer
+    /// @brief @~english @~chinese 调度器和计时器
 
     /**
      * @~english Sets a Scheduler object that is used to schedule all "updates" and timers.
@@ -1811,6 +1837,7 @@ public:
 
     /// @{
     /// @name Transformations
+    /// @brief @~english @~chinese 仿射变换函数
 
     /**
      * @~english Calls children's updateTransform() method recursively.
@@ -1892,6 +1919,7 @@ public:
 
     /// @{
     /// @name Coordinate Converters
+    /// @brief @~english @~chinese 坐标转换
 
     /**
      * @~english Converts a Vec2 to node (local) space coordinates. The result is in Points.
@@ -1971,8 +1999,9 @@ public:
 
     /// @} end of Coordinate Converters
 
-      /// @{
+    /// @{
     /// @name component functions
+    /// @brief @~english @~chinese 组件系统
     /**
      * @~english Gets a component by its name. @~chinese 通过名字得到组件 
      *

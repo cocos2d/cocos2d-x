@@ -42,146 +42,234 @@ class Texture2D;
  */
 
 /** @class SpriteFrame
- * @brief A SpriteFrame has:
-    - texture: A Texture2D that will be used by the Sprite
-    - rectangle: A rectangle of the texture
-
-
- You can modify the frame of a Sprite by doing:
- 
-    SpriteFrame *frame = SpriteFrame::frameWithTexture(texture, rect, offset);
-    sprite->setDisplayFrame(frame);
+ * @brief @~english A SpriteFrame has:
+ *   - texture: A Texture2D that will be used by the Sprite
+ *   - rectangle: A rectangle of the texture
+ *
+ *
+ * You can modify the frame of a Sprite by doing:
+ *  @code
+ *   SpriteFrame *frame = SpriteFrame::createWithTexture(texture, rect);
+ *   sprite->setSpriteFrame(frame);
+ *  @endcode
+ * @~chinese 一个 SpriteFrame 包含:
+ * - 纹理: 会被 Sprite 使用的 Texture2D 对象。
+ * - 矩形: 在纹理中的矩形区域。
+ * 
+ * 
+ * 可以这样来修改 Sprite 使用的 SpriteFrame:
+ * 
+ *  @code
+ *   SpriteFrame *frame = SpriteFrame::createWithTexture(texture, rect);
+ *   sprite->setSpriteFrame(frame);
+ *  @endcode
  */
 class CC_DLL SpriteFrame : public Ref, public Clonable
 {
 public:
 
-    /** Create a SpriteFrame with a texture filename, rect in points.
+    /** @~english Create a SpriteFrame with a texture filename, rect in points.
      It is assumed that the frame was not trimmed.
      *
-     * @param filename Texture file name.
-     * @param rect A specified rect.
-     * @return An autoreleased SpriteFrame object.
+     * @~chinese 使用指定的图片文件与矩形区域创建一个 SpriteFrame。
+     * 这个方法假设 SpriteFrame 没有进行修剪。
+     * 
+     * @param filename @~english Texture file name.
+     * @~chinese 图片文件路径。
+     * @param rect @~english A specified rect.
+     * @~chinese 指定的矩形区域。
+     * @return @~english An autoreleased SpriteFrame object.
+     * @~chinese 一个 SpriteFrame 实例（已被 autorelease）。
      */
     static SpriteFrame* create(const std::string& filename, const Rect& rect);
     
-    /** Create a SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
+    /** @~english Create a SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      *
-     * @param filename Texture filename
-     * @param rect A specified rect.
-     * @param rotated Is rotated if true.
-     * @param offset A specified offset.
-     * @param originalSize A specified original size.
-     * @return An autoreleased SpriteFrame object.
+     * @~chinese 使用指定的图片文件，矩形区域，是否旋转，偏移量与原始大小创建一个 SpriteFrame。
+     * originalSize 是 SpriteFrame 被修剪之前的大小(以像素为单位)。
+     * 
+     * @param filename @~english Texture filename
+     * @~chinese 图片文件路径
+     * @param rect @~english A specified rect.
+     * @~chinese 指定的矩形区域。
+     * @param rotated @~english Is rotated if true.
+     * @~chinese 是否旋转。
+     * @param offset @~english A specified offset.
+     * @~chinese 指定的偏移量。
+     * @param originalSize @~english A specified original size.
+     * @~chinese 指定的原始大小。
+     * @return @~english An autoreleased SpriteFrame object.
+     * @~chinese 一个 SpriteFrame 实例（已被 autorelease）。
      */
     static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
     
-    /** Create a SpriteFrame with a texture, rect in points.
+    /** @~english Create a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
-     * @param pobTexture The texture pointer.
-     * @param rect A specified rect.
-     * @return An autoreleased SpriteFrame object.
+     * @~chinese 使用指定的纹理与矩形区域创建一个 SpriteFrame。
+     * 此方法假设 SpriteFrame 没有修剪。
+     * @param pobTexture @~english The texture pointer.
+     * @~chinese 指定的纹理实例。
+     * @param rect @~english A specified rect.
+     * @~chinese 指定的矩形区域。
+     * @return @~english An autoreleased SpriteFrame object.
+     * @~chinese 一个 SpriteFrame 实例（已被 autorelease）。
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect);
 
-    /** Create a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+    /** @~english Create a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in points of the frame before being trimmed.
-     * @param pobTexture The texture pointer.
-     * @param rect A specified rect.
-     * @param rotated Is rotated if true.
-     * @param offset A specified offset.
-     * @param originalSize A specified original size.
-     * @return An autoreleased SpriteFrame object.
+     * @~chinese 使用指定的纹理，矩形区域，是否旋转，偏移量与原始大小创建一个 SpriteFrame。
+     * originalSize 是 SpriteFrame 被修剪之前的大小(以像素为单位)。
+     * @param pobTexture @~english The texture pointer.
+     * @~chinese 指定的纹理实例。
+     * @param rect @~english A specified rect.
+     * @~chinese 指定的矩形区域。
+     * @param rotated @~english Is rotated if true.
+     * @~chinese 是否旋转。
+     * @param offset @~english A specified offset.
+     * @~chinese 指定的偏移量。
+     * @param originalSize @~english A specified original size.
+     * @~chinese 指定的原始大小。
+     * @return @~english An autoreleased SpriteFrame object.
+     * @~chinese 一个 SpriteFrame 实例（已被 autorelease）。
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
 
     // attributes
-    /** Get rect of the sprite frame.
+    /** @~english Get rect of the sprite frame.
      *
-     * @return The rect of the sprite frame, in pixels.
+     * @~chinese 获取 SpriteFrame 的纹理矩形区域。
+     * 
+     * @return @~english The rect of the sprite frame, in pixels.
+     * @~chinese SpriteFrame 的纹理矩形区域，以像素为单位。
      */
     inline const Rect& getRectInPixels() const { return _rectInPixels; }
-    /** Set rect of the sprite frame.
+    /** @~english Set rect of the sprite frame.
      *
-     * @param rectInPixels The rect of the sprite frame, in pixels.
+     * @~chinese 设置 SpriteFrame 的纹理矩形区域。。
+     * 
+     * @param rectInPixels @~english The rect of the sprite frame, in pixels.
+     * @~chinese SpriteFrame 的纹理矩形区域，以像素为单位。
      */
     void setRectInPixels(const Rect& rectInPixels);
 
-    /**Is the sprite frame rotated or not.
+    /**@~english Is the sprite frame rotated or not.
      *
-     * @return Is rotated if true.
+     * @~chinese 获取 SpriteFrame 是否旋转。
+     * 
+     * @return @~english Is rotated if true.
+     * @~chinese 如果旋转则返回 true；否则返回 false。
      */
     inline bool isRotated() const { return _rotated; }
-    /** Set rotated of the sprite frame.
+    /** @~english Set rotated of the sprite frame.
      *
-     * @param rotated Rotated the sprite frame if true.
+     * @~chinese 设置 SpriteFrame 是否旋转。
+     * 
+     * @param rotated @~english Rotated the sprite frame if true.
+     * @~chinese 如果为 true，则旋转；否则不旋转。
      */
     inline void setRotated(bool rotated) { _rotated = rotated; }
 
-    /** Get rect of the frame.
+    /** @~english Get rect of the frame.
      *
-     * @return The rect of the sprite frame.
+     * @~chinese 获取 SpriteFrame 的纹理矩形区域。
+     * 
+     * @return @~english The rect of the sprite frame.
+     * @~chinese SpriteFrame 的纹理矩形区域。
      */
     inline const Rect& getRect() const { return _rect; }
-    /** Set rect of the frame.
+    /** @~english Set rect of the frame.
      *
-     * @param rect The rect of the sprite.
+     * @~chinese 设置 SpriteFrame 的纹理矩形区域。
+     * 
+     * @param rect @~english The rect of the sprite.
+     * @~chinese SpriteFrame 的纹理矩形区域。
      */
     void setRect(const Rect& rect);
 
-    /** Get offset of the frame.
+    /** @~english Get offset of the frame.
      * 
-     * @return The offset of the sprite frame, in pixels.
+     * @~chinese 获取 SpriteFrame 的偏移量。
+     * 
+     * @return @~english The offset of the sprite frame, in pixels.
+     * @~chinese SpriteFrame 的偏移量。
      */
     const Vec2& getOffsetInPixels() const;
-    /** Set offset of the frame.
+    /** @~english Set offset of the frame.
      * 
-     * @param offsetInPixels The offset of the sprite frame, in pixels.
+     * @~chinese 设置 SpriteFrame 的偏移量。
+     * 
+     * @param offsetInPixels @~english The offset of the sprite frame, in pixels.
+     * @~chinese SpriteFrame 的偏移量。
      */
     void setOffsetInPixels(const Vec2& offsetInPixels);
 
-    /** Get original size of the trimmed image.
+    /** @~english Get original size of the trimmed image.
      *
-     * @return The original size of the trimmed image, in pixels.
+     * @~chinese 获取修剪前的原始大小。
+     * 
+     * @return @~english The original size of the trimmed image, in pixels.
+     * @~chinese 修剪前的原始大小，以像素为单位。
      */
     inline const Size& getOriginalSizeInPixels() const { return _originalSizeInPixels; }
-    /** Set original size of the trimmed image.
+    /** @~english Set original size of the trimmed image.
      *
-     * @param sizeInPixels The original size of the trimmed image, in pixels.
+     * @~chinese 设置修剪前的原始大小。
+     * 
+     * @param sizeInPixels @~english The original size of the trimmed image, in pixels.
+     * @~chinese 修剪前的原始大小，以像素为单位。
      */
     inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
 
-    /** Get original size of the trimmed image.
+    /** @~english Get original size of the trimmed image.
      *
-     * @return The original size of the trimmed image.
+     * @~chinese 获取修剪前的原始大小。
+     * 
+     * @return @~english The original size of the trimmed image.
+     * @~chinese 修剪前的原始大小。
      */
     inline const Size& getOriginalSize() const { return _originalSize; }
-    /** Set original size of the trimmed image.
+    /** @~english Set original size of the trimmed image.
      *
-     * @param sizeInPixels The original size of the trimmed image.
+     * @~chinese 设置修剪前的原始大小。
+     * 
+     * @param sizeInPixels @~english The original size of the trimmed image.
+     * @~chinese 修剪前的原始大小。
      */
     inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
 
-    /** Get texture of the frame.
+    /** @~english Get texture of the frame.
      *
-     * @return The texture of the sprite frame.
+     * @~chinese 获取使用的纹理实例。
+     * 
+     * @return @~english The texture of the sprite frame.
+     * @~chinese 使用的纹理实例。
      */
     Texture2D* getTexture();
-    /** Set texture of the frame, the texture is retained.
+    /** @~english Set texture of the frame, the texture is retained.
      *
-     * @param pobTexture The texture of the sprite frame.
+     * @~chinese 设置使用的纹理实例，会被 retain。
+     * 
+     * @param pobTexture @~english The texture of the sprite frame.
+     * @~chinese 纹理实例。
      */
     void setTexture(Texture2D* pobTexture);
 
-    /** Get offset of the frame.
+    /** @~english Get offset of the frame.
      *
-     * @return The offset of the sprite frame.
+     * @~chinese 获取偏移量。
+     * 
+     * @return @~english The offset of the sprite frame.
+     * @~chinese 偏移量。
      */
     const Vec2& getOffset() const;
-    /** Set offset of the frame.
+    /** @~english Set offset of the frame.
      *
-     * @param offsets The offset of the sprite frame.
+     * @~chinese 设置偏移量。
+     * 
+     * @param offsets @~english The offset of the sprite frame.
+     * @~chinese 偏移量。
      */
     void setOffset(const Vec2& offsets);
 
@@ -199,24 +287,33 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~SpriteFrame();
     
-    /** Initializes a SpriteFrame with a texture, rect in points.
+    /** @~english Initializes a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
+     * @~chinese 使用指定的纹理与矩形区域初始化一个 SpriteFrame。
+     * 此方法假设 SpriteFrame 没有修剪。
      */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect);
     
-    /** Initializes a SpriteFrame with a texture filename, rect in points;
+    /** @~english Initializes a SpriteFrame with a texture filename, rect in points;
      It is assumed that the frame was not trimmed.
+     * @~chinese 使用指定的图片文件与矩形区域初始化一个 SpriteFrame。
+     * 此方法假设 SpriteFrame 没有修剪。
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect);
     
-    /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+    /** @~english Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in points of the frame before being trimmed.
+     * @~chinese 使用指定的纹理，矩形区域，是否旋转，偏移量与原始大小初始化一个 SpriteFrame。
+     * originalSize 是 SpriteFrame 被修剪之前的大小(以像素为单位)。
      */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
     
-    /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
+    /** @~english Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      
+     * @~chinese 使用指定的图片文件，矩形区域，是否旋转，偏移量与原始大小初始化一个 SpriteFrame。
+     * originalSize 是 SpriteFrame 被修剪之前的大小(以像素为单位)。
+     * 
      @since v1.1
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);

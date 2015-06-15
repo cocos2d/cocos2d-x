@@ -59,10 +59,12 @@ typedef struct CC_DLL PhysicsContactData
  * @{
  */
 
-/**
- * @brief Contact infomation. 
- 
+/** @class PhysicsContact
+ * @brief @~english Contact infomation. 
  * It will created automatically when two shape contact with each other. And it will destoried automatically when two shape separated.
+ *
+ * @~chinese 碰撞信息。
+ * 当刚体的形状间发生碰撞时会自动创建PhysicsContact对象，并在碰撞分离时自动销毁。
  */
 class CC_DLL PhysicsContact : public EventCustom
 {
@@ -77,34 +79,36 @@ public:
         SEPARATE
     };
     
-    /** Get contact shape A. */
+    /** @~english Get contact shape A. @~chinese 获取碰撞的形状A。*/
     inline PhysicsShape* getShapeA() const { return _shapeA; }
     
-    /** Get contact shape B. */
+    /** @~english Get contact shape B. @~chinese 获取碰撞的形状B。*/
     inline PhysicsShape* getShapeB() const { return _shapeB; }
     
-    /** Get contact data. */
+    /** @~english Get contact data. @~chinese 获取碰撞数据。*/
     inline const PhysicsContactData* getContactData() const { return _contactData; }
     
-    /** Get previous contact data */
+    /** @~english Get previous contact data. @~chinese 获取碰撞时两个形状接触前的碰撞数据。*/
     inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
     
     /** 
-     * Get data. 
+     * @~english Get the user data.  
+     * @~chinese 获取用户数据。
      * @lua NA
      */
     inline void* getData() const { return _data; }
     
     /**
-     * @brief Set data to contact. 
-     
+     * @~english Set data to contact. 
      * You must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact separate.
      *
+     * @~chinese 设置用户数据。
+     * 你需要自己负责这部分数据的释放，通常你可以在两个形状第一次接触的时候设置用户数据，然后在形状分离的时候释放数据。
      * @lua NA
      */
     inline void setData(void* data) { _data = data; }
 
-    /** Get the event code */
+    /** @~english Get the event code. @~chinese 获取碰撞事件代码。 */
     EventCode getEventCode() const { return _eventCode; };
 
 private:
@@ -143,25 +147,46 @@ private:
     friend class PhysicsWorld;
 };
 
-/**
- * @brief Presolve value generated when onContactPreSolve called.
+/** @class PhysicsContactPreSolve
+ * @brief @~english Presolve value generated when onContactPreSolve called.
+ * @~chinese onContactPreSolve回调被调用的时候生成PhysicsContactPreSolve对象。
  */
 class CC_DLL PhysicsContactPreSolve
 {
 public:
-    /** Get restitution between two bodies.*/
+    /** @~english Get restitution between two bodies.
+     * @~chinese 获取两个刚体间的弹力。
+     */
     float getRestitution() const;
-    /** Get friction between two bodies.*/
+    
+    /** @~english Get friction between two bodies. 
+     * @~chinese 获取两个刚体间的摩擦力。
+     */
     float getFriction() const;
-    /** Get surface velocity between two bodies.*/
+    
+    /** @~english Get surface velocity between two bodies.
+     * @~chinese 获取两个刚体间的表面速度值。
+     */
     Vec2 getSurfaceVelocity() const;
-    /** Set the restitution.*/
+    
+    /** @~english Set the restitution. 
+     * @~chinese 设置弹力。
+     */
     void setRestitution(float restitution);
-    /** Set the friction.*/
+    
+    /** @~english Set the friction. 
+     * @~chinese 设置摩擦力。
+     */
     void setFriction(float friction);
-    /** Set the surface velocity.*/
+    
+    /** @~english Set the surface velocity. 
+     * @~chinese 设置表面速度。
+     */
     void setSurfaceVelocity(const Vect& velocity);
-    /** Ignore the rest of the contact presolve and postsolve callbacks. */
+    
+    /** @~english Ignore the rest of the contact presolve and postsolve callbacks.
+     * @~chinese 忽略这一次的接触。
+     */
     void ignore();
     
 private:
@@ -174,17 +199,26 @@ private:
     friend class EventListenerPhysicsContact;
 };
 
-/**
- * @brief Postsolve value generated when onContactPostSolve called.
+/** @class PhysicsContactPostSolve
+ * @brief @~english Postsolve value generated when onContactPostSolve called.
+ * @~chinese onContactPreSolve回调被调用的时候生成PhysicsContactPostSolve对象。
  */
 class CC_DLL PhysicsContactPostSolve
 {
 public:
-    /** Get restitution between two bodies.*/
+    /** @~english Get restitution between two bodies.
+     * @~chinese 获取两个刚体建的弹力。
+     */
     float getRestitution() const;
-    /** Get friction between two bodies.*/
+    
+    /** @~english Get friction between two bodies.
+     * @~chinese 获取两个刚体间的摩擦力。
+     */
     float getFriction() const;
-    /** Get surface velocity between two bodies.*/
+    
+    /** @~english Get surface velocity between two bodies.
+     * @~chinese 获取两个刚体间的表面速度。
+     */
     Vec2 getSurfaceVelocity() const;
     
 private:
@@ -197,45 +231,61 @@ private:
     friend class EventListenerPhysicsContact;
 };
 
-/** Contact listener. It will recive all the contact callbacks. */
+/** @class EventListenerPhysicsContact
+ * @brief @~english Contact listener. It will recive all the contact callbacks. 
+ * @~chinese 碰撞事件监听器，可以接收到所有碰撞事件。
+ */
 class CC_DLL EventListenerPhysicsContact : public EventListenerCustom
 {
 public:
-    /** Create the listener. */
+    /** @~english Create the listener. @~chinese 创建监听器。*/
     static EventListenerPhysicsContact* create();
     
-    /** Check the listener is available.
-
-     *@return Ture if there's one available callback function at least, false if there's no one.
-     */
     virtual bool checkAvailable() override;
     
-    /** Clone an object from this listener.*/
     virtual EventListenerPhysicsContact* clone() override;
     
 protected:
     /**
-     * It will be call when two body have contact.
+     * @~english It will be call when two body have contact.
      * if return false, it will not invoke callbacks.
+     * @~chinese 两个刚体碰撞时会调用这个函数。如果函数返回false的话，碰撞回调将不会被调用。
      */
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
 public:
     /**
-     * @brief It will called at two shapes start to contact, and only call it once.
+     * @~english It will called at two shapes start to contact, and only call it once.
+     * @~chinese 这个回调在碰撞的两个形状第一次接触时被调用，并且只会被调用一次。
      */
     std::function<bool(PhysicsContact& contact)> onContactBegin;
+        
     /**
-     * @brief Two shapes are touching during this step. Return false from the callback to make world ignore the collision this step or true to process it normally. Additionally, you may override collision values, restitution, or surface velocity values.
+     * @~english Two shapes are touching during this step. 
+     * Return false from the callback to make world ignore the collision this step or true to process it normally. 
+     * Additionally, you may override collision values, restitution, or surface velocity values.
+     *
+     * @~chinese 碰撞过程中两个形状的每一次相互接触时的回调。
+     * 返回false的话，物理世界将忽略这一次的接触。负责正常处理两个形状的这一次接触。
+     * 你可以在这个回调中自定义碰撞属性，例如弹力、表面速度等。
      */
     std::function<bool(PhysicsContact& contact, PhysicsContactPreSolve& solve)> onContactPreSolve;
+    
     /**
-     * @brief Two shapes are touching and their collision response has been processed. You can retrieve the collision impulse or kinetic energy at this time if you want to use it to calculate sound volumes or damage amounts. See cpArbiter for more info
+     * @~english Two shapes are touching and their collision response has been processed. 
+     * You can retrieve the collision impulse or kinetic energy at this time if you want to use it to calculate sound volumes or damage amounts. 
+     *
+     * @~chinese 两种形状相互接触并且它们的碰撞响应已被处理。
+     * 如果你想使用它来计算音量或者伤害值，这时你可以检索碰撞冲力或动能。
      */
     std::function<void(PhysicsContact& contact, const PhysicsContactPostSolve& solve)> onContactPostSolve;
+    
     /**
-     * @brief It will called at two shapes separated, and only call it once.
+     * @~english It will called at two shapes separated, and only call it once.
      * onContactBegin and onContactSeparate will called in pairs.
+     *
+     * @~chinese 这个回调在两个碰撞的形状分离时被调用，并且只会被调用一次。
+     * onContactBegin和onContactSeparate是成对被调用的。
      */
     std::function<void(PhysicsContact& contact)> onContactSeparate;
     
@@ -250,11 +300,14 @@ protected:
     friend class PhysicsWorld;
 };
 
-/** This event listener only be called when bodyA and bodyB have contacts. */
+/** @class EventListenerPhysicsContactWithBodies
+ * @brief @~english This event listener only be called when bodyA and bodyB have contacts. 
+ * @~chinese 碰撞事件监听器，只可以接收到刚体bodyA和刚体bodyB之间的碰撞事件。
+ */
 class CC_DLL EventListenerPhysicsContactWithBodies : public EventListenerPhysicsContact
 {
 public:
-    /** Create the listener. */
+    /** @~english Create the listener. @~chinese 创建碰撞监听器。*/
     static EventListenerPhysicsContactWithBodies* create(PhysicsBody* bodyA, PhysicsBody* bodyB);
     
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
@@ -270,11 +323,14 @@ protected:
     virtual ~EventListenerPhysicsContactWithBodies();
 };
 
-/** This event listener only be called when shapeA and shapeB have contacts. */
+/** @class EventListenerPhysicsContactWithShapes
+ * @brief @~english This event listener only be called when shapeA and shapeB have contacts. 
+ * @~chinese 碰撞事件监听器，只可以接收到形状shapeA和形状shapeB之间的碰撞事件。
+ */
 class CC_DLL EventListenerPhysicsContactWithShapes : public EventListenerPhysicsContact
 {
 public:
-    /** Create the listener. */
+    /** @~english Create the listener. @~chinese 创建碰撞监听器。*/
     static EventListenerPhysicsContactWithShapes* create(PhysicsShape* shapeA, PhysicsShape* shapeB);
     
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;
@@ -289,11 +345,14 @@ protected:
     virtual ~EventListenerPhysicsContactWithShapes();
 };
 
-/** This event listener only be called when shapeA or shapeB is in the group your specified */
+/** @class EventListenerPhysicsContactWithGroup
+ * @brief @~english This event listener only be called when shapeA or shapeB is in the group your specified.
+ * @~chinese 碰撞事件监听器，只可以监听给定分组的形状之间的碰撞事件。
+ */
 class CC_DLL EventListenerPhysicsContactWithGroup : public EventListenerPhysicsContact
 {
 public:
-    /** Create the listener. */
+    /** @~english Create the listener. @~chinese 创建碰撞监听器。 */
     static EventListenerPhysicsContactWithGroup* create(int group);
     
     virtual bool hitTest(PhysicsShape* shapeA, PhysicsShape* shapeB) override;

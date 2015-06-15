@@ -37,8 +37,9 @@ NS_CC_BEGIN
 class EventCustom;
 
 /** @class EventListenerCustom
- * @brief Custom event listener.
- * @code Usage:
+ * @brief @~english Custom event listener.
+ * @~chinese 自定义事件监听器。
+ * @code Usage:@~english
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *     Adds a listener:
  *
@@ -60,10 +61,14 @@ class EventCustom;
 class CC_DLL EventListenerCustom : public EventListener
 {
 public:
-    /** Creates an event listener with type and callback.
-     * @param eventName The type of the event.
-     * @param callback The callback function when the specified event was emitted.
-     * @return An autoreleased EventListenerCustom object.
+    /** @~english Creates an event listener with name and callback.
+     * @~chinese 根据名称和事件回调创建一个事件监听器。
+     * @param eventName @~english The name of the event.
+     * @~chinese 事件的名称。
+     * @param callback @~english The callback function when the specified event was emitted.
+     * @~chinese 当事件被触发时，将会调用指定的回调函数。
+     * @return @~english An autoreleased EventListenerCustom object.
+     * @~chinese 一个自动释放的自定义事件对象。
      */
     static EventListenerCustom* create(const std::string& eventName, const std::function<void(EventCustom*)>& callback);
     
@@ -72,10 +77,10 @@ public:
     virtual EventListenerCustom* clone() override;
     
 CC_CONSTRUCTOR_ACCESS:
-    /** Constructor */
+    /** @~english Constructor  @~chinese 构造函数*/
     EventListenerCustom();
     
-    /** Initializes event with type and callback function */
+    /** @~english Initializes event with callback function  @~chinese 根据回调函数,初始化事件*/
     bool init(const ListenerID& listenerId, const std::function<void(EventCustom*)>& callback);
     
 protected:

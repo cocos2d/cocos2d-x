@@ -53,18 +53,26 @@ class Touch;
 // Layer
 //
 /** @class Layer
- * @brief Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
+ * @brief @~english Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
 
 All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
+ * @~chinese 图层是Node类的一个子类节点，它实现了TouchEventsDelegate协议。
+ * 
+ * 它所有从Node节点继承过来的功能都是有效的,并且添加了以下新功能:
+ * - 它可以接收iPhone触摸
+ * - 它可以得到加速度计输入事件
 */
 class CC_DLL Layer : public Node
 {
 public:    
-    /** Creates a fullscreen black layer.
+    /** @~english Creates a fullscreen black layer.
      *
-     * @return An autoreleased Layer object.
+     * @~chinese 创建一个全屏黑色的图层。
+     * 
+     * @return @~english An autoreleased Layer object.
+     * @~chinese 一个autoreleased图层对象。
      */
     static Layer *create();
 
@@ -79,66 +87,97 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final {CC_UNUSED_PARAM(pTouches); CC_UNUSED_PARAM(pEvent);}
     
-    /* Callback function should not be deprecated, it will generate lots of warnings.
-       Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
-    */
-    /** Callback function for touch began.
+
+    /** @~english Callback function for touch began.
      *
-     * @param touch Touch infomation.
-     * @param unused_event Event information.
-     * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
+     * @~chinese 触摸开始时的回调函数
+     * 
+     * @param touch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @return @~english if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
+     * @~chinese 如果返回false,那么onTouchMoved、onTouchEnded onTouchCancelled永远不会被调用
      * @js NA
      */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
-    /** Callback function for touch moved.
-    *
-    * @param touch Touch infomation.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for touch moved.
+     *
+     * @~chinese 触摸移动时的回调函数
+     * 
+     * @param touch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
-    /** Callback function for touch ended.
-    *
-    * @param touch Touch infomation.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for touch ended.
+     *
+     * @~chinese 触摸结束时的回调函数
+     * 
+     * @param touch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
-    /** Callback function for touch cancelled.
-    *
-    * @param touch Touch infomation.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for touch cancelled.
+     *
+     * @~chinese 触摸取消时的回调函数
+     * 
+     * @param touch @~english Touch infomation.
+     * @~chinese 触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
 
-    /** Callback function for multiple touches began.
-    *
-    * @param touches Touches information.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for multiple touches began.
+     *
+     * @~chinese 多点触摸开始时的回调函数
+     * 
+     * @param touches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
-    /** Callback function for multiple touches moved.
-    *
-    * @param touches Touches information.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for multiple touches moved.
+     *
+     * @~chinese 多点触摸移动时的回调函数
+     * 
+     * @param touches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
-    /** Callback function for multiple touches ended.
-    *
-    * @param touches Touches information.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for multiple touches ended.
+     *
+     * @~chinese 多点触摸结束时的回调函数
+     * 
+     * @param touches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
-    /** Callback function for multiple touches cancelled.
-    *
-    * @param touches Touches information.
-    * @param unused_event Event information.
-    * @js NA
-    */
+    /** @~english Callback function for multiple touches cancelled.
+     *
+     * @~chinese 多点触摸取消时的回调函数
+     * 
+     * @param touches @~english Touches information.
+     * @~chinese 多点触摸信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
+     * @js NA
+     */
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
     /** 
       @deprecated Please override onAcceleration 
@@ -146,34 +185,26 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
-	/* Callback function should not be deprecated, it will generate lots of warnings.
-	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
-    */
-    /** Callback funtion for acceleration.
-     * @param acc Acceleration information.
-     * @param unused_event Event information.
+    /** @~english Callback funtion for acceleration.
+     * @~chinese 加速计事件回调函数。
+     * @param acc @~english Acceleration information.
+     * @~chinese 加速计信息。
+     * @param unused_event @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
-    /** If isTouchEnabled, this method is called onEnter. Override it to change the
-    way Layer receives touch events.
-    ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
-    Example:
-    void Layer::registerWithTouchDispatcher()
-    {
-    TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-    }
-    @since v0.8.0
-    @js NA
-    */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
 
-    /** whether or not it will receive Touch events.
-    You can enable / disable touch events with this property.
-    Only the touches of this node will be affected. This "method" is not propagated to it's children.
-    @since v0.8.1
-    @js NA
+    /** @~english whether or not it will receive Touch events.
+     * You can enable / disable touch events with this property.
+     * Only the touches of this node will be affected. This "method" is not propagated to it's children.
+     * @~chinese 是否接收触摸事件。
+     * 您可以调用该方法来启用或者禁用触摸事件。
+     * 只有调用该方法的节点的接触将受到影响。这个“方法”不会传播到它的孩子。
+     * @since v0.8.1
+     * @js NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
     CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
@@ -181,55 +212,69 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
 
-    /** 
-      swallowsTouches of the touch events. Default is true 
-      @js NA
+    /** @~english
+     * swallowsTouches of the touch events. Default is true
+     * @~chinese 
+     * 设置吞噬触摸事件。默认值是True.
+     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
     CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
-    /** whether or not it will receive Accelerometer events
-    You can enable / disable accelerometer events with this property.
-    @since v0.8.1
-    @js NA
-    */
+    /** @~english whether or not it will receive Accelerometer events
+     * You can enable / disable accelerometer events with this property.
+     * @~chinese 是否接收加速度计的事件
+     * 您可以调用该方法来启用或禁用加速计事件
+     * @since v0.8.1
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerInterval(double interval);
 
-    /** whether or not it will receive keyboard or keypad events
-    You can enable / disable accelerometer events with this property.
-    it's new in cocos2d-x
-    @js NA
-    */
+    /** @~english whether or not it will receive keyboard or keypad events
+     * You can enable / disable accelerometer events with this property.
+     * it's new in cocos2d-x
+     * @~chinese 是否会收到键盘或虚拟键盘事件
+     * 您调用该方法启用或者禁用键盘事件
+     * 这是cocos2d-x的一个新方法
+     * @js NA
+     */
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
 
-    /** 
-      Please use onKeyPressed instead. 
-      @js NA
+    /** @~english
+     * Please use onKeyPressed instead.
+     * @~chinese 
+     * 请使用onKeyPressed函数代替。
+     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     
-    /** 
-      Please use onKeyReleased instead. 
-      @js NA
+    /** @~english
+     * Please use onKeyReleased instead.
+     * @~chinese 
+     * 请使用onKeyReleased函数代替。
+     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
-	/* Callback function should not be deprecated, it will generate lots of warnings.
-	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
-    */
-    /** Callback function for key pressed.
-     * @param keyCode KeyCode information.
-     * @param event Event information.
+    /** @~english Callback function for key pressed.
+     * @~chinese 按键按下去时的回调函数
+     * @param keyCode @~english KeyCode information.
+     * @~chinese 键码信息。
+     * @param event @~english Event information.
+     * @~chinese 事件信息。
      * @js NA
      */
     virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
-    /** Callback function for key released.
-    * @param keyCode KeyCode information.
-    * @param event Event information.
+    /** @~english Callback function for key released.
+     * @~chinese 按键释放时的回调函数
+    * @param keyCode @~english KeyCode information.
+     * @~chinese 键码信息。
+    * @param event @~english Event information.
+     * @~chinese 事件信息。
     * @js NA
     */
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
@@ -278,13 +323,18 @@ private:
 
 
 /** @class __LayerRGBA
- * @brief LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
- 
- All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
- - opacity
- - RGB colors
- @since 2.1
- @js NA
+ * @brief @~english LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
+ *
+ * All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
+ * - opacity
+ * - RGB colors
+ * @~chinese LayerRGBA类是Layer的子类，它实现了RGBAProtocol协议并且使用纯色作为背景。
+ * 
+ * 它所有从Layer继承过来的功能都是有效的,并且它还实现了一些新特性，这些特性可以对所有符合 RGBAProtocol的孩子结点生效。
+ * - 不透明
+ * - RGB颜色
+ * @since 2.1
+ * @js NA
  */
 class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
 {
@@ -324,49 +374,77 @@ private:
 // LayerColor
 //
 /** @class LayerColor
- * @brief LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
+ * @brief @~english LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
 
-All features from Layer are valid, plus the following new features:
-- opacity
-- RGB colors
-*/
+ * All features from Layer are valid, plus the following new features:
+ * - opacity
+ * - RGB colors
+ * @~chinese LayerColor是Layer类的子类，并且它实现了 RGBAProtocol协议
+ *
+ * 它所有从Layer继承过来的功能都是有效的,并且它还实现了一些新特性，这些特性可以对所有符合 RGBAProtocol的孩子结点生效。
+ * - 不透明
+ * - RGB颜色
+ */
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
-    /** Creates a fullscreen black layer.
+    /** @~english Creates a fullscreen black layer.
      *
-     * @return An autoreleased LayerColor object.
+     * @~chinese 创建一个全屏的黑色图层
+     *
+     * @return @~english An autoreleased LayerColor object.
+     * @~chinese 一个自动释放的LayerColor对象。
      */
     static LayerColor* create();
-    /** Creates a Layer with color, width and height in Points.
+    /** @~english Creates a Layer with color, width and height in Points.
      *
-     * @param color The color of layer.
-     * @param width The width of layer.
-     * @param height The height of layer.
-     * @return An autoreleased LayerColor object.
+     * @~chinese 通过颜色,宽度和高度来创建一个图层
+     * 
+     * @param color @~english The color of layer.
+     * @~chinese 图层的颜色。
+     * @param width @~english The width of layer.
+     * @~chinese 图层的宽度。
+     * @param height @~english The height of layer.
+     * @~chinese 图层的高度。
+     * @return @~english An autoreleased LayerColor object.
+     * @~chinese 一个自动释放LayerColor对象。
      */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
-    /** Creates a Layer with color. Width and height are the window size.
+    /** @~english Creates a Layer with color. Width and height are the window size.
      *
-     * @param color The color of layer.
-     * @return An autoreleased LayerColor object.
+     * @~chinese 使用颜色创建一个图层。宽度和高度等于窗口大小。
+     * 
+     * @param color @~english The color of layer.
+     * @~chinese 图层的颜色。
+     * @return @~english An autoreleased LayerColor object.
+     * @~chinese 一个自动释放的LayerColor对象。
      */
     static LayerColor * create(const Color4B& color);
 
-    /** Change width in Points.
+    /** @~english Change width in Points.
      * 
-     * @param w The width of layer.
+     * @~chinese 修改图层的宽度
+     * 
+     * @param w @~english The width of layer.
+     * @~chinese 图层的宽度
      */
     void changeWidth(GLfloat w);
-    /** Change height in Points.
+    /** @~english Change height in Points.
      *
-     * @param h The height of layer.
+     * @~chinese 修改图层的高度
+     * 
+     * @param h @~english The height of layer.
+     * @~chinese 图层的高度。
      */
     void changeHeight(GLfloat h);
-    /** Change width and height in Points.
+    /** @~english Change width and height in Points.
      * 
-     * @param w The width of layer.
-     * @param h The Height of layer.
+     * @~chinese 修改图层的宽度和高度
+     * 
+     * @param w @~english The width of layer.
+     * @~chinese 图层的宽度。
+     * @param h @~english The Height of layer.
+     * @~chinese 图层的高度。
     @since v0.8
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
@@ -377,18 +455,15 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     virtual void setContentSize(const Size & var) override;
-    /** BlendFunction. Conforms to BlendProtocol protocol */
-    /**
-    * @lua NA
-    */
+    /** @~english BlendFunction. Conforms to BlendProtocol protocol
+     * @~chinese 混合函数,符合BlendProtocol协议
+     * @lua NA
+     */
     virtual const BlendFunc& getBlendFunc() const override;
     /**
-    *@code
-    *When this function bound into js or lua,the parameter will be changed
-    *In js: var setBlendFunc(var src, var dst)
-    *In lua: local setBlendFunc(local src, local dst)
-    *@endcode
-    */
+     *@code@~english
+     *When this function bound into js or lua,the parameter will be changed
+     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
 
     virtual std::string getDescription() const override;
@@ -420,116 +495,179 @@ private:
 // LayerGradient
 //
 /** @class LayerGradient
- * @brief LayerGradient is a subclass of LayerColor that draws gradients across the background.
+ * @brief @~english LayerGradient is a subclass of LayerColor that draws gradients across the background.
+ * All features from LayerColor are valid, plus the following new features:
+ * - direction
+ * - final color
+ * - interpolation mode
 
-All features from LayerColor are valid, plus the following new features:
-- direction
-- final color
-- interpolation mode
+ * Color is interpolated between the startColor and endColor along the given
+ * vector (starting at the origin, ending at the terminus).  If no vector is
+ * supplied, it defaults to (0, -1) -- a fade from top to bottom.
+ * If 'compressedInterpolation' is disabled, you will not see either the start or end color for
+ * non-cardinal vectors; a smooth gradient implying both end points will be still
+ * be drawn, however.
 
-Color is interpolated between the startColor and endColor along the given
-vector (starting at the origin, ending at the terminus).  If no vector is
-supplied, it defaults to (0, -1) -- a fade from top to bottom.
-
-If 'compressedInterpolation' is disabled, you will not see either the start or end color for
-non-cardinal vectors; a smooth gradient implying both end points will be still
-be drawn, however.
-
-If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
-
-@since v0.99.5
-*/
+ * If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
+ * @~chinese LayerGradient类是LayerColor的子类,用来绘制渐变背景。
+ * 
+ * 它所有从LayerColor继承来的功能是有效的,再加上以下新的特性:
+ * - 方向
+ * - 最终颜色
+ * - 插值模式
+ * 
+ * 颜色是用给定的向量(从原点,最后终点)，使用endColor和startColor进行插值得到的
+ * 如果没有提供向量,它默认为(0,1) —— 表示从上到下渐变。
+ * 
+ * 如果“compressedInterpolation”是禁用的,你不会看到的开始或结束的颜色梯度
+ *
+ * 如果启用了“compressedInterpolation”(默认模式),您将看到的开始和结束的颜色梯度。
+ * 
+ * @since v0.99.5
+ */
 class CC_DLL LayerGradient : public LayerColor
 {
 public:
-    /** Creates a fullscreen black layer.
+    /** @~english Creates a fullscreen black layer.
      *
-     * @return An autoreleased LayerGradient object.
+     * @~chinese 创建一个全屏的黑色图层。
+     * 
+     * @return @~english An autoreleased LayerGradient object.
+     * @~chinese 一个自动释放的LayerGradient对象。
      */
     static LayerGradient* create();
 
-    /** Creates a full-screen Layer with a gradient between start and end.
+    /** @~english Creates a full-screen Layer with a gradient between start and end.
      *
-     * @param start The start color.
-     * @param end The end color.
-     * @return An autoreleased LayerGradient object.
+     * @~chinese 创建一个全屏的和在开始和结束颜色之间的梯度图层。
+     * 
+     * @param start @~english The start color.
+     * @~chinese 起点颜色。
+     * @param end @~english The end color.
+     * @~chinese 终点颜色。
+     * @return @~english An autoreleased LayerGradient object.
+     * @~chinese 一个自动释放LayerGradient对象。
      */
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
-    /** Creates a full-screen Layer with a gradient between start and end in the direction of v.
+    /** @~english Creates a full-screen Layer with a gradient between start and end in the direction of v.
      *
-     * @param start The start color.
-     * @param end The end color.
-     * @param v The direction of gradient color.
-     * @return An autoreleased LayerGradient object.
+     * @~chinese 在方向V上，使用开始颜色和结束颜色插值，创建一个全屏的带颜色梯度的图层。
+     * 
+     * @param start @~english The start color.
+     * @~chinese 开始颜色。
+     * @param end @~english The end color.
+     * @~chinese 结束颜色。
+     * @param v @~english The direction of gradient color.
+     * @~chinese 颜色梯度的方向。
+     * @return @~english An autoreleased LayerGradient object.
+     * @~chinese 一个自动释放LayerGradient对象。
      */
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
     
-    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
-     Default: true.
+    /** @~english Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
+     * Default: true.
      *
-     * @param compressedInterpolation The interpolation will be compressed if true.
+     * @~chinese 为了在规范和非规范的向量空间内显示所有的颜色梯度,是否需要压缩插值。
+     * 默认值: True
+     * 
+     * @param compressedInterpolation @~english The interpolation will be compressed if true.
+     * @~chinese 如果插值被压缩则为true.
      */
     void setCompressedInterpolation(bool compressedInterpolation);
-    /** Get the compressedInterpolation
+    /** @~english Get the compressedInterpolation
      *
-     * @return The interpolation will be compressed if true.
+     * @~chinese 查询是否插值会压缩
+     * 
+     * @return @~english The interpolation will be compressed if true.
+     * @~chinese 如果插值会压缩则返回真，否则返回假
      */
     bool isCompressedInterpolation() const;
 
-    /** Sets the start color of the gradient.
+    /** @~english Sets the start color of the gradient.
      * 
-     * @param startColor The start color.
+     * @~chinese 设置开始渐变颜色。
+     * 
+     * @param startColor @~english The start color.
+     * @~chinese 开始颜色。
      */
     void setStartColor( const Color3B& startColor );
-    /** Returns the start color of the gradient.
+    /** @~english Returns the start color of the gradient.
      *
-     * @return The start color.
+     * @~chinese 返回开始颜色梯度。
+     * 
+     * @return @~english The start color.
+     * @~chinese 开始颜色。
      */
     const Color3B& getStartColor() const;
 
-    /** Sets the end color of the gradient.
+    /** @~english Sets the end color of the gradient.
      *
-     * @param endColor The end color.
+     * @~chinese 设置结束渐变颜色。
+     * 
+     * @param endColor @~english The end color.
+     * @~chinese 结束颜色。
      */
     void setEndColor( const Color3B& endColor );
-    /** Returns the end color of the gradient.
+    /** @~english Returns the end color of the gradient.
      *
-     * @return The end color.
+     * @~chinese 返回结束的颜色梯度。
+     * 
+     * @return @~english The end color.
+     * @~chinese 结束颜色。
      */
     const Color3B& getEndColor() const;
 
-    /** Returns the start opacity of the gradient.
+    /** @~english Returns the start opacity of the gradient.
      *
-     * @param startOpacity The start opacity, from 0 to 255.
+     * @~chinese 返回开始的不透明的梯度。
+     * 
+     * @param startOpacity @~english The start opacity, from 0 to 255.
+     * @~chinese 开始不透明度,从0到255。
      */
     void setStartOpacity( GLubyte startOpacity );
-    /** Returns the start opacity of the gradient.
+    /** @~english Returns the start opacity of the gradient.
      *
-     * @return The start opacity.
+     * @~chinese 返回开始的不透明的梯度。
+     * 
+     * @return @~english The start opacity.
+     * @~chinese 开始的不透明度。
      */
     GLubyte getStartOpacity() const;
 
-    /** Returns the end opacity of the gradient.
+    /** @~english Returns the end opacity of the gradient.
      *
-     * @param endOpacity The end opacity, from 0 to 255.
+     * @~chinese 返回结束不透明的渐变。
+     * 
+     * @param endOpacity @~english The end opacity, from 0 to 255.
+     * @~chinese 不透明,从0到255。
      */
     void setEndOpacity( GLubyte endOpacity );
-    /** Returns the end opacity of the gradient.
+    /** @~english Returns the end opacity of the gradient.
      *
-     * @return The end opacity.
+     * @~chinese 返回结束不透明的渐变。
+     * 
+     * @return @~english The end opacity.
+     * @~chinese 不透明。
      */
     GLubyte getEndOpacity() const;
 
-    /** Sets the directional vector that will be used for the gradient.
+    /** @~english Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
      *
-     * @param alongVector The direction of gradient.
+     * @~chinese 设置梯度方向向量。
+     * 默认值是垂直方向(0,1)。
+     * 
+     * @param alongVector @~english The direction of gradient.
+     * @~chinese 梯度的方向。
      */
     void setVector(const Vec2& alongVector);
-    /** Returns the directional vector used for the gradient.
+    /** @~english Returns the directional vector used for the gradient.
      *
-     * @return The direction of gradient.
+     * @~chinese 返回梯度方向向量。
+     * 
+     * @return @~english The direction of gradient.
+     * @~chinese 梯度的方向。
      */
     const Vec2& getVector() const;
 
@@ -540,13 +678,15 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~LayerGradient();
     
     virtual bool init() override;
-    /** Initializes the Layer with a gradient between start and end.
+    /** @~english Initializes the Layer with a gradient between start and end.
+     * @~chinese 使用开始和结束颜色来初始化图层。
      * @js init
      * @lua init
      */
     bool initWithColor(const Color4B& start, const Color4B& end);
     
-    /** Initializes the Layer with a gradient between start and end in the direction of v.
+    /** @~english Initializes the Layer with a gradient between start and end in the direction of v.
+     * @~chinese 使用开始和结束颜色，以及梯度方向来初始化图层
      * @js init
      * @lua init
      */
@@ -565,36 +705,41 @@ protected:
 
 
 /** @class LayerMultiplex
- * @brief MultipleLayer is a Layer with the ability to multiplex it's children.
-Features:
-- It supports one or more children
-- Only one children will be active a time
-*/
+ * @brief @~english MultipleLayer is a Layer with the ability to multiplex it's children.
+ * Features:
+ * - It supports one or more children
+ * - Only one children will be active a time
+ * @~chinese MultipleLayer是一种图层，它支持多路复用孩子节点
+ * 特点:
+ * - 它支持一个或多个孩子节点
+ * - 同时只有一个孩子节点会被激活
+ */
 class CC_DLL LayerMultiplex : public Layer
 {
 public:
-    /** Creates and initializes a LayerMultiplex object.
+    /** @~english Creates and initializes a LayerMultiplex object.
+     * @~chinese 创建并初始化一个LayerMultiplex对象。
      * @lua NA
      * 
-     * @return An autoreleased LayerMultiplex object.
+     * @return @~english An autoreleased LayerMultiplex object.
+     * @~chinese 一个autoreleased LayerMultiplex对象。
      */
     static LayerMultiplex* create();
 
-    /** Creates a LayerMultiplex with an array of layers.
+    /** @~english Creates a LayerMultiplex with an array of layers.
+     * @~chinese 使用数组创建一个LayerMultiplex层。
      @since v2.1
      * @js NA
      *
-     * @param arrayOfLayers An array of layers.
-     * @return An autoreleased LayerMultiplex object.
+     * @param arrayOfLayers @~english An array of layers.
+     * @~chinese 一个数组的层。
+     * @return @~english An autoreleased LayerMultiplex object.
+     * @~chinese 一个autoreleased LayerMultiplex对象。
      */
     static LayerMultiplex* createWithArray(const Vector<Layer*>& arrayOfLayers);
 
-    /** Creates a LayerMultiplex with one or more layers using a variable argument list.
-     * @code
-     * When this function bound to lua or js,the input params are changed.
-     * In js:var create(...)
-     * In lua:local create(...)
-     * @endcode
+    /** @~english Creates a LayerMultiplex with one or more layers using a variable argument list.
+     * @~chinese 创建一个变长参数列表来创建LayerMultiplex
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
@@ -616,34 +761,47 @@ public:
     static LayerMultiplex * create(Layer* layer, ... );
 #endif
 
-    /** Creates a LayerMultiplex with one layer.
-     * Lua script can not init with undetermined number of variables
-     * so add these functions to be used with lua.
+    /** @~english Creates a LayerMultiplex with one layer.
+     * @~chinese Creates a LayerMultiplex with one layer.
+     * 使用一个图层来创建 MultiplexLayer
+     *
+     * @param layer @~english A certain layer.
+     * @~chinese 某一图层。
+     * @return @~english An autoreleased LayerMultiplex object.
+     * @~chinese 一个自动释放的LayerMultiplex对象。
      * @js NA
      * @lua NA
-     *
-     * @param layer A certain layer.
-     * @return An autoreleased LayerMultiplex object.
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
 
 
-    /** Add a certain layer to LayerMultiplex.
+    /** @~english Add a certain layer to LayerMultiplex.
      *
-     * @param layer A layer need to be added to the LayerMultiplex.
+     * @~chinese 添加图层到LayerMultiplex。
+     * 
+     * @param layer @~english A layer need to be added to the LayerMultiplex.
+     * @~chinese 被添加到LayerMultiplex的图层
      */
     void addLayer(Layer* layer);
 
-    /** Switches to a certain layer indexed by n.
+    /** @~english Switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
      *
-     * @param n The layer indexed by n will display.
+     * @~chinese 切换到某一个索引为n的图层。
+     * 当前(旧的)图层将从它的父亲中移除，当 (cleanup = true)时。
+     * 
+     * @param n @~english The layer indexed by n will display.
+     * @~chinese 图层n将会显示。
      */
     void switchTo(int n);
-    /** release the current layer and switches to another layer indexed by n.
-    The current (old) layer will be removed from it's parent with 'cleanup=true'.
+    /** @~english release the current layer and switches to another layer indexed by n.
+     * The current (old) layer will be removed from it's parent with 'cleanup=true'.
      *
-     * @param n The layer indexed by n will display.
+     * @~chinese 释放当前图层同时切换到另一个索引为n的图层。
+     * 当前(旧的)图层将从它的父亲中移除，当 (cleanup = true)时。
+     * 
+     * @param n @~english The layer indexed by n will display.
+     * @~chinese 将显示层被n。
      */
     void switchToAndReleaseMe(int n);
 
@@ -661,14 +819,16 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~LayerMultiplex();
     
     virtual bool init() override;
-    /** initializes a MultiplexLayer with one or more layers using a variable argument list.
+    /** @~english initializes a MultiplexLayer with one or more layers using a variable argument list.
+     * @~chinese 使用一个图层或者一个变长参数列表来初始化 MultiplexLayer
      * @js NA
      * @lua NA
      */
     bool initWithLayers(Layer* layer, va_list params);
     
-    /** initializes a MultiplexLayer with an array of layers
-     @since v2.1
+    /** @~english initializes a MultiplexLayer with an array of layers
+     * @~chinese 使用一个图层数组来初始化 LayerMultiplex
+     * @since v2.1
      */
     bool initWithArray(const Vector<Layer*>& arrayOfLayers);
 

@@ -40,17 +40,26 @@ class Touch;
 
 
 
-/** @brief A Menu for touch handling.
-* 
-* Features and Limitation:
-*  - You can add MenuItem objects in runtime using addChild.
-*  - But the only accepted children are MenuItem objects.
+/** @class Menu
+ * @brief @~english A Menu for touch handling.
+ * 
+ * Features and Limitation:
+ *  - You can add MenuItem objects in runtime using addChild.
+ *  - But the only accepted children are MenuItem objects.
+ *
+ * @~chinese 菜单，一个可添加响应触摸事件菜单项的容器类。
+ * 
+ * 特性和限制:
+ * - 在运行时你可以通过addChild函数添加菜单项。
+ * - 只接受菜单项（MenuItem）及其派生类对象作为孩子节点。
 */
 class CC_DLL Menu : public Layer
 {
 public:
-    /**
+    /**@~english
      * Menu state, it's used internally.
+     * @~chinese 
+     * 菜单的状态,内部使用。
      */
     enum class State
     {
@@ -59,7 +68,10 @@ public:
     };
     
     /**
-     *@brief Creates an empty Menu.
+     *@brief @~english Creates an empty Menu.
+     * @~chinese 创建一个空的菜单。
+     * @return @~english A initialized empty menu which is marked as "autorelease".
+     * @~chinese 一个初始化的空菜单，该节点会自动被标记为“autorelease”(自动释放).
      */
     static Menu* create();
     
@@ -80,78 +92,129 @@ public:
     // On WP8 for lists longer than 10 items, use createWithArray or variadicCreate with NULL as the last argument.
     static Menu* variadicCreate(MenuItem* item, ...);
 #else
-    /** Creates a Menu with MenuItem objects. */
+    /** @~english Creates a Menu with MenuItem objects.  
+     * @~chinese 通过给定的一个或多个菜单项对象创建菜单。
+     * @return @~english A initialized menu which is marked as "autorelease".
+     * @~chinese 一个初始化的菜单，该节点会自动被标记为“autorelease”(自动释放).
+     */
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** 
+    /** @~english
      * Creates a Menu with a Array of MenuItem objects.
+     * @~chinese 通过给定的一组菜单项对象创建菜单。
+     * @param arrayOfItems @~english A array of MenuItem objects. @~chinese 一个MenuItem对象数组。
+     * @return @~english A initialized menu which is marked as "autorelease".
+     * @~chinese 一个初始化的菜单，该节点会自动被标记为“autorelease”(自动释放).
      * @js NA
      */
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
-    /**
-     * Creates a Menu with it's item, then use addChild() to add 
-     * other items. It is used for script, it can't init with undetermined
-     * number of variables.
+    /**@~english
+     * Creates a Menu with it's item, then use addChild() to add other items.
+     * @~chinese 
+     * 通过给定的一个菜单项对象创建菜单，之后可通过addChild函数添加其他菜单项。
+     * @param item @~english A MenuItem object. @~chinese 一个MenuItem对象。
+     * @return @~english A initialized menu which is marked as "autorelease".
+     * @~chinese 一个初始化的菜单，该节点会自动被标记为“autorelease”(自动释放).
      * @js NA
      */
     static Menu* createWithItem(MenuItem* item);
     
-    /** Creates a Menu with MenuItem objects.
+    /** @~english Creates a Menu with MenuItem objects.
+     * @~chinese 通过给定的一个或多个菜单项对象创建菜单。
+     * @param firstItem @~english The first MenuItem object. @~chinese 给定的第一个菜单项。
+     * @param args @~english Other MenuItem objects(variadic parameters).@~chinese 其他菜单项(可变参数)。
+     * @return @~english A initialized menu which is marked as "autorelease".
+     * @~chinese 一个初始化的菜单，该节点会自动被标记为“autorelease”(自动释放).
      * @js NA
      */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
 
-    /** Align items vertically. */
+    /** @~english Align items vertically with default padding. 
+     * @~chinese 以默认间距垂直排列菜单项。
+     */
     void alignItemsVertically();
 
-    /** Align items vertically with padding.
-    @since v0.7.2
-    */
+    /** @~english Align items vertically with padding.
+     * @~chinese 以指定间距垂直排列菜单项。
+     * @param padding @~english The padding for align items vertically. @~chinese 菜单项垂直排列的间距值。
+     * @since v0.7.2
+     */
     void alignItemsVerticallyWithPadding(float padding);
 
-    /** Align items horizontally. */
+    /** @~english Align items horizontally with default padding.
+     * @~chinese 以默认间距水平排列菜单项。
+     */
     void alignItemsHorizontally();
     
-    /** Align items horizontally with padding.
-    @since v0.7.2
-    */
+    /** @~english Align items horizontally with padding.
+     * @~chinese 以指定间距水平排列菜单项。
+     * @param padding @~english The padding for align items horizontally. @~chinese 菜单项水平排列的间距值。
+     * @since v0.7.2
+     */
     void alignItemsHorizontallyWithPadding(float padding);
 
-    /** Align items in rows of columns. */
+    /** @~english Align items in rows of columns.
+     * @~chinese 将菜单项按照列分组排列，参数为每列所包含的菜单项数。
+     * @param columns @~english The number of MenuItem on the first column. @~chinese 放置在第一列的菜单项数目。
+     * @param ... @~english The numbers of MenuItem on other columns.(variadic parameters).@~chinese 其他列放置的菜单项数目(可变参数)。
+     */
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     
-    /** Align items in rows of columns. */
+    /** @~english Align items in rows of columns.
+     * @~chinese 将菜单项按照列分组排列，参数为每列所包含的菜单项数。
+     * @param columns @~english The number of MenuItem on the first column. @~chinese 放置在第一列的菜单项数目。
+     * @param args @~english The numbers of MenuItem on other columns.(variadic parameters).@~chinese 其他列放置的菜单项数目(可变参数)。
+     */
     void alignItemsInColumns(int columns, va_list args);
     
-    /** Align items in array of columns.
+    /** @~english Align items in rows of columns.
+     * @~chinese 将菜单项按照列分组排列，参数为每列所包含的菜单项数。
+     * @param columns @~english A array of the number of MenuItem on columns. @~chinese 包含每列菜单项数目配置的数组。
      * @js NA
      */
-    void alignItemsInColumnsWithArray(const ValueVector& rows);
+    void alignItemsInColumnsWithArray(const ValueVector& columns);
 
-    /** Align items in columns of rows. */
+    /** @~english Align items in columns of rows.
+     * @~chinese 将菜单项按照行分组排列，参数为每行所包含的菜单项数。
+     * @param rows @~english The number of MenuItem on the first row. @~chinese 放置在第一行的菜单项数目。
+     * @param ... @~english The numbers of MenuItem on other rows.(variadic parameters).@~chinese 其他行放置的菜单项数目(可变参数)。
+     */
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     
-    /** Align items in columns of rows. */
+    /** @~english Align items in columns of rows.
+     * @~chinese 将菜单项按照行分组排列，参数为每行所包含的菜单项数。
+     * @param rows @~english The number of MenuItem on the first row. @~chinese 放置在第一行的菜单项数目。
+     * @param args @~english The numbers of MenuItem on other rows.(variadic parameters).@~chinese 其他行放置的菜单项数目(可变参数)。
+     */
     void alignItemsInRows(int rows, va_list args);
     
-    /** Align items in array of rows.
+    /** @~english Align items in columns of rows.
+     * @~chinese 将菜单项按照行分组排列，参数为每行所包含的菜单项数。
+     * @param rows @~english A array of the number of MenuItem on rows. @~chinese 包含每行菜单项数目配置的数组。
      * @js NA
      */
-    void alignItemsInRowsWithArray(const ValueVector& columns);
+    void alignItemsInRowsWithArray(const ValueVector& rows);
 
-    /**
+    /**@~english
      * Determines if the menu is enable.
+     * @~chinese 
+     * 验证菜单是否可点击。
      * @see `setEnabled(bool)`.
-     * @return whether the menu is enabled or not.
+     * @return @~english whether the menu is enabled or not.
+     * @~chinese 是可点击返回true，否则返回false。
      */
     virtual bool isEnabled() const { return _enabled; }
 
-    /**
-     * Set whether the menu is visible.
-     * The default value is true, a menu is default to visible.
-     *@param value true if menu is enable, false if menu is disable.
+    /**@~english
+     * Set whether the menu is enable.
+     * The default value is true, a menu is default to enable.
+     * @~chinese 
+     * 设置菜单是否可点击。
+     * 默认为true,可点击。
+     * @param value @~english true if menu is enable, false if menu is disable.
+     * @~chinese true 菜单响应点击，false 菜单不响应点击。
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 
@@ -182,17 +245,12 @@ CC_CONSTRUCTOR_ACCESS:
     Menu() : _selectedItem(nullptr) {}
     virtual ~Menu();
 
-    /** initializes an empty Menu */
     bool init() override;
 
-    /** initializes a Menu with a NSArray of MenuItem objects */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
 
 protected:
 
-
-
-    /** whether or not the menu will receive events */
     bool _enabled;
 
     MenuItem* getItemForTouch(Touch * touch);

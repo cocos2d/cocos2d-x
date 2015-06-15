@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
  Copyright (c) 2015 Chukong Technologies Inc.
  
@@ -37,147 +37,577 @@
 NS_CC_BEGIN
 struct PUParticle3D;
 class PUParticleSystem3D;
+
 /**
- * 3d particle emitter
- */
+* @addtogroup _3d
+* @{
+*/
+
+/** @class PUEmitter
+*@brief @~english PUEmitter，the base class of pu emitter，inherit from Particle3DEmitter.
+ Different emitters can have their own implementation.
+
+ @~chinese PUEmitter继承自Particle3DEmitter，是pu发射器的基类。
+ 具体的实现由不同的发射器类型定义。。
+*/
 class CC_DLL PUEmitter : public Particle3DEmitter
 {
     friend class PUParticleSystem3D;
 public:
 
-    // Default values
+    /**
+    @property
+    @static
+    @~english Default enabled
+    @~chinese 默认的启用状态
+    */
     static const bool DEFAULT_ENABLED;
+
+    /**
+    @property
+    @static
+    @~english Default position
+    @~chinese 默认位置
+    */
     static const Vec3 DEFAULT_POSITION;
+
+    /**
+    @property
+    @static
+    @~english Default whether use local coordinate system
+    @~chinese 默认是否使用局部坐标系
+    */
     static const bool DEFAULT_KEEP_LOCAL;
+
+    /**
+    @property
+    @static
+    @~english Default emitted direction
+    @~chinese 默认发射方向
+    */
     static const Vec3 DEFAULT_DIRECTION;
+
+    /**
+    @property
+    @static
+    @~english Default emitted orientation
+    @~chinese 默认发射朝向
+    */
     static const Quaternion DEFAULT_ORIENTATION;
+
+    /**
+    @property
+    @static
+    @~english Default emitted starting orientation
+    @~chinese 默认发射朝向范围起始值
+    */
     static const Quaternion DEFAULT_ORIENTATION_RANGE_START;
+
+    /**
+    @property
+    @static
+    @~english Default emitted ending orientation
+    @~chinese 默认发射朝向范围结束值
+    */
     static const Quaternion DEFAULT_ORIENTATION_RANGE_END;
-    //static const Particle::ParticleType DEFAULT_EMITS;
+
+    /**
+    @property
+    @static
+    @~english Default texture starting coords
+    @~chinese 默认纹理起始坐标
+    */
     static const unsigned short DEFAULT_START_TEXTURE_COORDS;
+
+    /**
+    @property
+    @static
+    @~english Default texture ending coords
+    @~chinese 默认纹理结束坐标
+    */
     static const unsigned short DEFAULT_END_TEXTURE_COORDS;
+
+    /**
+    @property
+    @static
+    @~english Default texture coords
+    @~chinese 默认纹理坐标
+    */
     static const unsigned short DEFAULT_TEXTURE_COORDS;
+
+    /**
+    @property
+    @static
+    @~english Default color starting range
+    @~chinese 默认颜色范围起始值
+    */
     static const Vec4 DEFAULT_START_COLOUR_RANGE;
+
+    /**
+    @property
+    @static
+    @~english Default color ending range
+    @~chinese 默认颜色范围结束值
+    */
     static const Vec4 DEFAULT_END_COLOUR_RANGE;
+
+    /**
+    @property
+    @static
+    @~english Default color
+    @~chinese 默认颜色值
+    */
     static const Vec4 DEFAULT_COLOUR;
+
+    /**
+    @property
+    @static
+    @~english Default whether use auto direction
+    @~chinese 默认是否使用自动朝向
+    */
     static const bool DEFAULT_AUTO_DIRECTION;
+
+    /**
+    @property
+    @static
+    @~english Default whether force emission
+    @~chinese 默认是否强制发射
+    */
     static const bool DEFAULT_FORCE_EMISSION;
+
+    /**
+    @property
+    @static
+    @~english Default emission rate
+    @~chinese 默认发射率
+    */
     static const float DEFAULT_EMISSION_RATE;
+
+    /**
+    @property
+    @static
+    @~english Default particle time to live
+    @~chinese 默认粒子生存时间
+    */
     static const float DEFAULT_TIME_TO_LIVE;
+
+    /**
+    @property
+    @static
+    @~english Default particle mass
+    @~chinese 默认粒子质量
+    */
     static const float DEFAULT_MASS;
+
+    /**
+    @property
+    @static
+    @~english Default particle velocity
+    @~chinese 默认粒子速率
+    */
     static const float DEFAULT_VELOCITY;
+
+    /**
+    @property
+    @static
+    @~english Default emitted duration
+    @~chinese 默认发射持续时间
+    */
     static const float DEFAULT_DURATION;
+
+    /**
+    @property
+    @static
+    @~english Default emitted repeat delay
+    @~chinese 默认重复发射间隔
+    */
     static const float DEFAULT_REPEAT_DELAY;
+
+    /**
+    @property
+    @static
+    @~english Default emitted angle
+    @~chinese 默认发射角度
+    */
     static const float DEFAULT_ANGLE;
+
+    /**
+    @property
+    @static
+    @~english Default emitted particle dimensions
+    @~chinese 默认发射粒子尺寸
+    */
     static const float DEFAULT_DIMENSIONS;
+
+    /**
+    @property
+    @static
+    @~english Default emitted particle width
+    @~chinese 默认发射粒子宽度
+    */
     static const float DEFAULT_WIDTH;
+
+    /**
+    @property
+    @static
+    @~english Default emitted particle height
+    @~chinese 默认发射粒子高度
+    */
     static const float DEFAULT_HEIGHT;
+
+    /**
+    @property
+    @static
+    @~english Default emitted particle depth
+    @~chinese 默认发射粒子深度
+    */
     static const float DEFAULT_DEPTH;
 
     PUEmitter();
     virtual ~PUEmitter();
     
+    /**
+    * @~english Perform activities when a emitter is started(internal method).
+    * @~chinese 当发射器开始运行时执行(内部方法)。
+    */
     virtual void notifyStart();
+
+    /**
+    * @~english Perform activities when a emitter is stopped(internal method).
+    * @~chinese 当发射器停止运行时执行(内部方法)。
+    */
     virtual void notifyStop();
+
+    /**
+    * @~english Perform activities when a emitter is paused(internal method).
+    * @~chinese 当发射器暂停运行时执行(内部方法)。
+    */
     virtual void notifyPause();
+
+    /**
+    * @~english Perform activities when a emitter is paused(internal method).
+    * @~chinese 当发射器恢复运行时执行(内部方法)。
+    */
     virtual void notifyResume();
+
+    /**
+    * @~english Notify that the emitter is rescaled(internal method).
+    * @~chinese 当发射器需要缩放时执行(内部方法)。
+    */
     virtual void notifyRescaled(const Vec3& scale);
+
+    /**
+    * @~english The function is automatically called during initialisation (prepare) activities of a ParticleSystem(internal method).
+    * @~chinese 当一个粒子系统初始化时自动执行(内部方法)。
+    */
     virtual void prepare();
+
+    /**
+    * @~english The function is automatically called when a ParticleSystem is expired(internal method).
+    * @~chinese 当一个粒子系统失效时自动执行(内部方法)。
+    */
     virtual void unPrepare();
+
+    /**
+    * @~english This function is called before the ParticleSystem update-loop where all particles are traversed(internal method).
+    * @~chinese 在粒子系统更新循环粒子遍历前执行(内部方法)。
+    * @param deltaTime   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
+    */
     virtual void preUpdateEmitter(float deltaTime);
+
+    /**
+    * @~english This function is called when the ParticleSystem update-loop where all particles are traversed(internal method).
+    * @~chinese 在粒子系统更新循环粒子遍历时执行(内部方法)。
+    * @param particle   @~english The current traversed particle. @~chinese 当前遍历到的粒子。
+    * @param delta   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
+    */
     virtual void updateEmitter(Particle3D *particle, float deltaTime) override;
+
+    /**
+    * @~english This function is called after the ParticleSystem update-loop where all particles are traversed(internal method).
+    * @~chinese 在粒子系统更新循环粒子遍历后执行(内部方法)。
+    * @param deltaTime   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
+    */
     virtual void postUpdateEmitter(float deltaTime);
+
+    /**
+    * @~english Calculate the number of particles that the emitter wants to emit.
+    * @~chinese 计算想要发射粒子的数量。
+    * @param timeElapsed   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
+    */
     virtual unsigned short calculateRequestedParticles(float timeElapsed);
     
+    /**
+    * @~english Overwrite function.
+    * @~chinese 重写的函数。
+    * @see Particle3DEmitter emit(int count);
+    */
     virtual void emit(int count) override;
 
+    /**
+    * @~english Set position of emitter.
+    * @~chinese 设置发射器的位置。
+    * @param pos   @~english The position in local coordinate system. @~chinese 局部坐标系下的位置。
+    */
     void setLocalPosition(const Vec3 &pos) { _position = pos; };
+
+    /**
+    * @~english Get position of emitter.
+    * @~chinese 获取发射器的位置。
+    * @return   @~english The position in local coordinate system. @~chinese 局部坐标系下的位置。
+    */
     const Vec3 getLocalPosition() const { return _position; };
-        /** Calculate the derived position of the affector.
-    @remarks
-        Note, that in script, the position is set as localspace, while if the affector is
-        emitted, its position is automatically transformed. This function always returns 
-        the derived position.
+
+    /**
+    * @~english Calculate the world position of the emitter.
+    * @~chinese 计算发射器的世界位置。
+    * @return      @~english The position in world coordinate system. @~chinese 发射器在世界坐标系下的位置。
     */
     const Vec3& getDerivedPosition();
     
-    /** Enables or disables the emitter.
+    /**
+    * @~english Set the emitter enable or disable.
+    * @~chinese 设置发射器可用或不可用。
+    * @param enabled @~english Whether the emitter enabled. @~chinese 发射器是否可用。
     */
     void setEnabled (bool enabled);
 
+    /**
+    * @~english Get the emitter enabled.
+    * @~chinese 获取发射器是否可用。
+    * @return @~english Whether the emitter enabled. @~chinese 发射器是否可用。
+    */
     bool isEnabled(void) const;
 
+    /**
+    * @~english Is the emitter emission done.
+    * @~chinese 发射器是否发射完成。
+    * @return @~english Whether the emission done. @~chinese 发射是否完成。
+    */
     bool isEmitterDone() const;
 
-        /** Todo
+    /**
+    * @~english Get the emitter type.
+    * @~chinese 获取发射器类型。
+    * @return @~english The type. @~chinese 类型。
     */
     inline const std::string& getEmitterType(void) const {return _emitterType;};
+
+    /**
+    * @~english Set the emitter type.
+    * @~chinese 设置发射器类型。
+    * @param emitterType @~english The type. @~chinese 类型。
+    */
     void setEmitterType(const std::string& emitterType) {_emitterType = emitterType;};
 
-    /** Todo
+    /**
+    * @~english Get the name of emitter.
+    * @~chinese 获取发射器名称。
+    * @return @~english The name. @~chinese 名称。
     */
     inline const std::string& getName(void) const {return _name;};
+
+    /**
+    * @~english Set the name of emitter.
+    * @~chinese 设置发射器名称。
+    * @param name @~english The name. @~chinese 名称。
+    */
     void setName(const std::string& name) {_name = name;};
 
-    /** Todo
+    /**
+    * @~english Get the emission angle attribute.
+    * @~chinese 获取发射角属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynAngle(void) const {return _dynAngle;};
+
+    /**
+    * @~english Set the emission angle attribute.
+    * @~chinese 设置发射角属性。
+    * @param dynAngle @~english The attribute. @~chinese 属性。
+    */
     void setDynAngle(PUDynamicAttribute* dynAngle);
 
-    /** Todo
+    /**
+    * @~english Get the emission rate attribute.
+    * @~chinese 获取发射率属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynEmissionRate(void) const {return _dynEmissionRate;};
+
+    /**
+    * @~english Set the emission rate attribute.
+    * @~chinese 设置发射率属性。
+    * @param dynEmissionRate @~english The attribute. @~chinese 属性。
+    */
     void setDynEmissionRate(PUDynamicAttribute* dynEmissionRate);
 
-    /** Todo
+    /**
+    * @~english Get the time to live attribute.
+    * @~chinese 获取存活时间属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynTotalTimeToLive(void) const {return _dynTotalTimeToLive;};
+
+    /**
+    * @~english Set the time to live attribute.
+    * @~chinese 设置存活时间属性。
+    * @param dynTotalTimeToLive @~english The attribute. @~chinese 属性。
+    */
     void setDynTotalTimeToLive(PUDynamicAttribute* dynTotalTimeToLive);
 
-    /** Todo
+    /**
+    * @~english Get the mass of emission particle.
+    * @~chinese 获取发射粒子的质量。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynParticleMass(void) const {return _dynParticleMass;};
+
+    /**
+    * @~english Set the mass of emission particle.
+    * @~chinese 设置发射粒子的质量。
+    * @param dynParticleMass @~english The attribute. @~chinese 属性。
+    */
     void setDynParticleMass(PUDynamicAttribute* dynParticleMass);
 
-    /** Todo
+    /**
+    * @~english Get the emission velocity.
+    * @~chinese 获取发射速率。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynVelocity(void) const {return _dynVelocity;};
+
+    /**
+    * @~english Set the emission velocity.
+    * @~chinese 设置发射速率。
+    * @param dynVelocity @~english The attribute. @~chinese 属性。
+    */
     void setDynVelocity(PUDynamicAttribute* dynVelocity);
 
-    /** Todo
+    /**
+    * @~english Get the emission duration.
+    * @~chinese 获取发射持续时间。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynDuration(void) const {return _dynDuration;};
+
+    /**
+    * @~english Set the emission duration.
+    * @~chinese 设置发射持续时间。
+    * @param dynDuration @~english The attribute. @~chinese 属性。
+    */
     void setDynDuration(PUDynamicAttribute* dynDuration);
+
+    /**
+    * @~english Whether use duration(unused means infinite time).
+    * @~chinese 是否设置持续时间(不设置意味无限时间)。
+    * @param durationSet @~english Whether use. @~chinese 是否使用。
+    */
     void setDynDurationSet(bool durationSet);
 
-    /** Todo
+    /**
+    * @~english Get the delay of repeat emission.
+    * @~chinese 获取重复发射的间隔时间。
+    * @return @~english The delay. @~chinese 间隔时间。
     */
     inline PUDynamicAttribute* getDynRepeatDelay(void) const {return _dynRepeatDelay;};
+
+    /**
+    * @~english Set the delay of repeat emission.
+    * @~chinese 设置重复发射的间隔时间。
+    * @param dynRepeatDelay @~english The delay. @~chinese 间隔时间。
+    */
     void setDynRepeatDelay(PUDynamicAttribute* dynRepeatDelay);
+
+    /**
+    * @~english Whether use delay of repeat emission(unused means emit once).
+    * @~chinese 是否设置重复间隔（不设置意味发射一次）。
+    * @param repeatDelaySet @~english Whether use. @~chinese 是否使用。
+    */
     void setDynRepeatDelaySet(bool repeatDelaySet);
 
-    /** Todo
+    /**
+    * @~english Get the all dimensions attribute of particle.
+    * @~chinese 获取粒子所有维度属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynParticleAllDimensions(void) const {return _dynParticleAllDimensions;};
+
+    /**
+    * @~english Set the all dimensions attribute of particle.
+    * @~chinese 设置粒子所有维度属性。
+    * @param dynParticleAllDimensions @~english The attribute. @~chinese 属性。
+    */
     void setDynParticleAllDimensions(PUDynamicAttribute* dynParticleAllDimensions);
+
+    /**
+    * @~english Whether use all dimensions setting.
+    * @~chinese 是否使用所有维度的设置。
+    * @param particleAllDimensionsSet @~english Whether use. @~chinese 是否使用。
+    */
     void setDynParticleAllDimensionsSet(bool particleAllDimensionsSet);
 
-    /** Todo
+    /**
+    * @~english Get the attribute of particle width.
+    * @~chinese 获取粒子宽度的属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynParticleWidth(void) const {return _dynParticleWidth;};
+
+    /**
+    * @~english Set the attribute of particle width.
+    * @~chinese 设置粒子宽度的属性。
+    * @return @~english The attribute. @~chinese 属性。
+    */
     void setDynParticleWidth(PUDynamicAttribute* dynParticleWidth);
+
+    /**
+    * @~english Whether use the attribute of particle width.
+    * @~chinese 是否使用粒子宽度的属性。
+    * @param particleWidthSet @~english Whether use. @~chinese 是否使用。
+    */
     void setDynParticleWidthSet(bool particleWidthSet);
 
-    /** Todo
+    /**
+    * @~english Get the attribute of particle height.
+    * @~chinese 获取粒子高度的属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynParticleHeight(void) const {return _dynParticleHeight;};
+
+    /**
+    * @~english Set the attribute of particle height.
+    * @~chinese 设置粒子高度的属性。
+    * @return @~english The attribute. @~chinese 属性。
+    */
     void setDynParticleHeight(PUDynamicAttribute* dynParticleHeight);
+
+    /**
+    * @~english Whether use the attribute of particle height.
+    * @~chinese 是否使用粒子高度的属性。
+    * @param particleWidthSet @~english Whether use. @~chinese 是否使用。
+    */
     void setDynParticleHeightSet(bool particleHeightSet);
 
-    /** Todo
+    /**
+    * @~english Get the attribute of particle depth.
+    * @~chinese 获取粒子深度的属性。
+    * @return @~english The attribute. @~chinese 属性。
     */
     inline PUDynamicAttribute* getDynParticleDepth(void) const {return _dynParticleDepth;};
+
+    /**
+    * @~english Set the attribute of particle depth.
+    * @~chinese 设置粒子深度的属性。
+    * @return @~english The attribute. @~chinese 属性。
+    */
     void setDynParticleDepth(PUDynamicAttribute* dynParticleDepth);
+
+    /**
+    * @~english Whether use the attribute of particle depth.
+    * @~chinese 是否使用粒子高度的属性。
+    * @param particleDepthSet @~english Whether use. @~chinese 是否使用。
+    */
     void setDynParticleDepthSet(bool particleDepthSet);
 
     ///** Todo
@@ -185,140 +615,264 @@ public:
     //inline ParticleType getEmitsType(void) const {return mEmitsType;};
     //void setEmitsType(ParticleType emitsType) {mEmitsType = emitsType;};
 
-    /** Todo
+    /**
+    * @~english Get the name of emits.
+    * @~chinese 获取发射对象的名称。
+    * @return @~english The name. @~chinese 名称。
     */
     inline const std::string& getEmitsName(void) const {return _emitsName;};
+
+    /**
+    * @~english Set the name of emits.
+    * @~chinese 设置发射对象的名称。
+    * @return @~english The name. @~chinese 名称。
+    */
     void setEmitsName(const std::string& emitsName);
+
+    /**
+    * @~english Get the type of emits.
+    * @~chinese 获取发射对象的类型。
+    * @see ParticleType
+    * @return @~english The type. @~chinese 类型。
+    */
     inline PUParticle3D::ParticleType getEmitsType() const {return _emitsType;};
+
+    /**
+    * @~english Set the type of emits.
+    * @~chinese 设置发射对象的类型。
+    * @see ParticleType
+    * @param type @~english The type. @~chinese 类型。
+    */
     void setEmitsType(PUParticle3D::ParticleType type) {_emitsType = type;};
+
+    /**
+    * @~english Get the pointer of emits(PUEmitter, PUParticleSystem3D, etc).
+    * @~chinese 获取发射对象的指针（PUEmitter, PUParticleSystem3D等）。
+    * @return @~english The pointer of emits. @~chinese 发射对象指针。
+    */
     Ref* getEmitsEntityPtr() const;
+
+    /**
+    * @~english Whether this emitter marked for emission.
+    * @~chinese 当前发射器是否标记为被发射对象。
+    * @return @~english The pointer of emits. @~chinese 发射对象指针。
+    */
     bool isMarkedForEmission() const {return _isMarkedForEmission;};
+
+    /**
+    * @~english Set this emitter marked for emission.
+    * @~chinese 标记当前发射器为被发射对象。
+    * @param isMarked @~english Whether marked. @~chinese 是否标记。
+    */
     void setMarkedForEmission(bool isMarked) {_isMarkedForEmission = isMarked;};
 
-        /** Returns the base direction of the particle that is going to be emitted.
+    /**
+    * @~english Returns the base direction of the particle that is going to be emitted.
+    * @~chinese 返回发射粒子的基准方向。
+    * @return @~english The base direction of the particle. @~chinese 粒子方向。
     */
     const Vec3& getParticleDirection(void);
 
-    /** Returns the originally set particle direction. This value is not affected by affectors, angle, etc.
+    /**
+    * @~english Returns the originally set particle direction. This value is not affected by affectors, angle, etc.
+    * @~chinese 返回粒子初始方向，该值不会被修改。
+    * @return @~english The originally set particle direction. @~chinese 粒子初始方向。
     */
     const Vec3& getOriginalParticleDirection(void) const;
 
-    /** Returns the base orientation of the particle that is going to be emitted.
+    /**
+    * @~english Returns the base orientation of the particle that is going to be emitted.
+    * @~chinese 返回发射粒子的基准朝向。
+    * @return @~english The base orientation of the particle. @~chinese 粒子基准朝向。
     */
     const Quaternion& getParticleOrientation(void) const;
 
-    /** Set the orientation of the particle.
+    /**
+    * @~english Set the orientation of the particle.
+    * @~chinese 设置粒子的朝向。
+    * @param orientation @~english The orientation. @~chinese 朝向。
     */
     void setParticleOrientation(const Quaternion& orientation);
 
-    /** Returns the start orientation of the particle that is going to be emitted.
-    @remarks
-        The orientation is generated random between mParticleOrientationRangeStart and mParticleOrientationRangeEnd.
+    /**
+    * @~english Returns the start orientation of the particle that is going to be emitted
+    * @~chinese 返回被发射粒子的起始朝向。
+    * @return @~english The start orientation. @~chinese 起始朝向。
     */
     const Quaternion& getParticleOrientationRangeStart(void) const;
 
-    /** Set start orientation of the particle that is going to be emitted.
-    @remarks
-        The orientation is generated random between mParticleOrientationRangeStart and mParticleOrientationRangeEnd.
+    /**
+    * @~english Set start orientation of the particle that is going to be emitted.
+    * @~chinese 设置被发射粒子的起始朝向。
+    * @param orientationRangeStart @~english The start orientation. @~chinese 起始朝向。
     */
     void setParticleOrientationRangeStart(const Quaternion& orientationRangeStart);
 
-    /** Returns the end orientation of the particle that is going to be emitted.
-    @remarks
-        The orientation is generated random between mParticleOrientationRangeStart and mParticleOrientationRangeEnd.
+    /**
+    * @~english Returns the end orientation of the particle that is going to be emitted.
+    * @~chinese 返回被发射粒子的终止朝向。
+    * @return @~english The end orientation. @~chinese 终止朝向。
     */
     const Quaternion& getParticleOrientationRangeEnd(void) const;
 
-    /** Set end orientation of the particle that is going to be emitted.
-    @remarks
-        The orientation is generated random between mParticleOrientationRangeStart and mParticleOrientationRangeEnd.
+    /**
+    * @~english Set end orientation of the particle that is going to be emitted.
+    * @~chinese 设置被发射粒子的终止朝向。
+    * @param orientationRangeEnd @~english The end orientation. @~chinese 终止朝向。
     */
     void setParticleOrientationRangeEnd(const Quaternion& orientationRangeEnd);
             
-    /** Sets the direction of the particle that the emitter is emitting.
-    @remarks
-        Don't confuse this with the emitters own direction.
-    @param dir The base direction of emitted particles.
+    /**
+    * @~english Sets the direction of the particle that the emitter is emitting.
+    * @~chinese 设置被发射粒子的方向。
+    * @param direction @~english The base direction of emitted particles. @~chinese 粒子基准方向。
     */
     void setParticleDirection(const Vec3& direction);
 
-    /** Todo
+    /**
+    * @~english Whether use auto direction.
+    * @~chinese 是否使用自动方向计算。
+    * @return @~english Whether use. @~chinese 是否使用。
     */
     bool isAutoDirection(void) const;
 
-    /** Todo
+    /**
+    * @~english Set use auto direction.
+    * @~chinese 设置使用自动方向计算。
+    * @param autoDirection @~english Whether use. @~chinese 是否使用。
     */
     void setAutoDirection(bool autoDirection);
 
-    /** Todo
+    /**
+    * @~english Whether force emission.
+    * @~chinese 是否强制发射。
+    * @return @~english Whether force. @~chinese 是否强制。
     */
     bool isForceEmission(void) const;
 
-    /** Todo
+    /**
+    * @~english Set force emission.
+    * @~chinese 设置强制发射。
+    * @param forceEmission @~english Whether force. @~chinese 是否强制。
     */
     void setForceEmission(bool forceEmission);
 
-        /** Get the colour of a particle that will be emitted.
+    /**
+    * @~english Get the color of a particle that will be emitted.
+    * @~chinese 获取发射粒子的颜色。
+    * @return @~english The color of a particle. @~chinese 粒子颜色。
     */
     const Vec4& getParticleColor(void) const;
 
-    /** Set the colour of an emitted particle.
+    /**
+    * @~english Set the color of an emitted particle.
+    * @~chinese 设置粒子颜色。
+    * @param forceEmission @~english The color of a particle. @~chinese 粒子颜色。
     */
     void setParticleColor(const Vec4& particleColour);
 
-    /** Get the colour range start of an emitted particle.
+    /**
+    * @~english Get the color range start of an emitted particle.
+    * @~chinese 获取发射粒子的颜色范围的起始值。
+    * @return @~english The color range start. @~chinese 颜色范围起始值。
     */
     const Vec4& getParticleColorRangeStart(void) const;
 
-    /** Set the colour range start of an emitted particle. This is the lower value used to generate a random colour.
+    /**
+    * @~english Set the color range start of an emitted particle
+    * @~chinese 设置发射粒子的颜色范围的起始值。
+    * @param particleColourRangeStart @~english The color range start. @~chinese 颜色范围起始值。
     */
     void setParticleColorRangeStart(const Vec4& particleColourRangeStart);
 
-    /** Get the colour range end of an emitted particle.
+    /**
+    * @~english Get the color range end of an emitted particle.
+    * @~chinese 获取发射粒子的颜色范围的终止值。
+    * @return @~english The color range end. @~chinese 颜色范围终止值。
     */
     const Vec4& getParticleColorRangeEnd(void) const;
 
-    /** Set the colour range end of an emitted particle. This is the upper value used to generate a random colour.
+    /**
+    * @~english Set the color range end of an emitted particle
+    * @~chinese 设置发射粒子的颜色范围的终止值。
+    * @param particleColourRangeEnd @~english The color range end. @~chinese 颜色范围终止值。
     */
     void setParticleColorRangeEnd(const Vec4& particleColourRangeEnd);
 
-    /** Get the texture coords of an emitted particle.
+    /**
+    * @~english Get the texture coords of an emitted particle.
+    * @~chinese 获取发射粒子的纹理坐标。
+    * @return @~english The texture coords. @~chinese 纹理坐标。
     */
     const unsigned short& getParticleTextureCoords(void) const;
 
-    /** Set the texture coords of an emitted particle.
+    /**
+    * @~english Set the texture coords of an emitted particle.
+    * @~chinese 设置发射粒子的纹理坐标。
+    * @param particleTextureCoords @~english The texture coords. @~chinese 纹理坐标。
     */
     void setParticleTextureCoords(const unsigned short& particleTextureCoords);
 
-    /** Get the texture coords range start  of an emitted particle.
+    /**
+    * @~english Get the texture coords range start  of an emitted particle.
+    * @~chinese 获取发射粒子的纹理坐标范围的起始值。
+    * @return @~english The texture coords range start. @~chinese 纹理坐标范围的起始值。
     */
     const unsigned short& getParticleTextureCoordsRangeStart(void) const;
 
-    /** Set the texture coords range start of an emitted particle. This is the lower value used to set a random texture coords.
+    /**
+    * @~english Set the texture coords range start of an emitted particle.
+    * @~chinese 设置发射粒子的纹理坐标范围的起始值。
+    * @param particleTextureCoordsRangeStart @~english The texture coords range start. @~chinese 纹理坐标范围的起始值。
     */
     void setParticleTextureCoordsRangeStart(const unsigned short& particleTextureCoordsRangeStart);
             
-    /** Get the texture coords range end of an emitted particle.
+    /**
+    * @~english Get the texture coords range end of an emitted particle.
+    * @~chinese 获取发射粒子的纹理坐标范围的终止值。
+    * @return @~english The texture coords range end. @~chinese 纹理坐标范围的终止值。
     */
     const unsigned short& getParticleTextureCoordsRangeEnd(void) const;
 
-    /** Set the texture coords range end of an emitted particle. This is the upper value used to set a random texture coords.
+    /**
+    * @~english Set the texture coords range end of an emitted particle.
+    * @~chinese 设置发射粒子的纹理坐标范围的终止值。
+    * @param particleTextureCoordsRangeEnd @~english The texture coords range end. @~chinese 纹理坐标范围的终止值。
     */
     void setParticleTextureCoordsRangeEnd(const unsigned short& particleTextureCoordsRangeEnd);
 
-    /** Todo
+    /**
+    * @~english Whether use local coordinate system.
+    * @~chinese 是否使用局部坐标系。
+    * @return @~english Whether use. @~chinese 是否使用。
     */
     bool isKeepLocal(void) const;
 
-    /** If this attribute is set to 'true', the particles are emitted relative to the emitter
+    /**
+    * @~english Set use local coordinate system, If this attribute is set to 'true', the particles are emitted relative to the emitter.
+    * @~chinese 设置使用局部坐标系,如果设置的值为true，粒子的位置和发射器位置是相关的。
+    * @param keepLocal @~english Whether use. @~chinese 是否使用。
     */
     void setKeepLocal(bool keepLocal);
 
-    /** Transforms the particle position in a local position relative to the emitter
+    /**
+    * @~english Transforms the particle position in a local position relative to the emitter
+    * @~chinese 把粒子的位置变换到发射器的局部坐标系下。
+    * @param particle @~english The transformed particle. @~chinese 需要变换的粒子。
     */
     bool makeParticleLocal(PUParticle3D* particle);
 
+    /**
+    * @~english Clone this emitter.
+    * @~chinese 拷贝当前发射器。
+    */
     virtual PUEmitter* clone() = 0;
+
+    /**
+    * @~english Copy attributes to another emitter(internal method).
+    * @~chinese 拷贝属性到另外一个发射器(内部方法)。
+    * @param render @~english The emitter. @~chinese 发射器。
+    */
     virtual void copyAttributesTo (PUEmitter* emitter);
 
 protected:
@@ -365,206 +919,108 @@ protected:
     Vec3 _latestPositionDiff;
 
     Vec3 _derivedPosition;
-    /** Although the scale is on a Particle System level, the emitter can also be scaled.
-    */
-    Vec3 _emitterScale;
+    Vec3 _emitterScale;///<Although the scale is on a Particle System level, the emitter can also be scaled.
 
-    // Type of the emitter
-    std::string _emitterType;
+    std::string _emitterType;///<Type of the emitter
 
-    // Name of the emitter (optional)
-    std::string _name;
+    std::string _name;///<Name of the emitter (optional)
 
-    /** Direction (and speed) of the emitted particle
-    @remarks
-        Don't confuse the particle direction with the direction of the emitter itself. 
-        The particleDirection is the direction of an emitted particle.
-    */
-    Vec3 _particleDirection;
+    Vec3 _particleDirection;///<Direction (and speed) of the emitted particle
             
-    /** The original direction of the emitted particle
-    @remarks
-        Don't confuse this with the particles' originalDirection.
-    */
-    Vec3 _originalParticleDirection;
+    Vec3 _originalParticleDirection;///<The original direction of the emitted particle
 
-    /** Orientation of the particle as soon as it is emitted.
-    @remarks
-        This is only visible if a renderer is used that renders 3D particles.
-    */
-    Quaternion _particleOrientation;
+    Quaternion _particleOrientation;///<Orientation of the particle as soon as it is emitted.
 
-    /** If set, the range generates a random orientation between start and end.
-    */
-    Quaternion _particleOrientationRangeStart;
-    Quaternion _particleOrientationRangeEnd;
-    bool _particleOrientationRangeSet;
 
-    // Angle around direction which particles may be emitted
-    PUDynamicAttribute* _dynAngle;
+    Quaternion _particleOrientationRangeStart;///<Orientation range start
+    Quaternion _particleOrientationRangeEnd;///<Orientation range end
+    bool _particleOrientationRangeSet;///<If set, the range generates a random orientation between start and end.
 
-    // Rate of particle emission.
-    PUDynamicAttribute* _dynEmissionRate;
+    PUDynamicAttribute* _dynAngle;///< Angle around direction which particles may be emitted
+
+    PUDynamicAttribute* _dynEmissionRate;///<Rate of particle emission
 
     //// Identifies the type of particle this emitter emits (default is visual particle).
     //ParticleType mEmitsType;
 
-    // Identifies the name of particle this emitter emits (default is visual particle, so there is no name)
-    std::string _emitsName;
+    std::string _emitsName;///<Identifies the name of particle this emitter emits (default is visual particle, so there is no name)
 
-    /** Dynamic attribute used to generate the total time to live.
-    */
-    PUDynamicAttribute* _dynTotalTimeToLive;
+    PUDynamicAttribute* _dynTotalTimeToLive;///<Dynamic attribute used to generate the total time to live.
 
-    /** Dynamic attribute used to generate the mass of a particle.
-    */
-    PUDynamicAttribute* _dynParticleMass;
+    PUDynamicAttribute* _dynParticleMass;///<Dynamic attribute used to generate the mass of a particle.
 
-    /** Dynamic attribute used to generate the velocity of a particle.
-    */
-    PUDynamicAttribute* _dynVelocity;
 
-    /** Dynamic attribute used to define the duration of the emitter.
-    */
-    PUDynamicAttribute* _dynDuration;
+    PUDynamicAttribute* _dynVelocity;///<Dynamic attribute used to generate the velocity of a particle.
 
-    /** Dynamic attribute used to define the repeat/delay of the emitter.
-    */
-    PUDynamicAttribute* _dynRepeatDelay;
+    PUDynamicAttribute* _dynDuration;///<Dynamic attribute used to define the duration of the emitter.
 
-    /** Dynamic attribute used to define the (own) dimensions of a particle.
-    @remarks
-        In the Particle Technique it is possible to set the default dimensions for all particles, but it
-        is also possible to set the dimensions per particle. Note, that this only applies to visual particles,
-        of course. This attribute is used to x, y and z dimensions with the value.
-    */
-    PUDynamicAttribute* _dynParticleAllDimensions;
-    bool _dynParticleAllDimensionsSet;
+    PUDynamicAttribute* _dynRepeatDelay;///<Dynamic attribute used to define the repeat/delay of the emitter.
 
-    /** Dynamic attribute used to define the (own) width of a particle.
-    @remarks
-        In the Particle Technique it is possible to set the default width for all particles, but it
-        is also possible to set the width per particle. Note, that this only applies to visual particles,
-        of course.
-    */
-    PUDynamicAttribute* _dynParticleWidth;
-    bool _dynParticleWidthSet;
+    PUDynamicAttribute* _dynParticleAllDimensions;///<Dynamic attribute used to define the (own) dimensions of a particle.
+    bool _dynParticleAllDimensionsSet;///<Whether use dynamic attribute to define the dimensions of a particle.
 
-    /** Dynamic attribute used to define the (own) height of a particle.
-    @remarks
-        In the Particle Technique it is possible to set the default height for all particles, but it
-        is also possible to set the height per particle. Note, that this only applies to visual particles,
-        of course.
-    */
-    PUDynamicAttribute* _dynParticleHeight;
-    bool _dynParticleHeightSet;
+    PUDynamicAttribute* _dynParticleWidth;///<Dynamic attribute used to define the (own) width of a particle.
+    bool _dynParticleWidthSet;///<Whether use dynamic attribute to define the width of a particle.
 
-    /** Dynamic attribute used to define the (own) depth of a particle.
-    @remarks
-        In the Particle Technique it is possible to set the default depth for all particles, but it
-        is also possible to set the depth per particle. Note, that this only applies to visual particles,
-        of course.
-    */
-    PUDynamicAttribute* _dynParticleDepth;
-    bool _dynParticleDepthSet;
+    PUDynamicAttribute* _dynParticleHeight;///<Dynamic attribute used to define the (own) height of a particle.
+    bool _dynParticleHeightSet;///<Whether use dynamic attribute to define the height of a particle.
 
-    /** Notional up vector, just used to speed up generation of variant directions.
-    */
-    Vec3 _upVector;
+    PUDynamicAttribute* _dynParticleDepth;///<Dynamic attribute used to define the (own) depth of a particle.
+    bool _dynParticleDepthSet;///<Whether use dynamic attribute to define the depth of a particle.
 
-    /** Particles that are left to be emitted from the previous time.
-    */
-    float _remainder;
+    Vec3 _upVector;///<Notional up vector, just used to speed up generation of variant directions.
+
+    float _remainder;///<As you know that the emitted particles must be int.
+                     ///<This is the time left by last emit circle which is not enough to emit one particle.
 
     ///** Helper factory
     //*/
     //DynamicAttributeFactory mDynamicAttributeFactory;
 
-    /** Helper class
-    */
-    PUDynamicAttributeHelper _dynamicAttributeHelper;
+    PUDynamicAttributeHelper _dynamicAttributeHelper;///<Helper class
 
-    /** Duration remainder.
-    */
-    float _durationRemain;
+    float _durationRemain;///<Duration remainder.
 
-    /** Indication to determine whether duration is set.
-    */
-    bool _dynDurationSet;
+    bool _dynDurationSet;///<Indication to determine whether duration is set.
 
-    /** Repeat/delay remainder.
-    */
-    float _repeatDelayRemain;
+    float _repeatDelayRemain;///<Repeat/delay remainder.
 
-    /** Indication to determine whether repeat/delay is set.
-    */
-    bool _dynRepeatDelaySet;
+    bool _dynRepeatDelaySet;///<Indication to determine whether repeat/delay is set.
 
-    /** Auto direction means that the direction of a particle is not determined by the 
-        direction vector that has been set, but the direction vector is generated based on
-        the shape of the emitter. In most cases this means that the particle direction is
-        perpendicular on the shape of the emitter.
-    @remarks
-        This attribute has only a meaning for certain emitters.
-    */
-    bool _autoDirection;
+    bool _autoDirection;///<Auto direction means that the direction of a particle is not determined by the direction vector that has been set,
+                        ///<but the direction vector is generated based on the shape of the emitter.
+                        ///<In most cases this means that the particle direction is perpendicular on the shape of the emitter.
 
-    /** In normal cases, emission is regulated by time. This prevents that too much particles are
-        emitted at once, which causes a drop in the framerate. In some cases you just want to emit
-        all particles immediately without any delay. Setting the 'mForceEmission' to true enables this.
-        In that case, the emission rate defines the number of particles that are emitted immediately.
-        If the emission rate is 100, the emitter emits 100 particles at once and then disables.
-    */
-    bool _forceEmission;
+    bool _forceEmission; ///<In normal cases, emission is regulated by time. This prevents that too much particles are
+                         ///<emitted at once, which causes a drop in the framerate. In some cases you just want to emit
+                         ///<all particles immediately without any delay. Setting the 'mForceEmission' to true enables this.
+                         ///<In that case, the emission rate defines the number of particles that are emitted immediately.
+                         ///<If the emission rate is 100, the emitter emits 100 particles at once and then disables.
 
-    /** Original value, used to set it back.
-    */
-    bool _originalForceEmission;
+    bool _originalForceEmission;///<Original value, used to set it back.
 
-    /** If mForceEmission has been set to true and if all particles are emitted, the mForceEmissionExecuted
-        is also set to true, preventing any further 'forced emission'.
-    */
-    bool _forceEmissionExecuted;
+    bool _forceEmissionExecuted;///<If mForceEmission has been set to true and if all particles are emitted, the mForceEmissionExecuted
+                                ///<is also set to true, preventing any further 'forced emission'.
 
-    /** Original value, used to set it back.
-    */
-    bool _originalForceEmissionExecuted;
+    bool _originalForceEmissionExecuted;///<Original value, used to set it back.
 
-    /** Colour that is assigned to an emitted particle.
-    */
-    Vec4 _particleColor;
+    Vec4 _particleColor;///<Color that is assigned to an emitted particle.
 
-    /** Used to randomize the colour of an emitted particle.
-    */
-    Vec4 _particleColorRangeStart;
+    Vec4 _particleColorRangeStart;///<Used to randomize the colour of an emitted particle.
 
-    /** Used to randomize the colour of an emitted particle.
-    */
-    Vec4 _particleColorRangeEnd;
+    Vec4 _particleColorRangeEnd;///<Used to randomize the colour of an emitted particle.
 
-    /** Used to determine whether the colour range has been set.
-    */
-    bool _particleColorRangeSet;
+    bool _particleColorRangeSet;///<Used to determine whether the colour range has been set.
 
-    /** Determines whether particle positions should be kept local in relation to the emitter.
-    */
-    bool _keepLocal;
+    bool _keepLocal;///<Determines whether particle positions should be kept local in relation to the emitter.
 
-    /** Texture coords that is assigned to an emitted particle (only works if the renderer uses it)
-    */
-    unsigned short _particleTextureCoords;
+    unsigned short _particleTextureCoords;///<Texture coords that is assigned to an emitted particle (only works if the renderer uses it)
 
-    /** Used to randomize the texture coords of an emitted particle.
-    */
-    unsigned short _particleTextureCoordsRangeStart;
+    unsigned short _particleTextureCoordsRangeStart;///<Used to randomize the texture coords of an emitted particle.
                 
-    /** Used to randomize the texture coords of an emitted particle.
-    */
-    unsigned short _particleTextureCoordsRangeEnd;
+    unsigned short _particleTextureCoordsRangeEnd;///<Used to randomize the texture coords of an emitted particle.
 
-    /** Used to determine whether the texture coords range has been set.
-    */
-    bool _particleTextureCoordsRangeSet;
+    bool _particleTextureCoordsRangeSet;///<Used to determine whether the texture coords range has been set.
 
     bool _originEnabled;
     bool _originEnabledSet;
@@ -574,6 +1030,9 @@ protected:
 
     bool _isMarkedForEmission;
 };
+
+// end of _3d group
+/// @}
 
 NS_CC_END
 

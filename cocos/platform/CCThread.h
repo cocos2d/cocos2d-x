@@ -36,21 +36,24 @@ NS_CC_BEGIN
  * @{
  */
 
-/* On iOS, should create autorelease pool when create a new thread
+/* @~english On iOS, should create autorelease pool when create a new thread
  * and release it when the thread end.
+ * @~chinese 在iOS上，创建一个新线程时应该创建autorelease池
+ * 并且在线程结束时释放它。
  */
-
 class CC_DLL ThreadHelper
 {
 public:
 
-    /** Create an autorelease pool for objective-c codes.
+    /** @~english Create an autorelease pool for objective-c codes.
+     * @~chinese 为objective-c代码创建一个autorelease池。
      * @js NA
      * @lua NA
      */
     static void* createAutoreleasePool();
     
-    /**
+    /** @~english Release the autorelease pool.
+     * @~chinese 释放autorelease池。
      * @js NA
      * @lua NA
     */

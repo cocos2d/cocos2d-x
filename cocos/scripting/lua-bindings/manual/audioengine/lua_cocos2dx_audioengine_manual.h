@@ -37,12 +37,17 @@ extern "C" {
  * @{
  */
 
-/**
+/**@~english
  * Call this function can import the lua bindings for the audioengine module.
  * After registering, we could call the related audioengine code conveniently in the lua.eg,.ccexp.AudioEngine:stop(audioID).
  * If you don't want to use the audioengine module in the lua, you only don't call this registering function.
  * If you don't register the audioengine module, the package size would become smaller .
  * The current mechanism,this function is called in the lua_module_register.h
+ * @~chinese 
+ * 调用这个函数可以将audioengine模块绑定到Lua层。
+ * 调用这个注册函数后，我们可以方便地在Lua层调用相关的3D代码，例如：ccexp.AudioEngine:stop(audioID).
+ * 如果你不想使用audioengine模块，那么你就无需调用这个注册函数。这种情况下，最终包的大小也会变得更小一些。
+ * 目前的机制,这个函数在lua_module_register.h中被调用。
  */
 
 TOLUA_API int  register_audioengine_module(lua_State* L);

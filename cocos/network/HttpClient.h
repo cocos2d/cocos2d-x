@@ -46,122 +46,202 @@ namespace network {
     
 
 
-/** Singleton that handles asynchrounous http requests.
+/** @~english Singleton that handles asynchronous http requests.
  *
- * Once the request completed, a callback will issued in main thread when it provided during make request.
+ * Once the request completed, a callback will be issued in main thread when it provided during make request.
  *
+ * @~chinese 用于处理异步http请求的单例。
+ *
+ * 一旦完成一个请求,将设置一个主线程中调用的回调函数用来进行请求返回处理。
+ * 
  * @lua NA
  */
 class CC_DLL HttpClient
 {
 public:
-	/**
+	/**@~english
 	* The buffer size of _responseMessage
+    * @~chinese 
+    * _responseMessage的缓存大小
 	*/
 	static const int RESPONSE_BUFFER_SIZE = 256;
 
-    /**
+    /**@~english
      * Get instance of HttpClient.
      *
-     * @return the instance of HttpClient.
+     * @~chinese 
+     * HttpClient的实例。
+     * 
+     * @return @~english the instance of HttpClient.
+     * @~chinese HttpClient实例。
      */
     static HttpClient *getInstance();
     
-    /** 
-     * Relase the instance of HttpClient. 
+    /** @~english
+     * Destroy the instance of HttpClient. 
+     * @~chinese 
+     * 销毁HttpClient实例。
      */
     static void destroyInstance();
 
-    /** 
+    /** @~english
      * Enable cookie support.
      *
-     * @param cookieFile the filepath of cookie file.
+     * @~chinese 
+     * 启用cookie支持。
+     * 
+     * @param cookieFile @~english the filepath of cookie file.
+     * @~chinese cookie文件的文件名。
      */
     void enableCookies(const char* cookieFile);
     
-    /**
+    /**@~english
      * Get the cookie filename
      * 
-     * @return the cookie filename
+     * @~chinese 
+     * 获取Cookie文件名
+     * 
+     * @return @~english the cookie filename
+     * @~chinese Cookie文件名
      */
     const std::string& getCookieFilename();
     
-    /**
+    /**@~english
      * Set root certificate path for SSL verification.
      *
-     * @param caFile a full path of root certificate.if it is empty, SSL verification is disabled.
+     * @~chinese 
+     * 设置SSL证书路径。
+     * 
+     * @param caFile @~english a full path of root certificate.if it is empty, SSL verification is disabled.
+     * @~chinese SSL证书的全路径，如果这个值为空, SSL验证将不起效。
      */
     void setSSLVerification(const std::string& caFile);
     
-    /**
-     * Get ths ssl CA filename
+    /**@~english
+     * Get ths SSL CA filename
      * 
-     * @return the ssl CA filename
+     * @~chinese 
+     * 获怪SSL证书的文件名
+     * 
+     * @return @~english the SSL CA filename
+     * @~chinese SSL证书文件名
      */
     const std::string& getSSLVerification();
         
-    /**
-     * Add a get request to task queue
+    /**@~english
+     * Add a request to task queue
      *
-     * @param request a HttpRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "send" here.
+     * @~chinese 
+     * 添加一个request到任务队列中
+     * 
+     * @param request @~english a HttpRequest object, which includes url, response callback etc.
+     * @~chinese 一个HttpRequest对象,包括url,响应回调等。
      */
     void send(HttpRequest* request);
 
-    /**
+    /**@~english
      * Immediate send a request
      *
-     * @param request a HttpRequest object, which includes url, response callback etc.
-                      please make sure request->_requestData is clear before calling "sendImmediate" here.
+     * @~chinese 
+     * 立即发送一个request
+     * 
+     * @param request @~english a HttpRequest object, which includes url, response callback etc.
+     * @~chinese HttpRequest对象,包括url,响应回调等。
      */
     void sendImmediate(HttpRequest* request);
     
-    /**
-     * Set the timeout value for connecting.
+    /**@~english
+     * Set the timeout value for connecting in seconds.
      *
-     * @param value the timeout value for connecting.
+     * @~chinese 
+     * 以秒为单位设置连接超时时间。
+     * 
+     * @param value @~english the timeout value for connecting in seconds.
+     * @~chinese 以秒为单位的连接超时时间。
      */
     void setTimeoutForConnect(int value);
     
-    /**
-     * Get the timeout value for connecting.
+    /**@~english
+     * Get the timeout value for connecting in seconds.
      *
-     * @return int the timeout value for connecting.
+     * @~chinese 
+     * 获取以秒为单痊的连接超时时间。
+     * 
+     * @return @~english the timeout value for connecting in seconds.
+     * @~chinese 以秒为单位的连接超时时间。
      */
     int getTimeoutForConnect();
     
-    /**
-     * Set the timeout value for reading.
+    /**@~english
+     * Set the timeout value for reading in seconds.
      *
-     * @param value the timeout value for reading.
+     * @~chinese 
+     * 设置以秒为单位的read超时时间。
+     * 
+     * @param value @~english the timeout value for reading in seconds.
+     * @~chinese 以秒为单位的read超时时间。
      */
     void setTimeoutForRead(int value);
 
-    /**
-     * Get the timeout value for reading.
+    /**@~english
+     * Get the timeout value for reading in seconds.
      *
-     * @return int the timeout value for reading.
+     * @~chinese 
+     * 获得以秒为单位的read超时时间。
+     * 
+     * @return @~english the timeout value for reading in seconds.
+     * @~chinese 以秒为单位的read超时时间。
      */
     int getTimeoutForRead();
     
+    /**@~english
+     *Get the Cookie object
+     *
+     *@~chinese
+     *获取Cookie对象
+     *
+     * @return @~english the Cookie object
+     * @~chinese Cookie对象
+     */
     HttpCookie* getCookie() const {return _cookie; }
     
+    /**@~english
+     *Get the _cookieFileMutex that represents the std::mutex of the cookie files
+     *
+     *@~chinese
+     *获取cookie文件互斥量_cookieFileMutex
+     *
+     * @return @~english the std::mutex 
+     * @~chinese std::mutex
+     */
     std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
     
+    /**@~english
+     *Get the _sslCaFileMutex that represents the std::mutex of the SSL files
+     *
+     *@~chinese
+     *获取SSL文件互斥量_cookieFileMutex
+     *
+     * @return @~english the std::mutex 
+     * @~chinese std::mutex
+     */
     std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
 private:
     HttpClient();
     virtual ~HttpClient();
     bool init(void);
     
-    /**
+    /**@~english
      * Init pthread mutex, semaphore, and create new thread for http requests
-     * @return bool
+     * @~chinese 
+     * 初始化pthread互斥信号量,为http请求创建新线程
+     * @return @~english bool
+     * @~chinese bool值
      */
     bool lazyInitThreadSemphore();
     void networkThread();
     void networkThreadAlone(HttpRequest* request, HttpResponse* response);
-    /** Poll function called from main thread to dispatch callbacks when http requests finished **/
+
     void dispatchResponseCallbacks();
     
     void processResponse(HttpResponse* response, char* responseMessage);

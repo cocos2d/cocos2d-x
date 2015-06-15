@@ -29,6 +29,7 @@
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 
+
 /**
  * @addtogroup base
  * @{
@@ -38,13 +39,16 @@ NS_CC_BEGIN
 
 class Node;
 
+
 /** @class Event
- * @brief Base class of all kinds of events.
+ * @brief @~english Base class of all kinds of events.
+ * @~chinese 各种各样的事件的基类。
  */
 class CC_DLL Event : public Ref
 {
 public:
-    /** Type Event type.*/
+
+    /** @~english Type Event type. @~chinese 事件类型。*/
     enum class Type
     {
         TOUCH,
@@ -57,38 +61,57 @@ public:
     };
     
 CC_CONSTRUCTOR_ACCESS:
-    /** Constructor */
+
+    /** @~english Constructor  @~chinese 构造函数*/
     Event(Type type);
 public:
-    /** Destructor.
+
+    /** @~english Destructor.
+     * @~chinese 析构函数。
      */
     virtual ~Event();
 
-    /** Gets the event type.
+
+    /** @~english Gets the event type.
      *
-     * @return The event type.
+     * @~chinese 获取事件类型。
+     * 
+     * @return @~english The event type.
+     * @~chinese 事件类型。
      */
 	inline Type getType() const { return _type; };
     
-    /** Stops propagation for current event.
+
+    /** @~english Stops propagation for current event.
+     * @~chinese 停止传播当前事件。
      */
     inline void stopPropagation() { _isStopped = true; };
     
-    /** Checks whether the event has been stopped.
+
+    /** @~english Checks whether the event has been stopped.
      *
-     * @return True if the event has been stopped.
+     * @~chinese 检查事件是否已经停止。
+     * 
+     * @return @~english True if the event has been stopped.
+     * @~chinese 如果事件已经停止则返回真。
      */
     inline bool isStopped() const { return _isStopped; };
     
-    /** Gets current target of the event.
-     * @return The target with which the event associates.
-     * @note It onlys be available when the event listener is associated with node.
+
+    /** @~english Gets current target of the event.
+     * @~chinese 得到的当前目标的事件。
+     * @return @~english The target with which the event associates.
+     * @~chinese 与事件关联的目标。
+     * @note @~english It onlys be available when the event listener is associated with node.
      *        It returns 0 when the listener is associated with fixed priority.
+     * @~chinese 只有当事件侦听器与节点相关联时才有效。
+     * 如果侦听器与固定优先级相关联则返回0。
      */
     inline Node* getCurrentTarget() { return _currentTarget; };
     
 protected:
-    /** Sets current target */
+
+    /** @~english Sets current target  @~chinese 设置当前目标*/
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
 	Type _type;     ///< Event type

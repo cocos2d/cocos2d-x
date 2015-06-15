@@ -44,10 +44,10 @@ THE SOFTWARE.
 */
 NS_CC_BEGIN
 
-
 /**
  * @class AsyncTaskPool
- * @brief This class allows to perform background operations without having to manipulate threads.
+ * @brief @~english This class allows to perform background operations without having to manipulate threads.
+ * @~chinese 这个类允许执行后台操作,而无需操作线程。
  * @js NA
  */
 class CC_DLL AsyncTaskPool
@@ -63,30 +63,55 @@ public:
         TASK_MAX_TYPE,
     };
 
-    /**
+
+    /** @brief
+     * @~english
      * Returns the shared instance of the async task pool.
+     * @~chinese 
+     * 返回异步任务池实例。
+     * @return @~english instance of the async task pool.
+     * @~chinese 异步任务池实例。
      */
     static AsyncTaskPool* getInstance();
 
-    /**
+
+    /** @brief 
+     * @~english
      * Destroys the async task pool.
+     * @~chinese 
+     * 销毁异步任务池。
      */
     static void destoryInstance();
     
-    /**
+
+    /** @brief
+     * @~english
      * Stop tasks.
      *
-     * @param type Task type you want to stop.
+     * @~chinese 
+     * 停止指定类型的所有任务
+     * 
+     * @param type @~english Task type you want to stop.
+     * @~chinese 待停止的任务类型。
      */
     void stopTasks(TaskType type);
     
-    /**
+
+    /** @brief
+     * @~english
      * Enqueue a asynchronous task.
      *
-     * @param type task type is io task, network task or others, each type of task has a thread to deal with it.
-     * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread.
-     * @param callbackParam parameter used by the callback.
-     * @param f task can be lambda function.
+     * @~chinese 
+     * 异步任务排队。
+     * 
+     * @param type @~english task type is io task, network task or others, each type of task has a thread to deal with it.
+     * @~chinese 任务类型是io、网络任务或其他,每种类型的任务有一个线程来处理它。
+     * @param callback @~english callback when the task is finished. The callback is called in the main thread instead of task thread.
+     * @~chinese 当任务完成后的回调。在主线程调用回调,而不是任务线程。
+     * @param callbackParam @~english parameter used by the callback.
+     * @~chinese 回调使用的参数。
+     * @param f @~english task can be lambda function.
+     * @~chinese 任务可以是lambda函数。
      * @lua NA
      */
     template<class F>

@@ -58,31 +58,94 @@ class Frame;
 class CC_STUDIO_DLL ActionTimelineCache
 {
 public:    
-    
-    /** Gets the singleton */
+
+    /** @~english Gets the singleton.
+    *   @~chinese 获取单例。
+    * @return @~english The singleton.
+    * @~chinese 单例。
+    */
     static ActionTimelineCache* getInstance();
 
-    /** Destroys the singleton */
+    /** @~english Destroys the singleton.
+    *   @~chinese 释放单例。
+    */
     static void destroyInstance();
 
+    /** @~english Clear action time lines.
+    *   @~chinese 清空时间轴列表。
+    */
     void purge();
 
     void init();
 
-    /** Remove action with filename, and also remove other resource relate with this file */
+    /** @~english Remove action with filename, and also remove other resource relate with this file.
+    *   @~chinese 通过文件名移除动作，同时移除与该文件相关的其他资源。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    */
     void removeAction(const std::string& fileName);
     
+    /** @~english Create action timeline by file.
+    *   @~chinese 通过文件名创建时间轴动画。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     static ActionTimeline* createAction(const std::string& fileName);
 
-    /** Clone a action with the specified name from the container. */
+    /** @~english Clone an action with the specified name from the container. 
+    *   @~chinese 通过来自其他容器的指定名称复制一个动画。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     ActionTimeline* createActionFromJson(const std::string& fileName);
 
+    /** @~english Load an action time line from file.
+    *   @~chinese 从文件中载入时间轴动画。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
+    /** @~english Load an action time line from file and content string.
+    *   @~chinese 从文件和内容字符串中中载入时间轴动画。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @param content @~english Content string.
+    * @~chinese 内容字符串。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
     
+    /** @~english Create an action time line from flatbuffer file.
+    *   @~chinese 从flatbuffer二进制文件中创建时间轴动画。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
+    /** @~english Load na action time line from flatbuffer file.
+    *   @~chinese 从flatbuffer二进制文件中载入时间轴动画。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
     
+    /** @~english Create an action time line from flatbuffer file for simulator.
+    *   @~chinese 从flatbuffer二进制文件中创建时间轴动画(用于模拟器)。
+    * @param fileName @~english File name.
+    * @~chinese 文件名。
+    * @return @~english ActionTimeline.
+    * @~chinese 时间轴动画。
+    */
     ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
     
 protected:
