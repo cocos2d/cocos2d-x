@@ -1,4 +1,4 @@
-/**@~english
+/**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2014-2015 Chukong Technologies
 
@@ -17,25 +17,6 @@
  Original file from GamePlay3D: http://gameplay3d.org
 
  This file was modified to fit the cocos2d-x project
- * @~chinese 
- * 黑莓公司2013年版权所有。
- * 版权(c)2014 - 2015 Chukong技术
- * 
- * 在Apache许可下的2.0版本(“许可证”);
- * 你不可以使用这个文件除了遵守许可证。
- * 你可以获得许可证的副本
- * 
- * 网址:
- * 
- * Unless required by applicable law or agreed to in writing, software
- * 分布式的许可下分布在一个“目前的”基础上,
- * 没有任何形式的保证或条件,无论是明示或默示。
- * 看到的许可证管理权限和特定的语言
- * limitations under the License.
- * 
- * 原始文件从GamePlay3D:http:
- * 
- * 这个文件被修改以适应cocos2d-x项目
  */
 
 #ifndef MATHUTIL_H_
