@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -36,40 +36,46 @@ NS_CC_BEGIN
 
 namespace ui {
     
-/**
- *@brief RelativeBox is just a convenient wrapper class for relative layout type.
- * RelativeBox lays out its children relative to a widget or a position.
- */
+/** @class RelativeBox
+*@brief @~english RelativeBox is just a convenient wrapper class for relative layout type.
+ RelativeBox lays out its children relative to a widget or a position.
+
+ @~chinese RelativeBox仅是关联布局类型的简便封装。
+ RelativeBox 把它的子节点布局关联于一个widget或者一个位置。
+*/
 class CC_GUI_DLL RelativeBox : public Layout{
     
     
 public:
     
     /**
-     * Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
     RelativeBox();
     
     /**
-     * Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
     virtual ~RelativeBox();
     
     /**
-     * Create an empty RelativeBox instance.
-     * @return A RelativeBox instance.
+     * @~english Create an empty RelativeBox instance.
+     * @~chinese 创建一个空的RelativeBox实例。
+     * @return @~english A RelativeBox instance. @~chinese 
      */
     static RelativeBox* create();
     
     /**
-     * @brief Create a RelativeBox with a fixed size.
-     *
-     * @param size Size in `Size`.
-     * @return A RelativeBox instance.
+     * @~english Create a RelativeBox with a fixed size.
+     * @~chinese 通过一个固定尺寸创建RelativeBox。
+     * @param size @~english Size in `Size`. @~chinese 尺寸大小。
+     * @return @~english A RelativeBox instance. @~chinese  RelativeBox实例。
      */
     static RelativeBox* create(const Size& size);
     

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -57,32 +57,94 @@ class CC_STUDIO_DLL GUIReader : public cocos2d::Ref
 public:
     CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader() { return GUIReader::getInstance(); };
     CC_DEPRECATED_ATTRIBUTE static void purgeGUIReader() { GUIReader::destroyInstance(); };
-    
-    static GUIReader* getInstance();
-    static void destroyInstance();
-    
-    cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
-    
-    cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);
-    
-    int getVersionInteger(const char* str);
+
     /**
-     *  @js NA
+    * @~english Gets the static instance of GUIReader.
+    * @~chinese 获取GUIReader的静态实例.
+    */
+    static GUIReader* getInstance();
+
+    /**
+    * @~english Destroy GUIReader static instance.
+    * @~chinese 释放GUIReader的静态实例.
+    */
+    static void destroyInstance();
+
+    /**
+    * @~english Create a UI widget from file contain Json description data.
+    * @~chinese 根据json描述文件的数据创建UI组件.
+    *
+    * @parame fileName   @~english full path of Json description file @~chinese Json描述文件全路径
+    *
+    * @return @~english UI widget node @~chinese UI组件节点
+    */
+    cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
+
+    /**
+    * @~english Create a UI widget from file contain binary description data.
+    * @~chinese 根据二进制描述文件的数据创建UI组件.
+    *
+    * @parame fileName   @~english full path of binary description file @~chinese 二进制描述文件全路径
+    *
+    * @return @~english UI widget node @~chinese UI组件节点
+    */
+    cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);
+
+    /**
+    * @~english Get int value of a version string
+    * @~chinese 获取版本字符串的整型值
+    *
+    * @parame str   @~english string value of version @~chinese 版本字符串
+    *
+    * @return @~english integer value of version @~chinese 版本整型值
+    */
+    int getVersionInteger(const char* str);
+
+    /**
+     * @~english Store design screen size
+     * @~chinese 保存屏幕设计尺寸
+     * @js NA
      */
     void storeFileDesignSize(const char* fileName, const cocos2d::Size &size);
     /**
-     *  @js NA
+     * @~english Get design screen size
+     * @~chinese 获取设计屏幕尺寸
+     * @js NA
      */
     const cocos2d::Size getFileDesignSize(const char* fileName) const;
     
     void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; }
 
+    /**
+    * @~english Register type to ObjectFactory
+    * @~chinese 向ObjectFactory注册类型
+    *
+    * @parame classType @~english type of class @~chinese 类型
+    *
+    * @parame ins       @~english Object instance of classType @~chinese 指定类型实例对象
+    *
+    * @parame object    @~english Reader instance @~chinese 指定类型数据读取类实例
+    *
+    * @parame callBack  @~english Notify call back function @~chinese 回调通知函数
+    */
     void registerTypeAndCallBack(const std::string& classType,
                                  cocos2d::ObjectFactory::Instance ins,
                                  Ref* object,
                                  SEL_ParseEvent callBack);
 
+    /**
+    * @~english Register type to ObjectFactory
+    * @~chinese 向ObjectFactory注册类型
+    *
+    * @parame classType @~english type of class @~chinese 类型
+    *
+    * @parame ins       @~english Object instance getter function @~chinese 指定类型实例对象获取函数
+    *
+    * @parame object    @~english Reader instance @~chinese 指定类型数据读取类实例
+    *
+    * @parame callBack  @~english Notify call back function @~chinese 回调通知函数
+    */
     void registerTypeAndCallBack(const std::string& classType,
                                  cocos2d::ObjectFactory::InstanceFunc ins,
                                  Ref* object,
@@ -108,23 +170,96 @@ public:
 class CC_STUDIO_DLL WidgetPropertiesReader : public cocos2d::Ref
 {
 public:
-    virtual cocos2d::ui::Widget* createWidget(const rapidjson::Value& dic, const char* fullPath, const char* fileName)=0;
+    /**
+    * @~english Create UI widget with json dictionary
+    * @~chinese 根据json数据创建UI组件
+    *
+    * @parame dic       @~english Widget description data in json dictionary @~chinese json类型组件描述数据
+    *
+    * @parame fullPath  @~english Full path of resource forder @~chinese 资源目录全路径
+    *
+    * @parame fileName  @~english Full path of Json description file @~chinese Json描述文件全路径
+    *
+    * @return @~english UI widget node @~chinese UI组件节点
+    */
+    virtual cocos2d::ui::Widget* createWidget(const rapidjson::Value& dic, const char* fullPath, const char* fileName) = 0;
 
+    /**
+    * @~english Create UI widget with json dictionary
+    * @~chinese 根据json数据创建UI组件
+    *
+    * @parame data      @~english Widget description data in json dictionary @~chinese json类型组件描述数据
+    *
+    * @return @~english UI widget node @~chinese UI组件节点
+    */
     virtual cocos2d::ui::Widget* widgetFromJsonDictionary(const rapidjson::Value& data) = 0;
+
+    /**
+    * @~english Set widget properties from json dictionary
+    * @~chinese 根据json数据设定UI组件属性
+    *
+    * @parame reader    @~english Custom property reader @~chinese 用户自定义属性读取类
+    *
+    * @parame widget    @~english UI widget to be set @~chinese 需要设置的UI组件
+    *
+    * @parame options   @~english Json dictionary that contain property data @~chinese 包含属性数据的json对象
+    */
     virtual void setPropsForAllWidgetFromJsonDictionary(WidgetReaderProtocol* reader, cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
-    
-    
+
+    /**
+    * @~english Set custom widget properties from json dictionary
+    * @~chinese 根据json数据设定用户自定义UI组件属性
+    *
+    * @parame classType @~english Custorm class type @~chinese 自定义UI组件类型
+    *
+    * @parame widget    @~english Custom UI widget to be set @~chinese 需要设置的用户自定义UI组件
+    *
+    * @parame customOptions   @~english Json dictionary that contain custom property data @~chinese 包含用户自定义属性数据的json对象
+    */
     virtual void setPropsForAllCustomWidgetFromJsonDictionary(const std::string& classType,
                                                               cocos2d::ui::Widget* widget,
                                                               const rapidjson::Value& customOptions) = 0;
-    
-    //add binary parsing
-    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* cocoLoader,stExpCocoNode*	pCocoNode, const char* fileName)=0;
-    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) = 0;
+
+    /**
+    * @~english Set widget properties from binary data file
+    * @~chinese 根据二进制属性描述数据设定UI组件属性
+    *
+    * @parame cocoLoader    @~english Property reader @~chinese 属性读取类
+    *
+    * @parame pCocoNode     @~english UI node to be set @~chinese 需要设置的UI节点
+    *
+    * @parame fileName      @~english Full path of binary file @~chinese 二进制描述文件全路径
+    *
+    * @return @~english UI widget node @~chinese UI组件节点
+    */
+    virtual cocos2d::ui::Widget* createWidgetFromBinary(CocoLoader* cocoLoader, stExpCocoNode* pCocoNode, const char* fileName) = 0;
+    /**
+    * @~english Set widget properties from binary data file
+    * @~chinese 根据二进制属性描述数据设定UI组件属性
+    *
+    * @parame cocoLoader    @~english Property reader @~chinese 属性读取类
+    *
+    * @parame pCocoNode     @~english UI node to be set @~chinese 需要设置的UI节点
+    *
+    * @return @~english UI widget node @~chinese UI组件节点
+    */
+    virtual cocos2d::ui::Widget* widgetFromBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode) = 0;
+    /**
+    * @~english Set widget properties from binary data
+    * @~chinese 根据二进制数据设定UI组件属性
+    *
+    * @parame reader    @~english Custom property reader @~chinese 用户自定义属性读取类
+    *
+    * @parame widget    @~english UI widget to be set @~chinese 需要设置的UI组件
+    *
+    * @parame cocoLoader   @~english Binary data reader @~chinese 二进制数据读取类
+    *
+    * @parame pCocoNode    @~english Custom expand node @~chinese 用户自定义扩展节点
+    */
     virtual void setPropsForAllWidgetFromBinary(WidgetReaderProtocol* reader,
                                                 cocos2d::ui::Widget* widget,
                                                 CocoLoader* cocoLoader,
-                                                stExpCocoNode*	pCocoNode) = 0;
+                                                stExpCocoNode* pCocoNode) = 0;
     
 protected:
     void setAnchorPointForWidget(cocos2d::ui::Widget* widget, const rapidjson::Value&options);

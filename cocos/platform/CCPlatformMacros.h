@@ -26,8 +26,10 @@ Copyright (c) 2013-2015 Chukong Technologies
 #ifndef __CC_PLATFORM_MACROS_H__
 #define __CC_PLATFORM_MACROS_H__
 
-/**
+/**@~english
  * Define some platform specific macros.
+ * @~chinese 
+ * 定义一些特定于平台的宏。
  */
 #include "base/ccConfig.h"
 #include "platform/CCPlatformConfig.h"
@@ -36,7 +38,8 @@ Copyright (c) 2013-2015 Chukong Technologies
 /** @def CREATE_FUNC(__TYPE__)
  * Define a create function for a specific type, such as Layer.
  *
- * @param __TYPE__  class type to add create(), such as Layer.
+ * @param __TYPE__  @~english class type to add create(), such as Layer.
+ * @~chinese 对一个指定类型定义一个create函数，比如Layer。
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -58,7 +61,8 @@ static __TYPE__* create() \
 /** @def NODE_FUNC(__TYPE__)
  * Define a node function for a specific type, such as Layer.
  *
- * @param __TYPE__  class type to add node(), such as Layer.
+ * @param __TYPE__  @~english class type to add node(), such as Layer.
+ * @~chinese 提供类类型用于node()函数,例如Layer。
  * @deprecated  This interface will be deprecated sooner or later.
  */
 #define NODE_FUNC(__TYPE__) \
@@ -92,8 +96,10 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
-    /** Application will crash in glDrawElements function on some win32 computers and some android devices.
+    /** @~english Application will crash in glDrawElements function on some win32 computers and some android devices.
      *  Indices should be bound again while drawing to avoid this bug.
+     * @~chinese 应用程序在一些win32电脑和一些android设备上执行glDrawElements函数时将会崩溃。
+     * 为了避免这种错误应该再次绑定索引。
      */
     #define CC_REBIND_INDICES_BUFFER  1
 #else
@@ -121,12 +127,18 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 /** @def CC_PROPERTY_READONLY 
  * It is used to declare a protected variable. We can use getter to read the variable.
  * 
- * @param varType     the type of variable.
- * @param varName     variable name.
- * @param funName     "get + funName" will be the name of the getter.
- * @warning   The getter is a public virtual function, you should rewrite it first.
+ * @param varType     @~english the type of variable.
+ * @~chinese 变量的类型。
+ * @param varName     @~english variable name.
+ * @~chinese 变量的名字。
+ * @param funName     @~english "get + funName" will be the name of the getter.
+ * @~chinese “get + funNam”将被作为getter的名称。
+ * @warning @~english   The getter is a public virtual function, you should rewrite it first.
  *            The variables and methods declared after CC_PROPERTY_READONLY are all public.
  *            If you need protected or private, please declare.
+ * @~chinese getter是一个公开的虚函数,你应该重写它。
+ * 在CC_PROPERTY_READONLY之后声明的变量和方法都是公开的。
+ * 如果你希望它是受保护的或私有的,请声明。
  */
 #define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -140,13 +152,20 @@ public: virtual const varType& get##funName(void) const;
  * It is used to declare a protected variable.
  * We can use getter to read the variable, and use the setter to change the variable.
  *
- * @param varType     The type of variable.
- * @param varName     Variable name.
- * @param funName     "get + funName" will be the name of the getter.
+ * @param varType     @~english The type of variable.
+ * @~chinese 变量的类型。
+ * @param varName     @~english Variable name.
+ * @~chinese 变量的名字。
+ * @param funName     @~english "get + funName" will be the name of the getter.
  *                    "set + funName" will be the name of the setter.
- * @warning   The getter and setter are public virtual functions, you should rewrite them first.
+ * @~chinese “get + funNam”将被作为getter的名称。
+ *           “set + funNam”将被作为setter的名称。
+ * @warning @~english   The getter and setter are public virtual functions, you should rewrite them first.
  *            The variables and methods declared after CC_PROPERTY are all public.
  *            If you need protected or private, please declare.
+ * @~chinese getter和setter都是公开的虚函数,你应该重写它。
+ * 在CC_PROPERTY_READONLY之后声明的变量和方法都是公开的。
+ * 如果你希望它是受保护的或私有的,请声明。
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
@@ -161,12 +180,18 @@ public: virtual void set##funName(const varType& var);
 /** @def CC_SYNTHESIZE_READONLY 
  * It is used to declare a protected variable. We can use getter to read the variable.
  *
- * @param varType     The type of variable.
- * @param varName     Variable name.
- * @param funName     "get + funName" will be the name of the getter.
- * @warning   The getter is a public inline function.
+ * @param varType     @~english The type of variable.
+ * @~chinese 变量的类型。
+ * @param varName     @~english Variable name.
+ * @~chinese 变量的名字。
+ * @param funName     @~english "get + funName" will be the name of the getter.
+ * @~chinese “get + funNam”将被作为getter的名称。
+ * @warning @~english   The getter is a public inline function.
  *            The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
  *            If you need protected or private, please declare.
+ * @~chinese  getter是一个公开的内联函数。
+ * 在CC_SYNTHESIZE_READONLY之后声明的变量和方法都是公开的。
+ * 如果你希望它是受保护的或私有的,请声明。
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -180,13 +205,20 @@ public: virtual const varType& get##funName(void) const { return varName; }
  * It is used to declare a protected variable.
  * We can use getter to read the variable, and use the setter to change the variable.
  *
- * @param varType     The type of variable.
- * @param varName     Variable name.
- * @param funName     "get + funName" will be the name of the getter.
+ * @param varType     @~english The type of variable.
+ * @~chinese 变量的类型。
+ * @param varName     @~english Variable name.
+ * @~chinese 变量的名字。
+ * @param funName     @~english "get + funName" will be the name of the getter.
  *                    "set + funName" will be the name of the setter.
- * @warning   The getter and setter are public inline functions.
+ * @~chinese“get + funNam”将被作为getter的名称。
+ *           “set + funNam”将被作为setter的名称。
+ * @warning @~english   The getter and setter are public inline functions.
  *            The variables and methods declared after CC_SYNTHESIZE are all public.
  *            If you need protected or private, please declare.
+ * @~chinese getter和setter都是公开的内联函数。
+ * 在CC_SYNTHESIZE之后声明的变量和方法都是公开的。
+ * 如果你希望它是受保护的或私有的,请声明。
  */
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
@@ -243,7 +275,7 @@ public: virtual void set##funName(varType var)   \
 #define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
-/** Lua engine debug */
+/** @~english Lua engine debug  @~chinese Lua引擎调试*/
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || CC_LUA_ENGINE_DEBUG == 0
 #define LUALOG(...)
 #else
@@ -301,8 +333,10 @@ public: virtual void set##funName(varType var)   \
 /** @def CC_FORMAT_PRINTF(formatPos, argPos)
  * Only certain compiler support __attribute__((format))
  *
- * @param formatPos 1-based position of format string argument.
- * @param argPos    1-based position of first format-dependent argument.
+ * @param formatPos @~english 1-based position of format string argument.
+ * @~chinese 基于格式字符串参数的位置。
+ * @param argPos    @~english 1-based position of first format-dependent argument.
+ * @~chinese 基于第一个format-dependent参数的位置。
  */
 #if defined(__GNUC__) && (__GNUC__ >= 4)
 #define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))

@@ -36,13 +36,16 @@
 NS_CC_BEGIN
 
 /** @class EventKeyboard
- * @brief Keyboard event.
+ * @brief @~english Keyboard event.
+ * @~chinese 键盘事件.
  */
 class CC_DLL EventKeyboard : public Event
 {
 public:
-    /**
+    /**@~english
      * KeyCode The key (code).
+     * @~chinese 
+     * 键盘按键对应的键码 (键码).
      * @js NA
      */
     enum class KeyCode
@@ -219,10 +222,14 @@ public:
         KEY_PLAY
     };
     
-    /** Constructor.
+    /** @~english Constructor.
      *
-     * @param keyCode A given keycode.
-     * @param isPressed True if the key is pressed.
+     * @~chinese 构造函数.
+     * 
+     * @param keyCode @~english A given keycode.
+     * @~chinese 输入一个键盘码.
+     * @param isPressed @~english True if the key is pressed.
+     * @~chinese 如果对应的键盘按键被按下，值为true.
      * @js ctor
      */
     EventKeyboard(KeyCode keyCode, bool isPressed);

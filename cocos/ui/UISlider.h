@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -49,7 +49,9 @@ typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
 /** 
+ * @class Silider
  * @brief UI Slider widget.
+ * @~chinese 滑动条控件
  */
 class CC_GUI_DLL Slider : public Widget
 {
@@ -57,7 +59,10 @@ class CC_GUI_DLL Slider : public Widget
     DECLARE_CLASS_GUI_INFO
     
 public:
-    /** EventType Slider event type.
+    /**
+     * @enum EventType
+     * @brief @~english Slider event type.
+     * @~chinese 滑动条事件类型
      */
     enum class EventType
     {
@@ -65,95 +70,124 @@ public:
     };
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
-     * Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造函数
      * @js ctor
      * @lua new
      */
     Slider();
     
     /**
-     * Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构函数
      * @js NA
      * @lua NA
      */
     virtual ~Slider();
     
-    /** Create a slider widget.
-     *
-     * @return An autoreleased Slider object.
+    /** 
+     * @~english Create a slider widget.
+     * @~chinese 创建一个滑动条
+     * @return @~english An autoreleased Slider object.
+     * @~chinese 被创建的滑动条
      */
     static Slider* create();
     
-    /** Create a slider widget with bar texture, ball texture and texture resource type.
-     *
-     * @param barTextureName Bar texture file name.
-     * @param normalBallTextureName Ball texture file name.
-     * @param resType Texture resource type.
-     * @return An autoreleased Slider object.
+    /** 
+     * @~english Create a slider widget with bar texture, ball texture and texture resource type.
+     * @~chinese 通过指定的滑动条纹理，滑动条指针纹理以及纹理类型来创建滑动条
+     * @param barTextureName @~english Bar texture file name.
+     * @~chinese 滑动条纹理
+     * @param normalBallTextureName @~english Ball texture file name.
+     * @~chinese 滑动条指针纹理
+     * @param resType @~english Texture resource type.
+     * @~chinese 纹理类型
+     * @return @~english An autoreleased Slider object.
+     * @~chinese 被创建的滑动条
      */
     static Slider* create(const std::string& barTextureName,
                           const std::string& normalBallTextureName,
                           TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Load texture for slider bar.
-     *
-     * @param fileName   File name of texture.
-     * @param resType    @see TextureResType .
+     * @~english Load texture for slider bar.
+     * @~chinese 读取滑动条的纹理
+     * @param fileName   @~english File name of texture.
+     * @~chinese 滑动条纹理的路径
+     * @param resType    @~english  The reousrce type @see TextureResType .
+     * @~chinese 滑动条资源类型
      */
     void loadBarTexture(const std::string& fileName,TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Sets if slider is using scale9 renderer.
-     * @param able True that using scale9 renderer, false otherwise.
+     * @~english Sets if slider is using scale9 renderer.
+     * @~chinese 设置滑动条是否使用九宫格 渲染器
+     * @param able @~english True that using scale9 renderer, false otherwise.
+     * @~chinese 使用九宫格渲染器时为true，反之为false
      */
     void setScale9Enabled(bool able);
     
     /**
-     * Gets If slider is using scale9 renderer.
-     * @return True that using scale9 renderer, false otherwise.
+     * @~english Gets If slider is using scale9 renderer.
+     * @~chinese 获取当前滑动条是否使用九宫格渲染器
+     * @return @~english True that using scale9 renderer, false otherwise.
+     * @~chinese 使用九宫格渲染器返回true，反之返回false
      */
     bool isScale9Enabled()const;
     
     /**
-     * Sets capinsets for slider, if slider is using scale9 renderer.
-     * @param capInsets Capinsets for slider.
+     * @~english Sets capinsets for slider, if slider is using scale9 renderer.
+     * @~chinese 设置滑动条的capinset，如果该滑动条使用了九宫格渲染器的话
+     * @param capInsets @~english Capinsets for slider.
+     * @~chinese 滑动条的capinsets
      */
     void setCapInsets(const Rect &capInsets);
     
     /**
-     * Sets capinsets for bar slider, if slider is using scale9 renderer.
-     * @param capInsets Capinsets for bar slider.
+     * @~english Sets capinsets for bar slider, if slider is using scale9 renderer.
+     * @~chinese 设置滑动条的滑块的capinsets，如果使用了九宫格的渲染器的话
+     * @param capInsets @~english Capinsets for bar slider.
+     * @~chinese 滑动条滑块的capinsets
      */
     void setCapInsetsBarRenderer(const Rect &capInsets);
     
     /**
-     * Gets capinsets for bar slider, if slider is using scale9 renderer.
-     * @return capInsets Capinsets for bar slider.
+     * @~english Gets capinsets for bar slider, if slider is using scale9 renderer.
+     * @~chinese 获取滑块的capinsets，如果滑动条开启了九宫格渲染
+     * @return capInsets @~english Capinsets for bar slider.
+     * @~chinese 滑块的capinsets
      */
     const Rect& getCapInsetsBarRenderer()const;
     
     /**
-     * Sets capinsets for progress bar slider, if slider is using scale9 renderer.
-     * @param capInsets Capinsets for progress bar slider.
+     * @~english Sets capinsets for progress bar slider, if slider is using scale9 renderer.
+     * @~chinese 设置进度条的capinsets，如果滑动条开启了九宫格渲染
+     * @param capInsets @~english Capinsets for progress bar slider.
+     * @~chinese 进度条的capinsets
      * @js NA
      */
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
     /**
-     * Gets capinsets for progress bar slider, if slider is using scale9 renderer.
-     * @return Capinsets for progress bar slider.
+     * @~english Gets capinsets for progress bar slider, if slider is using scale9 renderer.
+     * @~chinese 获取进度条的capinsets，如果滑动条开启了九宫格渲染的话
+     * @return @~english Capinsets for progress bar slider.
+     * @~chinese 进度跳的九宫格渲染
      * @js NA
      */
     const Rect& getCapInsetsProgressBarRebderer()const;
     
     /**
-     * Load textures for slider ball.
-     *
-     * @param normal     Normal state texture.
-     * @param pressed    Pressed state texture.
-     * @param disabled    Disabled state texture.
+     * @~english Load textures for slider ball.
+     * @~chinese 读取滑动条的滑块的纹理
+     * @param normal @~english Normal state texture.
+     * @~chinese 正常状态下的纹理
+     * @param pressed @~english Pressed state texture.
+     * @~chinese 按住状态下的纹理
+     * @param disabled @~english Disabled state texture.
+     * @~chinese 禁用状态下的纹理
      * @param texType    @see TextureResType .
+     * @~chinese 纹理资源类型
      */
     void loadSlidBallTextures(const std::string& normal,
                               const std::string& pressed = "",
@@ -161,55 +195,66 @@ public:
                               TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Load normal state texture for slider ball.
-     *
-     * @param normal    Normal state texture.
-     * @param resType    @see TextureResType .
+     * @~english Load normal state texture for slider ball.
+     * @~chinese 读取正常状态下滑动条滑块纹理
+     * @param normal    @~english Normal state texture.
+     * @~chinese 正常状态的纹理
+     * @param resType   @~english  @see TextureResType .
+     * @~chinese 纹理资源类型
      */
     void loadSlidBallTextureNormal(const std::string& normal,TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Load pressed state texture for slider ball.
-     *
-     * @param pressed    Pressed state texture.
-     * @param resType    @see TextureResType .
+     * @~english Load pressed state texture for slider ball.
+     * @~chinese 读取滑动条滑块按住状态的纹理
+     * @param pressed   @~english  Pressed state texture.
+     * @~chinese 按住状态下的纹理
+     * @param resType    @~english @see TextureResType .
+     * @~chinese 纹理资源类型
      */
     void loadSlidBallTexturePressed(const std::string& pressed,TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Load disabled state texture for slider ball.
-     *
-     * @param disabled   Disabled state texture.
-     * @param resType    @see TextureResType .
+     * @~english Load disabled state texture for slider ball.
+     * @~chinese 读取禁用状态下的滑动条滑块纹理
+     * @param disabled   @~english Disabled state texture.
+     * @~chinese 禁用状态下的纹理
+     * @param resType    @~english @see TextureResType .
+     * @~chinese 纹理资源类型
      */
     void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Load dark state texture for slider progress bar.
-     *
-     * @param fileName   File path of texture.
-     * @param resType    @see TextureResType .
+     * @~english Load dark state texture for slider progress bar.
+     * @~chinese 读取暗色状态下进度条纹理
+     * @param fileName   @~english File path of texture.
+     * @~chinese 纹理路径
+     * @param resType  @~english   @see TextureResType .
+     * @~chinese 纹理资源类型
      */
     void loadProgressBarTexture(const std::string& fileName, TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Changes the progress direction of slider.
-     * @param percent  Percent value from 1 to 100.
+     * @~english Changes the progress direction of slider.
+     * @~chinese 设置滑动条的百分比
+     * @param percent  @~english Percent value from 1 to 100.
+     * @~chinese 百分比，从0至100
      */
     void setPercent(int percent);
     
     /**
-     * Gets the progress direction of slider.
-     *
-     * @return percent Percent value from 1 to 100.
+     * @~english Gets the progress direction of slider.
+     * @~chinese 获取滑动条的百分比
+     * @return percent @~english Percent value from 1 to 100.
+     * @~chinese 百分比，从0至100
      */
     int getPercent()const;
     
     CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     /**
-     * Add call back function called when slider's percent has changed to slider.
-     *
-     * @param callback An given call back function called when slider's percent has changed to slider.
+     * @~english Add call back function called when slider's percent has changed to slider.
+     * @~chinese 添加一个回调函数，该回调函数在滑动条百分比变化时被触发
+     * @param callback @~english An given call back function called when slider's percent has changed to slider.
      */
     void addEventListener(const ccSliderCallback& callback);
     
@@ -234,13 +279,20 @@ public:
      */
     virtual std::string getDescription() const override;
     
-    /** When user pressed the button, the button will zoom to a scale.
+    /**
+     * @~english When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)
+     * @~chinese 当用户按住按钮时，按钮会按指定缩放系数缩放，按钮的最终缩放系数，等于原始缩放系数+_zoomScale
+     * @param scale @~english The scale factor.
+     * @~chinses 缩放系数
      * @since v3.3
      */
     void setZoomScale(float scale);
     /**
-     * @brief Return a zoom scale
+     * @brief @~english Return a zoom scale
+     * @~chinese 获取缩放系数
+     * @return @~english The zoom scale factor.
+     * @~chinese 缩放系数
      * @since v3.3
      */
     float getZoomScale()const;

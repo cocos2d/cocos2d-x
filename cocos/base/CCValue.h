@@ -130,6 +130,9 @@ public:
 
     /** @~english Assignment operator, assign from bool to Value.  @~chinese 赋值运算符,从布尔值赋值。*/
     Value& operator= (bool v);
+    
+    /** Assignment operator, assign from char* to Value. @~chinese 重载赋值运算符,从字符串指针赋值。*/
+    Value& operator= (const char* v);
 
     /** @~english Assignment operator, assign from string to Value.  @~chinese 赋值运算符,从字符串赋值。*/
     Value& operator= (const std::string& v);

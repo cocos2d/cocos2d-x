@@ -36,9 +36,33 @@ namespace cocostudio {
     public:
         WidgetCallBackHandlerProtocol() {};
         virtual ~WidgetCallBackHandlerProtocol() {};
-        
+
+        /**
+        * @~english User touch event callback function.
+        * @~chinese 用户触摸事件回调函数.
+        *
+        * @parame callBackName  @~english user defined callback name @~chinese 用户定义的回调名称
+        *
+        * @return @~english call back bundle function @~chinese 回调函数
+        */
         virtual cocos2d::ui::Widget::ccWidgetTouchCallback onLocateTouchCallback(const std::string &callBackName){ return nullptr; };
+        /**
+        * @~english User click event callback function.
+        * @~chinese 用户点击事件回调函数.
+        *
+        * @parame callBackName  @~english user defined callback name @~chinese 用户定义的回调名称
+        *
+        * @return @~english call back bundle function @~chinese 回调函数
+        */
         virtual cocos2d::ui::Widget::ccWidgetClickCallback onLocateClickCallback(const std::string &callBackName){ return nullptr; };
+        /**
+        * @~english User event callback function.
+        * @~chinese 用户事件回调函数.
+        *
+        * @parame callBackName  @~english user defined callback name @~chinese 用户定义的回调名称
+        *
+        * @return @~english call back bundle function @~chinese 回调函数
+        */
         virtual cocos2d::ui::Widget::ccWidgetEventCallback onLocateEventCallback(const std::string &callBackName){ return nullptr; };
     };
 

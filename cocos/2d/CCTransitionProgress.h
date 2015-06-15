@@ -24,7 +24,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #ifndef __CCTRANSITIONPROGRESS_H__
 #define __CCTRANSITIONPROGRESS_H__
 
@@ -39,17 +38,23 @@ class RenderTexture;
  * @addtogroup _2d
  * @{
  */
-/** @class TransitionProgress
- * @brief A base class of progress transition.
+/** 
+ * @brief @~english A base class of progress transition.
+ * @~chinese 一个TransitionScene的子类。
  */
 class CC_DLL TransitionProgress : public TransitionScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgress object.
+     * @~chinese 使用持续时间、传入的场景创建一个过渡.
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgress object.
+     * @~chinese autoreleased TransitionProgress对象。
      */
     static TransitionProgress* create(float t, Scene* scene);
 
@@ -77,18 +82,25 @@ protected:
 };
 
 
-/** @class TransitionProgressRadialCCW
- * @brief TransitionRadialCCW transition.
+/** 
+ * @brief @~english TransitionRadialCCW transition.
  A counter clock-wise radial transition to the next scene
+ * @~chinese TransitionRadialCCW过渡。
+ * 逆时针放射状过渡到下一个场景
  */
 class CC_DLL TransitionProgressRadialCCW : public TransitionProgress
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgressRadialCCW object.
+     * @~chinese 使用持续时间、传入的场景创建一个逆时针放射状过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgressRadialCCW object.
+     * @~chinese autoreleased TransitionProgressRadialCCW对象。
      */
     static TransitionProgressRadialCCW* create(float t, Scene* scene);
 
@@ -108,18 +120,25 @@ protected:
 };
 
 
-/** @class TransitionProgressRadialCW
- * @brief TransitionRadialCW transition.
+/** 
+ * @brief @~english TransitionRadialCW transition.
  A counter clock-wise radial transition to the next scene.
+ * @~chinese TransitionRadialCW过渡。
+ * 逆时针放射状过渡到下一个场景
 */
 class CC_DLL TransitionProgressRadialCW : public TransitionProgress
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgressRadialCW object.
+     * @~chinese 使用持续时间、传入的场景创建一个逆时针放射状过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgressRadialCW object.
+     * @~chinese autoreleased TransitionProgressRadialCW对象。
      */
     static TransitionProgressRadialCW* create(float t, Scene* scene);
 
@@ -138,18 +157,25 @@ protected:
 
 };
 
-/** @class TransitionProgressHorizontal
-  * @brief TransitionProgressHorizontal transition.
+/** 
+  * @brief @~english TransitionProgressHorizontal transition.
  A  clock-wise radial transition to the next scene
+ * @~chinese TransitionProgressHorizontal过渡。
+ * 顺时针放射状过渡到下一个场景
  */
 class CC_DLL TransitionProgressHorizontal : public TransitionProgress
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgressHorizontal object.
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgressHorizontal object.
+     * @~chinese autoreleased TransitionProgressHorizontal对象。
      */
     static TransitionProgressHorizontal* create(float t, Scene* scene);
 
@@ -167,17 +193,23 @@ protected:
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
 
-/** @class TransitionProgressVertical
- * @brief TransitionProgressVertical transition.
+/** 
+ * @brief @~english TransitionProgressVertical transition.
+ * @~chinese TransitionProgressVertical 过渡.
  */
 class CC_DLL TransitionProgressVertical : public TransitionProgress
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgressVertical object.
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgressVertical object.
+     * @~chinese An autoreleased TransitionProgressVertical object.
      */
     static TransitionProgressVertical* create(float t, Scene* scene);
 
@@ -195,17 +227,23 @@ protected:
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
 
-/** @class TransitionProgressInOut
- * @brief TransitionProgressInOut transition.
+/** 
+ * @brief @~english TransitionProgressInOut transition.
+ * @~chinese TransitionProgressInOut过渡。
  */
 class CC_DLL TransitionProgressInOut : public TransitionProgress
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgressInOut object.
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgressInOut object.
+     * @~chinese autoreleased TransitionProgressInOut对象。
      */
     static TransitionProgressInOut* create(float t, Scene* scene);
 
@@ -225,17 +263,23 @@ protected:
     virtual void setupTransition() override;
 };
 
-/** @class TransitionProgressOutIn
- * @brief TransitionProgressOutIn transition.
+/** 
+ * @brief @~english TransitionProgressOutIn transition.
+ * @~chinese TransitionProgressOutIn过渡。
  */
 class CC_DLL TransitionProgressOutIn : public TransitionProgress
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return An autoreleased TransitionProgressOutIn object.
+     * @~chinese 使用持续时间、传入的场景创建一个过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english An autoreleased TransitionProgressOutIn object.
+     * @~chinese autoreleased TransitionProgressOutIn对象。
      */
     static TransitionProgressOutIn* create(float t, Scene* scene);
 
@@ -260,4 +304,3 @@ protected:
 NS_CC_END
 
 #endif /* __CCTRANSITIONPROGRESS_H__ */
-

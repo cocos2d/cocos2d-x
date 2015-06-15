@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -32,46 +32,66 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup _3d
- * @{
- */
+    @addtogroup _3d
+    @{
+*/
 
 class Texture2D;
 
-/**
- * @brief the sprite3D material is only texture for now
- * @js NA
- * @lua NA
- */
+/** @class Sprite3DMaterialCache
+    @brief @~english the sprite3D material is only texture for now
+	@~chinese 当前的材质仅仅使用了纹理
+    @js NA
+    @lua NA
+*/
 class Sprite3DMaterialCache
 {
 public:
-    /**get & destroy cache*/
+    /** @~english get & destroy cache
+        @~chinese 得到此对象的实例
+        @return @~english the instance of this object @~chinese 此对象的实例
+    */
     static Sprite3DMaterialCache* getInstance();
 
-    /**destroy the instance*/
+    /** @~english destroy the instance
+        @~chinese 销毁实例
+    */
     static void destroyInstance();
-    
-    /**add to cache*/
+
+    /** @~english add to cache
+        @~chinese 添加到缓存中
+        @param key @~english  the key of material @~chinese 材质的键
+        @param tex @~english  the Texture2D to add @~chinese 添加的Texture2D
+        @return @~english Whether or not the operation is successful @~chinese 是否成功
+    */
     bool addSprite3DMaterial(const std::string& key, Texture2D* tex);
-    
-    /**get material from cache*/
+
+    /** @~english get material from cache
+        @~chinese 从缓存中获得材质
+        @param key @~english  the key of material @~chinese 材质的键
+        @return @~english the Texture2D of the given material @~chinese 给定材质的Texture2D
+    */
     Texture2D* getSprite3DMaterial(const std::string& key);
-    
-    /**remove all spritematerial*/
+
+    /** @~english remove all spritematerial
+        @~chinese 删除所有spritematerial
+    */
     void removeAllSprite3DMaterial();
-    /**remove unused spritematerial*/
+
+    /** @~english remove unused spritematerial
+        @~chinese 删除未使用的spritematerial
+    */
     void removeUnusedSprite3DMaterial();
-    
+
 CC_CONSTRUCTOR_ACCESS:
-    
+
     Sprite3DMaterialCache();
     ~Sprite3DMaterialCache();
-    
+
 protected:
     static Sprite3DMaterialCache* _cacheInstance;//instance
     std::unordered_map<std::string, Texture2D*> _materials; //cached material
-    
+
 };
 
 // end of 3d group

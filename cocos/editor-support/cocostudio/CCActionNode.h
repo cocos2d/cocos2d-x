@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -42,122 +42,146 @@ class CC_STUDIO_DLL ActionNode : public cocos2d::Ref
 public:
 
 	/**
-	* Default constructor
-	*/
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
 	ActionNode();
 
 	/**
-	* Default destructor
-	*/
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
 	virtual ~ActionNode();
 	/**
-	* Sets the time interval of frame.
-	*
-	* @param fTime   the time interval of frame
+	* @~english Sets the time interval of frame.
+    * @~chinese 设置帧的间隔时间.
+    *
+	* @param fTime   @~english the time interval of frame @~chinese 帧间隔时间
 	*/
 	void setUnitTime(float fTime);
 
 	/**
-	* Gets the time interval of frame.
-	*
-	* @return fTime   the time interval of frame
+	* @~english Gets the time interval of frame.
+    * @~chinese 获取帧的间隔时间.
+    *
+	* @return fTime   @~english the time interval of frame @~chinese 帧间隔时间
 	*/
 	float getUnitTime();
 	/**
-	* Sets tag for ActionNode
-	*
-	* @param tag    tag of ActionNode
+	* @~english Sets tag for ActionNode
+    * @~chinese 设置动作节点的Tag
+    *
+	* @param tag    @~english tag of ActionNode @~chinese 动作节点的Tag
 	*/
 	void setActionTag(int tag);
 
 	/**
-	* Gets tag for ActionNode
-	*
-	* @return tag    tag of ActionNode
+	* @~english Gets tag for ActionNode
+    * @~chinese 获取动作节点的Tag
+    *
+	* @return tag    @~english tag of ActionNode @~chinese 动作节点的Tag
 	*/
 	int getActionTag();
 
 	/**
-	* Sets node which will run a action.
-	*
-	* @param  node which will run a action
+	* @~english Sets node which will run a action.
+    * @~chinese 设置将要执行动作的节点.
+    *
+	* @param  @~english node which will run a action @~chinese 将要执行动作的节点
 	*/
 	void setObject(cocos2d::Ref* node);
 
 	/**
-	* Gets node which will run a action.
-	*
-	* @return  node which will run a action
+	* @~english Gets node which will run a action.
+    * @~chinese 获取将要执行动作的节点.
+    *
+	* @return  @~english node which will run a action @~chinese 将要执行动作的节点
 	*/
 	cocos2d::Ref* getObject();
 
 	/**
-	* Insets a ActionFrame to ActionNode.
+	* @~english Inserts a ActionFrame to ActionNode.
+    * @~chinese 向动作节点插入一个动作帧.
 	*
-	* @param index  the index of ActionFrame
+	* @param index  @~english the index of ActionFrame @~chinese 动作帧的索引值
 	*
-	* @param frame  the ActionFrame which will be inserted
+	* @param frame  @~english the ActionFrame which will be inserted @~chinese 将要添加的动作帧
 	*/
 	void insertFrame(int index, ActionFrame* frame);
 
 	/**
-	* Pushs back a ActionFrame to ActionNode.
+	* @~english Pushs back a ActionFrame to ActionNode.
+    * @~chinese 在动作节点的动作序列队尾插入一个动作帧.
 	*
-	* @param frame  the ActionFrame which will be added
+	* @param frame  @~english the ActionFrame which will be added @~chinese 将要添加的动作帧
 	*/
 	void addFrame(ActionFrame* frame);
 
 	/**
-	* Remove a ActionFrame from ActionNode.
-	*
-	* @param frame  the ActionFrame which will be removed
+	* @~english Remove a ActionFrame from ActionNode.
+    * @~chinese 从动作节点的动作序列中删除一个动作帧.
+    *
+	* @param frame  the ActionFrame which will be removed @~chinese 将要删除的动作帧
 	*/
-	void deleteFrame(ActionFrame* frame );
+	void deleteFrame(ActionFrame* frame);
 
 	/**
-	* Remove all ActionFrames from ActionNode.
-	*/
+	* @~english Remove all ActionFrames from ActionNode.
+    * @~chinese 删除动作节点下的所有动作帧.
+    */
 	void clearAllFrame();
 
 	/**
-	* Gets index of first ActionFrame.
-	*
-	* @return  index of first ActionFrame
+	* @~english Gets index of first ActionFrame.
+    * @~chinese 获取第一个动作帧的索引值.
+    *
+	* @return  @~english index of first ActionFrame @~chinese 第一个动作帧的索引值
 	*/
 	int getFirstFrameIndex();
 
 	/**
-	* Gets index of last ActionFrame.
-	*
-	* @return  index of last ActionFrame
+	* @~english Gets index of last ActionFrame.
+    * @~chinese 获取最后一个动作帧的索引值.
+    *
+	* @return  @~english index of last ActionFrame @~chinese 最后一个动作帧的索引值
 	*/
 	int getLastFrameIndex();
 
 	/**
-	* Updates action states to some time.
-	*
-	* @param fTime   the time when need to update
+	* @~english Updates action states to some time.
+	* @~chinese 在指定时间更新动作状态.
+	* @param fTime   @~english the time when need to update @~chinese 需要更新的时间
 	*/
 	virtual bool updateActionToTimeLine(float fTime);
 
 	/**
-	* Play the action.
-	*/
+	*  @~english Play the action.
+    *  @~chinese 播放动画.
+    */
 	virtual void playAction();
 
 	/**
-	* Stop the action.
-	*/
+	*  @~english Stop the action.
+    *  @~chinese 停止动画.
+    */
 	virtual void stopAction();
 
-	/*init properties with a json dictionary*/
+	/** 
+    * @~english init properties with a json dictionary
+    * @~chinese 使用json字典初始化属性值
+    */
 	virtual void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    /** 
+    * @~english init properties with binary file
+    * @~chinese 使用二进制数据初始化属性值
+    */
     virtual void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, Ref* root);
 
 	/**
-	* Gets if the action is done once time.
-	*
-	* @return   that if the action is done once time
+	* @~english Gets if the action is done once time.
+    * @~chinese 获取动画是否已经完成过一次播放.
+    *
+	* @return   @~english that if the action is done once time @~chinese 动画是否已经完成过一次播放
 	*/
 	virtual bool isActionDoneOnce();
 protected:

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -52,10 +52,11 @@ typedef enum
 typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
-/**
- *@brief Layout manager that allows the user to flip left and right through pages of data.
- *
- */
+/** @class PageView
+*@brief @~english Layout manager that allows the user to flip left and right through pages of data.
+ 
+ @~chinese Layout的管理器，可以让用户在多个Layout之间左右切换显示。
+*/
 class CC_GUI_DLL PageView : public Layout
 {
     
@@ -80,116 +81,124 @@ public:
     };
     
     /**
-     *PageView page turn event callback.
+     * @~english PageView page turn event callback.
+     * @~chinese 页面翻页时的事件回调。
      */
     typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
 
     /**
-     * Default constructor
+     * @~english Default constructor
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
     PageView();
     
     /**
-     * Default destructor
+     * @~english Default destructor
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
     virtual ~PageView();
     
     /**
-     * Create an empty PageView.
-     *@return A PageView instance.
+     * @~english Create an empty PageView.
+     * @~chinese 创建一个空的PageView。
+     * @return @~english A PageView instance.
      */
     static PageView* create();
     
     /**
-     * Add a widget as a page of PageView in a given index.
-     *
-     * @param widget    Widget to be added to pageview.
-     * @param pageIdx   A given index.
-     * @param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
+     * @~english Add a widget as a page of PageView in a given index.
+     * @~chinese 把一个widget添加到指定的PageView页中。
+     * @param widget    @~english Widget to be added to pageview. @~chinese 被添加到PageView中的Widget。
+     * @param pageIdx   @~english A given index. @~chinese 页索引。
+     * @param forceCreate   @~english If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it. @~chinese 如果forceCreate为True，并且指定页不存在，将会创建一个默认页并把widget加入。
      */
     void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
-     * Insert a page into the end of PageView.
-     *
-     * @param page Page to be inserted.
+     * @~english Insert a page into the end of PageView.
+     * @~chinese 往PageView的最后插入一页。
+     * @param page @~english Page to be inserted. @~chinese 被插入的页。
      */
     void addPage(Layout* page);
     
     /**
-     * Insert a page into PageView at a given index.
-     *
-     * @param page  Page to be inserted.
-     * @param idx   A given index.
+     * @~english Insert a page into PageView at a given index.
+     * @~chinese 在指定位置插入一页。
+     * @param page  @~english Page to be inserted. @~chinese 被插入的页。
+     * @param idx   @~english A given index. @~chinese 页索引号。
      */
     void insertPage(Layout* page, int idx);
     
     /**
-     * Remove a page of PageView.
-     *
-     * @param page  Page to be removed.
+     * @~english Remove a page of PageView.
+     * @~chinese 从PageView中移除一页。
+     * @param page  @~english Page to be removed. @~chinese 被移除的页。
      */
     void removePage(Layout* page);
 
     /**
-     * Remove a page at a given index of PageView.
-     *
-     * @param index  A given index.
+     * @~english Remove a page at a given index of PageView.
+     * @~chinese 移除指定位置的页。
+     * @param index  @~english A given index. @~chinese 页索引号。
      */
     void removePageAtIndex(ssize_t index);
     
     
     /**
-     * @brief Remove all pages of the PageView.
+     * @~english Remove all pages of the PageView.
+     * @~chinese 移除PageView中所有页。
      */
     void removeAllPages();
     
     /**
-     * Scroll to a page with a given index.
-     *
-     * @param idx   A given index in the PageView.
+     * @~english Scroll to a page with a given index.
+     * @~chinese 滚动到一个指定的页。
+     * @param idx   @~english A given index in the PageView. @~chinese 页索引号。 
      */
     void scrollToPage(ssize_t idx);
     
     /**
-     * Gets current displayed page index.
-     * @return current page index.
+     * @~english Gets current displayed page index.
+     * @~chinese 获取当前显示页的索引号。
+     * @return @~english current page index. @~chinese 当前页索引号。
      */
     ssize_t getCurPageIndex() const;
     
      
     /**
-     * @brief Get all the pages in the PageView.
-     * @return A vector of Layout pionters.
+     * @~english Get all the pages in the PageView.
+     * @~chinese 获取所有页的列表。
+     * @return @~english A vector of Layout pionters. @~chinese 一个Layout指针数组。
      */
     Vector<Layout*>& getPages();
     
     
     /**
-     * @brief Get a page at a given index
-     *
-     * @param index A given index.
-     * @return A layout pointer in PageView container.
+     * @~english Get a page at a given index
+     * @~chinese 获取指定的页。
+     * @param index @~english A given index. @~chinese 页索引号。
+     * @return @~english A layout pointer in PageView container. @~chinese 一个已在PageView中的layout指针。
      */
     Layout* getPage(ssize_t index);
     
     /**
-     * Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     *@deprecated Use `PageView::addEventListener` instead.
-     *@param target A pointer of `Ref*` type.
-     *@param selector A member function pointer with signature of `SEL_PageViewEvent`.
+     * @~english Add a page turn callback to PageView, then when one page is turning, the callback will be called.
+     * @~chinese 添加一个页面切换时的回调函数，当页面切换时被调用。
+     * @deprecated Use `PageView::addEventListener` instead.
+     * @param target @~english A pointer of `Ref*` type.　@~chinese 一个Ref类型指针。
+     * @param selector @~english A member function pointer with signature of `SEL_PageViewEvent`.　@~chinese 回调函数。
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
 
     
     /**
-     * @brief Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     *
-     * @param callback A page turning callback.
+     * @~english Add a page turn callback to PageView, then when one page is turning, the callback will be called.
+     * @~chinese 添加一个页面切换时的回调函数，当页面切换时被调用。
+     * @param callback @~english A page turning callback. @~chinese 回调函数。
      */
     void addEventListener(const ccPageViewCallback& callback);
     
@@ -208,27 +217,32 @@ public:
     virtual void onEnter() override;
 
     /**   
-     *@brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
-     *@param threshold  A threshold in float.
+     * @~english If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
+     * @~chinese 如果没有指定该值，pageView会在滚到页面一半时切换到下一页。
+     * @param threshold  @~english A threshold in float. @~chinese 切换页面门限值。
      */
     void setCustomScrollThreshold(float threshold);
 
     /**
-     *@brief Query the custom scroll threshold of the PageView.
-     *@return Custom scroll threshold in float.
+     * @~english Query the custom scroll threshold of the PageView.
+     * @~chinese 请求设定的切换页面门限值。
+     * @return @~english Custom scroll threshold in float. @~chinese 切换页面门限值。
      */
     float getCustomScrollThreshold()const;
 
     /**
-     *@brief Set using user defined scroll page threshold or not.
+     * @~english Set using user defined scroll page threshold or not.
      * If you set it to false, then the default scroll threshold is pageView.width / 2
-     *@param flag True if using custom scroll threshold, false otherwise.
+     * @~chinese 是否使用用户设置的切换页面门限值。
+     * 如果设为false，那么pageView会在滚到页面一半时切换到下一页。
+     * @param flag @~english True if using custom scroll threshold, false otherwise. @~chinese 切换页面门限值。
      */
     void setUsingCustomScrollThreshold(bool flag);
 
     /**
-     *@brief Query whether use user defined scroll page threshold or not.
-     *@return True if using custom scroll threshold, false otherwise.
+     * @~english Query whether use user defined scroll page threshold or not.
+     * @~chinese 请求是否使用用户自定义页面切换门限值。
+     * @return @~english True if using custom scroll threshold, false otherwise. @~chinese True表明使用用户设置的页面切换门限值。反之不使用。
      */
     bool isUsingCustomScrollThreshold()const;
 

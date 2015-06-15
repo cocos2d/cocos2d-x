@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -34,61 +34,99 @@ NS_CC_BEGIN
  */
 
 /**
- * @brief Inherit from Sprite, achieve BillBoard.
+ * @class BillBoard
+ * @brief @~english Inherit from Sprite, achieve BillBoard.
+ * @~chinese BillBoard 用于实现3D场景的公告板功能，所谓的公告板，即始终朝向相机所在点，或始终朝向相机局部坐标系的XoY平面的2D精灵
  */
 class CC_DLL BillBoard : public Sprite
 {
 public:
 
+    /**
+     * @~english Oriented mode
+     * @~chinese 公告板的朝向模式
+     */
     enum class Mode
     {
-        VIEW_POINT_ORIENTED, // orient to the camera
-        VIEW_PLANE_ORIENTED // orient to the XOY plane of camera
+        /**
+         * @~english Orient to the camera's position
+         * @~chinese 朝向相机的所在位置
+         */ 
+        VIEW_POINT_ORIENTED, 
+        /**
+        * @~english Orient to the XOY plane of camera
+        * @~chinese 朝向相机局部坐标系下的XoY平面
+        */
+        VIEW_PLANE_ORIENTED
     };
 
     /// @name Creators
 
     /**
-     * Creates an empty BillBoard without texture. You can call setTexture method subsequently.
-     *
-     * @return An autoreleased BillBoard object.
+     * @~english Creates an empty BillBoard without texture. You can call setTexture method subsequently.
+     * @~chinese 创建一个空的，不带纹理的公告板，你可以在创建完成后，再调用setTexture方法赋予其纹理
+     * @param mode @~english The BillBoard rotation mode
+     * @~chinese 朝向类型
+     * @return @~english An autoreleased BillBoard object.
+     * @~chinese 被创建的公告板
      */
     static BillBoard* create(Mode mode = Mode::VIEW_POINT_ORIENTED);
 
     /**
-     * Creates a BillBoard with an image filename.
-     *
+     * @~english Creates a BillBoard with an image filename.
      * After creation, the rect of BillBoard will be the size of the image,
      * and the offset will be (0,0).
-     *
-     * @param   filename A path to image file, e.g., "scene1/monster.png"
-     * @return  An autoreleased BillBoard object.
+     * @~chinese 通过指定的图片文件路径创建一个公告板，在创建完成后，公告板将会和图片尺寸一样大，同时其锚点会被
+     * 设置成Vec2(0, 0)
+     * @param   filename @~english A path to image file, e.g., "scene1/monster.png"
+     * @~chinese 图片文件的路径，如"scene1/monster.png"
+     * @param mode @~english The billboard rotation mode
+     * @~chinese 公告板的朝向类型
+     * @return  @~english An autoreleased BillBoard object.
+     * @~chinese 被创建的公告板
      */
     static BillBoard* create(const std::string& filename, Mode mode = Mode::VIEW_POINT_ORIENTED);
 
     /**
-     * Creates a BillBoard with an image filename and a rect.
-     *
-     * @param   filename A path to image file, e.g., "scene1/monster.png"
-     * @param   rect     A subrect of the image file
-     * @return  An autoreleased BillBoard object
+     * @~english Creates a BillBoard with an image filename and a rect.
+     * @~chinese 通过指定图片文件路径以及待渲染区域矩形来创建公告板
+     * @param   filename @~english A path to image file, e.g., "scene1/monster.png"
+     * @~chinese 图片文件的路径
+     * @param   rect @~english A subrect of the image file
+     * @~chinese 待渲染区域矩形，必须要比图片的尺寸要小
+     * @return  @~english An autoreleased BillBoard object
+     * @~chinese 被创建的公告板
      */
     static BillBoard* create(const std::string& filename, const Rect& rect, Mode mode = Mode::VIEW_POINT_ORIENTED);
 
      /**
-     * Creates a BillBoard with a Texture2D object.
+     * @~english Creates a BillBoard with a Texture2D object.
      *
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
-     *
-     * @param   texture    A pointer to a Texture2D object.
-     * @return  An autoreleased BillBoard object
+     * @~chinese 通过一个指定的Texture2D对象来创建公告板，创建完成后，公告板将会与纹理尺寸一样大，锚点会被设为Vec2(0, 0)
+     * @param   texture @~english A pointer to a Texture2D object.
+     * @~chinese Texture2D对象
+     * @param mode @~english The billBoard rotation mode.
+     * @~chinese 公告板的朝向类型
+     * @return @~english An autoreleased BillBoard object
+     * @~chinese 被创建的公告板
      */
     static BillBoard* createWithTexture(Texture2D *texture, Mode mode = Mode::VIEW_POINT_ORIENTED);
 
-    /** Set the billboard rotation mode. */
+    /**
+     * @~english Set the billboard rotation mode. 
+     * @~chinese 设置BillBoard对象的朝向类型
+     * @param mode @~english The billboard roation mode.
+     * @~chinese 朝向类型
+     **/
     void setMode(Mode mode);
 
-    /** Get the billboard rotation mode. */
+    /** 
+     * @~english Get the billboard rotation mode. 
+     * @~chinese 获取BillBoard的当前朝向类型
+     * @return @~english The billboard rotation mode.
+     * @~chinese 当前朝向类型
+     **/
     Mode getMode() const;
 
     //override

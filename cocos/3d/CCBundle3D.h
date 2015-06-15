@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -40,10 +40,13 @@ class Animation3D;
 class Data;
 
 /**
- * @brief Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
+ * @class Bundle3D
+ * @brief @~english Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
  * There are two types of bundle files, c3t and c3b.
  * c3t text file
  * c3b binary file
+ * @~chinese Bundle3D 类，所谓Bundle3D类包含了一系列的资源，诸如网格，材质，网格蒙皮信息，以及动画等的文件格式。共有两种类型的Bundle 文件，一种是
+ * 文本形式的c3t文件，一种是二进制形式的c3b文件
  * @js NA
  * @lua NA
  */
@@ -51,30 +54,58 @@ class CC_DLL Bundle3D
 {
 public:
     /**
-     * create a new bundle, destroy it when finish using it
+     * @~english Create a new bundle, destroy it when finish using it
+     * @~chinese 创建一个新的Bundle3D对象，将在使用后销毁
+     * @return @~english The Bundle3D object
+     * @~chinese 被创建的Bundle3D对象
      */
     static Bundle3D* createBundle();
     
+    /**
+     * @~english Destroy the specified Bundle3D object.
+     * @~chinese 销毁指定的Bundle3D对象
+     * @param bundle the Bundle3D object.
+     * @~chinese 指定的Bundl3D对象
+     */
     static void destroyBundle(Bundle3D* bundle);
     
+    /**
+     * @~english Clear the Bundle3D object's buffer
+     * @~chinese 清空指定Bundle3D对象的缓冲区
+     **/
 	virtual void clear();
 
     /**
-     * load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
-     * @param path File to be loaded
-     * @return result of load
+     * @~english Load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
+     * @~chinese 载入一个文件，你必须在载入文件完成之后在调用loadMeshData与loadSkinData等方法
+     * @param path @~english File to be loaded
+     * @~chinese 被载入的文件路径
+     * @return @~english result of load
+     * @~chinese 载入结果
      */
     virtual bool load(const std::string& path);
     
     /**
-     * load skin data from bundle
-     * @param id The ID of the skin, load the first Skin in the bundle if it is empty
+     * @~english load skin data from bundle.
+     * @~chinese 读取Bundle3D中的蒙皮信息
+     * @param id @~english The ID of the skin, load the first Skin in the bundle if it is empty.
+     * @~chinese 蒙皮的索引，如果蒙蔽索引为空，则将会读取该bundle中的第一个蒙皮信息
+     * @param skindata @~english the SkinData which you need.
+     * @~chinese 获取的SkinData对象
+     * @return @~english Result of the load.
+     * @~chinese 载入结果
      */
     virtual bool loadSkinData(const std::string& id, SkinData* skindata);
     
     /**
-     * load material data from bundle
-     * @param id The ID of the animation, load the first animation in the bundle if it is empty
+     * @~english Load animation data from bundle
+     * @~chinese 读取bundle中的动画数据
+     * @param id @~english The ID of the animation, load the first animation in the bundle if it is empty
+     * @~chinese 动画的索引，如果索引为空，则读取bundle中的第一个动画
+     * @param animationdata @~english The Animation3DData which you need.
+     * @~chinese 得到的Animation3DData对象
+     * @return @~english Result of the load
+     * @~chinese 载入结果
      */
     virtual bool loadAnimationData(const std::string& id, Animation3DData* animationdata);
     
@@ -86,15 +117,43 @@ public:
     virtual bool loadMaterials(MaterialDatas& materialdatas);
     
     /**
-     * load triangle list
-     * @param path the file path to load
+     * @~english Load triangle list
+     * @~chinese 读取网格的三角列表
+     * @param path @~english The file path to load.
+     * @~chinese bundle文件路径
+     * @return @~english The std::vector which contatin triangles.
+     * @~chinese 三角形列表的std::vector对象
      */
     static std::vector<Vec3> getTrianglesList(const std::string& path);
     
-    //load .obj file
+    /**
+     * @~english Load .obj format. 
+     * @~chinese 读取.ojb格式文件
+     * @param meshdatas @~english The mesh datas.
+     * @~chinese 读取后获得的网格数据
+     * @param materialdatas @~english The materialdatas.
+     * @~chinese 读取后获得的材质数据
+     * @param nodedatas @~english The node data.
+     * @~chinese 读取后获得的节点数据
+     * @param fullPath @~english The .obj file path.
+     * @~chinese .obj文件的路径
+     * @param mtl_basepath @~english The material base path.
+     * @~chinese 材质文件的搜索父路径
+     * @return @~english The result of the load.
+     * @~chinese 读取的结果
+     **/
     static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
     
-    //calculate aabb
+    /**
+     * @~english Calculate the AABB.
+     * @~chinese 计算AABB
+     * @param vertex @~english Vertices list.
+     * @~chinese  顶点数组
+     * @param stride @~english The stride of the element.
+     * @~chinese 顶点数组中每个元素之间的跨距
+     * @param index @~english The indices list.
+     * @~chinese 索引数组
+     **/
     static AABB calculateAABB(const std::vector<float>& vertex, int stride, const std::vector<unsigned short>& index);
   
 protected:

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
@@ -36,8 +36,15 @@ NS_CC_BEGIN
 class Bone3D;
 
 /** 
- * @brief attach a node to a bone
+ * @class AttachNode
+ * @brief @~english Attach a node to a bone
  * usage: auto sprite = Sprite3D::create("girl.c3b");
+ *        auto weapon = Sprite3D::create("weapon.c3b");
+ *        auto attachNode = sprite->getAttachNode("left hand");
+ *        attachNode->addChild(weapon);
+ * @~chinese AttachNode用于将一个Node绑定到骨骼上，在游戏中可以用来绑定一些武器、道具等到角色的模型上
+ * 以下给出一个用例：
+ *        auto sprite = Sprite3D::create("girl.c3b");
  *        auto weapon = Sprite3D::create("weapon.c3b");
  *        auto attachNode = sprite->getAttachNode("left hand");
  *        attachNode->addChild(weapon);
@@ -46,8 +53,12 @@ class CC_DLL AttachNode : public Node
 {
 public:
     /** 
-     * creates an AttachNode
-     * @param attachBone The bone to which the AttachNode is going to attach, the attacheBone must be a bone of the AttachNode's parent
+     * @~english Creates an AttachNode
+     * @~chinese 创建一个AttachNode
+     * @param attachBone @~english The bone to which the AttachNode is going to attach, the attacheBone must be a bone of the AttachNode's parent
+     * @~chinese 将要被绑定的骨骼，该骨骼必须要作为该AttachNode对象的父节点
+     * @return @~english The AttachNode obj
+     * @~chinese 被创建的AttachNode对象
      */
     static AttachNode* create(Bone3D* attachBone);
     
@@ -59,7 +70,14 @@ public:
 
 CC_CONSTRUCTOR_ACCESS:
     
+    /**
+     * Constructor
+     */
     AttachNode();
+
+    /**
+     * Destructor
+     */
     virtual ~AttachNode();
     
 

@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2015 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -43,21 +43,51 @@ namespace cocostudio
 {
     class CC_STUDIO_DLL ObjectExtensionData : public cocos2d::Ref
     {
-        
+
     public:
+        /**
+        * @~english Allocates and initializes a ObjectExtensionData.
+        * @~chinese 分配并且初始化一个ObjectExtensionData.
+        * @return @~english A initialized ObjectExtensionData which is marked as "autorelease".
+        * @~chinese 一个初始化的ObjectExtensionData，该节点会自动被标记为“autorelease”(自动释放).
+        */
         static ObjectExtensionData* create();
-        
+
+        /**
+        * @~english Set custom property.
+        * @~chinese 设定用户自定义属性.
+        *
+        * @param customProperty    @~english custom property @~chinese 用户自定义属性
+        */
         virtual void setCustomProperty(const std::string& customProperty) { _customProperty = customProperty; }
+        /**
+        * @~english Get custom property.
+        * @~chinese 获取用户自定义属性.
+        *
+        * @return @~english custom property @~chinese 用户自定义属性
+        */
         virtual std::string getCustomProperty() const { return _customProperty; };
-        
+
+        /**
+        * @~english Set tag for timeline data
+        * @~chinese 设置时间轴数据的Tag
+        *
+        * @param tag    @~english tag of timeline data @~chinese 间轴数据的Tag
+        */
         virtual void setActionTag(int actionTag);
+        /**
+        * @~english Get tag for timeline data
+        * @~chinese 获取时间轴数据的Tag
+        *
+        * @return @~english tag of timeline data @~chinese 间轴数据的Tag
+        */
         virtual const int getActionTag() const;
-        
+
     CC_CONSTRUCTOR_ACCESS:
         ObjectExtensionData();
         ~ObjectExtensionData();
         virtual bool init();
-        
+
     protected:
         std::string _customProperty;
         cocostudio::timeline::ActionTimelineData* _timelineData;

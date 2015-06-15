@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright 2012-2013, Syoyo Fujita.
 //
 // Licensed under 2-clause BSD liecense.
@@ -22,7 +22,8 @@ NS_CC_BEGIN
  */
 
 /**
- * @brief .obj file Loader
+ * @brief @~english .obj file Loader
+ * @~chinese .obj文件读取器
  * @js NA
  * @lua NA
  **/
@@ -31,7 +32,8 @@ class ObjLoader
 public:
 
     /**
-     * model's material struct
+     * @~english Model's material struct
+     * @~chinese .obj模型材质结构体
      **/
     typedef struct
     {
@@ -56,7 +58,8 @@ public:
     } material_t;
     
     /**
-     * model's indices struct
+     * @~english Model's indices struct
+     * @~chinese .obj模型顶点结构体
      **/
     typedef struct
     {
@@ -64,7 +67,8 @@ public:
     } mesh_t;
     
     /**
-     * model's shape struct
+     * @~english Model's shape struct
+     * @~chinese .obj模型形状结构体
      **/
     typedef struct
     {
@@ -74,7 +78,8 @@ public:
     } shape_t;
     
     /**
-     * model's shapes struct
+     * @~english model's shapes struct
+     * @~chinese .obj模型形状数组结构体
      **/
     typedef struct
     {
@@ -94,11 +99,16 @@ public:
     }shapes_t;
     
     /**
-     * Loads .obj from a file.
-     * @param shapes will be filled with parsed shape data
-     * @param filename the .obj file path .
-     * @param mtl_basepath It's optional, and used for base path for .mtl file
-     * @return The function returns error string, return empty string when loading .obj success.
+     * @~english Loads .obj from a file.
+     * @~chinese 通过.obj文件读取模型
+     * @param shapes @~english will be filled with parsed shape data
+     * @~chinese 输出的.obj信息
+     * @param filename @~english The .obj file path .
+     * @~chinese .obj文件路径
+     * @param mtl_basepath @~english It's optional, and used for base path for .mtl file
+     * @~chinese 可选的材质基路径，将在此基础上查询材质文件
+     * @return @~english The function returns error string, return empty string when loading .obj success.
+     * @~chinese 当模型读取成功，返回空字符串，反之返回带有错误信息的字符串
     */
     static std::string LoadObj(
                         shapes_t& shapes,   // [output]

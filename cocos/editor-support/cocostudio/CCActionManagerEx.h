@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -39,83 +39,100 @@ class CC_STUDIO_DLL ActionManagerEx:public cocos2d::Ref
 public:
 
 	/**
-	* Default constructor
-	* @js ctor
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    * @js ctor
 	*/
 	ActionManagerEx();
 
 	/**
-	* Default destructor
-	* @js NA
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    * @js NA
 	* @lua NA
 	*/
 	virtual ~ActionManagerEx();
 
 	/**
-	* Gets the static instance of ActionManager.
-	* @js getInstance
+	* @~english Gets the static instance of ActionManager.
+    * @~chinese 获取ActionManager的静态实例.
+    * @js getInstance
 	* @lua getInstance
 	*/
 	static ActionManagerEx* getInstance();
 
 	/**
-	* Purges ActionManager point.
-	* @js purge
+	* @~english Destroy ActionManager static instance.
+    * @~chinese 释放ActionManager的静态实例.
+    * @js purge
 	* @lua destroyActionManager
 	*/
 	static void destroyInstance();
 
 	/**
-	* Gets an ActionObject with a name.
+	* @~english Gets an ActionObject with a name.
+    * @~chinese 通过名称获取动作对象.
+    *
+	* @param jsonName  @~english UI file name @~chinese UI描述文件名称
 	*
-	* @param jsonName  UI file name
+	* @param actionName  @~english action name in the UI file. @~chinese 描述文件中的动作名称
 	*
-	* @param actionName  action name in the UI file.
-	*
-	* @return  ActionObject which named as the param name
+	* @return  @~english ActionObject which named as the param name. @chinese 符合参数名称的动作对象
 	*/
-	ActionObject* getActionByName(const char* jsonName,const char* actionName);
+	ActionObject* getActionByName(const char* jsonName, const char* actionName);
 
 	/**
-	* Play an Action with a name.
+	* @~english Play an Action with a name.
+    * @~chinese 播放指定名称的动作.
+    *
+	* @param jsonName   @~english UI file name @~chinese UI描述文件名称
 	*
-	* @param jsonName  UI file name
+	* @param actionName  @~english action name in the UI file. @~chinese UI描述文件中保存的动作名称.
 	*
-	* @param actionName  action name in teh UIfile.
-	*
-	* @return  ActionObject which named as the param name
+	* @return  @~english ActionObject which named as the param name. @chinese 符合参数名称的动作对象
 	*/
 	ActionObject* playActionByName(const char* jsonName,const char* actionName);
 
 	/**
-	* Play an Action with a name.
+    * @~english Play an Action with a name.
+    * @~chinese 播放指定名称的动作.
+    *
+	* @param jsonName  @~english UI file name @~chinese UI描述文件名称
 	*
-	* @param jsonName  UI file name
+	* @param actionName  @~english action name in the UI file. @~chinese UI描述文件中保存的动作名称.
 	*
-	* @param actionName  action name in teh UIfile.
-	*
-	* @param func ui action call back
-	*/
+	* @param func  @~english ui action call back @~chinese UI动作回调函数
+    *
+    * @return  @~english ActionObject which named as the param name. @chinese 符合参数名称的动作对象
+    */
 	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
 
 	/**
 	* Stop an Action with a name.
+    * @~chinese 停止播放指定名称的动作.
+    *
+	* @param jsonName  @~english UI file name @~chinese UI描述文件名称
 	*
-	* @param jsonName  UI file name
+	* @param actionName  @~english action name in the UI file. @~chinese UI描述文件中保存的动作名称.
 	*
-	* @param actionName  action name in teh UIfile.
-	*
-	* @return  ActionObject which named as the param name
-	*/
+    * @return  @~english ActionObject which named as the param name. @chinese 符合参数名称的动作对象
+    */
 	ActionObject* stopActionByName(const char* jsonName,const char* actionName);
 
-	/*init properties with json dictionay*/
+	/**
+    * @~english init properties with json dictionary
+    * @~chinese 使用json字典初始化属性值
+    */
 	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
-    void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
+    /**
+    * @~english init properties with binary file
+    * @~chinese 使用二进制数据初始化属性值
+    */
+    void initWithBinary(const char* file, Ref* root, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
 
 	/**
-	* Release all actions.
-	*
+	* @~english Release all actions.
+	* @~chinese 释放全部动作.
 	*/
 	void releaseActions();
 

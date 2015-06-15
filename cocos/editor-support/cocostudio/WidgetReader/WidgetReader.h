@@ -44,28 +44,97 @@ namespace cocostudio
     public:
         WidgetReader();
         virtual ~WidgetReader();
-        
+
+        /**
+        * @~english Gets the static instance of WidgetReader.
+        * @~chinese 获取WidgetReader的静态实例.
+        */
         static WidgetReader* getInstance();
-        /** @deprecated Use method destroyInstance() instead */
-        CC_DEPRECATED_ATTRIBUTE static void purge();
+        /**
+        * @~english Destroy WidgetReader static instance.
+        * @~chinese 释放WidgetReader的静态实例.
+        */
         static void destroyInstance();
-        
+
+        /**
+        * @deprecated @~english Use method destroyInstance() instead @~chinese 已弃用，请使用destroyInstance()
+        */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+
+        /**
+        * @~english Set properties to widget from a json description object
+        * @~chinese 根据json描述设置UI组件属性
+        *
+        * @parame widget    @~english widget to be config @~chinese 要设置的组件
+        *
+        * @parame options   @~english json object contain the description of properties @~chinese 包含属性信息的json对象
+        */
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                 const rapidjson::Value& options);
-        
+
+        /**
+        * @~english Set color properties to widget from a json description object
+        * @~chinese 根据json描述设置UI组件颜色属性
+        *
+        * @parame widget    @~english widget to be config @~chinese 要设置的组件
+        *
+        * @parame options   @~english json object contain the description of properties @~chinese 包含属性信息的json对象
+        */
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
+
+        /**
+        * @~english Set properties to widget from a binary description data
+        * @~chinese 根据二进制描述数据设置UI组件属性
+        *
+        * @parame widget    @~english widget to be config @~chinese 要设置的组件
+        *
+        * @parame cocoLoader  @~english property loader @~chinese 属性读取器
+        *
+        * @parame pCocoNode   @~english custorm nodes @~chinese 用户自定义扩展节点
+        */
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
         
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);        
-        
-        /* flatbuffers refactoring */
+        /**
+        * @~english Serialize flat buffers with XML object.
+        * @~chinese 根据xml对象序列化flat buffer.
+        *
+        * @parame objectData   @~english XML description object @~chinese xml描述对象
+        *
+        * @parame builder      @~english flat buffer builder @~chinese flat buffer构造器
+        *
+        * @return @~english flat buffer data structure @~chinese flat buffer结构数据
+        */
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
+        /**
+        * @~english Set properties to node from a flat buffer description table
+        * @~chinese 根据flat buffer数据设置节点属性
+        *
+        * @parame node          @~english node to be config @~chinese 需要设置的节点
+        *
+        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese 包含属性描述数据的flat buffer
+        */
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        /**
+        * @~english Set properties of layout from a flat buffer description table
+        * @~chinese 根据flat buffer数据设置布局属性
+        *
+        * @parame node          @~english node to be config @~chinese 需要设置的节点
+        *
+        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese 包含属性描述数据的flat buffer
+        */
         void setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        /**
+        * @~english Create node with a flat buffer table contains description of properties.
+        * @~chinese 根据flat buffer描述数据创建节点
+        *
+        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese 包含属性描述数据的flat buffer
+        *
+        * @return @~english created node @~chinese 创建的节点
+        */
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* widgetOptions);
-        /**/
-        
+
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,

@@ -51,8 +51,27 @@ namespace cocostudio
     {
     public:
         virtual ~WidgetReaderProtocol() {};
+
+        /**
+        * @~english Set properties to widget from a json description object
+        * @~chinese 根据json描述设置UI组件属性
+        *
+        * @parame widget    @~english widget to be config @~chinese 要设置的组件
+        *
+        * @parame options   @~english json object contain the description of properties @~chinese 包含属性信息的json对象
+        */
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) = 0;        
+        /**
+        * @~english Set properties to widget from a binary description data
+        * @~chinese 根据二进制描述数据设置UI组件属性
+        *
+        * @parame widget    @~english widget to be config @~chinese 要设置的组件
+        *
+        * @parame cocoLoader  @~english property loader @~chinese 属性读取器
+        *
+        * @parame pCocoNode   @~english custorm nodes @~chinese 用户自定义扩展节点
+        */
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode) = 0;
     };
 }
 

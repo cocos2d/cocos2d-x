@@ -39,7 +39,8 @@ NS_CC_BEGIN
 class Event;
 
 /** @class EventListenerMouse
- * @brief Mouse event listener.
+ * @brief @~english Mouse event listener.
+ * @~chinese 鼠标事件监听器。
  * @js cc._EventListenerMouse
  */
 class CC_DLL EventListenerMouse : public EventListener
@@ -47,9 +48,12 @@ class CC_DLL EventListenerMouse : public EventListener
 public:
     static const std::string LISTENER_ID;
     
-    /** Create a mouse event listener.
+    /** @~english Create a mouse event listener.
      *
-     * @return An autoreleased EventListenerMouse object.
+     * @~chinese 创建一个鼠标事件监听器。
+     * 
+     * @return @~english An autoreleased EventListenerMouse object.
+     * @~chinese 一个自动释放的鼠标事件监听器对象
      */
     static EventListenerMouse* create();
 

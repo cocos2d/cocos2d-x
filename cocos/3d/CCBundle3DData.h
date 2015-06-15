@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -35,38 +35,70 @@
  
 NS_CC_BEGIN
 
-/**mesh vertex attribute
-* @js NA
-* @lua NA
-*/
+/**
+ * @~english mesh vertex attribute
+ * @~chinese 网格的顶点属性
+ * @struct MeshVertexAttrib
+ * @js NA
+ * @lua NA
+ */
+
 struct MeshVertexAttrib
 {
-    //attribute size
+    /**
+    * @~english The attribute size.
+    * @~chinese 属性数
+    */
     GLint size;
-    //GL_FLOAT
+    /**
+    * @~english Attribute's data type, currently must be GL_FLOAT.
+    * @~chinese 属性的数据类型，当前必须为GL_FLOAT型
+    */
     GLenum type;
-    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
+    /**
+     * @~english The attribute type, the attribute type must be one of the following:
+     * VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX
+     * @~chinese 属性类型，属性类型必须为下列中的类型之一：
+     * VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX
+     * @note @~english see GLProgram for detail
+     * @~chinese 详细内容请参看GLProgram类
+     **/
     int  vertexAttrib;
-    //size in bytes
+    /**
+     * @~english The attribute size in bytes.
+     * @~chinese 属性尺寸，以字节计
+     */
     int attribSizeBytes;
 };
 
 
-/** model node data, since 3.3
+/** Model node data, since 3.3.
+* @struct ModelData
 * @js NA
 * @lua NA
 */
 struct ModelData
 {
+    /** The sub mesh ID*/
     std::string subMeshId;
+    /**The material ID.*/
     std::string matrialId;
+    /**The bone list.*/
     std::vector<std::string> bones;
+    /**The inverse bind pose matrix list.*/
     std::vector<Mat4>        invBindPose;
     
+    /**
+     * Destructor.
+     **/
     virtual ~ModelData()
     {
         resetData();
     }
+
+    /**
+     * Reset the data of the ModelData object.
+     **/
     virtual void resetData()
     {
         bones.clear();
@@ -75,20 +107,32 @@ struct ModelData
 };
 
 /** Node data, since 3.3 
+* @struct NodeData
 * @js NA
 * @lua NA
 */
 struct NodeData
 {
+    /**The NodeData ID.*/
     std::string id;
+    /**The NodeData transform.*/
     Mat4        transform;
+    /**The Model data list.*/
     std::vector<ModelData*> modelNodeDatas;
+    /**The children list.*/
     std::vector<NodeData*>  children;
 
+    /**
+     *Destructor.
+     */
     virtual ~NodeData()
     {
         resetData();
     }
+
+    /**
+     * @~english Reset Data, will reset itself and children's data.
+     */
     virtual void resetData()
     {
         id.clear();
@@ -108,20 +152,37 @@ struct NodeData
 
 };
 
-/** node datas, since 3.3 
-* @js NA
-* @lua NA
-*/
+/** 
+ * @~english node datas, since 3.3 
+ * @struct NodeDatas
+ * @js NA
+ * @lua NA
+ */
 struct NodeDatas
 {
+    /**
+     * @~english The skeleton list.
+     * @~chinese 骨骼列表
+     **/
     std::vector<NodeData*> skeleton; //skeleton
+    /**
+     * @~english The NodeData list.
+     * @~chinese NodeData(节点数据)列表
+     */
     std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
-    
+
+    /**
+    *Destructor.
+    */
     virtual ~NodeDatas()
     {
         resetData();
     }
     
+    /**
+     * @~english Reset data.
+     * @~chinese 重置数据
+     */
     void resetData()
     {
         for(auto& it : skeleton)
@@ -137,26 +198,63 @@ struct NodeDatas
     }
 };
 
-/**mesh data
-* @js NA
-* @lua NA
-*/
+/**
+ * @~english Mesh data
+ * @~chinese 网格数据
+ * @struct MeshData
+ * @js NA
+ * @lua NA
+ */
 struct MeshData
 {
     typedef std::vector<unsigned short> IndexArray;
+    /**
+     * @~english The vertices list.
+     * @~chinese 顶点数组
+     */
     std::vector<float> vertex;
+    /**
+     * @~english The vertex size in float data type.
+     * 顶点大小，以float数据类型计
+     */
     int vertexSizeInFloat;
+    /**
+     * @~english Sub meshes' indices list.
+     * @~chinese 子网格索引数组
+     */
     std::vector<IndexArray> subMeshIndices;
+    /**
+     * @~english Sub meshes' ID list.
+     * @~chinese 子网格ID数组
+     */
     std::vector<std::string> subMeshIds; //subMesh Names (since 3.3)
+    /**
+     * @~english Sub meshes' AABB list.
+     * @~chinese 子网格的AABB数组
+     */
     std::vector<AABB> subMeshAABB;
+    /**
+     * @~english The Size of indices List.
+     * 索引数组的大小
+     */
     int numIndex;
+    /**
+     * @~english The vertex attribute lists.
+     * @~chinese 顶点属性数组
+     */
     std::vector<MeshVertexAttrib> attribs;
+    /**
+     * @~english The amount of the attributes.
+     * @~chinese 顶点属性的个数
+     */
     int attribCount;
 
 public:
     /**
-     * Get per vertex size
+     * @~english Get per vertex size
+     * @~chinese 获取每一个顶点的大小
      * @return return the sum of each vertex's all attribute size.
+     * @~chinese 返回每个顶点所有属性大小之和
      */
     int getPerVertexSize() const
     {
@@ -169,7 +267,8 @@ public:
     }
 
     /**
-     * Reset the data
+     * @~english Reset the data
+     * @~chinese 重设数据
      */
     void resetData()
     {
@@ -181,26 +280,42 @@ public:
         numIndex = 0;
         attribCount = 0;
     }
+    /**
+    * Constructor.
+    */
     MeshData()
     : vertexSizeInFloat(0)
     , numIndex(0)
     , attribCount(0)
     {
     }
+    /**
+    * Destructor.
+    */
     ~MeshData()
     {
         resetData();
     }
 };
 
-/** mesh datas 
-* @js NA
-* @lua NA
-*/
+/** 
+ * @~english mesh datas 
+ * @~chinese 网格数据集合
+ * @struct MeshDatas
+ * @js NA
+ * @lua NA
+ */
 struct MeshDatas
 {
+    /**
+     * @~english The MeshData list
+     * @~chinese 网格数据数组
+     */
     std::vector<MeshData*> meshDatas;
-    
+    /**
+     * @~english Reset data.
+     * @~chinese 重设数据
+     **/
     void resetData()
     {
         for(auto& it : meshDatas)
@@ -209,27 +324,64 @@ struct MeshDatas
         }
         meshDatas.clear();
     }
+    /**
+     * Destructor
+     **/
     ~MeshDatas()
     {
         resetData();
     }
 };
 
-/**skin data
-* @js NA
-* @lua NA
-*/
+/**
+ * @~english skin data
+ * @~chinese 蒙皮数据
+ * @struct SkinData
+ * @js NA
+ * @lua NA
+ */
 struct SkinData
 {
-    std::vector<std::string> skinBoneNames; //skin bones affect skin
-    std::vector<std::string> nodeBoneNames; //node bones don't affect skin, all bones [skinBone, nodeBone]
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone, only for skin bone
-    std::vector<Mat4>        skinBoneOriginMatrices; // original bone transform, for skin bone
-    std::vector<Mat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
+    /**
+     * @~english The skin bones list which affect skin.
+     * @~chinese 影响蒙皮的骨骼数组
+     */
+    std::vector<std::string> skinBoneNames; 
+    /**
+     * @~english Node bones don't affect skin, all bones [skinBone, nodeBone].
+     * @~chinese 不影响蒙皮的骨骼与影响蒙皮的骨骼（所有骨骼）数组
+     */
+    std::vector<std::string> nodeBoneNames; 
+    /**
+     * @~english Bind pose of skin bone, only for skin bone.
+     * @~chinese 骨骼的蒙皮绑定姿态的逆变换矩阵数组，只有影响蒙皮的骨骼才与之对应
+     */
+    std::vector<Mat4>        inverseBindPoseMatrices; 
+    /**
+     * @~english Original bone transform, for skin bone.
+     * @~chinese 骨骼的初始变换矩阵数组，只有影响蒙皮的骨骼才与之对应
+     */
+    std::vector<Mat4>        skinBoneOriginMatrices;
+    /**
+     * @~english Original bone transform, for node bone.
+     * @~chinese 节点骨骼的初始变换矩阵数组
+     */
+    std::vector<Mat4>        nodeBoneOriginMatrices; 
     
-    //bone child info, both skinbone and node bone
-    std::map<int, std::vector<int> > boneChild;//key parent, value child
+    /**
+     * @~english Bone child info[key parent, value child], both skinbone and node bone.
+     * @~chinese 骨骼的子节点信息集合，存储数据为一个pair，主键为其父节点，值为子节点；蒙皮骨骼与节点骨骼都与之对应
+     */
+    std::map<int, std::vector<int> > boneChild;
+    /**
+     * @~english The root bone index.
+     * @~chinese 根节点骨骼的索引
+     */
     int                              rootBoneIndex;
+    /**
+     * @~english Reset data.
+     * @~chinese 重设数据 
+     */
     void resetData()
     {
         skinBoneNames.clear();
@@ -241,6 +393,12 @@ struct SkinData
         rootBoneIndex = -1;
     }
 
+    /**
+     * @~english Add name for SkinBone.
+     * @~chinese 为蒙皮骨骼添加名称
+     * @param name @~english The SkinBone name.
+     * @~chinese 蒙皮骨骼的名称
+     */
     void addSkinBoneNames(const std::string& name)
     {
         auto it = std::find(skinBoneNames.begin(), skinBoneNames.end(), name);
@@ -248,6 +406,12 @@ struct SkinData
             skinBoneNames.push_back(name);
     }
     
+    /**
+     * @~english Add name for NodeBone.
+     * @~chinese 为节点骨骼添加名称
+     * @param name @~english the NodeBone name.
+     * @~chinese 节点骨骼的名称
+     */
     void addNodeBoneNames(const std::string& name)
     {
         auto it = std::find(nodeBoneNames.begin(), nodeBoneNames.end(), name);
@@ -255,6 +419,14 @@ struct SkinData
             nodeBoneNames.push_back(name);
     }
     
+    /**
+     * @~english Get the index of the specified SkinBone name.
+     * @~chinese 通过给定的蒙皮骨骼的名称获取其索引
+     * @param name @~english The specified name.
+     * @~chinese 给定的蒙皮骨骼的名称
+     * @return @~english The index.
+     * @~chinese 蒙皮骨骼的索引
+     */
     int getSkinBoneNameIndex(const std::string& name)const
     {
         int i = 0;
@@ -267,6 +439,14 @@ struct SkinData
         return -1;
     }
     
+    /**
+     * @~english Get the index of the specified Bone name(skinBone & nodeBone both).
+     * @~chinese 通过给定的名称返回骨骼的索引，（蒙皮骨骼与节点骨骼皆可）
+     * @param name @~english The specified name.
+     * @~chinese 指定的名称
+     * @return @~english The index.
+     * @~chinese 骨骼的索引
+     */
     int getBoneNameIndex(const std::string& name)const
     {
         int i = 0;
@@ -287,10 +467,13 @@ struct SkinData
 
 };
 
-/**material data, 
-* @js NA
-* @lua NA
-*/
+/**
+ * @~english material data
+ * @~chinese 材质数据
+ * @struct MaterialData
+ * @js NA
+ * @lua NA
+ */
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
@@ -301,10 +484,11 @@ struct MaterialData
 };
 
 
-/**new material, since 3.3 
-* @js NA
-* @lua NA
-*/
+/**
+ * new material, since 3.3 
+ * @js NA
+ * @lua NA
+ */
 struct NTextureData
 {
     enum class Usage {
