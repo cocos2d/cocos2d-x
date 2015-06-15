@@ -29,62 +29,33 @@ var SpritePolygonTestDemo = BaseTestLayer.extend({
     _title:"",
     _subtitle:"",
     _debugDraw:null,
+    _sp: null,
+    _spp: null,
 
     ctor:function () {
         this._super();
     },
 
-    initDefaultSprite:function(filename, inst){
-        cc.director.setClearColor(cc.color(102/255, 184/255, 204/255, 255/255));
-        this.addChild(inst);
-
-        var s = cc.director.getWinSize();
-        inst.setPosition(s.width/2 + 0.15*s.width, s.height/2);
-
-        var sp = new cc.Sprite(filename);
-        this.addChild(sp);
-        sp.setPosition(s.width/2 - 0.15*s.width, s.height/2);
-
-        this._debugDraw = new cc.DrawNode();
-        sp.addChild(this._debugDraw);
-
-        var self = this;
-        cc.eventManager.addListener({
-            event:cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan:function(){
-                inst.showDebug(true);
-                self._debugDraw.setVisible(true);
+    initTouchDebugDraw: function() {
+        var touchListener = cc.EventListener.create({
+            type: TOUCH_ONE_BY_ONE,
+            onTouchBegan: function (touch, event) {
+                this._sp.debugDraw(true);
+                this._spp.debugDraw(true);
                 return true;
             },
-            onTouchEnded:function(){
-                inst.showDebug(false);
-                self._debugDraw.setVisible(false);
+            onTouchMoved: function (touch, event) {
+                var pos = touch.getDelta();
+                float newScale = cc.clampf(this._spp.getScale() + pos.x * 0.01f, 0.1f, 2.f);
+                this._spp.setScale(newScale);
+                this._sp.setScale(newScale);
+            },
+            onTouchEnded: function (touch, event) {
+                this._sp.debugDraw(false);
+                this._spp.debugDraw(false);
             }
-        }, this);
-
-        var positions = new Array(4);
-        var spSize = sp.getContentSize();
-        positions[0] = cc.p(0, spSize.height);
-        positions[1] = cc.p(spSize.width, spSize.height);
-        positions[2] = cc.p(spSize.width, 0);
-        positions[3] = cc.p(0, 0);
-
-        this._debugDraw.drawSegment(positions[0], positions[1], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[1], positions[2], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[2], positions[3], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[3], positions[0], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[0], positions[2], 1, cc.color.GREEN);
-
-        this._debugDraw.setVisible(false);
-
-        var label1 = new cc.LabelTTF("Sprite:\nPixels drawn:"+spSize.width*spSize.height, "fonts/arial.ttf", 10);
-        sp.addChild(label1);
-        label1.setAnchorPoint(cc.p(0, 1));
-
-        var label2 = new cc.LabelTTF("SpritePolygon:\nPixels drawn:"+(inst.getArea()+inst.getVertCount()), "fonts/arial.ttf", 10);
-        inst.addChild(label2);
-        label2.setAnchorPoint(cc.p(0, 1));
-
+        });
+        cc.eventManager.addEventListener(touchListener, this);
     },
 
     onRestartCallback:function (sender) {
@@ -136,20 +107,50 @@ var SpritePolygonTestScene = cc.Scene.extend({
 });
 
 var SpritePolygonTest1 = SpritePolygonTestDemo.extend({
-    _title:"SpritePolygon Creation",
-    _subtitle:"SpritePolygon::create(\"Images/grossini.png\")",
+    _title:"PolygonSprite Creation",
+    _subtitle:"new cc.Sprite(jsb.AutoPolygon.generatePolygon(filename))",
 
-    ctor:function(){
+    ctor:function () {
         this._super();
 
         var s = ccexp.SpritePolygon.create(s_pathGrossini);
         this.initDefaultSprite(s_pathGrossini, s);
+    },
+    make2Sprites: function() {
+        var polygons = jsb.AutoPolygon.generatePolygon(s_pathGrossini);
+        this._spp = new cc.Sprite(polygons);
+        this._spp.setPosition((0.5+0.15) * winSize.width, 0.5 * winSize.height);
+        this.addChild(this._spp);
+
+        this._sp = new cc.Sprite(s_pathGrossini);
+        addChild(this._sp);
+        this._sp.setPosition((0.5-0.15) * winSize.width, 0.5 * winSize.height);
+
+        var ttfConfig = new cc.FontDefinition({
+            fontName: "fonts/arial.ttf",
+            fontSize: 8
+        });
+        var temp = "Sprite:\nPixels drawn: ";
+        var spSize = this._sp.getContentSize();
+        var spArea = new cc.LabelTTF(temp+(spSize.width*spSize.height), ttfConfig);
+        spArea.anchorX = 0;
+        spArea.anchorY = 1;
+        this._sp.addChild(spArea);
+        
+        temp = "SpritePolygon:\nPixels drawn: ";
+        var vertCount = "\nverts:"+polygons.getVertCount();
+        var sppArea = new cc.LabelTTF(temp+polygons.getArea()+vertCount, ttfConfig);
+        sppArea.anchorX = 0;
+        sppArea.anchorY = 1;
+        this._spp.addChild(sppArea);
+        
+        this.initTouchDebugDraw();
     }
 });
 
 var SpritePolygonTest2 = SpritePolygonTestDemo.extend({
-    _title:"SpritePolygon Creation",
-    _subtitle:"SpritePolygon::create(\"Images/grossini.png\", verts)",
+    _title:"PolygonSprite Creation with a rect",
+    _subtitle:"new cc.Sprite(jsb.AutoPolygon.generatePolygon(filename, rect))",
 
     ctor:function(){
         this._super();
