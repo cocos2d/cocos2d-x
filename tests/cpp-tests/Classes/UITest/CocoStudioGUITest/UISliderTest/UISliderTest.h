@@ -98,4 +98,16 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UISliderNewEventCallbackTest : public UIScene
+{
+public:
+    CREATE_FUNC(UISliderNewEventCallbackTest);
+
+    UISliderNewEventCallbackTest();
+    ~UISliderNewEventCallbackTest();
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UISliderTest__) */
