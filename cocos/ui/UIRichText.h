@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -36,10 +36,13 @@ NS_CC_BEGIN
 
 namespace ui {
     
-/**
- *@brief Rich text element base class.
- * It defines the basic common properties for all rich text element.
- */
+/** @class RichElement
+*@brief @~english Rich text element base class.
+ It defines the basic common properties for all rich text element.
+ 
+ @~chinese 富文本元素基类。
+ 它定义了所有的富文本元素的通用属性。
+*/
 class CC_GUI_DLL RichElement : public Ref
 {
 public:
@@ -54,14 +57,16 @@ public:
     };
     
     /**
-     * @brief Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
     RichElement(){};
     
     /**
-     * @brief Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
@@ -69,12 +74,12 @@ public:
 
     
     /**
-     * @brief Initialize a rich element with different arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in @see `Color3B`.
-     * @param opacity A opacity value in `GLubyte`.
-     * @return True if initialize success, false otherwise.
+     * @~english Initialize a rich element with different arguments.
+     * @~chinese 通过不同的参数初始化一个富文本元素。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in @see `Color3B`. @~chinese 颜色值。 
+     * @param opacity @~english A opacity value in `GLubyte`. @~chinese 不透明度。
+     * @return @~english True if initialize success, false otherwise. @~chinese True表明初始化成功，反之失败。
      */
     bool init(int tag, const Color3B& color, GLubyte opacity);
 protected:
@@ -85,15 +90,18 @@ protected:
     friend class RichText;
 };
     
-/**
- *@brief Rich element for displaying text.
- */
+/** @class RichElementText
+*@brief @~english Rich element for displaying text.
+
+ @~chinese 用以显示文本的RichElementText。
+*/
 class CC_GUI_DLL RichElementText : public RichElement
 {
 public:
     
     /**
-     *@brief Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
@@ -101,36 +109,37 @@ public:
 
     
     /**
-     *@brief Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
     virtual ~RichElementText(){};
     
     /**
-     * @brief Initialize a RichElementText with various arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in Color3B.
-     * @param opacity A opacity in GLubyte.
-     * @param text Content string.
-     * @param fontName Content font name.
-     * @param fontSize Content font size.
-     * @return True if initialize scucess, false otherwise.
+     * @~english Initialize a RichElementText with various arguments.
+     * @~chinese 通过多个变量初始化一个RichElementText类。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in Color3B. @~chinese 颜色值。
+     * @param opacity @~english A opacity in GLubyte. @~chinese 不透明度。
+     * @param text @~english Content string. @~chinese 文本内容。
+     * @param fontName @~english Content font name. @~chinese 文本字体名称。
+     * @param fontSize @~english Content font size. @~chinese 文本字体大小。
+     * @return @~english True if initialize scucess, false otherwise. @~chinese True表明初始化成功，反之失败。
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 
     
     /**
-     * @brief Create a RichElementText with various arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in Color3B.
-     * @param opacity A opacity in GLubyte.
-     * @param text Content string.
-     * @param fontName Content font name.
-     * @param fontSize Content font size.
-     * @return RichElementText instance.
+     * @~english Create a RichElementText with various arguments.
+     * @~chinese 通过多个变量创建一个RichElementText类。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in Color3B. @~chinese 颜色值。
+     * @param opacity @~english A opacity in GLubyte. @~chinese 不透明度。
+     * @param text @~english Content string. @~chinese 文本内容。
+     * @param fontName @~english Content font name. @~chinese 文本字体名称。
+     * @param fontSize @~english Content font size. @~chinese 文本字体大小。
+     * @return @~english RichElementText instance. @~chinese 富文本类实例。
      */
     static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
 protected:
@@ -141,15 +150,18 @@ protected:
     
 };
     
-/**
- *@brief Rich element for displaying images.
- */
+/** @class RichElementImage
+*@brief @~english Rich element for displaying images.
+
+ @~chinese 用以显示图片的RichElementImage。
+*/
 class CC_GUI_DLL RichElementImage : public RichElement
 {
 public:
     
     /**
-     * @brief Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      *
@@ -158,7 +170,8 @@ public:
 
     
     /**
-     * @brief Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
@@ -166,25 +179,25 @@ public:
 
     
     /**
-     * @brief Initialize a RichElementImage with various arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in Color3B.
-     * @param opacity A opacity in GLubyte.
-     * @param filePath A image file name.
-     * @return True if initialize success, false otherwise.
+     * @~english Initialize a RichElementImage with various arguments.
+     * @~chinese 通过多个变量初始化一个RichElementImage类。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in Color3B. @~chinese 颜色值。
+     * @param opacity @~english A opacity in GLubyte. @~chinese 不透明度。
+     * @param filePath @~english A image file name. @~chinese 图片文件名。
+     * @return @~english True if initialize success, false otherwise. @~chinese True表明初始化成功，反之失败。
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
 
     
     /**
-     * @brief Create a RichElementImage with various arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in Color3B.
-     * @param opacity A opacity in GLubyte.
-     * @param filePath A image file name.
-     * @return A RichElementImage instance.
+     * @~english Create a RichElementImage with various arguments.
+     * @~chinese 通过多个变量创建一个RichElementImage类。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in Color3B. @~chinese 颜色值。
+     * @param opacity @~english A opacity in GLubyte. @~chinese 不透明度。
+     * @param filePath @~english A image file name. @~chinese 图片文件名。
+     * @return @~english A RichElementImage instance. @~chinese 一个RichElementImage实例。
      */
     static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
 protected:
@@ -194,15 +207,18 @@ protected:
     friend class RichText;
 };
     
-/**
- *@brief Rich element for displaying custom node type.
- */
+/** @class RichElementCustomNode
+*@brief @~english Rich element for displaying custom node type.
+
+ @~chinese 用以显示自定义节点类型的RichElementCustomNode。
+*/
 class CC_GUI_DLL RichElementCustomNode : public RichElement
 {
 public:
     
     /**
-     * @brief Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
@@ -210,7 +226,8 @@ public:
 
     
     /**
-     * @brief Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
@@ -218,24 +235,24 @@ public:
 
     
     /**
-     * @brief Initialize a RichElementCustomNode with various arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in Color3B.
-     * @param opacity A opacity in GLubyte.
-     * @param customNode A custom node pointer.
-     * @return True if initialize success, false otherwise.
+     * @~english Initialize a RichElementCustomNode with various arguments.
+     * @~chinese 通过多个变量初始化一个RichElementCustomNode类。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in Color3B. @~chinese 颜色值。
+     * @param opacity @~english A opacity in GLubyte. @~chinese 不透明度。
+     * @param customNode @~english A custom node pointer. @~chinese 自定义节点指针。
+     * @return @~english True if initialize success, false otherwise. @~chinese True表明初始化成功，反之失败。
      */
     bool init(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
     
     /**
-     * @brief Create a RichElementCustomNode with various arguments.
-     *
-     * @param tag A integer tag value.
-     * @param color A color in Color3B.
-     * @param opacity A opacity in GLubyte.
-     * @param customNode A custom node pointer.
-     * @return A RichElementCustomNode instance.
+     * @~english Create a RichElementCustomNode with various arguments.
+     * @~chinese 通过多个变量创建一个RichElementCustomNode类。
+     * @param tag @~english A integer tag value. @~chinese 标签值。
+     * @param color @~english A color in Color3B. @~chinese 颜色值。
+     * @param opacity @~english A opacity in GLubyte. @~chinese 不透明度。
+     * @param customNode @~english A custom node pointer. @~chinese 自定义节点指针。
+     * @return @~english A RichElementCustomNode instance. @~chinese True表明初始化成功，反之失败。
      */
     static RichElementCustomNode* create(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
 protected:
@@ -244,73 +261,80 @@ protected:
 };
     
 /**
- *@brief A container for displaying various RichElements.
- * We could use it to display texts with images easily.
- */
+*@brief @~english A container for displaying various RichElements.
+ We could use it to display texts with images easily.
+
+ @~chinese 一个显示多个RichElement的容器类。
+ 我们可以使用它很容易显示带图片的文本。
+*/
 class CC_GUI_DLL RichText : public Widget
 {
 public:
     
     /**
-     * @brief Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
     RichText();
     
     /**
-     * @brief Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
     virtual ~RichText();
     
     /**
-     * @brief Create a empty RichText.
-     *
-     * @return RichText instance.
+     * @~english Create a empty RichText.
+     * @~chinese 创建一个空的RichText。
+     * @return @~english RichText instance. @~chinese RichText实例。
      */
     static RichText* create();
     
     /**
-     * @brief Insert a RichElement at a given index.
-     *
-     * @param element A RichElement type.
-     * @param index A given index.
+     * @~english Insert a RichElement at a given index.
+     * @~chinese 在指定位置插入一个RichElement。
+     * @param element @~english A RichElement type. @~chinese 一个RichElement类。
+     * @param index @~english A given index. @~chinese 索引值。
      */
     void insertElement(RichElement* element, int index);
     
     /**
-     * @brief Add a RichElement at the end of RichText.
-     *
-     * @param element A RichElement instance.
+     * @~english Add a RichElement at the end of RichText.
+     * @~chinese 在容器最后插入一个RichElement。
+     * @param element @~english A RichElement instance. @~chinese 一个RichElement类。
      */
     void pushBackElement(RichElement* element);
     
     /**
-     * @brief Remove a RichElement at a given index.
-     *
-     * @param index A integer index value.
+     * @~english Remove a RichElement at a given index.
+     * @~chinese 移除指定位置的RichElement。
+     * @param index @~english A integer index value. @~chinese 索引值。
      */
     void removeElement(int index);
     
     /**
-     * @brief Remove specific RichElement.
-     *
-     * @param element A RichElement type.
+     * @~english Remove specific RichElement.
+     * @~chinese 移除一个RichElement。
+     * @param element @~english A RichElement type. @~chinese 一个RichElement类指针。
      */
     void removeElement(RichElement* element);
     
     /**
-     * @brief Set vertical space between each RichElement.
-     *
-     * @param space Point in float.
+     * @~english Set vertical space between each RichElement.
+     * @~chinese 设置每个RichElement的垂直间隔。
+     * @param space @~english Point in float. @~chinese 垂直间隔值。
      */
     void setVerticalSpace(float space);
     
     /**
-     * @brief Rearrange all RichElement in the RichText.
+     * @~english Rearrange all RichElement in the RichText.
      * It's usually called internally.
+     * @~chinese 重新排列所有的RichElement。
+     * 常内部调用。
      */
     void formatText();
 

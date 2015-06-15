@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -37,11 +37,13 @@ NS_CC_BEGIN
 namespace ui {
     class Scale9Sprite;
 
-/**
- *@brief Visual indicator of progress in some operation.
- * Displays a bar to the user representing how far the operation has progressed.
- *
- */
+/** @class LoadingBar
+*@brief @~english Visual indicator of progress in some operation.
+ Displays a bar to the user representing how far the operation has progressed.
+
+ @~chinese 在一些操作中可视化指示进度条。
+ 显示给用户一个条表示操作已经完成了多少。
+*/
 class CC_GUI_DLL LoadingBar : public Widget
 {
     
@@ -58,111 +60,118 @@ public:
     };
 
     /**
-     * Default constructor.
+     * @~english Default constructor.
+     * @~chinese 默认构造器
      * @js ctor
      * @lua new
      */
     LoadingBar();
     
     /**
-     * Default destructor.
+     * @~english Default destructor.
+     * @~chinese 默认析构器
      * @js NA
      * @lua NA
      */
     virtual ~LoadingBar();
     
     /**
-     * Create an empty LoadingBar.
-     *@return A LoadingBar instance.
+     * @~english Create an empty LoadingBar.
+     * @~chinese 创建一个空的LoadingBar。
+     * @return @~english A LoadingBar instance. @~chinese 
      */
     static LoadingBar* create();
     
      
     /**
-     * @brief Create a LoadingBar with a texture name and a predefined progress value.
-     *
-     * @param textureName LoadingBar background texture name.
-     * @param percentage A percentage in float.
-     * @return A LoadingBar instance.
+     * @~english Create a LoadingBar with a texture name and a predefined progress value.
+     * @~chinese 使用一个纹理和一个进度百分比创建一个LoadingBar。
+     * @param textureName @~english LoadingBar background texture name. @~chinese LoadingBar背景纹理。
+     * @param percentage @~english A percentage in float. @~chinese 显示的进度百分比。
+     * @return @~english A LoadingBar instance. @~chinese 一个LoadingBar实例。
      */
     static LoadingBar* create(const std::string& textureName, float percentage = 0);
     
     
     /**
-     * @brief Create a LoadingBar with a texture name along with its texture type and a predefined progress value.
-     *
-     * @param textureName LoadingBar background texture name.
-     * @param texType LoadingBar background texture type.
-     * @param percentage A percentage in float, default value is 0.
-     * @return A LoadingBar instance.
+     * @~english Create a LoadingBar with a texture name along with its texture type and a predefined progress value.
+     * @~chinese 使用一个纹理、纹理类型和一个进度百分比创建一个LoadingBar。
+     * @param textureName @~english LoadingBar background texture name. @~chinese LoadingBar背景纹理。
+     * @param texType @~english LoadingBar background texture type. @~chinese LoadingBar背景纹理类型。
+     * @param percentage @~english A percentage in float, default value is 0. @~chinese 显示的进度百分比。
+     * @return @~english A LoadingBar instance. @~chinese 一个LoadingBar实例。
      */
     static LoadingBar* create(const std::string& textureName,
                               TextureResType texType,
                               float percentage = 0);
     
     /**
-     * Change the progress direction of LoadingBar.
-     *
+     * @~english Change the progress direction of LoadingBar.
+     * @~chinese 改变进度显示方向。
      * @see Direction  `LEFT` means progress left to right, `RIGHT` otherwise.
-     * @param direction Direction
+     * @param direction @~english Direction @~chinese 显示方向。
      */
     void setDirection(Direction direction);
     
     /**
-     * Get the progress direction of LoadingBar.
-     *
+     * @~english Get the progress direction of LoadingBar.
+     * @~chinese 获取进度显示方向。
      * @see Direction  `LEFT` means progress left to right, `RIGHT` otherwise.
-     * @return LoadingBar progress direction.
+     * @return @~english LoadingBar progress direction. @~chinese 显示方向。
      */
     Direction getDirection()const;
     
     /**
-     * Load texture for LoadingBar.
-     *
-     * @param texture   File name of texture.
-     * @param texType   Texture resource type,@see TextureResType.
+     * @~english Load texture for LoadingBar.
+     * @~chinese LoadingBar载入背景纹理。
+     * @param texture   @~english File name of texture. @~chinese 纹理名称。
+     * @param texType   @~english Texture resource type,@see TextureResType. @~chinese 纹理资源类型。
      */
     void loadTexture(const std::string& texture,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Changes the progress value of LoadingBar.
-     *
-     * @param percent   Percent value from 1 to 100.
+     * @~english Changes the progress value of LoadingBar.
+     * @~chinese 改变LoadingBar的当前进度。
+     * @param percent   @~english Percent value from 1 to 100. @~chinese 进度值从1到100.
      */
     void setPercent(float percent);
     
     /**
-     * Get the progress value of LoadingBar.
-     *
-     * @return Progress value from 1 to 100.
+     * @~english Get the progress value of LoadingBar.
+     * @~chinese 获取LoadingBar当前的进度。
+     * @return @~english Progress value from 1 to 100. @~chinese 进度值从1到100.
      */
     float getPercent() const;
     
     /**
-     * Enable scale9 renderer.
-     *
-     * @param enabled Set to true will use scale9 renderer, false otherwise.
+     * @~english Enable scale9 renderer.
+     * @~chinese 是否开启九宫格渲染。
+     * @param enabled @~english Set to true will use scale9 renderer, false otherwise. @~chinese True表示开启九宫格渲染，反之关闭。
      */
     void setScale9Enabled(bool enabled);
     
     
     /**
-     * @brief Query whether LoadingBar is using scale9 renderer or not.
-     * @return Whether LoadingBar uses scale9 renderer or not.
+     * @~english Query whether LoadingBar is using scale9 renderer or not.
+     * @~chinese 请求LoadingBar是否开启了九宫格渲染。
+     * @return @~english Whether LoadingBar uses scale9 renderer or not. @~chinese True表示开启九宫格渲染，反之关闭。
      */
     bool isScale9Enabled()const;
     
     /**
-     * Set capInsets for LoadingBar.
+     * @~english Set capInsets for LoadingBar.
      * This setting only take effect when enable scale9 renderer.
-     * @param capInsets CapInset in `Rect`.
+     * @~chinese 设置CapInsets。
+     * 只有当开启九宫格渲染后才需要设置。
+     * @param capInsets @~english CapInset in `Rect`. @~chinese CapInset的矩形区域。
      */
     void setCapInsets(const Rect &capInsets);
     
     
     /**
-     * @brief Query LoadingBar's capInsets.
-     * @return CapInsets of LoadingBar.
+     * @~english Query LoadingBar's capInsets.
+     * @~chinese 请求LoadingBar的capInsets。
+     * @return @~english CapInsets of LoadingBar. @~chinese CapInset的矩形区域。
      */
     const Rect& getCapInsets()const;
     
