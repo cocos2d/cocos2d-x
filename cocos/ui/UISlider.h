@@ -62,6 +62,7 @@ public:
     enum class EventType
     {
         ON_PERCENTAGE_CHANGED,
+        //@since v3.7
         ON_PERCENTAGE_DOWN,
         ON_PERCENTAGE_UP,
         ON_PERCENTAGE_CANCEL
@@ -210,12 +211,14 @@ public:
 
     /**
      * Set a large value could give more control to the precision.
+     * @since v3.7
      * @param percent The max percent of Slider.
      */
     void setMaxPercent(int percent);
 
     /**
      * Query the maximum percent of Slider. The default value is 100.
+     * @since v3.7
      * @return The maximum percent of the Slider.
      */
     int getMaxPercent()const;
