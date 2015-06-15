@@ -5946,9 +5946,14 @@ void js_register_cocos2dx_AutoPolygon(JSContext *cx, JS::HandleObject global) {
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
+    JS::RootedObject jsbObj(cx);
     JS::RootedValue tmpVal(cx);
     JS::RootedObject tmpObj(cx);
     get_or_create_js_obj(cx, global, "cc", &ccObj);
+    get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    
+    js_register_cocos2dx_PolygonInfo(cx, jsbObj);
+    js_register_cocos2dx_AutoPolygon(cx, jsbObj);
     
     JS_GetProperty(cx, ccObj, "PlistParser", &tmpVal);
     tmpObj = tmpVal.toObjectOrNull();
