@@ -154,6 +154,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -180,6 +183,9 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -205,6 +211,9 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -375,6 +384,7 @@
     <ClInclude Include="..\Classes\MenuTest\MenuTest.h" />
     <ClInclude Include="..\Classes\MotionStreakTest\MotionStreakTest.h" />
     <ClInclude Include="..\Classes\MutiTouchTest\MutiTouchTest.h" />
+    <ClInclude Include="..\Classes\NavMeshTest\NavMeshTest.h" />
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h" />
@@ -607,6 +617,7 @@
     <ClCompile Include="..\Classes\MenuTest\MenuTest.cpp" />
     <ClCompile Include="..\Classes\MotionStreakTest\MotionStreakTest.cpp" />
     <ClCompile Include="..\Classes\MutiTouchTest\MutiTouchTest.cpp" />
+    <ClCompile Include="..\Classes\NavMeshTest\NavMeshTest.cpp" />
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
