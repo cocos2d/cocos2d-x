@@ -27,10 +27,14 @@ THE SOFTWARE.
 #define __BASE_CC_PLATFORM_CONFIG_H__
 /// @cond DO_NOT_SHOW
 
-/**
+/**@~english
   Config of cocos2d-x project, per target platform.
   
   THIS FILE MUST NOT INCLUDE ANY OTHER FILE
+ * @~chinese 
+ * 配置每个平台的cocos2d-x 工程
+ * 
+ * 这个文件不能包括任何其他文件
 */
 
 //////////////////////////////////////////////////////////////////////////
