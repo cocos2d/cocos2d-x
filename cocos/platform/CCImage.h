@@ -128,7 +128,7 @@ public:
     bool initWithImageData(const unsigned char * data, ssize_t dataLen);
 
     /** @~english Load image from raw data @~chinese 从原始数据中加载图片
-    // @warning kFmtRawData @~english only support RGBA8888 @~english 只支持RGBA8888
+    // @warning kFmtRawData @~english only support RGBA8888 @~chinese 只支持RGBA8888
     */
     bool initWithRawData(const unsigned char * data, ssize_t dataLen, int width, int height, int bitsPerComponent, bool preMulti = false);
 
@@ -226,7 +226,7 @@ protected:
     /*
      @brief @~english The same result as with initWithImageFile, but thread safe. It is caused by
      loadImage() in TextureCache.cpp.
-     * @~chinese 它和使用initWithImageFile的结果是一样的，只不过线程相对安全。它在源文件TextureCache.cpp中被 loadImage()调用
+     * @~chinese 它和使用initWithImageFile的结果是一样的，只不过线程相对安全。它被TextureCache.cpp中的 loadImage()所调用
      @param fullpath  @~english full path of the file.
      * @~chinese 文件的完整路径。
      @param imageType @~english the type of image, currently only supporting two types.
