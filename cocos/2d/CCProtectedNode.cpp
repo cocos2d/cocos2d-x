@@ -65,7 +65,7 @@ void ProtectedNode::cleanup()
 {
     Node::cleanup();
     // timers
-    for( const auto &child: _protectedChildren)
+    for( const auto child: _protectedChildren)
         child->cleanup();
 }
 
@@ -137,7 +137,7 @@ Node* ProtectedNode::getProtectedChildByTag(int tag)
 {
     CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
     
-    for (auto& child : _protectedChildren)
+    for (auto child : _protectedChildren)
     {
         if(child && child->getTag() == tag)
             return child;
@@ -199,7 +199,7 @@ void ProtectedNode::removeAllProtectedChildren()
 void ProtectedNode::removeAllProtectedChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
-    for (auto& child : _protectedChildren)
+    for (auto child : _protectedChildren)
     {
         // IMPORTANT:
         //  -1st do onExit
@@ -348,28 +348,28 @@ void ProtectedNode::onEnter()
 #endif
     
     Node::onEnter();
-    for( const auto &child: _protectedChildren)
+    for( const auto child: _protectedChildren)
         child->onEnter();
 }
 
 void ProtectedNode::onEnterTransitionDidFinish()
 {
     Node::onEnterTransitionDidFinish();
-    for( const auto &child: _protectedChildren)
+    for( const auto child: _protectedChildren)
         child->onEnterTransitionDidFinish();
 }
 
 void ProtectedNode::onExitTransitionDidStart()
 {
     Node::onExitTransitionDidStart();
-    for( const auto &child: _protectedChildren)
+    for( const auto child: _protectedChildren)
         child->onExitTransitionDidStart();
 }
 
 void ProtectedNode::onExit()
 {
     Node::onExit();
-    for( const auto &child: _protectedChildren)
+    for( const auto child: _protectedChildren)
         child->onExit();
 }
 
@@ -399,11 +399,11 @@ void ProtectedNode::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        for(const auto &child : _children){
+        for(const auto child : _children){
             child->updateDisplayedColor(_displayedColor);
         }
     }
-    for(const auto &child : _protectedChildren){
+    for(const auto child : _protectedChildren){
         child->updateDisplayedColor(_displayedColor);
     }
 }
@@ -436,7 +436,7 @@ void ProtectedNode::setCameraMask(unsigned short mask, bool applyChildren)
     Node::setCameraMask(mask, applyChildren);
     if (applyChildren)
     {
-        for (auto& iter: _protectedChildren)
+        for (auto iter: _protectedChildren)
         {
             iter->setCameraMask(mask);
         }

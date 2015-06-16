@@ -439,7 +439,7 @@ void TemplateVectorPerfTest::generateTestFunctions()
             Vector<Node*> nodeVector = createVector();
             
             CC_PROFILER_START(this->profilerName());
-            for (const auto& e : nodeVector)
+            for (const auto e : nodeVector)
             {
                 e->setTag(111);
             }

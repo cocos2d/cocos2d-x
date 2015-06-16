@@ -697,7 +697,7 @@ void Sprite::removeAllChildrenWithCleanup(bool cleanup)
 {
     if (_batchNode)
     {
-        for(const auto &child : _children) {
+        for(const auto child : _children) {
             Sprite* sprite = dynamic_cast<Sprite*>(child);
             if (sprite)
             {
@@ -717,7 +717,7 @@ void Sprite::sortAllChildren()
 
         if ( _batchNode)
         {
-            for(const auto &child : _children)
+            for(const auto child : _children)
                 child->sortAllChildren();
         }
 
@@ -750,7 +750,7 @@ void Sprite::setDirtyRecursively(bool bValue)
     _recursiveDirty = bValue;
     setDirty(bValue);
 
-    for(const auto &child: _children) {
+    for(const auto child: _children) {
         Sprite* sp = dynamic_cast<Sprite*>(child);
         if (sp)
         {

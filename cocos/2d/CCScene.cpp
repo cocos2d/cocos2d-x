@@ -325,7 +325,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
             }
             
             auto& children = node->getChildren();
-            for( const auto &n : children) {
+            for (const auto n : children) {
                 addToPhysicsWorldFunc(n);
             }
         };

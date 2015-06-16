@@ -385,7 +385,7 @@ void ParticleBatchNode::removeChildAtIndex(int index, bool doCleanup)
 
 void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
 {
-    for(const auto &child : _children)
+    for(const auto child : _children)
         static_cast<ParticleSystem*>(child)->setBatchNode(nullptr);
 
     Node::removeAllChildrenWithCleanup(doCleanup);
@@ -460,7 +460,7 @@ void ParticleBatchNode::updateAllAtlasIndexes()
 {
     int index = 0;
     
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         ParticleSystem* partiSys = static_cast<ParticleSystem*>(child);
         partiSys->setAtlasIndex(index);
         index += partiSys->getTotalParticles();

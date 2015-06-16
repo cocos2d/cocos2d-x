@@ -159,7 +159,7 @@ Vector<Node*> ActionManager::pauseAllRunningActions()
 
 void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 {
-    for(const auto &node : targetsToResume) {
+    for(const auto node : targetsToResume) {
         this->resumeTarget(node);
     }
 }

@@ -160,7 +160,7 @@ void Ref::printLeaks()
     {
         log("[memory] WARNING: %d Ref objects still active in memory.\n", (int)__refAllocationList.size());
 
-        for (const auto& ref : __refAllocationList)
+        for (const auto ref : __refAllocationList)
         {
             CC_ASSERT(ref);
             const char* type = typeid(*ref).name();

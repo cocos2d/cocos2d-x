@@ -924,7 +924,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
             }
 
             getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (const auto &child : _children)
+            for (const auto child : _children)
             {
                 child->updateTransform();
             }
@@ -941,7 +941,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
             setColor(_shadowColor3B);
 
             getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (const auto &child : _children)
+            for (const auto child : _children)
             {
                 child->updateTransform();
             }
@@ -969,7 +969,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
 
     glprogram->setUniformsForBuiltins(transform);
 
-    for(const auto &child: _children)
+    for(const auto child: _children)
     {
         child->updateTransform();
     }

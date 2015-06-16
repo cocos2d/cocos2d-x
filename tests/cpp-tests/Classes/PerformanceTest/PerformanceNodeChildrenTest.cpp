@@ -246,7 +246,7 @@ void IterateSpriteSheetForLoop::update(float dt)
 
     CC_PROFILER_START(this->profilerName());
 
-    for( const auto &object : children )
+    for (const auto object : children)
     {
         auto o = static_cast<Ref*>(object);
         auto sprite = static_cast<Sprite*>(o);
@@ -284,7 +284,7 @@ void IterateSpriteSheetIterator::update(float dt)
 
     CC_PROFILER_START(this->profilerName());
 
-    for( auto it=std::begin(children); it != std::end(children); ++it)
+    for (auto it=std::begin(children); it != std::end(children); ++it)
     {
         auto sprite = static_cast<Sprite*>(*it);
         sprite->setVisible(false);

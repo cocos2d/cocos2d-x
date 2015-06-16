@@ -67,7 +67,7 @@ void AutoreleasePool::clear()
 #endif
     std::vector<Ref*> releasings;
     releasings.swap(_managedObjectArray);
-    for (const auto &obj : releasings)
+    for (const auto obj : releasings)
     {
         obj->release();
     }
@@ -90,7 +90,7 @@ void AutoreleasePool::dump()
 {
     CCLOG("autorelease pool: %s, number of managed object %d\n", _name.c_str(), static_cast<int>(_managedObjectArray.size()));
     CCLOG("%20s%20s%20s", "Object pointer", "Object id", "reference count");
-    for (const auto &obj : _managedObjectArray)
+    for (const auto obj : _managedObjectArray)
     {
         CC_UNUSED_PARAM(obj);
         CCLOG("%20p%20u\n", obj, obj->getReferenceCount());

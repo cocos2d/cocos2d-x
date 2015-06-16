@@ -185,7 +185,7 @@ Node::~Node()
     // attributes
     CC_SAFE_RELEASE_NULL(_glProgramState);
 
-    for (auto& child : _children)
+    for (auto child : _children)
     {
         child->_parent = nullptr;
     }
@@ -236,7 +236,7 @@ void Node::cleanup()
 #endif // #if CC_ENABLE_SCRIPT_BINDING
 
     // timers
-    for( const auto &child: _children)
+    for( const auto child: _children)
         child->cleanup();
 }
 
@@ -894,7 +894,7 @@ Node* Node::getChildByName(const std::string& name) const
     std::hash<std::string> h;
     size_t hash = h(name);
     
-    for (const auto& child : _children)
+    for (const auto child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
         if(child->_hashOfName == hash && child->_name.compare(name) == 0)
@@ -966,7 +966,7 @@ bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::
     else
     {
         // search its children
-        for (const auto& child : node->getChildren())
+        for (const auto child : node->getChildren())
         {
             if (doEnumerateRecursive(child, name, callback))
             {
@@ -993,7 +993,7 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
     }
     
     bool ret = false;
-    for (const auto& child : _children)
+    for (const auto child : _children)
     {
         if (std::regex_match(child->_name, std::regex(searchName)))
         {
@@ -1191,7 +1191,7 @@ void Node::removeFromPhysicsWorld()
 void Node::removeAllChildrenWithCleanup(bool cleanup)
 {
     // not using detachChild improves speed here
-    for (const auto& child : _children)
+    for (const auto child : _children)
     {
         // IMPORTANT:
         //  -1st do onExit
@@ -1426,7 +1426,7 @@ void Node::onEnter()
     
     _isTransitionFinished = false;
     
-    for( const auto &child: _children)
+    for( const auto child: _children)
         child->onEnter();
     
     this->resume();
@@ -1455,7 +1455,7 @@ void Node::onEnterTransitionDidFinish()
 #endif
 
     _isTransitionFinished = true;
-    for( const auto &child: _children)
+    for( const auto child: _children)
         child->onEnterTransitionDidFinish();
     
 #if CC_ENABLE_SCRIPT_BINDING
@@ -1479,7 +1479,7 @@ void Node::onExitTransitionDidStart()
     }
 #endif
     
-    for( const auto &child: _children)
+    for( const auto child: _children)
         child->onExitTransitionDidStart();
     
 #if CC_ENABLE_SCRIPT_BINDING
@@ -1512,7 +1512,7 @@ void Node::onExit()
     
     _running = false;
     
-    for( const auto &child: _children)
+    for( const auto child: _children)
         child->onExit();
     
 #if CC_ENABLE_SCRIPT_BINDING
@@ -1996,7 +1996,7 @@ Vec2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
 void Node::updateTransform()
 {
     // Recursively iterate over children
-    for( const auto &child: _children)
+    for( const auto child: _children)
         child->updateTransform();
 }
 
@@ -2183,7 +2183,7 @@ void Node::updateDisplayedOpacity(GLubyte parentOpacity)
     
     if (_cascadeOpacityEnabled)
     {
-        for(const auto& child : _children)
+        for(const auto child : _children)
         {
             child->updateDisplayedOpacity(_displayedOpacity);
         }
@@ -2230,7 +2230,7 @@ void Node::disableCascadeOpacity()
 {
     _displayedOpacity = _realOpacity;
     
-    for(const auto& child : _children)
+    for(const auto child : _children)
     {
         child->updateDisplayedOpacity(255);
     }
@@ -2262,7 +2262,7 @@ void Node::updateDisplayedColor(const Color3B& parentColor)
     
     if (_cascadeColorEnabled)
     {
-        for(const auto &child : _children)
+        for(const auto child : _children)
         {
             child->updateDisplayedColor(_displayedColor);
         }
@@ -2306,7 +2306,7 @@ void Node::updateCascadeColor()
 
 void Node::disableCascadeColor()
 {
-    for(const auto& child : _children)
+    for(const auto child : _children)
     {
         child->updateDisplayedColor(Color3B::WHITE);
     }
@@ -2318,7 +2318,7 @@ void Node::setCameraMask(unsigned short mask, bool applyChildren)
     _cameraMask = mask;
     if (applyChildren)
     {
-        for (const auto& child : _children)
+        for (const auto child : _children)
         {
             child->setCameraMask(mask, applyChildren);
         }

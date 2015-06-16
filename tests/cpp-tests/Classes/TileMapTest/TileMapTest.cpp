@@ -282,7 +282,7 @@ TMXOrthoTest2::TMXOrthoTest2()
     auto& children = map->getChildren();
     SpriteBatchNode* child = nullptr;
 
-    for(const auto &obj : children) {
+    for(const auto obj : children) {
         child = static_cast<SpriteBatchNode*>(obj);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -311,7 +311,7 @@ TMXOrthoTest3::TMXOrthoTest3()
     auto& children = map->getChildren();
     SpriteBatchNode* child = nullptr;
 
-    for(const auto &node : children) {
+    for(const auto node : children) {
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -342,7 +342,7 @@ TMXOrthoTest4::TMXOrthoTest4()
     
     auto& children = map->getChildren();
     
-    for(const auto &node : children) {
+    for(const auto node : children) {
         child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -646,7 +646,7 @@ TMXUncompressedTest::TMXUncompressedTest()
     TMXLayer* layer;
     
     auto& children = map->getChildren();
-    for(const auto &node : children) {
+    for(const auto node : children) {
         layer= static_cast<TMXLayer*>(node);
         layer->releaseMap();
     }
@@ -1197,7 +1197,7 @@ TMXOrthoFlipTest::TMXOrthoFlipTest()
     log("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    for(const auto &node : children) {
+    for(const auto node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -1226,7 +1226,7 @@ TMXOrthoFlipRunTimeTest::TMXOrthoFlipRunTimeTest()
     log("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    for(const auto &node : children) {
+    for(const auto node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -1304,7 +1304,7 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     log("ContentSize: %f, %f", s.width,s.height);
 
     auto& children = map->getChildren();
-    for(const auto &node : children) {
+    for(const auto node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -1336,7 +1336,7 @@ TMXOrthoXMLFormatTest::TMXOrthoXMLFormatTest()
     log("ContentSize: %f, %f", s.width,s.height);
     
     auto& children = map->getChildren();
-    for(const auto &node : children) {
+    for(const auto node : children) {
         auto child = static_cast<SpriteBatchNode*>(node);
         child->getTexture()->setAntiAliasTexParameters();
     }
@@ -1368,7 +1368,7 @@ TMXBug987::TMXBug987()
     CCLOG("ContentSize: %f, %f", s1.width,s1.height);
 
     auto& children = map->getChildren();
-    for(const auto &child : children) {
+    for (const auto child : children) {
         auto node = static_cast<TMXLayer*>(child);
         node->getTexture()->setAntiAliasTexParameters();
     }

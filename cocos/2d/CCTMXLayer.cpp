@@ -380,7 +380,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
         
         // update possible children
         
-        for(const auto &child : _children) {
+        for(const auto child : _children) {
             Sprite* sp = static_cast<Sprite*>(child);
             ssize_t ai = sp->getAtlasIndex();
             if ( ai >= indexForZ )
@@ -590,7 +590,7 @@ void TMXLayer::removeTileAt(const Vec2& pos)
             _textureAtlas->removeQuadAtIndex(atlasIndex);
 
             // update possible children
-            for(const auto &obj : _children) {
+            for(const auto obj : _children) {
                 Sprite* child = static_cast<Sprite*>(obj);
                 ssize_t ai = child->getAtlasIndex();
                 if ( ai >= atlasIndex )

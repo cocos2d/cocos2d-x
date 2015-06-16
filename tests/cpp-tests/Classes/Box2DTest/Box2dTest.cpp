@@ -228,7 +228,7 @@ void Box2DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     //Add a new body/atlas sprite at the touched location
 
-    for (auto& touch : touches)
+    for (auto touch : touches)
     {
         if(!touch)
             break;

@@ -53,7 +53,7 @@ static void setProgram(Node *n, GLProgram *p)
     n->setGLProgram(p);
     
     auto& children = n->getChildren();
-    for(const auto &child : children) {
+    for(const auto child : children) {
         setProgram(child, p);
     }
 }

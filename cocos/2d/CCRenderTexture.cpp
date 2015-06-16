@@ -682,7 +682,7 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
         //! make sure all children are drawn
         sortAllChildren();
 
-        for(const auto &child: _children)
+        for(const auto child: _children)
         {
             if (child != _sprite)
                 child->visit(renderer, transform, flags);

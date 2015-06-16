@@ -243,7 +243,7 @@ void SpriteBatchNode1::addNewSpriteWithCoords(Vec2 p)
 
 void SpriteBatchNode1::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for (auto &touch: touches)
+    for (auto touch: touches)
     {
         auto location = touch->getLocation();
             
@@ -606,7 +606,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     
     auto& children = asmtest->getChildren();
 
-    for(const auto &obj : children) {
+    for(const auto obj : children) {
         auto child = static_cast<Sprite*>(obj);
 
         ssize_t currentIndex = child->getAtlasIndex();
@@ -617,7 +617,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     
     prev = -1;
     auto& descendants = asmtest->getDescendants();
-    for(const auto &sprite : descendants) {
+    for(const auto sprite : descendants) {
         ssize_t currentIndex = sprite->getAtlasIndex();
         CCASSERT( prev == currentIndex-1, "Child order failed");
         ////----CCLOG("descendant %x - atlasIndex:%d", child, currentIndex);
@@ -1451,7 +1451,7 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
 
     if( _usingTexture1 )                          //--> win32 : Let's it make just simple sentence
     {
-        for(const auto &obj : children) {
+        for(const auto obj : children) {
             sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture2);
         }
@@ -1460,7 +1460,7 @@ void SpriteNewTexture::onTouchesEnded(const std::vector<Touch*>& touches, Event*
     } 
     else 
     {
-        for(const auto &obj : children) {
+        for(const auto obj : children) {
             sprite = static_cast<Sprite*>( obj );
             sprite->setTexture(_texture1);
         }
@@ -2310,14 +2310,14 @@ void SpriteHybrid::reparentSprite(float dt)
     ////----CCLOG("New parent is: %x", p2);
     
     auto& p1Children = p1->getChildren();
-    for(const auto &node : p1Children) {
+    for(const auto node : p1Children) {
         retArray.pushBack(node);
     }
 
     int i=0;
     p1->removeAllChildrenWithCleanup(false);
 
-    for(const auto &node : retArray) {
+    for(const auto node : retArray) {
         p2->addChild(node, i, i);
         i++;
     }
@@ -4261,7 +4261,7 @@ void NodeSort::reorderSprite(float dt)
     
     auto& children = _node->getChildren();
     
-    for(const auto &child : children) {
+    for(const auto child : children) {
         log("tag %i z %i",(int)child->getTag(),(int)child->getLocalZOrder());
     }
     //z-4
@@ -4270,7 +4270,7 @@ void NodeSort::reorderSprite(float dt)
     _node->sortAllChildren();
     
     log("After reorder--");
-    for(const auto &child : children) {
+    for(const auto child : children) {
         log("tag %i z %i",(int)child->getTag(),(int)child->getLocalZOrder());
     }
 }
@@ -4323,7 +4323,7 @@ void SpriteBatchNodeReorderSameIndex::reorderSprite(float dt)
 
     _batchNode->sortAllChildren();
 
-    for(const auto &sprite : _batchNode->getDescendants()) {
+    for(const auto sprite : _batchNode->getDescendants()) {
         log("tag %i", sprite->getTag() );
     }
 }

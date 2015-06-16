@@ -813,7 +813,7 @@ std::set<void*> Scheduler::pauseAllTargetsWithMinPriority(int minPriority)
 
 void Scheduler::resumeTargets(const std::set<void*>& targetsToResume)
 {
-    for(const auto &obj : targetsToResume) {
+    for(const auto obj : targetsToResume) {
         this->resumeTarget(obj);
     }
 }

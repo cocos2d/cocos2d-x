@@ -840,7 +840,7 @@ LayerMultiplex::LayerMultiplex()
 
 LayerMultiplex::~LayerMultiplex()
 {
-    for(const auto &layer : _layers) {
+    for(const auto layer : _layers) {
         layer->cleanup();
     }
 }

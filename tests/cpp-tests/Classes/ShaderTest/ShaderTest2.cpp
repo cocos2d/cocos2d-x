@@ -535,7 +535,7 @@ EffectSpriteLamp::EffectSpriteLamp()
 
 void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event)
 {
-    for ( auto &item: touches )
+    for (auto item: touches )
     {
         auto touch = item;
         auto s = Director::getInstance()->getWinSize();
@@ -550,7 +550,7 @@ void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event 
 
 void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event)
 {
-    for ( auto &item: touches )
+    for (auto item: touches)
     {
         auto touch = item;
         auto s = Director::getInstance()->getWinSize();
@@ -565,7 +565,7 @@ void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event 
 
 void EffectSpriteLamp::onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event)
 {
-    for ( auto &item: touches )
+    for (auto item: touches)
     {
         auto touch = item;
         auto s = Director::getInstance()->getWinSize();
