@@ -108,13 +108,13 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
 
     if (texture != nullptr)
     {
-        callback(texture);
+        if (callback) callback(texture);
         return;
     }
 
     // check if file exists
     if ( fullpath.empty() || ! FileUtils::getInstance()->isFileExist( fullpath ) ) {
-        callback(nullptr);
+        if (callback) callback(nullptr);
         return;
     }
 
