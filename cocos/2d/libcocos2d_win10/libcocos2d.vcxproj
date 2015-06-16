@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -541,6 +541,11 @@
     <ClCompile Include="..\..\math\Vec2.cpp" />
     <ClCompile Include="..\..\math\Vec3.cpp" />
     <ClCompile Include="..\..\math\Vec4.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMesh.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMeshAgent.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMeshDebugDraw.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMeshObstacle.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMeshUtils.cpp" />
     <ClCompile Include="..\..\network\HttpClient-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpConnection-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpCookie.cpp" />
@@ -1138,6 +1143,11 @@
     <ClInclude Include="..\..\math\Vec2.h" />
     <ClInclude Include="..\..\math\Vec3.h" />
     <ClInclude Include="..\..\math\Vec4.h" />
+    <ClInclude Include="..\..\navmesh\CCNavMesh.h" />
+    <ClInclude Include="..\..\navmesh\CCNavMeshAgent.h" />
+    <ClInclude Include="..\..\navmesh\CCNavMeshDebugDraw.h" />
+    <ClInclude Include="..\..\navmesh\CCNavMeshObstacle.h" />
+    <ClInclude Include="..\..\navmesh\CCNavMeshUtils.h" />
     <ClInclude Include="..\..\network\HttpClient.h" />
     <ClInclude Include="..\..\network\HttpConnection-winrt.h" />
     <ClInclude Include="..\..\network\HttpCookie.h" />
@@ -1380,8 +1390,17 @@
     <Text Include="..\..\renderer\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
+      <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\external\bullet\proj.win10\libbullet.vcxproj">
       <Project>{ecee1119-ce2e-4f7e-83a8-1932ea48e893}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\external\recast\proj.win10\librecast.vcxproj">
+      <Project>{f551524d-8a70-4b2f-a7c2-28ae61150022}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\editor-support\spine\proj.win10\libSpine.vcxproj">
+      <Project>{4b3ba10a-941f-4e08-8a50-8a7fcb822bb8}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -1516,6 +1535,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -1553,6 +1573,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
@@ -1591,6 +1612,7 @@
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
