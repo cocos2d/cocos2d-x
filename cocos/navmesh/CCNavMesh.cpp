@@ -485,7 +485,6 @@ void cocos2d::NavMesh::findPath(const Vec3 &start, const Vec3 &end, std::vector<
 {
     static const int MAX_POLYS = 256;
     static const int MAX_SMOOTH = 2048;
-    int pathIterNum = 0;
     float ext[3];
     ext[0] = 2; ext[1] = 4; ext[2] = 2;
     dtQueryFilter filter;
