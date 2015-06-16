@@ -42,7 +42,6 @@ set(JSBINDING_SRC
   auto/jsb_cocos2dx_ui_auto.cpp
   auto/jsb_cocos2dx_3d_auto.cpp
   auto/jsb_cocos2dx_3d_extension_auto.cpp
-  auto/jsb_cocos2dx_experimental.cpp
   auto/jsb_cocos2dx_physics3d_auto.cpp
   manual/ScriptingCore.cpp
   manual/cocos2d_specifics.cpp
