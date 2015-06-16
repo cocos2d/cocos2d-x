@@ -13,6 +13,7 @@ MotionStreakTests::MotionStreakTests()
 {
     ADD_TEST_CASE(MotionStreakTest1);
     ADD_TEST_CASE(MotionStreakTest2);
+	ADD_TEST_CASE(MotionStreakTest3);
     ADD_TEST_CASE(Issue1358);
 }
 
@@ -107,6 +108,72 @@ void MotionStreakTest2::onTouchesMoved(const std::vector<Touch*>& touches, Event
 std::string MotionStreakTest2::title() const
 {
     return "MotionStreak test";
+}
+
+//------------------------------------------------------------------
+//
+// MotionStreakTest3 - opacity
+//
+//------------------------------------------------------------------
+
+void MotionStreakTest3::onEnter()
+{
+	MotionStreakTest::onEnter();
+
+	auto s = Director::getInstance()->getWinSize();
+
+	_root = Sprite::create(s_pathR1);
+	addChild(_root, 1);
+	_root->setPosition(Vec2(s.width / 2, s.height / 2));
+
+	// the target object is offset from root, and the streak is moved to follow it
+	_target = Sprite::create(s_pathR1);
+	_root->addChild(_target);
+	_target->setPosition(Vec2(s.width / 4, 0));
+
+	// create the streak object and add it to the scene
+	streak = MotionStreak::create(2, 3, 32, Color3B::GREEN, s_streak);
+	addChild(streak);
+	// schedule an update on each frame so we can syncronize the streak with the target
+	schedule(CC_SCHEDULE_SELECTOR(MotionStreakTest3::onUpdate));
+
+	auto a1 = RotateBy::create(2, 360);
+
+	auto action1 = RepeatForever::create(a1);
+	auto motion = MoveBy::create(2, Vec2(100, 0));
+	_root->runAction(RepeatForever::create(Sequence::create(motion, motion->reverse(), nullptr)));
+	_root->runAction(action1);
+
+	auto colorAction = RepeatForever::create(Sequence::create(
+		TintTo::create(0.2f, 255, 0, 0),
+		TintTo::create(0.2f, 0, 255, 0),
+		TintTo::create(0.2f, 0, 0, 255),
+		TintTo::create(0.2f, 0, 255, 255),
+		TintTo::create(0.2f, 255, 255, 0),
+		TintTo::create(0.2f, 255, 0, 255),
+		TintTo::create(0.2f, 255, 255, 255),
+		nullptr));
+
+	streak->runAction(colorAction);
+
+	auto opacityAction = RepeatForever::create(Sequence::createWithTwoActions(FadeTo::create(3.0f, 0x00), FadeTo::create(3.0f, 0xFF)));
+
+	streak->runAction(opacityAction);
+}
+
+void MotionStreakTest3::onUpdate(float delta)
+{
+	streak->setPosition(_target->convertToWorldSpace(Vec2::ZERO));
+}
+
+std::string MotionStreakTest3::title() const
+{
+	return "MotionStreak opacity test";
+}
+
+std::string MotionStreakTest3::subtitle() const
+{
+	return "The tail should be fading in and out";
 }
 
 //------------------------------------------------------------------

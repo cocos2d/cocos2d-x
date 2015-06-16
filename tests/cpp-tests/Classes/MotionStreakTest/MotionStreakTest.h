@@ -47,6 +47,20 @@ public:
     virtual std::string title() const override;
 };
 
+class MotionStreakTest3 : public MotionStreakTest
+{
+protected:
+	cocos2d::Node*        _root;
+	cocos2d::Node*        _target;
+
+public:
+	CREATE_FUNC(MotionStreakTest3);
+	virtual void onEnter() override;
+	void onUpdate(float delta);
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+};
+
 class Issue1358 : public MotionStreakTest
 {
 public:
