@@ -3012,6 +3012,8 @@
         "external/recast/Recast/RecastRegion.cpp", 
         "external/recast/fastlz/fastlz.c", 
         "external/recast/fastlz/fastlz.h", 
+        "external/recast/proj.win10/librecast.vcxproj", 
+        "external/recast/proj.win10/librecast.vcxproj.filters", 
         "external/recast/proj.win32/librecast.vcxproj", 
         "external/recast/proj.win32/librecast.vcxproj.filters", 
         "external/recast/proj.win8.1-universal/librecast.Shared/librecast.Shared.vcxitems", 
