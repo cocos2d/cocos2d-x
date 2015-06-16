@@ -32,31 +32,63 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
+
 class EventAssetsManagerEx;
 class AssetsManagerEx;
 
-/**
- *  Usage:
+/**@~english
+ * The event listener for receving events during AssetsManagerEx update process.
+ * Usage:
+ * @code
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *        auto manager = AssetsManagerEx::create(manifestUrl, storagePath);
- *     Adds a listener:
- *
+ * @endcode
+ * 
+ * Adds a listener:
+ * @code
  *        auto callback = [](EventAssetsManagerEx* event){ do_some_thing(); };
  *        auto listener = EventListenerAssetsManagerEx::create(manager, callback);
  *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
+ * @endcode
  *
- *     Removes a listener
- *
+ * Removes a listener
+ * @code
  *        dispatcher->removeEventListener(listener);
+ * @endcode
+ * @~chinese 
+ * 用于接收AssetsManagerEx更新过程中的事件的事件监听器。
+ * 用法:
+ * @code
+ *        auto dispatcher = Director::getInstance()->getEventDispatcher();
+ *        auto manager = AssetsManagerEx::create(manifestUrl, storagePath);
+ * @endcode
+ * 添加一个侦听器:
+ * @code
+ *        auto callback = [](EventAssetsManagerEx* event){ do_some_thing(); };
+ *        auto listener = EventListenerAssetsManagerEx::create(manager, callback);
+ *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
+ * @endcode
+ * 
+ * 删除一个侦听器:
+ * @code
+ *        dispatcher->removeEventListener(listener);
+ * @endcode
  */
 class CC_EX_DLL EventListenerAssetsManagerEx : public cocos2d::EventListenerCustom
 {
 public:
     friend class AssetsManagerEx;
     
-    /** Creates an event listener with type and callback.
-     *  @param eventType The type of the event.
-     *  @param callback The callback function when the specified event was emitted.
+    /** @~english Creates an event listener with AssetsManagerEx obejct and callback.
+     * @~chinese 用AssetsManagerEx对象和回调函数创建一个事件监听器。
+     *  @param AssetsManagerEx @~english The AssetsManagerEx object.
+     * @~chinese AssetsManagerEx资源管理器对象。
+     *  @param callback @~english The callback function when the specified event was emitted.
+     * @~chinese 接收事件的回调函数。
      */
     static EventListenerAssetsManagerEx* create(AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback);
     
@@ -65,10 +97,16 @@ public:
     virtual EventListenerAssetsManagerEx* clone() override;
     
 CC_CONSTRUCTOR_ACCESS:
-    /** Constructor */
+    /** @~english Constructor  @~chinese 构造函数*/
     EventListenerAssetsManagerEx();
     
-    /** Initializes event with type and callback function */
+    /** @~english Initialize an event listener with AssetsManagerEx obejct and callback.
+     * @~chinese 用AssetsManagerEx对象和回调函数初始化一个事件监听器。
+     *  @param AssetsManagerEx @~english The AssetsManagerEx object.
+     * @~chinese AssetsManagerEx资源管理器对象。
+     *  @param callback @~english The callback function when the specified event was emitted.
+     * @~chinese 接收事件的回调函数。
+     */
     bool init(const AssetsManagerEx *AssetsManagerEx, const std::function<void(EventAssetsManagerEx*)>& callback);
     
 protected:
@@ -80,6 +118,11 @@ protected:
     
     //friend class luaEventListenerAssetsManagerEx;
 };
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 

@@ -37,106 +37,203 @@
 
 NS_CC_EXT_BEGIN
 
+/**
+ * @addtogroup AssetsManager
+ * @{
+ */
 
+/**
+ * @~english Manifest is an abstraction of the assets list. 
+ * It's initialized and parsed with a manifest file.
+ * It contains all defined assets, and can be compared to generate difference between local and remote manifest.
+ * @~chinese Manifest是资源列表的抽象。
+ * 它可以通过一个manifest文件来初始化并解析出资源列表信息。
+ * 它包含所有manifest文件中定义的资源，并且可以用来比较本地和远程manifest资源的差异，以便后续的更新过程中使用。
+ */
 class CC_EX_DLL Manifest : public Ref
 {
 public:
     
     friend class AssetsManagerEx;
     
-    //! The type of difference
+    /** @~english Type of difference between local and remote asset
+     * @~chinese 本地和远程资源的差异类型
+     */
     enum class DiffType {
+        /** @~english Added in remote, absent in local
+         * @~chinese 在远程资源列表中存在，在本地不存在
+         */
         ADDED,
+        /** @~english Deleted in remote, present in local
+         * @~chinese 在远程资源列表中已删除，在当地仍然存在
+         */
         DELETED,
+        /** @~english Updated in remote, local version is old
+         * @~chinese 在远程资源列表中已更新，本地的版本是旧的
+         */
         MODIFIED
     };
-    
+
+    /** @~english Download state of a updating asset
+     * @~chinese 下载更新资源的状态
+     */
     enum class DownloadState {
+        /** @~english Wait to be updated
+         * @~chinese 等待更新
+         */
         UNSTARTED,
+        /** @~english Downloading
+         * @~chinese 下载中
+         */
         DOWNLOADING,
+        /** @~english Updated
+         * @~chinese 已更新
+         */
         SUCCESSED
     };
     
-    //! Asset object
+    /** @~english The asset object
+     * @~chinese 资源对象
+     */
     struct Asset {
+        /** @~english The version number string, suggested to use md5.
+         * @~chinese 版本号的字符串，建议使用md5。
+         */
         std::string md5;
+        /** @~english The url address of the remote asset
+         * @~chinese 远程资源的url地址
+         */
         std::string path;
+        /** @~english Indicate whether the asset is compressed or not
+         * @~chinese 指示资源是否被压缩
+         */
         bool compressed;
+        /** @~english The download state
+         * @~chinese 下载的状态
+         */
         DownloadState downloadState;
     };
-    
-    //! Object indicate the difference between two Assets
+
+    /** @~english Object indicate the difference between two Assets
+     * @~chinese 显示两种资源之间区别的对象
+     */
     struct AssetDiff {
+        /** @~english The asset object
+         * @~chinese 资源对象
+         */
         Asset asset;
+        /** @~english Type of difference between local and remote asset
+         * @~chinese 本地和远程资源的区别类型
+         */
         DiffType type;
     };
     
-    /** @brief Check whether the version informations have been fully loaded
+    /** @brief @~english Check whether the version informations have been fully loaded
+     * @~chinese 检查版本信息是否已加载
+     * @return @~english The version informations have been loaded or not
+     * @~chinese 返回版本信息是否已加载
      */
     bool isVersionLoaded() const;
     
-    /** @brief Check whether the manifest have been fully loaded
+    /** @brief @~english Check whether the manifest have been fully loaded
+     * @~chinese 检查资源清单是否已满载
+     * @return @~english The manifest have been loaded or not
+     * @~chinese 返回清单是否已经被加载
      */
     bool isLoaded() const;
     
-    /** @brief Gets remote package url.
+    /** @brief @~english Gets remote package url.
+     * @~chinese 获取远程资源包url。
+     * @return @~english The remote package url
+     * @~chinese 远程资源包url
      */
     const std::string& getPackageUrl() const;
     
-    /** @brief Gets remote manifest file url.
+    /** @brief @~english Gets remote manifest file url.
+     * @~chinese 获取远程资源清单文件的url。
+     * @return @~english The remote manifest file url
+     * @~chinese 远程资源清单文件的url
      */
     const std::string& getManifestFileUrl() const;
     
-    /** @brief Gets remote version file url.
+    /** @brief @~english Gets remote version file url.
+     * @~chinese 获取远程版本文件的url。
+     * @return @~english The remote version file url
+     * @~chinese 远程版本文件的url
      */
     const std::string& getVersionFileUrl() const;
     
-    /** @brief Gets manifest version.
+    /** @brief @~english Gets manifest version.
+     * @~chinese 获取资源清单的版本。
+     * @return @~english The manifest version
+     * @~chinese 资源清单的版本
      */
     const std::string& getVersion() const;
     
-    /** @brief Get the search paths list related to the Manifest.
+    /** @brief @~english Get the search paths list related to the Manifest.
+     * @~chinese Manifest相关搜索路径列表。
+     * @return @~english The search paths
+     * @~chinese 搜索路径列表
      */
     std::vector<std::string> getSearchPaths() const;
     
 protected:
     
-    /** @brief Constructor for Manifest class
-     * @param manifestUrl Url of the local manifest
+    /** @brief @~english Constructor for Manifest class
+     * @~chinese Manifest资源清单类的构造函数
+     * @param manifestUrl @~english Url of the local manifest
+     * @~chinese 本地资源清单地址
      */
     Manifest(const std::string& manifestUrl = "");
     
-    /** @brief Load the json file into local json object
-     * @param url Url of the json file
+    /** @brief @~english Load the json file into local json object
+     * @~chinese 加载json文件到json对象
+     * @param url @~english Url of the json file
+     * @~chinese json文件的Url
      */
     void loadJson(const std::string& url);
     
-    /** @brief Parse the version file information into this manifest
-     * @param versionUrl Url of the local version file
+    /** @brief @~english Parse the version file information into this manifest
+     * @~chinese 解析版本文件的版本信息到这个Manifest
+     * @param versionUrl @~english Url of the local version file
+     * @~chinese 版本文件的Url
      */
     void parseVersion(const std::string& versionUrl);
     
-    /** @brief Parse the manifest file information into this manifest
-     * @param manifestUrl Url of the local manifest
+    /** @brief @~english Parse the manifest file information into this manifest
+     * @~chinese 解析Manifest文件信息
+     * @param manifestUrl @~english Url of the local manifest
+     * @~chinese Manifest的本地url地址
      */
     void parse(const std::string& manifestUrl);
     
-    /** @brief Check whether the version of this manifest equals to another.
-     * @param b   The other manifest
+    /** @brief @~english Check whether the version of this manifest equals to another.
+     * @~chinese 检查这个Manifest的版本是否等于另一个Manifest对象
+     * @param b   @~english The other manifest
+     * @~chinese 另一个Manifest对象
+     * @return @~english Return true if the version of this manifest equals to b, otherwise return false.
+     * @~chinese 如果想等则返回true，否则返回false。
      */
     bool versionEquals(const Manifest *b) const;
     
-    /** @brief Generate difference between this Manifest and another.
-     * @param b   The other manifest
+    /** @brief @~english Generate difference between this Manifest and another.
+     * @~chinese 生成这个Manifest对象和另一个之间的区别。
+     * @param b   @~english The other manifest
+     * @~chinese 另一个Manifest对象
+     * @return @~english Return the different assets between this manifest and b.
+     * @~chinese 这个Manifest对象和另一个之间的差异资源列表。
      */
     std::unordered_map<std::string, AssetDiff> genDiff(const Manifest *b) const;
     
-    /** @brief Generate resuming download assets list
-     * @param units   The download units reference to be modified by the generation result
+    /** @brief @~english Generate assets list for resuming previous download.
+     * @~chinese 生成可以用于恢复之前一次下载的资源列表。
+     * @param units   @~english The download units reference to be modified by the generation result
+     * @~chinese 下载资源列表，结果会被保存在这个参数中
      */
     void genResumeAssetsList(Downloader::DownloadUnits *units) const;
     
-    /** @brief Prepend all search paths to the FileUtils.
+    /** @brief @~english Prepend all search paths to the FileUtils.
+     * @~chinese 向FileUtils中优先插入这个Manifest对象相关的搜索路径。
      */
     void prependSearchPaths();
     
@@ -150,28 +247,35 @@ protected:
     
     void clear();
     
-    /** @brief Gets all groups.
+    /** @brief @~english Gets all groups.
+     * @~chinese 获取所有组。
      */
     const std::vector<std::string>& getGroups() const;
     
-    /** @brief Gets all groups version.
+    /** @brief @~english Gets all groups version.
+     * @~chinese 得到所有组的版本。
      */
     const std::unordered_map<std::string, std::string>& getGroupVerions() const;
     
-    /** @brief Gets version for the given group.
-     * @param group   Key of the requested group
+    /** @brief @~english Gets version for the given group.
+     * @~chinese 给定组的版本。
+     * @param group   @~english Key of the requested group
+     * @~chinese 组的键值
      */
     const std::string& getGroupVersion(const std::string &group) const;
     
     /** 
-     * @brief Gets assets.
-     * @lua NA
+     * @brief @~english Gets assets.
+     * @~chinese 获得所有资源。
      */
     const std::unordered_map<std::string, Asset>& getAssets() const;
     
-    /** @brief Set the download state for an asset
-     * @param key   Key of the asset to set
-     * @param state The current download state of the asset
+    /** @brief @~english Set the download state for an asset
+     * @~chinese 为一个资源设置下载状态
+     * @param key   @~english Key of the asset to set
+     * @~chinese 要修改的资源键值
+     * @param state @~english The current download state of the asset
+     * @~chinese 资源的当前下载状态
      */
     void setAssetDownloadState(const std::string &key, const DownloadState &state);
     
@@ -218,6 +322,11 @@ private:
     
     rapidjson::Document _json;
 };
+
+/**
+ * // AssetsManager
+ * @}
+ */
 
 NS_CC_EXT_END
 #endif /* defined(__Manifest__) */
