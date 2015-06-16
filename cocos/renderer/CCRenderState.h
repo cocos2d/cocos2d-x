@@ -201,6 +201,13 @@ public:
          */
         static StateBlock* create();
 
+        /** The recommended way to create StateBlocks is by calling `create`.
+         * Don't use `new` or `delete` on them.
+         * 
+         */
+        StateBlock();
+        ~StateBlock();
+
         /**
          * Binds the state in this StateBlock to the renderer.
          *
@@ -398,8 +405,6 @@ public:
         static StateBlock* _defaultState;
 
     protected:
-        StateBlock();
-        ~StateBlock();
 
         void bindNoRestore();
         static void enableDepthWrite();
