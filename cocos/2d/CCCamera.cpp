@@ -20,6 +20,9 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
  ****************************************************************************/
 #include "2d/CCCamera.h"
 #include "base/CCDirector.h"
@@ -29,11 +32,13 @@
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCFrameBuffer.h"
+#include "renderer/CCRenderState.h"
 
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
-
+experimental::Viewport Camera::_defaultViewport;
 
 Camera* Camera::getDefaultCamera()
 {
@@ -46,7 +51,7 @@ Camera* Camera::getDefaultCamera()
     return nullptr;
 }
 
-    Camera* Camera::create()
+Camera* Camera::create()
 {
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
@@ -88,13 +93,14 @@ Camera::Camera()
 , _cameraFlag(1)
 , _frustumDirty(true)
 , _depth(-1)
+, _fbo(nullptr)
 {
     _frustum.setClipZ(true);
 }
 
 Camera::~Camera()
 {
-    
+    CC_SAFE_RELEASE_NULL(_fbo);
 }
 
 const Mat4& Camera::getProjectionMatrix() const
@@ -334,7 +340,7 @@ float Camera::getDepthInView(const Mat4& transform) const
     return depth;
 }
 
-void Camera::setDepth(int depth)
+void Camera::setDepth(int8_t depth)
 {
     if (_depth != depth)
     {
@@ -404,14 +410,16 @@ void Camera::clearBackground(float depth)
     {
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
         glStencilMask(0);
+
         oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
         glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
         glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
+
         glDepthMask(GL_TRUE);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_ALWAYS);
     }
-    
+
     //draw
     static V3F_C4B_T2F_Quad quad;
     quad.bl.vertices = Vec3(-1,-1,0);
@@ -458,14 +466,81 @@ void Camera::clearBackground(float depth)
             glDisable(GL_DEPTH_TEST);
         }
         glDepthFunc(oldDepthFunc);
+
         if(GL_FALSE == oldDepthMask)
         {
             glDepthMask(GL_FALSE);
         }
-        
+
+        /* IMPORTANT: We only need to update the states that are not restored.
+         Since we don't know what was the previous value of the mask, we update the RenderState
+         after setting it.
+         The other values don't need to be updated since they were restored to their original values
+         */
         glStencilMask(0xFFFFF);
+        RenderState::StateBlock::_defaultState->setStencilWrite(0xFFFFF);
+
+        /* BUG: RenderState does not support glColorMask yet. */
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
+}
+
+void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
+{
+    CC_SAFE_RETAIN(fbo);
+    CC_SAFE_RELEASE_NULL(_fbo);
+    _fbo = fbo;
+    if(_scene)
+    {
+        _scene->setCameraOrderDirty();
+    }
+}
+
+void Camera::applyFrameBufferObject()
+{
+    if(nullptr == _fbo)
+    {
+        experimental::FrameBuffer::applyDefaultFBO();
+    }
+    else
+    {
+        _fbo->applyFBO();
+    }
+}
+
+void Camera::apply()
+{
+    applyFrameBufferObject();
+    applyViewport();
+}
+
+void Camera::applyViewport()
+{
+    if(nullptr == _fbo)
+    {
+        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
+    }
+    else
+    {
+        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
+                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
+    }
+    
+}
+
+int Camera::getRenderOrder() const
+{
+    int result(0);
+    if(_fbo)
+    {
+        result = _fbo->getFID()<<8;
+    }
+    else
+    {
+        result = 127 <<8;
+    }
+    result += _depth;
+    return result;
 }
 
 NS_CC_END

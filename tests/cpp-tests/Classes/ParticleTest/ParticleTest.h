@@ -372,4 +372,12 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ParticleIssue12310 : public ParticleDemo
+{
+public:
+    CREATE_FUNC(ParticleIssue12310);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 #endif

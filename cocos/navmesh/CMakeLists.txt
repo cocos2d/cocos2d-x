@@ -5,5 +5,5 @@ set(COCOS_NAVMESH_SRC
   navmesh/CCNavMeshAgent.cpp
   navmesh/CCNavMeshDebugDraw.cpp
   navmesh/CCNavMeshObstacle.cpp
-  navmesh/CCNavMeshTool.cpp
+  navmesh/CCNavMeshUtils.cpp
 )

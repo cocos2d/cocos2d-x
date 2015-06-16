@@ -8,8 +8,6 @@ DEFINE_TEST_SUITE(Box2dTestBedSuite);
 
 class Box2dTestBed : public TestCase
 {
-    int        m_entryID;
-    cocos2d::EventListenerTouchOneByOne* _touchListener;
 public:
     static Box2dTestBed* createWithEntryID(int entryId);
 
@@ -20,6 +18,9 @@ public:
 
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+private:
+    int        m_entryID;
+    cocos2d::EventListenerTouchOneByOne* _touchListener;
 };
 
 struct TestEntry;

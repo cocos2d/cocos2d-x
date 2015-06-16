@@ -143,7 +143,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
-#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
@@ -203,11 +203,13 @@ public:
     void setNavMeshDebugCamera(Camera *camera);
 
 protected:
-    void addChildToNavMesh(Node* child);
-
-protected:
     NavMesh*       _navMesh;
     Camera *       _navMeshDebugCamera;
+#endif
+    
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+public:
+    void stepPhysicsAndNavigation(float deltaTime);
 #endif
 };
 

@@ -1814,7 +1814,8 @@ bool Blink::initWithDuration(float duration, int blinks)
 
 void Blink::stop()
 {
-    _target->setVisible(_originalState);
+    if(NULL != _target)
+        _target->setVisible(_originalState);
     ActionInterval::stop();
 }
 
@@ -2106,7 +2107,7 @@ TintBy* TintBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) TintBy();
-    a->initWithDuration(_duration, (GLubyte)_deltaR, (GLubyte)_deltaG, (GLubyte)_deltaB);
+    a->initWithDuration(_duration, _deltaR, _deltaG, _deltaB);
     a->autorelease();
     return a;
 }

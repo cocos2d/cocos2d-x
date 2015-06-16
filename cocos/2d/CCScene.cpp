@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCFrameBuffer.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
@@ -159,7 +160,7 @@ void Scene::onProjectionChanged(EventCustom* event)
 
 static bool camera_cmp(const Camera* a, const Camera* b)
 {
-    return a->getDepth() < b->getDepth();
+    return a->getRenderOrder() < b->getRenderOrder();
 }
 
 void Scene::render(Renderer* renderer)
@@ -186,7 +187,7 @@ void Scene::render(Renderer* renderer)
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-        
+        camera->apply();
         //clear background with max depth
         camera->clearBackground(1.0);
         //visit the scene
@@ -215,6 +216,7 @@ void Scene::render(Renderer* renderer)
 #endif
 
     Camera::_visitingCamera = nullptr;
+    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()
@@ -248,53 +250,22 @@ void Scene::setNavMeshDebugCamera(Camera *camera)
     _navMeshDebugCamera = camera;
 }
 
-void Scene::addChildToNavMesh(Node* child)
-{
-    if (_navMesh)
-    {
-        std::function<void(Node*)> addToNavMeshFunc = nullptr;
-        addToNavMeshFunc = [this, &addToNavMeshFunc](Node* node) -> void
-        {
-            auto agCom = static_cast<NavMeshAgent*>(node->getComponent(NavMeshAgent::getNavMeshAgentComponentName()));
-            if (agCom)
-            {
-                agCom->onEnter();
-            }
-
-            auto obCom = static_cast<NavMeshObstacle*>(node->getComponent(NavMeshObstacle::getNavMeshObstacleComponentName()));
-            if (obCom)
-            {
-                obCom->onEnter();
-            }
-
-            auto& children = node->getChildren();
-            for (const auto &n : children) {
-                addToNavMeshFunc(n);
-            }
-        };
-
-        addToNavMeshFunc(child);
-    }
-}
-
 #endif
 
-#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
+#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
-#if CC_USE_NAVMESH
-    addChildToNavMesh(child);
 #endif
 }
 
 void Scene::addChild(Node* child, int zOrder, const std::string &name)
 {
     Node::addChild(child, zOrder, name);
+#if CC_USE_PHYSICS
     addChildToPhysicsWorld(child);
-#if CC_USE_NAVMESH
-    addChildToNavMesh(child);
 #endif
 }
 
@@ -328,8 +299,6 @@ bool Scene::initWithPhysics()
         
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         Physics3DWorldDes info;
-        //TODO: FIX ME
-        //info.isDebugDrawEnabled = true;
         CC_BREAK_IF(! (_physics3DWorld = Physics3DWorld::create(&info)));
         _physics3DWorld->retain();
 #endif
@@ -364,31 +333,32 @@ void Scene::addChildToPhysicsWorld(Node* child)
         addToPhysicsWorldFunc(child);
     }
 #endif
-    
+}
+
+#endif
+
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+void Scene::stepPhysicsAndNavigation(float deltaTime)
+{
+#if CC_USE_PHYSICS
+    if (_physicsWorld && _physicsWorld->isAutoStep())
+    {
+        _physicsWorld->update(deltaTime, false);
+    }
+#endif
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld)
     {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            static std::string comName = Physics3DComponent::getPhysics3DComponentName();
-            auto com = static_cast<Physics3DComponent*>(node->getComponent(comName));
-            if (com)
-            {
-                com->addToPhysicsWorld(_physics3DWorld);
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
+        _physics3DWorld->stepSimulate(deltaTime);
+    }
+#endif
+#if CC_USE_NAVMESH
+    if (_navMesh)
+    {
+        _navMesh->update(deltaTime);
     }
 #endif
 }
-
 #endif
 
 NS_CC_END

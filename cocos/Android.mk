@@ -183,6 +183,7 @@ renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
 renderer/CCVertexIndexData.cpp \
 renderer/ccGLStateCache.cpp \
+renderer/CCFrameBuffer.cpp \
 renderer/ccShaders.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCDeprecated.cpp \
@@ -207,7 +208,7 @@ navmesh/CCNavMesh.cpp \
 navmesh/CCNavMeshAgent.cpp \
 navmesh/CCNavMeshDebugDraw.cpp \
 navmesh/CCNavMeshObstacle.cpp \
-navmesh/CCNavMeshTool.cpp \
+navmesh/CCNavMeshUtils.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \

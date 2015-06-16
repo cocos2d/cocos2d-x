@@ -59,8 +59,11 @@ typedef struct CC_DLL PhysicsMaterial
 const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT;
 
 /**
- *  @addtogroup core
+ *  @addtogroup physics
  *  @{
+ *  @addtogroup physics_2d
+ *  @{
+
  */
 
 /**
@@ -718,6 +721,7 @@ protected:
     friend class PhysicsBody;
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

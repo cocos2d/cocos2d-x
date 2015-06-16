@@ -28,7 +28,7 @@ var CocosBuilderTestScene = TestScene.extend({
      runThisTest:function(){
          if (cc.sys.isNative)
          {
-            cc.BuilderReader.setResourcePath("res/");
+            cc.BuilderReader.setResourcePath("res/resjs/");
          }
          else
          {

@@ -36,7 +36,7 @@ ccs._load = (function(){
         var json = cc.loader.getRes(file);
 
         if(!json)
-            return cc.log("%s is not exists", file);
+            return cc.log("%s does not exist", file);
         var ext = extname(file).toLocaleLowerCase();
         if(ext !== "json" && ext !== "exportjson")
             return cc.log("%s load error, must be json file", file);
