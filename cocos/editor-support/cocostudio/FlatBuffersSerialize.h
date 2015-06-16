@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -93,17 +93,17 @@ class CC_STUDIO_DLL FlatBuffersSerialize
 public:
     /**
     * @~english Gets the static instance of FlatBuffersSerialize.
-    * @~chinese »ñÈ¡FlatBuffersSerializeµÄ¾²Ì¬ÊµÀı.
+    * @~chinese è·å–FlatBuffersSerializeçš„é™æ€å®ä¾‹.
     */
     static FlatBuffersSerialize* getInstance();
     /**
     * @~english Destroy FlatBuffersSerialize static instance.
-    * @~chinese ÊÍ·ÅFlatBuffersSerializeµÄ¾²Ì¬ÊµÀı.
+    * @~chinese é‡Šæ”¾FlatBuffersSerializeçš„é™æ€å®ä¾‹.
     */
     static void destroyInstance();
 
     /** 
-    * @deprecated @~english Use method destroyInstance() instead @~chinese ÒÑÆúÓÃ£¬ÇëÊ¹ÓÃdestroyInstance()
+    * @deprecated @~english Use method destroyInstance() instead @~chinese å·²å¼ƒç”¨ï¼Œè¯·ä½¿ç”¨destroyInstance()
     */
     CC_DEPRECATED_ATTRIBUTE static void purge();
 
@@ -112,211 +112,211 @@ public:
 
     /**
     * @~english Destroy FlatBufferBuilder instance.
-    * @~chinese ÊÍ·ÅFlatBufferBuilderµÄ¾²Ì¬ÊµÀı.
+    * @~chinese é‡Šæ”¾FlatBufferBuilderçš„é™æ€å®ä¾‹.
     */
     void deleteFlatBufferBuilder();
 
     /**
     * @~english Serialize flat buffers with XML.
-    * @~chinese ¸ù¾İxmlÊı¾İĞòÁĞ»¯flat buffer.
+    * @~chinese æ ¹æ®xmlæ•°æ®åºåˆ—åŒ–flat buffer.
     *
-    * @parame xmlFileName           @~english input xml file name @~chinese xmlÎÄ¼şÃû³Æ
+    * @parame xmlFileName           @~english input xml file name @~chinese xmlæ–‡ä»¶åç§°
     *
-    * @parame flatbuffersFileName   @~english output flatbuffer file name @~chinese Êä³öµÄflat bufferÎÄ¼şÃû
+    * @parame flatbuffersFileName   @~english output flatbuffer file name @~chinese è¾“å‡ºçš„flat bufferæ–‡ä»¶å
     *
-    * @return @~english error message @~chinese ´íÎóĞÅÏ¢
+    * @return @~english error message @~chinese é”™è¯¯ä¿¡æ¯
     */
     std::string serializeFlatBuffersWithXMLFile(const std::string& xmlFileName,
                                                 const std::string& flatbuffersFileName);
 
     /**
     * @~english Create node tree flatbuffer from xml object
-    * @~chinese ¸ù¾İxmlÊı¾İ´´½¨flat buffer½ÚµãÊ÷
+    * @~chinese æ ¹æ®xmlæ•°æ®åˆ›å»ºflat bufferèŠ‚ç‚¹æ ‘
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @parame classType   @~english root node class type @~chinese ¸ù½ÚµãÀàĞÍ
+    * @parame classType   @~english root node class type @~chinese æ ¹èŠ‚ç‚¹ç±»å‹
     *
-    * @return @~english error message @~chinese ´íÎóĞÅÏ¢
+    * @return @~english error message @~chinese é”™è¯¯ä¿¡æ¯
     */
     flatbuffers::Offset<flatbuffers::NodeTree> createNodeTree(const tinyxml2::XMLElement* objectData,
                                                               std::string classType);
     
     /**
     * @~english Create node action flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½½Úµã¶¯×÷ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼èŠ‚ç‚¹åŠ¨ä½œæè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::NodeAction> createNodeAction(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create time line flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½Ê±¼äÖáÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼æ—¶é—´è½´æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::TimeLine> createTimeLine(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create point frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½pointÖ¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼pointå¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::PointFrame> createPointFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create scale frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½Ëõ·ÅÖ¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼ç¼©æ”¾å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::ScaleFrame> createScaleFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create color frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½ÑÕÉ«Ö¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼é¢œè‰²å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::ColorFrame> createColorFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create texture frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½²ÄÖÊÖ¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼æè´¨å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::TextureFrame> createTextureFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create event frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½ÊÂ¼şÖ¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼äº‹ä»¶å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::EventFrame> createEventFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create int frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½ÕûĞÍÖ¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼æ•´å‹å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::IntFrame> createIntFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create bool frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½²¼¶ûĞÍÖ¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼å¸ƒå°”å‹å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::BoolFrame> createBoolFrame(const tinyxml2::XMLElement* objectData);
     /**
     * @~english Create inner action frame flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½Ç¶Ì×Ö¡ÃèÊö
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼åµŒå¥—å¸§æè¿°
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::InnerActionFrame> createInnerActionFrame(const tinyxml2::XMLElement* objectData);
     
     /**
     * @~english Create easing data flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½»º¶¯Êı¾İ
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼ç¼“åŠ¨æ•°æ®
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::EasingData> createEasingData(const tinyxml2::XMLElement* objectData);
 
     /**
     * @~english Create animation info flatbuffer from xml object
-    * @~chinese ¸ù¾İxml½Úµã´´½¨flat buffer¸ñÊ½¶¯»­Êı¾İ
+    * @~chinese æ ¹æ®xmlèŠ‚ç‚¹åˆ›å»ºflat bufferæ ¼å¼åŠ¨ç”»æ•°æ®
     *
-    * @parame objectData  @~english xml descriptoin object @~chinese xml¸ñÊ½ÃèÊöÊı¾İ
+    * @parame objectData  @~english xml descriptoin object @~chinese xmlæ ¼å¼æè¿°æ•°æ®
     *
-    * @return @~english flatbuffer object @~chinese flat buffer¶ÔÏó
+    * @return @~english flatbuffer object @~chinese flat bufferå¯¹è±¡
     */
     flatbuffers::Offset<flatbuffers::AnimationInfo> createAnimationInfo(const tinyxml2::XMLElement* objectData);
     /**/
 
     /**
     * @~english Get resource type embed default or user added
-    * @~chinese »ñÈ¡×ÊÔ´ÀàĞÍ£º±à¼­Æ÷×Ô´øÄ¬ÈÏ×ÊÔ´/ÓÃ»§Ìí¼Ó×ÊÔ´
+    * @~chinese è·å–èµ„æºç±»å‹ï¼šç¼–è¾‘å™¨è‡ªå¸¦é»˜è®¤èµ„æº/ç”¨æˆ·æ·»åŠ èµ„æº
     *
-    * @parame key  @~english resource type key @~chinese ×ÊÔ´ÀàĞÍ¼üÖµ
+    * @parame key  @~english resource type key @~chinese èµ„æºç±»å‹é”®å€¼
     *
-    * @return @~english resource type @~chinese ×ÊÔ´ÀàĞÍ
+    * @return @~english resource type @~chinese èµ„æºç±»å‹
     */
     int getResourceType(std::string key);
     /**
     * @~english Get GUI widget class type of a special component
-    * @~chinese »ñÈ¡Ö¸¶¨×é¼şµÄUI×é¼şÀàĞÍ
+    * @~chinese è·å–æŒ‡å®šç»„ä»¶çš„UIç»„ä»¶ç±»å‹
     *
-    * @parame name  @~english component class name @~chinese ×é¼şÀàÃû³Æ
+    * @parame name  @~english component class name @~chinese ç»„ä»¶ç±»åç§°
     *
-    * @return @~english widget class name @~chinese UI×é¼şÀàÃû
+    * @return @~english widget class name @~chinese UIç»„ä»¶ç±»å
     */
     std::string getGUIClassName(const std::string &name);
     /**
     * @~english Get GUI widget reader class name or a special widget
-    * @~chinese »ñÈ¡Ö¸¶¨UI×é¼şµÄreaderÀàÃû
+    * @~chinese è·å–æŒ‡å®šUIç»„ä»¶çš„readerç±»å
     *
-    * @parame widget  @~english UI widget component @~chinese UI×é¼ş
+    * @parame widget  @~english UI widget component @~chinese UIç»„ä»¶
     *
-    * @return @~english widget reader class name @~chinese UI×é¼şreaderÀàÃû
+    * @return @~english widget reader class name @~chinese UIç»„ä»¶readerç±»å
     */
     std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
     
     /**
     * @~english Choose flat buffer builder that can convert current xml project file to flat buffer data for simulator use
-    * @~chinese Ñ¡Ôñ¿ÉÒÔ½«µ±Ç°xmlÏîÄ¿ÎÄ¼ş×ª»»³É¹©Ä£ÄâÆ÷Ê¹ÓÃÊı¾İµÄflat buffer¹¹ÔìÆ÷
+    * @~chinese é€‰æ‹©å¯ä»¥å°†å½“å‰xmlé¡¹ç›®æ–‡ä»¶è½¬æ¢æˆä¾›æ¨¡æ‹Ÿå™¨ä½¿ç”¨æ•°æ®çš„flat bufferæ„é€ å™¨
     *
-    * @parame xmlFileName  @~english xml project file @~chinese xmlÏîÄ¿ÎÄ¼ş
+    * @parame xmlFileName  @~english xml project file @~chinese xmlé¡¹ç›®æ–‡ä»¶
     *
-    * @return @~english flat buffer builder @~chinese flat buffer¹¹ÔìÆ÷
+    * @return @~english flat buffer builder @~chinese flat bufferæ„é€ å™¨
     */
     flatbuffers::FlatBufferBuilder* createFlatBuffersWithXMLFileForSimulator(const std::string& xmlFileName);
     /**
     * @~english Convert xml project object to flat buffer data for simulator use
-    * @~chinese ½«xmlÏîÄ¿¶ÔÏó×ª»»Îªflat bufferÊı¾İ¹©Ä£ÄâÆ÷Ê¹ÓÃ
+    * @~chinese å°†xmlé¡¹ç›®å¯¹è±¡è½¬æ¢ä¸ºflat bufferæ•°æ®ä¾›æ¨¡æ‹Ÿå™¨ä½¿ç”¨
     *
-    * @parame objectData  @~english xml project object @~chinese xmlÏîÄ¿¶ÔÏó
+    * @parame objectData  @~english xml project object @~chinese xmlé¡¹ç›®å¯¹è±¡
     *
-    * @parame classType   @~english root node class type @~chinese ¸ù½ÚµãÀàĞÍ
+    * @parame classType   @~english root node class type @~chinese æ ¹èŠ‚ç‚¹ç±»å‹
     *
-    * @return @~english flat buffer data @~chinese flat bufferÊı¾İ
+    * @return @~english flat buffer data @~chinese flat bufferæ•°æ®
     */
     flatbuffers::Offset<flatbuffers::NodeTree> createNodeTreeForSimulator(const tinyxml2::XMLElement* objectData,
                                                                           std::string classType);
     /**
     * @~english Convert xml project object to flat buffer data for simulator use
-    * @~chinese ½«xmlÏîÄ¿¶ÔÏó×ª»»Îªflat bufferÊı¾İ¹©Ä£ÄâÆ÷Ê¹ÓÃ
+    * @~chinese å°†xmlé¡¹ç›®å¯¹è±¡è½¬æ¢ä¸ºflat bufferæ•°æ®ä¾›æ¨¡æ‹Ÿå™¨ä½¿ç”¨
     *
-    * @parame objectData  @~english xml project object @~chinese xmlÏîÄ¿¶ÔÏó
+    * @parame objectData  @~english xml project object @~chinese xmlé¡¹ç›®å¯¹è±¡
     *
-    * @return @~english flat buffer data @~chinese flat bufferÊı¾İ
+    * @return @~english flat buffer data @~chinese flat bufferæ•°æ®
     */
     flatbuffers::Offset<flatbuffers::ProjectNodeOptions> createProjectNodeOptionsForSimulator(const tinyxml2::XMLElement* objectData);
 	/** 
     * @~english Get csd format version
-    * @~chinese »ñÈ¡csd¸ñÊ½°æ±¾
+    * @~chinese è·å–csdæ ¼å¼ç‰ˆæœ¬
     *
-    * ¡¤return @~english csd version @~chinese csd °æ±¾
+    * Â·return @~english csd version @~chinese csd ç‰ˆæœ¬
     */
     std::string getCsdVersion() { return _csdVersion; }
     

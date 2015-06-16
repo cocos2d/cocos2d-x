@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -45,9 +45,9 @@ class CC_STUDIO_DLL Tween : public ProcessBase
 public:
     /**
      * @~english Create with a Bone
-     * @~chinese ÓÃÒ»¶Î¹ÇÍ·À´´´½¨»º¶¯
+     * @~chinese ç”¨ä¸€æ®µéª¨å¤´æ¥åˆ›å»ºç¼“åŠ¨
      * @param bone @~english the Bone Tween will bind to
-     * @~chinese ÓÃÀ´°ó¶¨»º¶¯µÄÒ»¶Î¹ÇÍ·
+     * @~chinese ç”¨æ¥ç»‘å®šç¼“åŠ¨çš„ä¸€æ®µéª¨å¤´
      */
     static Tween *create(Bone *bone);
 public:
@@ -56,9 +56,9 @@ public:
 
     /**
      * @~english Init with a Bone
-     * @~chinese ÓÃÒ»¶Î¹ÇÍ·À´³õÊ¼»¯»º¶¯
+     * @~chinese ç”¨ä¸€æ®µéª¨å¤´æ¥åˆå§‹åŒ–ç¼“åŠ¨
      * @param bone @~english the Bone Tween will bind to
-     * @~chinese ÓÃÀ´°ó¶¨»º¶¯µÄÒ»¶Î¹ÇÍ·
+     * @~chinese ç”¨æ¥ç»‘å®šç¼“åŠ¨çš„ä¸€æ®µéª¨å¤´
      */
     virtual bool init(Bone *bone);
 
@@ -67,20 +67,20 @@ public:
      * @~english Start the Process
      *
      * @param  movementBoneData  @~english the MovementBoneData include all FrameData
-     * @~chinese »î¶¯¹ÇÍ·Êı¾İ£¬°üº¬ËùÓĞÖ¡Êı¾İ
+     * @~chinese æ´»åŠ¨éª¨å¤´æ•°æ®ï¼ŒåŒ…å«æ‰€æœ‰å¸§æ•°æ®
      * @param  durationTo @~english the number of frames changing to this animation needs.
-     * @~chinese ¸Ä±äµ½¸Ã¶¯»­ĞèÒªµÄ×ÜÖ¡Êı¡£
+     * @~chinese æ”¹å˜åˆ°è¯¥åŠ¨ç”»éœ€è¦çš„æ€»å¸§æ•°ã€‚
      * @param  durationTween  @~english the number of frames this animation actual last.
-     * @~chinese ¸Ã¶Î¶¯»­Êµ¼Ê°üº¬µÄ×ÜÖ¡Êı
+     * @~chinese è¯¥æ®µåŠ¨ç”»å®é™…åŒ…å«çš„æ€»å¸§æ•°
      * @param  loop @~english   whether the animation is loop
      *
      *         loop < 0 : use the value from MovementData get from Action Editor
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
-     * @~chinese ¶¯»­ÊÇ·ñÑ­»·¡£
-     *         loop < 0 : Ê¹ÓÃ´Ó¶¯×÷±à¼­Æ÷ÖĞ»ñµÃµÄ»î¶¯Êı¾İÖĞµÄµÄÖµ
-     *         loop = 0 : ¶¯»­²»Ñ­»·
-     *         loop > 0 : ¶¯»­Ñ­»·
+     * @~chinese åŠ¨ç”»æ˜¯å¦å¾ªç¯ã€‚
+     *         loop < 0 : ä½¿ç”¨ä»åŠ¨ä½œç¼–è¾‘å™¨ä¸­è·å¾—çš„æ´»åŠ¨æ•°æ®ä¸­çš„çš„å€¼
+     *         loop = 0 : åŠ¨ç”»ä¸å¾ªç¯
+     *         loop > 0 : åŠ¨ç”»å¾ªç¯
      *
      * @param  tweenEasing  @~english    tween easing is used for calculate easing effect
      *
@@ -89,57 +89,57 @@ public:
      *         0  : line
      *         1  : fade in
      *         2  : fade in and out
-     * @~chinese Ö¡²¹¼ä»º¶¯ÓÃÀ´¼ÆËã»º¶¯Ğ§¹û
-     *         TWEEN_EASING_MAX : Ê¹ÓÃ´Ó¶¯×÷±à¼­Æ÷ÖĞ»ñµÃµÄ»î¶¯Êı¾İÖĞµÄµÄÖµ
-     *         -1 : µ­³ö
-     *         0  : ÏßĞÔ
-     *         1  : µ­Èë
-     *         2  : µ­Èëµ­³ö
+     * @~chinese å¸§è¡¥é—´ç¼“åŠ¨ç”¨æ¥è®¡ç®—ç¼“åŠ¨æ•ˆæœ
+     *         TWEEN_EASING_MAX : ä½¿ç”¨ä»åŠ¨ä½œç¼–è¾‘å™¨ä¸­è·å¾—çš„æ´»åŠ¨æ•°æ®ä¸­çš„çš„å€¼
+     *         -1 : æ·¡å‡º
+     *         0  : çº¿æ€§
+     *         1  : æ·¡å…¥
+     *         2  : æ·¡å…¥æ·¡å‡º
      */
     virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /*
     * @~english Set animation.
-    * @~chinese ÉèÖÃ¶¯»­¡£
+    * @~chinese è®¾ç½®åŠ¨ç”»ã€‚
     * @param animation @~english The animation.
-    * @~chinese ¶¯»­¡£
+    * @~chinese åŠ¨ç”»ã€‚
     */
     inline void setAnimation(ArmatureAnimation *animation) { _animation = animation; }
     /*
     * @~english Get animation.
-    * @~chinese »ñÈ¡¶¯»­¡£
+    * @~chinese è·å–åŠ¨ç”»ã€‚
     * @return @~english The animation.
-    * @~chinese ¶¯»­¡£
+    * @~chinese åŠ¨ç”»ã€‚
     */
     inline ArmatureAnimation *getAnimation() const { return _animation; }
 
     /**
     * @~english Go to specified frame and play current movement.
-    * @~chinese Ìø×ªÖÁÖ¸¶¨µÄÖ¡²¢´Ó¸ÃÖ¡¿ªÊ¼²¥·Åµ±Ç°¶¯×÷¡£
+    * @~chinese è·³è½¬è‡³æŒ‡å®šçš„å¸§å¹¶ä»è¯¥å¸§å¼€å§‹æ’­æ”¾å½“å‰åŠ¨ä½œã€‚
     * @param frameIndex @~english Index of frame.
-    * @~chinese ÒªÌø×ªµÄÖ¡Ë÷Òı¡£
+    * @~chinese è¦è·³è½¬çš„å¸§ç´¢å¼•ã€‚
     */
     virtual void gotoAndPlay(int frameIndex);
     /**
     * @~english Go to specified frame and pause current movement.
-    * @~chinese Ìø×ªÖÁÖ¸¶¨µÄÖ¡²¢ÔİÍ£µ±Ç°¶¯×÷¡£
+    * @~chinese è·³è½¬è‡³æŒ‡å®šçš„å¸§å¹¶æš‚åœå½“å‰åŠ¨ä½œã€‚
     * @param frameIndex @~english Index of frame.
-    * @~chinese ÒªÌø×ªµÄÖ¡Ë÷Òı¡£
+    * @~chinese è¦è·³è½¬çš„å¸§ç´¢å¼•ã€‚
     */
     virtual void gotoAndPause(int frameIndex);
 
     /*
     * @~english Set movBoneData.
-    * @~chinese ÉèÖÃ»î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese è®¾ç½®æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     * @param data @~english The movBoneData.
-    * @~chinese »î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     */
     virtual void setMovementBoneData(MovementBoneData *data) { _movementBoneData = data; }
     /*
     * @~english Get movBoneData.
-    * @~chinese »ñÈ¡»î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese è·å–æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     * @return @~english The movBoneData.
-    * @~chinese »î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     */
     virtual const MovementBoneData *getMovementBoneData() const { return _movementBoneData; }
 protected:

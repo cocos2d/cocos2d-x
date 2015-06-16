@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -94,9 +94,9 @@ public:
 
     /*
     * @~english Get contour data.
-    * @~chinese »ñÈ¡ÂÖÀªÊı¾İ¡£
+    * @~chinese è·å–è½®å»“æ•°æ®ã€‚
     * @return @~english Contour data.
-    * @~chinese ÂÖÀªÊı¾İ¡£
+    * @~chinese è½®å»“æ•°æ®ã€‚
     */
     inline ContourData *getContourData() { return _contourData; }
 
@@ -115,9 +115,9 @@ public:
 
     /*
     * @~english Get calculated vertex list.
-    * @~chinese »ñÈ¡¶¥µãÁĞ±í¡£
+    * @~chinese è·å–é¡¶ç‚¹åˆ—è¡¨ã€‚
     * @return @~english Calculated vertex list.
-    * @~chinese ¶¥µãÁĞ±í¡£
+    * @~chinese é¡¶ç‚¹åˆ—è¡¨ã€‚
     */
     virtual const std::vector<cocos2d::Vec2> &getCalculatedVertexList() const { return _calculatedVertexList; }
 #endif
@@ -141,7 +141,7 @@ private:
 
 /*
  *  @brief  @~english ContourSprite used to draw the contour of the display
- * @~chinese ÂÖÀª¾«ÁéÓÃÀ´»æÖÆÏÔÊ¾µÄÂÖÀª¡£
+ * @~chinese è½®å»“ç²¾çµç”¨æ¥ç»˜åˆ¶æ˜¾ç¤ºçš„è½®å»“ã€‚
  *  @js NA
  *  @lua NA
  */
@@ -151,19 +151,19 @@ public:
 
     /**
     * @~english Allocates and initializes a ColliderDetector.
-    * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯Åö×²¼ì²âÆ÷¡£
+    * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–ç¢°æ’æ£€æµ‹å™¨ã€‚
     * @return @~english An initialized ColliderDetector which is marked as "autorelease".
-    * @~chinese ³õÊ¼»¯²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄÅö×²¼ì²âÆ÷¶ÔÏó¡£
+    * @~chinese åˆå§‹åŒ–å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„ç¢°æ’æ£€æµ‹å™¨å¯¹è±¡ã€‚
     */
     static ColliderDetector *create();
 
     /**
     * @~english Allocates and initializes a ColliderDetector by a bone.
-    * @~chinese Ê¹ÓÃÒ»¶Î¹ÇÍ··ÖÅä²¢ÇÒ³õÊ¼»¯Åö×²¼ì²âÆ÷¡£
+    * @~chinese ä½¿ç”¨ä¸€æ®µéª¨å¤´åˆ†é…å¹¶ä¸”åˆå§‹åŒ–ç¢°æ’æ£€æµ‹å™¨ã€‚
     * @param bone  @~english A bone for initialize the ColliderDetector.
-    * @~chinese ³õÊ¼»¯Åö×²¼ì²âÆ÷µÄ¹ÇÍ·¡£
+    * @~chinese åˆå§‹åŒ–ç¢°æ’æ£€æµ‹å™¨çš„éª¨å¤´ã€‚
     * @return @~english An initialized ColliderDetector which is marked as "autorelease".
-    * @~chinese ³õÊ¼»¯²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄÅö×²¼ì²âÆ÷¶ÔÏó¡£
+    * @~chinese åˆå§‹åŒ–å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„ç¢°æ’æ£€æµ‹å™¨å¯¹è±¡ã€‚
     */
     static ColliderDetector *create(Bone *bone);
 public:
@@ -179,80 +179,80 @@ public:
 
     /**
     * @~english Init ColliderDetector.
-    * @~chinese ³õÊ¼»¯Åö×²¼ì²âÆ÷¡£
+    * @~chinese åˆå§‹åŒ–ç¢°æ’æ£€æµ‹å™¨ã€‚
     * @return @~english Is initialize succeed.
-    * @~chinese ÊÇ·ñ³õÊ¼»¯³É¹¦¡£
+    * @~chinese æ˜¯å¦åˆå§‹åŒ–æˆåŠŸã€‚
     */
     virtual bool init();
 
     /**
     * @~english Init ColliderDetector by a bone.
-    * @~chinese ÊÇÓÃÒ»¶Î¹ÇÍ·³õÊ¼»¯Åö×²¼ì²âÆ÷¡£
+    * @~chinese æ˜¯ç”¨ä¸€æ®µéª¨å¤´åˆå§‹åŒ–ç¢°æ’æ£€æµ‹å™¨ã€‚
     * @param bone @~english A bone for initialize the ColliderDetector.
-    * @~chinese ³õÊ¼»¯Åö×²¼ì²âÆ÷µÄ¹ÇÍ·¡£
+    * @~chinese åˆå§‹åŒ–ç¢°æ’æ£€æµ‹å™¨çš„éª¨å¤´ã€‚
     * @return @~english Is initialize succeed.
-    * @~chinese ÊÇ·ñ³õÊ¼»¯³É¹¦¡£
+    * @~chinese æ˜¯å¦åˆå§‹åŒ–æˆåŠŸã€‚
     */
     virtual bool init(Bone *bone);
 
     /**
     * @~english Add contour data to the ColliderDetector.
-    * @~chinese ÎªÅö×²¼ì²âÆ÷Ìí¼ÓÂÖÀªÊı¾İ¡£
+    * @~chinese ä¸ºç¢°æ’æ£€æµ‹å™¨æ·»åŠ è½®å»“æ•°æ®ã€‚
     * @param contourData @~english The contour data to be added.
-    * @~chinese ÒªÌí¼ÓµÄÂÖÀªÊı¾İ¡£
+    * @~chinese è¦æ·»åŠ çš„è½®å»“æ•°æ®ã€‚
     */
     void addContourData(ContourData *contourData);
 
     /**
     * @~english Add contour datas to the ColliderDetector.
-    * @~chinese ÎªÅö×²¼ì²âÆ÷Ìí¼ÓÒ»×éÂÖÀªÊı¾İ¡£
+    * @~chinese ä¸ºç¢°æ’æ£€æµ‹å™¨æ·»åŠ ä¸€ç»„è½®å»“æ•°æ®ã€‚
     * @param contourData @~english The contour datas to be added.
-    * @~chinese ÒªÌí¼ÓµÄÒ»×éÂÖÀªÊı¾İ¡£
+    * @~chinese è¦æ·»åŠ çš„ä¸€ç»„è½®å»“æ•°æ®ã€‚
     */
     void addContourDataList(cocos2d::Vector<ContourData*> &contourDataList);
 
     /**
     * @~english Remove a contour data.
-    * @~chinese ÒÆ³ıÂÖÀªÊı¾İ¡£
+    * @~chinese ç§»é™¤è½®å»“æ•°æ®ã€‚
     * @param contourData @~english The contour data to be removed.
-    * @~chinese ÒªÒÆ³ıµÄÂÖÀªÊı¾İ¡£
+    * @~chinese è¦ç§»é™¤çš„è½®å»“æ•°æ®ã€‚
     */
     void removeContourData(ContourData *contourData);
 
     /**
     * @~english Remove all contour data.
-    * @~chinese ÒÆ³ıËùÓĞÂÖÀªÊı¾İ¡£
+    * @~chinese ç§»é™¤æ‰€æœ‰è½®å»“æ•°æ®ã€‚
     */
     void removeAll();
 
     /**
     * @~english Returns the armature affine transform matrix. The matrix is in Pixels.
-    * @~chinese Ê¹ÓÃ±ä»»¾ØÕó·ÂÉäÂÖÀªÊı¾İ¡£¾ØÕóµ¥Î»ÊÇÏñËØ¡£
+    * @~chinese ä½¿ç”¨å˜æ¢çŸ©é˜µä»¿å°„è½®å»“æ•°æ®ã€‚çŸ©é˜µå•ä½æ˜¯åƒç´ ã€‚
     * @param t @~english Transformation matrix, in pixels.
-    * @~chinese ±ä»»¾ØÕó¡£
+    * @~chinese å˜æ¢çŸ©é˜µã€‚
     */
     void updateTransform(cocos2d::Mat4 &t);
 
     /**
     * @~english Set is the ColliderDetector active.
-    * @~chinese ÉèÖÃÅö×²¼ì²âÆ÷ÊÇ·ñ¼¤»î¡£
+    * @~chinese è®¾ç½®ç¢°æ’æ£€æµ‹å™¨æ˜¯å¦æ¿€æ´»ã€‚
     * @param active @~english Is the ColliderDetector active.
-    * @~chinese ÊÇ·ñ¼¤»î¡£
+    * @~chinese æ˜¯å¦æ¿€æ´»ã€‚
     */
     void setActive(bool active);
     /**
     * @~english Get is the ColliderDetector active.
-    * @~chinese »ñÈ¡Åö×²¼ì²âÆ÷ÊÇ·ñ¼¤»î¡£
+    * @~chinese è·å–ç¢°æ’æ£€æµ‹å™¨æ˜¯å¦æ¿€æ´»ã€‚
     * @return @~english Is the ColliderDetector active.
-    * @~chinese ÊÇ·ñ¼¤»î¡£
+    * @~chinese æ˜¯å¦æ¿€æ´»ã€‚
     */
     bool getActive();
 
     /**
     * @~english Get the collider bodies.
-    * @~chinese »ñÈ¡Åö×²ÌåÁĞ±í¡£
+    * @~chinese è·å–ç¢°æ’ä½“åˆ—è¡¨ã€‚
     * @return @~english Collider bodies.
-    * @~chinese Åö×²ÌåÁĞ±í¡£
+    * @~chinese ç¢°æ’ä½“åˆ—è¡¨ã€‚
     */
     const cocos2d::Vector<ColliderBody*>& getColliderBodyList();
 
@@ -263,17 +263,17 @@ public:
 
     /**
     * @~english Set the bone.
-    * @~chinese ÉèÖÃ¹ÇÍ·¡£
+    * @~chinese è®¾ç½®éª¨å¤´ã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     */
     virtual void setBone(Bone *bone) { _bone = bone; }
 
     /**
     * @~english Get the bone.
-    * @~chinese »ñÈ¡¹ÇÍ·¡£
+    * @~chinese è·å–éª¨å¤´ã€‚
     * @return @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     */
     virtual Bone *getBone() const { return _bone; }
 

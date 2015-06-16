@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -43,229 +43,229 @@ public:
 
     /**
     * @~english Gets the static instance of DictionaryHelper.
-    * @~chinese »ñÈ¡DictionaryHelperµÄ¾²Ì¬ÊµÀı.
+    * @~chinese è·å–DictionaryHelperçš„é™æ€å®ä¾‹.
     */
     static DictionaryHelper* getInstance();
     /**
     * @~english Destroy DictionaryHelper static instance.
-    * @~chinese ÊÍ·ÅDictionaryHelperµÄ¾²Ì¬ÊµÀı.
+    * @~chinese é‡Šæ”¾DictionaryHelperçš„é™æ€å®ä¾‹.
     */
     static void destroyInstance();
     
     /**
     * @~english Get a child json item from the root node.
-    * @~chinese »ñÈ¡¸ù½ÚµãÏÂµÄÒ»¸ö×Ójson½Úµã.
+    * @~chinese è·å–æ ¹èŠ‚ç‚¹ä¸‹çš„ä¸€ä¸ªå­jsonèŠ‚ç‚¹.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~chinese key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~chinese key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @return @~english child json item @~chinese ×ÓjsonÏî
+    * @return @~english child json item @~chinese å­jsoné¡¹
     */
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key);
     /**
     * @~english Get a child json item from the root node.
-    * @~chinese »ñÈ¡¸ù½ÚµãÏÂµÄÒ»¸ö×Ójson½Úµã.
+    * @~chinese è·å–æ ¹èŠ‚ç‚¹ä¸‹çš„ä¸€ä¸ªå­jsonèŠ‚ç‚¹.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @parame idx    @~english index of child json item in root[key] @~chinese ×ÓjsonÔÚroot[key]Êı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of child json item in root[key] @~chinese å­jsonåœ¨root[key]æ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
-    * @return @~english child json item @~chinese ×ÓjsonÏî
+    * @return @~english child json item @~chinese å­jsoné¡¹
     */
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx);
     /**
     * @~english Get a child json item from the root node.
-    * @~chinese »ñÈ¡¸ù½ÚµãÏÂµÄÒ»¸ö×Ójson½Úµã.
+    * @~chinese è·å–æ ¹èŠ‚ç‚¹ä¸‹çš„ä¸€ä¸ªå­jsonèŠ‚ç‚¹.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame idx    @~english index of child json item @~chinese ×ÓjsonÔÚÊı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of child json item @~chinese å­jsonåœ¨æ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
-    * @return @~english child json item @~chinese ×ÓjsonÏî
+    * @return @~english child json item @~chinese å­jsoné¡¹
     */
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, int idx);
 
     /**
     * @~english Get the integer value of a child json item from the root node.
-    * @~chinese »ñÈ¡rootÏÂÒ»¸ö×Ó½ÚµãµÄÕûĞÎÊıÖµ.
+    * @~chinese è·å–rootä¸‹ä¸€ä¸ªå­èŠ‚ç‚¹çš„æ•´å½¢æ•°å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english integer value of item @~chinese ×Ó½ÚµãµÄÕûĞÍÊıÖµ
+    * @return @~english integer value of item @~chinese å­èŠ‚ç‚¹çš„æ•´å‹æ•°å€¼
     */
     int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
     /**
     * @~english Get the float value of a child json item from the root node.
-    * @~chinese »ñÈ¡rootÏÂÒ»¸ö×Ó½ÚµãµÄ¸¡µãÊıÖµ.
+    * @~chinese è·å–rootä¸‹ä¸€ä¸ªå­èŠ‚ç‚¹çš„æµ®ç‚¹æ•°å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english float value of item @~chinese ×Ó½ÚµãµÄ¸¡µãÊıÖµ
+    * @return @~english float value of item @~chinese å­èŠ‚ç‚¹çš„æµ®ç‚¹æ•°å€¼
     */
     float getFloatValue_json(const rapidjson::Value& root, const char* key, float def = 0.0f);
     /**
     * @~english Get the boolean value of a child json item from the root node.
-    * @~chinese »ñÈ¡rootÏÂÒ»¸ö×Ó½ÚµãµÄ²¼¶ûĞÍÖµ.
+    * @~chinese è·å–rootä¸‹ä¸€ä¸ªå­èŠ‚ç‚¹çš„å¸ƒå°”å‹å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english boolean value of item @~chinese ×Ó½ÚµãµÄ²¼¶ûĞÍÖµ
+    * @return @~english boolean value of item @~chinese å­èŠ‚ç‚¹çš„å¸ƒå°”å‹å€¼
     */
     bool  getBooleanValue_json(const rapidjson::Value& root, const char* key, bool def = false);
     /**
     * @~english Get the string value of a child json item from the root node.
-    * @~chinese »ñÈ¡rootÏÂÒ»¸ö×Ó½ÚµãµÄ²¼¶ûĞÍÖµ.
+    * @~chinese è·å–rootä¸‹ä¸€ä¸ªå­èŠ‚ç‚¹çš„å¸ƒå°”å‹å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english string value of item @~chinese ×Ó½ÚµãµÄ×Ö·û´®ÀàĞÍÖµ
+    * @return @~english string value of item @~chinese å­èŠ‚ç‚¹çš„å­—ç¬¦ä¸²ç±»å‹å€¼
     */
     const char* getStringValue_json(const rapidjson::Value& root, const char* key, const char *def = NULL);
     /**
     * @~english Get the size of a child json array from the root node.
-    * @~chinese »ñÈ¡¸ù½ÚµãÏÂÒ»¸öÊı×éĞÍ×Ó½ÚµãµÄÊı×é´óĞ¡.
+    * @~chinese è·å–æ ¹èŠ‚ç‚¹ä¸‹ä¸€ä¸ªæ•°ç»„å‹å­èŠ‚ç‚¹çš„æ•°ç»„å¤§å°.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english size of child json array @~chinese ×ÓjsonÊı×éµÄ´óĞ¡
+    * @return @~english size of child json array @~chinese å­jsonæ•°ç»„çš„å¤§å°
     */
     int   getArrayCount_json(const rapidjson::Value& root, const char* key, int def = 0);
 
     /**
     * @~english Get the integer value at desired index of a child array item from the root node.
-    * @~chinese »ñÈ¡Ò»¸ö×ÓjsonÊı×éÖĞÖ¸¶¨Î»ÖÃ½ÚµãµÄÕûĞÍÖµ.
+    * @~chinese è·å–ä¸€ä¸ªå­jsonæ•°ç»„ä¸­æŒ‡å®šä½ç½®èŠ‚ç‚¹çš„æ•´å‹å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @parame idx    @~english index of item in child json @~chinese Ä¿±ê¶ÔÏóÔÚ×ÓjsonÊı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of item in child json @~chinese ç›®æ ‡å¯¹è±¡åœ¨å­jsonæ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english integer value of item @~chinese Ä¿±êÏîµÄÕûĞÍÖµ
+    * @return @~english integer value of item @~chinese ç›®æ ‡é¡¹çš„æ•´å‹å€¼
     */
     int   getIntValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, int def = 0);
     /**
     * @~english Get the float value at desired index of a child array item from the root node.
-    * @~chinese »ñÈ¡Ò»¸ö×ÓjsonÊı×éÖĞÖ¸¶¨Î»ÖÃ½ÚµãµÄ¸¡µãĞÍÖµ.
+    * @~chinese è·å–ä¸€ä¸ªå­jsonæ•°ç»„ä¸­æŒ‡å®šä½ç½®èŠ‚ç‚¹çš„æµ®ç‚¹å‹å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @parame idx    @~english index of item in child json @~chinese Ä¿±ê¶ÔÏóÔÚ×ÓjsonÊı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of item in child json @~chinese ç›®æ ‡å¯¹è±¡åœ¨å­jsonæ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english float value of item @~chinese Ä¿±êÏîµÄ¸¡µãĞÍÖµ
+    * @return @~english float value of item @~chinese ç›®æ ‡é¡¹çš„æµ®ç‚¹å‹å€¼
     */
     float getFloatValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, float def = 0.0f);
     /**
     * @~english Get the boolean value at desired index of a child array item from the root node.
-    * @~chinese »ñÈ¡Ò»¸ö×ÓjsonÊı×éÖĞÖ¸¶¨Î»ÖÃ½ÚµãµÄ²¼¶ûĞÍÖµ.
+    * @~chinese è·å–ä¸€ä¸ªå­jsonæ•°ç»„ä¸­æŒ‡å®šä½ç½®èŠ‚ç‚¹çš„å¸ƒå°”å‹å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @parame idx    @~english index of item in child json @~chinese Ä¿±ê¶ÔÏóÔÚ×ÓjsonÊı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of item in child json @~chinese ç›®æ ‡å¯¹è±¡åœ¨å­jsonæ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english boolean value of item @~chinese Ä¿±êÏîµÄ²¼¶ûĞÍÖµ
+    * @return @~english boolean value of item @~chinese ç›®æ ‡é¡¹çš„å¸ƒå°”å‹å€¼
     */
     bool  getBoolValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, bool def = false);
     /**
     * @~english Get the string value at desired index of a child array item from the root node.
-    * @~chinese »ñÈ¡Ò»¸ö×ÓjsonÊı×éÖĞÖ¸¶¨Î»ÖÃ½ÚµãµÄ×Ö·û´®Öµ.
+    * @~chinese è·å–ä¸€ä¸ªå­jsonæ•°ç»„ä¸­æŒ‡å®šä½ç½®èŠ‚ç‚¹çš„å­—ç¬¦ä¸²å€¼.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @parame idx    @~english index of item in child json @~chinese Ä¿±ê¶ÔÏóÔÚ×ÓjsonÊı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of item in child json @~chinese ç›®æ ‡å¯¹è±¡åœ¨å­jsonæ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
     * @parame def    @~english default value to be returned if child not found
-    *                @~chinese Èç¹û×Ó½Úµã²»´æÔÚ·µ»ØµÄÄ¬ÈÏÖµ
+    *                @~chinese å¦‚æœå­èŠ‚ç‚¹ä¸å­˜åœ¨è¿”å›çš„é»˜è®¤å€¼
     *
-    * @return @~english string value of item @~chinese Ä¿±êÏîµÄ×Ö·û´®Öµ
+    * @return @~english string value of item @~chinese ç›®æ ‡é¡¹çš„å­—ç¬¦ä¸²å€¼
     */
     const char* getStringValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, const char *def = NULL);
     /**
     * @~english Get the child json item at desired index of a child array item from the root node.
-    * @~chinese »ñÈ¡Ò»¸öjsonÊı×éÖĞÖ¸¶¨Î»ÖÃµÄjsonÏî.
+    * @~chinese è·å–ä¸€ä¸ªjsonæ•°ç»„ä¸­æŒ‡å®šä½ç½®çš„jsoné¡¹.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×ÓjsonÌõÄ¿µÄ¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­jsonæ¡ç›®çš„é”®å€¼
     *
-    * @parame idx    @~english index of item in child json @~chinese Ä¿±ê¶ÔÏóÔÚ×ÓjsonÊı×éÖĞµÄË÷ÒıÖµ
+    * @parame idx    @~english index of item in child json @~chinese ç›®æ ‡å¯¹è±¡åœ¨å­jsonæ•°ç»„ä¸­çš„ç´¢å¼•å€¼
     *
-    * @return @~english child json item @~chinese ×ÓjsonÏî
+    * @return @~english child json item @~chinese å­jsoné¡¹
     */
     const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key, int idx);
 
     /**
     * @~english Check whether a json item is valid or not.
-    * @~chinese ¼ì²âjsonÏîÊÇ·ñÓĞĞ§.
+    * @~chinese æ£€æµ‹jsoné¡¹æ˜¯å¦æœ‰æ•ˆ.
     *
-    * @parame root   @~english json node to be check @~chinese  ´ı¼ì²âµÄjsonÏî
+    * @parame root   @~english json node to be check @~chinese  å¾…æ£€æµ‹çš„jsoné¡¹
     *
-    * @return @~english if the item is valid @~chinese ´ı¼ì²âÏîÊÇ·ñÓĞĞ§
+    * @return @~english if the item is valid @~chinese å¾…æ£€æµ‹é¡¹æ˜¯å¦æœ‰æ•ˆ
     */
     bool checkObjectExist_json(const rapidjson::Value &root);
     /**
     * @~english Check whether a json item is valid or not.
-    * @~chinese ¼ì²âjsonÏîÊÇ·ñÓĞĞ§.
+    * @~chinese æ£€æµ‹jsoné¡¹æ˜¯å¦æœ‰æ•ˆ.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame key    @~english key of child json item @~chinese ×Ó½Úµã¼üÖµ
+    * @parame key    @~english key of child json item @~chinese å­èŠ‚ç‚¹é”®å€¼
     *
-    * @return @~english if the item is valid @~chinese ´ı¼ì²âÏîÊÇ·ñÓĞĞ§
+    * @return @~english if the item is valid @~chinese å¾…æ£€æµ‹é¡¹æ˜¯å¦æœ‰æ•ˆ
     */
     bool checkObjectExist_json(const rapidjson::Value &root, const char* key);
     /**
     * @~english Check whether a json item is valid or not.
-    * @~chinese ¼ì²âjsonÏîÊÇ·ñÓĞĞ§.
+    * @~chinese æ£€æµ‹jsoné¡¹æ˜¯å¦æœ‰æ•ˆ.
     *
-    * @parame root   @~english root node of json @~chinese json¸ù½Úµã
+    * @parame root   @~english root node of json @~chinese jsonæ ¹èŠ‚ç‚¹
     *
-    * @parame idx    @~english index of child item @~chinese ×Ó½ÚµãË÷Òı
+    * @parame idx    @~english index of child item @~chinese å­èŠ‚ç‚¹ç´¢å¼•
     *
-    * @return @~english if the item is valid @~chinese ´ı¼ì²âÏîÊÇ·ñÓĞĞ§
+    * @return @~english if the item is valid @~chinese å¾…æ£€æµ‹é¡¹æ˜¯å¦æœ‰æ•ˆ
     */
     bool checkObjectExist_json(const rapidjson::Value &root, int index);
 };

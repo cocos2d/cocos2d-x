@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -36,7 +36,7 @@ class Bone;
 
 /**
  *  @~english DisplayManager manages Bone's display
- * @~chinese ÏÔÊ¾¹ÜÀíÆ÷£¬¹ÜÀí¹ÇÍ·µÄÏÔÊ¾¡£
+ * @~chinese æ˜¾ç¤ºç®¡ç†å™¨ï¼Œç®¡ç†éª¨å¤´çš„æ˜¾ç¤ºã€‚
  *  @js NA
  *  @lua NA
  */
@@ -55,10 +55,10 @@ public:
      * @~english Use BoneData to init the display list.
      * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point.
      * If the display is a Armature, then create a new Armature.
-     * @~chinese Ê¹ÓÃ¹ÇÍ·Êı¾İÀ´³õÊ¼»¯ÏÔÊ¾ÁĞ±í¡£Èç¹ûÏÔÊ¾Îª¾«Áé²¢ÇÒÆäÔÚ²ÄÖÊÊı¾İÖĞÓĞ²ÄÖÊĞÅÏ¢£¬
-     * ÄÇÃ´Ê¹ÓÃ²ÄÖÊÊı¾İ³õÊ¼»¯ÏÔÊ¾µÄÃªµã¡£Èç¹ûÏÔÊ¾Îª¹Ç÷À£¬ÄÇÃ´´´½¨Ò»Ì×ĞÂ¹Ç÷À¡£
+     * @~chinese ä½¿ç”¨éª¨å¤´æ•°æ®æ¥åˆå§‹åŒ–æ˜¾ç¤ºåˆ—è¡¨ã€‚å¦‚æœæ˜¾ç¤ºä¸ºç²¾çµå¹¶ä¸”å…¶åœ¨æè´¨æ•°æ®ä¸­æœ‰æè´¨ä¿¡æ¯ï¼Œ
+     * é‚£ä¹ˆä½¿ç”¨æè´¨æ•°æ®åˆå§‹åŒ–æ˜¾ç¤ºçš„é”šç‚¹ã€‚å¦‚æœæ˜¾ç¤ºä¸ºéª¨éª¼ï¼Œé‚£ä¹ˆåˆ›å»ºä¸€å¥—æ–°éª¨éª¼ã€‚
      * @param boneData @~english Bone data.
-     * @~chinese ¹Ç÷ÀÊı¾İ¡£
+     * @~chinese éª¨éª¼æ•°æ®ã€‚
      */
     virtual void initDisplayList(BoneData *boneData);
 
@@ -66,17 +66,17 @@ public:
      * @~english Add display and use  _DisplayData init the display.
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
-     * @~chinese Ìí¼ÓÏÔÊ¾²¢Ê¹ÓÃ_DisplayDataÀ´³õÊ¼»¯ÏÔÊ¾¡£Èç¹ûË÷Òı´¦ÒÑ¾­ÓĞÏÔÊ¾£¬Ôò½«Æä¸²¸Ç¡£
-     * Èç¹ûË÷ÒıÎªµ±Ç°ÏÔÊ¾Ë÷Òı£¬ÔòÍ¬Ê±½«ÏÔÊ¾¸ü¸ÄÎª_index´¦ÏÔÊ¾¡£
+     * @~chinese æ·»åŠ æ˜¾ç¤ºå¹¶ä½¿ç”¨_DisplayDataæ¥åˆå§‹åŒ–æ˜¾ç¤ºã€‚å¦‚æœç´¢å¼•å¤„å·²ç»æœ‰æ˜¾ç¤ºï¼Œåˆ™å°†å…¶è¦†ç›–ã€‚
+     * å¦‚æœç´¢å¼•ä¸ºå½“å‰æ˜¾ç¤ºç´¢å¼•ï¼Œåˆ™åŒæ—¶å°†æ˜¾ç¤ºæ›´æ”¹ä¸º_indexå¤„æ˜¾ç¤ºã€‚
      *
      *	@param 	displayData @~english it include the display information, like DisplayType.
      *					If you want to create a sprite display, then create a `SpriteDisplayData` param
-     * @~chinese ÏÔÊ¾Êı¾İ£¬°üº¬ÏÔÊ¾ĞÅÏ¢£¬ÀıÈçÏÔÊ¾ÖÖÀà¡£
-     * Òª´´½¨Ò»¸ö¾«ÁéÏÔÊ¾£¬Ôò´´½¨Ò»¸ö`SpriteDisplayData`²ÎÊı¡£
+     * @~chinese æ˜¾ç¤ºæ•°æ®ï¼ŒåŒ…å«æ˜¾ç¤ºä¿¡æ¯ï¼Œä¾‹å¦‚æ˜¾ç¤ºç§ç±»ã€‚
+     * è¦åˆ›å»ºä¸€ä¸ªç²¾çµæ˜¾ç¤ºï¼Œåˆ™åˆ›å»ºä¸€ä¸ª`SpriteDisplayData`å‚æ•°ã€‚
      *
      *	@param 	index @~english the index of the display you want to replace or add to
      *					-1 : append display from back
-     * @~chinese ÒªÌí¼Ó»ò¸²¸ÇµÄÏÔÊ¾µÄË÷Òı¡£Îª-1Ê±½«ÏÔÊ¾Ìí¼ÓÖÁ×îºó
+     * @~chinese è¦æ·»åŠ æˆ–è¦†ç›–çš„æ˜¾ç¤ºçš„ç´¢å¼•ã€‚ä¸º-1æ—¶å°†æ˜¾ç¤ºæ·»åŠ è‡³æœ€å
      */
     void addDisplay(DisplayData *displayData, int index);
 
@@ -84,30 +84,30 @@ public:
     * @~english Add node and use node to init the display.
     * If index already have a display, then replace it.
     * If index is current display index, then also change display to _index
-    * @~chinese Îª¹ÇÍ·Ôö¼Ó½Úµã£¬²¢Ê¹ÓÃ½ÚµãÀ´³õÊ¼»¯ÏÔÊ¾ĞÔ¡£
-    * Èç¹ûË÷Òı´¦ÒÑÓĞÏÔÊ¾£¬Ôò½«Æä¸²¸Ç¡£
-    * Èç¹ûË÷ÒıÎªµ±Ç°ÏÔÊ¾Ë÷Òı£¬ÔòÍ¬Ê±½«ÏÔÊ¾¸ü¸ÄÎª_index´¦ÏÔÊ¾¡£
+    * @~chinese ä¸ºéª¨å¤´å¢åŠ èŠ‚ç‚¹ï¼Œå¹¶ä½¿ç”¨èŠ‚ç‚¹æ¥åˆå§‹åŒ–æ˜¾ç¤ºæ€§ã€‚
+    * å¦‚æœç´¢å¼•å¤„å·²æœ‰æ˜¾ç¤ºï¼Œåˆ™å°†å…¶è¦†ç›–ã€‚
+    * å¦‚æœç´¢å¼•ä¸ºå½“å‰æ˜¾ç¤ºç´¢å¼•ï¼Œåˆ™åŒæ—¶å°†æ˜¾ç¤ºæ›´æ”¹ä¸º_indexå¤„æ˜¾ç¤ºã€‚
     * @param display @~english The node to add.
-    * @~chinese ÒªÌí¼ÓµÄ½Úµã¡£
+    * @~chinese è¦æ·»åŠ çš„èŠ‚ç‚¹ã€‚
     * @param index @~english The index of the display you want to replace or add to
     *          -1 : append display from back
-    * @~chinese ÒªÌí¼Ó»ò¸²¸ÇµÄÏÔÊ¾µÄË÷Òı¡£Îª-1Ê±½«ÏÔÊ¾Ìí¼ÓÖÁ×îºó¡£
+    * @~chinese è¦æ·»åŠ æˆ–è¦†ç›–çš„æ˜¾ç¤ºçš„ç´¢å¼•ã€‚ä¸º-1æ—¶å°†æ˜¾ç¤ºæ·»åŠ è‡³æœ€åã€‚
     */
     void addDisplay(cocos2d::Node *display, int index);
 
     /**
     * @~english Remove a display.
-    * @~chinese Îª¹ÇÍ·ÒÆ³ıÏÔÊ¾¡£
+    * @~chinese ä¸ºéª¨å¤´ç§»é™¤æ˜¾ç¤ºã€‚
     * @param index @~english The index of the display you want to remove.
-    * @~chinese ÒªÒÆ³ıµÄÏÔÊ¾µÄË÷Òı¡£
+    * @~chinese è¦ç§»é™¤çš„æ˜¾ç¤ºçš„ç´¢å¼•ã€‚
     */
     void removeDisplay(int index);
 
     /**
     * @~english Get list of decorative display.
-    * @~chinese »ñµÃ×°ÊÎÏÔÊ¾ÁĞ±í¡£
+    * @~chinese è·å¾—è£…é¥°æ˜¾ç¤ºåˆ—è¡¨ã€‚
     * @return @~english The list of decorative display.
-    * @~chinese ×°ÊÎÏÔÊ¾ÁĞ±í¡£
+    * @~chinese è£…é¥°æ˜¾ç¤ºåˆ—è¡¨ã€‚
     */
     const cocos2d::Vector<DecorativeDisplay*>& getDecorativeDisplayList() const;
 
@@ -122,13 +122,13 @@ public:
      *
      * Note : if index is the same with prev index, the method will not effect.
      *
-     * @~chinese Í¨¹ıË÷Òı¸Ä±äÏÔÊ¾¡£¿ÉÒÔÍ¨¹ı´Ë·½·¨¸Ä±äÏÔÊ¾ÁĞ±íÖĞµÄÏÔÊ¾¡£
-     * ÏÔÊ¾ÁĞ±í½öÎªµ±Ç°¹ÇÍ·Ê¹ÓÃ£¬ÊÇ¿ÉÔÚÃ¿Ö¡ÖĞÊ¹ÓÃµÄÏÔÊ¾¡£
+     * @~chinese é€šè¿‡ç´¢å¼•æ”¹å˜æ˜¾ç¤ºã€‚å¯ä»¥é€šè¿‡æ­¤æ–¹æ³•æ”¹å˜æ˜¾ç¤ºåˆ—è¡¨ä¸­çš„æ˜¾ç¤ºã€‚
+     * æ˜¾ç¤ºåˆ—è¡¨ä»…ä¸ºå½“å‰éª¨å¤´ä½¿ç”¨ï¼Œæ˜¯å¯åœ¨æ¯å¸§ä¸­ä½¿ç”¨çš„æ˜¾ç¤ºã€‚
      *
      * @param index @~english The index of the display you want to change
-     * @~chinese Òª¸Ä±äµÄÏÔÊ¾µÄË÷Òı¡£
+     * @~chinese è¦æ”¹å˜çš„æ˜¾ç¤ºçš„ç´¢å¼•ã€‚
      * @param force @~english If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
-     * @~chinese Èç¹ûÎªÕæ£¬Ç¿ÖÆ½«ÏÔÊ¾¸ÄÎªÖ¸¶¨µÄÏÔÊ¾£¬»òÕßµ±Ç°µÄÏÔÊ¾»á±»ÉèÖÃÎªÔÚflashÖĞÃ¿¸ö¹Ø¼üÖ¡ÖĞ±à¼­µÄÏÔÊ¾Ë÷ÒıÖµ¡£
+     * @~chinese å¦‚æœä¸ºçœŸï¼Œå¼ºåˆ¶å°†æ˜¾ç¤ºæ”¹ä¸ºæŒ‡å®šçš„æ˜¾ç¤ºï¼Œæˆ–è€…å½“å‰çš„æ˜¾ç¤ºä¼šè¢«è®¾ç½®ä¸ºåœ¨flashä¸­æ¯ä¸ªå…³é”®å¸§ä¸­ç¼–è¾‘çš„æ˜¾ç¤ºç´¢å¼•å€¼ã€‚
      */
     void changeDisplayWithIndex(int index, bool force);
 
@@ -138,79 +138,79 @@ public:
     *
     * Note : if index is the same with prev index, the method will not effect.
     *
-    * @~chinese Í¨¹ıÃû³Æ¸Ä±äÏÔÊ¾¡£¿ÉÒÔÍ¨¹ı´Ë·½·¨¸Ä±äÏÔÊ¾ÁĞ±íÖĞµÄÏÔÊ¾¡£
-    * ÏÔÊ¾ÁĞ±í½öÎªµ±Ç°¹ÇÍ·Ê¹ÓÃ£¬ÊÇ¿ÉÔÚÃ¿Ö¡ÖĞÊ¹ÓÃµÄÏÔÊ¾¡£
+    * @~chinese é€šè¿‡åç§°æ”¹å˜æ˜¾ç¤ºã€‚å¯ä»¥é€šè¿‡æ­¤æ–¹æ³•æ”¹å˜æ˜¾ç¤ºåˆ—è¡¨ä¸­çš„æ˜¾ç¤ºã€‚
+    * æ˜¾ç¤ºåˆ—è¡¨ä»…ä¸ºå½“å‰éª¨å¤´ä½¿ç”¨ï¼Œæ˜¯å¯åœ¨æ¯å¸§ä¸­ä½¿ç”¨çš„æ˜¾ç¤ºã€‚
     *
     * @param name @~english The name of the display you want to change
-    * @~chinese Òª¸Ä±äµÄÏÔÊ¾µÄÃû³Æ¡£
+    * @~chinese è¦æ”¹å˜çš„æ˜¾ç¤ºçš„åç§°ã€‚
     * @param force @~english If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
-    * @~chinese Èç¹ûÎªÕæ£¬Ç¿ÖÆ½«ÏÔÊ¾¸ÄÎªÖ¸¶¨µÄÏÔÊ¾£¬»òÕßµ±Ç°µÄÏÔÊ¾»á±»ÉèÖÃÎªÔÚflashÖĞÃ¿¸ö¹Ø¼üÖ¡ÖĞ±à¼­µÄÏÔÊ¾Ë÷ÒıÖµ¡£
+    * @~chinese å¦‚æœä¸ºçœŸï¼Œå¼ºåˆ¶å°†æ˜¾ç¤ºæ”¹ä¸ºæŒ‡å®šçš„æ˜¾ç¤ºï¼Œæˆ–è€…å½“å‰çš„æ˜¾ç¤ºä¼šè¢«è®¾ç½®ä¸ºåœ¨flashä¸­æ¯ä¸ªå…³é”®å¸§ä¸­ç¼–è¾‘çš„æ˜¾ç¤ºç´¢å¼•å€¼ã€‚
     */
     void changeDisplayWithName(const std::string& name, bool force);
 
     /**
     * @~english Get display render node.
-    * @~chinese »ñµÃÏÔÊ¾äÖÈ¾½Úµã¡£
+    * @~chinese è·å¾—æ˜¾ç¤ºæ¸²æŸ“èŠ‚ç‚¹ã€‚
     * @return @~english The display render node.
-    * @~chinese ÏÔÊ¾äÖÈ¾½Úµã¡£
+    * @~chinese æ˜¾ç¤ºæ¸²æŸ“èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node *getDisplayRenderNode() const;
     /**
     * @~english Get type of display render node.
-    * @~chinese »ñµÃÏÔÊ¾äÖÈ¾½ÚµãÀàĞÍ¡£
+    * @~chinese è·å¾—æ˜¾ç¤ºæ¸²æŸ“èŠ‚ç‚¹ç±»å‹ã€‚
     * @return @~english The type of display render node.
-    * @~chinese ÏÔÊ¾äÖÈ¾½ÚµãÀàĞÍ¡£
+    * @~chinese æ˜¾ç¤ºæ¸²æŸ“èŠ‚ç‚¹ç±»å‹ã€‚
     */
     DisplayType getDisplayRenderNodeType() const;
 
     /**
     * @~english Get current display index.
-    * @~chinese »ñµÃµ±Ç°ÏÔÊ¾Ë÷Òı¡£
+    * @~chinese è·å¾—å½“å‰æ˜¾ç¤ºç´¢å¼•ã€‚
     * @return @~english Current display index.
-    * @~chinese ÏÔÊ¾µ±Ç°ÏÔÊ¾Ë÷Òı¡£
+    * @~chinese æ˜¾ç¤ºå½“å‰æ˜¾ç¤ºç´¢å¼•ã€‚
     */
     int getCurrentDisplayIndex() const;
 
     /**
     * @~english Set current decorative display.
-    * @~chinese ÉèÖÃµ±Ç°×°ÊÎÏÔÊ¾¡£
+    * @~chinese è®¾ç½®å½“å‰è£…é¥°æ˜¾ç¤ºã€‚
     * @param decoDisplay @~english Current decorative display.
-    * @~chinese µ±Ç°×°ÊÎÏÔÊ¾¡£
+    * @~chinese å½“å‰è£…é¥°æ˜¾ç¤ºã€‚
     */
     virtual void setCurrentDecorativeDisplay(DecorativeDisplay *decoDisplay);
     /**
     * @~english Get current decorative display.
-    * @~chinese »ñÈ¡µ±Ç°×°ÊÎÏÔÊ¾¡£
+    * @~chinese è·å–å½“å‰è£…é¥°æ˜¾ç¤ºã€‚
     * @return @~english Current decorative display.
-    * @~chinese µ±Ç°×°ÊÎÏÔÊ¾¡£
+    * @~chinese å½“å‰è£…é¥°æ˜¾ç¤ºã€‚
     */
     virtual DecorativeDisplay *getCurrentDecorativeDisplay() const;
     /**
     * @~english Get current decorative display by index.
-    * @~chinese Í¨¹ıË÷Òı»ñÈ¡µ±Ç°×°ÊÎÏÔÊ¾¡£
+    * @~chinese é€šè¿‡ç´¢å¼•è·å–å½“å‰è£…é¥°æ˜¾ç¤ºã€‚
     * @param index @~english Index of display.
-    * @~chinese ÏÔÊ¾µÄË÷Òı¡£
+    * @~chinese æ˜¾ç¤ºçš„ç´¢å¼•ã€‚
     * @return @~english Current decorative display.
-    * @~chinese µ±Ç°×°ÊÎÏÔÊ¾¡£
+    * @~chinese å½“å‰è£…é¥°æ˜¾ç¤ºã€‚
     */
     virtual DecorativeDisplay *getDecorativeDisplayByIndex(int index) const;
 
     /**
      * @~english Sets whether the display is visible.
      * The default value is true, a node is default to visible.
-     * @~chinese ÉèÖÃÏÔÊ¾ÊÇ·ñ¿É¼û¡£Ä¬ÈÏºÍ½ÚµãÒ»ÑùÎª¿É¼û¡£
+     * @~chinese è®¾ç½®æ˜¾ç¤ºæ˜¯å¦å¯è§ã€‚é»˜è®¤å’ŒèŠ‚ç‚¹ä¸€æ ·ä¸ºå¯è§ã€‚
      *
      * @param visible @~english True if the node is visible, false if the node is hidden.
-     * @~chinese ½Úµã¿É¼ûÊ±ÎªÕæ£¬·ñÔòÎª¼Ù¡£
+     * @~chinese èŠ‚ç‚¹å¯è§æ—¶ä¸ºçœŸï¼Œå¦åˆ™ä¸ºå‡ã€‚
      */
     virtual void setVisible(bool visible);
     /**
      * @~english Determines if the display is visible
-     * @~chinese ¼ì²éÏÔÊ¾ÊÇ·ñ¿É¼û¡£
+     * @~chinese æ£€æŸ¥æ˜¾ç¤ºæ˜¯å¦å¯è§ã€‚
      *
      * @see setVisible(bool)
      * @return @~english true if the node is visible, false if the node is hidden.
-     * @~chinese ½Úµã¿É¼ûÊ±ÎªÕæ£¬·ñÔòÎª¼Ù¡£
+     * @~chinese èŠ‚ç‚¹å¯è§æ—¶ä¸ºçœŸï¼Œå¦åˆ™ä¸ºå‡ã€‚
      */
     virtual bool isVisible() const;
 
@@ -234,34 +234,34 @@ public:
 
     /**
     * @~english Check if the position is inside the bone.
-    * @~chinese ¼ì²éÎ»ÖÃµã×ø±êÊÇ·ñÔÚ¹ÇÍ·ÖĞ¡£
+    * @~chinese æ£€æŸ¥ä½ç½®ç‚¹åæ ‡æ˜¯å¦åœ¨éª¨å¤´ä¸­ã€‚
     * @param _point @~english The point to be checked.
-    * @~chinese Òª¼ì²éµÄµã¡£
+    * @~chinese è¦æ£€æŸ¥çš„ç‚¹ã€‚
     */
     virtual bool containPoint(cocos2d::Vec2 &_point);
 
     /**
      * @~english Check if the position is inside the bone.
-     * @~chinese ¼ì²éÎ»ÖÃµã×ø±êÊÇ·ñÔÚ¹ÇÍ·ÖĞ¡£
+     * @~chinese æ£€æŸ¥ä½ç½®ç‚¹åæ ‡æ˜¯å¦åœ¨éª¨å¤´ä¸­ã€‚
      * @param x @~english The x of point to be checked.
-     * @~chinese Òª¼ì²éµÄµãx×ø±ê¡£
+     * @~chinese è¦æ£€æŸ¥çš„ç‚¹xåæ ‡ã€‚
      * @param y @~english The y of point to be checked.
-     * @~chinese Òª¼ì²éµÄµãy×ø±ê¡£
+     * @~chinese è¦æ£€æŸ¥çš„ç‚¹yåæ ‡ã€‚
      */
     virtual bool containPoint(float x, float y);
 
     /**
     * @~english Set force change display.
-    * @~chinese ÉèÖÃÊÇ·ñÇ¿ÖÆ¸Ä±äÏÔÊ¾¡£
+    * @~chinese è®¾ç½®æ˜¯å¦å¼ºåˆ¶æ”¹å˜æ˜¾ç¤ºã€‚
     * @param force @~english Is force change display.
-    * @~chinese ÊÇ·ñÇ¿ÖÆ¸Ä±äÏÔÊ¾¡£
+    * @~chinese æ˜¯å¦å¼ºåˆ¶æ”¹å˜æ˜¾ç¤ºã€‚
     */
     virtual void setForceChangeDisplay(bool force) { _forceChangeDisplay = force; }
     /**
     * @~english Get force change display.
-    * @~chinese ÊÇ·ñÇ¿ÖÆ¸Ä±äÏÔÊ¾¡£
+    * @~chinese æ˜¯å¦å¼ºåˆ¶æ”¹å˜æ˜¾ç¤ºã€‚
     * @return @~english Is force change display.
-    * @~chinese ÊÇ·ñÇ¿ÖÆ¸Ä±äÏÔÊ¾¡£
+    * @~chinese æ˜¯å¦å¼ºåˆ¶æ”¹å˜æ˜¾ç¤ºã€‚
     */
     virtual bool isForceChangeDisplay() const { return _forceChangeDisplay; }
 protected:

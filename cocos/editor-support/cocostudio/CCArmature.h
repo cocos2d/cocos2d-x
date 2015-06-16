@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -75,31 +75,31 @@ public:
 
     /**
     * @~english Allocates and initializes an armature.
-    * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯¹Ç÷À¶¯»­¶ÔÏó¡£
+    * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–éª¨éª¼åŠ¨ç”»å¯¹è±¡ã€‚
     * @return @~english An initialized armature which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯¹ı²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ¹Ç÷À¶¯»­¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–è¿‡å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„éª¨éª¼åŠ¨ç”»å¯¹è±¡ã€‚
     */
     static Armature *create();
 
     /**
     * @~english Allocates an armature, and use the `ArmatureData` named name in `ArmatureDataManager` to initializes the armature.
-    * @~chinese ·ÖÅä¹Ç÷À¶¯»­¶ÔÏó£¬²¢Ê¹ÓÃ`ArmatureDataManager`ÖĞÒÔnameÃüÃûµÄ`ArmatureData`¶ÔÆä½øĞĞ³õÊ¼»¯¡£
+    * @~chinese åˆ†é…éª¨éª¼åŠ¨ç”»å¯¹è±¡ï¼Œå¹¶ä½¿ç”¨`ArmatureDataManager`ä¸­ä»¥nameå‘½åçš„`ArmatureData`å¯¹å…¶è¿›è¡Œåˆå§‹åŒ–ã€‚
     * @param name  @~english Armature will use the name to find the `ArmatureData` to initializes it.
-    * @~chinese ¹Ç÷À½«ÒÔ¸ÃnameÀ´²éÕÒ`ArmatureData`À´¶Ô¹Ç÷À½øĞĞ³õÊ¼»¯¡£
+    * @~chinese éª¨éª¼å°†ä»¥è¯¥nameæ¥æŸ¥æ‰¾`ArmatureData`æ¥å¯¹éª¨éª¼è¿›è¡Œåˆå§‹åŒ–ã€‚
     * @return @~english An initialized armature which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯¹ı²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ¹Ç÷À¶¯»­¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–è¿‡å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„éª¨éª¼åŠ¨ç”»å¯¹è±¡ã€‚
     */
     static Armature *create(const std::string& name);
 
     /**
     * @~english Allocates an armature, and use the `ArmatureData` named name in `ArmatureDataManager` to initializes the armature.
-    * @~chinese ·ÖÅä¹Ç÷À¶¯»­¶ÔÏó£¬²¢Ê¹ÓÃ`ArmatureDataManager`ÖĞÒÔnameÃüÃûµÄ`ArmatureData`¶ÔÆä½øĞĞ³õÊ¼»¯¡£
+    * @~chinese åˆ†é…éª¨éª¼åŠ¨ç”»å¯¹è±¡ï¼Œå¹¶ä½¿ç”¨`ArmatureDataManager`ä¸­ä»¥nameå‘½åçš„`ArmatureData`å¯¹å…¶è¿›è¡Œåˆå§‹åŒ–ã€‚
     * @param name  @~english Armature will use the name to find the `ArmatureData` to initializes it.
-    * @~chinese ¹Ç÷À½«ÒÔnameÀ´²éÕÒ`ArmatureData`À´¶Ô¹Ç÷À½øĞĞ³õÊ¼»¯¡£
+    * @~chinese éª¨éª¼å°†ä»¥nameæ¥æŸ¥æ‰¾`ArmatureData`æ¥å¯¹éª¨éª¼è¿›è¡Œåˆå§‹åŒ–ã€‚
     * @param parentBone  @~english The armature will set the parentBone as its parent.
-    * @~chinese ¹Ç÷À½«ÒÔparentBone×÷Îª¸¸¹ÇÍ·¡£
+    * @~chinese éª¨éª¼å°†ä»¥parentBoneä½œä¸ºçˆ¶éª¨å¤´ã€‚
     * @return @~english An initialized armature which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯¹ı²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ¹Ç÷À¶¯»­¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–è¿‡å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„éª¨éª¼åŠ¨ç”»å¯¹è±¡ã€‚
     */
     static Armature *create(const std::string& name, Bone *parentBone);
 
@@ -117,85 +117,85 @@ public:
 
     /**
     * @~english Init an armature with specified name.
-    * @~chinese ÓÃÖ¸¶¨µÄÃû³Æ³õÊ¼»¯¹Ç÷À¡£
+    * @~chinese ç”¨æŒ‡å®šçš„åç§°åˆå§‹åŒ–éª¨éª¼ã€‚
     * @param name @~english Armature name.
-    * @~chinese ¹Ç÷ÀÃû³Æ¡£
+    * @~chinese éª¨éª¼åç§°ã€‚
     */
     virtual bool init(const std::string& name);
 
     /**
     * @~english Init an armature with specified name.
-    * @~chinese ÓÃÖ¸¶¨µÄÃû³Æ³õÊ¼»¯¹Ç÷À¡£
+    * @~chinese ç”¨æŒ‡å®šçš„åç§°åˆå§‹åŒ–éª¨éª¼ã€‚
     * @param name @~english Armature name.
-    * @~chinese ¹Ç÷ÀÃû³Æ¡£
+    * @~chinese éª¨éª¼åç§°ã€‚
     * @param parentBone @~english The armature will set the parentBone as its parent.
-    * @~chinese ¹Ç÷À½«ÒÔ¸Ã²ÎÊı×÷Îª¸¸¹ÇÍ·¡£
+    * @~chinese éª¨éª¼å°†ä»¥è¯¥å‚æ•°ä½œä¸ºçˆ¶éª¨å¤´ã€‚
     */
     virtual bool init(const std::string& name, Bone *parentBone);
 
     /**
      * @~english Add a bone to this Armature.
-     * @~chinese ½«Ò»¶Î¹ÇÍ·Ìí¼ÓÖÁ¹Ç÷ÀÖĞ¡£
+     * @~chinese å°†ä¸€æ®µéª¨å¤´æ·»åŠ è‡³éª¨éª¼ä¸­ã€‚
      * @param bone  @~english The bone you want to add to Armature.
-     * @~chinese ÒªÌí¼ÓµÄ¹ÇÍ·¡£
+     * @~chinese è¦æ·»åŠ çš„éª¨å¤´ã€‚
      * @param parentName @~english The parent Bone's name you want to add to. If it's nullptr, then set Armature to its parent.
-     * @~chinese ÒÔ¸Ã²ÎÊı×÷ÎªÃû³ÆµÄ¹ÇÍ·½«×÷Îª¹ÇÍ·±»Ìí¼ÓºóµÄ¸¸¹ÇÍ·¡£Èç¹û¸Ã²ÎÊıÎª¿Õ£¬¹ÇÍ·±»Ìí¼Óºó½«ÒÔ¹Ç÷À×÷Îª¸¸¹ÇÍ·¡£
+     * @~chinese ä»¥è¯¥å‚æ•°ä½œä¸ºåç§°çš„éª¨å¤´å°†ä½œä¸ºéª¨å¤´è¢«æ·»åŠ åçš„çˆ¶éª¨å¤´ã€‚å¦‚æœè¯¥å‚æ•°ä¸ºç©ºï¼Œéª¨å¤´è¢«æ·»åŠ åå°†ä»¥éª¨éª¼ä½œä¸ºçˆ¶éª¨å¤´ã€‚
      */
     virtual void addBone(Bone *bone, const std::string& parentName);
 
     /**
      * @~english Get a bone with the specified name.
-     * @~chinese ÒÔÖ¸¶¨µÄÃû³Æ»ñÈ¡Ò»¶Î¹ÇÍ·¡£
+     * @~chinese ä»¥æŒ‡å®šçš„åç§°è·å–ä¸€æ®µéª¨å¤´ã€‚
      * @param name @~english The bone's name you want to get.
-     * @~chinese Òª»ñÈ¡¹ÇÍ·µÄÃû³Æ¡£
+     * @~chinese è¦è·å–éª¨å¤´çš„åç§°ã€‚
      */
     virtual Bone *getBone(const std::string& name) const;
 
     /**
      * @~english Change a bone's parent with the specified parent name.
-     * @~chinese ¸ù¾İÖ¸¶¨µÄÃû³Æ£¬¸ü¸ÄÒ»¶Î¹ÇÍ·µÄ¸¸¹ÇÍ·¡£
+     * @~chinese æ ¹æ®æŒ‡å®šçš„åç§°ï¼Œæ›´æ”¹ä¸€æ®µéª¨å¤´çš„çˆ¶éª¨å¤´ã€‚
      * @param bone @~english The bone you want to change parent.
-     * @~chinese Òª¸ü¸ÄµÄÒ»¶Î¹ÇÍ·¡£
+     * @~chinese è¦æ›´æ”¹çš„ä¸€æ®µéª¨å¤´ã€‚
      * @param parentName @~english The new parent's name.
-     * @~chinese ĞÂ¸¸¹ÇÍ·µÄÃû³Æ¡£
+     * @~chinese æ–°çˆ¶éª¨å¤´çš„åç§°ã€‚
      */
     virtual void changeBoneParent(Bone *bone, const std::string& parentName);
 
     /**
      * @~english Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
-     * @~chinese ¸ù¾İÖ¸¶¨µÄÃû³Æ£¬ÒÆ³ıÒ»¶Î¹ÇÍ·¡£¸ù¾İ²ÎÊı£¬½«»á¾ö¶¨ÊÇ·ñ¶Ô×Ó¹ÇÍ·½øĞĞµİ¹éÒÆ³ı¡£
+     * @~chinese æ ¹æ®æŒ‡å®šçš„åç§°ï¼Œç§»é™¤ä¸€æ®µéª¨å¤´ã€‚æ ¹æ®å‚æ•°ï¼Œå°†ä¼šå†³å®šæ˜¯å¦å¯¹å­éª¨å¤´è¿›è¡Œé€’å½’ç§»é™¤ã€‚
      * @param bone @~english The bone you want to remove.
-     * @~chinese ÒªÒÆ³ıµÄ¹ÇÍ·¡£
+     * @~chinese è¦ç§»é™¤çš„éª¨å¤´ã€‚
      * @param recursion @~english Determine whether remove the bone's child recursion.
-     * @~chinese ÊÇ·ñµİ¹éÒÆ³ı¡£
+     * @~chinese æ˜¯å¦é€’å½’ç§»é™¤ã€‚
      */
     virtual void removeBone(Bone *bone, bool recursion);
 
     /**
      * @~english Get Armature's bone dictionary.
-     * @~chinese »ñÈ¡¹ÇÍ·ÁĞ±í¡£
+     * @~chinese è·å–éª¨å¤´åˆ—è¡¨ã€‚
      * @return @~english Armature's bone dictionary.
-     * @~chinese ¹ÇÍ·ÁĞ±í¡£
+     * @~chinese éª¨å¤´åˆ—è¡¨ã€‚
      */
     const cocos2d::Map<std::string, Bone*>& getBoneDic() const;
 
     /**
     * @~english Get armature's boundingBox by calculating all bones' boundingBox.
-    * @~chinese Í¨¹ı¼ÆËãËùÓĞ¹ÇÍ·µÄÍâ±ß¿ò£¬µÃµ½ÕûÌ×¹Ç÷ÀµÄÍâ±ß¿ò¡£
+    * @~chinese é€šè¿‡è®¡ç®—æ‰€æœ‰éª¨å¤´çš„å¤–è¾¹æ¡†ï¼Œå¾—åˆ°æ•´å¥—éª¨éª¼çš„å¤–è¾¹æ¡†ã€‚
     * @return @~english Armature's boundingBox.
-    * @~chinese ¹Ç÷ÀµÄÍâ±ß¿ò¡£
+    * @~chinese éª¨éª¼çš„å¤–è¾¹æ¡†ã€‚
     */
     virtual cocos2d::Rect getBoundingBox() const override;
 
     /**
     * @~english Get a bone containing the specified point.
-    * @~chinese »ñÈ¡Ò»¶Î°üº¬Ö¸¶¨×ø±êµãµÄ¹ÇÍ·¡£
+    * @~chinese è·å–ä¸€æ®µåŒ…å«æŒ‡å®šåæ ‡ç‚¹çš„éª¨å¤´ã€‚
     * @param x @~english Specified point x.
-    * @~chinese Ö¸¶¨µãµÄX×ø±ê¡£
+    * @~chinese æŒ‡å®šç‚¹çš„Xåæ ‡ã€‚
     * @param y @~english Specified point y.
-    * @~chinese Ö¸¶¨µãµÄY×ø±ê¡£
+    * @~chinese æŒ‡å®šç‚¹çš„Yåæ ‡ã€‚
     * @return @~english The bone containing the specified point, if no bone found, return null.
-    * @~chinese °üº¬¸ÃµãµÄ¹Ç÷À£¬Èç¹ûÃ»ÓĞ¹Ç÷À±»ÕÒµ½£¬·µ»Ø¿Õ¡£
+    * @~chinese åŒ…å«è¯¥ç‚¹çš„éª¨éª¼ï¼Œå¦‚æœæ²¡æœ‰éª¨éª¼è¢«æ‰¾åˆ°ï¼Œè¿”å›ç©ºã€‚
     */
     Bone *getBoneAtPoint(float x, float y) const;
 
@@ -212,7 +212,7 @@ public:
 
     /**
      * @~english Set contentsize and Calculate anchor point.
-     * @~chinese ÉèÖÃ´óĞ¡²¢¼ÆËãÃªµã¡£
+     * @~chinese è®¾ç½®å¤§å°å¹¶è®¡ç®—é”šç‚¹ã€‚
      */
     virtual void updateOffsetPoint();
     virtual void setAnchorPoint(const cocos2d::Vec2& point) override;
@@ -220,31 +220,31 @@ public:
 
     /**
     * @~english Get offset points of bones.
-    * @~chinese »ñÈ¡¹ÇÍ·µÄ×ø±êÆ«ÒÆÁ¿¡£
+    * @~chinese è·å–éª¨å¤´çš„åæ ‡åç§»é‡ã€‚
     */
     virtual const cocos2d::Vec2& getOffsetPoints() const;
 
     /**
     * @~english Set animation for armature.
-    * @~chinese Îª¹Ç÷ÀÉèÖÃ¶¯»­¡£
+    * @~chinese ä¸ºéª¨éª¼è®¾ç½®åŠ¨ç”»ã€‚
     * @param animation @~english Armature animation.
-    * @~chinese ¹Ç÷À¶¯»­¡£
+    * @~chinese éª¨éª¼åŠ¨ç”»ã€‚
     */
     virtual void setAnimation(ArmatureAnimation *animation);
 
     /**
     * @~english Get animation of armature.
-    * @~chinese »ñµÃ¹Ç÷ÀÉèÖÃµÄ¶¯»­¡£
+    * @~chinese è·å¾—éª¨éª¼è®¾ç½®çš„åŠ¨ç”»ã€‚
     * @return @~english Animation of armature.
-    * @~chinese ¹Ç÷À¶¯»­¡£
+    * @~chinese éª¨éª¼åŠ¨ç”»ã€‚
     */
     virtual ArmatureAnimation *getAnimation() const;
 
     /**
     * @~english Get is the armature is transformed.
-    * @~chinese »ñµÃ¹Ç÷ÀÊÇ·ñÒÑ¾­½øĞĞ×ø±ê±ä»»¡£
+    * @~chinese è·å¾—éª¨éª¼æ˜¯å¦å·²ç»è¿›è¡Œåæ ‡å˜æ¢ã€‚
     * @return @~english Is the armature is transformed.
-    * @~chinese ¹Ç÷ÀÊÇ·ñÒÑ¾­½øĞĞ×ø±ê±ä»»¡£
+    * @~chinese éª¨éª¼æ˜¯å¦å·²ç»è¿›è¡Œåæ ‡å˜æ¢ã€‚
     */
     virtual bool getArmatureTransformDirty() const;
 
@@ -257,65 +257,65 @@ public:
 
     /**
     * @~english Set armature data for armature.
-    * @~chinese Îª¹Ç÷ÀÉèÖÃÊı¾İ¡£
+    * @~chinese ä¸ºéª¨éª¼è®¾ç½®æ•°æ®ã€‚
     * @param armatureData @~english Armature data.
-    * @~chinese ¹Ç÷ÀÊı¾İ¡£
+    * @~chinese éª¨éª¼æ•°æ®ã€‚
     */
     virtual void setArmatureData(ArmatureData *armatureData) { _armatureData = armatureData; }
 
     /**
     * @~english Get armature data of armature.
-    * @~chinese »ñÈ¡¹Ç÷ÀÊı¾İ¡£
+    * @~chinese è·å–éª¨éª¼æ•°æ®ã€‚
     * @return @~english Armature data.
-    * @~chinese ¹Ç÷ÀÊı¾İ¡£
+    * @~chinese éª¨éª¼æ•°æ®ã€‚
     */
     virtual ArmatureData *getArmatureData() const { return _armatureData; }
 
     /**
     * @~english Set parent bone for armature.
-    * @~chinese Îª¹Ç÷ÀÉèÖÃ¸¸¹ÇÍ·¡£
+    * @~chinese ä¸ºéª¨éª¼è®¾ç½®çˆ¶éª¨å¤´ã€‚
     * @param parentBone @~english Parent bone.
-    * @~chinese ¸¸¹ÇÍ·¡£
+    * @~chinese çˆ¶éª¨å¤´ã€‚
     */
     virtual void setParentBone(Bone *parentBone);
 
     /**
     * @~english Get parent bone of armature.
-    * @~chinese »ñÈ¡¹Ç÷ÀµÄ¸¸¹ÇÍ·¡£
+    * @~chinese è·å–éª¨éª¼çš„çˆ¶éª¨å¤´ã€‚
     * @return @~english Parent bone.
-    * @~chinese ¹Ç÷ÀÊı¾İ¡£
+    * @~chinese éª¨éª¼æ•°æ®ã€‚
     */
     virtual Bone *getParentBone() const;
 
     /**
     * @~english Set version for armature.
-    * @~chinese Îª¹Ç÷ÀÉèÖÃ°æ±¾ºÅ¡£
+    * @~chinese ä¸ºéª¨éª¼è®¾ç½®ç‰ˆæœ¬å·ã€‚
     * @param version @~english Armature version.
-    * @~chinese ¹Ç÷À°æ±¾ºÅ¡£
+    * @~chinese éª¨éª¼ç‰ˆæœ¬å·ã€‚
     */
     virtual void setVersion(float version) { _version = version; }
 
     /**
     * @~english Get version of armature.
-    * @~chinese »ñÈ¡¹Ç÷ÀµÄ°æ±¾ºÅ¡£
+    * @~chinese è·å–éª¨éª¼çš„ç‰ˆæœ¬å·ã€‚
     * @return @~english Armature version.
-    * @~chinese ¹Ç÷À°æ±¾ºÅ¡£
+    * @~chinese éª¨éª¼ç‰ˆæœ¬å·ã€‚
     */
     virtual float getVersion() const { return _version; }
 
     /**
     * @~english Set BatchNode for armature.
-    * @~chinese Îª¹Ç÷ÀÉèÖÃÅú´Î½Úµã¡£
+    * @~chinese ä¸ºéª¨éª¼è®¾ç½®æ‰¹æ¬¡èŠ‚ç‚¹ã€‚
     * @param batchNode @~english BatchNode.
-    * @~chinese Åú´Î½Úµã¡£
+    * @~chinese æ‰¹æ¬¡èŠ‚ç‚¹ã€‚
     */
     virtual void setBatchNode(BatchNode *batchNode) { _batchNode = batchNode; }
 
     /**
     * @~english Get BatchNode of armature.
-    * @~chinese »ñÈ¡¹Ç÷ÀµÄÅú´Î½Úµã¡£
+    * @~chinese è·å–éª¨éª¼çš„æ‰¹æ¬¡èŠ‚ç‚¹ã€‚
     * @return @~english BatchNode.
-    * @~chinese Åú´Î½Úµã¡£
+    * @~chinese æ‰¹æ¬¡èŠ‚ç‚¹ã€‚
     */
     virtual BatchNode *getBatchNode() const { return _batchNode; }
 

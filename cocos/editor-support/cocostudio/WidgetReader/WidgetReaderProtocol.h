@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -54,22 +54,22 @@ namespace cocostudio
 
         /**
         * @~english Set properties to widget from a json description object
-        * @~chinese ¸ù¾İjsonÃèÊöÉèÖÃUI×é¼şÊôĞÔ
+        * @~chinese æ ¹æ®jsonæè¿°è®¾ç½®UIç»„ä»¶å±æ€§
         *
-        * @parame widget    @~english widget to be config @~chinese ÒªÉèÖÃµÄ×é¼ş
+        * @parame widget    @~english widget to be config @~chinese è¦è®¾ç½®çš„ç»„ä»¶
         *
-        * @parame options   @~english json object contain the description of properties @~chinese °üº¬ÊôĞÔĞÅÏ¢µÄjson¶ÔÏó
+        * @parame options   @~english json object contain the description of properties @~chinese åŒ…å«å±æ€§ä¿¡æ¯çš„jsonå¯¹è±¡
         */
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
         /**
         * @~english Set properties to widget from a binary description data
-        * @~chinese ¸ù¾İ¶ş½øÖÆÃèÊöÊı¾İÉèÖÃUI×é¼şÊôĞÔ
+        * @~chinese æ ¹æ®äºŒè¿›åˆ¶æè¿°æ•°æ®è®¾ç½®UIç»„ä»¶å±æ€§
         *
-        * @parame widget    @~english widget to be config @~chinese ÒªÉèÖÃµÄ×é¼ş
+        * @parame widget    @~english widget to be config @~chinese è¦è®¾ç½®çš„ç»„ä»¶
         *
-        * @parame cocoLoader  @~english property loader @~chinese ÊôĞÔ¶ÁÈ¡Æ÷
+        * @parame cocoLoader  @~english property loader @~chinese å±æ€§è¯»å–å™¨
         *
-        * @parame pCocoNode   @~english custorm nodes @~chinese ÓÃ»§×Ô¶¨ÒåÀ©Õ¹½Úµã
+        * @parame pCocoNode   @~english custorm nodes @~chinese ç”¨æˆ·è‡ªå®šä¹‰æ‰©å±•èŠ‚ç‚¹
         */
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode) = 0;
     };

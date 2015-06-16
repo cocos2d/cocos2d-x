@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -38,51 +38,51 @@ class TriggerObj;
 /** 
  * @class ArmatureMovementDispatcher
  * @brief @~english Armature action state dispatcher.
- * @~chinese  ArmatureÔËĞĞ×´Ì¬ÊÂ¼ş·Ö·¢Æ÷¡£
+ * @~chinese  Armatureè¿è¡ŒçŠ¶æ€äº‹ä»¶åˆ†å‘å™¨ã€‚
 */
 class CC_STUDIO_DLL ArmatureMovementDispatcher : public cocos2d::Ref
 {
 public:
     /**
      * @brief @~english ArmatureMovementDispatcher constructor.
-     * @~chinese ArmatureMovementDispatcher¹¹Ôìº¯Êı¡£
+     * @~chinese ArmatureMovementDispatcheræ„é€ å‡½æ•°ã€‚
      */
     ArmatureMovementDispatcher(void);
     /**
      * @brief @~english ArmatureMovementDispatcher destructor.
-     * @~chinese ArmatureMovementDispatcherÎö¹¹º¯Êı¡£
+     * @~chinese ArmatureMovementDispatcherææ„å‡½æ•°ã€‚
      */
     ~ArmatureMovementDispatcher(void);
 public:
     /**
      * @brief @~english Add armature event callback function to trigger object.
-     * @~chinese Îª´¥·¢Æ÷¶ÔÏóÔö¼ÓÊÂ¼ş»Øµ÷¡£
+     * @~chinese ä¸ºè§¦å‘å™¨å¯¹è±¡å¢åŠ äº‹ä»¶å›è°ƒã€‚
      * @param pTarget @~english Trigger object point.
-     * @~chinese ´¥·¢Æ÷¶ÔÏóÖ¸Õë¡£
+     * @~chinese è§¦å‘å™¨å¯¹è±¡æŒ‡é’ˆã€‚
      * @param mecf @~english Callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      */
     void addAnimationEventCallBack(cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
 
     /**
      * @brief @~english Remove armature event callback function from trigger object.
-     * @~chinese Îª´¥·¢Æ÷¶ÔÏóÒÆ³ıÊÂ¼ş»Øµ÷¡£
+     * @~chinese ä¸ºè§¦å‘å™¨å¯¹è±¡ç§»é™¤äº‹ä»¶å›è°ƒã€‚
      * @param pTarget @~english Trigger object point.
-     * @~chinese ´¥·¢Æ÷¶ÔÏóÖ¸Õë¡£
+     * @~chinese è§¦å‘å™¨å¯¹è±¡æŒ‡é’ˆã€‚
      * @param mecf @~english Callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      */
     void removeAnnimationEventCallBack(cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
 
     /**
      * @brief @~english Animation event callback function.
-     * @~chinese ArmatureÊÂ¼ş»Øµ÷µÄ·½·¨¡£
+     * @~chinese Armatureäº‹ä»¶å›è°ƒçš„æ–¹æ³•ã€‚
      * @param armature @~english Armature object point.
-     * @~chinese 1.x¹Ç÷À¶¯»­¶ÔÏóÖ¸Õë¡£
+     * @~chinese 1.xéª¨éª¼åŠ¨ç”»å¯¹è±¡æŒ‡é’ˆã€‚
      * @param movementType @~english Armature movement type.
-     * @~chinese 1.x¹Ç÷À¶¯»­ÒÆ¶¯ÀàĞÍ¡£
+     * @~chinese 1.xéª¨éª¼åŠ¨ç”»ç§»åŠ¨ç±»å‹ã€‚
      * @param movementID @~english Armature movement action id.
-     * @~chinese 1.x¹Ç÷À¶¯»­¶¯×÷ID¡£
+     * @~chinese 1.xéª¨éª¼åŠ¨ç”»åŠ¨ä½œIDã€‚
      */
     void animationEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
     
@@ -94,191 +94,191 @@ private:
 /** 
  * @class TriggerMng
  * @brief @~english Trigger manager.
- * @~chinese  ArmatureÔËĞĞ×´Ì¬ÊÂ¼ş·Ö·¢Æ÷¡£
+ * @~chinese  Armatureè¿è¡ŒçŠ¶æ€äº‹ä»¶åˆ†å‘å™¨ã€‚
 */
 class CC_STUDIO_DLL TriggerMng
 {
 public:
     /**
      * @brief @~english TriggerMng constructor.
-     * @~chinese TriggerMng¹¹Ôìº¯Êı¡£
+     * @~chinese TriggerMngæ„é€ å‡½æ•°ã€‚
      */
     TriggerMng(void);
 
     /**
      * @brief @~english TriggerMng destructor.
-     * @~chinese TriggerMngÎö¹¹º¯Êı¡£
+     * @~chinese TriggerMngææ„å‡½æ•°ã€‚
      */
     virtual ~TriggerMng(void);
 
 public:
     /**
      * @brief @~english Get instance point of TriggerMng.
-     * @~chinese TriggerMngµ¥ÀıÖ¸Õë¡£
+     * @~chinese TriggerMngå•ä¾‹æŒ‡é’ˆã€‚
      */
     static TriggerMng* getInstance();
 
     /**
      * @brief @~english Destroy instance point of TriggerMng.
-     * @~chinese Ïú»ÙTriggerMngµ¥ÀıÖ¸Õë¡£
+     * @~chinese é”€æ¯TriggerMngå•ä¾‹æŒ‡é’ˆã€‚
      */
     static void destroyInstance();
 
     /**
      * @brief @~english Get version string of TriggerMng.
-     * @~chinese TriggerMng°æ±¾ºÅ×Ö·û´®¡£
+     * @~chinese TriggerMngç‰ˆæœ¬å·å­—ç¬¦ä¸²ã€‚
      */
     static const char* triggerMngVersion();
     
 public:
      /**
      * @brief @~english Parse export json data of cocos studio 1.x Scene Editor.
-     * @~chinese ½âÎöcocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öjsonÊı¾İ¡£
+     * @~chinese è§£æcocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºjsonæ•°æ®ã€‚
      * @param root @~english json data object
-     * @~chinese jsonÊı¾İ¶ÔÏó¡£
+     * @~chinese jsonæ•°æ®å¯¹è±¡ã€‚
      */
     void parse(const rapidjson::Value &root);
 
     /**
      * @brief @~english Parse binary data of cocos studio 1.x scene editor.
-     * @~chinese ½âÎöcocos studio 1.xµ¼³öµÄ¶ş½øÖÆÊı¾İ¡£
+     * @~chinese è§£æcocos studio 1.xå¯¼å‡ºçš„äºŒè¿›åˆ¶æ•°æ®ã€‚
      * @param pCocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param pCocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      */
     void parse(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
 
     /**
      * @brief @~english remove all triggers.
-     * @~chinese ÒÆ³ıËùÓĞ´¥·¢Æ÷¡£
+     * @~chinese ç§»é™¤æ‰€æœ‰è§¦å‘å™¨ã€‚
      */
     void removeAll(void);
 
     /**
      * @brief @~english Get triggers with event id.
-     * @~chinese ¸ù¾İ´¥·¢Æ÷ÊÂ¼şid,»ñÈ¡°ó¶¨µ½Õâ¸öidÉÏµÄËùÓĞ´¥·¢Æ÷¡£
+     * @~chinese æ ¹æ®è§¦å‘å™¨äº‹ä»¶id,è·å–ç»‘å®šåˆ°è¿™ä¸ªidä¸Šçš„æ‰€æœ‰è§¦å‘å™¨ã€‚
      * @param event @~english Event id.
-     * @~chinese ÊÂ¼şid¡£
+     * @~chinese äº‹ä»¶idã€‚
      * @return @~english Trigger vector.
-     * @~chinese ´¥·¢Æ÷Êı×é¡£
+     * @~chinese è§¦å‘å™¨æ•°ç»„ã€‚
      */
     cocos2d::Vector<TriggerObj*>* get(unsigned int event) const;
 
     /**
      * @brief @~english Get trigger with trigger id.
-     * @~chinese ¸ù¾İ´¥·¢Æ÷id,»ñÈ¡´¥·¢Æ÷¡£
+     * @~chinese æ ¹æ®è§¦å‘å™¨id,è·å–è§¦å‘å™¨ã€‚
      * @param id @~english Trigger unique id.
-     * @~chinese ´¥·¢Æ÷Î¨Ò»id¡£
+     * @~chinese è§¦å‘å™¨å”¯ä¸€idã€‚
      * @return @~english Trigger point.
-     * @~chinese »ñÈ¡´¥·¢Æ÷Ö¸Õë¡£
+     * @~chinese è·å–è§¦å‘å™¨æŒ‡é’ˆã€‚
      */
     TriggerObj* getTriggerObj(unsigned int id) const;
 
     /**
      * @brief @~english Remove trigger with trigger point.
-     * @~chinese ¸ù¾İ´¥·¢Æ÷Ö¸Õë£¬ÒÆ³ı´¥·¢Æ÷¡£
+     * @~chinese æ ¹æ®è§¦å‘å™¨æŒ‡é’ˆï¼Œç§»é™¤è§¦å‘å™¨ã€‚
      * @param Obj @~english Trigger point.
-     * @~chinese ´¥·¢Æ÷Ö¸Õë¡£
+     * @~chinese è§¦å‘å™¨æŒ‡é’ˆã€‚
      * @return @~english true remove successfully false failed to remove .
-     * @~chinese true³É¹¦ÒÆ³ı£¬·ñÔòfalse¡£
+     * @~chinese trueæˆåŠŸç§»é™¤ï¼Œå¦åˆ™falseã€‚
      */
     bool removeTriggerObj(TriggerObj *Obj);
 
     /**
      * @brief @~english Remove trigger with trigger unique id.
-     * @~chinese ¸ù¾İ´¥·¢Æ÷id£¬ÒÆ³ı´¥·¢Æ÷¡£
+     * @~chinese æ ¹æ®è§¦å‘å™¨idï¼Œç§»é™¤è§¦å‘å™¨ã€‚
      * @param id @~english Trigger unique id.
-     * @~chinese ´¥·¢Æ÷Î¨Ò»id¡£
+     * @~chinese è§¦å‘å™¨å”¯ä¸€idã€‚
      * @return @~english true remove successfully false failed to remove .
-     * @~chinese true³É¹¦ÒÆ³ı£¬·ñÔòfalse¡£
+     * @~chinese trueæˆåŠŸç§»é™¤ï¼Œå¦åˆ™falseã€‚
      */
     bool removeTriggerObj(unsigned int id);
 
     /** @brief @~english Returns whether _triggerObjs is empty (i.e. whether its size is 0).
-     * @~chinese ·µ»Ø_triggerObjs VectorÊÇ·ñÎª¿Õ(¼´ÎŞÂÛÆä´óĞ¡Îª0)¡£
+     * @~chinese è¿”å›_triggerObjs Vectoræ˜¯å¦ä¸ºç©º(å³æ— è®ºå…¶å¤§å°ä¸º0)ã€‚
      * @return @~english true _triggerObjs isn't empty false empty .
-     * @~chinese true Ã»ÓĞ´¥·¢Æ÷£¬·ñÔòfalse¡£
+     * @~chinese true æ²¡æœ‰è§¦å‘å™¨ï¼Œå¦åˆ™falseã€‚
      */
     bool isEmpty(void) const;
 
     /**
      * @brief @~english Add armature event callback to trigger object.
-     * @~chinese Îª´¥·¢Æ÷¶ÔÏóÔö¼ÓÊÂ¼ş»Øµ÷¡£
+     * @~chinese ä¸ºè§¦å‘å™¨å¯¹è±¡å¢åŠ äº‹ä»¶å›è°ƒã€‚
      * @param pTarget @~english Trigger object point.
-     * @~chinese ´¥·¢Æ÷¶ÔÏóÖ¸Õë¡£
+     * @~chinese è§¦å‘å™¨å¯¹è±¡æŒ‡é’ˆã€‚
      * @param mecf @~english Callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      */
     void addArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
 
     /**
      * @brief @~english Remove armature event callback function with armature point, trigger point, callback function.
-     * @~chinese Îª´¥·¢Æ÷¶ÔÏóÒÆ³ıÊÂ¼ş»Øµ÷¡£
+     * @~chinese ä¸ºè§¦å‘å™¨å¯¹è±¡ç§»é™¤äº‹ä»¶å›è°ƒã€‚
      * @param pTarget @~english Trigger object point.
-     * @~chinese ´¥·¢Æ÷¶ÔÏóÖ¸Õë¡£
+     * @~chinese è§¦å‘å™¨å¯¹è±¡æŒ‡é’ˆã€‚
      * @param mecf @~english Callback function.
-     * @~chinese »Øµ÷º¯Êı¡£
+     * @~chinese å›è°ƒå‡½æ•°ã€‚
      */
     void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
 
     /**
      * @brief @~english Remove all event callback functions binding to armature point.
-     * @~chinese ÒÆ³ı°ó¶¨µ½ArmatureËùÓĞÊÂ¼ş»Øµ÷¡£
+     * @~chinese ç§»é™¤ç»‘å®šåˆ°Armatureæ‰€æœ‰äº‹ä»¶å›è°ƒã€‚
      * @param pAr @~english Armature point.
-     * @~chinese 1.x¹Ç÷À¶¯»­Ö¸Õë¡£
+     * @~chinese 1.xéª¨éª¼åŠ¨ç”»æŒ‡é’ˆã€‚
      */
     void removeArmatureAllMovementCallBack(Armature *pAr);
 
     /**
      * @brief @~english Remove all armature event callback functions. 
-     * @~chinese ÒÆ³ıArmatureËùÓĞÊÂ¼ş»Øµ÷¡£
+     * @~chinese ç§»é™¤Armatureæ‰€æœ‰äº‹ä»¶å›è°ƒã€‚
      */
     void removeAllArmatureMovementCallBack();
 
     /**
      * @brief @~english Dispatch trigger events. 
-     * @~chinese  ·Ö·¢´¥·¢Æ÷ÊÂ¼ş¡£
+     * @~chinese  åˆ†å‘è§¦å‘å™¨äº‹ä»¶ã€‚
      * @param tEvent @~english Trigger event.
-     * @~chinese ´¥·¢Æ÷ÊÂ¼ş¡£
+     * @~chinese è§¦å‘å™¨äº‹ä»¶ã€‚
      */
     void dispatchEvent(cocos2d::EventCustom* tEvent);
 
     /**
      * @brief @~english Remove trigger event listener. 
-     * @~chinese ÒÆ³ı´¥·¢Æ÷ÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese ç§»é™¤è§¦å‘å™¨äº‹ä»¶ç›‘å¬å™¨ã€‚
      * @param listener @~english Trigger event listener.
-     * @~chinese ´¥·¢Æ÷ÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese è§¦å‘å™¨äº‹ä»¶ç›‘å¬å™¨ã€‚
      */
     void removeEventListener(cocos2d::EventListener* listener);
 
     /**
      * @brief @~english Add a trigger event listener with the fixed priority.
-     * @~chinese Ôö¼Ó´¥·¢Æ÷ÊÂ¼ş¼àÌıÆ÷£¬²¢Ö¸¶¨ÓÅÏÈ¼¶¡£
+     * @~chinese å¢åŠ è§¦å‘å™¨äº‹ä»¶ç›‘å¬å™¨ï¼Œå¹¶æŒ‡å®šä¼˜å…ˆçº§ã€‚
      * @param listener @~english Trigger event listener.
-     * @~chinese ´¥·¢Æ÷ÊÂ¼ş¼àÌıÆ÷¡£
+     * @~chinese è§¦å‘å™¨äº‹ä»¶ç›‘å¬å™¨ã€‚
      * @param fixedPriority @~english The fixed priority of the listener
-     * @~chinese ¼àÌıÆ÷ÓÅÏÈ¼¶
+     * @~chinese ç›‘å¬å™¨ä¼˜å…ˆçº§
      */
     void addEventListenerWithFixedPriority(cocos2d::EventListener* listener, int fixedPriority);
 
 private:
     /**
-    @Ö÷Ìâ ¸ù¾İcocos studio 1.xµ¼³öµÄ¶ş½øÖÆ¶ÔÏó×ª»»Îªjson¶ÔÏó£¬ÓÃÓÚluaµ÷ÓÃ
-    @²ÎÊı document json¶ÔÏó
-    @²ÎÊı pCocoLoader cocos studio 1.xµ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó
-    @²ÎÊı pCocoNode cocos studio 1.xµ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó
-    @·µ»Ø ÎŞ
+    @ä¸»é¢˜ æ ¹æ®cocos studio 1.xå¯¼å‡ºçš„äºŒè¿›åˆ¶å¯¹è±¡è½¬æ¢ä¸ºjsonå¯¹è±¡ï¼Œç”¨äºluaè°ƒç”¨
+    @å‚æ•° document jsonå¯¹è±¡
+    @å‚æ•° pCocoLoader cocos studio 1.xå¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡
+    @å‚æ•° pCocoNode cocos studio 1.xå¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡
+    @è¿”å› æ— 
     */
     /**
      * @brief @~english Transform binary object into a json object, assign to document.
-     * @~chinese ¸ù¾İcocos studio 1.xµ¼³öµÄ¶ş½øÖÆ¶ÔÏó×ª»»Îªjson¶ÔÏó£¬²¢¸³Öµ¸ødocument¡£
+     * @~chinese æ ¹æ®cocos studio 1.xå¯¼å‡ºçš„äºŒè¿›åˆ¶å¯¹è±¡è½¬æ¢ä¸ºjsonå¯¹è±¡ï¼Œå¹¶èµ‹å€¼ç»™documentã€‚
      * @param document @~english Json data object
-     * @~chinese jsonÊı¾İ¶ÔÏó¡£
+     * @~chinese jsonæ•°æ®å¯¹è±¡ã€‚
      * @param pCocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param pCocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      */
     void buildJson(rapidjson::Document &document, cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
 

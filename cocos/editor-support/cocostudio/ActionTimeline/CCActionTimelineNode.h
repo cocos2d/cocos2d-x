@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -44,39 +44,39 @@ public:
     bool init() override;
 
     /** @~english Initialize with root node and actiontimeline.
-    *   @~chinese Ê¹ÓÃ¸ù½ÚµãºÍÊ±¼äÖá¶¯»­³õÊ¼»¯¡£
+    *   @~chinese ä½¿ç”¨æ ¹èŠ‚ç‚¹å’Œæ—¶é—´è½´åŠ¨ç”»åˆå§‹åŒ–ã€‚
     * @param root @~english Root node.
-    * @~chinese ¸ù½Úµã¡£
+    * @~chinese æ ¹èŠ‚ç‚¹ã€‚
     * @param action @~english Action time line.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     * @return @~english Is init succeed.
-    * @~chinese ÊÇ·ñ³õÊ¼»¯³É¹¦¡£
+    * @~chinese æ˜¯å¦åˆå§‹åŒ–æˆåŠŸã€‚
     */
     bool init(cocos2d::Node* root, ActionTimeline* action);
     
     /** @~english Set root node.
-    *   @~chinese ÉèÖÃ¸ù½Úµã¡£
+    *   @~chinese è®¾ç½®æ ¹èŠ‚ç‚¹ã€‚
     * @param root @~english Root node.
-    * @~chinese ¸ù½Úµã¡£
+    * @~chinese æ ¹èŠ‚ç‚¹ã€‚
     */
     virtual void setRoot(cocos2d::Node* root);
     /** @~english Get root node.
-    *   @~chinese »ñÈ¡¸ù½Úµã¡£
+    *   @~chinese è·å–æ ¹èŠ‚ç‚¹ã€‚
     * @return @~english Root node.
-    * @~chinese ¸ù½Úµã¡£
+    * @~chinese æ ¹èŠ‚ç‚¹ã€‚
     */
     virtual cocos2d::Node* getRoot();
     
     /** @~english Set action time line.
-    *   @~chinese ÉèÖÃÊ±¼äÖá¶¯»­¡£
+    *   @~chinese è®¾ç½®æ—¶é—´è½´åŠ¨ç”»ã€‚
     * @param action @~english Action time line.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     virtual void setActionTimeline(ActionTimeline* action);
     /** @~english Get action time line.
-    *   @~chinese »ñÈ¡Ê±¼äÖá¶¯»­¡£
+    *   @~chinese è·å–æ—¶é—´è½´åŠ¨ç”»ã€‚
     * @return @~english Action time line.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     virtual ActionTimeline* getActionTimeline();
     

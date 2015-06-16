@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -95,32 +95,32 @@ public:
 
     /**
     * @~english Get singleton.
-    * @~chinese »ñÈ¡µ¥Àı¡£
+    * @~chinese è·å–å•ä¾‹ã€‚
     * @return @~english Singleton of `DataReaderHelper`.
-    * @~chinese Êı¾İ¶ÁÈ¡Æ÷µÄµ¥Àı¡£
+    * @~chinese æ•°æ®è¯»å–å™¨çš„å•ä¾‹ã€‚
     */
 	static DataReaderHelper *getInstance();
 
     /**
      * @~english Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
-     * @~chinese Ëõ·ÅÎ»ÖÃÊı¾İ£¬×÷ÓÃÓÚ¶à·Ö±æÂÊÊÊÅä¡£ÔÚÒÑ¾­¶ÁÈ¡µÄÊı¾İÉÏ²»Æğ×÷ÓÃ¡£
+     * @~chinese ç¼©æ”¾ä½ç½®æ•°æ®ï¼Œä½œç”¨äºå¤šåˆ†è¾¨ç‡é€‚é…ã€‚åœ¨å·²ç»è¯»å–çš„æ•°æ®ä¸Šä¸èµ·ä½œç”¨ã€‚
      * @param scale @~english The scale for position data.
-     * @~chinese Î»ÖÃÊı¾İËõ·ÅÖµ¡£
+     * @~chinese ä½ç½®æ•°æ®ç¼©æ”¾å€¼ã€‚
      */
     static void setPositionReadScale(float scale);
     /**
     * @~english Get the scale for the position data, used for multiresolution adapter
     * It won't effect the data already read.
-    * @~chinese »ñÈ¡Î»ÖÃÊı¾İµÄËõ·ÅÖµ£¬×÷ÓÃÓÚ¶à·Ö±æÂÊÊÊÅä¡£ÔÚÒÑ¾­¶ÁÈ¡µÄÊı¾İÉÏ²»Æğ×÷ÓÃ¡£
+    * @~chinese è·å–ä½ç½®æ•°æ®çš„ç¼©æ”¾å€¼ï¼Œä½œç”¨äºå¤šåˆ†è¾¨ç‡é€‚é…ã€‚åœ¨å·²ç»è¯»å–çš„æ•°æ®ä¸Šä¸èµ·ä½œç”¨ã€‚
     * @return @~english The scale for position data.
-    * @~chinese Î»ÖÃÊı¾İËõ·ÅÖµ¡£
+    * @~chinese ä½ç½®æ•°æ®ç¼©æ”¾å€¼ã€‚
     */
     static float getPositionReadScale();
 
     /**
     * @~english Clear and destory singleton.
-    * @~chinese ÍË³ö²¢Ïú»Ùµ¥Àı¡£
+    * @~chinese é€€å‡ºå¹¶é”€æ¯å•ä¾‹ã€‚
     */
     static void purge();
 public:
@@ -136,31 +136,31 @@ public:
 
     /**
     * @~english Add data from file.
-    * @~chinese ´ÓÎÄ¼ş¶ÁÈ¡²¢Ìí¼ÓÊı¾İ¡£
+    * @~chinese ä»æ–‡ä»¶è¯»å–å¹¶æ·»åŠ æ•°æ®ã€‚
     * @param filePath @~english The path of file.
-    * @~chinese ÎÄ¼şµÄÂ·¾¶¡£
+    * @~chinese æ–‡ä»¶çš„è·¯å¾„ã€‚
     */
     void addDataFromFile(const std::string& filePath);
 
     /**
     * @~english Add data from file asynchronous.
-    * @~chinese Òì²½´ÓÎÄ¼ş¶ÁÈ¡²¢Ìí¼ÓÊı¾İ¡£
+    * @~chinese å¼‚æ­¥ä»æ–‡ä»¶è¯»å–å¹¶æ·»åŠ æ•°æ®ã€‚
     * @param filePath @~english The path of file.
-    * @~chinese ÎÄ¼şµÄÂ·¾¶¡£
+    * @~chinese æ–‡ä»¶çš„è·¯å¾„ã€‚
     */
     void addDataFromFileAsync(const std::string& imagePath, const std::string& plistPath, const std::string& filePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
     * @~english Add data callback asynchronous.
-    * @~chinese Òì²½Ìí¼ÓÊı¾İ»Øµ÷¡£
+    * @~chinese å¼‚æ­¥æ·»åŠ æ•°æ®å›è°ƒã€‚
     */
     void addDataAsyncCallBack(float dt);
 
     /**
     * @~english Remove config file.
-    * @~chinese ÒÆ³ı¿ØÖÆÎÄ¼ş¡£
+    * @~chinese ç§»é™¤æ§åˆ¶æ–‡ä»¶ã€‚
     * @param configFile @~english The path of config file.
-    * @~chinese ¿ØÖÆÎÄ¼şµÄÂ·¾¶¡£
+    * @~chinese æ§åˆ¶æ–‡ä»¶çš„è·¯å¾„ã€‚
     */
     void removeConfigFile(const std::string& configFile);
 public:
@@ -168,12 +168,12 @@ public:
     /**
      * @~english Translate XML export from Dragon Bone flash tool to datas, and save them.
      * When you add a new xml, the data already saved will be keeped.
-     * @~chinese °Ñ´ÓDragon Bone flash¹¤¾ßµ¼³öµÄXML×ª»»ÎªÊı¾İ²¢±£´æ¡£Ìí¼ÓĞÂµÄxmlÊ±£¬ÒÑ±£´æµÄÊı¾İ½«±£Áô¡£
+     * @~chinese æŠŠä»Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLè½¬æ¢ä¸ºæ•°æ®å¹¶ä¿å­˜ã€‚æ·»åŠ æ–°çš„xmlæ—¶ï¼Œå·²ä¿å­˜çš„æ•°æ®å°†ä¿ç•™ã€‚
      *
      * @param xmlPath @~english The cache of the xml.
-     * @~chinese xml»º´æ¡£
+     * @~chinese xmlç¼“å­˜ã€‚
      * @param dataInfo @~english data info.
-     * @~chinese Êı¾İĞÅÏ¢¡£
+     * @~chinese æ•°æ®ä¿¡æ¯ã€‚
      */
     static void addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo = nullptr);
 
@@ -181,22 +181,22 @@ public:
 
     /**
      * @~english Decode Armature Datas from xml export from Dragon Bone flash tool
-     * @~chinese ½«Dragon Bone flash¹¤¾ßµ¼³öµÄXMLÖĞµÄ¹Ç÷ÀÊı¾İ½âÂë¡£
+     * @~chinese å°†Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLä¸­çš„éª¨éª¼æ•°æ®è§£ç ã€‚
      */
     static ArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo);
     /**
     * @~english Decode bone Datas from xml export from Dragon Bone flash tool
-    * @~chinese ½«Dragon Bone flash¹¤¾ßµ¼³öµÄXMLÖĞµÄ¹ÇÍ·Êı¾İ½âÂë¡£
+    * @~chinese å°†Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLä¸­çš„éª¨å¤´æ•°æ®è§£ç ã€‚
     */
     static BoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML, DataInfo *dataInfo);
     /**
     * @~english Decode bone display Datas from xml export from Dragon Bone flash tool
-    * @~chinese ½«Dragon Bone flash¹¤¾ßµ¼³öµÄXMLÖĞµÄ¹ÇÍ·ÏÔÊ¾Êı¾İ½âÂë¡£
+    * @~chinese å°†Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLä¸­çš„éª¨å¤´æ˜¾ç¤ºæ•°æ®è§£ç ã€‚
     */
     static DisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo);
     /**
     * @~english Decode ArmatureAnimation Datas from xml export from Dragon Bone flash tool
-    * @~chinese ½«Dragon Bone flash¹¤¾ßµ¼³öµÄXMLÖĞµÄ¹Ç÷À¶¯»­Êı¾İ½âÂë¡£
+    * @~chinese å°†Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLä¸­çš„éª¨éª¼åŠ¨ç”»æ•°æ®è§£ç ã€‚
     */
     static AnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML, DataInfo *dataInfo);
     static MovementData *decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData, DataInfo *dataInfo);
@@ -206,13 +206,13 @@ public:
 
     /**
     * @~english Decode Texture Datas from xml export from Dragon Bone flash tool
-    * @~chinese ½«Dragon Bone flash¹¤¾ßµ¼³öµÄXMLÖĞµÄ²ÄÖÊÊı¾İ½âÂë¡£
+    * @~chinese å°†Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLä¸­çš„æè´¨æ•°æ®è§£ç ã€‚
     */
     static TextureData *decodeTexture(tinyxml2::XMLElement *textureXML, DataInfo *dataInfo);
 
     /**
     * @~english Decode Contour Datas from xml export from Dragon Bone flash tool
-    * @~chinese ½«Dragon Bone flash¹¤¾ßµ¼³öµÄXMLÖĞµÄÂÖÀªÊı¾İ½âÂë¡£
+    * @~chinese å°†Dragon Bone flashå·¥å…·å¯¼å‡ºçš„XMLä¸­çš„è½®å»“æ•°æ®è§£ç ã€‚
     */
     static ContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 

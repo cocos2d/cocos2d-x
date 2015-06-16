@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -60,91 +60,91 @@ class CC_STUDIO_DLL ActionTimelineCache
 public:    
 
     /** @~english Gets the singleton.
-    *   @~chinese »ñÈ¡µ¥Àı¡£
+    *   @~chinese è·å–å•ä¾‹ã€‚
     * @return @~english The singleton.
-    * @~chinese µ¥Àı¡£
+    * @~chinese å•ä¾‹ã€‚
     */
     static ActionTimelineCache* getInstance();
 
     /** @~english Destroys the singleton.
-    *   @~chinese ÊÍ·Åµ¥Àı¡£
+    *   @~chinese é‡Šæ”¾å•ä¾‹ã€‚
     */
     static void destroyInstance();
 
     /** @~english Clear action time lines.
-    *   @~chinese Çå¿ÕÊ±¼äÖáÁĞ±í¡£
+    *   @~chinese æ¸…ç©ºæ—¶é—´è½´åˆ—è¡¨ã€‚
     */
     void purge();
 
     void init();
 
     /** @~english Remove action with filename, and also remove other resource relate with this file.
-    *   @~chinese Í¨¹ıÎÄ¼şÃûÒÆ³ı¶¯×÷£¬Í¬Ê±ÒÆ³ıÓë¸ÃÎÄ¼şÏà¹ØµÄÆäËû×ÊÔ´¡£
+    *   @~chinese é€šè¿‡æ–‡ä»¶åç§»é™¤åŠ¨ä½œï¼ŒåŒæ—¶ç§»é™¤ä¸è¯¥æ–‡ä»¶ç›¸å…³çš„å…¶ä»–èµ„æºã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     */
     void removeAction(const std::string& fileName);
     
     /** @~english Create action timeline by file.
-    *   @~chinese Í¨¹ıÎÄ¼şÃû´´½¨Ê±¼äÖá¶¯»­¡£
+    *   @~chinese é€šè¿‡æ–‡ä»¶ååˆ›å»ºæ—¶é—´è½´åŠ¨ç”»ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     static ActionTimeline* createAction(const std::string& fileName);
 
     /** @~english Clone an action with the specified name from the container. 
-    *   @~chinese Í¨¹ıÀ´×ÔÆäËûÈİÆ÷µÄÖ¸¶¨Ãû³Æ¸´ÖÆÒ»¸ö¶¯»­¡£
+    *   @~chinese é€šè¿‡æ¥è‡ªå…¶ä»–å®¹å™¨çš„æŒ‡å®šåç§°å¤åˆ¶ä¸€ä¸ªåŠ¨ç”»ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     ActionTimeline* createActionFromJson(const std::string& fileName);
 
     /** @~english Load an action time line from file.
-    *   @~chinese ´ÓÎÄ¼şÖĞÔØÈëÊ±¼äÖá¶¯»­¡£
+    *   @~chinese ä»æ–‡ä»¶ä¸­è½½å…¥æ—¶é—´è½´åŠ¨ç”»ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);
     /** @~english Load an action time line from file and content string.
-    *   @~chinese ´ÓÎÄ¼şºÍÄÚÈİ×Ö·û´®ÖĞÖĞÔØÈëÊ±¼äÖá¶¯»­¡£
+    *   @~chinese ä»æ–‡ä»¶å’Œå†…å®¹å­—ç¬¦ä¸²ä¸­ä¸­è½½å…¥æ—¶é—´è½´åŠ¨ç”»ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @param content @~english Content string.
-    * @~chinese ÄÚÈİ×Ö·û´®¡£
+    * @~chinese å†…å®¹å­—ç¬¦ä¸²ã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     ActionTimeline* loadAnimationActionWithContent(const std::string&fileName, const std::string& content);
     
     /** @~english Create an action time line from flatbuffer file.
-    *   @~chinese ´Óflatbuffer¶ş½øÖÆÎÄ¼şÖĞ´´½¨Ê±¼äÖá¶¯»­¡£
+    *   @~chinese ä»flatbufferäºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºæ—¶é—´è½´åŠ¨ç”»ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     ActionTimeline* createActionWithFlatBuffersFile(const std::string& fileName);
     /** @~english Load na action time line from flatbuffer file.
-    *   @~chinese ´Óflatbuffer¶ş½øÖÆÎÄ¼şÖĞÔØÈëÊ±¼äÖá¶¯»­¡£
+    *   @~chinese ä»flatbufferäºŒè¿›åˆ¶æ–‡ä»¶ä¸­è½½å…¥æ—¶é—´è½´åŠ¨ç”»ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
     
     /** @~english Create an action time line from flatbuffer file for simulator.
-    *   @~chinese ´Óflatbuffer¶ş½øÖÆÎÄ¼şÖĞ´´½¨Ê±¼äÖá¶¯»­(ÓÃÓÚÄ£ÄâÆ÷)¡£
+    *   @~chinese ä»flatbufferäºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºæ—¶é—´è½´åŠ¨ç”»(ç”¨äºæ¨¡æ‹Ÿå™¨)ã€‚
     * @param fileName @~english File name.
-    * @~chinese ÎÄ¼şÃû¡£
+    * @~chinese æ–‡ä»¶åã€‚
     * @return @~english ActionTimeline.
-    * @~chinese Ê±¼äÖá¶¯»­¡£
+    * @~chinese æ—¶é—´è½´åŠ¨ç”»ã€‚
     */
     ActionTimeline* createActionWithFlatBuffersForSimulator(const std::string& fileName);
     

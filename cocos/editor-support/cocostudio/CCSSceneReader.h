@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -33,7 +33,7 @@ namespace cocostudio {
 /** 
  * @class SceneReader
  * @brief @~english Reader of parsing export data of cocos studio 1.x scene reader.
- * @~chinese cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öÊı¾İ½âÎöÆ÷¡£
+ * @~chinese cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºæ•°æ®è§£æå™¨ã€‚
 */
 class CC_STUDIO_DLL SceneReader
 {
@@ -60,13 +60,13 @@ public:
 
     /**
      * @brief @~english Get instance point of SceneReader.
-     * @~chinese SceneReaderµ¥ÀıÖ¸Õë¡£
+     * @~chinese SceneReaderå•ä¾‹æŒ‡é’ˆã€‚
      */
     static SceneReader* getInstance();
 
     /**
      * @brief @~english Destroy instance point of SceneReader.
-     * @~chinese Ïú»ÙSceneReaderµ¥ÀıÖ¸Õë¡£
+     * @~chinese é”€æ¯SceneReaderå•ä¾‹æŒ‡é’ˆã€‚
      *  @js purge
      *  @lua destroySceneReader
      */
@@ -74,17 +74,17 @@ public:
 
     /**
      * @brief @~english Get version string of SceneReader.
-     * @~chinese SceneReader°æ±¾ºÅ×Ö·û´®¡£
+     * @~chinese SceneReaderç‰ˆæœ¬å·å­—ç¬¦ä¸²ã€‚
      */
     static const char* sceneReaderVersion();
 
     /**
      * @brief @~english Create a scene with json or binary file path and type of attach component.
-     * @~chinese ¸ù¾İ¶ş½øÖÆ»òÕßjsonÂ·¾¶ºÍ½á¹¹Ê÷¹¹½¨ÀàĞÍ£¬´´½¨³¡¾°¡£
+     * @~chinese æ ¹æ®äºŒè¿›åˆ¶æˆ–è€…jsonè·¯å¾„å’Œç»“æ„æ ‘æ„å»ºç±»å‹ï¼Œåˆ›å»ºåœºæ™¯ã€‚
      * @param fileName @~english Json or binary file path
-     * @~chinese json»òÕß¶ş½øÖÆÎÄ¼şÂ·¾¶
+     * @~chinese jsonæˆ–è€…äºŒè¿›åˆ¶æ–‡ä»¶è·¯å¾„
      * @param attachComponent @~english Type of attach component
-     * @~chinese ¶ÔÏó½á¹¹Ê÷¹¹½¨ÀàĞÍ
+     * @~chinese å¯¹è±¡ç»“æ„æ ‘æ„å»ºç±»å‹
      *  @js purge
      *  @lua destroySceneReader
      */
@@ -92,134 +92,134 @@ public:
 
     /**
      * @brief @~english Call selector after each of the components created.
-     * @~chinese ÉèÖÃÃ¿¸ö×é¼ş´´½¨Íê±Ïºó»Øµ÷·½·¨¡£
+     * @~chinese è®¾ç½®æ¯ä¸ªç»„ä»¶åˆ›å»ºå®Œæ¯•åå›è°ƒæ–¹æ³•ã€‚
      * @param @~english Callback function of selector
-     * @~chinese selector »Øµ÷·½·¨
+     * @~chinese selector å›è°ƒæ–¹æ³•
      */
     void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
 
     /**
      * @brief @~english Get Node point by tag.
-     * @~chinese ¸ù¾İnTag»ñÈ¡nodeÖ¸Õë¡£
+     * @~chinese æ ¹æ®nTagè·å–nodeæŒ‡é’ˆã€‚
      * @param tag @~english Tag of node.
-     * @~chinese nodeµÄtag¡£
+     * @~chinese nodeçš„tagã€‚
      * @return @~english Node point by tag.
-     * @~chinese ¸ù¾İtag·µ»ØnodeÖ¸Õë¡£
+     * @~chinese æ ¹æ®tagè¿”å›nodeæŒ‡é’ˆã€‚
      */
     cocos2d::Node* getNodeByTag(int nTag);
 
     /**
      * @brief @~english Get the type of attach component.
-     * @~chinese »ñÈ¡³¡¾°¶ÔÏó½á¹¹Ê÷¹¹½¨ÀàĞÍ¡£
+     * @~chinese è·å–åœºæ™¯å¯¹è±¡ç»“æ„æ ‘æ„å»ºç±»å‹ã€‚
      */
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
 CC_CONSTRUCTOR_ACCESS:
 
     /**
      * @brief @~english SceneReader constructor.
-     * @~chinese SceneReader¹¹Ôìº¯Êı¡£
+     * @~chinese SceneReaderæ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     SceneReader(void);
 
     /**
      * @brief @~english SceneReader destructor.
-     * @~chinese SceneReaderÎö¹¹º¯Êı¡£
+     * @~chinese SceneReaderææ„å‡½æ•°ã€‚
      */
     virtual ~SceneReader(void);
     
 private:
     /**
      * @brief @~english Get component name with class name.
-     * @~chinese ¸ù¾İÀàÃû»ñÈ¡×é¼şÃû³Æ¡£
+     * @~chinese æ ¹æ®ç±»åè·å–ç»„ä»¶åç§°ã€‚
      * @param @~english Component name
-     * @~chinese ×é¼şÃû³Æ
+     * @~chinese ç»„ä»¶åç§°
      */
     std::string getComponentClassName(const std::string& name);
 
     /**
      * @brief @~english Create component point with class name.
-     * @~chinese ¸ù¾İÀàÃû´´½¨×é¼ş¡£
+     * @~chinese æ ¹æ®ç±»ååˆ›å»ºç»„ä»¶ã€‚
      * @param classname @~english Class name.
-     * @~chinese ÀàÃû¡£
+     * @~chinese ç±»åã€‚
      * @return @~english Component point.
-     * @~chinese ×é¼şÖ¸Õë¡£
+     * @~chinese ç»„ä»¶æŒ‡é’ˆã€‚
      */
     cocos2d::Component* createComponent(const std::string classname);
 
     /**
      * @brief @~english Create node object and add it to parent node with json file path.
-     * @~chinese ´´½¨³¡¾°½á¹¹Ê÷node¶ÔÏó¡£
+     * @~chinese åˆ›å»ºåœºæ™¯ç»“æ„æ ‘nodeå¯¹è±¡ã€‚
      * @param dict @~english Json object.
-     * @~chinese json¶ÔÏó¡£
+     * @~chinese jsonå¯¹è±¡ã€‚
      * @param parent @~english Parent node point.
-     * @~chinese ¸¸ÀànodeÖ¸Õë¡£
+     * @~chinese çˆ¶ç±»nodeæŒ‡é’ˆã€‚
      * @param attachComponent @~english Type of attach component
-     * @~chinese ¶ÔÏó½á¹¹Ê÷¹¹½¨ÀàĞÍ
+     * @~chinese å¯¹è±¡ç»“æ„æ ‘æ„å»ºç±»å‹
      * @return @~english Node object point.
-     * @~chinese node¶ÔÏóÖ¸Õë¡£
+     * @~chinese nodeå¯¹è±¡æŒ‡é’ˆã€‚
      */
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);
 
     /**
      * @brief @~english Set property of node.
-     * @~chinese ÉèÖÃnode¶ÔÏóÊôĞÔ¡£
+     * @~chinese è®¾ç½®nodeå¯¹è±¡å±æ€§ã€‚
      * @param dict @~english Json object.
-     * @~chinese json¶ÔÏó¡£
+     * @~chinese jsonå¯¹è±¡ã€‚
      * @param node @~english Node point.
-     * @~chinese nodeÖ¸Õë¡£
+     * @~chinese nodeæŒ‡é’ˆã€‚
      */
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
 
      /**
      * @brief @~english Parse export json data of cocos studio 1.x Scene Editor and assign to doc.
-     * @~chinese ½âÎöcocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öjsonÊı¾İ£¬ÅĞ¶ÏjsonµÄÓĞĞ§ĞÔ£¬¸øjson¶ÔÏódoc¸³Öµ¡£
+     * @~chinese è§£æcocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºjsonæ•°æ®ï¼Œåˆ¤æ–­jsonçš„æœ‰æ•ˆæ€§ï¼Œç»™jsonå¯¹è±¡docèµ‹å€¼ã€‚
      * @param fileName @~english Json file path.
-     * @~chinese jsonÂ·¾¶¡£
+     * @~chinese jsonè·¯å¾„ã€‚
      * @param doc @~english Json data object
-     * @~chinese jsonÊı¾İ¶ÔÏó¡£
+     * @~chinese jsonæ•°æ®å¯¹è±¡ã€‚
      * @return @~english true parse successfully, false failed to parse.
-     * @~chinese true ½âÎö³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true è§£ææˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     bool readJson(const std::string &fileName, rapidjson::Document& doc);
 
     /**
      * @brief @~english Create node object and add it to parent node by binary file path.
-     * @~chinese ´´½¨³¡¾°½á¹¹Ê÷node¶ÔÏó¡£
+     * @~chinese åˆ›å»ºåœºæ™¯ç»“æ„æ ‘nodeå¯¹è±¡ã€‚
      * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      * @param parent @~english Parent node point.
-     * @~chinese ¸¸nodeÖ¸Õë¡£
+     * @~chinese çˆ¶nodeæŒ‡é’ˆã€‚
      * @param attachComponent @~english Type of attach component
-     * @~chinese ¶ÔÏó½á¹¹Ê÷¹¹½¨ÀàĞÍ
+     * @~chinese å¯¹è±¡ç»“æ„æ ‘æ„å»ºç±»å‹
      * @return @~english Node object point.
-     * @~chinese node¶ÔÏóÖ¸Õë¡£
+     * @~chinese nodeå¯¹è±¡æŒ‡é’ˆã€‚
      */
     cocos2d::Node* createObject(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node* parent, AttachComponentType attachComponent);
 
     /**
      * @brief @~english Create node object and add it to parent node with binary file path.
-     * @~chinese ´´½¨³¡¾°½á¹¹Ê÷node¶ÔÏó¡£
+     * @~chinese åˆ›å»ºåœºæ™¯ç»“æ„æ ‘nodeå¯¹è±¡ã€‚
      * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      * @param node @~english Node point.
-     * @~chinese nodeÖ¸Õë¡£
+     * @~chinese nodeæŒ‡é’ˆã€‚
      */
     void setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node *node);
 
     /**
      * @brief @~english get Node point by tag based on its parent node point.
-     * @~chinese ¸ù¾İtagºÍparentÖ¸Õë£¬ÔÚparentµÄº¢×ÓÖĞ¼ä¸ù¾İtagÆ¥Åä»ñÈ¡nodeÖ¸Õë¡£
+     * @~chinese æ ¹æ®tagå’ŒparentæŒ‡é’ˆï¼Œåœ¨parentçš„å­©å­ä¸­é—´æ ¹æ®tagåŒ¹é…è·å–nodeæŒ‡é’ˆã€‚
      * @param parent @~english Parent node point.
-     * @~chinese ¸¸nodeÖ¸Õë¡£
+     * @~chinese çˆ¶nodeæŒ‡é’ˆã€‚
      * @param tag @~english Tag of node.
-     * @~chinese nodeµÄtag¡£
+     * @~chinese nodeçš„tagã€‚
      * @return @~english Node point by tag.
-     * @~chinese ¸ù¾İtag·µ»ØnodeÖ¸Õë¡£
+     * @~chinese æ ¹æ®tagè¿”å›nodeæŒ‡é’ˆã€‚
      */
     cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
 private:

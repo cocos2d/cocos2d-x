@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -66,7 +66,7 @@ namespace cocostudio {
 
 /**
  * @~english The base node include a lot of attributes.
- * @~chinese ¸ù½Úµã°üº¬ºÜ¶àÊôĞÔ¡£
+ * @~chinese æ ¹èŠ‚ç‚¹åŒ…å«å¾ˆå¤šå±æ€§ã€‚
  * @js NA
  * @lua NA
  */
@@ -87,33 +87,33 @@ public:
 
     /*
     * @~english Copy data from node.
-    * @~chinese ´Ó½Úµã¸´ÖÆÊı¾İ¡£
+    * @~chinese ä»èŠ‚ç‚¹å¤åˆ¶æ•°æ®ã€‚
     * @param node @~english A `BaseData` to be copied.
-    * @~chinese Òª¸´ÖÆµÄ`BaseData`¶ÔÏó¡£
+    * @~chinese è¦å¤åˆ¶çš„`BaseData`å¯¹è±¡ã€‚
     */
     virtual void copy(const BaseData *node);
 
     /*
     * @~english Calculate two `BaseData`'s between value(to - from) and set to self.
-    * @~chinese ¼ÆËãÁ½¸ö`BaseData`µÄ¼ä¾à£¬²¢ÉèÖÃµ½×ÔÉí¡£
-    * @param from @~english from `BaseData`. @~chinese ×Ô`BaseData`¡£
-    * @param to @~english to `BaseData`. @~chinese µ½`BaseData`¡£
+    * @~chinese è®¡ç®—ä¸¤ä¸ª`BaseData`çš„é—´è·ï¼Œå¹¶è®¾ç½®åˆ°è‡ªèº«ã€‚
+    * @param from @~english from `BaseData`. @~chinese è‡ª`BaseData`ã€‚
+    * @param to @~english to `BaseData`. @~chinese åˆ°`BaseData`ã€‚
     */
     virtual void subtract(BaseData *from, BaseData *to, bool limit);
 
     /*
     * @~english Set color.
-    * @~chinese ÉèÖÃÑÕÉ«¡£
+    * @~chinese è®¾ç½®é¢œè‰²ã€‚
     * @param color @~english Color. 
-    * @~chinese ÑÕÉ«¡£
+    * @~chinese é¢œè‰²ã€‚
     */
     virtual void setColor(const cocos2d::Color4B &color);
 
     /*
     * @~english Get color.
-    * @~chinese »ñÈ¡ÑÕÉ«¡£
+    * @~chinese è·å–é¢œè‰²ã€‚
     * @return @~english Color.
-    * @~chinese ÑÕÉ«¡£
+    * @~chinese é¢œè‰²ã€‚
     */
     virtual cocos2d::Color4B getColor();
 public:
@@ -161,11 +161,11 @@ public:
 
     /*
     * @~english Change display to texutre.
-    * @~chinese ½«ÏÔÊ¾¸ü»»ÖÁ²ÄÖÊ¡£¡£
+    * @~chinese å°†æ˜¾ç¤ºæ›´æ¢è‡³æè´¨ã€‚ã€‚
     * @param displayName @~english Display name.
-    * @~chinese ÏÔÊ¾Ãû³Æ¡£
+    * @~chinese æ˜¾ç¤ºåç§°ã€‚
     * @return @~english New display name.
-    * @~chinese ĞÂµÄÏÔÊ¾Ãû³Æ¡£
+    * @~chinese æ–°çš„æ˜¾ç¤ºåç§°ã€‚
     */
     static const std::string changeDisplayToTexture(const std::string& displayName);
 public:
@@ -181,9 +181,9 @@ public:
 
     /*
     * @~english Copy data from displayData.
-    * @~chinese ´ÓÏÔÊ¾Êı¾İ¸´ÖÆÊı¾İ¡£
+    * @~chinese ä»æ˜¾ç¤ºæ•°æ®å¤åˆ¶æ•°æ®ã€‚
     * @param node @~english A `DisplayData` to be copied.
-    * @~chinese Òª¸´ÖÆµÄ`DisplayData`¶ÔÏó¡£
+    * @~chinese è¦å¤åˆ¶çš„`DisplayData`å¯¹è±¡ã€‚
     */
     virtual void copy(DisplayData *displayData);
 
@@ -213,9 +213,9 @@ public:
 
     /*
     * @~english Copy data from displayData.
-    * @~chinese ´ÓÏÔÊ¾Êı¾İ¸´ÖÆÊı¾İ¡£
+    * @~chinese ä»æ˜¾ç¤ºæ•°æ®å¤åˆ¶æ•°æ®ã€‚
     * @param node @~english A `DisplayData` to be copied.
-    * @~chinese Òª¸´ÖÆµÄ`DisplayData`¶ÔÏó¡£
+    * @~chinese è¦å¤åˆ¶çš„`DisplayData`å¯¹è±¡ã€‚
     */
     void copy(DisplayData *displayData);
 public:
@@ -268,8 +268,8 @@ public:
 * @~english BoneData used to init a Bone.
 * BoneData keeps a DisplayData list, a Bone can have many display to change.
 * The display information saved in the DisplayData
-* @~chinese ÓÃÀ´³õÊ¼»¯Ò»¶Î¹ÇÍ·µÄ¹ÇÍ·Êı¾İ¡£º¬ÓĞÒ»¸öÏÔÊ¾Êı¾İÁĞ±í£¬¹ÇÍ·¿ÉÒÔ¾İ¾İ´Ë½øĞĞ¶à¸öÏÔÊ¾µÄÇĞ»»¡£
-* ÏÔÊ¾Êı¾İÖĞ°üº¬ÏÔÊ¾ĞÅÏ¢¡£
+* @~chinese ç”¨æ¥åˆå§‹åŒ–ä¸€æ®µéª¨å¤´çš„éª¨å¤´æ•°æ®ã€‚å«æœ‰ä¸€ä¸ªæ˜¾ç¤ºæ•°æ®åˆ—è¡¨ï¼Œéª¨å¤´å¯ä»¥æ®æ®æ­¤è¿›è¡Œå¤šä¸ªæ˜¾ç¤ºçš„åˆ‡æ¢ã€‚
+* æ˜¾ç¤ºæ•°æ®ä¸­åŒ…å«æ˜¾ç¤ºä¿¡æ¯ã€‚
 * @js NA
 * @lua NA
 */
@@ -292,19 +292,19 @@ public:
 
     /*
     * @~english Add displayData.
-    * @~chinese Ôö¼ÓÏÔÊ¾Êı¾İ¡£
+    * @~chinese å¢åŠ æ˜¾ç¤ºæ•°æ®ã€‚
     * @param displayData @~english A `DisplayData` to be added.
-    * @~chinese ÒªÔö¼ÓµÄ`DisplayData`¶ÔÏó¡£
+    * @~chinese è¦å¢åŠ çš„`DisplayData`å¯¹è±¡ã€‚
     */
     void addDisplayData(DisplayData *displayData);
 
     /*
     * @~english Get displayData.
-    * @~chinese »ñÈ¡ÏÔÊ¾Êı¾İ¡£
+    * @~chinese è·å–æ˜¾ç¤ºæ•°æ®ã€‚
     * @param index @~english The displayData's index.
-    * @~chinese ÏÔÊ¾Êı¾İµÄË÷Òı¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®çš„ç´¢å¼•ã€‚
     * @return @~english The displayData.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     DisplayData *getDisplayData(int index);
 public:
@@ -319,8 +319,8 @@ public:
 * @~english ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
 * When we create a Armature, we need to get each Bone's BoneData as it's init information.
 * So we can get a `BoneData` from the Dictionary saved in the ArmatureData.
-* @~chinese ¹Ç÷ÀÊı¾İ±£´æ¹Ç÷ÀµÄÃû³ÆºÍ¹Ç÷ÀÖĞµÄ`CCBone`¶ÔÏóÃÇËùĞèµÄ¹ÇÍ·Êı¾İ£¬µ±´´½¨¹Ç÷ÀµÄÊ±ºò£¬ĞèÒª»ñµÃÃ¿¶Î¹ÇÍ·µÄ¹ÇÍ·Êı¾İ×÷ÎªÆä³õÊ¼»¯ĞÅÏ¢¡£
-* Òò´Ë¿ÉÒÔ´Ó¹Ç÷ÀÊı¾İÖĞ±£´æµÄ`BoneData`¼¯ºÏÖĞ»ñÈ¡ÆäÖĞµÄ¹ÇÍ·Êı¾İ¡£
+* @~chinese éª¨éª¼æ•°æ®ä¿å­˜éª¨éª¼çš„åç§°å’Œéª¨éª¼ä¸­çš„`CCBone`å¯¹è±¡ä»¬æ‰€éœ€çš„éª¨å¤´æ•°æ®ï¼Œå½“åˆ›å»ºéª¨éª¼çš„æ—¶å€™ï¼Œéœ€è¦è·å¾—æ¯æ®µéª¨å¤´çš„éª¨å¤´æ•°æ®ä½œä¸ºå…¶åˆå§‹åŒ–ä¿¡æ¯ã€‚
+* å› æ­¤å¯ä»¥ä»éª¨éª¼æ•°æ®ä¸­ä¿å­˜çš„`BoneData`é›†åˆä¸­è·å–å…¶ä¸­çš„éª¨å¤´æ•°æ®ã€‚
 * @js NA
 * @lua NA
 */
@@ -343,19 +343,19 @@ public:
 
     /*
     * @~english Add boneData.
-    * @~chinese Ôö¼Ó¹ÇÍ·Êı¾İ¡£
+    * @~chinese å¢åŠ éª¨å¤´æ•°æ®ã€‚
     * @param boneData @~english A `BoneData` to be added.
-    * @~chinese ÒªÔö¼ÓµÄ`BoneData`¶ÔÏó¡£
+    * @~chinese è¦å¢åŠ çš„`BoneData`å¯¹è±¡ã€‚
     */
     void addBoneData(BoneData *boneData);
 
     /*
     * @~english Get boneData.
-    * @~chinese »ñÈ¡¹ÇÍ·Êı¾İ¡£
+    * @~chinese è·å–éª¨å¤´æ•°æ®ã€‚
     * @param boneName @~english The boneData's name.
-    * @~chinese ¹ÇÍ·Êı¾İµÄÃû³Æ¡£
+    * @~chinese éª¨å¤´æ•°æ®çš„åç§°ã€‚
     * @return @~english The boneData.
-    * @~chinese ¹ÇÍ·Êı¾İ¡£
+    * @~chinese éª¨å¤´æ•°æ®ã€‚
     */
     BoneData *getBoneData(const std::string& boneName);
 public:
@@ -403,9 +403,9 @@ public:
 
     /*
     * @~english Copy data from node.
-    * @~chinese ´Ó½Úµã¸´ÖÆÊı¾İ¡£
+    * @~chinese ä»èŠ‚ç‚¹å¤åˆ¶æ•°æ®ã€‚
     * @param node @~english A `BaseData` to be copied.
-    * @~chinese Òª¸´ÖÆµÄ`BaseData`¶ÔÏó¡£
+    * @~chinese è¦å¤åˆ¶çš„`BaseData`å¯¹è±¡ã€‚
     */
     virtual void copy(const BaseData *baseData);
 public:
@@ -458,19 +458,19 @@ public:
 
     /*
     * @~english Add frameData.
-    * @~chinese Ôö¼ÓÖ¡Êı¾İ¡£
+    * @~chinese å¢åŠ å¸§æ•°æ®ã€‚
     * @param boneData @~english A `FrameData` to be added.
-    * @~chinese ÒªÔö¼ÓµÄ`FrameData`¶ÔÏó¡£
+    * @~chinese è¦å¢åŠ çš„`FrameData`å¯¹è±¡ã€‚
     */
     void addFrameData(FrameData *frameData);
 
     /*
     * @~english Get frameData.
-    * @~chinese »ñÈ¡Ö¡Êı¾İ¡£
+    * @~chinese è·å–å¸§æ•°æ®ã€‚
     * @param index @~english The frameData's index.
-    * @~chinese Ö¡Êı¾İµÄË÷Òı¡£
+    * @~chinese å¸§æ•°æ®çš„ç´¢å¼•ã€‚
     * @return @~english The frameData.
-    * @~chinese Ö¡Êı¾İ¡£
+    * @~chinese å¸§æ•°æ®ã€‚
     */
     FrameData *getFrameData(int index);
 public:
@@ -503,19 +503,19 @@ public:
 
     /*
     * @~english Add movBoneData.
-    * @~chinese Ôö¼Ó»î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese å¢åŠ æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     * @param movBoneData @~english A `MovementBoneData` to be added.
-    * @~chinese ÒªÔö¼ÓµÄ`MovementBoneData`¶ÔÏó¡£
+    * @~chinese è¦å¢åŠ çš„`MovementBoneData`å¯¹è±¡ã€‚
     */
     void addMovementBoneData(MovementBoneData *movBoneData);
 
     /*
     * @~english Get movBoneData.
-    * @~chinese »ñÈ¡»î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese è·å–æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     * @param boneName @~english The boneData's name.
-    * @~chinese »î¶¯¹ÇÍ·Êı¾İµÄÃû³Æ¡£
+    * @~chinese æ´»åŠ¨éª¨å¤´æ•°æ®çš„åç§°ã€‚
     * @return @~english The movBoneData.
-    * @~chinese »î¶¯¹ÇÍ·Êı¾İ¡£
+    * @~chinese æ´»åŠ¨éª¨å¤´æ•°æ®ã€‚
     */
     MovementBoneData *getMovementBoneData(const std::string& boneName);
 public:
@@ -580,27 +580,27 @@ public:
 
     /*
     * @~english Add movement data.
-    * @~chinese Ôö¼Ó»î¶¯Êı¾İ¡£
+    * @~chinese å¢åŠ æ´»åŠ¨æ•°æ®ã€‚
     * @param movData @~english A `MovementData` to be added.
-    * @~chinese ÒªÔö¼ÓµÄ`MovementData`¶ÔÏó¡£
+    * @~chinese è¦å¢åŠ çš„`MovementData`å¯¹è±¡ã€‚
     */
     void addMovement(MovementData *movData);
 
     /*
     * @~english Get movement data.
-    * @~chinese »ñÈ¡»î¶¯Êı¾İ¡£
+    * @~chinese è·å–æ´»åŠ¨æ•°æ®ã€‚
     * @param movementName @~english The movement data's name.
-    * @~chinese »î¶¯Êı¾İµÄÃû³Æ¡£
+    * @~chinese æ´»åŠ¨æ•°æ®çš„åç§°ã€‚
     * @return @~english The movement data.
-    * @~chinese »î¶¯Êı¾İ¡£
+    * @~chinese æ´»åŠ¨æ•°æ®ã€‚
     */
     MovementData *getMovement(const std::string& movementName);
 
     /*
     * @~english Get movement data's count.
-    * @~chinese »ñÈ¡»î¶¯Êı¾İµÄ×ÜÊı¡£
+    * @~chinese è·å–æ´»åŠ¨æ•°æ®çš„æ€»æ•°ã€‚
     * @return @~english Movement data's count.
-    * @~chinese »î¶¯Êı¾İµÄ×ÜÊı¡£
+    * @~chinese æ´»åŠ¨æ•°æ®çš„æ€»æ•°ã€‚
     */
     ssize_t getMovementCount();
 public:
@@ -634,9 +634,9 @@ public:
     virtual bool init();
     /*
     * @~english Add vertext.
-    * @~chinese Ôö¼Ó¶¥µã¡£
+    * @~chinese å¢åŠ é¡¶ç‚¹ã€‚
     * @param vertex @~english A vertex to be added.
-    * @~chinese ÒªÔö¼ÓµÄ¶¥µã¡£
+    * @~chinese è¦å¢åŠ çš„é¡¶ç‚¹ã€‚
     */
     virtual void addVertex(cocos2d::Vec2 &vertex);
 public:
@@ -670,19 +670,19 @@ public:
 
     /*
     * @~english Add contour data.
-    * @~chinese Ôö¼ÓÂÖÀªÊı¾İ¡£
+    * @~chinese å¢åŠ è½®å»“æ•°æ®ã€‚
     * @param contourData @~english A `ContourData` to be added.
-    * @~chinese ÒªÔö¼ÓµÄ`ContourData`¶ÔÏó¡£
+    * @~chinese è¦å¢åŠ çš„`ContourData`å¯¹è±¡ã€‚
     */
     void addContourData(ContourData *contourData);
 
     /*
     * @~english Get contour data.
-    * @~chinese »ñÈ¡ÂÖÀªÊı¾İ¡£
+    * @~chinese è·å–è½®å»“æ•°æ®ã€‚
     * @param index @~english The contour data's index.
-    * @~chinese ÂÖÀªÊı¾İµÄË÷Òı¡£
+    * @~chinese è½®å»“æ•°æ®çš„ç´¢å¼•ã€‚
     * @return @~english The contour data.
-    * @~chinese ÂÖÀªÊı¾İ¡£
+    * @~chinese è½®å»“æ•°æ®ã€‚
     */
     ContourData *getContourData(int index);
 public:

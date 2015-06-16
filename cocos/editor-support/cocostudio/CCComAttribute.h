@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -35,9 +35,9 @@ namespace cocostudio {
 /** 
  * @class ComAttribute
  * @brief @~english ComAttribute.
- * @~chinese ×Ô¶¨ÒåÊôĞÔ×é¼ş.
+ * @~chinese è‡ªå®šä¹‰å±æ€§ç»„ä»¶.
  * @details @~english Store and access data by key-value, and load exporting data of cocos studio 1.x Scene Editor.
- * @~chinese ÒÔkey-value¼üÖµ¶Ô·½Ê½´æ´¢Óë»ñÈ¡Êı¾İ, ½âÎöcocos studio 1.x³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ.
+ * @~chinese ä»¥key-valueé”®å€¼å¯¹æ–¹å¼å­˜å‚¨ä¸è·å–æ•°æ®, è§£æcocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®.
 */
 class CC_STUDIO_DLL ComAttribute : public cocos2d::Component
 {
@@ -45,13 +45,13 @@ class CC_STUDIO_DLL ComAttribute : public cocos2d::Component
 public:
     /**
      * @brief @~english ComAttribute constructor.
-     * @~chinese ×Ô¶¨ÒåÊôĞÔ¹¹Ôìº¯Êı¡£
+     * @~chinese è‡ªå®šä¹‰å±æ€§æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     ComAttribute(void);
     /**
      * @brief @~english ComAttribute destructor.
-     * @~chinese ×Ô¶¨ÒåÊôĞÔÎö¹¹º¯Êı¡£
+     * @~chinese è‡ªå®šä¹‰å±æ€§ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
@@ -60,125 +60,125 @@ public:
 public:
     /**
      * @brief @~english Allocates and initializes a ComAttribute.
-     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯×Ô¶¨Òå×é¼ş¡£
+     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–è‡ªå®šä¹‰ç»„ä»¶ã€‚
      * @return @~english A initialized ComAttribute which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄ×Ô¶¨Òå×é¼ş£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å)¡£
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è‡ªå®šä¹‰ç»„ä»¶ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾)ã€‚
      */
     static ComAttribute* create(void);
 
     /**
      * @brief @~english Initialize a ComAttribute.
-     * @~chinese ³õÊ¼»¯×Ô¶¨Òå×é¼ş¡£
+     * @~chinese åˆå§‹åŒ–è‡ªå®šä¹‰ç»„ä»¶ã€‚
      * @return @~english true initialize successfully false failed to initialize.
-     * @~chinese true ³õÊ¼»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true åˆå§‹åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool init() override;
 
     /**
      * @brief @~english Deserialization export data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®ã€‚
      * @param r @~english SerData object point.
-     * @~chinese SerData¶ÔÏóÖ¸Õë¡£
+     * @~chinese SerDataå¯¹è±¡æŒ‡é’ˆã€‚
      * @return @~english true deserialize successfully false failed to deserialize.
-     * @~chinese true ·´ĞòÁĞ»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true ååºåˆ—åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool serialize(void* r) override;
 
     /**
      * @brief @~english Set int value for key.
-     * @~chinese ÉèÖÃÊôĞÔÃûÎªÎªkey£¬ÀàĞÍÎªintµÄÊıÖµ¡£
+     * @~chinese è®¾ç½®å±æ€§åä¸ºä¸ºkeyï¼Œç±»å‹ä¸ºintçš„æ•°å€¼ã€‚
      * @param key @~english The key to set.
-     * @~chinese ĞèÒªÉèÖÃµÄkey¡£
+     * @~chinese éœ€è¦è®¾ç½®çš„keyã€‚
      * @param value @~english A int value to set to the key.
-     * @~chinese ÀàĞÍÎªintµÄÊıÖµ¡£
+     * @~chinese ç±»å‹ä¸ºintçš„æ•°å€¼ã€‚
      */
     void setInt(const std::string& key, int value);
 
     /**
      * @brief @~english Set float value for key.
-     * @~chinese ÉèÖÃÊôĞÔÃûÎªÎªkey£¬ÀàĞÍÎªfloatµÄÊıÖµ¡£
+     * @~chinese è®¾ç½®å±æ€§åä¸ºä¸ºkeyï¼Œç±»å‹ä¸ºfloatçš„æ•°å€¼ã€‚
      * @param key @~english The key to set.
-     * @~chinese ĞèÒªÉèÖÃµÄkey¡£
+     * @~chinese éœ€è¦è®¾ç½®çš„keyã€‚
      * @param value @~english A float value to set to the key.
-     * @~chinese ÀàĞÍÎªfloatµÄÊıÖµ¡£
+     * @~chinese ç±»å‹ä¸ºfloatçš„æ•°å€¼ã€‚
      */
     void setFloat(const std::string& key, float value);
 
     /**
      * @brief @~english Set bool value for key.
-     * @~chinese ÉèÖÃÊôĞÔÃûÎªÎªkey£¬ÀàĞÍÎªboolµÄÊıÖµ¡£
+     * @~chinese è®¾ç½®å±æ€§åä¸ºä¸ºkeyï¼Œç±»å‹ä¸ºboolçš„æ•°å€¼ã€‚
      * @param key @~english The key to set.
-     * @~chinese ĞèÒªÉèÖÃµÄkey¡£
+     * @~chinese éœ€è¦è®¾ç½®çš„keyã€‚
      * @param value @~english A bool value to set to the key.
-     * @~chinese ÀàĞÍÎªboolµÄÊıÖµ¡£
+     * @~chinese ç±»å‹ä¸ºboolçš„æ•°å€¼ã€‚
      */
     void setBool(const std::string& key, bool value);
 
     /**
      * @brief @~english Set string value for key.
-     * @~chinese ÉèÖÃÊôĞÔÃûÎªÎªkey£¬ÀàĞÍÎªstringµÄÊıÖµ¡£
+     * @~chinese è®¾ç½®å±æ€§åä¸ºä¸ºkeyï¼Œç±»å‹ä¸ºstringçš„æ•°å€¼ã€‚
      * @param key @~english The key to set.
-     * @~chinese ĞèÒªÉèÖÃµÄkey¡£
+     * @~chinese éœ€è¦è®¾ç½®çš„keyã€‚
      * @param value @~english A string value to set to the key.
-     * @~chinese ÀàĞÍÎªstringµÄÊıÖµ¡£
+     * @~chinese ç±»å‹ä¸ºstringçš„æ•°å€¼ã€‚
      */
     void setString(const std::string& key, const std::string& value);
 
     /**
      * @brief @~english Get int value by key, if the key doesn't exist, will return passed default value.
-     * @~chinese »ñÈ¡Ö¸¶¨ key µÄÕûĞÍÖµ£¬Èç¹û key ²»´æÔÚ£¬Ôò·µ»ØÖ¸¶¨µÄ def¡£
+     * @~chinese è·å–æŒ‡å®š key çš„æ•´å‹å€¼ï¼Œå¦‚æœ key ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æŒ‡å®šçš„ defã€‚
      * @param key @~english The key to get value.
-     * @~chinese ĞèÒª»ñÈ¡µÄkey¡£
+     * @~chinese éœ€è¦è·å–çš„keyã€‚
      * @param def @~english The default value to return if the key doesn't exist.
-     * @~chinese ·µ»ØµÄÄ¬ÈÏÖµ¡£Èç¹ûkey²»´æÔÚ£¬Ôò·µ»Ø´ËÖµ¡£
+     * @~chinese è¿”å›çš„é»˜è®¤å€¼ã€‚å¦‚æœkeyä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æ­¤å€¼ã€‚
      * @return @~english Int value of the key.
-     * @~chinese keyµÄÕûĞÍÖµ¡£
+     * @~chinese keyçš„æ•´å‹å€¼ã€‚
      */
     int getInt(const std::string& key, int def = 0) const;
 
     /**
      * @brief @~english Get float value by key, if the key doesn't exist, will return passed default value.
-     * @~chinese »ñÈ¡Ö¸¶¨ key µÄ×Ö·û´®£¬Èç¹û key ²»´æÔÚ£¬Ôò·µ»ØÖ¸¶¨µÄ def¡£
+     * @~chinese è·å–æŒ‡å®š key çš„å­—ç¬¦ä¸²ï¼Œå¦‚æœ key ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æŒ‡å®šçš„ defã€‚
      * @param key @~english The key to get value.
-     * @~chinese ĞèÒª»ñÈ¡µÄkey¡£
+     * @~chinese éœ€è¦è·å–çš„keyã€‚
      * @param def @~english The default value to return if the key doesn't exist.
-     * @~chinese ·µ»ØµÄÄ¬ÈÏÖµ¡£Èç¹ûkey²»´æÔÚ£¬Ôò·µ»Ø´ËÖµ¡£
+     * @~chinese è¿”å›çš„é»˜è®¤å€¼ã€‚å¦‚æœkeyä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æ­¤å€¼ã€‚
      * @return @~english Float value of the key.
-     * @~chinese keyµÄfloatÖµ¡£
+     * @~chinese keyçš„floatå€¼ã€‚
      */
     float getFloat(const std::string& key, float def = 0.0f) const;
 
     /**
      * @brief @~english Get bool value by key, if the key doesn't exist, will return passed default value.
-     * @~chinese »ñÈ¡Ö¸¶¨ key µÄ×Ö·û´®£¬Èç¹û key ²»´æÔÚ£¬Ôò·µ»ØÖ¸¶¨µÄ def¡£
+     * @~chinese è·å–æŒ‡å®š key çš„å­—ç¬¦ä¸²ï¼Œå¦‚æœ key ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æŒ‡å®šçš„ defã€‚
      * @param key @~english The key to get value.
-     * @~chinese ĞèÒª»ñÈ¡µÄkey¡£
+     * @~chinese éœ€è¦è·å–çš„keyã€‚
      * @param def @~english The default value to return if the key doesn't exist.
-     * @~chinese ·µ»ØµÄÄ¬ÈÏÖµ¡£Èç¹ûkey²»´æÔÚ£¬Ôò·µ»Ø´ËÖµ¡£
+     * @~chinese è¿”å›çš„é»˜è®¤å€¼ã€‚å¦‚æœkeyä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æ­¤å€¼ã€‚
      * @return @~english Bool value of the key.
-     * @~chinese keyµÄboolÖµ¡£
+     * @~chinese keyçš„boolå€¼ã€‚
      */
     bool getBool(const std::string& key, bool def = false) const;
 
     /**
      * @brief @~english Get string value by key, if the key doesn't exist, will return passed default value.
-     * @~chinese »ñÈ¡Ö¸¶¨ key µÄ×Ö·û´®£¬Èç¹û key ²»´æÔÚ£¬Ôò·µ»ØÖ¸¶¨µÄ def¡£
+     * @~chinese è·å–æŒ‡å®š key çš„å­—ç¬¦ä¸²ï¼Œå¦‚æœ key ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æŒ‡å®šçš„ defã€‚
      * @param key @~english The key to get value.
-     * @~chinese ĞèÒª»ñÈ¡µÄkey¡£
+     * @~chinese éœ€è¦è·å–çš„keyã€‚
      * @param def @~english The default value to return if the key doesn't exist.
-     * @~chinese ·µ»ØµÄÄ¬ÈÏÖµ¡£Èç¹ûkey²»´æÔÚ£¬Ôò·µ»Ø´ËÖµ¡£
+     * @~chinese è¿”å›çš„é»˜è®¤å€¼ã€‚å¦‚æœkeyä¸å­˜åœ¨ï¼Œåˆ™è¿”å›æ­¤å€¼ã€‚
      * @return @~english String value of the key.
-     * @~chinese keyµÄstringÖµ¡£
+     * @~chinese keyçš„stringå€¼ã€‚
      */
     std::string getString(const std::string& key, const std::string& def = "") const;
 
      /**
      * @brief @~english Parse export json data of cocos studio 1.x Scene Editor and assign to _doc.
-     * @~chinese ½âÎöcocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öjsonÊı¾İ£¬ÅĞ¶ÏjsonµÄÓĞĞ§ĞÔ£¬¸øjson¶ÔÏó_doc¸³Öµ¡£
+     * @~chinese è§£æcocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºjsonæ•°æ®ï¼Œåˆ¤æ–­jsonçš„æœ‰æ•ˆæ€§ï¼Œç»™jsonå¯¹è±¡_docèµ‹å€¼ã€‚
      * @param jsonFile @~english Json file path.
-     * @~chinese jsonÂ·¾¶¡£
+     * @~chinese jsonè·¯å¾„ã€‚
      * @return @~english true parse successfully, false failed to parse.
-     * @~chinese true ½âÎö³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true è§£ææˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     bool parse(const std::string &jsonFile);
 private:
