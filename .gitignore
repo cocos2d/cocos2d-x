@@ -136,4 +136,5 @@ tests/cpp-tests/Resources/audio
 /tests/lua-game-controller-test/src/cocos/
 /tests/lua-tests/src/cocos/
 /tests/js-tests/res/
-/tools/framework-compile/
+/tools/framework-compile/bin/proj_modifier/plutil-win32/
+!/tools/framework-compile/bin/
