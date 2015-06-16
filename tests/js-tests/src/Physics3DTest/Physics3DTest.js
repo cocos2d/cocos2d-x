@@ -433,21 +433,21 @@ var Physics3DKinematicDemo = Physics3DTestDemo.extend({
         floor.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
 
         //create Kinematics
-        for(let i = 0; i < 3; ++i){
+        for(var i = 0; i < 3; ++i){
             rbDes.mass = 0;
             rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(2, 2, 2));
 
-            let sprite = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
+            var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
             sprite.setTexture("Images/CyanSquare.png");
             sprite.setCameraMask(cc.CameraFlag.USER1);
-            let rigidBody = sprite.getPhysicsObj();
+            var rigidBody = sprite.getPhysicsObj();
             rigidBody.setKinematic(true);
 
             this.addChild(sprite);
 
             sprite.setScale(2);
             sprite.setPosition3D(cc.math.vec3(-15, 0, 15-15*i));
-            let moveby = cc.moveBy(2+i, cc.math.vec3(30, 0, 0));
+            var moveby = cc.moveBy(2+i, cc.math.vec3(30, 0, 0));
             sprite.runAction(cc.sequence(moveby, moveby.reverse()).repeatForever());
         }
 
