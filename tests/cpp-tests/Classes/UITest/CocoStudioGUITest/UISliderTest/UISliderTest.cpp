@@ -349,7 +349,7 @@ bool UISliderNewEventCallbackTest::init()
         slider->addEventListener([=](Ref* widget,Slider::EventType type)
         {
             Slider* slider = (Slider*)widget;
-            if(type == Slider::EventType::ON_PERCENTAGE_DOWN)
+            if(type == Slider::EventType::ON_SLIDEBALL_DOWN)
             {
                 CCLOG("slider button pressed!");
             }
@@ -357,7 +357,7 @@ bool UISliderNewEventCallbackTest::init()
             {
                 CCLOG("slider is moving! percent = %f", 100.0f * slider->getPercent() / slider->getMaxPercent() );
             }
-            else if(type == Slider::EventType::ON_PERCENTAGE_UP)
+            else if(type == Slider::EventType::ON_SLIDEBALL_UP)
             {
                 CCLOG("slider button is released.");
             }

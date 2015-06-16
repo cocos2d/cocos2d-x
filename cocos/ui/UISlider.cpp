@@ -444,7 +444,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         Vec2 nsp = convertToNodeSpace(_touchBeganPosition);
         setPercent(getPercentWithBallPos(nsp.x));
-        percentChangedEvent(EventType::ON_PERCENTAGE_DOWN);
+        percentChangedEvent(EventType::ON_SLIDEBALL_DOWN);
     }
     return pass;
 }
@@ -460,13 +460,13 @@ void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 void Slider::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchEnded(touch, unusedEvent);
-    percentChangedEvent(EventType::ON_PERCENTAGE_UP);
+    percentChangedEvent(EventType::ON_SLIDEBALL_UP);
 }
 
 void Slider::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchCancelled(touch, unusedEvent);
-    percentChangedEvent(EventType::ON_PERCENTAGE_CANCEL);
+    percentChangedEvent(EventType::ON_SLIDEBALL_CANCEL);
 }
 
 float Slider::getPercentWithBallPos(float px)const

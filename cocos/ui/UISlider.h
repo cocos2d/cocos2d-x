@@ -63,9 +63,9 @@ public:
     {
         ON_PERCENTAGE_CHANGED,
         //@since v3.7
-        ON_PERCENTAGE_DOWN,
-        ON_PERCENTAGE_UP,
-        ON_PERCENTAGE_CANCEL
+        ON_SLIDEBALL_DOWN,
+        ON_SLIDEBALL_UP,
+        ON_SLIDEBALL_CANCEL
     };
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
