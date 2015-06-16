@@ -337,7 +337,7 @@ CCDictionary *CCArmature::getBoneDic()
     return m_pBoneDic;
 }
 
-CCAffineTransform CCArmature::nodeToParentTransform()
+const CCAffineTransform& CCArmature::nodeToParentTransform()
 {
     if (m_bTransformDirty)
     {
