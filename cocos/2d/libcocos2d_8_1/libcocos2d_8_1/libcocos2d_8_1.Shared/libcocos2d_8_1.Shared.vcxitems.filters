@@ -1791,34 +1791,64 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.h">
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.h">
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.h">
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.h">
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.h">
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBuffer.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.h">
+      <Filter>audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp">
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -3427,33 +3457,65 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.cpp">
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.cpp">
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.cpp">
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.cpp">
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.cpp">
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\AudioEngine.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault-winrt.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBuffer.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioCachePlayer.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\AudioEngine.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioEngine-winrt.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.cpp">
+      <Filter>audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMesh.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshAgent.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshDebugDraw.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshObstacle.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\navmesh\CCNavMeshUtils.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault-winrt.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3712,6 +3774,15 @@
     <Filter Include="external\poly2tri\sweep">
       <UniqueIdentifier>{932c5f6e-07b3-4b34-97ae-2f3d42024149}</UniqueIdentifier>
     </Filter>
+    <Filter Include="audio">
+      <UniqueIdentifier>{f1c7e21a-6d78-44ba-9480-d7ba197c7b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="physics3d">
+      <UniqueIdentifier>{9cd5215e-ca71-4a7c-bc6d-a86d493b0a70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="navmesh">
+      <UniqueIdentifier>{9a25af30-04d1-41a7-9e55-e34db6b712cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />
@@ -3826,8 +3897,5 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimationCurve.inl">
       <Filter>3d</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CMakeLists.txt" />
   </ItemGroup>
 </Project>
