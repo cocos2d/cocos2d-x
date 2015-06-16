@@ -102,12 +102,6 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
 
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path);
 
-    // check if file exists
-    if ( fullpath.empty() || ! FileUtils::getInstance()->isFileExist( fullpath ) ) {
-        callback(nullptr);
-        return;
-    }
-    
     auto it = _textures.find(fullpath);
     if( it != _textures.end() )
         texture = it->second;
@@ -118,7 +112,11 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
         return;
     }
 
-    // ALTERNATIVE: insert file exists check here to allow loading cached but deleted file
+    // check if file exists
+    if ( fullpath.empty() || ! FileUtils::getInstance()->isFileExist( fullpath ) ) {
+        callback(nullptr);
+        return;
+    }
 
     // lazy init
     if (_asyncStructQueue == nullptr)
