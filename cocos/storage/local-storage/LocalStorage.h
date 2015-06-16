@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "CCPlatformMacros.h"
 
 /**
- * @addtogroup core
+ * @addtogroup storage
  * @{
  */
 

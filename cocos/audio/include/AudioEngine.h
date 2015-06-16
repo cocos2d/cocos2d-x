@@ -41,7 +41,7 @@
 #endif // ERROR
 
 /**
- * @addtogroup core
+ * @addtogroup audio
  * @{
  */
 

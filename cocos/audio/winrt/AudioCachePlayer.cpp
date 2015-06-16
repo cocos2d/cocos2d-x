@@ -37,23 +37,13 @@ inline void ThrowIfFailed(HRESULT hr)
 // AudioCache
 AudioCache::AudioCache()
     : _isReady(false)
+    , _retry(false)
     , _fileFullPath("")
     , _srcReader(nullptr)
     , _fileFormat(FileFormat::UNKNOWN)
 {
     _callbacks.clear();
     memset(&_audInfo, 0, sizeof(AudioInfo));
-}
-
-AudioCache::AudioCache(const AudioCache& obj)
-{
-    // TODO
-}
-
-AudioCache& AudioCache::operator=(const AudioCache& rhs)
-{
-    // TODO
-    return *this;
 }
 
 AudioCache::~AudioCache()
@@ -68,6 +58,10 @@ AudioCache::~AudioCache()
 
 void AudioCache::readDataTask()
 {
+    if (_isReady) {
+        return;
+    }
+
     std::wstring path(_fileFullPath.begin(), _fileFullPath.end());
 
     if (nullptr != _srcReader) {
@@ -79,23 +73,33 @@ void AudioCache::readDataTask()
     {
     case FileFormat::WAV:
         _srcReader = new (std::nothrow) WAVReader();
-        if (_srcReader->initialize(_fileFullPath)) {
-            _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
-            _audInfo._wfx = _srcReader->getWaveFormatInfo();
-            _isReady = true;
-            invokeCallbacks();
-        }
         break;
 
     case FileFormat::OGG:
+        _srcReader = new (std::nothrow) OGGReader();
         break;
 
     case FileFormat::MP3:
+        _srcReader = new (std::nothrow) MP3Reader();
+
         break;
 
     case FileFormat::UNKNOWN:
     default:
         break;
+    }
+
+    if (_srcReader && _srcReader->initialize(_fileFullPath)) {
+        _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
+        _audInfo._wfx = _srcReader->getWaveFormatInfo();
+        _isReady = true;
+        _retry = false;
+        invokeCallbacks();
+    }
+
+    if (!_isReady) {
+        _retry = true;
+        log("Failed to read input file: %s.\n", _fileFullPath.c_str());
     }
 }
 
@@ -109,6 +113,10 @@ void AudioCache::addCallback(const std::function<void()> &callback)
         _callbacks.push_back(callback);
     }
     _cbMutex.unlock();
+
+    if (_retry) {
+        readDataTask();
+    }
 }
 
 void AudioCache::invokeCallbacks()
@@ -294,6 +302,9 @@ void AudioPlayer::setVolume(float volume)
         if (FAILED(_xaMasterVoice->SetVolume(volume))) {
             error();
         }
+        else {
+            _volume = volume;
+        }
     }
 }
 
@@ -375,7 +386,7 @@ bool AudioPlayer::_play(bool resume)
 
         if (_state == AudioPlayerState::PAUSED && !resume || nullptr == _xaSourceVoice) break;
 
-        if (FAILED(_xaSourceVoice->Start())) {
+        if (FAILED(_xaMasterVoice->SetVolume(_volume)) || FAILED(_xaSourceVoice->Start())) {
             error();
         }
         else {
@@ -416,7 +427,6 @@ void AudioPlayer::popBuffer()
 {
     _bqMutex.lock();
     if (!_cachedBufferQ.empty()) {
-        delete[] _cachedBufferQ.front()._data;
         _cachedBufferQ.pop();
     }
     _bqMutex.unlock();
@@ -431,9 +441,9 @@ bool AudioPlayer::submitBuffers()
         if (nullptr == _xaSourceVoice) break;
         if (!_cachedBufferQ.size() || (_isStreaming && _cachedBufferQ.size() < QUEUEBUFFER_NUM)) {
             AudioDataChunk chunk;
-            if (_cache->getChunk(chunk)) {
+            if (_cache->getChunk(chunk) && chunk._dataSize) {
                 _xaBuffer.AudioBytes = chunk._dataSize;
-                _xaBuffer.pAudioData = chunk._data;
+                _xaBuffer.pAudioData = chunk._data->data();
                 _xaBuffer.Flags = chunk._endOfStream ? XAUDIO2_END_OF_STREAM : 0;
                 _cachedBufferQ.push(chunk);
                 ret = SUCCEEDED(_xaSourceVoice->SubmitSourceBuffer(&_xaBuffer));

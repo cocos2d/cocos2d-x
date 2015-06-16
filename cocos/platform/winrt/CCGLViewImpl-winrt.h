@@ -52,8 +52,6 @@ public:
     virtual bool isOpenGLReady();
     virtual void end();
     virtual void swapBuffers();
-    virtual void setViewPortInPoints(float x , float y , float w , float h);
-    virtual void setScissorInPoints(float x , float y , float w , float h);
 
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
     Size getRenerTargetSize() const { return Size(m_width, m_height); }

@@ -32,7 +32,7 @@
 #include "base/ccMacros.h"
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 

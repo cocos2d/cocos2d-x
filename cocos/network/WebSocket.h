@@ -41,7 +41,7 @@ struct libwebsocket_context;
 struct libwebsocket_protocols;
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 

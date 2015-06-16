@@ -34,9 +34,9 @@ namespace cocostudio {
 /** 
  * @class ComRender
  * @brief @~english ComRender.
- * @~chinese äÖÈ¾×é¼ş.
+ * @~chinese æ¸²æŸ“ç»„ä»¶.
  * @details @~english Package render the target object of cocos2d-x, to ensure consistency component implementation.
- * @~chinese äÖÈ¾×é¼ş °ü×°¹ÒÔØµ½¶ÔÏóµÄäÖÈ¾¶ÔÏó,È·±£×é¼şÊµÏÖµÄÒ»ÖÂĞÔ.
+ * @~chinese æ¸²æŸ“ç»„ä»¶ åŒ…è£…æŒ‚è½½åˆ°å¯¹è±¡çš„æ¸²æŸ“å¯¹è±¡,ç¡®ä¿ç»„ä»¶å®ç°çš„ä¸€è‡´æ€§.
 */
 class CC_STUDIO_DLL ComRender : public cocos2d::Component
 {
@@ -44,25 +44,25 @@ class CC_STUDIO_DLL ComRender : public cocos2d::Component
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @brief @~english ComRender constructor.
-     * @~chinese äÖÈ¾×é¼ş¹¹Ôìº¯Êı¡£
+     * @~chinese æ¸²æŸ“ç»„ä»¶æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     ComRender(void);
 
     /**
      * @brief @~english ComRender constructor.
-     * @~chinese äÖÈ¾×é¼ş¹¹Ôìº¯Êı¡£
+     * @~chinese æ¸²æŸ“ç»„ä»¶æ„é€ å‡½æ•°ã€‚
      * @param node @~english Node point 
-     * @~chinese äÖÈ¾¶ÔÏóÖ¸Õë
+     * @~chinese æ¸²æŸ“å¯¹è±¡æŒ‡é’ˆ
      * @param comName @~english component name 
-     * @~chinese ×é¼şÃû³Æ
+     * @~chinese ç»„ä»¶åç§°
      * @js ctor
      */
     ComRender(cocos2d::Node *node, const char *comName);
 
     /**
      * @brief @~english ComRender destructor.
-     * @~chinese äÖÈ¾×é¼şÎö¹¹º¯Êı¡£
+     * @~chinese æ¸²æŸ“ç»„ä»¶ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
@@ -74,10 +74,10 @@ public:
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
-     * @~chinese Ã¿´ÎNode½øÈëÏÔÊ¾ÇøÓòÊ±²úÉúµÄ»Øµ÷ÊÂ¼ş¡£
-     * Èç¹ûnode½øÈëÏÔÊ¾ÇøÓòÊ±°éËæ×ÅÒ»¸ö×ª»»¶¯»­£¬ÄÇÃ´ÊÂ¼ş½«»áÔÚ×ª»»¶¯»­¿ªÊ¼µÄÊ±ºò±»µ÷ÓÃ¡£
-     * ÔÚonEnter¹ı³ÌÖĞ£¬Äã²»ÄÜ¹»·ÃÎÊ¡°sister/brother¡±ĞÖÃÃ½Úµã¡£
-     * Èç¹ûÄãÖØÔØÁËonEnter·½·¨£¬ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà£¬e.g., Node::onEnter().
+     * @~chinese æ¯æ¬¡Nodeè¿›å…¥æ˜¾ç¤ºåŒºåŸŸæ—¶äº§ç”Ÿçš„å›è°ƒäº‹ä»¶ã€‚
+     * å¦‚æœnodeè¿›å…¥æ˜¾ç¤ºåŒºåŸŸæ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢åŠ¨ç”»ï¼Œé‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è½¬æ¢åŠ¨ç”»å¼€å§‹çš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * åœ¨onEnterè¿‡ç¨‹ä¸­ï¼Œä½ ä¸èƒ½å¤Ÿè®¿é—®â€œsister/brotherâ€å…„å¦¹èŠ‚ç‚¹ã€‚
+     * å¦‚æœä½ é‡è½½äº†onEnteræ–¹æ³•ï¼Œä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±»ï¼Œe.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
@@ -88,66 +88,77 @@ public:
      * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-     * @~chinese Ã¿´ÎNodeÍË³öÏÔÊ¾ÇøÓòÊ±²úÉúµÄ»Øµ÷ÊÂ¼ş¡£
-     * Èç¹ûnodeÀë¿ªÏÔÊ¾ÇøÓòÊ±°éËæ×ÅÒ»¸ö×ª»»¶¯»­£¬ÄÇÃ´ÊÂ¼ş½«»áÔÚ×ª»»¶¯»­½áÊøµÄÊ±ºò±»µ÷ÓÃ¡£
-     * ÔÚonExit¹ı³ÌÖĞ,Äã²»ÄÜ¹»·ÃÎÊÒ»¸öÆ½¼¶½Úµã¡£
-     * Èç¹ûÄãÖØÔØonExit, ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà, e.g., Node::onExit().
+     * @~chinese æ¯æ¬¡Nodeé€€å‡ºæ˜¾ç¤ºåŒºåŸŸæ—¶äº§ç”Ÿçš„å›è°ƒäº‹ä»¶ã€‚
+     * å¦‚æœnodeç¦»å¼€æ˜¾ç¤ºåŒºåŸŸæ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢åŠ¨ç”»ï¼Œé‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è½¬æ¢åŠ¨ç”»ç»“æŸçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * åœ¨onExitè¿‡ç¨‹ä¸­,ä½ ä¸èƒ½å¤Ÿè®¿é—®ä¸€ä¸ªå¹³çº§èŠ‚ç‚¹ã€‚
+     * å¦‚æœä½ é‡è½½onExit, ä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±», e.g., Node::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit() override;
 
     /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
+
+    /**
      * @brief @~english deserialization export data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®ã€‚
      * @param r @~english SerData object point.
-     * @~chinese SerData¶ÔÏóÖ¸Õë¡£
+     * @~chinese SerDataå¯¹è±¡æŒ‡é’ˆã€‚
      * @return @~english true deserialize successfully false failed to deserialize.
-     * @~chinese true ·´ĞòÁĞ»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true ååºåˆ—åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool serialize(void* r) override;
 
     /**
      * @brief @~english get Node point.
-     * @~chinese »ñÈ¡äÖÈ¾¶ÔÏóÖ¸Õë¡£
+     * @~chinese è·å–æ¸²æŸ“å¯¹è±¡æŒ‡é’ˆã€‚
      */
     virtual cocos2d::Node* getNode();
 
     /**
      * @brief @~english set Node point.
-     * @~chinese ÉèÖÃäÖÈ¾×é¼ş°ü×°µÄäÖÈ¾¶ÔÏóÖ¸Õë¡£
+     * @~chinese è®¾ç½®æ¸²æŸ“ç»„ä»¶åŒ…è£…çš„æ¸²æŸ“å¯¹è±¡æŒ‡é’ˆã€‚
      */
     virtual void setNode(cocos2d::Node *node);
 
     /**
      * @brief @~english Allocates and initializes a ComRender.
-     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯äÖÈ¾×é¼ş¡£
+     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–æ¸²æŸ“ç»„ä»¶ã€‚
      * @return @~english A initialized ComRender which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄ×Ô¶¨Òå×é¼ş£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å)¡£
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è‡ªå®šä¹‰ç»„ä»¶ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾)ã€‚
      */
     static ComRender* create(void);
 
     /**
      * @brief @~english Allocates and initializes a ComRender.
-     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯äÖÈ¾×é¼ş¡£
+     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–æ¸²æŸ“ç»„ä»¶ã€‚
      * @param node @~english Node point 
-     * @~chinese äÖÈ¾¶ÔÏóÖ¸Õë
+     * @~chinese æ¸²æŸ“å¯¹è±¡æŒ‡é’ˆ
      * @param comName @~english component name 
-     * @~chinese ×é¼şÃû³Æ
+     * @~chinese ç»„ä»¶åç§°
      * @return @~english A initialized ComRender which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄ×Ô¶¨Òå×é¼ş£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å)¡£
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è‡ªå®šä¹‰ç»„ä»¶ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾)ã€‚
      */
     static ComRender* create(cocos2d::Node *node, const char *comName);
 private:
      /**
      * @brief @~english Parse export json data of cocos studio 1.x Scene Editor and assign to doc.
-     * @~chinese ½âÎöcocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öjsonÊı¾İ£¬ÅĞ¶ÏjsonµÄÓĞĞ§ĞÔ£¬¸øjson¶ÔÏódoc¸³Öµ¡£
+     * @~chinese è§£æcocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºjsonæ•°æ®ï¼Œåˆ¤æ–­jsonçš„æœ‰æ•ˆæ€§ï¼Œç»™jsonå¯¹è±¡docèµ‹å€¼ã€‚
      * @param fileName @~english json file path.
-     * @~chinese jsonÂ·¾¶¡£
+     * @~chinese jsonè·¯å¾„ã€‚
      * @param doc @~english json data object
-     * @~chinese jsonÊı¾İ¶ÔÏó¡£
+     * @~chinese jsonæ•°æ®å¯¹è±¡ã€‚
      * @return @~english true parse successfully, false failed to parse.
-     * @~chinese true ½âÎö³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true è§£ææˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     bool readJson(const std::string &fileName, rapidjson::Document &doc);
 

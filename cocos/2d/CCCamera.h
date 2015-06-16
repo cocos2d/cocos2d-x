@@ -20,7 +20,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
+ ****************************************************************************/
 #ifndef _CCCAMERA_H__
 #define _CCCAMERA_H__
 
@@ -28,6 +31,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCFrameBuffer.h"
 
 NS_CC_BEGIN
 
@@ -71,6 +75,8 @@ enum class CameraFlag
 class CC_DLL Camera :public Node
 {
     friend class Scene;
+    friend class Director;
+    friend class EventDispatcher;
 public:
     /**@~english
     * The type of camera.
@@ -172,10 +178,10 @@ public:
     /**@~english get view projection matrix @~chinese 得到视图投影矩阵*/
     const Mat4& getViewProjectionMatrix() const;
     
-    /* @~english convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
-     *
+    /** @~english convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
+     * Origin point at left top corner in screen-space.
      * @~chinese 把指定坐标点从世界坐标转换为屏幕坐标。
-     * 
+     * 原点在GL屏幕坐标系的左下角。
      * @param src @~english The world-space position.
      * @~chinese 世界的位置。
      * @return @~english The screen-space position.
@@ -185,22 +191,47 @@ public:
     
     /**@~english
      * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
-     *
+     * Origin point at left top corner in screen-space.
      * @~chinese 
      * 把指定坐标点从屏幕坐标转换为世界坐标。
-     * 
+     * 原点在GL屏幕坐标系的左下角。
      * @param src @~english The screen-space position.
      * @~chinese 屏幕的位置。
      * @return @~english The world-space position.
      * @~chinese 世界的位置。
      */
     Vec3 unproject(const Vec3& src) const;
+    
+    /** @~english convert the specified point in 3D world-space coordinates into the GL-screen-space coordinates.
+     * Origin point at left bottom corner in GL-screen-space.
+     * @~chinese 把指定坐标点从3D世界坐标转换为屏幕坐标。
+     * 原点在GL屏幕坐标系的左下角。
+     * @param src @~english The 3D world-space position.
+     * @~chinese 3D世界的位置。
+     * @return @~english The GL-screen-space position.
+     * @~chinese GL屏幕空间的位置。
+     */
+    Vec2 projectGL(const Vec3& src) const;
+    
+    /**@~english
+     * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
+     * Origin point at left bottom corner in GL-screen-space.
+     * @~chinese 
+     * 把指定坐标点从屏幕坐标转换为3D世界坐标。
+     * 原点在GL屏幕坐标系的左下角。
+     * @param src @~english The GL-screen-space position.
+     * @~chinese GL屏幕空间的位置。
+     * @return @~english The 3D world-space position.
+     * @~chinese 3D世界的位置。
+     */
+    Vec3 unprojectGL(const Vec3& src) const;
 
     /**@~english
      * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
-     *
+     * Origin point at left bottom corner in GL-screen-space.
      * @~chinese 
      * 把指定坐标点从屏幕坐标转换为世界坐标。
+     * 原点在GL屏幕坐标系的左下角。
      *
      * @param viewport @~english The viewport size to use.
      * @~chinese 使用的视窗大小。
@@ -209,9 +240,24 @@ public:
      * @param dst @~english The world-space position.
      * @~chinese 世界的位置。
      */
-    void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
-    
+    void unproject(const Size& size, const Vec3* src, Vec3* dst) const;
+
     /**@~english
+     * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
+     * Origin point at left bottom corner in GL-screen-space.
+     * @~chinese 
+     * 把指定坐标点从屏幕坐标转换为3D世界坐标。
+     * 原点在GL屏幕坐标系的左下角。
+     * @param size @~english The window size to use.
+     * @~chinese 使用的窗口大小。
+     * @param src  @~english The GL-screen-space position.
+     * @~chinese GL屏幕空间的位置。
+     * @param dst  @~english The 3D world-space position.
+     * @~chinese 3D世界的位置。
+     */
+    void unprojectGL(const Size& size, const Vec3* src, Vec3* dst) const;
+
+    /**
      * Is this aabb visible in frustum
      * @~chinese 
      * aabb在视椎体内是否可见
@@ -230,14 +276,19 @@ public:
      * @~chinese
      * 设置深度，相比深度小的，深度较大的相机会绘制在顶端，标识是CameraFlag::DEFAULT的相机深度是0，用户定义的相机深度默认为-1
      */
-    void setDepth(int depth);
+    void setDepth(int8_t depth);
     
     /**@~english
      * get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
      * @~chinese 
      * 获取深度，相比深度小的，深度较大的相机会绘制在顶端，标识是CameraFlag::DEFAULT的相机深度是0，用户定义的相机深度默认为-1
      */
-    int getDepth() const { return _depth; }
+    int8_t getDepth() const { return _depth; }
+    
+    /**
+     get rendered order
+     */
+    int getRenderOrder() const;
     
     /**@~english
      * Get the frustum's far plane.
@@ -270,9 +321,22 @@ public:
      * 获取到当前运行场景的默认相机。
      */
     static Camera* getDefaultCamera();
-    
+    /**
+     Before rendering scene with this camera, the background need to be cleared.
+     */
     void clearBackground(float depth);
-    
+    /**
+     Apply the FBO, RenderTargets and viewport.
+     */
+    void apply();
+    /**
+     Set FBO, which will attacha several render target for the rendered result.
+    */
+    void setFrameBufferObject(experimental::FrameBuffer* fbo);
+    /**
+     Set Viewport for camera.
+     */
+    void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -292,7 +356,8 @@ CC_CONSTRUCTOR_ACCESS:
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
-    
+    void applyFrameBufferObject();
+    void applyViewport();
 protected:
 
     Scene* _scene; //Scene camera belongs to
@@ -311,10 +376,17 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
-    int  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
+    int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
     
-    friend class Director;
+    experimental::Viewport _viewport;
+    
+    experimental::FrameBuffer* _fbo;
+protected:
+    static experimental::Viewport _defaultViewport;
+public:
+    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
+    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 };
 
 NS_CC_END

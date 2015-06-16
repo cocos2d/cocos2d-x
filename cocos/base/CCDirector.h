@@ -60,6 +60,10 @@ class Renderer;
 class Camera;
 
 class Console;
+namespace experimental
+{
+    class FrameBuffer;
+}
 
 /**
  * @brief @~english Matrix stack type.
@@ -721,6 +725,9 @@ protected:
 
     /* @~english Renderer for the Director  @~chinese 渲染器的导演*/
     Renderer *_renderer;
+    
+    /* Default FrameBufferObject*/
+    experimental::FrameBuffer* _defaultFBO;
 
     /* @~english Console for the director  @~chinese 控制台的导演*/
     Console *_console;

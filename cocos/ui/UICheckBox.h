@@ -352,6 +352,17 @@ protected:
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
+
+    void setupBackgroundTexture();
+    void loadTextureBackGround(SpriteFrame* spriteFrame);
+    void setupBackgroundSelectedTexture();
+    void loadTextureBackGroundSelected(SpriteFrame* spriteFrame);
+    void setupFrontCrossTexture();
+    void loadTextureFrontCross(SpriteFrame* spriteframe);
+    void setupBackgroundDisable();
+    void loadTextureBackGroundDisabled(SpriteFrame* spriteframe);
+    void setupFrontCrossDisableTexture();
+    void loadTextureFrontCrossDisabled(SpriteFrame* spriteframe);
     
     void selectedEvent();
     void unSelectedEvent();
@@ -394,6 +405,9 @@ protected:
     
     ccCheckBoxCallback _checkBoxEventCallback;
 
+    bool _isBackgroundSelectedTextureLoaded;
+    bool _isBackgroundDisabledTextureLoaded;
+    bool _isFrontCrossDisabledTextureLoaded;
     TextureResType _backGroundTexType;
     TextureResType _backGroundSelectedTexType;
     TextureResType _frontCrossTexType;
@@ -403,12 +417,7 @@ protected:
     float _zoomScale;
     float _backgroundTextureScaleX;
     float _backgroundTextureScaleY;
-    std::string _backGroundFileName;
-    std::string _backGroundSelectedFileName;
-    std::string _frontCrossFileName;
-    std::string _backGroundDisabledFileName;
-    std::string _frontCrossDisabledFileName;
-    
+
     bool _backGroundBoxRendererAdaptDirty;
     bool _backGroundSelectedBoxRendererAdaptDirty;
     bool _frontCrossRendererAdaptDirty;

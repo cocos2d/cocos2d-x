@@ -29,7 +29,7 @@
 #include "network/HttpRequest.h"
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 

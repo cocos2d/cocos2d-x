@@ -25,7 +25,7 @@
         },
         {
             "from": "../../resjs", 
-            "to": "res/"
+            "to": "res/resjs/"
         }
     ], 
     "ndk_module_path": [

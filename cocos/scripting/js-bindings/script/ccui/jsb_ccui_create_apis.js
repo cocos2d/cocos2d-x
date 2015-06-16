@@ -136,6 +136,23 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
 
+if (ccui.WebView)
+{
+    ccui.WebView.prototype._ctor = function(url){
+        this.init();
+        url !== undefined && this.loadURL(url);
+    };
+}
+
+if (ccui.VideoPlayer)
+{
+    ccui.VideoPlayer.prototype._ctor = function(url){
+        this.init();
+        url !== undefined && this.setURL(url);
+    };
+}
+
+
 cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
     rect = rect || cc.rect(0, 0, 0, 0);
     capInsets = capInsets || cc.rect(0, 0, 0, 0);

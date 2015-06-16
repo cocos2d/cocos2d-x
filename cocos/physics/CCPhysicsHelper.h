@@ -35,7 +35,9 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup core
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_2d
  * @{
  */
 
@@ -184,6 +186,7 @@ public:
     }
 };
 
+/** @} */
 /** @} */
 
 NS_CC_END

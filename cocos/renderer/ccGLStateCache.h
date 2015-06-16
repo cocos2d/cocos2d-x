@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

@@ -68,6 +68,22 @@ void ComRender::onExit()
     }
 }
 
+void ComRender::onAdd()
+{
+    if (_owner != nullptr)
+    {
+        _owner->addChild(_render);
+    }
+}
+
+void ComRender::onRemove()
+{
+    if (_owner != nullptr)
+    {
+        _owner->removeChild(_render, true);
+    }
+}
+
 cocos2d::Node* ComRender::getNode()
 {
     return _render;

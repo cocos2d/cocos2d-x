@@ -253,7 +253,7 @@ protected:
 
     bool _enabled;
 
-    MenuItem* getItemForTouch(Touch * touch);
+    virtual MenuItem* getItemForTouch(Touch * touch);
     State _state;
     MenuItem *_selectedItem;
 

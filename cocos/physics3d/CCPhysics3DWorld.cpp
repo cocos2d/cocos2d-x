@@ -67,6 +67,16 @@ Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)
     return world;
 }
 
+void Physics3DWorld::setGravity(const Vec3& gravity)
+{
+    _btPhyiscsWorld->setGravity(convertVec3TobtVector3(gravity));
+}
+
+Vec3 Physics3DWorld::getGravity() const
+{
+    return convertbtVector3ToVec3(_btPhyiscsWorld->getGravity());
+}
+
 bool Physics3DWorld::init(Physics3DWorldDes* info)
 {
     ///collision configuration contains default setup for memory, collision setup

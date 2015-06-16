@@ -35,7 +35,7 @@
 #include "platform/CCGL.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

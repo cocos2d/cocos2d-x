@@ -470,22 +470,6 @@ Vec2 GLViewImpl::GetPoint(PointerEventArgs^ args) {
 }
 
 
-void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
-{
-    glViewport((GLint) (x * _scaleX + _viewPortRect.origin.x),
-        (GLint) (y * _scaleY + _viewPortRect.origin.y),
-        (GLsizei) (w * _scaleX),
-        (GLsizei) (h * _scaleY));
-}
-
-void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
-{
-    glScissor((GLint) (x * _scaleX + _viewPortRect.origin.x),
-        (GLint) (y * _scaleY + _viewPortRect.origin.y),
-        (GLsizei) (w * _scaleX),
-        (GLsizei) (h * _scaleY));
-}
-
 void GLViewImpl::QueueBackKeyPress()
 {
     std::shared_ptr<BackButtonEvent> e(new BackButtonEvent());

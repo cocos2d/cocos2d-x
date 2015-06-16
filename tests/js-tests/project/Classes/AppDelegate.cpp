@@ -39,6 +39,16 @@
 
 #include "js_Effect3D_bindings.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -110,8 +120,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_experimental);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_manual);
 
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     sc->addRegisterCallback(register_all_cocos2dx_physics3d);
     sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
+#endif
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
@@ -121,6 +133,16 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     sc->addRegisterCallback(register_DrawNode3D_bindings);
     sc->addRegisterCallback(register_Effect3D_bindings);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+#endif
 
     sc->start();
     sc->runScript("script/jsb_boot.js");

@@ -35,7 +35,7 @@ NS_CC_BEGIN
 struct FontDefinition;
 
 /**
- * @addtogroup support
+ * @addtogroup platform
  * @{
  */
 

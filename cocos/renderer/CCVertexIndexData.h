@@ -29,7 +29,7 @@
 #include <map>
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

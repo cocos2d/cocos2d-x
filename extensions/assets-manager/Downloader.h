@@ -248,7 +248,7 @@ public:
         /** @~english The response code
          * @~chinese 响应代码
          */
-        double responseCode;
+        long responseCode;
     };
     
     typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
@@ -336,6 +336,15 @@ public:
      * @~chinese 内容大小
      */
     long getContentSize(const std::string &srcUrl);
+    
+    /** @~english Gets the file header of the given url synchronously
+     * @~chinese 同步获取给定url的文件Header
+     * @param srcUrl @~english The source url
+     * @~chinese 给定的资源url
+     * @return @~english The header information
+     * @~chinese Header信息
+     */
+    HeaderInfo getHeader(const std::string &srcUrl);
     
     /** @~english Gets the file header of the given url asynchronously
      * @~chinese 异步获取给定url的文件Header
@@ -436,9 +445,6 @@ protected:
 
     void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, bool resumeDownload, FileDescriptor *fDesc, ProgressData *pData);
     
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    HeaderInfo prepare(const std::string &srcUrl);
-#endif
     HeaderInfo prepareHeader(const std::string &srcUrl, void* header = nullptr);
     
     void downloadToBuffer(const std::string &srcUrl, const std::string &customId, const StreamData &buffer, const ProgressData &data);

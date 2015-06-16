@@ -396,6 +396,10 @@ THE SOFTWARE.
 #endif
 #endif
 
+/** @~english Use 3D navigation API. @~chinese 是否使用导航网格功能。*/
+#ifndef CC_USE_NAVMESH
+#define CC_USE_NAVMESH 1
+#endif
 
 /** @~english Use culling or not.  @~chinese 是否使用剔除功能。*/
 #ifndef CC_USE_CULLING

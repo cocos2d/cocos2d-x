@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

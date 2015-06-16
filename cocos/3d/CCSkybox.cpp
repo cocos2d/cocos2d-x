@@ -30,6 +30,7 @@
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "3d/CCSkybox.h"
 #include "3d/CCTextureCube.h"
 
@@ -183,14 +184,21 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
 
     glEnable(GL_DEPTH_TEST);
+    RenderState::StateBlock::_defaultState->setDepthTest(true);
+
     glDepthFunc(GL_LEQUAL);
+    RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
+
 
     GLboolean cullFlag = glIsEnabled(GL_CULL_FACE);
     GLint cullMode;
     glGetIntegerv(GL_CULL_FACE_MODE, &cullMode);
 
     glEnable(GL_CULL_FACE);
+    RenderState::StateBlock::_defaultState->setCullFace(true);
+
     glCullFace(GL_BACK);
+    RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {

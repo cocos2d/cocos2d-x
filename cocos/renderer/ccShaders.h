@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
