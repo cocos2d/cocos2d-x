@@ -406,7 +406,7 @@ public:
         @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese 在指定位置的法线矢量地形。如果这个参数为空或nullptr，正常计算应跳过。
         @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese 地形的指定位置的高度值，如果（x，z）位置的地形边界，它将返回0；
      **/
-    float getHeight(float x, float z, Vec3* normal= nullptr);
+    float getHeight(float x, float z, Vec3 * normal= nullptr) const;
 
     /** @~english get specified position's height mapping to the terrain,use bi-linear interpolation method
         @~chinese 获取指定位置的高度映射到地形，使用双线性插值方法
@@ -414,14 +414,14 @@ public:
         @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese 在指定位置的法线矢量地形。如果这个参数为空或nullptr，正常计算应跳过。
         @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese 地形的指定位置的高度值，如果（x，z）位置的地形边界，它将返回0；
      **/
-    float getHeight(Vec2 pos, Vec3* Normal = nullptr);
+    float getHeight(Vec2 pos, Vec3*Normal = nullptr) const;
 
     /** @~english get the normal of the specified pistion in terrain
         @~chinese 得到指定位置的法线
         @return @~english the normal vector of the specified position of the terrain. @~chinese 地形的指定位置的法向量。
         @note the fast normal calculation may not get precise normal vector.
      **/
-    Vec3 getNormal(int pixelX, int pixelY);
+    Vec3 getNormal(int pixelX, int pixelY) const;
 
     /** @~english get height from the raw height filed
         @~chinese 得到高度
@@ -429,7 +429,7 @@ public:
         @param pixelY @~english  the position of y in raw height @~chinese Y在原高度的位置
         @return @~english the height of position(x,y) @~chinese 位置（x，y）的高度
     */
-    float getImageHeight(int pixelX, int pixelY);
+    float getImageHeight(int pixelX, int pixelY) const;
 
     /** @~english show the wireline instead of the surface,Debug Use only
         @~chinese 显示线框模式，调试使用
@@ -468,7 +468,20 @@ public:
     void setDetailMap(unsigned int index, DetailMap detailMap);
 
     // Overrides, internal use only
-    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+    /**
+     * Ray-Terrain intersection.
+     * @return the intersection point
+     */
+    Vec3 getIntersectionPoint(const Ray & ray) const;
+
+   /**
+    * Ray-Terrain intersection.
+    * @param ray to hit the terrain
+    * @param intersectionPoint hit point if hitted
+    * @return true if hit, false otherwise
+    */
+    bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
 
     /** @~english Ray-Terrain intersection.
         @~chinese 射线地形相交。

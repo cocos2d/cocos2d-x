@@ -177,14 +177,18 @@ bool	CocoLoader::ReadCocoBinBuff(char* pBinBuff)
 	pTempBuff += sizeof(stCocoFileHeader);
 	char*   pStartAddr = m_pMemoryBuff = pTempBuff;
     
-	if( m_pFileHeader->m_nCompressSize > 0 )
+	char*	pDestBuff = new char[m_pFileHeader->m_nDataSize];
+	if (m_pFileHeader->m_nCompressSize > 0)
 	{
-		char*	pDestBuff  = new char[m_pFileHeader->m_nDataSize];
 		uLongf		dwSrcSize  = m_pFileHeader->m_nCompressSize;
 		uLongf		dwDestSize  = m_pFileHeader->m_nDataSize;
 		uncompress((Bytef*)pDestBuff,&dwDestSize,(Bytef*)m_pMemoryBuff,dwSrcSize);
-		pStartAddr = m_pMemoryBuff = pDestBuff;
 	}
+	else
+	{
+		memcpy(pDestBuff, m_pMemoryBuff, m_pFileHeader->m_nDataSize);
+	}
+	pStartAddr = m_pMemoryBuff = pDestBuff;
     
 	m_pObjectDescArray = (stExpCocoObjectDesc*)pStartAddr;
     

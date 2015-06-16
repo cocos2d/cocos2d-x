@@ -34,9 +34,9 @@ namespace cocostudio {
 /** 
  * @class ComController
  * @brief @~english ComController.
- * @~chinese Âß¼­×é¼ş.
+ * @~chinese é€»è¾‘ç»„ä»¶.
  * @details @~english you can get input and calling each frame when attach ComController component.
- * @~chinese ÊµÏÖ¶ÔÏóÂß¼­µÄ×é¼ş£¬¿ÉÒÔ»ñÈ¡ÊäÈëÒÔ¼°Ã¿Ö¡µ÷ÓÃ.
+ * @~chinese å®ç°å¯¹è±¡é€»è¾‘çš„ç»„ä»¶ï¼Œå¯ä»¥è·å–è¾“å…¥ä»¥åŠæ¯å¸§è°ƒç”¨.
 */
 class CC_STUDIO_DLL ComController : public cocos2d::Component, public InputDelegate
 {
@@ -45,7 +45,7 @@ class CC_STUDIO_DLL ComController : public cocos2d::Component, public InputDeleg
 public:
     /**
      * @brief @~english ComController constructor.
-     * @~chinese Âß¼­×é¼ş¹¹Ôìº¯Êı¡£
+     * @~chinese é€»è¾‘ç»„ä»¶æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     ComController(void);
@@ -53,7 +53,7 @@ public:
 public:
     /**
      * @brief @~english ComController destructor.
-     * @~chinese Âß¼­×é¼şÎö¹¹º¯Êı¡£
+     * @~chinese é€»è¾‘ç»„ä»¶ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
@@ -61,9 +61,9 @@ public:
 
     /**
      * @brief @~english Initialize a ComController.
-     * @~chinese ³õÊ¼»¯Âß¼­×é¼ş¡£
+     * @~chinese åˆå§‹åŒ–é€»è¾‘ç»„ä»¶ã€‚
      * @return @~english true initialize successfully false failed to initialize.
-     * @~chinese true ³õÊ¼»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true åˆå§‹åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool init() override;
 
@@ -72,10 +72,10 @@ public:
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
-     * @~chinese Ã¿´ÎNode½øÈëÏÔÊ¾ÇøÓòÊ±²úÉúµÄ»Øµ÷ÊÂ¼ş¡£
-     * Èç¹ûnode½øÈëÏÔÊ¾ÇøÓòÊ±°éËæ×ÅÒ»¸ö×ª»»¶¯»­£¬ÄÇÃ´ÊÂ¼ş½«»áÔÚ×ª»»¶¯»­¿ªÊ¼µÄÊ±ºò±»µ÷ÓÃ¡£
-     * ÔÚonEnter¹ı³ÌÖĞ£¬Äã²»ÄÜ¹»·ÃÎÊ¡°sister/brother¡±ĞÖÃÃ½Úµã¡£
-     * Èç¹ûÄãÖØÔØÁËonEnter·½·¨£¬ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà£¬e.g., Node::onEnter().
+     * @~chinese æ¯æ¬¡Nodeè¿›å…¥æ˜¾ç¤ºåŒºåŸŸæ—¶äº§ç”Ÿçš„å›è°ƒäº‹ä»¶ã€‚
+     * å¦‚æœnodeè¿›å…¥æ˜¾ç¤ºåŒºåŸŸæ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢åŠ¨ç”»ï¼Œé‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è½¬æ¢åŠ¨ç”»å¼€å§‹çš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * åœ¨onEnterè¿‡ç¨‹ä¸­ï¼Œä½ ä¸èƒ½å¤Ÿè®¿é—®â€œsister/brotherâ€å…„å¦¹èŠ‚ç‚¹ã€‚
+     * å¦‚æœä½ é‡è½½äº†onEnteræ–¹æ³•ï¼Œä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±»ï¼Œe.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
@@ -86,14 +86,25 @@ public:
      * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-     * @~chinese Ã¿´ÎNodeÍË³öÏÔÊ¾ÇøÓòÊ±²úÉúµÄ»Øµ÷ÊÂ¼ş¡£
-     * Èç¹ûnodeÀë¿ªÏÔÊ¾ÇøÓòÊ±°éËæ×ÅÒ»¸ö×ª»»¶¯»­£¬ÄÇÃ´ÊÂ¼ş½«»áÔÚ×ª»»¶¯»­½áÊøµÄÊ±ºò±»µ÷ÓÃ¡£
-     * ÔÚonExit¹ı³ÌÖĞ,Äã²»ÄÜ¹»·ÃÎÊÒ»¸öÆ½¼¶½Úµã¡£
-     * Èç¹ûÄãÖØÔØonExit, ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà, e.g., Node::onExit().
+     * @~chinese æ¯æ¬¡Nodeé€€å‡ºæ˜¾ç¤ºåŒºåŸŸæ—¶äº§ç”Ÿçš„å›è°ƒäº‹ä»¶ã€‚
+     * å¦‚æœnodeç¦»å¼€æ˜¾ç¤ºåŒºåŸŸæ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢åŠ¨ç”»ï¼Œé‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è½¬æ¢åŠ¨ç”»ç»“æŸçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * åœ¨onExitè¿‡ç¨‹ä¸­,ä½ ä¸èƒ½å¤Ÿè®¿é—®ä¸€ä¸ªå¹³çº§èŠ‚ç‚¹ã€‚
+     * å¦‚æœä½ é‡è½½onExit, ä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±», e.g., Node::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit() override;
+
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
 
     /**
      * @~english Schedules the "update" method.
@@ -101,36 +112,36 @@ public:
      * It will use the order number 0. This method will be called every frame.
      * Scheduled methods with a lower order value will be called before the ones that have a higher order value.
      * Only one "update" method could be scheduled per node.
-     * @~chinese µ÷¶È"update"·½·¨¡£
+     * @~chinese è°ƒåº¦"update"æ–¹æ³•ã€‚
      *
-     * ËüµÄÓÅÏÈ¼¶½«»áÊÇ0£¬Õâ¸ö·½·¨½«»áÔÚÃ¿Ò»Ö¡¶¼±»µ÷ÓÃ¡£
-     * ÓµÓĞ½ÏĞ¡ÓÅÏÈÊıÖµµÄµ÷¶È·½·¨½«»áÔÚÓĞÓµÓÃ½Ï´óÓÅÏÈÊıÖµµÄ·½·¨Ö®Ç°±»µ÷ÓÃ¡£
-     * Ã¿Ò»¸ö½ÚµãÖ»ÓĞÒ»"update"ÄÜ¹»±»µ÷¶È(Äã²»ÄÜ¹»ÓĞ2¸ö¡°update¡±Ñ¡ÔñÆ÷)¡£
+     * å®ƒçš„ä¼˜å…ˆçº§å°†ä¼šæ˜¯0ï¼Œè¿™ä¸ªæ–¹æ³•å°†ä¼šåœ¨æ¯ä¸€å¸§éƒ½è¢«è°ƒç”¨ã€‚
+     * æ‹¥æœ‰è¾ƒå°ä¼˜å…ˆæ•°å€¼çš„è°ƒåº¦æ–¹æ³•å°†ä¼šåœ¨æœ‰æ‹¥ç”¨è¾ƒå¤§ä¼˜å…ˆæ•°å€¼çš„æ–¹æ³•ä¹‹å‰è¢«è°ƒç”¨ã€‚
+     * æ¯ä¸€ä¸ªèŠ‚ç‚¹åªæœ‰ä¸€"update"èƒ½å¤Ÿè¢«è°ƒåº¦(ä½ ä¸èƒ½å¤Ÿæœ‰2ä¸ªâ€œupdateâ€é€‰æ‹©å™¨)ã€‚
      * @lua NA
      */
     virtual void update(float delta) override;
 
     /** 
      * @brief @~english Returns whether or not the ComAudio is enabled.
-     * @~chinese ·µ»ØÉùÒô×é¼şÊÇ·ñ±»ÆôÓÃ¡£
+     * @~chinese è¿”å›å£°éŸ³ç»„ä»¶æ˜¯å¦è¢«å¯ç”¨ã€‚
      * @return @~english Whether or not the ComAudio is enabled. 
-     * @~chinese ÉùÒô×é¼şÊÇ·ñ±»ÆôÓÃ¡£
+     * @~chinese å£°éŸ³ç»„ä»¶æ˜¯å¦è¢«å¯ç”¨ã€‚
      */
     virtual bool isEnabled() const override;
 
     /**  
      * @brief @~english Enables or disables the ComAudio.
-     * @~chinese ÆôÓÃ»ò½ûÓÃÉùÒô×é¼ş¡£
+     * @~chinese å¯ç”¨æˆ–ç¦ç”¨å£°éŸ³ç»„ä»¶ã€‚
      * @param enabled @~english true enable the ComAudio, false disabled the ComAudio. 
-     * @~chinese true£¬ÆôÓÃÉùÒô×é¼ş false£¬½ûÓÃÉùÒô×é¼ş¡£
+     * @~chinese trueï¼Œå¯ç”¨å£°éŸ³ç»„ä»¶ falseï¼Œç¦ç”¨å£°éŸ³ç»„ä»¶ã€‚
      */
     virtual void setEnabled(bool b) override;
 
     /**
      * @brief @~english Allocates and initializes a create.
-     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯Âß¼­×é¼ş¡£
+     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–é€»è¾‘ç»„ä»¶ã€‚
      * @return @~english A initialized ComController which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄÂß¼­×é¼ş£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å)¡£
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„é€»è¾‘ç»„ä»¶ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾)ã€‚
      */
     static ComController* create(void);
 };

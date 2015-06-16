@@ -90,7 +90,13 @@ public:
      * @return @~english An autoreleased Physics3DWorld object. @~chinese 一个自动释放的physics3dworld对象。
     */
     static Physics3DWorld* create(Physics3DWorldDes* info);
-
+    
+    /** set gravity for the physics world */
+    void setGravity(const Vec3& gravity);
+    
+    /** get current gravity */
+    Vec3 getGravity() const;
+    
     /** @~english Add a Physics3DObject.
     @~chinese 添加一个physics3dobject。
     */

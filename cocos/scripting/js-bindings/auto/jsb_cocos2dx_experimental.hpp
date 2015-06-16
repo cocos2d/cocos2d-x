@@ -1,3 +1,4 @@
+#include "base/ccConfig.h"
 #ifndef __cocos2dx_experimental_h__
 #define __cocos2dx_experimental_h__
 
@@ -20,5 +21,5 @@ bool js_cocos2dx_experimental_SpritePolygon_getArea(JSContext *cx, uint32_t argc
 bool js_cocos2dx_experimental_SpritePolygon_initWithMarching(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_SpritePolygon_getVertCount(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_SpritePolygon_getTrianglesCount(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_experimental_h__

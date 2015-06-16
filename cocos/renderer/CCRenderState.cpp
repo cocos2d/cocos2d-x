@@ -37,28 +37,9 @@ NS_CC_BEGIN
 
 RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
 
-// Render state override bits
-enum
-{
-    RS_BLEND = (1 << 0),
-    RS_BLEND_FUNC = (1 << 1),
-    RS_CULL_FACE = (1 << 2),
-    RS_DEPTH_TEST = (1 << 3),
-    RS_DEPTH_WRITE = (1 << 4),
-    RS_DEPTH_FUNC = (1 << 5),
-    RS_CULL_FACE_SIDE = (1 << 6),
-    RS_STENCIL_TEST = (1 << 7),
-    RS_STENCIL_WRITE = (1 << 8),
-    RS_STENCIL_FUNC = (1 << 9),
-    RS_STENCIL_OP = (1 << 10),
-    RS_FRONT_FACE = (1 << 11),
-
-    RS_ALL_ONES = 0xFFFFFFFF,
-};
-
 
 RenderState::RenderState()
-: _textures()
+: _texture(nullptr)
 , _hash(0)
 , _hashDirty(true)
 , _parent(nullptr)
@@ -102,32 +83,27 @@ std::string RenderState::getName() const
 }
 
 
-const Vector<Texture2D*>& RenderState::getTextures() const
-{
-    return _textures;
-}
-
 void RenderState::setTexture(Texture2D* texture)
 {
-    if (_textures.size() > 0)
-        _textures.replace(0, texture);
-    else
-        _textures.pushBack(texture);
+    if (_texture != texture)
+    {
+        CC_SAFE_RELEASE(_texture);
+        _texture = texture;
+        CC_SAFE_RETAIN(_texture);
+    }
 }
 
 Texture2D* RenderState::getTexture() const
 {
-    if (_textures.size() > 0)
-        return _textures.at(0);
-    return nullptr;
+    return _texture;
 }
 
 void RenderState::bind(Pass* pass)
 {
     CC_ASSERT(pass);
 
-    if (_textures.size() > 0)
-        GL::bindTexture2D(_textures.at(0)->getName());
+    if (_texture)
+        GL::bindTexture2D(_texture->getName());
 
     // Get the combined modified state bits for our RenderState hierarchy.
     long stateOverrideBits = _state ? _state->_bits : 0;
@@ -193,7 +169,8 @@ void RenderState::cloneInto(RenderState* renderState) const
     }
 
     renderState->_name = _name;
-    renderState->_textures = _textures;
+    renderState->_texture = _texture;
+    CC_SAFE_RETAIN(renderState->_texture);
     // weak ref. don't retain
     renderState->_parent = _parent;
 }
@@ -733,6 +710,14 @@ uint32_t RenderState::StateBlock::getHash() const
 {
     // XXX
     return 0x12345678;
+}
+
+void RenderState::StateBlock::invalidate(long stateBits)
+{
+    CCASSERT(_defaultState, "_default state not created yet. Cannot be invalidated");
+
+    _defaultState->_bits = stateBits;
+    _defaultState->restore(0);
 }
 
 void RenderState::StateBlock::setBlend(bool enabled)

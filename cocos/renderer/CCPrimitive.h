@@ -28,7 +28,7 @@
 #include "renderer/CCVertexIndexData.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

@@ -129,12 +129,12 @@ public:
     /** @~english align node and physics according to physics object
         @~chinese 根据物理对象对齐节点和物理
     */
-    void syncToPhysics();
+    void syncNodeToPhysics();
 
     /** @~english align node and physics according to node
         @~chinese 根据节点对象对齐节点和物理
     */
-    void syncToNode();
+    void syncPhysicsToNode();
 
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();

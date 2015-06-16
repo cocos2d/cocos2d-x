@@ -1,3 +1,4 @@
+#include "base/ccConfig.h"
 #ifndef __cocos2dx_studio_h__
 #define __cocos2dx_studio_h__
 
@@ -754,5 +755,5 @@ bool js_cocos2dx_studio_ObjectExtensionData_getCustomProperty(JSContext *cx, uin
 bool js_cocos2dx_studio_ObjectExtensionData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ObjectExtensionData_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ObjectExtensionData_ObjectExtensionData(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_studio_h__

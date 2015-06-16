@@ -125,7 +125,7 @@ var Material_2DEffects = MaterialSystemTestDemo.extend({
 
     ctor:function(){
         this._super();
-        var properties = cc.Properties.createWithoutAutorelease("Materials/2d_effects.material#sample");
+        var properties = cc.Properties.createNonRefCounted("Materials/2d_effects.material#sample");
 
         var mat1 = cc.Material.createWithProperties(properties);
 

@@ -36,7 +36,7 @@
 #include "network/HttpCookie.h"
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 

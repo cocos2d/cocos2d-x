@@ -83,10 +83,12 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
             
             rapidjson::Document dReplyParse;
             dReplyParse.SetObject();
-            dReplyParse.AddMember("cmd",strcmd.c_str(),dReplyParse.GetAllocator());
+            rapidjson::Document::AllocatorType& allocator = dReplyParse.GetAllocator();
+            dReplyParse.AddMember("cmd", rapidjson::Value(strcmd.c_str(), allocator)
+                                  , allocator);
             if (dArgParse.HasMember("seq"))
             {
-                dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
+                dReplyParse.AddMember("seq",dArgParse["seq"],allocator);
             }
             
             if(strcmp(strcmd.c_str(), "start-logic") == 0)
@@ -128,36 +130,40 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
             } else if(strcmp(strcmd.c_str(), "getversion") == 0)
             {
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                bodyvalue.AddMember("version", getRuntimeVersion(), dReplyParse.GetAllocator());
-                dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                bodyvalue.AddMember("version", rapidjson::Value(getRuntimeVersion(), allocator)
+                                    , allocator);
+                dReplyParse.AddMember("body", bodyvalue, allocator);
+                dReplyParse.AddMember("code", 0, allocator);
             } else if(strcmp(strcmd.c_str(), "getfileinfo") == 0)
             {
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);
                 rapidjson::Document* filecfgjson = _fileserver->getFileCfgJson();
-                for (auto it = filecfgjson->MemberonBegin(); it != filecfgjson->MemberonEnd(); ++it)
+                for (rapidjson::Value::MemberIterator itr = filecfgjson->MemberBegin()
+                     ; itr != filecfgjson->MemberEnd()
+                     ; ++itr)
                 {
-                    bodyvalue.AddMember(it->name.GetString(), it->value.GetString(), dReplyParse.GetAllocator());
+                    bodyvalue.AddMember(itr->name, itr->value, allocator);
                 }
-                dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                
+                dReplyParse.AddMember("body", bodyvalue, allocator);
+                dReplyParse.AddMember("code", 0, allocator);
                
             } else if (strcmp(strcmd.c_str(), "getEntryfile") == 0)
             {
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);
                 rapidjson::Value entryFileValue(rapidjson::kStringType);
-                entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(), dReplyParse.GetAllocator());
-                bodyvalue.AddMember("entryfile", entryFileValue, dReplyParse.GetAllocator());
-                dReplyParse.AddMember("body", bodyvalue,dReplyParse.GetAllocator());
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                entryFileValue.SetString(ConfigParser::getInstance()->getEntryFile().c_str(), allocator);
+                bodyvalue.AddMember("entryfile", entryFileValue, allocator);
+                dReplyParse.AddMember("body", bodyvalue,allocator);
+                dReplyParse.AddMember("code", 0, allocator);
             } else if(strcmp(strcmd.c_str(), "getIP") == 0)
             {
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);
                 rapidjson::Value IPValue(rapidjson::kStringType);
-                IPValue.SetString(getIPAddress().c_str(), dReplyParse.GetAllocator());
-                bodyvalue.AddMember("IP", IPValue,dReplyParse.GetAllocator());
-                dReplyParse.AddMember("body", bodyvalue,dReplyParse.GetAllocator());
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                IPValue.SetString(getIPAddress().c_str(), allocator);
+                bodyvalue.AddMember("IP", IPValue,allocator);
+                dReplyParse.AddMember("body", bodyvalue,allocator);
+                dReplyParse.AddMember("code", 0, allocator);
 
             } else if(strcmp(strcmd.c_str(), "remove") == 0)
             {
@@ -181,12 +187,16 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                             if(remove(filepath.c_str()) != 0) 
                             {
                                 // remove failed
-                                bodyvalue.AddMember(filename, 2, dReplyParse.GetAllocator());
+                                bodyvalue.AddMember(rapidjson::Value(filename, allocator)
+                                                    , rapidjson::Value(2)
+                                                    , allocator);
                             }
                         } else
                         {
                             // file not exist
-                            bodyvalue.AddMember(filename, 1, dReplyParse.GetAllocator());
+                            bodyvalue.AddMember(rapidjson::Value(filename, allocator)
+                                                , rapidjson::Value(1)
+                                                , allocator);
                         }
 
                         // file remove success, remove it from record
@@ -194,10 +204,10 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                             _fileserver->removeResFileInfo(filename);
                     }
 
-                    dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    dReplyParse.AddMember("body", bodyvalue, allocator);
                 }
 
-                dReplyParse.AddMember("code",0,dReplyParse.GetAllocator());
+                dReplyParse.AddMember("code",0,allocator);
             } else if(strcmp(strcmd.c_str(), "shutdownapp") == 0)
             {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -220,10 +230,10 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
 #endif
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);
                 rapidjson::Value platformValue(rapidjson::kStringType);
-                platformValue.SetString(platform.c_str(), dReplyParse.GetAllocator());
-                bodyvalue.AddMember("platform", platformValue, dReplyParse.GetAllocator());
-                dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                platformValue.SetString(platform.c_str(), allocator);
+                bodyvalue.AddMember("platform", platformValue, allocator);
+                dReplyParse.AddMember("body", bodyvalue, allocator);
+                dReplyParse.AddMember("code", 0, allocator);
             } else if(strcmp(strcmd.c_str(), "usewritablepath") == 0)
             {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -235,7 +245,7 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                 FileUtils::getInstance()->setSearchPaths(searchPathArray);
 #endif
                 
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                dReplyParse.AddMember("code", 0, allocator);
             }
             else if (strcmp(strcmd.c_str(), "workdir") == 0)
             {
@@ -245,10 +255,11 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                     FileUtils::getInstance()->setDefaultResourceRootPath(objectPath.GetString());
                     
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    bodyvalue.AddMember("path", objectPath.GetString(), dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("path", rapidjson::Value(objectPath.GetString(), allocator)
+                                        , allocator);
+                    dReplyParse.AddMember("body", bodyvalue, allocator);
                 }
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                dReplyParse.AddMember("code", 0, allocator);
             }
             else if (strcmp(strcmd.c_str(), "writablePath") == 0)
             {
@@ -258,10 +269,11 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                     FileUtils::getInstance()->setWritablePath(objectPath.GetString());
                     
                     rapidjson::Value bodyvalue(rapidjson::kObjectType);
-                    bodyvalue.AddMember("path", objectPath.GetString(), dReplyParse.GetAllocator());
-                    dReplyParse.AddMember("body", bodyvalue, dReplyParse.GetAllocator());
+                    bodyvalue.AddMember("path", rapidjson::Value(objectPath.GetString(), allocator)
+                                        , allocator);
+                    dReplyParse.AddMember("body", bodyvalue, allocator);
                 }
-                dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
+                dReplyParse.AddMember("code", 0, allocator);
             }
             
             rapidjson::StringBuffer buffer;

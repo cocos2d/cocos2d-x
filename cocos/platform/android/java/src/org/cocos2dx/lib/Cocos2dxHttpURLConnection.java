@@ -28,6 +28,8 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.InflaterInputStream;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -260,11 +262,20 @@ public class Cocos2dxHttpURLConnection
     }
 
     static byte[] getResponseContent(HttpURLConnection http) {
-        DataInputStream in;
-        try {
-            in = new DataInputStream(http.getInputStream());
+        InputStream in;
+        try {            
+            in = http.getInputStream();
+            String contentEncoding = http.getContentEncoding();
+            if (contentEncoding != null) {
+                if(contentEncoding.equalsIgnoreCase("gzip")){
+                    in = new GZIPInputStream(http.getInputStream()); //reads 2 bytes to determine GZIP stream!
+                }
+                else if(contentEncoding.equalsIgnoreCase("deflate")){
+                    in = new InflaterInputStream(http.getInputStream());
+                }
+            }       
         } catch (IOException e) {
-            in = new DataInputStream(http.getErrorStream());
+            in = http.getErrorStream();
         } catch (Exception e) {
             Log.e("Cocos2dxHttpURLConnection exception", e.toString());
             return null;

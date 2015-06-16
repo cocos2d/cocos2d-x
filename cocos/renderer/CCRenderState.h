@@ -83,13 +83,6 @@ public:
      */
     std::string getName() const;
 
-
-    /**
-     * @~english Get texture list
-     * @~chinese 获取贴图列表
-     * @return @~english Texture list. @~chinese 贴图列表。
-     */
-    const Vector<Texture2D*>& getTextures() const;
     /** 
      * @~english Texture that will use in the CC_Texture0 uniform.
      Added to be backwards compatible. Use Samplers from .material instead.
@@ -233,7 +226,7 @@ public:
      * RenderState object.
      * @~chinese 一系列渲染状态的组合，可以应用到RenderState物体上。
      */
-    class StateBlock : public Ref
+    class CC_DLL StateBlock : public Ref
     {
         friend class RenderState;
         friend class Pass;
@@ -247,6 +240,13 @@ public:
          * @return @~english Created StateBlock. @~chinese 新创建的StateBlock。
          */
         static StateBlock* create();
+
+        /** The recommended way to create StateBlocks is by calling `create`.
+         * Don't use `new` or `delete` on them.
+         * 
+         */
+        StateBlock();
+        ~StateBlock();
 
         /**
          * @~english Binds the state in this StateBlock to the renderer.
@@ -408,6 +408,52 @@ public:
          */
         bool isDirty() const;
 
+        /** StateBlock bits to be used with invalidate */
+        enum
+        {
+            RS_BLEND = (1 << 0),
+            RS_BLEND_FUNC = (1 << 1),
+            RS_CULL_FACE = (1 << 2),
+            RS_DEPTH_TEST = (1 << 3),
+            RS_DEPTH_WRITE = (1 << 4),
+            RS_DEPTH_FUNC = (1 << 5),
+            RS_CULL_FACE_SIDE = (1 << 6),
+            RS_STENCIL_TEST = (1 << 7),
+            RS_STENCIL_WRITE = (1 << 8),
+            RS_STENCIL_FUNC = (1 << 9),
+            RS_STENCIL_OP = (1 << 10),
+            RS_FRONT_FACE = (1 << 11),
+            
+            RS_ALL_ONES = 0xFFFFFFFF,
+        };
+
+        /** 
+         * Invalidates the default StateBlock.
+         *
+         * Only call it if you are calling GL calls directly. Invoke this function
+         * at the end of your custom draw call.
+         * This function restores the default render state its defaults values.
+         * Since this function might call GL calls, it must be called in a GL context is present.
+         *
+         * @param stateBits Bitwise-OR of the states that needs to be invalidated
+         */
+        static void invalidate(long stateBits);
+
+        /**
+         * Restores the global Render State to the default state
+         *
+         * The difference between `invalidate()` and `restore()`, is that `restore()` will
+         * restore the global Render State based on its current state. Only the
+         * states that were changed will be restored.
+         *
+         * Rule of thumb:
+         
+         - call `restore()` if you want to restore to the default state after using `StateBlock`.
+         - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
+
+         */
+        static void restore(long stateOverrideBits);
+
         /***
          * @~english Default render state.
          * @~chinese 默认渲染状态。
@@ -415,11 +461,8 @@ public:
         static StateBlock* _defaultState;
 
     protected:
-        StateBlock();
-        ~StateBlock();
 
         void bindNoRestore();
-        static void restore(long stateOverrideBits);
         static void enableDepthWrite();
 
         void cloneInto(StateBlock* renderState) const;
@@ -473,7 +516,7 @@ protected:
     // name, for filtering
     std::string _name;
 
-    Vector<Texture2D*> _textures;
+    Texture2D* _texture;
 };
 
 /**

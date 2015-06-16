@@ -252,6 +252,10 @@ void MeshCommand::postBatchDraw()
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
+
+        // restore the default state since we don't know
+        // if the next command will need the default state or not
+        RenderState::StateBlock::restore(0);
     }
 }
 

@@ -34,9 +34,9 @@ namespace cocostudio {
 /** 
  * @class ComAudio
  * @brief @~english ComAudio.
- * @~chinese ×Ô¶¨ÒåÉùÒô×é¼ş.
+ * @~chinese è‡ªå®šä¹‰å£°éŸ³ç»„ä»¶.
  * @details @~english offers a very simple interface to play background music & sound effects.
- * @~chinese Ìá¹©²¥·ÅÒôĞ§ºÍ±³¾°ÒôÀÖµÄÒ»ÏµÁĞ½Ó¿Ú.
+ * @~chinese æä¾›æ’­æ”¾éŸ³æ•ˆå’ŒèƒŒæ™¯éŸ³ä¹çš„ä¸€ç³»åˆ—æ¥å£.
 */
 class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
@@ -46,13 +46,13 @@ class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 public:
     /**
      * @brief @~english ComAudio constructor.
-     * @~chinese ÉùÒô×é¼ş¹¹Ôìº¯Êı¡£
+     * @~chinese å£°éŸ³ç»„ä»¶æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     ComAudio(void);
     /**
      * @brief @~english ComAudio destructor.
-     * @~chinese ÉùÒô×é¼şÎö¹¹º¯Êı¡£
+     * @~chinese å£°éŸ³ç»„ä»¶ææ„å‡½æ•°ã€‚
      * @js NA
      * @lua NA
      */
@@ -61,9 +61,9 @@ public:
 public:
     /**
      * @brief @~english initialize a ComAudio.
-     * @~chinese ³õÊ¼»¯ÉùÒô×é¼ş¡£
+     * @~chinese åˆå§‹åŒ–å£°éŸ³ç»„ä»¶ã€‚
      * @return @~english true initialize successfully false failed to initialize.
-     * @~chinese true ³õÊ¼»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true åˆå§‹åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool init() override;
 
@@ -72,10 +72,10 @@ public:
      * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
      * During onEnter you can't access a "sister/brother" node.
      * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
-     * @~chinese Ã¿´ÎNode½øÈëÏÔÊ¾ÇøÓòÊ±²úÉúµÄ»Øµ÷ÊÂ¼ş¡£
-     * Èç¹ûnode½øÈëÏÔÊ¾ÇøÓòÊ±°éËæ×ÅÒ»¸ö×ª»»¶¯»­£¬ÄÇÃ´ÊÂ¼ş½«»áÔÚ×ª»»¶¯»­¿ªÊ¼µÄÊ±ºò±»µ÷ÓÃ¡£
-     * ÔÚonEnter¹ı³ÌÖĞ£¬Äã²»ÄÜ¹»·ÃÎÊ¡°sister/brother¡±ĞÖÃÃ½Úµã¡£
-     * Èç¹ûÄãÖØÔØÁËonEnter·½·¨£¬ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà£¬e.g., Node::onEnter().
+     * @~chinese æ¯æ¬¡Nodeè¿›å…¥æ˜¾ç¤ºåŒºåŸŸæ—¶äº§ç”Ÿçš„å›è°ƒäº‹ä»¶ã€‚
+     * å¦‚æœnodeè¿›å…¥æ˜¾ç¤ºåŒºåŸŸæ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢åŠ¨ç”»ï¼Œé‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è½¬æ¢åŠ¨ç”»å¼€å§‹çš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * åœ¨onEnterè¿‡ç¨‹ä¸­ï¼Œä½ ä¸èƒ½å¤Ÿè®¿é—®â€œsister/brotherâ€å…„å¦¹èŠ‚ç‚¹ã€‚
+     * å¦‚æœä½ é‡è½½äº†onEnteræ–¹æ³•ï¼Œä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±»ï¼Œe.g., Node::onEnter().
      * @js NA
      * @lua NA
      */
@@ -86,142 +86,153 @@ public:
      * If the Node leaves the 'stage' with a transition, this event is called when the transition finishes.
      * During onExit you can't access a sibling node.
      * If you override onExit, you shall call its parent's one, e.g., Node::onExit().
-     * @~chinese Ã¿´ÎNodeÍË³öÏÔÊ¾ÇøÓòÊ±²úÉúµÄ»Øµ÷ÊÂ¼ş¡£
-     * Èç¹ûnodeÀë¿ªÏÔÊ¾ÇøÓòÊ±°éËæ×ÅÒ»¸ö×ª»»¶¯»­£¬ÄÇÃ´ÊÂ¼ş½«»áÔÚ×ª»»¶¯»­½áÊøµÄÊ±ºò±»µ÷ÓÃ¡£
-     * ÔÚonExit¹ı³ÌÖĞ,Äã²»ÄÜ¹»·ÃÎÊÒ»¸öÆ½¼¶½Úµã¡£
-     * Èç¹ûÄãÖØÔØonExit, ÄãÓ¦¸Ãµ÷ÓÃËüµÄ¸¸Àà, e.g., Node::onExit().
+     * @~chinese æ¯æ¬¡Nodeé€€å‡ºæ˜¾ç¤ºåŒºåŸŸæ—¶äº§ç”Ÿçš„å›è°ƒäº‹ä»¶ã€‚
+     * å¦‚æœnodeç¦»å¼€æ˜¾ç¤ºåŒºåŸŸæ—¶ä¼´éšç€ä¸€ä¸ªè½¬æ¢åŠ¨ç”»ï¼Œé‚£ä¹ˆäº‹ä»¶å°†ä¼šåœ¨è½¬æ¢åŠ¨ç”»ç»“æŸçš„æ—¶å€™è¢«è°ƒç”¨ã€‚
+     * åœ¨onExitè¿‡ç¨‹ä¸­,ä½ ä¸èƒ½å¤Ÿè®¿é—®ä¸€ä¸ªå¹³çº§èŠ‚ç‚¹ã€‚
+     * å¦‚æœä½ é‡è½½onExit, ä½ åº”è¯¥è°ƒç”¨å®ƒçš„çˆ¶ç±», e.g., Node::onExit().
      * @js NA
      * @lua NA
      */
     virtual void onExit() override;
 
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
+
     /** 
      * @brief @~english Returns whether or not the ComAudio is enabled.
-     * @~chinese ·µ»ØÉùÒô×é¼şÊÇ·ñ±»ÆôÓÃ¡£
+     * @~chinese è¿”å›å£°éŸ³ç»„ä»¶æ˜¯å¦è¢«å¯ç”¨ã€‚
      * @return @~english Whether or not the ComAudio is enabled. 
-     * @~chinese ÉùÒô×é¼şÊÇ·ñ±»ÆôÓÃ¡£
+     * @~chinese å£°éŸ³ç»„ä»¶æ˜¯å¦è¢«å¯ç”¨ã€‚
      */
     virtual bool isEnabled() const override;
 
     /**  
      * @brief @~english Enables or disables the ComAudio.
-     * @~chinese ÆôÓÃ»ò½ûÓÃÉùÒô×é¼ş¡£
+     * @~chinese å¯ç”¨æˆ–ç¦ç”¨å£°éŸ³ç»„ä»¶ã€‚
      * @param enabled @~english true enable the ComAudio, false disabled the ComAudio. 
-     * @~chinese true£¬ÆôÓÃÉùÒô×é¼ş false£¬½ûÓÃÉùÒô×é¼ş¡£
+     * @~chinese trueï¼Œå¯ç”¨å£°éŸ³ç»„ä»¶ falseï¼Œç¦ç”¨å£°éŸ³ç»„ä»¶ã€‚
      */
     virtual void setEnabled(bool b) override;
 
     /**
      * @brief @~english Deserialization export data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®ã€‚
      * @param r @~english SerData object point.
-     * @~chinese SerData¶ÔÏóÖ¸Õë¡£
+     * @~chinese SerDataå¯¹è±¡æŒ‡é’ˆã€‚
      * @return @~english true deserialize successfully false failed to deserialize.
-     * @~chinese true ·´ĞòÁĞ»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true ååºåˆ—åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool serialize(void* r) override;
 
     /**
      * @brief @~english Allocates and initializes a create.
-     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯ÉùÒô×é¼ş¡£
+     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–å£°éŸ³ç»„ä»¶ã€‚
      * @return @~english A initialized ComAudio which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄÉùÒô×é¼ş£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å)¡£
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„å£°éŸ³ç»„ä»¶ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾)ã€‚
      */
     static ComAudio* create(void);
    
 public:
     /**
      * @brief @~english Release the shared Engine object.
-     * @~chinese ÊÍ·ÅÒôĞ§ÒıÇæÊµÀı¡£
+     * @~chinese é‡Šæ”¾éŸ³æ•ˆå¼•æ“å®ä¾‹ã€‚
      * @warning @~english It must be called before the application exit, or it will lead to memory leaks.
-     * @~chinese ÔÚÓÎÏ·ÍË³öÊ±ĞèÒªµ÷ÓÃÕâ¸ö·½·¨£¬²»È»µÄ»°»áµ¼ÖÂÄÚ´æĞ¹Â©¡£
+     * @~chinese åœ¨æ¸¸æˆé€€å‡ºæ—¶éœ€è¦è°ƒç”¨è¿™ä¸ªæ–¹æ³•ï¼Œä¸ç„¶çš„è¯ä¼šå¯¼è‡´å†…å­˜æ³„æ¼ã€‚
      */
     void end();
 
     /**
      * @brief @~english Preload background music.
-     * @~chinese Ô¤¼ÓÔØ±³¾°ÒôÀÖ¡£
+     * @~chinese é¢„åŠ è½½èƒŒæ™¯éŸ³ä¹ã€‚
      * @param pszFilePath @~english The path of the background music file.
-     * @~chinese ±³¾°ÒôÀÖµÄÎÄ¼şÂ·¾¶¡£
+     * @~chinese èƒŒæ™¯éŸ³ä¹çš„æ–‡ä»¶è·¯å¾„ã€‚
      */
     void preloadBackgroundMusic(const char* pszFilePath);
 
     /**
      * @~brief @~english Play background music.
-     * @~chinese ²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese æ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      * 
      * @param pszFilePath @~english The path of the background music file,or the FileName of T_SoundResInfo.
-     * @~chinese ±³¾°ÒôÀÖµÄÎÄ¼şÂ·¾¶»òT_SoundResInfoÖĞµÄFileName×Ö¶Î¡£
+     * @~chinese èƒŒæ™¯éŸ³ä¹çš„æ–‡ä»¶è·¯å¾„æˆ–T_SoundResInfoä¸­çš„FileNameå­—æ®µã€‚
      * @param loop @~english Whether the background music loop or not.
-     * @~chinese ±³¾°ÒôÀÖÊÇ·ñÑ­»·²¥·Å¡£
+     * @~chinese èƒŒæ™¯éŸ³ä¹æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
      */
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
 
     /**
      * @~brief @~english Play background music based _loop of property. 
-     * @~chinese ²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese æ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      * @param pszFilePath @~english The path of the background music file,or the FileName of T_SoundResInfo.
-     * @~chinese ±³¾°ÒôÀÖµÄÎÄ¼şÂ·¾¶»òT_SoundResInfoÖĞµÄFileName×Ö¶Î¡£
+     * @~chinese èƒŒæ™¯éŸ³ä¹çš„æ–‡ä»¶è·¯å¾„æˆ–T_SoundResInfoä¸­çš„FileNameå­—æ®µã€‚
      */
     void playBackgroundMusic(const char* pszFilePath);
 
     /**
      * @~brief @~english Play background music based _loop and _filePath of property. 
-     * @~chinese ²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese æ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      */
     void playBackgroundMusic();
 
     /**
      * @brief @~english Stop playing background music.
-     * @~chinese Í£Ö¹²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese åœæ­¢æ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      * @param releaseData @~english If release the background music data or not.As default value is false.
-     * @~chinese ÊÇ·ñÊÍ·Å±³¾°ÒôÀÖµÄÊı¾İ£¬Ä¬ÈÏÖµÎªfalse¡£
+     * @~chinese æ˜¯å¦é‡Šæ”¾èƒŒæ™¯éŸ³ä¹çš„æ•°æ®ï¼Œé»˜è®¤å€¼ä¸ºfalseã€‚
      */
     void stopBackgroundMusic(bool bReleaseData);
 
     /**
      * @brief @~english Stop playing background music.
-     * @~chinese Í£Ö¹²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese åœæ­¢æ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      */
     void stopBackgroundMusic();
 
     /**
      * @brief @~english Pause playing background music.
-     * @~chinese ÔİÍ£²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese æš‚åœæ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      */
     void pauseBackgroundMusic();
 
     /**
      * @brief @~english Resume playing background music.
-     * @~chinese »Ö¸´²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese æ¢å¤æ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      */
     void resumeBackgroundMusic();
 
     /**
      * @brief @~english Rewind playing background music.
-     * @~chinese ½«±³¾°ÒôÀÖµ¹»ØÆğÊ¼µã²¥·Å¡£
+     * @~chinese å°†èƒŒæ™¯éŸ³ä¹å€’å›èµ·å§‹ç‚¹æ’­æ”¾ã€‚
      */
     void rewindBackgroundMusic();
 
     /**
      * @brief @~english Indicates whether any background music can be played or not.
-     * @~chinese ÊÇ·ñ»á²¥·Å±³¾°ÒôÀÖ¡£
+     * @~chinese æ˜¯å¦ä¼šæ’­æ”¾èƒŒæ™¯éŸ³ä¹ã€‚
      * @return true @~english if background music can be played, otherwise false.
-     * @~chinese Èç¹û±³¾°ÒôÀÖ»á±»²¥·Å·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese å¦‚æœèƒŒæ™¯éŸ³ä¹ä¼šè¢«æ’­æ”¾è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool willPlayBackgroundMusic();
 
     /**
      * @brief @~english Indicates whether the background music is playing.
-     * @~chinese ±³¾°ÒôÀÖÊÇ·ñÔÚ²¥·Å¡£
+     * @~chinese èƒŒæ™¯éŸ³ä¹æ˜¯å¦åœ¨æ’­æ”¾ã€‚
      * @return true @~english if the background music is playing, otherwise false.
-     * @~chinese ÕıÔÚ²¥·Å·µ»Øtrue£¬·ñÔò·µ»Øfalse¡£
+     * @~chinese æ­£åœ¨æ’­æ”¾è¿”å›trueï¼Œå¦åˆ™è¿”å›falseã€‚
      */
     bool isBackgroundMusicPlaying();
 
     /**
      * @brief @~english The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
-     * @~chinese »ñÈ¡±³¾°ÒôÀÖµÄÒôÁ¿£¬ÒôÁ¿µÄÖµµÄ·¶Î§Îª0.0µ½1.0¡£
+     * @~chinese è·å–èƒŒæ™¯éŸ³ä¹çš„éŸ³é‡ï¼ŒéŸ³é‡çš„å€¼çš„èŒƒå›´ä¸º0.0åˆ°1.0ã€‚
      */
     float getBackgroundMusicVolume();
 
@@ -230,143 +241,143 @@ public:
 
     /**
      * @brief @~english The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
-     * @~chinese »ñÈ¡ÒôĞ§µÄÒôÁ¿´óĞ¡,ÒôÁ¿´óĞ¡·¶Î§Îª0.0µ½1.0¡£
+     * @~chinese è·å–éŸ³æ•ˆçš„éŸ³é‡å¤§å°,éŸ³é‡å¤§å°èŒƒå›´ä¸º0.0åˆ°1.0ã€‚
      */
     float getEffectsVolume();
 
     /**
      * @brief @~english Set the volume of sound effects.
-     * @~chinese ÉèÖÃÒôĞ§µÄÒôÁ¿´óĞ¡¡£
+     * @~chinese è®¾ç½®éŸ³æ•ˆçš„éŸ³é‡å¤§å°ã€‚
      * @param volume @~english must be within the range of 0.0 as the minimum and 1.0 as the maximum.
-     * @~chinese ÒôĞ§µÄÒôÁ¿´óĞ¡£¬·¶Î§Îª0.0µ½1.0¡£
+     * @~chinese éŸ³æ•ˆçš„éŸ³é‡å¤§å°ï¼ŒèŒƒå›´ä¸º0.0åˆ°1.0ã€‚
      */
     void setEffectsVolume(float volume);
 
     /**
      * @brief @~english Play sound effect with a file path and loop.
-     * @~chinese ²¥·ÅÒôĞ§
+     * @~chinese æ’­æ”¾éŸ³æ•ˆ
      * @param pszFilePath @~english The path of the effect file. 
-     * @~chinese ÒôĞ§ÎÄ¼şµÄÂ·¾¶¡£
+     * @~chinese éŸ³æ•ˆæ–‡ä»¶çš„è·¯å¾„ã€‚
      * @param bLoop @~english Determines whether to loop the effect playing or not. 
-     * @~chinese ÊÇ·ñÑ­»·²¥·Å,Ä¬ÈÏÎªfalse,²»Ñ­»·¡£
+     * @~chinese æ˜¯å¦å¾ªç¯æ’­æ”¾,é»˜è®¤ä¸ºfalse,ä¸å¾ªç¯ã€‚
      * @return @~english The sound id. 
-     * @~chinese ÉùÒôid¡£
+     * @~chinese å£°éŸ³idã€‚
      */
     unsigned int playEffect(const char* pszFilePath, bool bLoop);
 
     /**
      * @brief @~english Play sound effect with a file path and _loop of property
-     * @~chinese ²¥·ÅÒôĞ§
+     * @~chinese æ’­æ”¾éŸ³æ•ˆ
      * @param pszFilePath @~english The path of the effect file. 
-     * @~chinese ÒôĞ§ÎÄ¼şµÄÂ·¾¶¡£
+     * @~chinese éŸ³æ•ˆæ–‡ä»¶çš„è·¯å¾„ã€‚
      * @param bLoop @~english Determines whether to loop the effect playing or not. 
-     * @~chinese ÊÇ·ñÑ­»·²¥·Å,Ä¬ÈÏÎªfalse,²»Ñ­»·¡£
+     * @~chinese æ˜¯å¦å¾ªç¯æ’­æ”¾,é»˜è®¤ä¸ºfalse,ä¸å¾ªç¯ã€‚
      * @return @~english The sound id. 
-     * @~chinese ÉùÒôid¡£
+     * @~chinese å£°éŸ³idã€‚
      */
     unsigned int playEffect(const char* pszFilePath);
 
     /**
      * @brief @~english Play sound effect with _filePath and _loop of property
-     * @~chinese ²¥·ÅÒôĞ§
+     * @~chinese æ’­æ”¾éŸ³æ•ˆ
      * @return @~english The sound id. 
-     * @~chinese ÉùÒôid¡£
+     * @~chinese å£°éŸ³idã€‚
      */
     unsigned int playEffect();
 
     /**
      * @brief @~english Pause playing sound effect.
-     * @~chinese ÔİÍ£²¥·ÅÖ¸¶¨ÒôĞ§¡£
+     * @~chinese æš‚åœæ’­æ”¾æŒ‡å®šéŸ³æ•ˆã€‚
      * @param nSoundId @~english The return value of function playEffect.
-     * @~chinese ÒôĞ§id¡£
+     * @~chinese éŸ³æ•ˆidã€‚
      */
     void pauseEffect(unsigned int nSoundId);
 
     /**
      * @brief @~english Pause all playing sound effect.
-     * @~chinese ÔİÍ£ËùÓĞ²¥·ÅµÄÒôĞ§¡£
+     * @~chinese æš‚åœæ‰€æœ‰æ’­æ”¾çš„éŸ³æ•ˆã€‚
      */
     void pauseAllEffects();
 
     /**
      * @brief @~english Resume playing sound effect.
-     * @~chinese »Ö¸´ÔİÍ£²¥·ÅÖ¸¶¨µÄÒôĞ§¡£
+     * @~chinese æ¢å¤æš‚åœæ’­æ”¾æŒ‡å®šçš„éŸ³æ•ˆã€‚
      * @param nSoundId @~english The return value of function playEffect.
-     * @~chinese playEffect·µ»ØµÄ×ÊÔ´id¡£
+     * @~chinese playEffectè¿”å›çš„èµ„æºidã€‚
      */
     void resumeEffect(unsigned int nSoundId);
 
     /**
      * @brief @~english Resume all playing sound effect.
-     * @~chinese »Ö¸´ËùÓĞÔİÍ£µÄÒôĞ§¡£
+     * @~chinese æ¢å¤æ‰€æœ‰æš‚åœçš„éŸ³æ•ˆã€‚
      */
     void resumeAllEffects();
 
     /**
      * @brief @~english Stop playing sound effect.
-     * @~chinese Í£Ö¹²¥·ÅÖ¸¶¨µÄÒôĞ§¡£
+     * @~chinese åœæ­¢æ’­æ”¾æŒ‡å®šçš„éŸ³æ•ˆã€‚
      *
      * @param nSoundId @~english The return value of function playEffect.
-     * @~chinese playEffect·µ»ØµÄ×ÊÔ´id¡£
+     * @~chinese playEffectè¿”å›çš„èµ„æºidã€‚
      */
     void stopEffect(unsigned int nSoundId);
 
     /**
      * @brief @~english Stop all playing sound effects.
-     * @~chinese Í£Ö¹ËùÓĞ²¥·ÅµÄÒôĞ§¡£
+     * @~chinese åœæ­¢æ‰€æœ‰æ’­æ”¾çš„éŸ³æ•ˆã€‚
      */
     void stopAllEffects();
 
     /**
      * @brief @~english Preload a compressed audio file.
      * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
-     * @~chinese Ô¤¼ÓÔØÒôĞ§ÎÄ¼ş¡£
+     * @~chinese é¢„åŠ è½½éŸ³æ•ˆæ–‡ä»¶ã€‚
      * @param pszFilePath @~english The path of the effect file. 
-     * @~chinese ÒôĞ§ÎÄ¼şÂ·¾¶¡£
+     * @~chinese éŸ³æ•ˆæ–‡ä»¶è·¯å¾„ã€‚
      * @js NA
      */
     void preloadEffect(const char* pszFilePath);
 
     /**
      * @brief @~english Unload the preloaded effect from internal buffer.
-     * @~chinese Ğ¶ÔØÔ¤¼ÓÔØµ½ÄÚ´æÖĞµÄÒôĞ§ÎÄ¼ş¡£
+     * @~chinese å¸è½½é¢„åŠ è½½åˆ°å†…å­˜ä¸­çš„éŸ³æ•ˆæ–‡ä»¶ã€‚
      * @param pszFilePath @~english The path of the effect file.
-     * @~chinese ÒôĞ§ÎÄ¼şµÄÂ·¾¶¡£
+     * @~chinese éŸ³æ•ˆæ–‡ä»¶çš„è·¯å¾„ã€‚
      */
     void unloadEffect(const char* pszFilePath);
 
     /**
      * @brief @~english Set file path.
-     * @~chinese ÉèÖÃÂ·¾¶¡£
+     * @~chinese è®¾ç½®è·¯å¾„ã€‚
      */
     void setFile(const char* pszFilePath);
 
     /**
      * @brief @~english Get file path.
-     * @~chinese »ñÈ¡Â·¾¶¡£
+     * @~chinese è·å–è·¯å¾„ã€‚
      * @return @~english File path.
-     * @~chinese ÉùÒôÎÄ¼ş¡£
+     * @~chinese å£°éŸ³æ–‡ä»¶ã€‚
      */
     const char* getFile();
 
     /**  
      * @brief @~english Sets hether or not the sound is loop.
-     * @~chinese ÉèÖÃÉùÒôÊÇ·ñÑ­»·¡£
+     * @~chinese è®¾ç½®å£°éŸ³æ˜¯å¦å¾ªç¯ã€‚
      * @param bLoop @~english true ComAudio is loop, false ComAudio is not loop. 
-     * @~chinese true£¬¿ªÆôÉùÒô×é¼şÑ­»· false£¬ÉùÒô×é¼ş²»Ñ­»·¡£
+     * @~chinese trueï¼Œå¼€å¯å£°éŸ³ç»„ä»¶å¾ªç¯ falseï¼Œå£°éŸ³ç»„ä»¶ä¸å¾ªç¯ã€‚
      */
     void setLoop(bool bLoop);
 
     /** 
      * @brief @~english Returns whether or not the sound is loop.
-     * @~chinese ·µ»ØÉùÒô×é¼şÊÇ·ñÑ­»·¡£
+     * @~chinese è¿”å›å£°éŸ³ç»„ä»¶æ˜¯å¦å¾ªç¯ã€‚
      * @return @~english Whether or not the ComAudio is loop. 
-     * @~chinese ÉùÒô×é¼şÊÇ·ñÑ­»·¡£
+     * @~chinese å£°éŸ³ç»„ä»¶æ˜¯å¦å¾ªç¯ã€‚
      */
     bool isLoop();
 private:
-	std::string _filePath;
-	bool _loop;
+    std::string _filePath;
+    bool _loop;
 };
 
 }

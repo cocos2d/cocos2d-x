@@ -1094,7 +1094,7 @@ cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
     this.b = b || 0;
-    this.a = a || 255;
+    this.a = (a === undefined) ? 255 : a;
 };
 
 /**
@@ -1124,8 +1124,8 @@ cc.color = function (r, g, b, a) {
     if (typeof r === "string")
         return cc.hexToColor(r);
     if (typeof r === "object")
-        return {r: r.r, g: r.g, b: r.b, a: r.a || 255};
-    return  {r: r, g: g, b: b, a: a || 255};
+        return {r: r.r, g: r.g, b: r.b, a: (r.a === undefined) ? 255 : r.a};
+    return  {r: r, g: g, b: b, a: (a === undefined ? 255 : a)};
 };
 
 /**

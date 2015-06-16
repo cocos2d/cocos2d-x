@@ -66,12 +66,12 @@ public:
     /** @~english Physics synchronize rendering.
     @~chinese 物理同步渲染。
     */
-    void syncToPhysics();
+    void syncNodeToPhysics();
 
     /** @~english Rendering synchronize physics.
     @~chinese 同步物理渲染。
     */
-    void syncToNode();
+    void syncPhysicsToNode();
 
 CC_CONSTRUCTOR_ACCESS:
     PhysicsSprite3D();
