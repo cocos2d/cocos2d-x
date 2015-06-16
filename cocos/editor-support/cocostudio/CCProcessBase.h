@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -59,31 +59,31 @@ public:
 
     /**
      * @~english Play animation by animation name.
-     * @~chinese ¸ù¾İ¶¯»­Ãû³Æ²¥·Å¶¯»­¡£
+     * @~chinese æ ¹æ®åŠ¨ç”»åç§°æ’­æ”¾åŠ¨ç”»ã€‚
      *
      * @param  durationTo @~english The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
      *         -1 : use the value from MovementData get from flash design panel
-     * @~chinese Á½¸ö¶¯»­ÇĞ»»Ê±µÄĞèÒªµÄÖ¡Êı¡£ÒâÎ¶×ÅÇĞ»»µ½¸Ã¶¯»­Ê±ĞèÒª¶àÉÙÖ¡¡£
-     *    -1£ºÊ¹ÓÃFlashµÄÉè¼ÆÃæ°åÖĞMovementDataÖĞµÄÖµ
+     * @~chinese ä¸¤ä¸ªåŠ¨ç”»åˆ‡æ¢æ—¶çš„éœ€è¦çš„å¸§æ•°ã€‚æ„å‘³ç€åˆ‡æ¢åˆ°è¯¥åŠ¨ç”»æ—¶éœ€è¦å¤šå°‘å¸§ã€‚
+     *    -1ï¼šä½¿ç”¨Flashçš„è®¾è®¡é¢æ¿ä¸­MovementDataä¸­çš„å€¼
      *
      * @param  durationTween  @~english The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
      *         -1 : use the value from MovementData get from flash design panel
-     * @~chinese ÒªÔÚÓÎÏ·ÖĞ²¥·ÅµÄÖ¡×ÜÊı¡£Èç¹ûÉèÖÃ³É80£¬ÔòÔÚ¶¯»­½«ÔÚÑ­»·ÖĞÃ¿´Î²¥·Å80Ö¡¡£
-     * -1£ºÊ¹ÓÃFlashµÄÉè¼ÆÃæ°åÖĞMovementDataÖĞµÄÖµ
+     * @~chinese è¦åœ¨æ¸¸æˆä¸­æ’­æ”¾çš„å¸§æ€»æ•°ã€‚å¦‚æœè®¾ç½®æˆ80ï¼Œåˆ™åœ¨åŠ¨ç”»å°†åœ¨å¾ªç¯ä¸­æ¯æ¬¡æ’­æ”¾80å¸§ã€‚
+     * -1ï¼šä½¿ç”¨Flashçš„è®¾è®¡é¢æ¿ä¸­MovementDataä¸­çš„å€¼
      *
      * @param  loop @~english   Whether the animation is loop
      *
      *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
-     * @~chinese ¶¯»­ÊÇ·ñÑ­»·¡£
-     *         loop < 0 : Ê¹ÓÃFlashµÄÉè¼ÆÃæ°åÖĞMovementDataÖĞµÄÖµ
-     *         loop = 0 : ²»Ñ­»·
-     *         loop > 0 : Ñ­»·
+     * @~chinese åŠ¨ç”»æ˜¯å¦å¾ªç¯ã€‚
+     *         loop < 0 : ä½¿ç”¨Flashçš„è®¾è®¡é¢æ¿ä¸­MovementDataä¸­çš„å€¼
+     *         loop = 0 : ä¸å¾ªç¯
+     *         loop > 0 : å¾ªç¯
      *
      * @param  tweenEasing @~english Tween easing is used for calculate easing effect
      *
@@ -92,29 +92,29 @@ public:
      *         0  : line
      *         1  : fade in
      *         2  : fade in and out
-     * @~chinese Ö¡²¹¼ä»º¶¯ÓÃÀ´¼ÆËã»º¶¯Ğ§¹û
-     *         TWEEN_EASING_MAX : Ê¹ÓÃFlashµÄÉè¼ÆÃæ°åÖĞMovementDataÖĞµÄÖµ
-     *         -1 : µ­³ö
-     *         0  : ÏßĞÔ
-     *         1  : µ­Èë
-     *         2  : µ­Èëµ­³ö
+     * @~chinese å¸§è¡¥é—´ç¼“åŠ¨ç”¨æ¥è®¡ç®—ç¼“åŠ¨æ•ˆæœ
+     *         TWEEN_EASING_MAX : ä½¿ç”¨Flashçš„è®¾è®¡é¢æ¿ä¸­MovementDataä¸­çš„å€¼
+     *         -1 : æ·¡å‡º
+     *         0  : çº¿æ€§
+     *         1  : æ·¡å…¥
+     *         2  : æ·¡å…¥æ·¡å‡º
      *
      */
     virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
      * @~english Pause the Process
-     * @~chinese ÔİÍ£½ø³Ì
+     * @~chinese æš‚åœè¿›ç¨‹
      */
     virtual void pause();
     /**
      * @~english Resume the Process
-     * @~chinese »Ö¸´½ø³Ì
+     * @~chinese æ¢å¤è¿›ç¨‹
      */
     virtual void resume();
     /**
      * @~english Stop the Process
-     * @~chinese Í£Ö¹½ø³Ì
+     * @~chinese åœæ­¢è¿›ç¨‹
      */
     virtual void stop();
 
@@ -122,94 +122,94 @@ public:
     /**
      * @~english You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
-     * @~chinese ´Ë·½·¨²»Ó¦±»µ÷ÓÃ£¬³ı·ÇÄãÖªµÀÒª×öµÄÊÂÇé¡£¸üĞÂ½ø¶È£¬°üº¬µ±Ç°½ø¶È£¬µ±Ç°Ö¡µÈµÈ¡£
+     * @~chinese æ­¤æ–¹æ³•ä¸åº”è¢«è°ƒç”¨ï¼Œé™¤éä½ çŸ¥é“è¦åšçš„äº‹æƒ…ã€‚æ›´æ–°è¿›åº¦ï¼ŒåŒ…å«å½“å‰è¿›åº¦ï¼Œå½“å‰å¸§ç­‰ç­‰ã€‚
      *
      * @param dt @~english The duration since last update
-     * @~chinese ´ÓÉÏ´Îupdatµ½ÏÖÔÚµÄÊ±¼ä¼ä¸ô¡£
+     * @~chinese ä»ä¸Šæ¬¡updatåˆ°ç°åœ¨çš„æ—¶é—´é—´éš”ã€‚
      */
     virtual void update(float dt);
 
     /**
     * @~english Get current frame index.
-    * @~chinese »ñÈ¡µ±Ç°Ö¡Ë÷Òı¡£
+    * @~chinese è·å–å½“å‰å¸§ç´¢å¼•ã€‚
     * @return @~english Current frame index.
-    * @~chinese µ±Ç°Ö¡Ë÷Òı¡£
+    * @~chinese å½“å‰å¸§ç´¢å¼•ã€‚
     */
     virtual int getCurrentFrameIndex();
 
     /**
     * @~english Set process scale.
-    * @~chinese ÉèÖÃ½ø¶ÈËõ·ÅÖµ¡£
+    * @~chinese è®¾ç½®è¿›åº¦ç¼©æ”¾å€¼ã€‚
     * @param processScale @~english Process scale.
-    * @~chinese ½ø¶ÈËõ·ÅÖµ¡£
+    * @~chinese è¿›åº¦ç¼©æ”¾å€¼ã€‚
     */
     virtual void setProcessScale(float processScale) { _processScale = processScale; }
     /**
     * @~english Get process scale.
-    * @~chinese »ñÈ¡½ø¶ÈËõ·ÅÖµ¡£
+    * @~chinese è·å–è¿›åº¦ç¼©æ”¾å€¼ã€‚
     * @return @~english Process scale.
-    * @~chinese ½ø¶ÈËõ·ÅÖµ¡£
+    * @~chinese è¿›åº¦ç¼©æ”¾å€¼ã€‚
     */
     virtual float getProcessScale() const { return _processScale; }
 
     /**
     * @~english Set is pause.
-    * @~chinese ÉèÖÃÊÇ·ñÔİÍ£¡£
+    * @~chinese è®¾ç½®æ˜¯å¦æš‚åœã€‚
     * @param pause @~english Is pause.
-    * @~chinese ÊÇ·ñÔİÍ£¡£
+    * @~chinese æ˜¯å¦æš‚åœã€‚
     */
     virtual void setIsPause(bool pause) { _isPause = pause; }
     /**
     * @~english Get is pause.
-    * @~chinese »ñÈ¡ÊÇ·ñÔİÍ£¡£
+    * @~chinese è·å–æ˜¯å¦æš‚åœã€‚
     * @return @~english Is pause.
-    * @~chinese ÊÇ·ñÔİÍ£¡£
+    * @~chinese æ˜¯å¦æš‚åœã€‚
     */
     virtual bool isPause() const { return _isPause; }
 
     /**
     * @~english Set is complete.
-    * @~chinese ÉèÖÃÊÇ·ñÍê³É¡£
+    * @~chinese è®¾ç½®æ˜¯å¦å®Œæˆã€‚
     * @param complete @~english Is complete.
-    * @~chinese ÊÇ·ñÍê³É¡£
+    * @~chinese æ˜¯å¦å®Œæˆã€‚
     */
     virtual void setIsComplete(bool complete) { _isComplete = complete; }
     /**
     * @~english Get is complete.
-    * @~chinese »ñÈ¡ÊÇ·ñÍê³É¡£
+    * @~chinese è·å–æ˜¯å¦å®Œæˆã€‚
     * @return @~english Is complete.
-    * @~chinese ÊÇ·ñÍê³É¡£
+    * @~chinese æ˜¯å¦å®Œæˆã€‚
     */
     virtual bool isComplete() const { return _isComplete; }
 
     /**
     * @~english Set is playing.
-    * @~chinese ÉèÖÃÊÇ·ñÔÚ²¥·Å¡£
+    * @~chinese è®¾ç½®æ˜¯å¦åœ¨æ’­æ”¾ã€‚
     * @param complete @~english Is playing.
-    * @~chinese ÊÇ·ñÔÚ²¥·Å¡£
+    * @~chinese æ˜¯å¦åœ¨æ’­æ”¾ã€‚
     */
     virtual void setIsPlaying(bool playing) { _isPlaying = playing; }
     /**
     * @~english Set is playing.
-    * @~chinese ÉèÖÃÊÇ·ñÔÚ²¥·Å¡£
+    * @~chinese è®¾ç½®æ˜¯å¦åœ¨æ’­æ”¾ã€‚
     * @return @~english Is playing.
-    * @~chinese ÊÇ·ñÔÚ²¥·Å¡£
+    * @~chinese æ˜¯å¦åœ¨æ’­æ”¾ã€‚
     */
     virtual bool isPlaying() const { return _isPlaying; }
 
     /**
     * @~english Get current percent.
-    * @~chinese »ñÈ¡µ±Ç°½ø¶È¡£
+    * @~chinese è·å–å½“å‰è¿›åº¦ã€‚
     * @return @~english Current percent.
-    * @~chinese µ±Ç°½ø¶È¡£
+    * @~chinese å½“å‰è¿›åº¦ã€‚
     */
     virtual float getCurrentPercent() const { return _currentPercent; }
 
     /**
     * @~english Get raw duration.
-    * @~chinese »ñÈ¡Ô­Ê¼×Ü³¤¡£
+    * @~chinese è·å–åŸå§‹æ€»é•¿ã€‚
     * @return @~english Raw duration.
-    * @~chinese Ô­Ê¼×Ü³¤¡£
+    * @~chinese åŸå§‹æ€»é•¿ã€‚
     */
     virtual int getRawDuration() const { return _rawDuration; }
 

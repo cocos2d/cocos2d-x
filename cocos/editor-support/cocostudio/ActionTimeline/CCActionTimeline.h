@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -50,35 +50,35 @@ class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 public:
     /**
     * @~english Allocates and initializes an `ActionTimelineData`.
-    * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯Ò»¸ö`ActionTimelineData`¶ÔÏó¡£
+    * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–ä¸€ä¸ª`ActionTimelineData`å¯¹è±¡ã€‚
     * @param actionTag @~english Action tag.
-    * @~chinese ¶¯×÷TAG¡£
+    * @~chinese åŠ¨ä½œTAGã€‚
     * @return @~english An initialized `ActionTimelineData` which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯¹ı²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ`ActionTimelineData`¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–è¿‡å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„`ActionTimelineData`å¯¹è±¡ã€‚
     */
     static ActionTimelineData* create(int actionTag);
 
     /**
     * @~english Set action tag.
-    * @~chinese ÉèÖÃ¶¯×÷TAG¡£
+    * @~chinese è®¾ç½®åŠ¨ä½œTAGã€‚
     * @param actionTag @~english Action tag.
-    * @~chinese ¶¯×÷TAG¡£
+    * @~chinese åŠ¨ä½œTAGã€‚
     */
     virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
     /**
     * @~english Get action tag.
-    * @~chinese »ñÈ¡¶¯×÷TAG¡£
+    * @~chinese è·å–åŠ¨ä½œTAGã€‚
     * @return @~english Action tag.
-    * @~chinese ¶¯×÷TAG¡£
+    * @~chinese åŠ¨ä½œTAGã€‚
     */
     virtual int getActionTag() const { return _actionTag; }
 CC_CONSTRUCTOR_ACCESS:
     ActionTimelineData();
     /**
     * @~english Initializes an `ActionTimelineData`.
-    * @~chinese ³õÊ¼»¯Ò»¸ö`ActionTimelineData`¶ÔÏó¡£
+    * @~chinese åˆå§‹åŒ–ä¸€ä¸ª`ActionTimelineData`å¯¹è±¡ã€‚
     * @param actionTag  @~english Action tag.
-    * @~chinese ¶¯×÷TAG¡£
+    * @~chinese åŠ¨ä½œTAGã€‚
     */
     virtual bool init(int actionTag);
 protected:
@@ -93,11 +93,11 @@ public:
 
     /**
     * @~english Allocates and initializes an `ActionTimeline`.
-    * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯Ò»¸ö`ActionTimeline`¶ÔÏó¡£
+    * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–ä¸€ä¸ª`ActionTimeline`å¯¹è±¡ã€‚
     * @param actionTag @~english Action tag.
-    * @~chinese ¶¯×÷TAG¡£
+    * @~chinese åŠ¨ä½œTAGã€‚
     * @return @~english An initialized `ActionTimeline` which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯¹ı²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ`ActionTimeline`¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–è¿‡å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„`ActionTimeline`å¯¹è±¡ã€‚
     */
     static ActionTimeline* create();
 
@@ -106,200 +106,200 @@ public:
 
     /**
     * @~english Play specified animation.
-    * @~chinese ²¥·ÅÖ¸¶¨µÄ¶¯»­¡£
+    * @~chinese æ’­æ”¾æŒ‡å®šçš„åŠ¨ç”»ã€‚
     * @param animationName @~english Name of specified animation.
-    * @~chinese Ö¸¶¨¶¯»­µÄÃû³Æ¡£
+    * @~chinese æŒ‡å®šåŠ¨ç”»çš„åç§°ã€‚
     * @param loop @~english Is play loop.
-    * @~chinese ÊÇ·ñÑ­»·²¥·Å¡£
+    * @~chinese æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
     */
     virtual void play(std::string animationName, bool loop);
 
     virtual bool init();
 
     /** @~english Goto the specified frame index, and start playing from this index.
-    * @~chinese Ìø×ªµ½Ö¸¶¨Ö¡²¢´Ó¸ÃÖ¡¿ªÊ¼²¥·Å¶¯»­¡£
+    * @~chinese è·³è½¬åˆ°æŒ‡å®šå¸§å¹¶ä»è¯¥å¸§å¼€å§‹æ’­æ”¾åŠ¨ç”»ã€‚
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese ¶¯»­½«´Ó´ËÖ¡¿ªÊ¼²¥·Å¡£
+     * @~chinese åŠ¨ç”»å°†ä»æ­¤å¸§å¼€å§‹æ’­æ”¾ã€‚
      */
     virtual void gotoFrameAndPlay(int startIndex);
 
     /** @~english Goto the specified frame index, and start playing from this index.
-    * @~chinese Ìø×ªÖÁÖ¸¶¨Ë÷ÒıµÄÖ¡£¬²¢´Ó¸ÃÖ¡¿ªÊ¼²¥·Å¶¯»­¡£
+    * @~chinese è·³è½¬è‡³æŒ‡å®šç´¢å¼•çš„å¸§ï¼Œå¹¶ä»è¯¥å¸§å¼€å§‹æ’­æ”¾åŠ¨ç”»ã€‚
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese ¶¯»­½«´Ó¸ÃË÷ÒıÎ»ÖÃ¿ªÊ¼²¥·Å¡£
+     * @~chinese åŠ¨ç”»å°†ä»è¯¥ç´¢å¼•ä½ç½®å¼€å§‹æ’­æ”¾ã€‚
      * @param loop @~english Whether or not the animation need loop. 
-     * @~chinese ¶¯»­ÊÇ·ñÑ­»·²¥·Å¡£
+     * @~chinese åŠ¨ç”»æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
      */
     virtual void gotoFrameAndPlay(int startIndex, bool loop);
 
     /** @~english Goto the specified frame index, and start playing from start index, end at end index.
-    * @~chinese Ìø×ªµ½Ö¸¶¨Ö¡²¢´Ó¸ÃÖ¡¿ªÊ¼²¥·Å¶¯»­£¬²¥·Åµ½Ö¸¶¨µÄ½áÊøÖ¡Î»ÖÃÍ£Ö¹¡£
+    * @~chinese è·³è½¬åˆ°æŒ‡å®šå¸§å¹¶ä»è¯¥å¸§å¼€å§‹æ’­æ”¾åŠ¨ç”»ï¼Œæ’­æ”¾åˆ°æŒ‡å®šçš„ç»“æŸå¸§ä½ç½®åœæ­¢ã€‚
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese ¶¯»­½«´Ó´ËÖ¡¿ªÊ¼²¥·Å¡£
+     * @~chinese åŠ¨ç”»å°†ä»æ­¤å¸§å¼€å§‹æ’­æ”¾ã€‚
      * @param endIndex @~english The animation will end at this index.
-     * @~chinese ¶¯»­²¥·Åµ½´ËÖ¡½áÊø¡£
+     * @~chinese åŠ¨ç”»æ’­æ”¾åˆ°æ­¤å¸§ç»“æŸã€‚
      * @param loop @~english Whether or not the animation need loop. 
-     * @~chinese ¶¯»­ÊÇ·ñÑ­»·²¥·Å¡£
+     * @~chinese åŠ¨ç”»æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
      */
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, bool loop);
 
     /** @~english Goto the specified frame index, and start playing from start index, end at end index.
-    * @~chineseÌø×ªµ½Ö¸¶¨Ö¡£¬²¢ÇÒ´ÓÆğÊ¼Ö¡¿ªÊ¼²¥·Å£¬µ½½áÊøÖ¡Í£Ö¹¡£
+    * @~chineseè·³è½¬åˆ°æŒ‡å®šå¸§ï¼Œå¹¶ä¸”ä»èµ·å§‹å¸§å¼€å§‹æ’­æ”¾ï¼Œåˆ°ç»“æŸå¸§åœæ­¢ã€‚
      * @param startIndex @~english The animation will play from this index.
-     * @~chinese ¶¯»­½«´Ó´ËÖ¡¿ªÊ¼²¥·Å¡£
+     * @~chinese åŠ¨ç”»å°†ä»æ­¤å¸§å¼€å§‹æ’­æ”¾ã€‚
      * @param endIndex @~english The animation will end at this index.
-     * @~chinese ¶¯»­²¥·Åµ½´ËÖ¡½áÊø¡£
+     * @~chinese åŠ¨ç”»æ’­æ”¾åˆ°æ­¤å¸§ç»“æŸã€‚
      * @param currentFrameIndex @~english set current frame index. 
-     * @~chinese ÉèÖÃµ±Ç°Ö¡Ë÷Òı¡£
+     * @~chinese è®¾ç½®å½“å‰å¸§ç´¢å¼•ã€‚
      * @param loop @~english Whether or not the animation need loop. 
-     * @~chinese ¶¯»­ÊÇ·ñÑ­»·²¥·Å¡£
+     * @~chinese åŠ¨ç”»æ˜¯å¦å¾ªç¯æ’­æ”¾ã€‚
      */
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop);
 
     /** @~english Goto the specified frame index, and pause at this index.
-    * @~chinese Ìø×ªµ½Ö¸¶¨Ö¡²¢ÇÒÔİÍ£ÔÚ¸ÃÖ¡¡£
+    * @~chinese è·³è½¬åˆ°æŒ‡å®šå¸§å¹¶ä¸”æš‚åœåœ¨è¯¥å¸§ã€‚
      * @param startIndex @~english The animation will pause at this index.
-     * @~chinese ¶¯»­½«ÔİÍ£ÔÚ¸ÃÖ¡¡£
+     * @~chinese åŠ¨ç”»å°†æš‚åœåœ¨è¯¥å¸§ã€‚
      */
     virtual void gotoFrameAndPause(int startIndex);
 
     /** @~english Pause the animation. 
-     * @~chinese ÔİÍ£¶¯»­¡£
+     * @~chinese æš‚åœåŠ¨ç”»ã€‚
     */
     virtual void pause();
     /** @~english Resume the animation. 
-    * @~chinese ¼ÌĞø¶¯»­¡£
+    * @~chinese ç»§ç»­åŠ¨ç”»ã€‚
     */
     virtual void resume();
 
     /** @~english Whether or not Action is playing.
-    * @~chinese ÊÇ·ñÔÚ²¥·Å¡£
+    * @~chinese æ˜¯å¦åœ¨æ’­æ”¾ã€‚
     */
     virtual bool isPlaying() const;
 
     /** @~english Set the animation speed, this will speed up or slow down the speed. 
-    * @~chinese ÉèÖÃ¶¯»­ËÙ¶È£¬Ê¹¶¯»­¼ÓËÙ»ò¼õËÙ¡£
+    * @~chinese è®¾ç½®åŠ¨ç”»é€Ÿåº¦ï¼Œä½¿åŠ¨ç”»åŠ é€Ÿæˆ–å‡é€Ÿã€‚
     * @param speed @~english Animation speed.
-    * @~chinese ¶¯»­²¥·ÅËÙ¶È¡£
+    * @~chinese åŠ¨ç”»æ’­æ”¾é€Ÿåº¦ã€‚
     */
     virtual void  setTimeSpeed(float speed) { _timeSpeed = speed; }
 
     /** @~english Get current animation speed.
-     *   @~chinese »ñÈ¡µ±Ç°¶¯»­ËÙ¶È¡£
+     *   @~chinese è·å–å½“å‰åŠ¨ç”»é€Ÿåº¦ã€‚
      * @return @~english Animation speed.
-     * @~chinese ¶¯»­²¥·ÅËÙ¶È¡£
+     * @~chinese åŠ¨ç”»æ’­æ”¾é€Ÿåº¦ã€‚
      */
     virtual float getTimeSpeed() const { return _timeSpeed; }
 
     /** @~english Set duration of the whole action.
-    *   @~chinese ÉèÖÃÕûÌå¶¯»­Ê±³¤¡£
+    *   @~chinese è®¾ç½®æ•´ä½“åŠ¨ç”»æ—¶é•¿ã€‚
     * @param duration @~english Animation duration.
-    * @~chinese ¶¯»­Ê±³¤¡£
+    * @~chinese åŠ¨ç”»æ—¶é•¿ã€‚
     */
     virtual void setDuration(int duration) { _duration = duration; }
     /** @~english Get duration of the whole action.
-    *   @~chinese »ñÈ¡¶¯»­Ê±³¤¡£
+    *   @~chinese è·å–åŠ¨ç”»æ—¶é•¿ã€‚
     * @return @~english Animation duration.
-    * @~chinese ¶¯»­Ê±³¤¡£
+    * @~chinese åŠ¨ç”»æ—¶é•¿ã€‚
     */
     virtual int  getDuration() const { return _duration; }
 
     /** @~english Get start frame index of this action.
-    *   @~chinese ¶¯»­µÄÆğÊ¼Ö¡Ë÷Òı¡£
+    *   @~chinese åŠ¨ç”»çš„èµ·å§‹å¸§ç´¢å¼•ã€‚
     * @return @~english Start frame index.
-    * @~chinese ÆğÊ¼Ö¡Ë÷Òı¡£
+    * @~chinese èµ·å§‹å¸§ç´¢å¼•ã€‚
     */
     virtual int getStartFrame() const { return _startFrame; }
 
     /** @~english End frame of this action.
     *   When action play to this frame, if action is not loop, then it will stop,  or it will play from start frame again. 
-    *   @~chinese ¶¯»­µÄ½áÊøÖ¡¡£
-    *   µ±¶¯»­²¥·Åµ½¸ÃÖ¡Ê±£¬Èç¹û·ÇÑ­»·²¥·Å£¬Ôò¶¯»­Í£Ö¹¡£·ñÔò»á´ÓÆğÊ¼Ö¡´ÓÍ·²¥·Å¡£
+    *   @~chinese åŠ¨ç”»çš„ç»“æŸå¸§ã€‚
+    *   å½“åŠ¨ç”»æ’­æ”¾åˆ°è¯¥å¸§æ—¶ï¼Œå¦‚æœéå¾ªç¯æ’­æ”¾ï¼Œåˆ™åŠ¨ç”»åœæ­¢ã€‚å¦åˆ™ä¼šä»èµ·å§‹å¸§ä»å¤´æ’­æ”¾ã€‚
     * @return @~english End frame.
-    * @~chinese ½áÊøÖ¡¡£
+    * @~chinese ç»“æŸå¸§ã€‚
     */
     virtual int  getEndFrame() const { return _endFrame; }
 
     /** @~english Set current frame index, this will cause action plays to this frame. 
-    *   @~chinese ÉèÖÃµ±Ç°Ö¡Ë÷Òı£¬½«»áÊ¹¶¯»­²¥·ÅÖÁ¸ÃÖ¡¡£
+    *   @~chinese è®¾ç½®å½“å‰å¸§ç´¢å¼•ï¼Œå°†ä¼šä½¿åŠ¨ç”»æ’­æ”¾è‡³è¯¥å¸§ã€‚
     * @param frameIndex @~english Current frame index.
-    * @~chinese µ±Ç°Ö¡Ë÷Òı¡£
+    * @~chinese å½“å‰å¸§ç´¢å¼•ã€‚
     */
     virtual void setCurrentFrame(int frameIndex);
     /** @~english Get current frame. 
-    *   @~chinese »ñÈ¡µ±Ç°Ö¡Ë÷Òı¡£
+    *   @~chinese è·å–å½“å‰å¸§ç´¢å¼•ã€‚
     * @return @~english Current frame index.
-    * @~chinese µ±Ç°Ö¡Ë÷Òı¡£
+    * @~chinese å½“å‰å¸§ç´¢å¼•ã€‚
     */
     virtual int  getCurrentFrame() const { return _currentFrame; }
 
     /** @~english Add Timeline to ActionTimeline.
-    *   @~chinese ½«Ê±¼äÖá¼ÓÈë¶¯»­Ê±¼äÖá¡£
+    *   @~chinese å°†æ—¶é—´è½´åŠ å…¥åŠ¨ç”»æ—¶é—´è½´ã€‚
     * @param timeline @~english Timeline.
-    * @~chinese Ê±¼äÖá¡£
+    * @~chinese æ—¶é—´è½´ã€‚
     */
     virtual void addTimeline(Timeline* timeline);
     /** @~english Remove Timeline to ActionTimeline.
-    *   @~chinese ½«Ê±¼äÖá´Ó¶¯»­Ê±¼äÖáÖĞÒÆ³ı¡£
+    *   @~chinese å°†æ—¶é—´è½´ä»åŠ¨ç”»æ—¶é—´è½´ä¸­ç§»é™¤ã€‚
     * @param timeline @~english Timeline.
-    * @~chinese Ê±¼äÖá¡£
+    * @~chinese æ—¶é—´è½´ã€‚
     */
     virtual void removeTimeline(Timeline* timeline);
 
     /** @~english Get timelines.
-    *   @~chinese »ñÈ¡Ê±¼äÖáÁĞ±í¡£
+    *   @~chinese è·å–æ—¶é—´è½´åˆ—è¡¨ã€‚
     * @return @~english Timelines.
-    * @~chinese Ê±¼äÖáÁĞ±í¡£
+    * @~chinese æ—¶é—´è½´åˆ—è¡¨ã€‚
     */
     virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
     
     /** AnimationInfo*/
     /** @~english Add animationInfo.
-    *   @~chinese Ôö¼Ó¶¯»­ĞÅÏ¢¡£
+    *   @~chinese å¢åŠ åŠ¨ç”»ä¿¡æ¯ã€‚
     * @param animationInfo @~english Animation info.
-    * @~chinese ¶¯»­ĞÅÏ¢¡£
+    * @~chinese åŠ¨ç”»ä¿¡æ¯ã€‚
     */
     virtual void addAnimationInfo(const AnimationInfo& animationInfo);
     /** @~english Remove animationInfo.
-    *   @~chinese ÒÆ³ı¶¯»­ĞÅÏ¢¡£
+    *   @~chinese ç§»é™¤åŠ¨ç”»ä¿¡æ¯ã€‚
     * @param animationName @~english Name of animation info.
-    * @~chinese ¶¯»­ĞÅÏ¢µÄÃû³Æ¡£
+    * @~chinese åŠ¨ç”»ä¿¡æ¯çš„åç§°ã€‚
     */
     virtual void removeAnimationInfo(std::string animationName);
     /** @~english Is animationInfo exists.
-    *   @~chinese ÊÇ·ñ¶¯»­ĞÅÏ¢´æÔÚ¡£
+    *   @~chinese æ˜¯å¦åŠ¨ç”»ä¿¡æ¯å­˜åœ¨ã€‚
     * @param animationName @~english Name of animation info.
-    * @~chinese ¶¯»­ĞÅÏ¢µÄÃû³Æ¡£
+    * @~chinese åŠ¨ç”»ä¿¡æ¯çš„åç§°ã€‚
     * @return @~english Is exists.
-    * @~chinese ÊÇ·ñ´æÔÚ¡£
+    * @~chinese æ˜¯å¦å­˜åœ¨ã€‚
     */
     virtual bool IsAnimationInfoExists(const std::string& animationName);
     /** @~english Get animationInfo.
-    *   @~chinese »ñÈ¡¶¯»­ĞÅÏ¢¡£
+    *   @~chinese è·å–åŠ¨ç”»ä¿¡æ¯ã€‚
     * @param animationInfo @~english Animation info name.
-    * @~chinese ¶¯»­ĞÅÏ¢µÄÃû³Æ¡£
+    * @~chinese åŠ¨ç”»ä¿¡æ¯çš„åç§°ã€‚
     */
     virtual AnimationInfo getAnimationInfo(const std::string& animationName);
 
     /** @~english Set ActionTimeline's frame event callback function.
-    *   @~chinese ÉèÖÃ¶¯»­Ê±¼äÖáµÄÖ¡ÊÂ¼ş»Øµ÷º¯Êı¡£
+    *   @~chinese è®¾ç½®åŠ¨ç”»æ—¶é—´è½´çš„å¸§äº‹ä»¶å›è°ƒå‡½æ•°ã€‚
     * @param listener @~english Callback function .
-    * @~chinese »Øµ÷º¯Êı¡£
+    * @~chinese å›è°ƒå‡½æ•°ã€‚
     */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
     /** @~english Clear ActionTimeline's frame event callback function.
-    *   @~chinese Çå³ı¶¯»­Ê±¼äÖáµÄÖ¡ÊÂ¼ş»Øµ÷º¯Êı¡£
+    *   @~chinese æ¸…é™¤åŠ¨ç”»æ—¶é—´è½´çš„å¸§äº‹ä»¶å›è°ƒå‡½æ•°ã€‚
     */
     void clearFrameEventCallFunc();
 
     /** @~english Last frame callback will call when arriving last frame.
-    *   @~chinese ¶¯»­²¥·ÅÖÁ×îºóÒ»Ö¡Ê±£¬½«»áµ÷ÓÃ×îºóÒ»Ö¡µÄ»Øµ÷¡£
+    *   @~chinese åŠ¨ç”»æ’­æ”¾è‡³æœ€åä¸€å¸§æ—¶ï¼Œå°†ä¼šè°ƒç”¨æœ€åä¸€å¸§çš„å›è°ƒã€‚
     * @param listener @~english Callback function .
-    * @~chinese »Øµ÷º¯Êı¡£
+    * @~chinese å›è°ƒå‡½æ•°ã€‚
     */
     void setLastFrameCallFunc(std::function<void()> listener);
     /** @~english Clear last frame callback.
-    *   @~chinese Çå³ı¶¯»­²¥·ÅÖÁ×îºóÒ»Ö¡Ê±µ÷ÓÃ×îºóÒ»Ö¡µÄ»Øµ÷¡£
+    *   @~chinese æ¸…é™¤åŠ¨ç”»æ’­æ”¾è‡³æœ€åä¸€å¸§æ—¶è°ƒç”¨æœ€åä¸€å¸§çš„å›è°ƒã€‚
     */
     void clearLastFrameCallFunc();
 

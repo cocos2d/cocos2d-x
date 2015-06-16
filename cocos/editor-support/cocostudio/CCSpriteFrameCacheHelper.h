@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -49,34 +49,34 @@ public:
 
     /**
     * @~english Get singleton.
-    * @~chinese »ñÈ¡µ¥Àı¡£
+    * @~chinese è·å–å•ä¾‹ã€‚
     * @return @~english Singleton of `SpriteFrameCacheHelper`.
-    * @~chinese ¹Ç÷ÀÊı¾İ¹ÜÀíÆ÷µÄµ¥Àı¡£
+    * @~chinese éª¨éª¼æ•°æ®ç®¡ç†å™¨çš„å•ä¾‹ã€‚
     */
     static SpriteFrameCacheHelper *getInstance();
 
     /**
     * @~english Destory singleton.
-    * @~chinese Ïú»Ùµ¥Àı¡£
+    * @~chinese é”€æ¯å•ä¾‹ã€‚
     */
     static void purge();
 public:
 
     /**
      * @~english Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name.
-     * @~chinese ÎªCCSpriteFrameCacheÌí¼Ó¾«ÁéÖ¡£¬½«»á±£´æÏÔÊ¾Ãû³Æ¼°Ïà¹ØÍ¼Æ¬Ãû³Æ¡£
+     * @~chinese ä¸ºCCSpriteFrameCacheæ·»åŠ ç²¾çµå¸§ï¼Œå°†ä¼šä¿å­˜æ˜¾ç¤ºåç§°åŠç›¸å…³å›¾ç‰‡åç§°ã€‚
      * @param plistPath @~english Path of plist.
-     * @~chinese plistÂ·¾¶¡£
+     * @~chinese plistè·¯å¾„ã€‚
      * @param imagePath @~english Path of image.
-     * @~chinese Í¼Æ¬Â·¾¶¡£
+     * @~chinese å›¾ç‰‡è·¯å¾„ã€‚
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
 
     /**
     * @~english Remove sprite frame from CCSpriteFrameCache.
-    * @~chinese ÎªCCSpriteFrameCacheÒÆ³ı¾«ÁéÖ¡¡£
+    * @~chinese ä¸ºCCSpriteFrameCacheç§»é™¤ç²¾çµå¸§ã€‚
     * @param plistPath @~english Path of plist.
-    * @~chinese plistÂ·¾¶¡£
+    * @~chinese plistè·¯å¾„ã€‚
     */
     void removeSpriteFrameFromFile(const std::string& plistPath);
 

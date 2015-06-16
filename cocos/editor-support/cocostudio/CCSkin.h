@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -51,7 +51,7 @@ public:
 
     /**
     * @~english Updates the quad according the armature.
-    * @~chinese Í¨¹ı¹Ç÷À±ä»»¾ØÕó¸üĞÂ¡£
+    * @~chinese é€šè¿‡éª¨éª¼å˜æ¢çŸ©é˜µæ›´æ–°ã€‚
     */
     void updateArmatureTransform();
     void updateTransform() override;
@@ -60,9 +60,9 @@ public:
 
     /**
     * @~english Returns the armature world affine transform matrix. The matrix is in Pixels.
-    * @~chinese ·µ»Ø½Úµãµ½¹Ç÷ÀÊÀ½ç×ø±ê·ÂÉä±ä»»¾ØÕó¡£¾ØÕóµ¥Î»ÊÇÏñËØ¡£
+    * @~chinese è¿”å›èŠ‚ç‚¹åˆ°éª¨éª¼ä¸–ç•Œåæ ‡ä»¿å°„å˜æ¢çŸ©é˜µã€‚çŸ©é˜µå•ä½æ˜¯åƒç´ ã€‚
     *
-    * @return @~english transformation matrix, in pixels. @~chinese ½Úµãµ½¹Ç÷ÀÊÀ½ç×ø±ê·ÂÉä±ä»»¾ØÕó
+    * @return @~english transformation matrix, in pixels. @~chinese èŠ‚ç‚¹åˆ°éª¨éª¼ä¸–ç•Œåæ ‡ä»¿å°„å˜æ¢çŸ©é˜µ
     */
     cocos2d::Mat4 getNodeToWorldTransformAR() const;
     
@@ -72,41 +72,41 @@ public:
      *  @js NA
      *  @lua NA
      * @~english Set skin data.
-     * @~chinese ÉèÖÃÆ¤·ôÊı¾İ¡£
+     * @~chinese è®¾ç½®çš®è‚¤æ•°æ®ã€‚
      * @param data @~english Skin data.
-     * @~chinese Æ¤·ôÊı¾İ¡£
+     * @~chinese çš®è‚¤æ•°æ®ã€‚
      */
     virtual void setSkinData(const BaseData &data);
     /**
     *  @js NA
     *  @lua NA
     * @~english Get skin data.
-    * @~chinese »ñÈ¡Æ¤·ôÊı¾İ¡£
+    * @~chinese è·å–çš®è‚¤æ•°æ®ã€‚
     * @return @~english Skin data.
-    * @~chinese Æ¤·ôÊı¾İ¡£
+    * @~chinese çš®è‚¤æ•°æ®ã€‚
     */
     virtual const BaseData &getSkinData() const;
 
     /**
     * @~english Set bone.
-    * @~chinese ÉèÖÃ¹ÇÍ·¡£
+    * @~chinese è®¾ç½®éª¨å¤´ã€‚
     * @param bone @~english Bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     */
     virtual void setBone(Bone *bone);
     /**
     * @~english Get bone.
-    * @~chinese »ñÈ¡¹ÇÍ·¡£
+    * @~chinese è·å–éª¨å¤´ã€‚
     * @return @~english Bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     */
     virtual Bone *getBone() const;
 
     /**
     * @~english Get display name.
-    * @~chinese »ñÈ¡ÏÔÊ¾Ãû³Æ¡£
+    * @~chinese è·å–æ˜¾ç¤ºåç§°ã€‚
     * @return @~english Display name.
-    * @~chinese ÏÔÊ¾Ãû³Æ¡£
+    * @~chinese æ˜¾ç¤ºåç§°ã€‚
     */
     virtual const std::string &getDisplayName() const { return _displayName; }
 protected:

@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -39,29 +39,29 @@ namespace cocostudio {
 
         /**
         * @~english User touch event callback function.
-        * @~chinese ÓÃ»§´¥ÃşÊÂ¼ş»Øµ÷º¯Êı.
+        * @~chinese ç”¨æˆ·è§¦æ‘¸äº‹ä»¶å›è°ƒå‡½æ•°.
         *
-        * @parame callBackName  @~english user defined callback name @~chinese ÓÃ»§¶¨ÒåµÄ»Øµ÷Ãû³Æ
+        * @parame callBackName  @~english user defined callback name @~chinese ç”¨æˆ·å®šä¹‰çš„å›è°ƒåç§°
         *
-        * @return @~english call back bundle function @~chinese »Øµ÷º¯Êı
+        * @return @~english call back bundle function @~chinese å›è°ƒå‡½æ•°
         */
         virtual cocos2d::ui::Widget::ccWidgetTouchCallback onLocateTouchCallback(const std::string &callBackName){ return nullptr; };
         /**
         * @~english User click event callback function.
-        * @~chinese ÓÃ»§µã»÷ÊÂ¼ş»Øµ÷º¯Êı.
+        * @~chinese ç”¨æˆ·ç‚¹å‡»äº‹ä»¶å›è°ƒå‡½æ•°.
         *
-        * @parame callBackName  @~english user defined callback name @~chinese ÓÃ»§¶¨ÒåµÄ»Øµ÷Ãû³Æ
+        * @parame callBackName  @~english user defined callback name @~chinese ç”¨æˆ·å®šä¹‰çš„å›è°ƒåç§°
         *
-        * @return @~english call back bundle function @~chinese »Øµ÷º¯Êı
+        * @return @~english call back bundle function @~chinese å›è°ƒå‡½æ•°
         */
         virtual cocos2d::ui::Widget::ccWidgetClickCallback onLocateClickCallback(const std::string &callBackName){ return nullptr; };
         /**
         * @~english User event callback function.
-        * @~chinese ÓÃ»§ÊÂ¼ş»Øµ÷º¯Êı.
+        * @~chinese ç”¨æˆ·äº‹ä»¶å›è°ƒå‡½æ•°.
         *
-        * @parame callBackName  @~english user defined callback name @~chinese ÓÃ»§¶¨ÒåµÄ»Øµ÷Ãû³Æ
+        * @parame callBackName  @~english user defined callback name @~chinese ç”¨æˆ·å®šä¹‰çš„å›è°ƒåç§°
         *
-        * @return @~english call back bundle function @~chinese »Øµ÷º¯Êı
+        * @return @~english call back bundle function @~chinese å›è°ƒå‡½æ•°
         */
         virtual cocos2d::ui::Widget::ccWidgetEventCallback onLocateEventCallback(const std::string &callBackName){ return nullptr; };
     };

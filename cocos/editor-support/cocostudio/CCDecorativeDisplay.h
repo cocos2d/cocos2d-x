@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -56,25 +56,25 @@ public:
 
     /*
     * @~english Set display by node.
-    * @~chinese ¸ù¾İ½ÚµãÉèÖÃÏÔÊ¾¡£
+    * @~chinese æ ¹æ®èŠ‚ç‚¹è®¾ç½®æ˜¾ç¤ºã€‚
     * @param display @~english Node for display.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     */
     virtual void setDisplay(cocos2d::Node *display);
 
     /*
     * @~english Get display by node.
-    * @~chinese »ñÈ¡ÏÔÊ¾½Úµã¡£
+    * @~chinese è·å–æ˜¾ç¤ºèŠ‚ç‚¹ã€‚
     * @return @~english Node for display.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     */
     virtual cocos2d::Node *getDisplay() const { return _display; }
 
     /*
     * @~english Set display data.
-    * @~chinese ÉèÖÃÏÔÊ¾Êı¾İ¡£
+    * @~chinese è®¾ç½®æ˜¾ç¤ºæ•°æ®ã€‚
     * @param data @~english Display data.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     virtual void setDisplayData(DisplayData *data)
     {
@@ -88,18 +88,18 @@ public:
 
     /*
     * @~english Get display data.
-    * @~chinese »ñÈ¡ÏÔÊ¾Êı¾İ¡£
+    * @~chinese è·å–æ˜¾ç¤ºæ•°æ®ã€‚
     * @return @~english Display data.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     virtual DisplayData *getDisplayData() const { return _displayData; }
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT || ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
     /*
     * @~english Set collider detector.
-    * @~chinese ÉèÖÃÅö×²¼ì²âÆ÷¡£
+    * @~chinese è®¾ç½®ç¢°æ’æ£€æµ‹å™¨ã€‚
     * @param data @~english collider detector.
-    * @~chinese Åö×²¼ì²âÆ÷¡£
+    * @~chinese ç¢°æ’æ£€æµ‹å™¨ã€‚
     */
     virtual void setColliderDetector(ColliderDetector *detector)
     {
@@ -113,9 +113,9 @@ public:
 
     /*
     * @~english Get collider detector.
-    * @~chinese »ñÈ¡Åö×²¼ì²âÆ÷¡£
+    * @~chinese è·å–ç¢°æ’æ£€æµ‹å™¨ã€‚
     * @return @~english collider detector.
-    * @~chinese Åö×²¼ì²âÆ÷¡£
+    * @~chinese ç¢°æ’æ£€æµ‹å™¨ã€‚
     */
     virtual ColliderDetector *getColliderDetector() const { return _colliderDetector; }
 #endif

@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -45,131 +45,131 @@ class CC_STUDIO_DLL DisplayFactory
 public:
     /*
     * @~english Add display.
-    * @~chinese Ôö¼ÓÏÔÊ¾¡£
+    * @~chinese å¢åŠ æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     * @param displayData @~english Display data.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     static void addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     /*
     * @~english Create display.
-    * @~chinese ´´½¨ÏÔÊ¾¡£
+    * @~chinese åˆ›å»ºæ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     */
     static void createDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
     /*
     * @~english Update display.
-    * @~chinese ¸üĞÂÏÔÊ¾¡£
+    * @~chinese æ›´æ–°æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param dt, @~english Delta time.
-    * @~chinese ¼ä¸ôÊ±¼ä¡£
+    * @~chinese é—´éš”æ—¶é—´ã€‚
     * @param dirty @~english Is dirty.
-    * @~chinese ÊÇ·ñÎªÔà¡£
+    * @~chinese æ˜¯å¦ä¸ºè„ã€‚
     */
     static void updateDisplay(Bone *bone, float dt, bool dirty);
 
     /*
     * @~english Add sprite display.
-    * @~chinese Ôö¼Ó¾«ÁéÏÔÊ¾¡£
+    * @~chinese å¢åŠ ç²¾çµæ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     * @param displayData @~english Display data.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     static void addSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     /*
     * @~english Create sprite display.
-    * @~chinese ´´½¨¾«ÁéÏÔÊ¾¡£
+    * @~chinese åˆ›å»ºç²¾çµæ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     */
     static void createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
     /*
     * @~english Initialize sprite display.
-    * @~chinese ³õÊ¼»¯¾«ÁéÏÔÊ¾¡£
+    * @~chinese åˆå§‹åŒ–ç²¾çµæ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     * @param displayName @~english Display name.
-    * @~chinese ÏÔÊ¾Ãû³Æ¡£
+    * @~chinese æ˜¾ç¤ºåç§°ã€‚
     * @param skin @~english The skin.
-    * @~chinese Æ¤·ô¡£
+    * @~chinese çš®è‚¤ã€‚
     */
     static void initSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisplay, const char *displayName, Skin *skin);
 
     /*
     * @~english Add armature display.
-    * @~chinese Ôö¼Ó¹Ç÷ÀÏÔÊ¾¡£
+    * @~chinese å¢åŠ éª¨éª¼æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     * @param displayData @~english Display data.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     static void addArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     /*
     * @~english Create armature display.
-    * @~chinese ´´½¨¹Ç÷ÀÏÔÊ¾¡£
+    * @~chinese åˆ›å»ºéª¨éª¼æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     */
     static void createArmatureDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
     /*
     * @~english Update armature display.
-    * @~chinese ¸üĞÂ¹Ç÷ÀÏÔÊ¾¡£
+    * @~chinese æ›´æ–°éª¨éª¼æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param display @~english Display node.
-    * @~chinese ÏÔÊ¾½Úµã¡£
+    * @~chinese æ˜¾ç¤ºèŠ‚ç‚¹ã€‚
     * @param dt, @~english Delta time.
-    * @~chinese ¼ä¸ôÊ±¼ä¡£
+    * @~chinese é—´éš”æ—¶é—´ã€‚
     */
     static void updateArmatureDisplay(Bone *bone, cocos2d::Node *display, float dt);
 
     /*
     * @~english Add particle display.
-    * @~chinese Ôö¼ÓÁ£×ÓÏÔÊ¾¡£
+    * @~chinese å¢åŠ ç²’å­æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     * @param displayData @~english Display data.
-    * @~chinese ÏÔÊ¾Êı¾İ¡£
+    * @~chinese æ˜¾ç¤ºæ•°æ®ã€‚
     */
     static void addParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);
     /*
     * @~english Create particle display.
-    * @~chinese ´´½¨Á£×ÓÏÔÊ¾¡£
+    * @~chinese åˆ›å»ºç²’å­æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param decoDisplay @~english `DecorativeDisplay` object.
-    * @~chinese `DecorativeDisplay`¶ÔÏó¡£
+    * @~chinese `DecorativeDisplay`å¯¹è±¡ã€‚
     */
     static void createParticleDisplay(Bone *bone, DecorativeDisplay *decoDisplay);
     /*
     * @~english Update particle display.
-    * @~chinese ¸üĞÂÁ£×ÓÏÔÊ¾¡£
+    * @~chinese æ›´æ–°ç²’å­æ˜¾ç¤ºã€‚
     * @param bone @~english The bone.
-    * @~chinese ¹ÇÍ·¡£
+    * @~chinese éª¨å¤´ã€‚
     * @param display @~english Display node.
-    * @~chinese ÏÔÊ¾½Úµã¡£
+    * @~chinese æ˜¾ç¤ºèŠ‚ç‚¹ã€‚
     * @param dt, @~english Delta time.
-    * @~chinese ¼ä¸ôÊ±¼ä¡£
+    * @~chinese é—´éš”æ—¶é—´ã€‚
     */
     static void updateParticleDisplay(Bone *bone, cocos2d::Node *display, float dt);
 };

@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -46,91 +46,91 @@ class CC_STUDIO_DLL Frame : public cocos2d::Ref
 public:
     /** 
     * @~english Set frame index.
-    * @~chinese ÉèÖÃÖ¡Ë÷Òı¡£
+    * @~chinese è®¾ç½®å¸§ç´¢å¼•ã€‚
     * @param frameIndex @~english Frame index.
-    * @~chinese Ö¡Ë÷Òı¡£
+    * @~chinese å¸§ç´¢å¼•ã€‚
     */
     virtual void setFrameIndex(unsigned int frameIndex) { _frameIndex = frameIndex; }
     /**
     * @~english Get frame index.
-    * @~chinese »ñÈ¡Ö¡Ë÷Òı¡£
+    * @~chinese è·å–å¸§ç´¢å¼•ã€‚
     * @return @~english Frame index.
-    * @~chinese Ö¡Ë÷Òı¡£
+    * @~chinese å¸§ç´¢å¼•ã€‚
     */
     virtual unsigned int getFrameIndex() const { return _frameIndex; }
 
     /**
     * @~english Set timeline.
-    * @~chinese ÉèÖÃÊ±¼äÖá¡£
+    * @~chinese è®¾ç½®æ—¶é—´è½´ã€‚
     * @param timeline @~english Timeline.
-    * @~chinese Ê±¼äÖá¡£
+    * @~chinese æ—¶é—´è½´ã€‚
     */
     virtual void setTimeline(Timeline* timeline) { _timeline = timeline; }
     /**
     * @~english Get timeline.
-    * @~chinese »ñÈ¡Ê±¼äÖá¡£
+    * @~chinese è·å–æ—¶é—´è½´ã€‚
     * @return @~english Timeline.
-    * @~chinese Ê±¼äÖá¡£
+    * @~chinese æ—¶é—´è½´ã€‚
     */
     virtual Timeline* getTimeline() const { return _timeline; }
 
     /**
     * @~english Set node.
-    * @~chinese ÉèÖÃ½Úµã¡£
+    * @~chinese è®¾ç½®èŠ‚ç‚¹ã€‚
     * @param node @~english Node.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     */
     virtual void setNode(cocos2d::Node* node) { _node = node; }
     /**
     * @~english Get node.
-    * @~chinese »ñÈ¡½Úµã¡£
+    * @~chinese è·å–èŠ‚ç‚¹ã€‚
     * @return @~english Node.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     */
     virtual cocos2d::Node* getNode() const { return _node; }
 
     /**
     * @~english Set is tween.
-    * @~chinese ÉèÖÃÊÇ·ñ²¹¼ä¡£
+    * @~chinese è®¾ç½®æ˜¯å¦è¡¥é—´ã€‚
     * @param tween @~english Is tween.
-    * @~chinese ÊÇ·ñ²¹¼ä¡£
+    * @~chinese æ˜¯å¦è¡¥é—´ã€‚
     */
     virtual void setTween(bool tween) { _tween = tween; }
     /**
     * @~english Get is tween.
-    * @~chinese »ñÈ¡ÊÇ·ñ²¹¼ä¡£
+    * @~chinese è·å–æ˜¯å¦è¡¥é—´ã€‚
     * @return @~english Is tween.
-    * @~chinese ÊÇ·ñ²¹¼ä¡£
+    * @~chinese æ˜¯å¦è¡¥é—´ã€‚
     */
     virtual bool isTween() const { return _tween; }
 
     /**
     * @~english Set tween type.
-    * @~chinese ÉèÖÃ²¹¼äÖÖÀà¡£
+    * @~chinese è®¾ç½®è¡¥é—´ç§ç±»ã€‚
     * @param tweenType @~english Tween type.
-    * @~chinese ²¹¼äÖÖÀà¡£
+    * @~chinese è¡¥é—´ç§ç±»ã€‚
     */
     virtual void setTweenType(const tweenfunc::TweenType& tweenType) { _tweenType = tweenType; }
     /**
     * @~english Get tween type.
-    * @~chinese »ñÈ¡²¹¼äÖÖÀà¡£
+    * @~chinese è·å–è¡¥é—´ç§ç±»ã€‚
     * @return @~english Tween type.
-    * @~chinese ²¹¼äÖÖÀà¡£
+    * @~chinese è¡¥é—´ç§ç±»ã€‚
     */
     virtual tweenfunc::TweenType getTweenType() const { return _tweenType; }
     
     /**
     * @~english Set tween params, to make easing with params, need `setTweenType(TweenType::CUSTOM_EASING)`.
-    * @~chinese ÉèÖÃ²¹¼ä²ÎÊı¡£ÒªÊ¹ÓÃ²¹¼ä²ÎÊı£¬ĞèÒªµ÷ÓÃ`setTweenType(TweenType::CUSTOM_EASING)`¡£
+    * @~chinese è®¾ç½®è¡¥é—´å‚æ•°ã€‚è¦ä½¿ç”¨è¡¥é—´å‚æ•°ï¼Œéœ€è¦è°ƒç”¨`setTweenType(TweenType::CUSTOM_EASING)`ã€‚
     * @param tweenType @~english Tween params.
-    * @~chinese ²¹¼ä²ÎÊı¡£
+    * @~chinese è¡¥é—´å‚æ•°ã€‚
     */
     virtual void setEasingParams(const std::vector<float>& easingParams);
     /**
     * @~english Set tween params.
-    * @~chinese »ñÈ¡²¹¼ä²ÎÊı¡£
+    * @~chinese è·å–è¡¥é—´å‚æ•°ã€‚
     * @return @~english Tween params.
-    * @~chinese ²¹¼ä²ÎÊı¡£
+    * @~chinese è¡¥é—´å‚æ•°ã€‚
     */
     virtual const std::vector<float>& getEasingParams() const;
     
@@ -138,19 +138,19 @@ public:
 
     /**
     * @~english Calling when enter this frame.
-    * @~chinese µ±½øÈë¸ÃÖ¡Ê±µ÷ÓÃ¡£
+    * @~chinese å½“è¿›å…¥è¯¥å¸§æ—¶è°ƒç”¨ã€‚
     * @param nextFrame @~english Next frame.
-    * @~chinese ÏÂÒ»Ö¡¡£
+    * @~chinese ä¸‹ä¸€å¸§ã€‚
     * @param currentFrameIndex @~english Current frame Index.
-    * @~chinese µ±Ç°Ö¡Ë÷Òı¡£
+    * @~chinese å½“å‰å¸§ç´¢å¼•ã€‚
     */
     virtual void onEnter(Frame* nextFrame, int currentFrameIndex) = 0;
 
     /**
     * @~english Calculate attribute by tween percent.
-    * @~chinese ¸ù¾İµ±Ç°²¹¼ä°Ù·Ö±È¼ÆËãµ±Ç°ÊôĞÔ¡£
+    * @~chinese æ ¹æ®å½“å‰è¡¥é—´ç™¾åˆ†æ¯”è®¡ç®—å½“å‰å±æ€§ã€‚
     * @param nextFrame @~english percent.
-    * @~chinese ²¹¼ä°Ù·Ö±È¡£
+    * @~chinese è¡¥é—´ç™¾åˆ†æ¯”ã€‚
     */
     virtual void apply(float percent);
 
@@ -190,16 +190,16 @@ public:
 
     /**
     * @~english Set visible.
-    * @~chinese ÉèÖÃÊÇ·ñ¿É¼û¡£
+    * @~chinese è®¾ç½®æ˜¯å¦å¯è§ã€‚
     * @param visible @~english Is visible.
-    * @~chinese ÊÇ·ñ¿É¼û¡£
+    * @~chinese æ˜¯å¦å¯è§ã€‚
     */
     inline void setVisible(bool visible) { _visible = visible;}
     /**
     * @~english Get visible.
-    * @~chinese »ñÈ¡ÊÇ·ñ¿É¼û¡£
+    * @~chinese è·å–æ˜¯å¦å¯è§ã€‚
     * @return @~english Is visible.
-    * @~chinese ÊÇ·ñ¿É¼û¡£
+    * @~chinese æ˜¯å¦å¯è§ã€‚
     */
     inline bool isVisible() const { return _visible; }
 
@@ -222,16 +222,16 @@ public:
 
     /**
     * @~english Set texture name.
-    * @~chinese ÉèÖÃ²ÄÖÊÃû³Æ¡£
+    * @~chinese è®¾ç½®æè´¨åç§°ã€‚
     * @param textureName @~english Texture name.
-    * @~chinese ²ÄÖÊÃû³Æ¡£
+    * @~chinese æè´¨åç§°ã€‚
     */
     inline void setTextureName(std::string textureName) { _textureName = textureName;}
     /**
     * @~english Get texture name.
-    * @~chinese »ñÈ¡²ÄÖÊÃû³Æ¡£
+    * @~chinese è·å–æè´¨åç§°ã€‚
     * @return @~english Texture name.
-    * @~chinese ²ÄÖÊÃû³Æ¡£
+    * @~chinese æè´¨åç§°ã€‚
     */
     inline std::string getTextureName() const { return _textureName; }
 
@@ -252,16 +252,16 @@ public:
 
     /**
     * @~english Set rotation.
-    * @~chinese ÉèÖÃĞı×ª¡£
+    * @~chinese è®¾ç½®æ—‹è½¬ã€‚
     * @param rotation @~english Rotation angle.
-    * @~chinese Ğı×ª½Ç¶È¡£
+    * @~chinese æ—‹è½¬è§’åº¦ã€‚
     */
     inline void  setRotation(float rotation) { _rotation = rotation; }
     /**
     * @~english Get rotation.
-    * @~chinese »ñÈ¡Ğı×ª¡£
+    * @~chinese è·å–æ—‹è½¬ã€‚
     * @return @~english Rotation angle.
-    * @~chinese Ğı×ª½Ç¶È¡£
+    * @~chinese æ—‹è½¬è§’åº¦ã€‚
     */
     inline float getRotation() const { return _rotation; }
 
@@ -284,31 +284,31 @@ public:
 
     /**
     * @~english Set skew x.
-    * @~chinese ÉèÖÃºáÏòÀ­Éì¡£
+    * @~chinese è®¾ç½®æ¨ªå‘æ‹‰ä¼¸ã€‚
     * @param skewx @~english Skew x.
-    * @~chinese ºáÏòÀ­Éì¡£
+    * @~chinese æ¨ªå‘æ‹‰ä¼¸ã€‚
     */
     inline void  setSkewX(float skewx) { _skewX = skewx; }
     /**
     * @~english Get skew x.
-    * @~chinese »ñÈ¡ºáÏòÀ­Éì¡£
+    * @~chinese è·å–æ¨ªå‘æ‹‰ä¼¸ã€‚
     * @return @~english Skew x.
-    * @~chinese ºáÏòÀ­Éì¡£
+    * @~chinese æ¨ªå‘æ‹‰ä¼¸ã€‚
     */
     inline float getSkewX() const { return _skewX; }
 
     /**
     * @~english Set skew y.
-    * @~chinese ÉèÖÃ×İÏòÀ­Éì¡£
+    * @~chinese è®¾ç½®çºµå‘æ‹‰ä¼¸ã€‚
     * @param skewx @~english Skew y.
-    * @~chinese ×İÏòÀ­Éì¡£
+    * @~chinese çºµå‘æ‹‰ä¼¸ã€‚
     */
     inline void  setSkewY(float skewy) { _skewY = skewy; }
     /**
     * @~english Get skew y.
-    * @~chinese »ñÈ¡×İÏòÀ­Éì¡£
+    * @~chinese è·å–çºµå‘æ‹‰ä¼¸ã€‚
     * @return @~english Skew y.
-    * @~chinese ×İÏòÀ­Éì¡£
+    * @~chinese çºµå‘æ‹‰ä¼¸ã€‚
     */
     inline float getSkewY() const { return _skewY; }
 
@@ -349,46 +349,46 @@ public:
 
     /**
     * @~english Set position.
-    * @~chinese ÉèÖÃ×ø±ê¡£
+    * @~chinese è®¾ç½®åæ ‡ã€‚
     * @param position @~english Position.
-    * @~chinese ×ø±ê¡£
+    * @~chinese åæ ‡ã€‚
     */
     inline void setPosition(const cocos2d::Point& position) { _position = position; }
     /**
     * @~english Get position.
-    * @~chinese »ñÈ¡×ø±ê¡£
+    * @~chinese è·å–åæ ‡ã€‚
     * @return @~english Position.
-    * @~chinese ×ø±ê¡£
+    * @~chinese åæ ‡ã€‚
     */
     inline cocos2d::Point getPosition() const { return _position; }
 
     /**
     * @~english Set position x.
-    * @~chinese ÉèÖÃx×ø±ê¡£
+    * @~chinese è®¾ç½®xåæ ‡ã€‚
     * @param x @~english Position x.
-    * @~chinese x×ø±ê¡£
+    * @~chinese xåæ ‡ã€‚
     */
     inline void setX(float x) { _position.x = x; }
     /**
     * @~english Set position y.
-    * @~chinese ÉèÖÃy×ø±ê¡£
+    * @~chinese è®¾ç½®yåæ ‡ã€‚
     * @param x @~english Position y.
-    * @~chinese y×ø±ê¡£
+    * @~chinese yåæ ‡ã€‚
     */
     inline void setY(float y) { _position.y = y; }
 
     /**
     * @~english Get position x.
-    * @~chinese »ñÈ¡x×ø±ê¡£
+    * @~chinese è·å–xåæ ‡ã€‚
     * @return @~english Position x.
-    * @~chinese x×ø±ê¡£
+    * @~chinese xåæ ‡ã€‚
     */
     inline float getX() const { return _position.x; }
     /**
     * @~english Get position y.
-    * @~chinese »ñÈ¡y×ø±ê¡£
+    * @~chinese è·å–yåæ ‡ã€‚
     * @return @~english Position y.
-    * @~chinese y×ø±ê¡£
+    * @~chinese yåæ ‡ã€‚
     */
     inline float getY() const { return _position.y; }
     
@@ -413,39 +413,39 @@ public:
 
     /**
     * @~english Set scale.
-    * @~chinese ÉèÖÃËõ·ÅÖµ¡£
+    * @~chinese è®¾ç½®ç¼©æ”¾å€¼ã€‚
     * @param scale @~english Scale.
-    * @~chinese Ëõ·ÅÖµ¡£
+    * @~chinese ç¼©æ”¾å€¼ã€‚
     */
     inline void  setScale(float scale) { _scaleX = scale; _scaleY = scale; }
 
     /**
     * @~english Set scale x.
-    * @~chinese ÉèÖÃxËõ·ÅÖµ¡£
+    * @~chinese è®¾ç½®xç¼©æ”¾å€¼ã€‚
     * @param scaleX @~english Scale x.
-    * @~chinese xËõ·ÅÖµ¡£
+    * @~chinese xç¼©æ”¾å€¼ã€‚
     */
     inline void  setScaleX(float scaleX) { _scaleX = scaleX; }
     /**
     * @~english Get scale x.
-    * @~chinese »ñÈ¡xËõ·ÅÖµ¡£
+    * @~chinese è·å–xç¼©æ”¾å€¼ã€‚
     * @return @~english Scale x.
-    * @~chinese xËõ·ÅÖµ¡£
+    * @~chinese xç¼©æ”¾å€¼ã€‚
     */
     inline float getScaleX() const { return _scaleX; }
 
     /**
     * @~english Set scale y.
-    * @~chinese ÉèÖÃyËõ·ÅÖµ¡£
+    * @~chinese è®¾ç½®yç¼©æ”¾å€¼ã€‚
     * @param scaleX @~english Scale y.
-    * @~chinese yËõ·ÅÖµ¡£
+    * @~chinese yç¼©æ”¾å€¼ã€‚
     */
     inline void  setScaleY(float scaleY) { _scaleY = scaleY;}
     /**
     * @~english Get scale y.
-    * @~chinese »ñÈ¡yËõ·ÅÖµ¡£
+    * @~chinese è·å–yç¼©æ”¾å€¼ã€‚
     * @return @~english Scale y.
-    * @~chinese yËõ·ÅÖµ¡£
+    * @~chinese yç¼©æ”¾å€¼ã€‚
     */
     inline float getScaleY() const { return _scaleY; }
 
@@ -471,16 +471,16 @@ public:
 
     /**
     * @~english Set anchor point.
-    * @~chinese ÉèÖÃÃªµã¡£
+    * @~chinese è®¾ç½®é”šç‚¹ã€‚
     * @param point @~english Anchor point.
-    * @~chinese Ãªµã¡£
+    * @~chinese é”šç‚¹ã€‚
     */
     inline void setAnchorPoint(const cocos2d::Point& point) { _anchorPoint = point; }
     /**
     * @~english Get anchor point.
-    * @~chinese »ñÈ¡Ãªµã¡£
+    * @~chinese è·å–é”šç‚¹ã€‚
     * @return @~english Anchor point.
-    * @~chinese Ãªµã¡£
+    * @~chinese é”šç‚¹ã€‚
     */
     inline cocos2d::Point getAnchorPoint() const { return _anchorPoint; }
 
@@ -510,16 +510,16 @@ public:
 
     /**
     * @~english Set inner action type.
-    * @~chinese ÉèÖÃÇ¶Ì×¶¯»­ÀàĞÍ¡£
+    * @~chinese è®¾ç½®åµŒå¥—åŠ¨ç”»ç±»å‹ã€‚
     * @param type @~english Inner action type.
-    * @~chinese Ç¶Ì×¶¯»­ÀàĞÍ¡£
+    * @~chinese åµŒå¥—åŠ¨ç”»ç±»å‹ã€‚
     */
     inline void setInnerActionType(InnerActionType type) { _innerActionType = type; }
     /**
     * @~english Get inner action type.
-    * @~chinese »ñÈ¡Ç¶Ì×¶¯»­ÀàĞÍ¡£
+    * @~chinese è·å–åµŒå¥—åŠ¨ç”»ç±»å‹ã€‚
     * @return @~english Inner action type.
-    * @~chinese Ç¶Ì×¶¯»­ÀàĞÍ¡£
+    * @~chinese åµŒå¥—åŠ¨ç”»ç±»å‹ã€‚
     */
     inline InnerActionType getInnerActionType() const { return _innerActionType; }
     
@@ -527,54 +527,54 @@ public:
     
     /**
     * @~english Set start frame index.
-    * @~chinese ÉèÖÃÆğÊ¼Ö¡Ë÷Òı¡£
+    * @~chinese è®¾ç½®èµ·å§‹å¸§ç´¢å¼•ã€‚
     * @param type @~english Start frame index.
-    * @~chinese ÆğÊ¼Ö¡Ë÷Òı¡£
+    * @~chinese èµ·å§‹å¸§ç´¢å¼•ã€‚
     */
 	void setStartFrameIndex(int frameIndex);
     /**
     * @~english Get start frame index.
-    * @~chinese »ñÈ¡ÆğÊ¼Ö¡Ë÷Òı¡£
+    * @~chinese è·å–èµ·å§‹å¸§ç´¢å¼•ã€‚
     * @return @~english Start frame index.
-    * @~chinese ÆğÊ¼Ö¡Ë÷Òı¡£
+    * @~chinese èµ·å§‹å¸§ç´¢å¼•ã€‚
     */
     inline int  getStartFrameIndex() const { return _startFrameIndex; }
 
     /**
     * @~english Set end frame index.
-    * @~chinese ÉèÖÃ½áÊøÖ¡Ë÷Òı¡£
+    * @~chinese è®¾ç½®ç»“æŸå¸§ç´¢å¼•ã€‚
     * @param type @~english End frame index.
-    * @~chinese ½áÊøÖ¡Ë÷Òı¡£
+    * @~chinese ç»“æŸå¸§ç´¢å¼•ã€‚
     */
 	void setEndFrameIndex(int frameIndex);
     /**
     * @~english Get end frame index.
-    * @~chinese »ñÈ¡½áÊøÖ¡Ë÷Òı¡£
+    * @~chinese è·å–ç»“æŸå¸§ç´¢å¼•ã€‚
     * @return @~english End frame index.
-    * @~chinese ½áÊøÖ¡Ë÷Òı¡£
+    * @~chinese ç»“æŸå¸§ç´¢å¼•ã€‚
     */
     inline int  getEndFrameIndex() const { return _endFrameIndex; }
     
     /**
     * @~english Set animation name.
-    * @~chinese ÉèÖÃ¶¯»­Ãû³Æ¡£
+    * @~chinese è®¾ç½®åŠ¨ç”»åç§°ã€‚
     * @param animationNamed @~english Animation name.
-    * @~chinese ¶¯»­Ãû³Æ¡£
+    * @~chinese åŠ¨ç”»åç§°ã€‚
     */
 	void setAnimationName(const std::string& animationNamed);
     
     /**
     * @~english Set single frame index.
-    * @~chinese ÉèÖÃµ¥Ö¡Ë÷Òı¡£
+    * @~chinese è®¾ç½®å•å¸§ç´¢å¼•ã€‚
     * @param frameIndex @~english Single frame index.
-    * @~chinese µ¥Ö¡Ë÷Òı¡£
+    * @~chinese å•å¸§ç´¢å¼•ã€‚
     */
     inline void setSingleFrameIndex(int frameIndex) { _singleFrameIndex = frameIndex;}
     /**
     * @~english Get single frame index.
-    * @~chinese »ñÈ¡µ¥Ö¡Ë÷Òı¡£
+    * @~chinese è·å–å•å¸§ç´¢å¼•ã€‚
     * @return @~english Single frame index.
-    * @~chinese µ¥Ö¡Ë÷Òı¡£
+    * @~chinese å•å¸§ç´¢å¼•ã€‚
     */
     inline int  getSingleFrameIndex() const { return _singleFrameIndex;}
 
@@ -603,16 +603,16 @@ public:
 
     /**
     * @~english Set color.
-    * @~chinese ÉèÖÃÑÕÉ«¡£
+    * @~chinese è®¾ç½®é¢œè‰²ã€‚
     * @param color @~english Color.
-    * @~chinese ÑÕÉ«¡£
+    * @~chinese é¢œè‰²ã€‚
     */
     inline void setColor(const cocos2d::Color3B& color) { _color = color; }
     /**
     * @~english Get color.
-    * @~chinese »ñÈ¡ÑÕÉ«¡£
+    * @~chinese è·å–é¢œè‰²ã€‚
     * @return @~english Color.
-    * @~chinese ÑÕÉ«¡£
+    * @~chinese é¢œè‰²ã€‚
     */
     inline cocos2d::Color3B getColor() const { return _color; }
 
@@ -638,16 +638,16 @@ public:
 
     /**
     * @~english Set alpha.
-    * @~chinese ÉèÖÃÍ¸Ã÷¶È¡£
+    * @~chinese è®¾ç½®é€æ˜åº¦ã€‚
     * @param alpha @~english Alpha.
-    * @~chinese Í¸Ã÷¶È¡£
+    * @~chinese é€æ˜åº¦ã€‚
     */
     inline void setAlpha(GLubyte alpha) { _alpha = alpha; }
     /**
     * @~english Get alpha.
-    * @~chinese »ñÈ¡Í¸Ã÷¶È¡£
+    * @~chinese è·å–é€æ˜åº¦ã€‚
     * @return @~english Alpha.
-    * @~chinese Í¸Ã÷¶È¡£
+    * @~chinese é€æ˜åº¦ã€‚
     */
     inline GLubyte getAlpha() const { return _alpha; }
 
@@ -673,16 +673,16 @@ public:
 
     /**
     * @~english Set frame event.
-    * @~chinese ÉèÖÃÖ¡ÊÂ¼ş¡£
+    * @~chinese è®¾ç½®å¸§äº‹ä»¶ã€‚
     * @param event @~english Frame event.
-    * @~chinese Ö¡ÊÂ¼ş¡£
+    * @~chinese å¸§äº‹ä»¶ã€‚
     */
     inline void setEvent(std::string event) { _event = event;}
     /**
     * @~english Get frame event.
-    * @~chinese »ñÈ¡Ö¡ÊÂ¼ş¡£
+    * @~chinese è·å–å¸§äº‹ä»¶ã€‚
     * @return @~english Frame event.
-    * @~chinese Ö¡ÊÂ¼ş¡£
+    * @~chinese å¸§äº‹ä»¶ã€‚
     */
     inline std::string getEvent() const { return _event; }
 
@@ -703,16 +703,16 @@ public:
 
     /**
     * @~english Set z order.
-    * @~chinese ÉèÖÃzÖá´ÎĞò¡£
+    * @~chinese è®¾ç½®zè½´æ¬¡åºã€‚
     * @param zorder @~english Z order.
-    * @~chinese zÖá´ÎĞò¡£
+    * @~chinese zè½´æ¬¡åºã€‚
     */
     inline void setZOrder(int zorder) { _zorder = zorder;}
     /**
     * @~english Get z order.
-    * @~chinese »ñÈ¡zÖá´ÎĞò¡£
+    * @~chinese è·å–zè½´æ¬¡åºã€‚
     * @return @~english Z order.
-    * @~chinese zÖá´ÎĞò¡£
+    * @~chinese zè½´æ¬¡åºã€‚
     */
     inline int getZOrder() const { return _zorder; }
 
@@ -733,16 +733,16 @@ public:
     
     /**
     * @~english Get blend function.
-    * @~chinese »ñÈ¡»ìºÏº¯Êı¡£
+    * @~chinese è·å–æ··åˆå‡½æ•°ã€‚
     * @return @~english Blend function.
-    * @~chinese »ìºÏº¯Êı¡£
+    * @~chinese æ··åˆå‡½æ•°ã€‚
     */
     inline BlendFunc getBlendFunc() const { return _blendFunc; }
     /**
     * @~english Set blend function.
-    * @~chinese ÉèÖÃ»ìºÏº¯Êı¡£
+    * @~chinese è®¾ç½®æ··åˆå‡½æ•°ã€‚
     * @param zorder @~english Blend function.
-    * @~chinese »ìºÏº¯Êı¡£
+    * @~chinese æ··åˆå‡½æ•°ã€‚
     */
     inline void setBlendFunc(BlendFunc blendFunc) { _blendFunc = blendFunc; }
     

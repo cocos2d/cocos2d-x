@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -70,14 +70,14 @@ class CC_STUDIO_DLL CSLoader
 public:
     /**
     * @~english Get singleton.
-    * @~chinese »ñÈ¡µ¥Àı¡£
+    * @~chinese è·å–å•ä¾‹ã€‚
     * @return @~english Singleton of `CSLoader`.
-    * @~chinese `CSLoader`µÄµ¥Àı¡£
+    * @~chinese `CSLoader`çš„å•ä¾‹ã€‚
     */
     static CSLoader* getInstance();
     /**
     * @~english Destory singleton.
-    * @~chinese Ïú»Ùµ¥Àı¡£
+    * @~chinese é”€æ¯å•ä¾‹ã€‚
     */
     static void destroyInstance();
     
@@ -89,22 +89,22 @@ public:
     
     /**
     * @~english Create node from binary file.
-    * @~chinese ´Ó¶ş½øÖÆÎÄ¼şÖĞ´´½¨½Úµã¡£
+    * @~chinese ä»äºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºèŠ‚ç‚¹ã€‚
     * @param filename @~english File name.
-    * @~chinese ÎÄ¼şÃû³Æ¡£
+    * @~chinese æ–‡ä»¶åç§°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     static cocos2d::Node* createNode(const std::string& filename);
     /**
     * @~english Create node from binary file and run specified callback function after creating.
-    * @~chinese ´Ó¶ş½øÖÆÎÄ¼şÖĞ´´½¨½Úµã£¬ÔÚ´´½¨Íê³Éºóµ÷ÓÃÖ¸¶¨µÄ»Øµ÷º¯Êı¡£
+    * @~chinese ä»äºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºèŠ‚ç‚¹ï¼Œåœ¨åˆ›å»ºå®Œæˆåè°ƒç”¨æŒ‡å®šçš„å›è°ƒå‡½æ•°ã€‚
     * @param filename @~english File name.
-    * @~chinese ÎÄ¼şÃû³Æ¡£
+    * @~chinese æ–‡ä»¶åç§°ã€‚
     * @param filename @~english Specified callback function.
-    * @~chinese Ö¸¶¨µÄ»Øµ÷º¯Êı¡£
+    * @~chinese æŒ‡å®šçš„å›è°ƒå‡½æ•°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
@@ -116,87 +116,87 @@ public:
     
     /**
     * @~english Create node from json file.
-    * @~chinese ´ÓJsonÎÄ¼şÖĞ´´½¨½Úµã¡£
+    * @~chinese ä»Jsonæ–‡ä»¶ä¸­åˆ›å»ºèŠ‚ç‚¹ã€‚
     * @param filename @~english Json file name.
-    * @~chinese JsonÎÄ¼şÃû³Æ¡£
+    * @~chinese Jsonæ–‡ä»¶åç§°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* createNodeFromJson(const std::string& filename);
     /**
     * @~english Load node from json file.
-    * @~chinese ´ÓJsonÎÄ¼şÖĞÔØÈë½Úµã¡£
+    * @~chinese ä»Jsonæ–‡ä»¶ä¸­è½½å…¥èŠ‚ç‚¹ã€‚
     * @param filename @~english Json file name.
-    * @~chinese JsonÎÄ¼şÃû³Æ¡£
+    * @~chinese Jsonæ–‡ä»¶åç§°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);
     /**
     * @~english Load node from json string.
-    * @~chinese ´ÓJson×Ö·û´®ÖĞÔØÈë½Úµã¡£
+    * @~chinese ä»Jsonå­—ç¬¦ä¸²ä¸­è½½å…¥èŠ‚ç‚¹ã€‚
     * @param content @~english Json string.
-    * @~chinese Json×Ö·û´®¡£
+    * @~chinese Jsonå­—ç¬¦ä¸²ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* loadNodeWithContent(const std::string& content);
     
     /*
     * @~english Set is record json path.
-    * @~chinese ÉèÖÃÊÇ·ñ¼ÇÂ¼JsonÂ·¾¶¡£
+    * @~chinese è®¾ç½®æ˜¯å¦è®°å½•Jsonè·¯å¾„ã€‚
     * @param record @~english Is record json path.
-    * @~chinese ÊÇ·ñ¼ÇÂ¼JsonÂ·¾¶¡£
+    * @~chinese æ˜¯å¦è®°å½•Jsonè·¯å¾„ã€‚
     */
     void setRecordJsonPath(bool record) { _recordJsonPath = record; }
     /*
     * @~english Get is record json path.
-    * @~chinese »ñÈ¡ÊÇ·ñ¼ÇÂ¼JsonÂ·¾¶¡£
+    * @~chinese è·å–æ˜¯å¦è®°å½•Jsonè·¯å¾„ã€‚
     * @return @~english Is record json path.
-    * @~chinese ÊÇ·ñ¼ÇÂ¼JsonÂ·¾¶¡£
+    * @~chinese æ˜¯å¦è®°å½•Jsonè·¯å¾„ã€‚
     */
     bool isRecordJsonPath() const { return _recordJsonPath; }
     
     /*
     * @~english Set json path.
-    * @~chinese ÉèÖÃJsonÂ·¾¶¡£
+    * @~chinese è®¾ç½®Jsonè·¯å¾„ã€‚
     * @param record @~english Json path.
-    * @~chinese JsonÂ·¾¶¡£
+    * @~chinese Jsonè·¯å¾„ã€‚
     */
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
     /*
     * @~english Get json path.
-    * @~chinese »ñÈ¡JsonÂ·¾¶¡£
+    * @~chinese è·å–Jsonè·¯å¾„ã€‚
     * @return @~english Json path.
-    * @~chinese JsonÂ·¾¶¡£
+    * @~chinese Jsonè·¯å¾„ã€‚
     */
     std::string getJsonPath() const { return _jsonPath; }
     
     /**
     * @~english Create node from flatbuffer binary file.
-    * @~chinese ´Óflatbuffer¶ş½øÖÆÎÄ¼şÖĞ´´½¨½Úµã¡£
+    * @~chinese ä»flatbufferäºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºèŠ‚ç‚¹ã€‚
     * @param filename @~english File name.
-    * @~chinese ÎÄ¼şÃû³Æ¡£
+    * @~chinese æ–‡ä»¶åç§°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename);
     /**
     * @~english Create node from flatbuffer binary file.
-    * @~chinese ´Óflatbuffer¶ş½øÖÆÎÄ¼şÖĞ´´½¨½Úµã¡£
+    * @~chinese ä»flatbufferäºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºèŠ‚ç‚¹ã€‚
     * @param filename @~english File name.
-    * @~chinese ÎÄ¼şÃû³Æ¡£
+    * @~chinese æ–‡ä»¶åç§°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName);
     /**
     * @~english Create node from nodetree.
-    * @~chinese ´Ó½ÚµãÊ÷ÖĞ´´½¨½Úµã¡£
+    * @~chinese ä»èŠ‚ç‚¹æ ‘ä¸­åˆ›å»ºèŠ‚ç‚¹ã€‚
     * @param nodetree @~english Node tree.
-    * @~chinese ½ÚµãÊ÷¡£
+    * @~chinese èŠ‚ç‚¹æ ‘ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree);
 
@@ -211,20 +211,20 @@ public:
     
     /**
     * @~english Create node from flatbuffer binary file(for simulator).
-    * @~chinese ´Óflatbuffer¶ş½øÖÆÎÄ¼şÖĞ´´½¨½Úµã(ÎªÄ£ÄâÆ÷)¡£
+    * @~chinese ä»flatbufferäºŒè¿›åˆ¶æ–‡ä»¶ä¸­åˆ›å»ºèŠ‚ç‚¹(ä¸ºæ¨¡æ‹Ÿå™¨)ã€‚
     * @param filename @~english File name.
-    * @~chinese ÎÄ¼şÃû³Æ¡£
+    * @~chinese æ–‡ä»¶åç§°ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* createNodeWithFlatBuffersForSimulator(const std::string& filename);
     /**
     * @~english Create node from nodetree(for simulator).
-    * @~chinese ´Ó½ÚµãÊ÷ÖĞ´´½¨½Úµã(ÎªÄ£ÄâÆ÷)¡£
+    * @~chinese ä»èŠ‚ç‚¹æ ‘ä¸­åˆ›å»ºèŠ‚ç‚¹(ä¸ºæ¨¡æ‹Ÿå™¨)ã€‚
     * @param nodetree @~english Node tree.
-    * @~chinese ½ÚµãÊ÷¡£
+    * @~chinese èŠ‚ç‚¹æ ‘ã€‚
     * @return @~english Created node.
-    * @~chinese ´´½¨³öµÄ½Úµã¡£
+    * @~chinese åˆ›å»ºå‡ºçš„èŠ‚ç‚¹ã€‚
     */
     cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
 

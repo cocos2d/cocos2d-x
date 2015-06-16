@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 /** 
  * @brief @~english Declare the current trigger class name to ObjectFactory, for reflection to create objects.
- * @~chinese ¹¤³§ÀàObjectFactory×¢²áº¯ÊıÉùÃ÷£¬±»ÓÃÓÚ´¥·¢Æ÷Í·ÎÄ¼ş£¬°Ñµ±Ç°×é¼şÀàÃû×¢²áµ½ObjectFactory£¬ÓÃÓÚ·´Éä´´½¨¶ÔÏó.
+ * @~chinese å·¥å‚ç±»ObjectFactoryæ³¨å†Œå‡½æ•°å£°æ˜ï¼Œè¢«ç”¨äºè§¦å‘å™¨å¤´æ–‡ä»¶ï¼ŒæŠŠå½“å‰ç»„ä»¶ç±»åæ³¨å†Œåˆ°ObjectFactoryï¼Œç”¨äºåå°„åˆ›å»ºå¯¹è±¡.
 */
 #define DECLARE_CLASS_INFO \
     public: \
@@ -42,7 +42,7 @@ THE SOFTWARE.
 
 /** 
  * @brief @~english Implement the current trigger class name to ObjectFactory, for reflection to create objects.
- * @~chinese ¹¤³§ÀàObjectFactory×¢²áº¯ÊıÊµÏÖ£¬±»ÓÃÓÚ´¥·¢Æ÷Ô´ÎÄ¼ş£¬°Ñµ±Ç°×é¼şÀàÃû×¢²áµ½ObjectFactory£¬ÓÃÓÚ·´Éä´´½¨¶ÔÏó.
+ * @~chinese å·¥å‚ç±»ObjectFactoryæ³¨å†Œå‡½æ•°å®ç°ï¼Œè¢«ç”¨äºè§¦å‘å™¨æºæ–‡ä»¶ï¼ŒæŠŠå½“å‰ç»„ä»¶ç±»åæ³¨å†Œåˆ°ObjectFactoryï¼Œç”¨äºåå°„åˆ›å»ºå¯¹è±¡.
 */
 #define IMPLEMENT_CLASS_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
@@ -55,9 +55,9 @@ THE SOFTWARE.
 
 /** 
  * @brief @~english Trigger manager send events to trigger action and condition.
- * @~chinese ´¥·¢Æ÷¹ÜÀíÆ÷·¢ËÍÊÂ¼ş£¬´Ó¶øÒı·¢Ìõ¼şÅĞ¶Ï£¬¶¯×÷Ö´ĞĞ¡£
+ * @~chinese è§¦å‘å™¨ç®¡ç†å™¨å‘é€äº‹ä»¶ï¼Œä»è€Œå¼•å‘æ¡ä»¶åˆ¤æ–­ï¼ŒåŠ¨ä½œæ‰§è¡Œã€‚
  * @param event @~english event id.
- * @~chinese ÊÂ¼şid¡£
+ * @~chinese äº‹ä»¶idã€‚
 */
 void CC_STUDIO_DLL sendEvent(unsigned int event);
 

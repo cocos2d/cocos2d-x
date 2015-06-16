@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -71,11 +71,11 @@ class  CC_STUDIO_DLL ArmatureAnimation : public ProcessBase
 public:
     /**
     * @~english Create with a Armature.
-    * @~chinese Ê¹ÓÃÒ»Ì×¹Ç÷ÀÀ´´´½¨¹Ç÷À¶¯»­¡£
+    * @~chinese ä½¿ç”¨ä¸€å¥—éª¨éª¼æ¥åˆ›å»ºéª¨éª¼åŠ¨ç”»ã€‚
     * @param armature  @~english The Armature ArmatureAnimation will bind to.
-    * @~chinese ½«Òª°ó¶¨¶¯»­µÄ¹Ç÷À¡£
+    * @~chinese å°†è¦ç»‘å®šåŠ¨ç”»çš„éª¨éª¼ã€‚
     * @return @~english Binded armature animation.
-    * @~chinese ÒÑ°ó¶¨µÄ¹Ç÷À¶¯»­¡£
+    * @~chinese å·²ç»‘å®šçš„éª¨éª¼åŠ¨ç”»ã€‚
     */
     static ArmatureAnimation *create(Armature *armature);
 public:
@@ -91,9 +91,9 @@ public:
 
     /**
     * @~english Init with a Armature.
-    * @~chinese Ê¹ÓÃÒ»Ì×¹Ç÷À½øĞĞ³õÊ¼»¯¡£
+    * @~chinese ä½¿ç”¨ä¸€å¥—éª¨éª¼è¿›è¡Œåˆå§‹åŒ–ã€‚
     * @param armature  @~english The Armature ArmatureAnimation will bind to.
-    * @~chinese ½«Òª°ó¶¨¶¯»­µÄ¹Ç÷À¡£
+    * @~chinese å°†è¦ç»‘å®šåŠ¨ç”»çš„éª¨éª¼ã€‚
     */
     virtual bool init(Armature *armature);
 
@@ -104,39 +104,39 @@ public:
 
     /**
     * @~english Scale animation play speed.
-    * @~chinese Ëõ·Å¶¯»­²¥·ÅËÙ¶È¡£
+    * @~chinese ç¼©æ”¾åŠ¨ç”»æ’­æ”¾é€Ÿåº¦ã€‚
     * @param speedScale @~english Scale value.
-    * @~chinese ¶¯»­²¥·ÅËÙ¶ÈËõ·ÅÖµ¡£
+    * @~chinese åŠ¨ç”»æ’­æ”¾é€Ÿåº¦ç¼©æ”¾å€¼ã€‚
     */
     virtual void setSpeedScale(float speedScale);
 
     /**
     * @~english Get animation play speed scale.
-    * @~chinese »ñÈ¡¶¯»­²¥·ÅËÙ¶ÈËõ·ÅÖµ¡£
+    * @~chinese è·å–åŠ¨ç”»æ’­æ”¾é€Ÿåº¦ç¼©æ”¾å€¼ã€‚
     * @return @~english Scale value.
-    * @~chinese ¶¯»­²¥·ÅËÙ¶ÈËõ·ÅÖµ¡£
+    * @~chinese åŠ¨ç”»æ’­æ”¾é€Ÿåº¦ç¼©æ”¾å€¼ã€‚
     */
     virtual float getSpeedScale() const;
 
     using ProcessBase::play;
     /**
     * @~english Play animation by animation name.
-    * @~chinese ¸ù¾İ¶¯»­Ãû³Æ²¥·Å¶¯»­¡£
+    * @~chinese æ ¹æ®åŠ¨ç”»åç§°æ’­æ”¾åŠ¨ç”»ã€‚
     * @param  animationName  @~english The animation name you want to play
-    * @~chinese Òª²¥·ÅµÄ¶¯»­Ãû³Æ¡£
+    * @~chinese è¦æ’­æ”¾çš„åŠ¨ç”»åç§°ã€‚
     * @param  durationTo @~english The frames between two animation changing-over.
     *         It's meaning is changing to this animation need how many frames
     *         -1 : use the value from MovementData get from flash design panel
-    * @~chinese Á½¸ö¶¯»­ÇĞ»»Ê±µÄĞèÒªµÄÖ¡Êı¡£ÒâÎ¶×ÅÇĞ»»µ½¸Ã¶¯»­Ê±ĞèÒª¶àÉÙÖ¡¡£
-    *    -1£ºÊ¹ÓÃFlashµÄÉè¼ÆÃæ°åÖĞMovementDataÖĞµÄÖµ
+    * @~chinese ä¸¤ä¸ªåŠ¨ç”»åˆ‡æ¢æ—¶çš„éœ€è¦çš„å¸§æ•°ã€‚æ„å‘³ç€åˆ‡æ¢åˆ°è¯¥åŠ¨ç”»æ—¶éœ€è¦å¤šå°‘å¸§ã€‚
+    *    -1ï¼šä½¿ç”¨Flashçš„è®¾è®¡é¢æ¿ä¸­MovementDataä¸­çš„å€¼
     * @param  loop @~english  Whether the animation is loop
     *         loop < 0 : use the value from MovementData get from flash design panel
     *         loop = 0 : this animation is not loop
     *         loop > 0 : this animation is loop
-    * @~chinese ¶¯»­ÊÇ·ñÑ­»·¡£
-    *         loop < 0 : Ê¹ÓÃFlashµÄÉè¼ÆÃæ°åÖĞMovementDataÖĞµÄÖµ
-    *         loop = 0 : ²»Ñ­»·
-    *         loop > 0 : Ñ­»·
+    * @~chinese åŠ¨ç”»æ˜¯å¦å¾ªç¯ã€‚
+    *         loop < 0 : ä½¿ç”¨Flashçš„è®¾è®¡é¢æ¿ä¸­MovementDataä¸­çš„å€¼
+    *         loop = 0 : ä¸å¾ªç¯
+    *         loop > 0 : å¾ªç¯
     */
     virtual void play(const std::string& animationName, int durationTo = -1,  int loop = -1);
 
@@ -145,33 +145,33 @@ public:
 
     /**
     * @~english Play animation by index, the other param is the same to `play`.
-    * @~chinese ¸ù¾İÖ¡Ë÷Òı²¥·Å¶¯»­£¬ÆäÓà²ÎÊıº¬Òå¼û`play`¡£
+    * @~chinese æ ¹æ®å¸§ç´¢å¼•æ’­æ”¾åŠ¨ç”»ï¼Œå…¶ä½™å‚æ•°å«ä¹‰è§`play`ã€‚
     * @param  animationIndex  @~english the animation index you want to play.
-    * @~chinese Òª²¥·ÅµÄ¶¯»­ÆğÊ¼Ö¡Ë÷Òı¡£
+    * @~chinese è¦æ’­æ”¾çš„åŠ¨ç”»èµ·å§‹å¸§ç´¢å¼•ã€‚
     */
     virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
     /**
     * @~english Update movementList and play animation, the other param is the same to `play`.
-    * @~chinese Ë¢ĞÂ¶¯»­ÁĞ±í²¢²¥·Å¶¯»­£¬ÆäÓà²ÎÊıº¬Òå¼û`play`¡£
+    * @~chinese åˆ·æ–°åŠ¨ç”»åˆ—è¡¨å¹¶æ’­æ”¾åŠ¨ç”»ï¼Œå…¶ä½™å‚æ•°å«ä¹‰è§`play`ã€‚
     * @param movementNames @~english New movement names.
-    * @~chinese ĞÂµÄ¶¯»­ÁĞ±íÃû³Æ¼¯ºÏ¡£
+    * @~chinese æ–°çš„åŠ¨ç”»åˆ—è¡¨åç§°é›†åˆã€‚
     */
     virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
 
     /**
     * @~english Update movementList and play animation, the other param is the same to `play`.
-    * @~chinese Ë¢ĞÂ¶¯»­ÁĞ±í²¢²¥·Å¶¯»­£¬ÆäÓà²ÎÊıº¬Òå¼û`play`¡£
+    * @~chinese åˆ·æ–°åŠ¨ç”»åˆ—è¡¨å¹¶æ’­æ”¾åŠ¨ç”»ï¼Œå…¶ä½™å‚æ•°å«ä¹‰è§`play`ã€‚
     * @param movementIndexes @~english New movement indexes.
-    * @~chinese ĞÂµÄ¶¯»­ÁĞ±íË÷Òı¼¯ºÏ¡£
+    * @~chinese æ–°çš„åŠ¨ç”»åˆ—è¡¨ç´¢å¼•é›†åˆã€‚
     */
     virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
      * @~english Go to specified frame and play current movement.
      * You need first switch to the movement you want to play, then call this function.
-     * @~chinese Ìø×ªÖÁÖ¸¶¨µÄÖ¡²¢´Ó¸ÃÖ¡¿ªÊ¼²¥·Åµ±Ç°¶¯×÷¡£
-     *  ĞèÒªÏÈÇĞ»»ÖÁÒª²¥·ÅµÄ¶¯×÷£¬ÔÙµ÷ÓÃ¸Ãº¯Êı¡£
+     * @~chinese è·³è½¬è‡³æŒ‡å®šçš„å¸§å¹¶ä»è¯¥å¸§å¼€å§‹æ’­æ”¾å½“å‰åŠ¨ä½œã€‚
+     *  éœ€è¦å…ˆåˆ‡æ¢è‡³è¦æ’­æ”¾çš„åŠ¨ä½œï¼Œå†è°ƒç”¨è¯¥å‡½æ•°ã€‚
      * 
      * example : 
      *@code
@@ -182,15 +182,15 @@ public:
      *           gotoAndPlay(15);
      *@endcode
      * @param frameIndex @~english Index of frame.
-     * @~chinese ÒªÌø×ªµÄÖ¡Ë÷Òı¡£
+     * @~chinese è¦è·³è½¬çš„å¸§ç´¢å¼•ã€‚
      */
     virtual void gotoAndPlay(int frameIndex);
 
     /**
      * @~english Go to specified frame and pause current movement.
-     * @~chinese Ìø×ªÖÁÖ¸¶¨µÄÖ¡²¢ÔİÍ£µ±Ç°¶¯×÷¡£
+     * @~chinese è·³è½¬è‡³æŒ‡å®šçš„å¸§å¹¶æš‚åœå½“å‰åŠ¨ä½œã€‚
      * @param frameIndex @~english Index of frame.
-     * @~chinese ÒªÌø×ªµÄÖ¡Ë÷Òı¡£
+     * @~chinese è¦è·³è½¬çš„å¸§ç´¢å¼•ã€‚
      */
     virtual void gotoAndPause(int frameIndex);
 
@@ -200,9 +200,9 @@ public:
 
     /**
     * @~english Get movement count.
-    * @~chinese »ñµÃ¶¯×÷ÊıÁ¿¡£
+    * @~chinese è·å¾—åŠ¨ä½œæ•°é‡ã€‚
     * @return @~english Movement count.
-    * @~chinese ¶¯×÷ÊıÁ¿¡£
+    * @~chinese åŠ¨ä½œæ•°é‡ã€‚
     */
     ssize_t getMovementCount() const;
 
@@ -210,9 +210,9 @@ public:
 
     /**
      * @~english Get current movementID
-     * @~chinese »ñµÃµ±Ç°¶¯×÷ID
+     * @~chinese è·å¾—å½“å‰åŠ¨ä½œID
      * @return @~english The name of current movement
-     * @~chinese »ñµÃµ±Ç°¶¯×÷Ãû³Æ
+     * @~chinese è·å¾—å½“å‰åŠ¨ä½œåç§°
      */
     std::string getCurrentMovementID() const;
 
@@ -224,26 +224,26 @@ public:
     /**
     * @~english Set armature's movement event callback function.
     * To disconnect this event, just `setMovementEventCallFunc(nullptr, nullptr)`;
-    * @~chinese ÉèÖÃ¹Ç÷ÀµÄ¶¯×÷ÊÂ¼ş»Øµ÷º¯Êı£¬ Òª¶Ô¸ÃÊÂ¼şÈ¡Ïû¹ØÁª£¬Çëµ÷ÓÃ`setMovementEventCallFunc(nullptr, nullptr);`
+    * @~chinese è®¾ç½®éª¨éª¼çš„åŠ¨ä½œäº‹ä»¶å›è°ƒå‡½æ•°ï¼Œ è¦å¯¹è¯¥äº‹ä»¶å–æ¶ˆå…³è”ï¼Œè¯·è°ƒç”¨`setMovementEventCallFunc(nullptr, nullptr);`
     * @param frameIndex @~english Movement event callback function.
-    * @~chinese ¶¯×÷ÊÂ¼ş»Øµ÷º¯Êı¡£
+    * @~chinese åŠ¨ä½œäº‹ä»¶å›è°ƒå‡½æ•°ã€‚
     */
     void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
 
     /**
     * @~english Set armature's frame event callback function.
     * To disconnect this event, just `setFrameEventCallFunc(nullptr, nullptr)`;
-    * @~chinese ÉèÖÃ¹Ç÷ÀµÄÖ¡ÊÂ¼ş»Øµ÷º¯Êı£¬ Òª¶Ô¸ÃÊÂ¼şÈ¡Ïû¹ØÁª£¬Çëµ÷ÓÃ`setFrameEventCallFunc(nullptr, nullptr);`
+    * @~chinese è®¾ç½®éª¨éª¼çš„å¸§äº‹ä»¶å›è°ƒå‡½æ•°ï¼Œ è¦å¯¹è¯¥äº‹ä»¶å–æ¶ˆå…³è”ï¼Œè¯·è°ƒç”¨`setFrameEventCallFunc(nullptr, nullptr);`
     * @param frameIndex @~english Frame event callback function.
-    * @~chinese Ö¡ÊÂ¼ş»Øµ÷º¯Êı¡£
+    * @~chinese å¸§äº‹ä»¶å›è°ƒå‡½æ•°ã€‚
     */
     void setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener);
 
     /**
     * @~english Set animation data.
-    * @~chinese ÉèÖÃ¶¯»­Êı¾İ¡£
+    * @~chinese è®¾ç½®åŠ¨ç”»æ•°æ®ã€‚
     * @param data @~english Animation data.
-    * @~chinese ¶¯»­Êı¾İ¡£
+    * @~chinese åŠ¨ç”»æ•°æ®ã€‚
     */
     virtual void setAnimationData(AnimationData *data) 
     {
@@ -257,18 +257,18 @@ public:
 
     /**
     * @~english Get animation data.
-    * @~chinese »ñÈ¡¶¯»­Êı¾İ¡£
+    * @~chinese è·å–åŠ¨ç”»æ•°æ®ã€‚
     * @return @~english Animation data.
-    * @~chinese ¶¯»­Êı¾İ¡£
+    * @~chinese åŠ¨ç”»æ•°æ®ã€‚
     */
     virtual AnimationData *getAnimationData() const { return _animationData; }
 
 
     /** 
      * @~english Returns a user assigned Object. Similar to userData, but instead of holding a void* it holds an object
-     * @~chinese ·µ»ØÓÃ»§·ÖÅäµÄ¶ÔÏó£¬ÀàËÆÓÚuserData£¬µ«²¢·Çvoid*¶øÊÇÒ»¸ö¶ÔÏó¡£
+     * @~chinese è¿”å›ç”¨æˆ·åˆ†é…çš„å¯¹è±¡ï¼Œç±»ä¼¼äºuserDataï¼Œä½†å¹¶évoid*è€Œæ˜¯ä¸€ä¸ªå¯¹è±¡ã€‚
      * @return @~english A user assigned Object
-     * @~chinese ÓÃ»§·ÖÅäµÄ¶ÔÏó¡£
+     * @~chinese ç”¨æˆ·åˆ†é…çš„å¯¹è±¡ã€‚
      * @js NA
      * @lua NA
      */
@@ -283,12 +283,12 @@ public:
      * @~english Returns a user assigned Object. Similar to UserData, but instead of holding a void* it holds an object.
      * The UserObject will be retained once in this method, and the previous UserObject (if existed) will be relese.
      * The UserObject will be released in Node's destructure.
-     * @~chinese ·µ»ØÓÃ»§·ÖÅäµÄ¶ÔÏó£¬ÀàËÆÓÚuserData£¬µ«²¢·Çvoid*¶øÊÇÒ»¸ö¶ÔÏó¡£
-     * ÓÃ»§¶ÔÏó½«ÔÚ¸Ã·½·¨ÖĞ±£ÁôÒ»´Î£¬Í¬Ê±ÉÏÒ»¸öÓÃ»§¶ÔÏó£¨Èç¹û´æÔÚ£©½«±»ÊÍ·Å¡£
-     * ÓÃ»§¶ÔÏó»áÔÚ½ÚµãµÄÎö¹¹º¯ÊıÖĞÊÍ·Å¡£
+     * @~chinese è¿”å›ç”¨æˆ·åˆ†é…çš„å¯¹è±¡ï¼Œç±»ä¼¼äºuserDataï¼Œä½†å¹¶évoid*è€Œæ˜¯ä¸€ä¸ªå¯¹è±¡ã€‚
+     * ç”¨æˆ·å¯¹è±¡å°†åœ¨è¯¥æ–¹æ³•ä¸­ä¿ç•™ä¸€æ¬¡ï¼ŒåŒæ—¶ä¸Šä¸€ä¸ªç”¨æˆ·å¯¹è±¡ï¼ˆå¦‚æœå­˜åœ¨ï¼‰å°†è¢«é‡Šæ”¾ã€‚
+     * ç”¨æˆ·å¯¹è±¡ä¼šåœ¨èŠ‚ç‚¹çš„ææ„å‡½æ•°ä¸­é‡Šæ”¾ã€‚
      *
      * @param userObject  @~english  A user assigned Object
-     * @~chinese ·µ»ØÓÃ»§·ÖÅäµÄ¶ÔÏó¡£
+     * @~chinese è¿”å›ç”¨æˆ·åˆ†é…çš„å¯¹è±¡ã€‚
      */
     virtual void setUserObject(Ref *userObject);
 protected:

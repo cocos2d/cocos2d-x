@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -42,11 +42,11 @@ struct CC_STUDIO_DLL stExpCocoAttribDesc
 public:
     /**
     * @~english Get type name.
-    * @~chinese »ñÈ¡ÀàĞÍÃû³Æ.
+    * @~chinese è·å–ç±»å‹åç§°.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english type name @~chinese ÀàĞÍÃû³Æ
+    * @return @~english type name @~chinese ç±»å‹åç§°
     */
     char* GetName(CocoLoader*	pCoco);
 };
@@ -59,27 +59,27 @@ struct CC_STUDIO_DLL stExpCocoObjectDesc
 public:
     /**
     * @~english Get type name.
-    * @~chinese »ñÈ¡ÀàĞÍÃû³Æ.
+    * @~chinese è·å–ç±»å‹åç§°.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english type name @~chinese ÀàĞÍÃû³Æ
+    * @return @~english type name @~chinese ç±»å‹åç§°
     */
     char*	GetName(CocoLoader*	pCoco);
     /**
     * @~english Get attribute count.
-    * @~chinese »ñÈ¡ÊôĞÔÊıÁ¿.
+    * @~chinese è·å–å±æ€§æ•°é‡.
     *
-    * @return @~english count of attributes @~chinese ÊôĞÔ×ÜÊı
+    * @return @~english count of attributes @~chinese å±æ€§æ€»æ•°
     */
     int		GetAttribNum();
     /**
     * @~english Get attributes description array.
-    * @~chinese »ñÈ¡ÊôĞÔÃèÊöÊı×é.
+    * @~chinese è·å–å±æ€§æè¿°æ•°ç»„.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english attributes description array @~chinese ÊôĞÔÃèÊöÊı×é
+    * @return @~english attributes description array @~chinese å±æ€§æè¿°æ•°ç»„
     */
     stExpCocoAttribDesc*	GetAttribDescArray(CocoLoader*	pCoco);
 };
@@ -95,45 +95,45 @@ public:
 public:
     /**
     * @~english Get json value type.
-    * @~chinese »ñÈ¡jsonÖµµÃÀàĞÍ.
+    * @~chinese è·å–jsonå€¼å¾—ç±»å‹.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english json value type @~chinese jsonÖµÀàĞÍ
+    * @return @~english json value type @~chinese jsonå€¼ç±»å‹
     */
     rapidjson::Type		GetType(CocoLoader*	pCoco);
     /**
     * @~english Get type name.
-    * @~chinese »ñÈ¡ÀàĞÍÃû³Æ.
+    * @~chinese è·å–ç±»å‹åç§°.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english type name @~chinese ÀàĞÍÃû³Æ
+    * @return @~english type name @~chinese ç±»å‹åç§°
     */
     char*				GetName(CocoLoader*	pCoco);
     /**
     * @~english Get type name.
-    * @~chinese »ñÈ¡ÀàĞÍÃû³Æ.
+    * @~chinese è·å–ç±»å‹åç§°.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english type name @~chinese ÀàĞÍÃû³Æ
+    * @return @~english type name @~chinese ç±»å‹åç§°
     */
     char*				GetValue(CocoLoader*	pCoco);
     /**
     * @~english Get child array.
-    * @~chinese »ñÈ¡Êı×éÖĞ×Ó½ÚµãÊıÁ¿.
+    * @~chinese è·å–æ•°ç»„ä¸­å­èŠ‚ç‚¹æ•°é‡.
     *
-    * @return @~english count of child @~chinese ×Ó½ÚµãÊıÁ¿
+    * @return @~english count of child @~chinese å­èŠ‚ç‚¹æ•°é‡
     */
     int					GetChildNum();
     /**
     * @~english Get child array.
-    * @~chinese »ñÈ¡×Ó½ÚµãÁĞ±í.
+    * @~chinese è·å–å­èŠ‚ç‚¹åˆ—è¡¨.
     *
-    * @parame pCoco  @~english property loader @~chinese ÊôĞÔ¼ÓÔØÆ÷
+    * @parame pCoco  @~english property loader @~chinese å±æ€§åŠ è½½å™¨
     *
-    * @return @~english child array @~chinese ×Ó½ÚµãÁĞ±í
+    * @return @~english child array @~chinese å­èŠ‚ç‚¹åˆ—è¡¨
     */
     stExpCocoNode*		GetChildArray(CocoLoader*	pCoco);
 public:
@@ -167,53 +167,53 @@ public:
 
     /**
     * @~english Read binary data buffer.
-    * @~chinese ¶ÁÈ¡¶ş½øÖÆ»º´æ.
+    * @~chinese è¯»å–äºŒè¿›åˆ¶ç¼“å­˜.
     *
-    * @parame pBinBuff  @~english binary buffer @~chinese ¶ş½øÖÆ»º´æ
+    * @parame pBinBuff  @~english binary buffer @~chinese äºŒè¿›åˆ¶ç¼“å­˜
     *
-    * @return @~english if load successed @~chinese ÊÇ·ñ¶ÁÈ¡³É¹¦
+    * @return @~english if load successed @~chinese æ˜¯å¦è¯»å–æˆåŠŸ
     */
     bool					ReadCocoBinBuff(char* pBinBuff);
     /**
     * @~english Get the header of description data.
-    * @~chinese »ñÈ¡ÃèÊöÊı¾İÍ·.
+    * @~chinese è·å–æè¿°æ•°æ®å¤´.
     *
-    * @return @~english header buffer pointer @~chinese Í·Êı¾İ»º³åÇøÖ¸Õë
+    * @return @~english header buffer pointer @~chinese å¤´æ•°æ®ç¼“å†²åŒºæŒ‡é’ˆ
     */
     stCocoFileHeader*		GetFileHeader(){ return m_pFileHeader; }
     /**
     * @~english Get the root node.
-    * @~chinese »ñÈ¡¸ù½Úµã.
+    * @~chinese è·å–æ ¹èŠ‚ç‚¹.
     *
-    * @return @~english root node @~chinese ¸ù½Úµã
+    * @return @~english root node @~chinese æ ¹èŠ‚ç‚¹
     */
     stExpCocoNode*			GetRootCocoNode(){ return	m_pRootNode; }
     /**
     * @~english Get attributes description array.
-    * @~chinese »ñÈ¡ÊôĞÔÃèÊöÊı×é.
+    * @~chinese è·å–å±æ€§æè¿°æ•°ç»„.
     *
-    * @return @~english attributes description array @~chinese ÊôĞÔÃèÊöÊı×é
+    * @return @~english attributes description array @~chinese å±æ€§æè¿°æ•°ç»„
     */
     stExpCocoObjectDesc*	GetCocoObjectDescArray(){ return	m_pObjectDescArray; }
     /**
     * @~english Get attribute description buffer address
-    * @~chinese »ñÈ¡ÊôĞÔÃèÊö»º³åÇøµØÖ·
+    * @~chinese è·å–å±æ€§æè¿°ç¼“å†²åŒºåœ°å€
     *
-    * @return @~english buffer address @~chinese »º³åÇøµØÖ·
+    * @return @~english buffer address @~chinese ç¼“å†²åŒºåœ°å€
     */
     char*					GetMemoryAddr_AttribDesc();
     /**
     * @~english Get node address
-    * @~chinese »ñÈ¡½ÚµãÖ¸Õë
+    * @~chinese è·å–èŠ‚ç‚¹æŒ‡é’ˆ
     *
-    * @return @~english buffer address @~chinese »º³åÇøµØÖ·
+    * @return @~english buffer address @~chinese ç¼“å†²åŒºåœ°å€
     */
     char*					GetMemoryAddr_CocoNode();
     /**
     * @~english Get string buffer address
-    * @~chinese »ñÈ¡×Ö·û´®»º³åÇøµØÖ·
+    * @~chinese è·å–å­—ç¬¦ä¸²ç¼“å†²åŒºåœ°å€
     *
-    * @return @~english buffer address @~chinese »º³åÇøµØÖ·
+    * @return @~english buffer address @~chinese ç¼“å†²åŒºåœ°å€
     */
     char*					GetMemoryAddr_String();
     

@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -43,19 +43,19 @@ class CC_STUDIO_DLL Bone : public cocos2d::Node
 public:
     /**
     * @~english Allocates and initializes a bone.
-    * @~chinese ·ÖÅä²¢³õÊ¼»¯Ò»¸ö¹ÇÍ·¶ÔÏó¡£
+    * @~chinese åˆ†é…å¹¶åˆå§‹åŒ–ä¸€ä¸ªéª¨å¤´å¯¹è±¡ã€‚
     * @return @~english An initialized bone which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ¹ÇÍ·¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„éª¨å¤´å¯¹è±¡ã€‚
     */
     static Bone *create();
 
     /**
     * @~english Allocates and initializes a bone.
-    * @~chinese ·ÖÅä²¢³õÊ¼»¯Ò»¸ö¹ÇÍ·¶ÔÏó¡£
+    * @~chinese åˆ†é…å¹¶åˆå§‹åŒ–ä¸€ä¸ªéª¨å¤´å¯¹è±¡ã€‚
     * @param name  @~english If name is not null, then set name to the bone's name.
-    * @~chinese Èç¹û·Ç¿Õ£¬Ôò½«¸Ã²ÎÊıÉèÎª¹ÇÍ·µÄÃû³Æ¡£
+    * @~chinese å¦‚æœéç©ºï¼Œåˆ™å°†è¯¥å‚æ•°è®¾ä¸ºéª¨å¤´çš„åç§°ã€‚
     * @return @~english An initialized bone which is marked as "autorelease".
-    * @~chinese Ò»¸ö³õÊ¼»¯²¢ÇÒÉèÖÃÎª×Ô¶¯ÊÍ·ÅµÄ¹ÇÍ·¶ÔÏó¡£
+    * @~chinese ä¸€ä¸ªåˆå§‹åŒ–å¹¶ä¸”è®¾ç½®ä¸ºè‡ªåŠ¨é‡Šæ”¾çš„éª¨å¤´å¯¹è±¡ã€‚
     */
     static Bone *create(const std::string& name);
 
@@ -73,9 +73,9 @@ public:
 
     /**
      * @~english Initializes a Bone with the specified name.
-     * @~chinese ÒÔÖ¸¶¨µÄÃû³Æ³õÊ¼»¯Ò»¶Î¹ÇÍ·¡£
+     * @~chinese ä»¥æŒ‡å®šçš„åç§°åˆå§‹åŒ–ä¸€æ®µéª¨å¤´ã€‚
      * @param name @~english Bone's name.
-     * @~chinese ¹ÇÍ·µÄÃû³Æ¡£
+     * @~chinese éª¨å¤´çš„åç§°ã€‚
      */
     virtual bool init(const std::string& name);
 
@@ -106,9 +106,9 @@ public:
 
     /**
      * @~english Add a child to this bone, and it will let this child call `setParent(Bone *parent)` function to set self to it's parent
-     * @~chinese Îªµ±Ç°¹ÇÍ·Ìí¼ÓÒ»¶Î×Ó¹ÇÍ·£¬Í¬Ê±¸Ã×Ó¹ÇÍ·»áµ÷ÓÃ`setParent(Bone *parent)`À´½«µ±Ç°¹ÇÍ·ÉèÎªÆä¸¸¹ÇÍ·¡£
+     * @~chinese ä¸ºå½“å‰éª¨å¤´æ·»åŠ ä¸€æ®µå­éª¨å¤´ï¼ŒåŒæ—¶è¯¥å­éª¨å¤´ä¼šè°ƒç”¨`setParent(Bone *parent)`æ¥å°†å½“å‰éª¨å¤´è®¾ä¸ºå…¶çˆ¶éª¨å¤´ã€‚
      * @param child @~english The child you want to add
-     * @~chinese ÒªÌí¼ÓµÄ×Ó¹ÇÍ·¡£
+     * @~chinese è¦æ·»åŠ çš„å­éª¨å¤´ã€‚
      */
     void addChildBone(Bone *child);
 
@@ -116,36 +116,36 @@ public:
      * @~english Set parent bone.
      * If parent is NUll, then also remove this bone from armature.
      * It will not set the Armature, if you want to add the bone to a Armature, you should use `Armature::addBone(Bone *bone, const char* parentName)`.
-     * @~chinese ÉèÖÃ¸¸¹ÇÍ·¡£Èç¹û¸¸¹ÇÍ·²ÎÊıÎªNULL£¬Ôò½«µ±Ç°¹ÇÍ·´Ó¹Ç÷ÀÖĞÒÆ³ı¡£
-     * ±¾º¯Êı²»»á¶Ô¹Ç÷À½øĞĞÉèÖÃ¸Ä±ä£¬Èç¹ûÒª½«¹ÇÍ·¼ÓÈë¹Ç÷À£¬Ó¦µ÷ÓÃ`Armature::addBone(Bone *bone, const char* parentName)`¡£
+     * @~chinese è®¾ç½®çˆ¶éª¨å¤´ã€‚å¦‚æœçˆ¶éª¨å¤´å‚æ•°ä¸ºNULLï¼Œåˆ™å°†å½“å‰éª¨å¤´ä»éª¨éª¼ä¸­ç§»é™¤ã€‚
+     * æœ¬å‡½æ•°ä¸ä¼šå¯¹éª¨éª¼è¿›è¡Œè®¾ç½®æ”¹å˜ï¼Œå¦‚æœè¦å°†éª¨å¤´åŠ å…¥éª¨éª¼ï¼Œåº”è°ƒç”¨`Armature::addBone(Bone *bone, const char* parentName)`ã€‚
      * @param parent @~english the parent bone.
      *          nullptr : remove this bone from armature
-     * @~chinese ¸¸¹ÇÍ·£¬ÎªnullptrÊ±£º½«µ±Ç°¹ÇÍ·´Ó¹Ç÷ÀÖĞÒÆ³ı¡£
+     * @~chinese çˆ¶éª¨å¤´ï¼Œä¸ºnullptræ—¶ï¼šå°†å½“å‰éª¨å¤´ä»éª¨éª¼ä¸­ç§»é™¤ã€‚
      */
     void setParentBone(Bone *parent);
 
     /**
      * @~english Get parent bone
-     * @~chinese »ñÈ¡¸¸¹ÇÍ·
+     * @~chinese è·å–çˆ¶éª¨å¤´
      * @return @~english parent bone
-     * @~chinese ¸¸¹ÇÍ·
+     * @~chinese çˆ¶éª¨å¤´
      */
     Bone *getParentBone();
 
     using Node::removeFromParent;
     /**
      * @~english Remove itself from its parent.
-     * @~chinese ½«µ±Ç°¹ÇÍ·´Ó¸¸¹ÇÍ·ÖĞÒÆ³ı
+     * @~chinese å°†å½“å‰éª¨å¤´ä»çˆ¶éª¨å¤´ä¸­ç§»é™¤
      * @param recursion @~english   whether remove recursionly
-     * @~chinese ÊÇ·ñµİ¹éÒÆ³ı
+     * @~chinese æ˜¯å¦é€’å½’ç§»é™¤
      */
     void removeFromParent(bool recursion);
 
     /**
      * @~english Removes a child Bone
-     * @~chinese ½«µ±Ç°¹ÇÍ·´Ó¸¸¹ÇÍ·ÖĞÒÆ³ı
+     * @~chinese å°†å½“å‰éª¨å¤´ä»çˆ¶éª¨å¤´ä¸­ç§»é™¤
      * @param bone @~english  the bone you want to remove
-     * @~chinese ÒªÒÆ³ıµÄ¹ÇÍ·
+     * @~chinese è¦ç§»é™¤çš„éª¨å¤´
      */
     void removeChildBone(Bone *bone, bool recursion);
 
@@ -157,7 +157,7 @@ public:
 
     /**
     * @~english Update zorder
-    * @~chinese ¸üĞÂZÅÅĞò
+    * @~chinese æ›´æ–°Zæ’åº
     */
     void updateZOrder();
 
@@ -165,33 +165,33 @@ public:
 
     /**
     * @~english Get tween of bone.
-    * @~chinese »ñÈ¡²¹¼äÊôĞÔ¡£
+    * @~chinese è·å–è¡¥é—´å±æ€§ã€‚
     * @return @~english Tween.
-    * @~chinese ²¹¼ä
+    * @~chinese è¡¥é—´
     */
     Tween *getTween();
 
     /*
      * @~english Set whether or not the bone's transform property changed. if true, the bone will update the transform.
-     * @~chinese ÉèÖÃ¹ÇÍ·µÄ±äĞÎÊôĞÔÊÇ·ñÒÑ¸Ä±ä£¬Èç¹ûÎªÕæ£¬¹ÇÍ·½«»á¸üĞÂ±äĞÎ¡£
+     * @~chinese è®¾ç½®éª¨å¤´çš„å˜å½¢å±æ€§æ˜¯å¦å·²æ”¹å˜ï¼Œå¦‚æœä¸ºçœŸï¼Œéª¨å¤´å°†ä¼šæ›´æ–°å˜å½¢ã€‚
      * @param dirty @~english  Is the transform property changed.
-     * @~chinese ÊÇ·ñ¸Ä±ä¡£
+     * @~chinese æ˜¯å¦æ”¹å˜ã€‚
      */
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
 
     /*
     * @~english Whether or not the bone's transform property changed.
-    * @~chinese ¹ÇÍ·µÄ±äĞÎÊôĞÔÊÇ·ñÒÑ¸Ä±ä£¬Èç¹ûÎªÕæ£¬¹ÇÍ·½«»á¸üĞÂ±äĞÎ¡£
+    * @~chinese éª¨å¤´çš„å˜å½¢å±æ€§æ˜¯å¦å·²æ”¹å˜ï¼Œå¦‚æœä¸ºçœŸï¼Œéª¨å¤´å°†ä¼šæ›´æ–°å˜å½¢ã€‚
     * @return @~english Is dirty.
-    * @~chinese ÊÇ·ñÒÑ¸Ä±ä
+    * @~chinese æ˜¯å¦å·²æ”¹å˜
     */
     virtual bool isTransformDirty() { return _boneTransformDirty; }
 
     /**
     * @~english Returns the armature affine transform matrix. The matrix is in Pixels.
-    * @~chinese ·µ»Ø½Úµãµ½¹Ç÷À×ø±ê·ÂÉä±ä»»¾ØÕó¡£¾ØÕóµ¥Î»ÊÇÏñËØ¡£
+    * @~chinese è¿”å›èŠ‚ç‚¹åˆ°éª¨éª¼åæ ‡ä»¿å°„å˜æ¢çŸ©é˜µã€‚çŸ©é˜µå•ä½æ˜¯åƒç´ ã€‚
     * @return @~english Transformation matrix, in pixels. 
-    * @~chinese ½Úµãµ½¹Ç÷À×ø±ê·ÂÉä±ä»»¾ØÕó¡£
+    * @~chinese èŠ‚ç‚¹åˆ°éª¨éª¼åæ ‡ä»¿å°„å˜æ¢çŸ©é˜µã€‚
     */
     virtual cocos2d::Mat4 getNodeToArmatureTransform() const;
     virtual cocos2d::Mat4 getNodeToWorldTransform() const override;
@@ -203,9 +203,9 @@ public:
 
     /*
      * @~english Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
-     * @~chinese »ñÈ¡¹ÇÍ·µÄÅö×²Ìå£¬Êı×éÖĞµÄ¶ÔÏóÎªÅö×²Ìå¡£
+     * @~chinese è·å–éª¨å¤´çš„ç¢°æ’ä½“ï¼Œæ•°ç»„ä¸­çš„å¯¹è±¡ä¸ºç¢°æ’ä½“ã€‚
      * @return @~english The ColliderBody list in this bone.
-     * @~chinese ¹ÇÍ·µÄÅö×²Ìå¡£
+     * @~chinese éª¨å¤´çš„ç¢°æ’ä½“ã€‚
      */
     virtual ColliderDetector* getColliderDetector() const;
 
@@ -216,70 +216,70 @@ public:
 
     /*
     * @~english Set bone data.
-    * @~chinese ÉèÖÃ¹ÇÍ·Êı¾İ¡£
+    * @~chinese è®¾ç½®éª¨å¤´æ•°æ®ã€‚
     * @param boneData @~english Bone data.
-    * @~chinese ¹ÇÍ·Êı¾İ¡£
+    * @~chinese éª¨å¤´æ•°æ®ã€‚
     */
     virtual void setBoneData(BoneData *boneData);
     /*
     * @~english Get bone data.
-    * @~chinese »ñÈ¡¹ÇÍ·Êı¾İ¡£
+    * @~chinese è·å–éª¨å¤´æ•°æ®ã€‚
     * @return @~english Bone data.
-    * @~chinese ¹ÇÍ·Êı¾İ¡£
+    * @~chinese éª¨å¤´æ•°æ®ã€‚
     */
     virtual BoneData *getBoneData() const;
 
     /*
     * @~english Set armature.
-    * @~chinese ÉèÖÃ¹Ç÷À¡£
+    * @~chinese è®¾ç½®éª¨éª¼ã€‚
     * @param boneData @~english Armature.
-    * @~chinese ¹Ç÷À¡£
+    * @~chinese éª¨éª¼ã€‚
     */
     virtual void setArmature(Armature *armature);
     /*
     * @~english Get armature.
-    * @~chinese »ñÈ¡¹Ç÷À¡£
+    * @~chinese è·å–éª¨éª¼ã€‚
     * @return @~english Armature.
-    * @~chinese ¹Ç÷À¡£
+    * @~chinese éª¨éª¼ã€‚
     */
     virtual Armature *getArmature() const;
 
     /*
     * @~english Set child armature.
-    * @~chinese ÉèÖÃ×Ó¹Ç÷À¡£
+    * @~chinese è®¾ç½®å­éª¨éª¼ã€‚
     * @param boneData @~english Child armature.
-    * @~chinese ×Ó¹Ç÷À¡£
+    * @~chinese å­éª¨éª¼ã€‚
     */
     virtual void setChildArmature(Armature *childArmature);
     /*
     * @~english Get childe armature.
-    * @~chinese »ñÈ¡×Ó¹Ç÷À¡£
+    * @~chinese è·å–å­éª¨éª¼ã€‚
     * @return @~english Child armature.
-    * @~chinese ×Ó¹Ç÷À¡£
+    * @~chinese å­éª¨éª¼ã€‚
     */
     virtual Armature *getChildArmature() const;
 
     /*
     * @~english Get display manager.
-    * @~chinese »ñÈ¡ÏÔÊ¾¹ÜÀíÆ÷¡£
+    * @~chinese è·å–æ˜¾ç¤ºç®¡ç†å™¨ã€‚
     * @return @~english Display manager.
-    * @~chinese ÏÔÊ¾¹ÜÀíÆ÷¡£
+    * @~chinese æ˜¾ç¤ºç®¡ç†å™¨ã€‚
     */
     virtual DisplayManager *getDisplayManager() const { return _displayManager; }
 
     /**
      * @lua NA
      * @~english Set whether or not ignore the movement bone data.
-     * @~chinese ÉèÖÃÊÇ·ñºöÂÔ»î¶¯¹ÇÍ·µÄÊı¾İ¡£
+     * @~chinese è®¾ç½®æ˜¯å¦å¿½ç•¥æ´»åŠ¨éª¨å¤´çš„æ•°æ®ã€‚
      * @param ignore @~english  Is ignore.
-     * @~chinese ÊÇ·ñºöÂÔ¡£
+     * @~chinese æ˜¯å¦å¿½ç•¥ã€‚
      */
     virtual void setIgnoreMovementBoneData(bool ignore) { _ignoreMovementBoneData = ignore; }
     /*
     * @~english Whether or not ignore the movement bone data.
-    * @~chinese ÊÇ·ñºöÂÔ»î¶¯¹ÇÍ·µÄÊı¾İ¡£
+    * @~chinese æ˜¯å¦å¿½ç•¥æ´»åŠ¨éª¨å¤´çš„æ•°æ®ã€‚
     * @return @~english Is ignore.
-    * @~chinese ÊÇ·ñºöÂÔ¡£
+    * @~chinese æ˜¯å¦å¿½ç•¥ã€‚
     */
     virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
 
@@ -292,47 +292,47 @@ public:
     
     /*
      * @~english Set blend function.
-     * @~chinese ÉèÖÃ»ìºÏº¯Êı¡£
+     * @~chinese è®¾ç½®æ··åˆå‡½æ•°ã€‚
      * @param blendFunc @~english Blend function.
-     * @~chinese »ìºÏº¯Êı¡£
+     * @~chinese æ··åˆå‡½æ•°ã€‚
      */
     virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
     /*
     * @~english Get blend function.
-    * @~chinese »ñÈ¡»ìºÏº¯Êı¡£
+    * @~chinese è·å–æ··åˆå‡½æ•°ã€‚
     * @return @~english Blend function.
-    * @~chinese »ìºÏº¯Êı¡£
+    * @~chinese æ··åˆå‡½æ•°ã€‚
     */
     virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
 
     /*
      * @~english Set if blend function is dirty.
-     * @~chinese ÉèÖÃ»ìºÏº¯ÊıÊÇ·ñÎªdirty¡£
+     * @~chinese è®¾ç½®æ··åˆå‡½æ•°æ˜¯å¦ä¸ºdirtyã€‚
      * @param dirty @~english Is dirty.
-     * @~chinese ÊÇ·ñdirty¡£
+     * @~chinese æ˜¯å¦dirtyã€‚
      */
     virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
     /*
     * @~english Get is blend function dirty.
-    * @~chinese »ñÈ¡»ìºÏº¯ÊıÊÇ·ñÎªÔà¡£
+    * @~chinese è·å–æ··åˆå‡½æ•°æ˜¯å¦ä¸ºè„ã€‚
     * @return @~english Is dirty.
-    * @~chinese ÊÇ·ñÔà¡£
+    * @~chinese æ˜¯å¦è„ã€‚
     */
     virtual bool isBlendDirty(void) { return _blendDirty; }
 
     /*
     * @~english Get tween frame data.
-    * @~chinese »ñÈ¡²¹¼ä¹Ø¼üÖ¡Êı¾İ¡£
+    * @~chinese è·å–è¡¥é—´å…³é”®å¸§æ•°æ®ã€‚
     * @return @~english Tween frame data.
-    * @~chinese ²¹¼ä¹Ø¼üÖ¡Êı¾İ¡£
+    * @~chinese è¡¥é—´å…³é”®å¸§æ•°æ®ã€‚
     */
     virtual FrameData *getTweenData() const { return _tweenData; }
 
     /*
     * @~english Get world info.
-    * @~chinese »ñÈ¡ÊÀ½çĞÅÏ¢¡£
+    * @~chinese è·å–ä¸–ç•Œä¿¡æ¯ã€‚
     * @return @~english World info.
-    * @~chinese ÊÀ½çĞÅÏ¢¡£
+    * @~chinese ä¸–ç•Œä¿¡æ¯ã€‚
     */
     virtual BaseData *getWorldInfo() const { return _worldInfo; }
 protected:

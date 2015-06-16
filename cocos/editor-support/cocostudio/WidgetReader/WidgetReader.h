@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -47,91 +47,91 @@ namespace cocostudio
 
         /**
         * @~english Gets the static instance of WidgetReader.
-        * @~chinese »ñÈ¡WidgetReaderµÄ¾²Ì¬ÊµÀı.
+        * @~chinese è·å–WidgetReaderçš„é™æ€å®ä¾‹.
         */
         static WidgetReader* getInstance();
         /**
         * @~english Destroy WidgetReader static instance.
-        * @~chinese ÊÍ·ÅWidgetReaderµÄ¾²Ì¬ÊµÀı.
+        * @~chinese é‡Šæ”¾WidgetReaderçš„é™æ€å®ä¾‹.
         */
         static void destroyInstance();
 
         /**
-        * @deprecated @~english Use method destroyInstance() instead @~chinese ÒÑÆúÓÃ£¬ÇëÊ¹ÓÃdestroyInstance()
+        * @deprecated @~english Use method destroyInstance() instead @~chinese å·²å¼ƒç”¨ï¼Œè¯·ä½¿ç”¨destroyInstance()
         */
         CC_DEPRECATED_ATTRIBUTE static void purge();
 
         /**
         * @~english Set properties to widget from a json description object
-        * @~chinese ¸ù¾İjsonÃèÊöÉèÖÃUI×é¼şÊôĞÔ
+        * @~chinese æ ¹æ®jsonæè¿°è®¾ç½®UIç»„ä»¶å±æ€§
         *
-        * @parame widget    @~english widget to be config @~chinese ÒªÉèÖÃµÄ×é¼ş
+        * @parame widget    @~english widget to be config @~chinese è¦è®¾ç½®çš„ç»„ä»¶
         *
-        * @parame options   @~english json object contain the description of properties @~chinese °üº¬ÊôĞÔĞÅÏ¢µÄjson¶ÔÏó
+        * @parame options   @~english json object contain the description of properties @~chinese åŒ…å«å±æ€§ä¿¡æ¯çš„jsonå¯¹è±¡
         */
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                 const rapidjson::Value& options);
 
         /**
         * @~english Set color properties to widget from a json description object
-        * @~chinese ¸ù¾İjsonÃèÊöÉèÖÃUI×é¼şÑÕÉ«ÊôĞÔ
+        * @~chinese æ ¹æ®jsonæè¿°è®¾ç½®UIç»„ä»¶é¢œè‰²å±æ€§
         *
-        * @parame widget    @~english widget to be config @~chinese ÒªÉèÖÃµÄ×é¼ş
+        * @parame widget    @~english widget to be config @~chinese è¦è®¾ç½®çš„ç»„ä»¶
         *
-        * @parame options   @~english json object contain the description of properties @~chinese °üº¬ÊôĞÔĞÅÏ¢µÄjson¶ÔÏó
+        * @parame options   @~english json object contain the description of properties @~chinese åŒ…å«å±æ€§ä¿¡æ¯çš„jsonå¯¹è±¡
         */
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
 
         /**
         * @~english Set properties to widget from a binary description data
-        * @~chinese ¸ù¾İ¶ş½øÖÆÃèÊöÊı¾İÉèÖÃUI×é¼şÊôĞÔ
+        * @~chinese æ ¹æ®äºŒè¿›åˆ¶æè¿°æ•°æ®è®¾ç½®UIç»„ä»¶å±æ€§
         *
-        * @parame widget    @~english widget to be config @~chinese ÒªÉèÖÃµÄ×é¼ş
+        * @parame widget    @~english widget to be config @~chinese è¦è®¾ç½®çš„ç»„ä»¶
         *
-        * @parame cocoLoader  @~english property loader @~chinese ÊôĞÔ¶ÁÈ¡Æ÷
+        * @parame cocoLoader  @~english property loader @~chinese å±æ€§è¯»å–å™¨
         *
-        * @parame pCocoNode   @~english custorm nodes @~chinese ÓÃ»§×Ô¶¨ÒåÀ©Õ¹½Úµã
+        * @parame pCocoNode   @~english custorm nodes @~chinese ç”¨æˆ·è‡ªå®šä¹‰æ‰©å±•èŠ‚ç‚¹
         */
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
         
         /**
         * @~english Serialize flat buffers with XML object.
-        * @~chinese ¸ù¾İxml¶ÔÏóĞòÁĞ»¯flat buffer.
+        * @~chinese æ ¹æ®xmlå¯¹è±¡åºåˆ—åŒ–flat buffer.
         *
-        * @parame objectData   @~english XML description object @~chinese xmlÃèÊö¶ÔÏó
+        * @parame objectData   @~english XML description object @~chinese xmlæè¿°å¯¹è±¡
         *
-        * @parame builder      @~english flat buffer builder @~chinese flat buffer¹¹ÔìÆ÷
+        * @parame builder      @~english flat buffer builder @~chinese flat bufferæ„é€ å™¨
         *
-        * @return @~english flat buffer data structure @~chinese flat buffer½á¹¹Êı¾İ
+        * @return @~english flat buffer data structure @~chinese flat bufferç»“æ„æ•°æ®
         */
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
         /**
         * @~english Set properties to node from a flat buffer description table
-        * @~chinese ¸ù¾İflat bufferÊı¾İÉèÖÃ½ÚµãÊôĞÔ
+        * @~chinese æ ¹æ®flat bufferæ•°æ®è®¾ç½®èŠ‚ç‚¹å±æ€§
         *
-        * @parame node          @~english node to be config @~chinese ĞèÒªÉèÖÃµÄ½Úµã
+        * @parame node          @~english node to be config @~chinese éœ€è¦è®¾ç½®çš„èŠ‚ç‚¹
         *
-        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese °üº¬ÊôĞÔÃèÊöÊı¾İµÄflat buffer
+        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese åŒ…å«å±æ€§æè¿°æ•°æ®çš„flat buffer
         */
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
         /**
         * @~english Set properties of layout from a flat buffer description table
-        * @~chinese ¸ù¾İflat bufferÊı¾İÉèÖÃ²¼¾ÖÊôĞÔ
+        * @~chinese æ ¹æ®flat bufferæ•°æ®è®¾ç½®å¸ƒå±€å±æ€§
         *
-        * @parame node          @~english node to be config @~chinese ĞèÒªÉèÖÃµÄ½Úµã
+        * @parame node          @~english node to be config @~chinese éœ€è¦è®¾ç½®çš„èŠ‚ç‚¹
         *
-        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese °üº¬ÊôĞÔÃèÊöÊı¾İµÄflat buffer
+        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese åŒ…å«å±æ€§æè¿°æ•°æ®çš„flat buffer
         */
         void setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
         /**
         * @~english Create node with a flat buffer table contains description of properties.
-        * @~chinese ¸ù¾İflat bufferÃèÊöÊı¾İ´´½¨½Úµã
+        * @~chinese æ ¹æ®flat bufferæè¿°æ•°æ®åˆ›å»ºèŠ‚ç‚¹
         *
-        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese °üº¬ÊôĞÔÃèÊöÊı¾İµÄflat buffer
+        * @parame widgetOptions @~english flat buffer table contain the description of properties @~chinese åŒ…å«å±æ€§æè¿°æ•°æ®çš„flat buffer
         *
-        * @return @~english created node @~chinese ´´½¨µÄ½Úµã
+        * @return @~english created node @~chinese åˆ›å»ºçš„èŠ‚ç‚¹
         */
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* widgetOptions);
 

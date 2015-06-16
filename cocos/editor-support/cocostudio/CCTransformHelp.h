@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -33,7 +33,7 @@ namespace cocostudio {
 
 /*
  * @~english Use to calculate the matrix of node from parent node.
- * @~chinese ÓÃÀ´¼ÆËã½Úµã×Ô¸¸½ÚµãµÄ±ä»»¾ØÕó¡£
+ * @~chinese ç”¨æ¥è®¡ç®—èŠ‚ç‚¹è‡ªçˆ¶èŠ‚ç‚¹çš„å˜æ¢çŸ©é˜µã€‚
  * @js NA
  * @lua NA
  */
@@ -44,95 +44,95 @@ public:
 
     /**
     * @~english Transform a node by the matrix from parent node.
-    * @~chinese Í¨¹ı¸¸½ÚµãµÄ¾ØÕó±ä»»×Ó½Úµã¡£
+    * @~chinese é€šè¿‡çˆ¶èŠ‚ç‚¹çš„çŸ©é˜µå˜æ¢å­èŠ‚ç‚¹ã€‚
     * @param node @~english Child node.
-    * @~chinese ×Ó½Úµã¡£
+    * @~chinese å­èŠ‚ç‚¹ã€‚
     * @param parentNode @~english Parent node.
-    * @~chinese ¸¸½Úµã¡£
+    * @~chinese çˆ¶èŠ‚ç‚¹ã€‚
     */
     static void transformFromParent(BaseData &node, const BaseData &parentNode);
     /**
     * @~english Transform parent node by the matrix from node.
-    * @~chinese Í¨¹ı×Ó½ÚµãµÄ¾ØÕó±ä»»¸¸½Úµã¡£
+    * @~chinese é€šè¿‡å­èŠ‚ç‚¹çš„çŸ©é˜µå˜æ¢çˆ¶èŠ‚ç‚¹ã€‚
     * @param node @~english Child node.
-    * @~chinese ×Ó½Úµã¡£
+    * @~chinese å­èŠ‚ç‚¹ã€‚
     * @param parentNode @~english Parent node.
-    * @~chinese ¸¸½Úµã¡£
+    * @~chinese çˆ¶èŠ‚ç‚¹ã€‚
     */
     static void transformToParent(BaseData &node, const BaseData &parentNode);
 
     /**
     * @~english Transform a node by the matrix from parent node without scale.
-    * @~chinese Í¨¹ı¸¸½ÚµãµÄ¾ØÕó±ä»»×Ó½Úµã£¬ÎŞËõ·Å¡£
+    * @~chinese é€šè¿‡çˆ¶èŠ‚ç‚¹çš„çŸ©é˜µå˜æ¢å­èŠ‚ç‚¹ï¼Œæ— ç¼©æ”¾ã€‚
     * @param node @~english Child node.
-    * @~chinese ×Ó½Úµã¡£
+    * @~chinese å­èŠ‚ç‚¹ã€‚
     * @param parentNode @~english Parent node.
-    * @~chinese ¸¸½Úµã¡£
+    * @~chinese çˆ¶èŠ‚ç‚¹ã€‚
     */
     static void transformFromParentWithoutScale(BaseData &node, const BaseData &parentNode);
     /**
     * @~english Transform parent node by the matrix from node without scale.
-    * @~chinese Í¨¹ı×Ó½ÚµãµÄ¾ØÕó±ä»»¸¸½Úµã£¬ÎŞËõ·Å¡£
+    * @~chinese é€šè¿‡å­èŠ‚ç‚¹çš„çŸ©é˜µå˜æ¢çˆ¶èŠ‚ç‚¹ï¼Œæ— ç¼©æ”¾ã€‚
     * @param node @~english Child node.
-    * @~chinese ×Ó½Úµã¡£
+    * @~chinese å­èŠ‚ç‚¹ã€‚
     * @param parentNode @~english Parent node.
-    * @~chinese ¸¸½Úµã¡£
+    * @~chinese çˆ¶èŠ‚ç‚¹ã€‚
     */
     static void transformToParentWithoutScale(BaseData &node, const BaseData &parentNode);
 
     /**
     * @~english Get matrix from node attribute.
-    * @~chinese »ñÈ¡½ÚµãÊôĞÔ¾ØÕó¡£
+    * @~chinese è·å–èŠ‚ç‚¹å±æ€§çŸ©é˜µã€‚
     * @param _node @~english Node.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     * @param _matrix @~english Matrix.
-    * @~chinese ¾ØÕó¡£
+    * @~chinese çŸ©é˜µã€‚
     */
     static void nodeToMatrix(const BaseData &_node, cocos2d::AffineTransform &_matrix);
     /**
     * @~english Get matrix from node attribute.
-    * @~chinese »ñÈ¡½ÚµãÊôĞÔ¾ØÕó¡£
+    * @~chinese è·å–èŠ‚ç‚¹å±æ€§çŸ©é˜µã€‚
     * @param node @~english Node.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     * @param matrix @~english Matrix.
-    * @~chinese ¾ØÕó¡£
+    * @~chinese çŸ©é˜µã€‚
     */
     static void nodeToMatrix(const BaseData &node, cocos2d::Mat4 &matrix);
     /**
     * @~english Set node attribute by matrix.
-    * @~chinese Í¨¹ı¾ØÕóÉèÖÃ½ÚµãÊôĞÔ¡£
+    * @~chinese é€šè¿‡çŸ©é˜µè®¾ç½®èŠ‚ç‚¹å±æ€§ã€‚
     * @param _matrix @~english Matrix.
-    * @~chinese ¾ØÕó¡£
+    * @~chinese çŸ©é˜µã€‚
     * @param _node @~english Node.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     */
     static void matrixToNode(const cocos2d::AffineTransform &_matrix, BaseData &_node);
     /**
     * @~english Set node attribute by matrix.
-    * @~chinese Í¨¹ı¾ØÕóÉèÖÃ½ÚµãÊôĞÔ¡£
+    * @~chinese é€šè¿‡çŸ©é˜µè®¾ç½®èŠ‚ç‚¹å±æ€§ã€‚
     * @param _matrix @~english Matrix.
-    * @~chinese ¾ØÕó¡£
+    * @~chinese çŸ©é˜µã€‚
     * @param _node @~english Node.
-    * @~chinese ½Úµã¡£
+    * @~chinese èŠ‚ç‚¹ã€‚
     */
     static void matrixToNode(const cocos2d::Mat4 &_matrix, BaseData &_node);
 
     /**
     * @~english Change target data by concat source data.
-    * @~chinese Í¨¹ıÏà¼ÓÉèÖÃÄ¿±êÊı¾İ¡£
+    * @~chinese é€šè¿‡ç›¸åŠ è®¾ç½®ç›®æ ‡æ•°æ®ã€‚
     * @param target @~english Target data.
-    * @~chinese Ä¿±êÊı¾İ¡£
+    * @~chinese ç›®æ ‡æ•°æ®ã€‚
     * @param source @~english Source data.
-    * @~chinese Ô´Êı¾İ¡£
+    * @~chinese æºæ•°æ®ã€‚
     */
     static void nodeConcat(BaseData &target, BaseData &source);
     /**
     * @~english Change target data ay sub source data.
-    * @~chinese Í¨¹ıÏà¼õÉèÖÃÄ¿±êÊı¾İ¡£
+    * @~chinese é€šè¿‡ç›¸å‡è®¾ç½®ç›®æ ‡æ•°æ®ã€‚
     * @param target @~english Target data.
-    * @~chinese Ä¿±êÊı¾İ¡£
+    * @~chinese ç›®æ ‡æ•°æ®ã€‚
     * @param source @~english Source data.
-    * @~chinese Ô´Êı¾İ¡£
+    * @~chinese æºæ•°æ®ã€‚
     */
     static void nodeSub(BaseData &target, BaseData &source);
 public:

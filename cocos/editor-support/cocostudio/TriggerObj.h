@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -37,60 +37,60 @@ namespace cocostudio {
 /** 
  * @class BaseTriggerCondition
  * @brief @~english condition base class.
- * @~chinese ´¥·¢Æ÷Ìõ¼ş»ùÀà¡£
+ * @~chinese è§¦å‘å™¨æ¡ä»¶åŸºç±»ã€‚
 */
 class CC_STUDIO_DLL BaseTriggerCondition : public cocos2d::Ref
 {
 protected:
     /**
      * @brief @~english BaseTriggerCondition constructor.
-     * @~chinese ´¥·¢Æ÷Ìõ¼ş»ùÀà¹¹Ôìº¯Êı¡£
+     * @~chinese è§¦å‘å™¨æ¡ä»¶åŸºç±»æ„é€ å‡½æ•°ã€‚
      */
     BaseTriggerCondition(void);
 public:
     /**
      * @brief @~english BaseTriggerCondition destructor.
-     * @~chinese ´¥·¢Æ÷Ìõ¼ş»ùÀàÎö¹¹º¯Êı¡£
+     * @~chinese è§¦å‘å™¨æ¡ä»¶åŸºç±»ææ„å‡½æ•°ã€‚
      */
     virtual ~BaseTriggerCondition(void);
 
     /**
      * @brief @~english initialize a BaseTriggerCondition.
-     * @~chinese ³õÊ¼»¯´¥·¢Æ÷Ìõ¼ş¡£
+     * @~chinese åˆå§‹åŒ–è§¦å‘å™¨æ¡ä»¶ã€‚
      * @return @~english true Initialize successfully false failed to initialize.
-     * @~chinese true ³õÊ¼»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true åˆå§‹åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool init();
 
     /**
      * @brief @~english Detect condition of trigger.
-     * @~chinese ´¥·¢Æ÷Ìõ¼şÅĞ¶Ï¡£
+     * @~chinese è§¦å‘å™¨æ¡ä»¶åˆ¤æ–­ã€‚
      * @return @~english true Detect successfully false failed to Detect.
-     * @~chinese true Ìõ¼ş³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true æ¡ä»¶æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool detect();
 
     /**
      * @brief @~english Deserialization json data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®ã€‚
      * @param val @~english Json object point.
-     * @~chinese json¶ÔÏóÖ¸Õë¡£
+     * @~chinese jsonå¯¹è±¡æŒ‡é’ˆã€‚
      */
     virtual void serialize(const rapidjson::Value &val);
 
     /**
      * @brief @~english Deserialization binary data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.xµ¼³öµÄ¶ş½øÖÆÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.xå¯¼å‡ºçš„äºŒè¿›åˆ¶æ•°æ®ã€‚
      * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      */
     virtual void serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode);
 
     /**
      * @brief @~english it is called when the trigger condition is removed , you can override this method to implement free the resources here.
-     * @~chinese ´¥·¢Æ÷±»ÒÆ³ıµÄÊ±ºò±»µ÷ÓÃ£¬¿ÉÒÔÖØÔØÕâ¸ö·½·¨°Ñ×ÊÔ´ÊÍ·Åµ½ÕâÀï¡£
+     * @~chinese è§¦å‘å™¨è¢«ç§»é™¤çš„æ—¶å€™è¢«è°ƒç”¨ï¼Œå¯ä»¥é‡è½½è¿™ä¸ªæ–¹æ³•æŠŠèµ„æºé‡Šæ”¾åˆ°è¿™é‡Œã€‚
      */
     virtual void removeAll();
 };
@@ -98,58 +98,58 @@ public:
 /** 
  * @class BaseTriggerAction
  * @brief @~english Action base class.
- * @~chinese ´¥·¢Æ÷¶¯×÷»ùÀà¡£
+ * @~chinese è§¦å‘å™¨åŠ¨ä½œåŸºç±»ã€‚
 */
 class CC_STUDIO_DLL BaseTriggerAction : public cocos2d::Ref
 {
 protected:
     /**
      * @brief @~english BaseTriggerAction constructor.
-     * @~chinese ´¥·¢Æ÷¶¯×÷»ùÀà¹¹Ôìº¯Êı¡£
+     * @~chinese è§¦å‘å™¨åŠ¨ä½œåŸºç±»æ„é€ å‡½æ•°ã€‚
      */
     BaseTriggerAction(void);
 public:
     /**
      * @brief @~english BaseTriggerAction destructor.
-     * @~chinese ´¥·¢Æ÷¶¯×÷»ùÀàÎö¹¹º¯Êı¡£
+     * @~chinese è§¦å‘å™¨åŠ¨ä½œåŸºç±»ææ„å‡½æ•°ã€‚
      */
     virtual ~BaseTriggerAction(void);
 
     /**
      * @brief @~english initialize a BaseTriggerAction.
-     * @~chinese ³õÊ¼»¯´¥·¢Æ÷¶¯×÷¡£
+     * @~chinese åˆå§‹åŒ–è§¦å‘å™¨åŠ¨ä½œã€‚
      * @return @~english true Initialize successfully false failed to initialize.
-     * @~chinese true ³õÊ¼»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true åˆå§‹åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool init();
 
     /**
      * @brief @~english BaseTriggerAction execution.
-     * @~chinese ´¥·¢Æ÷¶¯×÷Ö´ĞĞ¡£
+     * @~chinese è§¦å‘å™¨åŠ¨ä½œæ‰§è¡Œã€‚
      */
     virtual void done();
 
     /**
      * @brief @~english Deserialization json data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®ã€‚
      * @param val @~english Json object point.
-     * @~chinese json¶ÔÏóÖ¸Õë¡£
+     * @~chinese jsonå¯¹è±¡æŒ‡é’ˆã€‚
      */
     virtual void serialize(const rapidjson::Value &val);
 
     /**
      * @brief @~english Deserialization binary data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.xµ¼³öµÄ¶ş½øÖÆÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.xå¯¼å‡ºçš„äºŒè¿›åˆ¶æ•°æ®ã€‚
      * @param cocoLoader @~english Loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param cocoNode @~english Loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      */
     virtual void serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode);
 
     /**
      * @brief @~english It is called when the trigger action is removed , you can override this method to implement free the resources here.
-     * @~chinese ´¥·¢Æ÷±»ÒÆ³ıµÄÊ±ºò±»µ÷ÓÃ£¬¿ÉÒÔÖØÔØÕâ¸ö·½·¨°Ñ×ÊÔ´ÊÍ·Åµ½ÕâÀï¡£
+     * @~chinese è§¦å‘å™¨è¢«ç§»é™¤çš„æ—¶å€™è¢«è°ƒç”¨ï¼Œå¯ä»¥é‡è½½è¿™ä¸ªæ–¹æ³•æŠŠèµ„æºé‡Šæ”¾åˆ°è¿™é‡Œã€‚
      */
     virtual void removeAll();
 };
@@ -157,90 +157,90 @@ public:
 /** 
  * @class TriggerObj
  * @brief @~english Trigger class.
- * @~chinese ´¥·¢Æ÷¡£
+ * @~chinese è§¦å‘å™¨ã€‚
 */
 class CC_STUDIO_DLL TriggerObj : public cocos2d::Ref
 {
 public:
     /**
      * @brief @~english TriggerObj constructor.
-     * @~chinese TriggerObj¹¹Ôìº¯Êı¡£
+     * @~chinese TriggerObjæ„é€ å‡½æ•°ã€‚
      */
     TriggerObj(void);
 
     /**
      * @brief @~english TriggerObj destructor.
-     * @~chinese TriggerObjÎö¹¹º¯Êı¡£
+     * @~chinese TriggerObjææ„å‡½æ•°ã€‚
      */
     virtual ~TriggerObj(void);
 
     /**
      * @brief @~english initialize a TriggerObj.
-     * @~chinese ³õÊ¼»¯´¥·¢Æ÷¡£
+     * @~chinese åˆå§‹åŒ–è§¦å‘å™¨ã€‚
      * @return @~english true initialize successfully false failed to initialize.
-     * @~chinese true ³õÊ¼»¯³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true åˆå§‹åŒ–æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool init();
 
     /**
      * @brief @~english Allocates and initializes a create.
-     * @~chinese ·ÖÅä²¢ÇÒ³õÊ¼»¯´¥·¢Æ÷¡£
+     * @~chinese åˆ†é…å¹¶ä¸”åˆå§‹åŒ–è§¦å‘å™¨ã€‚
      * @return @~english A initialized TriggerObj which is marked as "autorelease".
-     * @~chinese Ò»¸ö³õÊ¼»¯µÄ´¥·¢Æ÷£¬¸Ã½Úµã»á×Ô¶¯±»±ê¼ÇÎª¡°autorelease¡±(×Ô¶¯ÊÍ·Å)¡£
+     * @~chinese ä¸€ä¸ªåˆå§‹åŒ–çš„è§¦å‘å™¨ï¼Œè¯¥èŠ‚ç‚¹ä¼šè‡ªåŠ¨è¢«æ ‡è®°ä¸ºâ€œautoreleaseâ€(è‡ªåŠ¨é‡Šæ”¾)ã€‚
      */
     static TriggerObj* create(void);
 
     /**
      * @brief @~english Detect condition of trigger.
-     * @~chinese ´¥·¢Æ÷Ìõ¼şÅĞ¶Ï¡£
+     * @~chinese è§¦å‘å™¨æ¡ä»¶åˆ¤æ–­ã€‚
      * @return @~english true Detect successfully false failed to Detect.
-     * @~chinese true Ìõ¼ş³É¹¦£¬·ñÔòfalse¡£
+     * @~chinese true æ¡ä»¶æˆåŠŸï¼Œå¦åˆ™falseã€‚
      */
     virtual bool detect();
 
     /**
      * @brief @~english trigger execution.
-     * @~chinese ´¥·¢Æ÷¶¯×÷Ö´ĞĞ¡£
+     * @~chinese è§¦å‘å™¨åŠ¨ä½œæ‰§è¡Œã€‚
      */
     virtual void done();
 
     /**
      * @brief @~english it is called when the trigger is removed , you can override this method to implement free the resources here.
-     * @~chinese ´¥·¢Æ÷±»ÒÆ³ıµÄÊ±ºò±»µ÷ÓÃ£¬¿ÉÒÔÖØÔØÕâ¸ö·½·¨°Ñ×ÊÔ´ÊÍ·Åµ½ÕâÀï¡£
+     * @~chinese è§¦å‘å™¨è¢«ç§»é™¤çš„æ—¶å€™è¢«è°ƒç”¨ï¼Œå¯ä»¥é‡è½½è¿™ä¸ªæ–¹æ³•æŠŠèµ„æºé‡Šæ”¾åˆ°è¿™é‡Œã€‚
      */
     virtual void removeAll();
 
     /**
      * @brief @~english Deserialization json data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.x ³¡¾°±à¼­Æ÷µ¼³öµÄÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.x åœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„æ•°æ®ã€‚
      * @param val @~english json object point.
-     * @~chinese json¶ÔÏóÖ¸Õë¡£
+     * @~chinese jsonå¯¹è±¡æŒ‡é’ˆã€‚
      */
     virtual void serialize(const rapidjson::Value &val);
 
     /**
      * @brief @~english Deserialization binary data of cocos studio 1.x scene editor.
-     * @~chinese ·´ĞòÁĞ»¯cocos studio 1.xµ¼³öµÄ¶ş½øÖÆÊı¾İ¡£
+     * @~chinese ååºåˆ—åŒ–cocos studio 1.xå¯¼å‡ºçš„äºŒè¿›åˆ¶æ•°æ®ã€‚
      * @param cocoLoader @~english loader scene object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İ¼ÓÔØÆ÷¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®åŠ è½½å™¨å¯¹è±¡ã€‚
      * @param cocoNode @~english loader node object of binary data exported by scene reader in cocos studio 1.x.
-     * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³ö¶ş½øÖÆÊı¾İnode¶ÔÏó¡£
+     * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºäºŒè¿›åˆ¶æ•°æ®nodeå¯¹è±¡ã€‚
      */
     virtual void serialize(cocostudio::CocoLoader *cocoLoader, cocostudio::stExpCocoNode *cocoNode);
 
     /**
      * @brief @~english get unique id of trigger.
-     * @~chinese »ñÈ¡´¥·¢Æ÷Î¨Ò»id¡£
+     * @~chinese è·å–è§¦å‘å™¨å”¯ä¸€idã€‚
      * @return @~english unique id of trigger.
-     * @~chinese ´¥·¢Æ÷Î¨Ò»id¡£
+     * @~chinese è§¦å‘å™¨å”¯ä¸€idã€‚
      */
     unsigned int getId();
 
     /**  
      * @brief @~english enables or disables the trigger.
-     * @~chinese ÆôÓÃ»ò½ûÓÃ´¥·¢Æ÷¡£
+     * @~chinese å¯ç”¨æˆ–ç¦ç”¨è§¦å‘å™¨ã€‚
      * @param enabled @~english true enable the trigger, false disabled the trigger. 
-     * @~chinese true£¬ÆôÓÃ´¥·¢Æ÷ false£¬½ûÓÃ´¥·¢Æ÷¡£
+     * @~chinese trueï¼Œå¯ç”¨è§¦å‘å™¨ falseï¼Œç¦ç”¨è§¦å‘å™¨ã€‚
      */
     void setEnabled(bool enabled);
   

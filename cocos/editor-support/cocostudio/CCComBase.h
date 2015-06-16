@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 /** 
  * @brief @~english Declare the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese ¹¤³§ÀàObjectFactory×¢²áº¯ÊıÊµÏÖ£¬±»ÓÃÓÚ×é¼şÍ·ÎÄ¼ş£¬°Ñµ±Ç°×é¼şÀàÃû×¢²áµ½ObjectFactory£¬ÓÃÓÚ·´Éä´´½¨¶ÔÏó.
+ * @~chinese å·¥å‚ç±»ObjectFactoryæ³¨å†Œå‡½æ•°å®ç°ï¼Œè¢«ç”¨äºç»„ä»¶å¤´æ–‡ä»¶ï¼ŒæŠŠå½“å‰ç»„ä»¶ç±»åæ³¨å†Œåˆ°ObjectFactoryï¼Œç”¨äºåå°„åˆ›å»ºå¯¹è±¡.
 */
 #define DECLARE_CLASS_COMPONENT_INFO \
     public: \
@@ -42,7 +42,7 @@ THE SOFTWARE.
         
 /** 
  * @brief @~english Implement the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese ¹¤³§ÀàObjectFactory×¢²áº¯ÊıÉùÃ÷£¬±»ÓÃÓÚ×é¼şÔ´ÎÄ¼ş£¬°Ñµ±Ç°×é¼şÀàÃû×¢²áµ½ObjectFactory£¬ÓÃÓÚ·´Éä´´½¨¶ÔÏó.
+ * @~chinese å·¥å‚ç±»ObjectFactoryæ³¨å†Œå‡½æ•°å£°æ˜ï¼Œè¢«ç”¨äºç»„ä»¶æºæ–‡ä»¶ï¼ŒæŠŠå½“å‰ç»„ä»¶ç±»åæ³¨å†Œåˆ°ObjectFactoryï¼Œç”¨äºåå°„åˆ›å»ºå¯¹è±¡.
 */
 #define IMPLEMENT_CLASS_COMPONENT_INFO(className) \
         cocos2d::Ref* className::createInstance(void) \
@@ -53,7 +53,7 @@ THE SOFTWARE.
 
 /** 
  * @brief @~english Register the current component class name to ObjectFactory, for reflection to create objects.
- * @~chinese ÏÔÊ½½«µ±Ç°×é¼şÀàÃû×¢²áµ½ObjectFactory£¬ÓÃÓÚ·´Éä´´½¨¶ÔÏó.
+ * @~chinese æ˜¾å¼å°†å½“å‰ç»„ä»¶ç±»åæ³¨å†Œåˆ°ObjectFactoryï¼Œç”¨äºåå°„åˆ›å»ºå¯¹è±¡.
 */
 #define CREATE_CLASS_COMPONENT_INFO(className) \
         cocos2d::ObjectFactory::TInfo(#className, &className::createInstance)
@@ -61,9 +61,9 @@ THE SOFTWARE.
 /** 
  * @class SerData
  * @brief @~english Data of serialization and de-serialization.
- * @~chinese ĞòÁĞ»¯Êı¾İ½á¹¹.
+ * @~chinese åºåˆ—åŒ–æ•°æ®ç»“æ„.
  * @details @~english Binary data object of cocos studio 1.x Scene Editor export.
- * @~chinese cocos studio 1.x³¡¾°±à¼­Æ÷µ¼³öµÄ¶ş½øÖÆÊı¾İ.
+ * @~chinese cocos studio 1.xåœºæ™¯ç¼–è¾‘å™¨å¯¼å‡ºçš„äºŒè¿›åˆ¶æ•°æ®.
 */
 struct CC_STUDIO_DLL SerData
 {

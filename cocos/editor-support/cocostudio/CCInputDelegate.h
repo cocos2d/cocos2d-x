@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -42,9 +42,9 @@ namespace cocostudio {
 /** 
  * @class InputDelegate
  * @brief @~english InputDelegate.
- * @~chinese ÊäÈë´úÀí¡£
+ * @~chinese è¾“å…¥ä»£ç†ã€‚
  * @details @~english component input delegate include touch, accelerometer, keypad
- * @~chinese ×é¼şÊäÈë´úÀí£¬±»Âß¼­×é¼ş¼Ì³ĞÖØÔØ£¬´Ó¶ø·½±ãÂß¼­×é¼ş»ñÈ¡ÊäÈë¡£
+ * @~chinese ç»„ä»¶è¾“å…¥ä»£ç†ï¼Œè¢«é€»è¾‘ç»„ä»¶ç»§æ‰¿é‡è½½ï¼Œä»è€Œæ–¹ä¾¿é€»è¾‘ç»„ä»¶è·å–è¾“å…¥ã€‚
  *  @lua NA.
 */
 class CC_STUDIO_DLL InputDelegate
@@ -52,14 +52,14 @@ class CC_STUDIO_DLL InputDelegate
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @brief @~english InputDelegate constructor.
-     * @~chinese ÊäÈë´úÀí¹¹Ôìº¯Êı¡£
+     * @~chinese è¾“å…¥ä»£ç†æ„é€ å‡½æ•°ã€‚
      * @js ctor
      */
     InputDelegate(void);
 
     /**
      * @brief @~english InputDelegate destructor.
-     * @~chinese ÊäÈë´úÀíÎö¹¹º¯Êı¡£
+     * @~chinese è¾“å…¥ä»£ç†ææ„å‡½æ•°ã€‚
      * @js NA
      */
     virtual ~InputDelegate(void);
@@ -68,87 +68,87 @@ public:
 
     /** 
      * @brief @~english Whether or not it will receive Touch events.
-     * @~chinese ÊÇ·ñ½ÓÊÕ´¥ÃşÊÂ¼ş¡£
+     * @~chinese æ˜¯å¦æ¥æ”¶è§¦æ‘¸äº‹ä»¶ã€‚
      * @return @~english true receive touch events, false don't receive touch events.
-     * @~chinese true ½ÓÊÕ´¥ÃşÊÂ¼ş£¬false ²»½ÓÊÜ´¥ÃşÊ±¼ä¡£
+     * @~chinese true æ¥æ”¶è§¦æ‘¸äº‹ä»¶ï¼Œfalse ä¸æ¥å—è§¦æ‘¸æ—¶é—´ã€‚
     */
     virtual bool isTouchEnabled() const;
 
     /** 
      * @brief @~english Enable / disable touch events with this property.
-     * @~chinese µ÷ÓÃ¸Ã·½·¨À´ÆôÓÃ»òÕß½ûÓÃ´¥ÃşÊÂ¼ş¡£
+     * @~chinese è°ƒç”¨è¯¥æ–¹æ³•æ¥å¯ç”¨æˆ–è€…ç¦ç”¨è§¦æ‘¸äº‹ä»¶ã€‚
      * @param value @~english true enable touch events false disable touch events.
-     * @~chinese true ÆôÓÃ´¥ÃşÊÂ¼ş false ½ûÓÃ´¥ÃşÊÂ¼ş¡£
+     * @~chinese true å¯ç”¨è§¦æ‘¸äº‹ä»¶ false ç¦ç”¨è§¦æ‘¸äº‹ä»¶ã€‚
     */
     virtual void setTouchEnabled(bool value);
 
     /** 
      * @brief @~english Whether or not it will receive accelerometer events.
-     * @~chinese ÊÇ·ñ½ÓÊÕ¼ÓËÙ¼ÆÊÂ¼ş¡£
+     * @~chinese æ˜¯å¦æ¥æ”¶åŠ é€Ÿè®¡äº‹ä»¶ã€‚
      * @return @~english true receive accelerometer events, false don't receive accelerometer events.
-     * @~chinese true ½ÓÊÕ¼ÓËÙ¼ÆÊÂ¼ş£¬false ²»½ÓÊÜ¼ÓËÙ¼ÆÊÂ¼ş¡£
+     * @~chinese true æ¥æ”¶åŠ é€Ÿè®¡äº‹ä»¶ï¼Œfalse ä¸æ¥å—åŠ é€Ÿè®¡äº‹ä»¶ã€‚
     */
     virtual bool isAccelerometerEnabled() const;
 
     /** 
      * @brief @~english Enable / disable accelerometer events with this property.
-     * @~chinese µ÷ÓÃ¸Ã·½·¨À´ÆôÓÃ»òÕß½ûÓÃ¼ÓËÙ¼ÆÊÂ¼ş¡£
+     * @~chinese è°ƒç”¨è¯¥æ–¹æ³•æ¥å¯ç”¨æˆ–è€…ç¦ç”¨åŠ é€Ÿè®¡äº‹ä»¶ã€‚
      * @param value @~english true enable accelerometer events false disable accelerometer events.
-     * @~chinese true ÆôÓÃ¼ÓËÙ¼ÆÊÂ¼ş false ½ûÓÃ¼ÓËÙ¼ÆÊÂ¼ş¡£
+     * @~chinese true å¯ç”¨åŠ é€Ÿè®¡äº‹ä»¶ false ç¦ç”¨åŠ é€Ÿè®¡äº‹ä»¶ã€‚
     */
     virtual void setAccelerometerEnabled(bool value);
 
     /** 
      * @brief @~english Whether or not it will receive keyboard or keypad events.
-     * @~chinese ÊÇ·ñ½ÓÊÕ¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş¡£
+     * @~chinese æ˜¯å¦æ¥æ”¶é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶ã€‚
      * @return @~english true receive keyboard or keypad events, false don't receive keyboard or keypad events.
-     * @~chinese true ½ÓÊÕ¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş£¬false ²»½ÓÊÜ¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş¡£
+     * @~chinese true æ¥æ”¶é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶ï¼Œfalse ä¸æ¥å—é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶ã€‚
     */
     virtual bool isKeypadEnabled() const;
 
     /** 
      * @brief @~english Enable / disable keyboard or keypad events with this property.
-     * @~chinese µ÷ÓÃ¸Ã·½·¨À´ÆôÓÃ»òÕß½ûÓÃ¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş¡£
+     * @~chinese è°ƒç”¨è¯¥æ–¹æ³•æ¥å¯ç”¨æˆ–è€…ç¦ç”¨é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶ã€‚
      * @param value @~english true enable keyboard or keypad events false disable keyboard or keypad events.
-     * @~chinese true ÆôÓÃ¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş false ½ûÓÃ¼üÅÌ»òĞéÄâ¼üÅÌÊÂ¼ş¡£
+     * @~chinese true å¯ç”¨é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶ false ç¦ç”¨é”®ç›˜æˆ–è™šæ‹Ÿé”®ç›˜äº‹ä»¶ã€‚
     */
     virtual void setKeypadEnabled(bool value);
 
     /** 
      * @brief @~english Set dispatchMode with this property.
-     * @~chinese ÉèÖÃÏûÏ¢·Ö·¢·½Ê½¡£
+     * @~chinese è®¾ç½®æ¶ˆæ¯åˆ†å‘æ–¹å¼ã€‚
      * @param mode @~english Dispatch mode include all at once and one by one.
-     * @~chinese ÉèÖÃ·Ö·¢Ä£Ê½£¬ ¶àµã´¥ÃşºÍµ¥µã´¥Ãş¡£
+     * @~chinese è®¾ç½®åˆ†å‘æ¨¡å¼ï¼Œ å¤šç‚¹è§¦æ‘¸å’Œå•ç‚¹è§¦æ‘¸ã€‚
     */
     virtual void setTouchMode(cocos2d::Touch::DispatchMode mode);
 
     /** 
      * @brief @~english Get dispatch mode.
-     * @~chinese »ñÈ¡ÏûÏ¢·Ö·¢·½Ê½¡£
+     * @~chinese è·å–æ¶ˆæ¯åˆ†å‘æ–¹å¼ã€‚
      * @return @~english Return dispatch mode, all at once or one by one.
-     * @~chinese »ñÈ¡·Ö·¢Ä£Ê½£¬¶àµã´¥Ãş»òÕßµ¥µã´¥Ãş¡£
+     * @~chinese è·å–åˆ†å‘æ¨¡å¼ï¼Œå¤šç‚¹è§¦æ‘¸æˆ–è€…å•ç‚¹è§¦æ‘¸ã€‚
     */
     virtual cocos2d::Touch::DispatchMode getTouchMode() const;
 
     /**
      * @brief @~english Set receive touch priority with this property.
-     * @~chinese ÉèÖÃ´¥ÃşÊÂ¼ş½ÓÊÕÓÅÏÈ¼¶¡£
+     * @~chinese è®¾ç½®è§¦æ‘¸äº‹ä»¶æ¥æ”¶ä¼˜å…ˆçº§ã€‚
      * @param priority @~english Receive touch priority.
-     * @~chinese ´¥ÃşÊÂ¼ş½ÓÊÕÓÅÏÈ¼¶¡£
+     * @~chinese è§¦æ‘¸äº‹ä»¶æ¥æ”¶ä¼˜å…ˆçº§ã€‚
     */
     virtual void setTouchPriority(int priority);
 
     /**
      * @brief @~english Get receive touch priority with this property.
-     * @~chinese ÉèÖÃ´¥ÃşÊÂ¼ş½ÓÊÕÓÅÏÈ¼¶¡£
+     * @~chinese è®¾ç½®è§¦æ‘¸äº‹ä»¶æ¥æ”¶ä¼˜å…ˆçº§ã€‚
     */
     virtual int  getTouchPriority() const;
 
     /** 
      * @brief @~english Callback function for accelerate began.
-     * @~chinese ¼ÓËÙ¼Æ»Øµ÷º¯Êı
+     * @~chinese åŠ é€Ÿè®¡å›è°ƒå‡½æ•°
      * @param accelerationValue @~english Acceleration infomation.
-     * @~chinese ¼ÓËÙ¼ÆĞÅÏ¢¡£
+     * @~chinese åŠ é€Ÿè®¡ä¿¡æ¯ã€‚
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(cocos2d::Acceleration* accelerationValue) final { CC_UNUSED_PARAM(accelerationValue); };
@@ -203,124 +203,124 @@ public:
 
     /** 
      * @brief @~english Callback funtion for acceleration.
-     * @~chinese ¼ÓËÙ¼ÆÊÂ¼ş»Øµ÷º¯Êı¡£
+     * @~chinese åŠ é€Ÿè®¡äº‹ä»¶å›è°ƒå‡½æ•°ã€‚
      * @param acc @~english Acceleration information.
-     * @~chinese ¼ÓËÙ¼ÆĞÅÏ¢¡£
+     * @~chinese åŠ é€Ÿè®¡ä¿¡æ¯ã€‚
      * @param event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event) {};
 
     /**
      * @brief @~english Callback function for key pressed.
-     * @~chinese °´¼ü°´ÏÂÈ¥Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese æŒ‰é”®æŒ‰ä¸‹å»æ—¶çš„å›è°ƒå‡½æ•°
      * @param keyCode @~english KeyCode information.
-     * @~chinese ¼üÂëĞÅÏ¢¡£
+     * @~chinese é”®ç ä¿¡æ¯ã€‚
      * @param event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
 
     /** 
      * @brief @~english Callback function for key released.
-     * @~chinese °´¼üÊÍ·ÅÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese æŒ‰é”®é‡Šæ”¾æ—¶çš„å›è°ƒå‡½æ•°
      * @param keyCode @~english KeyCode information.
-     * @~chinese ¼üÂëĞÅÏ¢¡£
+     * @~chinese é”®ç ä¿¡æ¯ã€‚
      * @param event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
     */
     virtual void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event) {};
 
     /** 
      * @brief @~english Callback function for touch began.
-     * @~chinese ´¥Ãş¿ªÊ¼Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸å¼€å§‹æ—¶çš„å›è°ƒå‡½æ•°
      * @param touch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param event @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @return @~english if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
-     * @~chinese Èç¹û·µ»Øfalse,ÄÇÃ´onTouchMoved¡¢onTouchEnded onTouchCancelledÓÀÔ¶²»»á±»µ÷ÓÃ
+     * @~chinese å¦‚æœè¿”å›false,é‚£ä¹ˆonTouchMovedã€onTouchEnded onTouchCancelledæ°¸è¿œä¸ä¼šè¢«è°ƒç”¨
      * @js NA
      */
     virtual bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
 
     /**
      * @brief @~english Callback function for touch moved.
-     * @~chinese ´¥ÃşÒÆ¶¯Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸ç§»åŠ¨æ—¶çš„å›è°ƒå‡½æ•°
      * @param pTouch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
 
     /**
      * @brief @~english Callback function for touch ended.
-     * @~chinese ´¥Ãş½áÊøÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸ç»“æŸæ—¶çš„å›è°ƒå‡½æ•°
      * @param pTouch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 
     /**
      * @brief @~english Callback function for touch cancelled.
-     * @~chinese ´¥ÃşÈ¡ÏûÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese è§¦æ‘¸å–æ¶ˆæ—¶çš„å›è°ƒå‡½æ•°
      * @param pTouch @~english Touch infomation.
-     * @~chinese ´¥ÃşĞÅÏ¢¡£
+     * @~chinese è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchCancelled(cocos2d::Touch *touch, cocos2d::Event *event);
 
     /**
      * @brief @~english Callback function for multiple touches began.
-     * @~chinese ¶àµã´¥Ãş¿ªÊ¼Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸å¼€å§‹æ—¶çš„å›è°ƒå‡½æ•°
      * @param pTouches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
     /**
      * @brief @~english Callback function for multiple touches moved.
-     * @~chinese ¶àµã´¥ÃşÒÆ¶¯Ê±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸ç§»åŠ¨æ—¶çš„å›è°ƒå‡½æ•°
      * @param pTouches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
      /**
      * @brief @~english Callback function for multiple touches ended.
-     * @~chinese ¶àµã´¥Ãş½áÊøÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸ç»“æŸæ—¶çš„å›è°ƒå‡½æ•°
      * @param pTouches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
 
      /**
      * @brief @~english Callback function for multiple touches cancelled.
-     * @~chinese ¶àµã´¥ÃşÈ¡ÏûÊ±µÄ»Øµ÷º¯Êı
+     * @~chinese å¤šç‚¹è§¦æ‘¸å–æ¶ˆæ—¶çš„å›è°ƒå‡½æ•°
      * 
      * @param pTouches @~english Touches information.
-     * @~chinese ¶àµã´¥ÃşĞÅÏ¢¡£
+     * @~chinese å¤šç‚¹è§¦æ‘¸ä¿¡æ¯ã€‚
      * @param pEvent @~english Event information.
-     * @~chinese ÊÂ¼şĞÅÏ¢¡£
+     * @~chinese äº‹ä»¶ä¿¡æ¯ã€‚
      * @js NA
      */
     virtual void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event);
