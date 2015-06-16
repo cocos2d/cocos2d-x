@@ -253,6 +253,26 @@ It should work same as apples CFSwapInt32LittleToHost(..)
     } while (false)
 #endif
 
+/**
+ * GL assertion that can be used for any OpenGL function call.
+ *
+ * This macro will assert if an error is detected when executing
+ * the specified GL code. This macro will do nothing in release
+ * mode and is therefore safe to use for realtime/per-frame GL
+ * function calls.
+ */
+#if defined(NDEBUG) || (defined(__APPLE__) && !defined(DEBUG))
+#define CC_GL_ASSERT( gl_code ) gl_code
+#else
+#define CC_GL_ASSERT( gl_code ) do \
+{ \
+gl_code; \
+__gl_error_code = glGetError(); \
+CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
+} while(0)
+#endif
+
+
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE
  Increments the GL Draws counts by one.
  The number of calls per frame are displayed on the screen when the Director's stats are enabled.

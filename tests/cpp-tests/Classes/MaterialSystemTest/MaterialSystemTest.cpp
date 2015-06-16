@@ -480,21 +480,12 @@ void Material_renderState::onEnter()
     skeletonNode->setNormalizedPosition(Vec2(0.6,0.3));
     this->addChild(skeletonNode);
 
-    _stateBlock = RenderState::StateBlock::create();
-    _stateBlock->retain();
-
-    _stateBlock->setDepthTest(false);
-    _stateBlock->setDepthWrite(false);
-    _stateBlock->setCullFace(true);
-    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_FRONT);
-    _stateBlock->setFrontFace(RenderState::FRONT_FACE_CW);
-    _stateBlock->setBlend(false);
-}
-
-void Material_renderState::onExit()
-{
-    MaterialSystemBaseTest::onExit();
-    _stateBlock->release();
+    _stateBlock.setDepthTest(false);
+    _stateBlock.setDepthWrite(false);
+    _stateBlock.setCullFace(true);
+    _stateBlock.setCullFaceSide(RenderState::CULL_FACE_SIDE_FRONT);
+    _stateBlock.setFrontFace(RenderState::FRONT_FACE_CW);
+    _stateBlock.setBlend(false);
 }
 
 std::string Material_renderState::subtitle() const
@@ -507,12 +498,12 @@ void Material_renderState::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = [this]() {
 
-        this->_stateBlock->bind();
+        this->_stateBlock.bind();
 
         // should do something...
         // and after that, restore
 
-        this->_stateBlock->restore(0);
+        this->_stateBlock.restore(0);
     };
     
     renderer->addCommand(&_customCommand);
