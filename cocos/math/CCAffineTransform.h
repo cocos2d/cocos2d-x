@@ -38,7 +38,10 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-/**@{
+/**
+@struct AffineTransform
+@brief
+@~english
  Affine transform
  a   b    0
  c   d    0
@@ -48,67 +51,96 @@ NS_CC_BEGIN
  1   0    0
  0   1    0
  0   0    1
+ * @~chinese 
+ * 仿射变换
+ a   b    0
+ c   d    0
+ tx  ty   1
+ * 
+ * 单位变换
+ 1   0    0
+ 0   1    0
+ 0   0    1
  */
 struct CC_DLL AffineTransform {
     float a, b, c, d;
     float tx, ty;
-
+    /**@~english indentity AffineTransform. @~chinese 单位变换。*/
     static const AffineTransform IDENTITY;
 };
 
-/**@}*/
-
-/**Make affine transform.*/
+/**@~english Make affine transform from a, b, c, d, tx, ty.. @~chinese 从a,b,c,d,tx,ty构建仿射变换。*/
 CC_DLL AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty);
 #define AffineTransformMake __CCAffineTransformMake
 
-/**Multiply point (x,y,1) by a  affine tranform.*/
+/**@~english Multiply point (x,y,1) by a  affine tranform. @~chinese 用仿射矩阵变换点(x,y,1)。*/
 CC_DLL Vec2 __CCPointApplyAffineTransform(const Vec2& point, const AffineTransform& t);
 #define PointApplyAffineTransform __CCPointApplyAffineTransform
 
-/**Multiply size (width,height,0) by a  affine tranform.*/
+/**@~english Multiply size (width,height,0) by a  affine tranform. @~chinese 用仿射矩阵变换(width,height,0)。*/
 CC_DLL Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t);
 #define SizeApplyAffineTransform __CCSizeApplyAffineTransform
-/**Make identity affine transform.*/
+/**@~english Make identity affine transform. @~chinese 构建一个单位仿射变换矩阵。*/
 CC_DLL AffineTransform AffineTransformMakeIdentity();
-/**Transform Rect, which will transform the four vertice of the point.*/
+/**@~english Transform Rect, which will transform the four vertice of the point. @~chinese 变换矩形,这将逐个变换矩形的四个顶点。*/
 CC_DLL Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform);
-/**@{
- Transform vec2 and Rect by Mat4.
+/**@~english
+ Transform Rect by Mat4.
+ * @~chinese 
+ * 使用Mat4变换Rect.
  */
 CC_DLL Rect RectApplyTransform(const Rect& rect, const Mat4& transform);
+/**@~english
+ Transform Rect by Mat4.
+ * @~chinese 
+ * 使用Mat4变换Vec2.
+ */
 CC_DLL Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform);
-/**@}*/
-/**
+/**@~english
  Translation, equals
+ 1  0  1
+ 0  1  0   * affinetransform
+ tx ty 1
+ * @~chinese 
+ * 进行平移,其效果等价于
  1  0  1
  0  1  0   * affinetransform
  tx ty 1
  */
 CC_DLL AffineTransform AffineTransformTranslate(const AffineTransform& t, float tx, float ty);
-/**
+/**@~english
  Rotation, equals
+ cos(angle)   sin(angle)   0
+ -sin(angle)  cos(angle)   0  * AffineTransform
+ 0            0            1
+ * @~chinese 
+ * 进行旋转,等价于
  cos(angle)   sin(angle)   0
  -sin(angle)  cos(angle)   0  * AffineTransform
  0            0            1
  */
 CC_DLL AffineTransform AffineTransformRotate(const AffineTransform& aTransform, float anAngle);
-/**
+/**@~english
  Scale, equals
+ sx   0   0
+ 0    sy  0  * affineTransform
+ 0    0   1
+ * @~chinese 
+ * 进行缩放,等价于
  sx   0   0
  0    sy  0  * affineTransform
  0    0   1
  */
 CC_DLL AffineTransform AffineTransformScale(const AffineTransform& t, float sx, float sy);
-/**Concat two affine transform, t1 * t2*/
+/**@~english Concat two affine transform, t1*t2.  @~chinese 连乘两个仿射变换t1*t2 */
 CC_DLL AffineTransform AffineTransformConcat(const AffineTransform& t1, const AffineTransform& t2);
-/**Compare affine transform.*/
+/**@~english Compare affine transform. @~chinese 判断仿射变换是否相等。*/
 CC_DLL bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2);
-/**Get the inverse of affine transform.*/
+/**@~english Get the inverse of affine transform. @~chinese 得到仿射变换的逆。*/
 CC_DLL AffineTransform AffineTransformInvert(const AffineTransform& t);
-/**Concat Mat4, return t1 * t2.*/
+/**@~english Concat Mat4, return t1*t2  @~chinese 连乘矩阵t1*t2。*/
 CC_DLL Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
-
+/**@~english identity affineTransform. @~chinese 单位仿射变换矩阵。*/
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 
 NS_CC_END
