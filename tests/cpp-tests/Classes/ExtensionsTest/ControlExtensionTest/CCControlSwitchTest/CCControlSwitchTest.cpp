@@ -26,6 +26,9 @@
 
 #include "CCControlSwitchTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 ControlSwitchTest::~ControlSwitchTest()
 {
     CC_SAFE_RELEASE(_displayValueLabel);
@@ -38,7 +41,7 @@ bool ControlSwitchTest::init()
         auto screenSize = Director::getInstance()->getWinSize();
         
         auto layer = Node::create();
-        layer->setPosition(Vec2(screenSize.width / 2, screenSize.height / 2));
+        layer->setPosition(screenSize.width / 2, screenSize.height / 2);
         addChild(layer, 1);
         
         double layer_width = 0;
@@ -46,7 +49,7 @@ bool ControlSwitchTest::init()
         // Add the black background for the text
         auto background = Scale9Sprite::create("extensions/buttonBackground.png");
         background->setContentSize(Size(80, 50));
-        background->setPosition(Vec2(layer_width + background->getContentSize().width / 2.0f, 0));
+        background->setPosition(layer_width + background->getContentSize().width / 2.0f, 0);
         layer->addChild(background);
         
         layer_width += background->getContentSize().width;
@@ -67,7 +70,7 @@ bool ControlSwitchTest::init()
                 Label::createWithSystemFont("On", "Arial-BoldMT", 16),
                 Label::createWithSystemFont("Off", "Arial-BoldMT", 16)
             );
-        switchControl->setPosition(Vec2(layer_width + 10 + switchControl->getContentSize().width / 2, 0));
+        switchControl->setPosition(layer_width + 10 + switchControl->getContentSize().width / 2, 0);
         layer->addChild(switchControl);
 
         switchControl->addTargetWithActionForControlEvents(this, cccontrol_selector(ControlSwitchTest::valueChanged), Control::EventType::VALUE_CHANGED);

@@ -116,4 +116,34 @@
 -- @field [parent=#ccui] RichText#RichText RichText preloaded module
 
 
+--------------------------------------------------------
+-- the ccui HBox
+-- @field [parent=#ccui] HBox#HBox HBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui VBox
+-- @field [parent=#ccui] VBox#VBox VBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RelativeBox
+-- @field [parent=#ccui] RelativeBox#RelativeBox RelativeBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui Scale9Sprite
+-- @field [parent=#ccui] Scale9Sprite#Scale9Sprite Scale9Sprite preloaded module
+
+
+--------------------------------------------------------
+-- the ccui EditBox
+-- @field [parent=#ccui] EditBox#EditBox EditBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui LayoutComponent
+-- @field [parent=#ccui] LayoutComponent#LayoutComponent LayoutComponent preloaded module
+
+
 return nil

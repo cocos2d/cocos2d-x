@@ -20,13 +20,13 @@ bool PlayerController::init()
     return true;
 }
 
-void PlayerController::onEnter()
+void PlayerController::onAdd()
 {
-    ComController::onEnter();
+    ComController::onAdd();
     setTouchEnabled(true);
 }
 
-void PlayerController::onExit()
+void PlayerController::onRemove()
 {
     setTouchEnabled(false);
 }
@@ -55,7 +55,7 @@ void PlayerController::onTouchesEnded(const std::vector<Touch*>& touches, Event 
 
 PlayerController* PlayerController::create(void)
 {
-    PlayerController * pRet = new PlayerController();
+    PlayerController * pRet = new (std::nothrow) PlayerController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

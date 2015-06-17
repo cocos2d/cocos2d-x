@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "SimpleAudioEngine_objc.h"
 #include <string>
 
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 using namespace cocos2d;
 
 static void static_end()
@@ -159,7 +159,7 @@ SimpleAudioEngine* SimpleAudioEngine::getInstance()
 {
     if (! s_pEngine)
     {
-        s_pEngine = new SimpleAudioEngine();
+        s_pEngine = new (std::nothrow) SimpleAudioEngine();
     }
     
     return s_pEngine;

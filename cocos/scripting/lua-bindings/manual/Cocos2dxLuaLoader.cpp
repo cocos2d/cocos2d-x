@@ -39,10 +39,18 @@ extern "C"
         static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
         
         std::string filename(luaL_checkstring(L, 1));
-        size_t pos = filename.rfind(NOT_BYTECODE_FILE_EXT);
+        size_t pos = filename.rfind(BYTECODE_FILE_EXT);
         if (pos != std::string::npos)
         {
             filename = filename.substr(0, pos);
+        }
+        else
+        {
+            pos = filename.rfind(NOT_BYTECODE_FILE_EXT);
+            if (pos == filename.length() - NOT_BYTECODE_FILE_EXT.length())
+            {
+                filename = filename.substr(0, pos);
+            }
         }
         
         pos = filename.find_first_of(".");
@@ -77,7 +85,6 @@ extern "C"
             
             pos = prefix.find("?.lua");
             chunkName = prefix.substr(0, pos) + filename + BYTECODE_FILE_EXT;
-            chunkName = utils->fullPathForFilename(chunkName.c_str());
             if (utils->isFileExist(chunkName))
             {
                 chunk = utils->getFileData(chunkName.c_str(), "rb", &chunkSize);
@@ -86,7 +93,6 @@ extern "C"
             else
             {
                 chunkName = prefix.substr(0, pos) + filename + NOT_BYTECODE_FILE_EXT;
-                chunkName = utils->fullPathForFilename(chunkName.c_str());
                 if (utils->isFileExist(chunkName))
                 {
                     chunk = utils->getFileData(chunkName.c_str(), "rb", &chunkSize);
@@ -102,7 +108,7 @@ extern "C"
         {
             LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
             stack->luaLoadBuffer(L, (char*)chunk, (int)chunkSize, chunkName.c_str());
-            delete []chunk;
+            free(chunk);
         }
         else
         {

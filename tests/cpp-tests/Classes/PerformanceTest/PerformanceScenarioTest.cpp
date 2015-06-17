@@ -1,67 +1,11 @@
 #include "PerformanceScenarioTest.h"
 #include "../testResource.h"
 
-enum
+USING_NS_CC;
+
+PerformceScenarioTests::PerformceScenarioTests()
 {
-    TEST_COUNT = 1,
-};
-
-static int s_nScenarioCurCase = 0;
-
-////////////////////////////////////////////////////////
-//
-// ScenarioMenuLayer
-//
-////////////////////////////////////////////////////////
-void ScenarioMenuLayer::showCurrentTest()
-{
-    Scene* scene = NULL;
-
-    switch (_curCase)
-    {
-    case 0:
-        scene = ScenarioTest::scene();
-        break;
-    }
-    s_nScenarioCurCase = _curCase;
-
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
-}
-
-void ScenarioMenuLayer::onEnter()
-{
-    PerformBasicLayer::onEnter();
-
-    auto s = Director::getInstance()->getWinSize();
-
-    // Title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-
-    // Subtitle
-    std::string strSubTitle = subtitle();
-    if(strSubTitle.length())
-    {
-        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1);
-        l->setPosition(Vec2(s.width/2, s.height-80));
-    }
-
-    performTests();
-}
-
-std::string ScenarioMenuLayer::title() const
-{
-    return "no title";
-}
-
-std::string ScenarioMenuLayer::subtitle() const
-{
-    return "";
+    ADD_TEST_CASE(ScenarioTest);
 }
 
 ////////////////////////////////////////////////////////
@@ -75,6 +19,17 @@ int ScenarioTest::_initSpriteNum = 2000;
 int ScenarioTest::_spriteStepNum = 500;
 int ScenarioTest::_initParsysNum = 10;
 int ScenarioTest::_parsysStepNum = 5;
+
+bool ScenarioTest::init()
+{
+    if (TestCase::init())
+    {
+        performTests();
+        return true;
+    }
+
+    return false;
+}
 
 void ScenarioTest::performTests()
 {
@@ -105,7 +60,7 @@ void ScenarioTest::performTests()
                                                     MenuItemFont::create( "Add/Remove Sprite" ),
                                                     MenuItemFont::create( "Add/Remove Particle"),
                                                     MenuItemFont::create( "Add/Remove Particle System"),
-                                                    NULL);
+                                                    nullptr);
     _itemToggle->setAnchorPoint(Vec2(0.0f, 0.5f));
     _itemToggle->setPosition(Vec2(origin.x, origin.y + s.height / 2));
 
@@ -148,7 +103,7 @@ void ScenarioTest::performTests()
     increase->setColor(Color3B(0,200,20));
     increase->setPosition(Vec2(origin.x + s.width / 2 + 80, origin.y + 80));
     
-    auto menu = Menu::create(_itemToggle, decrease, increase, NULL);
+    auto menu = Menu::create(_itemToggle, decrease, increase, nullptr);
     menu->setPosition(Vec2(0.0f, 0.0f));
     addChild(menu, 10);
 
@@ -252,7 +207,7 @@ void ScenarioTest::addNewSprites(int num)
         else
             action = FadeOut::create(2);
         auto action_back = action->reverse();
-        auto seq = Sequence::create( action, action_back, NULL );
+        auto seq = Sequence::create( action, action_back, nullptr );
         
         sprite->runAction( RepeatForever::create(seq) );
 
@@ -344,27 +299,4 @@ void ScenarioTest::removeParticleSystem()
 std::string ScenarioTest::title() const
 {
     return "Scenario Performance Test";
-}
-
-//
-//std::string ScenarioTest::subtitle() const
-//{
-//    return "See console for results";
-//}
-
-Scene* ScenarioTest::scene()
-{
-    auto scene = Scene::create();
-    ScenarioTest *layer = new ScenarioTest(false, TEST_COUNT, s_nScenarioCurCase);
-    scene->addChild(layer);
-    layer->release();
-
-    return scene;
-}
-
-void runScenarioTest()
-{
-    s_nScenarioCurCase = 0;
-    auto scene = ScenarioTest::scene();
-    Director::getInstance()->replaceScene(scene);
 }

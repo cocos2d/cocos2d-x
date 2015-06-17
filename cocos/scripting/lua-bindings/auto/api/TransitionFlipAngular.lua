@@ -2,17 +2,22 @@
 --------------------------------
 -- @module TransitionFlipAngular
 -- @extend TransitionSceneOriented
+-- @parent_module cc
 
 --------------------------------
--- overload function: create(float, cc.Scene)
---          
--- overload function: create(float, cc.Scene, cc.TransitionScene::Orientation)
---          
+-- @overload self, float, cc.Scene         
+-- @overload self, float, cc.Scene, int         
 -- @function [parent=#TransitionFlipAngular] create
 -- @param self
--- @param #float float
--- @param #cc.Scene scene
--- @param #cc.TransitionScene::Orientation orientation
--- @return TransitionFlipAngular#TransitionFlipAngular ret (retunr value: cc.TransitionFlipAngular)
+-- @param #float t
+-- @param #cc.Scene s
+-- @param #int o
+-- @return TransitionFlipAngular#TransitionFlipAngular ret (return value: cc.TransitionFlipAngular)
 
+--------------------------------
+-- 
+-- @function [parent=#TransitionFlipAngular] TransitionFlipAngular 
+-- @param self
+-- @return TransitionFlipAngular#TransitionFlipAngular self (return value: cc.TransitionFlipAngular)
+        
 return nil

@@ -26,7 +26,6 @@
  */
 
 #include "CCControlButton.h"
-#include "CCScale9Sprite.h"
 #include "2d/CCLabel.h"
 #include "2d/CCAction.h"
 #include "2d/CCActionInterval.h"
@@ -64,10 +63,10 @@ ControlButton::~ControlButton()
 
 bool ControlButton::init()
 {
-    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), Scale9Sprite::create());
+    return this->initWithLabelAndBackgroundSprite(Label::createWithSystemFont("", "Helvetica", 12), cocos2d::ui::Scale9Sprite::create());
 }
 
-bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* backgroundSprite)
+bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, ui::Scale9Sprite* backgroundSprite)
 {
     if (Control::init())
     {
@@ -121,9 +120,9 @@ bool ControlButton::initWithLabelAndBackgroundSprite(Node* node, Scale9Sprite* b
     }
 }
 
-ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite)
+ControlButton* ControlButton::create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite)
 {
-    ControlButton *pRet = new ControlButton();
+    ControlButton *pRet = new (std::nothrow) ControlButton();
     pRet->initWithLabelAndBackgroundSprite(label, backgroundSprite);
     pRet->autorelease();
     return pRet;
@@ -131,26 +130,26 @@ ControlButton* ControlButton::create(Node* label, Scale9Sprite* backgroundSprite
 
 bool ControlButton::initWithTitleAndFontNameAndFontSize(const std::string& title, const std::string& fontName, float fontSize)
 {
-    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), Scale9Sprite::create());
+    return initWithLabelAndBackgroundSprite(Label::createWithSystemFont(title, fontName, fontSize), cocos2d::ui::Scale9Sprite::create());
 }
 
 ControlButton* ControlButton::create(const std::string& title, const std::string& fontName, float fontSize)
 {
-    ControlButton *pRet = new ControlButton();
+    ControlButton *pRet = new (std::nothrow) ControlButton();
     pRet->initWithTitleAndFontNameAndFontSize(title, fontName, fontSize);
     pRet->autorelease();
     return pRet;
 }
 
-bool ControlButton::initWithBackgroundSprite(Scale9Sprite* sprite)
+bool ControlButton::initWithBackgroundSprite(cocos2d::ui::Scale9Sprite* sprite)
 {
     Label *label = Label::createWithSystemFont("", "Arial", 30);//
     return initWithLabelAndBackgroundSprite(label, sprite);
 }
 
-ControlButton* ControlButton::create(Scale9Sprite* sprite)
+ControlButton* ControlButton::create(cocos2d::ui::Scale9Sprite* sprite)
 {
-    ControlButton *pRet = new ControlButton();
+    ControlButton *pRet = new (std::nothrow) ControlButton();
     pRet->initWithBackgroundSprite(sprite);
     pRet->autorelease();
     return pRet;
@@ -423,7 +422,7 @@ const std::string& ControlButton::getTitleBMFontForState(State state)
 }
 
 
-Scale9Sprite* ControlButton::getBackgroundSpriteForState(State state)
+ui::Scale9Sprite* ControlButton::getBackgroundSpriteForState(State state)
 {
     auto backgroundSprite = _backgroundSpriteDispatchTable.at((int)state);
     if (backgroundSprite)
@@ -434,7 +433,7 @@ Scale9Sprite* ControlButton::getBackgroundSpriteForState(State state)
 }
 
 
-void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State state)
+void ControlButton::setBackgroundSpriteForState(ui::Scale9Sprite* sprite, State state)
 {
     Size oldPreferredSize = _preferredSize;
 
@@ -470,7 +469,7 @@ void ControlButton::setBackgroundSpriteForState(Scale9Sprite* sprite, State stat
 
 void ControlButton::setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, State state)
 {
-    Scale9Sprite * sprite = Scale9Sprite::createWithSpriteFrame(spriteFrame);
+    ui::Scale9Sprite * sprite = ui::Scale9Sprite::createWithSpriteFrame(spriteFrame);
     this->setBackgroundSpriteForState(sprite, state);
 }
 
@@ -509,14 +508,14 @@ void ControlButton::needsLayout()
     }
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Vec2 (getContentSize().width / 2, getContentSize().height / 2));
+        _titleLabel->setPosition(getContentSize().width / 2, getContentSize().height / 2);
     }
     
     // Update the background sprite
     this->setBackgroundSprite(this->getBackgroundSpriteForState(_state));
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Vec2 (getContentSize().width / 2, getContentSize().height / 2));
+        _backgroundSprite->setPosition(getContentSize().width / 2, getContentSize().height / 2);
     }
    
     // Get the title label size
@@ -571,14 +570,14 @@ void ControlButton::needsLayout()
     
     if (_titleLabel != nullptr)
     {
-        _titleLabel->setPosition(Vec2(getContentSize().width/2, getContentSize().height/2));
+        _titleLabel->setPosition(getContentSize().width/2, getContentSize().height/2);
         // Make visible the background and the label
         _titleLabel->setVisible(true);
     }
   
     if (_backgroundSprite != nullptr)
     {
-        _backgroundSprite->setPosition(Vec2(getContentSize().width/2, getContentSize().height/2));
+        _backgroundSprite->setPosition(getContentSize().width/2, getContentSize().height/2);
         _backgroundSprite->setVisible(true);   
     }   
 }
@@ -723,7 +722,7 @@ void ControlButton::onTouchCancelled(Touch *pTouch, Event *pEvent)
 
 ControlButton* ControlButton::create()
 {
-    ControlButton *pControlButton = new ControlButton();
+    ControlButton *pControlButton = new (std::nothrow) ControlButton();
     if (pControlButton && pControlButton->init())
     {
         pControlButton->autorelease();

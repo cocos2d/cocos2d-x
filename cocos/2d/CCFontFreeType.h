@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,13 +26,14 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "CCFont.h"
-#include "base/CCData.h"
 
 #include <string>
 #include <ft2build.h>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define generic GenericFromFreeTypeLibrary
 #define internal InternalFromFreeTypeLibrary
 #endif
@@ -40,11 +41,10 @@
 #include FT_FREETYPE_H
 #include FT_STROKER_H
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #undef generic
 #undef internal
 #endif
-
 
 NS_CC_BEGIN
 
@@ -91,6 +91,8 @@ private:
     bool              _distanceFieldEnabled;
     float             _outlineSize;
 };
+
+/// @endcond
 
 NS_CC_END
 

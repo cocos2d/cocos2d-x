@@ -1,9 +1,14 @@
-
-
 #include "UIButtonTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
 // UIButtonTest_Editor
+
+UIButtonEditorTests::UIButtonEditorTests()
+{
+    ADD_TEST_CASE(UIButtonTest_Editor);
+}
 
 UIButtonTest_Editor::UIButtonTest_Editor()
 : _displayValueLabel(nullptr)
@@ -16,44 +21,43 @@ UIButtonTest_Editor::~UIButtonTest_Editor()
     
 }
 
+void UIButtonTest_Editor::configureGUIScene()
+{
+    UIScene_Editor::configureGUIScene();
+    
+    Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
+    
+    Button* button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_123"));
+    button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
+    
+    Button* title_button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_126"));
+    title_button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
+    
+    Button* scale9_button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_129"));
+    scale9_button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent,this));
+}
+
 bool UIButtonTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIButton_Editor/UIButton_Editor_1.json"));
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIButton/res.csb");
+        Node* child = node->getChildByTag(4);
+        child->removeFromParent();
+        _layout = static_cast<Layout*>(child);
         _touchGroup->addChild(_layout);
-        Size screenSize = CCDirector::getInstance()->getWinSize();
-        Size rootSize = _layout->getSize();
-        _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
-                                       (screenSize.height - rootSize.height) / 2));
         
-        Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
-
-        Text* back_label = static_cast<Text*>(Helper::seekWidgetByName(root, "back"));
-//        back_label->addTouchEventListener(this, toucheventselector(UIScene_Editor::toGUIEditorTestScene));
-        back_label->addTouchEventListener(CC_CALLBACK_2(UIScene_Editor::toGUIEditorTestScene, this));
+        this->configureGUIScene();
         
-        _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
         
-        Button* button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_123"));
-//        button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
-        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
-        
-        Button* title_button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_126"));
-//        title_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
-        title_button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
-        
-        Button* scale9_button = static_cast<Button*>(Helper::seekWidgetByName(root, "Button_129"));
-//        scale9_button->addTouchEventListener(this, toucheventselector(UIButtonTest_Editor::touchEvent));
-        scale9_button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Editor::touchEvent, this));
-        
-        _displayValueLabel = Text::create();
-        _displayValueLabel->setFontName("fonts/Marker Felt.ttf");
+        _displayValueLabel = ui::Text::create();
+        _displayValueLabel->setFontName("Marker Felt");
         _displayValueLabel->setFontSize(30);
         _displayValueLabel->setString("No event");
-        _displayValueLabel->setPosition(Vec2(_layout->getSize().width / 2,
-                                              _layout->getSize().height - _displayValueLabel->getSize().height * 1.75f));
-        _touchGroup->addChild(_displayValueLabel);
+        _displayValueLabel->setPosition(Vec2(_layout->getContentSize().width / 2,
+                                            _layout->getContentSize().height - _displayValueLabel->getContentSize().height * 1.75f));
+        
+        _touchGroup->addChild(_displayValueLabel,20);
         
         return true;
     }

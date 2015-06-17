@@ -2,40 +2,62 @@
 --------------------------------
 -- @module ScaleTo
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
--- overload function: create(float, float, float)
---          
--- overload function: create(float, float)
---          
--- overload function: create(float, float, float, float)
---          
+-- @overload self, float, float, float         
+-- @overload self, float, float         
+-- @overload self, float, float, float, float         
+-- @function [parent=#ScaleTo] initWithDuration
+-- @param self
+-- @param #float duration
+-- @param #float sx
+-- @param #float sy
+-- @param #float sz
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
+-- @overload self, float, float, float         
+-- @overload self, float, float         
+-- @overload self, float, float, float, float         
 -- @function [parent=#ScaleTo] create
 -- @param self
--- @param #float float
--- @param #float float
--- @param #float float
--- @param #float float
--- @return ScaleTo#ScaleTo ret (retunr value: cc.ScaleTo)
+-- @param #float duration
+-- @param #float sx
+-- @param #float sy
+-- @param #float sz
+-- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
 
 --------------------------------
+-- 
 -- @function [parent=#ScaleTo] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
+-- @return ScaleTo#ScaleTo self (return value: cc.ScaleTo)
         
 --------------------------------
+-- 
 -- @function [parent=#ScaleTo] clone 
 -- @param self
 -- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
         
 --------------------------------
+-- 
 -- @function [parent=#ScaleTo] reverse 
 -- @param self
 -- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
         
 --------------------------------
+-- param time In seconds.
 -- @function [parent=#ScaleTo] update 
 -- @param self
--- @param #float float
+-- @param #float time
+-- @return ScaleTo#ScaleTo self (return value: cc.ScaleTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#ScaleTo] ScaleTo 
+-- @param self
+-- @return ScaleTo#ScaleTo self (return value: cc.ScaleTo)
         
 return nil

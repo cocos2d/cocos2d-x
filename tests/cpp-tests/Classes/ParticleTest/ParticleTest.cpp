@@ -1,13 +1,11 @@
 #include "ParticleTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagParticleCount = 1,
 };
-
-Layer* nextParticleAction();
-Layer* backParticleAction();
-Layer* restartParticleAction();
 
 //------------------------------------------------------------------
 //
@@ -588,7 +586,7 @@ void ParallaxParticle::onEnter()
     ParticleDemo::onEnter();
 
     _background->getParent()->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     auto p = ParallaxNode::create();
     addChild(p, 5);
@@ -612,7 +610,7 @@ void ParallaxParticle::onEnter()
 
     auto move = MoveBy::create(4, Vec2(300,0));
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     p->runAction(RepeatForever::create(seq));
 }
 
@@ -632,7 +630,7 @@ void RadiusMode1::onEnter()
 
 	_color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::createWithTotalParticles(200);
     _emitter->retain();
@@ -716,7 +714,7 @@ void RadiusMode2::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::createWithTotalParticles(200);
     _emitter->retain();
@@ -800,7 +798,7 @@ void Issue704::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::createWithTotalParticles(100);
     _emitter->retain();
@@ -892,7 +890,7 @@ void Issue870::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/SpinningPeas.plist");
     _emitter->setTextureWithRect(Director::getInstance()->getTextureCache()->addImage("Images/particles.png"), Rect(0,0,32,32));
@@ -900,7 +898,7 @@ void Issue870::onEnter()
     _emitter->retain();
 
     _index = 0;
-    schedule(schedule_selector(Issue870::updateQuads), 2.0f);
+    schedule(CC_SCHEDULE_SELECTOR(Issue870::updateQuads), 2.0f);
 }
 
 void Issue870::updateQuads(float dt)
@@ -932,7 +930,7 @@ void DemoParticleFromFile::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     std::string filename = "Particles/" + _title + ".plist";
     _emitter = ParticleSystemQuad::create(filename);
@@ -956,101 +954,61 @@ enum
     IDC_TOGGLE
 };
 
-static int sceneIdx = -1;
-
-Layer* createParticleLayer(int nIndex)
+ParticleTests::ParticleTests()
 {
-    switch(nIndex)
-    {
-        case 0: return new ParticleReorder();
-        case 1: return new ParticleBatchHybrid();
-        case 2: return new ParticleBatchMultipleEmitters();
-        case 3: return new DemoFlower();
-        case 4: return new DemoGalaxy();
-        case 5: return new DemoFirework();
-        case 6: return new DemoSpiral();
-        case 7: return new DemoSun();
-        case 8: return new DemoMeteor();
-        case 9: return new DemoFire();
-        case 10: return new DemoSmoke();
-        case 11: return new DemoExplosion();
-        case 12: return new DemoSnow();
-        case 13: return new DemoRain();
-        case 14: return new DemoBigFlower();
-        case 15: return new DemoRotFlower();
-        case 16: return new DemoModernArt();
-        case 17: return new DemoRing();
-        case 18: return new ParallaxParticle();
-        case 19: return new DemoParticleFromFile("BoilingFoam");
-        case 20: return new DemoParticleFromFile("BurstPipe");
-        case 21: return new DemoParticleFromFile("Comet");
-        case 22: return new DemoParticleFromFile("debian");
-        case 23: return new DemoParticleFromFile("ExplodingRing");
-        case 24: return new DemoParticleFromFile("LavaFlow");
-        case 25: return new DemoParticleFromFile("SpinningPeas");
-        case 26: return new DemoParticleFromFile("SpookyPeas");
-        case 27: return new DemoParticleFromFile("Upsidedown");
-        case 28: return new DemoParticleFromFile("Flower");
-        case 29: return new DemoParticleFromFile("Spiral");
-        case 30: return new DemoParticleFromFile("Galaxy");
-        case 31: return new DemoParticleFromFile("Phoenix");
-        case 32: return new DemoParticleFromFile("lines");
-        case 33: return new DemoParticleFromFile("ButterFly");
-        case 34: return new DemoParticleFromFile("ButterFlyYFlipped");
-        case 35: return new RadiusMode1();
-        case 36: return new RadiusMode2();
-        case 37: return new Issue704();
-        case 38: return new Issue870();
-        case 39: return new Issue1201();
-        // v1.1 tests
-        case 40: return new MultipleParticleSystems();
-        case 41: return new MultipleParticleSystemsBatched();
-        case 42: return new AddAndDeleteParticleSystems();
-        case 43: return new ReorderParticleSystems();
-        case 44: return new PremultipliedAlphaTest();
-        case 45: return new PremultipliedAlphaTest2();
-        case 46: return new Issue3990();
-        case 47: return new ParticleAutoBatching();
-        case 48: return new ParticleVisibleTest();
-        default:
-            break;
-    }
+    ADD_TEST_CASE(ParticleReorder);
+    ADD_TEST_CASE(ParticleBatchHybrid);
+    ADD_TEST_CASE(ParticleBatchMultipleEmitters);
+    ADD_TEST_CASE(DemoFlower);
+    ADD_TEST_CASE(DemoGalaxy);
+    ADD_TEST_CASE(DemoFirework);
+    ADD_TEST_CASE(DemoSpiral);
+    ADD_TEST_CASE(DemoSun);
+    ADD_TEST_CASE(DemoMeteor);
+    ADD_TEST_CASE(DemoFire);
+    ADD_TEST_CASE(DemoSmoke);
+    ADD_TEST_CASE(DemoExplosion);
+    ADD_TEST_CASE(DemoSnow);
+    ADD_TEST_CASE(DemoRain);
+    ADD_TEST_CASE(DemoBigFlower);
+    ADD_TEST_CASE(DemoRotFlower);
+    ADD_TEST_CASE(DemoModernArt);
+    ADD_TEST_CASE(DemoRing);
+    ADD_TEST_CASE(ParallaxParticle);
+    addTestCase("BoilingFoam", [](){return DemoParticleFromFile::create("BoilingFoam");});
+    addTestCase("BurstPipe", [](){return DemoParticleFromFile::create("BurstPipe"); });
+    addTestCase("Comet", [](){return DemoParticleFromFile::create("Comet"); });
+    addTestCase("debian", [](){return DemoParticleFromFile::create("debian"); });
+    addTestCase("ExplodingRing", [](){return DemoParticleFromFile::create("ExplodingRing"); });
+    addTestCase("LavaFlow", [](){return DemoParticleFromFile::create("LavaFlow"); });
+    addTestCase("SpinningPeas", [](){return DemoParticleFromFile::create("SpinningPeas"); });
+    addTestCase("SpookyPeas", [](){return DemoParticleFromFile::create("SpookyPeas"); });
+    addTestCase("Upsidedown", [](){return DemoParticleFromFile::create("Upsidedown"); });
+    addTestCase("Flower", [](){return DemoParticleFromFile::create("Flower"); });
+    addTestCase("Spiral", [](){return DemoParticleFromFile::create("Spiral"); });
+    addTestCase("Galaxy", [](){return DemoParticleFromFile::create("Galaxy"); });
+    addTestCase("Phoenix", [](){return DemoParticleFromFile::create("Phoenix"); });
+    addTestCase("lines", [](){return DemoParticleFromFile::create("lines"); });
+    addTestCase("ButterFly", [](){return DemoParticleFromFile::create("ButterFly"); });
+    addTestCase("ButterFlyYFlipped", [](){return DemoParticleFromFile::create("ButterFlyYFlipped"); });
+    ADD_TEST_CASE(RadiusMode1);
+    ADD_TEST_CASE(RadiusMode2);
+    ADD_TEST_CASE(Issue704);
+    ADD_TEST_CASE(Issue870);
+    ADD_TEST_CASE(Issue1201);
 
-    return NULL;
-}
-#define MAX_LAYER    49
+    ADD_TEST_CASE(MultipleParticleSystems);
+    ADD_TEST_CASE(MultipleParticleSystemsBatched);
+    ADD_TEST_CASE(AddAndDeleteParticleSystems);
+    ADD_TEST_CASE(ReorderParticleSystems);
+    ADD_TEST_CASE(PremultipliedAlphaTest);
+    ADD_TEST_CASE(PremultipliedAlphaTest2);
+    ADD_TEST_CASE(Issue3990);
+    ADD_TEST_CASE(ParticleAutoBatching);
+    ADD_TEST_CASE(ParticleVisibleTest);
+    ADD_TEST_CASE(ParticleResetTotalParticles);
 
-
-Layer* nextParticleAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createParticleLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backParticleAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = createParticleLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartParticleAction()
-{
-    auto layer = createParticleLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
+    ADD_TEST_CASE(ParticleIssue12310);
 }
 
 ParticleDemo::~ParticleDemo(void)
@@ -1060,12 +1018,12 @@ ParticleDemo::~ParticleDemo(void)
 
 void ParticleDemo::onEnter(void)
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
 	_color = LayerColor::create( Color4B(127,127,127,255) );
 	this->addChild(_color);
 
-    _emitter = NULL;
+    _emitter = nullptr;
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(ParticleDemo::onTouchesBegan, this);
@@ -1079,9 +1037,9 @@ void ParticleDemo::onEnter(void)
                                                                MenuItemFont::create( "Free Movement" ),
                                                                MenuItemFont::create( "Relative Movement" ),
                                                                MenuItemFont::create( "Grouped Movement" ),
-                                                               NULL );
+                                                               nullptr );
 
-    auto menu = Menu::create(item4, NULL);
+    auto menu = Menu::create(item4, nullptr);
 
     menu->setPosition( Vec2::ZERO );
     item4->setPosition( Vec2( VisibleRect::left().x, VisibleRect::bottom().y+ 100) );
@@ -1100,7 +1058,7 @@ void ParticleDemo::onEnter(void)
 
     auto move = MoveBy::create(4, Vec2(300,0) );
     auto move_back = move->reverse();
-    auto seq = Sequence::create( move, move_back, NULL);
+    auto seq = Sequence::create( move, move_back, nullptr);
     _background->runAction( RepeatForever::create(seq) );
 
 
@@ -1139,7 +1097,7 @@ void ParticleDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *ev
         pos = _background->convertToWorldSpace(Vec2::ZERO);
     }
 
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         _emitter->setPosition(location -pos);
     }
@@ -1158,7 +1116,7 @@ void ParticleDemo::update(float dt)
 
 void ParticleDemo::toggleCallback(Ref* sender)
 {
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         if (_emitter->getPositionType() == ParticleSystem::PositionType::GROUPED)
             _emitter->setPositionType(ParticleSystem::PositionType::FREE);
@@ -1169,34 +1127,10 @@ void ParticleDemo::toggleCallback(Ref* sender)
     }
 }
 
-void ParticleDemo::restartCallback(Ref* sender)
-{
-    if (_emitter != NULL)
-    {
-        _emitter->resetSystem();
-    }
-}
-
-void ParticleDemo::nextCallback(Ref* sender)
-{
-    auto s = new ParticleTestScene();
-    s->addChild( nextParticleAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ParticleDemo::backCallback(Ref* sender)
-{
-    auto s = new ParticleTestScene();
-    s->addChild( backParticleAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
 void ParticleDemo::setEmitterPosition()
 {
     auto s = Director::getInstance()->getWinSize();
-    if (_emitter != NULL)
+    if (_emitter != nullptr)
     {
         _emitter->setPosition( Vec2(s.width / 2, s.height / 2) );
     }
@@ -1210,7 +1144,7 @@ void ParticleBatchHybrid::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     _emitter->retain();
@@ -1220,7 +1154,7 @@ void ParticleBatchHybrid::onEnter()
 
     addChild(batch, 10);
 
-     schedule(schedule_selector(ParticleBatchHybrid::switchRender), 2.0f);
+     schedule(CC_SCHEDULE_SELECTOR(ParticleBatchHybrid::switchRender), 2.0f);
 
      auto node = Node::create();
      addChild(node);
@@ -1231,7 +1165,7 @@ void ParticleBatchHybrid::onEnter()
 
 void ParticleBatchHybrid::switchRender(float dt)
 {
-     bool usingBatch = ( _emitter->getBatchNode() != NULL );
+     bool usingBatch = ( _emitter->getBatchNode() != nullptr );
      _emitter->removeFromParentAndCleanup(false);
 
      auto newParent = (usingBatch ? _parent2  : _parent1 );
@@ -1258,7 +1192,7 @@ void ParticleBatchMultipleEmitters::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     auto emitter1 = ParticleSystemQuad::create("Particles/LavaFlow.plist");
     emitter1->setStartColor(Color4F(1,0,0,1));
@@ -1301,7 +1235,7 @@ void ParticleReorder::onEnter()
     _order = 0;
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     auto ignore = ParticleSystemQuad::create("Particles/SmallSun.plist");
     auto parent1 = Node::create();
@@ -1337,7 +1271,7 @@ void ParticleReorder::onEnter()
         addChild(parent, 10, 1000+i);
     }
 
-    schedule(schedule_selector(ParticleReorder::reorderParticles), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(ParticleReorder::reorderParticles), 1.0f);
 }
 
 std::string ParticleReorder::title() const
@@ -1471,9 +1405,9 @@ void Issue1201::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
-    RainbowEffect *particle = new RainbowEffect();
+    RainbowEffect *particle = new (std::nothrow) RainbowEffect();
     particle->initWithTotalParticles(50);
 
     addChild(particle);
@@ -1501,7 +1435,7 @@ void MultipleParticleSystems::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     Director::getInstance()->getTextureCache()->addImage("Images/particles.png");
 
@@ -1514,7 +1448,7 @@ void MultipleParticleSystems::onEnter()
         addChild(particleSystem);
     }
 
-    _emitter = NULL;
+    _emitter = nullptr;
 
 }
 
@@ -1536,7 +1470,7 @@ void MultipleParticleSystems::update(float dt)
     
     for(const auto &child : _children) {
         auto item = dynamic_cast<ParticleSystem*>(child);
-        if (item != NULL)
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
@@ -1555,7 +1489,7 @@ void MultipleParticleSystemsBatched::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     ParticleBatchNode *batchNode = ParticleBatchNode::createWithTexture(nullptr, 3000);
 
@@ -1572,7 +1506,7 @@ void MultipleParticleSystemsBatched::onEnter()
         batchNode->addChild(particleSystem);
     }
 
-    _emitter = NULL;
+    _emitter = nullptr;
 }
 
 void MultipleParticleSystemsBatched::update(float dt)
@@ -1584,7 +1518,7 @@ void MultipleParticleSystemsBatched::update(float dt)
     auto batchNode = getChildByTag(2);
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
-        if (item != NULL)
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
@@ -1613,10 +1547,10 @@ void AddAndDeleteParticleSystems::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     //adds the texture inside the plist to the texture cache
-    _batchNode = ParticleBatchNode::createWithTexture((Texture2D*)NULL, 16000);
+    _batchNode = ParticleBatchNode::createWithTexture((Texture2D*)nullptr, 16000);
 
     addChild(_batchNode, 1, 2);
 
@@ -1635,8 +1569,8 @@ void AddAndDeleteParticleSystems::onEnter()
 
     }
 
-    schedule(schedule_selector(AddAndDeleteParticleSystems::removeSystem), 0.5f);
-    _emitter = NULL;
+    schedule(CC_SCHEDULE_SELECTOR(AddAndDeleteParticleSystems::removeSystem), 0.5f);
+    _emitter = nullptr;
 
 }
 
@@ -1672,7 +1606,7 @@ void AddAndDeleteParticleSystems::update(float dt)
     auto batchNode = getChildByTag(2);
     for(const auto &child : batchNode->getChildren()) {
         auto item = dynamic_cast<ParticleSystem*>(child);
-        if (item != NULL)
+        if (item != nullptr)
         {
             count += item->getParticleCount();
         }
@@ -1701,7 +1635,7 @@ void ReorderParticleSystems::onEnter()
 
     _color->setColor(Color3B::BLACK);
     removeChild(_background ,true);
-    _background = NULL;
+    _background = nullptr;
 
     _batchNode = ParticleBatchNode::create("Images/stars-grayscale.png" ,3000);
 
@@ -1786,8 +1720,8 @@ void ReorderParticleSystems::onEnter()
 
     }
 
-    schedule(schedule_selector(ReorderParticleSystems::reorderSystem), 2.0f);
-    _emitter = NULL;
+    schedule(CC_SCHEDULE_SELECTOR(ReorderParticleSystems::reorderSystem), 2.0f);
+    _emitter = nullptr;
 
 }
 
@@ -1859,7 +1793,7 @@ void PremultipliedAlphaTest::onEnter()
 
 	_color->setColor(Color3B::BLUE);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/BoilingFoam.plist");
     _emitter->retain();
@@ -1882,7 +1816,7 @@ void PremultipliedAlphaTest::onEnter()
     this->addChild(_emitter, 10);
     _hasEmitter = true;
     
-    schedule(schedule_selector(PremultipliedAlphaTest::readdPaticle), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(PremultipliedAlphaTest::readdPaticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2
@@ -1893,7 +1827,7 @@ void PremultipliedAlphaTest2::onEnter()
 
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     _emitter = ParticleSystemQuad::create("Particles/TestPremultipliedAlpha.plist");
     _emitter->retain();
@@ -1919,7 +1853,7 @@ void Issue3990::onEnter()
     
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
     
     _emitter = ParticleSystemQuad::create("Particles/Spiral.plist");
     
@@ -1954,7 +1888,7 @@ void ParticleVisibleTest::onEnter()
     
     _emitter->setTexture( Director::getInstance()->getTextureCache()->addImage(s_stars1) );
     
-    schedule(schedule_selector(ParticleVisibleTest::callback), 1);
+    schedule(CC_SCHEDULE_SELECTOR(ParticleVisibleTest::callback), 1);
     
     setEmitterPosition();
 }
@@ -1983,7 +1917,7 @@ void ParticleAutoBatching::onEnter()
 
 	_color->setColor(Color3B::BLACK);
     this->removeChild(_background, true);
-    _background = NULL;
+    _background = nullptr;
 
     Size s = Director::getInstance()->getWinSize();
 
@@ -2005,13 +1939,74 @@ std::string ParticleAutoBatching::subtitle() const
     return "All 10 particles should be drawin in one batch";
 }
 
-//
-// main
-//
-void ParticleTestScene::runThisTest()
-{
-    addChild(nextParticleAction());
 
-    Director::getInstance()->replaceScene(this);
+//
+// ParticleResetTotalParticles
+//
+void ParticleResetTotalParticles::onEnter()
+{
+    ParticleDemo::onEnter();
+    
+    _color->setColor(Color3B::BLACK);
+    removeChild(_background, true);
+    _background = nullptr;
+    
+    auto p = ParticleFire::createWithTotalParticles(10);
+    this->addChild(p);
+    
+    auto add = MenuItemFont::create("add 10 particles",
+                                    [p](Ref*)->void
+                                    {
+                                        p->setTotalParticles(p->getTotalParticles() + 10 );
+                                    });
+    add->setPosition(Vec2(0, 25));
+    auto remove = MenuItemFont::create("remove 10 particles",
+                                       [p](Ref*)->void
+                                       {
+                                           int count = p->getTotalParticles() - 10;
+                                           if (count < 0) { count = 0; }
+                                           p->setTotalParticles(count);
+                                       });
+    remove->setPosition(Vec2(0, -25));
+    
+    auto menu = Menu::create(add, remove, nullptr);
+    menu->setPosition(Vec2(VisibleRect::center()));
+    this->addChild(menu);
+    
 }
 
+std::string ParticleResetTotalParticles::title() const
+{
+    return "reset total particles";
+}
+
+std::string ParticleResetTotalParticles::subtitle() const
+{
+    return "it should work as well";
+}
+
+void ParticleIssue12310::onEnter()
+{
+    ParticleDemo::onEnter();
+
+    _color->setColor(Color3B::BLACK);
+    removeChild(_background, true);
+    _background = nullptr;
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto particle = ParticleSystemQuad::create("Particles/BoilingFoam.plist");
+    particle->setPosition(Vec2(winSize.width * 0.35f, winSize.height * 0.5f));
+    addChild(particle);
+
+    _emitter = particle;
+
+    auto particle2 = ParticleSystemQuad::create("Particles/BoilingFoamStar.plist");
+    particle2->setPosition(Vec2(winSize.width * 0.65f, winSize.height * 0.5f));
+    addChild(particle2);
+}
+
+std::string ParticleIssue12310::subtitle() const
+{
+    return "You should see two Particle Emitters using different texture.";
+}

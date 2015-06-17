@@ -48,16 +48,12 @@ THE SOFTWARE.
 
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
-#include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
-#include "base/ccTypes.h"
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
-#include "base/CCProfiling.h"
 #include "renderer/CCTextureCache.h"
-
-#include "CCGL.h"
+#include "deprecated/CCString.h"
+#include "platform/CCFileUtils.h"
 
 using namespace std;
 
@@ -97,8 +93,6 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(Vec2::ZERO)
-, _posVar(Vec2::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -120,7 +114,7 @@ ParticleSystem::ParticleSystem()
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
 {
-    modeA.gravity = Vec2::ZERO;
+    modeA.gravity.setZero();
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -139,7 +133,7 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem * ParticleSystem::create(const std::string& plistFile)
 {
-    ParticleSystem *ret = new ParticleSystem();
+    ParticleSystem *ret = new (std::nothrow) ParticleSystem();
     if (ret && ret->initWithFile(plistFile))
     {
         ret->autorelease();
@@ -151,7 +145,7 @@ ParticleSystem * ParticleSystem::create(const std::string& plistFile)
 
 ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
 {
-    ParticleSystem *ret = new ParticleSystem();
+    ParticleSystem *ret = new (std::nothrow) ParticleSystem();
     if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
         ret->autorelease();
@@ -170,11 +164,11 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
     bool ret = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile.c_str());
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile);
 
     CCASSERT( !dict.empty(), "Particles: file not found");
     
-    // XXX compute path from a path, should define a function somewhere to do it
+    // FIXME: compute path from a path, should define a function somewhere to do it
     string listFilePath = plistFile;
     if (listFilePath.find('/') != string::npos)
     {
@@ -257,7 +251,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             // position
             float x = dictionary["sourcePositionx"].asFloat();
             float y = dictionary["sourcePositiony"].asFloat();
-            this->setPosition( Vec2(x,y) );            
+            this->setPosition(x,y);            
             _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
             _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
 
@@ -373,7 +367,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 
                 Texture2D *tex = nullptr;
                 
-                if (textureName.length() > 0)
+                if (!textureName.empty())
                 {
                     // set not pop-up message box when load image failed
                     bool notify = FileUtils::getInstance()->isPopupNotify();
@@ -405,12 +399,12 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         CC_BREAK_IF(!deflated);
                         
                         // For android, we should retain it in VolatileTexture::addImage which invoked in Director::getInstance()->getTextureCache()->addUIImage()
-                        image = new Image();
+                        image = new (std::nothrow) Image();
                         bool isOK = image->initWithImageData(deflated, deflatedLen);
                         CCASSERT(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
+                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, _plistFile + textureName));
 
                         image->release();
                     }
@@ -465,7 +459,7 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     _emitterMode = Mode::GRAVITY;
 
     // default: modulate
-    // XXX: not used
+    // FIXME:: not used
     //    colorModulate = YES;
 
     _isAutoRemoveOnFinish = false;
@@ -687,7 +681,7 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Vec2 currentPosition = Vec2::ZERO;
+    Vec2 currentPosition;
     if (_positionType == PositionType::FREE)
     {
         currentPosition = this->convertToWorldSpace(Vec2::ZERO);
@@ -698,6 +692,8 @@ void ParticleSystem::update(float dt)
     }
 
     {
+        Mat4 worldToNodeTM = getWorldToNodeTransform();
+        
         while (_particleIdx < _particleCount)
         {
             tParticle *p = &_particles[_particleIdx];
@@ -712,7 +708,6 @@ void ParticleSystem::update(float dt)
                 {
                     Vec2 tmp, radial, tangential;
 
-                    radial = Vec2::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
@@ -771,7 +766,15 @@ void ParticleSystem::update(float dt)
 
                 Vec2    newPos;
 
-                if (_positionType == PositionType::FREE || _positionType == PositionType::RELATIVE)
+                if (_positionType == PositionType::FREE)
+                {
+                    Vec3 p1(currentPosition.x,currentPosition.y,0),p2(p->startPos.x,p->startPos.y,0);
+                    worldToNodeTM.transformPoint(&p1);
+                    worldToNodeTM.transformPoint(&p2);
+                    p1 = p1 - p2;
+                    newPos = p->pos - Vec2(p1.x,p1.y);
+                }
+                else if(_positionType == PositionType::RELATIVE)
                 {
                     Vec2 diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;
@@ -1174,4 +1177,3 @@ void ParticleSystem::setScaleY(float newScaleY)
 
 
 NS_CC_END
-

@@ -22,159 +22,320 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "base/ccMacros.h"
-#include "base/CCDirector.h"
 #include "renderer/CCMeshCommand.h"
+#include "base/ccMacros.h"
+#include "base/CCConfiguration.h"
+#include "base/CCDirector.h"
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCConfiguration.h"
+#include "2d/CCLight.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCPass.h"
+#include "xxhash.h"
 
 NS_CC_BEGIN
 
+
 MeshCommand::MeshCommand()
 : _textureID(0)
-, _blendType(BlendFunc::DISABLE)
 , _glProgramState(nullptr)
-, _cullFaceEnabled(false)
-, _cullFace(GL_BACK)
-, _depthTestEnabled(false)
-, _depthWriteEnabled(false)
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
+, _materialID(0)
+, _vao(0)
+, _material(nullptr)
+, _stateBlock(nullptr)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // listen the event that renderer was recreated on Android/WP8
+    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
+#endif
 }
 
-void MeshCommand::init(float globalOrder,
-                       GLuint textureID,
-                       GLProgramState* glProgramState,
-                       BlendFunc blendType,
+void MeshCommand::init(float globalZOrder,
+                       Material* material,
                        GLuint vertexBuffer,
                        GLuint indexBuffer,
                        GLenum primitive,
                        GLenum indexFormat,
                        ssize_t indexCount,
-                       const Mat4 &mv)
+                       const cocos2d::Mat4 &mv,
+                       uint32_t flags)
 {
-    CCASSERT(glProgramState, "GLProgramState cannot be nill");
-    
-    _globalOrder = globalOrder;
-    _textureID = textureID;
-    _blendType = blendType;
-    _glProgramState = glProgramState;
+    CCASSERT(material, "material cannot be nill");
 
+    RenderCommand::init(globalZOrder, mv, flags);
+
+    _globalOrder = globalZOrder;
+    _material = material;
+    
     _vertexBuffer = vertexBuffer;
     _indexBuffer = indexBuffer;
     _primitive = primitive;
     _indexFormat = indexFormat;
     _indexCount = indexCount;
-    _mv = mv;
+    _mv.set(mv);
+
+    _is3D = true;
 }
 
-void MeshCommand::setCullFaceEnabled(bool enable)
+void MeshCommand::init(float globalZOrder,
+                       GLuint textureID,
+                       GLProgramState* glProgramState,
+                       RenderState::StateBlock* stateBlock,
+                       GLuint vertexBuffer,
+                       GLuint indexBuffer,
+                       GLenum primitive,
+                       GLenum indexFormat,
+                       ssize_t indexCount,
+                       const cocos2d::Mat4& mv,
+                       uint32_t flags)
 {
-    _cullFaceEnabled = enable;
+    CCASSERT(glProgramState, "GLProgramState cannot be nill");
+    CCASSERT(stateBlock, "StateBlock cannot be nill");
+    CCASSERT(!_material, "cannot init with GLProgramState if previously inited without GLProgramState");
+
+    RenderCommand::init(globalZOrder, mv, flags);
+    
+    _globalOrder = globalZOrder;
+    _textureID = textureID;
+
+    // weak ref
+    _glProgramState = glProgramState;
+    _stateBlock = stateBlock;
+    
+    _vertexBuffer = vertexBuffer;
+    _indexBuffer = indexBuffer;
+    _primitive = primitive;
+    _indexFormat = indexFormat;
+    _indexCount = indexCount;
+    _mv.set(mv);
+    
+    _is3D = true;
+
 }
 
-void MeshCommand::setCullFace(GLenum cullFace)
-{
-    _cullFace = cullFace;
-}
-
-void MeshCommand::setDepthTestEnabled(bool enable)
-{
-    _depthTestEnabled = enable;
-}
-
-void MeshCommand::setDepthWriteEnabled(bool enable)
-{
-    _depthWriteEnabled = enable;
-}
 
 void MeshCommand::setDisplayColor(const Vec4& color)
 {
+    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_color");
+
     _displayColor = color;
+}
+
+void MeshCommand::setMatrixPalette(const Vec4* matrixPalette)
+{
+    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette");
+
+    _matrixPalette = matrixPalette;
+}
+
+void MeshCommand::setMatrixPaletteSize(int size)
+{
+    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette with its size");
+
+    _matrixPaletteSize = size;
 }
 
 MeshCommand::~MeshCommand()
 {
+    releaseVAO();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
+#endif
 }
 
 void MeshCommand::applyRenderState()
 {
-    if (_cullFaceEnabled)
+    CCASSERT(!_material, "Must not be called when using materials");
+    CCASSERT(_stateBlock, "StateBlock must be non null");
+
+    // blend and texture
+    GL::bindTexture2D(_textureID);
+
+    _stateBlock->bind();
+}
+
+void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend)
+{
+    int intArray[7] = {0};
+    intArray[0] = (int)texID;
+    *(int**)&intArray[1] = (int*) glProgramState;
+    intArray[3] = (int) vertexBuffer;
+    intArray[4] = (int) indexBuffer;
+    intArray[5] = (int) blend.src;
+    intArray[6] = (int) blend.dst;
+    _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+}
+
+uint32_t MeshCommand::getMaterialID() const
+{
+    return _materialID;
+}
+
+void MeshCommand::preBatchDraw()
+{
+    // Do nothing if using material since each pass needs to bind its own VAO
+    if (!_material)
     {
-        glEnable(GL_CULL_FACE);
-        glCullFace(_cullFace);
-    }
-    if (_depthTestEnabled)
-    {
-        glEnable(GL_DEPTH_TEST);
-    }
-    if (_depthWriteEnabled)
-    {
-        glDepthMask(GL_TRUE);
+        if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
+            buildVAO();
+        if (_vao)
+        {
+            GL::bindVAO(_vao);
+        }
+        else
+        {
+            glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+
+            // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
+            GLProgramState* programState = _material
+                                            ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+                                            : _glProgramState;
+            programState->applyAttributes();
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        }
     }
 }
 
-void MeshCommand::restoreRenderState()
+void MeshCommand::batchDraw()
 {
-    if (_cullFaceEnabled)
+    if (_material)
     {
-        glDisable(GL_CULL_FACE);
+        for(const auto& pass: _material->_currentTechnique->_passes)
+        {
+            pass->bind(_mv);
+
+            glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+
+            pass->unbind();
+        }
     }
-    if (_depthTestEnabled)
+    else
     {
-        glDisable(GL_DEPTH_TEST);
-    }
-    if (_depthWriteEnabled)
-    {
-        glDepthMask(GL_FALSE);
+        _glProgramState->applyGLProgram(_mv);
+
+        // set render state
+        applyRenderState();
+
+        // Draw
+        glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
     }
 }
-
-void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
+void MeshCommand::postBatchDraw()
 {
-    glProgram->setUniformLocationWith4fv(uniform->location, (const float*)_matrixPalette, _matrixPaletteSize);
+    // when using material, unbind is after draw
+    if (!_material)
+    {
+        if (_vao)
+        {
+            GL::bindVAO(0);
+        }
+        else
+        {
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
+
+        // restore the default state since we don't know
+        // if the next command will need the default state or not
+        RenderState::StateBlock::restore(0);
+    }
 }
 
 void MeshCommand::execute()
 {
-    // set render state
-    applyRenderState();
-    
-    // Set material
-    GL::bindTexture2D(_textureID);
-    GL::blendFunc(_blendType.src, _blendType.dst);
-
+    // Draw without VAO
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    _glProgramState->setUniformVec4("u_color", _displayColor);
-    
-    if (_matrixPaletteSize && _matrixPalette)
-    {
-        _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
-        
-    }
-    
-    _glProgramState->apply(_mv);
-    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    // Draw
-    glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-    
-    //restore render state
-    restoreRenderState();
-    
+
+    if (_material)
+    {
+        for(const auto& pass: _material->_currentTechnique->_passes)
+        {
+            pass->bind(_mv, true);
+
+            glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+
+            pass->unbind();
+        }
+    }
+    else
+    {
+        // set render state
+        _glProgramState->apply(_mv);
+
+        applyRenderState();
+
+        // Draw
+        glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+        
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+    }
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
+
+void MeshCommand::buildVAO()
+{
+    // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
+    GLProgramState* programState = (_material != nullptr)
+                                    ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+                                    : _glProgramState;
+
+    releaseVAO();
+    glGenVertexArrays(1, &_vao);
+    GL::bindVAO(_vao);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    auto flags = programState->getVertexAttribsFlags();
+    for (int i = 0; flags > 0; i++) {
+        int flag = 1 << i;
+        if (flag & flags)
+            glEnableVertexAttribArray(i);
+        flags &= ~flag;
+    }
+    programState->applyAttributes(false);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    
+    GL::bindVAO(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+void MeshCommand::releaseVAO()
+{
+    if (_vao)
+    {
+        glDeleteVertexArrays(1, &_vao);
+        _vao = 0;
+        GL::bindVAO(0);
+    }
+}
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+void MeshCommand::listenRendererRecreated(EventCustom* event)
+{
+    _vao = 0;
+}
+
+#endif
 
 NS_CC_END

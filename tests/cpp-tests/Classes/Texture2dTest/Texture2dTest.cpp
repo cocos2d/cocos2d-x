@@ -27,122 +27,87 @@
 #include "Texture2dTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagLabel = 1,
     kTagSprite1 = 2,
     kTagSprite2 = 3,
 };
 
-static std::function<Layer*()> createFunctions[] =
+Texture2DTests::Texture2DTests()
 {
-    CL(TexturePVRv3Premult),
-
-    CL(TextureMipMap),
-    CL(TextureMemoryAlloc),
-    CL(TextureAlias),
-    CL(TexturePVRMipMap),
-    CL(TexturePVRMipMap2),
-    CL(TexturePVRNonSquare),
-    CL(TexturePVRNPOT4444),
-    CL(TexturePVRNPOT8888),
-    CL(TexturePVRTest),
-    CL(TexturePVR2BPP),
-    CL(TexturePVR2BPPv3),
-    CL(TexturePVR4BPP),
-    CL(TexturePVR4BPPv3),
-    CL(TexturePVRII4BPPv3),
-    CL(TexturePVRRGBA8888),
-    CL(TexturePVRRGBA8888v3),
-    CL(TexturePVRBGRA8888),
-    CL(TexturePVRBGRA8888v3),
-    CL(TexturePVRRGBA4444),
-    CL(TexturePVRRGBA4444v3),
-    CL(TexturePVRRGBA4444GZ),
-    CL(TexturePVRRGBA4444CCZ),
-    CL(TexturePVRRGBA5551),
-    CL(TexturePVRRGBA5551v3),
-    CL(TexturePVRRGB565),
-    CL(TexturePVRRGB565v3),
-    CL(TexturePVRRGB888),
-    CL(TexturePVRRGB888v3),
-    CL(TexturePVRA8),
-    CL(TexturePVRA8v3),
-    CL(TexturePVRI8),
-    CL(TexturePVRI8v3),
-    CL(TexturePVRAI88),
-    CL(TexturePVRAI88v3),
+    ADD_TEST_CASE(TextureMipMap);
+    ADD_TEST_CASE(TextureMemoryAlloc);
+    ADD_TEST_CASE(TextureAlias);
+    ADD_TEST_CASE(TexturePVRMipMap);
+    ADD_TEST_CASE(TexturePVRMipMap2);
+    ADD_TEST_CASE(TexturePVRNonSquare);
+    ADD_TEST_CASE(TexturePVRNPOT4444);
+    ADD_TEST_CASE(TexturePVRNPOT8888);
+    ADD_TEST_CASE(TexturePVRTest);
+    ADD_TEST_CASE(TexturePVR2BPP);
+    ADD_TEST_CASE(TexturePVR2BPPv3);
+    ADD_TEST_CASE(TexturePVR4BPP);
+    ADD_TEST_CASE(TexturePVR4BPPv3);
+    ADD_TEST_CASE(TexturePVRII4BPPv3);
+    ADD_TEST_CASE(TexturePVRRGBA8888);
+    ADD_TEST_CASE(TexturePVRRGBA8888v3);
+    ADD_TEST_CASE(TexturePVRBGRA8888);
+    ADD_TEST_CASE(TexturePVRBGRA8888v3);
+    ADD_TEST_CASE(TexturePVRRGBA4444);
+    ADD_TEST_CASE(TexturePVRRGBA4444v3);
+    ADD_TEST_CASE(TexturePVRRGBA4444GZ);
+    ADD_TEST_CASE(TexturePVRRGBA4444CCZ);
+    ADD_TEST_CASE(TexturePVRRGBA5551);
+    ADD_TEST_CASE(TexturePVRRGBA5551v3);
+    ADD_TEST_CASE(TexturePVRRGB565);
+    ADD_TEST_CASE(TexturePVRRGB565v3);
+    ADD_TEST_CASE(TexturePVRRGB888);
+    ADD_TEST_CASE(TexturePVRRGB888v3);
+    ADD_TEST_CASE(TexturePVRA8);
+    ADD_TEST_CASE(TexturePVRA8v3);
+    ADD_TEST_CASE(TexturePVRI8);
+    ADD_TEST_CASE(TexturePVRI8v3);
+    ADD_TEST_CASE(TexturePVRAI88);
+    ADD_TEST_CASE(TexturePVRAI88v3);
     
-    CL(TexturePVRv3Premult),
+    ADD_TEST_CASE(TexturePVRv3Premult);
     
-    CL(TexturePVRBadEncoding),
-    CL(TexturePNG),
-    CL(TextureJPEG),
-    CL(TextureTIFF),
-    CL(TextureTGA),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    CL(TextureWEBP),
+    ADD_TEST_CASE(TexturePVRBadEncoding);
+    ADD_TEST_CASE(TexturePNG);
+    ADD_TEST_CASE(TextureJPEG);
+    ADD_TEST_CASE(TextureTIFF);
+    ADD_TEST_CASE(TextureTGA);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    ADD_TEST_CASE(TextureWEBP);
 #endif
-    CL(TexturePixelFormat),
-    CL(TextureBlend),
-    CL(TextureAsync),
-    CL(TextureGlClamp),
-    CL(TextureGlRepeat),
-    CL(TextureSizeTest),
-    CL(TextureCache1),
-    CL(TextureDrawAtPoint),
-    CL(TextureDrawInRect),
+    ADD_TEST_CASE(TexturePixelFormat);
+    ADD_TEST_CASE(TextureBlend);
+    ADD_TEST_CASE(TextureAsync);
+    ADD_TEST_CASE(TextureGlClamp);
+    ADD_TEST_CASE(TextureGlRepeat);
+    ADD_TEST_CASE(TextureSizeTest);
+    ADD_TEST_CASE(TextureCache1);
+    ADD_TEST_CASE(TextureDrawAtPoint);
+    ADD_TEST_CASE(TextureDrawInRect);
     
-    CL(TextureETC1),
+    ADD_TEST_CASE(TextureETC1);
     
-    CL(TextureS3TCDxt1),
-    CL(TextureS3TCDxt3),
-    CL(TextureS3TCDxt5),
-    CL(TextureS3TCWithNoMipmaps),
+    ADD_TEST_CASE(TextureS3TCDxt1);
+    ADD_TEST_CASE(TextureS3TCDxt3);
+    ADD_TEST_CASE(TextureS3TCDxt5);
+    ADD_TEST_CASE(TextureS3TCWithNoMipmaps);
     
-    CL(TextureATITCRGB),
-    CL(TextureATITCExplicit),
-    CL(TextureATITCInterpolated),
+    ADD_TEST_CASE(TextureATITCRGB);
+    ADD_TEST_CASE(TextureATITCExplicit);
+    ADD_TEST_CASE(TextureATITCInterpolated);
     
-    CL(TextureConvertRGB888),
-    CL(TextureConvertRGBA8888),
-    CL(TextureConvertI8),
-    CL(TextureConvertAI88),
+    ADD_TEST_CASE(TextureConvertRGB888);
+    ADD_TEST_CASE(TextureConvertRGBA8888);
+    ADD_TEST_CASE(TextureConvertI8);
+    ADD_TEST_CASE(TextureConvertAI88);
 };
-
-static unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
-
-static int sceneIdx=-1;
-Layer* createTextureTest(int index)
-{
-    auto layer = (createFunctions[index])();;
-    return layer;
-}
-
-Layer* nextTextureTest();
-Layer* backTextureTest();
-Layer* restartTextureTest();
-
-Layer* nextTextureTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % TEST_CASE_COUNT;
-
-    return createTextureTest(sceneIdx);
-}
-
-Layer* backTextureTest()
-{
-    sceneIdx--;
-    if( sceneIdx < 0 )
-        sceneIdx = TEST_CASE_COUNT -1;    
-
-    return createTextureTest(sceneIdx);
-}
-
-Layer* restartTextureTest()
-{
-    return createTextureTest(sceneIdx);
-}
 
 //------------------------------------------------------------------
 //
@@ -151,14 +116,12 @@ Layer* restartTextureTest()
 //------------------------------------------------------------------
 void TextureDemo::onEnter()
 {
-    BaseTest::onEnter();
-
-    auto textureCache = Director::getInstance()->getTextureCache();
-    log("%s\n", textureCache->getCachedTextureInfo().c_str());
+    TestCase::onEnter();
 
     auto col = LayerColor::create(Color4B(128,128,128,255));
     addChild(col, -10);
-    
+
+    auto textureCache = Director::getInstance()->getTextureCache();
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
 }
 
@@ -167,37 +130,6 @@ TextureDemo::~TextureDemo()
     auto textureCache = Director::getInstance()->getTextureCache();
     textureCache->removeUnusedTextures();
     log("%s\n", textureCache->getCachedTextureInfo().c_str());
-}
-
-void TextureDemo::restartCallback(Ref* sender)
-{
-    auto s = TextureTestScene::create();
-    s->addChild(restartTextureTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-void TextureDemo::nextCallback(Ref* sender)
-{
-    auto s = TextureTestScene::create();
-    s->addChild(nextTextureTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-void TextureDemo::backCallback(Ref* sender)
-{
-    auto s = TextureTestScene::create();
-    s->addChild(backTextureTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-std::string TextureDemo::title() const
-{
-    return "No title";
-}
-
-std::string TextureDemo::subtitle() const
-{
-    return "";
 }
 
 //------------------------------------------------------------------
@@ -370,8 +302,8 @@ void TextureMipMap::onEnter()
     auto scale2 = scale1->clone();
     auto sc_back2 = scale2->reverse();
 
-    img0->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
-    img1->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
+    img0->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, nullptr)));
+    img1->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, nullptr)));
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 }
 
@@ -420,8 +352,8 @@ void TexturePVRMipMap::onEnter()
         auto scale2 = scale1->clone();
         auto sc_back2 = scale2->reverse();
         
-        imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
-        img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
+        imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, nullptr)));
+        img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, nullptr)));
     }
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 }
@@ -463,8 +395,8 @@ void TexturePVRMipMap2::onEnter()
     auto scale2 = scale1->clone();
     auto sc_back2 = scale2->reverse();
     
-    imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, NULL)));
-    img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, NULL)));
+    imgMipMap->runAction(RepeatForever::create(Sequence::create(scale1, sc_back, nullptr)));
+    img->runAction(RepeatForever::create(Sequence::create(scale2, sc_back2, nullptr)));
     log("%s\n", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
 }
 
@@ -760,7 +692,7 @@ void TexturePVRRGB888::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto img = Sprite::create("Images/test_image_rgb888.pvr");
-    if (img != NULL)
+    if (img != nullptr)
     {
         img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
         addChild(img);
@@ -1361,7 +1293,7 @@ void TextureAlias::onEnter()
     // scale them to show
     auto sc = ScaleBy::create(3, 8.0f);
     auto sc_back = sc->reverse();
-    auto scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, NULL));
+    auto scaleforever = RepeatForever::create(Sequence::create(sc, sc_back, nullptr));
     auto scaleToo = scaleforever->clone();
 
     sprite2->runAction(scaleforever);
@@ -1456,7 +1388,7 @@ void TexturePixelFormat::onEnter()
 
     auto fadeout = FadeOut::create(2);
     auto fadein  = FadeIn::create(2);
-    auto seq = Sequence::create(DelayTime::create(2), fadeout, fadein, NULL);
+    auto seq = Sequence::create(DelayTime::create(2), fadeout, fadein, nullptr);
     auto seq_4ever = RepeatForever::create(seq);
     auto seq_4ever2 = seq_4ever->clone();
     auto seq_4ever3 = seq_4ever->clone();
@@ -1551,33 +1483,35 @@ void TextureAsync::onEnter()
 
     auto scale = ScaleBy::create(0.3f, 2);
     auto scale_back = scale->reverse();
-    auto seq = Sequence::create(scale, scale_back, NULL);
+    auto seq = Sequence::create(scale, scale_back, nullptr);
     label->runAction(RepeatForever::create(seq));
 
-    scheduleOnce(schedule_selector(TextureAsync::loadImages), 1.0f);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(TextureAsync::loadImages), 1.0f);
 }
 
 TextureAsync::~TextureAsync()
 {
-    Director::getInstance()->getTextureCache()->unbindAllImageAsync();
-    Director::getInstance()->getTextureCache()->removeAllTextures();
+    auto textureCache = Director::getInstance()->getTextureCache();
+    textureCache->unbindAllImageAsync();
+    textureCache->removeAllTextures();
 }
 
 void TextureAsync::loadImages(float dt)
 {
+    auto textureCache = Director::getInstance()->getTextureCache();
     for( int i=0;i < 8;i++) {
         for( int j=0;j < 8; j++) {
             char szSpriteName[100] = {0};
             sprintf(szSpriteName, "Images/sprites_test/sprite-%d-%d.png", i, j);
-            Director::getInstance()->getTextureCache()->addImageAsync(szSpriteName, CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+            textureCache->addImageAsync(szSpriteName, CC_CALLBACK_1(TextureAsync::imageLoaded, this));
         }
     }
 
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background1.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background2.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/background.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/atlastest.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
-    Director::getInstance()->getTextureCache()->addImageAsync("Images/grossini_dance_atlas.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/background1.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/background2.jpg", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/background.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/atlastest.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
+    textureCache->addImageAsync("Images/grossini_dance_atlas.png", CC_CALLBACK_1(TextureAsync::imageLoaded, this));
 }
 
 
@@ -1638,7 +1572,7 @@ void TextureGlClamp::onEnter()
     sprite->runAction(rotate);
     auto scale = ScaleBy::create(2, 0.04f);
     auto scaleBack = scale->reverse();
-    auto seq = Sequence::create(scale, scaleBack, NULL);
+    auto seq = Sequence::create(scale, scaleBack, nullptr);
     sprite->runAction(seq);
 }
 
@@ -1675,7 +1609,7 @@ void TextureGlRepeat::onEnter()
     sprite->runAction(rotate);
     auto scale = ScaleBy::create(2, 0.04f);
     auto scaleBack = scale->reverse();
-    auto seq = Sequence::create(scale, scaleBack, NULL);
+    auto seq = Sequence::create(scale, scaleBack, nullptr);
     sprite->runAction(seq);
 }
 
@@ -1697,7 +1631,7 @@ TextureGlRepeat::~TextureGlRepeat()
 void TextureSizeTest::onEnter()
 {
     TextureDemo::onEnter();
-    Sprite *sprite = NULL;
+    Sprite *sprite = nullptr;
     
     log("Loading 512x512 image...");
     sprite = Sprite::create("Images/texture512x512.png");
@@ -1824,7 +1758,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
 {
     TextureDemo::draw(renderer, transform, flags);
     
-    _renderCmd.init(_globalZOrder);
+    _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 
@@ -1867,7 +1801,7 @@ void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t
 {
     TextureDemo::draw(renderer, transform, flags);
 
-    _renderCmd.init(_globalZOrder);
+    _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
     renderer->addCommand(&_renderCmd);
 }
@@ -1902,25 +1836,13 @@ std::string TextureDrawInRect::subtitle() const
 
 //------------------------------------------------------------------
 //
-// TextureTestScene
-//
-//------------------------------------------------------------------
-void TextureTestScene::runThisTest()
-{
-    auto layer = nextTextureTest();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
-}
-
-//------------------------------------------------------------------
-//
 // TextureMemoryAlloc
 //
 //------------------------------------------------------------------
 void TextureMemoryAlloc::onEnter()
 {
     TextureDemo::onEnter();
-    _background = NULL;
+    _background = nullptr;
     
     MenuItemFont::setFontSize(24);
     
@@ -1939,14 +1861,14 @@ void TextureMemoryAlloc::onEnter()
     auto item5 = MenuItemFont::create("A8", CC_CALLBACK_1(TextureMemoryAlloc::updateImage, this));
     item5->setTag(4);
     
-    auto menu = Menu::create(item1, item2, item3, item4, item5, NULL);
+    auto menu = Menu::create(item1, item2, item3, item4, item5, nullptr);
     menu->alignItemsHorizontally();
     
     addChild(menu);
     
     auto warmup = MenuItemFont::create("warm up texture", CC_CALLBACK_1(TextureMemoryAlloc::changeBackgroundVisible, this));
     
-    auto menu2 = Menu::create(warmup, NULL);
+    auto menu2 = Menu::create(warmup, nullptr);
 
     menu2->alignItemsHorizontally();
     
@@ -1978,36 +1900,20 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
 	switch (tag) 
     {
 		case 0:
-			file = "Images/background.png";
+			file = "Images/test_image.png";
 			break;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-            // android can not pack .gz file into apk file
         case 1:
-            file = "Images/fire_rgba8888.pvr";
+            file = "Images/test_image_rgba8888.pvr";
             break;
         case 2:
-            file = "Images/grossini_pvr_rgba8888.pvr";
+            file = "Images/test_image_rgb888.pvr";
             break;
         case 3:
-            file = "Images/grossini_pvr_rgba4444.pvr";
+            file = "Images/test_image_rgba4444.pvr";
             break;
         case 4:
             file = "Images/test_image_a8.pvr";
             break;
-#else
-		case 1:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 2:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 3:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-		case 4:
-			file = "Images/test_image_rgba4444.pvr.gz";
-			break;
-#endif
 	}
 
     _background = Sprite::create(file.c_str());
@@ -2074,7 +1980,7 @@ void TexturePVRv3Premult::transformSprite(cocos2d::Sprite *sprite)
     auto fade = FadeOut::create(2);
     auto dl = DelayTime::create(2);
     auto fadein = fade->reverse();
-    auto seq = Sequence::create(fade, fadein, dl, NULL);
+    auto seq = Sequence::create(fade, fadein, dl, nullptr);
     auto repeat = RepeatForever::create(seq);
     sprite->runAction(repeat);
 }

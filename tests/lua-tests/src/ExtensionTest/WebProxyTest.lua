@@ -1,5 +1,4 @@
- 
- local function WebSocketTestLayer()
+local function WebSocketTestLayer()
     local layer   = cc.Layer:create()
     local winSize = cc.Director:getInstance():getWinSize()
         

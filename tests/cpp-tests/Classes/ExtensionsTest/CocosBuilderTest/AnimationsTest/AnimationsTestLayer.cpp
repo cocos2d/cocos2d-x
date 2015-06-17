@@ -15,7 +15,7 @@ AnimationsTestLayer::~AnimationsTestLayer()
 
 SEL_MenuHandler AnimationsTestLayer::onResolveCCBCCMenuItemSelector(Ref * pTarget, const char * pSelectorName)
 {
-    return NULL;
+    return nullptr;
 }
 
 Control::Handler AnimationsTestLayer::onResolveCCBCCControlSelector(Ref *pTarget, const char*pSelectorName)
@@ -25,7 +25,7 @@ Control::Handler AnimationsTestLayer::onResolveCCBCCControlSelector(Ref *pTarget
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonJumpClicked", AnimationsTestLayer::onControlButtonJumpClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onCCControlButtonFunkyClicked", AnimationsTestLayer::onControlButtonFunkyClicked);
 
-    return NULL;
+    return nullptr;
 }
 
 bool AnimationsTestLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {

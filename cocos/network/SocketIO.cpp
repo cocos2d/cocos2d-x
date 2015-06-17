@@ -28,12 +28,13 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
+#include <algorithm>
+#include <sstream>
+#include <iterator>
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "WebSocket.h"
 #include "HttpClient.h"
-#include <algorithm>
-#include <sstream>
 
 NS_CC_BEGIN
 
@@ -120,7 +121,7 @@ void SIOClientImpl::handshake()
     std::stringstream pre;
     pre << "http://" << _uri << "/socket.io/1";
 
-    HttpRequest* request = new HttpRequest();
+    HttpRequest* request = new (std::nothrow) HttpRequest();
     request->setUrl(pre.str().c_str());
     request->setRequestType(HttpRequest::Type::GET);
 
@@ -216,7 +217,7 @@ void SIOClientImpl::openSocket()
     std::stringstream s;
     s << _uri << "/socket.io/1/websocket/" << _sid;
 
-    _ws = new WebSocket();
+    _ws = new (std::nothrow) WebSocket();
     if (!_ws->init(*this, s.str()))
     {
         CC_SAFE_DELETE(_ws);
@@ -258,7 +259,7 @@ void SIOClientImpl::disconnect()
 
 SIOClientImpl* SIOClientImpl::create(const std::string& host, int port)
 {
-    SIOClientImpl *s = new SIOClientImpl(host, port);
+    SIOClientImpl *s = new (std::nothrow) SIOClientImpl(host, port);
 
     if (s && s->init())
     {
@@ -359,7 +360,7 @@ void SIOClientImpl::onOpen(WebSocket* ws)
         iter->second->onOpen();
     }
 
-    Director::getInstance()->getScheduler()->schedule(schedule_selector(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
+    Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 
     log("SIOClientImpl::onOpen socket connected!");
 }
@@ -401,9 +402,9 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 
 
     s_data = payload;
-    SIOClient *c = NULL;
+    SIOClient *c = nullptr;
     c = getClient(endpoint);
-    if (c == NULL) log("SIOClientImpl::onMessage client lookup returned NULL");
+    if (c == nullptr) log("SIOClientImpl::onMessage client lookup returned nullptr");
 
     switch(control)
     {
@@ -595,7 +596,7 @@ SocketIO::~SocketIO(void)
 SocketIO* SocketIO::getInstance()
 {
     if (nullptr == _inst)
-        _inst = new SocketIO();
+        _inst = new (std::nothrow) SocketIO();
 
     return _inst;
 }
@@ -660,7 +661,7 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
         //create a new socket, new client, connect
         socket = SIOClientImpl::create(host, port);
 
-        c = new SIOClient(host, port, path, socket, delegate);
+        c = new (std::nothrow) SIOClient(host, port, path, socket, delegate);
 
         socket->addClient(path, c);
 
@@ -671,9 +672,9 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
         //check if already connected to endpoint, handle
         c = socket->getClient(path);
 
-        if(c == NULL)
+        if(c == nullptr)
         {
-            c = new SIOClient(host, port, path, socket, delegate);
+            c = new (std::nothrow) SIOClient(host, port, path, socket, delegate);
 
             socket->addClient(path, c);
 

@@ -25,14 +25,13 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCMenu.h"
 #include "base/CCDirector.h"
-#include "CCApplication.h"
 #include "base/CCTouch.h"
-#include "CCStdC.h"
 #include "base/CCEventListenerTouch.h"
+#include "base/CCEventDispatcher.h"
+#include "platform/CCStdC.h"
 #include "deprecated/CCString.h"
 
 #include <vector>
-#include <stdarg.h>
 
 using namespace std;
 
@@ -58,7 +57,7 @@ Menu* Menu::create()
     return Menu::create(nullptr, nullptr);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Menu * Menu::variadicCreate(MenuItem* item, ...)
 {
     va_list args;
@@ -89,7 +88,7 @@ Menu * Menu::create(MenuItem* item, ...)
 
 Menu* Menu::createWithArray(const Vector<MenuItem*>& arrayOfItems)
 {
-    auto ret = new Menu();
+    auto ret = new (std::nothrow) Menu();
     if (ret && ret->initWithArray(arrayOfItems))
     {
         ret->autorelease();
@@ -141,7 +140,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         setAnchorPoint(Vec2(0.5f, 0.5f));
         this->setContentSize(s);
 
-        setPosition(Vec2(s.width/2, s.height/2));
+        setPosition(s.width/2, s.height/2);
         
         int z=0;
         
@@ -191,6 +190,12 @@ void Menu::addChild(Node * child, int zOrder, int tag)
 {
     CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
     Layer::addChild(child, zOrder, tag);
+}
+
+void Menu::addChild(Node * child, int zOrder, const std::string &name)
+{
+    CCASSERT( dynamic_cast<MenuItem*>(child) != nullptr, "Menu only supports MenuItem objects as children");
+    Layer::addChild(child, zOrder, name);
 }
 
 void Menu::onEnter()
@@ -315,7 +320,7 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
     float y = height / 2.0f;
     
     for(const auto &child : _children) {
-        child->setPosition(Vec2(0, y - child->getContentSize().height * child->getScaleY() / 2.0f));
+        child->setPosition(0, y - child->getContentSize().height * child->getScaleY() / 2.0f);
         y -= child->getContentSize().height * child->getScaleY() + padding;
     }
 }
@@ -334,7 +339,7 @@ void Menu::alignItemsHorizontallyWithPadding(float padding)
     float x = -width / 2.0f;
     
     for(const auto &child : _children) {
-        child->setPosition(Vec2(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0));
+        child->setPosition(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0);
         x += child->getContentSize().width * child->getScaleX() + padding;
     }
 }
@@ -413,8 +418,8 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
         float tmp = child->getContentSize().height;
         rowHeight = (unsigned int)((rowHeight >= tmp || isnan(tmp)) ? rowHeight : tmp);
 
-        child->setPosition(Vec2(x - winSize.width / 2,
-                               y - child->getContentSize().height / 2));
+        child->setPosition(x - winSize.width / 2,
+                               y - child->getContentSize().height / 2);
 
         x += w;
         ++columnsOccupied;
@@ -514,8 +519,8 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
         float tmp = child->getContentSize().width;
         columnWidth = (unsigned int)((columnWidth >= tmp || isnan(tmp)) ? columnWidth : tmp);
 
-        child->setPosition(Vec2(x + columnWidths[column] / 2,
-                               y - winSize.height / 2));
+        child->setPosition(x + columnWidths[column] / 2,
+                               y - winSize.height / 2);
 
         y -= child->getContentSize().height + 10;
         ++rowsOccupied;
@@ -544,7 +549,7 @@ MenuItem* Menu::getItemForTouch(Touch *touch)
             {
                 Vec2 local = child->convertToNodeSpace(touchLocation);
                 Rect r = child->rect();
-                r.origin = Vec2::ZERO;
+                r.origin.setZero();
                 
                 if (r.containsPoint(local))
                 {

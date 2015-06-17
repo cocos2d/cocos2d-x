@@ -3,6 +3,7 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
+#include "lua_module_register.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -20,30 +21,20 @@ AppDelegate::~AppDelegate()
     //CCScriptEngineManager::destroyInstance();
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    // initialize director
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
-        glview = GLView::create("Lua Empty Test");
-        director->setOpenGLView(glview);
-    }
-    
-    director->setOpenGLView(glview);
-    
-    glview->setDesignResolutionSize(480, 320, ResolutionPolicy::NO_BORDER);
-
-    // turn on display FPS
-    director->setDisplayStats(true);
-
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
-
     // register lua engine
     LuaEngine* engine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_module_register(L);
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
     engine->executeString("require 'src/hello.lua'");

@@ -30,7 +30,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * no
     NodeLoaderLibrary * ccNodeLoaderLibrary = NodeLoaderLibrary::newDefaultNodeLoaderLibrary();
 
     ccNodeLoaderLibrary->registerNodeLoader("TestHeaderLayer", TestHeaderLayerLoader::loader());
-    if(nodeName != NULL && nodeLoader != NULL) {
+    if(nodeName != nullptr && nodeLoader != nullptr) {
         ccNodeLoaderLibrary->registerNodeLoader(nodeName, nodeLoader);
     }
 
@@ -48,7 +48,7 @@ void HelloCocosBuilderLayer::openTest(const char * pCCBFileName, const char * no
     this->mTestTitleLabelTTF->setString(pCCBFileName);
 
     auto scene = Scene::create();
-    if(node != NULL) {
+    if(node != nullptr) {
         scene->addChild(node);
     }
 
@@ -70,7 +70,7 @@ void HelloCocosBuilderLayer::onNodeLoaded(cocos2d::Node * node,  cocosbuilder::N
 
 
 SEL_MenuHandler HelloCocosBuilderLayer::onResolveCCBCCMenuItemSelector(Ref * pTarget, const char * pSelectorName) {
-    return NULL;    
+    return nullptr;    
 }
 
 Control::Handler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(Ref * pTarget, const char * pSelectorName) {
@@ -82,7 +82,7 @@ Control::Handler HelloCocosBuilderLayer::onResolveCCBCCControlSelector(Ref * pTa
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onScrollViewTestClicked", HelloCocosBuilderLayer::onScrollViewTestClicked);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "onTimelineCallbackSoundClicked", HelloCocosBuilderLayer::onTimelineCallbackSoundClicked);
     
-    return NULL;
+    return nullptr;
 }
 
 bool HelloCocosBuilderLayer::onAssignCCBMemberVariable(Ref * pTarget, const char * pMemberVariableName, Node * pNode) {
@@ -164,7 +164,7 @@ void HelloCocosBuilderLayer::onAnimationsTestClicked(Ref * sender, Control::Even
     this->mTestTitleLabelTTF->setString("TestAnimations.ccbi");
     
     auto scene = Scene::create();
-    if(animationsTest != NULL) {
+    if(animationsTest != nullptr) {
         scene->addChild(animationsTest);
     }
     

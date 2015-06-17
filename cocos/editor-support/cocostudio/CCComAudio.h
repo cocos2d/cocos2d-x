@@ -27,14 +27,16 @@ THE SOFTWARE.
 
 #include "CCComBase.h"
 #include "2d/CCComponent.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
-class ComAudio : public cocos2d::Component
+class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
 
     DECLARE_CLASS_COMPONENT_INFO
-protected:
+
+public:
     /**
      * @js ctor
      */
@@ -57,6 +59,16 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	virtual void onAdd() override;
+	/**
+	* @js NA
+	* @lua NA
+	*/
+	virtual void onRemove() override;
     virtual bool isEnabled() const override;
     virtual void setEnabled(bool b) override;
     virtual bool serialize(void* r) override;

@@ -36,7 +36,7 @@ namespace cocostudio {
 
 ArmatureAnimation *ArmatureAnimation::create(Armature *armature)
 {
-    ArmatureAnimation *pArmatureAnimation = new ArmatureAnimation();
+    ArmatureAnimation *pArmatureAnimation = new (std::nothrow) ArmatureAnimation();
     if (pArmatureAnimation && pArmatureAnimation->init(armature))
     {
         pArmatureAnimation->autorelease();
@@ -153,7 +153,7 @@ void ArmatureAnimation::setSpeedScale(float speedScale)
         bone->getTween()->setProcessScale(_processScale);
         if (bone->getChildArmature())
         {
-            bone->getChildArmature()->getAnimation()->setProcessScale(_processScale);
+            bone->getChildArmature()->getAnimation()->setSpeedScale(_processScale);
         }
     }
 }
@@ -166,10 +166,20 @@ float ArmatureAnimation::getSpeedScale() const
 
 void ArmatureAnimation::play(const std::string& animationName, int durationTo,  int loop)
 {
-    CCASSERT(_animationData, "_animationData can not be null");
+    if (animationName.empty())
+    {
+        CCLOG("_animationData can not be null");
+        return;
+    }
+//    CCASSERT(_animationData, "_animationData can not be null");
 
     _movementData = _animationData->getMovement(animationName.c_str());
-    CCASSERT(_movementData, "_movementData can not be null");
+    if (nullptr == _movementData)
+    {
+        CCLOG("_movementData can not be null");
+        return;
+    }
+//    CCASSERT(_movementData, "_movementData can not be null");
 
     //! Get key frame count
     _rawDuration = _movementData->duration;
@@ -228,7 +238,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
 
             if (bone->getChildArmature())
             {
-                bone->getChildArmature()->getAnimation()->setProcessScale(_processScale);
+                bone->getChildArmature()->getAnimation()->setSpeedScale(_processScale);
             }
         }
         else
@@ -340,6 +350,12 @@ void ArmatureAnimation::update(float dt)
     for (const auto &tween : _tweenList)
     {
         tween->update(dt);
+    }
+
+    if(_frameEventQueue.size() > 0 || _movementEventQueue.size() > 0)
+    {
+        _armature->retain();
+        _armature->autorelease();
     }
 
     while (_frameEventQueue.size() > 0)
@@ -485,7 +501,7 @@ void ArmatureAnimation::frameEvent(Bone *bone, const std::string& frameEventName
 {
     if ((_frameEventTarget && _frameEventCallFunc) || _frameEventListener)
     {
-        FrameEvent *frameEvent = new FrameEvent();
+        FrameEvent *frameEvent = new (std::nothrow) FrameEvent();
         frameEvent->bone = bone;
         frameEvent->frameEventName = frameEventName;
         frameEvent->originFrameIndex = originFrameIndex;
@@ -500,7 +516,7 @@ void ArmatureAnimation::movementEvent(Armature *armature, MovementEventType move
 {
     if ((_movementEventTarget && _movementEventCallFunc) || _movementEventListener)
     {
-        MovementEvent *movementEvent = new MovementEvent();
+        MovementEvent *movementEvent = new (std::nothrow) MovementEvent();
         movementEvent->armature = armature;
         movementEvent->movementType = movementType;
         movementEvent->movementID = movementID;

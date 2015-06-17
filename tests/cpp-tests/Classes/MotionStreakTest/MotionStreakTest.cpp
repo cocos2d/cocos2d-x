@@ -1,52 +1,21 @@
 #include "MotionStreakTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
 	kTagLabel = 1,
 	kTagSprite1 = 2,
 	kTagSprite2 = 3,
 };
 
-Layer* nextMotionAction();
-Layer* backMotionAction();
-Layer* restartMotionAction();
-
-static int sceneIdx = -1;
-
-static std::function<Layer*()> createFunctions[] =
+MotionStreakTests::MotionStreakTests()
 {
-	CL(MotionStreakTest1),
-    CL(MotionStreakTest2),
-    CL(Issue1358),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextMotionAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(MotionStreakTest1);
+    ADD_TEST_CASE(MotionStreakTest2);
+    ADD_TEST_CASE(Issue1358);
 }
 
-Layer* backMotionAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartMotionAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
 //------------------------------------------------------------------
 //
 // MotionStreakTest1
@@ -73,13 +42,13 @@ void MotionStreakTest1::onEnter()
     streak = MotionStreak::create(2, 3, 32, Color3B::GREEN, s_streak);
     addChild(streak);
     // schedule an update on each frame so we can syncronize the streak with the target
-    schedule(schedule_selector(MotionStreakTest1::onUpdate));
+    schedule(CC_SCHEDULE_SELECTOR(MotionStreakTest1::onUpdate));
   
     auto a1 = RotateBy::create(2, 360);
 
     auto action1 = RepeatForever::create(a1);
     auto motion = MoveBy::create(2, Vec2(100,0) );
-    _root->runAction( RepeatForever::create(Sequence::create(motion, motion->reverse(), NULL) ) );
+    _root->runAction( RepeatForever::create(Sequence::create(motion, motion->reverse(), nullptr) ) );
     _root->runAction( action1 );
 
     auto colorAction = RepeatForever::create(Sequence::create(
@@ -90,7 +59,7 @@ void MotionStreakTest1::onEnter()
         TintTo::create(0.2f, 255, 255, 0),
         TintTo::create(0.2f, 255, 0, 255),
         TintTo::create(0.2f, 255, 255, 255),
-        NULL));
+        nullptr));
 
     streak->runAction(colorAction);
 }
@@ -161,7 +130,7 @@ void Issue1358::onEnter()
     _radius = size.width/3;
     _angle = 0.0f;
     
-    schedule(schedule_selector(Issue1358::update), 0);
+    schedule(CC_SCHEDULE_SELECTOR(Issue1358::update), 0);
 }
 
 void Issue1358::update(float dt)
@@ -207,16 +176,16 @@ std::string MotionStreakTest::subtitle() const
 
 void MotionStreakTest::onEnter()
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
     auto s = Director::getInstance()->getWinSize();
 
     auto itemMode = MenuItemToggle::createWithCallback( CC_CALLBACK_1(MotionStreakTest::modeCallback, this),
         MenuItemFont::create("Use High Quality Mode"),
         MenuItemFont::create("Use Fast Mode"),
-        NULL);
+        nullptr);
 
-    auto menuMode = Menu::create(itemMode, NULL);
+    auto menuMode = Menu::create(itemMode, nullptr);
     addChild(menuMode);
 
     menuMode->setPosition(Vec2(s.width/2, s.height/4));
@@ -226,37 +195,4 @@ void MotionStreakTest::modeCallback(Ref *pSender)
 {
     bool fastMode = streak->isFastMode();
     streak->setFastMode(! fastMode);
-}
-
-void MotionStreakTest::restartCallback(Ref* sender)
-{
-    auto s = new MotionStreakTestScene();//CCScene::create();
-    s->addChild(restartMotionAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MotionStreakTest::nextCallback(Ref* sender)
-{
-    auto s = new MotionStreakTestScene();//CCScene::create();
-    s->addChild( nextMotionAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MotionStreakTest::backCallback(Ref* sender)
-{
-    auto s = new MotionStreakTestScene;//CCScene::create();
-    s->addChild( backMotionAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void MotionStreakTestScene::runThisTest()
-{
-    auto layer = nextMotionAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

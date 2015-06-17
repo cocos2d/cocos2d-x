@@ -1,6 +1,8 @@
 #include "FontTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagLabel1,
     kTagLabel2,
@@ -12,31 +14,16 @@ enum {
     kTagColor3,
 };
 
-static int fontIdx = 0;
-
+//you don't need any ifdef anymore
 static std::string fontList[] =
 {
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC))
-    // custom ttf files are defined in Test-info.plist
-    "American Typewriter",
-    "Marker Felt",
-    "A Damn Mess",
-    "Abberancy",
-    "Abduction",
-    "Paint Boy",
-    "Schwarzwald Regular",
-    "Scissor Cuts",
-#else
     "fonts/A Damn Mess.ttf",
     "fonts/Abberancy.ttf",
     "fonts/Abduction.ttf",
     "fonts/Paint Boy.ttf",
-    "fonts/Schwarzwald Regular.ttf",
+    "fonts/Schwarzwald.ttf",
     "fonts/Scissor Cuts.ttf",
-#endif
 };
-
-static int fontCount = sizeof(fontList) / sizeof(*fontList);
 
 static int vAlignIdx = 0;
 static TextVAlignment verticalAlignment[] =
@@ -45,44 +32,27 @@ static TextVAlignment verticalAlignment[] =
     TextVAlignment::CENTER,
     TextVAlignment::BOTTOM,
 };
-static int vAlignCount = sizeof(verticalAlignment) / sizeof(*verticalAlignment);
 
-static const char* nextAction(void)
+
+FontTests::FontTests()
 {
-    fontIdx++;
-    if(fontIdx >= fontCount) {
-        fontIdx = 0;
-        vAlignIdx = (vAlignIdx + 1) % vAlignCount;
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){vAlignIdx = 0; return FontTest::create(fontFile); });
     }
-    return fontList[fontIdx].c_str();
-}
-
-static const char* backAction(void)
-{
-    fontIdx--;
-    if( fontIdx < 0 ) {
-        fontIdx = fontCount - 1;
-        vAlignIdx--;
-        if(vAlignIdx < 0)
-            vAlignIdx = vAlignCount - 1;
+    
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){ vAlignIdx = 1;  return FontTest::create(fontFile); });
     }
-
-    return fontList[fontIdx].c_str();
+    
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){vAlignIdx = 2; return FontTest::create(fontFile); });
+    }
 }
 
-static const char* restartAction(void)
-{
-    return fontList[fontIdx].c_str();
-}
-
-
-FontTest::FontTest()
-: BaseTest()
-{
-    showFont(restartAction());
-}
-
-void FontTest::showFont(const char *pFont)
+void FontTest::showFont(const std::string& fontFile)
 {
     auto s = Director::getInstance()->getWinSize();
 
@@ -97,12 +67,12 @@ void FontTest::showFont(const char *pFont)
     removeChildByTag(kTagColor2, true);
     removeChildByTag(kTagColor3, true);
 
-    auto top = Label::createWithSystemFont(pFont, pFont, 24);
-    auto left = Label::createWithSystemFont("alignment left", pFont, fontSize,
+    auto top = Label::createWithSystemFont(fontFile, fontFile, 24);
+    auto left = Label::createWithSystemFont("alignment left", fontFile, fontSize,
                                           blockSize, TextHAlignment::LEFT, verticalAlignment[vAlignIdx]);
-    auto center = Label::createWithSystemFont("alignment center", pFont, fontSize,
+    auto center = Label::createWithSystemFont("alignment center", fontFile, fontSize,
                                             blockSize, TextHAlignment::CENTER, verticalAlignment[vAlignIdx]);
-    auto right = Label::createWithSystemFont("alignment right", pFont, fontSize,
+    auto right = Label::createWithSystemFont("alignment right", fontFile, fontSize,
                                            blockSize, TextHAlignment::RIGHT, verticalAlignment[vAlignIdx]);
 
     auto leftColor = LayerColor::create(Color4B(100, 100, 100, 255), blockSize.width, blockSize.height);
@@ -122,12 +92,12 @@ void FontTest::showFont(const char *pFont)
     right->setAnchorPoint(Vec2(0,0.5));
     rightColor->setAnchorPoint(Vec2(0,0.5));
 
-    top->setPosition(Vec2(s.width/2,s.height-20));
-    left->setPosition(Vec2(0,s.height/2));
+    top->setPosition(s.width/2,s.height-20);
+    left->setPosition(0,s.height/2);
     leftColor->setPosition(left->getPosition());
-    center->setPosition(Vec2(blockSize.width, s.height/2));
+    center->setPosition(blockSize.width, s.height/2);
     centerColor->setPosition(center->getPosition());
-    right->setPosition(Vec2(blockSize.width*2, s.height/2));
+    right->setPosition(blockSize.width*2, s.height/2);
     rightColor->setPosition(right->getPosition());
 
     this->addChild(leftColor, -1, kTagColor1);
@@ -139,35 +109,7 @@ void FontTest::showFont(const char *pFont)
     this->addChild(top, 0, kTagLabel4);
 }
 
-void FontTest::backCallback(Ref* sender)
-{
-    showFont(backAction());
-}
-
-void FontTest::nextCallback(Ref* sender)
-{
-    showFont(nextAction());
-}
-
 std::string FontTest::title() const
 {
     return "Font test";
-}
-
-void FontTest::restartCallback(Ref* sender)
-{
-    showFont(restartAction());
-}
-
-///---------------------------------------
-// 
-// DirectorTestScene
-// 
-///---------------------------------------
-void FontTestScene::runThisTest()
-{
-    auto layer = FontTest::create();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

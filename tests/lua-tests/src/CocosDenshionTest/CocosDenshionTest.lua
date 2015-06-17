@@ -1,4 +1,3 @@
-require "AudioEngine" 
 local EFFECT_FILE = "effect1.wav"
 
 local MUSIC_FILE = nil 
@@ -23,7 +22,7 @@ local function CocosDenshionTest()
         "pause background music",
         "resume background music",
         "rewind background music",
-        "is background music playing",
+        "is background music playing(output on the console)",
         "play effect",
         "play effect repeatly",
         "stop effect",

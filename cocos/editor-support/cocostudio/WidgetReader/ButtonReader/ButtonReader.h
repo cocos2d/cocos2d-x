@@ -25,23 +25,34 @@
 #ifndef __TestCpp__ButtonReader__
 #define __TestCpp__ButtonReader__
 
-#include "../WidgetReader.h"
+#include "cocostudio/WidgetReader/WidgetReader.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
-    class ButtonReader : public WidgetReader
+    class CC_STUDIO_DLL ButtonReader : public WidgetReader
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:        
         ButtonReader();
         virtual ~ButtonReader();
         
         static ButtonReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                 const rapidjson::Value& options);
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);                
+        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* buttonOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* buttonOptions);
+        
+        int getResourceType(std::string key);    
         
     };
 }

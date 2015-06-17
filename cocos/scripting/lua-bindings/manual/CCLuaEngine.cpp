@@ -33,6 +33,12 @@
 #include "lua_cocos2dx_coco_studio_manual.hpp"
 #include "lua_cocos2dx_ui_manual.hpp"
 
+#if _MSC_VER > 1800
+#pragma comment(lib,"lua51-2015.lib")
+#else
+#pragma comment(lib,"lua51.lib")
+#endif
+
 NS_CC_BEGIN
 
 LuaEngine* LuaEngine::_defaultEngine = nullptr;
@@ -41,7 +47,7 @@ LuaEngine* LuaEngine::getInstance(void)
 {
     if (!_defaultEngine)
     {
-        _defaultEngine = new LuaEngine();
+        _defaultEngine = new (std::nothrow) LuaEngine();
         _defaultEngine->init();
     }
     return _defaultEngine;
@@ -57,9 +63,6 @@ bool LuaEngine::init(void)
 {
     _stack = LuaStack::create();
     _stack->retain();
-    executeScriptFile("DeprecatedEnum.lua");
-    executeScriptFile("DeprecatedClass.lua");
-    executeScriptFile("Deprecated.lua");
     return true;
 }
 

@@ -28,12 +28,12 @@
 
 #include "base/ccTypes.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
+
+NS_CC_BEGIN
 
 /** @file CCVertex.h */
 
@@ -46,10 +46,11 @@ bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Cx, float Cy,
                              float Dx, float Dy, float *T);
 
-// end of data_structures group
-/// @}
-
 NS_CC_END
+
+
+// end of base group
+/// @}
 
 #endif /* __CCVERTEX_H__ */
 

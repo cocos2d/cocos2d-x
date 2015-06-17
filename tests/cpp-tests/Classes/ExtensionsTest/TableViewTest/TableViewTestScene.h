@@ -3,17 +3,16 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
+#include "BaseTest.h"
 
-void runTableViewTest();
+DEFINE_TEST_SUITE(TableViewTests);
 
-class TableViewTestLayer : public cocos2d::Layer, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
+class TableViewTest : public TestCase, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
 {
 public:
-    virtual bool init();  
-   
-	void toExtensionsMainLayer(cocos2d::Ref *sender);
+    CREATE_FUNC(TableViewTest);
 
-    CREATE_FUNC(TableViewTestLayer);
+    virtual bool init() override;  
     
     virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) {};
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) {}

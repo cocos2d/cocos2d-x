@@ -62,7 +62,7 @@ local function LuaBridgeLayer()
         if (cc.PLATFORM_OS_ANDROID == targetPlatform) then
             local args = { 2 , 3}
             local sigs = "(II)I"
-            local luaj = require "luaj"
+            local luaj = require "cocos.cocos2d.luaj"
             local className = "com/cocos2dx/sample/LuaJavaBridgeTest/LuaJavaBridgeTest"
             local ok,ret  = luaj.callStaticMethod(className,"addTwoNumbers",args,sigs)
             if not ok then
@@ -101,7 +101,7 @@ local function LuaBridgeLayer()
         subtitleLabel:setString("See the console.")
         if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_MAC == targetPlatform) then
             local args = { num1 = 2 , num2 = 3 }
-            local luaoc = require "luaoc"
+            local luaoc = require "cocos.cocos2d.luaoc"
             local className = "LuaObjectCBridgeTest"
             local ok,ret  = luaoc.callStaticMethod(className,"addTwoNumbers",args)
             if not ok then

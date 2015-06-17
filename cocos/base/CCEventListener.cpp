@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "base/CCEventListener.h"
-#include "platform/CCCommon.h"
+#include "base/CCConsole.h"
 
 NS_CC_BEGIN
 

@@ -1,38 +1,22 @@
 #ifndef __PERFORMANCE_SCENARIO_TEST_H__
 #define __PERFORMANCE_SCENARIO_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class ScenarioMenuLayer : public PerformBasicLayer
+DEFINE_TEST_SUITE(PerformceScenarioTests);
+
+class ScenarioTest : public TestCase
 {
 public:
-    ScenarioMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-        :PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
+    CREATE_FUNC(ScenarioTest);
 
-    virtual void showCurrentTest();
-
-    virtual void onEnter() override;
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
-    virtual void performTests() = 0;
-};
-
-class ScenarioTest : public ScenarioMenuLayer
-{
-public:
-    ScenarioTest(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-        :ScenarioMenuLayer(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
-
+    virtual bool init() override;
     virtual std::string title() const override;
     virtual void performTests();
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) ;
 
-    static Scene* scene();
+    static cocos2d::Scene* scene();
 
 private:
     void addNewSprites(int num);
@@ -52,18 +36,16 @@ private:
     static int _initParsysNum;
     static int _parsysStepNum;
 
-    TMXTiledMap* _map1;
-    TMXTiledMap* _map2;
+    cocos2d::TMXTiledMap* _map1;
+    cocos2d::TMXTiledMap* _map2;
 
-    MenuItemToggle* _itemToggle;
-    Vector<Sprite*> _spriteArray;
-    Vector<ParticleSystemQuad*> _parsysArray;
-    Label* _spriteLabel;
-    Label* _particleLabel;
-    Label* _parsysLabel;
+    cocos2d::MenuItemToggle* _itemToggle;
+    cocos2d::Vector<cocos2d::Sprite*> _spriteArray;
+    cocos2d::Vector<cocos2d::ParticleSystemQuad*> _parsysArray;
+    cocos2d::Label* _spriteLabel;
+    cocos2d::Label* _particleLabel;
+    cocos2d::Label* _parsysLabel;
     int _particleNumber;
 };
-
-void runScenarioTest();
 
 #endif

@@ -68,16 +68,6 @@ Vec3::~Vec3()
 {
 }
 
-bool Vec3::isZero() const
-{
-    return x == 0.0f && y == 0.0f && z == 0.0f;
-}
-
-bool Vec3::isOne() const
-{
-    return x == 1.0f && y == 1.0f && z == 1.0f;
-}
-
 float Vec3::angle(const Vec3& v1, const Vec3& v2)
 {
     float dx = v1.y * v2.z - v1.z * v2.y;
@@ -85,13 +75,6 @@ float Vec3::angle(const Vec3& v1, const Vec3& v2)
     float dz = v1.x * v2.y - v1.y * v2.x;
 
     return atan2f(sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
-}
-
-void Vec3::add(const Vec3& v)
-{
-    x += v.x;
-    y += v.y;
-    z += v.z;
 }
 
 void Vec3::add(const Vec3& v1, const Vec3& v2, Vec3* dst)
@@ -196,23 +179,6 @@ float Vec3::dot(const Vec3& v1, const Vec3& v2)
     return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-float Vec3::length() const
-{
-    return sqrt(x * x + y * y + z * z);
-}
-
-float Vec3::lengthSquared() const
-{
-    return (x * x + y * y + z * z);
-}
-
-void Vec3::negate()
-{
-    x = -x;
-    y = -y;
-    z = -z;
-}
-
 void Vec3::normalize()
 {
     float n = x * x + y * y + z * z;
@@ -238,50 +204,6 @@ Vec3 Vec3::getNormalized() const
     return v;
 }
 
-void Vec3::scale(float scalar)
-{
-    x *= scalar;
-    y *= scalar;
-    z *= scalar;
-}
-
-void Vec3::set(float xx, float yy, float zz)
-{
-    this->x = xx;
-    this->y = yy;
-    this->z = zz;
-}
-
-void Vec3::set(const float* array)
-{
-    GP_ASSERT(array);
-
-    x = array[0];
-    y = array[1];
-    z = array[2];
-}
-
-void Vec3::set(const Vec3& v)
-{
-    this->x = v.x;
-    this->y = v.y;
-    this->z = v.z;
-}
-
-void Vec3::set(const Vec3& p1, const Vec3& p2)
-{
-    x = p2.x - p1.x;
-    y = p2.y - p1.y;
-    z = p2.z - p1.z;
-}
-
-void Vec3::subtract(const Vec3& v)
-{
-    x -= v.x;
-    y -= v.y;
-    z -= v.z;
-}
-
 void Vec3::subtract(const Vec3& v1, const Vec3& v2, Vec3* dst)
 {
     GP_ASSERT(dst);
@@ -299,10 +221,10 @@ void Vec3::smooth(const Vec3& target, float elapsedTime, float responseTime)
     }
 }
 
-const Vec3 Vec3::ZERO = Vec3(0.0f, 0.0f, 0.0f);
-const Vec3 Vec3::ONE = Vec3(1.0f, 1.0f, 1.0f);
-const Vec3 Vec3::UNIT_X = Vec3(1.0f, 0.0f, 0.0f);
-const Vec3 Vec3::UNIT_Y = Vec3(0.0f, 1.0f, 0.0f);
-const Vec3 Vec3::UNIT_Z = Vec3(0.0f, 0.0f, 1.0f);
+const Vec3 Vec3::ZERO(0.0f, 0.0f, 0.0f);
+const Vec3 Vec3::ONE(1.0f, 1.0f, 1.0f);
+const Vec3 Vec3::UNIT_X(1.0f, 0.0f, 0.0f);
+const Vec3 Vec3::UNIT_Y(0.0f, 1.0f, 0.0f);
+const Vec3 Vec3::UNIT_Z(0.0f, 0.0f, 1.0f);
 
 NS_CC_MATH_END

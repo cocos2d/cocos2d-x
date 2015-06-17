@@ -13,7 +13,7 @@ uniform vec4 u_textColor;
 void main() 
 {
     float dist = texture2D(CC_Texture0, v_texCoord).a;
-    //todo:Implementation 'fwidth' for glsl 1.0 \n
+    //TODO: Implementation 'fwidth' for glsl 1.0 \n
     //float width = fwidth(dist); \n
     //assign width for constant will lead to a little bit fuzzy,it's temporary measure.\n
     float width = 0.04; 

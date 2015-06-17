@@ -28,31 +28,39 @@
 #include <string>
 #include <unordered_map>
 #include "base/ccTypes.h"
-#include "base/CCMap.h"
 
 NS_CC_BEGIN
 
-class Sprite3D;
-class Mesh;
-class EventListenerCustom;
-class EventCustom;
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Texture2D;
 
 /**
- * the sprite3D material is only texture for now
+ * @brief the sprite3D material is only texture for now
+ * @js NA
+ * @lua NA
  */
 class Sprite3DMaterialCache
 {
 public:
-    
+    /**get & destroy cache*/
     static Sprite3DMaterialCache* getInstance();
+
+    /**destroy the instance*/
     static void destroyInstance();
     
+    /**add to cache*/
     bool addSprite3DMaterial(const std::string& key, Texture2D* tex);
     
+    /**get material from cache*/
     Texture2D* getSprite3DMaterial(const std::string& key);
     
+    /**remove all spritematerial*/
     void removeAllSprite3DMaterial();
+    /**remove unused spritematerial*/
     void removeUnusedSprite3DMaterial();
     
 CC_CONSTRUCTOR_ACCESS:
@@ -61,10 +69,13 @@ CC_CONSTRUCTOR_ACCESS:
     ~Sprite3DMaterialCache();
     
 protected:
-    static Sprite3DMaterialCache* _cacheInstance;
-    std::unordered_map<std::string, Texture2D*> _materials; //
+    static Sprite3DMaterialCache* _cacheInstance;//instance
+    std::unordered_map<std::string, Texture2D*> _materials; //cached material
     
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

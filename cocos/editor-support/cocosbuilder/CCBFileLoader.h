@@ -2,14 +2,13 @@
 #define _CCB_CCBFILELOADER_H_
 
 #include "CCNodeLoader.h"
-#include "CCBReader.h"
 
 namespace cocosbuilder {
 
 /* Forward declaration. */
 class CCBReader;
 
-class CCBFileLoader : public NodeLoader {
+class CC_DLL CCBFileLoader : public NodeLoader {
     public:
         /**
          * @js NA

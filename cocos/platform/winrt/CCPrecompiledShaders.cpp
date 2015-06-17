@@ -27,13 +27,6 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "sha1.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "platform/winrt/shaders/precompiledshaders.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "platform/wp8/shaders/precompiledshaders.h"
-#endif
-
-
 using namespace Windows::Graphics::Display;
 using namespace Windows::Storage;
 using namespace Platform;
@@ -135,6 +128,25 @@ void CCPrecompiledShaders::loadPrecompiledPrograms()
 #endif
 }
 
+void CCPrecompiledShaders::addPrecompiledProgram(const char* key, const unsigned char* program, int programLength)
+{
+    std::string id = key;
+    PrecompiledProgram* p = nullptr;
+    auto it = m_precompiledPrograms.find(id);
+    if (it != m_precompiledPrograms.end())
+    {
+        p = it->second;
+    }
+    else
+    {
+        p = new PrecompiledProgram();
+        m_precompiledPrograms[id] = p;
+    }
+    p->key = key;
+    p->program = program;
+    p->length = programLength;
+}
+
 bool CCPrecompiledShaders::loadProgram(GLuint program, const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
     std::string id = computeHash(vShaderByteArray, fShaderByteArray);
@@ -173,7 +185,7 @@ bool CCPrecompiledShaders::addProgram(GLuint program, const std::string& id)
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(WP8_SHADER_COMPILER)
 
 void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFolder^ folder)
 {

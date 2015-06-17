@@ -22,7 +22,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "AssetsManager.h"
-#include "cocos2d.h"
 
 #include <curl/curl.h>
 #include <curl/easy.h>
@@ -30,15 +29,23 @@
 #include <vector>
 #include <thread>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <dirent.h>
 #endif
 
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
+#include "base/CCUserDefault.h"
+#include "platform/CCFileUtils.h"
 
+#ifdef MINIZIP_FROM_SYSTEM
+#include <minizip/unzip.h>
+#else // from our embedded sources
 #include "unzip.h"
+#endif
 
 using namespace cocos2d;
 using namespace std;
@@ -77,11 +84,11 @@ struct ProgressMessage
 
 // Implementation of AssetsManager
 
-AssetsManager::AssetsManager(const char* packageUrl/* =NULL */, const char* versionFileUrl/* =NULL */, const char* storagePath/* =NULL */)
-:  _storagePath(storagePath)
+AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* versionFileUrl/* =nullptr */, const char* storagePath/* =nullptr */)
+:  _storagePath(storagePath ? storagePath : "")
 , _version("")
-, _packageUrl(packageUrl)
-, _versionFileUrl(versionFileUrl)
+, _packageUrl(packageUrl ? packageUrl : "")
+, _versionFileUrl(versionFileUrl ? versionFileUrl : "")
 , _downloadedVersion("")
 , _curl(nullptr)
 , _connectionTimeout(0)
@@ -159,6 +166,7 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(_curl, CURLOPT_FOLLOWLOCATION, 1 );
     res = curl_easy_perform(_curl);
     
     if (res != 0)
@@ -172,8 +180,7 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
-    string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
-    if (recordedVersion == _version)
+    if (getVersion() == _version)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
             if (this->_delegate)
@@ -209,6 +216,8 @@ void AssetsManager::downloadAndUncompress()
         if (! uncompress())
         {
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
+            	UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(),"");
+                UserDefault::getInstance()->flush();
                 if (this->_delegate)
                     this->_delegate->onError(ErrorCode::UNCOMPRESS);
             });
@@ -309,9 +318,9 @@ bool AssetsManager::uncompress()
                                   &fileInfo,
                                   fileName,
                                   MAX_FILENAME,
-                                  NULL,
+                                  nullptr,
                                   0,
-                                  NULL,
+                                  nullptr,
                                   0) != UNZ_OK)
         {
             CCLOG("can not read file info");
@@ -349,7 +358,7 @@ bool AssetsManager::uncompress()
             {
                 const string dir=_storagePath+fileNameStr.substr(0,index);
                 
-                FILE *out = fopen(dir.c_str(), "r");
+                FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(dir).c_str(), "r");
                 
                 if(!out)
                 {
@@ -388,7 +397,7 @@ bool AssetsManager::uncompress()
             }
             
             // Create a file to store current file.
-            FILE *out = fopen(fullPath.c_str(), "wb");
+            FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), "wb");
             if (! out)
             {
                 CCLOG("can not open destination file %s", fullPath.c_str());
@@ -444,7 +453,16 @@ bool AssetsManager::uncompress()
  */
 bool AssetsManager::createDirectory(const char *path)
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    return FileUtils::getInstance()->createDirectory(_storagePath.c_str());
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    BOOL ret = CreateDirectoryA(path, nullptr);
+    if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+    {
+        return false;
+    }
+    return true;
+#else
     mode_t processMask = umask(0);
     int ret = mkdir(path, S_IRWXU | S_IRWXG | S_IRWXO);
     umask(processMask);
@@ -452,16 +470,11 @@ bool AssetsManager::createDirectory(const char *path)
     {
         return false;
     }
-    
-    return true;
-#else
-    BOOL ret = CreateDirectoryA(path, NULL);
-	if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
-	{
-		return false;
-	}
+
     return true;
 #endif
+
+
 }
 
 void AssetsManager::setSearchPath()
@@ -482,7 +495,10 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     static int percent = 0;
-    int tmp = (int)(nowDownloaded / totalToDownload * 100);
+    int tmp = 0;
+    if (totalToDownload > 0) {
+        tmp = (int)(nowDownloaded / totalToDownload * 100);
+    }
     
     if (percent != tmp)
     {
@@ -503,7 +519,7 @@ bool AssetsManager::downLoad()
 {
     // Create a file to save package.
     const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    FILE *fp = fopen(outFileName.c_str(), "wb");
+    FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "wb");
     if (! fp)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
@@ -525,6 +541,7 @@ bool AssetsManager::downLoad()
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
+    curl_easy_setopt(_curl, CURLOPT_FOLLOWLOCATION, 1 );
 
     res = curl_easy_perform(_curl);
     curl_easy_cleanup(_curl);
@@ -620,8 +637,8 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
         SuccessCallback successCallback;
     };
 
-    auto* manager = new AssetsManager(packageUrl,versionFileUrl,storagePath);
-    auto* delegate = new DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
+    auto* manager = new (std::nothrow) AssetsManager(packageUrl,versionFileUrl,storagePath);
+    auto* delegate = new (std::nothrow) DelegateProtocolImpl(errorCallback,progressCallback,successCallback);
     manager->setDelegate(delegate);
     manager->_shouldDeleteDelegateWhenExit = true;
     manager->autorelease();
@@ -631,18 +648,19 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
 void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    DIR *dir = NULL;
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    FileUtils::getInstance()->createDirectory(_storagePath.c_str());
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+        CreateDirectoryA(_storagePath.c_str(), 0);
+    }
+#else
+    DIR *dir = nullptr;
     dir = opendir (_storagePath.c_str());
     if (!dir)
     {
         mkdir(_storagePath.c_str(), S_IRWXU | S_IRWXG | S_IRWXO);
-    }
-#else    
-    if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
-    {
-        CreateDirectoryA(_storagePath.c_str(), 0);
     }
 #endif
 }
@@ -653,16 +671,18 @@ void AssetsManager::destroyStoragePath()
     deleteVersion();
     
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-    string command = "rm -r ";
-    // Path may include space.
-    command += "\"" + _storagePath + "\"";
-    system(command.c_str());    
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    FileUtils::getInstance()->removeDirectory(_storagePath.c_str());
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     string command = "rd /s /q ";
     // Path may include space.
     command += "\"" + _storagePath + "\"";
     system(command.c_str());
+#else
+    string command = "rm -r ";
+    // Path may include space.
+    command += "\"" + _storagePath + "\"";
+    system(command.c_str());    
 #endif
 }
 

@@ -1,6 +1,8 @@
 #include "EffectsTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagTextLayer = 1,
 
@@ -8,7 +10,6 @@ enum {
     kTagLabel = 2,
 };
 
-static int actionIdx=0; 
 static std::string effectsList[] =
 {
     "Shaky3D",
@@ -35,6 +36,15 @@ static std::string effectsList[] =
     "PageTurn3D",
 }; 
 
+EffectTests::EffectTests()
+{
+    int index = 0;
+    for (auto& effectName : effectsList)
+    {
+        addTestCase(effectName, [index](){return EffectBaseTest::create(index); });
+        index++;
+    }
+}
 
 class Shaky3DDemo : public Shaky3D 
 {
@@ -63,7 +73,7 @@ public:
         auto flipx_back = flipx->reverse();
         auto delay = DelayTime::create(2);
         
-        return Sequence::create(flipx, delay, flipx_back, NULL);
+        return Sequence::create(flipx, delay, flipx_back, nullptr);
     }
 };
 
@@ -76,7 +86,7 @@ public:
         auto flipy_back = flipy->reverse();
         auto delay = DelayTime::create(2);
         
-        return Sequence::create(flipy, delay, flipy_back, NULL);
+        return Sequence::create(flipy, delay, flipy_back, nullptr);
     }
 };
 
@@ -162,7 +172,7 @@ public:
         auto shuffle_back = shuffle->reverse();
         auto delay = DelayTime::create(2);
 
-        return Sequence::create(shuffle, delay, shuffle_back, NULL);
+        return Sequence::create(shuffle, delay, shuffle_back, nullptr);
     }
 };
 
@@ -176,7 +186,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -190,7 +200,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -204,7 +214,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -217,7 +227,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -230,7 +240,7 @@ public:
         auto back = fadeout->reverse();
         auto delay = DelayTime::create(0.5f);
 
-        return Sequence::create(fadeout, delay, back, NULL);
+        return Sequence::create(fadeout, delay, back, nullptr);
     }
 };
 
@@ -275,17 +285,15 @@ class PageTurn3DDemo : public PageTurn3D
 public:
     static ActionInterval* create(float t)
     {
-        Director::getInstance()->setDepthTest(true);
         return PageTurn3D::create(t, Size(15,10)); 
     }
 };
 
 //------------------------------------------------------------------
 //
-// TextLayer
+// EffectBaseTest
 //
 //------------------------------------------------------------------
-#define MAX_LAYER    22
 
 ActionInterval* createEffect(int nIndex, float t)
 {
@@ -318,123 +326,55 @@ ActionInterval* createEffect(int nIndex, float t)
         case 21: return PageTurn3DDemo::create(t);
     }
 
-    return NULL;
-}
-
-ActionInterval* getAction()
-{
-    auto pEffect = createEffect(actionIdx, 3);
-
-    return pEffect;
-} 
-
-void EffectTestScene::runThisTest()
-{
-    addChild(TextLayer::create());
-    Director::getInstance()->replaceScene(this);
+    return nullptr;
 }
 
 #define SID_RESTART        1
 
-TextLayer::TextLayer(void)
-: BaseTest()
+EffectBaseTest::EffectBaseTest(int actionIdx)
 {
 	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
 	this->addChild(background,-20);
     
     _gridNodeTarget = NodeGrid::create();
-    auto effect = getAction();
+    auto effect = createEffect(actionIdx, 3); 
     _gridNodeTarget->runAction(effect);
     addChild(_gridNodeTarget, 0, kTagBackground);
     
     auto bg = Sprite::create(s_back3);
     _gridNodeTarget->addChild(bg, 0);
-//  bg->setAnchorPoint( Vec2::ZERO );
     bg->setPosition(VisibleRect::center());
 
     auto grossini = Sprite::create(s_pathSister2);
     _gridNodeTarget->addChild(grossini, 1);
-    grossini->setPosition( Vec2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    grossini->setPosition(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
-    grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, NULL) ) );
+    grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
 
     auto tamara = Sprite::create(s_pathSister1);
     _gridNodeTarget->addChild(tamara, 1);
-    tamara->setPosition( Vec2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    tamara->setPosition(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
-    tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, NULL)) );
+    tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr)) );
     
     auto label = Label::createWithTTF((effectsList[actionIdx]).c_str(), "fonts/Marker Felt.ttf", 32);
     
-    label->setPosition( Vec2(VisibleRect::center().x,VisibleRect::top().y-80) );
+    label->setPosition(VisibleRect::center().x,VisibleRect::top().y-80);
     addChild(label);
     label->setTag( kTagLabel );
     
-    schedule( schedule_selector(TextLayer::checkAnim) );
+    schedule( CC_SCHEDULE_SELECTOR(EffectBaseTest::checkAnim) );
 }
 
-void TextLayer::checkAnim(float dt)
+void EffectBaseTest::checkAnim(float dt)
 {
     //auto s2 = getChildByTag(kTagBackground);
-    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != NULL)
+    if ( _gridNodeTarget->getNumberOfRunningActions() == 0 && _gridNodeTarget->getGrid() != nullptr)
         _gridNodeTarget->setGrid(nullptr);;
 }
 
-
-TextLayer::~TextLayer(void)
+EffectBaseTest::~EffectBaseTest(void)
 {
 }
-
-// TextLayer* TextLayer::node()
-// {
-//     return TextLayer::create();
-// }
-
-TextLayer* TextLayer::create()
-{
-    auto layer = new TextLayer();
-    layer->autorelease();
-    
-    return layer;
-}
-
-void TextLayer::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void TextLayer::newScene()
-{
-    auto s = new EffectTestScene();
-    auto child = TextLayer::create();
-    s->addChild(child);
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextLayer::restartCallback(Ref* sender)
-{
-    newScene();
-}
-
-void TextLayer::nextCallback(Ref* sender)
-{
-    // update the action index
-    actionIdx++;
-    actionIdx = actionIdx % MAX_LAYER;
-
-    newScene();
-}
-
-void TextLayer::backCallback(Ref* sender)
-{
-    // update the action index
-    actionIdx--;
-    int total = MAX_LAYER;
-    if( actionIdx < 0 )
-        actionIdx += total;    
-
-    newScene();
-} 

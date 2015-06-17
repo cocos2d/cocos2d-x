@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>187d3e60-961a-41ee-bc18-c510a431d22e</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>f8868b9a-1bec-48df-b4b6-294815dc7a5d</UniqueIdentifier>
+      <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Image Include="Assets\Logo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SmallLogo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Filter Include="Cocos2dEngine">
+      <UniqueIdentifier>{6b9ca606-5a38-4479-a7ec-01bdfeda67bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{a18967bc-4fa1-4c67-bf7e-3f9c8b6a1129}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp" />
+    <ClCompile Include="Cocos2dEngine\Cocos2dRenderer.cpp">
+      <Filter>Cocos2dEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Cocos2dEngine\OpenGLES.cpp">
+      <Filter>Cocos2dEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Cocos2dEngine\OpenGLESPage.xaml.cpp" />
+    <ClCompile Include="..\..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\HelloWorldScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.xaml.h" />
+    <ClInclude Include="Cocos2dEngine\Cocos2dRenderer.h">
+      <Filter>Cocos2dEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Cocos2dEngine\OpenGLES.h">
+      <Filter>Cocos2dEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Cocos2dEngine\OpenGLESPage.xaml.h" />
+    <ClInclude Include="..\..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\HelloWorldScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\WideLogo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HelloCpp_TemporaryKey.pfx" />
+    <None Include="$(AngleBinPath)libEGL.dll" />
+    <None Include="$(AngleBinPath)libGLESv2.dll" />
+    <None Include="$(ZLibBinPath)zlib.dll" />
+    <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
+    <None Include="$(SQLiteBinPath)sqlite3.dll" />
+    <None Include="$(OggBinPath)libogg.dll" />
+    <None Include="$(OggBinPath)libvorbis.dll" />
+    <None Include="$(OggBinPath)libvorbisfile.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Cocos2dEngine\OpenGLESPage.xaml">
+      <Filter>Cocos2dEngine</Filter>
+    </Page>
+  </ItemGroup>
+</Project>

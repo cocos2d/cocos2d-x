@@ -39,6 +39,14 @@ CCSSceneReader.cpp \
 TriggerBase.cpp \
 TriggerMng.cpp \
 TriggerObj.cpp \
+CocoLoader.cpp \
+WidgetReader/NodeReader/NodeReader.cpp \
+WidgetReader/SingleNodeReader/SingleNodeReader.cpp \
+WidgetReader/SpriteReader/SpriteReader.cpp \
+WidgetReader/ParticleReader/ParticleReader.cpp \
+WidgetReader/GameMapReader/GameMapReader.cpp \
+WidgetReader/ProjectNodeReader/ProjectNodeReader.cpp \
+WidgetReader/ComAudioReader/ComAudioReader.cpp \
 WidgetReader/WidgetReader.cpp \
 WidgetReader/ButtonReader/ButtonReader.cpp \
 WidgetReader/CheckBoxReader/CheckBoxReader.cpp \
@@ -53,25 +61,32 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
+WidgetReader/Node3DReader/Node3DReader.cpp \
+WidgetReader/Sprite3DReader/Sprite3DReader.cpp \
+WidgetReader/UserCameraReader/UserCameraReader.cpp \
+WidgetReader/Particle3DReader/Particle3DReader.cpp \
+ActionTimeline/CCActionTimelineCache.cpp \
+ActionTimeline/CCFrame.cpp \
+ActionTimeline/CCTimeLine.cpp \
+ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CCActionTimelineNode.cpp \
+ActionTimeline/CSLoader.cpp \
+FlatBuffersSerialize.cpp \
+WidgetCallBackHandlerProtocol.cpp \
+WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
+CCObjectExtensionData.cpp \
+CocoStudio.cpp
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../../external
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/../../../external \
-$(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../..
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
-LOCAL_CFLAGS += -Wno-psabi -fexceptions
-LOCAL_EXPORT_CFLAGS += -Wno-psabi
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
+                    $(LOCAL_PATH)/WidgetReader
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ui_static
+LOCAL_CFLAGS += -fexceptions
+
+LOCAL_STATIC_LIBRARIES := cocos_ui_static
+LOCAL_STATIC_LIBRARIES += cocosdenshion_static
+LOCAL_STATIC_LIBRARIES += cocos_flatbuffers_static
 
 include $(BUILD_STATIC_LIBRARY)
-
-$(call import-module,.)
-$(call import-module,audio/android)
-$(call import-module,ui)
-

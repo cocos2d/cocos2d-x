@@ -26,25 +26,24 @@
 #ifndef _TRANSITIONS_TEST_H_
 #define _TRANSITIONS_TEST_H_
 
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-USING_NS_CC;
 
-class TransitionsTestScene : public TestScene
+DEFINE_TEST_SUITE(TransitionsTests);
+
+class TransitionsTest : public TestCase
 {
 public:
-    virtual void runThisTest();
+    CREATE_FUNC(TransitionsTest);
 };
 
-class TestLayer1 : public Layer
+class TestLayer1 : public cocos2d::Layer
 {
 public:
-    TestLayer1(void);
-    ~TestLayer1(void);
+    static TestLayer1* create(const std::string& transitionName);
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    TestLayer1(const std::string& transitionName);
+    ~TestLayer1();
 
     void step(float dt);
 
@@ -54,15 +53,13 @@ public:
     virtual void onExit() override;
 };
 
-class TestLayer2 : public Layer
+class TestLayer2 : public cocos2d::Layer
 {
 public:
-    TestLayer2(void);
-    ~TestLayer2(void);
+    static TestLayer2* create(const std::string& transitionName);
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    TestLayer2(const std::string& transitionName);
+    ~TestLayer2();
 
     void step(float dt);
 

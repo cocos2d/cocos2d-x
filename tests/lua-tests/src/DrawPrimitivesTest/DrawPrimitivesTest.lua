@@ -175,9 +175,69 @@ local function drawPrimitivesMainLayer()
         local draw = cc.DrawNode:create()
         layer:addChild(draw, 10)
 
+        --draw 1 point
+        draw:drawPoint(cc.p(60,60), 4, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+
+        --draw 4 small points
+        local fourpoints = { cc.p(60,60), cc.p(70,70), cc.p(60,70), cc.p(70,60) }
+        draw:drawPoints(fourpoints, 4, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+
+        --draw a line
+        draw:drawLine(cc.p(0,0), cc.p(size.width, size.height), cc.c4f(0,1,0,1))
+        
+        --draw a rectangle
+        draw:drawRect(cc.p(23,23), cc.p(7,7), cc.c4f(1,1,0,1))
+
+        --draw a solid polygon
+        local vertices3 = { cc.p(60,160), cc.p(70,190), cc.p(100,190), cc.p(90,160) }
+        draw:drawSolidPoly( vertices3, 4, cc.c4f(0,0,1,1) )
+    
+        --draw a solid rectangle
+        draw:drawSolidRect(cc.p(10,10), cc.p(20,20), cc.c4f(1,1,0,1))
+
+        --draw a solid circle
+        draw:drawSolidCircle(cc.p(VisibleRect:center().x + 140 ,VisibleRect:center().y), 100, math.pi/2, 50, 1.0, 2.0, cc.c4f(1,0,0,0.2))
+        
+        --draw open random color poly
+        local vertices = { cc.p(0,0), cc.p(50,50), cc.p(100,50), cc.p(100,100), cc.p(50,100) }
+        draw:drawPoly( vertices, 5, false, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+        
+        --draw closed random color poly
+        local vertices2 = { cc.p(30,130), cc.p(30,230), cc.p(50,200) }
+        draw:drawPoly( vertices2, 3, true, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+        
+        --draw two circle
+        draw:drawCircle(cc.p(VisibleRect:center().x + 140 ,VisibleRect:center().y), 110, math.pi/2, 50, true, 1.0, 2.0, cc.c4f(1.0, 0.0, 0.0, 0.5))
+    
+        draw:drawCircle(cc.p(VisibleRect:center().x - 140 ,VisibleRect:center().y), 50, math.pi/2, 30, false, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+        
+        --draw some beziers
+        draw:drawQuadBezier(cc.p(size.width - 150, size.height - 150), cc.p(size.width - 70, size.height - 10), cc.p(size.width - 10, size.height - 10), 10, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 0.5))
+    
+        draw:drawQuadBezier(cc.p(0, size.height), cc.p(size.width/2, size.height/2), cc.p(size.width, size.height), 50, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 0.5))
+    
+        draw:drawCubicBezier(cc.p(VisibleRect:center()), cc.p(VisibleRect:center().x+30,VisibleRect:center().y+50), cc.p(VisibleRect:center().x+60,VisibleRect:center().y-50),VisibleRect:right(),100, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 0.5))
+
+        --draw Cardinal spline and catmullrom
+        local array = {
+                cc.p(0, 0),
+                cc.p(size.width / 2 - 30, 0),
+                cc.p(size.width / 2 - 30, size.height - 80),
+                cc.p(0, size.height - 80),
+                cc.p(0, 0) }
+        draw:drawCardinalSpline(array, 0.5, 50, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 0.5))
+
+        local array2 = {
+                cc.p(size.width / 2, 30),
+                cc.p(size.width - 80, 30),
+                cc.p(size.width - 80, size.height - 80),
+                cc.p(size.width / 2, size.height - 80),
+                cc.p(size.width / 2, 30) }
+        draw:drawCatmullRom(array2, 50, cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 0.5))
+
         --Draw 10 circles
         for i=1, 10 do
-            draw:drawDot(cc.p(size.width/2, size.height/2), 10*(10-i), cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 1))
+            draw:drawDot(cc.p(size.width/2, size.height/2), 10*(10-i), cc.c4f(math.random(0,1), math.random(0,1), math.random(0,1), 0.5))
         end
 
         --Draw polygons

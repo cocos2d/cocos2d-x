@@ -1,5 +1,6 @@
 local guiSceneManager =  {}
 guiSceneManager.currentUISceneIdx = 1
+local font_TextName   =  "fonts/Marker Felt.ttf"
 
 local UIScene = class("UIScene")
 UIScene.__index = UIScene
@@ -27,9 +28,6 @@ function UIScene:init()
     local root = self._uiLayer:getChildByTag(81)
 
     self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")--getWidgetByName
-    back_label:setVisible(false)
 
     local function previousCallback(sender, eventType)
         if eventType == ccui.TouchEventType.ended then
@@ -102,11 +100,11 @@ end
 function UIButtonTest:initExtend()
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIButtonTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -114,11 +112,11 @@ function UIButtonTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("Button")
-    alert:setFontName(font_UIButtonTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)        
     alert:setColor(cc.c3b(159, 168, 176))                
         
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)        
     
     local function touchEvent(sender,eventType)
@@ -166,11 +164,11 @@ function UIButtonScale9Test:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIButtonTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -178,10 +176,10 @@ function UIButtonScale9Test:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("Button scale9 render")
-    alert:setFontName(font_UIButtonTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
@@ -201,7 +199,7 @@ function UIButtonScale9Test:initExtend()
     button:setScale9Enabled(true)
     button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
-    button:setSize(cc.size(150, button:getVirtualRendererSize().height * 1.5))
+    button:setContentSize(cc.size(150, button:getVirtualRendererSize().height * 1.5))
     button:addTouchEventListener(touchEvent)
     self._uiLayer:addChild(button)
 end
@@ -231,12 +229,12 @@ function UIButtonPressedActionTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIButtonTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -244,10 +242,10 @@ function UIButtonPressedActionTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("Button Pressed Action")
-    alert:setFontName(font_UIButtonTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
@@ -296,12 +294,12 @@ function UITextButtonTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIButtonTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -309,10 +307,10 @@ function UITextButtonTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("TextButton")
-    alert:setFontName(font_UIButtonTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
@@ -361,11 +359,11 @@ function UITextButtonScale9Test:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
           
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIButtonTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -373,10 +371,10 @@ function UITextButtonScale9Test:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("TextButton scale9 render")
-    alert:setFontName(font_UIButtonTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function touchEvent(sender,eventType)
@@ -395,7 +393,7 @@ function UITextButtonScale9Test:initExtend()
     textButton:setTouchEnabled(true)
     textButton:setScale9Enabled(true)
     textButton:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
-    textButton:setSize(cc.size(180, textButton:getVirtualRendererSize().height * 1.5))
+    textButton:setContentSize(cc.size(180, textButton:getVirtualRendererSize().height * 1.5))
     textButton:setTitleText("Text Button scale9 render")
     textButton:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     textButton:addTouchEventListener(touchEvent)        
@@ -427,11 +425,11 @@ function UICheckBoxTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
           
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIButtonTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -439,10 +437,10 @@ function UICheckBoxTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("CheckBox")
-    alert:setFontName(font_UICheckBoxTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function selectedEvent(sender,eventType)
@@ -455,6 +453,7 @@ function UICheckBoxTest:initExtend()
         
     local checkBox = ccui.CheckBox:create()
     checkBox:setTouchEnabled(true)
+    checkBox:setSelectedState(true)
     checkBox:loadTextures("cocosui/check_box_normal.png",
                                "cocosui/check_box_normal_press.png",
                                "cocosui/check_box_active.png",
@@ -492,11 +491,11 @@ function UISliderTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
           
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move the slider thumb")
-    self._displayValueLabel:setFontName(font_UISliderTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -504,10 +503,10 @@ function UISliderTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("Slider")
-    alert:setFontName(font_UISliderTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function percentChangedEvent(sender,eventType)
@@ -554,11 +553,11 @@ function UISliderScale9Test:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
           
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move the slider thumb")
-    self._displayValueLabel:setFontName(font_UISliderTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -566,10 +565,10 @@ function UISliderScale9Test:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("Slider scale9 render")
-    alert:setFontName(font_UISliderTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function percentChangedEvent(sender,eventType)
@@ -587,7 +586,7 @@ function UISliderScale9Test:initExtend()
     slider:loadProgressBarTexture("cocosui/slider_bar_active_9patch.png")
     slider:setScale9Enabled(true)
     slider:setCapInsets(cc.rect(0, 0, 0, 0))
-    slider:setSize(cc.size(250, 10))
+    slider:setContentSize(cc.size(250, 10))
     slider:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
     slider:addEventListener(percentChangedEvent)
 
@@ -618,19 +617,19 @@ function UIImageViewTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("ImageView")
-    alert:setFontName(font_UIImageViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local imageView = ccui.ImageView:create()
     imageView:loadTexture("cocosui/ccicon.png")
-    imageView:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + imageView:getSize().height / 4.0))
+    imageView:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + imageView:getContentSize().height / 4.0))
     self._uiLayer:addChild(imageView)
 end
 
@@ -659,21 +658,21 @@ function UIImageViewScale9Test:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("ImageView scale9 render")
-    alert:setFontName(font_UIImageViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local imageView = ccui.ImageView:create()
     imageView:setScale9Enabled(true)
     imageView:loadTexture("cocosui/buttonHighlighted.png")
-    imageView:setSize(cc.size(200, 85))
-    imageView:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + imageView:getSize().height / 4.0))
+    imageView:setContentSize(cc.size(200, 85))
+    imageView:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + imageView:getContentSize().height / 4.0))
     self._uiLayer:addChild(imageView)
 end
 
@@ -709,17 +708,14 @@ function UILoadingBarLeftTest:initExtend()
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
-
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("LoadingBar")
-    alert:setFontName(font_UILoadingBarTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local loadingBar = ccui.LoadingBar:create()
@@ -728,7 +724,7 @@ function UILoadingBarLeftTest:initExtend()
     loadingBar:loadTexture("cocosui/sliderProgress.png")
     loadingBar:setPercent(0)
         
-    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
+    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getContentSize().height / 4.0))
     self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
@@ -835,17 +831,14 @@ function UILoadingBarRightTest:initExtend()
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
-
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("LoadingBar")
-    alert:setFontName(font_UILoadingBarTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local loadingBar = ccui.LoadingBar:create()
@@ -855,7 +848,7 @@ function UILoadingBarRightTest:initExtend()
     loadingBar:setDirection(ccui.LoadingBarDirection.RIGHT)
     loadingBar:setPercent(0)
         
-    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
+    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getContentSize().height / 4.0))
     self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
@@ -962,17 +955,14 @@ function UILoadingBarLeftScale9Test:initExtend()
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
-
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("LoadingBar Scale9 Render")
-    alert:setFontName(font_UILoadingBarTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local loadingBar = ccui.LoadingBar:create()
@@ -981,10 +971,10 @@ function UILoadingBarLeftScale9Test:initExtend()
     loadingBar:loadTexture("cocosui/slider_bar_active_9patch.png")
     loadingBar:setScale9Enabled(true)
     loadingBar:setCapInsets(cc.rect(0, 0, 0, 0))
-    loadingBar:setSize(cc.size(300, 30))
+    loadingBar:setContentSize(cc.size(300, 30))
     loadingBar:setPercent(0)
         
-    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
+    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getContentSize().height / 4.0))
     self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
@@ -1091,17 +1081,14 @@ function UILoadingBarRightScale9Test:initExtend()
     local root = self._uiLayer:getChildByTag(81)
     self._sceneTitle = root:getChildByName("UItest")
 
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
-
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("LoadingBar Scale9 Render")
-    alert:setFontName(font_UILoadingBarTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))    
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local loadingBar = ccui.LoadingBar:create()
@@ -1110,11 +1097,11 @@ function UILoadingBarRightScale9Test:initExtend()
     loadingBar:loadTexture("cocosui/slider_bar_active_9patch.png")
     loadingBar:setScale9Enabled(true)
     loadingBar:setCapInsets(cc.rect(0, 0, 0, 0))
-    loadingBar:setSize(cc.size(300, 30))
-    loadingBar:setDirection(ccui.LoadingBarDirection.LEFT)
+    loadingBar:setContentSize(cc.size(300, 30))
+    loadingBar:setDirection(ccui.LoadingBarDirection.RIGHT)
     loadingBar:setPercent(0)
         
-    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getSize().height / 4.0))
+    loadingBar:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + loadingBar:getContentSize().height / 4.0))
     self._uiLayer:addChild(loadingBar)
 
     local function update(delta)
@@ -1212,14 +1199,14 @@ end
 function UILabelAtlasTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("LabelAtlas")
-    alert:setFontName(font_UILabelAtlasTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
 
@@ -1253,21 +1240,21 @@ end
 function UILabelBMFontTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("LabelBMFont")
-    alert:setFontName(font_UILabelBMFontTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
 
     local labelBMFont = ccui.TextBMFont:create()
     labelBMFont:setFntFile("cocosui/bitmapFontTest2.fnt")
     labelBMFont:setString("BMFont")
-    labelBMFont:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2.0 + labelBMFont:getSize().height / 8.0))        
+    labelBMFont:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2.0 + labelBMFont:getContentSize().height / 8.0))        
         
     self._uiLayer:addChild(labelBMFont) 
 end
@@ -1295,21 +1282,21 @@ end
 function UILabelTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Label")
-    alert:setFontName(font_UILabelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local label = ccui.Text:create()
     label:setString("Label")
     label:setFontName("AmericanTypewriter")
     label:setFontSize(30)
-    label:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + label:getSize().height / 4))    
+    label:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 + label:getContentSize().height / 4))    
     self._uiLayer:addChild(label) 
 end
 
@@ -1336,23 +1323,24 @@ end
 function UITextAreaTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("TextArea")
-    alert:setFontName(font_UITextAreaTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local textArea = ccui.Text:create()
-    textArea:setTextAreaSize(cc.size(280, 150))
+    textArea:ignoreContentAdaptWithSize(false)
+    textArea:setContentSize(cc.size(280, 150))
     textArea:setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER)
     textArea:setString("TextArea widget can line wrap")
     textArea:setFontName("AmericanTypewriter")
     textArea:setFontSize(32)
-    textArea:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - textArea:getSize().height / 8))  
+    textArea:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2 - textArea:getContentSize().height / 8))  
     self._uiLayer:addChild(textArea) 
 end
 
@@ -1380,22 +1368,22 @@ end
 function UITextFieldTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
 
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UITextFieldTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
     self._uiLayer:addChild(self._displayValueLabel)  
         
     local alert = ccui.Text:create()
     alert:setString("TextField")
-    alert:setFontName(font_UITextFieldTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function textFieldEvent(sender, eventType)
@@ -1418,7 +1406,7 @@ function UITextFieldTest:initExtend()
         
     local textField = ccui.TextField:create()
     textField:setTouchEnabled(true)
-    textField:setFontName(font_UITextFieldTest)
+    textField:setFontName(font_TextName)
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -1450,22 +1438,22 @@ end
 function UITextFieldMaxLengthTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
 
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UITextFieldTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
     self._uiLayer:addChild(self._displayValueLabel)  
         
     local alert = ccui.Text:create()
     alert:setString("TextField max length")
-    alert:setFontName(font_UITextFieldTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function textFieldEvent(sender, eventType)
@@ -1496,7 +1484,7 @@ function UITextFieldMaxLengthTest:initExtend()
     textField:setMaxLengthEnabled(true)
     textField:setMaxLength(3)
     textField:setTouchEnabled(true)
-    textField:setFontName(font_UITextFieldTest)
+    textField:setFontName(font_TextName)
     textField:setFontSize(30)
     textField:setPlaceHolder("input words here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -1528,22 +1516,22 @@ end
 function UITextFieldPasswordTest:initExtend()
 
     self:init()
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
 
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UITextFieldTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
     self._uiLayer:addChild(self._displayValueLabel)  
         
     local alert = ccui.Text:create()
     alert:setString("TextField password")
-    alert:setFontName(font_UITextFieldTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local function textFieldEvent(sender, eventType)
@@ -1568,7 +1556,7 @@ function UITextFieldPasswordTest:initExtend()
     textField:setPasswordEnabled(true)
     textField:setPasswordStyleText("*")
     textField:setTouchEnabled(true)
-    textField:setFontName(font_UITextFieldTest)
+    textField:setFontName(font_TextName)
     textField:setFontSize(30)
     textField:setPlaceHolder("input password here")
     textField:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
@@ -1600,47 +1588,47 @@ function UIPanelTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
     local background = root:getChildByName("background_Panel")
     
     local layout = ccui.Layout:create()
-    layout:setSize(cc.size(280, 150))
-    local backgroundSize = background:getSize()
+    layout:setContentSize(cc.size(280, 150))
+    local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(button:getContentSize().width / 2, layout:getContentSize().height - button:getContentSize().height / 2))
     layout:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+    textButton:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
     layout:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(layout:getContentSize().width - button_scale9:getContentSize().width / 2, button_scale9:getContentSize().height / 2))
     layout:addChild(button_scale9)  
 end
 
@@ -1668,14 +1656,14 @@ function UIPanelColorTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel color render")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
@@ -1684,33 +1672,33 @@ function UIPanelColorTest:initExtend()
     local layout = ccui.Layout:create()
     layout:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
     layout:setBackGroundColor(cc.c3b(128, 128, 128))
-    layout:setSize(cc.size(280, 150))
+    layout:setContentSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(button:getContentSize().width / 2, layout:getContentSize().height - button:getContentSize().height / 2))
     layout:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+    textButton:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
     layout:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(layout:getContentSize().width - button_scale9:getContentSize().width / 2, button_scale9:getContentSize().height / 2))
     layout:addChild(button_scale9)  
 end
 
@@ -1738,14 +1726,14 @@ function UIPanelGradientTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel color Gradient")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
@@ -1754,33 +1742,33 @@ function UIPanelGradientTest:initExtend()
     local layout = ccui.Layout:create()
     layout:setBackGroundColorType(ccui.LayoutBackGroundColorType.gradient)
     layout:setBackGroundColor(cc.c3b(64, 64, 64), cc.c3b(192, 192, 192))
-    layout:setSize(cc.size(280, 150))
+    layout:setContentSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(button:getContentSize().width / 2, layout:getContentSize().height - button:getContentSize().height / 2))
     layout:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+    textButton:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
     layout:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(layout:getContentSize().width - button_scale9:getContentSize().width / 2, button_scale9:getContentSize().height / 2))
     layout:addChild(button_scale9)  
 end
 
@@ -1808,14 +1796,14 @@ function UIPanelBackGroundImageTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel background image")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
         
     local root = self._uiLayer:getChildByTag(81)
@@ -1824,33 +1812,33 @@ function UIPanelBackGroundImageTest:initExtend()
     local layout = ccui.Layout:create()
     layout:setClippingEnabled(true)
     layout:setBackGroundImage("cocosui/Hello.png")
-    layout:setSize(cc.size(280, 150))
+    layout:setContentSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(button:getContentSize().width / 2, layout:getContentSize().height - button:getContentSize().height / 2))
     layout:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+    textButton:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
     layout:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(layout:getContentSize().width - button_scale9:getContentSize().width / 2, button_scale9:getContentSize().height / 2))
     layout:addChild(button_scale9)   
 end
 
@@ -1878,14 +1866,14 @@ function UIPanelBackGroundImageScale9Test:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel background image scale9")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
@@ -1894,33 +1882,33 @@ function UIPanelBackGroundImageScale9Test:initExtend()
     local layout = ccui.Layout:create()
     layout:setBackGroundImageScale9Enabled(true)
     layout:setBackGroundImage("cocosui/green_edit.png")
-    layout:setSize(cc.size(280, 150))
+    layout:setContentSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(button:getSize().width / 2, layout:getSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(button:getContentSize().width / 2, layout:getContentSize().height - button:getContentSize().height / 2))
     layout:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+    textButton:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
     layout:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(layout:getSize().width - button_scale9:getSize().width / 2, button_scale9:getSize().height / 2))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(layout:getContentSize().width - button_scale9:getContentSize().width / 2, button_scale9:getContentSize().height / 2))
     layout:addChild(button_scale9)  
 end
 
@@ -1948,14 +1936,14 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel Layout Linear Vertical")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
@@ -1963,12 +1951,12 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
     
     local layout = ccui.Layout:create()
     layout:setLayoutType(ccui.LayoutType.VERTICAL)
-    layout:setSize(cc.size(280, 150))
+    layout:setContentSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
@@ -1998,7 +1986,7 @@ function UIPanelLayoutLinearVerticalTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     layout:addChild(button_scale9)
         
     local lp3 = ccui.LinearLayoutParameter:create()
@@ -2031,14 +2019,14 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     local alert = ccui.Text:create()
     alert:setString("Panel Layout Linear Horizontal")
-    alert:setFontName(font_UIPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
@@ -2047,12 +2035,12 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
     local layout = ccui.Layout:create()
     layout:setLayoutType(ccui.LayoutType.HORIZONTAL)
     layout:setClippingEnabled(true)
-    layout:setSize(cc.size(280, 150))
+    layout:setContentSize(cc.size(280, 150))
     local backgroundSize = background:getContentSize()
     layout:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                (backgroundSize.width - layout:getSize().width) / 2,
+                                (backgroundSize.width - layout:getContentSize().width) / 2,
                                 (widgetSize.height - backgroundSize.height) / 2 +
-                                (backgroundSize.height - layout:getSize().height) / 2))
+                                (backgroundSize.height - layout:getContentSize().height) / 2))
     self._uiLayer:addChild(layout)
         
     local button = ccui.Button:create()
@@ -2082,7 +2070,7 @@ function UIPanelLayoutLinearHorizontalTest:initExtend()
     button_scale9:setTouchEnabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
     button_scale9:setScale9Enabled(true)
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
     layout:addChild(button_scale9)
         
     local lp3 = ccui.LinearLayoutParameter:create()
@@ -2094,6 +2082,222 @@ end
 function UIPanelLayoutLinearHorizontalTest.create()
     local scene = cc.Scene:create()
     local layer = UIPanelLayoutLinearHorizontalTest.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene  
+end
+
+local UILayoutComponentBerthTest = class("UILayoutComponentBerthTest",UIScene)
+UILayoutComponentBerthTest._displayValueLabel = nil
+
+function UILayoutComponentBerthTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UILayoutComponentBerthTest)
+    return target
+end
+
+function UILayoutComponentBerthTest:initExtend()
+
+    self:init()
+
+    local widgetSize = self._widget:getContentSize()
+
+    self._displayValueLabel = ccui.Text:create()
+    self._displayValueLabel:setString("LayoutComponent Berth Test")
+    self._displayValueLabel:setFontName(font_TextName)
+    self._displayValueLabel:setFontSize(32)
+    self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
+    self._uiLayer:addChild(self._displayValueLabel)
+
+    local baseLayer = cc.LayerColor:create()
+    baseLayer:setColor(cc.c3b(50, 100, 0))
+    baseLayer:setOpacity(100)
+    baseLayer:setContentSize(cc.size(200, 200))
+    self._uiLayer:addChild(baseLayer)
+
+    button = ccui.Button:create("cocosui/animationbuttonnormal.png")
+    print(string.format("content size should be greater than 0:  width = %f, height = %f", button:getContentSize().width,
+        button:getContentSize().height))
+    button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
+
+    button:addTouchEventListener(function(sender, eventType)
+        
+        if eventType == ccui.TouchEventType.began then
+            
+        elseif eventType == ccui.TouchEventType.moved then
+            
+        elseif eventType == ccui.TouchEventType.ended then
+            local touchWidgetSize = self._widget:getContentSize()
+            local layerSize = baseLayer:getContentSize()
+            if (layerSize.width == touchWidgetSize.width and layerSize.height == touchWidgetSize.height) then
+                baseLayer:setContentSize(cc.size(200, 200))
+            else
+                baseLayer:setContentSize(widgetSize)
+            end
+            ccui.Helper:doLayout(baseLayer)
+        else
+            
+        end
+    end)
+    button:setZoomScale(0.4)
+    button:setPressedActionEnabled(true)
+    self._uiLayer:addChild(button)
+
+
+    local leftTopSprite = cc.Sprite:create("cocosui/CloseSelected.png")
+    local leftTop = ccui.LayoutComponent:bindLayoutComponent(leftTopSprite)
+    leftTop:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Left)
+    leftTop:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Top)
+    baseLayer:addChild(leftTopSprite)
+
+    local leftBottomSprite = cc.Sprite:create("cocosui/CloseSelected.png")
+    local leftBottom = ccui.LayoutComponent:bindLayoutComponent(leftBottomSprite)
+    leftBottom:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Left)
+    leftBottom:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Bottom)
+    baseLayer:addChild(leftBottomSprite)
+
+    local rightTopSprite = cc.Sprite:create("cocosui/CloseSelected.png")
+    local rightTop = ccui.LayoutComponent:bindLayoutComponent(rightTopSprite)
+    rightTop:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Right)
+    rightTop:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Top)
+    baseLayer:addChild(rightTopSprite)
+
+    local rightBottomSprite = cc.Sprite:create("cocosui/CloseSelected.png")
+    local rightBottom = ccui.LayoutComponent:bindLayoutComponent(rightBottomSprite)
+    rightBottom:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Right)
+    rightBottom:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Bottom)
+    baseLayer:addChild(rightBottomSprite)
+
+    ccui.Helper:doLayout(baseLayer)
+end
+
+function UILayoutComponentBerthTest.create()
+    local scene = cc.Scene:create()
+    local layer = UILayoutComponentBerthTest.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene  
+end
+
+local UILayoutComponentBerthStretchTest = class("UILayoutComponentBerthStretchTest",UIScene)
+UILayoutComponentBerthStretchTest._displayValueLabel = nil
+
+function UILayoutComponentBerthStretchTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UILayoutComponentBerthStretchTest)
+    return target
+end
+
+function UILayoutComponentBerthStretchTest:initExtend()
+
+    self:init()
+
+    local widgetSize = self._widget:getContentSize()
+    
+    self._displayValueLabel = ccui.Text:create()
+    self._displayValueLabel:setString("LayoutComponent Berth Stretch Test")
+    self._displayValueLabel:setFontName(font_TextName)
+    self._displayValueLabel:setFontSize(32)
+    self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
+    self._uiLayer:addChild(self._displayValueLabel)
+
+    local baseLayer = cc.LayerColor:create()
+    baseLayer:setColor(cc.c3b(50, 100, 0))
+    baseLayer:setOpacity(100)
+    baseLayer:setContentSize(cc.size(200, 200))
+    self._uiLayer:addChild(baseLayer)
+
+    button = ccui.Button:create("cocosui/animationbuttonnormal.png")
+    print(string.format("content size should be greater than 0:  width = %f, height = %f", button:getContentSize().width,
+        button:getContentSize().height))
+    button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0))
+
+    button:addTouchEventListener(function(sender, eventType)
+        
+        if eventType == ccui.TouchEventType.began then
+            
+        elseif eventType == ccui.TouchEventType.moved then
+            
+        elseif eventType == ccui.TouchEventType.ended then
+            local touchWidgetSize = self._widget:getContentSize()
+            local layerSize = baseLayer:getContentSize()
+            if (layerSize.width == touchWidgetSize.width and layerSize.height == touchWidgetSize.height) then
+                baseLayer:setContentSize(cc.size(200, 200))
+            else
+                baseLayer:setContentSize(widgetSize)
+            end
+            ccui.Helper:doLayout(baseLayer)
+        else
+            
+        end
+    end)
+    button:setZoomScale(0.4)
+    button:setPressedActionEnabled(true)
+    self._uiLayer:addChild(button)
+
+    local leftTopSprite = ccui.ImageView:create("cocosui/CloseSelected.png")
+    leftTopSprite:ignoreContentAdaptWithSize(false)
+    local leftTop = ccui.LayoutComponent:bindLayoutComponent(leftTopSprite)
+    leftTop:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Left)
+    leftTop:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Top)
+    leftTop:setStretchWidthEnabled(true)
+    leftTop:setStretchHeightEnabled(true)
+    baseLayer:addChild(leftTopSprite)
+    leftTop:setSize(leftTopSprite:getContentSize())
+    leftTop:setLeftMargin(0)
+    leftTop:setTopMargin(0)
+
+    local leftBottomSprite = ccui.ImageView:create("cocosui/CloseSelected.png")
+    leftBottomSprite:ignoreContentAdaptWithSize(false)
+    local leftBottom = ccui.LayoutComponent:bindLayoutComponent(leftBottomSprite)
+    leftBottom:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Left)
+    leftBottom:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Bottom)
+    leftBottom:setStretchWidthEnabled(true)
+    leftBottom:setStretchHeightEnabled(true)
+    baseLayer:addChild(leftBottomSprite)
+    leftBottom:setSize(leftBottomSprite:getContentSize())
+    leftBottom:setLeftMargin(0)
+    leftBottom:setBottomMargin(0)
+
+    local rightTopSprite = ccui.ImageView:create("cocosui/CloseSelected.png")
+    rightTopSprite:ignoreContentAdaptWithSize(false)
+    local rightTop = ccui.LayoutComponent:bindLayoutComponent(rightTopSprite)
+    rightTop:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Right)
+    rightTop:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Top)
+    rightTop:setStretchWidthEnabled(true)
+    rightTop:setStretchHeightEnabled(true)
+    baseLayer:addChild(rightTopSprite)
+    rightTop:setSize(rightTopSprite:getContentSize())
+    rightTop:setTopMargin(0)
+    rightTop:setRightMargin(0)
+
+    local rightBottomSprite = ccui.ImageView:create("cocosui/CloseSelected.png")
+    rightBottomSprite:ignoreContentAdaptWithSize(false)
+    local rightBottom = ccui.LayoutComponent:bindLayoutComponent(rightBottomSprite)
+    rightBottom:setHorizontalEdge(ccui.LayoutComponent.HorizontalEdge.Right)
+    rightBottom:setVerticalEdge(ccui.LayoutComponent.VerticalEdge.Bottom)
+    rightBottom:setStretchWidthEnabled(true)
+    rightBottom:setStretchHeightEnabled(true)
+    baseLayer:addChild(rightBottomSprite)
+    rightBottom:setSize(rightBottomSprite:getContentSize())
+    rightBottom:setBottomMargin(0)
+    rightBottom:setRightMargin(0)
+    ccui.Helper:doLayout(baseLayer)
+end
+
+function UILayoutComponentBerthStretchTest.create()
+    local scene = cc.Scene:create()
+    local layer = UILayoutComponentBerthStretchTest.extend(cc.Layer:create())
     layer:initExtend()
     scene:addChild(layer)
     return scene  
@@ -2116,11 +2320,11 @@ function UIScrollViewVerticalTest:initExtend()
 
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move by vertical direction")
-    self._displayValueLabel:setFontName(font_UIScrollViewTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
@@ -2128,10 +2332,10 @@ function UIScrollViewVerticalTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("ScrollView")
-    alert:setFontName(font_UIScrollViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
     
     local root = self._uiLayer:getChildByTag(81)  
@@ -2139,44 +2343,44 @@ function UIScrollViewVerticalTest:initExtend()
         
     local scrollView = ccui.ScrollView:create()
     scrollView:setTouchEnabled(true)
-    scrollView:setSize(cc.size(280, 150))        
+    scrollView:setContentSize(cc.size(280, 150))        
     local backgroundSize = background:getContentSize()
     scrollView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                               (backgroundSize.width - scrollView:getSize().width) / 2,
+                               (backgroundSize.width - scrollView:getContentSize().width) / 2,
                                (widgetSize.height - backgroundSize.height) / 2 +
-                               (backgroundSize.height - scrollView:getSize().height) / 2))
+                               (backgroundSize.height - scrollView:getContentSize().height) / 2))
     self._uiLayer:addChild(scrollView)
         
     local imageView = ccui.ImageView:create()
     imageView:loadTexture("cocosui/ccicon.png")
         
-    local innerWidth = scrollView:getSize().width
-    local innerHeight = scrollView:getSize().height + imageView:getSize().height
+    local innerWidth = scrollView:getContentSize().width
+    local innerHeight = scrollView:getContentSize().height + imageView:getContentSize().height
         
     scrollView:setInnerContainerSize(cc.size(innerWidth, innerHeight))                
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(innerWidth / 2, scrollView:getInnerContainerSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(innerWidth / 2, scrollView:getInnerContainerSize().height - button:getContentSize().height / 2))
     scrollView:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(innerWidth / 2, button:getBottomBoundary() - button:getSize().height))
+    textButton:setPosition(cc.p(innerWidth / 2, button:getBottomBoundary() - button:getContentSize().height))
     scrollView:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(innerWidth / 2, textButton:getBottomBoundary() - textButton:getSize().height))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(innerWidth / 2, textButton:getBottomBoundary() - textButton:getContentSize().height))
     scrollView:addChild(button_scale9)
         
-    imageView:setPosition(cc.p(innerWidth / 2, imageView:getSize().height / 2))
+    imageView:setPosition(cc.p(innerWidth / 2, imageView:getContentSize().height / 2))
     scrollView:addChild(imageView)
 end
 
@@ -2205,11 +2409,11 @@ function UIScrollViewHorizontalTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move by horizontal direction")
-    self._displayValueLabel:setFontName(font_UIScrollViewTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
@@ -2217,10 +2421,10 @@ function UIScrollViewHorizontalTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("ScrollView")
-    alert:setFontName(font_UIScrollViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
     
     local root = self._uiLayer:getChildByTag(81)      
@@ -2230,49 +2434,49 @@ function UIScrollViewHorizontalTest:initExtend()
     scrollView:setBounceEnabled(true)
     scrollView:setDirection(ccui.ScrollViewDir.horizontal)
     scrollView:setTouchEnabled(true)
-    scrollView:setSize(cc.size(280, 150))
-    scrollView:setInnerContainerSize(scrollView:getSize())
+    scrollView:setContentSize(cc.size(280, 150))
+    scrollView:setInnerContainerSize(scrollView:getContentSize())
     local backgroundSize = background:getContentSize()
     scrollView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                    (backgroundSize.width - scrollView:getSize().width) / 2,
+                                    (backgroundSize.width - scrollView:getContentSize().width) / 2,
                                     (widgetSize.height - backgroundSize.height) / 2 +
-                                    (backgroundSize.height - scrollView:getSize().height) / 2))
+                                    (backgroundSize.height - scrollView:getContentSize().height) / 2))
     self._uiLayer:addChild(scrollView)
         
     local imageView = ccui.ImageView:create()
     imageView:loadTexture("cocosui/ccicon.png")
         
-    local innerWidth = scrollView:getSize().width + imageView:getSize().width
-    local innerHeight = scrollView:getSize().height
+    local innerWidth = scrollView:getContentSize().width + imageView:getContentSize().width
+    local innerHeight = scrollView:getContentSize().height
         
     scrollView:setInnerContainerSize(cc.size(innerWidth, innerHeight))
         
     local button = ccui.Button:create()
     button:setTouchEnabled(true)
     button:loadTextures("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png", "")
-    button:setPosition(cc.p(button:getSize().width / 2,
-                                scrollView:getInnerContainerSize().height - button:getSize().height / 2))
+    button:setPosition(cc.p(button:getContentSize().width / 2,
+                                scrollView:getInnerContainerSize().height - button:getContentSize().height / 2))
     scrollView:addChild(button)
         
     local textButton = ccui.Button:create()
     textButton:setTouchEnabled(true)
     textButton:loadTextures("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png", "")
     textButton:setTitleText("Text Button")
-    textButton:setPosition(cc.p(button:getRightBoundary() + button:getSize().width / 2,
-                                    button:getBottomBoundary() - button:getSize().height / 2))
+    textButton:setPosition(cc.p(button:getRightBoundary() + button:getContentSize().width / 2,
+                                    button:getBottomBoundary() - button:getContentSize().height / 2))
     scrollView:addChild(textButton)
         
     local button_scale9 = ccui.Button:create()
     button_scale9:setTouchEnabled(true)
     button_scale9:setScale9Enabled(true)
     button_scale9:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
-    button_scale9:setSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
-    button_scale9:setPosition(cc.p(textButton:getRightBoundary() + textButton:getSize().width / 2,
-                                       textButton:getBottomBoundary() - textButton:getSize().height / 2))
+    button_scale9:setContentSize(cc.size(100, button_scale9:getVirtualRendererSize().height))
+    button_scale9:setPosition(cc.p(textButton:getRightBoundary() + textButton:getContentSize().width / 2,
+                                       textButton:getBottomBoundary() - textButton:getContentSize().height / 2))
     scrollView:addChild(button_scale9)                
                 
-    imageView:setPosition(cc.p(innerWidth - imageView:getSize().width / 2,
-                                   button_scale9:getBottomBoundary() - button_scale9:getSize().height / 2))
+    imageView:setPosition(cc.p(innerWidth - imageView:getContentSize().width / 2,
+                                   button_scale9:getBottomBoundary() - button_scale9:getContentSize().height / 2))
     scrollView:addChild(imageView)  
 end
 
@@ -2301,11 +2505,11 @@ function UIPageViewTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move by horizontal direction")
-    self._displayValueLabel:setFontName(font_UIPageViewTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
@@ -2313,10 +2517,10 @@ function UIPageViewTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("PageView")
-    alert:setFontName(font_UIPageViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
      
     local root = self._uiLayer:getChildByTag(81)      
@@ -2324,32 +2528,32 @@ function UIPageViewTest:initExtend()
         
     local pageView = ccui.PageView:create()
     pageView:setTouchEnabled(true)
-    pageView:setSize(cc.size(240, 130))
+    pageView:setContentSize(cc.size(240, 130))
     local backgroundSize = background:getContentSize()
     pageView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2 +
-                                  (backgroundSize.width - pageView:getSize().width) / 2,
+                                  (backgroundSize.width - pageView:getContentSize().width) / 2,
                                   (widgetSize.height - backgroundSize.height) / 2 +
-                                  (backgroundSize.height - pageView:getSize().height) / 2))
+                                  (backgroundSize.height - pageView:getContentSize().height) / 2))
       
     for i = 1 , 3 do
         local layout = ccui.Layout:create()
-        layout:setSize(cc.size(240, 130))
+        layout:setContentSize(cc.size(240, 130))
             
         local imageView = ccui.ImageView:create()
         imageView:setTouchEnabled(true)
         imageView:setScale9Enabled(true)
         imageView:loadTexture("cocosui/scrollviewbg.png")
-        imageView:setSize(cc.size(240, 130))
-        imageView:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+        imageView:setContentSize(cc.size(240, 130))
+        imageView:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
         layout:addChild(imageView)
             
         local label = ccui.Text:create()
         local pageInfo = string.format("page %d", i)
         label:setString(pageInfo)
-        label:setFontName(font_UIPageViewTest)
+        label:setFontName(font_TextName)
         label:setFontSize(30)
         label:setColor(cc.c3b(192, 192, 192))
-        label:setPosition(cc.p(layout:getSize().width / 2, layout:getSize().height / 2))
+        label:setPosition(cc.p(layout:getContentSize().width / 2, layout:getContentSize().height / 2))
         layout:addChild(label)
             
         pageView:addPage(layout)
@@ -2395,11 +2599,11 @@ function UIListViewVerticalTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move by vertical direction")
-    self._displayValueLabel:setFontName(font_UIListViewTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
@@ -2407,10 +2611,10 @@ function UIListViewVerticalTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("ListView")
-    alert:setFontName(font_UIListViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
 
     local root = self._uiLayer:getChildByTag(81)
@@ -2419,50 +2623,55 @@ function UIListViewVerticalTest:initExtend()
     local backgroundSize = background:getContentSize()
 
     local array = {}
-    for i = 0,19 do
-        array[i] = string.format("ListView_item_%d",i)
+    for i = 1,20 do
+        array[i] = string.format("ListView_item_%d",i - 1)
     end
 
     local function listViewEvent(sender, eventType)
-        if eventType == ccui.ListViewEventType.onsSelectedItem then
+        if eventType == ccui.ListViewEventType.ONSELECTEDITEM_START then
             print("select child index = ",sender:getCurSelectedIndex())
+        end
+    end
+
+    local function scrollViewEvent(sender, evenType)
+        if evenType == ccui.ScrollviewEventType.scrollToBottom then
+            print("SCROLL_TO_BOTTOM")
+        elseif evenType ==  ccui.ScrollviewEventType.scrollToTop then
+            print("SCROLL_TO_TOP")
         end
     end
 
     local listView = ccui.ListView:create()
     -- set list view ex direction
     listView:setDirection(ccui.ScrollViewDir.vertical)
-    listView:setTouchEnabled(true)
     listView:setBounceEnabled(true)
     listView:setBackGroundImage("cocosui/green_edit.png")
     listView:setBackGroundImageScale9Enabled(true)
-    listView:setSize(cc.size(240, 130))
+    listView:setContentSize(cc.size(240, 130))
     listView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2.0 +
-                              (backgroundSize.width - listView:getSize().width) / 2.0,
+                              (backgroundSize.width - listView:getContentSize().width) / 2.0,
                               (widgetSize.height - backgroundSize.height) / 2.0 +
-                              (backgroundSize.height - listView:getSize().height) / 2.0))
+                              (backgroundSize.height - listView:getContentSize().height) / 2.0))
     listView:addEventListener(listViewEvent)
+    listView:addScrollViewEventListener(scrollViewEvent)
     self._uiLayer:addChild(listView)
 
 
     -- create model
-    local default_button = ccui.Button:create()
+    local default_button = ccui.Button:create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png")
     default_button:setName("Title Button")
-    default_button:setTouchEnabled(true)
-    default_button:loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "")
     
     local default_item = ccui.Layout:create()
     default_item:setTouchEnabled(true)
-    default_item:setSize(default_button:getSize())
-    default_button:setPosition(cc.p(default_item:getSize().width / 2.0, default_item:getSize().height / 2.0))
+    default_item:setContentSize(default_button:getContentSize())
+    default_button:setPosition(cc.p(default_item:getContentSize().width / 2.0, default_item:getContentSize().height / 2.0))
     default_item:addChild(default_button)
 
     --set model
     listView:setItemModel(default_item)
     
     --add default item
-    local count = table.getn(array) + 1
-    print(math.floor(count / 4))
+    local count = table.getn(array)
     for i = 1,math.floor(count / 4) do
         listView:pushBackDefaultItem()
     end
@@ -2470,39 +2679,42 @@ function UIListViewVerticalTest:initExtend()
     for i = 1,math.floor(count / 4) do
         listView:insertDefaultItem(0)
     end
+
+    listView:removeAllChildren()
+
+    local testSprite = cc.Sprite:create("cocosui/backtotoppressed.png")
+    testSprite:setPosition(cc.p(200,200))
+    listView:addChild(testSprite)
       
     --add custom item
     for i = 1,math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
-        custom_button:setSize(default_button:getSize())
+        custom_button:setContentSize(default_button:getContentSize())
         
         local custom_item = ccui.Layout:create()
-        custom_item:setSize(custom_button:getSize())
-        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:setContentSize(custom_button:getContentSize())
+        custom_button:setPosition(cc.p(custom_item:getContentSize().width / 2.0, custom_item:getContentSize().height / 2.0))
         custom_item:addChild(custom_button)
         
-        listView:pushBackCustomItem(custom_item) 
+        listView:addChild(custom_item) 
     end
 
     --insert custom item
     local items = listView:getItems()
     local items_count = table.getn(items)
     for i = 1, math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
-        custom_button:setSize(default_button:getSize())
+        custom_button:setContentSize(default_button:getContentSize())
         
         local custom_item = ccui.Layout:create()
-        custom_item:setSize(custom_button:getSize())
-        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:setContentSize(custom_button:getContentSize())
+        custom_button:setPosition(cc.p(custom_item:getContentSize().width / 2.0, custom_item:getContentSize().height / 2.0))
         custom_item:addChild(custom_button)
+        custom_item:setTag(1)
         
         listView:insertCustomItem(custom_item, items_count)
     end
@@ -2513,14 +2725,14 @@ function UIListViewVerticalTest:initExtend()
         local item = listView:getItem(i - 1)
         local button = item:getChildByName("Title Button")
         local index = listView:getIndex(item)
-        button:setTitleText(array[index])
+        button:setTitleText(array[index + 1])
     end
     
     -- remove last item
-    listView:removeLastItem()
+    listView:removeChildByTag(1)
     
     -- remove item by index
-    items_count = table.getn(items)
+    items_count = table.getn(listView:getItems())
     listView:removeItem(items_count - 1)
     
     -- set all items layout gravity
@@ -2555,11 +2767,11 @@ function UIListViewHorizontalTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("Move by vertical direction")
-    self._displayValueLabel:setFontName(font_UIListViewTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
@@ -2567,10 +2779,10 @@ function UIListViewHorizontalTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("ListView")
-    alert:setFontName(font_UIListViewTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
         
 
@@ -2580,8 +2792,8 @@ function UIListViewHorizontalTest:initExtend()
     local backgroundSize = background:getContentSize()
 
     local array = {}
-    for i = 0,19 do
-        array[i] = string.format("ListView_item_%d",i)
+    for i = 1,20 do
+        array[i] = string.format("ListView_item_%d",i - 1)
     end
 
     local function listViewEvent(sender, eventType)
@@ -2597,32 +2809,30 @@ function UIListViewHorizontalTest:initExtend()
     listView:setBounceEnabled(true)
     listView:setBackGroundImage("cocosui/green_edit.png")
     listView:setBackGroundImageScale9Enabled(true)
-    listView:setSize(cc.size(240, 130))
+    listView:setContentSize(cc.size(240, 130))
     listView:setPosition(cc.p((widgetSize.width - backgroundSize.width) / 2.0 +
-                              (backgroundSize.width - listView:getSize().width) / 2.0,
+                              (backgroundSize.width - listView:getContentSize().width) / 2.0,
                               (widgetSize.height - backgroundSize.height) / 2.0 +
-                              (backgroundSize.height - listView:getSize().height) / 2.0))
+                              (backgroundSize.height - listView:getContentSize().height) / 2.0))
     listView:addEventListener(listViewEvent)
     self._uiLayer:addChild(listView)
 
 
     -- create model
-    local default_button = ccui.Button:create()
+    local default_button = ccui.Button:create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png")
     default_button:setName("Title Button")
-    default_button:setTouchEnabled(true)
-    default_button:loadTextures("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png", "")
     
     local default_item = ccui.Layout:create()
     default_item:setTouchEnabled(true)
-    default_item:setSize(default_button:getSize())
-    default_button:setPosition(cc.p(default_item:getSize().width / 2.0, default_item:getSize().height / 2.0))
+    default_item:setContentSize(default_button:getContentSize())
+    default_button:setPosition(cc.p(default_item:getContentSize().width / 2.0, default_item:getContentSize().height / 2.0))
     default_item:addChild(default_button)
 
     --set model
     listView:setItemModel(default_item)
     
     --add default item
-    local count = table.getn(array) + 1
+    local count = table.getn(array)
     for i = 1,math.floor(count / 4) do
         listView:pushBackDefaultItem()
     end
@@ -2633,16 +2843,14 @@ function UIListViewHorizontalTest:initExtend()
       
     --add custom item
     for i = 1,math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
-        custom_button:setSize(default_button:getSize())
+        custom_button:setContentSize(default_button:getContentSize())
         
         local custom_item = ccui.Layout:create()
-        custom_item:setSize(custom_button:getSize())
-        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:setContentSize(custom_button:getContentSize())
+        custom_button:setPosition(cc.p(custom_item:getContentSize().width / 2.0, custom_item:getContentSize().height / 2.0))
         custom_item:addChild(custom_button)
         
         listView:pushBackCustomItem(custom_item) 
@@ -2652,16 +2860,14 @@ function UIListViewHorizontalTest:initExtend()
     local items = listView:getItems()
     local items_count = table.getn(items)
     for i = 1, math.floor(count / 4) do
-        local custom_button = ccui.Button:create()
+        local custom_button = ccui.Button:create("cocosui/button.png", "cocosui/buttonHighlighted.png")
         custom_button:setName("Title Button")
-        custom_button:setTouchEnabled(true)
-        custom_button:loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "")
         custom_button:setScale9Enabled(true)
-        custom_button:setSize(default_button:getSize())
+        custom_button:setContentSize(default_button:getContentSize())
         
         local custom_item = ccui.Layout:create()
-        custom_item:setSize(custom_button:getSize())
-        custom_button:setPosition(cc.p(custom_item:getSize().width / 2.0, custom_item:getSize().height / 2.0))
+        custom_item:setContentSize(custom_button:getContentSize())
+        custom_button:setPosition(cc.p(custom_item:getContentSize().width / 2.0, custom_item:getContentSize().height / 2.0))
         custom_item:addChild(custom_button)
         
         listView:insertCustomItem(custom_item, items_count)
@@ -2669,18 +2875,20 @@ function UIListViewHorizontalTest:initExtend()
     
     -- set item data
     items_count = table.getn(listView:getItems())
+    print("items_count", items_count)
     for i = 1,items_count do
         local item = listView:getItem(i - 1)
         local button = item:getChildByName("Title Button")
         local index = listView:getIndex(item)
-        button:setTitleText(array[index])
+        print("index is ", index)
+        button:setTitleText(array[index + 1])
     end
     
     -- remove last item
     listView:removeLastItem()
     
     -- remove item by index
-    items_count = table.getn(items)
+    items_count = table.getn(listView:getItems())
     listView:removeItem(items_count - 1)
     
     -- set all items layout gravity
@@ -2715,22 +2923,22 @@ function UIDragPanelTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
         
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIDragPanelTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
     self._uiLayer:addChild(self._displayValueLabel)
         
     local alert = ccui.Text:create()
     alert:setString("DragPanel")
-    alert:setFontName(font_UIDragPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
         
     local sc = ccui.ScrollView:create()
@@ -2738,7 +2946,7 @@ function UIDragPanelTest:initExtend()
     sc:setBackGroundColorType(ccui.LayoutBackGroundColorType.solid)
     sc:setDirection(ccui.ScrollViewDir.both)
     sc:setInnerContainerSize(cc.size(480, 320))
-    sc:setSize(cc.size(100,100))
+    sc:setContentSize(cc.size(100,100))
     sc:setPosition(cc.p(100,100))
     sc:scrollToPercentBothDirection(cc.p(50, 50), 1, true)
     local iv = ccui.ImageView:create()
@@ -2774,23 +2982,23 @@ function UIDragPanelBounceTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
 
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("No Event")
-    self._displayValueLabel:setFontName(font_UIDragPanelTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getSize().height * 1.5))
+    self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
     self._uiLayer:addChild(self._displayValueLabel)        
         
 
     local alert = ccui.Text:create()
     alert:setString("DragPanel Bounce")
-    alert:setFontName(font_UIDragPanelTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 2.925))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 2.925))
     self._uiLayer:addChild(alert)
         
     local sc = ccui.ScrollView:create()
@@ -2799,7 +3007,7 @@ function UIDragPanelBounceTest:initExtend()
     sc:setBounceEnabled(true)
     sc:setDirection(ccui.ScrollViewDir.both)
     sc:setInnerContainerSize(cc.size(480, 320))
-    sc:setSize(cc.size(100,100))
+    sc:setContentSize(cc.size(100,100))
     sc:setPosition(cc.p(100,100))
     sc:scrollToPercentBothDirection(cc.p(50, 50), 1, true)
     local iv = ccui.ImageView:create()
@@ -2834,11 +3042,11 @@ function UINodeContainerTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
-
+    local widgetSize = self._widget:getContentSize()
+    print("setFontName before")
     self._displayValueLabel = ccui.Text:create()
     self._displayValueLabel:setString("NodeContainer Add CCNode")
-    self._displayValueLabel:setFontName(font_UINodeContainerTest)
+    self._displayValueLabel:setFontName(font_TextName)
     self._displayValueLabel:setFontSize(32)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
     self._displayValueLabel:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + self._displayValueLabel:getContentSize().height * 1.5))
@@ -2846,10 +3054,10 @@ function UINodeContainerTest:initExtend()
         
     local alert = ccui.Text:create()
     alert:setString("NodeContainer")
-    alert:setFontName(font_UINodeContainerTest)
+    alert:setFontName(font_TextName)
     alert:setFontSize(30)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 1.75))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 1.75))
     self._uiLayer:addChild(alert)
         
     local nodeContainer = ccui.Widget:create()
@@ -2885,12 +3093,12 @@ function UIRichTextTest:initExtend()
     
     self:init()
 
-    local widgetSize = self._widget:getSize()
+    local widgetSize = self._widget:getContentSize()
 
     local alert = ccui.Text:create("RichText", "fonts/Marker Felt.ttf", 30)
-    alert:setFontName(font_UINodeContainerTest)
+    alert:setFontName(font_TextName)
     alert:setColor(cc.c3b(159, 168, 176))
-    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getSize().height * 3.125))
+    alert:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert:getContentSize().height * 3.125))
     self._widget:addChild(alert)
 
 
@@ -2898,7 +3106,7 @@ function UIRichTextTest:initExtend()
         if eventType == ccui.TouchEventType.ended then
             if self._richText:isIgnoreContentAdaptWithSize() then
                 self._richText:ignoreContentAdaptWithSize(false)
-                self._richText:setSize(cc.size(100, 100))
+                self._richText:setContentSize(cc.size(100, 100))
             else
                 self._richText:ignoreContentAdaptWithSize(true)
             end
@@ -2908,14 +3116,14 @@ function UIRichTextTest:initExtend()
     local button = ccui.Button:create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png")
     button:setTouchEnabled(true)
     button:setTitleText("switch")
-    button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + button:getSize().height * 2.5))
+    button:setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + button:getContentSize().height * 2.5))
     button:addTouchEventListener(touchEvent)
     button:setLocalZOrder(10)
     self._widget:addChild(button)
 
     self._richText = ccui.RichText:create()
     self._richText:ignoreContentAdaptWithSize(false)
-    self._richText:setSize(cc.size(100, 100))
+    self._richText:setContentSize(cc.size(100, 100))
 
     local re1 = ccui.RichElementText:create(1, cc.c3b(255, 255, 255), 255, "This color is white. ", "Helvetica", 10)
     local re2 = ccui.RichElementText:create(2, cc.c3b(255, 255,   0), 255, "And this is yellow. ", "Helvetica", 10)
@@ -2956,8 +3164,896 @@ function UIRichTextTest.create()
     return scene   
 end
 
+local UIFocusTestHorizontal = class("UIFocusTestHorizontal",UIScene)
+function UIFocusTestHorizontal.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestHorizontal)
+    return target
+end
+
+function UIFocusTestHorizontal:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+    self._horizontalLayout = ccui.HBox:create()
+    self._horizontalLayout:setPosition(cc.p(20, winSize.height / 2 + 40))
+    self._uiLayer:addChild(self._horizontalLayout)
+
+    self._horizontalLayout:setFocused(true)
+    self._horizontalLayout:setLoopFocus(true)
+    self._horizontalLayout:setTag(100)
+    self._firstFocusedWidget = self._horizontalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count = 3
+    for i = 1, count do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._horizontalLayout:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._horizontalLayout:setLoopFocus(not self._horizontalLayout:isLoopFocus())
+            if self._horizontalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestHorizontal.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestHorizontal.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestVertical = class("UIFocusTestVertical",UIScene)
+
+function UIFocusTestVertical.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestVertical)
+    return target
+end
+
+function UIFocusTestVertical:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+    self._verticalLayout = ccui.VBox:create()
+    self._verticalLayout:setPosition(cc.p(winSize.width/2 - 100, winSize.height - 70))
+    self._uiLayer:addChild(self._verticalLayout)
+
+    self._verticalLayout:setFocused(true)
+    self._verticalLayout:setLoopFocus(true)
+    self._verticalLayout:setTag(100)
+    self._verticalLayout:setScale(0.5)
+    self._firstFocusedWidget = self._verticalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count = 3
+    for i = 1, count do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._verticalLayout:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._verticalLayout:setLoopFocus(not self._verticalLayout:isLoopFocus())
+            if self._verticalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestVertical.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestVertical.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestNestedLayout1 = class("UIFocusTestNestedLayout1",UIScene)
+
+function UIFocusTestNestedLayout1.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestNestedLayout1)
+    return target
+end
+
+function UIFocusTestNestedLayout1:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    self._verticalLayout = ccui.VBox:create()
+    self._verticalLayout:setPosition(cc.p(winSize.width/2 - 80, winSize.height - 70))
+    self._uiLayer:addChild(self._verticalLayout)
+    self._verticalLayout:setScale(0.5)
+
+    self._verticalLayout:setFocused(true)
+    self._verticalLayout:setLoopFocus(true)
+    self._verticalLayout:setTag(100)
+    self._firstFocusedWidget = self._verticalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count1 = 1
+    for i = 1, count1 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 0))
+        imageView:setTouchEnabled(true)
+        imageView:setScaleX(2.5)
+        imageView:setTag(i - 1 + count1)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._verticalLayout:addChild(imageView)
+    end
+
+    local hbox = ccui.HBox:create()
+    hbox:setScale(0.8)
+    hbox:setTag(101)
+    self._verticalLayout:addChild(hbox)
+
+    local count2 = 2
+    for i = 1, count2 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 1))
+        imageView:setScaleY(2.0)
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2)
+        imageView:addTouchEventListener(onImageViewClicked)
+        hbox:addChild(imageView)
+    end
+
+    local innerVBox = ccui.VBox:create()
+    hbox:addChild(innerVBox)
+    innerVBox:setTag(102)
+
+    local count3 = 2
+    for i = 1, count3 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2 + count3)
+        imageView:addTouchEventListener(onImageViewClicked)
+        innerVBox:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._verticalLayout:setLoopFocus(not self._verticalLayout:isLoopFocus())
+            if self._verticalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestNestedLayout1.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestNestedLayout1.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestNestedLayout2 = class("UIFocusTestNestedLayout2",UIScene)
+
+function UIFocusTestNestedLayout2.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestNestedLayout2)
+    return target
+end
+
+function UIFocusTestNestedLayout2:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    self._horizontalLayout = ccui.HBox:create()
+    self._horizontalLayout:setPosition(cc.p(winSize.width/2 - 200, winSize.height - 70))
+    self._uiLayer:addChild(self._horizontalLayout)
+    self._horizontalLayout:setScale(0.6)
+
+    self._horizontalLayout:setFocused(true)
+    self._horizontalLayout:setLoopFocus(true)
+    self._horizontalLayout:setTag(100)
+    self._firstFocusedWidget = self._horizontalLayout
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count1 = 2
+    for i = 1, count1 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 1))
+        imageView:setTouchEnabled(true)
+        imageView:setScaleY(2.4)
+        imageView:setTag(i - 1 + count1)
+        imageView:addTouchEventListener(onImageViewClicked)
+        self._horizontalLayout:addChild(imageView)
+    end
+
+    local vbox = ccui.VBox:create()
+    vbox:setScale(0.8)
+    vbox:setTag(101)
+    self._horizontalLayout:addChild(vbox)
+
+    local count2 = 2
+    for i = 1, count2 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setAnchorPoint(cc.p(0, 1))
+        imageView:setScaleX(2.0)
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2)
+        imageView:addTouchEventListener(onImageViewClicked)
+        vbox:addChild(imageView)
+    end
+
+    local innerVBox = ccui.HBox:create()
+    vbox:addChild(innerVBox)
+    innerVBox:setTag(102)
+
+    local count3 = 2
+    for i = 1, count3 do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i - 1 + count1 + count2 + count3)
+        imageView:addTouchEventListener(onImageViewClicked)
+        innerVBox:addChild(imageView)
+    end
+
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._horizontalLayout:setLoopFocus(not self._horizontalLayout:isLoopFocus())
+            if self._horizontalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestNestedLayout2.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestNestedLayout2.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
+local UIFocusTestNestedLayout3 = class("UIFocusTestNestedLayout3",UIScene)
+
+function UIFocusTestNestedLayout3.extend( target )
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, UIFocusTestNestedLayout3)
+    return target
+end
+
+function UIFocusTestNestedLayout3:initExtend()
+    self:init()
+
+    local root = self._uiLayer:getChildByTag(81)
+    local background = root:getChildByName("background_Panel")
+    background:removeFromParent(true)
+
+    local function onLeftKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_LEFT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onRightKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_RIGHT, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onUpKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_UP, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    local function onDownKeyPressed()
+        local event = cc.EventKeyboard:new(cc.KeyCode.KEY_DPAD_DOWN, false)
+        cc.Director:getInstance():getEventDispatcher():dispatchEvent(event)
+    end
+
+    self._dpadMenu = cc.Menu:create()
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    local leftItem = cc.MenuItemFont:create("Left")
+    leftItem:setPosition(cc.p(winSize.width - 100, winSize.height/2))
+    leftItem:registerScriptTapHandler(onLeftKeyPressed)
+    self._dpadMenu:addChild(leftItem)
+
+    local rightItem = cc.MenuItemFont:create("Right")
+    rightItem:setPosition(cc.p(winSize.width - 30, winSize.height/2))
+    rightItem:registerScriptTapHandler(onRightKeyPressed)
+    self._dpadMenu:addChild(rightItem)
+
+    local upItem = cc.MenuItemFont:create("Up")
+    upItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 + 50))
+    upItem:registerScriptTapHandler(onUpKeyPressed)
+    self._dpadMenu:addChild(upItem)
+
+    local downItem = cc.MenuItemFont:create("Down")
+    downItem:setPosition(cc.p(winSize.width - 60, winSize.height/2 - 50))
+    downItem:registerScriptTapHandler(onDownKeyPressed)
+    self._dpadMenu:addChild(downItem)
+    self._dpadMenu:setPosition(cc.p(0, 0))
+    self._uiLayer:addChild(self._dpadMenu)
+
+    ccui.Widget:enableDpadNavigation(true)
+
+    local function onFocusChanged(widgetLostFocus,widgetGetFocus)
+        if nil ~= widgetGetFocus and widgetGetFocus:isFocusEnabled() then
+             widgetGetFocus:setColor(cc.c3b(255, 0, 0))
+        end
+
+        if nil ~= widgetLostFocus and widgetLostFocus:isFocusEnabled() then
+            widgetLostFocus:setColor(cc.c3b(255, 255, 255))
+        end
+    
+        if nil ~= widgetLostFocus and nil ~= widgetGetFocus then
+            print(string.format("on focus change, %d widget get focus, %d widget lose focus", widgetGetFocus:getTag(),  widgetLostFocus:getTag()))
+        end
+    end
+
+    local eventListener = cc.EventListenerFocus:create()
+    eventListener:registerScriptHandler(onFocusChanged)
+    local eventDispatcher = self:getEventDispatcher()
+    eventDispatcher:addEventListenerWithFixedPriority(eventListener, 1)
+
+    local winSize = cc.Director:getInstance():getVisibleSize()
+
+    self._verticalLayout = ccui.VBox:create()
+    self._verticalLayout:setPosition(cc.p(40, winSize.height - 70))
+    self._uiLayer:addChild(self._verticalLayout)
+    self._verticalLayout:setScale(0.8)
+
+    self._verticalLayout:setFocused(true)
+    self._verticalLayout:setLoopFocus(true)
+    self._verticalLayout:setTag(-1000)
+    self._firstFocusedWidget = self._verticalLayout
+
+    local upperHBox = ccui.HBox:create()
+    upperHBox:setTag(-200)
+    self._verticalLayout:addChild(upperHBox)
+
+    local params = ccui.LinearLayoutParameter:create()
+    params:setMargin({left = 0, top = 0, right = 50, bottom = 0})
+        
+    local vparams = ccui.LinearLayoutParameter:create()
+    vparams:setMargin({left = 10, top = 0, right = 0, bottom = 140})
+    upperHBox:setLayoutParameter(vparams)
+
+    local function onImageViewClicked(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            local w = sender
+            if w:isFocusEnabled() then
+                w:setFocusEnabled(false)
+                w:setColor(cc.c3b(255, 255,   0))
+            else
+                w:setFocusEnabled(true)
+                w:setColor(cc.c3b(255, 255, 255))
+            end
+        end
+    end
+
+    local count = 3
+    for i = 1, count do
+        local firstVbox = ccui.VBox:create()
+        firstVbox:setScale(0.5)
+        firstVbox:setLayoutParameter(params)
+        firstVbox:setTag(i * 100)
+
+        local count1 = 3
+        for j = 1, count1 do
+            local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+            imageView:setTouchEnabled(true)
+            imageView:setTag(j + firstVbox:getTag())
+            imageView:addTouchEventListener(onImageViewClicked)
+            firstVbox:addChild(imageView)
+        end
+
+        upperHBox:addChild(firstVbox)
+    end
+
+    local bottomHBox = ccui.HBox:create()
+    bottomHBox:setScale(0.5)
+    bottomHBox:setTag(600)
+    bottomHBox:setLayoutParameter(vparams)
+
+    count = 3
+    local bottomParams = ccui.LinearLayoutParameter:create()
+    bottomParams:setMargin({left = 0, top = 0, right = 8, bottom = 0})
+    for i = 1, count do
+        local imageView = ccui.ImageView:create("cocosui/scrollviewbg.png")
+        imageView:setLayoutParameter(bottomParams)
+        imageView:setTouchEnabled(true)
+        imageView:setTag(i + 600)
+        imageView:addTouchEventListener(onImageViewClicked)
+        bottomHBox:addChild(imageView)
+    end
+
+    self._verticalLayout:addChild(bottomHBox)
+
+    self._loopText = ccui.Text:create("loop enabled", "Arial", 20)
+    self._loopText:setPosition(cc.p(winSize.width/2, winSize.height - 50))
+    self._loopText:setColor(cc.c3b(255, 0 ,0))
+    self:addChild(self._loopText)
+
+    local function toggleFocusLoop(sender, eventType)
+        if eventType == ccui.TouchEventType.ended then
+            self._verticalLayout:setLoopFocus(not self._verticalLayout:isLoopFocus())
+            if self._verticalLayout:isLoopFocus() then
+                self._loopText:setString("loop enabled")
+            else
+                self._loopText:setString("loop disabled")
+            end
+        end
+    end
+
+    local btn = ccui.Button:create("cocosui/switch-mask.png")
+    btn:setTitleText("Toggle Loop")
+    btn:setPosition(cc.p(60, winSize.height - 50))
+    btn:setTitleColor(cc.c3b(0, 255, 0))
+    btn:addTouchEventListener(toggleFocusLoop)
+    self:addChild(btn)
+end
+
+function UIFocusTestNestedLayout3.create()
+    local scene = cc.Scene:create()
+    local layer = UIFocusTestNestedLayout3.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    return scene   
+end
+
 local cocoStudioGuiArray = 
 {
+    {
+        title = "UIFocusTestHorizontal",
+        func  = function () 
+            return UIFocusTestHorizontal.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestVertical",
+        func  = function () 
+            return UIFocusTestVertical.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestNestedLayout1",
+        func  = function () 
+            return UIFocusTestNestedLayout1.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestNestedLayout2",
+        func  = function () 
+            return UIFocusTestNestedLayout2.create()
+        end,
+    },
+
+    {
+        title = "UIFocusTestNestedLayout3",
+        func  = function () 
+            return UIFocusTestNestedLayout3.create()
+        end,
+    },
+
     {
         title = "UIButtonTest",
         func  = function () 
@@ -3152,6 +4248,20 @@ local cocoStudioGuiArray =
         func  = function ( )
             return UIPanelLayoutLinearHorizontalTest.create()
         end,
+    },
+
+    {
+        title = "UILayoutComponentBerthTest",
+        func = function()
+            return UILayoutComponentBerthTest.create()
+        end
+    },
+
+    {
+        title = "UILayoutComponentBerthStretchTest",
+        func = function()
+            return UILayoutComponentBerthStretchTest.create()
+        end
     },
 
     {

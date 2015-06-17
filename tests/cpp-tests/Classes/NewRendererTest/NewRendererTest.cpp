@@ -22,74 +22,20 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
 #include "NewRendererTest.h"
 
-static int sceneIdx = -1;
+USING_NS_CC;
 
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-static std::function<Layer*()> createFunctions[] =
+NewRendererTests::NewRendererTests()
 {
-    CL(NewSpriteTest),
-    CL(NewSpriteBatchTest),
-    CL(GroupCommandTest),
-    CL(NewClippingNodeTest),
-    CL(NewDrawNodeTest),
-    CL(NewCullingTest),
-    CL(VBOFullTest),
-    CL(CaptureScreenTest)
+    ADD_TEST_CASE(NewSpriteTest);
+    ADD_TEST_CASE(GroupCommandTest);
+    ADD_TEST_CASE(NewClippingNodeTest);
+    ADD_TEST_CASE(NewDrawNodeTest);
+    ADD_TEST_CASE(NewCullingTest);
+    ADD_TEST_CASE(VBOFullTest);
+    ADD_TEST_CASE(CaptureScreenTest);
 };
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* prevTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-}
-
-Layer* restartTest()
-{
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-}
-
-void NewRendererTestScene::runThisTest()
-{
-    auto layer = nextTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
-
-MultiSceneTest::MultiSceneTest()
-{
-
-}
-
-MultiSceneTest::~MultiSceneTest()
-{
-
-}
 
 std::string MultiSceneTest::title() const
 {
@@ -99,38 +45,6 @@ std::string MultiSceneTest::title() const
 std::string MultiSceneTest::subtitle() const
 {
     return "MultiSceneTest";
-}
-
-void MultiSceneTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void MultiSceneTest::restartCallback(Ref *sender)
-{
-    auto s = new NewRendererTestScene();
-    s->addChild(restartTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MultiSceneTest::nextCallback(Ref *sender)
-{
-    auto s = new NewRendererTestScene();
-    s->addChild(nextTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MultiSceneTest::backCallback(Ref *sender)
-{
-    auto s = new NewRendererTestScene();
-    s->addChild(prevTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 NewSpriteTest::NewSpriteTest()
@@ -236,7 +150,7 @@ public:
 
 SpriteInGroupCommand* SpriteInGroupCommand::create(const std::string &filename)
 {
-    SpriteInGroupCommand* sprite = new SpriteInGroupCommand();
+    SpriteInGroupCommand* sprite = new (std::nothrow) SpriteInGroupCommand();
     sprite->initWithFile(filename);
     sprite->autorelease();
     return sprite;
@@ -274,76 +188,6 @@ std::string GroupCommandTest::subtitle() const
     return "GroupCommandTest: You should see a sprite";
 }
 
-//-------- New Sprite Batch Test
-
-NewSpriteBatchTest::NewSpriteBatchTest()
-{
-    auto touchListener = EventListenerTouchAllAtOnce::create();
-    touchListener->onTouchesEnded = CC_CALLBACK_2(NewSpriteBatchTest::onTouchesEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-
-    auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
-    addChild(BatchNode, 0, kTagSpriteBatchNode);
-}
-
-NewSpriteBatchTest::~NewSpriteBatchTest()
-{
-
-}
-
-std::string NewSpriteBatchTest::title() const
-{
-    return "Renderer";
-}
-
-std::string NewSpriteBatchTest::subtitle() const
-{
-    return "SpriteBatchTest";
-}
-
-void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
-{
-    for (auto &touch : touches)
-    {
-        auto location = touch->getLocation();
-        addNewSpriteWithCoords(location);
-    }
-}
-
-void NewSpriteBatchTest::addNewSpriteWithCoords(Vec2 p)
-{
-    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
-
-    int idx = (int) (CCRANDOM_0_1() * 1400 / 100);
-    int x = (idx%5) * 85;
-    int y = (idx/5) * 121;
-
-
-    auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
-    BatchNode->addChild(sprite);
-
-    sprite->setPosition( Vec2( p.x, p.y) );
-
-    ActionInterval* action;
-    float random = CCRANDOM_0_1();
-
-    if( random < 0.20 )
-        action = ScaleBy::create(3, 2);
-    else if(random < 0.40)
-        action = RotateBy::create(3, 360);
-    else if( random < 0.60)
-        action = Blink::create(1, 3);
-    else if( random < 0.8 )
-        action = TintBy::create(2, 0, -255, -255);
-    else
-        action = FadeOut::create(2);
-
-    auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, nullptr);
-
-    sprite->runAction( RepeatForever::create(seq));
-}
-
 NewClippingNodeTest::NewClippingNodeTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -357,7 +201,7 @@ NewClippingNodeTest::NewClippingNodeTest()
     clipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
     this->addChild(clipper);
 
-    //TODO Fix draw node as clip node
+    // TODO: Fix draw node as clip node
 //    auto stencil = NewDrawNode::create();
 //    Vec2 rectangle[4];
 //    rectangle[0] = Vec2(0, 0);
@@ -535,13 +379,16 @@ VBOFullTest::VBOFullTest()
 {
     Size s = Director::getInstance()->getWinSize();
     Node* parent = Node::create();
-    parent->setPosition(s.width/2, s.height/2);
+    parent->setPosition(0,0);
     addChild(parent);
     
-    for (int i=0; i<Renderer::VBO_SIZE * 2; ++i)
+    for (int i=0; i< Renderer::VBO_SIZE / 3.9; ++i)
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
-        sprite->setPosition(Vec2(0,0));
+        sprite->setScale(0.1f, 0.1f);
+        float x = ((float)std::rand()) /RAND_MAX;
+        float y = ((float)std::rand()) /RAND_MAX;
+        sprite->setPosition(Vec2(x * s.width, y * s.height));
         parent->addChild(sprite);
     }
 }

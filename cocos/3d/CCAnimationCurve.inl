@@ -4,7 +4,6 @@ NS_CC_BEGIN
 template <int componentSize>
 void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateType type) const
 {
-    int floatSize = sizeof(float);
     if (_count == 1 || time <= _keytime[0])
     {
         memcpy(dst, _value, _componentSizeByte);
@@ -34,7 +33,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
         break;
         case EvaluateType::INT_NEAR:
         {
-            float* src = t > 0.5f ? toValue : fromValue;
+            float* src = fabs(t) > 0.5f ? toValue : fromValue;
             memcpy(dst, src, _componentSizeByte);
         }
         break;
@@ -73,7 +72,7 @@ template <int componentSize>
 AnimationCurve<componentSize>* AnimationCurve<componentSize>::create(float* keytime, float* value, int count)
 {
     int floatSize = sizeof(float);
-    AnimationCurve* curve = new AnimationCurve();
+    AnimationCurve* curve = new (std::nothrow) AnimationCurve();
     curve->_keytime = new float[count];
     memcpy(curve->_keytime, keytime, count * floatSize);
     
@@ -104,8 +103,8 @@ float AnimationCurve<componentSize>::getEndTime() const
 
 template <int componentSize>
 AnimationCurve<componentSize>::AnimationCurve()
-: _keytime(nullptr)
-, _value(nullptr)
+: _value(nullptr)
+, _keytime(nullptr)
 , _count(0)
 , _componentSizeByte(0)
 , _evaluateFun(nullptr)
@@ -115,8 +114,8 @@ AnimationCurve<componentSize>::AnimationCurve()
 template <int componentSize>
 AnimationCurve<componentSize>::~AnimationCurve()
 {
-    CC_SAFE_DELETE(_keytime);
-    CC_SAFE_DELETE(_value);
+    CC_SAFE_DELETE_ARRAY(_keytime);
+    CC_SAFE_DELETE_ARRAY(_value);
 }
 
 template <int componentSize>

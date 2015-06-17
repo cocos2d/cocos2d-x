@@ -27,18 +27,89 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UIPageViewTests);
+
 class UIPageViewTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIPageViewTest);
+
     UIPageViewTest();
     ~UIPageViewTest();
-    bool init();
+    virtual bool init() override;
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIPageViewTest)
-    Text* _displayValueLabel;
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewButtonTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewButtonTest);
+
+    UIPageViewButtonTest();
+    ~UIPageViewButtonTest();
+    virtual bool init() override;
+    
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewCustomScrollThreshold : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewCustomScrollThreshold);
+
+    UIPageViewCustomScrollThreshold();
+    ~UIPageViewCustomScrollThreshold();
+    virtual bool init() override;
+    
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
+
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewTouchPropagationTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewTouchPropagationTest);
+
+    UIPageViewTouchPropagationTest();
+    ~UIPageViewTouchPropagationTest();
+    virtual bool init() override;
+    
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewDynamicAddAndRemoveTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewDynamicAddAndRemoveTest);
+
+    UIPageViewDynamicAddAndRemoveTest();
+    ~UIPageViewDynamicAddAndRemoveTest();
+    virtual bool init() override;
+    
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    void onButtonClicked(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest__) */

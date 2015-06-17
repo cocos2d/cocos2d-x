@@ -12,23 +12,18 @@
 
 
 --------------------------------------------------------
--- the cc EventListener
--- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
-
-
---------------------------------------------------------
--- the cc Event
--- @field [parent=#cc] Event#Event Event preloaded module
-
-
---------------------------------------------------------
--- the cc EventDispatcher
--- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
+-- the cc Texture2D
+-- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
 
 
 --------------------------------------------------------
 -- the cc Touch
 -- @field [parent=#cc] Touch#Touch Touch preloaded module
+
+
+--------------------------------------------------------
+-- the cc Event
+-- @field [parent=#cc] Event#Event Event preloaded module
 
 
 --------------------------------------------------------
@@ -42,28 +37,18 @@
 
 
 --------------------------------------------------------
--- the cc Texture2D
--- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
-
-
---------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
 
 
 --------------------------------------------------------
--- the cc GLProgramState
--- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
+-- the cc Scene
+-- @field [parent=#cc] Scene#Scene Scene preloaded module
 
 
 --------------------------------------------------------
--- the cc AtlasNode
--- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
-
-
---------------------------------------------------------
--- the cc LabelAtlas
--- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
+-- the cc GLView
+-- @field [parent=#cc] GLView#GLView GLView preloaded module
 
 
 --------------------------------------------------------
@@ -82,68 +67,8 @@
 
 
 --------------------------------------------------------
--- the cc FileUtils
--- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
-
-
---------------------------------------------------------
--- the cc UserDefault
--- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerTouchOneByOne
--- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerTouchAllAtOnce
--- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerKeyboard
--- @field [parent=#cc] EventListenerKeyboard#EventListenerKeyboard EventListenerKeyboard preloaded module
-
-
---------------------------------------------------------
--- the cc EventMouse
--- @field [parent=#cc] EventMouse#EventMouse EventMouse preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerMouse
--- @field [parent=#cc] EventListenerMouse#EventListenerMouse EventListenerMouse preloaded module
-
-
---------------------------------------------------------
--- the cc EventAcceleration
--- @field [parent=#cc] EventAcceleration#EventAcceleration EventAcceleration preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerAcceleration
--- @field [parent=#cc] EventListenerAcceleration#EventListenerAcceleration EventListenerAcceleration preloaded module
-
-
---------------------------------------------------------
--- the cc EventCustom
--- @field [parent=#cc] EventCustom#EventCustom EventCustom preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerCustom
--- @field [parent=#cc] EventListenerCustom#EventListenerCustom EventListenerCustom preloaded module
-
-
---------------------------------------------------------
--- the cc EventFocus
--- @field [parent=#cc] EventFocus#EventFocus EventFocus preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerFocus
--- @field [parent=#cc] EventListenerFocus#EventListenerFocus EventListenerFocus preloaded module
+-- the cc AsyncTaskPool
+-- @field [parent=#cc] AsyncTaskPool#AsyncTaskPool AsyncTaskPool preloaded module
 
 
 --------------------------------------------------------
@@ -312,6 +237,91 @@
 
 
 --------------------------------------------------------
+-- the cc ActionFloat
+-- @field [parent=#cc] ActionFloat#ActionFloat ActionFloat preloaded module
+
+
+--------------------------------------------------------
+-- the cc Properties
+-- @field [parent=#cc] Properties#Properties Properties preloaded module
+
+
+--------------------------------------------------------
+-- the cc UserDefault
+-- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
+
+
+--------------------------------------------------------
+-- the cc FileUtils
+-- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventAcceleration
+-- @field [parent=#cc] EventAcceleration#EventAcceleration EventAcceleration preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventCustom
+-- @field [parent=#cc] EventCustom#EventCustom EventCustom preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListener
+-- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventDispatcher
+-- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventFocus
+-- @field [parent=#cc] EventFocus#EventFocus EventFocus preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerAcceleration
+-- @field [parent=#cc] EventListenerAcceleration#EventListenerAcceleration EventListenerAcceleration preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerCustom
+-- @field [parent=#cc] EventListenerCustom#EventListenerCustom EventListenerCustom preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerFocus
+-- @field [parent=#cc] EventListenerFocus#EventListenerFocus EventListenerFocus preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerKeyboard
+-- @field [parent=#cc] EventListenerKeyboard#EventListenerKeyboard EventListenerKeyboard preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventMouse
+-- @field [parent=#cc] EventMouse#EventMouse EventMouse preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerMouse
+-- @field [parent=#cc] EventListenerMouse#EventListenerMouse EventListenerMouse preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerTouchOneByOne
+-- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerTouchAllAtOnce
+-- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
+
+
+--------------------------------------------------------
 -- the cc ActionCamera
 -- @field [parent=#cc] ActionCamera#ActionCamera ActionCamera preloaded module
 
@@ -322,8 +332,23 @@
 
 
 --------------------------------------------------------
--- the cc ActionManager
--- @field [parent=#cc] ActionManager#ActionManager ActionManager preloaded module
+-- the cc CardinalSplineTo
+-- @field [parent=#cc] CardinalSplineTo#CardinalSplineTo CardinalSplineTo preloaded module
+
+
+--------------------------------------------------------
+-- the cc CardinalSplineBy
+-- @field [parent=#cc] CardinalSplineBy#CardinalSplineBy CardinalSplineBy preloaded module
+
+
+--------------------------------------------------------
+-- the cc CatmullRomTo
+-- @field [parent=#cc] CatmullRomTo#CatmullRomTo CatmullRomTo preloaded module
+
+
+--------------------------------------------------------
+-- the cc CatmullRomBy
+-- @field [parent=#cc] CatmullRomBy#CatmullRomBy CatmullRomBy preloaded module
 
 
 --------------------------------------------------------
@@ -632,6 +657,11 @@
 
 
 --------------------------------------------------------
+-- the cc ActionManager
+-- @field [parent=#cc] ActionManager#ActionManager ActionManager preloaded module
+
+
+--------------------------------------------------------
 -- the cc PageTurn3D
 -- @field [parent=#cc] PageTurn3D#PageTurn3D PageTurn3D preloaded module
 
@@ -712,33 +742,28 @@
 
 
 --------------------------------------------------------
--- the cc CardinalSplineTo
--- @field [parent=#cc] CardinalSplineTo#CardinalSplineTo CardinalSplineTo preloaded module
+-- the cc GLProgramState
+-- @field [parent=#cc] GLProgramState#GLProgramState GLProgramState preloaded module
 
 
 --------------------------------------------------------
--- the cc CardinalSplineBy
--- @field [parent=#cc] CardinalSplineBy#CardinalSplineBy CardinalSplineBy preloaded module
+-- the cc AtlasNode
+-- @field [parent=#cc] AtlasNode#AtlasNode AtlasNode preloaded module
 
 
 --------------------------------------------------------
--- the cc CatmullRomTo
--- @field [parent=#cc] CatmullRomTo#CatmullRomTo CatmullRomTo preloaded module
+-- the cc ClippingNode
+-- @field [parent=#cc] ClippingNode#ClippingNode ClippingNode preloaded module
 
 
 --------------------------------------------------------
--- the cc CatmullRomBy
--- @field [parent=#cc] CatmullRomBy#CatmullRomBy CatmullRomBy preloaded module
+-- the cc ClippingRectangleNode
+-- @field [parent=#cc] ClippingRectangleNode#ClippingRectangleNode ClippingRectangleNode preloaded module
 
 
 --------------------------------------------------------
 -- the cc DrawNode
 -- @field [parent=#cc] DrawNode#DrawNode DrawNode preloaded module
-
-
---------------------------------------------------------
--- the cc GLProgram
--- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
 
 
 --------------------------------------------------------
@@ -749,6 +774,11 @@
 --------------------------------------------------------
 -- the cc Label
 -- @field [parent=#cc] Label#Label Label preloaded module
+
+
+--------------------------------------------------------
+-- the cc LabelAtlas
+-- @field [parent=#cc] LabelAtlas#LabelAtlas LabelAtlas preloaded module
 
 
 --------------------------------------------------------
@@ -772,8 +802,148 @@
 
 
 --------------------------------------------------------
--- the cc Scene
--- @field [parent=#cc] Scene#Scene Scene preloaded module
+-- the cc MenuItem
+-- @field [parent=#cc] MenuItem#MenuItem MenuItem preloaded module
+
+
+--------------------------------------------------------
+-- the cc MenuItemLabel
+-- @field [parent=#cc] MenuItemLabel#MenuItemLabel MenuItemLabel preloaded module
+
+
+--------------------------------------------------------
+-- the cc MenuItemAtlasFont
+-- @field [parent=#cc] MenuItemAtlasFont#MenuItemAtlasFont MenuItemAtlasFont preloaded module
+
+
+--------------------------------------------------------
+-- the cc MenuItemFont
+-- @field [parent=#cc] MenuItemFont#MenuItemFont MenuItemFont preloaded module
+
+
+--------------------------------------------------------
+-- the cc MenuItemSprite
+-- @field [parent=#cc] MenuItemSprite#MenuItemSprite MenuItemSprite preloaded module
+
+
+--------------------------------------------------------
+-- the cc MenuItemImage
+-- @field [parent=#cc] MenuItemImage#MenuItemImage MenuItemImage preloaded module
+
+
+--------------------------------------------------------
+-- the cc MenuItemToggle
+-- @field [parent=#cc] MenuItemToggle#MenuItemToggle MenuItemToggle preloaded module
+
+
+--------------------------------------------------------
+-- the cc Menu
+-- @field [parent=#cc] Menu#Menu Menu preloaded module
+
+
+--------------------------------------------------------
+-- the cc MotionStreak
+-- @field [parent=#cc] MotionStreak#MotionStreak MotionStreak preloaded module
+
+
+--------------------------------------------------------
+-- the cc NodeGrid
+-- @field [parent=#cc] NodeGrid#NodeGrid NodeGrid preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleBatchNode
+-- @field [parent=#cc] ParticleBatchNode#ParticleBatchNode ParticleBatchNode preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleSystem
+-- @field [parent=#cc] ParticleSystem#ParticleSystem ParticleSystem preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleSystemQuad
+-- @field [parent=#cc] ParticleSystemQuad#ParticleSystemQuad ParticleSystemQuad preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleFire
+-- @field [parent=#cc] ParticleFire#ParticleFire ParticleFire preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleFireworks
+-- @field [parent=#cc] ParticleFireworks#ParticleFireworks ParticleFireworks preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleSun
+-- @field [parent=#cc] ParticleSun#ParticleSun ParticleSun preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleGalaxy
+-- @field [parent=#cc] ParticleGalaxy#ParticleGalaxy ParticleGalaxy preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleFlower
+-- @field [parent=#cc] ParticleFlower#ParticleFlower ParticleFlower preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleMeteor
+-- @field [parent=#cc] ParticleMeteor#ParticleMeteor ParticleMeteor preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleSpiral
+-- @field [parent=#cc] ParticleSpiral#ParticleSpiral ParticleSpiral preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleExplosion
+-- @field [parent=#cc] ParticleExplosion#ParticleExplosion ParticleExplosion preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleSmoke
+-- @field [parent=#cc] ParticleSmoke#ParticleSmoke ParticleSmoke preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleSnow
+-- @field [parent=#cc] ParticleSnow#ParticleSnow ParticleSnow preloaded module
+
+
+--------------------------------------------------------
+-- the cc ParticleRain
+-- @field [parent=#cc] ParticleRain#ParticleRain ParticleRain preloaded module
+
+
+--------------------------------------------------------
+-- the cc ProgressTimer
+-- @field [parent=#cc] ProgressTimer#ProgressTimer ProgressTimer preloaded module
+
+
+--------------------------------------------------------
+-- the cc ProtectedNode
+-- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
+
+
+--------------------------------------------------------
+-- the cc Sprite
+-- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
+
+
+--------------------------------------------------------
+-- the cc Image
+-- @field [parent=#cc] Image#Image Image preloaded module
+
+
+--------------------------------------------------------
+-- the cc RenderTexture
+-- @field [parent=#cc] RenderTexture#RenderTexture RenderTexture preloaded module
 
 
 --------------------------------------------------------
@@ -962,148 +1132,8 @@
 
 
 --------------------------------------------------------
--- the cc MenuItem
--- @field [parent=#cc] MenuItem#MenuItem MenuItem preloaded module
-
-
---------------------------------------------------------
--- the cc MenuItemLabel
--- @field [parent=#cc] MenuItemLabel#MenuItemLabel MenuItemLabel preloaded module
-
-
---------------------------------------------------------
--- the cc MenuItemAtlasFont
--- @field [parent=#cc] MenuItemAtlasFont#MenuItemAtlasFont MenuItemAtlasFont preloaded module
-
-
---------------------------------------------------------
--- the cc MenuItemFont
--- @field [parent=#cc] MenuItemFont#MenuItemFont MenuItemFont preloaded module
-
-
---------------------------------------------------------
--- the cc MenuItemSprite
--- @field [parent=#cc] MenuItemSprite#MenuItemSprite MenuItemSprite preloaded module
-
-
---------------------------------------------------------
--- the cc MenuItemImage
--- @field [parent=#cc] MenuItemImage#MenuItemImage MenuItemImage preloaded module
-
-
---------------------------------------------------------
--- the cc MenuItemToggle
--- @field [parent=#cc] MenuItemToggle#MenuItemToggle MenuItemToggle preloaded module
-
-
---------------------------------------------------------
--- the cc Menu
--- @field [parent=#cc] Menu#Menu Menu preloaded module
-
-
---------------------------------------------------------
--- the cc ClippingNode
--- @field [parent=#cc] ClippingNode#ClippingNode ClippingNode preloaded module
-
-
---------------------------------------------------------
--- the cc MotionStreak
--- @field [parent=#cc] MotionStreak#MotionStreak MotionStreak preloaded module
-
-
---------------------------------------------------------
--- the cc Sprite
--- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
-
-
---------------------------------------------------------
--- the cc ProgressTimer
--- @field [parent=#cc] ProgressTimer#ProgressTimer ProgressTimer preloaded module
-
-
---------------------------------------------------------
--- the cc Image
--- @field [parent=#cc] Image#Image Image preloaded module
-
-
---------------------------------------------------------
--- the cc RenderTexture
--- @field [parent=#cc] RenderTexture#RenderTexture RenderTexture preloaded module
-
-
---------------------------------------------------------
--- the cc NodeGrid
--- @field [parent=#cc] NodeGrid#NodeGrid NodeGrid preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleBatchNode
--- @field [parent=#cc] ParticleBatchNode#ParticleBatchNode ParticleBatchNode preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleSystem
--- @field [parent=#cc] ParticleSystem#ParticleSystem ParticleSystem preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleSystemQuad
--- @field [parent=#cc] ParticleSystemQuad#ParticleSystemQuad ParticleSystemQuad preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleFire
--- @field [parent=#cc] ParticleFire#ParticleFire ParticleFire preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleFireworks
--- @field [parent=#cc] ParticleFireworks#ParticleFireworks ParticleFireworks preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleSun
--- @field [parent=#cc] ParticleSun#ParticleSun ParticleSun preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleGalaxy
--- @field [parent=#cc] ParticleGalaxy#ParticleGalaxy ParticleGalaxy preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleFlower
--- @field [parent=#cc] ParticleFlower#ParticleFlower ParticleFlower preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleMeteor
--- @field [parent=#cc] ParticleMeteor#ParticleMeteor ParticleMeteor preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleSpiral
--- @field [parent=#cc] ParticleSpiral#ParticleSpiral ParticleSpiral preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleExplosion
--- @field [parent=#cc] ParticleExplosion#ParticleExplosion ParticleExplosion preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleSmoke
--- @field [parent=#cc] ParticleSmoke#ParticleSmoke ParticleSmoke preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleSnow
--- @field [parent=#cc] ParticleSnow#ParticleSnow ParticleSnow preloaded module
-
-
---------------------------------------------------------
--- the cc ParticleRain
--- @field [parent=#cc] ParticleRain#ParticleRain ParticleRain preloaded module
+-- the cc Camera
+-- @field [parent=#cc] Camera#Camera Camera preloaded module
 
 
 --------------------------------------------------------
@@ -1122,8 +1152,58 @@
 
 
 --------------------------------------------------------
+-- the cc BaseLight
+-- @field [parent=#cc] BaseLight#BaseLight BaseLight preloaded module
+
+
+--------------------------------------------------------
+-- the cc DirectionLight
+-- @field [parent=#cc] DirectionLight#DirectionLight DirectionLight preloaded module
+
+
+--------------------------------------------------------
+-- the cc PointLight
+-- @field [parent=#cc] PointLight#PointLight PointLight preloaded module
+
+
+--------------------------------------------------------
+-- the cc SpotLight
+-- @field [parent=#cc] SpotLight#SpotLight SpotLight preloaded module
+
+
+--------------------------------------------------------
+-- the cc AmbientLight
+-- @field [parent=#cc] AmbientLight#AmbientLight AmbientLight preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLProgram
+-- @field [parent=#cc] GLProgram#GLProgram GLProgram preloaded module
+
+
+--------------------------------------------------------
 -- the cc GLProgramCache
 -- @field [parent=#cc] GLProgramCache#GLProgramCache GLProgramCache preloaded module
+
+
+--------------------------------------------------------
+-- the cc RenderState
+-- @field [parent=#cc] RenderState#RenderState RenderState preloaded module
+
+
+--------------------------------------------------------
+-- the cc Pass
+-- @field [parent=#cc] Pass#Pass Pass preloaded module
+
+
+--------------------------------------------------------
+-- the cc Technique
+-- @field [parent=#cc] Technique#Technique Technique preloaded module
+
+
+--------------------------------------------------------
+-- the cc Material
+-- @field [parent=#cc] Material#Material Material preloaded module
 
 
 --------------------------------------------------------
@@ -1132,18 +1212,18 @@
 
 
 --------------------------------------------------------
+-- the cc Device
+-- @field [parent=#cc] Device#Device Device preloaded module
+
+
+--------------------------------------------------------
 -- the cc Application
 -- @field [parent=#cc] Application#Application Application preloaded module
 
 
 --------------------------------------------------------
--- the cc GLViewProtocol
--- @field [parent=#cc] GLViewProtocol#GLViewProtocol GLViewProtocol preloaded module
-
-
---------------------------------------------------------
--- the cc GLView
--- @field [parent=#cc] GLView#GLView GLView preloaded module
+-- the cc GLViewImpl
+-- @field [parent=#cc] GLViewImpl#GLViewImpl GLViewImpl preloaded module
 
 
 --------------------------------------------------------
@@ -1202,23 +1282,8 @@
 
 
 --------------------------------------------------------
--- the cc Sprite3D
--- @field [parent=#cc] Sprite3D#Sprite3D Sprite3D preloaded module
-
-
---------------------------------------------------------
--- the cc Mesh
--- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
-
-
---------------------------------------------------------
--- the cc SimpleAudioEngine
--- @field [parent=#cc] SimpleAudioEngine#SimpleAudioEngine SimpleAudioEngine preloaded module
-
-
---------------------------------------------------------
--- the cc ProtectedNode
--- @field [parent=#cc] ProtectedNode#ProtectedNode ProtectedNode preloaded module
+-- the cc SpritePolygonCache
+-- @field [parent=#cc] SpritePolygonCache#SpritePolygonCache SpritePolygonCache preloaded module
 
 
 return nil

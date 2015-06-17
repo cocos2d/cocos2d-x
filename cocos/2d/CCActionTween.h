@@ -35,6 +35,15 @@ NS_CC_BEGIN
  * @{
  */
 
+/**
+@brief The delegate class for ActionTween.
+@details If you want to use ActionTween on a node.
+        You should implement the node follow these steps:
+        1. The node should be inherit from ActionTweenDelegate.
+        2. Override the virtual method updateTweenAction in the node.
+
+        Then once you running ActionTween on the node, the method updateTweenAction will be incoked.
+*/
 class CC_DLL ActionTweenDelegate
 {
 public:
@@ -43,6 +52,12 @@ public:
      * @lua NA
      */
     virtual ~ActionTweenDelegate() {}
+
+    /**
+    @brief The callback function when ActionTween is running.
+    @param value The new value of the specified key.
+    @param key The key of property which should be updated.
+    */
     virtual void updateTweenAction(float value, const std::string& key) = 0;
 };
 
@@ -69,7 +84,14 @@ public:
 class CC_DLL ActionTween : public ActionInterval
 {
 public:
-    /** creates an initializes the action with the property name (key), and the from and to parameters. */
+    /** 
+     * @brief Create and initializes the action with the property name (key), and the from and to parameters.
+     * @param duration The duration of the ActionTween. It's a value in seconds.
+     * @param key The key of property which should be updated.
+     * @param from The value of the specified property when the action begin.
+     * @param to The value of the specified property when the action end.
+     * @return If the creation success, return a pointer of ActionTween; otherwise, return nil.
+     */
     static ActionTween* create(float duration, const std::string& key, float from, float to);
 
     // Overrides
@@ -79,7 +101,14 @@ public:
 	ActionTween *clone() const override;
     
 CC_CONSTRUCTOR_ACCESS:
-    /** initializes the action with the property name (key), and the from and to parameters. */
+    /** 
+     * @brief Initializes the action with the property name (key), and the from and to parameters.
+     * @param duration The duration of the ActionTween. It's a value in seconds.
+     * @param key The key of property which should be updated.
+     * @param from The value of the specified property when the action begin.
+     * @param to The value of the specified property when the action end.
+     * @return If the initialization success, return true; otherwise, return false.
+     */
     bool initWithDuration(float duration, const std::string& key, float from, float to);
 
 protected:

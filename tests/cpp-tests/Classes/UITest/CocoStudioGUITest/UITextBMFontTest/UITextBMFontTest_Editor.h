@@ -27,13 +27,14 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UITextBMFontEditorTest);
 class UITextBMFontTest_Editor : public UIScene_Editor
 {
 public:
-    bool init();
-    
+    CREATE_FUNC(UITextBMFontTest_Editor);
+
+    virtual bool init() override;
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UITextBMFontTest_Editor)
 };
 
 

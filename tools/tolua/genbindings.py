@@ -77,9 +77,16 @@ def main():
 
     if platform == 'win32':
         x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s' % cur_platform))
+        if not os.path.exists(x86_llvm_path):
+            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s' % cur_platform))
     else:
         x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+        if not os.path.exists(x86_llvm_path):
+            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+
     x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    if not os.path.exists(x64_llvm_path):
+        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
 
     if os.path.isdir(x86_llvm_path):
         llvm_path = x86_llvm_path
@@ -132,6 +139,16 @@ def main():
                     'cocos2dx_studio.ini' : ('cocos2dx_studio', 'lua_cocos2dx_studio_auto'), \
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'lua_cocos2dx_spine_auto'), \
                     'cocos2dx_physics.ini' : ('cocos2dx_physics', 'lua_cocos2dx_physics_auto'), \
+                    'cocos2dx_experimental_video.ini' : ('cocos2dx_experimental_video', 'lua_cocos2dx_experimental_video_auto'), \
+                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'lua_cocos2dx_experimental_auto'), \
+                    'cocos2dx_controller.ini' : ('cocos2dx_controller', 'lua_cocos2dx_controller_auto'), \
+                    'cocos2dx_cocosbuilder.ini': ('cocos2dx_cocosbuilder', 'lua_cocos2dx_cocosbuilder_auto'), \
+                    'cocos2dx_cocosdenshion.ini': ('cocos2dx_cocosdenshion', 'lua_cocos2dx_cocosdenshion_auto'), \
+                    'cocos2dx_3d.ini': ('cocos2dx_3d', 'lua_cocos2dx_3d_auto'), \
+                    'cocos2dx_audioengine.ini': ('cocos2dx_audioengine', 'lua_cocos2dx_audioengine_auto'), \
+                    'cocos2dx_csloader.ini' : ('cocos2dx_csloader', 'lua_cocos2dx_csloader_auto'), \
+                    'cocos2dx_experimental_webview.ini' : ('cocos2dx_experimental_webview', 'lua_cocos2dx_experimental_webview_auto'), \
+                    'cocos2dx_physics3d.ini' : ('cocos2dx_physics3d', 'lua_cocos2dx_physics3d_auto'), \
                     }
         target = 'lua'
         generator_py = '%s/generator.py' % cxx_generator_root
@@ -141,10 +158,6 @@ def main():
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             _run_cmd(command)
-
-        if platform == 'win32':
-            with _pushd(output_dir):
-                _run_cmd('dos2unix *')
 
         print '---------------------------------'
         print 'Generating lua bindings succeeds.'

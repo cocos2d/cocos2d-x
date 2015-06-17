@@ -26,12 +26,12 @@ THE SOFTWARE.
 #define __CCSSCENEREADER_H__
 
 #include "cocostudio/DictionaryHelper.h"
-
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
 
-class SceneReader
+class CC_STUDIO_DLL SceneReader
 {
 public:
 
@@ -65,9 +65,11 @@ public:
     void setTarget(const std::function<void(cocos2d::Ref* obj, void* doc)>& selector);
     cocos2d::Node* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _attachComponent;}
-private:
+CC_CONSTRUCTOR_ACCESS:
     SceneReader(void);
     virtual ~SceneReader(void);
+    
+private:
     std::string getComponentClassName(const std::string& name);
 
     cocos2d::Component* createComponent(const std::string classname);
@@ -76,6 +78,10 @@ private:
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);
     void setPropertyFromJsonDict(const rapidjson::Value& dict, cocos2d::Node *node);
     bool readJson(const std::string &fileName, rapidjson::Document& doc);
+
+    cocos2d::Node* createObject(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node* parent, AttachComponentType attachComponent);
+	void setPropertyFromJsonDict(CocoLoader *cocoLoader, stExpCocoNode *cocoNode, cocos2d::Node *node);
+    
     cocos2d::Node* nodeByTag(cocos2d::Node *parent, int tag);
 private:
     static SceneReader* s_sharedReader;

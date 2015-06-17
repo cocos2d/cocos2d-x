@@ -1,34 +1,31 @@
 /******************************************************************************
- * Spine Runtime Software License - Version 1.1
+ * Spine Runtimes Software License
+ * Version 2.1
  * 
  * Copyright (c) 2013, Esoteric Software
  * All rights reserved.
  * 
- * Redistribution and use in source and binary forms in whole or in part, with
- * or without modification, are permitted provided that the following conditions
- * are met:
+ * You are granted a perpetual, non-exclusive, non-sublicensable and
+ * non-transferable license to install, execute and perform the Spine Runtimes
+ * Software (the "Software") solely for internal use. Without the written
+ * permission of Esoteric Software (typically granted by licensing Spine), you
+ * may not (a) modify, translate, adapt or otherwise create derivative works,
+ * improvements of the Software or develop new applications using the Software
+ * or (b) remove, delete, alter or obscure any trademarks or any copyright,
+ * trademark, patent or other intellectual property or proprietary rights
+ * notices on or in the Software, including any copy thereof. Redistributions
+ * in binary or source form must include this license and terms.
  * 
- * 1. A Spine Essential, Professional, Enterprise, or Education License must
- *    be purchased from Esoteric Software and the license must remain valid:
- *    http://esotericsoftware.com/
- * 2. Redistributions of source code must retain this license, which is the
- *    above copyright notice, this declaration of conditions and the following
- *    disclaimer.
- * 3. Redistributions in binary form must reproduce this license, which is the
- *    above copyright notice, this declaration of conditions and the following
- *    disclaimer, in the documentation and/or other materials provided with the
- *    distribution.
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #ifndef SPINE_SKELETON_H_
@@ -37,33 +34,60 @@
 #include <spine/SkeletonData.h>
 #include <spine/Slot.h>
 #include <spine/Skin.h>
+#include <spine/IkConstraint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct spSkeleton spSkeleton;
-struct spSkeleton {
+typedef struct spSkeleton {
 	spSkeletonData* const data;
 
-	int boneCount;
+	int bonesCount;
 	spBone** bones;
 	spBone* const root;
 
-	int slotCount;
+	int slotsCount;
 	spSlot** slots;
 	spSlot** drawOrder;
+
+	int ikConstraintsCount;
+	spIkConstraint** ikConstraints;
 
 	spSkin* const skin;
 	float r, g, b, a;
 	float time;
 	int/*bool*/flipX, flipY;
 	float x, y;
-};
+
+#ifdef __cplusplus
+	spSkeleton() :
+		data(0),
+		bonesCount(0),
+		bones(0),
+		root(0),
+		slotsCount(0),
+		slots(0),
+		drawOrder(0),
+
+		ikConstraintsCount(0),
+		ikConstraints(0),
+
+		skin(0),
+		r(0), g(0), b(0), a(0),
+		time(0),
+		flipX(0),
+		flipY(0),
+		x(0), y(0) {
+	}
+#endif
+} spSkeleton;
 
 spSkeleton* spSkeleton_create (spSkeletonData* data);
 void spSkeleton_dispose (spSkeleton* self);
 
+/* Caches information about bones and IK constraints. Must be called if bones or IK constraints are added or removed. */
+void spSkeleton_updateCache (const spSkeleton* self);
 void spSkeleton_updateWorldTransform (const spSkeleton* self);
 
 void spSkeleton_setToSetupPose (const spSkeleton* self);
@@ -80,8 +104,9 @@ spSlot* spSkeleton_findSlot (const spSkeleton* self, const char* slotName);
 /* Returns -1 if the slot was not found. */
 int spSkeleton_findSlotIndex (const spSkeleton* self, const char* slotName);
 
-/* Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
- * attached if the corresponding attachment from the old skin was attached.
+/* Sets the skin used to look up attachments before looking in the SkeletonData defaultSkin. Attachments from the new skin are
+ * attached if the corresponding attachment from the old skin was attached. If there was no old skin, each slot's setup mode
+ * attachment is attached from the new skin.
  * @param skin May be 0.*/
 void spSkeleton_setSkin (spSkeleton* self, spSkin* skin);
 /* Returns 0 if the skin was not found. See spSkeleton_setSkin.
@@ -92,8 +117,12 @@ int spSkeleton_setSkinByName (spSkeleton* self, const char* skinName);
 spAttachment* spSkeleton_getAttachmentForSlotName (const spSkeleton* self, const char* slotName, const char* attachmentName);
 /* Returns 0 if the slot or attachment was not found. */
 spAttachment* spSkeleton_getAttachmentForSlotIndex (const spSkeleton* self, int slotIndex, const char* attachmentName);
-/* Returns 0 if the slot or attachment was not found. */
+/* Returns 0 if the slot or attachment was not found.
+ * @param attachmentName May be 0. */
 int spSkeleton_setAttachment (spSkeleton* self, const char* slotName, const char* attachmentName);
+
+/* Returns 0 if the IK constraint was not found. */
+spIkConstraint* spSkeleton_findIkConstraint (const spSkeleton* self, const char* ikConstraintName);
 
 void spSkeleton_update (spSkeleton* self, float deltaTime);
 

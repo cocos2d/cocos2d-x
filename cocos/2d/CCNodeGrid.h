@@ -32,34 +32,55 @@
 NS_CC_BEGIN
 
 class GridBase;
+/**
+ *  @addtogroup _2d
+ *  @{
+ */
 
-class NodeGrid : public Node
+/**
+ * @brief Base class for Grid Node.
+ */
+
+class CC_DLL NodeGrid : public Node
 {
 public:
+    /** Create a Grid Node.
+     *
+     * @return An autorelease Grid Node.
+     */
     static NodeGrid* create();
-
+    
+    /** Get a Grid Node. 
+     *
+     * @return Return a GridBase.
+     */
     GridBase* getGrid() { return _nodeGrid; }
     /**
-    * @js NA
-    */
+     * @js NA
+     */
     const GridBase* getGrid() const { return _nodeGrid; }
 
     /**
-     * Changes a grid object that is used when applying effects
+     * Changes a grid object that is used when applying effects.
      *
-     * @param grid  A Grid object that is used when applying effects
+     * @param grid  A Grid object that is used when applying effects.
      */
     void setGrid(GridBase *grid);
-
+    
+    /** Set the Grid Target. 
+     *
+     * @param target A Node is used to set the Grid Target.
+     */
     void setTarget(Node *target);
 
     // overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     NodeGrid();
     virtual ~NodeGrid();
 
+protected:
     void onGridBeginDraw();
     void onGridEndDraw();
 
@@ -72,6 +93,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);
 };
+/** @} */
 NS_CC_END
 
 #endif

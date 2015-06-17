@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDatas.h"
+#include "cocostudio/CocosStudioExport.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -38,7 +40,7 @@ class DisplayData;
  *  @js NA
  *  @lua NA
  */
-class DisplayFactory
+class CC_STUDIO_DLL DisplayFactory
 {
 public:
     static void addDisplay(Bone *bone, DecorativeDisplay *decoDisplay, DisplayData *displayData);

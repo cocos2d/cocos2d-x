@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "tinyxml2.h"
 #include "base/base64.h"
+#include "base/ccUtils.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_MAC && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 
@@ -131,7 +132,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
     // save file and free doc
 	if (doc)
 	{
-		doc->SaveFile(UserDefault::getInstance()->getXMLFilePath().c_str());
+        doc->SaveFile(FileUtils::getInstance()->getSuitableFOpen(UserDefault::getInstance()->getXMLFilePath()).c_str());
 		delete doc;
 	}
 }
@@ -250,7 +251,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
 
 	if (value)
 	{
-		ret = atof(value);
+		ret = utils::atof(value);
 	}
 
     if (doc) delete doc;
@@ -405,18 +406,18 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
 
 UserDefault* UserDefault::getInstance()
 {
-    initXMLFilePath();
-
-    // only create xml file one time
-    // the file exists after the program exit
-    if ((! isXMLFileExist()) && (! createXMLFile()))
+    if (!_userDefault)
     {
-        return nullptr;
-    }
+        initXMLFilePath();
 
-    if (! _userDefault)
-    {
-        _userDefault = new UserDefault();
+        // only create xml file one time
+        // the file exists after the program exit
+        if ((!isXMLFileExist()) && (!createXMLFile()))
+        {
+            return nullptr;
+        }
+
+        _userDefault = new (std::nothrow) UserDefault();
     }
 
     return _userDefault;
@@ -427,13 +428,22 @@ void UserDefault::destroyInstance()
     CC_SAFE_DELETE(_userDefault);
 }
 
-// XXX: deprecated
+void UserDefault::setDelegate(UserDefault *delegate)
+{
+    if (_userDefault)
+        delete _userDefault;
+
+    _userDefault = delegate;
+}
+
+
+// FIXME:: deprecated
 UserDefault* UserDefault::sharedUserDefault()
 {
     return UserDefault::getInstance();
 }
 
-// XXX: deprecated
+// FIXME:: deprecated
 void UserDefault::purgeSharedUserDefault()
 {
     return UserDefault::destroyInstance();
@@ -441,16 +451,7 @@ void UserDefault::purgeSharedUserDefault()
 
 bool UserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(_filePath.c_str(), "r");
-	bool bRet = false;
-
-	if (fp)
-	{
-		bRet = true;
-		fclose(fp);
-	}
-
-	return bRet;
+    return FileUtils::getInstance()->isFileExist(_filePath);
 }
 
 void UserDefault::initXMLFilePath()
@@ -483,7 +484,7 @@ bool UserDefault::createXMLFile()
 		return false;  
 	}  
 	pDoc->LinkEndChild(pRootEle);  
-	bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(_filePath.c_str());
+    bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(FileUtils::getInstance()->getSuitableFOpen(_filePath).c_str());
 
 	if(pDoc)
 	{

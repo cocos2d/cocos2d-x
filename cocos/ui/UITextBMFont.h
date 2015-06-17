@@ -26,7 +26,12 @@ THE SOFTWARE.
 #define __UILABELBMFONT_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_BEGIN
 
 class Label;
@@ -34,10 +39,9 @@ class Label;
 namespace ui {
     
 /**
-*   @js NA
-*   @lua NA
-*/    
-class TextBMFont : public Widget
+ * A widget for displaying BMFont label.
+ */    
+class CC_GUI_DLL TextBMFont : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -45,11 +49,15 @@ class TextBMFont : public Widget
 public:
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     TextBMFont();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~TextBMFont();
     
@@ -80,7 +88,7 @@ public:
      */
     ssize_t getStringLength()const;
 
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     /**
      * Returns the "class name" of widget.
@@ -104,5 +112,7 @@ protected:
     
 }
 NS_CC_END
+// end of ui group
+/// @}
 
 #endif /* defined(__LabelBMFont__) */

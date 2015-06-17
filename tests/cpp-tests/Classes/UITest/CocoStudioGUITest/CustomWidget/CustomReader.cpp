@@ -3,7 +3,12 @@
 #include "CustomReader.h"
 #include "CustomImageView.h"
 
-static CustomReader* _instanceCustomReader = NULL;
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
+using namespace cocostudio;
+
+static CustomReader* _instanceCustomReader = nullptr;
 
 CustomReader::CustomReader()
 {
@@ -19,7 +24,7 @@ CustomReader* CustomReader::getInstance()
 {
     if (!_instanceCustomReader)
     {
-        _instanceCustomReader = new CustomReader();
+        _instanceCustomReader = new (std::nothrow) CustomReader();
     }
     return _instanceCustomReader;
 }

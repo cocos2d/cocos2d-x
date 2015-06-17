@@ -31,7 +31,7 @@ using namespace cocos2d;
 
 bool GameOverScene::init()
 {
-	if( Scene::init() )
+	if( TestCase::init() )
 	{
 		this->_layer = GameOverLayer::create();
 		this->_layer->retain();
@@ -57,32 +57,19 @@ GameOverScene::~GameOverScene()
 
 bool GameOverLayer::init()
 {
-	if ( LayerColor::initWithColor( Color4B(255,255,255,255) ) )
+	if ( LayerColor::initWithColor( Color4B(0,128,255,255) ) )
 	{
 		auto winSize = Director::getInstance()->getWinSize();
 		this->_label = Label::createWithTTF("","fonts/arial.ttf", 32);
 		_label->retain();
 		_label->setColor( Color3B(0, 0, 0) );
-		_label->setPosition( Vec2(winSize.width/2, winSize.height/2) );
+		_label->setPosition(winSize.width/2, winSize.height/2);
 		this->addChild(_label);
 		
 		this->runAction( Sequence::create(
                                 DelayTime::create(3),
                                 CallFunc::create(CC_CALLBACK_0(GameOverLayer::gameOverDone, this)),
                                 nullptr));
-		
-        
-        auto itemBack = MenuItemFont::create("Back", [](Ref* sender){
-            auto scene = new ExtensionsTestScene();
-            scene->runThisTest();
-            scene->release();
-        });
-        
-        itemBack->setColor(Color3B(0, 0, 0));
-        itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-        auto menuBack = Menu::create(itemBack, nullptr);
-        menuBack->setPosition(Vec2::ZERO);
-        addChild(menuBack);
         
 		return true;
 	}
@@ -94,7 +81,9 @@ bool GameOverLayer::init()
 
 void GameOverLayer::gameOverDone()
 {
-	Director::getInstance()->replaceScene( ComponentsTestLayer::scene() );
+    auto director = Director::getInstance();
+    auto newScene = CocoStudioComponentsTest::create();
+    director->replaceScene(newScene);
 }
 
 GameOverLayer::~GameOverLayer()

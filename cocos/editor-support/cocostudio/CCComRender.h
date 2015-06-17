@@ -27,13 +27,14 @@ THE SOFTWARE.
 
 #include "CCComBase.h"
 #include "2d/CCComponent.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
-class ComRender : public cocos2d::Component
+class CC_STUDIO_DLL ComRender : public cocos2d::Component
 {
     DECLARE_CLASS_COMPONENT_INFO
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      *  @js ctor
      */
@@ -56,6 +57,16 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
     virtual bool serialize(void* r) override;
     virtual cocos2d::Node* getNode();
     virtual void setNode(cocos2d::Node *node);

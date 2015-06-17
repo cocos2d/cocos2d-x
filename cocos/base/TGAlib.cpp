@@ -181,7 +181,7 @@ void tgaFlipImage( tImageTGA *info )
     unsigned char *row = (unsigned char *)malloc(rowbytes);
     int y;
     
-    if (row == NULL) return;
+    if (row == nullptr) return;
     
     for( y = 0; y < (info->height/2); y++ )
     {
@@ -233,7 +233,7 @@ tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size)
         info->imageData = (unsigned char *)malloc(sizeof(unsigned char) * total);
 
         // check to make sure we have the memory required
-        if (info->imageData == NULL)
+        if (info->imageData == nullptr)
         {
             info->status = TGA_ERROR_MEMORY;
             break;

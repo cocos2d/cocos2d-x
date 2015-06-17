@@ -2,17 +2,22 @@
 --------------------------------
 -- @module TransitionZoomFlipAngular
 -- @extend TransitionSceneOriented
+-- @parent_module cc
 
 --------------------------------
--- overload function: create(float, cc.Scene)
---          
--- overload function: create(float, cc.Scene, cc.TransitionScene::Orientation)
---          
+-- @overload self, float, cc.Scene         
+-- @overload self, float, cc.Scene, int         
 -- @function [parent=#TransitionZoomFlipAngular] create
 -- @param self
--- @param #float float
--- @param #cc.Scene scene
--- @param #cc.TransitionScene::Orientation orientation
--- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular ret (retunr value: cc.TransitionZoomFlipAngular)
+-- @param #float t
+-- @param #cc.Scene s
+-- @param #int o
+-- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular ret (return value: cc.TransitionZoomFlipAngular)
 
+--------------------------------
+-- 
+-- @function [parent=#TransitionZoomFlipAngular] TransitionZoomFlipAngular 
+-- @param self
+-- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular self (return value: cc.TransitionZoomFlipAngular)
+        
 return nil

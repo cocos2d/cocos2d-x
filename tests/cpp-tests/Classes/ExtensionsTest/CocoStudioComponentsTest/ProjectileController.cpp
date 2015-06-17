@@ -19,9 +19,9 @@ bool ProjectileController::init()
     return true;
 }
 
-void ProjectileController::onEnter()
+void ProjectileController::onAdd()
 {
-    ComController::onEnter();
+    ComController::onAdd();
     auto winSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
     _owner->setPosition( Vec2(origin.x+20, origin.y+winSize.height/2) );
@@ -30,7 +30,7 @@ void ProjectileController::onEnter()
     static_cast<SceneController*>(com)->getProjectiles().pushBack(_owner);
 }
 
-void ProjectileController::onExit()
+void ProjectileController::onRemove()
 {
 
 }
@@ -78,7 +78,7 @@ void ProjectileController::update(float delta)
 
 ProjectileController* ProjectileController::create(void)
 {
-    ProjectileController * pRet = new ProjectileController();
+    ProjectileController * pRet = new (std::nothrow) ProjectileController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -133,7 +133,7 @@ void ProjectileController::move(float flocationX, float flocationY)
           Sequence::create(
                MoveTo::create(realMoveDuration, realDest),
                callfunc,
-               NULL)
+               nullptr)
           );
 }
 

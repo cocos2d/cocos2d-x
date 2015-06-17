@@ -28,14 +28,18 @@ THE SOFTWARE.
 #include "cocostudio/CCActionNode.h"
 #include "2d/CCActionInstant.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
+class CocoLoader;
+struct stExpCocoNode;
+    
 /**
 *  @js NA
 *  @lua NA
 */
-class ActionObject : public cocos2d::Ref
+class CC_STUDIO_DLL ActionObject : public cocos2d::Ref
 {
 public:
 
@@ -160,10 +164,17 @@ public:
 
 	/*init properties with a json dictionary*/
 	void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    
+    void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, cocos2d::Ref* root);
+
 
 	/*scheduler update function*/
 	void simulationActionUpdate(float dt);
 protected:
+    int valueToInt(const std::string& value);
+    bool valueToBool(const std::string& value);
+    float valueToFloat(const std::string& value);
+    
 	cocos2d::Vector<ActionNode*> _actionNodeList;
 	std::string _name;
 	bool _loop;

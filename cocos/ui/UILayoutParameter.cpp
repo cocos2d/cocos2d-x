@@ -29,6 +29,8 @@ NS_CC_BEGIN
 
 namespace ui {
     
+const Margin Margin::ZERO = Margin(0,0,0,0);
+    
 Margin::Margin(void) : left(0), top(0), right(0), bottom(0)
 {
 }
@@ -63,7 +65,7 @@ bool Margin::equals(const Margin &target) const
 
 LayoutParameter* LayoutParameter::create()
 {
-    LayoutParameter* parameter = new LayoutParameter();
+    LayoutParameter* parameter = new (std::nothrow) LayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -107,7 +109,7 @@ void LayoutParameter::copyProperties(LayoutParameter *model)
 
 LinearLayoutParameter* LinearLayoutParameter::create()
 {
-    LinearLayoutParameter* parameter = new LinearLayoutParameter();
+    LinearLayoutParameter* parameter = new (std::nothrow) LinearLayoutParameter();
     if (parameter)
     {
         parameter->autorelease();
@@ -144,7 +146,7 @@ void LinearLayoutParameter::copyProperties(LayoutParameter *model)
 
 RelativeLayoutParameter* RelativeLayoutParameter::create()
 {
-    RelativeLayoutParameter* parameter = new RelativeLayoutParameter();
+    RelativeLayoutParameter* parameter = new (std::nothrow) RelativeLayoutParameter();
     if (parameter)
     {
         parameter->autorelease();

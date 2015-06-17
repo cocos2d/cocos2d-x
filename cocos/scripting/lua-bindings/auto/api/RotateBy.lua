@@ -2,39 +2,60 @@
 --------------------------------
 -- @module RotateBy
 -- @extend ActionInterval
+-- @parent_module cc
 
 --------------------------------
--- overload function: create(float, float, float)
---          
--- overload function: create(float, float)
---          
--- overload function: create(float, vec3_table)
---          
+-- @overload self, float, float, float         
+-- @overload self, float, float         
+-- @overload self, float, vec3_table         
+-- @function [parent=#RotateBy] initWithDuration
+-- @param self
+-- @param #float duration
+-- @param #float deltaAngleZ_X
+-- @param #float deltaAngleZ_Y
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
+-- @overload self, float, float, float         
+-- @overload self, float, float         
+-- @overload self, float, vec3_table         
 -- @function [parent=#RotateBy] create
 -- @param self
--- @param #float float
--- @param #float float
--- @param #float float
--- @return RotateBy#RotateBy ret (retunr value: cc.RotateBy)
+-- @param #float duration
+-- @param #float deltaAngleZ_X
+-- @param #float deltaAngleZ_Y
+-- @return RotateBy#RotateBy ret (return value: cc.RotateBy)
 
 --------------------------------
+-- 
 -- @function [parent=#RotateBy] startWithTarget 
 -- @param self
--- @param #cc.Node node
+-- @param #cc.Node target
+-- @return RotateBy#RotateBy self (return value: cc.RotateBy)
         
 --------------------------------
+-- 
 -- @function [parent=#RotateBy] clone 
 -- @param self
 -- @return RotateBy#RotateBy ret (return value: cc.RotateBy)
         
 --------------------------------
+-- 
 -- @function [parent=#RotateBy] reverse 
 -- @param self
 -- @return RotateBy#RotateBy ret (return value: cc.RotateBy)
         
 --------------------------------
+-- param time In seconds.
 -- @function [parent=#RotateBy] update 
 -- @param self
--- @param #float float
+-- @param #float time
+-- @return RotateBy#RotateBy self (return value: cc.RotateBy)
+        
+--------------------------------
+-- 
+-- @function [parent=#RotateBy] RotateBy 
+-- @param self
+-- @return RotateBy#RotateBy self (return value: cc.RotateBy)
         
 return nil

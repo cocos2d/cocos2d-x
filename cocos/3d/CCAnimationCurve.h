@@ -24,45 +24,62 @@
 #ifndef __CCANIMATIONCURVE_H__
 #define __CCANIMATIONCURVE_H__
 
-#include <unordered_map>
 #include <functional>
 
-#include "base/ccTypes.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #undef NEAR
 #endif
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * Evaluate Type
+ */
 enum class EvaluateType
 {
-    INT_LINEAR,
+    INT_LINEAR, 
     INT_NEAR,
     INT_QUAT_SLERP,
     INT_USER_FUNCTION,
 };
 
 /**
- * curve of bone's position, rotation or scale
+ * @brief curve of bone's position, rotation or scale
+ *
+ * @lua NA
  */
 template <int componentSize>
 class AnimationCurve: public Ref
 {
 public:
     
-    //create animation curve
+    /**create animation curve*/
     static AnimationCurve* create(float* keytime, float* value, int count);
     
+    /**
+     * evalute value of time
+     * @param time Time to be estimated
+     * @param dst Estimated value of that time
+     * @param type EvaluateType
+     */
     void evaluate(float time, float* dst, EvaluateType type) const;
     
+    /**set evaluate function, allow the user use own function*/
     void setEvaluateFun(std::function<void(float time, float* dst)> fun);
     
+    /**get start time*/
     float getStartTime() const;
     
+    /**get end time*/
     float getEndTime() const;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -82,8 +99,11 @@ protected:
     int _count;
     int _componentSizeByte; //component size in byte, position and scale 3 * sizeof(float), rotation 4 * sizeof(float)
     
-    std::function<void(float time, float* dst)> _evaluateFun;
+    std::function<void(float time, float* dst)> _evaluateFun; //user defined function
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

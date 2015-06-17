@@ -65,11 +65,12 @@ void AutoreleasePool::clear()
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     _isClearing = true;
 #endif
-    for (const auto &obj : _managedObjectArray)
+    std::vector<Ref*> releasings;
+    releasings.swap(_managedObjectArray);
+    for (const auto &obj : releasings)
     {
         obj->release();
     }
-    _managedObjectArray.clear();
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
     _isClearing = false;
 #endif
@@ -109,7 +110,7 @@ PoolManager* PoolManager::getInstance()
 {
     if (s_singleInstance == nullptr)
     {
-        s_singleInstance = new PoolManager();
+        s_singleInstance = new (std::nothrow) PoolManager();
         // Add the first auto release pool
         new AutoreleasePool("cocos2d autorelease pool");
     }

@@ -14,6 +14,7 @@ public:
     AppDelegate();
     virtual ~AppDelegate();
 
+    void initGLContextAttrs();
     /**
     @brief    Implement Director and Scene init code here.
     @return true    Initialize success, app continue.

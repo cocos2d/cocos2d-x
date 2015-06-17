@@ -1,115 +1,34 @@
 #include "LayerTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagLayer = 1,
 };
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(LayerTestCascadingOpacityA),
-    CL(LayerTestCascadingOpacityB),
-    CL(LayerTestCascadingOpacityC),
-    CL(LayerTestCascadingColorA),
-    CL(LayerTestCascadingColorB),
-    CL(LayerTestCascadingColorC),
-    CL(LayerTest1),
-    CL(LayerTest2),
-    CL(LayerTestBlend),
-    CL(LayerGradientTest),
-    CL(LayerGradientTest2),
-    CL(LayerGradientTest3),
-    CL(LayerIgnoreAnchorPointPos),
-    CL(LayerIgnoreAnchorPointRot),
-    CL(LayerIgnoreAnchorPointScale),
-    CL(LayerExtendedBlendOpacityTest),
-    CL(LayerBug3162A),
-    CL(LayerBug3162B),
-    CL(LayerColorOccludeBug),
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+LayerTests::LayerTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();    
-    return layer;
+    ADD_TEST_CASE(LayerTestCascadingOpacityA);
+    ADD_TEST_CASE(LayerTestCascadingOpacityB);
+    ADD_TEST_CASE(LayerTestCascadingOpacityC);
+    ADD_TEST_CASE(LayerTestCascadingColorA);
+    ADD_TEST_CASE(LayerTestCascadingColorB);
+    ADD_TEST_CASE(LayerTestCascadingColorC);
+    ADD_TEST_CASE(LayerTest1);
+    ADD_TEST_CASE(LayerTest2);
+    ADD_TEST_CASE(LayerTestBlend);
+    ADD_TEST_CASE(LayerGradientTest);
+    ADD_TEST_CASE(LayerGradientTest2);
+    ADD_TEST_CASE(LayerIgnoreAnchorPointPos);
+    ADD_TEST_CASE(LayerIgnoreAnchorPointRot);
+    ADD_TEST_CASE(LayerIgnoreAnchorPointScale);
+    ADD_TEST_CASE(LayerExtendedBlendOpacityTest);
+    ADD_TEST_CASE(LayerBug3162A);
+    ADD_TEST_CASE(LayerBug3162B);
+    ADD_TEST_CASE(LayerColorOccludeBug);
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-//------------------------------------------------------------------
-//
-// LayerTest
-//
-//------------------------------------------------------------------
-
-LayerTest::LayerTest(void)
-{
-}
-
-LayerTest::~LayerTest(void)
-{
-}
-
-std::string LayerTest::subtitle() const
-{
-    return "";
-}
-
-std::string LayerTest::title() const
-{
-    return "Layer Test";
-}
-
-void LayerTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void LayerTest::restartCallback(Ref* sender)
-{
-    auto s = new LayerTestScene();
-    s->addChild(restartAction());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void LayerTest::nextCallback(Ref* sender)
-{
-    auto s = new LayerTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void LayerTest::backCallback(Ref* sender)
-{
-    auto s = new LayerTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
 
 // Cascading support extensions
 
@@ -122,6 +41,11 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
     for(const auto &child : children) {
         setEnableRecursiveCascading(child, enable);
     }
+}
+
+std::string LayerTest::title() const
+{
+    return "Layer Test";
 }
 
 // LayerTestCascadingOpacityA
@@ -151,7 +75,7 @@ void LayerTestCascadingOpacityA::onEnter()
                 FadeTo::create(4, 0),
                 FadeTo::create(4, 255),
                 DelayTime::create(1),
-                NULL)));
+                nullptr)));
 
     sister1->runAction(
         RepeatForever::create(
@@ -161,7 +85,7 @@ void LayerTestCascadingOpacityA::onEnter()
                 FadeTo::create(2, 0),
                 FadeTo::create(2, 255),
                 DelayTime::create(1),
-                NULL)));
+                nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -203,7 +127,7 @@ void LayerTestCascadingOpacityB::onEnter()
        FadeTo::create(4, 0),
        FadeTo::create(4, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -213,7 +137,7 @@ void LayerTestCascadingOpacityB::onEnter()
        FadeTo::create(2, 0),
        FadeTo::create(2, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -256,7 +180,7 @@ void LayerTestCascadingOpacityC::onEnter()
        FadeTo::create(4, 0),
        FadeTo::create(4, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -266,7 +190,7 @@ void LayerTestCascadingOpacityC::onEnter()
        FadeTo::create(2, 0),
        FadeTo::create(2, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
 }
 
 std::string LayerTestCascadingOpacityC::subtitle() const
@@ -304,7 +228,7 @@ void LayerTestCascadingColorA::onEnter()
        TintTo::create(6, 255, 0, 255),
        TintTo::create(6, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -316,7 +240,7 @@ void LayerTestCascadingColorA::onEnter()
        TintTo::create(2, 255, 0, 255),
        TintTo::create(2, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -357,7 +281,7 @@ void LayerTestCascadingColorB::onEnter()
        TintTo::create(6, 255, 0, 255),
        TintTo::create(6, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -369,7 +293,7 @@ void LayerTestCascadingColorB::onEnter()
        TintTo::create(2, 255, 0, 255),
        TintTo::create(2, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     // Enable cascading in scene
     setEnableRecursiveCascading(this, true);
@@ -409,7 +333,7 @@ void LayerTestCascadingColorC::onEnter()
        TintTo::create(6, 255, 0, 255),
        TintTo::create(6, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
     
     sister1->runAction(
      RepeatForever::create(
@@ -421,7 +345,7 @@ void LayerTestCascadingColorC::onEnter()
        TintTo::create(2, 255, 0, 255),
        TintTo::create(2, 255, 255, 255),
        DelayTime::create(1),
-       NULL)));
+       nullptr)));
 }
 
 std::string LayerTestCascadingColorC::subtitle() const
@@ -508,12 +432,12 @@ void LayerTest2::onEnter()
     
     auto actionTint = TintBy::create(2, -255, -127, 0);
     auto actionTintBack = actionTint->reverse();
-    auto seq1 = Sequence::create( actionTint, actionTintBack, NULL);
+    auto seq1 = Sequence::create( actionTint, actionTintBack, nullptr);
     layer1->runAction(seq1);
 
     auto actionFade = FadeOut::create(2.0f);
     auto actionFadeBack = actionFade->reverse();
-    auto seq2 = Sequence::create(actionFade, actionFadeBack, NULL);        
+    auto seq2 = Sequence::create(actionFade, actionFadeBack, nullptr);        
     layer2->runAction(seq2);
 }
 
@@ -543,7 +467,7 @@ LayerTestBlend::LayerTestBlend()
     sister1->setPosition( Vec2( s.width*1/3, s.height/2) );
     sister2->setPosition( Vec2( s.width*2/3, s.height/2) );
 
-    schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
+    schedule( CC_SCHEDULE_SELECTOR(LayerTestBlend::newBlend), 1.0f);
 }
 
 void LayerTestBlend::newBlend(float dt)
@@ -592,9 +516,9 @@ LayerGradientTest::LayerGradientTest()
     auto label2 = Label::createWithTTF("Compressed Interpolation: Disabled", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
     auto item2 = MenuItemLabel::create(label2);
-    auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, NULL);
+    auto item = MenuItemToggle::createWithCallback( CC_CALLBACK_1(LayerGradientTest::toggleItem, this), item1, item2, nullptr);
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     addChild(menu);
     auto s = Director::getInstance()->getWinSize();
     menu->setPosition(Vec2(s.width / 2, 100));
@@ -651,28 +575,6 @@ std::string LayerGradientTest2::subtitle() const
     return "You should see a gradient";
 }
 
-
-//------------------------------------------------------------------
-//
-// LayerGradientTest3
-//
-//------------------------------------------------------------------
-LayerGradientTest3::LayerGradientTest3()
-{
-    auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(255,255,0,255));
-    addChild(layer1);
-}
-
-std::string LayerGradientTest3::title() const
-{
-    return "LayerGradientTest 3";
-}
-
-std::string LayerGradientTest3::subtitle() const
-{
-    return "You should see a gradient";
-}
-
 // LayerIgnoreAnchorPointPos
 
 #define kLayerIgnoreAnchorPoint  1000
@@ -690,7 +592,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     auto move = MoveBy::create(2, Vec2(100,2));
     auto back = (MoveBy *)move->reverse();
-    auto seq = Sequence::create(move, back, NULL);
+    auto seq = Sequence::create(move, back, nullptr);
     l->runAction(RepeatForever::create(seq));
     this->addChild(l, 0, kLayerIgnoreAnchorPoint);
 
@@ -701,7 +603,7 @@ void LayerIgnoreAnchorPointPos::onEnter()
 
     auto item = MenuItemFont::create("Toggle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointPos::onToggle, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -749,7 +651,7 @@ void LayerIgnoreAnchorPointRot::onEnter()
 
     auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointRot::onToggle, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -787,7 +689,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     auto scale = ScaleBy::create(2, 2);
     auto back = (ScaleBy*)scale->reverse();
-    auto seq = Sequence::create(scale, back, NULL);
+    auto seq = Sequence::create(scale, back, nullptr);
 
     l->runAction(RepeatForever::create(seq));
 
@@ -800,7 +702,7 @@ void LayerIgnoreAnchorPointScale::onEnter()
 
     auto item = MenuItemFont::create("Toogle ignore anchor point", CC_CALLBACK_1(LayerIgnoreAnchorPointScale::onToggle, this));
 
-    auto menu = Menu::create(item, NULL);
+    auto menu = Menu::create(item, nullptr);
     this->addChild(menu);
 
     menu->setPosition(Vec2(s.width/2, s.height/2));
@@ -821,15 +723,6 @@ std::string LayerIgnoreAnchorPointScale::title() const
 std::string LayerIgnoreAnchorPointScale::subtitle() const
 {
     return "Ignoring Anchor Vec2 for scale";
-}
-
-void LayerTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    auto layer = nextAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
@@ -890,7 +783,7 @@ void LayerBug3162A::onEnter()
     
     this->addChild(_layer[0]);
     
-    schedule(schedule_selector(LayerBug3162A::step), 0.5, kRepeatForever, 0);
+    schedule(CC_SCHEDULE_SELECTOR(LayerBug3162A::step), 0.5, CC_REPEAT_FOREVER, 0);
 }
 
 void LayerBug3162A::step(float dt)
@@ -936,7 +829,7 @@ void LayerBug3162B::onEnter()
     _layer[1]->setCascadeColorEnabled(true);
     _layer[2]->setCascadeColorEnabled(true);
     
-    schedule(schedule_selector(LayerBug3162B::step), 0.5, kRepeatForever, 0);
+    schedule(CC_SCHEDULE_SELECTOR(LayerBug3162B::step), 0.5, CC_REPEAT_FOREVER, 0);
 }
 
 void LayerBug3162B::step(float dt)

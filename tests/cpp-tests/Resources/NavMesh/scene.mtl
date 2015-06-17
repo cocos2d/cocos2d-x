@@ -1,0 +1,15 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+
+newmtl 01___Default
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.8353 0.8353 0.8353
+	Kd 0.8353 0.8353 0.8353
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka maps\scenetex.png
+	map_Kd maps\scenetex.png

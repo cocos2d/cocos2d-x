@@ -27,15 +27,16 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UILayoutTests);
+
 class UILayoutTest : public UIScene
 {
 public:
     UILayoutTest();
     ~UILayoutTest();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest)
+    CREATE_FUNC(UILayoutTest);
 };
 
 class UILayoutTest_Color : public UIScene
@@ -43,10 +44,9 @@ class UILayoutTest_Color : public UIScene
 public:
     UILayoutTest_Color();
     ~UILayoutTest_Color();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Color)
+    CREATE_FUNC(UILayoutTest_Color);
 };
 
 class UILayoutTest_Gradient : public UIScene
@@ -54,10 +54,9 @@ class UILayoutTest_Gradient : public UIScene
 public:
     UILayoutTest_Gradient();
     ~UILayoutTest_Gradient();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Gradient)
+    CREATE_FUNC(UILayoutTest_Gradient);
 };
 
 class UILayoutTest_BackGroundImage : public UIScene
@@ -65,10 +64,9 @@ class UILayoutTest_BackGroundImage : public UIScene
 public:
     UILayoutTest_BackGroundImage();
     ~UILayoutTest_BackGroundImage();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_BackGroundImage)
+    CREATE_FUNC(UILayoutTest_BackGroundImage);
 };
 
 class UILayoutTest_BackGroundImage_Scale9 : public UIScene
@@ -76,10 +74,9 @@ class UILayoutTest_BackGroundImage_Scale9 : public UIScene
 public:
     UILayoutTest_BackGroundImage_Scale9();
     ~UILayoutTest_BackGroundImage_Scale9();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_BackGroundImage_Scale9)
+    CREATE_FUNC(UILayoutTest_BackGroundImage_Scale9);
 };
 
 class UILayoutTest_Layout_Linear_Vertical : public UIScene
@@ -87,10 +84,9 @@ class UILayoutTest_Layout_Linear_Vertical : public UIScene
 public:
     UILayoutTest_Layout_Linear_Vertical();
     ~UILayoutTest_Layout_Linear_Vertical();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Layout_Linear_Vertical)
+    CREATE_FUNC(UILayoutTest_Layout_Linear_Vertical);
 };
 
 class UILayoutTest_Layout_Linear_Horizontal : public UIScene
@@ -98,10 +94,9 @@ class UILayoutTest_Layout_Linear_Horizontal : public UIScene
 public:
     UILayoutTest_Layout_Linear_Horizontal();
     ~UILayoutTest_Layout_Linear_Horizontal();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Layout_Linear_Horizontal)
+    CREATE_FUNC(UILayoutTest_Layout_Linear_Horizontal);
 };
 
 class UILayoutTest_Layout_Relative_Align_Parent : public UIScene
@@ -109,10 +104,9 @@ class UILayoutTest_Layout_Relative_Align_Parent : public UIScene
 public:
     UILayoutTest_Layout_Relative_Align_Parent();
     ~UILayoutTest_Layout_Relative_Align_Parent();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Layout_Relative_Align_Parent)
+    CREATE_FUNC(UILayoutTest_Layout_Relative_Align_Parent);
 };
 
 class UILayoutTest_Layout_Relative_Location : public UIScene
@@ -120,23 +114,37 @@ class UILayoutTest_Layout_Relative_Location : public UIScene
 public:
     UILayoutTest_Layout_Relative_Location();
     ~UILayoutTest_Layout_Relative_Location();
-    bool init();
+    virtual bool init() override;
     
-protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Layout_Relative_Location)
+    CREATE_FUNC(UILayoutTest_Layout_Relative_Location);
 };
 
-/*
-class UILayoutTest_Layout_Grid : public UIScene
+class UILayoutComponentTest : public UIScene
 {
 public:
-    UILayoutTest_Layout_Grid();
-    ~UILayoutTest_Layout_Grid();
-    bool init();
-    
+    CREATE_FUNC(UILayoutComponentTest);
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 protected:
-    UI_SCENE_CREATE_FUNC(UILayoutTest_Layout_Grid)
+    cocos2d::LayerColor* _baseLayer;
+    
 };
- */
+
+class UILayoutComponent_Berth_Test : public UILayoutComponentTest
+{
+public:
+    virtual bool init() override;
+
+    CREATE_FUNC(UILayoutComponent_Berth_Test);
+};
+
+class UILayoutComponent_Berth_Stretch_Test : public UILayoutComponentTest
+{
+public:
+    virtual bool init() override;
+
+    CREATE_FUNC(UILayoutComponent_Berth_Stretch_Test);
+};
 
 #endif /* defined(__TestCpp__UILayoutTest__) */

@@ -8,6 +8,6 @@ void main(void)
     vec4 normalproj = CC_MVPMatrix * vec4(a_normal, 0);
     normalproj = normalize(normalproj);
     pos.xy += normalproj.xy * (OutlineWidth * (pos.z * 0.5 + 0.5));
-    
+
     gl_Position = pos;
 }

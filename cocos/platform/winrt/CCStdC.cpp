@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCStdC.h"
+#include "platform/CCStdC.h"
 
 int CC_DLL gettimeofday(struct timeval * val, struct timezone *)
 {

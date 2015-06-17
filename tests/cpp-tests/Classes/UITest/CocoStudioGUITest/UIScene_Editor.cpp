@@ -1,15 +1,15 @@
-
-
 #include "UIScene_Editor.h"
 #include "GUIEditorTest.h"
 #include "ui/CocosGUI.h"
 #include "UISceneManager_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
 UIScene_Editor::UIScene_Editor()
-: _sceneTitle(nullptr)
-, _touchGroup(nullptr)
+:  _touchGroup(nullptr)
 , _layout(nullptr)
+, _sceneTitle(nullptr)
 {
     
 }
@@ -21,58 +21,47 @@ UIScene_Editor::~UIScene_Editor()
 
 bool UIScene_Editor::init()
 {
-    if (CCLayer::init())
+    if (TestCase::init())
     {
         _touchGroup = Layer::create();
-        addChild(_touchGroup);                
-        
+        addChild(_touchGroup);
+
         return true;
     }
     
     return false;
 }
 
-void UIScene_Editor::previousCallback(Ref* sender, Widget::TouchEventType event)
+void UIScene_Editor::onEnter()
 {
-    switch (event)
+    TestCase::onEnter();
+
+    if (_sceneTitle)
     {
-        case Widget::TouchEventType::ENDED:
-            CCDirector::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->previousUIScene());
-            break;
-            
-        default:
-            break;
+        _sceneTitle->setString(getTestCaseName());
     }
 }
 
-void UIScene_Editor::nextCallback(Ref* sender, Widget::TouchEventType event)
+void UIScene_Editor::onExit()
 {
-    switch (event)
-    {
-        case Widget::TouchEventType::ENDED:
-            CCDirector::getInstance()->replaceScene(UISceneManager_Editor::sharedUISceneManager_Editor()->nextUIScene());
-            break;
-            
-        default:
-            break;
-    }
+    cocostudio::destroyCocosStudio();
+
+    TestCase::onExit();
 }
 
-void UIScene_Editor::toGUIEditorTestScene(Ref* sender, Widget::TouchEventType event)
+void UIScene_Editor::configureGUIScene()
 {
-    switch (event)
+    if (_touchGroup)
     {
-        case Widget::TouchEventType::ENDED:
-        {
-            UISceneManager_Editor::sharedUISceneManager_Editor()->purge();
-            
-            GUIEditorTestScene* pScene = new GUIEditorTestScene();
-            pScene->runThisTest();
-            pScene->release();
-        }
-            break;
-            
-        default:
-            break;
+        Size screenSize = CCDirector::getInstance()->getWinSize();
+        Size rootSize = _layout->getContentSize();
+        _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
+            (screenSize.height - rootSize.height) / 2));
+    }
+
+    if (_layout)
+    {
+        Layout* root = static_cast<Layout*>(_layout->getChildByName("root_Panel"));
+        _sceneTitle = static_cast<Text*>(Helper::seekWidgetByName(root, "UItest"));
     }
 }

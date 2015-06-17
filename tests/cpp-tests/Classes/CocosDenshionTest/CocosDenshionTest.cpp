@@ -1,6 +1,7 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "extensions/GUI/CCControlExtension/CCControlSlider.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -13,7 +14,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     #define MUSIC_FILE        "music.mid"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     #define MUSIC_FILE        "background.wav"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX )
     #define MUSIC_FILE        "background.ogg"
@@ -33,10 +34,10 @@ class Button : public Node//, public TargetedTouchDelegate
 public:
     static Button *createWithSprite(const char *filePath)
     {
-        auto b = new Button();
+        auto b = new (std::nothrow) Button();
         if (b && !b->initSpriteButton(filePath)) {
             delete b;
-            b = NULL;
+            b = nullptr;
         }
         b->autorelease();
         return b;
@@ -44,10 +45,10 @@ public:
 
     static Button *createWithText(const char *text)
     {
-        auto b = new Button();
+        auto b = new (std::nothrow) Button();
         if (b && !b->initTextButton(text)) {
             delete b;
-            b = NULL;
+            b = nullptr;
         }
         b->autorelease();
         return b;
@@ -147,10 +148,10 @@ public:
 
     static AudioSlider *create(Direction direction)
     {
-        auto ret = new AudioSlider(direction);
+        auto ret = new (std::nothrow) AudioSlider(direction);
         if (ret && !ret->init()) {
             delete ret;
-            ret = NULL;
+            ret = nullptr;
         }
         ret->autorelease();
         return ret;
@@ -174,9 +175,9 @@ public:
             _lblMinValue = Label::createWithTTF(buffer, "fonts/arial.ttf", 8);
             addChild(_lblMinValue);
             if (_direction == Vertical)
-                _lblMinValue->setPosition(Vec2(12.0, -50.0));
+                _lblMinValue->setPosition(12.0, -50.0);
             else
-                _lblMinValue->setPosition(Vec2(-50, 12.0));
+                _lblMinValue->setPosition(-50, 12.0);
         } else {
             _lblMinValue->setString(buffer);
         }
@@ -186,9 +187,9 @@ public:
             _lblMaxValue = Label::createWithTTF(buffer, "fonts/arial.ttf", 8);
             addChild(_lblMaxValue);
             if (_direction == Vertical)
-                _lblMaxValue->setPosition(Vec2(12.0, 50.0));
+                _lblMaxValue->setPosition(12.0, 50.0);
             else
-                _lblMaxValue->setPosition(Vec2(50, 12.0));
+                _lblMaxValue->setPosition(50, 12.0);
         } else {
             _lblMaxValue->setString(buffer);
         }
@@ -231,7 +232,7 @@ _sliderMusicVolume(nullptr)
 {
     addButtons();
     addSliders();
-    schedule(schedule_selector(CocosDenshionTest::updateVolumes));
+    schedule(CC_SCHEDULE_SELECTOR(CocosDenshionTest::updateVolumes));
 
     // preload background music and effect
     SimpleAudioEngine::getInstance()->preloadBackgroundMusic( MUSIC_FILE );
@@ -248,7 +249,7 @@ CocosDenshionTest::~CocosDenshionTest()
 
 void CocosDenshionTest::onExit()
 {
-    Layer::onExit();
+    TestCase::onExit();
 
     SimpleAudioEngine::end();
 }
@@ -397,7 +398,7 @@ void CocosDenshionTest::addSliders()
 void CocosDenshionTest::addChildAt(Node *node, float percentageX, float percentageY)
 {
     const Size size = VisibleRect::getVisibleRect().size;
-    node->setPosition(Vec2(percentageX * size.width, percentageY * size.height));
+    node->setPosition(percentageX * size.width, percentageY * size.height);
     addChild(node);
 }
 
@@ -416,11 +417,7 @@ void CocosDenshionTest::updateVolumes(float)
     }
 }
 
-void CocosDenshionTestScene::runThisTest()
+CocosDenshionTests::CocosDenshionTests()
 {
-    auto layer = new CocosDenshionTest();
-    addChild(layer);
-    layer->autorelease();
-
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(CocosDenshionTest);
 }

@@ -1,25 +1,23 @@
 #include "ClickAndMoveTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum
 {
     kTagSprite = 1,
 };
 
-void ClickAndMoveTestScene::runThisTest()
+ClickAndMoveTest::ClickAndMoveTest()
 {
-    auto layer = new MainLayer();
-    layer->autorelease();
-
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(ClickAndMoveTestCase);
 }
 
-MainLayer::MainLayer()
+ClickAndMoveTestCase::ClickAndMoveTestCase()
 {
     auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(MainLayer::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(MainLayer::onTouchEnded, this);
+    listener->onTouchBegan = CC_CALLBACK_2(ClickAndMoveTestCase::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(ClickAndMoveTestCase::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto sprite = Sprite::create(s_pathGrossini);
@@ -28,7 +26,7 @@ MainLayer::MainLayer()
     addChild(layer, -1);
         
     addChild(sprite, 0, kTagSprite);
-    sprite->setPosition( Vec2(20,150) );
+    sprite->setPosition(20,150);
     
     sprite->runAction( JumpTo::create(4, Vec2(300,48), 100, 4) );
     
@@ -36,16 +34,16 @@ MainLayer::MainLayer()
                                 Sequence::create(
                                         FadeIn::create(1),
                                         FadeOut::create(1),
-                                        NULL)
+                                        nullptr)
                       )); 
 }
 
-bool MainLayer::onTouchBegan(Touch* touch, Event  *event)
+bool ClickAndMoveTestCase::onTouchBegan(Touch* touch, Event  *event)
 {
     return true;
 }
 
-void MainLayer::onTouchEnded(Touch* touch, Event  *event)
+void ClickAndMoveTestCase::onTouchEnded(Touch* touch, Event  *event)
 {
     auto location = touch->getLocation();
 

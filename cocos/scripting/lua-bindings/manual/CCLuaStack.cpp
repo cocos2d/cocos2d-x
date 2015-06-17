@@ -31,9 +31,6 @@ extern "C" {
 #include "tolua++.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "lua_extensions.h"
-#endif
 }
 
 #include "Cocos2dxLuaLoader.h"
@@ -46,26 +43,17 @@ extern "C" {
 #include "platform/android/CCLuaJavaBridge.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "Lua_web_socket.h"
-#endif
 #include "LuaOpengl.h"
 #include "LuaScriptHandlerMgr.h"
 #include "lua_cocos2dx_auto.hpp"
-#include "lua_cocos2dx_extension_auto.hpp"
 #include "lua_cocos2dx_manual.hpp"
 #include "LuaBasicConversions.h"
-#include "lua_cocos2dx_extension_manual.h"
 #include "lua_cocos2dx_deprecated.h"
-#include "lua_xml_http_request.h"
-#include "lua_cocos2dx_studio_auto.hpp"
-#include "lua_cocos2dx_coco_studio_manual.hpp"
-#include "lua_cocos2dx_spine_auto.hpp"
-#include "lua_cocos2dx_spine_manual.hpp"
 #include "lua_cocos2dx_physics_auto.hpp"
 #include "lua_cocos2dx_physics_manual.hpp"
-#include "lua_cocos2dx_ui_auto.hpp"
-#include "lua_cocos2dx_ui_manual.hpp"
+#include "lua_cocos2dx_experimental_auto.hpp"
+#include "lua_cocos2dx_experimental_manual.hpp"
+
 
 namespace {
 int lua_print(lua_State * luastate)
@@ -109,7 +97,49 @@ int lua_print(lua_State * luastate)
 
     return 0;
 }
-}  // namespace {
+    
+int lua_release_print(lua_State * L)
+{
+    int nargs = lua_gettop(L);
+    
+    std::string t;
+    for (int i=1; i <= nargs; i++)
+    {
+        if (lua_istable(L, i))
+            t += "table";
+        else if (lua_isnone(L, i))
+            t += "none";
+        else if (lua_isnil(L, i))
+            t += "nil";
+        else if (lua_isboolean(L, i))
+        {
+            if (lua_toboolean(L, i) != 0)
+                t += "true";
+            else
+                t += "false";
+        }
+        else if (lua_isfunction(L, i))
+            t += "function";
+        else if (lua_islightuserdata(L, i))
+            t += "lightuserdata";
+        else if (lua_isthread(L, i))
+            t += "thread";
+        else
+        {
+            const char * str = lua_tostring(L, i);
+            if (str)
+                t += lua_tostring(L, i);
+            else
+                t += lua_typename(L, lua_type(L, i));
+        }
+        if (i!=nargs)
+            t += "\t";
+    }
+    log("[LUA-print] %s", t.c_str());
+    
+    return 0;
+}
+}
 
 NS_CC_BEGIN
 
@@ -123,7 +153,7 @@ LuaStack::~LuaStack()
 
 LuaStack *LuaStack::create(void)
 {
-    LuaStack *stack = new LuaStack();
+    LuaStack *stack = new (std::nothrow) LuaStack();
     stack->init();
     stack->autorelease();
     return stack;
@@ -131,7 +161,7 @@ LuaStack *LuaStack::create(void)
 
 LuaStack *LuaStack::attach(lua_State *L)
 {
-    LuaStack *stack = new LuaStack();
+    LuaStack *stack = new (std::nothrow) LuaStack();
     stack->initWithLuaState(L);
     stack->autorelease();
     return stack;
@@ -146,30 +176,26 @@ bool LuaStack::init(void)
     // Register our version of the global "print" function
     const luaL_reg global_functions [] = {
         {"print", lua_print},
-        {NULL, NULL}
+        {"release_print",lua_release_print},
+        {nullptr, nullptr}
     };
     luaL_register(_state, "_G", global_functions);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    luaopen_lua_extensions(_state);
-#endif
+
     g_luaType.clear();
     register_all_cocos2dx(_state);
-    register_all_cocos2dx_extension(_state);
-    register_cocos2dx_extension_CCBProxy(_state);
     tolua_opengl_open(_state);
-    register_all_cocos2dx_ui(_state);
-    register_all_cocos2dx_studio(_state);
     register_all_cocos2dx_manual(_state);
-    register_all_cocos2dx_extension_manual(_state);
-    register_all_cocos2dx_coco_studio_manual(_state);
-    register_all_cocos2dx_ui_manual(_state);
-    register_all_cocos2dx_spine(_state);
-    register_all_cocos2dx_spine_manual(_state);
+    register_all_cocos2dx_module_manual(_state);
+    register_all_cocos2dx_math_manual(_state);
+    register_all_cocos2dx_experimental(_state);
+    register_all_cocos2dx_experimental_manual(_state);
+
     register_glnode_manual(_state);
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
     register_all_cocos2dx_physics_manual(_state);
 #endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     LuaObjcBridge::luaopen_luaoc(_state);
 #endif
@@ -177,13 +203,6 @@ bool LuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     LuaJavaBridge::luaopen_luaj(_state);
 #endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    tolua_web_socket_open(_state);
-    register_web_socket_manual(_state);
-#endif
-    
-    register_xml_http_request(_state);
     register_all_cocos2dx_deprecated(_state);
     register_all_cocos2dx_manual_deprecated(_state);
     
@@ -253,12 +272,61 @@ int LuaStack::executeString(const char *codes)
     return executeFunction(0);
 }
 
+static const std::string BYTECODE_FILE_EXT    = ".luac";
+static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
+
 int LuaStack::executeScriptFile(const char* filename)
 {
-    std::string code("require \"");
-    code.append(filename);
-    code.append("\"");
-    return executeString(code.c_str());
+    CCAssert(filename, "CCLuaStack::executeScriptFile() - invalid filename");
+   
+    std::string buf(filename);
+    //
+    // remove .lua or .luac
+    //
+    size_t pos = buf.rfind(BYTECODE_FILE_EXT);
+    if (pos != std::string::npos)
+    {
+        buf = buf.substr(0, pos);
+    }
+    else
+    {
+        pos = buf.rfind(NOT_BYTECODE_FILE_EXT);
+        if (pos == buf.length() - NOT_BYTECODE_FILE_EXT.length())
+        {
+            buf = buf.substr(0, pos);
+        }
+    }
+    
+    FileUtils *utils = FileUtils::getInstance();
+    //
+    // 1. check .lua suffix
+    // 2. check .luac suffix
+    //
+    std::string tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
+    if (utils->isFileExist(tmpfilename))
+    {
+        buf = tmpfilename;
+    }
+    else
+    {
+        tmpfilename = buf + BYTECODE_FILE_EXT;
+        if (utils->isFileExist(tmpfilename))
+        {
+            buf = tmpfilename;
+        }
+    }
+    
+    std::string fullPath = utils->fullPathForFilename(buf);
+    Data data = utils->getDataFromFile(fullPath);
+    int rn = 0;
+    if (!data.isNull())
+    {
+        if (luaLoadBuffer(_state, (const char*)data.getBytes(), (int)data.getSize(), fullPath.c_str()) == 0)
+        {
+            rn = executeFunction(0);
+        }
+    }
+    return rn;
 }
 
 int LuaStack::executeGlobalFunction(const char* functionName)
@@ -493,86 +561,92 @@ int LuaStack::reallocateScriptHandler(int nHandler)
 
 int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray)
 {
+    int top = lua_gettop(_state);
     if (pushFunctionByHandler(handler))                 /* L: ... arg1 arg2 ... func */
     {
         if (numArgs > 0)
         {
             lua_insert(_state, -(numArgs + 1));         /* L: ... func arg1 arg2 ... */
-            int functionIndex = -(numArgs + 1);
-            if (!lua_isfunction(_state, functionIndex))
+        }
+        int functionIndex = -(numArgs + 1);
+        if (!lua_isfunction(_state, functionIndex))
+        {
+            CCLOG("value at stack [%d] is not function", functionIndex);
+            lua_pop(_state, numArgs + 1); // remove function and arguments
+            lua_settop(_state,top);
+            return 0;
+        }
+        
+        int traceback = 0;
+        lua_getglobal(_state, "__G__TRACKBACK__");                         /* L: ... func arg1 arg2 ... G */
+        if (!lua_isfunction(_state, -1))
+        {
+            lua_pop(_state, 1);                                            /* L: ... func arg1 arg2 ... */
+        }
+        else
+        {
+            lua_insert(_state, functionIndex - 1);                         /* L: ... G func arg1 arg2 ... */
+            traceback = functionIndex - 1;
+        }
+        
+        int error = 0;
+        ++_callFromLua;
+        error = lua_pcall(_state, numArgs, numResults, traceback);                  /* L: ... [G] ret1 ret2 ... retResults*/
+        --_callFromLua;
+        if (error)
+        {
+            if (traceback == 0)
             {
-                CCLOG("value at stack [%d] is not function", functionIndex);
-                lua_pop(_state, numArgs + 1); // remove function and arguments
-                return 0;
+                CCLOG("[LUA ERROR] %s", lua_tostring(_state, - 1));        /* L: ... error */
+                lua_pop(_state, 1); // remove error message from stack
             }
-            
-            int traceback = 0;
-            lua_getglobal(_state, "__G__TRACKBACK__");                         /* L: ... func arg1 arg2 ... G */
-            if (!lua_isfunction(_state, -1))
+            else                                                            /* L: ... G error */
             {
-                lua_pop(_state, 1);                                            /* L: ... func arg1 arg2 ... */
+                lua_pop(_state, 2); // remove __G__TRACKBACK__ and error message from stack
             }
-            else
-            {
-                lua_insert(_state, functionIndex - 1);                         /* L: ... G func arg1 arg2 ... */
-                traceback = functionIndex - 1;
+            lua_settop(_state,top);
+            return 0;
+        }
+        
+        // get return value,don't pass LUA_MULTRET to numResults,
+        if (numResults <= 0)
+        {
+            lua_settop(_state,top);
+            return 0;
+        }
+        
+        for (int i = 0 ; i < numResults; i++)
+        {
+            if (lua_type(_state, -1) == LUA_TBOOLEAN) {
+                
+                bool value = lua_toboolean(_state, -1);
+                resultArray.addObject(Bool::create(value)) ;
+                
+            }else if (lua_type(_state, -1) == LUA_TNUMBER) {
+                
+                double value = lua_tonumber(_state, -1);
+                resultArray.addObject(Double::create(value));
+                
+            }else if (lua_type(_state, -1) == LUA_TSTRING) {
+                
+                const char* value = lua_tostring(_state, -1);
+                resultArray.addObject(String::create(value));
+                
+            }else{
+                
+                resultArray.addObject(static_cast<Ref*>(tolua_tousertype(_state, -1, nullptr)));
             }
-            
-            int error = 0;
-            ++_callFromLua;
-            error = lua_pcall(_state, numArgs, numResults, traceback);                  /* L: ... [G] ret1 ret2 ... retResults*/
-            --_callFromLua;
-            if (error)
-            {
-                if (traceback == 0)
-                {
-                    CCLOG("[LUA ERROR] %s", lua_tostring(_state, - 1));        /* L: ... error */
-                    lua_pop(_state, 1); // remove error message from stack
-                }
-                else                                                            /* L: ... G error */
-                {
-                    lua_pop(_state, 2); // remove __G__TRACKBACK__ and error message from stack
-                }
-                return 0;
-            }
-            
-            // get return value,don't pass LUA_MULTRET to numResults,
-            if (numResults <= 0)
-                return 0;
-            
-            for (int i = 0 ; i < numResults; i++)
-            {
-                if (lua_type(_state, -1) == LUA_TBOOLEAN) {
-                    
-                    bool value = lua_toboolean(_state, -1);
-                    resultArray.addObject(Bool::create(value)) ;
-                    
-                }else if (lua_type(_state, -1) == LUA_TNUMBER) {
-                    
-                    double value = lua_tonumber(_state, -1);
-                    resultArray.addObject(Double::create(value));
-                    
-                }else if (lua_type(_state, -1) == LUA_TSTRING) {
-                    
-                    const char* value = lua_tostring(_state, -1);
-                    resultArray.addObject(String::create(value));
-                    
-                }else{
-                    
-                    resultArray.addObject(static_cast<Ref*>(tolua_tousertype(_state, -1, NULL)));
-                }
-                // remove return value from stack
-                lua_pop(_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/
-            }
-            /* L: ... [G]*/
-            
-            if (traceback)
-            {
-                lua_pop(_state, 1); // remove __G__TRACKBACK__ from stack      /* L: ... */
-            }
+            // remove return value from stack
+            lua_pop(_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/
+        }
+        /* L: ... [G]*/
+        
+        if (traceback)
+        {
+            lua_pop(_state, 1); // remove __G__TRACKBACK__ from stack      /* L: ... */
         }
     }
-    lua_settop(_state, 0);
+    lua_settop(_state,top);
     return 1;
 }
 
@@ -705,6 +779,113 @@ void LuaStack::cleanupXXTEAKeyAndSign()
         _xxteaSign = nullptr;
         _xxteaSignLen = 0;
     }
+}
+
+int LuaStack::loadChunksFromZIP(const char *zipFilePath)
+{
+    pushString(zipFilePath);
+    luaLoadChunksFromZIP(_state);
+    int ret = lua_toboolean(_state, -1);
+    lua_pop(_state, 1);
+    return ret;
+}
+
+int LuaStack::luaLoadChunksFromZIP(lua_State *L)
+{
+    if (lua_gettop(L) < 1) {
+        CCLOG("luaLoadChunksFromZIP() - invalid arguments");
+        return 0;
+    }
+    
+    const char *zipFilename = lua_tostring(L, -1);
+    lua_settop(L, 0);
+    FileUtils *utils = FileUtils::getInstance();
+    std::string zipFilePath = utils->fullPathForFilename(zipFilename);
+    
+    LuaStack *stack = this;
+    
+    do {
+        ssize_t size = 0;
+        void *buffer = nullptr;
+        unsigned char *zipFileData = utils->getFileData(zipFilePath.c_str(), "rb", &size);
+        ZipFile *zip = nullptr;
+        
+        bool isXXTEA = stack && stack->_xxteaEnabled && zipFileData;
+        for (int i = 0; isXXTEA && i < stack->_xxteaSignLen && i < size; ++i) {
+            isXXTEA = zipFileData[i] == stack->_xxteaSign[i];
+        }
+        
+        if (isXXTEA) { // decrypt XXTEA
+            xxtea_long len = 0;
+            buffer = xxtea_decrypt(zipFileData + stack->_xxteaSignLen,
+                                   (xxtea_long)size - (xxtea_long)stack->_xxteaSignLen,
+                                   (unsigned char*)stack->_xxteaKey,
+                                   (xxtea_long)stack->_xxteaKeyLen,
+                                   &len);
+            free(zipFileData);
+            zipFileData = nullptr;
+            zip = ZipFile::createWithBuffer(buffer, len);
+        } else {
+            if (zipFileData) {
+                zip = ZipFile::createWithBuffer(zipFileData, size);
+            }
+        }
+        
+        if (zip) {
+            CCLOG("lua_loadChunksFromZIP() - load zip file: %s%s", zipFilePath.c_str(), isXXTEA ? "*" : "");
+            lua_getglobal(L, "package");
+            lua_getfield(L, -1, "preload");
+            
+            int count = 0;
+            std::string filename = zip->getFirstFilename();
+            while (filename.length()) {
+                ssize_t bufferSize = 0;
+                unsigned char *zbuffer = zip->getFileData(filename.c_str(), &bufferSize);
+                if (bufferSize) {
+                    // remove .lua or .luac extension
+                    size_t pos = filename.find_last_of('.');
+                    if (pos != std::string::npos)
+                    {
+                        std::string suffix = filename.substr(pos, filename.length());
+                        if (suffix == NOT_BYTECODE_FILE_EXT || suffix == BYTECODE_FILE_EXT) {
+                            filename.erase(pos);
+                        }
+                    }
+                    // replace path seperator '/' '\' to '.'
+                    for (int i=0; i<filename.size(); i++) {
+                        if (filename[i] == '/' || filename[i] == '\\') {
+                            filename[i] = '.';
+                        }
+                    }
+                    CCLOG("[luaLoadChunksFromZIP] add %s to preload", filename.c_str());
+                    if (stack->luaLoadBuffer(L, (char*)zbuffer, (int)bufferSize, filename.c_str()) == 0) {
+                        lua_setfield(L, -2, filename.c_str());
+                        ++count;
+                    }
+                    free(zbuffer);
+                }
+                filename = zip->getNextFilename();
+            }
+            CCLOG("lua_loadChunksFromZIP() - loaded chunks count: %d", count);
+            lua_pop(L, 2);
+            lua_pushboolean(L, 1);
+            
+            delete zip;
+        } else {
+            CCLOG("lua_loadChunksFromZIP() - not found or invalid zip file: %s", zipFilePath.c_str());
+            lua_pushboolean(L, 0);
+        }
+        
+        if (zipFileData) {
+            free(zipFileData);
+        }
+        
+        if (buffer) {
+            free(buffer);
+        }
+    } while (0);
+    
+    return 1;
 }
 
 int LuaStack::luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName)

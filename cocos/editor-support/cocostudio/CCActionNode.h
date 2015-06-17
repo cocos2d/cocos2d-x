@@ -27,14 +27,17 @@ THE SOFTWARE.
 
 #include "cocostudio/CCActionFrame.h"
 #include "cocostudio/DictionaryHelper.h"
+#include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
-
+    
+class CocoLoader;
+struct stExpCocoNode;
 /**
 *  @js NA
 *  @lua NA
 */
-class ActionNode : public cocos2d::Ref
+class CC_STUDIO_DLL ActionNode : public cocos2d::Ref
 {
 public:
 
@@ -149,6 +152,7 @@ public:
 
 	/*init properties with a json dictionary*/
 	virtual void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    virtual void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, Ref* root);
 
 	/**
 	* Gets if the action is done once time.
@@ -157,6 +161,10 @@ public:
 	*/
 	virtual bool isActionDoneOnce();
 protected:
+    int valueToInt(const std::string& value);
+    bool valueToBool(const std::string& value);
+    float valueToFloat(const std::string& value);
+    
 	int _currentFrameIndex;
 	int _destFrameIndex;
 

@@ -17,24 +17,26 @@ AppDelegate::~AppDelegate()
 {
 }
 
+void AppDelegate::initGLContextAttrs()
+{
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("Cpp Empty Test");
+        glview = GLViewImpl::create("Cpp Empty Test");
         director->setOpenGLView(glview);
     }
 
     director->setOpenGLView(glview);
 
     // Set the design resolution
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
-    glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::SHOW_ALL);
-#else
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-#endif
 
 	Size frameSize = glview->getFrameSize();
     

@@ -9,20 +9,16 @@
 #ifndef __PERFORMANCE_RENDERER_TEST_H__
 #define __PERFORMANCE_RENDERER_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class RenderTestLayer : public PerformBasicLayer
+DEFINE_TEST_SUITE(PerformceRenderTests);
+
+class RenderPerformceTest : public TestCase
 {
-    
 public:
-    RenderTestLayer();
-    virtual ~RenderTestLayer();
+    CREATE_FUNC(RenderPerformceTest);
     
     virtual void onEnter() override;
-    virtual void showCurrentTest() override;
-public:
-    static Scene* scene();
 };
 
-void runRendererTest();
 #endif

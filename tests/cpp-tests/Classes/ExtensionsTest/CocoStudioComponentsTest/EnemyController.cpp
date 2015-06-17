@@ -18,9 +18,9 @@ bool EnemyController::init()
     return true;
 }
 
-void EnemyController::onEnter()
+void EnemyController::onAdd()
 {
-    ComController::onEnter();
+    ComController::onAdd();
    // Determine where to spawn the target along the Y axis
 	Size winSize = Director::getInstance()->getVisibleSize();
 	float minY = getOwner()->getContentSize().height/2;
@@ -52,7 +52,7 @@ void EnemyController::onEnter()
 	_owner->runAction( Sequence::create(actionMove, actionMoveDone, nullptr) );
 }
 
-void EnemyController::onExit()
+void EnemyController::onRemove()
 {
 }
 
@@ -63,7 +63,7 @@ void EnemyController::update(float delta)
 
 EnemyController* EnemyController::create(void)
 {
-    EnemyController * pRet = new EnemyController();
+    EnemyController * pRet = new (std::nothrow) EnemyController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

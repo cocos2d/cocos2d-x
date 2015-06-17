@@ -2,100 +2,22 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-static int sceneIdx = -1; 
+USING_NS_CC;
+USING_NS_CC_EXT;
 
-#define MAX_LAYER    11
-
-static Layer* createShaderLayer(int nIndex)
+ShaderTests::ShaderTests()
 {
-    switch (sceneIdx)
-    {
-        case 0: return new ShaderLensFlare();
-        case 1: return new ShaderMandelbrot();
-        case 2: return new ShaderJulia();
-        case 3: return new ShaderHeart();
-        case 4: return new ShaderFlower();
-        case 5: return new ShaderPlasma();
-        case 6: return new ShaderBlur();
-        case 7: return new ShaderRetroEffect();
-        case 8: return new ShaderMonjori();
-        case 9: return new ShaderGlow();
-        case 10: return new ShaderMultiTexture();
-    }
-    return NULL;
-}
-
-static Layer* nextAction(void)
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createShaderLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-static Layer* backAction(void)
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createShaderLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-static Layer* restartAction(void)
-{
-    auto layer = createShaderLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-
-ShaderTestDemo::ShaderTestDemo()
-{
-
-}
-
-void ShaderTestDemo::backCallback(Ref* sender)
-{
-    auto s = new ShaderTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ShaderTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new ShaderTestScene();//CCScene::create();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-std::string ShaderTestDemo::title() const
-{
-    return "No title";
-}
-
-std::string ShaderTestDemo::subtitle() const
-{
-    return "";
-}
-
-void ShaderTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new ShaderTestScene();
-    s->addChild(restartAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();    
+    ADD_TEST_CASE(ShaderLensFlare);
+    ADD_TEST_CASE(ShaderMandelbrot);
+    ADD_TEST_CASE(ShaderJulia);
+    ADD_TEST_CASE(ShaderHeart);
+    ADD_TEST_CASE(ShaderFlower);
+    ADD_TEST_CASE(ShaderPlasma);
+    ADD_TEST_CASE(ShaderBlur);
+    ADD_TEST_CASE(ShaderRetroEffect);
+    ADD_TEST_CASE(ShaderMonjori);
+    ADD_TEST_CASE(ShaderGlow);
+    ADD_TEST_CASE(ShaderMultiTexture);
 }
 
 ///---------------------------------------
@@ -122,7 +44,7 @@ ShaderNode::~ShaderNode()
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
 {
-    auto node = new ShaderNode();
+    auto node = new (std::nothrow) ShaderNode();
     node->initWithVertex(vert, frag);
     node->autorelease();
 
@@ -132,7 +54,7 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std:
 bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
             this->setGLProgramState(nullptr);
             loadShaderVertex(_vertFileName, _fragFileName);
         });
@@ -195,7 +117,7 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
 
 void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
@@ -207,6 +129,7 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 
     auto glProgramState = getGLProgramState();
     glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+
     glProgramState->apply(transform);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -259,13 +182,14 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
     
@@ -292,13 +216,14 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-
+#endif
         return true;
     }
 
@@ -439,7 +364,7 @@ SpriteBlur::~SpriteBlur()
 
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
-    SpriteBlur* pRet = new SpriteBlur();
+    SpriteBlur* pRet = new (std::nothrow) SpriteBlur();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -458,7 +383,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     if( Sprite::initWithTexture(texture, rect) ) 
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-        auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+        auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
                 setGLProgram(nullptr);
                 initGLProgram();
             });
@@ -562,6 +487,7 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();
@@ -572,7 +498,7 @@ bool ShaderBlur::init()
         addChild(sprite);
 
         createSliderCtls();
-
+#endif
         return true;
     }
 
@@ -821,18 +747,4 @@ void ShaderMultiTexture::changeTexture(Ref*)
     right->setTexture(textrue);
     auto programState = _sprite->getGLProgramState();
     programState->setUniformTexture("u_texture1", right->getTexture());
-}
-
-
-///---------------------------------------
-//
-// ShaderTestScene
-// 
-///---------------------------------------
-void ShaderTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    addChild(nextAction());
-
-    Director::getInstance()->replaceScene(this);
 }

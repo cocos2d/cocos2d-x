@@ -25,7 +25,7 @@ THE SOFTWARE.
 
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
-#include "base/CCDirector.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -60,7 +60,7 @@ bool ComponentContainer::add(Component *com)
     {
         if (_components == nullptr)
         {
-            _components = new Map<std::string, Component*>();
+            _components = new (std::nothrow) Map<std::string, Component*>();
         }
         Component *component = _components->at(com->getName());
         
@@ -68,7 +68,7 @@ bool ComponentContainer::add(Component *com)
         CC_BREAK_IF(component);
         com->setOwner(_owner);
         _components->insert(com->getName(), com);
-        com->onEnter();
+        com->onAdd();
         ret = true;
     } while(0);
     return ret;
@@ -85,15 +85,36 @@ bool ComponentContainer::remove(const std::string& name)
         CC_BREAK_IF(iter == _components->end());
         
         auto com = iter->second;
-        com->onExit();
+        com->onRemove();
         com->setOwner(nullptr);
         
         _components->erase(iter);
-        
         ret = true;
     } while(0);
     return ret;
  }
+
+bool ComponentContainer::remove(Component *com)
+{
+    bool ret = false;
+    do
+    {
+        CC_BREAK_IF(!_components);
+        
+        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        {
+            if (iter->second == com)
+            {
+                com->onRemove();
+                com->setOwner(nullptr);
+                _components->erase(iter);
+                break;
+            }
+        }
+        ret = true;
+    } while(0);
+    return ret;
+}
 
 void ComponentContainer::removeAll()
 {
@@ -101,7 +122,7 @@ void ComponentContainer::removeAll()
     {
         for (auto iter = _components->begin(); iter != _components->end(); ++iter)
         {
-            iter->second->onExit();
+            iter->second->onRemove();
             iter->second->setOwner(nullptr);
         }
         
@@ -114,7 +135,7 @@ void ComponentContainer::removeAll()
 
 void ComponentContainer::alloc(void)
 {
-    _components = new Map<std::string, Component*>();
+    _components = new (std::nothrow) Map<std::string, Component*>();
 }
 
 void ComponentContainer::visit(float delta)
@@ -133,6 +154,21 @@ void ComponentContainer::visit(float delta)
 bool ComponentContainer::isEmpty() const
 {
     return (_components == nullptr || _components->empty());
+}
+
+void ComponentContainer::onEnter()
+{
+    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    {
+        iter->second->onEnter();
+    }
+}
+void ComponentContainer::onExit()
+{
+    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    {
+        iter->second->onExit();
+    }
 }
 
 NS_CC_END

@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Stuart Carnie
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,8 +23,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __SUPPORT_CCPROFILING_H__
 #define __SUPPORT_CCPROFILING_H__
+/// @cond DO_NOT_SHOW
 
 #include <string>
 #include <chrono>
@@ -143,9 +145,9 @@ public:
     long numberOfCalls;
 };
 
-extern void ProfilingBeginTimingBlock(const char *timerName);
-extern void ProfilingEndTimingBlock(const char *timerName);
-extern void ProfilingResetTimingBlock(const char *timerName);
+extern void CC_DLL ProfilingBeginTimingBlock(const char *timerName);
+extern void CC_DLL ProfilingEndTimingBlock(const char *timerName);
+extern void CC_DLL ProfilingResetTimingBlock(const char *timerName);
 
 /*
  * cocos2d profiling categories
@@ -161,4 +163,5 @@ extern bool kProfilerCategoryParticles;
 
 NS_CC_END
 
+/// @endcond
 #endif // __SUPPORT_CCPROFILING_H__
