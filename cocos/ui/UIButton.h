@@ -352,7 +352,7 @@ public:
      * @~chinese 
      * 设置标题的文本的水平对齐方式
      * 
-     * @param hAlignment @~english see TextHAlignment
+     * @param hAlignment @~english see TextHAlignment @~chinese 文本的水平对齐方式。
      */
     void setTitleAlignment(TextHAlignment hAlignment);
 
@@ -360,10 +360,10 @@ public:
      * Sets the title's text vertical alignment.
      *
      * @~chinese 
-     * 设置标题的文本垂直对齐方式
+     * 设置标题的文本垂直和水平对齐方式
      * 
-     * @param hAlignment @~english see TextHAlignment.
-     * @param vAlignment @~english see TextVAlignment.
+     * @param hAlignment @~english see TextHAlignment. @~chinese 文本的水平对齐方式。
+     * @param vAlignment @~english see TextVAlignment. @~chinese 文本的垂直对齐方式。
      */
     void setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment);
 

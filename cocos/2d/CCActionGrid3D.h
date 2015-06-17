@@ -483,7 +483,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** 
     @brief @~english Initializes the action with duration, grid size, range and whether shake on Z axis.
      * @~chinese 用持续时间、网格大小、范围、是否在z轴摇晃等参数来初始化一个Shaky3D动作。
-    @param initWithDuration @~english Specify the duration of the Shaky3D action. It's a value in seconds.
+    @param duration @~english Specify the duration of the Shaky3D action. It's a value in seconds.
      * @~chinese 持续时间，以秒为单位。
     @param gridSize @~english Specify the size of the grid.
      * @~chinese 网格的大小。

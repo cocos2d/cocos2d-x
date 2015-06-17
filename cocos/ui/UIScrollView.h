@@ -215,7 +215,7 @@ public:
     /**
      * @~english Scroll inner container to right boundary of scrollview.
      * @~chinese 将内部布局容器滚动到滚动视图的右端边界
-     * @param second @~english Time in seconds.
+     * @param time @~english Time in seconds.
      * @~chinese 动作执行所需时间，以秒计
      * @param attenuated @~english Whether scroll speed attenuate or not.
      * @~chinese 滚动速度是否发生衰减
@@ -235,7 +235,7 @@ public:
     /**
      * @~english Scroll inner container to top and right boundary of scrollview.
      * @~chinese 滚动内部布局容器到滚动使徒的右上角
-     * @param second @~english Time in seconds.
+     * @param time @~english Time in seconds.
      * @~chinese 动作所需时间，以秒计
      * @param attenuated Whether scroll speed attenuate or not.
      * @~chinese 滚动速度是否发生衰减
@@ -255,7 +255,7 @@ public:
     /**
      * @~english Scroll inner container to bottom and right boundary of scrollview.
      * @~chinese 滚动内部布局容器到视图的右下角
-     * @param second @~english Time in seconds
+     * @param time @~english Time in seconds
      * @~chinese 动作执行所需时间
      * @param attenuated @~english Whether scroll speed attenuate or not.
      * @~chinese 滚动速度是否发生衰减

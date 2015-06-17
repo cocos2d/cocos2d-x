@@ -280,7 +280,7 @@ public:
      * @~chinese 
      * 设置ListView中每一项之间的边距。
      * 
-     * @param @~english margin
+     * @param margin @~english margin
      * @~chinese 边距
      */
     void setItemsMargin(float margin);

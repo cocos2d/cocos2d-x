@@ -205,6 +205,7 @@ public:
     /**
      * @brief @~english Add armature event callback to trigger object.
      * @~chinese 为触发器对象增加事件回调。
+     * @param pAr @~english The armature object @~chinese 骨骼动画对象
      * @param pTarget @~english Trigger object point.
      * @~chinese 触发器对象指针。
      * @param mecf @~english Callback function.
@@ -215,6 +216,7 @@ public:
     /**
      * @brief @~english Remove armature event callback function with armature point, trigger point, callback function.
      * @~chinese 为触发器对象移除事件回调。
+     * @param pAr @~english The armature object @~chinese 骨骼动画对象
      * @param pTarget @~english Trigger object point.
      * @~chinese 触发器对象指针。
      * @param mecf @~english Callback function.

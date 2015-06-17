@@ -131,7 +131,7 @@ public:
      *
      * @param texture @~english A given texture.
      * @~chinese 一个给定的纹理。
-     * @param @~english rect A given rect, in points.
+     * @param rect @~english A given rect, in points.
      * @~chinese 一个给定的矩形.
      *
      * @since v0.99.4

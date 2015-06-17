@@ -62,9 +62,9 @@ THE SOFTWARE.
 #include "base/ccConfig.h"
 
 /**
- * @def @~english CC_SWAP
- * simple macro that swaps 2 variables
- * @~chinese CC_SWAP
+ * @def CC_SWAP
+ * @~english simple macro that swaps 2 variables
+ * @~chinese 
  * 交换两个变量的简单宏
  * @deprecated @~english use std::swap() instead
  * @~chinese 使用std::swap()
@@ -77,33 +77,33 @@ THE SOFTWARE.
 #include "base/ccRandom.h"
 
 /**
- * @def @~english CCRANDOM_MINUS1_1
- * returns a random float between -1 and 1
- * @~chinese CCRANDOM_MINUS1_1
+ * @def CCRANDOM_MINUS1_1
+ * @~english returns a random float between -1 and 1
+ * @~chinese 
  * 返回一个随机-1到1之间的随机数
  */
 #define CCRANDOM_MINUS1_1() cocos2d::rand_minus1_1()
 
 /**
- * @def @~english CCRANDOM_0_1
- * returns a random float between 0 and 1
- * @~chinese CCRANDOM_0_1
+ * @def CCRANDOM_0_1
+ * @~english returns a random float between 0 and 1
+ * @~chinese 
  * 返回一个0和1之间的随机数
  */
 #define CCRANDOM_0_1() cocos2d::rand_0_1()
 
 /**
- * @def @~english CC_DEGREES_TO_RADIANS
- * converts degrees to radians
- * @~chinese CC_DEGREES_TO_RADIANS
+ * @def CC_DEGREES_TO_RADIANS
+ * @~english converts degrees to radians
+ * @~chinese 
  * 将度转换为弧度
  */
 #define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) * 0.01745329252f) // PI / 180
 
 /**
- * @def @~english CC_RADIANS_TO_DEGREES
- * converts radians to degrees
- * @~chinese CC_RADIANS_TO_DEGREES
+ * @def CC_RADIANS_TO_DEGREES
+ * @~english converts radians to degrees
+ * @~chinese 
  * 将弧度转换成度
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
@@ -112,9 +112,9 @@ THE SOFTWARE.
 #define kRepeatForever CC_REPEAT_FOREVER
 
 /**
- * @def @~english CC_BLEND_SRC
- * default gl blend src function. Compatible with premultiplied alpha images.
- * @~chinese CC_BLEND_SRC
+ * @def CC_BLEND_SRC
+ * @~english default gl blend src function. Compatible with premultiplied alpha images.
+ * @~chinese 
  * 默认gl混合src功能。兼容左乘阿尔法图像。
 */
 #define CC_BLEND_SRC GL_ONE
@@ -122,9 +122,9 @@ THE SOFTWARE.
 
 
 /**
- * @def @~english CC_NODE_DRAW_SETUP
- * Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
- * @~chinese CC_NODE_DRAW_SETUP
+ * @def CC_NODE_DRAW_SETUP
+ * @~english Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
+ * @~chinese 
  * 设置GL服务器状态,调整GL程序并设置模型视图投影矩阵
  * @since v2.0
  */
@@ -139,9 +139,9 @@ do { \
 
 
  /**
-  * @def @~english CC_DIRECTOR_END
-  * Stops and removes the director from memory. Removes the GLView from its parent
-  * @~chinese CC_DIRECTOR_END
+  * @def CC_DIRECTOR_END
+  * @~english Stops and removes the director from memory. Removes the GLView from its parent
+  * @~chinese 
   * 停止并清除director的内存。从父节点删除GLView
   * 
   * @since v0.99.4
@@ -153,10 +153,10 @@ do {                                                            \
 } while(0)
 
 /**
- * @def @~english CC_CONTENT_SCALE_FACTOR
- * On Mac it returns 1;
+ * @def CC_CONTENT_SCALE_FACTOR
+ * @~english On Mac it returns 1;
  * On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
- * @~chinese CC_CONTENT_SCALE_FACTOR
+ * @~chinese 
  * 在Mac它返回1;
  * 在iPhone上开启了RetinaDisplay则它返回2。否则返回1
 */
@@ -167,9 +167,9 @@ do {                                                            \
 /****************************/
 
 /**
- * @def @~english CC_RECT_PIXELS_TO_POINTS
- * Converts a rect in pixels to points
- * @~chinese CC_RECT_PIXELS_TO_POINTS
+ * @def CC_RECT_PIXELS_TO_POINTS
+ * @~english Converts a rect in pixels to points
+ * @~chinese 
  * 将一个矩形的像素转换成点
  */
 #define CC_RECT_PIXELS_TO_POINTS(__rect_in_pixels__)                                                                        \
@@ -177,9 +177,9 @@ do {                                                            \
             (__rect_in_pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
 
 /**
- * @def @~english CC_RECT_POINTS_TO_PIXELS
- * Converts a rect in points to pixels
- * @~chinese CC_RECT_POINTS_TO_PIXELS
+ * @def CC_RECT_POINTS_TO_PIXELS
+ * @~english Converts a rect in points to pixels
+ * @~chinese 
  * 将一个矩形的点转换成像素
  */
 #define CC_RECT_POINTS_TO_PIXELS(__rect_in_points_points__)                                                                        \
@@ -187,36 +187,36 @@ do {                                                            \
             (__rect_in_points_points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).size.height * CC_CONTENT_SCALE_FACTOR() )
 
 /**
- * @def @~english CC_POINT_PIXELS_TO_POINTS
- * Converts a pixels to points
- * @~chinese CC_POINT_PIXELS_TO_POINTS
+ * @def CC_POINT_PIXELS_TO_POINTS
+ * @~english Converts a pixels to points
+ * @~chinese 
  * 将一个像素转换成点
  */
 #define CC_POINT_PIXELS_TO_POINTS(__pixels__)                                                                        \
 Vec2( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
 
 /**
- * @def @~english CC_POINT_POINTS_TO_PIXELS
- * Converts a points to pixels
- * @~chinese CC_POINT_POINTS_TO_PIXELS
+ * @def CC_POINT_POINTS_TO_PIXELS
+ * @~english Converts a points to pixels
+ * @~chinese 
  * 将一个点转换成像素值
  */
 #define CC_POINT_POINTS_TO_PIXELS(__points__)                                                                        \
 Vec2( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
 
 /**
- * @def @~english CC_POINT_PIXELS_TO_POINTS
- * Converts a size in pixels to points
- * @~chinese CC_POINT_PIXELS_TO_POINTS
+ * @def CC_POINT_PIXELS_TO_POINTS
+ * @~english Converts a size in pixels to points
+ * @~chinese 
  * 将一个size内的像素值转换成点
  */
 #define CC_SIZE_PIXELS_TO_POINTS(__size_in_pixels__)                                                                        \
 Size( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_pixels__).height / CC_CONTENT_SCALE_FACTOR())
 
 /**
- * @def @~english CC_POINT_POINTS_TO_PIXELS
- * Converts a size in points to pixels
- * @~chinese CC_POINT_POINTS_TO_PIXELS
+ * @def CC_POINT_POINTS_TO_PIXELS
+ * @~english Converts a size in points to pixels
+ * @~chinese 
  * 将一个size内的点转换成像素值
  */
 #define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)                                                                        \
@@ -318,8 +318,8 @@ CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
 #endif
 
 
-/** @def CC_INCREMENT_GL_DRAWS_BY_ONE
- Increments the GL Draws counts by one.
+/** @def CC_INCREMENT_GL_DRAWS
+ Increments the GL Draws counts by n.
  The number of calls per frame are displayed on the screen when the Director's stats are enabled.
  */
 #define CC_INCREMENT_GL_DRAWS(__n__) cocos2d::Director::getInstance()->getRenderer()->addDrawnBatches(__n__)

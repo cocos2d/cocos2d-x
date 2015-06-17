@@ -166,7 +166,7 @@ public:
     /** @~english Keep the sprite's rotation separate from the body.  
      * @~chinese 设置精灵的旋转和物理刚体的旋转是否分离。
      *
-     * @param true if the sprite's rotation separate from the body.false，other wise.
+     * @param bIgnoreBodyRotation @~english true if the sprite's rotation separate from the body.false，other wise.
      * @~chinese 如果设置为true，则精灵的旋转和刚体是分离的。
      */
     void setIgnoreBodyRotation(bool bIgnoreBodyRotation);

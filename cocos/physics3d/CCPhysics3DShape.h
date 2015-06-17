@@ -37,8 +37,10 @@ class btCollisionShape;
 
 NS_CC_BEGIN
 /**
-    @addtogroup _3d
-    @{
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_3d
+ * @{
 */
 
 /**
@@ -112,9 +114,12 @@ public:
         @param heightStickWidth @~english  The Width of heightfield @~chinese 对地形的宽度
         @param heightStickLength @~english  The Length of heightfield. @~chinese 对地形的长度。
         @param heightfieldData @~english  The Data of heightfield. @~chinese 对地形数据。
+        @param heightScale @~english  heightScale。. @~chinese heightScale。
         @param minHeight @~english  The minHeight of heightfield. @~chinese 对地形的minheight。
         @param maxHeight @~english  The maxHeight of heightfield. @~chinese 对地形的最大高度。
+        @param useFloatDatam @~english  useFloatDatam @~chinese useFloatDatam
         @param flipQuadEdges @~english  if flip QuadEdges @~chinese 如果quadedges翻转
+        @param useDiamondSubdivision @~english  useDiamondSubdivision @~chinese useDiamondSubdivision
 
     */
     static Physics3DShape* createHeightfield(int heightStickWidth,int heightStickLength
@@ -163,7 +168,9 @@ protected:
 #endif
 };
 
-// end of 3d group
+// end of physics_3d group
+/// @}
+// end of physics group
 /// @}
 
 NS_CC_END

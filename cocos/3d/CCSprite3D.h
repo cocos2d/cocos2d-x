@@ -111,7 +111,7 @@ public:
 
     /** @~english get Mesh by Name, it returns the first one if there are more than one mesh with the same name
         @~chinese 通过名称得到网格，它返回第一个如果有多个具有相同名称的网格
-        @param index @~english  the specified name of a mesh @~chinese 一个指定的名称
+        @param name @~english  the specified name of a mesh @~chinese 一个指定的名称
         @return @~english a mesh with the specified name @~chinese 具有指定名称的网格
     */
     Mesh* getMeshByName(const std::string& name) const;

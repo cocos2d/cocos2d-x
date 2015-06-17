@@ -122,7 +122,7 @@ public:
      * @~chinese 增加动画数据。
      * @param id @~english The id of the animation data.
      * @~chinese 动画数据的标识。
-     * @return @~english AnimationData.
+     * @param animationData @~english The animation data.
      * @~chinese 动画数据。
      * @param configFilePath @~english Path of config file.
      * @~chinese 配置文件路径。

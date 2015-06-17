@@ -64,7 +64,7 @@ enum PUComponentType
 struct CC_DLL PUParticle3D : public Particle3D
 {
     /**
-    @property
+    @property DEFAULT_TTL
     @static
     @~english Default time to alive
     @~chinese 粒子默认的生存时间
@@ -72,7 +72,7 @@ struct CC_DLL PUParticle3D : public Particle3D
     static float DEFAULT_TTL;
 
     /**
-    @property
+    @property DEFAULT_MASS
     @static
     @~english Default mass
     @~chinese 粒子默认的质量
@@ -270,7 +270,7 @@ public:
     typedef std::map<std::string, ParticlePool> ParticlePoolMap;
 
     /**
-    @property
+    @property DEFAULT_WIDTH
     @static
     @~english Default width of particle
     @~chinese 粒子默认的宽度
@@ -278,7 +278,7 @@ public:
     static const float DEFAULT_WIDTH;
 
     /**
-    @property
+    @property DEFAULT_HEIGHT
     @static
     @~english Default height of particle
     @~chinese 粒子默认的高度
@@ -286,15 +286,15 @@ public:
     static const float DEFAULT_HEIGHT;
 
     /**
-    @property
+    @property DEFAULT_DEPTH
     @static
     @~english Default depth of particle
     @~chinese 粒子默认的深度
     */
     static const float DEFAULT_DEPTH;
 
-    /**
-    @property
+    /** 
+    @property DEFAULT_PARTICLE_QUOTA
     @static
     @~english Default quota of particle
     @~chinese 粒子默认的数量上限
@@ -302,7 +302,7 @@ public:
     static const unsigned int DEFAULT_PARTICLE_QUOTA;
 
     /**
-    @property
+    @property DEFAULT_EMITTED_EMITTER_QUOTA
     @static
     @~english Default quota of emitted emitter
     @~chinese 被发射的发射器默认的数量上限
@@ -310,7 +310,7 @@ public:
     static const unsigned int DEFAULT_EMITTED_EMITTER_QUOTA;
 
     /**
-    @property
+    @property DEFAULT_EMITTED_SYSTEM_QUOTA
     @static
     @~english Default quota of emitted system
     @~chinese 被发射的粒子系统默认的数量上限
@@ -318,7 +318,7 @@ public:
     static const unsigned int DEFAULT_EMITTED_SYSTEM_QUOTA;
 
     /**
-    @property
+    @property DEFAULT_MAX_VELOCITY
     @static
     @~english Default maximum velocity of particle
     @~chinese 粒子默认的最大速度
@@ -456,7 +456,7 @@ public:
     /**
     * @~english Set the default height of particle.
     * @~chinese 设置粒子默认的高度。
-    * @param width @~english The height of particle. @~chinese 粒子的高度。
+    * @param height @~english The height of particle. @~chinese 粒子的高度。
     */
     void setDefaultHeight(const float height);
 
@@ -470,7 +470,7 @@ public:
     /**
     * @~english Set the default depth of particle.
     * @~chinese 设置粒子默认的深度。
-    * @param width @~english The depth of particle. @~chinese 粒子的深度。
+    * @param depth @~english The depth of particle. @~chinese 粒子的深度。
     */
     void setDefaultDepth(const float depth);
 
@@ -586,7 +586,6 @@ public:
     * The pu particle system allows the use of multiple emitters
     * @~chinese 添加一个发射器。
     * pu粒子系统允许使用多个发射器。
-    * @param emitter @~english The pointer of emitter. @~chinese 发射器指针。
     */
     void removeAllListener();
 

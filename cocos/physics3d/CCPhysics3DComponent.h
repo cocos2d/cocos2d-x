@@ -37,8 +37,10 @@
 NS_CC_BEGIN
 
 /**
-    @addtogroup _3d
-    @{
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_3d
+ * @{
 */
 
 class Physics3DObject;
@@ -151,7 +153,9 @@ protected:
     PhysicsSyncFlag           _syncFlag;
 };
 
-// end of 3d group
+// end of physics_3d group
+/// @}
+// end of physics group
 /// @}
 NS_CC_END
 

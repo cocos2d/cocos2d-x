@@ -38,8 +38,10 @@ class btTypedConstraint;
 NS_CC_BEGIN
 
 /**
-    @addtogroup _3d
-    @{
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_3d
+ * @{
 */
 
 class Physics3DRigidBody;
@@ -105,7 +107,7 @@ public:
 
     /** @~english get user data
         @~chinese 设置用户数据
-        @param the @~english  user data will be seted @~chinese 用户数据将
+        @param userData @~english the user data will be seted @~chinese 用户数据
     */
     void setUserData(void* userData) { _userData = userData; }
 
@@ -281,7 +283,7 @@ public:
     /** @~english enable angular motor
         @~chinese 使角电机
         @param enableMotor @~english  whether to enable AngularMotor @~chinese 是否启用angularmotor
-        @param targetVeloctiy @~english  target velocity @~chinese 目标速度
+        @param targetVelocity @~english  target velocity @~chinese 目标速度
         @param maxMotorImpulse @~english  max motor impulse @~chinese 最大电机脉冲
     */
     void enableAngularMotor(bool enableMotor, float targetVelocity, float maxMotorImpulse);
@@ -740,7 +742,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Physics3D6DofConstraint() {}
 };
 
-// end of 3d group
+// end of physics_3d group
+/// @}
+// end of physics group
 /// @}
 
 NS_CC_END

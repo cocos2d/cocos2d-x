@@ -96,7 +96,7 @@ public:
     /**
      * @~english Set string value for TextBMFont
      * @~chinese 设置TextBMFont显示的字符串
-     * @param string @~english The String value.
+     * @param value @~english The String value.
      * @~chinese 字符串
      */
     CC_DEPRECATED_ATTRIBUTE void setText(const std::string& value){this->setString(value);}
@@ -104,7 +104,7 @@ public:
     /**
     * @~english Set string value for TextBMFont
     * @~chinese 设置TextBMFont显示的字符串
-    * @param string @~english The String value.
+    * @param value @~english The String value.
     * @~chinese 字符串
     */
     void setString(const std::string& value);

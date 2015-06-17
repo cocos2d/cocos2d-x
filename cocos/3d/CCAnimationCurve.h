@@ -42,7 +42,7 @@ NS_CC_BEGIN
  */
 
 /**
- * @enum Evaluate Type
+ * @enum EvaluateType
  * @brief @~english The evalute type for the curve evaluation(interpolation).
  * @~chinese 曲线求解(插值)类型
  */
@@ -88,6 +88,7 @@ public:
      * @~chinese 每个关键帧对应的时间点数组
      * @param value @~english The value.
      * @~chinese 每个关键帧时曲线的值的数组
+     * @param count @~english The count of key frames array.
      * @~chinese 关键帧数组大小
      **/
     static AnimationCurve* create(float* keytime, float* value, int count);

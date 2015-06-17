@@ -41,8 +41,10 @@ class btPersistentManifold;
 
 NS_CC_BEGIN
 /**
-    @addtogroup _3d
-    @{
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_3d
+ * @{
 */
 
 class Physics3DShape;
@@ -457,7 +459,9 @@ protected:
     std::vector<Physics3DConstraint*> _constraintList;
 };
 
-// end of 3d group
+// end of physics_3d group
+/// @}
+// end of physics group
 /// @}
 
 NS_CC_END

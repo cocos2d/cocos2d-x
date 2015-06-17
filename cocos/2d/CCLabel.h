@@ -55,7 +55,7 @@ enum class GlyphCollection {
 
 
 /**
- * @struct @~english TTFConfig
+ * @struct TTFConfig
  * @see `GlyphCollection`
  */
 typedef struct _ttfConfig
@@ -145,7 +145,7 @@ public:
      * @~chinese 一个字体文件或字体名称。
      * @param fontSize @~english The font size. This value must be > 0.
      * @~chinese 字体大小。这个值必须大于0。
-     * @param @~english dimensions
+     * @param dimensions @~english dimensions of the label node
      * @~chinese 文本的内容大小。
      * @param hAlignment @~english The text horizontal alignment.
      * @~chinese 水平对齐方式。
@@ -176,7 +176,7 @@ public:
      * @~chinese 一个TTF字体文件。
      * @param fontSize @~english The font size. This value must be > 0.
      * @~chinese 字体大小。这个值必须大于0。
-     * @param @~english dimensions
+     * @param dimensions @~english dimensions of the label node
      * @~chinese 文本的内容大小
      * @param hAlignment @~english The text horizontal alignment.
      * @~chinese 水平对齐方式。

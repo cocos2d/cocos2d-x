@@ -233,7 +233,7 @@ public:
      * 把指定坐标点从屏幕坐标转换为世界坐标。
      * 原点在GL屏幕坐标系的左下角。
      *
-     * @param viewport @~english The viewport size to use.
+     * @param size @~english The viewport size to use.
      * @~chinese 使用的视窗大小。
      * @param src @~english The screen-space position.
      * @~chinese 屏幕的位置。

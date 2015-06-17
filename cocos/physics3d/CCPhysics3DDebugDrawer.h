@@ -40,8 +40,10 @@
 NS_CC_BEGIN
 
 /**
-    @addtogroup _3d
-    @{
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_3d
+ * @{
 */
 
 class GLProgram;
@@ -131,7 +133,9 @@ protected:
     int _debugMode;
 };
 
-// end of 3d group
+// end of physics_3d group
+/// @}
+// end of physics group
 /// @}
 
 NS_CC_END
