@@ -101,9 +101,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>
-        xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"
-        xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
       </Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
@@ -140,9 +139,7 @@
       </Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"
-xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
+      <Command></Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
