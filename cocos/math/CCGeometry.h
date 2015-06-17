@@ -185,6 +185,17 @@ public:
      * @js NA
      */
     Rect(float x, float y, float width, float height);
+
+    /**@~english
+     Constructor a rect.
+     * @~chinese 
+     * 构造函数一个矩形。
+     @param pos @~english The coordinate of origin point. @~chinese 起始点的坐标点。
+     @param dimension @~english The size of rect. @~chinese 矩形的尺寸。
+     * @js NA
+     */
+    Rect(const Vec2& pos, const Size& dimension);
+
     /**@~english
     Copy constructor.
      * @~chinese 

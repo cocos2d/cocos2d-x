@@ -63,6 +63,7 @@ require "SpritePolygonTest/SpritePolygonTest"
 require "Physics3DTest/Physics3DTest"
 require "Scene3DTest/Scene3DTest"
 require "MaterialSystemTest/MaterialSystemTest"
+require "NavMeshTest/NavMeshTest"
 
 local LINE_SPACE = 40
 
@@ -115,6 +116,7 @@ local _allTests = {
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = true,  name = "NavMeshTest"            , create_func   =       NavMeshTest },
     { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
@@ -213,6 +215,10 @@ function CreateTestMenu()
         end
 
         if obj.name == "Physics3DTest" and nil == cc.Physics3DComponent then
+            testMenuItem:setEnabled(false) 
+        end
+
+        if obj.name == "NavMeshTest" and nil == cc.NavMesh then
             testMenuItem:setEnabled(false) 
         end
 
