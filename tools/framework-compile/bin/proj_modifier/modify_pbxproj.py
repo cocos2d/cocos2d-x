@@ -410,13 +410,13 @@ class PBXTargetDependency(PBXType):
 
 
 class PBXAggregateTarget(PBXType):
-	pass
-	
-	
+    pass
+    
+    
 class PBXHeadersBuildPhase(PBXType):
-	pass
-	
-	
+    pass
+    
+    
 class PBXBuildPhase(PBXType):
     def add_build_file(self, bf):
         if bf.get('isa') != 'PBXBuildFile':
@@ -1956,7 +1956,7 @@ class XcodeProject(PBXDict):
     
     @classmethod    
     def LoadFromXML(cls, path):
-    	tree = plistlib.readPlist(path)
+        tree = plistlib.readPlist(path)
         return XcodeProject(tree, path)
 
 
