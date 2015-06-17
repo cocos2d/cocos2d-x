@@ -241,11 +241,15 @@ public:
          */
         static StateBlock* create();
 
-        /** The recommended way to create StateBlocks is by calling `create`.
+        /** @english The recommended way to create StateBlocks is by calling `create`.
          * Don't use `new` or `delete` on them.
-         * 
+         * @chinese 构造函数，推荐使用create方法来创建。
          */
         StateBlock();
+        
+        /** @english Destructor.
+         * @chinese 析构函数。
+         */
         ~StateBlock();
 
         /**
@@ -458,6 +462,7 @@ public:
          * 来恢复。所以
          * -当你使用stateBlock时，可以通过restore()来将stateblock重置为默认状态。
          * -当你直接调用openGL函数设置了状态时，需要调用invalidate()。
+         * @param stateOverrideBits @~english Bitwise-OR of the states that needs to be override. @~chinese 待覆盖位的相与。
          */
         static void restore(long stateOverrideBits);
 

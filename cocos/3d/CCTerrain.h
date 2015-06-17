@@ -469,17 +469,13 @@ public:
 
     // Overrides, internal use only
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-    /**
-     * Ray-Terrain intersection.
-     * @return the intersection point
-     */
-    Vec3 getIntersectionPoint(const Ray & ray) const;
 
    /**
-    * Ray-Terrain intersection.
-    * @param ray to hit the terrain
-    * @param intersectionPoint hit point if hitted
-    * @return true if hit, false otherwise
+    * @~english Ray-Terrain intersection.
+    * @~chinese 射线地形相交。
+    * @param ray @~english  The ray used for intersection @~chinese 射线用于交叉口
+    * @param intersectionPoint @~english Hit point if hitted. @~chinese 射线与地形的交点（如果有交点）。
+    * @return @~english true if hit, false otherwise. @~chinese 返回true如果有交点，否则返回false。
     */
     bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
 
@@ -488,7 +484,7 @@ public:
         @param ray @~english  the ray used for intersection @~chinese 射线用于交叉口
         @return @~english the intersection point @~chinese 交叉点
     */
-    Vec3 getIntersectionPoint(const Ray& ray);
+    Vec3 getIntersectionPoint(const Ray& ray) const;
 
     /** @~english set the MaxDetailAmount.
         @~chinese 设置maxdetailamount。
