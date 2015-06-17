@@ -84,6 +84,7 @@ set(COCOS_SRC cocos2d.cpp
 
   #todo: provide prebuild versions of the xx libs for all platforms
   include_directories(../external/xxtea)
+  include_directories(../external/clipper)
 
 
 add_library(cocos2d ${COCOS_SRC})

@@ -143,12 +143,6 @@
     <ClCompile Include="..\manual\3d\jsb_cocos2dx_3d_manual.cpp">
       <Filter>manual\3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\auto\jsb_cocos2dx_experimental.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\experimental\jsb_cocos2dx_experimental_manual.cpp">
-      <Filter>manual\experimental</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\jsb_cocos2dx_physics3d_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
@@ -276,12 +270,6 @@
     </ClInclude>
     <ClInclude Include="..\manual\3d\jsb_cocos2dx_3d_manual.h">
       <Filter>manual\3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\jsb_cocos2dx_experimental.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\experimental\jsb_cocos2dx_experimental_manual.h">
-      <Filter>manual\experimental</Filter>
     </ClInclude>
     <ClInclude Include="..\auto\jsb_cocos2dx_physics3d_auto.hpp">
       <Filter>auto</Filter>
