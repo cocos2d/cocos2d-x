@@ -401,7 +401,7 @@ void Node::updateRotation3D()
     float x = _rotationQuat.x, y = _rotationQuat.y, z = _rotationQuat.z, w = _rotationQuat.w;
     _rotationX = atan2f(2.f * (w * x + y * z), 1.f - 2.f * (x * x + y * y));
     _rotationY = asinf(2.f * (w * y - z * x));
-    _rotationZ_X = atanf(2.f * (w * z + x * y) / (1.f - 2.f * (y * y + z * z)));
+    _rotationZ_X = atan2f(2.f * (w * z + x * y), 1.f - 2.f * (y * y + z * z));
     
     _rotationX = CC_RADIANS_TO_DEGREES(_rotationX);
     _rotationY = CC_RADIANS_TO_DEGREES(_rotationY);

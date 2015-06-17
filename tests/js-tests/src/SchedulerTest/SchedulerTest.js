@@ -644,6 +644,7 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
     },
 
     onExit: function() {
+        cc.director.getScheduler().setTimeScale(1);
         // restore scale
         cc.director.getScheduler().unscheduleUpdateForTarget(this._newScheduler);
         this._super();

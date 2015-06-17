@@ -122,12 +122,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.h">
-      <Filter>manual\experimental</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -234,12 +228,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
       <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.cpp">
-      <Filter>manual\experimental</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.cpp">
       <Filter>auto</Filter>

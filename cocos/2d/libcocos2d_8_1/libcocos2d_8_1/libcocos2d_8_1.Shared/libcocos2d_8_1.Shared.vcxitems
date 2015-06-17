@@ -191,6 +191,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h" />
@@ -572,6 +573,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimationCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.h" />
@@ -625,9 +627,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionPageTurn.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTweenFunction.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -804,6 +803,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\clipper\clipper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.c">
       <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
@@ -1157,6 +1157,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAnimationCache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.cpp" />
@@ -1210,9 +1211,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionPageTurn.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTweenFunction.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />

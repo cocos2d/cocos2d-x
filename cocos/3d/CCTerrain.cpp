@@ -159,11 +159,9 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 
     if(_isCameraViewChanged )
     {
-        auto camPos = camera->getPosition3D();
-        auto camModelMat = camera->getNodeToWorldTransform();
-        camModelMat.transformPoint(&camPos);
+        auto m = camera->getNodeToWorldTransform();
         //set lod
-        setChunksLOD(camPos);
+        setChunksLOD(Vec3(m.m[12], m.m[13], m.m[14]));
     }
 
     if(_isCameraViewChanged )
@@ -265,7 +263,7 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
         {
             AABB aabb = _chunkesArray[m][n]->_parent->_worldSpaceAABB;
             auto center = aabb.getCenter();
-            float dist = Vec3(center.x,0,center.z).distance(Vec3(cameraPos.x,0,cameraPos.z));
+            float dist = Vec2(center.x, center.z).distance(Vec2(cameraPos.x, cameraPos.z));
             _chunkesArray[m][n]->_currentLod = 3;
             for(int i =0;i<3;i++)
             {
