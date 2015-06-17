@@ -308,7 +308,7 @@ void GLProgram::bindPredefinedVertexAttribs()
 
 void GLProgram::parseVertexAttribs()
 {
-    _vertexAttribs.clear();
+    //_vertexAttribs.clear();
 
     // Query and store vertex attribute meta-data from the program.
     GLint activeAttributes;
@@ -346,7 +346,7 @@ void GLProgram::parseVertexAttribs()
 
 void GLProgram::parseUniforms()
 {
-    _userUniforms.clear();
+    //_userUniforms.clear();
 
     // Query and store uniforms from the program.
     GLint activeUniforms;
