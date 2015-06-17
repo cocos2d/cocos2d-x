@@ -34,13 +34,8 @@ LayerTests::LayerTests()
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
-    node->setCascadeColorEnabled(enable);
-    node->setCascadeOpacityEnabled(enable);
-    
-    auto& children = node->getChildren();
-    for(const auto &child : children) {
-        setEnableRecursiveCascading(child, enable);
-    }
+    node->setCascadeColorEnabled(enable, true);
+    node->setCascadeOpacityEnabled(enable, true);
 }
 
 std::string LayerTest::title() const

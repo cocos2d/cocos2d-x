@@ -2195,9 +2195,9 @@ bool Node::isCascadeOpacityEnabled(void) const
     return _cascadeOpacityEnabled;
 }
 
-void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
+void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled, bool recursive /* = false */)
 {
-    if (_cascadeOpacityEnabled == cascadeOpacityEnabled)
+    if (_cascadeOpacityEnabled == cascadeOpacityEnabled && !recursive)
     {
         return;
     }
@@ -2211,6 +2211,15 @@ void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     else
     {
         disableCascadeOpacity();
+    }
+
+    if (recursive)
+    {
+        auto& children = getChildren();
+        for (auto &child : children)
+        {
+            child->setCascadeOpacityEnabled(cascadeOpacityEnabled, recursive);
+        }
     }
 }
 
@@ -2274,9 +2283,9 @@ bool Node::isCascadeColorEnabled(void) const
     return _cascadeColorEnabled;
 }
 
-void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
+void Node::setCascadeColorEnabled(bool cascadeColorEnabled, bool recursive /* = false */)
 {
-    if (_cascadeColorEnabled == cascadeColorEnabled)
+    if (_cascadeColorEnabled == cascadeColorEnabled && !recursive)
     {
         return;
     }
@@ -2290,6 +2299,15 @@ void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
     else
     {
         disableCascadeColor();
+    }
+
+    if (recursive)
+    {
+        auto& children = getChildren();
+        for (const auto &child : children)
+        {
+            child->setCascadeColorEnabled(cascadeColorEnabled, recursive);
+        }
     }
 }
 
