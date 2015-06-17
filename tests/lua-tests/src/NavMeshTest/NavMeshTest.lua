@@ -33,7 +33,7 @@ function NavMeshBaseTestDemo:ctor()
 
     local function onNodeEvent(event)
         if "enter" == event then
-            -- self:onEnter()
+            self:onEnter()
         elseif "exit" == event then
             self:onExit()
         end
@@ -87,6 +87,14 @@ function NavMeshBaseTestDemo:init()
     end, 0)
 
     self:extend()
+end
+
+function NavMeshBaseTestDemo:onEnter()
+    local hitResult = {}
+    local ret = false
+    local physicsWorld = self:getPhysics3DWorld()
+    ret, hitResult = physicsWorld:rayCast(cc.vec3(0.0, 50.0, 0.0), cc.vec3(0.0, -50.0, 0.0), hitResult)
+    self:createAgent(hitResult.hitPosition)
 end
 
 function NavMeshBaseTestDemo:onExit()
@@ -300,12 +308,6 @@ function NavMeshBasicTestDemo:extend()
     local menu = cc.Menu:create(menuItem)
     menu:setPosition(cc.p(0.0, 0.0))
     self:addChild(menu)
-
-    local hitResult = {}
-    local ret = false
-    local physicsWorld = self:getPhysics3DWorld()
-    ret, hitResult = physicsWorld:rayCast(cc.vec3(0.0, 50.0, 0.0), cc.vec3(0.0, -50.0, 0.0), hitResult)
-    self:createAgent(hitResult.hitPosition)
 end
 ----------------------------------------
 ----NavMeshAdvanceTestDemo
@@ -378,9 +380,7 @@ function NavMeshAdvanceTestDemo:extend()
     menuItem0:registerScriptTapHandler(function (tag, sender)
         local scene = cc.Director:getInstance():getRunningScene()
         local x = math.random(-50, 50)
-        print("x value is ", x)
         local z = math.random(-50.0, 50.0)
-        print("z value is ", z)
 
         local hitResult = {}
         local ret = false
@@ -424,13 +424,6 @@ function NavMeshAdvanceTestDemo:extend()
     local menu = cc.Menu:create(menuItem0, menuItem1, menuItem2)
     menu:setPosition(cc.p(0.0, 0.0))
     self:addChild(menu)
-
-    local hitResult = {}
-    local ret    = false
-    local physicsWorld = cc.Director:getInstance():getRunningScene():getPhysics3DWorld()
-    ret,hitResult = physicsWorld:rayCast(cc.vec3(0.0, 50.0, 0.0), cc.vec3(0.0, -50.0, 0.0), hitResult)
-
-    self:createAgent(hitResult.hitPosition)
 end
 
 ----------------------------------------
