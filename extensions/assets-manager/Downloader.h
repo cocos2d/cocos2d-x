@@ -37,7 +37,7 @@
 NS_CC_EXT_BEGIN
 
 /**
- * @addtogroup AssetsManager
+ * @addtogroup assets_manager
  * @{
  */
 

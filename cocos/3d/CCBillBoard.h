@@ -94,6 +94,8 @@ public:
      * @~chinese 图片文件的路径
      * @param   rect @~english A subrect of the image file
      * @~chinese 待渲染区域矩形，必须要比图片的尺寸要小
+     * @param   mode @~english Billboard mode
+     * @~chinese 公告板的模式
      * @return  @~english An autoreleased BillBoard object
      * @~chinese 被创建的公告板
      */

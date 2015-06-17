@@ -1219,7 +1219,7 @@ public:
     };
     
     
-    /** @See ScriptTranslator
+    /** @see ScriptTranslator
      */
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node)
     {

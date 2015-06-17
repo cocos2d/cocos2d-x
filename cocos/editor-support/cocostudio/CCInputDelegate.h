@@ -250,9 +250,9 @@ public:
     /**
      * @brief @~english Callback function for touch moved.
      * @~chinese 触摸移动时的回调函数
-     * @param pTouch @~english Touch infomation.
+     * @param touch @~english Touch infomation.
      * @~chinese 触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */
@@ -261,9 +261,9 @@ public:
     /**
      * @brief @~english Callback function for touch ended.
      * @~chinese 触摸结束时的回调函数
-     * @param pTouch @~english Touch infomation.
+     * @param touch @~english Touch infomation.
      * @~chinese 触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */
@@ -272,9 +272,9 @@ public:
     /**
      * @brief @~english Callback function for touch cancelled.
      * @~chinese 触摸取消时的回调函数
-     * @param pTouch @~english Touch infomation.
+     * @param touch @~english Touch infomation.
      * @~chinese 触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */
@@ -283,9 +283,9 @@ public:
     /**
      * @brief @~english Callback function for multiple touches began.
      * @~chinese 多点触摸开始时的回调函数
-     * @param pTouches @~english Touches information.
+     * @param touches @~english Touches information.
      * @~chinese 多点触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */
@@ -294,9 +294,9 @@ public:
     /**
      * @brief @~english Callback function for multiple touches moved.
      * @~chinese 多点触摸移动时的回调函数
-     * @param pTouches @~english Touches information.
+     * @param touches @~english Touches information.
      * @~chinese 多点触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */
@@ -305,9 +305,9 @@ public:
      /**
      * @brief @~english Callback function for multiple touches ended.
      * @~chinese 多点触摸结束时的回调函数
-     * @param pTouches @~english Touches information.
+     * @param touches @~english Touches information.
      * @~chinese 多点触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */
@@ -317,9 +317,9 @@ public:
      * @brief @~english Callback function for multiple touches cancelled.
      * @~chinese 多点触摸取消时的回调函数
      * 
-     * @param pTouches @~english Touches information.
+     * @param touches @~english Touches information.
      * @~chinese 多点触摸信息。
-     * @param pEvent @~english Event information.
+     * @param event @~english Event information.
      * @~chinese 事件信息。
      * @js NA
      */

@@ -218,10 +218,9 @@ struct CC_DLL PointSprite
     GLfloat    size;       // 4 bytes
 };
 
-/** @struct @~english Quad2
- * A 2D Quad. 4 * 2 floats.
- * @~chinese Quad2
- * 一个 2D 的矩形顶点数据。
+/** @struct Quad2
+ * @brief @~english A 2D Quad. 4 * 2 floats.
+ * @~chinese 一个 2D 的矩形顶点数据。
  */
 struct CC_DLL Quad2
 {
@@ -231,10 +230,9 @@ struct CC_DLL Quad2
     Vec2        br;
 };
 
-/** @struct @~english Quad3
- * A 3D Quad. 4 * 3 floats.
- * @~chinese Quad3
- * 一个 3D 的矩形顶点数据。
+/** @struct Quad3
+ * @brief @~english A 3D Quad. 4 * 3 floats.
+ * @~chinese 一个 3D 的矩形顶点数据。
  */
 struct CC_DLL Quad3 {
     Vec3        bl;

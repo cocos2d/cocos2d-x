@@ -144,8 +144,10 @@ public:
      *  Gets resource file data from a zip file.
      * @~chinese 
      *  从一个zip文件获取资源文件数据。
-     *  @param filename @~english The resource file name which contains the relative path of the zip file.
-     *                  @~chinese 包含zip文件的相对路径的资源文件名。
+     *  @param zipFilePath @~english The resource zip file path.
+     *                  @~chinese zip文件的路径。
+     *  @param filename @~english The resource file path and name relative to the zip file.
+     *                  @~chinese 资源在zip文件中的相对路径。
      *  @param size @~english If the file read operation succeeds, it will be the data size, otherwise 0.
      *              @~chinese 如果文件读取成功,它就是数据大小,否则为0。
      * 
@@ -297,7 +299,7 @@ public:
      * @~chinese 
      * 设置filenameLookup字典。
      * 
-     *  @param pFilenameLookupDict @~english The dictionary for replacing filename.
+     *  @param filenameLookupDict @~english The dictionary for replacing filename.
      * @~chinese 用于替换文件名的字典。
      *  @since v2.1
      */
@@ -309,7 +311,7 @@ public:
      * 从一个文件名和相对的路径文件得到完整路径。
      *  @param filename @~english The file name.
      * @~chinese 文件的名字。
-     *  @param pszRelativeFile @~english The path of the relative file.
+     *  @param relativeFile @~english The path of the relative file.
      * @~chinese 相对的路径文件。
      *  @return @~english The full path.
      *          e.g. filename: hello.png, pszRelativeFile: /User/path1/path2/hello.plist
@@ -499,7 +501,7 @@ public:
      * Windows fopen不能支持utf - 8文件名
      * 需要使用第三方库将fopen的所有参数进行转换
      * 
-    * @param filename @~english std::string name file for convertation from utf-8
+    * @param filenameUtf8 @~english std::string name file for convertation from utf-8
      * @~chinese 需要转换成的utf-8文件的文件名
     * @return @~english std::string ansi filename in current locale
      * @~chinese 当前语言下标准ansi的文件名

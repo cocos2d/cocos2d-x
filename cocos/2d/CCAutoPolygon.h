@@ -55,7 +55,7 @@ public:
     /**@~english
      * Creates an empty Polygon info
      * @~chinese 
-     * 创建一个空多边形信息
+     * 创建一个空Polygon info
      * @memberof @~english PolygonInfo
      * @~chinese PolygonInfo
      * @return @~english PolygonInfo object
@@ -79,7 +79,7 @@ public:
      * @param other @~english another PolygonInfo to be copied
      * @~chinese 待拷贝的另一个PolygonInfo
      * @return @~english duplicate of the other PolygonInfo
-     * @~chinese 从待PolygonInfo拷贝出的PolygonInfo
+     * @~chinese 从待拷贝的PolygonInfo拷贝出的PolygonInfo
      */
     PolygonInfo(const PolygonInfo& other);
     //  end of creators group
@@ -208,13 +208,13 @@ public:
      * 减少点数量，以加快GPU处理和绘制的速度
      * 基于Ramer-Douglas-Puecker算法
      * @param   points  @~english a vector of Vec2 points as input
-     * @~chinese 一个Vec2点数组作为输入
+     * @~chinese 输入点vector
      * @param   rect    @~english a texture rect for specify an area of the image to avoid over reduction
      * @~chinese 一个指定图像的纹理点矩形区域，以避免超出规格
      * @param   epsilon @~english the perpendicular distance where points smaller than this value will be discarded
-     * @~chinese 点的垂直距离小于该值将被丢弃
+     * @~chinese 如果点的垂直距离小于该值，那么这个点将被丢弃
      * @return @~english  a vector of Vec2 of the remaining points in clockwise order
-     * @~chinese 一个存储剩余点点vector，按顺时针方向存储。
+     * @~chinese 一个存储剩余的点的vector，按顺时针方向存储。
      * @code
      * auto ap = AutoPolygon();
      * std::vector<Vec2> reduced = ap.reduce(inputPoints, rect);//default epsilon is 2
@@ -231,7 +231,7 @@ public:
      * @param   points  @~english a vector of Vec2 points as input
      * @~chinese 输入点vector。
      * @param   rect    @~english a texture rect for specify an area of the image, the expanded points will be clamped in this rect, ultimately resulting in a quad if the expansion is too great
-     * @~chinese 指定一个纹理矩形图像的区域,扩展完点点将夹在这个矩形内，避免最终扩展点过大。
+     * @~chinese 指定一个纹理矩形图像的区域,扩展完的点将夹在这个矩形内，避免最终扩展点过大。
      * @param   epsilon @~english the distance which the edges will expand
      * @~chinese 边缘扩展点距离
      * @return @~english  a vector of Vec2 as the result of the expansion
@@ -273,7 +273,7 @@ public:
      * @param   verts   @~english a pointer to the verts array, served both as input and output verts
      * @~chinese 一个指向顶点数组的指针,作为输入和输出顶点数组
      * @param   count   @~english the count for the verts array
-     * @~chinese 顶点点数量
+     * @~chinese 顶的点数量
      * @code
      * auto ap = AutoPolygon("grossini.png");
      * TrianglesCommand::Triangles myPolygons = ap.triangulate(myPoints);

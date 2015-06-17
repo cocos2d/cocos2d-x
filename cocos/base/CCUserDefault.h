@@ -316,7 +316,7 @@ public:
      * 
      * 如果在设置代理对象之后，想要不再使用代理对象。可以通过调用 `setDelegate(nullptr)` 来实现。
      * 
-    * @warm @~english It will delete previous delegate
+    * @warning @~english It will delete previous delegate
      * @~chinese 这个函数将删除之前的代理对象。
     */
     static void setDelegate(UserDefault *delegate);

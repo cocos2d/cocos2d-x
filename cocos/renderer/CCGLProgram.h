@@ -475,8 +475,8 @@ public:
     Create the GLProgram with a vertex and fragment file.
      * @~chinese 
      * 从给定的源代码文件中创建GLProgram。
-     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
-     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
      @return @~english The result GLProgram. @~chinese 创建的GLProgram。
      * @js init
      * @lua init
@@ -486,8 +486,8 @@ public:
     Init the GLProgram with a vertex and fragment file.
      * @~chinese 
      * 从给定的源代码文件中初始化GLProgram。
-     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
-     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
      @return @~english The GLprogram is inited correctly or not. @~chinese GLProgram是否被成功初始化。
      */
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
@@ -495,8 +495,8 @@ public:
     Create the GLProgram with a vertex and fragment file.
      * @~chinese 
      * 从给定的源代码文件中创建GLProgram。
-     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
-     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
      @param compileTimeDefines @~english compile macro and defines for shader. @~chinese 编译时的预定义值和宏。
      @return @~english The result GLProgram. @~chinese 创建的GLProgram。
      */
@@ -505,8 +505,8 @@ public:
     Init the GLProgram with a vertex and fragment file.
      * @~chinese 
      * 从给定的源代码文件中初始化GLProgram。
-     @param vShaderByteArray @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
-     @param fShaderByteArray @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
+     @param vShaderFilename @~english The source code file of vertex shader. @~chinese VertexShader源代码文件.
+     @param fShaderFilename @~english The source code file of fragment shader. @~chinese FragmentShader源代码文件.
      @param compileTimeDefines @~english compile macro and defines for shader. @~chinese 编译时的预定义值和宏。
      @return @~english The GLprogram is inited correctly or not. @~chinese GLProgram是否被成功初始化。
      */

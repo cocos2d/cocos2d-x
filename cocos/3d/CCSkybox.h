@@ -64,9 +64,9 @@ public:
 
     /** @~english texture getter and setter
         @~chinese 纹理的getter和setter
-        @param TextureCube @~english  cube texture @~chinese 纹理贴图
+        @param textureCube @~english  cube texture @~chinese 纹理贴图
     */
-    void setTexture(TextureCube*);
+    void setTexture(TextureCube* textureCube);
 
     /** @~english draw Skybox object
         @~chinese 绘制天空体对象

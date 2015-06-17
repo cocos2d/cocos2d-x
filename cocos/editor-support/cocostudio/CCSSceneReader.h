@@ -39,22 +39,30 @@ class CC_STUDIO_DLL SceneReader
 {
 public:
 
+    /**
+     * @brief @~english Attached component's type
+     * @~chinese 挂载的组件类型。
+     */
     enum class AttachComponentType
     {
-        ///parent: Empty Node
-        ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
-        ///            ComAttribute
-        ///            ComAudio
-        ///            ....
+        /**Parent:
+        - Empty Node
+        - ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        - ComAttribute
+        - ComAudio
+        - ...
+        */
         EMPTY_NODE,
         
-        ///parent:   ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
-        ///          ComAttribute
-        ///          ComAudio
-        ///          .....
+        /**Parent:   
+        - ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
+        - ComAttribute
+        - ComAudio
+        - ...
+        */
         RENDER_NODE,
         
-        /// Default AttachComponentType is _EmptyNode
+        /** Default AttachComponentType is _EmptyNode */
         DEFAULT = EMPTY_NODE,
     };
 
@@ -101,7 +109,7 @@ public:
     /**
      * @brief @~english Get Node point by tag.
      * @~chinese 根据nTag获取node指针。
-     * @param tag @~english Tag of node.
+     * @param nTag @~english Tag of node.
      * @~chinese node的tag。
      * @return @~english Node point by tag.
      * @~chinese 根据tag返回node指针。

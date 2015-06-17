@@ -92,7 +92,7 @@ public:
         positive if the point is on the positive side of the plane,
         negative if the point is on the negative side, and zero if the
         point is on the plane.
-        @par
+        @param rkPoint
         The absolute value of the return value is the true distance only
         when the plane normal is a unit length vector.
     */

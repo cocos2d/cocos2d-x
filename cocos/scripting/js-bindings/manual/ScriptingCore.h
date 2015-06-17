@@ -55,14 +55,14 @@ public:
 };
 
 /**
- * @addtogroup JSB
+ * @addtogroup jsb
  * @{
  */
 
 /**
  * @brief @~english ScriptingCore is the main class which manages interaction with JavaScript environment
  * @~chinese ScriptingCore是管理与JavaScript环境交互的核心类
- * @detail @~english It creates the JavaScript context and its global object.
+ * @details @~english It creates the JavaScript context and its global object.
  * It also manages object bindings between C++ scope and JavaScript scope, 
  * for most cocos2d classes, if you create an object in JavaScript scope, it will also create a C++ object,
  * ScriptingCore will manage a proxy between them and synchronize the life cycle.
@@ -337,7 +337,7 @@ public:
      * Compile the specified js file
      * @~chinese 
      * 编译指定路径下的js文件
-     * @param string    @~english The path of the script to to compiled
+     * @param path    @~english The path of the script to to compiled
      * @~chinese 脚本文件的路径
      * @param global    @~english The js global object
      * @~chinese js的全局对象
@@ -350,7 +350,7 @@ public:
      * Run the specified js file
      * @~chinese 
      * 执行指定的js文件
-     * @param string @~english The path of the script to be executed
+     * @param path @~english The path of the script to be executed
      * @~chinese 脚本文件的路径
      * @return @~english Return true if succeed, otherwise return false.
      * @~chinese 成功时返回true，否则返回false。
@@ -360,8 +360,12 @@ public:
      * Run the specified js file
      * @~chinese 
      * 执行指定的js文件
-     * @param string @~english The path of the script to be executed
+     * @param path @~english The path of the script to be executed
      * @~chinese 脚本文件的路径
+     * @param global @~english The global object to execute the script
+     * @~chinese 执行脚本的全局对象
+     * @param global @~english The context to execute the script
+     * @~chinese 执行脚本的js运行环境
      * @return @~english Return true if succeed, otherwise return false.
      * @~chinese 成功时返回true，否则返回false。
      */
@@ -371,7 +375,7 @@ public:
      * Clean script object for the specified js file
      * @~chinese 
      * 清除js文件对应的脚本缓存对象
-     * @param string @~english The path of the js file to be cleaned
+     * @param path @~english The path of the js file to be cleaned
      * @~chinese 脚本文件的路径
      */
     void cleanScript(const char *path);

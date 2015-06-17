@@ -241,14 +241,14 @@ public:
          */
         static StateBlock* create();
 
-        /** @english The recommended way to create StateBlocks is by calling `create`.
+        /** @~english The recommended way to create StateBlocks is by calling `create`.
          * Don't use `new` or `delete` on them.
-         * @chinese 构造函数，推荐使用create方法来创建。
+         * @~chinese 构造函数，推荐使用create方法来创建。
          */
         StateBlock();
         
-        /** @english Destructor.
-         * @chinese 析构函数。
+        /** @~english Destructor.
+         * @~chinese 析构函数。
          */
         ~StateBlock();
 

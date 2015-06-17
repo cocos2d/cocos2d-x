@@ -255,9 +255,9 @@ public:
      *  @note @~english If key does not match the key of any element in the container, the function return nullptr.
      * @~chinese 如果密钥不匹配的关键任何元素的容器,该函数返回nullptr。
      *  @param key @~english Key value of the element whose mapped value is accessed.
-     *       Member type K is the keys for the elements in the container. defined in Map<K, V> as an alias of its first template parameter (Key).
+     *       Member type K is the keys for the elements in the container. defined in Map\<K, V\> as an alias of its first template parameter (Key).
      * @~chinese 映射访问元素的关键值。
-     * 成员K是在容器中的元素的键。在Map<定义> K，V作为其第一个模板参数的别名（关键）
+     * 成员K是在容器中的元素的键。在Map\<K, V\> K，V作为其第一个模板参数的别名（关键）
      */
     const V at(const K& key) const
     {
@@ -278,18 +278,18 @@ public:
     /**
      * @~english
      * Searches the container for an element with 'key' as key and returns an iterator to it if found,
-     *         otherwise it returns an iterator to Map<K, V>::end (the element past the end of the container).
+     *         otherwise it returns an iterator to Map\<K, V\>\:\:end (the element past the end of the container).
      *
      * @~chinese 
      * 搜索的容器元素与“关键”键和返回一个迭代器,如果找到,
-     * 否则返回一个迭代器映射< K、V >::结束
+     * 否则返回一个迭代器映射\<K, V\>\:\:end
      * 
      * @param key @~english Key to be searched for.
      *        Member type 'K' is the type of the keys for the elements in the container,
-     *        defined in Map<K, V> as an alias of its first template parameter (Key).
+     *        defined in Map\<K, V\> as an alias of its first template parameter (Key).
      * @~chinese 寻找键。
      * 成员类型“K”容器中的元素的键,
-     * Map < K、V >中定义的别名,它的第一个模板参数
+     * Map\<K, V\>中定义的别名,它的第一个模板参数
      */
     const_iterator find(const K& key) const
     {

@@ -140,11 +140,9 @@ public:
      */
 
     /** 
-     @property
+     @property INVALID_TAG
      @~english Default tag used for all the nodes 
      @~chinese 用于所有的节点的默认Tag
-     @static
-     @const 
      */
     static const int INVALID_TAG = -1;
 
@@ -503,7 +501,7 @@ public:
      * @~english Sets the position (X, Y, and Z) in its parent's coordinate system.
      * @~chinese 设置节点在父节点坐标系中的位置（x,y,z）。
      * 
-     * @param @~english position The position (X, Y, and Z) in its parent's coordinate system. @~chinese 节点在父节点坐标系中的位置（x,y,z） 
+     * @param position @~english The position (X, Y, and Z) in its parent's coordinate system. @~chinese 节点在父节点坐标系中的位置（x,y,z） 
      * @js NA
      */
     virtual void setPosition3D(const Vec3& position);

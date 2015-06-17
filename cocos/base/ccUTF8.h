@@ -278,7 +278,7 @@ CC_DEPRECATED_ATTRIBUTE CC_DLL unsigned short* cc_utf8_to_utf16(const char* str_
  * @~english Converts a string from UTF-16 to UTF-8. The result will be null terminated.
  * @~chinese 将UTF-16转为UTF-8,返回结果将以null终止
  * 
- * @param utf16 @~english An UTF-16 encoded string, It must be an NULL terminal UTF16 string.
+ * @param str @~english An UTF-16 encoded string, It must be an NULL terminal UTF16 string.
  * @~chinese 一个UTF-16编码字符串，必须是一个以null终止的字符串
  *
  * @param len @~english Not used from 3.1, keep it just for backward compatibility.

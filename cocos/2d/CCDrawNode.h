@@ -432,7 +432,6 @@ public:
 
     /** @~english Set the color mixed mode.
      * @~chinese 设置颜色混合模式。
-     * @endcode
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);

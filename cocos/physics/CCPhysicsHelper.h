@@ -131,7 +131,7 @@ public:
      * @~english Make cpBB type convert to Rect type.
      * @~chinese 通过给定的cpBB对象转换得到Rect对象。
      *
-     * @param vec @~english The Object to convert. @~chinese 要转换的对象。
+     * @param bb @~english The Object to convert. @~chinese 要转换的对象。
      *
      * @return @~english A value of type Rect, converted from cpBB. 
      * @~chinese 返回转换结果，一个Rect对象。

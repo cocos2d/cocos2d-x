@@ -193,7 +193,7 @@ namespace ui {
         * @~chinese 通过指定的精灵帧的名称来创建九宫格精灵，当精灵被创建后，调用"setContentSize:"方法时，
         * 将会受到九宫格缩放的影响，当然缩放同时也会遵从精灵的锚点
         * @see initWithSpriteFrame(SpriteFrame *spriteFrame)
-        * @param spriteFrame  @~english A sprite frame pointer.
+        * @param spriteFrameName  @~english A sprite frame pointer.
         * @~chinese 精灵帧的名称
         * @return @~english A Scale9Sprite instance.
         * @~chinese 被创建的九宫格对象
@@ -208,8 +208,10 @@ namespace ui {
         * @~chinese 通过指定的精灵帧的名称以及capInsets来创建九宫格精灵，当精灵被创建后，调用"setContentSize:"方法时，
         * 将会受到九宫格缩放的影响，当然缩放同时也会遵从精灵的锚点
         * @see initWithSpriteFrame(SpriteFrame *spriteFrame)
-        * @param spriteFrame  @~english A sprite frame pointer.
+        * @param spriteFrameName  @~english A sprite frame pointer.
         * @~chinese 精灵帧指针
+        * @param capInsets @~english The values to use for the cap insets.
+        * @~chinese 指定的 capinsets
         * @return @~english A Scale9Sprite instance.
         * @~chinese 被创建的九宫格对象
         */
@@ -358,15 +360,15 @@ namespace ui {
          * It respects the anchorPoint too.
          * @~chinese 通过一个精灵对象来初始化一个九宫格精灵，当精灵被创建后，调用"setContentSize:"方法时，
          * 将会受到九宫格缩放的影响，当然缩放同时也会遵从精灵的锚点
-         * @param sprite The sprite instance.
+         * @param sprite @~english The sprite instance.
          * @~chinese 精灵的实例
-         * @param rect A delimitation zone.
+         * @param rect @~english A delimitation zone.
          * @~chinese 定界区
-         * @param rotated Whether the sprite is rotated or not.
+         * @param rotated @~english Whether the sprite is rotated or not.
          * @~chinese 这个精灵是否旋转
-         * @param capInsets The values to use for the cap insets.
+         * @param capInsets @~english The values to use for the cap insets.
          * @~chinese 指定的cap insets
-         * @return True if initializes success, false otherwise.
+         * @return @~english True if initializes success, false otherwise.
          * @~chinese 初始化成功返回true，反之返回false
          */
         virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
@@ -378,13 +380,14 @@ namespace ui {
          * It respects the anchorPoint too.
          * @~chinses 通过一个指定的精灵以及capInsets来创建九宫格精灵，当精灵被创建后，调用"setContentSize:"方法时，
          * 将会受到九宫格缩放的影响，当然缩放同时也会遵从精灵的锚点
-         * @param sprite The sprite instance.
+         *
+         * @param sprite @~english The sprite instance.
          * @~chinese 精灵的实例
-         * @param rect A delimitation zone.
+         * @param rect @~english A delimitation zone.
          * @~chinese 定界区
-         * @param capInsets The values to use for the cap insets.
+         * @param capInsets @~english The values to use for the cap insets.
          * @~chinese 指定的cap insets
-         * @return True if initializes success, false otherwise.
+         * @return @~english True if initializes success, false otherwise.
          * @~chinese 初始化成功返回true，反之返回false
          */
         virtual bool init(Sprite* sprite, const Rect& rect, const Rect& capInsets);
@@ -396,19 +399,20 @@ namespace ui {
          * It respects the anchorPoint too.
          * @~chinses 通过一个精灵对象以及其他相关参数来初始化一个九宫格精灵，当精灵被创建后，调用"setContentSize:"方法时，
          * 将会受到九宫格缩放的影响，当然缩放同时也会遵从精灵的锚点
-         * @param sprite The sprite instance.
+         * 
+         * @param sprite @~english The sprite instance.
          * @~chinese 精灵对象
-         * @param rect A delimitation zone.
+         * @param rect @~english A delimitation zone.
          * @~chinese 定界区
-         * @param rotated Whether the sprite is rotated or not.
+         * @param rotated @~english Whether the sprite is rotated or not.
          * @~chinese 确定精灵是否旋转
-         * @param offset The offset when slice the sprite.
+         * @param offset @~english The offset when slice the sprite.
          * @~chinese 切割精灵时的偏移量
-         * @param originalSize The original size of sprite.
+         * @param originalSize @~english The original size of sprite.
          * @~chinese 精灵的原始大小
-         * @param capInsets The values to use for the cap insets.
+         * @param capInsets @~english The values to use for the cap insets.
          * @~chinese 指定的cap insets
-         * @return True if initializes success, false otherwise.
+         * @return @~english True if initializes success, false otherwise.
          * @~chinese 初始化成功返回true，反之返回false
          */
         virtual bool init(Sprite* sprite,
@@ -419,7 +423,7 @@ namespace ui {
                           const Rect& capInsets);
         
         /**
-         * @brief @~english Initializes a 9-slice sprite with a sprite batchnode.
+         * @brief Initializes a 9-slice sprite with a sprite batchnode.
          * Once the sprite is created, you can then call its "setContentSize:" method
          * to resize the sprite will all it's 9-slice goodness intract.
          * It respects the anchorPoint too.

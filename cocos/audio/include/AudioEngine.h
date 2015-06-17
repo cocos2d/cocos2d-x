@@ -49,12 +49,7 @@ NS_CC_BEGIN
     namespace experimental{
 
 /**
- * @class @~english AudioProfile
- *
- * @brief
- * @~chinese AudioProfile
- * 
- * @brief
+ * @class AudioProfile
  * @js NA
  */
 class EXPORT_DLL AudioProfile
@@ -87,9 +82,7 @@ public:
 class AudioEngineImpl;
 
 /**
- * @class @~english AudioEngine
- *
- * @~chinese )
+ * @class AudioEngine
  * 
  * @brief @~english Offers a interface to play audio.
  *
@@ -316,7 +309,7 @@ public:
      * 
      * @param audioID @~english An audioID returned by the play2d function.
      * @~chinese 一个play2d函数返回的音频ID。
-     * @param @~english callback
+     * @param callback @~english callback
      * @~chinese 回调
      */
     static void setFinishCallback(int audioID, const std::function<void(int,const std::string&)>& callback);

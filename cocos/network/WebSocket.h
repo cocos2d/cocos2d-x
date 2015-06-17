@@ -164,6 +164,7 @@ public:
      *  @~chinese WebSocket的初始化方法，它在WebSocket实例被分配后被触发。
      *  @param  delegate @~english The delegate which want to receive event from websocket. @~chinese 接收来自websocket
      *  @param  url      @~english The URL of websocket server. @~chinese websocket服务端URL地址
+     *  @param  protocols @~english The protocol of the socket. @~chinese websocket的连接协议。
      *  @return @~english true: Success, false: Failure. @~chinese true:成功，false:失败
      *  @lua NA
      */
@@ -174,7 +175,7 @@ public:
     /**
      *  @~english Sends string data to websocket server. @~chinese 向websocket服务端发送字符串数据
      *  
-     *  @param @~english message string data. @~chinese 字符串数据
+     *  @param message @~english string data. @~chinese 字符串数据
      *  @lua sendstring
      */
     void send(const std::string& message);
@@ -182,8 +183,8 @@ public:
     /**
      *  @~english Sends binary data to websocket server. @~chinese 向websocket服务端发送二进制数据
      *  
-     *  @param @~english binaryMsg binary string data. @~chinese 二进制字符串数据
-     *  @param @~english len the size of binary string data. @~chinese 二进制字符串数据的长度
+     *  @param binaryMsg @~english binary string data. @~chinese 二进制字符串数据
+     *  @param len @~english the size of binary string data. @~chinese 二进制字符串数据的长度
      *  @lua sendstring
      */
     void send(const unsigned char* binaryMsg, unsigned int len);
