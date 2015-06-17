@@ -85,7 +85,13 @@ JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, j
 
 JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNIEnv*  env, jobject thiz)
 {
-    cocos_android_app_init(env, thiz);
+    static bool initCocosApp = true;
+    if (initCocosApp)
+    {
+        initCocosApp = false;
+        cocos_android_app_init(env, thiz);
+    }
+    
     cocos2d::Application::getInstance()->initGLContextAttrs(); 
     GLContextAttrs _glContextAttrs = GLView::getGLContextAttrs();
     
