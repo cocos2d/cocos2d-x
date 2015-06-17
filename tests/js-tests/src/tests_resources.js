@@ -1097,5 +1097,8 @@ var g_ccs2 = [
     "ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
 ];
 
-res.CCControlColourPickerSpriteSheet_plist = "extensions/CCControlColourPickerSpriteSheet.plist";
-res.CCControlColourPickerSpriteSheet_png = "extensions/CCControlColourPickerSpriteSheet.png";
+if (!cc.sys.isNative) {
+    var res = res || {};
+    res.CCControlColourPickerSpriteSheet_plist = "extensions/CCControlColourPickerSpriteSheet.plist";
+    res.CCControlColourPickerSpriteSheet_png = "extensions/CCControlColourPickerSpriteSheet.png";
+}
