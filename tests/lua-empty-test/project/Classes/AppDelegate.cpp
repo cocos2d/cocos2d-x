@@ -4,6 +4,7 @@
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 #include "lua_module_register.h"
+#include "CCComponentLua.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -30,14 +31,37 @@ void AppDelegate::initGLContextAttrs()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    // register lua engine
-    LuaEngine* engine = LuaEngine::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(engine);
-    lua_State* L = engine->getLuaStack()->getLuaState();
-    lua_module_register(L);
-    //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
-    //engine->executeScriptFile("src/hello.lua");
-    engine->executeString("require 'src/hello.lua'");
+    // initialize director
+    auto director = Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if(!glview) {
+        glview = GLViewImpl::create("Cpp Empty Test");
+        director->setOpenGLView(glview);
+    }
+    
+    director->setOpenGLView(glview);
+    auto& winSize = director->getWinSize();
+    
+    auto sprite = Sprite::create("res/crop.png");
+    sprite->setPosition(Vec2(winSize.width/2, winSize.height/2));
+    auto scene = Scene::create();
+    scene->addChild(sprite);
+    
+    auto luaUpdateComponent = new ComponentLua;
+    luaUpdateComponent->_scriptPath = "src/hello.lua";
+    luaUpdateComponent->bindEvent("update", "update");
+    sprite->addComponent(luaUpdateComponent);
+    luaUpdateComponent->release();
+    sprite->scheduleUpdate();
+    
+   
+    auto menuItem = MenuItemFont::create("click me", [luaUpdateComponent](Ref* item) { luaUpdateComponent->_scriptPath = "src/hello2.lua"; });
+    menuItem->setPosition(Vec2(winSize.width/2, winSize.height/2 - 100));
+    auto menu = Menu::create(menuItem, nullptr);
+    menu->setPosition(Vec2(0,0));
+    scene->addChild(menu);
+    
+    director->runWithScene(scene);
 
     return true;
 }

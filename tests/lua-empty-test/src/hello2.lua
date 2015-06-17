@@ -1,3 +1,3 @@
-function myadd(x, y)
-    return x + y
+function update()
+    print "hello2: update invoked"
 end
