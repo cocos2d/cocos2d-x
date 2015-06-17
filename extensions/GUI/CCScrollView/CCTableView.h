@@ -107,6 +107,7 @@ public:
     /**
      * cell size for a given index
      *
+     * @param table The table view
      * @param idx the index of a cell to get a size
      * @return size of a cell at given index
      */
@@ -123,8 +124,9 @@ public:
         return Size::ZERO;
     };
     /**
-     * a cell instance at a given index
+     * A cell instance at a given index
      *
+     * @param table The table view
      * @param idx index to search for a cell
      * @return cell found at idx
      */
@@ -207,6 +209,7 @@ public:
     TableViewDataSource* getDataSource() { return _dataSource; }
     /**
      * when this function bound to js or lua,the input params are changed
+     * @code
      * in js:var setDataSource(var jsSource)
      * in lua:local setDataSource()
      * @endcode
@@ -219,8 +222,8 @@ public:
      */
     TableViewDelegate* getDelegate() { return _tableViewDelegate; }
     /**
-     * @code
      * when this function bound to js or lua,the input params are changed
+     * @code
      * in js:var setDelegate(var jsDelegate)
      * in lua:local setDelegate()
      * @endcode

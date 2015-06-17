@@ -369,7 +369,7 @@ public:
      * 数组table的索引从1开始。
      * 这个Lua数组table中的值通过调用pushLuaValue获得，@see pushLuaValue。
      *
-     * @param dict @~english a LuaValueArray object.
+     * @param array @~english a LuaValueArray object.
      * @~chinese LuaValueArray
      */
 

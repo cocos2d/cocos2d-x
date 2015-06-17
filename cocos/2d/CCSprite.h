@@ -303,11 +303,9 @@ public:
      */
     virtual void setTextureRect(const Rect& rect);
 
-    /** @overload @~english
-     *
+    /** @~english
      * It will update the texture coordinates and the vertex rectangle.
      * @~chinese
-     * 
      * 更新 Sprite 的顶点坐标和纹理坐标。
      * @param rect @~english The used rect of the texture.
      * @~chinese 使用的纹理矩形区域。

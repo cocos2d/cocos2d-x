@@ -36,7 +36,9 @@
 
 NS_CC_BEGIN
 /**
- * @addtogroup _3d
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_3d
  * @{
 */
 
@@ -81,8 +83,12 @@ protected:
     Physics3DComponent* _physicsComponent;
 };
 
-// end of 3d group
-/// @}
+/**
+ end of physics_3d group
+ @}
+ end of physics group
+ @}
+*/
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

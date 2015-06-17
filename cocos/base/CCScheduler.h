@@ -369,7 +369,7 @@ public:
      * 如果 interval 值为0，则每一帧都会触发回调函数。
      * 返回一个 ID，用于 unscheduleScriptFunc()。
      * 
-     @warn @~english Don't invoke this function unless you know what you are doing.
+     @warning @~english Don't invoke this function unless you know what you are doing.
      * @~chinese 不要直接调用这个函数，除非你知道你在做什么。
      @js NA
      @lua NA

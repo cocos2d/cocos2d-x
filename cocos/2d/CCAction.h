@@ -48,7 +48,7 @@ class CC_DLL Action : public Ref, public Clonable
 public:
     
     /** 
-     @property
+     @property INVALID_TAG
      @~english Default tag used for all the actions. 
      @~chinese 所有Action对象的缺省tag值
      */

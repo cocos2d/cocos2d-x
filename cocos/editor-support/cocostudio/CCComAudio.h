@@ -117,7 +117,7 @@ public:
     /**  
      * @brief @~english Enables or disables the ComAudio.
      * @~chinese 启用或禁用声音组件。
-     * @param enabled @~english true enable the ComAudio, false disabled the ComAudio. 
+     * @param b @~english true enable the ComAudio, false disabled the ComAudio. 
      * @~chinese true，启用声音组件 false，禁用声音组件。
      */
     virtual void setEnabled(bool b) override;
@@ -163,7 +163,7 @@ public:
      * 
      * @param pszFilePath @~english The path of the background music file,or the FileName of T_SoundResInfo.
      * @~chinese 背景音乐的文件路径或T_SoundResInfo中的FileName字段。
-     * @param loop @~english Whether the background music loop or not.
+     * @param bLoop @~english Whether the background music loop or not.
      * @~chinese 背景音乐是否循环播放。
      */
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
@@ -185,7 +185,7 @@ public:
     /**
      * @brief @~english Stop playing background music.
      * @~chinese 停止播放背景音乐。
-     * @param releaseData @~english If release the background music data or not.As default value is false.
+     * @param bReleaseData @~english If release the background music data or not.As default value is false.
      * @~chinese 是否释放背景音乐的数据，默认值为false。
      */
     void stopBackgroundMusic(bool bReleaseData);
@@ -270,8 +270,6 @@ public:
      * @~chinese 播放音效
      * @param pszFilePath @~english The path of the effect file. 
      * @~chinese 音效文件的路径。
-     * @param bLoop @~english Determines whether to loop the effect playing or not. 
-     * @~chinese 是否循环播放,默认为false,不循环。
      * @return @~english The sound id. 
      * @~chinese 声音id。
      */

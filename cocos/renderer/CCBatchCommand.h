@@ -76,7 +76,7 @@ public:
     /**
     @~english Deprecated function, you should call upper init function instead.
     @~chinese Deprecated函数，你应该调用另外一个init函数, flags被设置为0.
-    @param globalZOrder @~english GlobalZOrder of the render command.
+    @param depth @~english GlobalZOrder of the render command.
      * @~chinese 命令的GlobalZOrder。
     @param shader @~english Shader used for draw the texture atlas.
      * @~chinese texture atlas的shader数据。

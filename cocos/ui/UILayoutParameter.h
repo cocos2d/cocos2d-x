@@ -239,7 +239,7 @@ public:
      * 设置LayoutParameter边距参数。
      * 
      * @see Margin
-     * @param @~english margin
+     * @param margin @~english margin
      * @~chinese 边距
      */
     void setMargin(const Margin& margin);

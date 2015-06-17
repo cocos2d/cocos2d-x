@@ -304,7 +304,7 @@ public:
     /**
      * @~english Sets the inner angle of a spot light (in radians).
      * @~chinese 设置聚光灯的内角（单位弧度）。
-     * @param angle @english The inner angle of spot light (in radians). @chinese 聚光灯的内角。
+     * @param angle @~english The inner angle of spot light (in radians). @~chinese 聚光灯的内角。
      */
     void setInnerAngle(float angle);
     
@@ -325,7 +325,7 @@ public:
     /**
      * @~english Sets the outer angle of a spot light (in radians).
      * @~chinese 设置聚光灯的外角（单位弧度）。
-     * @param outerAngle @~english The angle of spot light (in radians). @~chinese 聚光灯的外角（单位弧度）。
+     * @param angle @~english The angle of spot light (in radians). @~chinese 聚光灯的外角（单位弧度）。
      */
     void setOuterAngle(float angle);
     

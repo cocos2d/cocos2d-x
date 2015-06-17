@@ -140,7 +140,7 @@ public:
 	/**
      * @~english Transforms the obb by the given transformation matrix.
      * @~chinese 通过给定的矩阵变换OBB对象
-     * @pram mat @~english The transform matrix.
+     * @param mat @~english The transform matrix.
      * @~chinese 指定的变换矩阵
      */
     void transform(const Mat4& mat);

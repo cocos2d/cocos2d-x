@@ -7,9 +7,11 @@
 @defgroup network           Network
 @defgroup physics           Physics
 @defgroup physics_2d        Physics 2D
+@defgroup physics_3d        Physics 3D
 @defgroup platform          Platform Specific
 @defgroup renderer          Renderer
 @defgroup storage           Storage
 @defgroup ui                UI Nodes
 @defgroup lua               Lua Binding
+@defgroup jsb               JS Binding
  */

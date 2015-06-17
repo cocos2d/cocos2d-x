@@ -132,7 +132,7 @@ public:
     /**  
      * @brief @~english Enables or disables the ComAudio.
      * @~chinese 启用或禁用声音组件。
-     * @param enabled @~english true enable the ComAudio, false disabled the ComAudio. 
+     * @param b @~english true enable the ComAudio, false disabled the ComAudio. 
      * @~chinese true，启用声音组件 false，禁用声音组件。
      */
     virtual void setEnabled(bool b) override;

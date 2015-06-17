@@ -62,9 +62,9 @@ public:
     /** @~english Sets the min filter, mag filter, wrap s and wrap t texture parameters.
         @~chinese 设置min滤波器，mag滤波器，纹理包裹参数。
         If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
-        @param TexParams @~english  the min/mag filter of TextureCube @~chinese texturecube min/mag过滤器
+        @param texParams @~english  the min/mag filter of TextureCube @~chinese texturecube min/mag过滤器
     */
-    void setTexParameters(const TexParams&);
+    void setTexParameters(const TexParams& texParams);
 
     /** @~english reload texture cube after GLESContext reconstructed.
         @~chinese 在glescontext重建后重新加载纹理。

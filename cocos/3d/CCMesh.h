@@ -310,7 +310,7 @@ public:
     /**
      * @~english Get the Material which being used by the Mesh 
      * @~chinese 获取当前Mesh所使用的材质
-     * @param The material object.
+     * @return @~english The material object. @~chinese 材质对象
      */
     Material* getMaterial() const;
 

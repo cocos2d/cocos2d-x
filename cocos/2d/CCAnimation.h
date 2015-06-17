@@ -58,10 +58,9 @@ class SpriteFrame;
 class CC_DLL AnimationFrame : public Ref, public Clonable
 {
 public:
-    /** @struct @~english DisplayedEventInfo
-     * When the animation display,Dispatches the event of UserData.
-     * @~chinese DisplayedEventInfo
-     * 当显示帧动画时，分发UserData事件。
+    /** @struct DisplayedEventInfo
+     * @~english When the animation display,Dispatches the event of UserData.
+     * @~chinese 当显示帧动画时，分发UserData事件。
      */
     struct DisplayedEventInfo
     {

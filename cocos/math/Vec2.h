@@ -883,6 +883,10 @@ public:
      * @~chinese 第二条线段的起始端点。
      * @param D   @~english the endpoint for the second line L2 = (C - D)
      * @~chinese 第二条线段的结束端点。
+     * @param S   @~english the start point
+     * @~chinese 起点。
+     * @param E   @~english the endpoint
+     * @~chinese 端点。
      *
      * @returns @~english  whether these two lines overlap. 
      * @~chinese 如果两线段重叠返回true，否则返回false。

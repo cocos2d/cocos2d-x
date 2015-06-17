@@ -56,7 +56,7 @@ class CC_DLL PUEmitter : public Particle3DEmitter
 public:
 
     /**
-    @property
+    @property DEFAULT_ENABLED
     @static
     @~english Default enabled
     @~chinese 默认的启用状态
@@ -64,7 +64,7 @@ public:
     static const bool DEFAULT_ENABLED;
 
     /**
-    @property
+    @property DEFAULT_POSITION
     @static
     @~english Default position
     @~chinese 默认位置
@@ -72,7 +72,7 @@ public:
     static const Vec3 DEFAULT_POSITION;
 
     /**
-    @property
+    @property DEFAULT_KEEP_LOCAL
     @static
     @~english Default whether use local coordinate system
     @~chinese 默认是否使用局部坐标系
@@ -80,7 +80,7 @@ public:
     static const bool DEFAULT_KEEP_LOCAL;
 
     /**
-    @property
+    @property DEFAULT_DIRECTION
     @static
     @~english Default emitted direction
     @~chinese 默认发射方向
@@ -88,7 +88,7 @@ public:
     static const Vec3 DEFAULT_DIRECTION;
 
     /**
-    @property
+    @property DEFAULT_ORIENTATION
     @static
     @~english Default emitted orientation
     @~chinese 默认发射朝向
@@ -96,7 +96,7 @@ public:
     static const Quaternion DEFAULT_ORIENTATION;
 
     /**
-    @property
+    @property DEFAULT_ORIENTATION_RANGE_START
     @static
     @~english Default emitted starting orientation
     @~chinese 默认发射朝向范围起始值
@@ -104,7 +104,7 @@ public:
     static const Quaternion DEFAULT_ORIENTATION_RANGE_START;
 
     /**
-    @property
+    @property DEFAULT_ORIENTATION_RANGE_END
     @static
     @~english Default emitted ending orientation
     @~chinese 默认发射朝向范围结束值
@@ -112,7 +112,7 @@ public:
     static const Quaternion DEFAULT_ORIENTATION_RANGE_END;
 
     /**
-    @property
+    @property DEFAULT_START_TEXTURE_COORDS
     @static
     @~english Default texture starting coords
     @~chinese 默认纹理起始坐标
@@ -120,7 +120,7 @@ public:
     static const unsigned short DEFAULT_START_TEXTURE_COORDS;
 
     /**
-    @property
+    @property DEFAULT_END_TEXTURE_COORDS
     @static
     @~english Default texture ending coords
     @~chinese 默认纹理结束坐标
@@ -128,7 +128,7 @@ public:
     static const unsigned short DEFAULT_END_TEXTURE_COORDS;
 
     /**
-    @property
+    @property DEFAULT_TEXTURE_COORDS
     @static
     @~english Default texture coords
     @~chinese 默认纹理坐标
@@ -136,7 +136,7 @@ public:
     static const unsigned short DEFAULT_TEXTURE_COORDS;
 
     /**
-    @property
+    @property DEFAULT_START_COLOUR_RANGE
     @static
     @~english Default color starting range
     @~chinese 默认颜色范围起始值
@@ -144,7 +144,7 @@ public:
     static const Vec4 DEFAULT_START_COLOUR_RANGE;
 
     /**
-    @property
+    @property DEFAULT_END_COLOUR_RANGE
     @static
     @~english Default color ending range
     @~chinese 默认颜色范围结束值
@@ -152,7 +152,7 @@ public:
     static const Vec4 DEFAULT_END_COLOUR_RANGE;
 
     /**
-    @property
+    @property DEFAULT_COLOUR
     @static
     @~english Default color
     @~chinese 默认颜色值
@@ -160,7 +160,7 @@ public:
     static const Vec4 DEFAULT_COLOUR;
 
     /**
-    @property
+    @property DEFAULT_AUTO_DIRECTION
     @static
     @~english Default whether use auto direction
     @~chinese 默认是否使用自动朝向
@@ -168,7 +168,7 @@ public:
     static const bool DEFAULT_AUTO_DIRECTION;
 
     /**
-    @property
+    @property DEFAULT_FORCE_EMISSION
     @static
     @~english Default whether force emission
     @~chinese 默认是否强制发射
@@ -176,7 +176,7 @@ public:
     static const bool DEFAULT_FORCE_EMISSION;
 
     /**
-    @property
+    @property DEFAULT_EMISSION_RATE
     @static
     @~english Default emission rate
     @~chinese 默认发射率
@@ -184,7 +184,7 @@ public:
     static const float DEFAULT_EMISSION_RATE;
 
     /**
-    @property
+    @property DEFAULT_TIME_TO_LIVE
     @static
     @~english Default particle time to live
     @~chinese 默认粒子生存时间
@@ -192,7 +192,7 @@ public:
     static const float DEFAULT_TIME_TO_LIVE;
 
     /**
-    @property
+    @property DEFAULT_MASS
     @static
     @~english Default particle mass
     @~chinese 默认粒子质量
@@ -200,7 +200,7 @@ public:
     static const float DEFAULT_MASS;
 
     /**
-    @property
+    @property DEFAULT_VELOCITY
     @static
     @~english Default particle velocity
     @~chinese 默认粒子速率
@@ -208,7 +208,7 @@ public:
     static const float DEFAULT_VELOCITY;
 
     /**
-    @property
+    @property DEFAULT_DURATION
     @static
     @~english Default emitted duration
     @~chinese 默认发射持续时间
@@ -216,7 +216,7 @@ public:
     static const float DEFAULT_DURATION;
 
     /**
-    @property
+    @property DEFAULT_REPEAT_DELAY
     @static
     @~english Default emitted repeat delay
     @~chinese 默认重复发射间隔
@@ -224,7 +224,7 @@ public:
     static const float DEFAULT_REPEAT_DELAY;
 
     /**
-    @property
+    @property DEFAULT_ANGLE
     @static
     @~english Default emitted angle
     @~chinese 默认发射角度
@@ -232,7 +232,7 @@ public:
     static const float DEFAULT_ANGLE;
 
     /**
-    @property
+    @property DEFAULT_DIMENSIONS
     @static
     @~english Default emitted particle dimensions
     @~chinese 默认发射粒子尺寸
@@ -240,7 +240,7 @@ public:
     static const float DEFAULT_DIMENSIONS;
 
     /**
-    @property
+    @property DEFAULT_WIDTH
     @static
     @~english Default emitted particle width
     @~chinese 默认发射粒子宽度
@@ -248,7 +248,7 @@ public:
     static const float DEFAULT_WIDTH;
 
     /**
-    @property
+    @property DEFAULT_HEIGHT
     @static
     @~english Default emitted particle height
     @~chinese 默认发射粒子高度
@@ -256,7 +256,7 @@ public:
     static const float DEFAULT_HEIGHT;
 
     /**
-    @property
+    @property DEFAULT_DEPTH
     @static
     @~english Default emitted particle depth
     @~chinese 默认发射粒子深度
@@ -319,7 +319,7 @@ public:
     * @~english This function is called when the ParticleSystem update-loop where all particles are traversed(internal method).
     * @~chinese 在粒子系统更新循环粒子遍历时执行(内部方法)。
     * @param particle   @~english The current traversed particle. @~chinese 当前遍历到的粒子。
-    * @param delta   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
+    * @param deltaTime   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
     */
     virtual void updateEmitter(Particle3D *particle, float deltaTime) override;
 
@@ -585,7 +585,7 @@ public:
     /**
     * @~english Whether use the attribute of particle height.
     * @~chinese 是否使用粒子高度的属性。
-    * @param particleWidthSet @~english Whether use. @~chinese 是否使用。
+    * @param particleHeightSet @~english Whether use. @~chinese 是否使用。
     */
     void setDynParticleHeightSet(bool particleHeightSet);
 
@@ -767,7 +767,7 @@ public:
     /**
     * @~english Set the color of an emitted particle.
     * @~chinese 设置粒子颜色。
-    * @param forceEmission @~english The color of a particle. @~chinese 粒子颜色。
+    * @param particleColour @~english The color of a particle. @~chinese 粒子颜色。
     */
     void setParticleColor(const Vec4& particleColour);
 
@@ -871,7 +871,7 @@ public:
     /**
     * @~english Copy attributes to another emitter(internal method).
     * @~chinese 拷贝属性到另外一个发射器(内部方法)。
-    * @param render @~english The emitter. @~chinese 发射器。
+    * @param emitter @~english The emitter. @~chinese 发射器。
     */
     virtual void copyAttributesTo (PUEmitter* emitter);
 

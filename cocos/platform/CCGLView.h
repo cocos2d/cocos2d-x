@@ -82,12 +82,10 @@ enum class ResolutionPolicy
     UNKNOWN,
 };
 
-/** @struct @~english GLContextAttrs 
+/** @struct GLContextAttrs 
  *
- * There are six opengl Context Attrs. 
- * @~chinese GLContextAttrs
- * 
- * 有六个opengl 上下文环境属性。
+ * @~english There are six opengl Context Attrs. 
+ * @~chinese 有六个opengl上下文环境属性。
  */
 struct GLContextAttrs
 {

@@ -220,7 +220,7 @@ public:
     /**
     * @~english Get the orientation type of quad.
     * @~chinese 获取四边形的朝向类型。
-    * @param type @~english The orientation type. @~chinese 朝向类型。
+    * @return @~english The orientation type. @~chinese 朝向类型。
     */
     Type getType() const { return _type; }
 
@@ -248,7 +248,7 @@ public:
     /**
     * @~english Get the rotation type of quad.
     * @~chinese 获取四边形的旋转类型。
-    * @param type @~english The orientation type. @~chinese 旋转类型。
+    * @return @~english The orientation type. @~chinese 旋转类型。
     */
     RotateType getRotateType() const { return _rotateType; }
 
@@ -297,7 +297,7 @@ public:
     /**
     * @~english Get frame texture column count.
     * @~chinese 获取序列帧纹理的列数。
-    * @param textureCoordsRows @~english The column count. @~chinese 列数。
+    * @return @~english The column count. @~chinese 列数。
     */
     unsigned short getTextureCoordsColumns() const;
 

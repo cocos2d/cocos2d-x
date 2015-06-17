@@ -167,6 +167,7 @@ public:
      * @~chinese 返回一个使用指定的 `Image` 对象创建的 `Texture2D` 对象。
      * 如果之前没有加载该 `Image` 对象的纹理，会创建一个新的 `Texture2D` 对象，并返回该对象。
      * 否则，返回一个之前加载过的纹理对象的引用。
+     * @param image @~english The image to be added. @~chinese 要添加的Image对象
      * @param key @~english The "key" parameter will be used as the "key" for the cache.
      * If "key" is nil, then a new texture will be created each time.
      * @~chinese key 参数将作为缓存中的关键字以便之后进行查找。

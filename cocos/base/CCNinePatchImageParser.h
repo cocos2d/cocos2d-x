@@ -124,6 +124,7 @@ public:
      * 改变精灵帧信息。
      * 当解析多个精灵NinePatchImageParser帧是非常有用的。
      * 
+     * @param image @~english The Image object @~chinese Image对象
      * @param frameRect @~english The sprite frame rect in the image atlas.
      * @~chinese 图片集中的精灵框架矩形图像。
      * @param rotated @~english Whether is sprite frame is rotated in the image atlas.

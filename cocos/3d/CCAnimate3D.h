@@ -93,11 +93,11 @@ public:
     /**
      * @~english create Animate3D
      * @~chinese 通过Animation3D对象，开始时间，以及持续时间来构造Animate3D
-     * @param @~english Animation used to generate animate3D
+     * @param animation @~english Animation used to generate animate3D
      * @~chinese 指定的Animation3D对象
-     * @param @~english FormTime. 
+     * @param fromTime @~english FormTime. 
      * @~chinese 开始时间
-     * @param @~english Duration Time the Animate3D lasts.
+     * @param duration @~english Duration Time the Animate3D lasts.
      * @~chinese 动画播放的持续时间
      * @return @~english The Animate3D object.
      * @~chinese 被创建的Animate3D对象
@@ -109,7 +109,7 @@ public:
      * @~chinese 通过Animation3D，起始帧，结束帧，以及帧率来创建Animate3D对象
      * @param animation @~english Animation used to generate animate3D
      * @~chinese Animation3D对象
-     * @param @~english startFrame The start frame.
+     * @param startFrame @~english The start frame.
      * @~chinese 起始帧
      * @param endFrame @~english The end frame
      * @~chinese 结束帧

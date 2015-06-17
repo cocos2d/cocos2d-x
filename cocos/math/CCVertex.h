@@ -62,7 +62,8 @@ void CC_DLL ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, un
 @param Cy @~english y coordinate of C. @~chinese C点的y坐标。
 @param Dx @~english x coordinate of D. @~chinese D点的x坐标。
 @param Dy @~english y coordinate of D. @~chinese D点的y坐标。
-@return @~english the relative positon of the intersection point on line AB @~chinese 交点的位置（通过在AB上的相对位置来指定）
+@param T @~english the relative positon of the intersection point on line AB @~chinese 交点的位置（通过在AB上的相对位置来指定）
+@return @~english True if successfully calculated @~chinese 如果计算成功返回true，否则返回false
 */
 bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,

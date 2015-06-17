@@ -324,8 +324,8 @@ public:
      * @~english Emit the eventname and the args to the endpoint that _path point to.
      * @~chinese 给_path指向的终端发送给定的事件及参数。
      * 
-     * @param eventname @~english the name of event.. @~chinese 事件名称。
-     * @param arg @~english the argument of event. @~chinese 事件参数。
+     * @param eventname @~english the name of event. @~chinese 事件名称。
+     * @param args @~english the argument of event. @~chinese 事件参数。
      */
     void emit(std::string eventname, std::string args);
 

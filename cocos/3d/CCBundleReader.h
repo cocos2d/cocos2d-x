@@ -62,7 +62,7 @@ public:
     /**
      * @~english Initialise
      * @~chinese 初始化
-     * @param lpbuffer @~english The data buffer pointer
+     * @param buffer @~english The data buffer pointer
      * @~chinese 数据缓冲指针
      * @param length @~english The data buffer size
      * @~chinese 数据缓冲大小
@@ -151,7 +151,8 @@ public:
     /**
      * Read binary typed value array.
      * @~chinese 以二进制方式读取指定类型的值数组
-     * @param length the specified type pointer.
+     * @param length @~english Length of the array @~chinese 数组的长度
+     * @param values @~english Output array to store the result @~chinese 用于保存结果的数组
      * @return the result of the read.
      */
     template<typename T> bool readArray(unsigned int* length, std::vector<T>* values);

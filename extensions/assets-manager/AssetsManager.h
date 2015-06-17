@@ -38,7 +38,7 @@
 NS_CC_EXT_BEGIN
 
 /**
- * @addtogroup AssetsManager
+ * @addtogroup assets_manager
  * @{
  */
 
@@ -55,9 +55,14 @@ class AssetsManagerDelegateProtocol;
 class CC_EX_DLL AssetsManager : public Node
 {
 public:
+    /** @~english Error code that can be notified to listener
+     * @~chinese 会被传递給事件监听器的错误代码列表
+     */
     enum class ErrorCode
     {
-        // Error caused by creating a file to store downloaded data
+        /** @~english Error caused by creating a file to store downloaded data
+         * @~chinese 创建文件失败的错误
+         */
         CREATE_FILE,
         /** @~english Errors caused by network, there are the following possibilities:
          - network unavaivable
@@ -241,7 +246,7 @@ public:
     
     /** @brief @~english Gets connection time out in secondes
      * @~chinese 获取连接超时时间，以秒为单位
-     * @param timeout @~english The time out value.
+     * @return @~english The time out value.
      * @~chinese 连接超时时间。
      */
     unsigned int getConnectionTimeout();

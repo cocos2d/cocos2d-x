@@ -145,7 +145,7 @@ public:
     
     /** @brief @~english Set the Reverse direction.
      *         @~chinese 反转进度条的方向。
-     * @param reverse @~english If reverse is false it will clockwise,if is true it will Anti-clockwise.
+     * @param value @~english If reverse is false it will clockwise,if is true it will Anti-clockwise.
      *                @~chinese 如果是 false，则为顺时针方向；否则为逆时针方向。
      */
     inline void setReverseDirection(bool value) { _reverseDirection = value; };
