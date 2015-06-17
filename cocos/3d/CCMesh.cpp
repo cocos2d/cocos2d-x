@@ -613,6 +613,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
         if (hasAmbient)
         {
             ambient.x /= 255.f; ambient.y /= 255.f; ambient.z /= 255.f;
+            //override the uniform value of u_color using the calculated color 
             glProgramState->setUniformVec4("u_color", Vec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w));
         }
     }
