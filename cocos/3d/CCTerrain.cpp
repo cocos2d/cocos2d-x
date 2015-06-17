@@ -159,7 +159,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 
     if(_isCameraViewChanged )
     {
-        auto m = camera->getWorldToNodeTransform();
+        auto m = camera->getNodeToWorldTransform();
         //set lod
         setChunksLOD(Vec3(m.m[12], m.m[13], m.m[14]));
     }
