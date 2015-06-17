@@ -138,7 +138,7 @@ var Physics3DTestDemo = cc.Layer.extend({
         this.addChild(sprite);
         sprite.setPosition3D(this._camera.getPosition3D());
         sprite.setScale(0.5);
-        sprite.syncToNode();
+        sprite.syncNodeToPhysics();
         sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
         sprite.setCameraMask(cc.CameraFlag.USER1);
     },
@@ -250,7 +250,7 @@ var BasicPhysics3DDemo = Physics3DTestDemo.extend({
         floor.setScaleZ(60);
         this.addChild(floor);
         floor.setCameraMask(cc.CameraFlag.USER1);
-        floor.syncToNode();
+        floor.syncNodeToPhysics();
         //static object sync is not needed
         floor.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
 
@@ -270,7 +270,7 @@ var BasicPhysics3DDemo = Physics3DTestDemo.extend({
                     var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
                     sprite.setTexture("Images/CyanSquare.png");
                     sprite.setPosition3D(cc.math.vec3(x, y, z));
-                    sprite.syncToNode();
+                    sprite.syncNodeToPhysics();
                     sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
                     sprite.setCameraMask(cc.CameraFlag.USER1);
                     sprite.setScale(0.8);
@@ -305,7 +305,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.setCameraMask(cc.CameraFlag.USER1);
         sprite.setScale(0.4);
         sprite.setPosition3D(cc.math.vec3(-20, 5, 0));
-        component.syncToNode();
+        component.syncNodeToPhysics();
         component.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
 
         physicsScene.setPhysics3DDebugCamera(this._camera);
@@ -327,7 +327,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
         rigidBody.setAngularVelocity(cc.math.vec3(0, 3, 0));
         constraint = cc.Physics3DHingeConstraint.create(rigidBody, cc.math.vec3(4, 4, 0.5), cc.math.vec3(0, 1, 0));
         physicsScene.getPhysics3DWorld().addPhysics3DConstraint(constraint);
@@ -345,7 +345,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
         rigidBody.setLinearVelocity(cc.math.vec3(0, 3, 0));
 
         rbDes.mass = 0;
@@ -359,7 +359,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
 
         var frameInA = [-4.37114e-08, 1, 0, 0, -1, -4.37114e-08, 0, 0, 0, 0, 1, 0, 0, -5, 0, 1];
         var frameInB = [-4.37114e-08, 1, 0, 0, -1, -4.37114e-08, 0, 0, 0, 0, 1, 0, 0, 5, 0, 1];
@@ -380,7 +380,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
 
         frameInA = [-4.37114e-08, 1, 0, 0, -1, -4.37114e-08, 0, 0, 0, 0, 1, 0, 0, -10, 0, 1];
         constraint = cc.Physics3DConeTwistConstraint.create(rigidBody, frameInA);
@@ -399,7 +399,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
 
         frameInA = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
         constraint = cc.Physics3D6DofConstraint.create(rigidBody, frameInA, false);
@@ -428,7 +428,7 @@ var Physics3DKinematicDemo = Physics3DTestDemo.extend({
         floor.setPosition3D(cc.math.vec3(0, -1, 0));
         this.addChild(floor);
         floor.setCameraMask(cc.CameraFlag.USER1);
-        floor.syncToNode();
+        floor.syncNodeToPhysics();
         //static object sync is not needed
         floor.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
 
@@ -472,7 +472,7 @@ var Physics3DKinematicDemo = Physics3DTestDemo.extend({
                     var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/sphere.c3b", rbDes);
                     sprite.setTexture("Sprite3DTest/plane.png");
                     sprite.setPosition3D(cc.math.vec3(x, y, z));
-                    sprite.syncToNode();
+                    sprite.syncNodeToPhysics();
                     sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
                     sprite.setCameraMask(cc.CameraFlag.USER1);
                     sprite.setScale(1/sprite.getContentSize().width);
@@ -571,7 +571,7 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
         var rigidBody = cc.Physics3DRigidBody.create(rbDes);
         var component = cc.Physics3DComponent.create(rigidBody);
         terrain.addComponent(component);
-        component.syncToNode();
+        component.syncNodeToPhysics();
         component.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
 
         this.addChild(terrain);
@@ -593,7 +593,7 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
                     var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/sphere.c3b", rbDes);
                     sprite.setTexture("Sprite3DTest/plane.png");
                     sprite.setPosition3D(cc.math.vec3(x, y, z));
-                    sprite.syncToNode();
+                    sprite.syncNodeToPhysics();
                     sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
                     sprite.setCameraMask(cc.CameraFlag.USER1);
                     sprite.setScale(1/sprite.getContentSize().width);

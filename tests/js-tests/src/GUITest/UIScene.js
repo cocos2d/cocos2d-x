@@ -55,17 +55,19 @@ UIScene = cc.Scene.extend({
 
             this._sceneTitle = widget.getChildByName("UItest");
 
-
-            var label = new cc.LabelTTF("Main Menu", "Arial", 20);
-            var menuItem = new cc.MenuItemLabel(label, this.toExtensionsMainLayer, this);
-
-            var menu = new cc.Menu(menuItem);
-            menu.x = 0;
-            menu.y = 0;
-            menuItem.x = winSize.width - 50;
-            menuItem.y = 25;
-
-            this.addChild(menu, 1);
+            var back_label = widget.getChildByName("back");
+            if(back_label){
+                back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
+            }else{
+                var label = new cc.LabelTTF("Back", "Arial", 20);
+                var menuItem = new cc.MenuItemLabel(label, this.toExtensionsMainLayer, this);
+                var menu = new cc.Menu(menuItem);
+                menu.x = 0;
+                menu.y = 0;
+                menuItem.x = winSize.width - 50;
+                menuItem.y = 25;
+                this.addChild(menu, 1);
+            }
 
             var left_button = widget.getChildByName("left_Button");
             left_button.addTouchEventListener(this.previousCallback ,this);

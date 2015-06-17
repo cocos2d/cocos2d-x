@@ -124,4 +124,18 @@ public:
     cocos2d::CustomCommand _customCommand;
 };
 
+class Material_renderState : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_renderState);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+
+    cocos2d::RenderState::StateBlock _stateBlock;
+    cocos2d::CustomCommand _customCommand;
+};
+
 
