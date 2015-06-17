@@ -428,18 +428,22 @@ public:
         };
 
         /** 
+        @~english
          * Invalidates the default StateBlock.
          *
          * Only call it if you are calling GL calls directly. Invoke this function
          * at the end of your custom draw call.
          * This function restores the default render state its defaults values.
          * Since this function might call GL calls, it must be called in a GL context is present.
-         *
-         * @param stateBits Bitwise-OR of the states that needs to be invalidated
+         * @~chinese 让默认的StateBlock状态失效。通常情况下，如果你直接调用了openGL的函数来修改渲染状态，那么stateBlock中保存
+         * 的状态会与openGL的状态不一致。这个函数用于把openGL重置为默认状态,必须在openGL context存在时调用。
+         * @param stateBits @~english Bitwise-OR of the states that needs to be invalidated
+         * @~chinese 需要重置的状态位，可以通过按位或操作来指定多个状态。
          */
         static void invalidate(long stateBits);
 
         /**
+         * @~english
          * Restores the global Render State to the default state
          *
          * The difference between `invalidate()` and `restore()`, is that `restore()` will
@@ -450,7 +454,10 @@ public:
          
          - call `restore()` if you want to restore to the default state after using `StateBlock`.
          - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
-
+         * @~chinese 将全局的渲染状态设置为默认状态， 这个函数与invalidate()的区别在于，restore()函数会基于当前的StateBlock记录的状态
+         * 来恢复。所以
+         * -当你使用stateBlock时，可以通过restore()来将stateblock重置为默认状态。
+         * -当你直接调用openGL函数设置了状态时，需要调用invalidate()。
          */
         static void restore(long stateOverrideBits);
 
