@@ -289,6 +289,14 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
     ctor:function(){
         this._super();
 
+        cc.eventManager.removeListener(this);
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesBegan:this.onTouchesBegan.bind(this),
+            onTouchesMoved:this.onTouchesMoved.bind(this),
+            onTouchesEnded:this.onTouchesEnded.bind(this)
+        }, this);
+
         //PhysicsSprite3d = Sprite3D + Physics3DComponent
         var rbDes = cc.physics3DRigidBodyDes();
         rbDes.disableSleep = true;
@@ -322,7 +330,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
         sprite.setScaleX(8);
-        sprite.setScaleZ(8);
+        sprite.setScaleY(8);
         sprite.setPosition3D(cc.math.vec3(5, 0, 0));
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
@@ -408,6 +416,90 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         constraint.setAngularUpperLimit(cc.math.vec3(0, 0, 0));
         constraint.setLinearLowerLimit(cc.math.vec3(-10, 0, 0));
         constraint.setLinearUpperLimit(cc.math.vec3(10, 0, 0));
+    },
+
+    onTouchesBegan:function(touches, event){
+        if(this._camera){
+            cc.log("come in began");
+            var touch = touches[0];
+            var location = touch.getLocationInView();
+
+            var nearP = cc.math.vec3(location.x, location.y, 0);
+            var farP = cc.math.vec3(location.x, location.y, 1);
+
+            var size = director.getWinSize();
+            nearP    = this._camera.unproject(size, nearP, nearP);
+            farP     = this._camera.unproject(size, farP, farP);
+
+            var result = cc.hitResult()
+            result     = physicsScene.getPhysics3DWorld().rayCast(nearP, farP, result);
+            if(result !== false && result.hitObj.getObjType() == cc.Physics3DObject.PhysicsObjType.RIGID_BODY)
+            {
+                var mat = cc.math.mat4GetInversed(result.hitObj.getWorldTransform());
+                var position =  cc.math.vec4(result.hitPosition.x, result.hitPosition.y, result.hitPosition.z, 1.0);
+                var dst =  cc.math.vec4(0, 0, 0, 1);
+                dst     =  cc.math.mat4TransformVector(result.hitObj.getWorldTransform(), position, dst);
+
+                this._constraint = cc.Physics3DPointToPointConstraint.create(result.hitObj, cc.math.vec3(dst.x, dst.y, dst.z));
+                physicsScene.getPhysics3DWorld().addPhysics3DConstraint(this._constraint, true);
+                this._pickingDistance = cc.math.vec3Length(cc.math.vec3Sub(result.hitPosition, nearP));
+                return;
+            }
+        }
+        this._needShootBox = false;
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(this._constraint){
+            var touch = touches[0];
+            var location = touch.getLocationInView();
+
+            var nearP = cc.math.vec3(location.x, location.y, 0);
+            var farP = cc.math.vec3(location.x, location.y, 1);
+
+            var size = director.getWinSize();
+            nearP    = this._camera.unproject(size, nearP, nearP);
+            farP     = this._camera.unproject(size, farP, farP);
+
+            var dir  = cc.math.vec3Normalize(cc.math.vec3Sub(farP, nearP));
+            this._constraint.setPivotPointInB(cc.math.vec3Add(nearP, cc.math.vec3(dir.x * this._pickingDistance, dir.y * this._pickingDistance, dir.z * this._pickingDistance)));
+
+            return;
+        }
+
+        if(touches.length > 0 && this._camera){
+            var touch = touches[0];
+            var delta = touch.getDelta();
+
+            this._angle -= cc.degreesToRadians(delta.x);
+            this._camera.setPosition3D(cc.math.vec3(100*Math.sin(this._angle), 50, 100*Math.cos(this._angle)));
+            this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
+
+            if(delta.x * delta.x + delta.y + delta.y > 16)
+                this._needShootBox = false;
+        }
+    },
+
+    onTouchesEnded:function(touches, event){
+        if(this._constraint){
+            physicsScene.getPhysics3DWorld().removePhysics3DConstraint(this._constraint);
+            this._constraint = null;
+            return;
+        }
+
+        if(!this._needShootBox)
+            return;
+        if(touches.length > 0){
+            var location = touches[0].getLocationInView();
+
+            var nearP = cc.math.vec3(location.x, location.y, -1);
+            var farP = cc.math.vec3(location.x, location.y, 1);
+            nearP = this._camera.unproject(nearP);
+            farP = this._camera.unproject(farP);
+
+            var dir = cc.math.vec3Sub(farP, nearP);
+            this.shootBox(cc.math.vec3Add(this._camera.getPosition3D(), cc.math.vec3(dir.x*10, dir.y*10, dir.z*10)));
+        }
     }
 });
 
