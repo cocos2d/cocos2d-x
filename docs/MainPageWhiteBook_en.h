@@ -1,5 +1,5 @@
 /*!
-@cond GEN_WRITE_BOOK
+@cond GEN_WRITE_BOOK_EN
 
 @mainpage cocos
 
