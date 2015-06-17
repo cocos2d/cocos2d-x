@@ -91,10 +91,17 @@ public:
     */
     static Physics3DWorld* create(Physics3DWorldDes* info);
     
-    /** set gravity for the physics world */
+    /** 
+     * @~english Set gravity for the physics world
+     * @~chinese 设置物理世界的重力
+     * @param gravity @~english Gravity to be set. @~chinese 待设置的重力。
+     */
     void setGravity(const Vec3& gravity);
     
-    /** get current gravity */
+    /** 
+     * @~english Get current gravity.
+     * @~chinese 获取当前物理世界的重力。
+     */
     Vec3 getGravity() const;
     
     /** @~english Add a Physics3DObject.
