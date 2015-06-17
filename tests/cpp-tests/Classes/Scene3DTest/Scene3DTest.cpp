@@ -31,9 +31,9 @@ public:
     bool onTouchBegan(Touch* touch, Event* event) { return true; }
     void onTouchEnd(Touch*, Event*);
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    cocos2d::EventListenerCustom* _backToForegroundListener;
-#endif
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+//    cocos2d::EventListenerCustom* _backToForegroundListener;
+//#endif
     
 private:
     Scene3DTestScene();
@@ -419,32 +419,32 @@ void Scene3DTestScene::createWorld3D()
     monster->setPosition3D(_player->getPosition3D() + Vec3(-50, -5, 0));
     _monsters[1] = monster;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
-                                                            [this](EventCustom*)
-                                                            {
-                                                                auto state = _skyBox->getGLProgramState();
-                                                                auto glProgram = state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                                
-                                                                _textureCube->reloadTexture();
-                                                                
-                                                                Texture2D::TexParams tRepeatParams;
-                                                                tRepeatParams.magFilter = GL_NEAREST;
-                                                                tRepeatParams.minFilter = GL_NEAREST;
-                                                                tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
-                                                                tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
-                                                                _textureCube->setTexParameters(tRepeatParams);
-                                                                state->setUniformTexture("u_cubeTex", _textureCube);
-                                                                
-                                                                _skyBox->reload();
-                                                                _skyBox->setTexture(_textureCube);
-                                                            });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-#endif
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+//    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+//                                                            [this](EventCustom*)
+//                                                            {
+//                                                                auto state = _skyBox->getGLProgramState();
+//                                                                auto glProgram = state->getGLProgram();
+//                                                                glProgram->reset();
+//                                                                glProgram->initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
+//                                                                glProgram->link();
+//                                                                glProgram->updateUniforms();
+//                                                                
+//                                                                _textureCube->reloadTexture();
+//                                                                
+//                                                                Texture2D::TexParams tRepeatParams;
+//                                                                tRepeatParams.magFilter = GL_NEAREST;
+//                                                                tRepeatParams.minFilter = GL_NEAREST;
+//                                                                tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
+//                                                                tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+//                                                                _textureCube->setTexParameters(tRepeatParams);
+//                                                                state->setUniformTexture("u_cubeTex", _textureCube);
+//                                                                
+//                                                                _skyBox->reload();
+//                                                                _skyBox->setTexture(_textureCube);
+//                                                            });
+//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+//#endif
 }
 
 void Scene3DTestScene::createUI()
