@@ -2530,6 +2530,159 @@ tolua_lerror:
 
 #endif //CC_USE_PHYSICS
 
+#if CC_USE_NAVMESH
+#include "navmesh/CCNavMesh.h"
+int lua_cocos2dx_Scene_setNavMeshDebugCamera(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Scene* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Scene*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_setNavMeshDebugCamera'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        cocos2d::Camera* arg0;
+        
+        ok &= luaval_to_object<cocos2d::Camera>(tolua_S, 2, "cc.Camera",&arg0, "cc.Scene:setNavMeshDebugCamera");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_setNavMeshDebugCamera'", nullptr);
+            return 0;
+        }
+        cobj->setNavMeshDebugCamera(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Scene:setNavMeshDebugCamera",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_setNavMeshDebugCamera'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+int lua_cocos2dx_Scene_setNavMesh(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Scene* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Scene*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_setNavMesh'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        cocos2d::NavMesh* arg0;
+        
+        ok &= luaval_to_object<cocos2d::NavMesh>(tolua_S, 2, "cc.NavMesh",&arg0, "cc.Scene:setNavMesh");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_setNavMesh'", nullptr);
+            return 0;
+        }
+        cobj->setNavMesh(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Scene:setNavMesh",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_setNavMesh'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_Scene_getNavMesh(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Scene* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Scene",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Scene*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Scene_getNavMesh'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_getNavMesh'", nullptr);
+            return 0;
+        }
+        cocos2d::NavMesh* ret = cobj->getNavMesh();
+        object_to_luaval<cocos2d::NavMesh>(tolua_S, "cc.NavMesh",(cocos2d::NavMesh*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Scene:getNavMesh",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Scene_getNavMesh'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+#endif //#if CC_USE_NAVMESH
+
 static int tolua_cocos2d_Spawn_create(lua_State* tolua_S)
 {
     if (NULL == tolua_S)
@@ -4770,6 +4923,12 @@ static void extendScene(lua_State* tolua_S)
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         tolua_function(tolua_S, "getPhysics3DWorld", lua_cocos2dx_Scene_getPhysics3DWorld);
         tolua_function(tolua_S, "setPhysics3DDebugCamera", lua_cocos2dx_Scene_setPhysics3DDebugCamera);
+#endif
+
+#if CC_USE_NAVMESH
+        tolua_function(tolua_S, "setNavMeshDebugCamera", lua_cocos2dx_Scene_setNavMeshDebugCamera);
+        tolua_function(tolua_S, "setNavMesh", lua_cocos2dx_Scene_setNavMesh);
+        tolua_function(tolua_S, "getNavMesh", lua_cocos2dx_Scene_getNavMesh);
 #endif
     }
     lua_pop(tolua_S, 1);

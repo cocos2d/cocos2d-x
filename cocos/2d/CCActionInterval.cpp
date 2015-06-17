@@ -1464,7 +1464,7 @@ JumpTo* JumpTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) JumpTo();
-    a->initWithDuration(_duration, _delta, _height, _jumps);
+    a->initWithDuration(_duration, _endPosition, _height, _jumps);
     a->autorelease();
     return a;
 }
