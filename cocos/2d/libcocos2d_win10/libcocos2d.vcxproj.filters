@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -247,6 +247,9 @@
     </Filter>
     <Filter Include="physics3d">
       <UniqueIdentifier>{f68e83b4-2fa3-4f47-9864-e7dfd90c16a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="navmesh">
+      <UniqueIdentifier>{cc4f6ca9-4231-479d-8e19-ede4dff3382e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1842,9 +1845,6 @@
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\base\CCUserDefault-winrt.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -1886,6 +1886,22 @@
     </ClCompile>
     <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp">
       <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer\CCFrameBuffer.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMesh.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshAgent.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshDebugDraw.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshObstacle.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshUtils.cpp">
+      <Filter>navmesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3702,6 +3718,21 @@
     </ClInclude>
     <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h">
       <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMesh.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshAgent.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshDebugDraw.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshObstacle.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshUtils.h">
+      <Filter>navmesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

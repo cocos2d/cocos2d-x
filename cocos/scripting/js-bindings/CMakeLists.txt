@@ -42,7 +42,6 @@ set(JSBINDING_SRC
   auto/jsb_cocos2dx_ui_auto.cpp
   auto/jsb_cocos2dx_3d_auto.cpp
   auto/jsb_cocos2dx_3d_extension_auto.cpp
-  auto/jsb_cocos2dx_experimental.cpp
   auto/jsb_cocos2dx_physics3d_auto.cpp
   manual/ScriptingCore.cpp
   manual/cocos2d_specifics.cpp
@@ -69,7 +68,6 @@ set(JSBINDING_SRC
   manual/spine/jsb_cocos2dx_spine_manual.cpp
   manual/ui/jsb_cocos2dx_ui_manual.cpp
   manual/3d/jsb_cocos2dx_3d_manual.cpp
-  manual/experimental/jsb_cocos2dx_experimental_manual.cpp
   manual/physics3d/jsb_cocos2dx_physics3d_manual.cpp
   ${cocos_root}/cocos/storage/local-storage/LocalStorage.cpp
 )
