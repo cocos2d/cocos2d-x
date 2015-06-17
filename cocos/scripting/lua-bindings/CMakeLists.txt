@@ -19,11 +19,13 @@ include_directories(
   ${cocos_root}/cocos/platform
   ${cocos_root}/cocos/audio/include
   ${cocos_root}/cocos/physics3d
+  ${cocos_root}/cocos/navmesh
   manual
   manual/extension
   manual/cocostudio
   manual/ui
   manual/cocos2d
+  manual/navmesh
   auto
 )
 
@@ -110,6 +112,8 @@ set(lua_bindings_manual_files
     manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
+    manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp
+    manual/navmesh/lua_cocos2dx_navmesh_manual.cpp
     )
 
 set(lua_bindings_auto_files
@@ -128,6 +132,7 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_ui_auto.cpp
     auto/lua_cocos2dx_audioengine_auto.cpp
     auto/lua_cocos2dx_physics3d_auto.cpp
+    auto/lua_cocos2dx_navmesh_auto.cpp
     )
 
 if(MACOSX)

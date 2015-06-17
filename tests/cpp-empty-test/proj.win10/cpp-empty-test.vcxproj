@@ -165,6 +165,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win10\App\*" /iycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win10\App\*" /iycq</Command>
     </PostBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -209,6 +212,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win10\App\*" /iycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win10\App\*" /iycq</Command>
     </PostBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -239,7 +245,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <PostBuildEvent>
       <Command>echo "Copying Windows 10.0 Universal App CPP template files"
@@ -253,6 +259,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win10\App\*" /iycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win10\App\*" /iycq</Command>
     </PostBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
