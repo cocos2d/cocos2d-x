@@ -115,8 +115,8 @@ void LayerTest::backCallback(Ref* sender)
 
 static void setEnableRecursiveCascading(Node* node, bool enable)
 {
-    node->setCascadeColorEnabled(enable, true);
-    node->setCascadeOpacityEnabled(enable, true);
+    node->setCascadeColorEnabledRecursively(enable);
+    node->setCascadeOpacityEnabledRecursively(enable);
 }
 
 // LayerTestCascadingOpacityA

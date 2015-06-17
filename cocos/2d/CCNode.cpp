@@ -1729,9 +1729,9 @@ bool Node::isCascadeOpacityEnabled(void) const
     return _cascadeOpacityEnabled;
 }
 
-void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled, bool recursive /* = false */)
+void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 {
-    if (_cascadeOpacityEnabled == cascadeOpacityEnabled && !recursive)
+    if (_cascadeOpacityEnabled == cascadeOpacityEnabled)
     {
         return;
     }
@@ -1746,14 +1746,16 @@ void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled, bool recursive /
     {
         disableCascadeOpacity();
     }
+}
 
-    if (recursive)
+void Node::setCascadeOpacityEnabledRecursively(bool cascadeOpacityEnabled)
+{
+    setCascadeOpacityEnabled(cascadeOpacityEnabled);
+
+    auto& children = getChildren();
+    for (auto &child : children)
     {
-        auto& children = getChildren();
-        for (auto &child : children)
-        {
-            child->setCascadeOpacityEnabled(cascadeOpacityEnabled, recursive);
-        }
+        child->setCascadeOpacityEnabledRecursively(cascadeOpacityEnabled);
     }
 }
 
@@ -1815,9 +1817,9 @@ bool Node::isCascadeColorEnabled(void) const
     return _cascadeColorEnabled;
 }
 
-void Node::setCascadeColorEnabled(bool cascadeColorEnabled, bool recursive /* = false */)
+void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
 {
-    if (_cascadeColorEnabled == cascadeColorEnabled && !recursive)
+    if (_cascadeColorEnabled == cascadeColorEnabled)
     {
         return;
     }
@@ -1832,14 +1834,16 @@ void Node::setCascadeColorEnabled(bool cascadeColorEnabled, bool recursive /* = 
     {
         disableCascadeColor();
     }
+}
 
-    if (recursive)
+void Node::setCascadeColorEnabledRecursively(bool cascadeColorEnabled)
+{
+    setCascadeOpacityEnabled(cascadeColorEnabled);
+
+    auto& children = getChildren();
+    for (const auto &child : children)
     {
-        auto& children = getChildren();
-        for (const auto &child : children)
-        {
-            child->setCascadeColorEnabled(cascadeColorEnabled, recursive);
-        }
+        child->setCascadeColorEnabledRecursively(cascadeColorEnabled);
     }
 }
 

@@ -1329,15 +1329,17 @@ public:
     virtual void setOpacity(GLubyte opacity);
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);
     virtual bool isCascadeOpacityEnabled() const;
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled, bool recursive = false);
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled);
+    virtual void setCascadeOpacityEnabledRecursively(bool cascadeOpacityEnabled);
     
     virtual const Color3B& getColor(void) const;
     virtual const Color3B& getDisplayedColor() const;
     virtual void setColor(const Color3B& color);
     virtual void updateDisplayedColor(const Color3B& parentColor);
     virtual bool isCascadeColorEnabled() const;
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled, bool recursive = false);
-    
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled);
+    virtual void setCascadeColorEnabledRecursively(bool cascadeColorEnabled);
+
     virtual void setOpacityModifyRGB(bool bValue) {CC_UNUSED_PARAM(bValue);}
     virtual bool isOpacityModifyRGB() const { return false; };
     
@@ -1490,14 +1492,16 @@ public:
     virtual void setOpacity(GLubyte opacity) override { return Node::setOpacity(opacity); }
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Node::updateDisplayedOpacity(parentOpacity); }
     virtual bool isCascadeOpacityEnabled() const  override { return Node::isCascadeOpacityEnabled(); }
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled, bool recursive = false) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled, recursive); }
+    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
+    virtual void setCascadeOpacityEnabledRecursively(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabledRecursively(cascadeOpacityEnabled); }
 
     virtual const Color3B& getColor(void) const override { return Node::getColor(); }
     virtual const Color3B& getDisplayedColor() const override { return Node::getDisplayedColor(); }
     virtual void setColor(const Color3B& color) override { return Node::setColor(color); }
     virtual void updateDisplayedColor(const Color3B& parentColor) override { return Node::updateDisplayedColor(parentColor); }
     virtual bool isCascadeColorEnabled() const override { return Node::isCascadeColorEnabled(); }
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled, bool recursive = false) override { return Node::setCascadeColorEnabled(cascadeColorEnabled, recursive); }
+    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Node::setCascadeColorEnabled(cascadeColorEnabled); }
+    virtual void setCascadeColorEnabledRecursively(bool cascadeColorEnabled) override { return Node::setCascadeColorEnabledRecursively(cascadeColorEnabled); }
 
     virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
     virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
