@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos2d\coco
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet", "..\cocos2d\external\bullet\proj.win32\libbullet.vcxproj", "{012DFF48-A13F-4F52-B07B-F8B9D21CE95B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "librecast", "..\cocos2d\external\recast\proj.win32\librecast.vcxproj", "{41E34993-647E-4282-8384-4AB1AE31A452}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -42,6 +44,10 @@ Global
 		{012DFF48-A13F-4F52-B07B-F8B9D21CE95B}.Debug|Win32.Build.0 = Debug|Win32
 		{012DFF48-A13F-4F52-B07B-F8B9D21CE95B}.Release|Win32.ActiveCfg = Release|Win32
 		{012DFF48-A13F-4F52-B07B-F8B9D21CE95B}.Release|Win32.Build.0 = Release|Win32
+		{41E34993-647E-4282-8384-4AB1AE31A452}.Debug|Win32.ActiveCfg = Debug|Win32
+		{41E34993-647E-4282-8384-4AB1AE31A452}.Debug|Win32.Build.0 = Debug|Win32
+		{41E34993-647E-4282-8384-4AB1AE31A452}.Release|Win32.ActiveCfg = Release|Win32
+		{41E34993-647E-4282-8384-4AB1AE31A452}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -40,6 +40,7 @@
 /* Begin PBXBuildFile section */
 		1502702D1AD3BDBC0089CD03 /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
 		1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
+		150983E11B1C514B007F3818 /* NavMesh in Resources */ = {isa = PBXBuildFile; fileRef = B61E90CA1B12B74B00BE69EA /* NavMesh */; };
 		150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		150F918919DA409F00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		1531B2501AE013DE0075DB94 /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
@@ -64,6 +65,7 @@
 		15B914491B15721400C6B95B /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		15B9144A1B15A18C00C6B95B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
 		15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		15BF83C71B1D9E8900D518FA /* NavMesh in Resources */ = {isa = PBXBuildFile; fileRef = B61E90CA1B12B74B00BE69EA /* NavMesh */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -4465,6 +4467,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				150983E11B1C514B007F3818 /* NavMesh in Resources */,
 				15B914491B15721400C6B95B /* Shaders3D in Resources */,
 				15B914481B156A3700C6B95B /* Materials in Resources */,
 				1531B2501AE013DE0075DB94 /* Test.html in Resources */,
@@ -4514,6 +4517,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15BF83C71B1D9E8900D518FA /* NavMesh in Resources */,
 				15B9144A1B15A18C00C6B95B /* Materials in Resources */,
 				15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */,
 				1531B2511AE013F00075DB94 /* Test.html in Resources */,
@@ -5921,6 +5925,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5934,6 +5939,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 				);
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -5945,6 +5951,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5958,6 +5965,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 				);
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";

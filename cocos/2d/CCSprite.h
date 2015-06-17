@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "2d/CCAutoPolygon.h"
 
 NS_CC_BEGIN
 
@@ -128,6 +129,19 @@ public:
      * @~chinese 一个 Sprite 实例（已经被 autorelese）。
      */
     static Sprite* create(const std::string& filename);
+    
+    /** @~english
+     * Creates a polygon sprite with a polygon info.
+     *
+     * @~chinese 
+     * 使用一个PolygonInfo创建 Sprite。
+     * 
+     * @param polygonInfo @~english A specified polygon info, you can get that from AutoPolygon.
+     * @~chinese 一个指定的polygon info。你可以从AutoPolygon类获取polygon info.
+     * @return @~english An autoreleased sprite object.
+     * @~chinese 一个 Sprite 实例（已经被 autorelese）。
+     */
+    static Sprite* create(const PolygonInfo& info);
 
     /**@~english
      * Creates a sprite with an image filename and a rect.
@@ -638,6 +652,17 @@ CC_CONSTRUCTOR_ACCESS:
      * @~chinese 如果初始化成功，返回 true；否则返回 false。
      */
     virtual bool initWithTexture(Texture2D *texture);
+    
+    
+    /**
+     * Initializes a sprite with a PolygonInfo.
+     *
+     * After initialization, the rect used will be the size of the texture, and the offset will be (0,0).
+     *
+     * @param   PolygonInfo    a Polygon info contains the structure of the polygon.
+     * @return  True if the sprite is initialized properly, false otherwise.
+     */
+    virtual bool initWithPolygon(const PolygonInfo& info);
 
     /**@~english
      * Initializes a sprite with a texture and a rect.
@@ -760,6 +785,22 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
 
+    void debugDraw(bool on);
+    
+    /**
+     * returns a copy of the polygon information associated with this sprite
+     * because this is a copy process it is slower than getting the reference, so use wisely
+     *
+     * @return a copy of PolygonInfo
+     */
+    PolygonInfo getPolygonInfo() const;
+    
+    /**
+     * set the sprite to use this new PolygonInfo
+     *
+     * @param PolygonInfo the polygon information object
+     */
+    void setPolygonInfo(const PolygonInfo& info);
 protected:
 
     void updateColor() override;
@@ -767,8 +808,9 @@ protected:
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
+
+
     
-    TrianglesCommand::Triangles getRenderedTriangles() const;
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -788,9 +830,8 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
-#if CC_SPRITE_DEBUG_DRAW
-    DrawNode *_debugDrawNode;
-#endif //CC_SPRITE_DEBUG_DRAW
+
+
     //
     // Shared data
     //
@@ -805,6 +846,7 @@ protected:
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
+    PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
     bool _opacityModifyRGB;
