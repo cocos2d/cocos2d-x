@@ -151,6 +151,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -171,6 +174,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -191,6 +197,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -268,6 +277,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\cocos2d\external\bullet\proj.win10\libbullet.vcxproj">
       <Project>{ecee1119-ce2e-4f7e-83a8-1932ea48e893}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d\external\recast\proj.win10\librecast.vcxproj">
+      <Project>{f551524d-8a70-4b2f-a7c2-28ae61150022}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

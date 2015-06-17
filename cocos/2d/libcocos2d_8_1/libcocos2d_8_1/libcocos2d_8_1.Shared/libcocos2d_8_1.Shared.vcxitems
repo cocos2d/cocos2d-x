@@ -1259,7 +1259,4 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CMakeLists.txt" />
-  </ItemGroup>
 </Project>
