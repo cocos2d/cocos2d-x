@@ -28,6 +28,7 @@
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 
@@ -131,6 +132,7 @@ void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t f
     _program->use();
     _program->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
+
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
@@ -158,7 +160,9 @@ void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t f
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
+
     glDisable(GL_DEPTH_TEST);
+    RenderState::StateBlock::_defaultState->setDepthTest(false);
 }
 
 void Physics3DDebugDrawer::init()

@@ -232,7 +232,7 @@ bool UISliderNormalDefaultTest::init()
                                  widgetSize.height / 2.0f + 50));
         _uiLayer->addChild(slider);
         
-        Slider* sliderScale9 = Slider::create("cocosui/sliderTrack2.png", "cocosui/sliderThumb.png");
+        Slider* sliderScale9 = (Slider*)slider->clone();
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setCapInsets(Rect(0, 0, 0, 0));
         sliderScale9->setZoomScale(1.0);
@@ -287,7 +287,7 @@ bool UISliderDisabledDefaultTest::init()
                                  widgetSize.height / 2.0f + 50));
         _uiLayer->addChild(slider);
         
-        Slider* sliderScale9 = Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
+        Slider* sliderScale9 = (Slider*)slider->clone();
         sliderScale9->setScale9Enabled(true);
         sliderScale9->setEnabled(false);
         sliderScale9->setBright(false);

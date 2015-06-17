@@ -21,6 +21,8 @@
 #include "OpenGLES.h"
 #include "OpenGLESPage.g.h"
 #include <memory>
+#include <condition_variable>
+#include <mutex>
 
 #include "Cocos2dRenderer.h"
 
@@ -51,7 +53,7 @@ namespace cocos2d
         void StopRenderLoop();
 
         OpenGLES* mOpenGLES;
-        std::shared_ptr<cocos2d::Cocos2dRenderer> m_renderer;
+        std::shared_ptr<cocos2d::Cocos2dRenderer> mRenderer;
 
         Windows::Foundation::Size mSwapChainPanelSize;
         Concurrency::critical_section mSwapChainPanelSizeCriticalSection;
@@ -64,8 +66,8 @@ namespace cocos2d
         Windows::Foundation::IAsyncAction^ mRenderLoopWorker;
 
         // Track user input on a background worker thread.
-        Windows::Foundation::IAsyncAction^ m_inputLoopWorker;
-        Windows::UI::Core::CoreIndependentInputSource^ m_coreInput;
+        Windows::Foundation::IAsyncAction^ mInputLoopWorker;
+        Windows::UI::Core::CoreIndependentInputSource^ mCoreInput;
 
         // Independent input handling functions.
         void OnPointerPressed(Platform::Object^ sender, Windows::UI::Core::PointerEventArgs^ e);
@@ -77,9 +79,12 @@ namespace cocos2d
 
         void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
 
-        float m_dpi;
-        bool m_deviceLost;
-        Windows::Graphics::Display::DisplayOrientations m_orientation;
+        float mDpi;
+        bool mDeviceLost;
+        bool mVisible;
+        Windows::Graphics::Display::DisplayOrientations mOrientation;
 
+        std::mutex mSleepMutex;
+        std::condition_variable mSleepCondition;
     };
 }

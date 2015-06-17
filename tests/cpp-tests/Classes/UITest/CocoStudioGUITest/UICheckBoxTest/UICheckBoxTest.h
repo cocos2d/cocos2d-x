@@ -58,4 +58,17 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UICheckBoxCopyTest : public UIScene
+{
+public:
+    CREATE_FUNC(UICheckBoxCopyTest);
+
+    UICheckBoxCopyTest();
+    ~UICheckBoxCopyTest();
+
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UICheckBoxTest__) */

@@ -257,6 +257,14 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
+
+    void setupBarTexture();
+    void loadBarTexture(SpriteFrame* spriteframe);
+    void setupProgressBarTexture();
+    void loadProgressBarTexture(SpriteFrame* spriteframe);
+    void loadSlidBallTextureNormal(SpriteFrame* spriteframe);
+    void loadSlidBallTexturePressed(SpriteFrame* spriteframe);
+    void loadSlidBallTextureDisabled(SpriteFrame* spriteframe);
    
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
@@ -283,12 +291,9 @@ protected:
     float _zoomScale;
     float _sliderBallNormalTextureScaleX;
     float _sliderBallNormalTextureScaleY;
-    
-    std::string _textureFile;
-    std::string _progressBarTextureFile;
-    std::string _slidBallNormalTextureFile;
-    std::string _slidBallPressedTextureFile;
-    std::string _slidBallDisabledTextureFile;
+
+    bool _isSliderBallPressedTextureLoaded;
+    bool _isSliderBallDisabledTexturedLoaded;
 
     Rect _capInsetsBarRenderer;
     Rect _capInsetsProgressBarRenderer;

@@ -53,6 +53,24 @@ void AudioSourceReader::flushChunks()
     _rwMutex.unlock();
 }
 
+void AudioSourceReader::seekTo(const float ratio)
+{
+    if (_isStreaming) {
+        auto newPos = ratio * _audioSize;
+
+        if (!newPos && !_isDirty && _chnkQ.size())  // already in 0.0 position
+            return;
+
+        _bytesRead = newPos;
+        flushChunks();
+        auto alignment = _wfx.nChannels * _wfx.nBlockAlign;
+        _bytesRead = _bytesRead >= _audioSize ? (_audioSize - alignment) : _bytesRead - (_bytesRead % alignment);
+
+        for (int i = 0; i < QUEUEBUFFER_NUM; i++) {
+            produceChunk();
+        }
+    }
+}
 
 // WAVFileReader
 WAVReader::WAVReader() :
@@ -78,10 +96,8 @@ bool WAVReader::initialize(const std::string& filePath)
 
         flushChunks();
 
-        _rwMutex.lock();
         _streamer = ref new MediaStreamer;
         _streamer->Initialize(std::wstring(_filePath.begin(), _filePath.end()).c_str(), true);
-        _rwMutex.unlock();
         _wfx = _streamer->GetOutputWaveFormatEx();
         UINT32 dataSize = _streamer->GetMaxStreamLengthInBytes();
 
@@ -162,31 +178,7 @@ void WAVReader::produceChunk()
 
 void WAVReader::seekTo(const float ratio)
 {
-    if (_isStreaming) {
-        auto newPos = ratio * _audioSize;
-
-        if (!newPos && !_isDirty && _chnkQ.size())  // already in 0.0 position
-            return;
-
-        _bytesRead = newPos;
-        flushChunks();
-
-        switch (_wfx.wFormatTag)
-        {
-        case WAVE_FORMAT_PCM:
-        case WAVE_FORMAT_ADPCM: {
-            auto alignment = _wfx.nChannels * _wfx.nBlockAlign;
-            _bytesRead = _bytesRead >= _audioSize ? (_audioSize - alignment) : _bytesRead - (_bytesRead % alignment);
-        } break;
-
-        default:
-            break;
-        }
-
-        for (int i = 0; i < QUEUEBUFFER_NUM; i++) {
-            produceChunk();
-        }
-    }
+    AudioSourceReader::seekTo(ratio);
 }
 
 
@@ -299,21 +291,7 @@ void MP3Reader::produceChunk()
 
 void MP3Reader::seekTo(const float ratio)
 {
-    if (_isStreaming) {
-        auto newPos = ratio * _audioSize;
-
-        if (!newPos && !_isDirty && _chnkQ.size())  // already in 0.0 position
-            return;
-
-        _bytesRead = newPos;
-        flushChunks();
-        auto alignment = _wfx.nChannels * _wfx.nBlockAlign;
-        _bytesRead = _bytesRead >= _audioSize ? (_audioSize - alignment) : _bytesRead - (_bytesRead % alignment);
-
-        for (int i = 0; i < QUEUEBUFFER_NUM; i++) {
-            produceChunk();
-        }
-    }
+    AudioSourceReader::seekTo(ratio);
 }
 
 HRESULT MP3Reader::configureSourceReader(IMFSourceReader* pReader, IMFMediaType** ppDecomprsdAudioType)
@@ -518,6 +496,139 @@ Wrappers::FileHandle MP3Reader::openFile(const std::string& path, bool append)
     DWORD access = append ? GENERIC_WRITE : GENERIC_READ;
     DWORD creation = append ? OPEN_ALWAYS : OPEN_EXISTING;
     return Microsoft::WRL::Wrappers::FileHandle(CreateFile2(std::wstring(path.begin(), path.end()).c_str(), access, FILE_SHARE_READ, creation, &extParams));
+}
+
+
+// OGGReader
+OGGReader::OGGReader()
+{
+}
+
+OGGReader::~OGGReader()
+{
+    if (_vorbisFd) {
+        ov_clear(_vorbisFd.get());
+    }
+}
+
+bool OGGReader::initialize(const std::string& filePath)
+{
+    bool ret = false;
+    _filePath = filePath;
+
+    do {
+        _vorbisFd = std::make_unique<OggVorbis_File>();
+        if (ov_fopen(FileUtils::getInstance()->getSuitableFOpen(_filePath).c_str(), _vorbisFd.get())){
+            break;
+        }
+
+        auto  vi = ov_info(_vorbisFd.get(), -1);
+
+        if (!vi) {
+            break;
+        }
+
+        auto totalFrames = ov_pcm_total(_vorbisFd.get(), -1);
+        auto bytesPerFrame = vi->channels * 2;
+        _audioSize = totalFrames * bytesPerFrame;
+
+        _wfx.wFormatTag = WAVE_FORMAT_PCM;
+        _wfx.nChannels = vi->channels;
+        _wfx.nSamplesPerSec = vi->rate;
+        _wfx.nAvgBytesPerSec = vi->rate * bytesPerFrame;
+        _wfx.nBlockAlign = bytesPerFrame;
+        _wfx.wBitsPerSample = (bytesPerFrame / vi->channels) * 8;
+        _wfx.cbSize = 0;
+
+        if (_audioSize <= PCMDATA_CACHEMAXSIZE) {
+            produceChunk();
+        }
+        else {
+            _isStreaming = true;
+            for (int i = 0; i < QUEUEBUFFER_NUM; i++) {
+                produceChunk();
+            }
+        }
+
+        ret = true;
+    } while (false);
+
+    return ret;
+}
+
+bool OGGReader::consumeChunk(AudioDataChunk& chunk)
+{
+    bool ret = false;
+    _isDirty = true;
+
+    _rwMutex.lock();
+    if (_chnkQ.size() > 0) {
+        chunk = _chnkQ.front();
+        if (_isStreaming) {
+            _chnkQ.pop();
+        }
+        ret = true;
+    }
+    _rwMutex.unlock();
+
+    return ret;
+}
+
+void OGGReader::produceChunk()
+{
+    _rwMutex.lock();
+    int chunkSize = _audioSize;
+
+    do {
+        if (!_isStreaming && _chnkQ.size() || _chnkQ.size() >= QUEUEBUFFER_NUM) {
+            break;
+        }
+
+        if (_isStreaming) {
+            chunkSize = std::min(CHUNK_SIZE_MAX, _audioSize - _bytesRead);
+        }
+
+        if (!chunkSize && !_chnkQ.size()) {
+            auto alignment = _wfx.nChannels * _wfx.nBlockAlign;
+            _bytesRead -= alignment;
+            chunkSize = alignment;
+        }
+
+        if (!chunkSize) {
+            break;
+        }
+
+        int retSize = 0;
+        AudioDataChunk chunk = { 0 };
+        chunk._data = std::make_shared<PCMBuffer>(chunkSize);
+        
+        auto newPos = (1.0f * _bytesRead / _audioSize) * ov_time_total(_vorbisFd.get(), -1);
+        if (ov_time_seek(_vorbisFd.get(), newPos)){
+            break;
+        }
+
+        do
+        {
+            long br = 0;
+            int current_section = 0;
+            if ((br = ov_read(_vorbisFd.get(), (char*)chunk._data->data() + retSize, chunkSize - retSize, 0, 2, 1, &current_section)) == 0) {
+                break;
+            }
+            retSize += br;
+        } while (retSize < chunkSize);
+
+        _bytesRead += retSize;
+        chunk._dataSize = retSize;
+        chunk._seqNo = ((float)_bytesRead / _audioSize) * ((float)_audioSize / CHUNK_SIZE_MAX);
+        chunk._endOfStream = (_bytesRead >= _audioSize);
+        _chnkQ.push(chunk);
+    } while (false);
+    _rwMutex.unlock();
+}
+
+void OGGReader::seekTo(const float ratio)
+{
+    AudioSourceReader::seekTo(ratio);
 }
 
 #endif

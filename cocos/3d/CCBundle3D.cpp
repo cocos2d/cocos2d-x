@@ -2123,14 +2123,36 @@ Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
 std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
 {
     std::vector<Vec3> trianglesList;
-    auto bundle = Bundle3D::createBundle();
-    if (!bundle->load(path))
-    {
-        Bundle3D::destroyBundle(bundle);
+    
+    if (path.length() <= 4)
         return trianglesList;
-    }
+    
+    auto bundle = Bundle3D::createBundle();
+    std::string ext = path.substr(path.length() - 4, 4);
+    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
     MeshDatas meshs;
-    bundle->loadMeshDatas(meshs);
+    if (ext == ".obj")
+    {
+        MaterialDatas materials;
+        NodeDatas nodes;
+        if (!Bundle3D::loadObj(meshs, materials, nodes, path))
+        {
+            Bundle3D::destroyBundle(bundle);
+            return trianglesList;
+        }
+    }
+    else
+    {
+        if (!bundle->load(path))
+        {
+            Bundle3D::destroyBundle(bundle);
+            return trianglesList;
+        }
+        
+        bundle->loadMeshDatas(meshs);
+        
+    }
+    
     Bundle3D::destroyBundle(bundle);
     for (auto iter : meshs.meshDatas){
         int preVertexSize = iter->getPerVertexSize() / sizeof(float);
@@ -2140,6 +2162,7 @@ std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
             }
         }
     }
+    
     return trianglesList;
 }
 

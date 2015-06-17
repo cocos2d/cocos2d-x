@@ -40,7 +40,7 @@ THE SOFTWARE.
 #include "math/CCMath.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

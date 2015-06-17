@@ -1,6 +1,6 @@
 cocos2d-x authors & contributors
 
-(ordered by the join in time)
+(ordered by join time)
 
 Core Developers:
     Ricardo Quesada
@@ -68,6 +68,9 @@ Developers:
 
     silverscania
         Pass correct parameter to glPixelStorei when creating a texture
+
+    stari4ek
+        Fix VideoPlayer on Android ignore search paths
 
     FlagellumDei
         Center the window correctly on windows

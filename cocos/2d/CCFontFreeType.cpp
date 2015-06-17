@@ -343,7 +343,6 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
                 }
             }
 
-            xAdvance += 2 * _outlineSize;
             outRect.size.width  =  blendWidth;
             outRect.size.height =  blendHeight;
             outWidth  = blendWidth;

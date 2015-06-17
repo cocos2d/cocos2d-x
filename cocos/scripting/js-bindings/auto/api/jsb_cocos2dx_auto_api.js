@@ -2026,6 +2026,16 @@ renderer
 },
 
 /**
+ * @method stepPhysicsAndNavigation
+ * @param {float} arg0
+ */
+stepPhysicsAndNavigation : function (
+float 
+)
+{
+},
+
+/**
  * @method onProjectionChanged
  * @param {cc.EventCustom} arg0
  */
@@ -10498,6 +10508,18 @@ getVertexAttribsFlags : function (
 },
 
 /**
+ * @method applyAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+applyAutoBinding : function (
+str, 
+str 
+)
+{
+},
+
+/**
  * @method setUniformVec2
 * @param {int|String} int
 * @param {vec2_object|vec2_object} vec2
@@ -10544,11 +10566,31 @@ mat4
 },
 
 /**
+ * @method getNodeBinding
+ * @return {cc.Node}
+ */
+getNodeBinding : function (
+)
+{
+    return cc.Node;
+},
+
+/**
  * @method applyGLProgram
  * @param {mat4_object} arg0
  */
 applyGLProgram : function (
 mat4 
+)
+{
+},
+
+/**
+ * @method setNodeBinding
+ * @param {cc.Node} arg0
+ */
+setNodeBinding : function (
+node 
 )
 {
 },
@@ -10561,6 +10603,18 @@ mat4
 setUniformInt : function(
 str,
 int 
+)
+{
+},
+
+/**
+ * @method setParameterAutoBinding
+ * @param {String} arg0
+ * @param {String} arg1
+ */
+setParameterAutoBinding : function (
+str, 
+str 
 )
 {
 },
@@ -16202,6 +16256,200 @@ ProtectedNode : function (
 };
 
 /**
+ * @class Image
+ */
+cc.Image = {
+
+/**
+ * @method hasPremultipliedAlpha
+ * @return {bool}
+ */
+hasPremultipliedAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getDataLen
+ * @return {long}
+ */
+getDataLen : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method saveToFile
+ * @param {String} arg0
+ * @param {bool} arg1
+ * @return {bool}
+ */
+saveToFile : function (
+str, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method hasAlpha
+ * @return {bool}
+ */
+hasAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isCompressed
+ * @return {bool}
+ */
+isCompressed : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getHeight
+ * @return {int}
+ */
+getHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithImageFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithImageFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getWidth
+ * @return {int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBitPerPixel
+ * @return {int}
+ */
+getBitPerPixel : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFileType
+ * @return {cc.Image::Format}
+ */
+getFileType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNumberOfMipmaps
+ * @return {int}
+ */
+getNumberOfMipmaps : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRenderFormat
+ * @return {cc.Texture2D::PixelFormat}
+ */
+getRenderFormat : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getData
+ * @return {unsigned char}
+ */
+getData : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMipmaps
+ * @return {cc._MipmapInfo}
+ */
+getMipmaps : function (
+)
+{
+    return cc._MipmapInfo;
+},
+
+/**
+ * @method initWithRawData
+ * @param {unsigned char} arg0
+ * @param {long} arg1
+ * @param {int} arg2
+ * @param {int} arg3
+ * @param {int} arg4
+ * @param {bool} arg5
+ * @return {bool}
+ */
+initWithRawData : function (
+char, 
+long, 
+int, 
+int, 
+int, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPVRImagesHavePremultipliedAlpha
+ * @param {bool} arg0
+ */
+setPVRImagesHavePremultipliedAlpha : function (
+bool 
+)
+{
+},
+
+/**
+ * @method Image
+ * @constructor
+ */
+Image : function (
+)
+{
+},
+
+};
+
+/**
  * @class Sprite
  */
 cc.Sprite = {
@@ -16473,6 +16721,16 @@ getTextureRect : function (
 },
 
 /**
+ * @method debugDraw
+ * @param {bool} arg0
+ */
+debugDraw : function (
+bool 
+)
+{
+},
+
+/**
  * @method initWithFile
 * @param {String|String} str
 * @param {rect_object} rect
@@ -16549,258 +16807,10 @@ rect
 },
 
 /**
- * @method create
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {cc.Sprite|cc.Sprite|cc.Sprite}
-*/
-create : function(
-str,
-rect 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object} rect
-* @param {bool} bool
-* @return {cc.Sprite|cc.Sprite}
-*/
-createWithTexture : function(
-texture2d,
-rect,
-bool 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrameName
- * @param {String} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrameName : function (
-str 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrame
- * @param {cc.SpriteFrame} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrame : function (
-spriteframe 
-)
-{
-    return cc.Sprite;
-},
-
-/**
  * @method Sprite
  * @constructor
  */
 Sprite : function (
-)
-{
-},
-
-};
-
-/**
- * @class Image
- */
-cc.Image = {
-
-/**
- * @method hasPremultipliedAlpha
- * @return {bool}
- */
-hasPremultipliedAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getDataLen
- * @return {long}
- */
-getDataLen : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method saveToFile
- * @param {String} arg0
- * @param {bool} arg1
- * @return {bool}
- */
-saveToFile : function (
-str, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method hasAlpha
- * @return {bool}
- */
-hasAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isCompressed
- * @return {bool}
- */
-isCompressed : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getHeight
- * @return {int}
- */
-getHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithImageFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithImageFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method getWidth
- * @return {int}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getBitPerPixel
- * @return {int}
- */
-getBitPerPixel : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getFileType
- * @return {cc.Image::Format}
- */
-getFileType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getNumberOfMipmaps
- * @return {int}
- */
-getNumberOfMipmaps : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getRenderFormat
- * @return {cc.Texture2D::PixelFormat}
- */
-getRenderFormat : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getData
- * @return {unsigned char}
- */
-getData : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMipmaps
- * @return {cc._MipmapInfo}
- */
-getMipmaps : function (
-)
-{
-    return cc._MipmapInfo;
-},
-
-/**
- * @method initWithRawData
- * @param {unsigned char} arg0
- * @param {long} arg1
- * @param {int} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @param {bool} arg5
- * @return {bool}
- */
-initWithRawData : function (
-char, 
-long, 
-int, 
-int, 
-int, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method setPVRImagesHavePremultipliedAlpha
- * @param {bool} arg0
- */
-setPVRImagesHavePremultipliedAlpha : function (
-bool 
-)
-{
-},
-
-/**
- * @method Image
- * @constructor
- */
-Image : function (
 )
 {
 },
@@ -18441,7 +18451,7 @@ cc.Camera = {
 
 /**
  * @method getDepth
- * @return {int}
+ * @return {char}
  */
 getDepth : function (
 )
@@ -18460,6 +18470,14 @@ getViewProjectionMatrix : function (
 },
 
 /**
+ * @method applyViewport
+ */
+applyViewport : function (
+)
+{
+},
+
+/**
  * @method lookAt
  * @param {vec3_object} arg0
  * @param {vec3_object} arg1
@@ -18467,6 +18485,14 @@ getViewProjectionMatrix : function (
 lookAt : function (
 vec3, 
 vec3 
+)
+{
+},
+
+/**
+ * @method apply
+ */
+apply : function (
 )
 {
 },
@@ -18504,11 +18530,21 @@ float
 },
 
 /**
- * @method setDepth
- * @param {int} arg0
+ * @method setAdditionalProjection
+ * @param {mat4_object} arg0
  */
-setDepth : function (
-int 
+setAdditionalProjection : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setViewport
+ * @param {cc.experimental::Viewport} arg0
+ */
+setViewport : function (
+viewport 
 )
 {
 },
@@ -18562,11 +18598,21 @@ float
 },
 
 /**
- * @method setAdditionalProjection
- * @param {mat4_object} arg0
+ * @method getRenderOrder
+ * @return {int}
  */
-setAdditionalProjection : function (
-mat4 
+getRenderOrder : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDepth
+ * @param {char} arg0
+ */
+setDepth : function (
+char 
 )
 {
 },
@@ -18646,6 +18692,24 @@ getFarPlane : function (
 },
 
 /**
+ * @method applyFrameBufferObject
+ */
+applyFrameBufferObject : function (
+)
+{
+},
+
+/**
+ * @method setFrameBufferObject
+ * @param {cc.experimental::FrameBuffer} arg0
+ */
+setFrameBufferObject : function (
+framebuffer 
+)
+{
+},
+
+/**
  * @method initPerspective
  * @param {float} arg0
  * @param {float} arg1
@@ -18661,6 +18725,34 @@ float
 )
 {
     return false;
+},
+
+/**
+ * @method createOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {cc.Camera}
+ */
+createOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method getVisitingCamera
+ * @return {cc.Camera}
+ */
+getVisitingCamera : function (
+)
+{
+    return cc.Camera;
 },
 
 /**
@@ -18692,21 +18784,23 @@ float
 },
 
 /**
- * @method createOrthographic
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {cc.Camera}
+ * @method getDefaultViewport
+ * @return {cc.experimental::Viewport}
  */
-createOrthographic : function (
-float, 
-float, 
-float, 
-float 
+getDefaultViewport : function (
 )
 {
-    return cc.Camera;
+    return cc.experimental::Viewport;
+},
+
+/**
+ * @method setDefaultViewport
+ * @param {cc.experimental::Viewport} arg0
+ */
+setDefaultViewport : function (
+viewport 
+)
+{
 },
 
 /**
@@ -18714,16 +18808,6 @@ float
  * @return {cc.Camera}
  */
 getDefaultCamera : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method getVisitingCamera
- * @return {cc.Camera}
- */
-getVisitingCamera : function (
 )
 {
     return cc.Camera;
@@ -19869,16 +19953,6 @@ getStateBlock : function (
 )
 {
     return cc.RenderState::StateBlock;
-},
-
-/**
- * @method getTextures
- * @return {Array}
- */
-getTextures : function (
-)
-{
-    return new Array();
 },
 
 /**
@@ -22170,16 +22244,6 @@ isEnabled : function (
 },
 
 /**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
  * @method getOwner
  * @return {cc.Node}
  */
@@ -22200,16 +22264,6 @@ init : function (
 },
 
 /**
- * @method setOwner
- * @param {cc.Node} arg0
- */
-setOwner : function (
-node 
-)
-{
-},
-
-/**
  * @method getName
  * @return {String}
  */
@@ -22217,6 +22271,16 @@ getName : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
 },
 
 /**
@@ -22540,75 +22604,6 @@ getInstance : function (
 )
 {
     return cc.SimpleAudioEngine;
-},
-
-};
-
-/**
- * @class SpritePolygonCache
- */
-cc.SpritePolygonCache = {
-
-/**
- * @method isSpritePolygonCachExist
- * @param {String} arg0
- * @param {rect_object} arg1
- * @return {bool}
- */
-isSpritePolygonCachExist : function (
-str, 
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method removeAllSpritePolygonCache
- */
-removeAllSpritePolygonCache : function (
-)
-{
-},
-
-/**
- * @method removeSpritePolygonCache
- * @param {String} arg0
- * @param {rect_object} arg1
- */
-removeSpritePolygonCache : function (
-str, 
-rect 
-)
-{
-},
-
-/**
- * @method destroyInstance
- */
-destroyInstance : function (
-)
-{
-},
-
-/**
- * @method printInfo
- * @param {cc._SpritePolygonInfo} arg0
- */
-printInfo : function (
-_spritepolygoninfo 
-)
-{
-},
-
-/**
- * @method getInstance
- * @return {cc.SpritePolygonCache}
- */
-getInstance : function (
-)
-{
-    return cc.SpritePolygonCache;
 },
 
 };

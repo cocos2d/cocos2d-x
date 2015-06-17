@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
-
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -602,6 +602,8 @@ void RenderTexture::onEnd()
 
     // restore viewport
     director->setViewport();
+    const auto& vp = Camera::getDefaultViewport();
+    glViewport(vp._left, vp._bottom, vp._width, vp._height);
     //
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);

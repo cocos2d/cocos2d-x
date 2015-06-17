@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -59,6 +59,16 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
     virtual bool isEnabled() const override;
     virtual void setEnabled(bool b) override;
     virtual bool serialize(void* r) override;
@@ -98,8 +108,8 @@ public:
     void setLoop(bool bLoop);
     bool isLoop();
 private:
-	std::string _filePath;
-	bool _loop;
+    std::string _filePath;
+    bool _loop;
 };
 
 }

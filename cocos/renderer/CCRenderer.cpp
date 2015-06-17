@@ -482,6 +482,9 @@ void Renderer::processRenderCommand(RenderCommand* command)
             
             if(cmd->isSkipBatching())
             {
+                // XXX: execute() will call bind() and unbind()
+                // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
+                // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
                 cmd->execute();
             }
             else
@@ -693,6 +696,7 @@ void Renderer::clear()
 {
     //Enable Depth mask to make sure glClear clear the depth buffer correctly
     glDepthMask(true);
+    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDepthMask(false);
 
@@ -1060,7 +1064,6 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 }
 
 NS_CC_END

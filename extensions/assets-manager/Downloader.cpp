@@ -288,6 +288,7 @@ Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void
     curl_easy_setopt(header, CURLOPT_URL, srcUrl.c_str());
     curl_easy_setopt(header, CURLOPT_HEADER, 1);
     curl_easy_setopt(header, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(header, CURLOPT_NOSIGNAL, 1);
     if (curl_easy_perform(header) == CURLE_OK)
     {
         char *url;
@@ -296,16 +297,24 @@ Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void
         curl_easy_getinfo(header, CURLINFO_CONTENT_TYPE, &contentType);
         curl_easy_getinfo(header, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &info.contentSize);
         curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &info.responseCode);
-        info.url = url;
-        info.contentType = contentType;
-        info.valid = true;
         
-        if (_onHeader)
+        if (contentType == nullptr || info.contentSize == -1 || info.responseCode >= 400)
         {
-            _onHeader(srcUrl, info);
+            info.valid = false;
+        }
+        else
+        {
+            info.url = url;
+            info.contentType = contentType;
+            info.valid = true;
         }
     }
-    else
+    
+    if (info.valid && _onHeader)
+    {
+        _onHeader(srcUrl, info);
+    }
+    else if (!info.valid)
     {
         info.contentSize = -1;
         std::string msg = StringUtils::format("Can not get content size of file (%s) : Request header failed", srcUrl.c_str());
@@ -323,6 +332,11 @@ long Downloader::getContentSize(const std::string &srcUrl)
 {
     HeaderInfo info = prepareHeader(srcUrl);
     return info.contentSize;
+}
+
+Downloader::HeaderInfo Downloader::getHeader(const std::string &srcUrl)
+{
+    return prepareHeader(srcUrl);
 }
 
 void Downloader::getHeaderAsync(const std::string &srcUrl, const HeaderCallback &callback)
@@ -401,25 +415,26 @@ void Downloader::downloadToBuffer(const std::string &srcUrl, const std::string &
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        _fileUtils->removeFile(data.path + data.name + TEMP_EXT);
-        std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
+        std::string msg = StringUtils::format("Unable to download file to buffer: [curl error]%s", curl_easy_strerror(res));
         this->notifyError(msg, customId, res);
+    }
+    else
+    {
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            if (!ptr.expired())
+            {
+                std::shared_ptr<Downloader> downloader = ptr.lock();
+                
+                auto successCB = downloader->getSuccessCallback();
+                if (successCB != nullptr)
+                {
+                    successCB(data.url, "", data.customId);
+                }
+            }
+        });
     }
     
     curl_easy_cleanup(curl);
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-        if (!ptr.expired())
-        {
-            std::shared_ptr<Downloader> downloader = ptr.lock();
-            
-            auto successCB = downloader->getSuccessCallback();
-            if (successCB != nullptr)
-            {
-                successCB(data.url, "", data.customId);
-            }
-        }
-    });
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)

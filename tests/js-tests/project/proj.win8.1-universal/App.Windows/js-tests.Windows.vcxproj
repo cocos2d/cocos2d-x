@@ -119,7 +119,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4800;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
@@ -129,11 +129,26 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4800;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
@@ -143,11 +158,23 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4800;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
@@ -157,11 +184,26 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4800;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
@@ -171,11 +213,23 @@
       <Command>
       </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4800;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
@@ -183,11 +237,26 @@
     </ClCompile>
     <PreBuildEvent>
     </PreBuildEvent>
+    <Link>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PostBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>4800;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4800;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
@@ -200,6 +269,18 @@ xcopy "$(EngineRoot)external\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRo
 xcopy "$(EngineRoot)external\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /eiycq
 </Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>echo "Copying Windows 8.1 Universal App JavaScript template files"
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLESPage.xaml.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\OpenGLES.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq
+xcopy "$(EngineRoot)cocos\platform\win8.1-universal\cocos2d-js\pch.h" "$(EngineRoot)templates\js-template-default\frameworks\runtime-src\proj.win8.1-universal\App.Shared\*" /iycq</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

@@ -316,7 +316,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         auto labelHeightPixel = theLabel->_labelHeight * contentScaleFactor;
         if (totalHeight > labelHeightPixel)
         {
-            int numLines = labelHeightPixel / theLabel->_commonLineHeight;
+            int numLines = MIN(ceil(labelHeightPixel / theLabel->_commonLineHeight), theLabel->_currNumLines);
             totalHeight = numLines * theLabel->_commonLineHeight;
         }
         switch (theLabel->_vAlignment)
@@ -379,7 +379,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             nextFontPositionY -= theLabel->_commonLineHeight;
             
             theLabel->recordPlaceholderInfo(i);
-            if(nextFontPositionY < theLabel->_commonLineHeight)
+            if(nextFontPositionY < 0.f)
                 break;
 
             lineStart = true;
@@ -407,7 +407,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             }
         }
         
-        letterPosition.x = (nextFontPositionX + charXOffset + kernings[i]) / contentScaleFactor;
+        letterPosition.x = (nextFontPositionX + charXOffset) / contentScaleFactor;
         letterPosition.y = (nextFontPositionY - charYOffset) / contentScaleFactor;
                
         if( theLabel->recordLetterInfo(letterPosition, tempDefinition, i) == false)
@@ -417,6 +417,10 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         }
         
         nextFontPositionX += charAdvance + theLabel->_additionalKerning;
+        if (i < stringLen - 1)
+        {
+            nextFontPositionX += kernings[i + 1];
+        }
         
         auto letterRight = letterPosition.x + tempDefinition.width;
         if (longestLine < letterRight)

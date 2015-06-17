@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -59,6 +59,16 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
     virtual void update(float delta) override;
     virtual bool isEnabled() const override;
     virtual void setEnabled(bool b) override;

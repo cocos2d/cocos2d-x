@@ -186,7 +186,7 @@
                         widget.pushBackCustomItem(child);
                     } else {
                         if(!(widget instanceof ccui.Layout)) {
-                            if(child.getPositionType() == ccui.Widget.POSITION_PERCENT) {
+                            if(child.getPositionType() === ccui.Widget.POSITION_PERCENT) {
                                 var position = child.getPositionPercent();
                                 var anchor = widget.getAnchorPoint();
                                 child.setPositionPercent(cc.p(position.x + anchor.x, position.y + anchor.y));
@@ -203,7 +203,7 @@
 
     var getPath = function(res, type, path, cb){
         if(path){
-            if(type == 0)
+            if(type === 0)
                 cb(res + path, type);
             else
                 cb(path, type);

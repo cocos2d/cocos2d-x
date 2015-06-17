@@ -1054,9 +1054,16 @@ void Effect3DOutline::draw(const Mat4 &transform)
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
         glDisable(GL_DEPTH_TEST);
         glCullFace(GL_BACK);
         glDisable(GL_CULL_FACE);
+
+        // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+        // But if users must call GL directly, they should update the state manually,
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
+        RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+        RenderState::StateBlock::_defaultState->setCullFace(false);
     }
 }
 
