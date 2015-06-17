@@ -16,6 +16,7 @@
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_navmesh_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_physics3d_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="..\manual\js_manual_conversions.cpp" />
     <ClCompile Include="..\manual\localstorage\js_bindings_system_functions.cpp" />
     <ClCompile Include="..\manual\localstorage\js_bindings_system_registration.cpp" />
+    <ClCompile Include="..\manual\navmesh\jsb_cocos2dx_navmesh_manual.cpp" />
     <ClCompile Include="..\manual\network\jsb_socketio.cpp" />
     <ClCompile Include="..\manual\network\jsb_websocket.cpp" />
     <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp" />
@@ -53,6 +55,7 @@
     <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_navmesh_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_physics3d_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp" />
@@ -82,6 +85,7 @@
     <ClInclude Include="..\manual\localstorage\js_bindings_system_functions.h" />
     <ClInclude Include="..\manual\localstorage\js_bindings_system_functions_registration.h" />
     <ClInclude Include="..\manual\localstorage\js_bindings_system_registration.h" />
+    <ClInclude Include="..\manual\navmesh\jsb_cocos2dx_navmesh_manual.h" />
     <ClInclude Include="..\manual\network\jsb_socketio.h" />
     <ClInclude Include="..\manual\network\jsb_websocket.h" />
     <ClInclude Include="..\manual\network\XMLHTTPRequest.h" />
