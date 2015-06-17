@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -75,7 +75,7 @@ public:
      */
     static ArmatureAnimation *create(Armature *armature);
 public:
-	/**
+    /**
      * @js ctor
      */
     ArmatureAnimation();
@@ -275,13 +275,13 @@ protected:
     //! Scale the animation speed
     float _speedScale;
 
-    MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
+    MovementData *_movementData;                //! MovementData save all MovementFrameDatas this animation used.
 
-    Armature *_armature;						//! A weak reference of armature
+    Armature *_armature;                        //! A weak reference of armature
 
-    std::string _movementID;				//! Current movment's name
+    std::string _movementID;                //! Current movment's name
 
-    int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int _toIndex;                                //! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     cocos2d::Vector<Tween*> _tweenList;
 

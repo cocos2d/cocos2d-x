@@ -355,6 +355,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.cpp" />
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="..\..\external\clipper\clipper.cpp" />
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c" />
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
     <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
@@ -668,6 +669,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCAnimation.cpp" />
     <ClCompile Include="CCAnimationCache.cpp" />
     <ClCompile Include="CCAtlasNode.cpp" />
+    <ClCompile Include="CCAutoPolygon.cpp" />
     <ClCompile Include="CCCamera.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCClippingRectangleNode.cpp" />
@@ -721,9 +723,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCTransitionPageTurn.cpp" />
     <ClCompile Include="CCTransitionProgress.cpp" />
     <ClCompile Include="CCTweenFunction.cpp" />
-    <ClCompile Include="MarchingSquare.cpp" />
-    <ClCompile Include="SpritePolygon.cpp" />
-    <ClCompile Include="SpritePolygonCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManager.h" />
@@ -903,6 +902,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h" />
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="..\..\external\clipper\clipper.hpp" />
     <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\external\flatbuffers\flatbuffers.h" />
@@ -1275,6 +1275,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCAnimation.h" />
     <ClInclude Include="CCAnimationCache.h" />
     <ClInclude Include="CCAtlasNode.h" />
+    <ClInclude Include="CCAutoPolygon.h" />
     <ClInclude Include="CCCamera.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCClippingRectangleNode.h" />
@@ -1328,9 +1329,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCTransitionPageTurn.h" />
     <ClInclude Include="CCTransitionProgress.h" />
     <ClInclude Include="CCTweenFunction.h" />
-    <ClInclude Include="MarchingSquare.h" />
-    <ClInclude Include="SpritePolygon.h" />
-    <ClInclude Include="SpritePolygonCache.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\3d\CCAnimationCurve.inl" />

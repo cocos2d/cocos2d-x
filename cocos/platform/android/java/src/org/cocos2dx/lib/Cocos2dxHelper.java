@@ -74,10 +74,10 @@ public class Cocos2dxHelper {
     private static Activity sActivity = null;
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
-	//Enhance API modification begin
+    //Enhance API modification begin
     private static IGameTuningService mGameServiceBinder = null;
     private static final int BOOST_TIME = 7;
-	//Enhance API modification end
+    //Enhance API modification end
 
     // ===========================================================
     // Constructors
@@ -116,26 +116,26 @@ public class Cocos2dxHelper {
             sInited = true;
             
             //Enhance API modification begin
-			Intent serviceIntent = new Intent(IGameTuningService.class.getName());
-			serviceIntent.setPackage("com.enhance.gameservice");
+            Intent serviceIntent = new Intent(IGameTuningService.class.getName());
+            serviceIntent.setPackage("com.enhance.gameservice");
             boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
             //Enhance API modification end
         }
     }
     
     //Enhance API modification begin
-	private static ServiceConnection connection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			mGameServiceBinder = IGameTuningService.Stub.asInterface(service);
-			fastLoading(BOOST_TIME);
-		}
+    private static ServiceConnection connection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mGameServiceBinder = IGameTuningService.Stub.asInterface(service);
+            fastLoading(BOOST_TIME);
+        }
 
-		public void onServiceDisconnected(ComponentName name) {
-			sActivity.getApplicationContext().unbindService(connection);
-		}
-	};
-	//Enhance API modification end
-	
+        public void onServiceDisconnected(ComponentName name) {
+            sActivity.getApplicationContext().unbindService(connection);
+        }
+    };
+    //Enhance API modification end
+    
     public static Activity getActivity() {
         return sActivity;
     }
@@ -530,64 +530,64 @@ public class Cocos2dxHelper {
     }
 
     //Enhance API modification begin
-	public static int setResolutionPercent(int per) {
-		try {
-			if (mGameServiceBinder != null) {
-				return mGameServiceBinder.setPreferredResolution(per);
-			}
-			return -1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
+    public static int setResolutionPercent(int per) {
+        try {
+            if (mGameServiceBinder != null) {
+                return mGameServiceBinder.setPreferredResolution(per);
+            }
+            return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
-	public static int setFPS(int fps) {
-		try {
-			if (mGameServiceBinder != null) {
-				return mGameServiceBinder.setFramePerSecond(fps);
-			}
-			return -1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
+    public static int setFPS(int fps) {
+        try {
+            if (mGameServiceBinder != null) {
+                return mGameServiceBinder.setFramePerSecond(fps);
+            }
+            return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
-	public static int fastLoading(int sec) {
-		try {
-			if (mGameServiceBinder != null) {
-				return mGameServiceBinder.boostUp(sec);
-			}
-			return -1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
+    public static int fastLoading(int sec) {
+        try {
+            if (mGameServiceBinder != null) {
+                return mGameServiceBinder.boostUp(sec);
+            }
+            return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
-	public static int getTemperature() {
-		try {
-			if (mGameServiceBinder != null) {
-				return mGameServiceBinder.getAbstractTemperature();
-			}
-			return -1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
+    public static int getTemperature() {
+        try {
+            if (mGameServiceBinder != null) {
+                return mGameServiceBinder.getAbstractTemperature();
+            }
+            return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
-	public static int setLowPowerMode(boolean enable) {
-		try {
-			if (mGameServiceBinder != null) {
-				return mGameServiceBinder.setGamePowerSaving(enable);
-			}
-			return -1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
-    //Enhance API modification end	   
+    public static int setLowPowerMode(boolean enable) {
+        try {
+            if (mGameServiceBinder != null) {
+                return mGameServiceBinder.setGamePowerSaving(enable);
+            }
+            return -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    //Enhance API modification end     
 }
