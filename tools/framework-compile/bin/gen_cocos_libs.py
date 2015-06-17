@@ -59,7 +59,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
     try:
         sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE, shell=shell, bufsize=4096)
     except Exception, e:
-        print "execute command fail:%s" % cmdstring
+        print("execute command fail:%s" % cmdstring)
         raise e
 
     # subprocess.poll()方法：检查子进程是否结束了，如果结束了，设定并返回码，放在subprocess.returncode变量中
@@ -71,7 +71,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
 
     if 0 != sub.returncode :
         errStr = "[ERROR] execute command fail:%s" % cmdstring
-        print errStr
+        print(errStr)
         raise Exception(errStr)
 
     return sub.returncode
@@ -80,7 +80,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
 class CocosLibsCompiler(object):
 
     def __init__(self, args):
-        print "Compiler init function"
+        print("Compiler init function")
 
         # argsments check and set
         self.clean = args.clean
@@ -101,7 +101,7 @@ class CocosLibsCompiler(object):
         self.lib_dir = os.path.realpath(os.path.join(self.cur_dir, os.path.pardir, "libs"))
 
     def compile(self):
-        print "compile function"
+        print("compile function")
         if self.clean:
             self.clean_libs()
         if self.build_win:
@@ -124,7 +124,7 @@ class CocosLibsCompiler(object):
 
     def compile_win(self):
         if not os_is_win32():
-            print "this is not win platform, needn't compile"
+            print("this is not win platform, needn't compile")
             return
 
         win32_proj_info = {
@@ -244,9 +244,9 @@ class CocosLibsCompiler(object):
 
     def compile_mac_ios(self):
         if not os_is_mac():
-            print "this is not mac platform, needn't compile"
+            print("this is not mac platform, needn't compile")
             return
-        print "to compile mac"
+        print("to compile mac")
 
         xcode_proj_info = {
             "build/cocos2d_libs.xcodeproj" : {
@@ -282,21 +282,21 @@ class CocosLibsCompiler(object):
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphonesimulator ARCHS=\"i386 x86_64\" VALID_ARCHS=\"i386 x86_64\"", ios_sim_libs_dir)
             retVal = execute_command(build_cmd)
             if 0 != retVal:
-                print "[ERROR] compile ios simulator fail"
+                print("[ERROR] compile ios simulator fail")
                 return retVal
 
             # compile ios device
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphoneos", ios_dev_libs_dir)
             retVal = execute_command(build_cmd)
             if 0 != retVal:
-                print "[ERROR] compile ios device fail"
+                print("[ERROR] compile ios device fail")
                 return retVal
 
             # compile mac
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s Mac" % target, "", mac_out_dir)
             retVal = execute_command(build_cmd)
             if 0 != retVal:
-                print "[ERROR] compile mac fail"
+                print("[ERROR] compile mac fail")
                 return retVal
 
             # generate fat libs for iOS
@@ -320,7 +320,7 @@ class CocosLibsCompiler(object):
                 execute_command(mac_strip_cmd)
 
     def compile_android(self, language):
-        print "compile android"
+        print("compile android")
         # build .so for android
         CONSOLE_PATH = "tools/cocos2d-console/bin"
         SCRIPT_MK_PATH = "frameworks/runtime-src/proj.android/jni/Application.mk"
@@ -419,7 +419,7 @@ class CocosLibsCompiler(object):
             file_obj.close()
 
     def clean_libs(self):
-        print "to clean libs"
+        print("to clean libs")
         rmdir(self.lib_dir)
 
 
@@ -446,20 +446,20 @@ if __name__ == "__main__":
         args.all = True
 
     beginSecond = time.time()
-    print ">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond))
+    print(">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond)))
 
     compiler = CocosLibsCompiler(args)
     compiler.compile()
 
     endSecond = time.time()
-    print ">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond))
-    print ">>> End Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(endSecond))
+    print(">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond)))
+    print(">>> End Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(endSecond)))
     interSecond = endSecond - beginSecond
     interSecond = int(interSecond)
-    print ">>> Use Second %d" % interSecond
+    print(">>> Use Second %d" % interSecond)
     houre = interSecond/(60*60)
     interSecond = interSecond%(60*60)
     minute = interSecond/60
     second = interSecond%60
-    print ">>> Use Time %d:%d:%d" % (houre, minute, second)
+    print(">>> Use Time %d:%d:%d" % (houre, minute, second))
 

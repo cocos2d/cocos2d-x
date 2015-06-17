@@ -174,7 +174,7 @@ class VCXProject(object):
             else:
                 cur_mode = "Release"
 
-            print "event: %s" % event
+            print("event: %s" % event)
             event_node = self.get_node_if(cfg_node, event)
             cmd_node = self.get_node_if(event_node, eventItem)
             text_node = self.xmldoc.createTextNode(command)
