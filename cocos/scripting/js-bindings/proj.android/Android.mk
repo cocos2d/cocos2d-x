@@ -45,7 +45,6 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_studio_auto.cpp \
                    ../auto/jsb_cocos2dx_builder_auto.cpp \
                    ../auto/jsb_cocos2dx_ui_auto.cpp \
-                   ../auto/jsb_cocos2dx_experimental.cpp \
                    ../auto/jsb_cocos2dx_physics3d_auto.cpp \
                    ../manual/ScriptingCore.cpp \ \
                    ../manual/cocos2d_specifics.cpp \
@@ -74,7 +73,6 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../manual/network/XMLHTTPRequest.cpp \
                    ../manual/spine/jsb_cocos2dx_spine_manual.cpp \
                    ../manual/ui/jsb_cocos2dx_ui_manual.cpp \
-                   ../manual/experimental/jsb_cocos2dx_experimental_manual.cpp \
                    ../manual/physics3d/jsb_cocos2dx_physics3d_manual.cpp
 
 
