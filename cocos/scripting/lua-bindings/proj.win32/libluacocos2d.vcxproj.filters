@@ -76,6 +76,9 @@
     <Filter Include="manual\physics3d">
       <UniqueIdentifier>{3934b26e-18b0-465a-a89e-69a3417d107e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="manual\navmesh">
+      <UniqueIdentifier>{fa8be49e-8b79-4dc5-8f28-febde1347eda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\lua_cocos2dx_auto.cpp">
@@ -281,6 +284,15 @@
     </ClCompile>
     <ClCompile Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.cpp">
       <Filter>manual\physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_navmesh_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\lua_cocos2dx_navmesh_conversions.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\lua_cocos2dx_navmesh_manual.cpp">
+      <Filter>manual\navmesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +505,15 @@
     </ClInclude>
     <ClInclude Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.h">
       <Filter>manual\physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_navmesh_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\lua_cocos2dx_navmesh_conversions.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\lua_cocos2dx_navmesh_manual.h">
+      <Filter>manual\navmesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
