@@ -960,6 +960,9 @@
     <ClCompile Include="..\Classes\Scene3DTest\Scene3DTest.cpp">
       <Filter>Classes\Scene3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-ClippingNode.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1747,6 +1750,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene3DTest\Scene3DTest.h">
       <Filter>Classes\Scene3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-ClippingNode.h">
+      <Filter>Classes\BugsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
