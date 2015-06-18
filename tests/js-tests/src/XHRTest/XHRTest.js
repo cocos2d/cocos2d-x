@@ -107,10 +107,10 @@ var XHRTestLayer = cc.Layer.extend({
         //set arguments with <URL>?xxx=xxx&yyy=yyy
         if(cc.sys.isNative){
             xhr.open("GET", "http://geek.csdn.net/news/detail/33683", true);
-            xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
         }else{
             xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
         }
+        xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
 
         xhr.send();
     },
