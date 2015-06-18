@@ -190,6 +190,7 @@
         "src/SpritePolygonTest/SpritePolygonTest.js",
         "src/MaterialSystemTest/MaterialSystemTest.js",
         "src/TerrainTest/TerrainTest.js",
-        "src/Physics3DTest/Physics3DTest.js"
+        "src/Physics3DTest/Physics3DTest.js",
+        "src/NavMeshTest/NavMeshTest.js"
     ]
 }

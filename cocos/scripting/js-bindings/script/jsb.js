@@ -140,3 +140,6 @@ if (jsb.ParticleSystem3D) {
 
 if (jsb.Physics3DObject)
     require("script/physics3d/jsb_physics3d.js");
+
+if(jsb.NavMeshAgent)
+    require("script/navmesh/jsb_navmesh.js");
