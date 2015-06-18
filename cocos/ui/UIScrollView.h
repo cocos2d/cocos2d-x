@@ -433,11 +433,8 @@ protected:
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    bool scrollChildrenVertical(float touchOffsetX, float touchOffsetY);
-    bool scrollChildrenHorizontal(float touchOffsetX, float touchOffestY);
-    bool scrollChildrenBoth(float touchOffsetX, float touchOffsetY);
-	bool scrollChildrenBothBouncing(float touchOffsetX, float touchOffsetY);
-	bool scrollChildrenBothNoBouncing(float touchOffsetX, float touchOffsetY);
+	bool scrollChildrenBouncing(float touchOffsetX, float touchOffsetY);
+	bool scrollChildrenNoBouncing(float touchOffsetX, float touchOffsetY);
 	
 	
 	//
