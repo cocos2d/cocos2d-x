@@ -53,7 +53,7 @@ var UIVideoPlayerTest = UIScene.extend({
                 video.resume();
             }},
             { name: "SEEKTO", func: function(){
-                var sec = ((Math.random() * 3) * 100 | 0) / 100;
+                var sec = ((Math.random() * 59) * 100 | 0) / 100;
                 cc.log("seekTo %f sec!", sec);
                 video.seekTo(sec);
             }},
