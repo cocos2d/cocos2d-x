@@ -9,7 +9,7 @@ jsb.NavMesh.UpdateFlags =
 };
 
 
-cc.NavMeshAgentParam = function(){
+jsb.NavMeshAgentParam = function(){
     this.radius = 0.6;
     this.height = 2;
     this.maxAcceleration = 8;
@@ -25,16 +25,16 @@ cc.NavMeshAgentParam = function(){
     this.queryFilterType = 0;
 }
 
-cc.navMeshAgentParam = function(){
-    return new cc.NavMeshAgentParam();
+jsb.navMeshAgentParam = function(){
+    return new jsb.NavMeshAgentParam();
 };
 
-cc.AgentUserData = function(){
+jsb.AgentUserData = function(){
     this.time = 0;
 };
 
-cc.agentUserData = function(){
-    return new cc.AgentUserData();
+jsb.agentUserData = function(){
+    return new jsb.AgentUserData();
 };
 
 jsb.NavMeshAgent.prototype.setUserData = cc.Node.prototype.setUserData;
