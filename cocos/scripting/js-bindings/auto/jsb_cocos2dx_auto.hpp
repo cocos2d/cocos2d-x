@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocos2d_Texture2D_class;
 extern JSObject *jsb_cocos2d_Texture2D_prototype;
 

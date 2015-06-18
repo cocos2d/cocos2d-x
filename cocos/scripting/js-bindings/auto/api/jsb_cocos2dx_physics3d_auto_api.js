@@ -965,22 +965,6 @@ removeAllPhysics3DConstraints : function (
 },
 
 /**
- * @method rayCast
- * @param {vec3_object} arg0
- * @param {vec3_object} arg1
- * @param {cc.Physics3DWorld::HitResult} arg2
- * @return {bool}
- */
-rayCast : function (
-vec3, 
-vec3, 
-hitresult 
-)
-{
-    return false;
-},
-
-/**
  * @method getGravity
  * @return {vec3_object}
  */
