@@ -391,7 +391,10 @@ function Physics3DConstraintDemo:extend()
     component:syncNodeToPhysics()
 
     local frameInA = cc.mat4.createRotationZ(cc.mat4.createIdentity(), math.pi / 2)
-    local frameInB = frameInA
+    local frameInB = {}
+    for i=1,16 do
+        frameInB[i] = frameInA[i]
+    end
     frameInA[14] = -5.0
     frameInB[14] = 5.0
     constraint = cc.Physics3DSliderConstraint:create(rigidBody, rigidBodyB, frameInA, frameInB, false)
