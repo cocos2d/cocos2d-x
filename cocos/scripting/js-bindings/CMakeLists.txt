@@ -82,6 +82,7 @@ include_directories(
   manual/spine
   manual/navmesh
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
+  ${cocos_root}/cocos
   ${cocos_root}/cocos/base
   ${cocos_root}/cocos/2d
   ${cocos_root}/cocos/3d
