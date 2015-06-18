@@ -43,7 +43,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
     sub = None
     try:
         sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE, shell=shell, bufsize=4096)
-    except Exception, e:
+    except Exception as e:
         print("execute command fail:%s" % cmdstring)
         raise e
 

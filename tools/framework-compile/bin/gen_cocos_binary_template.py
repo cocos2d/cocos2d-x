@@ -20,7 +20,7 @@ class CocosBinTemplateGenerator(object):
         self.is_for_package = False
         try:
             self.is_for_package = args.is_for_package
-        except Exception, e:
+        except Exception as e:
             print("[Warn] %s" % e)
 
     def generate(self):
@@ -33,7 +33,6 @@ class CocosBinTemplateGenerator(object):
         excopy.copy_files_in_dir(self.template_dir, os.path.join(self.repo_x, "templates"))
 
     def clean_template(self):
-        import shutil
         rmdir(self.template_dir)
         rmdir(os.path.join(self.repo_x, "templates", "cpp-template-binary"))
         rmdir(os.path.join(self.repo_x, "templates", "lua-template-binary"))

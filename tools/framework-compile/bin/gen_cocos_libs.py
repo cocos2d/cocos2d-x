@@ -6,6 +6,9 @@ import sys
 import time
 import shutil
 import excopy
+import json
+from custom_error import CustomError
+from custom_error import Logging
 from utils_cocos import rmdir
 from argparse import ArgumentParser
 
@@ -58,7 +61,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
     sub = None
     try:
         sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE, shell=shell, bufsize=4096)
-    except Exception, e:
+    except Exception as e:
         print("execute command fail:%s" % cmdstring)
         raise e
 
@@ -78,11 +81,28 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
 
 
 class CocosLibsCompiler(object):
+    CFG_FILE = 'gen_libs_config.json'
+
+    KEY_LIBS_OUTPUT = 'libs_output_dir'
+    KEY_XCODE_PROJS_INFO = 'xcode_projs_info'
+    KEY_VS_PROJS_INFO = 'vs_projs_info'
+    CHECK_KEYS = [
+        KEY_LIBS_OUTPUT,
+        KEY_XCODE_PROJS_INFO,
+        KEY_VS_PROJS_INFO
+    ]
+
+    KEY_XCODE_TARGETS = 'targets'
+    KEY_VS_BUILD_TARGETS = 'build_targets'
+    KEY_VS_RENAME_TARGETS = 'rename_targets'
 
     def __init__(self, args):
         print("Compiler init function")
+        self.cur_dir = os.path.realpath(os.path.dirname(__file__))
+        self.cfg_file_path = os.path.join(self.cur_dir, CocosLibsCompiler.CFG_FILE)
+        self.parse_config()
 
-        # argsments check and set
+        # arguments check and set
         self.clean = args.clean
         self.build_win = args.win
         self.build_mac = args.mac
@@ -96,9 +116,23 @@ class CocosLibsCompiler(object):
             self.build_mac = True
             self.build_android = True
 
-        self.cur_dir = os.path.realpath(os.path.dirname(__file__))
         self.repo_x = os.path.realpath(self.repo_x)
-        self.lib_dir = os.path.realpath(os.path.join(self.cur_dir, os.path.pardir, "libs"))
+        self.lib_dir = os.path.normpath(os.path.join(self.repo_x, self.cfg_info[CocosLibsCompiler.KEY_LIBS_OUTPUT]))
+
+    def parse_config(self):
+        if not os.path.isfile(self.cfg_file_path):
+            raise CustomError('%s is not a valid config file.' % self.cfg_file_path, CustomError.ERROR_PATH_NOT_FOUND)
+
+        try:
+            f = open(self.cfg_file_path)
+            self.cfg_info = json.load(f)
+            f.close()
+        except:
+            raise CustomError('Parse %s failed.' % self.cfg_file_path, CustomError.ERROR_PARSE_FILE)
+
+        for k in CocosLibsCompiler.CHECK_KEYS:
+            if k not in self.cfg_info.keys():
+                raise CustomError('%s is not found in %s' % (k, self.cfg_file_path), CustomError.ERROR_WRONG_CONFIG)
 
     def compile(self):
         print("compile function")
@@ -127,35 +161,7 @@ class CocosLibsCompiler(object):
             print("this is not win platform, needn't compile")
             return
 
-        win32_proj_info = {
-            "build/cocos2d-win32.sln" : {
-                "outputdir" : self.lib_dir,
-                "build_targets" : [
-                    "libluacocos2d"
-                ],
-                "rename_targets" : [
-                    # "libcocos2d", "libluacocos2d", "libSpine", "libbox2d"
-                ]
-            },
-            "build/cocos2d-js-win32.sln" : {
-                "outputdir" : self.lib_dir,
-                "build_targets" : [
-                    "libjscocos2d"
-                ],
-                "rename_targets" : [
-                    # "libjscocos2d"
-                ]
-            },
-            "tools/simulator/frameworks/runtime-src/proj.win32/simulator.sln" : {
-                "outputdir" : self.lib_dir,
-                "build_targets" : [
-                    "libsimulator"
-                ],
-                "rename_targets" : [
-                    # "libsimulator"
-                ]
-            }
-        }
+        win32_proj_info = self.cfg_info[CocosLibsCompiler.KEY_VS_PROJS_INFO]
 
         import _winreg
         from utils_cocos import get_vs_cmd_path
@@ -179,7 +185,7 @@ class CocosLibsCompiler(object):
             raise Exception(message)
 
         for key in win32_proj_info.keys():
-            output_dir = os.path.join(win32_proj_info[key]["outputdir"], "windows")
+            output_dir = os.path.join(self.lib_dir, "win32")
 
             proj_path = os.path.join(self.repo_x, key)
 
@@ -210,7 +216,7 @@ class CocosLibsCompiler(object):
                 ])
                 execute_command(build_cmd)
             else:
-                for proj_name in win32_proj_info[key]["build_targets"]:
+                for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_BUILD_TARGETS]:
                     # build the projects
                     self.build_win32_proj(vs_command, proj_path, proj_name, "build")
 
@@ -232,7 +238,7 @@ class CocosLibsCompiler(object):
                 shutil.copy(file_path, win32_output_dir)
 
             suffix = ""
-            for proj_name in win32_proj_info[key]["rename_targets"]:
+            for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_RENAME_TARGETS]:
                 src_name = os.path.join(win32_output_dir, "%s.lib" % proj_name)
                 dst_name = os.path.join(win32_output_dir, "%s%s.lib" % (proj_name, suffix))
                 if os.path.exists(src_name):
@@ -248,35 +254,17 @@ class CocosLibsCompiler(object):
             return
         print("to compile mac")
 
-        xcode_proj_info = {
-            "build/cocos2d_libs.xcodeproj" : {
-                "outputdir" : self.lib_dir,
-                "targets"   : "libcocos2d",
-            },
-            "cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj" : {
-                "outputdir" : self.lib_dir,
-                "targets"   : "libluacocos2d",
-            },
-            "cocos/scripting/js-bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj" : {
-                "outputdir" : self.lib_dir,
-                "targets"   : "libjscocos2d",
-            },
-            "tools/simulator/libsimulator/proj.ios_mac/libsimulator.xcodeproj" : {
-                "outputdir" : self.lib_dir,
-                "targets"   : "libsimulator",
-            }
-        }
+        xcode_proj_info = self.cfg_info[CocosLibsCompiler.KEY_XCODE_PROJS_INFO]
 
         XCODE_CMD_FMT = "xcodebuild -project \"%s\" -configuration Release -target \"%s\" %s CONFIGURATION_BUILD_DIR=%s"
         for key in xcode_proj_info.keys():
-            output_dir = xcode_proj_info[key]["outputdir"]
             proj_path = os.path.join(self.repo_x, key)
-            ios_out_dir = os.path.join(output_dir, "ios")
-            mac_out_dir = os.path.join(output_dir, "mac")
+            ios_out_dir = os.path.join(self.lib_dir, "ios")
+            mac_out_dir = os.path.join(self.lib_dir, "mac")
             ios_sim_libs_dir = os.path.join(ios_out_dir, "simulator")
             ios_dev_libs_dir = os.path.join(ios_out_dir, "device")
 
-            target = xcode_proj_info[key]["targets"]
+            target = xcode_proj_info[key][CocosLibsCompiler.KEY_XCODE_TARGETS]
 
             # compile ios simulator
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphonesimulator ARCHS=\"i386 x86_64\" VALID_ARCHS=\"i386 x86_64\"", ios_sim_libs_dir)
@@ -402,11 +390,11 @@ class CocosLibsCompiler(object):
     def trip_libs(self, strip_cmd, folder):
         if os_is_win32():
             for name in os.listdir(folder):
-                if name[-2:] != ".a":
-                    pass
-                full_name = os.path.join(folder, name)
-                command = "%s -S %s" % (strip_cmd, full_name)
-                execute_command(command)
+                basename, ext = os.path.splitext(name)
+                if ext == ".a":
+                    full_name = os.path.join(folder, name)
+                    command = "%s -S %s" % (strip_cmd, full_name)
+                    execute_command(command)
         else:
             strip_cmd = "%s -S %s/*.a" % (strip_cmd, folder)
             execute_command(strip_cmd)
@@ -431,7 +419,6 @@ if __name__ == "__main__":
     parser.add_argument('--mac', dest='mac', action="store_true", help='compile mac platform')
     parser.add_argument('--android', dest='android', action="store_true",help='complile android platform')
     parser.add_argument('--dis-strip', "--disable-strip", dest='disable_strip', action="store_true", help='Disable the strip of the generated libs.')
-    parser.add_argument('--repo-x',  dest='repo_x', help='Set the repo path of cocos2d-x.')
     parser.add_argument('--vs', dest='vs_version', help='visual studio version, such as 2013.', default=2013)
 
     (args, unknown) = parser.parse_known_args()
@@ -439,27 +426,35 @@ if __name__ == "__main__":
     if len(unknown) > 0:
         print("unknown arguments: %s" % unknown)
 
-    if args.repo_x is None:
-        print("ERROR! must set repo of cocos2d-x")
-        exit(1)
+    # Get the engine path
+    cur_dir = os.path.realpath(os.path.dirname(__file__))
+    args.repo_x = os.path.normpath(os.path.join(cur_dir, os.pardir, os.pardir, os.pardir))
+
     if not args.win and not args.mac and not args.android:
         args.all = True
 
     beginSecond = time.time()
     print(">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond)))
 
-    compiler = CocosLibsCompiler(args)
-    compiler.compile()
-
-    endSecond = time.time()
-    print(">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond)))
-    print(">>> End Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(endSecond)))
-    interSecond = endSecond - beginSecond
-    interSecond = int(interSecond)
-    print(">>> Use Second %d" % interSecond)
-    houre = interSecond/(60*60)
-    interSecond = interSecond%(60*60)
-    minute = interSecond/60
-    second = interSecond%60
-    print(">>> Use Time %d:%d:%d" % (houre, minute, second))
-
+    try:
+        compiler = CocosLibsCompiler(args)
+        compiler.compile()
+    except Exception as e:
+        if isinstance(e, CustomError):
+            Logging.error(' '.join(e.args))
+            err_no = e.get_error_no()
+            sys.exit(err_no)
+        else:
+            raise
+    finally:
+        endSecond = time.time()
+        print(">>> Bgein Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(beginSecond)))
+        print(">>> End Compile at %s" % time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(endSecond)))
+        interSecond = endSecond - beginSecond
+        interSecond = int(interSecond)
+        print(">>> Use Second %d" % interSecond)
+        houre = interSecond/(60*60)
+        interSecond = interSecond%(60*60)
+        minute = interSecond/60
+        second = interSecond%60
+        print(">>> Use Time %d:%d:%d" % (houre, minute, second))
