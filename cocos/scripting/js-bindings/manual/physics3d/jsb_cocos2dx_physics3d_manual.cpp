@@ -390,7 +390,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_rayCast(JSContext *cx, uint32_t argc, 
 void register_all_cocos2dx_physics3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
-    get_or_create_js_obj(cx, global, "cc", &ccObj);
+    get_or_create_js_obj(cx, global, "jsb", &ccObj);
 
     JS::RootedValue tmpVal(cx);
     JS_GetProperty(cx, ccObj, "PhysicsSprite3D", &tmpVal);
