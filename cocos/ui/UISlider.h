@@ -228,7 +228,7 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override the widget's hitTest function to perfom its own
-    virtual bool hitTest(const Vec2 &pt) override;
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     /**
      * Returns the "class name" of widget.
      */
@@ -251,7 +251,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     virtual void initRenderer() override;
-    float getPercentWithBallPos(float location)const;
+    float getPercentWithBallPos(const Vec2 &pt) const;
     void percentChangedEvent();
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
