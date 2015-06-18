@@ -299,6 +299,91 @@ bool js_cocos2dx_physics3d_Physics3dShape_createHeightfield(JSContext *cx, uint3
     return false;
 }
 
+
+bool jsval_to_Physics3DWorld_HitResult(JSContext *cx, JS::HandleValue v, cocos2d::Physics3DWorld::HitResult* ret)
+{
+    JS::RootedObject tmp(cx);
+    JS::RootedValue jshitPosition(cx);
+    JS::RootedValue jshitNormal(cx);
+    JS::RootedValue jshitObject(cx);
+    
+    bool ok = v.isObject() &&
+    JS_ValueToObject(cx, v, &tmp) &&
+    JS_GetProperty(cx, tmp, "hitPosition", &jshitPosition) &&
+    JS_GetProperty(cx, tmp, "hitNormal", &jshitNormal) &&
+    JS_GetProperty(cx, tmp, "hitObj", &jshitObject) &&
+    jsval_to_vector3(cx, jshitPosition, &(ret->hitPosition)) &&
+    jsval_to_vector3(cx, jshitNormal, &(ret->hitNormal));
+
+    JSB_PRECONDITION2(ok, cx, false, "jsval_to_Physics3DWorld_HitResult : Error processing arguments");
+    
+    js_proxy_t *proxy = jsb_get_js_proxy(jshitObject.toObjectOrNull());
+    ret->hitObj = (cocos2d::Physics3DObject *)(proxy ? proxy->ptr : nullptr);
+    
+    return true;
+}
+
+jsval Physics3DWorld_HitResult_to_jsval(JSContext *cx, const cocos2d::Physics3DWorld::HitResult& v)
+{
+    JS::RootedObject proto(cx);
+    JS::RootedObject parent(cx);
+    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, proto, parent));
+    if (!tmp) return JSVAL_NULL;
+    JS::RootedValue hitPosition(cx, vector3_to_jsval(cx, v.hitPosition));
+    JS::RootedValue hitNormal(cx, vector3_to_jsval(cx, v.hitNormal));
+    JS::RootedValue hitobject(cx);
+    
+    if (v.hitObj)
+    {
+        js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Physics3DObject>(cx, (cocos2d::Physics3DObject*)v.hitObj);
+        hitobject.set(OBJECT_TO_JSVAL(jsProxy->obj));
+    }
+    
+    bool ok = JS_DefineProperty(cx, tmp, "hitPosition", hitPosition, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "hitNormal", hitNormal, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "hitObj", hitobject, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    if (ok) {
+        return OBJECT_TO_JSVAL(tmp);
+    }
+    return JSVAL_NULL;
+}
+
+bool js_cocos2dx_physics3d_Physics3DWorld_rayCast(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : Invalid Native Object");
+    if (argc == 3) {
+        cocos2d::Vec3 arg0;
+        cocos2d::Vec3 arg1;
+        cocos2d::Physics3DWorld::HitResult arg2;
+        ok &= jsval_to_vector3(cx, args.get(0), &arg0);
+        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
+        ok &= jsval_to_Physics3DWorld_HitResult(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : Error processing arguments");
+        bool ret = cobj->rayCast(arg0, arg1, &arg2);
+        
+        if (ret)
+        {
+            jsval jsret = JSVAL_NULL;
+            jsret = Physics3DWorld_HitResult_to_jsval(cx, arg2);
+            args.rval().set(jsret);
+        }
+        else
+        {
+            args.rval().set(JSVAL_FALSE);
+        }
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+
 void register_all_cocos2dx_physics3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
@@ -319,6 +404,10 @@ void register_all_cocos2dx_physics3d_manual(JSContext *cx, JS::HandleObject glob
     JS_DefineFunction(cx, tmpObj, "createHeightfield", js_cocos2dx_physics3d_Physics3dShape_createHeightfield, 8, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Physics3DObject_prototype), "setCollisionCallback", jsb_cocos2d_Physics3DObject_setCollisionCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    
+    JS_GetProperty(cx, ccObj, "Physics3DWorld", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
+    JS_DefineFunction(cx, tmpObj, "rayCast", js_cocos2dx_physics3d_Physics3DWorld_rayCast, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 #endif //CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION

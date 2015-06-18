@@ -41,3 +41,18 @@ cc.Physics3DComponent.PhysicsSyncFlag = {
     PHYSICS_TO_NODE : 2, // align physics transform to the node
     NODE_AND_NODE : 1 | 2, //pre simulation, align the physics object to the node and align the node transform according to physics object after simulation
 };
+
+cc.HitResult = function(){
+  this.hitPosition = cc.math.vec3();
+  this.hitNormal   = cc.math.vec3();
+  this.hitObj      = null;
+}
+
+cc.hitResult = function(){
+    return new cc.HitResult();
+};
+
+cc.Physics3DObject.PhysicsObjType = {
+    UNKNOWN : 0,
+    RIGID_BODY : 1, 
+};
