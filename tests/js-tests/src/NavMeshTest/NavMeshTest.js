@@ -1,27 +1,61 @@
 var NavMeshTestIdx = -1;
 
 var physicsScene = null;
+var START_POS_X = -0.5;
+var START_POS_Y = -2.5;
+var START_POS_Z = -0.5;
 
-const START_POS_X = -0.5;
-const START_POS_Y = -2.5;
-const START_POS_Z = -0.5;
+var ARRAY_SIZE_X = 4;
+var ARRAY_SIZE_Y = 3;
+var ARRAY_SIZE_Z = 4;
 
-const ARRAY_SIZE_X = 4;
-const ARRAY_SIZE_Y = 3;
-const ARRAY_SIZE_Z = 4;
+var NavMeshTestScene = cc.Scene.extend({
 
-var NavMeshBaseTestDemo = cc.Layer.extend({
-    _title:"NavMesh Test",
-    _camera:null,
-    _needMoveAgents:null,
-    _agents:null
     ctor:function () {
         this._super();
 
+        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
+
+        var menu = new cc.Menu(menuItem);
+        menu.x = 0;
+        menu.y = 0;
+        menuItem.x = winSize.width - 50;
+        menuItem.y = 25;
+        this.addChild(menu);
+
+        this.initWithPhysics();
+        this.getPhysics3DWorld().setDebugDrawEnable(false);
+        physicsScene = this;     
+    },
+    onMainMenuCallback:function () {
+        var scene = new cc.Scene();
+        var layer = new TestController();
+        scene.addChild(layer);
+        director.runScene(scene);
+    },
+    runThisTest:function (num) {
+        director.runScene(this);
+    }
+
+});
+
+var NavMeshBaseTestDemo = NavMeshTestScene.extend({
+    _title:"NavMesh Test",
+    _camera:null,
+    _needMoveAgents:null,
+    _agents:[],
+    _angle:null,
+    ctor:function () {
+        this._super();
+
+        this._agents = [];
+        this._angle = 0.0;
+
         var size = cc.winSize;
         this._camera = cc.Camera.createPerspective(30.0, size.width / size.height, 1.0, 1000.0);
-        this._camera.setPosition3D(cc.math.cc.math.vec3(0, 50, 100));
-        this._camera.lookAt(cc.math.cc.math.vec3(0, 0, 0), cc.math.cc.math.vec3(0, 1, 0));
+        this._camera.setPosition3D(cc.math.vec3(0, 50, 100));
+        this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this.addChild(this._camera);
 
@@ -41,10 +75,10 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
         var trianglesList = jsb.Bundle3D.getTrianglesList("NavMesh/scene.obj");
         var rbDes = cc.physics3DRigidBodyDes();
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createMesh(trianglesList[0], trianglesList.length/3);
+        rbDes.shape = cc.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
         var rigidBody = cc.Physics3DRigidBody.create(rbDes);
         var component = cc.Physics3DComponent.create(rigidBody);
-        var sprite = cc.PhysicsSprite3D.create("NavMesh/scene.obj");
+        var sprite = jsb.Sprite3D.create("NavMesh/scene.obj");
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
@@ -53,32 +87,21 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
 
         var navMesh = jsb.NavMesh.create("NavMesh/all_tiles_tilecache.bin", "NavMesh/geomset.txt");
         navMesh.setDebugDrawEnable(true);
-        setNavMesh(navMesh);
-        setNavMeshDebugCamera(this._camera);
+        physicsScene.setNavMesh(navMesh);
+        physicsScene.setNavMeshDebugCamera(this._camera);
 
         var ambientLight = jsb.AmbientLight.create(cc.color(64, 64, 64));
         ambientLight.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(ambientLight);
 
-        var dirLight = jsb.DirectionLight.create(cc.math.cc.math.vec3(1.2f, -1.1f, 0.5f), cc.color(255, 255, 255));
+        var dirLight = jsb.DirectionLight.create(cc.math.vec3(1.2, -1.1, 0.5), cc.color(255, 255, 255));
         dirLight.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(dirLight);
     },
-    onMainMenuCallback:function () {
-        var scene = new cc.Scene();
-        var layer = new TestController();
-        scene.addChild(layer);
-        director.runScene(scene);
-    },
-    runThisTest:function (num) {
-        NavMeshTestIdx = (num || num == 0) ? (num - 1) : -1;
-        var layer = nextNavMeshTest();
-        this.addChild(layer);
-
-        director.runScene(this);
-    },
+    
     onTouchesBegan:function(touches, event){
         this._needMoveAgents = true;
+        return true;
     },
 
     onTouchesMoved:function(touches, event){
@@ -87,8 +110,8 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
             var delta = touch.getDelta();
 
             this._angle -= cc.degreesToRadians(delta.x);
-            this._camera.setPosition3D(cc.math.cc.math.vec3(100*Math.sin(this._angle), 50, 100*Math.cos(this._angle)));
-            this._camera.lookAt(cc.math.cc.math.vec3(0, 0, 0), cc.math.cc.math.vec3(0, 1, 0));
+            this._camera.setPosition3D(cc.math.vec3(100*Math.sin(this._angle), 50, 100*Math.cos(this._angle)));
+            this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
 
             if(delta.x * delta.x + delta.y + delta.y > 16)
                 this._needMoveAgents = false;
@@ -105,27 +128,25 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
             var farP = cc.math.vec3(location.x, location.y, 1);
             nearP = this._camera.unproject(nearP);
             farP = this._camera.unproject(farP);
-
-            var dir = cc.math.vec3Sub(farP, nearP);
-
-            var result = {};
-            this.getPhysics3DWorld().rayCast(nearp, farp, result);
+            cc.log("ray cast before");
+            var result = physicsScene.getPhysics3DWorld().rayCast(nearP, farP);
+            cc.log("ray cast after");
             this.moveAgents(result.hitPosition);
         }
-    }
+    },
 
     
     createAgent:function(pos){
         var filePath = "Sprite3DTest/girl.c3b";
-        var param = {};
+        var param = cc.navMeshAgentParam();
         param.radius = 2.0;
         param.height = 8.0;
         param.maxSpeed = 8.0;
-        var agent = jsb.NavMeshAgent.create(filePath);
+        var agent = jsb.NavMeshAgent.create(param);
         var agentNode = jsb.Sprite3D.create(filePath);
-        agent.setOrientationRefAxes(cc.math.cc.math.vec3(-1.0f, 0.0f, 1.0f));
+        agent.setOrientationRefAxes(cc.math.vec3(-1.0, 0.0, 1.0));
 
-        var data = {time:0};
+        var data = cc.agentUserData();
         agent.setUserData(data);
         agentNode.setScale(0.05);
         agentNode.addComponent(agent);
@@ -134,7 +155,7 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
         node.addChild(agentNode);
         node.setPosition3D(pos);
         node.setCameraMask(cc.CameraFlag.USER1);
-        this.addChild(node);
+        physicsScene.addChild(node);
 
         var animation = jsb.Animation3D.create(filePath);
         var animate = jsb.Animate3D.create(animation);
@@ -157,15 +178,16 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
         this.addChild(obstacleNode);
     },
 
-    jump:function(pV1, pV2, eight, t){
-        var pOut;
+    jump:function(pV1, pV2, height, t){
+        var pOut = cc.math.vec3();
         pOut.x = pV1.x + t * (pV2.x - pV1.x);
         pOut.y = pV1.y + t * (pV2.y - pV1.y);
         pOut.z = pV1.z + t * (pV2.z - pV1.z);
-        pOut.y += height * cc.math.sinf(cc.math.M_PI * t);
+        pOut.y += height * Math.sin(Math.PI * t);
         return pOut;
     },
     moveAgents:function(des){
+        var self = this;
         for (var index = 0; index < this._agents.length; index++){
             var callback = function(agent, totalTimeAfterMove){
                 var data = agent.getUserData();
@@ -174,7 +196,7 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
                     agent.setAutoOrientation(false);
                     var linkdata = agent.getCurrentOffMeshLinkData();
 
-                    agent.getOwner().setPosition3D(jump(linkdata.startPosition, linkdata.endPosition, 10.0, data.time));
+                    agent.getOwner().setPosition3D(self.jump(linkdata.startPosition, linkdata.endPosition, 10.0, data.time));
                     var dir = cc.math.vec3(linkdata.endPosition.x - linkdata.startPosition.x, 
                         linkdata.endPosition.y - linkdata.startPosition.y, linkdata.endPosition.z - linkdata.startPosition.z);
                     dir.y = 0.0;
@@ -182,14 +204,14 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
                     var axes;
                     var refAxes = cc.math.vec3(-1.0, 0.0, 1.0);
                     refAxes.normalize();
-                    cc.math.vec3.cross(refAxes, dir, &axes);
-                    float angle = cc.math.vec3.dot(refAxes, dir);
-                    agent.getOwner().setRotationQuat(Quaternion(axes, acosf(angle)));
+                    axes = cc.math.vec3Cross(refAxes, dir);
+                    var angle = cc.math.vec3Dot(refAxes, dir);
+                    agent.getOwner().setRotationQuat(cc.math.quaternion(axes, Math.acos(angle)));
                     data.time += 0.01;
                     if (1.0 < data.time){
                         agent.completeOffMeshLink();
                         agent.setAutoOrientation(true);
-                        data.time = 0.0f;
+                        data.time = 0.0;
                     }
                 }
             };
@@ -197,14 +219,15 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
         }
     },
     update:function(dt) {
+        this._super(dt);
         if (!this._agents)
         {
             return;
         }
 
         for (var index = 0; index < this._agents.length; index++){
-            var speed = this._agents[index]["agent"].getCurrentVelocity().length * 0.2
-            this._agents[index]["animate"].setSpeed(speed)
+            var speed = cc.math.vec3Length( this._agents[index]["agent"].getCurrentVelocity() ) * 0.2
+            this._agents[index]["animate"].setSpeed(0.0 < speed ? speed : 0.0)
         }
 
     },
@@ -248,25 +271,19 @@ var NavMeshBaseTestDemo = cc.Layer.extend({
     },
 
     onRestartCallback:function (sender) {
-        var s = new NavMeshTestScene();
-        s.addChild(restartNavMeshTest());
-        director.runScene(s);
+        director.runScene(restartNavMeshTest());
     },
 
     onNextCallback:function (sender) {
-        var s = new NavMeshTestScene();
-        s.addChild(nextNavMeshTest());
-        director.runScene(s);
+        director.runScene(nextNavMeshTest());
     },
 
     onBackCallback:function (sender) {
-        var s = new NavMeshTestScene();
-        s.addChild(previousNavMeshTest());
-        director.runScene(s);
+        director.runScene(previousNavMeshTest());
     }
 });
 
-var NavMeshBaseTestDemo = NavMeshBaseTestDemo.extend({
+var NavMeshBasicTestDemo = NavMeshBaseTestDemo.extend({
     _title:"Navigation Mesh Test",
     _subtitle:"Basic Test",
     ctor:function () {
@@ -274,12 +291,13 @@ var NavMeshBaseTestDemo = NavMeshBaseTestDemo.extend({
 
         var label = new cc.LabelTTF("DebugDraw OFF");
         var menuItem = new cc.MenuItemLabel(label, function(){
-            if(physicsScene.getPhysics3DWorld().isDebugDrawEnabled()){
-                physicsScene.getPhysics3DWorld().setDebugDrawEnable(false);
-                label.setString("DebugDraw OFF");
-            }else{
-                physicsScene.getPhysics3DWorld().setDebugDrawEnable(true);
-                label.setString("DebugDraw ON");
+            var enabledDebug = physicsScene.getNavMesh().isDebugDrawEnabled();
+            physicsScene.getNavMesh().setDebugDrawEnable(!enabledDebug);
+            if (enabledDebug){
+                label.setString("Debug Draw ON");
+            }
+            else{
+                label.setString("Debug Draw OFF");
             }
         }, this);
 
@@ -289,8 +307,12 @@ var NavMeshBaseTestDemo = NavMeshBaseTestDemo.extend({
         menuItem.setPosition(cc.p(cc.visibleRect.left.x, cc.visibleRect.top.y - 50));
         this.addChild(menu);
 
-        var result = {};
-        this.getPhysics3DWorld().rayCast(cc.math.vec3(0, 50, 0), cc.math.vec3(0, -50, 0), result);
+        
+    },
+    onEnter:function () {
+        this._super();
+
+        var result = physicsScene.getPhysics3DWorld().rayCast(cc.math.vec3(0, 50, 0), cc.math.vec3(0, -50, 0));
         this.createAgent(result.hitPosition);
     }
 });
@@ -304,61 +326,59 @@ var NavMeshAdvanceTestDemo = NavMeshBaseTestDemo.extend({
         var label = new cc.LabelTTF();
         var label2 = new cc.LabelTTF();
         var label3 = new cc.LabelTTF();
-        var menuItem = new cc.MenuItemFont("Create Obstacle", function(){
-            if(physicsScene.getPhysics3DWorld().isDebugDrawEnabled()){
-                physicsScene.getPhysics3DWorld().setDebugDrawEnable(false);
-                label.setString("DebugDraw OFF");
-            }else{
-                physicsScene.getPhysics3DWorld().setDebugDrawEnable(true);
-                label.setString("DebugDraw ON");
+        var self = this;
+        var menuItem = new cc.MenuItemLabel(new cc.LabelTTF("Create Obstacle"), function(){
+            var x = Math.random() * 100 - 50;
+            var z = Math.random() * 100 - 50;
+            var result = physicsScene.getPhysics3DWorld().rayCast(cc.math.vec3(x, 50, z), cc.math.vec3(x, -50, z));
+            self.createObstacle(result.hitPosition);
+        }, this);
+        var menuItem2 = new cc.MenuItemLabel(new cc.LabelTTF("Create Agent"), function(){
+            var x = Math.random() * 100 - 50;
+            var z = Math.random() * 100 - 50;
+            var result = physicsScene.getPhysics3DWorld().rayCast(cc.math.vec3(x, 50, z), cc.math.vec3(x, -50, z));
+            self.createAgent(result.hitPosition);
+        }, this);
+
+        var label = new cc.LabelTTF("DebugDraw OFF");
+        var menuItem3 = new cc.MenuItemLabel(label, function(){
+            var enabledDebug = physicsScene.getNavMesh().isDebugDrawEnabled();
+            physicsScene.getNavMesh().setDebugDrawEnable(!enabledDebug);
+            if (enabledDebug){
+                label.setString("Debug Draw ON");
             }
-        }, this);
-        var menuItem2 = new cc.MenuItemFont("Create Agent", function(){
-            
-        }, this);
-        var menuItem3 = new cc.MenuItemFont("DebugDraw OFF", function(){
-            
+            else{
+                label.setString("Debug Draw OFF");
+            }
         }, this);
 
         var menu = new cc.Menu(menuItem, menuItem2, menuItem3);
         menu.setPosition(cc.p(0, 0));
         menuItem.setAnchorPoint(cc.p(0, 1));
         menuItem.setPosition(cc.p(cc.visibleRect.left.x, cc.visibleRect.top.y - 50));
+        menuItem2.setAnchorPoint(cc.p(0, 1));
+        menuItem2.setPosition(cc.p(cc.visibleRect.left.x, cc.visibleRect.top.y - 100));
+        menuItem3.setAnchorPoint(cc.p(0, 1));
+        menuItem3.setPosition(cc.p(cc.visibleRect.left.x, cc.visibleRect.top.y - 150));
         this.addChild(menu);
         
-        var result = {};
-        this.getPhysics3DWorld().rayCast(cc.math.vec3(0, 50, 0), cc.math.vec3(0, -50, 0), result);
+    },
+    onEnter:function () {
+        this._super();
+
+        var result = physicsScene.getPhysics3DWorld().rayCast(cc.math.vec3(0, 50, 0), cc.math.vec3(0, -50, 0));
         this.createAgent(result.hitPosition);
     }
 });
 
-var NavMeshTestScene = cc.Scene.extend({
 
-    ctor:function () {
-        this._super();
-
-        var label = new cc.LabelTTF("Main Menu", "Arial", 20);
-        var menuItem = new cc.MenuItemLabel(label, this.onMainMenuCallback, this);
-
-        var menu = new cc.Menu(menuItem);
-        menu.x = 0;
-        menu.y = 0;
-        menuItem.x = winSize.width - 50;
-        menuItem.y = 25;
-        this.addChild(menu);
-
-        this.initWithPhysics();
-        this.getPhysics3DWorld().setDebugDrawEnable(false);
-        physicsScene = this;     
-    }
-
-});
 
 //
 // Flow control
 //
 var arrayOfNavMeshTest = [
-    NavMeshBaseTestDemo,
+    NavMeshBasicTestDemo,
+    NavMeshAdvanceTestDemo
 ];
 
 var nextNavMeshTest = function () {

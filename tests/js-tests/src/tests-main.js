@@ -543,7 +543,7 @@ var testNames = [
         platforms: PLATFORM_JSB,
         linksrc:"src/NavMeshTest/NavMeshTest.js",
         testScene:function () {
-            return new NavMeshTestScene();
+            return new nextNavMeshTest();
         }
     },
     {
