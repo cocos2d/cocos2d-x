@@ -436,6 +436,17 @@ protected:
     bool scrollChildrenVertical(float touchOffsetX, float touchOffsetY);
     bool scrollChildrenHorizontal(float touchOffsetX, float touchOffestY);
     bool scrollChildrenBoth(float touchOffsetX, float touchOffsetY);
+	bool scrollChildrenBothBouncing(float touchOffsetX, float touchOffsetY);
+	bool scrollChildrenBothNoBouncing(float touchOffsetX, float touchOffsetY);
+	
+	
+	//
+	bool handleTopBounce(float* offsetYResult, float touchOffsetY);
+	bool handleBottomBounce(float* offsetYResult, float touchOffsetY);
+	bool handleLeftBounce(float* offsetXResult, float touchOffsetX);
+	bool handleRightBounce(float* offsetXResult, float touchOffsetX);
+
+	
 
 
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);

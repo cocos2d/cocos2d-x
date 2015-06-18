@@ -934,260 +934,235 @@ bool ScrollView::scrollChildrenHorizontal(float touchOffsetX, float touchOffestY
     return scrollenabled;
 }
 
+bool ScrollView::handleTopBounce(float* offsetYResult, float touchOffsetY)
+{
+	float icTopPos = _innerContainer->getTopBoundary();
+	if (icTopPos + touchOffsetY <= _bounceTopBoundary)
+	{
+		(*offsetYResult) = _bounceTopBoundary - icTopPos;
+		scrollToTopEvent();
+		return false;
+	}
+	return true;
+}
+
+bool ScrollView::handleBottomBounce(float* offsetYResult, float touchOffsetY)
+{
+	float icBottomPos = _innerContainer->getBottomBoundary();
+	if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
+	{
+		(*offsetYResult) = _bounceBottomBoundary - icBottomPos;
+		scrollToBottomEvent();
+		return false;
+	}
+	return true;
+}
+	
+bool ScrollView::handleLeftBounce(float* offsetXResult, float touchOffsetX)
+{
+	float icLeftPos = _innerContainer->getLeftBoundary();
+	if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
+	{
+		(*offsetXResult) = _bounceLeftBoundary - icLeftPos;
+		scrollToLeftEvent();
+		return false;
+	}
+	return true;
+}
+
+bool ScrollView::handleRightBounce(float* offsetXResult, float touchOffsetX)
+{
+	float icRightPos = _innerContainer->getRightBoundary();
+	if (icRightPos + touchOffsetX <= _bounceRightBoundary)
+	{
+		(*offsetXResult) = _bounceRightBoundary - icRightPos;
+		scrollToRightEvent();
+		return false;
+	}
+	return true;
+}
+
+bool ScrollView::scrollChildrenBothBouncing(float touchOffsetX, float touchOffsetY)
+{
+	bool scrollenabled = true;
+	float realOffsetX = touchOffsetX;
+	float realOffsetY = touchOffsetY;
+	
+	if(touchOffsetY > 0.0f) // up
+	{
+		if (touchOffsetX > 0.0f) // right
+		{
+			scrollenabled = handleLeftBounce(&realOffsetX, touchOffsetX);
+		}
+		else if (touchOffsetX < 0.0f) // left
+		{
+			scrollenabled = handleRightBounce(&realOffsetX, touchOffsetX);
+		}
+		scrollenabled = handleBottomBounce(&realOffsetY, touchOffsetY);
+	}
+	else if (touchOffsetY < 0.0f) // down
+	{
+		if (touchOffsetX < 0.0f) // down left
+		{
+			scrollenabled = handleRightBounce(&realOffsetX, touchOffsetX);
+		}
+		else if (touchOffsetX > 0.0f) // down right
+		{
+			scrollenabled = handleLeftBounce(&realOffsetX, touchOffsetX);
+		}
+		scrollenabled = handleTopBounce(&realOffsetY, touchOffsetY);
+	}
+	else {
+		if (touchOffsetX < 0.0f) // left
+		{
+			scrollenabled = handleRightBounce(&realOffsetX, touchOffsetX);
+		}
+		else if (touchOffsetX > 0.0f) // right
+		{
+			scrollenabled = handleLeftBounce(&realOffsetX, touchOffsetX);
+		}
+	}
+	moveChildren(realOffsetX, realOffsetY);
+	return scrollenabled;
+}
+
+bool ScrollView::scrollChildrenBothNoBouncing(float touchOffsetX, float touchOffsetY)
+{
+	bool scrollenabled = true;
+	float realOffsetX = touchOffsetX;
+	float realOffsetY = touchOffsetY;
+	if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) // up right
+	{
+		
+		float icLeftPos = _innerContainer->getLeftBoundary();
+		if (icLeftPos + touchOffsetX >= _leftBoundary)
+		{
+			realOffsetX = _leftBoundary - icLeftPos;
+			scrollToLeftEvent();
+			scrollenabled = false;
+		}
+		
+		float icBottomPos = _innerContainer->getBottomBoundary();
+		if (icBottomPos + touchOffsetY >= _bottomBoundary)
+		{
+			realOffsetY = _bottomBoundary - icBottomPos;
+			scrollToBottomEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX < 0.0f && touchOffsetY > 0.0f) // up left
+	{
+		
+		float icRightPos = _innerContainer->getRightBoundary();
+		if (icRightPos + touchOffsetX <= _rightBoundary)
+		{
+			realOffsetX = _rightBoundary - icRightPos;
+			scrollToRightEvent();
+			scrollenabled = false;
+		}
+		
+		float icBottomPos = _innerContainer->getBottomBoundary();
+		if (icBottomPos + touchOffsetY >= _bottomBoundary)
+		{
+			realOffsetY = _bottomBoundary - icBottomPos;
+			scrollToBottomEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX < 0.0f && touchOffsetY < 0.0f) // down left
+	{
+		float icRightPos = _innerContainer->getRightBoundary();
+		if (icRightPos + touchOffsetX <= _rightBoundary)
+		{
+			realOffsetX = _rightBoundary - icRightPos;
+			scrollToRightEvent();
+			scrollenabled = false;
+		}
+		
+		float icTopPos = _innerContainer->getTopBoundary();
+		if (icTopPos + touchOffsetY <= _topBoundary)
+		{
+			realOffsetY = _topBoundary - icTopPos;
+			scrollToTopEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX > 0.0f && touchOffsetY < 0.0f) // down right
+	{
+		
+		float icLeftPos = _innerContainer->getLeftBoundary();
+		if (icLeftPos + touchOffsetX >= _leftBoundary)
+		{
+			realOffsetX = _leftBoundary - icLeftPos;
+			scrollToLeftEvent();
+			scrollenabled = false;
+			
+		}
+		float icTopPos = _innerContainer->getTopBoundary();
+		if (icTopPos + touchOffsetY <= _topBoundary)
+		{
+			realOffsetY = _topBoundary - icTopPos;
+			scrollToTopEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX == 0.0f && touchOffsetY > 0.0f) // up
+	{
+		float icBottomPos = _innerContainer->getBottomBoundary();
+		if (icBottomPos + touchOffsetY >= _bottomBoundary)
+		{
+			realOffsetY = _bottomBoundary - icBottomPos;
+			scrollToBottomEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) // left
+	{
+		
+		float icRightPos = _innerContainer->getRightBoundary();
+		if (icRightPos + touchOffsetX <= _rightBoundary)
+		{
+			realOffsetX = _rightBoundary - icRightPos;
+			scrollToRightEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX == 0.0f && touchOffsetY < 0.0f) // down
+	{
+		
+		float icTopPos = _innerContainer->getTopBoundary();
+		if (icTopPos + touchOffsetY <= _topBoundary)
+		{
+			realOffsetY = _topBoundary - icTopPos;
+			scrollToTopEvent();
+			scrollenabled = false;
+		}
+	}
+	else if (touchOffsetX > 0.0f && touchOffsetY == 0.0f) // right
+	{
+		
+		float icLeftPos = _innerContainer->getLeftBoundary();
+		if (icLeftPos + touchOffsetX >= _leftBoundary)
+		{
+			realOffsetX = _leftBoundary - icLeftPos;
+			scrollToLeftEvent();
+			scrollenabled = false;
+		}
+	}
+	moveChildren(realOffsetX, realOffsetY);
+	return scrollenabled;
+}
+
 bool ScrollView::scrollChildrenBoth(float touchOffsetX, float touchOffsetY)
 {
-    bool scrollenabled = true;
-    float realOffsetX = touchOffsetX;
-    float realOffsetY = touchOffsetY;
     if (_bounceEnabled)
     {
-        if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) // up right
-        {
-            float icLeftPos = _innerContainer->getLeftBoundary();
-
-            if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
-            {
-                realOffsetX = _bounceLeftBoundary - icLeftPos;
-                scrollToLeftEvent();
-                scrollenabled = false;
-            }
-
-            float icBottomPos = _innerContainer->getBottomBoundary();
-
-            if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
-            {
-                realOffsetY = _bounceBottomBoundary - icBottomPos;
-                scrollToBottomEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX < 0.0f && touchOffsetY > 0.0f) // up left
-        {
-
-            float icRightPos = _innerContainer->getRightBoundary();
-
-            if (icRightPos + touchOffsetX <= _bounceRightBoundary)
-            {
-                realOffsetX = _bounceRightBoundary - icRightPos;
-                scrollToRightEvent();
-                scrollenabled = false;
-            }
-
-            float icBottomPos = _innerContainer->getBottomBoundary();
-            if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
-            {
-                realOffsetY = _bounceBottomBoundary - icBottomPos;
-                scrollToBottomEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX < 0.0f && touchOffsetY < 0.0f) // down left
-        {
-
-            float icRightPos = _innerContainer->getRightBoundary();
-            if (icRightPos + touchOffsetX <= _bounceRightBoundary)
-            {
-                realOffsetX = _bounceRightBoundary - icRightPos;
-                scrollToRightEvent();
-                scrollenabled = false;
-            }
-
-            float icTopPos = _innerContainer->getTopBoundary();
-            if (icTopPos + touchOffsetY <= _bounceTopBoundary)
-            {
-                realOffsetY = _bounceTopBoundary - icTopPos;
-                scrollToTopEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX > 0.0f && touchOffsetY < 0.0f) // down right
-        {
-
-            float icLeftPos = _innerContainer->getLeftBoundary();
-            if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
-            {
-                realOffsetX = _bounceLeftBoundary - icLeftPos;
-                scrollToLeftEvent();
-                scrollenabled = false;
-            }
-
-            float icTopPos = _innerContainer->getTopBoundary();
-            if (icTopPos + touchOffsetY <= _bounceTopBoundary)
-            {
-                realOffsetY = _bounceTopBoundary - icTopPos;
-                scrollToTopEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX == 0.0f && touchOffsetY > 0.0f) // up
-        {
-
-            float icBottomPos = _innerContainer->getBottomBoundary();
-            if (icBottomPos + touchOffsetY >= _bounceBottomBoundary)
-            {
-                realOffsetY = _bounceBottomBoundary - icBottomPos;
-                scrollToBottomEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) // left
-        {
-
-            float icRightPos = _innerContainer->getRightBoundary();
-            if (icRightPos + touchOffsetX <= _bounceRightBoundary)
-            {
-                realOffsetX = _bounceRightBoundary - icRightPos;
-                scrollToRightEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX == 0.0f && touchOffsetY < 0.0f) // down
-        {
-
-            float icTopPos = _innerContainer->getTopBoundary();
-            if (icTopPos + touchOffsetY <= _bounceTopBoundary)
-            {
-                realOffsetY = _bounceTopBoundary - icTopPos;
-                scrollToTopEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX > 0.0f && touchOffsetY == 0.0f) // right
-        {
-
-            float icLeftPos = _innerContainer->getLeftBoundary();
-            if (icLeftPos + touchOffsetX >= _bounceLeftBoundary)
-            {
-                realOffsetX = _bounceLeftBoundary - icLeftPos;
-                scrollToLeftEvent();
-                scrollenabled = false;
-            }
-        }
+		return scrollChildrenBothBouncing(touchOffsetX, touchOffsetY);
     }
     else
     {
-        if (touchOffsetX > 0.0f && touchOffsetY > 0.0f) // up right
-        {
-
-            float icLeftPos = _innerContainer->getLeftBoundary();
-            if (icLeftPos + touchOffsetX >= _leftBoundary)
-            {
-                realOffsetX = _leftBoundary - icLeftPos;
-                scrollToLeftEvent();
-                scrollenabled = false;
-            }
-
-            float icBottomPos = _innerContainer->getBottomBoundary();
-            if (icBottomPos + touchOffsetY >= _bottomBoundary)
-            {
-                realOffsetY = _bottomBoundary - icBottomPos;
-                scrollToBottomEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX < 0.0f && touchOffsetY > 0.0f) // up left
-        {
-
-            float icRightPos = _innerContainer->getRightBoundary();
-            if (icRightPos + touchOffsetX <= _rightBoundary)
-            {
-                realOffsetX = _rightBoundary - icRightPos;
-                scrollToRightEvent();
-                scrollenabled = false;
-            }
-
-            float icBottomPos = _innerContainer->getBottomBoundary();
-            if (icBottomPos + touchOffsetY >= _bottomBoundary)
-            {
-                realOffsetY = _bottomBoundary - icBottomPos;
-                scrollToBottomEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX < 0.0f && touchOffsetY < 0.0f) // down left
-        {
-
-            float icRightPos = _innerContainer->getRightBoundary();
-            if (icRightPos + touchOffsetX <= _rightBoundary)
-            {
-                realOffsetX = _rightBoundary - icRightPos;
-                scrollToRightEvent();
-                scrollenabled = false;
-            }
-
-            float icTopPos = _innerContainer->getTopBoundary();
-            if (icTopPos + touchOffsetY <= _topBoundary)
-            {
-                realOffsetY = _topBoundary - icTopPos;
-                scrollToTopEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX > 0.0f && touchOffsetY < 0.0f) // down right
-        {
-
-            float icLeftPos = _innerContainer->getLeftBoundary();
-            if (icLeftPos + touchOffsetX >= _leftBoundary)
-            {
-                realOffsetX = _leftBoundary - icLeftPos;
-                scrollToLeftEvent();
-                scrollenabled = false;
-
-            }
-            float icTopPos = _innerContainer->getTopBoundary();
-            if (icTopPos + touchOffsetY <= _topBoundary)
-            {
-                realOffsetY = _topBoundary - icTopPos;
-                scrollToTopEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX == 0.0f && touchOffsetY > 0.0f) // up
-        {
-            float icBottomPos = _innerContainer->getBottomBoundary();
-            if (icBottomPos + touchOffsetY >= _bottomBoundary)
-            {
-                realOffsetY = _bottomBoundary - icBottomPos;
-                scrollToBottomEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX < 0.0f && touchOffsetY == 0.0f) // left
-        {
-
-            float icRightPos = _innerContainer->getRightBoundary();
-            if (icRightPos + touchOffsetX <= _rightBoundary)
-            {
-                realOffsetX = _rightBoundary - icRightPos;
-                scrollToRightEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX == 0.0f && touchOffsetY < 0.0f) // down
-        {
-
-            float icTopPos = _innerContainer->getTopBoundary();
-            if (icTopPos + touchOffsetY <= _topBoundary)
-            {
-                realOffsetY = _topBoundary - icTopPos;
-                scrollToTopEvent();
-                scrollenabled = false;
-            }
-        }
-        else if (touchOffsetX > 0.0f && touchOffsetY == 0.0f) // right
-        {
-
-            float icLeftPos = _innerContainer->getLeftBoundary();
-            if (icLeftPos + touchOffsetX >= _leftBoundary)
-            {
-                realOffsetX = _leftBoundary - icLeftPos;
-                scrollToLeftEvent();
-                scrollenabled = false;
-            }
-        }
+		return scrollChildrenBothNoBouncing(touchOffsetX, touchOffsetY);
     }
-    moveChildren(realOffsetX, realOffsetY);
-    return scrollenabled;
 }
 
 bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
@@ -1622,6 +1597,9 @@ void ScrollView::scrollToTopEvent()
 void ScrollView::scrollToBottomEvent()
 {
     this->retain();
+	
+	CCLOG("scrollToBottomEvent() %s", "!!!");
+	
     if (_scrollViewEventListener && _scrollViewEventSelector)
     {
         (_scrollViewEventListener->*_scrollViewEventSelector)(this, SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
