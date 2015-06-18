@@ -103,6 +103,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
+						   $(LOCAL_PATH)/../manual/navmesh \
                            $(LOCAL_PATH)/../auto \
                            $(LOCAL_PATH)/../../../audio/include
 
