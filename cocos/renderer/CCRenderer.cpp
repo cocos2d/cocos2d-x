@@ -983,8 +983,8 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     transform.transformVector(v4local, &v4world);
 
     // center of screen is (0,0)
-    v4world.x -= screen_half.width;
-    v4world.y -= screen_half.height;
+    v4world.x -= scene->_defaultCamera->getPosition().x;
+    v4world.y -= scene->_defaultCamera->getPosition().y;
 
     // convert content size to world coordinates
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
