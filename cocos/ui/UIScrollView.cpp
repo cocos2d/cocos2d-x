@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIScrollView.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -1418,12 +1419,17 @@ void ScrollView::endRecordSlidAction()
         }
         float totalDis = 0.0f;
         Vec2 dir;
-        Vec2 touchEndPositionInNodeSpace = this->convertToNodeSpace(_touchEndPosition);
-        Vec2 touchBeganPositionInNodeSpace = this->convertToNodeSpace(_touchBeganPosition);
+        Vec3 endPt, bgnPt;
+        if (nullptr == _hittedByCamera ||
+            false == hitTest(_touchEndPosition, _hittedByCamera, &endPt) ||
+            false == hitTest(_touchBeganPosition, _hittedByCamera, &bgnPt))
+        {
+            return;
+        }
         switch (_direction)
         {
             case Direction::VERTICAL:
-                totalDis = touchEndPositionInNodeSpace.y - touchBeganPositionInNodeSpace.y;
+                totalDis = endPt.y - bgnPt.y;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_DOWN;
@@ -1434,7 +1440,7 @@ void ScrollView::endRecordSlidAction()
                 }
                 break;
             case Direction::HORIZONTAL:
-                totalDis = touchEndPositionInNodeSpace.x - touchBeganPositionInNodeSpace.x;
+                totalDis = endPt.x - bgnPt.x;
                 if (totalDis < 0.0f)
                 {
                     dir = SCROLLDIR_LEFT;
@@ -1446,7 +1452,7 @@ void ScrollView::endRecordSlidAction()
                 break;
             case Direction::BOTH:
             {
-                Vec2 subVector = touchEndPositionInNodeSpace - touchBeganPositionInNodeSpace;
+                Vec2 subVector = Vec2(endPt.x, endPt.y) - Vec2(bgnPt.x, bgnPt.y);
                 totalDis = subVector.getLength();
                 dir = subVector.getNormalized();
                 break;
@@ -1468,9 +1474,14 @@ void ScrollView::handlePressLogic(Touch *touch)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
-    Vec2 touchPositionInNodeSpace = this->convertToNodeSpace(touch->getLocation());
-    Vec2 previousTouchPositionInNodeSpace = this->convertToNodeSpace(touch->getPreviousLocation());
-    Vec2 delta = touchPositionInNodeSpace - previousTouchPositionInNodeSpace;
+    Vec3 currPt, prevPt;
+    if (nullptr == _hittedByCamera ||
+        false == hitTest(touch->getLocation(), _hittedByCamera, &currPt) ||
+        false == hitTest(touch->getPreviousLocation(), _hittedByCamera, &prevPt))
+    {
+        return;
+    }
+    Vec3 delta = currPt - prevPt;
     switch (_direction)
     {
         case Direction::VERTICAL: // vertical
