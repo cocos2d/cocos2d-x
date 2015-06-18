@@ -528,6 +528,14 @@
                     return new UIRichTextTest();
                 }
             }
+        ],
+        "UIS9NinePatchTest": [
+            {
+                title: "UIS9NinePatchTest",
+                func: function () {
+                    return new UIS9NinePatchTest();
+                }
+            }
         ]
     };
 
