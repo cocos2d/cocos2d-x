@@ -362,7 +362,7 @@ public:
     /**
      * Convert a world Space position (X,Z) to terrain space position (X,Z)
      */
-    Vec2 convertToTerrainSpace(Vec2 worldSpace);
+    Vec2 convertToTerrainSpace(Vec2 worldSpace) const;
 
     /**
      * reset the heightmap data.

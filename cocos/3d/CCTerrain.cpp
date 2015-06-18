@@ -541,11 +541,6 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     {
         lastRayPosition = rayPos;
         rayPos += rayStep;
-        if (normal.isZero())
-        {
-            intersectionPoint = Vec3(0, 0, 0);
-            return false;
-        }
         height = getHeight(rayPos.x, rayPos.z);
     }
 
@@ -563,7 +558,14 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     }
     Vec3 collisionPoint = (startPosition + endPosition) * 0.5f;
     intersectionPoint = collisionPoint;
-    return true;
+    Vec2 terrainSpacePos = convertToTerrainSpace(Vec2(intersectionPoint.x,intersectionPoint.z));
+    if (terrainSpacePos.x<0 || terrainSpacePos.x >_imageWidth || terrainSpacePos.y<0 || terrainSpacePos.y >_imageHeight)
+    {
+        return false;
+    }else
+    { 
+        return true;
+    } 
 }
 
 void Terrain::setMaxDetailMapAmount(int max_value)
@@ -571,7 +573,7 @@ void Terrain::setMaxDetailMapAmount(int max_value)
     _maxDetailMapValue = max_value;
 }
 
-cocos2d::Vec2 Terrain::convertToTerrainSpace(Vec2 worldSpaceXZ)
+cocos2d::Vec2 Terrain::convertToTerrainSpace(Vec2 worldSpaceXZ) const
 {
     Vec2 pos(worldSpaceXZ.x,worldSpaceXZ.y);
 
