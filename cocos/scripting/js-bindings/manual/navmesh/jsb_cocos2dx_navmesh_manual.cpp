@@ -60,21 +60,24 @@ static bool jsb_cocos2dx_navmesh_NavMeshAgent_move(JSContext *cx, uint32_t argc,
 
 		cobj->move(arg0, [=](cocos2d::NavMeshAgent *agent, float totalTimeAfterMove)->void{
 			jsval arg[2];
-			js_proxy_t *proxy = js_get_or_create_proxy(cx, agent);
+			js_proxy_t *agentProxy = js_get_or_create_proxy(cx, agent);
 			if (proxy)
-				arg[0] = OBJECT_TO_JSVAL(proxy->obj);
+				arg[0] = OBJECT_TO_JSVAL(agentProxy->obj);
 			else
 				arg[0] = JSVAL_NULL;
 			arg[1] = DOUBLE_TO_JSVAL((double)totalTimeAfterMove);
 			JS::RootedValue rval(cx);
 
-			bool ok = func->invoke(2, arg, &rval);
-			if (!ok && JS_IsExceptionPending(cx)) {
+			bool invokeOk = func->invoke(2, arg, &rval);
+			if (!invokeOk && JS_IsExceptionPending(cx)) {
 				JS_ReportPendingException(cx);
 			}
 		});
 		return true;
 	}
+    
+    JS_ReportError(cx, "jsb_cocos2dx_navmesh_NavMeshAgent_move : wrong number of arguments: %d, was expecting %d or %d", argc, 1, 2);
+    return false;
 }
 
 extern JSObject *jsb_cocos2d_NavMeshAgent_prototype;

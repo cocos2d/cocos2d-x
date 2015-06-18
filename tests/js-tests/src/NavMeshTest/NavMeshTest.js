@@ -138,7 +138,7 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
     
     createAgent:function(pos){
         var filePath = "Sprite3DTest/girl.c3b";
-        var param = cc.navMeshAgentParam();
+        var param = jsb.navMeshAgentParam();
         param.radius = 2.0;
         param.height = 8.0;
         param.maxSpeed = 8.0;
@@ -146,7 +146,7 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
         var agentNode = jsb.Sprite3D.create(filePath);
         agent.setOrientationRefAxes(cc.math.vec3(-1.0, 0.0, 1.0));
 
-        var data = cc.agentUserData();
+        var data = jsb.agentUserData();
         agent.setUserData(data);
         agentNode.setScale(0.05);
         agentNode.addComponent(agent);
