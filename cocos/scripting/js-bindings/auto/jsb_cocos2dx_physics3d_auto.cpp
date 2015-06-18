@@ -6753,7 +6753,7 @@ void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::H
 void register_all_cocos2dx_physics3d(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
-    get_or_create_js_obj(cx, obj, "cc", &ns);
+    get_or_create_js_obj(cx, obj, "jsb", &ns);
 
     js_register_cocos2dx_physics3d_Physics3DConstraint(cx, ns);
     js_register_cocos2dx_physics3d_Physics3D6DofConstraint(cx, ns);
