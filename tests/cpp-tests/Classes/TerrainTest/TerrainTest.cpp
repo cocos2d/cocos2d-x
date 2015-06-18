@@ -252,8 +252,15 @@ void Player::update(float dt)
     playerModelMat.transformPoint(&playerPos);
     Vec3 Normal;
     float player_h = _terrain->getHeight(playerPos.x, playerPos.z,&Normal);
-
-    player->setPositionY(player_h+PLAYER_HEIGHT);
+    if (Normal.isZero())//check the player whether is out of the terrain
+    {
+        player_h = playerPos.y;
+    }
+    else
+    {
+        player_h += PLAYER_HEIGHT;
+    }
+    player->setPositionY(player_h);
     Quaternion q2;
     q2.createFromAxisAngle(Vec3(0,1,0),(float)-M_PI,&q2);
  
