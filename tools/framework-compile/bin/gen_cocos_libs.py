@@ -7,77 +7,11 @@ import time
 import shutil
 import excopy
 import json
+import utils_cocos
+
 from custom_error import CustomError
 from custom_error import Logging
-from utils_cocos import rmdir
 from argparse import ArgumentParser
-
-def os_is_win32():
-    return sys.platform == 'win32'
-
-def is_32bit_windows():
-    arch = os.environ['PROCESSOR_ARCHITECTURE'].lower()
-    archw = os.environ.has_key("PROCESSOR_ARCHITEW6432")
-    return (arch == "x86" and not archw)
-
-def os_is_mac():
-    return sys.platform == 'darwin'
-
-def convert_to_python_path(path):
-    return path.replace("\\","/")
-
-def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
-    """ 执行一个SHELL命令
-        封装了subprocess的Popen方法, 支持超时判断，支持读取stdout和stderr
-        参数:
-        cwd: 运行命令时更改路径，如果被设定，子进程会直接先更改当前路径到cwd
-        timeout: 超时时间，秒，支持小数，精度0.1秒
-        shell: 是否通过shell运行
-        Returns: return_code
-        Raises:  Exception: 执行超时
-    """
-
-    import shlex
-    import datetime
-    import subprocess
-    import time
-
-    if os_is_win32():
-        cmdstring = convert_to_python_path(cmdstring)
-
-    print("")
-    print("Execute command:")
-    print(cmdstring)
-    print("")
-
-    if shell:
-        cmdstring_list = cmdstring
-    else:
-        cmdstring_list = shlex.split(cmdstring)
-    if timeout:
-        end_time = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
-
-    # 没有指定标准输出和错误输出的管道,因此会打印到屏幕上
-    sub = None
-    try:
-        sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE, shell=shell, bufsize=4096)
-    except Exception as e:
-        print("execute command fail:%s" % cmdstring)
-        raise e
-
-    # subprocess.poll()方法：检查子进程是否结束了，如果结束了，设定并返回码，放在subprocess.returncode变量中
-    while sub.poll() is None:
-        time.sleep(0.1)
-        if timeout:
-            if end_time <= datetime.datetime.now():
-                raise Exception("Timeout：%s"%cmdstring)
-
-    if 0 != sub.returncode :
-        errStr = "[ERROR] execute command fail:%s" % cmdstring
-        print(errStr)
-        raise Exception(errStr)
-
-    return sub.returncode
 
 
 class CocosLibsCompiler(object):
@@ -115,6 +49,11 @@ class CocosLibsCompiler(object):
             self.build_win = True
             self.build_mac = True
             self.build_android = True
+
+        if args.app_abi is None:
+            self.app_abi = 'armeabi:x86:armeabi-v7a'
+        else:
+            self.app_abi = args.app_abi
 
         self.repo_x = os.path.realpath(self.repo_x)
         self.lib_dir = os.path.normpath(os.path.join(self.repo_x, self.cfg_info[CocosLibsCompiler.KEY_LIBS_OUTPUT]))
@@ -154,20 +93,19 @@ class CocosLibsCompiler(object):
             "/%s \"Release|Win32\"" % mode,
             "/Project \"%s\"" % proj_name
         ])
-        execute_command(build_cmd)
+        utils_cocos.execute_command(build_cmd)
 
     def compile_win(self):
-        if not os_is_win32():
+        if not utils_cocos.os_is_win32():
             print("this is not win platform, needn't compile")
             return
 
         win32_proj_info = self.cfg_info[CocosLibsCompiler.KEY_VS_PROJS_INFO]
 
         import _winreg
-        from utils_cocos import get_vs_cmd_path
         # find the VS in register
         try:
-            if is_32bit_windows():
+            if utils_cocos.is_32bit_windows():
                 reg_flag = _winreg.KEY_WOW64_32KEY
             else:
                 # reg_flag = _winreg.KEY_WOW64_64KEY
@@ -189,7 +127,7 @@ class CocosLibsCompiler(object):
 
             proj_path = os.path.join(self.repo_x, key)
 
-            vs_command, needUpgrade = get_vs_cmd_path(vs_reg, proj_path, self.vs_version)
+            vs_command, needUpgrade = utils_cocos.get_vs_cmd_path(vs_reg, proj_path, self.vs_version)
 
             # get the build folder & win32 output folder
             build_folder_path = os.path.join(os.path.dirname(proj_path), "Release.win32")
@@ -204,7 +142,7 @@ class CocosLibsCompiler(object):
                 "\"%s\"" % proj_path,
                 "/clean \"Release|Win32\""
             ])
-            execute_command(clean_cmd)
+            utils_cocos.execute_command(clean_cmd)
 
             if self.use_incredibuild:
                 # use incredibuild, build whole sln
@@ -214,7 +152,7 @@ class CocosLibsCompiler(object):
                     "/build",
                     "/cfg=\"Release|Win32\""
                 ])
-                execute_command(build_cmd)
+                utils_cocos.execute_command(build_cmd)
             else:
                 for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_BUILD_TARGETS]:
                     # build the projects
@@ -249,7 +187,7 @@ class CocosLibsCompiler(object):
         print("Win32 build succeeded.")
 
     def compile_mac_ios(self):
-        if not os_is_mac():
+        if not utils_cocos.os_is_mac():
             print("this is not mac platform, needn't compile")
             return
         print("to compile mac")
@@ -268,21 +206,21 @@ class CocosLibsCompiler(object):
 
             # compile ios simulator
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphonesimulator ARCHS=\"i386 x86_64\" VALID_ARCHS=\"i386 x86_64\"", ios_sim_libs_dir)
-            retVal = execute_command(build_cmd)
+            retVal = utils_cocos.execute_command(build_cmd)
             if 0 != retVal:
                 print("[ERROR] compile ios simulator fail")
                 return retVal
 
             # compile ios device
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphoneos", ios_dev_libs_dir)
-            retVal = execute_command(build_cmd)
+            retVal = utils_cocos.execute_command(build_cmd)
             if 0 != retVal:
                 print("[ERROR] compile ios device fail")
                 return retVal
 
             # compile mac
             build_cmd = XCODE_CMD_FMT % (proj_path, "%s Mac" % target, "", mac_out_dir)
-            retVal = execute_command(build_cmd)
+            retVal = utils_cocos.execute_command(build_cmd)
             if 0 != retVal:
                 print("[ERROR] compile mac fail")
                 return retVal
@@ -294,18 +232,18 @@ class CocosLibsCompiler(object):
                 output_lib = os.path.join(ios_out_dir, lib)
                 lipo_cmd = "lipo -create -output \"%s\" \"%s\" \"%s\"" % (output_lib, sim_lib, dev_lib)
 
-                execute_command(lipo_cmd)
+                utils_cocos.execute_command(lipo_cmd)
 
             # remove the simulator & device libs in iOS
-            rmdir(ios_sim_libs_dir)
-            rmdir(ios_dev_libs_dir)
+            utils_cocos.rmdir(ios_sim_libs_dir)
+            utils_cocos.rmdir(ios_dev_libs_dir)
 
             if not self.disable_strip:
                 # strip the libs
                 ios_strip_cmd = "xcrun -sdk iphoneos strip -S %s/*.a" % ios_out_dir
-                execute_command(ios_strip_cmd)
+                utils_cocos.execute_command(ios_strip_cmd)
                 mac_strip_cmd = "xcrun strip -S %s/*.a" % mac_out_dir
-                execute_command(mac_strip_cmd)
+                utils_cocos.execute_command(mac_strip_cmd)
 
     def compile_android(self, language):
         print("compile android")
@@ -317,7 +255,7 @@ class CocosLibsCompiler(object):
         android_out_dir = os.path.join(self.lib_dir, "android")
         engine_dir = self.repo_x
         console_dir = os.path.join(engine_dir, CONSOLE_PATH)
-        if os_is_win32():
+        if utils_cocos.os_is_win32():
             cmd_path = os.path.join(console_dir, "cocos.bat")
         else:
             cmd_path = os.path.join(console_dir, "cocos")
@@ -325,19 +263,15 @@ class CocosLibsCompiler(object):
         proj_name = "My%sGame" % language
         proj_dir = os.path.join(self.cur_dir, "temp")
         proj_path = os.path.join(proj_dir, proj_name)
-        rmdir(proj_path)
+        utils_cocos.rmdir(proj_path)
 
         # create a runtime project
         create_cmd = "%s new -l %s -t runtime -d %s %s" % (cmd_path, language, proj_dir, proj_name)
-        execute_command(create_cmd)
-
-        # Add multi ABI in Application.mk
-        mk_file = os.path.join(proj_path, SCRIPT_MK_PATH)
-        self.modify_mk(mk_file)
+        utils_cocos.execute_command(create_cmd)
 
         # build it
-        build_cmd = "%s compile -s %s -p android --ndk-mode release -j 4" % (cmd_path, proj_path)
-        execute_command(build_cmd)
+        build_cmd = "%s compile -s %s -p android --ndk-mode release -j 4 --app-abi %s" % (cmd_path, proj_path, self.app_abi)
+        utils_cocos.execute_command(build_cmd)
 
         # copy .a to prebuilt dir
         obj_dir = os.path.join(proj_path, ANDROID_A_PATH)
@@ -353,17 +287,17 @@ class CocosLibsCompiler(object):
         if not self.disable_strip:
             # strip the android libs
             ndk_root = os.environ["NDK_ROOT"]
-            if os_is_win32():
-                if is_32bit_windows():
+            if utils_cocos.os_is_win32():
+                if utils_cocos.is_32bit_windows():
                     bit_str = ""
                 else:
                     bit_str = "-x86_64"
                 sys_folder_name = "windows%s" % bit_str
-            elif os_is_mac():
+            elif utils_cocos.os_is_mac():
                 sys_folder_name = "darwin-x86_64"
 
             # set strip execute file name
-            if os_is_win32():
+            if utils_cocos.os_is_win32():
                 strip_execute_name = "strip.exe"
             else:
                 strip_execute_name = "strip"
@@ -377,38 +311,34 @@ class CocosLibsCompiler(object):
             if os.path.exists(strip_cmd_path):
                 armlibs = ["armeabi", "armeabi-v7a"]
                 for fold in armlibs:
-                    self.trip_libs(strip_cmd_path, "%s/%s" % (android_out_dir, fold))
+                    self.trip_libs(strip_cmd_path, os.path.join(android_out_dir, fold))
 
             # strip x86 libs
             strip_cmd_path = os.path.join(ndk_root, "toolchains/x86-4.8/prebuilt/%s/i686-linux-android/bin/%s" % (sys_folder_name, strip_execute_name))
             if os.path.exists(strip_cmd_path) and os.path.exists(os.path.join(android_out_dir, "x86")):
-                self.trip_libs(strip_cmd_path, "%s/x86" % android_out_dir)
+                self.trip_libs(strip_cmd_path, os.path.join(android_out_dir, 'x86'))
 
         # remove the project
-        rmdir(proj_path)
+        utils_cocos.rmdir(proj_path)
 
     def trip_libs(self, strip_cmd, folder):
-        if os_is_win32():
+        if not os.path.isdir(folder):
+            return
+
+        if utils_cocos.os_is_win32():
             for name in os.listdir(folder):
                 basename, ext = os.path.splitext(name)
                 if ext == ".a":
                     full_name = os.path.join(folder, name)
                     command = "%s -S %s" % (strip_cmd, full_name)
-                    execute_command(command)
+                    utils_cocos.execute_command(command)
         else:
             strip_cmd = "%s -S %s/*.a" % (strip_cmd, folder)
-            execute_command(strip_cmd)
-
-
-    def modify_mk(self, mk_file):
-        if os.path.isfile(mk_file):
-            file_obj = open(mk_file, "a")
-            file_obj.write("\nAPP_ABI :=armeabi armeabi-v7a x86\n")
-            file_obj.close()
+            utils_cocos.execute_command(strip_cmd)
 
     def clean_libs(self):
         print("to clean libs")
-        rmdir(self.lib_dir)
+        utils_cocos.rmdir(self.lib_dir)
 
 
 if __name__ == "__main__":
@@ -420,6 +350,8 @@ if __name__ == "__main__":
     parser.add_argument('--android', dest='android', action="store_true",help='complile android platform')
     parser.add_argument('--dis-strip', "--disable-strip", dest='disable_strip', action="store_true", help='Disable the strip of the generated libs.')
     parser.add_argument('--vs', dest='vs_version', help='visual studio version, such as 2013.', default=2013)
+    parser.add_argument("--app-abi", dest="app_abi",
+                        help="Set the APP_ABI of ndk-build.Can be multi value separated with ':'. Sample : --app-aib armeabi:x86:mips. Default value is 'armeabi:x86:armeabi-v7a'.")
 
     (args, unknown) = parser.parse_known_args()
 
