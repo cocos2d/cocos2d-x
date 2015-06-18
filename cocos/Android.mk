@@ -83,9 +83,7 @@ cocos2d.cpp \
 2d/CCTransitionPageTurn.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
-2d/MarchingSquare.cpp \
-2d/SpritePolygon.cpp \
-2d/SpritePolygonCache.cpp \
+2d/CCAutoPolygon.cpp \
 3d/CCFrustum.cpp \
 3d/CCPlane.cpp \
 platform/CCFileUtils.cpp \
@@ -221,7 +219,8 @@ navmesh/CCNavMeshUtils.cpp \
 ../external/poly2tri/sweep/advancing_front.cc \
 ../external/poly2tri/sweep/cdt.cc \
 ../external/poly2tri/sweep/sweep_context.cc \
-../external/poly2tri/sweep/sweep.cc
+../external/poly2tri/sweep/sweep.cc \
+../external/clipper/clipper.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
@@ -237,7 +236,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
-                    $(LOCAL_PATH)/../external/poly2tri/sweep
+                    $(LOCAL_PATH)/../external/poly2tri/sweep \
+                    $(LOCAL_PATH)/../external/clipper
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform \
@@ -251,7 +251,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
-                    $(LOCAL_PATH)/../external/poly2tri/sweep
+                    $(LOCAL_PATH)/../external/poly2tri/sweep \
+                    $(LOCAL_PATH)/../external/clipper
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \

@@ -955,23 +955,40 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         }
     }
 
-    if (_currentLabelType == LabelType::TTF)
-    {
-        glprogram->setUniformLocationWith4f(_uniformTextColor,
-            _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
-
-        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-        {
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-        }
-    }
-
     glprogram->setUniformsForBuiltins(transform);
-
     for(const auto &child: _children)
     {
         child->updateTransform();
+    }
+    
+    if (_currentLabelType == LabelType::TTF)
+    {
+        switch (_currLabelEffect) {
+            case LabelEffect::OUTLINE:
+                //draw text with outline
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                for (const auto& batchNode:_batchNodes)
+                {
+                    batchNode->getTextureAtlas()->drawQuads();
+                }
+                
+                //draw text without outline
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+                break;
+            case LabelEffect::GLOW:
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            case LabelEffect::NORMAL:
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
+                break;
+            default:
+                break;
+        }
     }
 
     for (const auto& batchNode:_batchNodes)
