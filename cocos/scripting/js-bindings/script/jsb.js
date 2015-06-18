@@ -138,5 +138,5 @@ if (jsb.ParticleSystem3D) {
     require('script/3d/jsb_cocos2d_3d_ext.js');
 }
 
-if(cc.Physics3DObject)
+if (jsb.Physics3DObject)
     require("script/physics3d/jsb_physics3d.js");
