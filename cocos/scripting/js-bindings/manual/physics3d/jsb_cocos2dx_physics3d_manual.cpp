@@ -61,6 +61,10 @@ bool jsval_to_physics3DRigidBodyDes(JSContext* cx, JS::HandleValue v, Physics3DR
         jsval_to_matrix(cx, tmp, &m4);
         des->originalTransform = m4;
     }
+    if(JS_GetProperty(cx, jsobj, "disableSleep", &tmp))
+    {
+        des->disableSleep = tmp.toBoolean();
+    }
     return true;
 }
 
@@ -357,20 +361,19 @@ bool js_cocos2dx_physics3d_Physics3DWorld_rayCast(JSContext *cx, uint32_t argc, 
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : Invalid Native Object");
-    if (argc == 3) {
+    if (argc >= 2) {
         cocos2d::Vec3 arg0;
         cocos2d::Vec3 arg1;
-        cocos2d::Physics3DWorld::HitResult arg2;
+        cocos2d::Physics3DWorld::HitResult ret;
         ok &= jsval_to_vector3(cx, args.get(0), &arg0);
         ok &= jsval_to_vector3(cx, args.get(1), &arg1);
-        ok &= jsval_to_Physics3DWorld_HitResult(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : Error processing arguments");
-        bool ret = cobj->rayCast(arg0, arg1, &arg2);
+        bool succeed = cobj->rayCast(arg0, arg1, &ret);
         
-        if (ret)
+        if (succeed)
         {
             jsval jsret = JSVAL_NULL;
-            jsret = Physics3DWorld_HitResult_to_jsval(cx, arg2);
+            jsret = Physics3DWorld_HitResult_to_jsval(cx, ret);
             args.rval().set(jsret);
         }
         else
@@ -405,9 +408,7 @@ void register_all_cocos2dx_physics3d_manual(JSContext *cx, JS::HandleObject glob
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Physics3DObject_prototype), "setCollisionCallback", jsb_cocos2d_Physics3DObject_setCollisionCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
-    JS_GetProperty(cx, ccObj, "Physics3DWorld", &tmpVal);
-    tmpObj = tmpVal.toObjectOrNull();
-    JS_DefineFunction(cx, tmpObj, "rayCast", js_cocos2dx_physics3d_Physics3DWorld_rayCast, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Physics3DWorld_prototype), "rayCast", js_cocos2dx_physics3d_Physics3DWorld_rayCast, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 #endif //CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
