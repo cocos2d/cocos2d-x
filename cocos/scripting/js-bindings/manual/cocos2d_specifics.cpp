@@ -27,7 +27,7 @@
 #include "js_bindings_config.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_event_dispatcher_manual.h"
-
+#include "navmesh/CCNavMesh.h"
 using namespace cocos2d;
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
