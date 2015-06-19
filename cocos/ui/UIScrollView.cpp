@@ -44,10 +44,6 @@ _topBoundary(0.0f),
 _bottomBoundary(0.0f),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
-_bounceTopBoundary(0.0f),
-_bounceBottomBoundary(0.0f),
-_bounceLeftBoundary(0.0f),
-_bounceRightBoundary(0.0f),
 _autoScroll(false),
 _autoScrollAddUpTime(0.0f),
 _autoScrollOriginalSpeed(0.0f),
@@ -127,12 +123,6 @@ void ScrollView::onSizeChanged()
     Layout::onSizeChanged();
     _topBoundary = _contentSize.height;
     _rightBoundary = _contentSize.width;
-    float bounceBoundaryParameterX = _contentSize.width / 3.0f;
-    float bounceBoundaryParameterY = _contentSize.height / 3.0f;
-    _bounceTopBoundary = _contentSize.height - bounceBoundaryParameterY;
-    _bounceBottomBoundary = bounceBoundaryParameterY;
-    _bounceLeftBoundary = bounceBoundaryParameterX;
-    _bounceRightBoundary = _contentSize.width - bounceBoundaryParameterX;
     Size innerSize = _innerContainer->getContentSize();
     float orginInnerSizeWidth = innerSize.width;
     float orginInnerSizeHeight = innerSize.height;
@@ -787,54 +777,62 @@ bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchO
 
 bool ScrollView::processScrollUp(float* offsetYResult, float touchOffsetY)
 {
-	float boundary = (_bounceEnabled ? _bounceBottomBoundary : _bottomBoundary);
 	float icBottomPos = _innerContainer->getBottomBoundary();
-	if (icBottomPos + touchOffsetY >= boundary)
+	if (icBottomPos + touchOffsetY < _bottomBoundary)
 	{
-		(*offsetYResult) = boundary - icBottomPos;
-		processScrollEvent(MoveDirection::BOTTOM, false);
-		return false;
+		return true;
 	}
-	return true;
+	else if(!_bounceEnabled)
+	{
+		(*offsetYResult) = _bottomBoundary - icBottomPos;
+	}
+	processScrollEvent(MoveDirection::BOTTOM, false);
+	return false;
 }
 	
 bool ScrollView::processScrollDown(float* offsetYResult, float touchOffsetY)
 {
-	float boundary = (_bounceEnabled ? _bounceTopBoundary : _topBoundary);
 	float icTopPos = _innerContainer->getTopBoundary();
-	if (icTopPos + touchOffsetY <= boundary)
+	if (icTopPos + touchOffsetY > _topBoundary)
 	{
-		(*offsetYResult) = boundary - icTopPos;
-		processScrollEvent(MoveDirection::TOP, false);
-		return false;
+		return true;
 	}
-	return true;
+	else if(!_bounceEnabled)
+	{
+		(*offsetYResult) = _topBoundary - icTopPos;
+	}
+	processScrollEvent(MoveDirection::TOP, false);
+	return false;
 }
 
 bool ScrollView::processScrollLeft(float* offsetXResult, float touchOffsetX)
 {
-	float boundary = (_bounceEnabled ? _bounceRightBoundary : _rightBoundary);
 	float icRightPos = _innerContainer->getRightBoundary();
-	if (icRightPos + touchOffsetX <= boundary)
+	if (icRightPos + touchOffsetX > _rightBoundary)
 	{
-		(*offsetXResult) = boundary - icRightPos;
-		processScrollEvent(MoveDirection::RIGHT, false);
-		return false;
+		return true;
 	}
-	return true;
+	else if(!_bounceEnabled)
+	{
+		(*offsetXResult) = _rightBoundary - icRightPos;
+	}
+	processScrollEvent(MoveDirection::RIGHT, false);
+	return false;
 }
 
 bool ScrollView::processScrollRight(float* offsetXResult, float touchOffsetX)
 {
-	float boundary = (_bounceEnabled ? _bounceLeftBoundary : _leftBoundary);
 	float icLeftPos = _innerContainer->getLeftBoundary();
-	if (icLeftPos + touchOffsetX >= boundary)
+	if (icLeftPos + touchOffsetX < _leftBoundary)
 	{
-		(*offsetXResult) = boundary - icLeftPos;
-		processScrollEvent(MoveDirection::LEFT, false);
-		return false;
+		return true;
 	}
-	return true;
+	else if(!_bounceEnabled)
+	{
+		(*offsetXResult) = _leftBoundary - icLeftPos;
+	}
+	processScrollEvent(MoveDirection::LEFT, false);
+	return false;
 }
 
 bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
@@ -843,20 +841,26 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
 	
 	touchOffsetX = (_direction == Direction::VERTICAL ? 0 : touchOffsetX);
 	touchOffsetY = (_direction == Direction::HORIZONTAL ? 0 : touchOffsetY);
+	if(_bounceEnabled)
+	{
+		// If the position of the inner container is out of the boundary, the offsets should be divided by two.
+		touchOffsetX *= (isOutOfBoundaryLeftOrRight() ? 0.5f : 1);
+		touchOffsetY *= (isOutOfBoundaryTopOrBottom() ? 0.5f : 1);
+	}
 	
-	bool scrollenabled = true;
 	float realOffsetX = touchOffsetX;
 	float realOffsetY = touchOffsetY;
 	
+	bool scrollenabled = true;
 	if (touchOffsetY > 0.0f) // up
 	{
-		if (touchOffsetX > 0.0f) // right
-		{
-			scrollenabled = processScrollRight(&realOffsetX, touchOffsetX);
-		}
-		else if (touchOffsetX < 0.0f) // left
+		if (touchOffsetX < 0.0f) // left
 		{
 			scrollenabled = processScrollLeft(&realOffsetX, touchOffsetX);
+		}
+		else if (touchOffsetX > 0.0f) // right
+		{
+			scrollenabled = processScrollRight(&realOffsetX, touchOffsetX);
 		}
 		scrollenabled = processScrollUp(&realOffsetY, touchOffsetY);
 	}

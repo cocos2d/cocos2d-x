@@ -489,12 +489,6 @@ protected:
     float _leftBoundary;
     float _rightBoundary;
 
-    float _bounceTopBoundary;
-    float _bounceBottomBoundary;
-    float _bounceLeftBoundary;
-    float _bounceRightBoundary;
-
-
     bool _autoScroll;
     float _autoScrollAddUpTime;
 
