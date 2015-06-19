@@ -111,7 +111,7 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
 
-                startOfLine = 0.f;
+                startOfLine += lineWidth;
             }
             else
             {
