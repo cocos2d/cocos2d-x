@@ -441,13 +441,20 @@ protected:
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-	//
-	bool processScrollBottom(float* offsetYResult, float touchOffsetY);
+	// Without bounce
 	bool processScrollTop(float* offsetYResult, float touchOffsetY);
-	bool processScrollRight(float* offsetXResult, float touchOffsetX);
+	bool processScrollBottom(float* offsetYResult, float touchOffsetY);
 	bool processScrollLeft(float* offsetXResult, float touchOffsetX);
-
+	bool processScrollRight(float* offsetXResult, float touchOffsetX);
+	
+	// With bounce
+	bool processBounceScrollTop(float* offsetYResult, float touchOffsetY);
+	bool processBounceScrollBottom(float* offsetYResult, float touchOffsetY);
+	bool processBounceScrollLeft(float* offsetXResult, float touchOffsetX);
+	bool processBounceScrollRight(float* offsetXResult, float touchOffsetX);
+	
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
+	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
 
