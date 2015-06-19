@@ -433,8 +433,7 @@ protected:
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
-	void checkBounceBoundary(bool* pTopBounceNeeded, bool* pBottomBounceNeeded, bool* pLeftBounceNeeded, bool* pRightBounceNeeded);
-    bool checkNeedBounce();
+    bool processBounceConditionally();
     void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void jumpToDestination(const Vec2& des);
