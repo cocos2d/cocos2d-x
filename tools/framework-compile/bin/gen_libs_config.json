@@ -1,0 +1,44 @@
+{
+    "libs_output_dir" : "prebuilt",
+    "xcode_projs_info" : {
+        "build/cocos2d_libs.xcodeproj" : {
+            "targets"   : "libcocos2d"
+        },
+        "cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj" : {
+            "targets"   : "libluacocos2d"
+        },
+        "cocos/scripting/js-bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj" : {
+            "targets"   : "libjscocos2d"
+        },
+        "tools/simulator/libsimulator/proj.ios_mac/libsimulator.xcodeproj" : {
+            "targets"   : "libsimulator"
+        }
+    },
+    "vs_projs_info" : {
+        "build/cocos2d-win32.sln" : {
+            "build_targets" : [
+                "libluacocos2d"
+            ],
+            "rename_targets" : [
+                "libcocos2d", "libluacocos2d", "libSpine", "libbox2d"
+            ]
+        },
+        "build/cocos2d-js-win32.sln" : {
+            "build_targets" : [
+                "libjscocos2d"
+            ],
+            "rename_targets" : [
+                "libjscocos2d"
+            ]
+        },
+        "tools/simulator/frameworks/runtime-src/proj.win32/simulator.sln" : {
+            "build_targets" : [
+                "libsimulator"
+            ],
+            "rename_targets" : [
+                "libsimulator"
+            ]
+        }
+    },
+    "support_vs_versions" : [ 2013, 2015 ]
+}
