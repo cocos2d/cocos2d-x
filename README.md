@@ -27,16 +27,12 @@ Git user attention
 
 1. Clone the repo from GitHub.
 
-         $ git clone https://github.com/cocos2d/cocos2d-x.git
+         $ git clone --recurse-submodules https://github.com/cocos2d/cocos2d-x.git
 
 2. After cloning the repo, please execute `download-deps.py` to download and install dependencies.
 
          $ cd cocos2d-x
          cocos2d-x $ python download-deps.py
-
-3. After running `download-deps.py`.
-
-         cocos2d-x $ git submodule update --init
 
 How to start a new game
 -----------------------
