@@ -405,6 +405,35 @@ bool ScrollView::checkNeedBounce()
     return false;
 }
 
+bool ScrollView::isOutOfBoundary() const
+{
+	return _innerContainer->getTopBoundary() < _topBoundary
+		|| _innerContainer->getBottomBoundary() > _bottomBoundary
+		|| _innerContainer->getLeftBoundary() > _leftBoundary
+		|| _innerContainer->getRightBoundary() < _rightBoundary;
+}
+
+bool ScrollView::isOutOfBoundary(MoveDirection dir) const
+{
+	switch(dir)
+	{
+		case MoveDirection::TOP:	return _innerContainer->getTopBoundary() < _topBoundary;
+		case MoveDirection::BOTTOM:	return _innerContainer->getBottomBoundary() > _bottomBoundary;
+		case MoveDirection::LEFT:	return _innerContainer->getLeftBoundary() > _leftBoundary;
+		case MoveDirection::RIGHT:	return _innerContainer->getRightBoundary() < _rightBoundary;
+	}
+}
+
+bool ScrollView::isOutOfBoundaryTopOrBottom() const
+{
+	return isOutOfBoundary(MoveDirection::TOP) || isOutOfBoundary(MoveDirection::BOTTOM);
+}
+	
+bool ScrollView::isOutOfBoundaryLeftOrRight() const
+{
+	return isOutOfBoundary(MoveDirection::LEFT) || isOutOfBoundary(MoveDirection::RIGHT);
+}
+
 void ScrollView::checkBounceBoundary(bool* pTopBounceNeeded, bool* pBottomBounceNeeded, bool* pLeftBounceNeeded, bool* pRightBounceNeeded)
 {
     float icBottomPos = _innerContainer->getBottomBoundary();

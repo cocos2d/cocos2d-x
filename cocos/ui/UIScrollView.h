@@ -424,8 +424,12 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-
-
+	
+	bool isOutOfBoundary() const;
+	bool isOutOfBoundary(MoveDirection dir) const;
+	bool isOutOfBoundaryTopOrBottom() const;
+	bool isOutOfBoundaryLeftOrRight() const;
+	
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
