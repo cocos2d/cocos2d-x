@@ -34,27 +34,18 @@ NS_CC_BEGIN
 class CC_DLL ComponentLua : public Component
 {
 public:
-    /**
-     * Bind an event(update, onEnter or onExit) to a lua function.
-     * The lua function will be invoked when an event happens.
-     */
-    void bindEvent(const std::string& event, const std::string& luaFunctionName);
+    static ComponentLua* create(const std::string& scriptFileName);
     
-    /**
-     * Receive an event, and it will invoke corresponding lua function if there is.
-     */
-    void receiveEvent(const std::string& event);
-    
-    virtual void update(float delta);
-    
-public:
-    // lua script file path
-    std::string _scriptPath;
+    virtual void update(float dt);
     
 private:
-    // key: event
-    // value: lua function name
-    std::unordered_map<std::string, std::string> _eventFunctionMap;
+    ComponentLua(const std::string& scriptFileName);
+    void loadAndExecuteScript();
+    void getUserData();
+    
+private:
+    // lua script file path
+    std::string _scriptFileName;
 };
 
 NS_CC_END
