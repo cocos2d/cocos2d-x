@@ -53,7 +53,7 @@ class CocosLibsCompiler(object):
             self.build_android = True
 
         if args.app_abi is None:
-            self.app_abi = 'armeabi:x86:armeabi-v7a'
+            self.app_abi = 'armeabi'
         else:
             self.app_abi = args.app_abi
 
@@ -74,6 +74,9 @@ class CocosLibsCompiler(object):
         for k in CocosLibsCompiler.CHECK_KEYS:
             if k not in self.cfg_info.keys():
                 raise CustomError('%s is not found in %s' % (k, self.cfg_file_path), CustomError.ERROR_WRONG_CONFIG)
+
+    def get_cfg_info(self):
+        return self.cfg_info
 
     def compile(self):
         print("compile function")
@@ -353,7 +356,7 @@ if __name__ == "__main__":
     parser.add_argument('--dis-strip', "--disable-strip", dest='disable_strip', action="store_true", help='Disable the strip of the generated libs.')
     parser.add_argument('--vs', dest='vs_version', type=int, help='visual studio version, such as 2013.', default=2013)
     parser.add_argument("--app-abi", dest="app_abi",
-                        help="Set the APP_ABI of ndk-build.Can be multi value separated with ':'. Sample : --app-aib armeabi:x86:mips. Default value is 'armeabi:x86:armeabi-v7a'.")
+                        help="Set the APP_ABI of ndk-build.Can be multi value separated with ':'. Sample : --app-aib armeabi:x86:mips. Default value is 'armeabi'.")
 
     (args, unknown) = parser.parse_known_args()
 
