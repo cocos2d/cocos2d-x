@@ -421,7 +421,7 @@ protected:
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
-    void checkBounceBoundary();
+	void checkBounceBoundary(bool* pTopBounceNeeded, bool* pBottomBounceNeeded, bool* pLeftBounceNeeded, bool* pRightBounceNeeded);
     bool checkNeedBounce();
     void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
@@ -433,18 +433,12 @@ protected:
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-	bool scrollChildrenBouncing(float touchOffsetX, float touchOffsetY);
-	bool scrollChildrenNoBouncing(float touchOffsetX, float touchOffsetY);
-	
-	
 	//
-	bool handleTopBounce(float* offsetYResult, float touchOffsetY);
-	bool handleBottomBounce(float* offsetYResult, float touchOffsetY);
-	bool handleLeftBounce(float* offsetXResult, float touchOffsetX);
-	bool handleRightBounce(float* offsetXResult, float touchOffsetX);
-
+	bool handleTop(float* offsetYResult, float touchOffsetY);
+	bool handleBottom(float* offsetYResult, float touchOffsetY);
+	bool handleLeft(float* offsetXResult, float touchOffsetX);
+	bool handleRight(float* offsetXResult, float touchOffsetX);
 	
-
 
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
@@ -500,11 +494,6 @@ protected:
     float _slidTime;
     Vec2 _moveChildPoint;
     float _childFocusCancelOffset;
-
-    bool _leftBounceNeeded;
-    bool _topBounceNeeded;
-    bool _rightBounceNeeded;
-    bool _bottomBounceNeeded;
 
     bool _bounceEnabled;
     bool _bouncing;
