@@ -539,6 +539,14 @@ var testNames = [
         }
     },
     {
+        title:"NavMesh Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/NavMeshTest/NavMeshTest.js",
+        testScene:function () {
+            return new nextNavMeshTest();
+        }
+    },
+    {
         title:"ProgressActions Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/ProgressActionsTest/ProgressActionsTest.js",

@@ -1562,7 +1562,6 @@ bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, cocos2d::BlendFunc* r
     ret->src = (unsigned int)src;
     ret->dst = (unsigned int)dst;
     return true;
-    return true;
 }
 
 bool jsval_to_vector_vec2(JSContext* cx, JS::HandleValue v, std::vector<cocos2d::Vec2>* ret)
