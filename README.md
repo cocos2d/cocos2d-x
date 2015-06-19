@@ -13,7 +13,7 @@ cocos2d-x
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, Windows Phone, OS X, Windows and Linux.
+It works on iOS, Android, Windows Phone and Store Apps, OS X, Windows and Linux.
 
 cocos2d-x is:
 
@@ -86,16 +86,20 @@ Run
 
     $ cocos run -p win32
 
-### Build and run new project for Windows 8.1 and Windows Phone 8.1 ###
+### Build and run new project for Windows 8.1/10.0 and Windows Phone 8.1/10.0 ###
 
     $ cocos new MyGame -p com.your_company.mygame -l cpp -d projects
 
-Visual Studio 2013 Update 4 or later is required.
+* Visual Studio 2013 Update 4 or later is required for Windows 8.1 Universal Apps
 
-Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1)
+* Visual Studio 2015 RC and Windows 10.0 (build 10074 or higher) is required for Windows 10.0 UWP Apps
+
+Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1).
+Starting with Cocos2d-x v3.6 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
+Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0.
+
 See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
 
-Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0
 
 Main features
 -------------
@@ -145,10 +149,10 @@ Runtime Requirements
 --------------------
   * iOS 5.0+ for iPhone / iPad games
   * Android 2.3+ for Android games
-  * Windows Phone 8 and 8.1 for Windows Phone games
+  * Windows 8.1 for Windows Phone/Store 8.1 games
+  * Windows 10.0 for Windows Phone/Store 10.0  games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
-  * Windows 8+ for WinRT games (Modern Apps)
 
 
 Running Tests
