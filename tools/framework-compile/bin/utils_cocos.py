@@ -75,60 +75,47 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
 
     return sub.returncode
 
-def get_required_vs_version(proj_file):
-        # Now VS2012 is the mini version required
-        return "11.0"
-
-def get_vs_cmd_path(vs_reg, proj_path, vs_version):
-    # get required vs version
-    required_vs_version = get_required_vs_version(proj_path)
-    if required_vs_version is None:
-        raise Exception("Can't parse the sln file to find required VS version")
-
-    # get the correct available VS path
-    needUpgrade = False
-    vsPath = None
-
-    if vs_version is None:
-        i = 0
-        try:
-            while True:
-                version = _winreg.EnumKey(vs_reg, i)
-                try:
-                    if float(version) >= float(required_vs_version):
-                        key = _winreg.OpenKey(vs_reg, r"SxS\VS7")
-                        vsPath, type = _winreg.QueryValueEx(key, version)
-
-                        if float(version) > float(required_vs_version):
-                            needUpgrade = True
-
-                        key.close()
-                        break
-                except:
-                    pass
-                i += 1
-        except WindowsError:
-            pass
+def get_vs_cmd_path(vs_version):
+    if vs_version == 2013:
+        vs_ver = "12.0"
+    elif vs_version == 2015:
+        vs_ver = "14.0"
     else:
-        if vs_version == 2012:
-            vs_ver = "11.0"
-            needUpgrade = False
-        else:
-            vs_ver = "12.0"
-            needUpgrade = True
+        # not supported VS version
+        return None
 
+    # If the system is 64bit, find VS in both 32bit & 64bit registry
+    # If the system is 32bit, only find VS in 32bit registry
+    if is_32bit_windows():
+        reg_flag_list = [ _winreg.KEY_WOW64_32KEY ]
+    else:
+        reg_flag_list = [ _winreg.KEY_WOW64_64KEY, _winreg.KEY_WOW64_32KEY ]
+
+    # Find VS path
+    vsPath = None
+    for reg_flag in reg_flag_list:
         try:
-            key = _winreg.OpenKey(vs_reg, r"SxS\VS7")
+            vs = _winreg.OpenKey(
+                _winreg.HKEY_LOCAL_MACHINE,
+                r"SOFTWARE\Microsoft\VisualStudio",
+                0,
+                _winreg.KEY_READ | reg_flag
+            )
+            key = _winreg.OpenKey(vs, r"SxS\VS7")
             vsPath, type = _winreg.QueryValueEx(key, vs_ver)
         except:
-            raise Exception("Can't find VS%d" % vs_version)
+            continue
 
-    if vsPath is None:
-        message = "Can't find correct Visual Studio's path in the regedit"
-        raise Exception(message)
+        if vsPath is not None:
+            break
 
-    commandPath = os.path.join(vsPath, "Common7", "IDE", "devenv")
-    return (commandPath, needUpgrade)
+    # generate devenv path
+    if vsPath is not None:
+        commandPath = os.path.join(vsPath, "Common7", "IDE", "devenv")
+    else:
+        commandPath = None
+
+    return commandPath
 
 def rmdir(folder):
     if os.path.exists(folder):

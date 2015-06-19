@@ -39,5 +39,6 @@
                 "libsimulator"
             ]
         }
-    }
+    },
+    "support_vs_versions" : [ 2013, 2015 ]
 }
