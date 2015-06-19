@@ -152,12 +152,8 @@ void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
     
     Quaternion  quaternion;
     Quaternion::createFromRotationMatrix(rotation,&quaternion);
-
-    float rotx = atan2f(2 * (quaternion.w * quaternion.x + quaternion.y * quaternion.z), 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y));
-    float roty = asin(clampf(2 * (quaternion.w * quaternion.y - quaternion.z * quaternion.x) , -1.0f , 1.0f));
-    float rotz = -atan2(2 * (quaternion.w * quaternion.z + quaternion.x * quaternion.y) , 1 - 2 * (quaternion.y * quaternion.y + quaternion.z * quaternion.z));
-    
-    setRotation3D(Vec3(CC_RADIANS_TO_DEGREES(rotx),CC_RADIANS_TO_DEGREES(roty),CC_RADIANS_TO_DEGREES(rotz)));
+    quaternion.normalize();
+    setRotationQuat(quaternion);
 }
 
 const Mat4& Camera::getViewProjectionMatrix() const
