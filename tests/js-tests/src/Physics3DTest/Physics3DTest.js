@@ -432,7 +432,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
             farP     = this._camera.unproject(size, farP);
 
             var result = this._world.rayCast(nearP, farP);
-            if(result.hitObj !== undefined && result.hitObj.getObjType() == cc.Physics3DObject.PhysicsObjType.RIGID_BODY)
+            if(result.hitObj !== undefined && result.hitObj.getObjType() == jsb.Physics3DObject.PhysicsObjType.RIGID_BODY)
             {
                 var mat = cc.math.mat4GetInversed(result.hitObj.getWorldTransform());
                 var position =  cc.math.mat4TransformPoint(mat, result.hitPosition);
