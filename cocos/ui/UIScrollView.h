@@ -408,6 +408,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
+	enum class MoveDirection
+	{
+		TOP,
+		BOTTOM,
+		LEFT,
+		RIGHT,
+	};
+	
     virtual void initRenderer() override;
 
     virtual void onSizeChanged() override;
@@ -434,11 +442,10 @@ protected:
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
 	//
-	bool handleTop(float* offsetYResult, float touchOffsetY);
-	bool handleBottom(float* offsetYResult, float touchOffsetY);
-	bool handleLeft(float* offsetXResult, float touchOffsetX);
-	bool handleRight(float* offsetXResult, float touchOffsetX);
-	
+	bool processScrollBottom(float* offsetYResult, float touchOffsetY);
+	bool processScrollTop(float* offsetYResult, float touchOffsetY);
+	bool processScrollRight(float* offsetXResult, float touchOffsetX);
+	bool processScrollLeft(float* offsetXResult, float touchOffsetX);
 
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
     void startRecordSlidAction();
@@ -452,17 +459,10 @@ protected:
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
 
     void recordSlidTime(float dt);
-
-    void scrollToTopEvent();
-    void scrollToBottomEvent();
-    void scrollToLeftEvent();
-    void scrollToRightEvent();
-    void scrollingEvent();
-
-    void bounceTopEvent();
-    void bounceBottomEvent();
-    void bounceLeftEvent();
-    void bounceRightEvent();
+	
+	void processScrollEvent(MoveDirection dir, bool bounce);
+    void processScrollingEvent();
+	void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
 
 protected:
     Layout* _innerContainer;
