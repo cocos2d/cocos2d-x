@@ -21,11 +21,13 @@
  * THE SOFTWARE.
  */
 
+#include "base/ccConfig.h"
 #if CC_USE_NAVMESH
 #ifndef __cocos2d_js_bindings__jsb_cocos2dx_navmesh_conversions__
 #define __cocos2d_js_bindings__jsb_cocos2dx_navmesh_conversions__
 
 #include "jsapi.h"
+#include "navmesh/CCNavMeshAgent.h"
 
 namespace cocos2d
 {

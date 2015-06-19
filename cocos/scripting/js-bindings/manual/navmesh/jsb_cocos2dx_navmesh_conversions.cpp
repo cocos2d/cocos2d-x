@@ -22,9 +22,9 @@
  */
 
 #include "jsb_cocos2dx_navmesh_conversions.h"
+#if CC_USE_NAVMESH
 #include "cocos2d_specifics.hpp"
 #include "js_manual_conversions.h"
-#include "navmesh/CCNavMeshAgent.h"
 
 bool jsval_to_NavMeshAgentParam(JSContext *cx, JS::HandleValue v, cocos2d::NavMeshAgentParam* ret)
 {
@@ -91,3 +91,4 @@ jsval offMeshLinkData_to_jsval(JSContext* cx, const cocos2d::OffMeshLinkData& v)
     }
     return JSVAL_NULL;
 }
+#endif //#if CC_USE_NAVMESH

@@ -73,11 +73,11 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
     initScene:function () {
         //create mesh
         var trianglesList = jsb.Bundle3D.getTrianglesList("NavMesh/scene.obj");
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
-        var rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        var component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
+        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var component = jsb.Physics3DComponent.create(rigidBody);
         var sprite = jsb.Sprite3D.create("NavMesh/scene.obj");
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
