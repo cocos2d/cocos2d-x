@@ -10,7 +10,7 @@ from argparse import ArgumentParser
 class CocosBinTemplateGenerator(object):
 
     def __init__(self, args):
-        print "Generate cocos binary template"
+        print("Generate cocos binary template")
 
         self.cur_dir = os.path.realpath(os.path.dirname(__file__))
         self.repo_x = os.path.realpath(args.repo_x)
@@ -21,7 +21,7 @@ class CocosBinTemplateGenerator(object):
         try:
             self.is_for_package = args.is_for_package
         except Exception, e:
-            print "[Warn] %s" % e
+            print("[Warn] %s" % e)
 
     def generate(self):
         self.clean_template()

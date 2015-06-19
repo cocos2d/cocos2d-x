@@ -120,7 +120,7 @@ class TemplateModifier(object):
             pbx_proj.add_file_if_doesnt_exist("../Resources/res", res_group, tree="<group>")
 
         if pbx_proj.modified:
-            print "Save xcode project"
+            print("Save xcode project")
             pbx_proj.save()
 
         # modify the engine path
