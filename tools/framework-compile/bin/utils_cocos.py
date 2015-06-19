@@ -44,7 +44,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
     try:
         sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE, shell=shell, bufsize=4096)
     except Exception, e:
-        print "execute command fail:%s" % cmdstring
+        print("execute command fail:%s" % cmdstring)
         raise e
 
     # subprocess.poll()方法：检查子进程是否结束了，如果结束了，设定并返回码，放在subprocess.returncode变量中
@@ -56,7 +56,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
 
     if 0 != sub.returncode :
         errStr = "[ERROR] execute command fail:%s" % cmdstring
-        print errStr
+        print(errStr)
         raise Exception(errStr)
 
     return sub.returncode
