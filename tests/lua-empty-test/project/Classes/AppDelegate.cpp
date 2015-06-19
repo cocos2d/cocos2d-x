@@ -47,19 +47,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto scene = Scene::create();
     scene->addChild(sprite);
     
-    auto luaUpdateComponent = new ComponentLua;
-    luaUpdateComponent->_scriptPath = "src/hello.lua";
-    luaUpdateComponent->bindEvent("update", "update");
+    auto luaUpdateComponent = ComponentLua::create("src/hello.lua");
     sprite->addComponent(luaUpdateComponent);
-    luaUpdateComponent->release();
     sprite->scheduleUpdate();
-    
-   
-    auto menuItem = MenuItemFont::create("click me", [luaUpdateComponent](Ref* item) { luaUpdateComponent->_scriptPath = "src/hello2.lua"; });
-    menuItem->setPosition(Vec2(winSize.width/2, winSize.height/2 - 100));
-    auto menu = Menu::create(menuItem, nullptr);
-    menu->setPosition(Vec2(0,0));
-    scene->addChild(menu);
     
     director->runWithScene(scene);
 
