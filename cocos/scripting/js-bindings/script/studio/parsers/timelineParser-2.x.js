@@ -179,7 +179,8 @@
                 node.setTexture(path);
             else if(type === 1){
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
-                node.setSpriteFrame(spriteFrame);
+                if(spriteFrame)
+                    node.setSpriteFrame(spriteFrame);
             }
         });
 
