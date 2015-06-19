@@ -437,19 +437,22 @@ protected:
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
+	
+	bool checkCustomScrollDestinationLeft(float* touchOffsetX, float* touchOffsetY);
+	bool checkCustomScrollDestinationRight(float* touchOffsetX, float* touchOffsetY);
     bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
 	// Without bounce
-	bool processScrollTop(float* offsetYResult, float touchOffsetY);
-	bool processScrollBottom(float* offsetYResult, float touchOffsetY);
+	bool processScrollUp(float* offsetYResult, float touchOffsetY);
+	bool processScrollDown(float* offsetYResult, float touchOffsetY);
 	bool processScrollLeft(float* offsetXResult, float touchOffsetX);
 	bool processScrollRight(float* offsetXResult, float touchOffsetX);
 	
 	// With bounce
-	bool processBounceScrollTop(float* offsetYResult, float touchOffsetY);
-	bool processBounceScrollBottom(float* offsetYResult, float touchOffsetY);
+	bool processBounceScrollUp(float* offsetYResult, float touchOffsetY);
+	bool processBounceScrollDown(float* offsetYResult, float touchOffsetY);
 	bool processBounceScrollLeft(float* offsetXResult, float touchOffsetX);
 	bool processBounceScrollRight(float* offsetXResult, float touchOffsetX);
 	
@@ -499,7 +502,6 @@ protected:
 
     bool _bePressed;
     float _slidTime;
-    Vec2 _moveChildPoint;
     float _childFocusCancelOffset;
 
     bool _bounceEnabled;
