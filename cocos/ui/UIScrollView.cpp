@@ -55,16 +55,14 @@ _bePressed(false),
 _slidTime(0.0f),
 _childFocusCancelOffset(5.0f),
 _bounceEnabled(false),
+_bouncingBack(false),
+_bounceBackAttenuate(true),
+_bounceBackDuration(0),
+_bounceBackAccumulatedTime(0),
 _inertiaScrollEnabled(true),
 _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
 _eventCallback(nullptr)
-	
-	
-, m_bBouncingBack(false)
-, m_bBounceBackAttenuate(true)
-, m_fBounceBackDuration(0)
-, m_fBounceBackAccumulatedTime(0)
 {
     setTouchEnabled(true);
 }
@@ -357,11 +355,11 @@ void ScrollView::startBounceBack()
 {
 	static const float DEFAULT_BOUNCE_BACK_DURATION = 0.3f;
 	
-	m_bBouncingBack = true;
-	m_bBounceBackAttenuate = true;
-	m_bounceBackStartPosition = _innerContainer->getPosition();
-	m_fBounceBackDuration = DEFAULT_BOUNCE_BACK_DURATION;
-	m_fBounceBackAccumulatedTime = 0;
+	_bouncingBack = true;
+	_bounceBackAttenuate = true;
+	_bounceBackStartPosition = _innerContainer->getPosition();
+	_bounceBackDuration = DEFAULT_BOUNCE_BACK_DURATION;
+	_bounceBackAccumulatedTime = 0;
 	
 	// Calculate bounce back destination
 	{
@@ -382,26 +380,26 @@ void ScrollView::startBounceBack()
 		{
 			y = _bottomBoundary - _innerContainer->getBottomBoundary();
 		}
-		m_bounceBackTargetDelta = Vec2(x, y);
+		_bounceBackTargetDelta = Vec2(x, y);
 	}
 }
 	
 void ScrollView::processBounceBack(float deltaTime)
 {
-	m_fBounceBackAccumulatedTime += deltaTime;
-	float percentage = m_fBounceBackAccumulatedTime / m_fBounceBackDuration;
+	_bounceBackAccumulatedTime += deltaTime;
+	float percentage = _bounceBackAccumulatedTime / _bounceBackDuration;
 	if(percentage >= 1)
 	{
-		_innerContainer->setPosition(m_bounceBackStartPosition + m_bounceBackTargetDelta);
-		m_bBouncingBack = false;
+		_innerContainer->setPosition(_bounceBackStartPosition + _bounceBackTargetDelta);
+		_bouncingBack = false;
 	}
 	else
 	{
-		if(m_bBounceBackAttenuate)
+		if(_bounceBackAttenuate)
 		{
 			percentage = tweenfunc::expoEaseOut(percentage);
 		}
-		Vec2 moveDelta = m_bounceBackTargetDelta * percentage;
+		Vec2 moveDelta = _bounceBackTargetDelta * percentage;
 		
 		// Dispatch related events
 		if(moveDelta.x > 0)
@@ -420,7 +418,7 @@ void ScrollView::processBounceBack(float deltaTime)
 		{
 			processScrollEvent(MoveDirection::BOTTOM, true);
 		}
-		_innerContainer->setPosition(m_bounceBackStartPosition + moveDelta);
+		_innerContainer->setPosition(_bounceBackStartPosition + moveDelta);
 	}
 }
 
@@ -921,9 +919,9 @@ void ScrollView::startRecordSlidAction()
     {
         stopAutoScrollChildren();
     }
-    if (m_bBouncingBack)
+    if (_bouncingBack)
     {
-		m_bBouncingBack = false;
+		_bouncingBack = false;
     }
     _slidTime = 0.0f;
 }
@@ -1048,7 +1046,7 @@ void ScrollView::update(float dt)
     {
         autoScrollChildren(dt);
     }
-	if(m_bBouncingBack)
+	if(_bouncingBack)
 	{
 		processBounceBack(dt);
 	}

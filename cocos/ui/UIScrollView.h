@@ -494,6 +494,12 @@ protected:
     float _childFocusCancelOffset;
 
     bool _bounceEnabled;
+	bool _bouncingBack;
+	bool _bounceBackAttenuate;
+	Vec2 _bounceBackStartPosition;
+	Vec2 _bounceBackTargetDelta;
+	float _bounceBackDuration;
+	float _bounceBackAccumulatedTime;
 	
     bool _inertiaScrollEnabled;
 
@@ -511,22 +517,6 @@ protected:
 #pragma warning (pop)
 #endif
     ccScrollViewCallback _eventCallback;
-	
-	
-	
-	
-	// Working on new auto scroll
-	void startBounceBack();
-	void processBounceBack(float deltaTime);
-	
-	
-	bool m_bBouncingBack;
-	bool m_bBounceBackAttenuate;
-	Vec2 m_bounceBackStartPosition;
-	Vec2 m_bounceBackTargetDelta;
-	float m_fBounceBackDuration;
-	float m_fBounceBackAccumulatedTime;
-	
 };
 
 }
