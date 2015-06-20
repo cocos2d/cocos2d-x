@@ -431,14 +431,12 @@ protected:
 	
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
-    void bounceChildren(float dt);
     void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void jumpToDestination(const Vec2& des);
     void stopAutoScrollChildren();
 	
 	bool startBounceBackIfNeeded();
-	void startBounceBack();
 	void processBounceBack(float deltaTime);
 	
 	bool checkCustomScrollDestinationLeft(float* touchOffsetX, float* touchOffsetY);
@@ -468,6 +466,8 @@ protected:
 	void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
 	void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
+	
+	Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
 
 protected:
     Layout* _innerContainer;
