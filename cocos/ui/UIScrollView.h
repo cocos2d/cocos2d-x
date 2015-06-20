@@ -425,7 +425,6 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
 	
-	bool isOutOfBoundary() const;
 	bool isOutOfBoundary(MoveDirection dir) const;
 	bool isOutOfBoundaryTopOrBottom() const;
 	bool isOutOfBoundaryLeftOrRight() const;
@@ -433,13 +432,14 @@ protected:
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
-    bool processBounceConditionally();
     void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void jumpToDestination(const Vec2& des);
     void stopAutoScrollChildren();
-    void startBounceChildren(float v);
-    void stopBounceChildren();
+	
+	bool startBounceBackIfNeeded();
+	void startBounceBack();
+	void processBounceBack(float deltaTime);
 	
 	bool checkCustomScrollDestinationLeft(float* touchOffsetX, float* touchOffsetY);
 	bool checkCustomScrollDestinationRight(float* touchOffsetX, float* touchOffsetY);
@@ -452,14 +452,6 @@ protected:
 	bool processScrollDown(float* offsetYResult, float touchOffsetY);
 	bool processScrollLeft(float* offsetXResult, float touchOffsetX);
 	bool processScrollRight(float* offsetXResult, float touchOffsetX);
-	
-	// With bounce
-	bool processBounceScrollUp(float* offsetYResult, float touchOffsetY);
-	bool processBounceScrollDown(float* offsetYResult, float touchOffsetY);
-	bool processBounceScrollLeft(float* offsetXResult, float touchOffsetX);
-	bool processBounceScrollRight(float* offsetXResult, float touchOffsetX);
-	
-    bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
 	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
@@ -502,9 +494,7 @@ protected:
     float _childFocusCancelOffset;
 
     bool _bounceEnabled;
-    bool _bouncing;
-    Vec2 _bounceDir;
-    float _bounceOriginalSpeed;
+	
     bool _inertiaScrollEnabled;
 
     Ref* _scrollViewEventListener;
@@ -526,13 +516,14 @@ protected:
 	
 	
 	// Working on new auto scroll
-	void startBounceBackByNeo();
-	void processBounceBackByNeo(float deltaTime);
+	void startBounceBack();
+	void processBounceBack(float deltaTime);
 	
 	
 	bool m_bBouncingBack;
-	Vec2 m_bounceBackStartPisition;
-	Vec2 m_bounceBackDestination;
+	bool m_bBounceBackAttenuate;
+	Vec2 m_bounceBackStartPosition;
+	Vec2 m_bounceBackTargetDelta;
 	float m_fBounceBackDuration;
 	float m_fBounceBackAccumulatedTime;
 	
