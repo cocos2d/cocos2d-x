@@ -60,6 +60,11 @@ _inertiaScrollEnabled(true),
 _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
 _eventCallback(nullptr)
+	
+	
+, m_bBouncingBack(false)
+, m_fBounceBackDuration(0)
+, m_fBounceBackAccumulatedTime(0)
 {
     setTouchEnabled(true);
 }
@@ -430,6 +435,16 @@ bool ScrollView::isOutOfBoundaryTopOrBottom() const
 bool ScrollView::isOutOfBoundaryLeftOrRight() const
 {
 	return isOutOfBoundary(MoveDirection::LEFT) || isOutOfBoundary(MoveDirection::RIGHT);
+}
+
+void ScrollView::startBounceBackByNeo()
+{
+	
+}
+	
+void ScrollView::processBounceBackByNeo(float deltaTime)
+{
+	
 }
 
 void ScrollView::startBounceChildren(float v)

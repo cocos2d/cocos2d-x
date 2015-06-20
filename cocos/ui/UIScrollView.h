@@ -521,6 +521,21 @@ protected:
 #pragma warning (pop)
 #endif
     ccScrollViewCallback _eventCallback;
+	
+	
+	
+	
+	// Working on new auto scroll
+	void startBounceBackByNeo();
+	void processBounceBackByNeo(float deltaTime);
+	
+	
+	bool m_bBouncingBack;
+	Vec2 m_bounceBackStartPisition;
+	Vec2 m_bounceBackDestination;
+	float m_fBounceBackDuration;
+	float m_fBounceBackAccumulatedTime;
+	
 };
 
 }
