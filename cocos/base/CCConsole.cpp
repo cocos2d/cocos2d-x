@@ -233,11 +233,24 @@ void SendLogToWindow(const char *log)
 // Free functions to log
 //
 
+static CC_LOG_FUNCPTR _customLogFunc = nullptr;
+
+void logSetCustomFunction(CC_LOG_FUNCPTR logFunc)
+{
+    _customLogFunc = logFunc;
+}
+
 static void _log(const char *format, va_list args)
 {
     char buf[MAX_LOG_LENGTH];
 
     vsnprintf(buf, MAX_LOG_LENGTH-3, format, args);
+    
+    if (_customLogFunc != nullptr) {
+        _customLogFunc(buf);
+        return;
+    }
+    
     strcat(buf, "\n");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
