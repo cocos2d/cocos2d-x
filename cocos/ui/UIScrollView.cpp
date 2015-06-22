@@ -29,37 +29,15 @@ NS_CC_BEGIN
 
 namespace ui {
 
-static const float AUTOSCROLLMAXSPEED = 1000.0f;
-
+static const float INERTIA_DEACCELERATION = 3000.0f;
 static const float BOUNCE_BACK_DURATION = 0.3f;
 
-
-static char LOG_BUFFER[256];
-char* time()
+static long long getTimestamp()
 {
-	int nBufferLength = 256;
-	// Get current local time
-	struct tm* ptm = NULL;
 	struct timeval tv;
-	{
-		gettimeofday (&tv, NULL);
-		ptm = localtime (&tv.tv_sec);
-	}
-	
-	// Format the date and time, down to a single second.
-	strftime (LOG_BUFFER, nBufferLength, "%Y-%m-%d %H:%M:%S", ptm);
-	size_t nCurrentLength = strlen(LOG_BUFFER);
-	
-	// Compute milliseconds from microseconds.
-	long lMilliseconds = tv.tv_usec / 1000;
-	snprintf(LOG_BUFFER + nCurrentLength, nBufferLength - nCurrentLength, ".%03ld", lMilliseconds);
-	return LOG_BUFFER;
+	gettimeofday (&tv, NULL);
+	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
-
-const Vec2 SCROLLDIR_UP(0.0f, 1.0f);
-const Vec2 SCROLLDIR_DOWN(0.0f, -1.0f);
-const Vec2 SCROLLDIR_LEFT(-1.0f, 0.0f);
-const Vec2 SCROLLDIR_RIGHT(1.0f, 0.0f);
 
 IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
@@ -70,21 +48,19 @@ _topBoundary(0.0f),
 _bottomBoundary(0.0f),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
-_autoScroll(false),
-_autoScrollAddUpTime(0.0f),
-_autoScrollOriginalSpeed(0.0f),
-_autoScrollAcceleration(-1000.0f),
-_isAutoScrollSpeedAttenuated(false),
-_needCheckAutoScrollDestination(false),
 _bePressed(false),
-_slidTime(0.0f),
 _childFocusCancelOffset(5.0f),
+_inertiaScrollEnabled(true),
+_inertiaScrolling(false),
+_inertiaPrevTouchTimestamp(0),
+_inertiaScrollExpectedTime(0),
+_inertiaScrollElapsedTime(0),
+_autoScrolling(false),
+_autoScrollAttenuate(true),
+_autoScrollDuration(0),
+_autoScrollAccumulatedTime(0),
 _bounceEnabled(false),
 _bouncingBack(false),
-_bounceBackAttenuate(true),
-_bounceBackDuration(0),
-_bounceBackAccumulatedTime(0),
-_inertiaScrollEnabled(true),
 _scrollViewEventListener(nullptr),
 _scrollViewEventSelector(nullptr),
 _eventCallback(nullptr)
@@ -289,56 +265,6 @@ void ScrollView::moveChildren(float offsetX, float offsetY)
     _innerContainer->setPosition(position);
 }
 
-void ScrollView::autoScrollChildren(float dt)
-{
-    float lastTime = _autoScrollAddUpTime;
-    _autoScrollAddUpTime += dt;
-    if (_isAutoScrollSpeedAttenuated)
-    {
-        float nowSpeed = _autoScrollOriginalSpeed + _autoScrollAcceleration * _autoScrollAddUpTime;
-        if (nowSpeed <= 0.0f)
-        {
-            stopAutoScrollChildren();
-            startBounceBackIfNeeded();
-        }
-        else
-        {
-            float timeParam = lastTime * 2 + dt;
-            float offset = (_autoScrollOriginalSpeed + _autoScrollAcceleration * timeParam * 0.5f) * dt;
-            float offsetX = offset * _autoScrollDir.x;
-            float offsetY = offset * _autoScrollDir.y;
-            if (!scrollChildren(offsetX, offsetY))
-            {
-                stopAutoScrollChildren();
-                startBounceBackIfNeeded();
-            }
-        }
-    }
-    else
-    {
-        if (_needCheckAutoScrollDestination)
-        {
-            float xOffset = _autoScrollDir.x * dt * _autoScrollOriginalSpeed;
-            float yOffset = _autoScrollDir.y * dt * _autoScrollOriginalSpeed;
-            bool notDone = checkCustomScrollDestination(&xOffset, &yOffset);
-            bool scrollCheck = scrollChildren(xOffset, yOffset);
-            if (!notDone || !scrollCheck)
-            {
-                stopAutoScrollChildren();
-                startBounceBackIfNeeded();
-            }
-        }
-        else
-        {
-            if (!scrollChildren(_autoScrollDir.x * dt * _autoScrollOriginalSpeed, _autoScrollDir.y * dt * _autoScrollOriginalSpeed))
-            {
-                stopAutoScrollChildren();
-                startBounceBackIfNeeded();
-            }
-        }
-    }
-}
-
 bool ScrollView::startBounceBackIfNeeded()
 {
     if (!_bounceEnabled)
@@ -346,18 +272,14 @@ bool ScrollView::startBounceBackIfNeeded()
         return false;
     }
 	
-	_bounceBackTargetDelta = getHowMuchOutOfBoundary(Vec2::ZERO);
-	if(_bounceBackTargetDelta == Vec2::ZERO)
+	Vec2 outOfBoundary = getHowMuchOutOfBoundary(Vec2::ZERO);
+	if(outOfBoundary == Vec2::ZERO)
 	{
 		return false;
 	}
 	
 	_bouncingBack = true;
-	_bounceBackAttenuate = true;
-	_bounceBackStartPosition = _innerContainer->getPosition();
-	_bounceBackDuration = DEFAULT_BOUNCE_BACK_DURATION;
-	_bounceBackAccumulatedTime = 0;
-	
+	startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true);
 	return true;
 }
 
@@ -385,41 +307,45 @@ Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition) const
 	return result;
 }
 
-void ScrollView::processBounceBack(float deltaTime)
+void ScrollView::processAutoScrolling(float deltaTime)
 {
-	_bounceBackAccumulatedTime += deltaTime;
-	float percentage = _bounceBackAccumulatedTime / _bounceBackDuration;
+	_autoScrollAccumulatedTime += deltaTime;
+	float percentage = _autoScrollAccumulatedTime / _autoScrollDuration;
 	if(percentage >= 1)
 	{
-		_innerContainer->setPosition(_bounceBackStartPosition + _bounceBackTargetDelta);
+		_innerContainer->setPosition(_autoScrollStartPosition + _autoScrollTargetDelta);
+		_autoScrolling = false;
 		_bouncingBack = false;
 	}
 	else
 	{
-		if(_bounceBackAttenuate)
+		if(_autoScrollAttenuate)
 		{
 			percentage = tweenfunc::expoEaseOut(percentage);
 		}
-		Vec2 moveDelta = _bounceBackTargetDelta * percentage;
+		Vec2 moveDelta = _autoScrollTargetDelta * percentage;
 		
-		// Dispatch related events
-		if(moveDelta.x > 0)
+		// Dispatch related events if bouncing
+		if(_bouncingBack)
 		{
-			processScrollEvent(MoveDirection::RIGHT, true);
+			if(moveDelta.x > 0)
+			{
+				processScrollEvent(MoveDirection::RIGHT, true);
+			}
+			else if(moveDelta.x < 0)
+			{
+				processScrollEvent(MoveDirection::LEFT, true);
+			}
+			if(moveDelta.y > 0)
+			{
+				processScrollEvent(MoveDirection::TOP, true);
+			}
+			else if(moveDelta.y < 0)
+			{
+				processScrollEvent(MoveDirection::BOTTOM, true);
+			}
 		}
-		else if(moveDelta.x < 0)
-		{
-			processScrollEvent(MoveDirection::LEFT, true);
-		}
-		if(moveDelta.y > 0)
-		{
-			processScrollEvent(MoveDirection::TOP, true);
-		}
-		else if(moveDelta.y < 0)
-		{
-			processScrollEvent(MoveDirection::BOTTOM, true);
-		}
-		_innerContainer->setPosition(_bounceBackStartPosition + moveDelta);
+		_innerContainer->setPosition(_autoScrollStartPosition + moveDelta);
 	}
 }
 
@@ -444,35 +370,19 @@ bool ScrollView::isOutOfBoundaryLeftOrRight() const
 	return isOutOfBoundary(MoveDirection::LEFT) || isOutOfBoundary(MoveDirection::RIGHT);
 }
 
-void ScrollView::startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration)
+void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated)
 {
-    stopAutoScrollChildren();
-    _autoScrollDir = dir;
-    _isAutoScrollSpeedAttenuated = attenuated;
-    _autoScrollOriginalSpeed = v;
-    _autoScroll = true;
-    _autoScrollAcceleration = acceleration;
+	_autoScrolling = true;
+	_autoScrollTargetDelta = deltaMove;
+	_autoScrollAttenuate = attenuated;
+	_autoScrollStartPosition = _innerContainer->getPosition();
+	_autoScrollDuration = duration;
+	_autoScrollAccumulatedTime = 0;
 }
 
 void ScrollView::startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated)
 {
-    _needCheckAutoScrollDestination = false;
-    _autoScrollDestination = des;
-    Vec2 dis = des - _innerContainer->getPosition();
-    Vec2 dir = dis.getNormalized();
-    float orSpeed = 0.0f;
-    float acceleration = -1000.0f;
-    if (attenuated)
-    {
-        acceleration = (-(2 * dis.getLength())) / (second * second);
-        orSpeed =  2 * dis.getLength() / second;
-    }
-    else
-    {
-        _needCheckAutoScrollDestination = true;
-        orSpeed = dis.getLength() / second;
-    }
-    startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, attenuated, acceleration);
+	startAutoScroll(des - _innerContainer->getPosition(), second, attenuated);
 }
 
 void ScrollView::jumpToDestination(const Vec2 &des)
@@ -490,137 +400,71 @@ void ScrollView::jumpToDestination(const Vec2 &des)
     _innerContainer->setPosition(Vec2(finalOffsetX, finalOffsetY));
 }
 
-void ScrollView::stopAutoScrollChildren()
+void ScrollView::startInertiaScroll()
 {
-    _autoScroll = false;
-    _autoScrollOriginalSpeed = 0.0f;
-    _autoScrollAddUpTime = 0.0f;
-}
-
-bool ScrollView::checkCustomScrollDestinationLeft(float* touchOffsetX, float* touchOffsetY)
-{
-	float icLeftPos = _innerContainer->getLeftBoundary();
-	if (icLeftPos + *touchOffsetX >= _autoScrollDestination.x)
+	if(_inertiaTouchTimeDeltas.empty())
 	{
-		*touchOffsetX = _autoScrollDestination.x - icLeftPos;
-		return false;
+		return;
 	}
-	return true;
-}
-
-bool ScrollView::checkCustomScrollDestinationRight(float* touchOffsetX, float* touchOffsetY)
-{
-	float icRightPos = _innerContainer->getRightBoundary();
-	if (icRightPos + *touchOffsetX <= _autoScrollDestination.x)
+	
+	float totalDuration = 0;
+	for(auto i = _inertiaTouchTimeDeltas.begin(); i != _inertiaTouchTimeDeltas.end(); ++i)
 	{
-		*touchOffsetX = _autoScrollDestination.x - icRightPos;
-		return false;
+		totalDuration += (*i);
 	}
-	return true;
+	if(totalDuration >= 0.5f)
+	{
+		return;
+	}
+	
+	_inertiaScrolling = true;
+	
+	// Calcualte the initial velocity
+	Vec2 totalMovement;
+	for(auto i = _inertiaTouchDisplacements.begin(); i != _inertiaTouchDisplacements.end(); ++i)
+	{
+		totalMovement += (*i);
+	}
+	totalMovement.x = (_direction == Direction::VERTICAL ? 0 : totalMovement.x);
+	totalMovement.y = (_direction == Direction::HORIZONTAL ? 0 : totalMovement.y);
+	
+	_inertiaInitiVelocity = totalMovement / totalDuration;
+	
+	// Calculate values for ease out
+	_inertiaScrollExpectedTime = _inertiaInitiVelocity.length() / INERTIA_DEACCELERATION;
+	_inertiaScrollElapsedTime = 0;
 }
 
-bool ScrollView::checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY)
+void ScrollView::processInertiaScrolling(float dt)
 {
-    bool scrollenabled = true;
-    switch (_direction)
-    {
-        case Direction::VERTICAL:
-        {
-            if (_autoScrollDir.y > 0)
-            {
-                float icBottomPos = _innerContainer->getBottomBoundary();
-                if (icBottomPos + *touchOffsetY >= _autoScrollDestination.y)
-                {
-                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
-                    scrollenabled = false;
-                }
-            }
-            else
-            {
-                float icBottomPos = _innerContainer->getBottomBoundary();
-                if (icBottomPos + *touchOffsetY <= _autoScrollDestination.y)
-                {
-                    *touchOffsetY = _autoScrollDestination.y - icBottomPos;
-                    scrollenabled = false;
-                }
-            }
-            break;
-        }
-        case Direction::HORIZONTAL:
-        {
-            if (_autoScrollDir.x > 0)
-            {
-                float icLeftPos = _innerContainer->getLeftBoundary();
-                if (icLeftPos + *touchOffsetX >= _autoScrollDestination.x)
-                {
-                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
-                    scrollenabled = false;
-                }
-            }
-            else
-            {
-                float icLeftPos = _innerContainer->getLeftBoundary();
-                if (icLeftPos + *touchOffsetX <= _autoScrollDestination.x)
-                {
-                    *touchOffsetX = _autoScrollDestination.x - icLeftPos;
-                    scrollenabled = false;
-                }
-            }
-            break;
-        }
-        case Direction::BOTH:
-        {
-			if (*touchOffsetY > 0.0f) // up
-			{
-				if (*touchOffsetX > 0.0f) // right
-				{
-					scrollenabled = checkCustomScrollDestinationLeft(touchOffsetX, touchOffsetY);
-				}
-				else if (*touchOffsetX < 0.0f) // left
-				{
-					scrollenabled = checkCustomScrollDestinationRight(touchOffsetX, touchOffsetY);
-				}
-				float icBottomPos = _innerContainer->getBottomBoundary();
-				if (icBottomPos + *touchOffsetY >= _autoScrollDestination.y)
-				{
-					*touchOffsetY = _autoScrollDestination.y - icBottomPos;
-					scrollenabled = false;
-				}
-			}
-			else if (*touchOffsetY < 0.0f) // down
-			{
-				if (*touchOffsetX < 0.0f) // left
-				{
-					scrollenabled = checkCustomScrollDestinationRight(touchOffsetX, touchOffsetY);
-				}
-				else if (*touchOffsetX > 0.0f) // right
-				{
-					scrollenabled = checkCustomScrollDestinationLeft(touchOffsetX, touchOffsetY);
-				}
-				float icTopPos = _innerContainer->getTopBoundary();
-				if (icTopPos + *touchOffsetY <= _autoScrollDestination.y)
-				{
-					*touchOffsetY = _autoScrollDestination.y - icTopPos;
-					scrollenabled = false;
-				}
-			}
-			else
-			{
-				if (*touchOffsetX < 0.0f) // left
-				{
-					scrollenabled = checkCustomScrollDestinationRight(touchOffsetX, touchOffsetY);
-				}
-				else if (*touchOffsetX > 0.0f) // right
-				{
-					scrollenabled = checkCustomScrollDestinationLeft(touchOffsetX, touchOffsetY);
-				}
-			}
-            break;
-        }
-        default:
-            break;
-    }
-    return scrollenabled;
+	_inertiaScrollElapsedTime += dt;
+	if(isOutOfBoundaryLeftOrRight() || isOutOfBoundaryTopOrBottom())
+	{
+		// If the inner container is out of boundary, shorten the inertia time.
+		_inertiaScrollElapsedTime += dt * 15;
+	}
+	float percentage = _inertiaScrollElapsedTime / _inertiaScrollExpectedTime;
+	if(percentage >= 1)
+	{
+		_inertiaScrolling = false;
+		startBounceBackIfNeeded();
+		return;
+	}
+	percentage = tweenfunc::expoEaseOut(percentage);
+	
+	Vec2 inertiaVelocity = _inertiaInitiVelocity * (1 - percentage);
+	Vec2 displacement = inertiaVelocity * dt;
+	if(!_bounceEnabled)
+	{
+		Vec2 outOfBoundary = getHowMuchOutOfBoundary(displacement);
+		if(outOfBoundary != Vec2::ZERO)
+		{
+			// Don't allow to go out of boundary
+			displacement += outOfBoundary;
+			_inertiaScrolling = false;
+		}
+	}
+	moveChildren(displacement.x, displacement.y);
 }
 
 bool ScrollView::processScrollUp(float* offsetYResult, float touchOffsetY)
@@ -899,66 +743,23 @@ void ScrollView::jumpToPercentBothDirection(const Vec2& percent)
 
 void ScrollView::startRecordSlidAction()
 {
-    if (_autoScroll)
+    if (_inertiaScrolling)
     {
-        stopAutoScrollChildren();
+		_inertiaScrolling = false;
     }
-    if (_bouncingBack)
-    {
+	if(_autoScrolling)
+	{
+		_autoScrolling = false;
 		_bouncingBack = false;
-    }
-    _slidTime = 0.0f;
+	}
 }
 
 void ScrollView::endRecordSlidAction()
 {
-    if (!startBounceBackIfNeeded() && _inertiaScrollEnabled)
-    {
-        if (_slidTime <= 0.016f)
-        {
-            return;
-        }
-        float totalDis = 0.0f;
-        Vec2 dir;
-        Vec2 touchEndPositionInNodeSpace = this->convertToNodeSpace(_touchEndPosition);
-        Vec2 touchBeganPositionInNodeSpace = this->convertToNodeSpace(_touchBeganPosition);
-        switch (_direction)
-        {
-            case Direction::VERTICAL:
-                totalDis = touchEndPositionInNodeSpace.y - touchBeganPositionInNodeSpace.y;
-                if (totalDis < 0.0f)
-                {
-                    dir = SCROLLDIR_DOWN;
-                }
-                else
-                {
-                    dir = SCROLLDIR_UP;
-                }
-                break;
-            case Direction::HORIZONTAL:
-                totalDis = touchEndPositionInNodeSpace.x - touchBeganPositionInNodeSpace.x;
-                if (totalDis < 0.0f)
-                {
-                    dir = SCROLLDIR_LEFT;
-                }
-                else
-                {
-                    dir = SCROLLDIR_RIGHT;
-                }
-                break;
-            case Direction::BOTH:
-            {
-                Vec2 subVector = touchEndPositionInNodeSpace - touchBeganPositionInNodeSpace;
-                totalDis = subVector.getLength();
-                dir = subVector.getNormalized();
-                break;
-            }
-            default:
-                break;
-        }
-        float orSpeed = MIN(fabs(totalDis)/(_slidTime), AUTOSCROLLMAXSPEED);
-        startAutoScrollChildrenWithOriginalSpeed(dir, orSpeed, true, -1000);
-        _slidTime = 0.0f;
+	bool bounceBackStarted = startBounceBackIfNeeded();
+	if(!bounceBackStarted && _inertiaScrollEnabled)
+	{
+		startInertiaScroll();
     }
 }
 
@@ -966,6 +767,10 @@ void ScrollView::handlePressLogic(Touch *touch)
 {
     startRecordSlidAction();
     _bePressed = true;
+	
+	_inertiaPrevTouchTimestamp = getTimestamp();
+	_inertiaTouchDisplacements.clear();
+	_inertiaTouchTimeDeltas.clear();
 }
 
 void ScrollView::handleMoveLogic(Touch *touch)
@@ -974,6 +779,17 @@ void ScrollView::handleMoveLogic(Touch *touch)
     Vec2 previousTouchPositionInNodeSpace = this->convertToNodeSpace(touch->getPreviousLocation());
     Vec2 delta = touchPositionInNodeSpace - previousTouchPositionInNodeSpace;
 	scrollChildren(delta.x, delta.y);
+	
+	while(_inertiaTouchDisplacements.size() > 5)
+	{
+		_inertiaTouchDisplacements.pop_front();
+		_inertiaTouchTimeDeltas.pop_front();
+	}
+	_inertiaTouchDisplacements.push_back(delta);
+	
+	long long timestamp = getTimestamp();
+	_inertiaTouchTimeDeltas.push_back((timestamp - _inertiaPrevTouchTimestamp) / 1000.0f);
+	_inertiaPrevTouchTimestamp = timestamp;
 }
 
 void ScrollView::handleReleaseLogic(Touch *touch)
@@ -1026,23 +842,14 @@ void ScrollView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 
 void ScrollView::update(float dt)
 {
-    if (_autoScroll)
+    if (_inertiaScrolling)
     {
-        autoScrollChildren(dt);
+        processInertiaScrolling(dt);
     }
-	if(_bouncingBack)
+	else if (_autoScrolling)
 	{
-		processBounceBack(dt);
+		processAutoScrolling(dt);
 	}
-    recordSlidTime(dt);
-}
-
-void ScrollView::recordSlidTime(float dt)
-{
-    if (_bePressed)
-    {
-        _slidTime += dt;
-    }
 }
 
 void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender,Touch* touch)
@@ -1085,7 +892,6 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
 
 void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
 {
-	CCLOG("processScrollEvent() %d", dir);
 	ScrollviewEventType scrollEventType;
 	EventType eventType;
 	switch(dir) {
