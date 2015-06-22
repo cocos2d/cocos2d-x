@@ -408,6 +408,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
+	enum class MoveDirection
+	{
+		TOP,
+		BOTTOM,
+		LEFT,
+		RIGHT,
+	};
+	
     virtual void initRenderer() override;
 
     virtual void onSizeChanged() override;
@@ -416,29 +424,43 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-
-
+	
+	bool isOutOfBoundary() const;
+	bool isOutOfBoundary(MoveDirection dir) const;
+	bool isOutOfBoundaryTopOrBottom() const;
+	bool isOutOfBoundaryLeftOrRight() const;
+	
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
     void bounceChildren(float dt);
-    void checkBounceBoundary();
-    bool checkNeedBounce();
+    bool processBounceConditionally();
     void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void jumpToDestination(const Vec2& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
+	
+	bool checkCustomScrollDestinationLeft(float* touchOffsetX, float* touchOffsetY);
+	bool checkCustomScrollDestinationRight(float* touchOffsetX, float* touchOffsetY);
     bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    bool scrollChildrenVertical(float touchOffsetX, float touchOffsetY);
-    bool scrollChildrenHorizontal(float touchOffsetX, float touchOffestY);
-    bool scrollChildrenBoth(float touchOffsetX, float touchOffsetY);
-
-
+	// Without bounce
+	bool processScrollUp(float* offsetYResult, float touchOffsetY);
+	bool processScrollDown(float* offsetYResult, float touchOffsetY);
+	bool processScrollLeft(float* offsetXResult, float touchOffsetX);
+	bool processScrollRight(float* offsetXResult, float touchOffsetX);
+	
+	// With bounce
+	bool processBounceScrollUp(float* offsetYResult, float touchOffsetY);
+	bool processBounceScrollDown(float* offsetYResult, float touchOffsetY);
+	bool processBounceScrollLeft(float* offsetXResult, float touchOffsetX);
+	bool processBounceScrollRight(float* offsetXResult, float touchOffsetX);
+	
     bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
+	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
 
@@ -450,17 +472,10 @@ protected:
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
 
     void recordSlidTime(float dt);
-
-    void scrollToTopEvent();
-    void scrollToBottomEvent();
-    void scrollToLeftEvent();
-    void scrollToRightEvent();
-    void scrollingEvent();
-
-    void bounceTopEvent();
-    void bounceBottomEvent();
-    void bounceLeftEvent();
-    void bounceRightEvent();
+	
+	void processScrollEvent(MoveDirection dir, bool bounce);
+    void processScrollingEvent();
+	void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
 
 protected:
     Layout* _innerContainer;
@@ -473,12 +488,6 @@ protected:
     float _leftBoundary;
     float _rightBoundary;
 
-    float _bounceTopBoundary;
-    float _bounceBottomBoundary;
-    float _bounceLeftBoundary;
-    float _bounceRightBoundary;
-
-
     bool _autoScroll;
     float _autoScrollAddUpTime;
 
@@ -490,13 +499,7 @@ protected:
 
     bool _bePressed;
     float _slidTime;
-    Vec2 _moveChildPoint;
     float _childFocusCancelOffset;
-
-    bool _leftBounceNeeded;
-    bool _topBounceNeeded;
-    bool _rightBounceNeeded;
-    bool _bottomBounceNeeded;
 
     bool _bounceEnabled;
     bool _bouncing;
