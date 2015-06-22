@@ -25,8 +25,6 @@ THE SOFTWARE.
 #include "ui/UIScrollView.h"
 #include "2d/CCTweenFunction.h"
 
-#include "CCDirector.h"
-
 NS_CC_BEGIN
 
 namespace ui {
@@ -34,28 +32,6 @@ namespace ui {
 static const float INERTIA_DEACCELERATION = 3000.0f;
 static const float BOUNCE_BACK_DURATION = 0.3f;
 
-static char LOG_BUFFER[256];
-char* time()
-{
-	int nBufferLength = 256;
-	// Get current local time
-	struct tm* ptm = NULL;
-	struct timeval tv;
-	{
-		gettimeofday (&tv, NULL);
-		ptm = localtime (&tv.tv_sec);
-	}
-	
-	// Format the date and time, down to a single second.
-	strftime (LOG_BUFFER, nBufferLength, "%Y-%m-%d %H:%M:%S", ptm);
-	size_t nCurrentLength = strlen(LOG_BUFFER);
-	
-	// Compute milliseconds from microseconds.
-	long lMilliseconds = tv.tv_usec / 1000;
-	snprintf(LOG_BUFFER + nCurrentLength, nBufferLength - nCurrentLength, ".%03ld", lMilliseconds);
-	return LOG_BUFFER;
-}
-	
 static long long getTimestamp()
 {
 	struct timeval tv;
@@ -333,7 +309,6 @@ Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition) const
 
 void ScrollView::processAutoScrolling(float deltaTime)
 {
-	CCLOG("%s : processAutoScrolling()", time());
 	_autoScrollAccumulatedTime += deltaTime;
 	float percentage = _autoScrollAccumulatedTime / _autoScrollDuration;
 	if(percentage >= 1)
@@ -370,8 +345,6 @@ void ScrollView::processAutoScrolling(float deltaTime)
 				processScrollEvent(MoveDirection::BOTTOM, true);
 			}
 		}
-		
-		CCLOG("%s : processAutoScrolling() _autoScrollStartPosition(%0.2f,%0.2f), moveDelta(%0.2f,%0.2f)", time(), _autoScrollStartPosition.x, _autoScrollStartPosition.y, moveDelta.x, moveDelta.y);
 		_innerContainer->setPosition(_autoScrollStartPosition + moveDelta);
 	}
 }
@@ -399,8 +372,6 @@ bool ScrollView::isOutOfBoundaryLeftOrRight() const
 
 void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated)
 {
-	CCLOG("%s : startAutoScroll() deltaMove(%0.2f, %0.2f), duration=%0.2f, attenuated=%d", time(), deltaMove.x, deltaMove.y, duration, attenuated);
-
 	_autoScrolling = true;
 	_autoScrollTargetDelta = deltaMove;
 	_autoScrollAttenuate = attenuated;
@@ -462,8 +433,6 @@ void ScrollView::startInertiaScroll()
 	// Calculate values for ease out
 	_inertiaScrollExpectedTime = _inertiaInitiVelocity.length() / INERTIA_DEACCELERATION;
 	_inertiaScrollElapsedTime = 0;
-
-	CCLOG("%s : startInertiaScroll() startVelocity(%0.2f, %0.2f)", time(), _inertiaInitiVelocity.x, _inertiaInitiVelocity.y);
 }
 
 void ScrollView::processInertiaScrolling(float dt)
@@ -923,7 +892,6 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
 
 void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
 {
-	CCLOG("%s : processScrollEvent() dir=%d, bounce=%d", time(), dir, bounce);
 	ScrollviewEventType scrollEventType;
 	EventType eventType;
 	switch(dir) {
