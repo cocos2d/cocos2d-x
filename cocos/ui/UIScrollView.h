@@ -425,21 +425,19 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
 	
-	bool isOutOfBoundary() const;
 	bool isOutOfBoundary(MoveDirection dir) const;
 	bool isOutOfBoundaryTopOrBottom() const;
 	bool isOutOfBoundaryLeftOrRight() const;
 	
     void moveChildren(float offsetX, float offsetY);
     void autoScrollChildren(float dt);
-    void bounceChildren(float dt);
-    bool processBounceConditionally();
     void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void jumpToDestination(const Vec2& des);
     void stopAutoScrollChildren();
-    void startBounceChildren(float v);
-    void stopBounceChildren();
+	
+	bool startBounceBackIfNeeded();
+	void processBounceBack(float deltaTime);
 	
 	bool checkCustomScrollDestinationLeft(float* touchOffsetX, float* touchOffsetY);
 	bool checkCustomScrollDestinationRight(float* touchOffsetX, float* touchOffsetY);
@@ -452,14 +450,6 @@ protected:
 	bool processScrollDown(float* offsetYResult, float touchOffsetY);
 	bool processScrollLeft(float* offsetXResult, float touchOffsetX);
 	bool processScrollRight(float* offsetXResult, float touchOffsetX);
-	
-	// With bounce
-	bool processBounceScrollUp(float* offsetYResult, float touchOffsetY);
-	bool processBounceScrollDown(float* offsetYResult, float touchOffsetY);
-	bool processBounceScrollLeft(float* offsetXResult, float touchOffsetX);
-	bool processBounceScrollRight(float* offsetXResult, float touchOffsetX);
-	
-    bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
 	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
@@ -476,6 +466,8 @@ protected:
 	void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
 	void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
+	
+	Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
 
 protected:
     Layout* _innerContainer;
@@ -502,9 +494,13 @@ protected:
     float _childFocusCancelOffset;
 
     bool _bounceEnabled;
-    bool _bouncing;
-    Vec2 _bounceDir;
-    float _bounceOriginalSpeed;
+	bool _bouncingBack;
+	bool _bounceBackAttenuate;
+	Vec2 _bounceBackStartPosition;
+	Vec2 _bounceBackTargetDelta;
+	float _bounceBackDuration;
+	float _bounceBackAccumulatedTime;
+	
     bool _inertiaScrollEnabled;
 
     Ref* _scrollViewEventListener;
