@@ -483,10 +483,12 @@ protected:
 	
 	bool _inertiaScrollEnabled;
 	bool _inertiaScrolling;
-	Vec2 _inertiaVelocity;
+	Vec2 _inertiaInitiVelocity;
 	std::list<Vec2> _inertiaTouchDisplacements;
 	std::list<float> _inertiaTouchTimeDeltas;
 	long long _inertiaPrevTouchTimestamp;
+	float _inertiaScrollExpectedTime;
+	float _inertiaScrollElapsedTime;
 	
 	bool _autoScrolling;
 	bool _autoScrollAttenuate;

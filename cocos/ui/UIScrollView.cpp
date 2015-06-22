@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 namespace ui {
 
-static const float INERTIA_DEACCELERATION = 6000.0f;
+static const float INERTIA_DEACCELERATION = 3000.0f;
 static const float BOUNCE_BACK_DURATION = 0.3f;
 
 static char LOG_BUFFER[256];
@@ -77,6 +77,8 @@ _childFocusCancelOffset(5.0f),
 _inertiaScrollEnabled(true),
 _inertiaScrolling(false),
 _inertiaPrevTouchTimestamp(0),
+_inertiaScrollExpectedTime(0),
+_inertiaScrollElapsedTime(0),
 _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollDuration(0),
@@ -455,13 +457,34 @@ void ScrollView::startInertiaScroll()
 	totalMovement.x = (_direction == Direction::VERTICAL ? 0 : totalMovement.x);
 	totalMovement.y = (_direction == Direction::HORIZONTAL ? 0 : totalMovement.y);
 	
-	_inertiaVelocity = totalMovement / totalDuration;
-	CCLOG("%s : startInertiaScroll() startVelocity(%0.2f, %0.2f)", time(), _inertiaVelocity.x, _inertiaVelocity.y);
+	_inertiaInitiVelocity = totalMovement / totalDuration;
+	
+	// Calculate values for ease out
+	_inertiaScrollExpectedTime = _inertiaInitiVelocity.length() / INERTIA_DEACCELERATION;
+	_inertiaScrollElapsedTime = 0;
+
+	CCLOG("%s : startInertiaScroll() startVelocity(%0.2f, %0.2f)", time(), _inertiaInitiVelocity.x, _inertiaInitiVelocity.y);
 }
 
 void ScrollView::processInertiaScrolling(float dt)
 {
-	Vec2 displacement = _inertiaVelocity * dt;
+	_inertiaScrollElapsedTime += dt;
+	if(isOutOfBoundaryLeftOrRight() || isOutOfBoundaryTopOrBottom())
+	{
+		// If the inner container is out of boundary, shorten the inertia time.
+		_inertiaScrollElapsedTime += dt * 15;
+	}
+	float percentage = _inertiaScrollElapsedTime / _inertiaScrollExpectedTime;
+	if(percentage >= 1)
+	{
+		_inertiaScrolling = false;
+		startBounceBackIfNeeded();
+		return;
+	}
+	percentage = tweenfunc::expoEaseOut(percentage);
+	
+	Vec2 inertiaVelocity = _inertiaInitiVelocity * (1 - percentage);
+	Vec2 displacement = inertiaVelocity * dt;
 	if(!_bounceEnabled)
 	{
 		Vec2 outOfBoundary = getHowMuchOutOfBoundary(displacement);
@@ -472,31 +495,6 @@ void ScrollView::processInertiaScrolling(float dt)
 			_inertiaScrolling = false;
 		}
 	}
-	else
-	{
-		float deacceleration = INERTIA_DEACCELERATION * dt;
-		if(isOutOfBoundaryLeftOrRight() || isOutOfBoundaryTopOrBottom())
-		{
-			// If the inner container is out of boundary, amplify deacceleration.
-			deacceleration *= 20;
-		}
-		
-		Vec2 deaccelVelocity = -_inertiaVelocity;
-		deaccelVelocity.normalize();
-		deaccelVelocity *= deacceleration;
-		
-		if(_inertiaVelocity.length() > deacceleration)
-		{
-			_inertiaVelocity += deaccelVelocity;
-		}
-		else
-		{
-			_inertiaScrolling = false;
-			startBounceBackIfNeeded();
-		}
-	}
-	
-	// Scroll
 	moveChildren(displacement.x, displacement.y);
 }
 
@@ -819,10 +817,10 @@ void ScrollView::handleMoveLogic(Touch *touch)
 		_inertiaTouchTimeDeltas.pop_front();
 	}
 	_inertiaTouchDisplacements.push_back(delta);
+	
 	long long timestamp = getTimestamp();
 	_inertiaTouchTimeDeltas.push_back((timestamp - _inertiaPrevTouchTimestamp) / 1000.0f);
 	_inertiaPrevTouchTimestamp = timestamp;
-	CCLOG("%s : handleMoveLogic() timestamp=%lld", time(), timestamp);
 }
 
 void ScrollView::handleReleaseLogic(Touch *touch)
@@ -879,8 +877,7 @@ void ScrollView::update(float dt)
     {
         processInertiaScrolling(dt);
     }
-	
-	if(_autoScrolling)
+	else if (_autoScrolling)
 	{
 		processAutoScrolling(dt);
 	}
