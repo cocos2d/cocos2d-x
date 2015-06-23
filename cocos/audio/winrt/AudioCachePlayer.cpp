@@ -311,6 +311,7 @@ void AudioPlayer::setVolume(float volume)
 bool AudioPlayer::play2d(AudioCache* cache)
 {
     bool ret = false;
+    HRESULT hr = S_OK;
 
     if (cache != nullptr)
     {
@@ -323,12 +324,14 @@ bool AudioPlayer::play2d(AudioCache* cache)
             XAUDIO2_VOICE_SENDS sends = { 0 };
             sends.SendCount = 1;
             sends.pSends = descriptors;
-            ThrowIfFailed(_xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends));
+            hr = _xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends);
         }
 
-        _isStreaming = _cache->isStreamingSource();
-        _duration = getDuration();
-        ret = _play();
+        if (SUCCEEDED(hr)) {
+            _isStreaming = _cache->isStreamingSource();
+            _duration = getDuration();
+            ret = _play();
+        }
     }
 
     return ret;
@@ -336,20 +339,26 @@ bool AudioPlayer::play2d(AudioCache* cache)
 
 void AudioPlayer::init()
 {
-    memset(&_xaBuffer, 0, sizeof(_xaBuffer));
-    ThrowIfFailed(XAudio2Create(_xaEngine.ReleaseAndGetAddressOf()));
+    do {
+        memset(&_xaBuffer, 0, sizeof(_xaBuffer));
+        if (FAILED(XAudio2Create(_xaEngine.ReleaseAndGetAddressOf()))) {
+            break;
+        }
 
 #if defined(_DEBUG)
-    XAUDIO2_DEBUG_CONFIGURATION debugConfig = { 0 };
-    debugConfig.BreakMask = XAUDIO2_LOG_ERRORS;
-    debugConfig.TraceMask = XAUDIO2_LOG_ERRORS;
-    _xaEngine->SetDebugConfiguration(&debugConfig);
+        XAUDIO2_DEBUG_CONFIGURATION debugConfig = { 0 };
+        debugConfig.BreakMask = XAUDIO2_LOG_ERRORS;
+        debugConfig.TraceMask = XAUDIO2_LOG_ERRORS;
+        _xaEngine->SetDebugConfiguration(&debugConfig);
 #endif
 
-    _xaEngine->RegisterForCallbacks(this);
-    ThrowIfFailed(_xaEngine->CreateMasteringVoice(&_xaMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia));
-    _ready = true;
-    _state = AudioPlayerState::READY;
+        _xaEngine->RegisterForCallbacks(this);
+        if (FAILED(_xaEngine->CreateMasteringVoice(&_xaMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia))) {
+            break;
+        }
+        _ready = true;
+        _state = AudioPlayerState::READY;
+    } while (false);
 }
 
 void AudioPlayer::free()
