@@ -1646,5 +1646,4 @@ bool Terrain::Triangle::getInsterctPoint(const Ray &ray, Vec3& interScetPoint)co
     return true;
 }
 
-
 NS_CC_END
