@@ -690,7 +690,7 @@ void Label::updateQuads()
             }
             if (_lettersInfo[ctr].position.y - letterDef.height < 0.f)
             {
-                _reusedRect.size.height = _lettersInfo[ctr].position.y;
+                _reusedRect.size.height = _lettersInfo[ctr].position.y < 0.f ? 0.f : _lettersInfo[ctr].position.y;
             }
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
