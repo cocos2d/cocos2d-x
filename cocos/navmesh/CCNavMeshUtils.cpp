@@ -31,7 +31,7 @@
 NS_CC_BEGIN
 
 LinearAllocator::LinearAllocator(const int cap)
-: buffer(0)
+: buffer(nullptr)
 , capacity(0)
 , top(0)
 , high(0)

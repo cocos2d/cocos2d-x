@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -44,7 +44,7 @@ namespace cocostudio {
 class CC_STUDIO_DLL SpriteFrameCacheHelper
 {
 public:
-	/** @deprecated Use getInstance() instead */
+    /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper(){ return SpriteFrameCacheHelper::getInstance(); }
 
     static SpriteFrameCacheHelper *getInstance();
@@ -53,7 +53,7 @@ public:
 public:
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *    @brief    Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
     void removeSpriteFrameFromFile(const std::string& plistPath);

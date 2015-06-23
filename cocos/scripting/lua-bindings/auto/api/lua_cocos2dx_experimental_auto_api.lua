@@ -11,9 +11,4 @@
 -- @field [parent=#ccexp] TMXTiledMap#TMXTiledMap TMXTiledMap preloaded module
 
 
---------------------------------------------------------
--- the ccexp SpritePolygon
--- @field [parent=#ccexp] SpritePolygon#SpritePolygon SpritePolygon preloaded module
-
-
 return nil

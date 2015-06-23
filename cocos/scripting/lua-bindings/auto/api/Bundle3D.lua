@@ -65,17 +65,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#Bundle3D] loadObj 
--- @param self
--- @param #cc.MeshDatas meshdatas
--- @param #cc.MaterialDatas materialdatas
--- @param #cc.NodeDatas nodedatas
--- @param #string fullPath
--- @param #char mtl_basepath
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Bundle3D] Bundle3D 
 -- @param self
 -- @return Bundle3D#Bundle3D self (return value: cc.Bundle3D)

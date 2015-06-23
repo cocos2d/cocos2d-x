@@ -482,6 +482,9 @@ void Renderer::processRenderCommand(RenderCommand* command)
             
             if(cmd->isSkipBatching())
             {
+                // XXX: execute() will call bind() and unbind()
+                // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
+                // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
                 cmd->execute();
             }
             else

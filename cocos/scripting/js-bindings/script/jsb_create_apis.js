@@ -97,6 +97,9 @@ _p._ctor = function(fileName, rect) {
         } else if (fileName instanceof cc.SpriteFrame) {
             //init with a sprite frame
             this.initWithSpriteFrame(fileName);
+        } else if (fileName instanceof jsb.PolygonInfo) {
+            //init with a polygon info
+            this.initWithPolygon(fileName);
         }
     }
 };

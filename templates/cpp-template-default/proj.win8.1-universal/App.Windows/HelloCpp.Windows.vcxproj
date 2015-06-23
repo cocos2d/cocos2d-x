@@ -207,6 +207,9 @@
     <ProjectReference Include="..\..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Windows\libbox2d.Windows.vcxproj">
       <Project>{3b26a12d-3a44-47ea-82d2-282660fc844d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\cocos2d\external\recast\proj.win8.1-universal\librecast.Windows\librecast.Windows.vcxproj">
+      <Project>{19e35654-a3ec-48fa-bb21-082a2356c87c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

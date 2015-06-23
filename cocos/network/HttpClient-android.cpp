@@ -92,7 +92,10 @@ public:
 
     ~HttpURLConnection()
     {
-
+        if(_httpURLConnection != nullptr)
+        {
+            JniHelper::getEnv()->DeleteGlobalRef(_httpURLConnection);
+        }
     }
     
     void setRequestMethod(const char* method)
