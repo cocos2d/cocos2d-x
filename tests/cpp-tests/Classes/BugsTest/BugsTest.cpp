@@ -9,6 +9,7 @@
 #include "Bug-1159.h"
 #include "Bug-1174.h"
 #include "Bug-Child.h"
+#include "Bug-ClippingNode.h"
 
 BugsTests::BugsTests()
 {
@@ -22,5 +23,5 @@ BugsTests::BugsTests()
     ADD_TEST_CASE(Bug1159Layer);
     ADD_TEST_CASE(Bug1174Layer);
     ADD_TEST_CASE(BugChild);
-    ADD_TEST_CASE(BugCameraMask);
+    ADD_TEST_CASE(BugClippingNodeLayer);
 }
