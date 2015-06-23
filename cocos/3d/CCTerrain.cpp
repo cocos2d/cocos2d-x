@@ -36,6 +36,7 @@ USING_NS_CC;
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
+#include <set>
 
 #include "base/CCEventType.h"
 
@@ -490,82 +491,61 @@ cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y) const
 
 cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray) const
 {
-    Vec3 dir = ray._direction;
-    dir.normalize();
-    Vec3 rayStep = _terrainData._chunkSize.width*0.25*dir;
-    Vec3 rayPos =  ray._origin;
-    Vec3 rayStartPosition = ray._origin;
-    Vec3 lastRayPosition =rayPos;
-    rayPos += rayStep; 
-    // Linear search - Loop until find a point inside and outside the terrain Vector3 
-    Vec3 normal;
-    float height = getHeight(rayPos.x, rayPos.z, &normal);
-    while (rayPos.y > height)
+    Vec3 collisionPoint;
+    if (getIntersectionPoint(ray, collisionPoint))
     {
-        lastRayPosition = rayPos; 
-        rayPos += rayStep; 
-        if (normal.isZero())
-            return Vec3(0, 0, 0);
-        height = getHeight(rayPos.x,rayPos.z); 
-    } 
-
-    Vec3 startPosition = lastRayPosition;
-    Vec3 endPosition = rayPos;
-
-    for (int i= 0; i< 32; i++) 
-    { 
-        // Binary search pass 
-        Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
-        if (middlePoint.y < height) 
-            endPosition = middlePoint; 
-        else 
-            startPosition = middlePoint;
-    } 
-    Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
-    return collisionPoint;
+        return collisionPoint;
+    }
+    else
+    {
+        return Vec3(0,0,0);
+    }
 }
 
 bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const
 {
-    Vec3 dir = ray._direction;
-    dir.normalize();
-    Vec3 rayStep = _terrainData._chunkSize.width*0.25*dir;
-    Vec3 rayPos = ray._origin;
-    Vec3 rayStartPosition = ray._origin;
-    Vec3 lastRayPosition = rayPos;
-    rayPos += rayStep;
-    // Linear search - Loop until find a point inside and outside the terrain Vector3 
-    Vec3 normal;
-    float height = getHeight(rayPos.x, rayPos.z, &normal);
-    while (rayPos.y > height)
+    std::set<Chunk *> closeList;
+    Vec2 start = Vec2(ray._origin.x,ray._origin.z);
+    Vec2 dir = Vec2(ray._direction.x,ray._direction.z);
+    start = convertToTerrainSpace(start);
+    start.x /=(_terrainData._chunkSize.width+1);
+    start.y /=(_terrainData._chunkSize.height+1);
+    Vec2 delta = dir.getNormalized();
+    int maxStep = 10;
+    Vec2 neighbors[] = {Vec2(0,0),Vec2(1, 0), Vec2(0, 1), Vec2(-1, 0), Vec2(-1, 0), Vec2(1,1),Vec2(-1,-1),Vec2(-1,1),Vec2(1,-1) };
+    auto width = float(_imageWidth) / (_terrainData._chunkSize.width + 1);
+    auto height = float(_imageHeight) / (_terrainData._chunkSize.height + 1);
+    for(;;)
     {
-        lastRayPosition = rayPos;
-        rayPos += rayStep;
-        height = getHeight(rayPos.x, rayPos.z);
+        int x = roundf(start.x);
+        int y = roundf(start.y);
+        for (int k = 0; k < 9; k++)
+        {
+            auto chunk = getChunkByIndex(x+neighbors[k].x,y+neighbors[k].y);
+            if (chunk)
+            {
+                if (closeList.find(chunk) == closeList.end())
+                {
+                    if (chunk->getInsterctPointWithRay(ray, intersectionPoint))
+                    {
+                        return true;
+                    }
+                    closeList.insert(chunk);
+                }
+            }
+        }
+        start.x += delta.x;
+        start.y += delta.y;
+        if ((delta.x > 0 && start.x > width) || (delta.x <0 && start.x <0))
+        {
+            break;
+        }
+        if ((delta.y > 0 && start.y > height) || (delta.y < 0 && start.y < 0))
+        {
+            break;
+        }
     }
-
-    Vec3 startPosition = lastRayPosition;
-    Vec3 endPosition = rayPos;
-
-    for (int i = 0; i < 32; i++)
-    {
-        // Binary search pass 
-        Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
-        if (middlePoint.y < height)
-            endPosition = middlePoint;
-        else
-            startPosition = middlePoint;
-    }
-    Vec3 collisionPoint = (startPosition + endPosition) * 0.5f;
-    intersectionPoint = collisionPoint;
-    Vec2 terrainSpacePos = convertToTerrainSpace(Vec2(intersectionPoint.x,intersectionPoint.z));
-    if (terrainSpacePos.x<0 || terrainSpacePos.x >_imageWidth || terrainSpacePos.y<0 || terrainSpacePos.y >_imageHeight)
-    {
-        return false;
-    }else
-    { 
-        return true;
-    } 
+    return false;
 }
 
 void Terrain::setMaxDetailMapAmount(int max_value)
@@ -648,6 +628,12 @@ std::vector<float> Terrain::getHeightData() const
         }
     }
     return data;
+}
+
+Terrain::Chunk * cocos2d::Terrain::getChunkByIndex(int x, int y) const
+{
+    if (x<0 || y<0 || x>= MAX_CHUNKES || y >= MAX_CHUNKES) return nullptr;
+    return _chunkesArray[y][x];
 }
 
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
@@ -999,6 +985,19 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
         }
         break;
     }
+    //store triangle:
+    for (int i = 0; i < _size.height; i++)
+    {
+        for (int j = 0; j < _size.width; j++)
+        {
+             int nLocIndex = i * (_size.width + 1) + j;
+             Triangle a(_originalVertices[nLocIndex]._position, _originalVertices[nLocIndex + 1 * (_size.width + 1)]._position, _originalVertices[nLocIndex + 1]._position);
+             Triangle b(_originalVertices[nLocIndex + 1]._position, _originalVertices[nLocIndex + 1 * (_size.width + 1)]._position, _originalVertices[nLocIndex + 1 * (_size.width + 1) + 1]._position);
+
+            _trianglesList.push_back(a);
+            _trianglesList.push_back(b);
+        }
+    }
 
     calculateAABB();
     finish();
@@ -1257,6 +1256,34 @@ void Terrain::Chunk::calculateSlope()
     _slope = (highest.y - lowest.y)/dist;
 }
 
+bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint)
+{
+    float minDist = 9999;
+    bool isFind = false;
+    for (auto triangle : _trianglesList)
+    {
+        Vec3 p;
+        if (triangle.getInsterctPoint(ray, p))
+        {
+            float dist = ray._origin.distance(p);
+            if (dist<minDist)
+            {
+            interscetPoint = p;
+            minDist = dist;
+            }
+            isFind =true;
+        }
+    }
+    if (isFind)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void Terrain::Chunk::updateVerticesForLOD()
 {
     if(_oldLod == _currentLod){ return;} // no need to update vertices
@@ -1415,6 +1442,11 @@ Terrain::QuadTree::QuadTree(int x, int y, int w, int h, Terrain * terrain)
         _isTerminal = true;
         _localAABB = _chunk->_aabb;
         _chunk->_parent = this;
+
+        for (auto & triangle : _chunk->_trianglesList)
+        {
+            triangle.transform(_terrain->getNodeToWorldTransform());
+        }
     }
     _worldSpaceAABB = _localAABB;
     _worldSpaceAABB.transform(_terrain->getNodeToWorldTransform());
@@ -1540,5 +1572,79 @@ Terrain::DetailMap::DetailMap()
     _detailMapSrc = ""; 
     _detailMapSize = 35;
 }
+
+Terrain::Triangle::Triangle(Vec3 p1, Vec3 p2, Vec3 p3)
+{
+    _p1 = p1;
+    _p2 = p2;
+    _p3 = p3;
+}
+
+void Terrain::Triangle::transform(cocos2d::Mat4 matrix)
+{
+    matrix.transformPoint(&_p1);
+    matrix.transformPoint(&_p2);
+    matrix.transformPoint(&_p3);
+}
+
+bool Terrain::Triangle::getInsterctPoint(const Ray &ray, Vec3& interScetPoint)const
+{
+    // E1
+    Vec3 E1 = _p2 - _p1;
+
+    // E2
+    Vec3 E2 = _p3 - _p1;
+
+    // P
+    Vec3 P;
+    Vec3::cross(ray._direction,E2,&P);
+
+    // determinant
+    float det =  E1.dot(P);
+
+    // keep det > 0, modify T accordingly
+    Vec3 T;
+    if (det > 0)
+    {
+        T = ray._origin - _p1;
+    }
+    else
+    {
+        T = _p1 - ray._origin;
+        det = -det;
+    }
+
+    // If determinant is near zero, ray lies in plane of triangle
+    if (det < 0.0001f)
+        return false;
+
+     float t; // ray dist
+     float u,v;//barycentric coordinate
+    // Calculate u and make sure u <= 1
+    u = T.dot(P);
+    if (u < 0.0f || u > det)
+        return false;
+
+    // Q
+    Vec3 Q; 
+    Vec3::cross(T,E1,&Q);
+
+    // Calculate v and make sure u + v <= 1
+    v = ray._direction.dot(Q);
+    if (v < 0.0f || u + v > det)
+        return false;
+
+    // Calculate t, scale parameters, ray intersects triangle
+    t = E2.dot(Q);
+
+    float fInvDet = 1.0f / det;
+    t *= fInvDet;
+    u *= fInvDet;
+    v *= fInvDet;
+
+    interScetPoint = ray._origin + ray._direction * t;
+    return true;
+}
+
 
 NS_CC_END
