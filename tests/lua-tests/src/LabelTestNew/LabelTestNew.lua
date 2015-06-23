@@ -1235,17 +1235,20 @@ function LabelCharMapTest.create()
 
     local label1 = cc.Label:createWithCharMap("fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label1, 0, kTagSprite1)
+    label1:setAnchorPoint(cc.p(0, 0))
     label1:setPosition( cc.p(10,100) )
     label1:setOpacity( 200 )
 
     local label2 = cc.Label:createWithCharMap("fonts/tuffy_bold_italic-charmap.plist")
     layer:addChild(label2, 0, kTagSprite2)
+    label2:setAnchorPoint(cc.p(0, 0))
     label2:setPosition( cc.p(10,160) )
     label2:setOpacity( 32 )
 
     local label3 = cc.Label:createWithCharMap("fonts/tuffy_bold_italic-charmap.plist")--32 means Space key
     label3:setString("123 Test")
     layer:addChild(label3, 0, kTagSprite3)
+    label3:setAnchorPoint(cc.p(0, 0))
     label3:setPosition(cc.p(10,220))
 
     local function step(dt)
