@@ -61,9 +61,8 @@ local function baseInit(self)
             local children = ps:getChildren()
             for i= 1, #children do
                 local child = children[i]
-                if nil ~= child then
-                    --UNDO
-                    count = count + #(child:getParticlePool():getActiveParticleList())
+                if nil ~= child and nil ~= child.getAliveParticleCount then
+                    count = count + child:getAliveParticleCount()
                 end
             end
 

@@ -1791,7 +1791,7 @@ inline flatbuffers::Offset<ListViewOptions> CreateListViewOptions(flatbuffers::F
 struct ProjectNodeOptions : private flatbuffers::Table {
   const WidgetOptions *nodeOptions() const { return GetPointer<const WidgetOptions *>(4); }
   const flatbuffers::String *fileName() const { return GetPointer<const flatbuffers::String *>(6); }
-  float innerActionSpeed() const { return GetField<float>(8, 1.0); }
+  float innerActionSpeed() const { return GetField<float>(8, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
@@ -1808,7 +1808,7 @@ struct ProjectNodeOptionsBuilder {
   flatbuffers::uoffset_t start_;
   void add_nodeOptions(flatbuffers::Offset<WidgetOptions> nodeOptions) { fbb_.AddOffset(4, nodeOptions); }
   void add_fileName(flatbuffers::Offset<flatbuffers::String> fileName) { fbb_.AddOffset(6, fileName); }
-  void add_innerActionSpeed(float innerActionSpeed) { fbb_.AddElement<float>(8, innerActionSpeed, 1.0); }
+  void add_innerActionSpeed(float innerActionSpeed) { fbb_.AddElement<float>(8, innerActionSpeed, 0); }
   ProjectNodeOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ProjectNodeOptionsBuilder &operator=(const ProjectNodeOptionsBuilder &);
   flatbuffers::Offset<ProjectNodeOptions> Finish() {
@@ -1820,7 +1820,7 @@ struct ProjectNodeOptionsBuilder {
 inline flatbuffers::Offset<ProjectNodeOptions> CreateProjectNodeOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<WidgetOptions> nodeOptions = 0,
    flatbuffers::Offset<flatbuffers::String> fileName = 0,
-   float innerActionSpeed = 1.0) {
+   float innerActionSpeed = 0) {
   ProjectNodeOptionsBuilder builder_(_fbb);
   builder_.add_innerActionSpeed(innerActionSpeed);
   builder_.add_fileName(fileName);

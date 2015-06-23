@@ -14,6 +14,9 @@ import traceback
 from os import path, extsep
 from subprocess import Popen, PIPE, CalledProcessError
 
+def os_is_win32():
+    return sys.platform == 'win32'
+
 class UnrecognizedFormat:
     def __init__(self, prompt):
         self._prompt = prompt
@@ -66,7 +69,7 @@ class GitArchiver(object):
 
         # Raises an exception if there is no repo under main_repo_abspath.
         try:
-            self.run_shell("[ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1", main_repo_abspath)
+            self.run_shell("git rev-parse", main_repo_abspath)
         except Exception as e:
             raise ValueError("Not a git repository (or any of the parent directories).".format(path=main_repo_abspath))
 
@@ -188,7 +191,11 @@ class GitArchiver(object):
                 if self.verbose:
                     print("Compressing {f} => {a}...".format(f=file_path,
                                                              a=path.join(self.prefix, file_path)))
-                add(file_path, file_path)
+                try:
+                    add(file_path, file_path)
+                except:
+                    print('add %s failed.' % file_path)
+                    pass
             else:
                 print("{f} => {a}".format(f=file_path,
                                           a=path.join(self.prefix, file_path)))
@@ -199,7 +206,11 @@ class GitArchiver(object):
                     print("Compressing {f} => {a}...".format(f=path.join(self.main_repo_abspath, file_path),
                                                              a=path.join(self.prefix, file_path)))
 
-                add(path.join(self.main_repo_abspath, file_path), file_path)
+                try:
+                    add(path.join(self.main_repo_abspath, file_path), file_path)
+                except:
+                    print('add %s failed.' % file_path)
+                    pass
             else:
                 print("{f} => {a}".format(f=path.join(self.main_repo_abspath, file_path),
                                           a=path.join(self.prefix, file_path)))
@@ -232,7 +243,12 @@ class GitArchiver(object):
                     raise Exception("Couldn't find extra folder path (%s) in (%s)!" % (extra_folder_path, file_path))
 
                 path_in_zip = extra_to_zip_file + file_path[(len(extra_folder_path)):]
-                add(file_path, path_in_zip)
+
+                try:
+                    add(file_path, path_in_zip)
+                except:
+                    print('add %s failed.' % file_path)
+                    pass
 
         outfile_name, outfile_ext = path.splitext(output_path)
         for extra_dir in config_data["extra_dirs"]:
@@ -242,7 +258,11 @@ class GitArchiver(object):
                 for f in files:
                     file_path = path.join(root,f)
                     path_in_zip = file_path[(len(self.main_repo_abspath)+1):]
-                    add(file_path, path_in_zip)
+                    try:
+                        add(file_path, path_in_zip)
+                    except:
+                        print('add %s failed.' % file_path)
+                        pass
 
         if not dry_run:
             archive.close()
@@ -273,11 +293,20 @@ class GitArchiver(object):
         """
         components = []
 
-        while not path.samefile(abspath, repo_abspath):
-            abspath, tail = path.split(abspath)
+        if os_is_win32():
+            abspath = os.path.normpath(abspath)
+            repo_abspath = os.path.normpath(repo_abspath)
+            while abspath != repo_abspath:
+                abspath, tail = path.split(abspath)
 
-            if len(tail):
-                components.insert(0, tail)
+                if len(tail):
+                    components.insert(0, tail)
+        else:
+            while not path.samefile(abspath, repo_abspath):
+                abspath, tail = path.split(abspath)
+
+                if len(tail):
+                    components.insert(0, tail)
 
         components.insert(0, path.relpath(repo_abspath, repo_abspath))
         return components
