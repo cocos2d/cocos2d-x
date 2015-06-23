@@ -1261,6 +1261,7 @@ bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoin
             if (dist<minDist)
             {
             interscetPoint = p;
+            minDist = dist;
             }
             isFind =true;
         }
