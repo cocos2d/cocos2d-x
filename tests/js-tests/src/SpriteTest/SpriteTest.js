@@ -5338,10 +5338,10 @@ var SpriteBlendFuncTest = SpriteTestDemo.extend({
         //----start59----ctor
         this._super();
 
-        var destFactors = [gl.ZERO, gl.ONE, gl.SRC_COLOR, gl.ONE_MINUS_SRC_COLOR, gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA],
-           srcFactors = [gl.ZERO, gl.ONE, gl.DST_COLOR, gl.ONE_MINUS_DST_COLOR, gl.DST_ALPHA, gl.ONE_MINUS_DST_ALPHA];
-        var destTitles = ["ZERO", "ONE", "SRC_COLOR", "ONE_MINUS_SRC_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"],
-            srcTitles = ["ZERO", "ONE", "DST_COLOR", "ONE_MINUS_DST_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"];
+        var destFactors = [cc.ZERO, cc.ONE, cc.DST_COLOR, cc.ONE_MINUS_DST_COLOR, cc.DST_ALPHA, cc.ONE_MINUS_DST_ALPHA],
+           srcFactors = [cc.ZERO, cc.ONE, cc.SRC_COLOR, cc.ONE_MINUS_SRC_COLOR, cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA];
+        var destTitles = ["ZERO", "ONE", "DST_COLOR", "ONE_MINUS_DST_COLOR", "DST_ALPHA", "ONE_MINUS_DST_ALPHA"],
+            srcTitles = ["ZERO", "ONE", "SRC_COLOR", "ONE_MINUS_SRC_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"];
 
         var sourceImg = "Images/dot.png", destImg = "Images/wood.jpg";
         var sourceTexture = cc.textureCache.addImage(sourceImg);
@@ -5354,6 +5354,14 @@ var SpriteBlendFuncTest = SpriteTestDemo.extend({
         destSprite.setPosition(120,400);
         this.addChild(sourceSprite);
         this.addChild(destSprite);
+
+        if(cc._renderType === cc._RENDER_TYPE_CANVAS){
+            var info = new cc.LabelTTF("support is not complete on canvas", "Arial", 18);
+            info.x = 680;
+            info.y = 250;
+            info.setDimensions(cc.size(200, 200));
+            this.addChild(info);
+        }
 
         var i, j,  title, fontSize, titleLabel;
         for(i = 0; i < destTitles.length; i++){
@@ -5387,7 +5395,7 @@ var SpriteBlendFuncTest = SpriteTestDemo.extend({
                 //destSprite.setScale(0.8);
                 destSprite.setPosition( 220 + i * 60, 355 - j * 60);
 //                destSprite.setBlendFunc(srcFactors[j], destFactors[i]);
-                                                
+
                 this.addChild(destSprite,1);
                 this.addChild(sourceSprite,2);
             }
