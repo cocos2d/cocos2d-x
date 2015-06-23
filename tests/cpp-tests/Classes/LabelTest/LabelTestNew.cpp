@@ -79,6 +79,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue11576Test);
     ADD_TEST_CASE(LabelIssue11699Test);
     ADD_TEST_CASE(LabelIssue12259Test);
+    ADD_TEST_CASE(LabelIssue12409Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1971,4 +1972,42 @@ std::string LabelIssue12259Test::title() const
 std::string LabelIssue12259Test::subtitle() const
 {
     return "the texture of character should be cropped.";
+}
+
+LabelIssue12409Test::LabelIssue12409Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("abcdefghijklmn", "fonts/arial.ttf", 30);
+    label->setWidth(70);
+    label->setLineBreakWithoutSpace(true);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    auto labelSize = label->getContentSize();
+    auto winSize = Director::getInstance()->getWinSize();
+    Vec2 labelOrigin;
+    labelOrigin.x = winSize.width / 2 - (labelSize.width / 2);
+    labelOrigin.y = winSize.height / 2 - (labelSize.height / 2);
+    Vec2 vertices[4] =
+    {
+        Vec2(labelOrigin.x, labelOrigin.y),
+        Vec2(labelOrigin.x + labelSize.width, labelOrigin.y),
+        Vec2(labelOrigin.x + labelSize.width, labelOrigin.y + labelSize.height),
+        Vec2(labelOrigin.x, labelOrigin.y + labelSize.height)
+    };
+
+    auto drawNode = DrawNode::create();
+    drawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
+    addChild(drawNode);
+}
+
+std::string LabelIssue12409Test::title() const
+{
+    return "Test for Issue #12409";
+}
+
+std::string LabelIssue12409Test::subtitle() const
+{
+    return "Testing auto-wrapping without space.";
 }

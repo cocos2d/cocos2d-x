@@ -18,13 +18,16 @@ class VCXProject(object):
         else:
             self.file_path = os.path.abspath(proj_file_path)
 
-    def get_or_create_node(self, parent, node_name):
+    def get_or_create_node(self, parent, node_name, create_new=True):
         children = parent.getElementsByTagName(node_name)
         if len(children) > 0:
             return children[0]
         else:
-            child = parent.createElement(node_name)
-            return child
+            if create_new:
+                child = parent.createElement(node_name)
+                return child
+            else:
+                return None
 
     def save(self, new_path=None):
         if new_path is None:
@@ -111,18 +114,19 @@ class VCXProject(object):
                 link_info = ";".join(cur_libs)
                 depends_node.firstChild.nodeValue = link_info
 
-    def get_event_command(self, event, config):
+    def get_event_command(self, event, config=None):
         cfg_nodes = self.root_node.getElementsByTagName("ItemDefinitionGroup")
         ret = ""
         for cfg_node in cfg_nodes:
-            cond_attr = cfg_node.attributes["Condition"].value
-            if cond_attr.lower().find("debug") >= 0:
-                cur_mode = "Debug"
-            else:
-                cur_mode = "Release"
+            if config is not None:
+                cond_attr = cfg_node.attributes["Condition"].value
+                if cond_attr.lower().find("debug") >= 0:
+                    cur_mode = "Debug"
+                else:
+                    cur_mode = "Release"
 
-            if cur_mode.lower() != config.lower():
-                continue
+                if cur_mode.lower() != config.lower():
+                    continue
 
             event_nodes = cfg_node.getElementsByTagName(event)
             if len(event_nodes) <= 0:
@@ -139,19 +143,23 @@ class VCXProject(object):
 
         return ret
 
-    def set_event_command(self, event, command, config=None):
+    def set_event_command(self, event, command, config=None, create_new=True):
         cfg_nodes = self.root_node.getElementsByTagName("ItemDefinitionGroup")
         for cfg_node in cfg_nodes:
-            cond_attr = cfg_node.attributes["Condition"].value
-            if cond_attr.lower().find("debug") >= 0:
-                cur_mode = "Debug"
-            else:
-                cur_mode = "Release"
+            if config is not None:
+                cond_attr = cfg_node.attributes["Condition"].value
+                if cond_attr.lower().find("debug") >= 0:
+                    cur_mode = "Debug"
+                else:
+                    cur_mode = "Release"
 
-            if (config is not None) and (cur_mode.lower() != config.lower()):
+                if cur_mode.lower() != config.lower():
+                    continue
+
+            event_node = self.get_or_create_node(cfg_node, event, create_new)
+            if event_node is None:
                 continue
 
-            event_node = self.get_or_create_node(cfg_node, event)
             cmd_node = self.get_or_create_node(event_node, "Command")
             cmd_node.firstChild.nodeValue = command
 
@@ -174,7 +182,7 @@ class VCXProject(object):
             else:
                 cur_mode = "Release"
 
-            print "event: %s" % event
+            print("event: %s" % event)
             event_node = self.get_node_if(cfg_node, event)
             cmd_node = self.get_node_if(event_node, eventItem)
             text_node = self.xmldoc.createTextNode(command)

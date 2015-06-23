@@ -104,32 +104,42 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\spidermonkey\prebuilt\win32\debug-build\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-33.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
-      <ProgramDatabaseFile>$(ProjectDir)../../../runtime/win32/$(TargetName).pdb</ProgramDatabaseFile>
+      <OutputFile>$(ProjectDir)../../../simulator/win32/$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(ProjectDir)../../../simulator/win32/$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
+      <Command>
+      </Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy /Y /Q "$(OutDir)*.dll" "$(ProjectDir)..\..\..\runtime\win32\"
-xcopy /Y /Q "$(ProjectDir)..\Classes\ide-support\lang" "$(ProjectDir)..\..\..\runtime\win32\"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <CustomBuildStep>
+      <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
+xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(LocalDebuggerWorkingDirectory)\script" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /D /E /I /F /Y
+copy "$(ProjectDir)..\..\..\main.js" "$(LocalDebuggerWorkingDirectory)" /Y
+copy "$(ProjectDir)..\..\..\project.json" "$(LocalDebuggerWorkingDirectory)" /Y
+xcopy /Y /Q "$(OutDir)*.dll" "$(LocalDebuggerWorkingDirectory)"
+xcopy /Y /Q "$(ProjectDir)..\Classes\ide-support\lang" "$(LocalDebuggerWorkingDirectory)"</Command>
+      <Outputs>$(TargetName).cab</Outputs>
+      <Inputs>$(TargetFileName)</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -166,23 +176,19 @@ xcopy /Y /Q "$(ProjectDir)..\Classes\ide-support\lang" "$(ProjectDir)..\..\..\ru
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\spidermonkey\prebuilt\win32\release-build\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-33.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
-      <Message>Copy js and resource files.</Message>
+      <Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

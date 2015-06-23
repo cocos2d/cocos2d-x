@@ -5,7 +5,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_controller_Controller_receiveExternalKeyEvent(lua_State* tolua_S)
 {
     int argc = 0;

@@ -712,8 +712,8 @@ bool Label::recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefiniti
 
     _lettersInfo[spriteIndex].def = letterDef;
     _lettersInfo[spriteIndex].position = point;
-    _lettersInfo[spriteIndex].contentSize.width = _lettersInfo[spriteIndex].def.width;
-    _lettersInfo[spriteIndex].contentSize.height = _lettersInfo[spriteIndex].def.height;
+    _lettersInfo[spriteIndex].contentSize.width = letterDef.width;
+    _lettersInfo[spriteIndex].contentSize.height = letterDef.height;
     _limitShowCount++;
 
     return _lettersInfo[spriteIndex].def.validDefinition;

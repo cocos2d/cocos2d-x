@@ -5,7 +5,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_experimental_video_VideoPlayer_getFileName(lua_State* tolua_S)
 {
     int argc = 0;
