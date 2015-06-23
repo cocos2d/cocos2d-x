@@ -10,8 +10,6 @@ public:
 
     virtual bool init() override;
 
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
-
 private:
 
     cocos2d::ClippingNode *_clipSprite;

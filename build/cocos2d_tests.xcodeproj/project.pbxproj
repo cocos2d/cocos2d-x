@@ -850,6 +850,8 @@
 		B6CAB54F1AF9AA6C00B9B856 /* Physics3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB54C1AF9AA6C00B9B856 /* Physics3DTest.cpp */; };
 		B6DD2FFC1B04979C00E47F5F /* NavMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FFA1B04979C00E47F5F /* NavMeshTest.cpp */; };
 		B6DD2FFD1B04979C00E47F5F /* NavMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FFA1B04979C00E47F5F /* NavMeshTest.cpp */; };
+		B6DD9E861B39520900014CC3 /* Bug-ClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD9E841B39520900014CC3 /* Bug-ClippingNode.cpp */; };
+		B6DD9E871B39520900014CC3 /* Bug-ClippingNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD9E841B39520900014CC3 /* Bug-ClippingNode.cpp */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
 		C08689C118D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
@@ -1802,6 +1804,8 @@
 		B6CAB54D1AF9AA6C00B9B856 /* Physics3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Physics3DTest.h; path = Physics3DTest/Physics3DTest.h; sourceTree = "<group>"; };
 		B6DD2FFA1B04979C00E47F5F /* NavMeshTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NavMeshTest.cpp; path = NavMeshTest/NavMeshTest.cpp; sourceTree = "<group>"; };
 		B6DD2FFB1B04979C00E47F5F /* NavMeshTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavMeshTest.h; path = NavMeshTest/NavMeshTest.h; sourceTree = "<group>"; };
+		B6DD9E841B39520900014CC3 /* Bug-ClippingNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-ClippingNode.cpp"; sourceTree = "<group>"; };
+		B6DD9E851B39520900014CC3 /* Bug-ClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-ClippingNode.h"; sourceTree = "<group>"; };
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
 		C04F93591941B05400E9FEAB /* TileMapTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileMapTest2.h; sourceTree = "<group>"; };
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
@@ -2427,6 +2431,8 @@
 		1AC3597618CECF0B00F37B72 /* BugsTest */ = {
 			isa = PBXGroup;
 			children = (
+				B6DD9E841B39520900014CC3 /* Bug-ClippingNode.cpp */,
+				B6DD9E851B39520900014CC3 /* Bug-ClippingNode.h */,
 				1AC3597718CECF0B00F37B72 /* Bug-1159.cpp */,
 				1AC3597818CECF0B00F37B72 /* Bug-1159.h */,
 				1AC3597918CECF0B00F37B72 /* Bug-1174.cpp */,
@@ -5039,6 +5045,7 @@
 				295824591987415900F9746D /* UIScale9SpriteTest.cpp in Sources */,
 				1AC35C6118CECF0C00F37B72 /* TouchesTest.cpp in Sources */,
 				1AC35C6318CECF0C00F37B72 /* TransitionsTest.cpp in Sources */,
+				B6DD9E861B39520900014CC3 /* Bug-ClippingNode.cpp in Sources */,
 				29080DB3191B595E0066F8DF /* UILayoutTest_Editor.cpp in Sources */,
 				29080DB9191B595E0066F8DF /* UILoadingBarTest.cpp in Sources */,
 				29080DAF191B595E0066F8DF /* UIImageViewTest_Editor.cpp in Sources */,
@@ -5150,6 +5157,7 @@
 				1AC35C2018CECF0C00F37B72 /* NodeTest.cpp in Sources */,
 				29080DE4191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */,
 				1AC35C4218CECF0C00F37B72 /* RenderTextureTest.cpp in Sources */,
+				B6DD9E871B39520900014CC3 /* Bug-ClippingNode.cpp in Sources */,
 				1AC35C1618CECF0C00F37B72 /* MenuTest.cpp in Sources */,
 				1AC35C6818CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
 				29080D1D191B574B0066F8DF /* UITest.cpp in Sources */,

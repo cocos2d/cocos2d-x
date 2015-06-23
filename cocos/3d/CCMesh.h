@@ -189,6 +189,10 @@ public:
      */
     void calculateAABB();
     
+    /**
+     * force set this Sprite3D to 2D render queue
+     */
+    void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -213,6 +217,8 @@ protected:
     Material*           _material;
     AABB                _aabb;
     std::function<void()> _visibleChanged;
+    
+    bool                  _force2DQueue;
 };
 
 // end of 3d group
