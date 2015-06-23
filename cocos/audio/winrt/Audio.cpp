@@ -85,7 +85,7 @@ void Audio::CreateResources()
 	    // decode the data then we feed it through the XAudio2 pipeline as a separate Mastering Voice, so that we can tag it
 	    // as Game Media.
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    if(FAILED(m_musicEngine->CreateMasteringVoice(&m_musicMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia)))
+        if(FAILED(m_musicEngine->CreateMasteringVoice(&m_musicMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia)))
         {
             m_engineExperiencedCriticalError = true;
             break;
@@ -96,7 +96,7 @@ void Audio::CreateResources()
 	    // single mastering voice.
 	    // We are creating an entirely new engine instance and mastering voice in order to tag
 	    // our sound effects with the audio category AudioCategory_GameEffects.
-	    if(FAILED(XAudio2Create(&m_soundEffectEngine)))
+        if(FAILED(XAudio2Create(&m_soundEffectEngine)))
         {
             m_engineExperiencedCriticalError = true;
             break;
@@ -106,7 +106,7 @@ void Audio::CreateResources()
         m_soundEffectEngine->RegisterForCallbacks(&m_soundEffectEngineCallback);
 
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    if(FAILED(m_soundEffectEngine->CreateMasteringVoice(&m_soundEffectMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameEffects)))
+        if(FAILED(m_soundEffectEngine->CreateMasteringVoice(&m_soundEffectMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameEffects)))
         {
             m_engineExperiencedCriticalError = true;
             break;
