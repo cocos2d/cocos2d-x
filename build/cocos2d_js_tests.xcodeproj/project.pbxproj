@@ -38,6 +38,16 @@
 		A01E18F81784C59400B0CA4A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
 		A035A5E01782290400987F6C /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F808C177E98A600D9A1CB /* libcurl.dylib */; };
 		A035A71217822E9E00987F6C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A035A71117822E9E00987F6C /* libsqlite3.dylib */; };
+		B30431651B3999F50062CFA2 /* libPluginAdmob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B30431441B3999640062CFA2 /* libPluginAdmob.a */; };
+		B304316D1B399A010062CFA2 /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B30431471B3999640062CFA2 /* libPluginFacebook.a */; };
+		B304316E1B399A010062CFA2 /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B304314A1B3999640062CFA2 /* libPluginFlurry.a */; };
+		B304316F1B399A010062CFA2 /* libPluginIAP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B304314D1B3999640062CFA2 /* libPluginIAP.a */; };
+		B30431701B399A010062CFA2 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B30431501B3999640062CFA2 /* libPluginProtocol.a */; };
+		B30431711B399A010062CFA2 /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B30431531B3999640062CFA2 /* libPluginTwitter.a */; };
+		B30431721B399A010062CFA2 /* libPluginUmeng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B30431561B3999640062CFA2 /* libPluginUmeng.a */; };
+		B30431731B399A010062CFA2 /* libPluginWeibo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B30431591B3999640062CFA2 /* libPluginWeibo.a */; };
+		B304317F1B399AAC0062CFA2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B304317E1B399AAB0062CFA2 /* FacebookSDK.framework */; };
+		B30431811B399D5F0062CFA2 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = B30431801B399D5F0062CFA2 /* jsb_pluginx.js */; };
 		BA0613B51AC23B2D003118D6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA0613B41AC23B2D003118D6 /* Security.framework */; };
 		BA2350551948262700E17B2A /* script in Resources */ = {isa = PBXBuildFile; fileRef = BA2350541948262700E17B2A /* script */; };
 		BA2350561948262700E17B2A /* script in Resources */ = {isa = PBXBuildFile; fileRef = BA2350541948262700E17B2A /* script */; };
@@ -81,6 +91,62 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B30431431B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B30431361B3999640062CFA2 /* PluginAdmob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FADC44A7176EA82000B2D5ED;
+			remoteInfo = PluginAdmob;
+		};
+		B30431461B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B304312D1B3999640062CFA2 /* PluginFacebook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BA34A75D195AA8C7002D0ECD;
+			remoteInfo = PluginFacebook;
+		};
+		B30431491B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B30431331B3999640062CFA2 /* PluginFlurry.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A372168AFD41008C1C7B;
+			remoteInfo = PluginFlurry;
+		};
+		B304314C1B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B30431301B3999640062CFA2 /* PluginIAP.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 05A9357E19260E2E00F08DC0;
+			remoteInfo = PluginIAP;
+		};
+		B304314F1B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B304312A1B3999640062CFA2 /* PluginProtocol.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A321168ADBC2008C1C7B;
+			remoteInfo = PluginProtocol;
+		};
+		B30431521B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B30431391B3999640062CFA2 /* PluginTwitter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FACAD8881762C1B500D75ADE;
+			remoteInfo = PluginTwitter;
+		};
+		B30431551B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B304313F1B3999640062CFA2 /* PluginUmeng.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FA09A301168ADAEC008C1C7B;
+			remoteInfo = PluginUmeng;
+		};
+		B30431581B3999640062CFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B304313C1B3999640062CFA2 /* PluginWeibo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FAE27530175D9D2900F5DA8E;
+			remoteInfo = PluginWeibo;
+		};
 		ED2719561AE4E68200C17085 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
@@ -179,6 +245,16 @@
 		A01E17721784C06E00B0CA4A /* js-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A5EC1782290400987F6C /* js-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		B304312A1B3999640062CFA2 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = ../plugin/protocols/proj.ios/PluginProtocol.xcodeproj; sourceTree = "<group>"; };
+		B304312D1B3999640062CFA2 /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = ../plugin/plugins/facebook/proj.ios/PluginFacebook.xcodeproj; sourceTree = "<group>"; };
+		B30431301B3999640062CFA2 /* PluginIAP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginIAP.xcodeproj; path = ../plugin/plugins/iosiap/proj.ios/PluginIAP.xcodeproj; sourceTree = "<group>"; };
+		B30431331B3999640062CFA2 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = ../plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj; sourceTree = "<group>"; };
+		B30431361B3999640062CFA2 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = ../plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj; sourceTree = "<group>"; };
+		B30431391B3999640062CFA2 /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = ../plugin/plugins/twitter/proj.ios/PluginTwitter.xcodeproj; sourceTree = "<group>"; };
+		B304313C1B3999640062CFA2 /* PluginWeibo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginWeibo.xcodeproj; path = ../plugin/plugins/weibo/proj.ios/PluginWeibo.xcodeproj; sourceTree = "<group>"; };
+		B304313F1B3999640062CFA2 /* PluginUmeng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginUmeng.xcodeproj; path = ../plugin/plugins/umeng/proj.ios/PluginUmeng.xcodeproj; sourceTree = "<group>"; };
+		B304317E1B399AAB0062CFA2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../plugin/plugins/facebook/proj.ios/FacebookSDK.framework; sourceTree = "<group>"; };
+		B30431801B399D5F0062CFA2 /* jsb_pluginx.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = jsb_pluginx.js; path = ../plugin/jsbindings/script/jsb_pluginx.js; sourceTree = "<group>"; };
 		BA0613B41AC23B2D003118D6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BA2350541948262700E17B2A /* script */ = {isa = PBXFileReference; lastKnownFileType = text; name = script; path = "../cocos/scripting/js-bindings/script"; sourceTree = "<group>"; };
 		BAA7DEE218C84F5000D9A10E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = main.js; path = "../tests/js-tests/main.js"; sourceTree = "<group>"; };
@@ -218,6 +294,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B304317F1B399AAC0062CFA2 /* FacebookSDK.framework in Frameworks */,
+				B304316D1B399A010062CFA2 /* libPluginFacebook.a in Frameworks */,
+				B304316E1B399A010062CFA2 /* libPluginFlurry.a in Frameworks */,
+				B304316F1B399A010062CFA2 /* libPluginIAP.a in Frameworks */,
+				B30431701B399A010062CFA2 /* libPluginProtocol.a in Frameworks */,
+				B30431711B399A010062CFA2 /* libPluginTwitter.a in Frameworks */,
+				B30431721B399A010062CFA2 /* libPluginUmeng.a in Frameworks */,
+				B30431731B399A010062CFA2 /* libPluginWeibo.a in Frameworks */,
+				B30431651B3999F50062CFA2 /* libPluginAdmob.a in Frameworks */,
 				ED2719DA1AE4F8EB00C17085 /* libcocos2d iOS.a in Frameworks */,
 				ED2719D51AE4F86500C17085 /* libjscocos2d iOS.a in Frameworks */,
 				ED2719C41AE4F5D300C17085 /* AVFoundation.framework in Frameworks */,
@@ -356,6 +441,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				B30431801B399D5F0062CFA2 /* jsb_pluginx.js */,
+				B30431231B39990D0062CFA2 /* pluginx */,
 				1A604F2518BF1D2000CC9A93 /* cocos2d_js_bindings.xcodeproj */,
 				1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -369,6 +456,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B304317E1B399AAB0062CFA2 /* FacebookSDK.framework */,
 				ED2719D31AE4F64D00C17085 /* Cocoa.framework */,
 				ED2719D11AE4F64600C17085 /* OpenGL.framework */,
 				ED2719CF1AE4F63D00C17085 /* QuartzCore.framework */,
@@ -402,6 +490,85 @@
 				EDCC747E17C455FD007B692C /* IOKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B30431231B39990D0062CFA2 /* pluginx */ = {
+			isa = PBXGroup;
+			children = (
+				B304312A1B3999640062CFA2 /* PluginProtocol.xcodeproj */,
+				B304312D1B3999640062CFA2 /* PluginFacebook.xcodeproj */,
+				B30431301B3999640062CFA2 /* PluginIAP.xcodeproj */,
+				B30431331B3999640062CFA2 /* PluginFlurry.xcodeproj */,
+				B30431361B3999640062CFA2 /* PluginAdmob.xcodeproj */,
+				B30431391B3999640062CFA2 /* PluginTwitter.xcodeproj */,
+				B304313C1B3999640062CFA2 /* PluginWeibo.xcodeproj */,
+				B304313F1B3999640062CFA2 /* PluginUmeng.xcodeproj */,
+			);
+			name = pluginx;
+			sourceTree = "<group>";
+		};
+		B304312B1B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30431501B3999640062CFA2 /* libPluginProtocol.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B304312E1B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30431471B3999640062CFA2 /* libPluginFacebook.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B30431311B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B304314D1B3999640062CFA2 /* libPluginIAP.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B30431341B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B304314A1B3999640062CFA2 /* libPluginFlurry.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B30431371B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30431441B3999640062CFA2 /* libPluginAdmob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B304313A1B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30431531B3999640062CFA2 /* libPluginTwitter.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B304313D1B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30431591B3999640062CFA2 /* libPluginWeibo.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B30431401B3999640062CFA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B30431561B3999640062CFA2 /* libPluginUmeng.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		BAC9055D195C2D2500307000 /* script */ = {
@@ -503,6 +670,38 @@
 					ProductGroup = ED2719521AE4E68200C17085 /* Products */;
 					ProjectRef = 1A604F0218BF1D1C00CC9A93 /* cocos2d_libs.xcodeproj */;
 				},
+				{
+					ProductGroup = B30431371B3999640062CFA2 /* Products */;
+					ProjectRef = B30431361B3999640062CFA2 /* PluginAdmob.xcodeproj */;
+				},
+				{
+					ProductGroup = B304312E1B3999640062CFA2 /* Products */;
+					ProjectRef = B304312D1B3999640062CFA2 /* PluginFacebook.xcodeproj */;
+				},
+				{
+					ProductGroup = B30431341B3999640062CFA2 /* Products */;
+					ProjectRef = B30431331B3999640062CFA2 /* PluginFlurry.xcodeproj */;
+				},
+				{
+					ProductGroup = B30431311B3999640062CFA2 /* Products */;
+					ProjectRef = B30431301B3999640062CFA2 /* PluginIAP.xcodeproj */;
+				},
+				{
+					ProductGroup = B304312B1B3999640062CFA2 /* Products */;
+					ProjectRef = B304312A1B3999640062CFA2 /* PluginProtocol.xcodeproj */;
+				},
+				{
+					ProductGroup = B304313A1B3999640062CFA2 /* Products */;
+					ProjectRef = B30431391B3999640062CFA2 /* PluginTwitter.xcodeproj */;
+				},
+				{
+					ProductGroup = B30431401B3999640062CFA2 /* Products */;
+					ProjectRef = B304313F1B3999640062CFA2 /* PluginUmeng.xcodeproj */;
+				},
+				{
+					ProductGroup = B304313D1B3999640062CFA2 /* Products */;
+					ProjectRef = B304313C1B3999640062CFA2 /* PluginWeibo.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -513,6 +712,62 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		B30431441B3999640062CFA2 /* libPluginAdmob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginAdmob.a;
+			remoteRef = B30431431B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B30431471B3999640062CFA2 /* libPluginFacebook.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginFacebook.a;
+			remoteRef = B30431461B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B304314A1B3999640062CFA2 /* libPluginFlurry.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginFlurry.a;
+			remoteRef = B30431491B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B304314D1B3999640062CFA2 /* libPluginIAP.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginIAP.a;
+			remoteRef = B304314C1B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B30431501B3999640062CFA2 /* libPluginProtocol.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginProtocol.a;
+			remoteRef = B304314F1B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B30431531B3999640062CFA2 /* libPluginTwitter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginTwitter.a;
+			remoteRef = B30431521B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B30431561B3999640062CFA2 /* libPluginUmeng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginUmeng.a;
+			remoteRef = B30431551B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B30431591B3999640062CFA2 /* libPluginWeibo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPluginWeibo.a;
+			remoteRef = B30431581B3999640062CFA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		ED2719571AE4E68200C17085 /* libcocos2d Mac.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -548,6 +803,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B30431811B399D5F0062CFA2 /* jsb_pluginx.js in Resources */,
 				BA2350561948262700E17B2A /* script in Resources */,
 				BAA7DEE718C84F5000D9A10E /* project.json in Resources */,
 				1A604F5518BF1D6000CC9A93 /* Icon-57.png in Resources */,
@@ -693,7 +949,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/leo/Documents/long/code/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -723,7 +982,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/leo/Documents/long/code/cocos2d-js/frameworks/js-bindings/cocos2d-x/plugin/plugins/facebook/proj.ios",
+				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -821,7 +1083,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../plugin/jsbindings/manual";
 			};
 			name = Debug;
 		};
@@ -845,7 +1107,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../plugin/jsbindings/manual";
 			};
 			name = Release;
 		};
