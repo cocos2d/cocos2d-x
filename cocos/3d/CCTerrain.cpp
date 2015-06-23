@@ -512,13 +512,13 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     start.y /=(_terrainData._chunkSize.height+1);
     Vec2 delta = dir.getNormalized();
     int maxStep = 10;
-    Vec2 neighbors[] = { Vec2(0, 0), Vec2(1, 1), Vec2(0, 1), Vec2(1, 0), Vec2(-1, 0), Vec2(0, -1), Vec2(-1, 1),
-        Vec2(1, -1), Vec2(-1, -1) };
-    for(int i=0;i<maxStep;i++)
+    Vec2 neighbors[] = {Vec2(0,0),Vec2(1, 0), Vec2(0, 1), Vec2(-1, 0), Vec2(-1, 0), Vec2(1,1),Vec2(-1,-1),Vec2(-1,1),Vec2(1,-1) };
+    auto width = float(_imageWidth) / (_terrainData._chunkSize.width + 1);
+    auto height = float(_imageHeight) / (_terrainData._chunkSize.height + 1);
+    for(;;)
     {
         int x = roundf(start.x);
         int y = roundf(start.y);
-        Chunk * c_array[9];
         for (int k = 0; k < 9; k++)
         {
             auto chunk = getChunkByIndex(x+neighbors[k].x,y+neighbors[k].y);
@@ -536,6 +536,14 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
         }
         start.x += delta.x;
         start.y += delta.y;
+        if ((delta.x > 0 && start.x > width) || (delta.x <0 && start.x <0))
+        {
+            break;
+        }
+        if ((delta.y > 0 && start.y > height) || (delta.y < 0 && start.y < 0))
+        {
+            break;
+        }
     }
     return false;
 }
