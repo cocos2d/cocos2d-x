@@ -1427,7 +1427,7 @@ const Rect& Texture2D::getSpriteFrameCapInset( cocos2d::SpriteFrame *spriteFrame
     }
     else
     {
-        auto capInsetMap = this->_ninePatchInfo->capInsetMap;
+        auto &capInsetMap = this->_ninePatchInfo->capInsetMap;
         if(capInsetMap.find(spriteFrame) != capInsetMap.end())
         {
             return capInsetMap.at(spriteFrame);
