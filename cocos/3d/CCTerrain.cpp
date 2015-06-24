@@ -511,31 +511,30 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     start.x /=(_terrainData._chunkSize.width+1);
     start.y /=(_terrainData._chunkSize.height+1);
     Vec2 delta = dir.getNormalized();
-    int maxStep = 10;
-    Vec2 neighbors[] = {Vec2(0,0),Vec2(1, 0), Vec2(0, 1), Vec2(-1, 0), Vec2(-1, 0), Vec2(1,1),Vec2(-1,-1),Vec2(-1,1),Vec2(1,-1) };
     auto width = float(_imageWidth) / (_terrainData._chunkSize.width + 1);
     auto height = float(_imageHeight) / (_terrainData._chunkSize.height + 1);
     for(;;)
     {
-        int x = roundf(start.x);
-        int y = roundf(start.y);
-        for (int k = 0; k < 9; k++)
-        {
-            auto chunk = getChunkByIndex(x+neighbors[k].x,y+neighbors[k].y);
-            if (chunk)
-            {
-                if (closeList.find(chunk) == closeList.end())
+        int x1 = floorf(start.x);
+        int x2 = ceilf(start.x);
+        int y1 = floorf(start.y);
+        int y2 = ceilf(start.y);
+        for (int x = x1; x <= x2; x++) {
+            for (int y = y1; y <= y2; y++) {
+                auto chunk = getChunkByIndex(x, y);
+                if (chunk)
                 {
-                    if (chunk->getInsterctPointWithRay(ray, intersectionPoint))
+                    if (closeList.find(chunk) == closeList.end())
                     {
-                        return true;
+                        if (chunk->getInsterctPointWithRay(ray, intersectionPoint))
+                        {
+                            return true;
+                        }
+                        closeList.insert(chunk);
                     }
-                    closeList.insert(chunk);
                 }
             }
         }
-        start.x += delta.x;
-        start.y += delta.y;
         if ((delta.x > 0 && start.x > width) || (delta.x <0 && start.x <0))
         {
             break;
@@ -544,6 +543,8 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
         {
             break;
         }
+        start.x += delta.x;
+        start.y += delta.y;
     }
     return false;
 }
@@ -1258,6 +1259,9 @@ void Terrain::Chunk::calculateSlope()
 
 bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint)
 {
+    if (!ray.intersects(_aabb))
+        return false;
+    
     float minDist = 9999;
     bool isFind = false;
     for (auto triangle : _trianglesList)
