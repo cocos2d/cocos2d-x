@@ -1375,9 +1375,9 @@ void Label::updateColor()
     {
         textureAtlas = batchNode->getTextureAtlas();
         quads = textureAtlas->getQuads();
-        auto count = textureAtlas->getTotalQuads();
+        const auto count = textureAtlas->getTotalQuads();
 
-        for (int index = 0; index < count; ++index)
+        for (auto index = 0u; index < count; ++index)
         {
             quads[index].bl.colors = color4;
             quads[index].br.colors = color4;

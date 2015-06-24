@@ -161,7 +161,7 @@ void AtlasDemo::backCallback(Ref* sender)
 //------------------------------------------------------------------
 Atlas1::Atlas1()
 {
-    setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
+    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     _textureAtlas = TextureAtlas::create(s_AtlasTest, 3); _textureAtlas->retain();
     
     auto s = Director::getInstance()->getWinSize();

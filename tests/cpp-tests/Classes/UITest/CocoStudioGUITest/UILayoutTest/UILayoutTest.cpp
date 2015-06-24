@@ -738,7 +738,7 @@ void UILayoutComponentTest::touchEvent(Ref *pSender, Widget::TouchEventType type
                 _baseLayer->setContentSize(Size(200, 200));
             else
                 _baseLayer->setContentSize(widgetSize);
-            ui:Helper::doLayout(_baseLayer);
+            Helper::doLayout(_baseLayer);
          }
         break;
 

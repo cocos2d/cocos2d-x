@@ -586,7 +586,7 @@ EffectSpriteLamp::EffectSpriteLamp()
         this->addChild(_lightSprite);
         _lightSprite->setPosition(Vec2(pos.x, s.height- pos.y));
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->getWorldToNodeAffineTransform());
         lampEffect->setLightColor(Color4F(1,1,1,1));
         lampEffect->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
         lampEffect->setKBump(2);
@@ -611,7 +611,7 @@ void EffectSpriteLamp::onTouchesBegan(const std::vector<Touch*>& touches, Event 
         _lightSprite->setPosition(Vec2( loc_winSpace.x,  s.height - loc_winSpace.y));
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->getWorldToNodeAffineTransform());
         ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
     }
 }
@@ -626,7 +626,7 @@ void EffectSpriteLamp::onTouchesMoved(const std::vector<Touch*>& touches, Event 
         _lightSprite->setPosition(Vec2( loc_winSpace.x, s.height - loc_winSpace.y));
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->getWorldToNodeAffineTransform());
         ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
     }
 }
@@ -641,7 +641,7 @@ void EffectSpriteLamp::onTouchesEnded(const std::vector<Touch*>& touches, Event 
         _lightSprite->setPosition(Vec2( loc_winSpace.x, s.height - loc_winSpace.y));
         Vec3 pos(loc_winSpace.x,loc_winSpace.y, 50);
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->worldToNodeTransform());
+        Point lightPosInLocalSpace=PointApplyAffineTransform(Vec2(pos.x, pos.y),_sprite->getWorldToNodeAffineTransform());
         ((EffectNormalMapped*)_effect)->setLightPos(Vec3(lightPosInLocalSpace.x, lightPosInLocalSpace.y, 50));
     }
 }
