@@ -691,6 +691,9 @@ void Director::setDepthTest(bool on)
 void Director::setClearColor(const Color4F& clearColor)
 {
     _renderer->setClearColor(clearColor);
+    auto defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
+    
+    if(defaultFBO) defaultFBO->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)
