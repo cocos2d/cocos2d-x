@@ -1278,14 +1278,8 @@ bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoin
             isFind =true;
         }
     }
-    if (isFind)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    
+    return isFind;
 }
 
 void Terrain::Chunk::updateVerticesForLOD()
