@@ -27,6 +27,8 @@ THE SOFTWARE.
 USING_NS_CC;
 #include <stdlib.h>
 #include <CCImage.h>
+#include <float.h>
+#include <set>
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
@@ -35,10 +37,8 @@ USING_NS_CC;
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
-#include "2d/CCCamera.h"
-#include <set>
-
 #include "base/CCEventType.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -513,6 +513,9 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     Vec2 delta = dir.getNormalized();
     auto width = float(_imageWidth) / (_terrainData._chunkSize.width + 1);
     auto height = float(_imageHeight) / (_terrainData._chunkSize.height + 1);
+    bool hasIntersect = false;
+    float intersectionDist = FLT_MAX;
+    Vec3 tmpIntersectionPoint;
     for(;;)
     {
         int x1 = floorf(start.x);
@@ -526,9 +529,15 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
                 {
                     if (closeList.find(chunk) == closeList.end())
                     {
-                        if (chunk->getInsterctPointWithRay(ray, intersectionPoint))
+                        if (chunk->getInsterctPointWithRay(ray, tmpIntersectionPoint))
                         {
-                            return true;
+                            float dist = (ray._origin - tmpIntersectionPoint).length();
+                            if (intersectionDist > dist)
+                            {
+                                hasIntersect = true;
+                                intersectionDist = dist;
+                                intersectionPoint = tmpIntersectionPoint;
+                            }
                         }
                         closeList.insert(chunk);
                     }
@@ -546,7 +555,7 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
         start.x += delta.x;
         start.y += delta.y;
     }
-    return false;
+    return hasIntersect;
 }
 
 void Terrain::setMaxDetailMapAmount(int max_value)
@@ -1262,7 +1271,7 @@ bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoin
     if (!ray.intersects(_aabb))
         return false;
     
-    float minDist = 9999;
+    float minDist = FLT_MAX;
     bool isFind = false;
     for (auto triangle : _trianglesList)
     {
@@ -1585,6 +1594,7 @@ void Terrain::Triangle::transform(cocos2d::Mat4 matrix)
     matrix.transformPoint(&_p3);
 }
 
+//Please refer to 3D Math Primer for Graphics and Game Development
 bool Terrain::Triangle::getInsterctPoint(const Ray &ray, Vec3& interScetPoint)const
 {
     // E1
