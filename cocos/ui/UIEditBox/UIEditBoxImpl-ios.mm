@@ -222,18 +222,36 @@ static const int CC_EDIT_BOX_PADDING = 5;
  */
 - (BOOL)textField:(UITextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (getEditBoxImplIOS()->getMaxLength() < 0)
+    if (getEditBoxImplIOS()->getMaxLength() > 0)
     {
-        return YES;
+        NSUInteger oldLength = [textField.text length];
+        NSUInteger replacementLength = [string length];
+        NSUInteger rangeLength = range.length;
+        
+        NSUInteger newLength = oldLength - rangeLength + replacementLength;
+        
+        if(newLength > getEditBoxImplIOS()->getMaxLength())
+        {
+            return NO;
+        }
     }
     
-    NSUInteger oldLength = [textField.text length];
-    NSUInteger replacementLength = [string length];
-    NSUInteger rangeLength = range.length;
+    if([textField keyboardType] == UIKeyboardTypeDecimalPad)
+    {
+        NSString *candidate = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+        if (candidate && [candidate length] > 0 && ![candidate isEqualToString:@""])
+        {
+            NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+            f.numberStyle = NSNumberFormatterDecimalStyle;
+            NSNumber *number = [f numberFromString:candidate];
+            if (!number || [number isEqualToNumber:[NSDecimalNumber notANumber]])
+            {
+                return NO;
+            }
+        }
+    }
     
-    NSUInteger newLength = oldLength - rangeLength + replacementLength;
-    
-    return newLength <= getEditBoxImplIOS()->getMaxLength();
+    return YES;
 }
 
 /**
