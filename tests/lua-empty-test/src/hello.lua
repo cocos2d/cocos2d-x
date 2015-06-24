@@ -1,16 +1,8 @@
 
+function cc.ComponentLua:update()
 
-
-
-LuaComponent = {}
-
-function LuaComponent.update(self)
-        -- print "update"
-       -- print(self)
-
-       local sprite = cc.Sprite:create()
-print (tolua.type(sprite))
+    local owner = self:getOwner()
+    local x, y = owner:getPosition()
+    owner:setPosition(x+1, y+1)
 
 end
-
-

@@ -52,9 +52,14 @@ ComponentLua::ComponentLua(const std::string& scriptFileName)
 void ComponentLua::update(float delta)
 {
     lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
-    lua_getglobal(l, "LuaComponent");
-    lua_getfield(l, -1, "update");
-    getUserData();
+    
+    lua_getglobal(l, "_G");                        // stack: _G
+    lua_pushstring(l, "cc");                       // stack: _G "cc"
+    lua_rawget(l, -2);                             // stack: _G["cc"]
+    lua_pushstring(l, "ComponentLua");             // stack: _G["cc"] "ComponentLua"
+    lua_rawget(l, -2);                             // stack: _G["cc"]["ComponentLua"]
+    lua_getfield(l, -1, "update");                 // stack: _G["cc"]["ComponentLua"]["update"]
+    getUserData();                                 // stack: _G["cc"]["ComponentLua"]["update"] userdata
     LuaEngine::getInstance()->getLuaStack()->executeFunction(1);
 }
 
@@ -67,6 +72,7 @@ void ComponentLua::loadAndExecuteScript()
     // register native functions
     lua_State *l = engine->getLuaStack()->getLuaState();
     register_all_cocos2dx_luacomponent(l);
+
     
     // execute script
     char command[100];
@@ -76,64 +82,12 @@ void ComponentLua::loadAndExecuteScript()
     {
         CCLOG("there is something wrong with the script %s", _scriptFileName.c_str());
     }
-    
-    // set lua class's metatable to registered table
-    
-    tolua_open(l);
-    lua_pushstring(l,"cc.ComponentLua"); // string
-    lua_gettable(l, LUA_REGISTRYINDEX);  // table
-    if (!lua_istable(l, -1))
-    {
-        CCLOG("can not find table cc.ComponentLua");
-        return;
-    }
-    
-    
-    lua_getglobal(l, "LuaComponent"); // table LuaComponent
-    if (lua_istable(l,-1))
-    {
-        lua_pushvalue(l, -2); // table LuaComponent table
-        lua_setmetatable(l, -2); // table LuaComponent
-    }
-    
-    // generate userdata and set its metatable to LuaComponent
-    
-    object_to_luaval<cocos2d::ComponentLua>(l, "cc.ComponentLua",this); // table LuaComponent userdata
-    // set userdata's meta table to LuaComponent
-    lua_pushvalue(l, -2); // table LuaComponent userdata LuaComponent
-    lua_setmetatable(l, -2); // table LuaComponent userdata
-    
-    lua_settop(l, 0);
 }
 
 void ComponentLua::getUserData()
 {
     lua_State *L = LuaEngine::getInstance()->getLuaStack()->getLuaState();
-    
-    luaL_getmetatable(L, "cc.ComponentLua");                                 /* stack: mt */
-    if (lua_isnil(L, -1)) { /* NOT FOUND metatable */
-        lua_pop(L, 1);
-        return;
-    }
-    lua_pushstring(L,"tolua_ubox");
-    lua_rawget(L,-2);                                           /* stack: mt ubox */
-    if (lua_isnil(L, -1))
-    {
-        lua_pop(L, 1);
-        lua_pushstring(L, "tolua_ubox");
-        lua_rawget(L, LUA_REGISTRYINDEX);
-    }
-    
-    lua_pushlightuserdata(L,this);                             /* stack: mt ubox key<value> */
-    lua_rawget(L,-2);                                          /* stack: mt ubox ubox[value] */
-    if (lua_isnil(L,-1))
-    {
-        CCLOG("cant not get userdata");
-        lua_pop(L, 2);
-        return;
-    }
-    lua_remove(L, -2);
-    lua_remove(L, -2);
+    object_to_luaval<cocos2d::ComponentLua>(L, "cc.ComponentLua",this);
 }
 
 NS_CC_END
