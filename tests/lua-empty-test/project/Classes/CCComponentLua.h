@@ -36,16 +36,32 @@ class CC_DLL ComponentLua : public Component
 public:
     static ComponentLua* create(const std::string& scriptFileName);
     
-    virtual void update(float dt);
+    ~ComponentLua();
     
+    virtual void update(float dt);
+
 private:
     ComponentLua(const std::string& scriptFileName);
-    void loadAndExecuteScript();
+    bool loadAndExecuteScript();
     void getUserData();
+    void storeLuaTable();
+    bool getLuaFunction(const std::string& functionName);
+    void removeLuaTable();
+    
+    static void createComponentTable();
     
 private:
     // lua script file path
     std::string _scriptFileName;
+    // a table returned from lua
+    const void* _table;
+    bool _succeedLoadingScript;
+    
+    // string value of index
+    std::string _strIndex;
+    
+    // the index used to get lua table, it is unique for every component
+    static int _index;
 };
 
 NS_CC_END
