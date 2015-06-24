@@ -423,7 +423,6 @@ public:
      */
     std::vector<float> getHeightData() const;
     
-    Chunk * getChunkByIndex(int x,int y) const;
 protected:
     
     Terrain();
@@ -462,6 +461,8 @@ protected:
     ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
 
     ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+    
+    Chunk * getChunkByIndex(int x,int y) const;
 
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
