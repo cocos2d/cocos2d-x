@@ -1,8 +1,15 @@
 
-function cc.ComponentLua:update()
+local Movement = {
 
-    local owner = self:getOwner()
-    local x, y = owner:getPosition()
-    owner:setPosition(x+1, y+1)
+    update = function(self)
+        local owner = self:getOwner()
+        local x, y = owner:getPosition()
+        owner:setPosition(self:getPos(x, y))
+    end,
 
-end
+    getPos = function(self, x, y)
+        return x+1, y+1
+    end
+}
+
+return Movement
