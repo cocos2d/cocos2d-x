@@ -1,6 +1,5 @@
 const char* cc3D_Skybox_vert = STRINGIFY(
 
-uniform float u_scalef;
 uniform mat4  u_cameraRot;
 attribute vec3 a_position;
 varying vec3 v_reflect;
