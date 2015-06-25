@@ -94,6 +94,22 @@ CheckBox* CheckBox::create(const std::string& backGround,
     return nullptr;
 }
 	
+void CheckBox::releaseUpEvent()
+{
+	Widget::releaseUpEvent();
+	
+	if (_isSelected)
+	{
+		setSelected(false);
+		dispatchSelectChangedEvent(false);
+	}
+	else
+	{
+		setSelected(true);
+		dispatchSelectChangedEvent(true);
+	}
+}
+
 void CheckBox::dispatchSelectChangedEvent(bool selected)
 {
 	EventType eventType = (selected ? EventType::SELECTED : EventType::UNSELECTED);

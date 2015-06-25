@@ -173,8 +173,6 @@ protected:
 	
 	virtual void dispatchSelectChangedEvent(bool selected) = 0;
 	
-	virtual void releaseUpEvent() override;
-	
 	virtual void onSizeChanged() override;
 	
 	void backGroundTextureScaleChangedWithSize();

@@ -163,6 +163,8 @@ public:
     virtual std::string getDescription() const override;
     
 protected:
+	virtual void releaseUpEvent() override;
+	
 	virtual void dispatchSelectChangedEvent(bool selected) override;
 	
     virtual Widget* createCloneInstance() override;

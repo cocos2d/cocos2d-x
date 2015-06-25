@@ -302,24 +302,6 @@ void AbstractCheckButton::setupFrontCrossDisableTexture()
 	_frontCrossDisabledRendererAdaptDirty = true;
 }
 
-
-void AbstractCheckButton::releaseUpEvent()
-{
-	Widget::releaseUpEvent();
-	
-	if (_isSelected)
-	{
-		setSelected(false);
-		dispatchSelectChangedEvent(false);
-	}
-	else
-	{
-		setSelected(true);
-		dispatchSelectChangedEvent(true);
-	}
-}
-
-
 void AbstractCheckButton::onPressStateChangedToNormal()
 {
 	_backGroundBoxRenderer->setVisible(true);
