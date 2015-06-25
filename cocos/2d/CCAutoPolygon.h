@@ -41,7 +41,7 @@ NS_CC_BEGIN
  */
 
 /**
- * PolygonInfo is an object holding the required data to display Sprites。
+ * PolygonInfo is an object holding the required data to display Sprites.
  * It can be a simple as a triangle, or as complex as a whole 3D mesh
  */
 class CC_DLL PolygonInfo
