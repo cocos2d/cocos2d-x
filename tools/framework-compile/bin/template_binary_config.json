@@ -169,6 +169,10 @@
         }
     ],
     "android_mks" : [
+        "cocos/Android.mk",
+        "cocos/audio/android/Android.mk",
+        "cocos/scripting/js-bindings/proj.android/Android.mk",
+        "cocos/scripting/lua-bindings/proj.android/Android.mk",
         "cocos/storage/local-storage/Android.mk",
         "external/flatbuffers/Android.mk",
         "external/Box2D/Android.mk",
