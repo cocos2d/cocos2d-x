@@ -1,5 +1,5 @@
 #ifndef TERRAIN_TESH_H
-#include "../testBasic.h"
+
 #include "../BaseTest.h"
 
 #include "3d/CCSprite3D.h"
