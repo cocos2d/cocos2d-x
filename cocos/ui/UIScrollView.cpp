@@ -37,7 +37,7 @@ static float convertDistanceFromPointToInch(Vec2 dis)
 {
     auto glview = Director::getInstance()->getOpenGLView();
     int dpi = Device::getDPI();
-    float distance = Vec2(dis * glview->getScaleX() / dpi, dis * glview->getScaleY() / dpi).getLength();
+    float distance = Vec2(dis.x * glview->getScaleX() / dpi, dis.y * glview->getScaleY() / dpi).getLength();
     return distance;
 }
 
