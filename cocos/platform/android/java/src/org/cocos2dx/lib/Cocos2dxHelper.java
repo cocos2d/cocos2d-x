@@ -43,6 +43,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;  //Enhance API modification
+import android.os.Vibrator;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
 import android.util.Log;  //Enhance API modification
@@ -74,6 +75,7 @@ public class Cocos2dxHelper {
     private static Activity sActivity = null;
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
+    private static Vibrator sVibrateService = null;
     //Enhance API modification begin
     private static IGameTuningService mGameServiceBinder = null;
     private static final int BOOST_TIME = 7;
@@ -112,6 +114,8 @@ public class Cocos2dxHelper {
     
             Cocos2dxBitmap.setContext(activity);
             sActivity = activity;
+
+            Cocos2dxHelper.sVibrateService = (Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
 
             sInited = true;
             
@@ -204,11 +208,15 @@ public class Cocos2dxHelper {
         Cocos2dxHelper.sAccelerometerEnabled = false;
         Cocos2dxHelper.sCocos2dxAccelerometer.disable();
     }
-    
+
     public static void setKeepScreenOn(boolean value) {
         ((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
     }
-    
+
+    public static void vibrate(float duration) {
+        sVibrateService.vibrate((long)(duration * 1000));
+    }
+
     public static boolean openURL(String url) { 
         boolean ret = false;
         try {

@@ -84902,6 +84902,7 @@ int lua_cocos2dx_Device_setAccelerometerEnabled(lua_State* tolua_S)
 #endif
     return 0;
 }
+
 int lua_cocos2dx_Device_setKeepScreenOn(lua_State* tolua_S)
 {
     int argc = 0;
@@ -84938,6 +84939,44 @@ int lua_cocos2dx_Device_setKeepScreenOn(lua_State* tolua_S)
 #endif
     return 0;
 }
+
+int lua_cocos2dx_Device_vibrate(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.Device",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        double arg0;
+        ok &= luaval_to_number(tolua_S, 2, &arg0, "cc.Device:vibrate");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Device_vibrate'", nullptr);
+            return 0;
+        }
+        cocos2d::Device::vibrate(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Device:vibrate",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Device_vibrate'.",&tolua_err);
+#endif
+    return 0;
+}
+
 int lua_cocos2dx_Device_setAccelerometerInterval(lua_State* tolua_S)
 {
     int argc = 0;
@@ -84974,6 +85013,7 @@ int lua_cocos2dx_Device_setAccelerometerInterval(lua_State* tolua_S)
 #endif
     return 0;
 }
+
 int lua_cocos2dx_Device_getDPI(lua_State* tolua_S)
 {
     int argc = 0;
@@ -85008,6 +85048,7 @@ int lua_cocos2dx_Device_getDPI(lua_State* tolua_S)
 #endif
     return 0;
 }
+
 static int lua_cocos2dx_Device_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Device)");
@@ -85022,6 +85063,7 @@ int lua_register_cocos2dx_Device(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Device");
         tolua_function(tolua_S,"setAccelerometerEnabled", lua_cocos2dx_Device_setAccelerometerEnabled);
         tolua_function(tolua_S,"setKeepScreenOn", lua_cocos2dx_Device_setKeepScreenOn);
+        tolua_function(tolua_S,"vibrate", lua_cocos2dx_Device_vibrate);
         tolua_function(tolua_S,"setAccelerometerInterval", lua_cocos2dx_Device_setAccelerometerInterval);
         tolua_function(tolua_S,"getDPI", lua_cocos2dx_Device_getDPI);
     tolua_endmodule(tolua_S);
