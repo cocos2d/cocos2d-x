@@ -2009,6 +2009,10 @@
 		B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC619EE1B7700872B35 /* AnimationState.h */; };
 		B29A7E4019EE1B7700872B35 /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC619EE1B7700872B35 /* AnimationState.h */; };
 		B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A170721807CE7A005B8026 /* CCPhysicsJoint.cpp */; };
+		B5CE6DBE1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */; };
+		B5CE6DBF1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */; };
+		B5CE6DC01B3BF2B1002B0419 /* UIAbstractCheckButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */; };
+		B5CE6DC11B3BF2B1002B0419 /* UIAbstractCheckButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */; };
 		B603F1A81AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1A91AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1AA1AC8EA0900A9579C /* CCTerrain.h in Headers */ = {isa = PBXBuildFile; fileRef = B603F1A71AC8EA0900A9579C /* CCTerrain.h */; };
@@ -4692,6 +4696,8 @@
 		B29A7DC619EE1B7700872B35 /* AnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationState.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
+		B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIAbstractCheckButton.cpp; sourceTree = "<group>"; };
+		B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAbstractCheckButton.h; sourceTree = "<group>"; };
 		B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTerrain.cpp; sourceTree = "<group>"; };
 		B603F1A71AC8EA0900A9579C /* CCTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTerrain.h; sourceTree = "<group>"; };
 		B603F1B11AC8F1FD00A9579C /* ccShader_3D_Terrain.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Terrain.frag; sourceTree = "<group>"; };
@@ -6841,6 +6847,8 @@
 				2905FA1218CF08D100240AA3 /* UITextField.h */,
 				2905F9F018CF08D000240AA3 /* UIButton.cpp */,
 				2905F9F118CF08D000240AA3 /* UIButton.h */,
+				B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */,
+				B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */,
 				2905F9F218CF08D000240AA3 /* UICheckBox.cpp */,
 				2905F9F318CF08D000240AA3 /* UICheckBox.h */,
 				2905F9F618CF08D000240AA3 /* UIImageView.cpp */,
@@ -9763,6 +9771,7 @@
 				50ABBECD1925AB6F00A911A9 /* s3tc.h in Headers */,
 				B6CAB3651AF9AA1A00B9B856 /* btContinuousConvexCollision.h in Headers */,
 				15AE1BD119AAE01E00C27E9E /* CCControlHuePicker.h in Headers */,
+				B5CE6DC01B3BF2B1002B0419 /* UIAbstractCheckButton.h in Headers */,
 				D0FD03571A3B51AA00825BB5 /* CCAllocatorMutex.h in Headers */,
 				B6CAB36D1AF9AA1A00B9B856 /* btDiscreteCollisionDetectorInterface.h in Headers */,
 				50ABBE771925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
@@ -10225,6 +10234,7 @@
 				B6CAB2F41AF9AA1A00B9B856 /* btTetrahedronShape.h in Headers */,
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
 				15AE198F19AAD36E00C27E9E /* CheckBoxReader.h in Headers */,
+				B5CE6DC11B3BF2B1002B0419 /* UIAbstractCheckButton.h in Headers */,
 				B665E3911AA80A6500DDB1C5 /* CCPUPlaneCollider.h in Headers */,
 				B6DD2FAE1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				382384011A258FA7002C4610 /* util.h in Headers */,
@@ -10886,6 +10896,7 @@
 				B665E3961AA80A6500DDB1C5 /* CCPUPointEmitter.cpp in Sources */,
 				15AE184019AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
 				B6CAB2E51AF9AA1A00B9B856 /* btSphereShape.cpp in Sources */,
+				B5CE6DBE1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */,
 				B6CAB41F1AF9AA1A00B9B856 /* btMLCPSolver.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
 				B665E40A1AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitterTranslator.cpp in Sources */,
@@ -12240,6 +12251,7 @@
 				15AE195319AAD35100C27E9E /* CCDisplayFactory.cpp in Sources */,
 				182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
+				B5CE6DBF1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp in Sources */,
 				B6CAB4B81AF9AA1A00B9B856 /* SpuFakeDma.cpp in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				B6CAB4481AF9AA1A00B9B856 /* btThreadSupportInterface.cpp in Sources */,
