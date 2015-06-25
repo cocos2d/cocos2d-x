@@ -19041,6 +19041,16 @@ bool
 },
 
 /**
+ * @method vibrate
+ * @param {float} arg0
+ */
+vibrate : function (
+float
+)
+{
+},
+
+/**
  * @method setAccelerometerInterval
  * @param {float} arg0
  */

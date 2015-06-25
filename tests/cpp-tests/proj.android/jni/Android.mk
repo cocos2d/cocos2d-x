@@ -119,6 +119,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UITest/UITest.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/OpenURLTest/OpenURLTest.cpp \
+../../Classes/VibrateTest/VibrateTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp \

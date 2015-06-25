@@ -119,6 +119,7 @@ cocos_target_sources(${app_name} GROUP "Classes" FILES
     "Classes/TouchesTest/TouchesTest.cpp"
     "Classes/TransitionsTest/TransitionsTest.cpp"
     "Classes/UserDefaultTest/UserDefaultTest.cpp"
+    "Classes/VibrateTest/VibrateTest.cpp"
     "Classes/ZwoptexTest/ZwoptexTest.cpp"
     "Classes/FileUtilsTest/FileUtilsTest.cpp"
     "Classes/ConfigurationTest/ConfigurationTest.cpp"

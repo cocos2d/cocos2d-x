@@ -390,6 +390,8 @@
 		1AC35C6A18CECF0C00F37B72 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35B1A18CECF0C00F37B72 /* VisibleRect.cpp */; };
 		1AC35C6B18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35B1D18CECF0C00F37B72 /* ZwoptexTest.cpp */; };
 		1AC35C6C18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35B1D18CECF0C00F37B72 /* ZwoptexTest.cpp */; };
+		1AC35C7018CECF0C00F37B72 /* VibrateTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35C6D18CECF0C00F37B72 /* VibrateTest.cpp */; };
+		1AC35C7118CECF0C00F37B72 /* VibrateTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35C6D18CECF0C00F37B72 /* VibrateTest.cpp */; };
 		1AC35C8618CECF1400F37B72 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35C7018CECF1400F37B72 /* RootViewController.mm */; };
 		1AC35C8718CECF1400F37B72 /* testsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35C7218CECF1400F37B72 /* testsAppDelegate.mm */; };
 		1AC35C8818CECF1400F37B72 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35C7318CECF1400F37B72 /* Default-568h@2x.png */; };
@@ -1377,6 +1379,8 @@
 		1AC35B1B18CECF0C00F37B72 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
 		1AC35B1D18CECF0C00F37B72 /* ZwoptexTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZwoptexTest.cpp; sourceTree = "<group>"; };
 		1AC35B1E18CECF0C00F37B72 /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZwoptexTest.h; sourceTree = "<group>"; };
+		1AC35C6D18CECF0C00F37B72 /* VibrateTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VibrateTest.cpp; sourceTree = "<group>"; };
+		1AC35C6E18CECF0C00F37B72 /* VibrateTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrateTest.h; sourceTree = "<group>"; };
 		1AC35C6F18CECF1400F37B72 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1AC35C7018CECF1400F37B72 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		1AC35C7118CECF1400F37B72 /* testsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testsAppDelegate.h; sourceTree = "<group>"; };
@@ -2206,6 +2210,7 @@
 				1AC35B1B18CECF0C00F37B72 /* VisibleRect.h */,
 				A5030C3219D059AB000E78E7 /* OpenURLTest */,
 				1AC35B1C18CECF0C00F37B72 /* ZwoptexTest */,
+				1AC35C6F18CECF0C00F37B72 /* VibrateTest */,
 			);
 			name = Classes;
 			path = "../tests/cpp-tests/Classes";
@@ -2909,6 +2914,15 @@
 				1AC35B1E18CECF0C00F37B72 /* ZwoptexTest.h */,
 			);
 			path = ZwoptexTest;
+			sourceTree = "<group>";
+		};
+		1AC35C6F18CECF0C00F37B72 /* VibrateTest */ = {
+			isa = PBXGroup;
+			children = (
+				1AC35C6D18CECF0C00F37B72 /* VibrateTest.cpp */,
+				1AC35C6E18CECF0C00F37B72 /* VibrateTest.h */,
+			);
+			path = VibrateTest;
 			sourceTree = "<group>";
 		};
 		1AC35C6D18CECF1400F37B72 /* proj.ios */ = {
@@ -4616,6 +4630,7 @@
 				1AC35C6718CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
 				1AC35C2118CECF0C00F37B72 /* ParallaxTest.cpp in Sources */,
 				1AC35C6B18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */,
+				1AC35C7018CECF0C00F37B72 /* VibrateTest.cpp in Sources */,
 				29080DC7191B595E0066F8DF /* UISceneManager.cpp in Sources */,
 				1AC35C2F18CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */,
 				1AC35B4918CECF0C00F37B72 /* Bug-914.cpp in Sources */,
@@ -4773,6 +4788,7 @@
 				1AF152DA18FD252A00A52F3D /* PerformanceCallbackTest.cpp in Sources */,
 				1AC35C2218CECF0C00F37B72 /* ParallaxTest.cpp in Sources */,
 				1AC35C6C18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */,
+				1AC35C7118CECF0C00F37B72 /* VibrateTest.cpp in Sources */,
 				1AC35C3018CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */,
 				1AC35B4A18CECF0C00F37B72 /* Bug-914.cpp in Sources */,
 				1AC35B6418CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
