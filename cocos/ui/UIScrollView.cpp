@@ -33,11 +33,12 @@ namespace ui {
 #define MOVE_INCH            7.0f/160.0f
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
-static float convertDistanceFromPointToInch(float pointDis)
+static float convertDistanceFromPointToInch(Vec2 dis)
 {
     auto glview = Director::getInstance()->getOpenGLView();
-    float factor = ( glview->getScaleX() + glview->getScaleY() ) / 2;
-    return pointDis * factor / Device::getDPI();
+    int dpi = Device::getDPI();
+    float distance = Vec2(dis.x * glview->getScaleX() / dpi, dis.y * glview->getScaleY() / dpi).getLength();
+    return distance;
 }
 
 const Vec2 SCROLLDIR_UP(0.0f, 1.0f);
@@ -1588,22 +1589,22 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
         {
             _touchMovePosition = touch->getLocation();
             // calculates move offset in points
-            float offset = 0;
+            float offsetInInch = 0;
             switch (_direction)
             {
                 case Direction::HORIZONTAL:
-                    offset = fabs(sender->getTouchBeganPosition().x - touchPoint.x);
+                    offsetInInch = convertDistanceFromPointToInch(Vec2(fabs(sender->getTouchBeganPosition().x - touchPoint.x), 0));
                     break;
                 case Direction::VERTICAL:
-                    offset = fabs(sender->getTouchBeganPosition().y - touchPoint.y);
+                    offsetInInch = convertDistanceFromPointToInch(Vec2(0, fabs(sender->getTouchBeganPosition().y - touchPoint.y)));
                     break;
                 case Direction::BOTH:
-                    offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
+                    offsetInInch = convertDistanceFromPointToInch(sender->getTouchBeganPosition() - touchPoint);
                     break;
                 default:
                     break;
             }
-            if (convertDistanceFromPointToInch(offset) > _childFocusCancelOffsetInInch)
+            if (offsetInInch > _childFocusCancelOffsetInInch)
             {
                 sender->setHighlighted(false);
                 handleMoveLogic(touch);
