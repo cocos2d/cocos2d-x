@@ -76,19 +76,6 @@ class CocosBinTemplateGenerator(object):
             tmp_obj = gen_prebuilt_mk.MKGenerator(mk_file_path, android_libs, dst_file_path)
             tmp_obj.do_generate()
 
-        def process_file(sour, dest):
-            f = open(sour)
-            file_content = f.read()
-            f.close()
-
-            file_content = file_content.replace("__LIBS_DIR__", self.lib_dir)
-
-            f = open(os.path.join(dest, os.path.basename(sour)), "w")
-            f.write(file_content)
-            f.close()
-
-        utils_cocos.copy_files_with_cb(os.path.join(self.cur_dir, os.path.pardir, "x-modified"), self.repo_x, process_file)
-
     def getConfigJson(self):
         cfg_json_path = os.path.join(self.cur_dir, "template_binary_config.json")
         f = open(cfg_json_path)
