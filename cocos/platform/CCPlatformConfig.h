@@ -146,6 +146,7 @@ THE SOFTWARE.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #ifndef __MINGW32__
 #pragma warning (disable:4127) 
+#pragma warning (disable:4018)
 #endif 
 #endif  // CC_PLATFORM_WIN32
 
