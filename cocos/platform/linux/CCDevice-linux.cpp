@@ -501,6 +501,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
+    CC_UNUSED_PARAM(value);
 }
 
 void Device::vibrate(float duration)

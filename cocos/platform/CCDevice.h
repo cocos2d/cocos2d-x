@@ -59,6 +59,7 @@ public:
      * To enable or disable accelerometer.
      */
     static void setAccelerometerEnabled(bool isEnabled);
+
     /**
      *  Sets the interval of accelerometer.
      */
@@ -67,13 +68,13 @@ public:
     static Data getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha);
     
     static void setKeepScreenOn(bool value);
-    
+
     /**
-     *  Vibrate for the specified amount of time.
-     *  If vibrate is not supported, then invoking this method has no effect.
-	 *  Some platforms limit to a maximum duration of 5 seconds.
-	 *  Duration is ignored on iOS due to API limitations.
-     *  @param duration The duration in seconds.
+     * Vibrate for the specified amount of time.
+     * If vibrate is not supported, then invoking this method has no effect.
+     * Some platforms limit to a maximum duration of 5 seconds.
+     * Duration is ignored on iOS due to API limitations.
+     * @param duration The duration in seconds.
      */
     static void vibrate(float duration);
 

@@ -104,7 +104,7 @@ public class Cocos2dxHelper {
     
             Cocos2dxBitmap.setContext(activity);
             sActivity = activity;
-            
+
             Cocos2dxHelper.sVibrateService = (Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
 
             sInited = true;
@@ -180,15 +180,15 @@ public class Cocos2dxHelper {
         Cocos2dxHelper.sAccelerometerEnabled = false;
         Cocos2dxHelper.sCocos2dxAccelerometer.disable();
     }
-    
+
     public static void setKeepScreenOn(boolean value) {
         ((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
     }
-    
+
     public static void vibrate(float duration) {
         sVibrateService.vibrate((long)(duration * 1000));
     }
-    
+
     public static boolean openURL(String url) { 
         boolean ret = false;
         try {
