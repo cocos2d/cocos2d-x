@@ -155,24 +155,10 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 {
     auto camera = Camera::getVisitingCamera();
     
-    /*
-     At beginning, we have a regular skybox at origin point.
-     To render the skybox, we should keep camera at the center of skybox.
-     So we need a translate matrix, which can transform origin point to camera pos.
-     Camera's node to word transform matrix don't match our requement,
-        because it maybe contain the scale, rotate, reflact... effects, which isn't need.
-     First, we transform origin point to camera position by camera's node to world matrix.
-     Second, we create a translate matrix with the origin point's world position.
-     */
-    Vec3 cameraPosInNode(0, 0, 0);
-    Vec3 cameraPosInWorld;
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
-    Mat4 trans = Mat4::IDENTITY;
-    cameraModelMat.transformPoint(cameraPosInNode, &cameraPosInWorld);
-    trans.translate(cameraPosInWorld);
     
     auto state = getGLProgramState();
-    state->apply(trans);
+    state->apply(transform);
 
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     state->setUniformVec4("u_color", color);
