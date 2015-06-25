@@ -176,23 +176,14 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     state->setUniformVec4("u_color", color);
-    float scalf = (camera->getFarPlane() + camera->getNearPlane()) / 2;
-    state->setUniformFloat("u_scalef", scalf);
-    
-    GLboolean depthFlag = glIsEnabled(GL_DEPTH_TEST);
-    GLint depthFunc;
-    glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
+    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
+    state->setUniformMat4("u_cameraRot", cameraModelMat);
 
     glEnable(GL_DEPTH_TEST);
     RenderState::StateBlock::_defaultState->setDepthTest(true);
 
     glDepthFunc(GL_LEQUAL);
     RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
-
-
-    GLboolean cullFlag = glIsEnabled(GL_CULL_FACE);
-    GLint cullMode;
-    glGetIntegerv(GL_CULL_FACE_MODE, &cullMode);
 
     glEnable(GL_CULL_FACE);
     RenderState::StateBlock::_defaultState->setCullFace(true);
@@ -227,14 +218,6 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     }
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
-
-    glCullFace(cullMode);
-    if (!cullFlag)
-        glDisable(GL_CULL_FACE);
-
-    glDepthFunc(depthFunc);
-    if (!depthFlag)
-        glDisable(GL_DEPTH_TEST);
 
     CHECK_GL_ERROR_DEBUG();
 }
