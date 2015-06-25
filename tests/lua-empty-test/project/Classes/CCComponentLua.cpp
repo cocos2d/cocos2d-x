@@ -67,7 +67,9 @@ void ComponentLua::update(float delta)
     if (_succeedLoadingScript && getLuaFunction("update"))
     {
         getUserData();
-        LuaEngine::getInstance()->getLuaStack()->executeFunction(1);
+        lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
+        lua_pushnumber(l, delta);
+        LuaEngine::getInstance()->getLuaStack()->executeFunction(2);
     }
 }
 
