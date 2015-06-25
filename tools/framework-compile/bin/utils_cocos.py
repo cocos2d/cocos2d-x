@@ -120,7 +120,7 @@ def get_vs_cmd_path(vs_version):
 def rmdir(folder):
     if os.path.exists(folder):
         if sys.platform == 'win32':
-            execute_command("rd /s/q %s" % folder)
+            execute_command("rd /s/q \"%s\"" % folder)
         else:
             shutil.rmtree(folder)
 
