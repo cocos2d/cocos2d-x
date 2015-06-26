@@ -389,20 +389,29 @@ int LuaEngine::handleKeypadEvent(void* data)
         return 0;
     
     EventKeyboard::KeyCode action = keypadScriptData->actionType;
+    bool is_pressed = keypadScriptData->is_pressed_;
+    /////////////////////////////////
+    // greentwip fix for key codes //
+    /////////////////////////////////
+    _stack->pushInt(static_cast<int>(action));
+    _stack->pushBoolean(is_pressed);
 
-    switch(action)
+
+/*    switch(action)
     {
         case EventKeyboard::KeyCode::KEY_BACKSPACE:
-			_stack->pushString("backClicked");
-			break;
-		case EventKeyboard::KeyCode::KEY_MENU:
+            _stack->pushString("backClicked");
+            break;
+        case EventKeyboard::KeyCode::KEY_MENU:
             _stack->pushString("menuClicked");
-			break;
-		default:
-			break;
-    }
+            break;
+        default:
+            break;
+    }*/
 
-    int ret = _stack->executeFunctionByHandler(handler, 1);
+    /////////////////////////////////
+
+    int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
     return ret;
 }

@@ -1006,16 +1006,24 @@ static int lua_cocos2dx_Layer_setKeyboardEnabled(lua_State* L)
         dispatcher->removeEventListener(keyboardListener);
         if (enabled)
         {
+            /////////////////////////////////
+            // greentwip fix for key codes //
+            /////////////////////////////////
+
             auto listener = EventListenerKeyboard::create();
             listener->onKeyPressed = [self](EventKeyboard::KeyCode keyCode, Event* event){
-                
-            };
-            listener->onKeyReleased = [self](EventKeyboard::KeyCode keyCode, Event* event){
-                KeypadScriptData data(keyCode, self);
-                ScriptEvent scriptEvent(kKeypadEvent,&data);
+                KeypadScriptData data(keyCode, true, self);
+                ScriptEvent scriptEvent(kKeypadEvent, &data);
                 ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
             };
-            CCLOG("come in the keyboardEnable");
+            listener->onKeyReleased = [self](EventKeyboard::KeyCode keyCode, Event* event){
+                KeypadScriptData data(keyCode, false, self);
+                ScriptEvent scriptEvent(kKeypadEvent, &data);
+                ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+            };
+//            CCLOG("come in the keyboardEnable");
+
+            /////////////////////////////////
             dispatcher->addEventListenerWithSceneGraphPriority(listener, self);
             
             dict->setObject(listener, "keyboardListener");
@@ -5802,12 +5810,16 @@ static void cloneKeyboardHandler(const EventListenerKeyboard* src,EventListenerK
         int newscriptHandler = cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->reallocateScriptHandler(handler);
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)dst, newscriptHandler, type);
+        /////////////////////////////////
+        // greentwip fix for key codes //
+        /////////////////////////////////
+
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
                 {
                     dst->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event){
-                        LuaEventKeyboarData listenerData((int)keyCode, event);
+                        LuaEventKeyboardData listenerData((int)keyCode, true, event);
                         BasicScriptData data((void*)dst,(void*)&listenerData);
                         LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
@@ -5816,7 +5828,7 @@ static void cloneKeyboardHandler(const EventListenerKeyboard* src,EventListenerK
             case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_RELEASED:
                 {
                     dst->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event){
-                        LuaEventKeyboarData listenerData((int)keyCode, event);
+                        LuaEventKeyboardData listenerData((int)keyCode, false, event);
                         BasicScriptData data((void*)dst,(void*)&listenerData);
                         LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
@@ -5825,6 +5837,7 @@ static void cloneKeyboardHandler(const EventListenerKeyboard* src,EventListenerK
             default:
                 break;
         }
+        /////////////////////////////////
     }
 }
 
@@ -5909,13 +5922,16 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
         
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S,2,0);
         ScriptHandlerMgr::HandlerType type = static_cast<ScriptHandlerMgr::HandlerType>((int)tolua_tonumber(tolua_S, 3, 0));
+        /////////////////////////////////
+        // greentwip fix for key codes //
+        /////////////////////////////////
         switch (type)
         {
             case ScriptHandlerMgr::HandlerType::EVENT_KEYBOARD_PRESSED:
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                     self->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event){
-                        LuaEventKeyboarData listenerData((int)keyCode, event);
+                        LuaEventKeyboardData listenerData((int)keyCode, true, event);
                         BasicScriptData data((void*)self,(void*)&listenerData);
                         LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
@@ -5925,7 +5941,7 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
                 {
                     ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                     self->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event){
-                        LuaEventKeyboarData listenerData((int)keyCode, event);
+                        LuaEventKeyboardData listenerData((int)keyCode, false, event);
                         BasicScriptData data((void*)self,(void*)&listenerData);
                         LuaEngine::getInstance()->handleEvent(type, (void*)&data);
                     };
@@ -5934,7 +5950,7 @@ static int tolua_cocos2dx_EventListenerKeyboard_registerScriptHandler(lua_State*
             default:
                 break;
         }
-        
+        /////////////////////////////////
         return 0;
     }
     
