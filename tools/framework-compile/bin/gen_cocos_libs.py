@@ -128,8 +128,21 @@ class CocosLibsCompiler(object):
 
         # get the VS projects info
         win32_proj_info = self.cfg_info[CocosLibsCompiler.KEY_VS_PROJS_INFO]
-        for vs_version in vs_cmd_info.keys():
+        for vs_version in compile_vs_versions:
+            if not vs_version in vs_cmd_info.keys():
+                continue
+
             vs_command = vs_cmd_info[vs_version]
+            for key in win32_proj_info.keys():
+                # clean solutions
+                proj_path = os.path.join(self.repo_x, key)
+                clean_cmd = " ".join([
+                    "\"%s\"" % vs_command,
+                    "\"%s\"" % proj_path,
+                    "/clean \"Release|Win32\""
+                ])
+                utils_cocos.execute_command(clean_cmd)
+
             for key in win32_proj_info.keys():
                 output_dir = os.path.join(self.lib_dir, "win32")
                 proj_path = os.path.join(self.repo_x, key)
@@ -139,14 +152,6 @@ class CocosLibsCompiler(object):
                 win32_output_dir = os.path.join(self.repo_x, output_dir)
                 if not os.path.exists(win32_output_dir):
                     os.makedirs(win32_output_dir)
-
-                # clean solution
-                # clean_cmd = " ".join([
-                #     "\"%s\"" % vs_command,
-                #     "\"%s\"" % proj_path,
-                #     "/clean \"Release|Win32\""
-                # ])
-                # utils_cocos.execute_command(clean_cmd)
 
                 # build project
                 if self.use_incredibuild:
@@ -354,7 +359,7 @@ if __name__ == "__main__":
     parser.add_argument('--mac', dest='mac', action="store_true", help='compile mac platform')
     parser.add_argument('--android', dest='android', action="store_true",help='complile android platform')
     parser.add_argument('--dis-strip', "--disable-strip", dest='disable_strip', action="store_true", help='Disable the strip of the generated libs.')
-    parser.add_argument('--vs', dest='vs_version', type=int, help='visual studio version, such as 2013.', default=2013)
+    parser.add_argument('--vs', dest='vs_version', type=int, help='visual studio version, such as 2013.', default=None)
     parser.add_argument("--app-abi", dest="app_abi",
                         help="Set the APP_ABI of ndk-build.Can be multi value separated with ':'. Sample : --app-aib armeabi:x86:mips. Default value is 'armeabi'.")
 
