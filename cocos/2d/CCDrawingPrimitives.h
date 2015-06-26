@@ -25,22 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-/*@~english
- *
- * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT
- *
- *
- * LEGACY FUNCTIONS
- *
- * USE DrawNode instead
- *
- * @~chinese 
- * 
- * 遗留功能
- * 
- * 请使用DrawNode
- * 
- */
 
 
 #ifndef __CCDRAWING_PRIMITIVES__
@@ -51,46 +35,6 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
 
-/**
- @file@~english
- Drawing OpenGL ES primitives.
- - drawPoint, drawPoints
- - drawLine
- - drawRect, drawSolidRect
- - drawPoly, drawSolidPoly
- - drawCircle
- - drawQuadBezier
- - drawCubicBezier
- - drawCatmullRom
- - drawCardinalSpline
- 
- You can change the color, point size, width by calling:
- - drawColor4B(), drawColor4F()
- - ccPointSize()
- - glLineWidth()
- 
- * @~chinese 
- * 绘制OpenGL ES原生图案。
- * — drawPoint drawPoints
- * - drawLine
- * — drawRect drawSolidRect
- * — drawPoly drawSolidPoly
- * — drawCircle
- * — drawQuadBezier
- * — drawCubicBezier
- * — drawCatmullRom
- * — drawCardinalSpline
- * 
- * 你可以通过调用如下函数改变颜色,大小,宽度:
- * - drawColor4B(),drawColor4F()
- * - ccPointSize()
- * - glLineWidth()
- * 
- @warning @~english These functions draws the Line, Vec2, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawNode
- 
- * @~chinese 这些函数可以立即绘制线，点，多边形。它们不会采用批次处理。如果你要基于原生绘图做一个游戏,我建议创建一个批处理。或者,您应该使用DrawNode
- * 
- */
 
 NS_CC_BEGIN
 
@@ -102,8 +46,54 @@ NS_CC_BEGIN
 class PointArray;
 
 /**
-* @js cc.DrawingPrimitiveCanvas/cc.DrawingPrimitiveWebGL
-*/
+ @~english
+ * IMPORTANT! IMPORTANT! IMPORTANT! IMPORTANT!
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE DrawNode instead
+ *
+ * Drawing OpenGL ES primitives.
+ * - drawPoint, drawPoints
+ * - drawLine
+ * - drawRect, drawSolidRect
+ * - drawPoly, drawSolidPoly
+ * - drawCircle
+ * - drawQuadBezier
+ * - drawCubicBezier
+ * - drawCatmullRom
+ * - drawCardinalSpline
+
+ * You can change the color, point size, width by calling:
+ * - drawColor4B(), drawColor4F()
+ * - ccPointSize()
+ * - glLineWidth()
+
+ * @~chinese
+ *
+ * 遗留功能
+ *
+ * 请使用DrawNode
+ * 绘制OpenGL ES原生图案。
+ * - drawPoint drawPoints
+ * - drawLine
+ * - drawRect drawSolidRect
+ * - drawPoly drawSolidPoly
+ * - drawCircle
+ * - drawQuadBezier
+ * - drawCubicBezier
+ * - drawCatmullRom
+ * - drawCardinalSpline
+ *
+ * 你可以通过调用如下函数改变颜色,大小,宽度:
+ * - drawColor4B(),drawColor4F()
+ * - ccPointSize()
+ * - glLineWidth()
+ *
+ * @warning @~english These functions draws the Line, Vec2, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawNode
+ * @~chinese 这些函数可以立即绘制线，点，多边形。它们不会采用批次处理。如果你要基于原生绘图做一个游戏,我建议创建一个批处理。或者,您应该使用DrawNode
+ *
+ */
 namespace DrawPrimitives
 {
     /**@~english
@@ -395,8 +385,8 @@ namespace DrawPrimitives
 
 };
 
-// end of global group
-/** @~english @}  @~chinese @ }*/
+// end of _2d group
+/// @}
 
 NS_CC_END
 
