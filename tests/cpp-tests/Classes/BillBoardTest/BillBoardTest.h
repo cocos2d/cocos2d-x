@@ -25,7 +25,6 @@
 #ifndef _BILLBOARD_TEST_H_
 #define _BILLBOARD_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
 
