@@ -491,7 +491,7 @@ protected:
     bool _bePressed;
     float _slidTime;
     Vec2 _moveChildPoint;
-    float _childFocusCancelOffset;
+    float _childFocusCancelOffsetInInch;
 
     bool _leftBounceNeeded;
     bool _topBounceNeeded;
