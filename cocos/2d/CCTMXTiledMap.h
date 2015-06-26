@@ -47,16 +47,16 @@ class TMXMapInfo;
 /** Possible orientations of the TMX map.*/
 enum
 {
-    /** Orthogonal orientation. */
+    /** @~english  Orthogonal orientation. @~chinese 正交朝向*/
     TMXOrientationOrtho,
 
-    /** Hexagonal orientation. */
+    /** @~english  Hexagonal orientation. @~chinese  六边形的朝向*/
     TMXOrientationHex,
 
-    /** Isometric orientation. */
+    /** @~english Isometric orientation. @~chinese 等距朝向 */
     TMXOrientationIso,
     
-    /** Isometric staggered orientation. */
+    /** @~english Isometric staggered orientation. @~chinese 等距交错朝向 */
     TMXOrientationStaggered,
 };
 

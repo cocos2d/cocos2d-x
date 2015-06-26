@@ -82,13 +82,13 @@ public:
      */
     enum class Orientation
     {
-        /// An horizontal orientation where the Left is nearer
+        ///@~english  An horizontal orientation where the Left is nearer @~chinese 一个水平朝向，它离左边更近
         LEFT_OVER = 0,
-        /// An horizontal orientation where the Right is nearer
+        /// @~english An horizontal orientation where the Right is nearer @~chinese 一个水平朝向，它离右边更近
         RIGHT_OVER = 1,
-        /// A vertical orientation where the Up is nearer
+        ///@~english  A vertical orientation where the Up is nearer @~chinese 一个垂直朝向，它离上面更近
         UP_OVER = 0,
-        /// A vertical orientation where the Bottom is nearer
+        ///@~english  A vertical orientation where the Bottom is nearer @~chinese 一个垂直朝向，它离底部更近
         DOWN_OVER = 1,
     };
     
