@@ -65,6 +65,13 @@
             ]
         },
         {
+            "from": "tools/simulator/frameworks/runtime-src/Classes",
+            "to": "lua-template-binary/frameworks/runtime-src/Classes",
+            "include": [
+                "lua_module_register.h"
+            ]
+        },
+        {
             "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
             "to": "lua-template-binary/frameworks/runtime-src/proj.ios_mac/ios",
             "exclude": [
@@ -136,24 +143,15 @@
         },
         {
             "from": "cocos/platform/android/java/src",
-            "to": "cpp-template-binary/proj.android/src",
-            "include": [
-                "*.java"
-            ]
+            "to": "cpp-template-binary/proj.android/src"
         },
         {
             "from": "cocos/platform/android/java/src",
-            "to": "lua-template-binary/frameworks/runtime-src/proj.android/src",
-            "include": [
-                "*.java"
-            ]
+            "to": "lua-template-binary/frameworks/runtime-src/proj.android/src"
         },
         {
             "from": "cocos/platform/android/java/src",
-            "to": "js-template-binary/frameworks/runtime-src/proj.android/src",
-            "include": [
-                "*.java"
-            ]
+            "to": "js-template-binary/frameworks/runtime-src/proj.android/src"
         }
     ],
     "modify_config": [
@@ -169,7 +167,13 @@
         }
     ],
     "android_mks" : [
+        "cocos/Android.mk",
+        "cocos/audio/android/Android.mk",
+        "cocos/scripting/js-bindings/proj.android/Android.mk",
+        "cocos/scripting/lua-bindings/proj.android/Android.mk",
         "cocos/storage/local-storage/Android.mk",
+        "external/bullet/Android.mk",
+        "external/recast/Android.mk",
         "external/flatbuffers/Android.mk",
         "external/Box2D/Android.mk",
         "cocos/editor-support/cocosbuilder/Android.mk",

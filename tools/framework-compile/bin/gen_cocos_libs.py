@@ -87,8 +87,8 @@ class CocosLibsCompiler(object):
         if self.build_mac:
             self.compile_mac_ios()
         if self.build_android:
-            self.compile_android("lua")
             self.compile_android("js")
+            self.compile_android("lua")
 
 
     def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
