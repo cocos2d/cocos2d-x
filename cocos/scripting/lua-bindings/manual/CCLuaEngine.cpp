@@ -650,6 +650,7 @@ int LuaEngine::handleEventKeyboard(ScriptHandlerMgr::HandlerType type, void* dat
     
     lua_State* L = _stack->getLuaState();
     lua_pushinteger(L, keyboardData->keyCode);
+    lua_pushboolean(L, keyboardData->is_pressed_);
     toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"cc.Event");
     int ret = _stack->executeFunctionByHandler(handler, 2);
     _stack->clean();
