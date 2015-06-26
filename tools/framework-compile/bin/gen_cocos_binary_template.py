@@ -117,6 +117,14 @@ class CocosBinTemplateGenerator(object):
         self.modify_android_build_cfg(lua_build_cfg, "lua")
         self.modify_android_build_cfg(js_build_cfg, "js")
 
+        # modify the project.properties for templates
+        cpp_prop_file = os.path.join(dst_dir, "cpp-template-binary/proj.android/project.properties")
+        lua_prop_file = os.path.join(dst_dir, "lua-template-binary/frameworks/runtime-src/proj.android/project.properties")
+        js_prop_file = os.path.join(dst_dir, "js-template-binary/frameworks/runtime-src/proj.android/project.properties")
+        self.modify_project_properties(cpp_prop_file)
+        self.modify_project_properties(lua_prop_file)
+        self.modify_project_properties(js_prop_file)
+
         self.modify_version_json(os.path.join(dst_dir, "lua-template-binary/.settings/version.json"))
         self.modify_version_json(os.path.join(dst_dir, "js-template-binary/.settings/version.json"))
 
@@ -177,6 +185,22 @@ class CocosBinTemplateGenerator(object):
             json.dump(cfg_info, f, sort_keys=True, indent=4)
             f.close()
 
+    def modify_project_properties(self, cfg_path):
+        f = open(cfg_path)
+        lines = f.readlines()
+        f.close()
+
+        new_lines = []
+        pattern = r'android\.library\.reference.*'
+        for line in lines:
+            temp_str = line.strip()
+            if not re.match(pattern, temp_str):
+                new_lines.append(line)
+
+        f = open(cfg_path, 'w')
+        f.writelines(new_lines)
+        f.close()
+
     def modify_android_build_cfg(self, cfg_path, language):
         f = open(cfg_path)
         content = f.read()
@@ -190,7 +214,9 @@ class CocosBinTemplateGenerator(object):
             replace_str = "../../cocos2d-x"
 
         if replace_str is not None:
-            content = content.replace(replace_str, self.repo_x)
+            framework_version = self.version.strip()
+            framework_version = framework_version.replace(' ', '-')
+            content = content.replace(replace_str, "${COCOS_FRAMEWORKS}/%s" % framework_version)
 
             f = open(cfg_path, "w")
             f.write(content)
