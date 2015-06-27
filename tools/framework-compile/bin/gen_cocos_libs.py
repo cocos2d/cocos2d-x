@@ -291,7 +291,7 @@ class CocosLibsCompiler(object):
             cmd_path = os.path.join(console_dir, "cocos")
 
         proj_name = "My%sGame" % language
-        proj_dir = os.path.join(self.cur_dir, "temp")
+        proj_dir = engine_dir
         proj_path = os.path.join(proj_dir, proj_name)
         utils_cocos.rmdir(proj_path)
 
