@@ -126,74 +126,94 @@ class CocosLibsCompiler(object):
         if len(vs_cmd_info) == 0:
             raise CustomError('Not found available VS.', CustomError.ERROR_TOOLS_NOT_FOUND)
 
+        cocos2d_proj_file = os.path.join(self.repo_x, 'cocos/2d/libcocos2d.vcxproj')
+
         # get the VS projects info
         win32_proj_info = self.cfg_info[CocosLibsCompiler.KEY_VS_PROJS_INFO]
         for vs_version in compile_vs_versions:
             if not vs_version in vs_cmd_info.keys():
                 continue
 
-            vs_command = vs_cmd_info[vs_version]
-            for key in win32_proj_info.keys():
-                # clean solutions
-                proj_path = os.path.join(self.repo_x, key)
-                clean_cmd = " ".join([
-                    "\"%s\"" % vs_command,
-                    "\"%s\"" % proj_path,
-                    "/clean \"Release|Win32\""
-                ])
-                utils_cocos.execute_command(clean_cmd)
+            # rename the cocos2d project out dll name
+            f = open(cocos2d_proj_file, 'r')
+            old_file_content = f.read()
+            f.close()
 
-            for key in win32_proj_info.keys():
-                output_dir = os.path.join(self.lib_dir, "win32")
-                proj_path = os.path.join(self.repo_x, key)
+            new_file_content = old_file_content.replace('$(OutDir)$(ProjectName).dll', '$(OutDir)$(ProjectName)_%d.dll' % vs_version)
+            f = open(cocos2d_proj_file, 'w')
+            f.write(new_file_content)
+            f.close()
 
-                # get the build folder & win32 output folder
-                build_folder_path = os.path.join(os.path.dirname(proj_path), "Release.win32")
-                win32_output_dir = os.path.join(self.repo_x, output_dir)
-                if not os.path.exists(win32_output_dir):
-                    os.makedirs(win32_output_dir)
-
-                # build project
-                if self.use_incredibuild:
-                    # use incredibuild, build whole sln
-                    build_cmd = " ".join([
-                        "BuildConsole",
-                        "%s" % proj_path,
-                        "/build",
-                        "/cfg=\"Release|Win32\""
+            try:
+                vs_command = vs_cmd_info[vs_version]
+                for key in win32_proj_info.keys():
+                    # clean solutions
+                    proj_path = os.path.join(self.repo_x, key)
+                    clean_cmd = " ".join([
+                        "\"%s\"" % vs_command,
+                        "\"%s\"" % proj_path,
+                        "/clean \"Release|Win32\""
                     ])
-                    utils_cocos.execute_command(build_cmd)
-                else:
-                    for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_BUILD_TARGETS]:
-                        # build the projects
-                        self.build_win32_proj(vs_command, proj_path, proj_name, "build")
+                    utils_cocos.execute_command(clean_cmd)
 
-                        lib_file_path = os.path.join(build_folder_path, "%s.lib" % proj_name)
-                        if not os.path.exists(lib_file_path):
-                            # if the lib is not generated, rebuild the project
-                            self.build_win32_proj(vs_command, proj_path, proj_name, "rebuild")
+                for key in win32_proj_info.keys():
+                    output_dir = os.path.join(self.lib_dir, "win32")
+                    proj_path = os.path.join(self.repo_x, key)
 
-                        if not os.path.exists(lib_file_path):
-                            raise Exception("Library %s not generated as expected!" % lib_file_path)
+                    # get the build folder & win32 output folder
+                    build_folder_path = os.path.join(os.path.dirname(proj_path), "Release.win32")
+                    win32_output_dir = os.path.join(self.repo_x, output_dir)
+                    if not os.path.exists(win32_output_dir):
+                        os.makedirs(win32_output_dir)
 
-                # copy the libs into prebuilt dir
-                for file_name in os.listdir(build_folder_path):
-                    name, ext = os.path.splitext(file_name)
-                    if ext != ".lib" and ext != ".dll":
-                        continue
+                    # build project
+                    if self.use_incredibuild:
+                        # use incredibuild, build whole sln
+                        build_cmd = " ".join([
+                            "BuildConsole",
+                            "%s" % proj_path,
+                            "/build",
+                            "/cfg=\"Release|Win32\""
+                        ])
+                        utils_cocos.execute_command(build_cmd)
+                    else:
+                        for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_BUILD_TARGETS]:
+                            # build the projects
+                            self.build_win32_proj(vs_command, proj_path, proj_name, "build")
 
-                    file_path = os.path.join(build_folder_path, file_name)
-                    shutil.copy(file_path, win32_output_dir)
+                            lib_file_path = os.path.join(build_folder_path, "%s.lib" % proj_name)
+                            if not os.path.exists(lib_file_path):
+                                # if the lib is not generated, rebuild the project
+                                self.build_win32_proj(vs_command, proj_path, proj_name, "rebuild")
 
-                # rename the specified libs
-                suffix = "_%d" % vs_version
-                for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_RENAME_TARGETS]:
-                    src_name = os.path.join(win32_output_dir, "%s.lib" % proj_name)
-                    dst_name = os.path.join(win32_output_dir, "%s%s.lib" % (proj_name, suffix))
-                    if os.path.exists(src_name):
-                        if os.path.exists(dst_name):
-                            os.remove(dst_name)
-                        os.rename(src_name, dst_name)
+                            if not os.path.exists(lib_file_path):
+                                raise Exception("Library %s not generated as expected!" % lib_file_path)
+
+                    # copy the libs into prebuilt dir
+                    for file_name in os.listdir(build_folder_path):
+                        name, ext = os.path.splitext(file_name)
+                        if ext != ".lib" and ext != ".dll":
+                            continue
+
+                        file_path = os.path.join(build_folder_path, file_name)
+                        shutil.copy(file_path, win32_output_dir)
+
+                    # rename the specified libs
+                    suffix = "_%d" % vs_version
+                    for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_RENAME_TARGETS]:
+                        src_name = os.path.join(win32_output_dir, "%s.lib" % proj_name)
+                        dst_name = os.path.join(win32_output_dir, "%s%s.lib" % (proj_name, suffix))
+                        if os.path.exists(src_name):
+                            if os.path.exists(dst_name):
+                                os.remove(dst_name)
+                            os.rename(src_name, dst_name)
+            except Exception as e:
+                raise e
+            finally:
+                f = open(cocos2d_proj_file, 'w')
+                f.write(old_file_content)
+                f.close()
+
 
         print("Win32 build succeeded.")
 

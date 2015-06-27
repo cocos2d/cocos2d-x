@@ -150,19 +150,20 @@ class TemplateModifier(object):
 
         install_path = self.engine_path
         if self.is_for_package:
-            install_path = "$(COCOS_FRAMEWORKS)\\%s" % self.version
+            install_path = "$(COCOS_FRAMEWORKS)\\%s\\" % self.version
 
-        custom_step_event = vcx_proj.get_event_command('CustomBuildStep')
         copy_libs_cmd = "if not exist \"$(OutDir)\" mkdir \"$(OutDir)\"\n" \
                         "xcopy /Y /Q \"$(EngineRoot)\\prebuilt\\win32\\*.*\" \"$(OutDir)\"\n"
-        custom_step_event = copy_libs_cmd + custom_step_event
+        vcx_proj.set_event_command('PreLinkEvent', copy_libs_cmd, 'debug')
+        vcx_proj.set_event_command('PreLinkEvent', copy_libs_cmd, 'release')
 
         if language == "js":
-            vcx_proj.set_event_command('PreLinkEvent', '', create_new=False)
+            custom_step_event = vcx_proj.get_event_command('CustomBuildStep')
             custom_step_event.replace("$(ProjectDir)..\\..\\cocos2d-x\\cocos\\scripting\\js-bindings\\script",
                                       "$(ProjectDir)..\\..\\..\\script")
+            vcx_proj.set_event_command("CustomBuildStep", custom_step_event, create_new=False)
 
-        vcx_proj.set_event_command("CustomBuildStep", custom_step_event, create_new=False)
+        vcx_proj.remove_predefine_macro("_DEBUG", 'debug')
 
         #
         # copy_libs_cmd = "if not exist \"$(OutDir)\" mkdir \"$(OutDir)\"\n" \
@@ -178,9 +179,6 @@ class TemplateModifier(object):
         # if language == "lua":
         #     link_cmd = "libcmt.lib;%(IgnoreSpecificDefaultLibraries)"
         #     vcx_proj.set_item("Link", "IgnoreSpecificDefaultLibraries", link_cmd)
-        #
-        # vcx_proj.remove_predefine_macro("_DEBUG")
-        #
         #
         # debug_prebuild = vcx_proj.get_event_command("PreBuildEvent", "debug")
         # debug_prebuild = debug_prebuild.replace("$(ProjectDir)..\\..\\cocos2d-x\\cocos\\scripting\\js-bindings\\script",
@@ -234,6 +232,8 @@ class TemplateModifier(object):
         file_content = file_content.replace("MultiThreadedDebugDLL", "MultiThreadedDLL")
         for str in replace_strs:
             file_content = file_content.replace(str, install_path)
+        file_content = file_content.replace('%s\\' % install_path, install_path)
+
         f = open(proj_file_path, "w")
         f.write(file_content)
         f.close()
