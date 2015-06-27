@@ -393,25 +393,16 @@ int LuaEngine::handleKeypadEvent(void* data)
     /////////////////////////////////
     // greentwip fix for key codes //
     /////////////////////////////////
-    _stack->pushInt(static_cast<int>(action));
-    _stack->pushBoolean(is_pressed);
 
+    LuaValueDict eventData;
+    eventData.insert(eventData.end(), LuaValueDict::value_type("key", LuaValue::intValue(static_cast<int>(action))));
+    eventData.insert(eventData.end(), LuaValueDict::value_type("pressed", LuaValue::booleanValue(is_pressed)));
 
-/*    switch(action)
-    {
-        case EventKeyboard::KeyCode::KEY_BACKSPACE:
-            _stack->pushString("backClicked");
-            break;
-        case EventKeyboard::KeyCode::KEY_MENU:
-            _stack->pushString("menuClicked");
-            break;
-        default:
-            break;
-    }*/
+    _stack->pushLuaValueDict(eventData);
 
     /////////////////////////////////
 
-    int ret = _stack->executeFunctionByHandler(handler, 2);
+    int ret = _stack->executeFunctionByHandler(handler, 1);
     _stack->clean();
     return ret;
 }
@@ -642,7 +633,7 @@ int LuaEngine::handleEventKeyboard(ScriptHandlerMgr::HandlerType type, void* dat
     if (nullptr == basicScriptData->nativeObject || nullptr == basicScriptData->value)
         return 0;
     
-    LuaEventKeyboarData* keyboardData = static_cast<LuaEventKeyboarData*>(basicScriptData->value);
+    LuaEventKeyboardData* keyboardData = static_cast<LuaEventKeyboardData*>(basicScriptData->value);
     
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, type);
     if (0 == handler)
@@ -650,9 +641,10 @@ int LuaEngine::handleEventKeyboard(ScriptHandlerMgr::HandlerType type, void* dat
     
     lua_State* L = _stack->getLuaState();
     lua_pushinteger(L, keyboardData->keyCode);
-    lua_pushboolean(L, keyboardData->is_pressed_);
+    lua_pushinteger(L, keyboardData->is_pressed_);
+
     toluafix_pushusertype_ccobject(L, keyboardData->event->_ID, &(keyboardData->event->_luaID), (void*)(keyboardData->event),"cc.Event");
-    int ret = _stack->executeFunctionByHandler(handler, 2);
+    int ret = _stack->executeFunctionByHandler(handler, 3);
     _stack->clean();
     return ret;
 }
@@ -1063,3 +1055,4 @@ int LuaEngine::reload(const char* moduleFileName)
 }
 
 NS_CC_END
+
