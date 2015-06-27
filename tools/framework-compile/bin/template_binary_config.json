@@ -4,6 +4,8 @@
             "from": "templates/cpp-template-default",
             "to": "cpp-template-binary",
             "exclude": [
+                "*android-studio",
+                "*win10",
                 "*wp8",
                 "*win8.1-universal",
                 "*linux",
@@ -25,6 +27,8 @@
             "from": "templates/lua-template-default/frameworks",
             "to": "lua-template-binary/frameworks",
             "exclude": [
+                "*android-studio",
+                "*win10",
                 "*wp8",
                 "*win8.1-universal",
                 "*linux",
@@ -42,6 +46,8 @@
             "from": "templates/js-template-runtime",
             "to": "js-template-binary",
             "exclude": [
+                "*android-studio",
+                "*win10",
                 "*wp8",
                 "*win8.1-universal",
                 "*linux",
@@ -52,10 +58,7 @@
         },
         {
             "from": "web",
-            "to": "js-template-binary/frameworks/cocos2d-html5",
-            "exclude": [
-                ".*"
-            ]
+            "to": "js-template-binary/frameworks/cocos2d-html5"
         },
         {
             "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",

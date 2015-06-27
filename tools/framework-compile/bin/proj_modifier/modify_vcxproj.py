@@ -147,6 +147,9 @@ class VCXProject(object):
         cfg_nodes = self.root_node.getElementsByTagName("ItemDefinitionGroup")
         for cfg_node in cfg_nodes:
             if config is not None:
+                if 'Condition' not in cfg_node.attributes.keys():
+                    continue
+
                 cond_attr = cfg_node.attributes["Condition"].value
                 if cond_attr.lower().find("debug") >= 0:
                     cur_mode = "Debug"
@@ -161,7 +164,13 @@ class VCXProject(object):
                 continue
 
             cmd_node = self.get_or_create_node(event_node, "Command")
-            cmd_node.firstChild.nodeValue = command
+            if cmd_node.firstChild is None:
+                impl = minidom.getDOMImplementation()
+                dom = impl.createDocument(None, 'catalog', None)
+                nodeValue = dom.createTextNode(command)
+                cmd_node.appendChild(nodeValue)
+            else:
+                cmd_node.firstChild.nodeValue = command
 
     def get_node_if(self, parent, name):
         children = parent.getElementsByTagName(name)
@@ -210,14 +219,18 @@ class VCXProject(object):
     def remove_predefine_macro(self, macro, config=None):
         cfg_nodes = self.root_node.getElementsByTagName("ItemDefinitionGroup")
         for cfg_node in cfg_nodes:
-            cond_attr = cfg_node.attributes["Condition"].value
-            if cond_attr.lower().find("debug") >= 0:
-                cur_mode = "Debug"
-            else:
-                cur_mode = "Release"
+            if config is not None:
+                if 'Condition' not in cfg_node.attributes.keys():
+                    continue
 
-            if (config is not None) and (cur_mode.lower() != config.lower()):
-                continue
+                cond_attr = cfg_node.attributes["Condition"].value
+                if cond_attr.lower().find("debug") >= 0:
+                    cur_mode = "Debug"
+                else:
+                    cur_mode = "Release"
+
+                if (cur_mode.lower() != config.lower()):
+                    continue
 
             compile_node = self.get_or_create_node(cfg_node, "ClCompile")
             predefine_node = self.get_or_create_node(compile_node, "PreprocessorDefinitions")
