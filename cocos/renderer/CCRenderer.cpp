@@ -805,7 +805,7 @@ void Renderer::drawBatchedTriangles()
 #define kQuadSize sizeof(_verts[0])
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex , _verts, GL_DYNAMIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, kQuadSize * _filledVertex, _verts);
 
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
@@ -819,7 +819,7 @@ void Renderer::drawBatchedTriangles()
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(_indices[0]) * _filledIndex, _indices);
     }
 
     //Start drawing verties in batch
@@ -912,7 +912,7 @@ void Renderer::drawBatchedQuads()
 #define kQuadSize sizeof(_verts[0])
         glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
         
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4 , _quadVerts, GL_DYNAMIC_DRAW);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quadVerts[0]) * _numberQuads * 4, _quadVerts);
         
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
         
