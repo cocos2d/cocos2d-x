@@ -2428,33 +2428,6 @@ bool js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DConstraints(JSContex
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DConstraints : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_physics3d_Physics3DWorld_rayCast(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : Invalid Native Object");
-    if (argc == 3) {
-        cocos2d::Vec3 arg0;
-        cocos2d::Vec3 arg1;
-        cocos2d::Physics3DWorld::HitResult* arg2;
-        ok &= jsval_to_vector3(cx, args.get(0), &arg0);
-        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
-        #pragma warning NO CONVERSION TO NATIVE FOR HitResult*
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : Error processing arguments");
-        bool ret = cobj->rayCast(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_rayCast : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
 bool js_cocos2dx_physics3d_Physics3DWorld_getGravity(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -2813,7 +2786,6 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
         JS_FN("removeAllPhysics3DObjects", js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDebugDrawEnabled", js_cocos2dx_physics3d_Physics3DWorld_isDebugDrawEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllPhysics3DConstraints", js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DConstraints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("rayCast", js_cocos2dx_physics3d_Physics3DWorld_rayCast, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getGravity", js_cocos2dx_physics3d_Physics3DWorld_getGravity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removePhysics3DConstraint", js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addPhysics3DObject", js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DObject, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -6781,7 +6753,7 @@ void js_register_cocos2dx_physics3d_Physics3D6DofConstraint(JSContext *cx, JS::H
 void register_all_cocos2dx_physics3d(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
-    get_or_create_js_obj(cx, obj, "cc", &ns);
+    get_or_create_js_obj(cx, obj, "jsb", &ns);
 
     js_register_cocos2dx_physics3d_Physics3DConstraint(cx, ns);
     js_register_cocos2dx_physics3d_Physics3D6DofConstraint(cx, ns);

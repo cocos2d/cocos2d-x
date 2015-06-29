@@ -479,7 +479,8 @@ protected:
     float _rightBoundary;
 
     bool _bePressed;
-    float _childFocusCancelOffset;
+
+    float _childFocusCancelOffsetInInch;
 
     bool _inertiaScrollEnabled;
     bool _inertiaScrolling;

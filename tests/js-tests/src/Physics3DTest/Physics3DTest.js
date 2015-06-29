@@ -41,6 +41,7 @@ var Physics3DTestDemo = cc.Layer.extend({
     _camera:null,
     _angle:0.0,
     _needShootBox:false,
+    _listener: null,
 
     ctor:function () {
         this._super();
@@ -52,7 +53,7 @@ var Physics3DTestDemo = cc.Layer.extend({
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this.addChild(this._camera);
 
-        cc.eventManager.addListener({
+        this._listener = cc.eventManager.addListener({
             event:cc.EventListener.TOUCH_ALL_AT_ONCE,
             onTouchesBegan:this.onTouchesBegan.bind(this),
             onTouchesMoved:this.onTouchesMoved.bind(this),
@@ -112,7 +113,7 @@ var Physics3DTestDemo = cc.Layer.extend({
     },
 
     shootBox:function(des){
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
         var linearVel = cc.math.vec3Sub(des, this._camera.getPosition3D());
         linearVel.normalize();
         linearVel.x *= 100;
@@ -120,12 +121,12 @@ var Physics3DTestDemo = cc.Layer.extend({
         linearVel.z *= 100;
 
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(0.5, 0.5, 0.5));
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(0.5, 0.5, 0.5));
         var v = this._camera.getPosition3D();
         rbDes.originalTransform[12] = v.x;
         rbDes.originalTransform[13] = v.y;
         rbDes.originalTransform[14] = v.z;
-        var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
+        var sprite = jsb.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
         sprite.setTexture("Images/Icon.png");
 
         var rigidBody = sprite.getPhysicsObj();
@@ -138,8 +139,8 @@ var Physics3DTestDemo = cc.Layer.extend({
         this.addChild(sprite);
         sprite.setPosition3D(this._camera.getPosition3D());
         sprite.setScale(0.5);
-        sprite.syncToNode();
-        sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
+        sprite.syncNodeToPhysics();
+        sprite.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
         sprite.setCameraMask(cc.CameraFlag.USER1);
     },
 
@@ -240,23 +241,23 @@ var BasicPhysics3DDemo = Physics3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(60, 1, 60));
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(60, 1, 60));
 
-        var floor = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
+        var floor = jsb.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
         floor.setTexture("Sprite3DTest/plane.png");
         floor.setScaleX(60);
         floor.setScaleZ(60);
         this.addChild(floor);
         floor.setCameraMask(cc.CameraFlag.USER1);
-        floor.syncToNode();
+        floor.syncNodeToPhysics();
         //static object sync is not needed
-        floor.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
+        floor.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.NONE);
 
         //create several boxes using PhysicsSprite3D
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(0.8, 0.8, 0.8));
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(0.8, 0.8, 0.8));
         var start_x = START_POS_X - ARRAY_SIZE_X/2;
         var start_y = START_POS_Y;
         var start_z = START_POS_Z - ARRAY_SIZE_Z/2;
@@ -267,11 +268,11 @@ var BasicPhysics3DDemo = Physics3DTestDemo.extend({
                     var x = i + start_x,
                         y = 5 + k + start_y,
                         z = j + start_z;
-                    var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
+                    var sprite = jsb.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
                     sprite.setTexture("Images/CyanSquare.png");
                     sprite.setPosition3D(cc.math.vec3(x, y, z));
-                    sprite.syncToNode();
-                    sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
+                    sprite.syncNodeToPhysics();
+                    sprite.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
                     sprite.setCameraMask(cc.CameraFlag.USER1);
                     sprite.setScale(0.8);
                     this.addChild(sprite);
@@ -285,19 +286,25 @@ var BasicPhysics3DDemo = Physics3DTestDemo.extend({
 
 var Physics3DConstraintDemo = Physics3DTestDemo.extend({
     _subtitle:"Physics3D Constraint",
+    _constraint: null,
+    _world: null,
 
     ctor:function(){
         this._super();
 
+        this._listener.onTouchesBegan = this.onTouchesBegan.bind(this);
+        this._listener.onTouchesMoved = this.onTouchesMoved.bind(this);
+        this._listener.onTouchesEnded = this.onTouchesEnded.bind(this);
+
         //PhysicsSprite3d = Sprite3D + Physics3DComponent
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
         rbDes.disableSleep = true;
         rbDes.mass = 10;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(5, 5, 5));
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(5, 5, 5));
 
-        var rigidBody = cc.Physics3DRigidBody.create(rbDes);
+        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
         var quat = cc.math.quaternion(cc.math.vec3(0, 1, 0), cc.degreesToRadians(180));
-        var component = cc.Physics3DComponent.create(rigidBody, cc.math.vec3(0, -3, 0), quat);
+        var component = jsb.Physics3DComponent.create(rigidBody, cc.math.vec3(0, -3, 0), quat);
 
         var sprite = new jsb.Sprite3D("Sprite3DTest/orc.c3b");
         sprite.addComponent(component);
@@ -305,38 +312,39 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.setCameraMask(cc.CameraFlag.USER1);
         sprite.setScale(0.4);
         sprite.setPosition3D(cc.math.vec3(-20, 5, 0));
-        component.syncToNode();
-        component.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
+        component.syncNodeToPhysics();
+        component.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
 
         physicsScene.setPhysics3DDebugCamera(this._camera);
+        this._world = physicsScene.getPhysics3DWorld();
 
         //create point to point constraint
-        var constraint = cc.Physics3DPointToPointConstraint.create(rigidBody, cc.math.vec3(2.5, 2.5, 2.5));
-        physicsScene.getPhysics3DWorld().addPhysics3DConstraint(constraint);
+        var constraint = jsb.Physics3DPointToPointConstraint.create(rigidBody, cc.math.vec3(2.5, 2.5, 2.5));
+        this._world.addPhysics3DConstraint(constraint);
 
         //create hinge constraint
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(8, 8, 1));
-        rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(8, 8, 1));
+        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        component = jsb.Physics3DComponent.create(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
         sprite.setScaleX(8);
-        sprite.setScaleZ(8);
+        sprite.setScaleY(8);
         sprite.setPosition3D(cc.math.vec3(5, 0, 0));
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
         rigidBody.setAngularVelocity(cc.math.vec3(0, 3, 0));
-        constraint = cc.Physics3DHingeConstraint.create(rigidBody, cc.math.vec3(4, 4, 0.5), cc.math.vec3(0, 1, 0));
-        physicsScene.getPhysics3DWorld().addPhysics3DConstraint(constraint);
+        constraint = jsb.Physics3DHingeConstraint.create(rigidBody, cc.math.vec3(4, 4, 0.5), cc.math.vec3(0, 1, 0));
+        this._world.addPhysics3DConstraint(constraint);
 
         //create slider constraint
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(3, 2, 3));
-        rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 2, 3));
+        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        component = jsb.Physics3DComponent.create(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
         sprite.setScaleX(3);
@@ -345,13 +353,13 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
         rigidBody.setLinearVelocity(cc.math.vec3(0, 3, 0));
 
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
-        var rigidBodyB = cc.Physics3DRigidBody.create(rbDes);
-        component = cc.Physics3DComponent.create(rigidBodyB);
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
+        var rigidBodyB = jsb.Physics3DRigidBody.create(rbDes);
+        component = jsb.Physics3DComponent.create(rigidBodyB);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
         sprite.setScale(3);
@@ -359,20 +367,20 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
 
-        var frameInA = [-4.37114e-08, 1, 0, 0, -1, -4.37114e-08, 0, 0, 0, 0, 1, 0, 0, -5, 0, 1];
-        var frameInB = [-4.37114e-08, 1, 0, 0, -1, -4.37114e-08, 0, 0, 0, 0, 1, 0, 0, 5, 0, 1];
-        constraint = cc.Physics3DSliderConstraint.create(rigidBody, rigidBodyB, frameInA, frameInB, false);
-        physicsScene.getPhysics3DWorld().addPhysics3DConstraint(constraint);
+        var frameInA = [-4.37114e-8, 1, 0, 0, -1, -4.37114e-8, 0, 0, 0, 0, 1, 0, 0, -5, 0, 1];
+        var frameInB = [-4.37114e-8, 1, 0, 0, -1, -4.37114e-8, 0, 0, 0, 0, 1, 0, 0, 5, 0, 1];
+        constraint = jsb.Physics3DSliderConstraint.create(rigidBody, rigidBodyB, frameInA, frameInB, false);
+        this._world.addPhysics3DConstraint(constraint);
         constraint.setLowerLinLimit(-5);
         constraint.setUpperLinLimit(5);
 
         //create ConeTwist constraint
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
-        rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
+        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        component = jsb.Physics3DComponent.create(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
         sprite.setScale(3);
@@ -380,18 +388,18 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
 
-        frameInA = [-4.37114e-08, 1, 0, 0, -1, -4.37114e-08, 0, 0, 0, 0, 1, 0, 0, -10, 0, 1];
-        constraint = cc.Physics3DConeTwistConstraint.create(rigidBody, frameInA);
-        physicsScene.getPhysics3DWorld().addPhysics3DConstraint(constraint, true);
+        frameInA = [-4.37114e-8, 1, 0, 0, -1, -4.37114e-8, 0, 0, 0, 0, 1, 0, 0, -10, 0, 1];
+        constraint = jsb.Physics3DConeTwistConstraint.create(rigidBody, frameInA);
+        this._world.addPhysics3DConstraint(constraint, true);
         constraint.setLimit(cc.degreesToRadians(10), cc.degreesToRadians(10), cc.degreesToRadians(40));
 
         //create 6 dof constraint
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
-        rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
+        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        component = jsb.Physics3DComponent.create(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
         sprite.setScale(3);
@@ -399,15 +407,72 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(sprite);
-        component.syncToNode();
+        component.syncNodeToPhysics();
 
         frameInA = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-        constraint = cc.Physics3D6DofConstraint.create(rigidBody, frameInA, false);
-        physicsScene.getPhysics3DWorld().addPhysics3DConstraint(constraint);
+        constraint = jsb.Physics3D6DofConstraint.create(rigidBody, frameInA, false);
+        this._world.addPhysics3DConstraint(constraint);
         constraint.setAngularLowerLimit(cc.math.vec3(0, 0, 0));
         constraint.setAngularUpperLimit(cc.math.vec3(0, 0, 0));
         constraint.setLinearLowerLimit(cc.math.vec3(-10, 0, 0));
         constraint.setLinearUpperLimit(cc.math.vec3(10, 0, 0));
+    },
+
+    onTouchesBegan:function(touches, event){
+        if(this._camera){
+            cc.log("STARTED " + touches.length);
+            var touch = touches[0];
+            var location = touch.getLocationInView();
+
+            var nearP = cc.math.vec3(location.x, location.y, 0);
+            var farP = cc.math.vec3(location.x, location.y, 1);
+
+            var size = director.getWinSize();
+            nearP    = this._camera.unproject(size, nearP);
+            farP     = this._camera.unproject(size, farP);
+
+            var result = this._world.rayCast(nearP, farP);
+            if(result.hitObj !== undefined && result.hitObj.getObjType() == jsb.Physics3DObject.PhysicsObjType.RIGID_BODY)
+            {
+                var mat = cc.math.mat4GetInversed(result.hitObj.getWorldTransform());
+                var position =  cc.math.mat4TransformPoint(mat, result.hitPosition);
+
+                this._constraint = jsb.Physics3DPointToPointConstraint.create(result.hitObj, position);
+                this._world.addPhysics3DConstraint(this._constraint, true);
+                this._pickingDistance = cc.math.vec3Length(cc.math.vec3Sub(result.hitPosition, nearP));
+                return;
+            }
+        }
+        Physics3DTestDemo.prototype.onTouchesBegan.call(this, touches, event);
+        this._needShootBox = false;
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(this._constraint){
+            var touch = touches[0];
+            var location = touch.getLocationInView();
+
+            var nearP = cc.math.vec3(location.x, location.y, 0);
+            var farP = cc.math.vec3(location.x, location.y, 1);
+
+            var size = director.getWinSize();
+            nearP    = this._camera.unproject(size, nearP);
+            farP     = this._camera.unproject(size, farP);
+
+            var dir  = cc.math.vec3Normalize(cc.math.vec3Sub(farP, nearP));
+            this._constraint.setPivotPointInB(cc.math.vec3Add(nearP, cc.math.vec3(dir.x * this._pickingDistance, dir.y * this._pickingDistance, dir.z * this._pickingDistance)));
+            return;
+        }
+        Physics3DTestDemo.prototype.onTouchesMoved.call(this, touches, event);
+    },
+
+    onTouchesEnded:function(touches, event){
+        if(this._constraint){
+            this._world.removePhysics3DConstraint(this._constraint);
+            this._constraint = null;
+            return;
+        }
+        Physics3DTestDemo.prototype.onTouchesEnded.call(this, touches, event);
     }
 });
 
@@ -417,43 +482,43 @@ var Physics3DKinematicDemo = Physics3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(60, 1, 60));
+        rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(60, 1, 60));
 
-        var floor = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
+        var floor = jsb.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
         floor.setTexture("Sprite3DTest/plane.png");
         floor.setScaleX(60);
         floor.setScaleZ(60);
         floor.setPosition3D(cc.math.vec3(0, -1, 0));
         this.addChild(floor);
         floor.setCameraMask(cc.CameraFlag.USER1);
-        floor.syncToNode();
+        floor.syncNodeToPhysics();
         //static object sync is not needed
-        floor.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
+        floor.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.NONE);
 
         //create Kinematics
-        for(let i = 0; i < 3; ++i){
+        for(var i = 0; i < 3; ++i){
             rbDes.mass = 0;
-            rbDes.shape = cc.Physics3DShape.createBox(cc.math.vec3(2, 2, 2));
+            rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(2, 2, 2));
 
-            let sprite = cc.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
+            var sprite = jsb.PhysicsSprite3D.create("Sprite3DTest/box.c3t", rbDes);
             sprite.setTexture("Images/CyanSquare.png");
             sprite.setCameraMask(cc.CameraFlag.USER1);
-            let rigidBody = sprite.getPhysicsObj();
+            var rigidBody = sprite.getPhysicsObj();
             rigidBody.setKinematic(true);
 
             this.addChild(sprite);
 
             sprite.setScale(2);
             sprite.setPosition3D(cc.math.vec3(-15, 0, 15-15*i));
-            let moveby = cc.moveBy(2+i, cc.math.vec3(30, 0, 0));
+            var moveby = cc.moveBy(2+i, cc.math.vec3(30, 0, 0));
             sprite.runAction(cc.sequence(moveby, moveby.reverse()).repeatForever());
         }
 
         //create Dynamic
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createSphere(0.5);
+        rbDes.shape = jsb.Physics3DShape.createSphere(0.5);
         var start_x = START_POS_X - ARRAY_SIZE_X/2;
         var start_y = START_POS_Y + 5;
         var start_z = START_POS_Z - ARRAY_SIZE_Z/2;
@@ -469,11 +534,11 @@ var Physics3DKinematicDemo = Physics3DTestDemo.extend({
                     rbDes.originalTransform[13] = y;
                     rbDes.originalTransform[14] = z;
 
-                    var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/sphere.c3b", rbDes);
+                    var sprite = jsb.PhysicsSprite3D.create("Sprite3DTest/sphere.c3b", rbDes);
                     sprite.setTexture("Sprite3DTest/plane.png");
                     sprite.setPosition3D(cc.math.vec3(x, y, z));
-                    sprite.syncToNode();
-                    sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
+                    sprite.syncNodeToPhysics();
+                    sprite.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
                     sprite.setCameraMask(cc.CameraFlag.USER1);
                     sprite.setScale(1/sprite.getContentSize().width);
                     this.addChild(sprite);
@@ -491,7 +556,7 @@ var Physics3DCollisionCallbackDemo = Physics3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
 
         var scale = 2;
         var trianglesList = jsb.Bundle3D.getTrianglesList("Sprite3DTest/boss.c3b");
@@ -503,10 +568,10 @@ var Physics3DCollisionCallbackDemo = Physics3DTestDemo.extend({
         }
 
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
+        rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
 
-        var rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        var component = cc.Physics3DComponent.create(rigidBody);
+        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var component = jsb.Physics3DComponent.create(rigidBody);
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss.c3b");
         sprite.addComponent(component);
         sprite.setRotation3D(cc.math.vec3(-90, 0, 0));
@@ -562,23 +627,23 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
         terrain.setCameraMask(2);
         terrain.setDrawWire(false);
 
-        var rbDes = cc.physics3DRigidBodyDes();
+        var rbDes = jsb.physics3DRigidBodyDes();
         rbDes.mass = 0;
 
         var heightData = terrain.getHeightData();
         var size = terrain.getTerrainSize();
-        rbDes.shape = cc.Physics3DShape.createHeightfield(size.width, size.height, heightData, 1.0, terrain.getMinHeight(), terrain.getMaxHeight(), true, false, true);
-        var rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        var component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createHeightfield(size.width, size.height, heightData, 1.0, terrain.getMinHeight(), terrain.getMaxHeight(), true, false, true);
+        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var component = jsb.Physics3DComponent.create(rigidBody);
         terrain.addComponent(component);
-        component.syncToNode();
-        component.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE);
+        component.syncNodeToPhysics();
+        component.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.NONE);
 
         this.addChild(terrain);
 
         //create several spheres
         rbDes.mass = 1;
-        rbDes.shape = cc.Physics3DShape.createSphere(0.5);
+        rbDes.shape = jsb.Physics3DShape.createSphere(0.5);
         var start_x = START_POS_X - ARRAY_SIZE_X/2 + 5;
         var start_y = START_POS_Y + 20;
         var start_z = START_POS_Z - ARRAY_SIZE_Z/2;
@@ -590,11 +655,11 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
                         y = 5 + k + start_y,
                         z = j + start_z;
 
-                    var sprite = cc.PhysicsSprite3D.create("Sprite3DTest/sphere.c3b", rbDes);
+                    var sprite = jsb.PhysicsSprite3D.create("Sprite3DTest/sphere.c3b", rbDes);
                     sprite.setTexture("Sprite3DTest/plane.png");
                     sprite.setPosition3D(cc.math.vec3(x, y, z));
-                    sprite.syncToNode();
-                    sprite.setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
+                    sprite.syncNodeToPhysics();
+                    sprite.setSyncFlag(jsb.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE);
                     sprite.setCameraMask(cc.CameraFlag.USER1);
                     sprite.setScale(1/sprite.getContentSize().width);
                     this.addChild(sprite);
@@ -605,9 +670,9 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
         //create mesh
         var trianglesList = jsb.Bundle3D.getTrianglesList("Sprite3DTest/boss.c3b");
         rbDes.mass = 0;
-        rbDes.shape = cc.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
-        rigidBody = cc.Physics3DRigidBody.create(rbDes);
-        component = cc.Physics3DComponent.create(rigidBody);
+        rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
+        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        component = jsb.Physics3DComponent.create(rigidBody);
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss.c3b");
         sprite.addComponent(component);
         sprite.setRotation3D(cc.math.vec3(-90, 0, 0));

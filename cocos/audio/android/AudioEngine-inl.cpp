@@ -285,16 +285,7 @@ void AudioEngineImpl::update(float dt)
     for (auto iter = _audioPlayers.begin(); iter != itend; )
     {
         player = &(iter->second);
-        if (player->_playOver)
-        {
-            if (player->_finishCallback)
-                player->_finishCallback(player->_audioID, *AudioEngine::_audioIDInfoMap[player->_audioID].filePath);
-
-            AudioEngine::remove(player->_audioID);
-            iter = _audioPlayers.erase(iter);
-            continue;
-        }
-        else if (player->_delayTimeToRemove > 0.f)
+        if (player->_delayTimeToRemove > 0.f)
         {
             player->_delayTimeToRemove -= dt;
             if (player->_delayTimeToRemove < 0.f)
@@ -302,6 +293,15 @@ void AudioEngineImpl::update(float dt)
                 iter = _audioPlayers.erase(iter);
                 continue;
             }
+        }
+        else if (player->_playOver)
+        {
+            if (player->_finishCallback)
+                player->_finishCallback(player->_audioID, *AudioEngine::_audioIDInfoMap[player->_audioID].filePath);
+
+            AudioEngine::remove(player->_audioID);
+            iter = _audioPlayers.erase(iter);
+            continue;
         }
 
         ++iter;

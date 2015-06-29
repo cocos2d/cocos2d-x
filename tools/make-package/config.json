@@ -11,9 +11,5 @@
             "zip_file_path": "../cocos2d-console",
             "extract_to_zip_path": "tools/cocos2d-console"
         }
-    ],
-    "extra_dirs":
-    [
-        "tools/fbx-conv"
     ]
 }

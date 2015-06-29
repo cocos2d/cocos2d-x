@@ -23,8 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIScrollView.h"
-#include "2d/CCTweenFunction.h"
+#include "base/CCDirector.h"
 #include "base/ccUtils.h"
+#include "platform/CCDevice.h"
+#include "2d/CCTweenFunction.h"
 
 NS_CC_BEGIN
 
@@ -32,6 +34,15 @@ namespace ui {
 
 static const float INERTIA_DEACCELERATION = 3000.0f;
 static const float BOUNCE_BACK_DURATION = 0.3f;
+#define MOVE_INCH            7.0f/160.0f
+
+static float convertDistanceFromPointToInch(Vec2 dis)
+{
+    auto glview = Director::getInstance()->getOpenGLView();
+    int dpi = Device::getDPI();
+    float distance = Vec2(dis.x * glview->getScaleX() / dpi, dis.y * glview->getScaleY() / dpi).getLength();
+    return distance;
+}
 
 IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
@@ -43,7 +54,7 @@ _bottomBoundary(0.0f),
 _leftBoundary(0.0f),
 _rightBoundary(0.0f),
 _bePressed(false),
-_childFocusCancelOffset(5.0f),
+_childFocusCancelOffsetInInch(MOVE_INCH),
 _inertiaScrollEnabled(true),
 _inertiaScrolling(false),
 _inertiaPrevTouchTimestamp(0),
@@ -265,7 +276,6 @@ bool ScrollView::startBounceBackIfNeeded()
     {
         return false;
     }
-
     Vec2 outOfBoundary = getHowMuchOutOfBoundary(Vec2::ZERO);
     if(outOfBoundary == Vec2::ZERO)
     {
@@ -860,9 +870,24 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
         break;
         case TouchEventType::MOVED:
         {
-            float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
             _touchMovePosition = touch->getLocation();
-            if (offset > _childFocusCancelOffset)
+            // calculates move offset in points
+            float offsetInInch = 0;
+            switch (_direction)
+            {
+                case Direction::HORIZONTAL:
+                    offsetInInch = convertDistanceFromPointToInch(Vec2(fabs(sender->getTouchBeganPosition().x - touchPoint.x), 0));
+                    break;
+                case Direction::VERTICAL:
+                    offsetInInch = convertDistanceFromPointToInch(Vec2(0, fabs(sender->getTouchBeganPosition().y - touchPoint.y)));
+                    break;
+                case Direction::BOTH:
+                    offsetInInch = convertDistanceFromPointToInch(sender->getTouchBeganPosition() - touchPoint);
+                    break;
+                default:
+                    break;
+            }
+            if (offsetInInch > _childFocusCancelOffsetInInch)
             {
                 sender->setHighlighted(false);
                 handleMoveLogic(touch);
@@ -1034,7 +1059,7 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _leftBoundary = scrollView->_leftBoundary;
         _rightBoundary = scrollView->_rightBoundary;
         _bePressed = scrollView->_bePressed;
-        _childFocusCancelOffset = scrollView->_childFocusCancelOffset;
+        _childFocusCancelOffsetInInch = scrollView->_childFocusCancelOffsetInInch;
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
         _inertiaScrolling = scrollView->_inertiaScrolling;
         _inertiaInitiVelocity = scrollView->_inertiaInitiVelocity;

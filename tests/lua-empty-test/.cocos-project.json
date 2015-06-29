@@ -1,9 +1,10 @@
 {
     "win32_cfg": {
         "project_path": "../../build",
-        "sln_file": "cocos2d-win32.vc2013.sln",
+        "sln_file": "cocos2d-win32.sln",
         "project_name": "lua-empty-test",
-        "build_cfg_path": "project/proj.win32"
+        "build_cfg_path": "project/proj.win32",
+        "exe_out_dir": "lua-empty-test"
     }, 
     "linux_cfg": {
         "project_path": "project/proj.linux",
