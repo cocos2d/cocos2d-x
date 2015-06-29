@@ -1477,12 +1477,15 @@ cc._initSys = function(config, CONFIG_KEY){
     if( locSys.isMobile ) {
         capabilities["accelerometer"] = true;
         capabilities["touches"] = true;
+        if (platform === locSys.WINRT || platform === locSys.WP8) {
+            capabilities["keyboard"] = true;
+        }
     } else {
         // desktop
         capabilities["keyboard"] = true;
         capabilities["mouse"] = true;
         // winrt can't suppot mouse in current version
-        if (platform === locSys.WINRT)
+        if (platform === locSys.WINRT || platform === locSys.WP8)
         {
             capabilities["touches"] = true;
             capabilities["mouse"] = false;
