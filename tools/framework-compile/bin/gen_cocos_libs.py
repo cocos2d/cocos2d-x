@@ -8,6 +8,7 @@ import shutil
 import excopy
 import json
 import utils_cocos
+import gen_prebuilt_mk
 
 from custom_error import CustomError
 from custom_error import Logging
@@ -21,11 +22,13 @@ class CocosLibsCompiler(object):
     KEY_XCODE_PROJS_INFO = 'xcode_projs_info'
     KEY_VS_PROJS_INFO = 'vs_projs_info'
     KEY_SUPPORT_VS_VERSIONS = 'support_vs_versions'
+    KEY_ANDROID_MKS = "android_mks"
     CHECK_KEYS = [
         KEY_LIBS_OUTPUT,
         KEY_XCODE_PROJS_INFO,
         KEY_VS_PROJS_INFO,
-        KEY_SUPPORT_VS_VERSIONS
+        KEY_SUPPORT_VS_VERSIONS,
+        KEY_ANDROID_MKS
     ]
 
     KEY_XCODE_TARGETS = 'targets'
@@ -90,6 +93,8 @@ class CocosLibsCompiler(object):
             self.compile_android("js")
             self.compile_android("lua")
 
+        # generate prebuilt mk files
+        self.modify_binary_mk()
 
     def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
         build_cmd = " ".join([
@@ -365,6 +370,16 @@ class CocosLibsCompiler(object):
         else:
             strip_cmd = "%s -S %s/*.a" % (strip_cmd, folder)
             utils_cocos.execute_command(strip_cmd)
+
+    def modify_binary_mk(self):
+        android_libs = os.path.join(self.lib_dir, "android")
+        android_mks = self.cfg_info[CocosLibsCompiler.KEY_ANDROID_MKS]
+        for mk_file in android_mks:
+            mk_file_path = os.path.join(self.repo_x, mk_file)
+            print('gen %s' % mk_file_path)
+            dst_file_path = os.path.join(os.path.dirname(mk_file_path), "prebuilt-mk", os.path.basename(mk_file_path))
+            tmp_obj = gen_prebuilt_mk.MKGenerator(mk_file_path, android_libs, dst_file_path)
+            tmp_obj.do_generate()
 
     def clean_libs(self):
         print("to clean libs")

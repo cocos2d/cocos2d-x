@@ -5,7 +5,6 @@ import os
 import json
 import excopy
 import utils_cocos
-import gen_prebuilt_mk
 import modify_template
 import re
 
@@ -14,7 +13,6 @@ from argparse import ArgumentParser
 class CocosBinTemplateGenerator(object):
 
     KEY_COPY_CONFIG = 'template_copy_config'
-    KEY_ANDROID_MKS = "android_mks"
 
     def __init__(self, args):
         print("Generate cocos binary template")
@@ -39,7 +37,6 @@ class CocosBinTemplateGenerator(object):
     def generate(self):
         self.clean_template()
         self.copy_template()
-        self.modify_binary_mk()
         self.gen_templates()
 
     def clean_template(self):
@@ -50,15 +47,6 @@ class CocosBinTemplateGenerator(object):
     def copy_template(self):
         for item in self.config_json[CocosBinTemplateGenerator.KEY_COPY_CONFIG]:
             excopy.copy_files_with_config(item, self.repo_x, self.engine_template_dir)
-
-    def modify_binary_mk(self):
-        android_libs = os.path.join(self.lib_dir, "android")
-        android_mks = self.config_json[CocosBinTemplateGenerator.KEY_ANDROID_MKS]
-        for mk_file in android_mks:
-            mk_file_path = os.path.join(self.repo_x, mk_file)
-            dst_file_path = os.path.join(os.path.dirname(mk_file_path), "prebuilt-mk", os.path.basename(mk_file_path))
-            tmp_obj = gen_prebuilt_mk.MKGenerator(mk_file_path, android_libs, dst_file_path)
-            tmp_obj.do_generate()
 
     def getConfigJson(self):
         cfg_json_path = os.path.join(self.cur_dir, "template_binary_config.json")
