@@ -370,6 +370,122 @@ bool Physics3DRigidBody::isKinematic() const
     return false;
 }
 
+class btCollider : public btGhostObject
+{
+public:
+    btCollider(Physics3DCollider *collider)
+        : _collider(collider)
+    {};
+    ~btCollider(){};
+
+    ///this method is mainly for expert/internal use only.
+    virtual void	addOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btBroadphaseProxy* thisProxy = 0) override
+    {
+        btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
+        btAssert(otherObject);
+        ///if this linearSearch becomes too slow (too many overlapping objects) we should add a more appropriate data structure
+        int index = m_overlappingObjects.findLinearSearch(otherObject);
+        if (index == m_overlappingObjects.size())
+        {
+            //not found
+            m_overlappingObjects.push_back(otherObject);
+            if (_collider->onTriggerEnter != nullptr && _collider->IsTrigger())
+                _collider->onTriggerEnter(getPhysicsObject(otherObject));
+        }
+    }
+
+    ///this method is mainly for expert/internal use only.
+    virtual void	removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* dispatcher, btBroadphaseProxy* thisProxy = 0) override
+    {
+        btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
+        btAssert(otherObject);
+        int index = m_overlappingObjects.findLinearSearch(otherObject);
+        if (index < m_overlappingObjects.size())
+        {
+            m_overlappingObjects[index] = m_overlappingObjects[m_overlappingObjects.size() - 1];
+            m_overlappingObjects.pop_back();
+
+            if (_collider->onTriggerExit != nullptr && _collider->IsTrigger())
+                _collider->onTriggerExit(getPhysicsObject(otherObject));
+        }
+    }
+
+    Physics3DObject* getPhysicsObject(const btCollisionObject* btObj)
+    {
+        for (auto it : _collider->getPhysicsWorld()->getPhysicsObjects())
+        {
+            if (it->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+            {
+                if (static_cast<Physics3DRigidBody*>(it)->getRigidBody() == btObj)
+                    return it;
+            }
+            else if (it->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+            {
+                if (static_cast<Physics3DCollider*>(it)->getGhostObject() == btObj)
+                    return it;
+            }
+        }
+        return nullptr;
+    }
+
+private:
+    Physics3DCollider *_collider;
+};
+
+Physics3DCollider::Physics3DCollider()
+: _btGhostObject(nullptr)
+, _physics3DShape(nullptr)
+{
+
+}
+
+Physics3DCollider::~Physics3DCollider()
+{
+    CC_SAFE_DELETE(_btGhostObject);
+    CC_SAFE_RELEASE(_physics3DShape);
+}
+
+Physics3DCollider* Physics3DCollider::create(Physics3DShape *shape)
+{
+    auto ret = new (std::nothrow) Physics3DCollider();
+    if (ret->init(shape))
+    {
+        ret->autorelease();
+        return ret;
+    }
+
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+bool cocos2d::Physics3DCollider::IsTrigger() const
+{
+    return _btGhostObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE;
+}
+
+void cocos2d::Physics3DCollider::setIsTrigger(bool isTrigger)
+{
+    _btGhostObject->setCollisionFlags(isTrigger == true ?
+        _btGhostObject->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE : 
+        _btGhostObject->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+}
+
+bool Physics3DCollider::init(Physics3DShape *shape)
+{
+    _physics3DShape = shape;
+    _physics3DShape->retain();
+    _btGhostObject = new btCollider(this);
+    _btGhostObject->setCollisionShape(_physics3DShape->getbtShape());
+    _btGhostObject->setCollisionFlags(_btGhostObject->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    _type = Physics3DObject::PhysicsObjType::COLLIDER;
+    return true;
+}
+
+cocos2d::Mat4 cocos2d::Physics3DCollider::getWorldTransform() const
+{
+    return convertbtTransformToMat4(_btGhostObject->getWorldTransform());
+}
+
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

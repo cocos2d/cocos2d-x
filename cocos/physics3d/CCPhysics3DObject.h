@@ -38,6 +38,7 @@
 class btCollisionShape;
 class btRigidBody;
 class btPersistentManifold;
+class btGhostObject;
 
 NS_CC_BEGIN
 /**
@@ -79,6 +80,7 @@ public:
     {
         UNKNOWN = 0,
         RIGID_BODY,
+        COLLIDER,
     };
     
     /** Get the Physics3DObject Type. */
@@ -172,7 +174,7 @@ public:
      */
     static Physics3DRigidBody* create(Physics3DRigidBodyDes* info);
     
-	/** Get the pointer of btRigidBody. */
+    /** Get the pointer of btRigidBody. */
     btRigidBody* getRigidBody() const { return _btRigidBody; }
     
     /**
@@ -356,6 +358,38 @@ protected:
     btRigidBody* _btRigidBody;
     Physics3DShape *_physics3DShape;
     std::vector<Physics3DConstraint *> _constraintList;
+};
+
+/**
+* @brief Inherit from Physics3DObject, the main class for Colliders
+*/
+class CC_DLL Physics3DCollider : public Physics3DObject
+{
+public:
+
+    static Physics3DCollider* create(Physics3DShape *shape);
+
+    void setIsTrigger(bool isTrigger);
+    bool IsTrigger() const;
+
+    btGhostObject* getGhostObject() const { return _btGhostObject; }
+
+    std::function<void(Physics3DObject *otherObject)> onTriggerEnter;
+    std::function<void(Physics3DObject *otherObject)> onTriggerExit;
+
+    /** Get the world matrix of Physics3DObject. */
+    virtual cocos2d::Mat4 getWorldTransform() const;
+
+CC_CONSTRUCTOR_ACCESS :
+    Physics3DCollider();
+    virtual ~Physics3DCollider();
+
+    bool init(Physics3DShape *shape);
+
+protected:
+
+    btGhostObject *_btGhostObject;
+    Physics3DShape *_physics3DShape;
 };
 
 // end of 3d group
