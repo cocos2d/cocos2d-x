@@ -220,22 +220,22 @@ void Material_AutoBindings::onEnter()
     Material *mat1 = Material::createWithProperties(properties);
 
     auto spriteBlur = Sprite::create("Images/grossini.png");
-    spriteBlur->setNormalizedPosition(Vec2(0.2, 0.5));
+    spriteBlur->setNormalizedPosition(Vec2(0.2f, 0.5f));
     this->addChild(spriteBlur);
     spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteOutline = Sprite::create("Images/grossini.png");
-    spriteOutline->setNormalizedPosition(Vec2(0.4, 0.5));
+    spriteOutline->setNormalizedPosition(Vec2(0.4f, 0.5f));
     this->addChild(spriteOutline);
     spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteNoise = Sprite::create("Images/grossini.png");
-    spriteNoise->setNormalizedPosition(Vec2(0.6, 0.5));
+    spriteNoise->setNormalizedPosition(Vec2(0.6f, 0.5f));
     this->addChild(spriteNoise);
     spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
-    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8, 0.5));
+    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8f, 0.5f));
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
 
@@ -396,7 +396,7 @@ void Material_invalidate::onEnter()
     sprite->setScale(5);
     sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.3,0.3));
+    sprite->setNormalizedPosition(Vec2(0.3f,0.3f));
 
     auto rotate = RotateBy::create(5, Vec3(0,360,0));
     auto repeat = RepeatForever::create(rotate);
@@ -408,7 +408,7 @@ void Material_invalidate::onEnter()
     skeletonNode->setSkin("goblin");
 
     skeletonNode->setScale(0.25);
-    skeletonNode->setNormalizedPosition(Vec2(0.6,0.3));
+    skeletonNode->setNormalizedPosition(Vec2(0.6f,0.3f));
     this->addChild(skeletonNode);
 }
 
@@ -465,7 +465,7 @@ void Material_renderState::onEnter()
     sprite->setScale(5);
     sprite->setRotation3D(Vec3(0,180,0));
     addChild(sprite);
-    sprite->setNormalizedPosition(Vec2(0.3,0.3));
+    sprite->setNormalizedPosition(Vec2(0.3f,0.3f));
 
     auto rotate = RotateBy::create(5, Vec3(0,360,0));
     auto repeat = RepeatForever::create(rotate);
@@ -477,7 +477,7 @@ void Material_renderState::onEnter()
     skeletonNode->setSkin("goblin");
 
     skeletonNode->setScale(0.25);
-    skeletonNode->setNormalizedPosition(Vec2(0.6,0.3));
+    skeletonNode->setNormalizedPosition(Vec2(0.6f,0.3f));
     this->addChild(skeletonNode);
 
     _stateBlock.setDepthTest(false);

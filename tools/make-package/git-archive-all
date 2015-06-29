@@ -238,11 +238,22 @@ class GitArchiver(object):
             extra_folder_path = os.path.join(self.main_repo_abspath, extra_folder_name)
             extra_folders.append(extra_folder_path)
             extra_file_paths = self.unpack_zipfile(zip_file_path, self.main_repo_abspath)
+
+            key_move_dirs = "move_dirs"
             for file_path in extra_file_paths:
                 if file_path.find(extra_folder_path) == -1:
                     raise Exception("Couldn't find extra folder path (%s) in (%s)!" % (extra_folder_path, file_path))
 
                 path_in_zip = extra_to_zip_file + file_path[(len(extra_folder_path)):]
+                if key_move_dirs in zip_config:
+                    move_dirs = zip_config[key_move_dirs]
+                    related_path = os.path.relpath(file_path, extra_folder_path)
+                    temp_rel_path = related_path.replace('\\', '/')
+                    for move_dir in move_dirs:
+                        if temp_rel_path.startswith(move_dir):
+                            move_to_dir = move_dirs[move_dir]
+                            path_in_zip = os.path.join(move_to_dir, related_path)
+                            break
 
                 try:
                     add(file_path, path_in_zip)
@@ -250,19 +261,20 @@ class GitArchiver(object):
                     print('add %s failed.' % file_path)
                     pass
 
-        outfile_name, outfile_ext = path.splitext(output_path)
-        for extra_dir in config_data["extra_dirs"]:
-            dir_path = path.join(self.main_repo_abspath, extra_dir)
-            list_dirs = os.walk(dir_path)
-            for root,dirs,files in list_dirs:
-                for f in files:
-                    file_path = path.join(root,f)
-                    path_in_zip = file_path[(len(self.main_repo_abspath)+1):]
-                    try:
-                        add(file_path, path_in_zip)
-                    except:
-                        print('add %s failed.' % file_path)
-                        pass
+        key_extra_dirs = "extra_dirs"
+        if key_extra_dirs in config_data:
+            for extra_dir in config_data[key_extra_dirs]:
+                dir_path = path.join(self.main_repo_abspath, extra_dir)
+                list_dirs = os.walk(dir_path)
+                for root,dirs,files in list_dirs:
+                    for f in files:
+                        file_path = path.join(root,f)
+                        path_in_zip = file_path[(len(self.main_repo_abspath)+1):]
+                        try:
+                            add(file_path, path_in_zip)
+                        except:
+                            print('add %s failed.' % file_path)
+                            pass
 
         if not dry_run:
             archive.close()
