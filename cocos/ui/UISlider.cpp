@@ -48,6 +48,7 @@ _slidBallDisabledRenderer(nullptr),
 _slidBallRenderer(nullptr),
 _barLength(0.0),
 _percent(0),
+_maxPercent(100),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _zoomScale(0.1f),
@@ -384,18 +385,28 @@ void Slider::loadSlidBallTextureDisabled(SpriteFrame* spriteframe)
     this->updateChildrenDisplayedRGBA();
 }
 
+void Slider::setMaxPercent(int percent)
+{
+    _maxPercent = percent;
+}
+
+int Slider::getMaxPercent()const
+{
+    return _maxPercent;
+}
+
 void Slider::setPercent(int percent)
 {
-    if (percent > 100)
+    if (percent > _maxPercent)
     {
-        percent = 100;
+        percent = _maxPercent;
     }
     if (percent < 0)
     {
         percent = 0;
     }
     _percent = percent;
-    float res = percent / 100.0f;
+    float res = 1.0 * percent / _maxPercent;
     float dis = _barLength * res;
     _slidBallRenderer->setPosition(dis, _contentSize.height / 2.0f);
     if (_scale9Enabled)
@@ -433,7 +444,7 @@ bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         Vec2 nsp = convertToNodeSpace(_touchBeganPosition);
         setPercent(getPercentWithBallPos(nsp.x));
-        percentChangedEvent();
+        percentChangedEvent(EventType::ON_SLIDEBALL_DOWN);
     }
     return pass;
 }
@@ -443,22 +454,24 @@ void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
     _touchMovePosition = touch->getLocation();
     Vec2 nsp = convertToNodeSpace(_touchMovePosition);
     setPercent(getPercentWithBallPos(nsp.x));
-    percentChangedEvent();
+    percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
 }
 
 void Slider::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchEnded(touch, unusedEvent);
+    percentChangedEvent(EventType::ON_SLIDEBALL_UP);
 }
 
 void Slider::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchCancelled(touch, unusedEvent);
+    percentChangedEvent(EventType::ON_SLIDEBALL_CANCEL);
 }
 
 float Slider::getPercentWithBallPos(float px)const
 {
-    return ((px/_barLength)*100.0f);
+    return ((px/_barLength) * static_cast<float>(_maxPercent));
 }
 
 void Slider::addEventListenerSlider(Ref *target, SEL_SlidPercentChangedEvent selector)
@@ -472,7 +485,7 @@ void Slider::addEventListener(const ccSliderCallback& callback)
     _eventCallback = callback;
 }
 
-void Slider::percentChangedEvent()
+void Slider::percentChangedEvent(EventType event)
 {
     this->retain();
     if (_sliderEventListener && _sliderEventSelector)
@@ -481,7 +494,7 @@ void Slider::percentChangedEvent()
     }
     if (_eventCallback)
     {
-        _eventCallback(this, EventType::ON_PERCENTAGE_CHANGED);
+        _eventCallback(this,event);
     }
     if (_ccEventCallback)
     {
@@ -695,6 +708,7 @@ void Slider::copySpecialProperties(Widget *widget)
         loadSlidBallTexturePressed(slider->_slidBallPressedRenderer->getSpriteFrame());
         loadSlidBallTextureDisabled(slider->_slidBallDisabledRenderer->getSpriteFrame());
         setPercent(slider->getPercent());
+        setMaxPercent(slider->getMaxPercent());
         _isSliderBallPressedTextureLoaded = slider->_isSliderBallPressedTextureLoaded;
         _isSliderBallDisabledTexturedLoaded = slider->_isSliderBallDisabledTexturedLoaded;
         _sliderEventListener = slider->_sliderEventListener;
