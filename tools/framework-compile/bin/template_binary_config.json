@@ -168,17 +168,5 @@
             "from": "tools/framework-compile/bin-templates/js-template-runtime",
             "to": "js-template-binary"
         }
-    ],
-    "modify_config": [
-        {
-            "file_path": "cocos/2d/cocos2dx.props",
-            "pattern": "libbox2d\\.lib;",
-            "replace_string": ""
-        },
-        {
-            "file_path": "cocos/2d/cocos2dx.props",
-            "pattern": "libSpine\\.lib;",
-            "replace_string": ""
-        }
     ]
 }
