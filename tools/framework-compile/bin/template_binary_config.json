@@ -155,6 +155,18 @@
         {
             "from": "cocos/platform/android/java/src",
             "to": "js-template-binary/frameworks/runtime-src/proj.android/src"
+        },
+        {
+            "from": "tools/framework-compile/bin-templates/cpp-template-default",
+            "to": "cpp-template-binary"
+        },
+        {
+            "from": "tools/framework-compile/bin-templates/lua-template-runtime",
+            "to": "lua-template-binary"
+        },
+        {
+            "from": "tools/framework-compile/bin-templates/js-template-runtime",
+            "to": "js-template-binary"
         }
     ],
     "modify_config": [
