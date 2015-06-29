@@ -38,12 +38,6 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include "platform/android/CCJavascriptJavaBridge.h"
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "platform/ios/JavaScriptObjCBridge.h"
-#endif
-
 USING_NS_CC;
 int js_module_register()
 {
