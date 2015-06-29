@@ -113,6 +113,7 @@ local function MainMenuCallback()
     local scene = cc.Scene:create()
     scene:addChild(CreateTestMenu())
     Helper.usePhysics = false
+    cc.Director:getInstance():setDepthTest(false)
     cc.Director:getInstance():replaceScene(scene)
 end
 
@@ -140,4 +141,73 @@ function createTestLayer(title, subtitle)
     Helper.titleLabel:setString(titleStr)
     Helper.subtitleLabel:setString(subTitleStr)
     return layer
+end
+
+TestCastScene = {
+    index = 1,
+    createFunctioinTable = nil,
+    titleLabel = nil,
+    subtitleLabel = nil
+}
+
+function TestCastScene.nextAction()
+    TestCastScene.index = TestCastScene.index + 1
+    if TestCastScene.index > table.getn(TestCastScene.createFunctionTable) then
+        TestCastScene.index = 1
+    end
+
+    return TestCastScene.newScene()
+end
+
+function  TestCastScene.backAction()
+    TestCastScene.index = TestCastScene.index - 1
+    if TestCastScene.index == 0 then
+        TestCastScene.index = table.getn(TestCastScene.createFunctionTable)
+    end
+
+    return TestCastScene.newScene()
+end
+
+function TestCastScene.restartAction()
+    return TestCastScene.newScene()
+end
+
+function TestCastScene.newScene()
+    local scene =  TestCastScene.createFunctionTable[TestCastScene.index]()
+    scene:addChild(CreateBackMenuItem())
+    cc.Director:getInstance():replaceScene(scene)
+end
+
+function TestCastScene.initWithLayer(scene)
+    local size = cc.Director:getInstance():getWinSize()
+    TestCastScene.titleLabel = cc.Label:createWithTTF("", s_arialPath, 28)
+    TestCastScene.titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
+    scene:addChild(TestCastScene.titleLabel, 1)
+    TestCastScene.titleLabel:setPosition(size.width / 2, size.height - 50)
+
+    TestCastScene.subtitleLabel = cc.Label:createWithTTF("", s_thonburiPath, 16)
+    TestCastScene.subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
+    scene:addChild(TestCastScene.subtitleLabel, 1)
+    TestCastScene.subtitleLabel:setPosition(size.width / 2, size.height - 80)
+
+    -- menu
+    local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
+    local item2 = cc.MenuItemImage:create(s_pPathR1, s_pPathR2)
+    local item3 = cc.MenuItemImage:create(s_pPathF1, s_pPathF2)
+    item1:registerScriptTapHandler(TestCastScene.backAction)
+    item2:registerScriptTapHandler(TestCastScene.restartAction)
+    item3:registerScriptTapHandler(TestCastScene.nextAction)
+
+    local menu = cc.Menu:create()
+    menu:addChild(item1)
+    menu:addChild(item2)
+    menu:addChild(item3)
+    menu:setPosition(cc.p(0, 0))
+    item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
+    item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    scene:addChild(menu, 1)
+
+    local background = cc.Layer:create()
+    scene:addChild(background, -10)
 end

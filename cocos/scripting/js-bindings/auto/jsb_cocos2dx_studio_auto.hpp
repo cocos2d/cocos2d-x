@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocostudio_ActionObject_class;
 extern JSObject *jsb_cocostudio_ActionObject_prototype;
 

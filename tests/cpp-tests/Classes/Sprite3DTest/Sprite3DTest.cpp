@@ -2469,8 +2469,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
         _skyBox->setTexture(_textureCube);
         addChild(_skyBox);
-
-        _skyBox->setScale(700.f);
     }
 
     addChild(_camera);

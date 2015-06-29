@@ -43,7 +43,7 @@
         
 --------------------------------
 -- Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent<br>
--- param 	child  the child you want to add
+-- param     child  the child you want to add
 -- @function [parent=#Bone] addChildBone 
 -- @param self
 -- @param #ccs.Bone child
@@ -193,7 +193,7 @@
         
 --------------------------------
 -- Removes a child Bone<br>
--- param 	bone   the bone you want to remove
+-- param     bone   the bone you want to remove
 -- @function [parent=#Bone] removeChildBone 
 -- @param self
 -- @param #ccs.Bone bone

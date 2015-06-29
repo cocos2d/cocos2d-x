@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocosbuilder_CCBAnimationManager_class;
 extern JSObject *jsb_cocosbuilder_CCBAnimationManager_prototype;
 
