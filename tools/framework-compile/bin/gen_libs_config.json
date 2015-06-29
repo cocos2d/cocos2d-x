@@ -15,30 +15,16 @@
         }
     },
     "vs_projs_info" : {
-        "build/cocos2d-win32.sln" : {
-            "build_targets" : [
-                "libluacocos2d"
-            ],
-            "rename_targets" : [
-                "libcocos2d", "libluacocos2d", "libSpine", "libbox2d"
-            ]
-        },
-        "build/cocos2d-js-win32.sln" : {
-            "build_targets" : [
-                "libjscocos2d"
-            ],
-            "rename_targets" : [
-                "libjscocos2d"
-            ]
-        },
         "tools/simulator/frameworks/runtime-src/proj.win32/simulator.sln" : {
             "build_targets" : [
-                "libsimulator"
+                "simulator"
             ],
             "rename_targets" : [
+                "libSpine", "libbox2d", "libbullet", "librecast",
+                "libcocos2d", "libluacocos2d", "libjscocos2d", 
                 "libsimulator"
             ]
         }
     },
-    "support_vs_versions" : [ 2013, 2015 ]
+    "support_vs_versions" : [ 2015, 2013 ]
 }

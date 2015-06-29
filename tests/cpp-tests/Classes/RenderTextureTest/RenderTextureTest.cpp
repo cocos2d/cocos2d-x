@@ -1,5 +1,4 @@
 #include "RenderTextureTest.h"
-#include "../testBasic.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;

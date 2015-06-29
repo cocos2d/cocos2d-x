@@ -26,8 +26,6 @@
 #ifndef _ACTIONS__EASE_TEST_H_
 #define _ACTIONS__EASE_TEST_H_
 
-////----#include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ActionsEaseTests);
