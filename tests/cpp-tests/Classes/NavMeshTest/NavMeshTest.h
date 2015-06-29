@@ -25,7 +25,6 @@
 #ifndef _NAVMESH_TEST_H_
 #define _NAVMESH_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include "navmesh/CCNavMesh.h"
 #include <string>
