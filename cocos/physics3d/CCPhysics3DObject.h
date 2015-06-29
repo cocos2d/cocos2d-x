@@ -369,16 +369,55 @@ public:
 
     static Physics3DCollider* create(Physics3DShape *shape);
 
-    void setIsTrigger(bool isTrigger);
-    bool IsTrigger() const;
-
     btGhostObject* getGhostObject() const { return _btGhostObject; }
 
-    std::function<void(Physics3DObject *otherObject)> onTriggerEnter;
-    std::function<void(Physics3DObject *otherObject)> onTriggerExit;
+    /** Set trigger. */
+    void setIsTrigger(bool isTrigger);
+
+    /** Check is a trigger. */
+    bool IsTrigger() const;
+
+    /** Set restitution. */
+    void setRestitution(float rest);
+
+    /** Get restitution. */
+    float getRestitution() const;
+
+    /** Set friction. */
+    void setFriction(float frict);
+
+    /** Get friction. */
+    float getFriction() const;
+
+    /** Set rolling friction. */
+    void setRollingFriction(float frict);
+
+    /** Get rolling friction. */
+    float getRollingFriction() const;
+
+    /** Set hit friction. */
+    void setHitFraction(float hitFraction);
+
+    /** Get hit friction. */
+    float getHitFraction() const;
+
+    /** Set motion threshold, don't do continuous collision detection if the motion (in one step) is less then ccdMotionThreshold */
+    void setCcdMotionThreshold(float ccdMotionThreshold);
+
+    /** Get motion threshold. */
+    float getCcdMotionThreshold() const;
+
+    /** Set swept sphere radius. */
+    void setCcdSweptSphereRadius(float radius);
+
+    /** Get swept sphere radius. */
+    float getCcdSweptSphereRadius() const;
 
     /** Get the world matrix of Physics3DObject. */
     virtual cocos2d::Mat4 getWorldTransform() const;
+
+    std::function<void(Physics3DObject *otherObject)> onTriggerEnter;
+    std::function<void(Physics3DObject *otherObject)> onTriggerExit;
 
 CC_CONSTRUCTOR_ACCESS :
     Physics3DCollider();

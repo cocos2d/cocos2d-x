@@ -458,12 +458,72 @@ Physics3DCollider* Physics3DCollider::create(Physics3DShape *shape)
     return ret;
 }
 
-bool cocos2d::Physics3DCollider::IsTrigger() const
+float Physics3DCollider::getCcdSweptSphereRadius() const
 {
-    return _btGhostObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE;
+    return _btGhostObject->getCcdSweptSphereRadius();
 }
 
-void cocos2d::Physics3DCollider::setIsTrigger(bool isTrigger)
+void Physics3DCollider::setCcdSweptSphereRadius(float radius)
+{
+    _btGhostObject->setCcdSweptSphereRadius(radius);
+}
+
+float Physics3DCollider::getCcdMotionThreshold() const
+{
+    return _btGhostObject->getCcdMotionThreshold();
+}
+
+void Physics3DCollider::setCcdMotionThreshold(float ccdMotionThreshold)
+{
+    _btGhostObject->setCcdMotionThreshold(ccdMotionThreshold);
+}
+
+float Physics3DCollider::getHitFraction() const
+{
+    return _btGhostObject->getHitFraction();
+}
+
+void Physics3DCollider::setHitFraction(float hitFraction)
+{
+    _btGhostObject->setHitFraction(hitFraction);
+}
+
+float Physics3DCollider::getRollingFriction() const
+{
+    return _btGhostObject->getRollingFriction();
+}
+
+void Physics3DCollider::setRollingFriction(float frict)
+{
+    _btGhostObject->setRollingFriction(frict);
+}
+
+float Physics3DCollider::getFriction() const
+{
+    return _btGhostObject->getFriction();
+}
+
+void Physics3DCollider::setFriction(float frict)
+{
+    _btGhostObject->setFriction(frict);
+}
+
+float Physics3DCollider::getRestitution() const
+{
+    return _btGhostObject->getRestitution();
+}
+
+void Physics3DCollider::setRestitution(float rest)
+{
+    _btGhostObject->setRestitution(rest);
+}
+
+bool Physics3DCollider::IsTrigger() const
+{
+    return (_btGhostObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) != 0;
+}
+
+void Physics3DCollider::setIsTrigger(bool isTrigger)
 {
     _btGhostObject->setCollisionFlags(isTrigger == true ?
         _btGhostObject->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE : 
@@ -481,7 +541,7 @@ bool Physics3DCollider::init(Physics3DShape *shape)
     return true;
 }
 
-cocos2d::Mat4 cocos2d::Physics3DCollider::getWorldTransform() const
+cocos2d::Mat4 Physics3DCollider::getWorldTransform() const
 {
     return convertbtTransformToMat4(_btGhostObject->getWorldTransform());
 }
