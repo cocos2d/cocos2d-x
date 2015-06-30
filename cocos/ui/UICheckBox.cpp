@@ -93,44 +93,44 @@ CheckBox* CheckBox::create(const std::string& backGround,
     CC_SAFE_DELETE(pWidget);
     return nullptr;
 }
-	
+    
 void CheckBox::releaseUpEvent()
 {
-	Widget::releaseUpEvent();
-	
-	if (_isSelected)
-	{
-		setSelected(false);
-		dispatchSelectChangedEvent(false);
-	}
-	else
-	{
-		setSelected(true);
-		dispatchSelectChangedEvent(true);
-	}
+    Widget::releaseUpEvent();
+    
+    if (_isSelected)
+    {
+        setSelected(false);
+        dispatchSelectChangedEvent(false);
+    }
+    else
+    {
+        setSelected(true);
+        dispatchSelectChangedEvent(true);
+    }
 }
 
 void CheckBox::dispatchSelectChangedEvent(bool selected)
 {
-	EventType eventType = (selected ? EventType::SELECTED : EventType::UNSELECTED);
-	CheckBoxEventType checkBoxEventType = (selected ? CHECKBOX_STATE_EVENT_SELECTED : CHECKBOX_STATE_EVENT_UNSELECTED);
-	
-	this->retain();
-	if (_checkBoxEventCallback)
-	{
-		_checkBoxEventCallback(this, eventType);
-	}
-	if (_ccEventCallback)
-	{
-		_ccEventCallback(this, static_cast<int>(eventType));
-	}
-	
-	if (_checkBoxEventListener && _checkBoxEventSelector)
-	{
-		(_checkBoxEventListener->*_checkBoxEventSelector)(this, checkBoxEventType);
-	}
-	this->release();
-	
+    EventType eventType = (selected ? EventType::SELECTED : EventType::UNSELECTED);
+    CheckBoxEventType checkBoxEventType = (selected ? CHECKBOX_STATE_EVENT_SELECTED : CHECKBOX_STATE_EVENT_UNSELECTED);
+    
+    this->retain();
+    if (_checkBoxEventCallback)
+    {
+        _checkBoxEventCallback(this, eventType);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(eventType));
+    }
+    
+    if (_checkBoxEventListener && _checkBoxEventSelector)
+    {
+        (_checkBoxEventListener->*_checkBoxEventSelector)(this, checkBoxEventType);
+    }
+    this->release();
+    
 }
 
 void CheckBox::addEventListenerCheckBox(Ref *target, SEL_SelectedStateEvent selector)
@@ -159,7 +159,7 @@ void CheckBox::copySpecialProperties(Widget *widget)
     CheckBox* checkBox = dynamic_cast<CheckBox*>(widget);
     if (checkBox)
     {
-		AbstractCheckButton::copySpecialProperties(widget);
+        AbstractCheckButton::copySpecialProperties(widget);
         _checkBoxEventListener = checkBox->_checkBoxEventListener;
         _checkBoxEventSelector = checkBox->_checkBoxEventSelector;
         _checkBoxEventCallback = checkBox->_checkBoxEventCallback;

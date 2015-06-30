@@ -127,7 +127,7 @@ public:
      */
     static CheckBox* create(const std::string& backGround,
                             const std::string& cross,
-							TextureResType texType = TextureResType::LOCAL);
+                            TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Change Checkbox state to selected.
@@ -163,13 +163,13 @@ public:
     virtual std::string getDescription() const override;
     
 protected:
-	virtual void releaseUpEvent() override;
-	
-	virtual void dispatchSelectChangedEvent(bool selected) override;
-	
+    virtual void releaseUpEvent() override;
+    
+    virtual void dispatchSelectChangedEvent(bool selected) override;
+    
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-	
+    
 protected:
     //if you use the old event callback, it will retain the _checkBoxEventListener
     Ref*       _checkBoxEventListener;

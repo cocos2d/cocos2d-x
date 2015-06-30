@@ -42,8 +42,8 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     addTest("Focus Test", [](){ return new (std::nothrow) UIFocusTests; });
     addTest("Scale9Sprite Test", [](){ return new (std::nothrow) UIScale9SpriteTests; });
     addTest("Button Test", [](){ return new (std::nothrow) UIButtonTests; });
-	addTest("CheckBox Test", [](){ return new (std::nothrow) UICheckBoxTests; });
-	addTest("RadioButton Test", [](){ return new (std::nothrow) UIRadioButtonTests; });
+    addTest("CheckBox Test", [](){ return new (std::nothrow) UICheckBoxTests; });
+    addTest("RadioButton Test", [](){ return new (std::nothrow) UIRadioButtonTests; });
     addTest("Slider Test", [](){ return new (std::nothrow) UISliderTests; });
    
     addTest("ImageView Test", [](){ return new (std::nothrow) UIImageViewTests; });
