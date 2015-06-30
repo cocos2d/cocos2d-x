@@ -49,6 +49,7 @@ require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
 require "TransitionsTest/TransitionsTest"
 require "UserDefaultTest/UserDefaultTest"
+require "VibrateTest/VibrateTest"
 require "ZwoptexTest/ZwoptexTest"
 require "LuaBridgeTest/LuaBridgeTest"
 require "XMLHttpRequestTest/XMLHttpRequestTest"
@@ -147,6 +148,7 @@ local _allTests = {
     { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
     { isSupported = true,  name = "WebViewTest"            , create_func=           WebViewTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
+    { isSupported = true,  name = "VibrateTest"            , create_func   =               VibrateTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 

@@ -209,6 +209,9 @@
     <Filter Include="Classes\UserDefaultTest">
       <UniqueIdentifier>{7ec771c0-0344-43e9-9ae8-0f8a278791a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\VibrateTest">
+      <UniqueIdentifier>{3bd8ffaa-c24f-455b-bb31-25b038490329}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\ZwoptexTest">
       <UniqueIdentifier>{878bc3fc-cc88-43cb-85b7-f64c31c527b6}</UniqueIdentifier>
     </Filter>
@@ -952,6 +955,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>Classes\UserDefaultTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\VibrateTest\VibrateTest.cpp">
+      <Filter>Classes\VibrateTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -1742,6 +1748,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\UserDefaultTest\UserDefaultTest.h">
       <Filter>Classes\UserDefaultTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\VibrateTest\VibrateTest.h">
+      <Filter>Classes\VibrateTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
