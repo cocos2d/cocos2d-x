@@ -91,9 +91,8 @@ class CocosLibsCompiler(object):
             self.compile_mac_ios()
         if self.build_android:
             self.compile_android()
-
-        # generate prebuilt mk files
-        self.modify_binary_mk()
+            # generate prebuilt mk files
+            self.modify_binary_mk()
 
     def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
         build_cmd = " ".join([
