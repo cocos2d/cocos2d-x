@@ -445,10 +445,10 @@ Physics3DCollider::~Physics3DCollider()
     CC_SAFE_RELEASE(_physics3DShape);
 }
 
-Physics3DCollider* Physics3DCollider::create(Physics3DShape *shape)
+Physics3DCollider* Physics3DCollider::create(Physics3DColliderDes *info)
 {
     auto ret = new (std::nothrow) Physics3DCollider();
-    if (ret->init(shape))
+    if (ret->init(info))
     {
         ret->autorelease();
         return ret;
@@ -523,20 +523,28 @@ bool Physics3DCollider::IsTrigger() const
     return (_btGhostObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) != 0;
 }
 
-void Physics3DCollider::setIsTrigger(bool isTrigger)
+void Physics3DCollider::setTrigger(bool isTrigger)
 {
     _btGhostObject->setCollisionFlags(isTrigger == true ?
         _btGhostObject->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE : 
         _btGhostObject->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
 }
 
-bool Physics3DCollider::init(Physics3DShape *shape)
+bool Physics3DCollider::init(Physics3DColliderDes *info)
 {
-    _physics3DShape = shape;
+    _physics3DShape = info->shape;
     _physics3DShape->retain();
     _btGhostObject = new btCollider(this);
     _btGhostObject->setCollisionShape(_physics3DShape->getbtShape());
-    _btGhostObject->setCollisionFlags(_btGhostObject->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    
+    setTrigger(info->isTrigger);
+    setFriction(info->friction);
+    setRollingFriction(info->rollingFriction);
+    setRestitution(info->restitution);
+    setHitFraction(info->hitFraction);
+    setCcdSweptSphereRadius(info->ccdSweptSphereRadius);
+    setCcdMotionThreshold(info->ccdMotionThreshold);
+    
     _type = Physics3DObject::PhysicsObjType::COLLIDER;
     return true;
 }

@@ -584,13 +584,12 @@ bool Physics3DTerrainDemo::init()
     terrain->setCameraMask((unsigned short)CameraFlag::USER1);
 
     //create terrain
-    Physics3DRigidBodyDes rbDes;
-    rbDes.mass = 0.0f;
     std::vector<float> heidata = terrain->getHeightData();
     auto size = terrain->getTerrainSize();
-    rbDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 1.0f, terrain->getMinHeight(), terrain->getMaxHeight(), true, false, true);
-    auto rigidBody = Physics3DRigidBody::create(&rbDes);
-    auto component = Physics3DComponent::create(rigidBody);
+    Physics3DColliderDes colliderDes;
+    colliderDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 1.0f, terrain->getMinHeight(), terrain->getMaxHeight(), true, false, true);
+    auto collider = Physics3DCollider::create(&colliderDes);
+    auto component = Physics3DComponent::create(collider);
     terrain->addComponent(component);
     this->addChild(terrain);
     component->syncNodeToPhysics();
@@ -598,6 +597,7 @@ bool Physics3DTerrainDemo::init()
 
 
     //create several spheres
+    Physics3DRigidBodyDes rbDes;
     rbDes.mass = 1.f;
     rbDes.shape = Physics3DShape::createSphere(0.5f);
     float start_x = START_POS_X - ARRAY_SIZE_X/2 + 5.0f;
@@ -629,16 +629,15 @@ bool Physics3DTerrainDemo::init()
     //create mesh
     std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("Sprite3DTest/boss.c3b");
 
-    rbDes.mass = 0.0f;
-    rbDes.shape = Physics3DShape::createMesh(&trianglesList[0], (int)trianglesList.size() / 3);
-    rigidBody = Physics3DRigidBody::create(&rbDes);
-    component = Physics3DComponent::create(rigidBody);
-    auto sprite = Sprite3D::create("Sprite3DTest/boss.c3b");
-    sprite->addComponent(component);
+    colliderDes.shape = Physics3DShape::createMesh(&trianglesList[0], (int)trianglesList.size() / 3);
+
+    auto sprite = PhysicsSprite3D::createWithCollider("Sprite3DTest/boss.c3b", &colliderDes);
     sprite->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
     sprite->setPosition3D(Vec3(0.0f, 15.0f, 0.0f));
     sprite->setCameraMask(2);
     this->addChild(sprite);
+    sprite->syncNodeToPhysics();
+    sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NONE);
 
     std::vector<std::pair<Physics3DShape*, Mat4> > shapeList;
     {
@@ -660,7 +659,7 @@ bool Physics3DTerrainDemo::init()
 
         rbDes.mass = 10.0f;
         rbDes.shape = Physics3DShape::createCompoundShape(shapeList);
-        rigidBody = Physics3DRigidBody::create(&rbDes);
+        auto rigidBody = Physics3DRigidBody::create(&rbDes);
         component = Physics3DComponent::create(rigidBody);
         auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
         sprite->addComponent(component);
@@ -744,7 +743,7 @@ bool Physics3DCollisionCallbackDemo::init()
 
 std::string Physics3DColliderDemo::subtitle() const
 {
-    return "Physics3D Collider";
+    return "Physics3D Trigger";
 }
 
 bool Physics3DColliderDemo::init()
@@ -769,7 +768,10 @@ bool Physics3DColliderDemo::init()
     this->addChild(sprite);
 
     {
-        auto collider = Physics3DCollider::create(Physics3DShape::createSphere(10.0f));
+        Physics3DColliderDes colliderDes;
+        colliderDes.shape = Physics3DShape::createSphere(10.0f);
+        colliderDes.isTrigger = true;
+        auto collider = Physics3DCollider::create(&colliderDes);
         auto component = Physics3DComponent::create(collider);
         auto node = Node::create();
         node->addComponent(component);

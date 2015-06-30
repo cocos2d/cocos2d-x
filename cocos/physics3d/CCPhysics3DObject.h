@@ -361,18 +361,47 @@ protected:
 };
 
 /**
+ * @brief The description of Physics3DCollider.
+ */
+struct CC_DLL Physics3DColliderDes
+{
+    Physics3DShape* shape;
+    cocos2d::Mat4 originalTransform;
+    bool          isTrigger; //is it a trigger?
+    float friction;
+    float rollingFriction;
+    float restitution;
+    float hitFraction;
+    float ccdSweptSphereRadius;
+    float ccdMotionThreshold;
+    
+    Physics3DColliderDes()
+    : shape(nullptr)
+    , isTrigger(false)
+    , friction(0.5f)
+    , rollingFriction(0.0f)
+    , restitution(0.0f)
+    , hitFraction(1.0f)
+    , ccdSweptSphereRadius(0.0f)
+    , ccdMotionThreshold(0.0f)
+    {
+        
+    }
+};
+
+/**
 * @brief Inherit from Physics3DObject, the main class for Colliders
 */
 class CC_DLL Physics3DCollider : public Physics3DObject
 {
 public:
 
-    static Physics3DCollider* create(Physics3DShape *shape);
+    static Physics3DCollider* create(Physics3DColliderDes *info);
 
     btGhostObject* getGhostObject() const { return _btGhostObject; }
 
     /** Set trigger. */
-    void setIsTrigger(bool isTrigger);
+    void setTrigger(bool isTrigger);
 
     /** Check is a trigger. */
     bool IsTrigger() const;
@@ -423,7 +452,7 @@ CC_CONSTRUCTOR_ACCESS :
     Physics3DCollider();
     virtual ~Physics3DCollider();
 
-    bool init(Physics3DShape *shape);
+    bool init(Physics3DColliderDes *info);
 
 protected:
 
