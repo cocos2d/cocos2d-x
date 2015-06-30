@@ -38,7 +38,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class EventListenerTouchOneByOne;
-
+class Camera;
 
 namespace ui {
     class LayoutComponent;
@@ -543,10 +543,12 @@ public:
      * Checks a point is in widget's content space.
      * This function is used for determining touch area of widget.
      *
-     * @param pt The point in `Vec2`.
+     * @param pt        The point in `Vec2`.
+     * @param camera    The camera look at widget, used to convert GL screen point to near/far plane.
+     * @param p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
      * @return true if the point is in widget's content space, flase otherwise.
      */
-    virtual bool hitTest(const Vec2 &pt);
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const;
 
     /**
      * A callback which will be called when touch began event is issued.
@@ -956,6 +958,7 @@ protected:
     Vec2 _positionPercent;
 
     bool _hitted;
+    const Camera *_hittedByCamera;
     EventListenerTouchOneByOne* _touchListener;
     Vec2 _touchBeganPosition;
     Vec2 _touchMovePosition;

@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "2d/CCTweenFunction.h"
-
+#include "2d/CCCamera.h"
 NS_CC_BEGIN
 
 namespace ui {
@@ -764,6 +764,7 @@ void ScrollView::endRecordSlidAction()
 	if(!bounceBackStarted && _inertiaScrollEnabled)
 	{
 		startInertiaScroll();
+
     }
 }
 
@@ -779,9 +780,15 @@ void ScrollView::handlePressLogic(Touch *touch)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
-    Vec2 touchPositionInNodeSpace = this->convertToNodeSpace(touch->getLocation());
-    Vec2 previousTouchPositionInNodeSpace = this->convertToNodeSpace(touch->getPreviousLocation());
-    Vec2 delta = touchPositionInNodeSpace - previousTouchPositionInNodeSpace;
+    Vec3 currPt, prevPt;
+    if (nullptr == _hittedByCamera ||
+        false == hitTest(touch->getLocation(), _hittedByCamera, &currPt) ||
+        false == hitTest(touch->getPreviousLocation(), _hittedByCamera, &prevPt))
+    {
+        return;
+    }
+    Vec3 delta3 = currPt - prevPt;
+    Vec2 delta(delta3.x, delta3.y);
     scrollChildren(delta.x, delta.y);
 
     while(_inertiaTouchDisplacements.size() > 5)

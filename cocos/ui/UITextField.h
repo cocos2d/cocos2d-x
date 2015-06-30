@@ -316,7 +316,7 @@ public:
      */
     void setTouchAreaEnabled(bool enable);
     
-    virtual bool hitTest(const Vec2 &pt) override;
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     
     
     /**
