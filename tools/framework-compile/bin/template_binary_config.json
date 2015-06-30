@@ -106,6 +106,13 @@
             ]
         },
         {
+            "from": "tools/simulator/frameworks/runtime-src/Classes",
+            "to": "js-template-binary/frameworks/runtime-src/Classes",
+            "include": [
+                "js_module_register.h"
+            ]
+        },
+        {
             "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
             "to": "js-template-binary/frameworks/runtime-src/Classes/ide-support/",
             "exclude": [
