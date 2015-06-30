@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-cc.Physics3DRigidBodyDes = function(){
+jsb.Physics3DRigidBodyDes = function(){
     this.mass = 0;
     this.localInertia = cc.math.vec3(0, 0, 0);
     this.shape = null;
@@ -31,13 +31,28 @@ cc.Physics3DRigidBodyDes = function(){
     this.disableSleep = false;
 };
 
-cc.physics3DRigidBodyDes = function(){
-    return new cc.Physics3DRigidBodyDes();
+jsb.physics3DRigidBodyDes = function(){
+    return new jsb.Physics3DRigidBodyDes();
 };
 
-cc.Physics3DComponent.PhysicsSyncFlag = {
+jsb.Physics3DComponent.PhysicsSyncFlag = {
     NONE : 0,
     NODE_TO_PHYSICS : 1, //align node transform to the physics
     PHYSICS_TO_NODE : 2, // align physics transform to the node
     NODE_AND_NODE : 1 | 2, //pre simulation, align the physics object to the node and align the node transform according to physics object after simulation
+};
+
+jsb.HitResult = function(){
+  this.hitPosition = cc.math.vec3();
+  this.hitNormal   = cc.math.vec3();
+  this.hitObj      = null;
+}
+
+jsb.hitResult = function(){
+    return new cc.HitResult();
+};
+
+jsb.Physics3DObject.PhysicsObjType = {
+    UNKNOWN : 0,
+    RIGID_BODY : 1, 
 };

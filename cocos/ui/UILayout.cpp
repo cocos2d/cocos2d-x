@@ -1978,5 +1978,13 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
     }
 }
     
+void Layout::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    Widget::setCameraMask(mask, applyChildren);
+    if (_clippingStencil){
+        _clippingStencil->setCameraMask(mask, applyChildren);
+    }
+}
+    
 }
 NS_CC_END

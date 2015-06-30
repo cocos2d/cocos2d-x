@@ -198,8 +198,6 @@ bool Scene3DTestScene::init()
     do
     {
         CC_BREAK_IF(false == TestCase::init());
-        
-        Director::getInstance()->setDisplayStats(false);
 
         // prepare for camera creation, we need several custom cameras
         _gameCameras.resize(CAMERA_COUNT);

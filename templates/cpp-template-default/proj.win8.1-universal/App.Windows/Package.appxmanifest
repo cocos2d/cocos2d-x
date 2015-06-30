@@ -16,6 +16,11 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="cocos2d_Windows.App">
       <m2:VisualElements DisplayName="HelloCpp.Windows" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="HelloCpp.Windows" ForegroundText="light" BackgroundColor="#464646">
+        <m2:DefaultTile>
+          <m2:ShowNameOnTiles>
+            <m2:ShowOn Tile="square150x150Logo" />
+          </m2:ShowNameOnTiles>
+        </m2:DefaultTile>
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
         <m2:InitialRotationPreference>
           <m2:Rotation Preference="landscape" />

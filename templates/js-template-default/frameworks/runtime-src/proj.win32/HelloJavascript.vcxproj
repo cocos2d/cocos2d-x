@@ -99,9 +99,7 @@
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command></Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-33.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -111,14 +109,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\websockets\prebuilt\win32\*.*
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
+      <Command></Command>
     </PreBuildEvent>
     <PreBuildEvent>
-      <Message>Copy js and resource files.</Message>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
@@ -165,9 +159,7 @@ copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command></Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-33.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -177,12 +169,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\websockets\prebuilt\win32\*.*
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
-      <Message>Copy js and resource files.</Message>
+      <Command></Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

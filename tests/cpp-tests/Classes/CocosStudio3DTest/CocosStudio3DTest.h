@@ -25,7 +25,6 @@
 #ifndef _COCOSSTUDIO3D_TEST_H_
 #define _COCOSSTUDIO3D_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
 

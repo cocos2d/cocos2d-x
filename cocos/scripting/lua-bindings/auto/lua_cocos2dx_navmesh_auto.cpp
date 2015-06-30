@@ -6,7 +6,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_navmesh_NavMeshAgent_setMaxSpeed(lua_State* tolua_S)
 {
     int argc = 0;

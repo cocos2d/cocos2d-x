@@ -39,6 +39,7 @@
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "InputTest/MouseTest.h"
 #include "PerformanceTest/PerformanceTest.h"
+#include "VibrateTest/VibrateTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
