@@ -47,7 +47,9 @@
   <ItemGroup>
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
+    <ClCompile Include="..\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
+    <ClCompile Include="..\UIRadioButton.cpp" />
     <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIEditBox\UIEditBox.cpp" />
     <ClCompile Include="..\UIEditBox\UIEditBoxImplWin.cpp" />
