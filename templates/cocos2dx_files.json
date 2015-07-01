@@ -1212,6 +1212,8 @@
         "cocos/ui/UIScale9Sprite.h", 
         "cocos/ui/UIScrollView.cpp", 
         "cocos/ui/UIScrollView.h", 
+        "cocos/ui/UIScrollViewBar.cpp", 
+        "cocos/ui/UIScrollViewBar.h", 
         "cocos/ui/UISlider.cpp", 
         "cocos/ui/UISlider.h", 
         "cocos/ui/UIText.cpp", 

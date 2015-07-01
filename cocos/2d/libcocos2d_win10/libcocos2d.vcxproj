@@ -642,6 +642,7 @@
     <ClCompile Include="..\..\ui\UIRichText.cpp" />
     <ClCompile Include="..\..\ui\UIScale9Sprite.cpp" />
     <ClCompile Include="..\..\ui\UIScrollView.cpp" />
+    <ClCompile Include="..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\..\ui\UISlider.cpp" />
     <ClCompile Include="..\..\ui\UIText.cpp" />
     <ClCompile Include="..\..\ui\UITextAtlas.cpp" />
