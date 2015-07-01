@@ -13,6 +13,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				293CE83A1B43F3ED00F66EF1 /* PBXTargetDependency */,
 				1ADA8BA418CF277400AE24B9 /* PBXTargetDependency */,
 				1ADA8BA618CF277400AE24B9 /* PBXTargetDependency */,
 				1ADA8BA818CF277400AE24B9 /* PBXTargetDependency */,
@@ -27,6 +28,7 @@
 			buildPhases = (
 			);
 			dependencies = (
+				293CE83C1B43F3F300F66EF1 /* PBXTargetDependency */,
 				1ADA8BAC18CF277C00AE24B9 /* PBXTargetDependency */,
 				1ADA8BAE18CF277C00AE24B9 /* PBXTargetDependency */,
 				1ADA8BB018CF277C00AE24B9 /* PBXTargetDependency */,
@@ -1127,6 +1129,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1A0EE41918CDF799004CD58F;
 			remoteInfo = "lua-empty-test iOS";
+		};
+		293CE8391B43F3ED00F66EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1856634B1B4155D3009EF2AE;
+			remoteInfo = "js-tests Mac";
+		};
+		293CE83B1B43F3F300F66EF1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 185663961B4155DD009EF2AE;
+			remoteInfo = "js-tests iOS";
 		};
 		3E6177011960FAED00DE83F5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3497,15 +3513,6 @@
 			path = ZwoptexTest;
 			sourceTree = "<group>";
 		};
-		1AC35C6F18CECF0C00F37B72 /* VibrateTest */ = {
-			isa = PBXGroup;
-			children = (
-				1AC35C6D18CECF0C00F37B72 /* VibrateTest.cpp */,
-				1AC35C6E18CECF0C00F37B72 /* VibrateTest.h */,
-			);
-			path = VibrateTest;
-			sourceTree = "<group>";
-		};
 		1AC35C6D18CECF1400F37B72 /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -3544,6 +3551,15 @@
 				1AC35C7218CECF1400F37B72 /* testsAppDelegate.mm */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		1AC35C6F18CECF0C00F37B72 /* VibrateTest */ = {
+			isa = PBXGroup;
+			children = (
+				1AC35C6D18CECF0C00F37B72 /* VibrateTest.cpp */,
+				1AC35C6E18CECF0C00F37B72 /* VibrateTest.h */,
+			);
+			path = VibrateTest;
 			sourceTree = "<group>";
 		};
 		1AC35C9A18CECF1E00F37B72 /* proj.mac */ = {
@@ -5905,6 +5921,16 @@
 			isa = PBXTargetDependency;
 			target = 1A0EE41918CDF799004CD58F /* lua-empty-test iOS */;
 			targetProxy = 1ADA8BAF18CF277C00AE24B9 /* PBXContainerItemProxy */;
+		};
+		293CE83A1B43F3ED00F66EF1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1856634B1B4155D3009EF2AE /* js-tests Mac */;
+			targetProxy = 293CE8391B43F3ED00F66EF1 /* PBXContainerItemProxy */;
+		};
+		293CE83C1B43F3F300F66EF1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 185663961B4155DD009EF2AE /* js-tests iOS */;
+			targetProxy = 293CE83B1B43F3F300F66EF1 /* PBXContainerItemProxy */;
 		};
 		3E6177001960FAED00DE83F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
