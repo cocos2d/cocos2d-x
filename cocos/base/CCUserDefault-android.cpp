@@ -519,6 +519,11 @@ void UserDefault::flush()
 {
 }
 
+bool UserDefault::deleteValueForKey(const char* key)
+{
+    deleteValueForKeyJNI(key);
+    return true;
+}
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
