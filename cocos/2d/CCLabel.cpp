@@ -294,10 +294,9 @@ Label::~Label()
     if (_fontAtlas)
     {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
-
-        _eventDispatcher->removeEventListener(_purgeTextureListener);
-        _eventDispatcher->removeEventListener(_resetTextureListener);
     }
+    _eventDispatcher->removeEventListener(_purgeTextureListener);
+    _eventDispatcher->removeEventListener(_resetTextureListener);
 
     CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
