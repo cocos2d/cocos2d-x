@@ -154,7 +154,7 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
                 realName = "/" + realName;
             }
             realName = data.cFileName + realName;
-            if (0 != strcmp(&tmpPath.c_str()[tmpPath.length() - fl], data.cFileName))
+            if (0 != stricmp(&tmpPath.c_str()[tmpPath.length() - fl], data.cFileName))
             {
                 std::string msg = "File path error: \"";
                 msg.append(filename).append("\" the real name is: ").append(realName);
