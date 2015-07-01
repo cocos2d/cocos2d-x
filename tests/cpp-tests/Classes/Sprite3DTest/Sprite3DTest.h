@@ -554,4 +554,15 @@ protected:
     cocos2d::Sprite3D*  _sprite;
 };
 
+/// Clipping Sprite3D
+class Sprite3DClippingTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DClippingTest);
+    Sprite3DClippingTest();
+    ~Sprite3DClippingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
