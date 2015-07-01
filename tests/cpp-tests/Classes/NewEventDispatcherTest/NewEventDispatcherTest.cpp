@@ -1411,7 +1411,6 @@ Issue8194::Issue8194()
         auto nodeB = Node::create();
         addChild(nodeB, -1, tagB);
         
-        CCLOG("Test Issue8194 Add Nodes");
         cocos2d::EventListenerCustom* listenerB = cocos2d::EventListenerCustom::create("Issue8194", [&](cocos2d::EventCustom *event){
             _subtitleLabel->setString("Bug exist yet.");
             event->stopPropagation();
