@@ -563,6 +563,16 @@ blendfunc
 },
 
 /**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
+)
+{
+},
+
+/**
  * @method getPrimitiveType
  * @return {unsigned int}
  */
@@ -1128,6 +1138,16 @@ str
  */
 setBlendFunc : function (
 blendfunc 
+)
+{
+},
+
+/**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
 )
 {
 },
