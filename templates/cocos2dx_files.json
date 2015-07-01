@@ -3051,6 +3051,8 @@
         "external/tiff/include/linux/tiffio.h", 
         "external/tiff/include/linux/tiffvers.h", 
         "external/tiff/include/mac/tiff.h", 
+        "external/tiff/include/mac/tiffconf-32.h", 
+        "external/tiff/include/mac/tiffconf-64.h", 
         "external/tiff/include/mac/tiffconf.h", 
         "external/tiff/include/mac/tiffio.h", 
         "external/tiff/include/mac/tiffvers.h", 
