@@ -958,6 +958,8 @@ protected:
     Vec2 _positionPercent;
 
     bool _hitted;
+    // weak reference of the camera which made the widget passed the hit test when response touch begin event
+    // it's useful in the next touch move/end events
     const Camera *_hittedByCamera;
     EventListenerTouchOneByOne* _touchListener;
     Vec2 _touchBeganPosition;
