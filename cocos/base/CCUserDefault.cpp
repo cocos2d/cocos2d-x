@@ -503,6 +503,40 @@ void UserDefault::flush()
 {
 }
 
+bool UserDefault::deleteValueForKey(const char* key)
+{
+	tinyxml2::XMLElement* rootNode;
+	tinyxml2::XMLDocument* doc;
+	tinyxml2::XMLElement* node;
+
+	// check the params
+	if (!key)
+	{
+		return false;
+	}
+
+	// find the node
+	node = getXMLNodeForKey(key, &rootNode, &doc);
+
+	// if node not exist, don't need to delete
+	if (!node)
+	{
+		return true;	
+	}
+
+	// save file and free doc
+	if (doc)
+	{
+		doc->DeleteNode(node);
+		doc->SaveFile(FileUtils::getInstance()->getSuitableFOpen(UserDefault::getInstance()->getXMLFilePath()).c_str());
+		delete doc;
+
+		return true;
+	}
+
+	return false;
+}
+
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_PLATFORM != CC_PLATFORM_ANDROID)

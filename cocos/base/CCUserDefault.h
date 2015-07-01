@@ -243,6 +243,13 @@ public:
      */
     static bool isXMLFileExist();
 
+	/**
+	* delete any value by key, if the key doesn't exist, will return true.
+	* @param key The key to get value.
+	* @return it's true value for delete success
+	* @js NA
+	*/
+	static bool deleteValueForKey(const char* key);
 protected:
     UserDefault();
     virtual ~UserDefault();
