@@ -171,7 +171,7 @@ cocos new -l cpp|js|lua MyGame
 
 ## Download
 
-[Cocos2d-x v3.7 Beta0](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7beta0.zip) including : C++, Lua & JS
+[Cocos2d-x v3.7 RC0](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7rc0.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
@@ -179,19 +179,19 @@ cocos new -l cpp|js|lua MyGame
 
 It's the physics engine we provided for providing 3D physics game capability, it works great with our current 3D modules, like 3D sprites, 3D Terrain, etc. We used [bullet](http://bulletphysics.org/wordpress/) library as base of 3D physics, encapsulate it into our Cocos 3D physics APIs. You can refer to Physics3DTest test case for its API and usage, we will add documentation into [programmers guide](http://cocos2d-x.org/programmersguide) lately.
 
-![](J-img/physics3d.png)
+![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_348f31ee628da2b.png)
 
 ### 3D Navigation mesh
 
 The navigation mesh system provides simple to use API to find path in a complexe 3D world, you can add mesh with a triangles list, add obstacles. Then you will add agents which can perform a path finding task and move your 3D sprites to a certain place following the path. You can refer to NavmeshTest test case for its API and usage, we will add documentation into [programmers guide](http://cocos2d-x.org/programmersguide) lately.
 
-![](J-img/navmesh.png)
+![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_6589cbf376a639b.png)
 
 ### Material system
 
 Material system is an advanced system which defines all visual informations (it may contain aural or physical informations in the future) of an object. Instead of just plain an simple texture, you can have more than one texture, and much more features like multi-pass rendering. Refer to [the documentation](https://github.com/chukong/programmers-guide/blob/v3.7/chapters/14.md#shaders-and-materials) for more details.
 
-![](J-img/material.png)
+![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_a94a91aeeaf401d.png)
 
 ### All in one Cocos2d-x
 
@@ -208,7 +208,7 @@ auto spp = Sprite::create(pinfo);
 
 Although it do takes time to generate the polygons information, you can cache and reuse it, we also plan to support the polygons information generation in the editor in the future.
 
-![](J-img/polygonsprite.png)
+![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_7b5ef9b52f054f3.png)
 
 ### WebView and VideoPlayer in JS (native and web)
 
@@ -229,6 +229,10 @@ cocos run/compile -p android --android-studio
 ### Samsung Enhanced API support
 
 Samsung have provided a series of Enhanced API to optimize Cocos2d-x games for Samsung products with Android 5.0+ system. It include some very cool features like: Boost Up API, Power Saving Mode API, Dynamic FPS API, etc. The current API can be found in [this header file](https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/platform/android/CCEnhanceAPI-android.h), we will provide a detailed documentation later.
+
+### Win32 platform resource name become case sensitive
+
+In the previous versions, the resources file name's case is ignored on win32 platform, but not ignored in other platforms. This will lead to some unexpected issues, especially when user develop with win32 platform and pulish to other platforms like Android. In win32, the file name may be found without matching the case, but on other platforms it won't be found. So we decided to make win32 platform's resources case sensitive. Please make sure you are using the correct file name for your resources.
 
 ## The Next Step
 
