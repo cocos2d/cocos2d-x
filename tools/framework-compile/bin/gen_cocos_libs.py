@@ -90,11 +90,9 @@ class CocosLibsCompiler(object):
         if self.build_mac:
             self.compile_mac_ios()
         if self.build_android:
-            self.compile_android("js")
-            self.compile_android("lua")
-
-        # generate prebuilt mk files
-        self.modify_binary_mk()
+            self.compile_android()
+            # generate prebuilt mk files
+            self.modify_binary_mk()
 
     def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
         build_cmd = " ".join([
@@ -281,7 +279,7 @@ class CocosLibsCompiler(object):
                 mac_strip_cmd = "xcrun strip -S %s/*.a" % mac_out_dir
                 utils_cocos.execute_command(mac_strip_cmd)
 
-    def compile_android(self, language):
+    def compile_android(self):
         print("compile android")
         # build .so for android
         CONSOLE_PATH = "tools/cocos2d-console/bin"
@@ -295,17 +293,9 @@ class CocosLibsCompiler(object):
         else:
             cmd_path = os.path.join(console_dir, "cocos")
 
-        proj_name = "My%sGame" % language
-        proj_dir = engine_dir
-        proj_path = os.path.join(proj_dir, proj_name)
-        utils_cocos.rmdir(proj_path)
-
-        # create a runtime project
-        create_cmd = "%s new -l %s -t runtime -d %s %s" % (cmd_path, language, proj_dir, proj_name)
-        utils_cocos.execute_command(create_cmd)
-
-        # build it
-        build_cmd = "%s compile -s %s -p android --ndk-mode release -j 4 --app-abi %s" % (cmd_path, proj_path, self.app_abi)
+        # build the simulator project
+        proj_path = os.path.join(engine_dir, 'tools/simulator')
+        build_cmd = "%s compile -s %s -p android --ndk-mode release --app-abi %s" % (cmd_path, proj_path, self.app_abi)
         utils_cocos.execute_command(build_cmd)
 
         # copy .a to prebuilt dir
@@ -352,9 +342,6 @@ class CocosLibsCompiler(object):
             strip_cmd_path = os.path.join(ndk_root, "toolchains/x86-4.8/prebuilt/%s/i686-linux-android/bin/%s" % (sys_folder_name, strip_execute_name))
             if os.path.exists(strip_cmd_path) and os.path.exists(os.path.join(android_out_dir, "x86")):
                 self.trip_libs(strip_cmd_path, os.path.join(android_out_dir, 'x86'))
-
-        # remove the project
-        utils_cocos.rmdir(proj_path)
 
     def trip_libs(self, strip_cmd, folder):
         if not os.path.isdir(folder):
