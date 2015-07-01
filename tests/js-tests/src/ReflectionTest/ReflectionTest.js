@@ -45,7 +45,7 @@ var ReflectionTestLayer = BaseTestLayer.extend({
         var label2 = new cc.LabelTTF("CallReflectionWithBool", "Arial", 35);
         var menuItem2 = new cc.MenuItemLabel(label2, function(){
             if(cc.sys.os == cc.sys.OS_ANDROID){
-                jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;)V", "How are you ?", "I'm great !");
+                jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;Z)V", "How are you ?", "I'm great !", true);
             }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){
                 var ret = jsb.reflection.callStaticMethod("NativeOcClass","callNativeUIWithTitle:andContent:addBool:","cocos2d-js","Yes! you call a Native UI from Reflection", true);
                 cc.log("ret val is "+ret);
