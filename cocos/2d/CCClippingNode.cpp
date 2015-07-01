@@ -396,7 +396,7 @@ void ClippingNode::onBeforeVisit()
 
     // enable stencil use
     glEnable(GL_STENCIL_TEST);
-    RenderState::StateBlock::_defaultState->setStencilTest(true);
+//    RenderState::StateBlock::_defaultState->setStencilTest(true);
 
     // check for OpenGL error while enabling stencil test
     CHECK_GL_ERROR_DEBUG();
@@ -404,7 +404,7 @@ void ClippingNode::onBeforeVisit()
     // all bits on the stencil buffer are readonly, except the current layer bit,
     // this means that operation like glClear or glStencilOp will be masked with this value
     glStencilMask(mask_layer);
-    RenderState::StateBlock::_defaultState->setStencilWrite(mask_layer);
+//    RenderState::StateBlock::_defaultState->setStencilWrite(mask_layer);
 
     // manually save the depth test state
 
@@ -444,13 +444,13 @@ void ClippingNode::onBeforeVisit()
     //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
     //     if in inverted mode: set the current layer value to 0 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, mask_layer, mask_layer);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, mask_layer, mask_layer);
 
     glStencilOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
-    RenderState::StateBlock::_defaultState->setStencilOperation(
-                                                                !_inverted ? RenderState::STENCIL_OP_REPLACE : RenderState::STENCIL_OP_ZERO,
-                                                                RenderState::STENCIL_OP_KEEP,
-                                                                RenderState::STENCIL_OP_KEEP);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(
+//                                                                !_inverted ? RenderState::STENCIL_OP_REPLACE : RenderState::STENCIL_OP_ZERO,
+//                                                                RenderState::STENCIL_OP_KEEP,
+//                                                                RenderState::STENCIL_OP_KEEP);
 
 
     // enable alpha test only if the alpha threshold < 1,
@@ -508,10 +508,10 @@ void ClippingNode::onAfterDrawStencil()
     //     else
     //         do not draw the pixel but keep the current layer in the stencil buffer
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
-    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_EQUAL, _mask_layer_le, _mask_layer_le);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_EQUAL, _mask_layer_le, _mask_layer_le);
 
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP);
 
     // draw (according to the stencil test func) this node and its childs
 }
@@ -524,18 +524,18 @@ void ClippingNode::onAfterVisit()
 
     // manually restore the stencil state
     glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
-    RenderState::StateBlock::_defaultState->setStencilFunction((RenderState::StencilFunction)_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
+//    RenderState::StateBlock::_defaultState->setStencilFunction((RenderState::StencilFunction)_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
 
     glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
-    RenderState::StateBlock::_defaultState->setStencilOperation((RenderState::StencilOperation)_currentStencilFail,
-                                                                (RenderState::StencilOperation)_currentStencilPassDepthFail,
-                                                                (RenderState::StencilOperation)_currentStencilPassDepthPass);
+//    RenderState::StateBlock::_defaultState->setStencilOperation((RenderState::StencilOperation)_currentStencilFail,
+//                                                                (RenderState::StencilOperation)_currentStencilPassDepthFail,
+//                                                                (RenderState::StencilOperation)_currentStencilPassDepthPass);
 
     glStencilMask(_currentStencilWriteMask);
     if (!_currentStencilEnabled)
     {
         glDisable(GL_STENCIL_TEST);
-        RenderState::StateBlock::_defaultState->setStencilTest(false);
+//        RenderState::StateBlock::_defaultState->setStencilTest(false);
     }
 
     // we are done using this layer, decrement

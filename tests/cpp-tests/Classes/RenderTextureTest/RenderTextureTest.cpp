@@ -465,7 +465,7 @@ void RenderTextureTestDepthStencil::onBeforeClear()
 
     // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
     // But if users must call GL directly, they should update the state manually,
-    RenderState::StateBlock::_defaultState->setStencilWrite(0xFF);
+//    RenderState::StateBlock::_defaultState->setStencilWrite(0xFF);
 }
 
 void RenderTextureTestDepthStencil::onBeforeStencil()
@@ -477,9 +477,9 @@ void RenderTextureTestDepthStencil::onBeforeStencil()
 
     // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
     // But if users must call GL directly, they should update the state manually,
-    RenderState::StateBlock::_defaultState->setStencilTest(true);
-    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, 1, 0xFF);
-    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE);
+//    RenderState::StateBlock::_defaultState->setStencilTest(true);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, 1, 0xFF);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE);
 }
 
 void RenderTextureTestDepthStencil::onBeforDraw()
@@ -488,7 +488,7 @@ void RenderTextureTestDepthStencil::onBeforDraw()
 
     // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
     // But if users must call GL directly, they should update the state manually,
-    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NOTEQUAL, 1, 0xFF);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NOTEQUAL, 1, 0xFF);
 }
 
 void RenderTextureTestDepthStencil::onAfterDraw()
@@ -497,7 +497,7 @@ void RenderTextureTestDepthStencil::onAfterDraw()
 
     // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
     // But if users must call GL directly, they should update the state manually,
-    RenderState::StateBlock::_defaultState->setStencilTest(false);
+//    RenderState::StateBlock::_defaultState->setStencilTest(false);
 }
 
 std::string RenderTextureTestDepthStencil::title() const
