@@ -254,7 +254,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("ScrollView scroll to percent both directrion","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("ScrollView scroll to percent both direction without scroll bar","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5));
         _uiLayer->addChild(alert);
@@ -278,6 +278,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         ImageView* iv = ImageView::create("cocosui/Hello.png");
         iv->setPosition(Vec2(240, 160));
         sc->addChild(iv);
+		sc->setScrollBarEnabled(false);
         _uiLayer->addChild(sc);
         
         return true;
@@ -309,7 +310,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("ScrollView scroll to percent both directrion bounce","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("ScrollView scroll to percent both direction bounce","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5));
         _uiLayer->addChild(alert);
@@ -378,7 +379,7 @@ bool UIScrollViewNestTest::init()
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setContentSize(Size(280.0f, 150.0f));
-        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -413,7 +414,7 @@ bool UIScrollViewNestTest::init()
         
         
         
-        // Create the scrollview by horizontal
+        // Create the scrollview by vertical
         ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
@@ -473,7 +474,7 @@ bool UIScrollViewRotated::init()
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setContentSize(Size(280.0f, 150.0f));
-        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,

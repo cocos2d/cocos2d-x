@@ -39,6 +39,8 @@ class EventFocusListener;
 
 namespace ui {
 
+class ScrollViewBar;
+
 /**
  *Scrollview scroll event type.
  *@deprecated use @see `ScrollView::EventType` instead.
@@ -369,7 +371,21 @@ public:
      * @return True if inertia is enabled, false otherwise.
      */
     bool isInertiaScrollEnabled() const;
-
+	
+	/**
+	 * @brief Toggle scroll bar enabled.
+	 *
+	 * @param enabled True if enable scroll bar, false otherwise.
+	 */
+	void setScrollBarEnabled(bool enabled);
+	
+	/**
+	 * @brief Query scroll bar state.
+	 *
+	 * @return True if scroll bar is enabled, false otherwise.
+	 */
+	bool isScrollBarEnabled() const;
+	
     /**
      * Set layout type for scrollview.
      *
@@ -426,11 +442,15 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
 	
-    bool isOutOfBoundary(MoveDirection dir) const;
-    bool isOutOfBoundaryTopOrBottom() const;
-    bool isOutOfBoundaryLeftOrRight() const;
+	virtual void initScrollBar();
+	virtual void removeScrollBar();
 	
-    void moveChildren(float offsetX, float offsetY);
+	bool isOutOfBoundary(MoveDirection dir) const;
+	bool isOutOfBoundaryTopOrBottom() const;
+	bool isOutOfBoundaryLeftOrRight() const;
+	
+	void moveChildren(float offsetX, float offsetY);
+	void moveChildrenToPosition(const Vec2& position);
 	
     void startInertiaScroll();
     void processInertiaScrolling(float dt);
@@ -443,30 +463,25 @@ protected:
 
     void jumpToDestination(const Vec2& des);
 
-	
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    // Without bounce
-    bool processScrollUp(float* offsetYResult, float touchOffsetY);
-    bool processScrollDown(float* offsetYResult, float touchOffsetY);
-    bool processScrollLeft(float* offsetXResult, float touchOffsetX);
-    bool processScrollRight(float* offsetXResult, float touchOffsetX);
-	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
 
     //ScrollViewProtocol
-    virtual void handlePressLogic(Touch *touch) ;
-    virtual void handleMoveLogic(Touch *touch) ;
-    virtual void handleReleaseLogic(Touch *touch) ;
+    virtual void handlePressLogic(Touch *touch);
+    virtual void handleMoveLogic(Touch *touch);
+    virtual void handleReleaseLogic(Touch *touch);
 
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
-
-    void processScrollEvent(MoveDirection dir, bool bounce);
+	
+	void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
-    void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
-
-    Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
+	void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
+	
+	Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
+	
+	void updateScrollBar(const Vec2& outOfBoundary);
 
 protected:
     Layout* _innerContainer;
@@ -500,6 +515,10 @@ protected:
 	
     bool _bounceEnabled;
     bool _bouncingBack;
+	
+	bool _scrollBarEnabled;
+	ScrollViewBar* _verticalScrollBar;
+	ScrollViewBar* _horizontalScrollBar;
 	
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

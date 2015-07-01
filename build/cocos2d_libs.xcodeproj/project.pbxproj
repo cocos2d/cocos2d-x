@@ -2017,6 +2017,10 @@
 		B5CE6DC91B3C05BA002B0419 /* UIRadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DC61B3C05BA002B0419 /* UIRadioButton.cpp */; };
 		B5CE6DCA1B3C05BA002B0419 /* UIRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B5CE6DC71B3C05BA002B0419 /* UIRadioButton.h */; };
 		B5CE6DCB1B3C05BA002B0419 /* UIRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B5CE6DC71B3C05BA002B0419 /* UIRadioButton.h */; };
+		B5668D7D1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */; };
+		B5668D7E1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */; };
+		B5668D7F1B3838E4003CBD5E /* UIScrollViewBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */; };
+		B5668D801B3838E4003CBD5E /* UIScrollViewBar.h in Headers */ = {isa = PBXBuildFile; fileRef = B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */; };
 		B603F1A81AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1A91AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1AA1AC8EA0900A9579C /* CCTerrain.h in Headers */ = {isa = PBXBuildFile; fileRef = B603F1A71AC8EA0900A9579C /* CCTerrain.h */; };
@@ -4704,6 +4708,8 @@
 		B5CE6DBD1B3BF2B1002B0419 /* UIAbstractCheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAbstractCheckButton.h; sourceTree = "<group>"; };
 		B5CE6DC61B3C05BA002B0419 /* UIRadioButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRadioButton.cpp; sourceTree = "<group>"; };
 		B5CE6DC71B3C05BA002B0419 /* UIRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRadioButton.h; sourceTree = "<group>"; };
+		B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScrollViewBar.cpp; sourceTree = "<group>"; };
+		B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollViewBar.h; sourceTree = "<group>"; };
 		B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTerrain.cpp; sourceTree = "<group>"; };
 		B603F1A71AC8EA0900A9579C /* CCTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTerrain.h; sourceTree = "<group>"; };
 		B603F1B11AC8F1FD00A9579C /* ccShader_3D_Terrain.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_Terrain.frag; sourceTree = "<group>"; };
@@ -6841,6 +6847,8 @@
 				2905FA0518CF08D000240AA3 /* UIRichText.h */,
 				2905FA0718CF08D000240AA3 /* UIScrollView.cpp */,
 				2905FA0818CF08D000240AA3 /* UIScrollView.h */,
+				B5668D7B1B3838E4003CBD5E /* UIScrollViewBar.cpp */,
+				B5668D7C1B3838E4003CBD5E /* UIScrollViewBar.h */,
 				2905FA0918CF08D000240AA3 /* UISlider.cpp */,
 				2905FA0A18CF08D100240AA3 /* UISlider.h */,
 				2905FA0B18CF08D100240AA3 /* UIText.cpp */,
@@ -9405,6 +9413,7 @@
 				B6CAB24B1AF9AA1A00B9B856 /* btConvexPlaneCollisionAlgorithm.h in Headers */,
 				B6CAB5391AF9AA1A00B9B856 /* cl.h in Headers */,
 				15AE1BC219AADFFB00C27E9E /* ExtensionMacros.h in Headers */,
+				B5668D7F1B3838E4003CBD5E /* UIScrollViewBar.h in Headers */,
 				B665E4001AA80A6600DDB1C5 /* CCPUSphereCollider.h in Headers */,
 				B6CAB42D1AF9AA1A00B9B856 /* btVehicleRaycaster.h in Headers */,
 				15AE1BDF19AAE01E00C27E9E /* CCInvocation.h in Headers */,
@@ -10459,6 +10468,7 @@
 				B6CAB4B01AF9AA1A00B9B856 /* SpuCollisionTaskProcess.h in Headers */,
 				15AE185D19AAD31200C27E9E /* CocosDenshion.h in Headers */,
 				B6CAB3661AF9AA1A00B9B856 /* btContinuousConvexCollision.h in Headers */,
+				B5668D801B3838E4003CBD5E /* UIScrollViewBar.h in Headers */,
 				15AE194319AAD35100C27E9E /* CCColliderDetector.h in Headers */,
 				382F7ADF1AB1292A002EBECF /* CCObjectExtensionData.h in Headers */,
 				B6CAB3A81AF9AA1A00B9B856 /* btConstraintSolver.h in Headers */,
@@ -11584,6 +11594,7 @@
 				50ABC00D1926664800A911A9 /* CCFileUtils.cpp in Sources */,
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				15AE1A6819AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
+				B5668D7D1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */,
 				B665E2D21AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.cpp in Sources */,
 				B6CAB3811AF9AA1A00B9B856 /* btMinkowskiPenetrationDepthSolver.cpp in Sources */,
 				B6CAB4AD1AF9AA1A00B9B856 /* SpuCollisionTaskProcess.cpp in Sources */,
@@ -11735,6 +11746,7 @@
 				38B8E2E219E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */,
 				B6CAB3D21AF9AA1A00B9B856 /* btSliderConstraint.cpp in Sources */,
 				B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */,
+				B5668D7E1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */,
 				B665E32B1AA80A6500DDB1C5 /* CCPUOnCountObserver.cpp in Sources */,
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,
 				B6CAB3B01AF9AA1A00B9B856 /* btFixedConstraint.cpp in Sources */,
