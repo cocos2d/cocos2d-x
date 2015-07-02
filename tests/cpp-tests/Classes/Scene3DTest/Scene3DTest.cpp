@@ -1,6 +1,7 @@
 #include "Scene3DTest.h"
 
 #include "ui/CocosGUI.h"
+#include "renderer/CCRenderState.h"
 #include <spine/spine-cocos2dx.h>
 
 #include "../testResource.h"
@@ -8,6 +9,28 @@
 
 USING_NS_CC;
 using namespace spine;
+
+class SkeletonAnimationCullingFix : public SkeletonAnimation
+{
+public:
+    SkeletonAnimationCullingFix(const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
+    : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+    {}
+    
+    virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags) override
+    {
+        glDisable(GL_CULL_FACE);
+        SkeletonAnimation::drawSkeleton(transform, transformFlags);
+        RenderState::StateBlock::invalidate(cocos2d::RenderState::StateBlock::RS_ALL_ONES);
+    }
+    
+    static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
+    {
+        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix(skeletonDataFile, atlasFile, scale);
+        node->autorelease();
+        return node;
+    }
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declare Scene3DTestScene
@@ -631,7 +654,7 @@ void Scene3DTestScene::createDetailDlg()
     
     // add a spine ffd animation on it
     auto skeletonNode =
-        SkeletonAnimation::createWithFile("spine/goblins-ffd.json",
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins-ffd.json",
                                           "spine/goblins-ffd.atlas",
                                           1.5f);
     skeletonNode->setAnimation(0, "walk", true);
