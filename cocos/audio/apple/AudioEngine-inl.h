@@ -36,7 +36,7 @@
 
 NS_CC_BEGIN
     namespace experimental{
-#define MAX_AUDIOINSTANCES 32
+#define MAX_AUDIOINSTANCES 24
 
 class AudioEngineThreadPool;
 

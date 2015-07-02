@@ -1,6 +1,5 @@
 #ifndef __cocos2d_tests__SpritePolygonTest__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include "ui/CocosGUI.h"
 

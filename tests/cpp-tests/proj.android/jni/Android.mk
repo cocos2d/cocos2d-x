@@ -201,6 +201,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UnitTest/UnitTest.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/VisibleRect.cpp \
+../../Classes/VibrateTest/VibrateTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../Classes/controller.cpp \
 ../../Classes/testBasic.cpp

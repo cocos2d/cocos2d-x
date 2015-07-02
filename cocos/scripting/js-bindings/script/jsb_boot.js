@@ -1481,6 +1481,12 @@ cc._initSys = function(config, CONFIG_KEY){
         // desktop
         capabilities["keyboard"] = true;
         capabilities["mouse"] = true;
+        // winrt can't suppot mouse in current version
+        if (platform === locSys.WINRT)
+        {
+            capabilities["touches"] = true;
+            capabilities["mouse"] = false;
+        }
     }
 
     /**
