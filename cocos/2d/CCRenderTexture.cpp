@@ -384,7 +384,7 @@ void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint3
 {
     // override visit.
     // Don't call visit on its children
-    if (!_visible || !isVisitableByVisitingCamera())
+    if (!_visible)
     {
         return;
     }
@@ -399,7 +399,10 @@ void RenderTexture::visit(Renderer *renderer, const Mat4 &parentTransform, uint3
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     _sprite->visit(renderer, _modelViewTransform, flags);
-    draw(renderer, _modelViewTransform, flags);
+    if (isVisitableByVisitingCamera())
+    {
+        draw(renderer, _modelViewTransform, flags);
+    }
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
