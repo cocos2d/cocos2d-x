@@ -542,6 +542,20 @@ void UserDefault::flush()
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+bool UserDefault::deleteValueForKey(const char* key)
+{
+    // check the params
+    if (!key)
+    {
+        return false;
+    }
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+
+    flush();
+
+    return true;
+}
 
 NS_CC_END
 

@@ -521,6 +521,12 @@ void UserDefault::flush()
 
 bool UserDefault::deleteValueForKey(const char* key)
 {
+    // check the params
+    if (!key)
+    {
+        return false;
+    }
+    
     deleteValueForKeyJNI(key);
     return true;
 }

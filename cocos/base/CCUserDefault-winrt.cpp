@@ -329,6 +329,21 @@ void UserDefault::flush()
 {
 }
 
+bool UserDefault::deleteValueForKey(const char* key)
+{
+    // check the params
+    if (!key)
+    {
+        return false;
+    }
+
+    ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
+    auto values = localSettings->Values;
+    values->Remove(key);
+    
+    return true;
+}
+
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
