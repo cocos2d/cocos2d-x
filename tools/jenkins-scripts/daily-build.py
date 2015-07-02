@@ -1,4 +1,4 @@
-#Github pull reqest builder for Jenkins
+#Cocos2D-X test project daily build
 
 import os
 import sys
@@ -101,13 +101,13 @@ def main():
     else:
         exit_code = 1
 
-    #clean workspace
-    if remote_build == 1:
-        os.system("cd " + workspace)
-        os.system("git reset --hard")
-        os.system("git clean -xdf -f")
-    else:
-        print "local build, no need to cleanup"
+    # #clean workspace, we don't won't clean the repository
+    # if remote_build == 1:
+    #     os.system("cd " + workspace)
+    #     os.system("git reset --hard")
+    #     os.system("git clean -xdf -f")
+    # else:
+    #     print "local build, no need to cleanup"
 
     return(exit_code)
 
