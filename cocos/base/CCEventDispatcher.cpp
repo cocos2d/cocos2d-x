@@ -221,7 +221,9 @@ EventDispatcher::~EventDispatcher()
 }
 
 void EventDispatcher::visitTarget(Node* node, bool isRootNode)
-{    
+{
+    node->sortAllChildren();
+    
     int i = 0;
     auto& children = node->getChildren();
     
