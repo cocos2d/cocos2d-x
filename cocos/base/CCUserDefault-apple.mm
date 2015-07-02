@@ -550,7 +550,7 @@ bool UserDefault::deleteValueForKey(const char* key)
         return false;
     }
 
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithUTF8String:key]];
 
     flush();
 

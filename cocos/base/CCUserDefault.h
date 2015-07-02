@@ -202,6 +202,14 @@ public:
      */
     virtual void flush();
 
+    /**
+    * delete any value by key, if the key doesn't exist, will return true.
+    * @param key The key to get value.
+    * @return True if delete success
+    * @js NA
+    */
+    virtual bool deleteValueForKey(const char* key);
+    
     /** Returns the singleton.
      * @js NA
      * @lua NA
@@ -243,13 +251,6 @@ public:
      */
     static bool isXMLFileExist();
 
-	/**
-	* delete any value by key, if the key doesn't exist, will return true.
-	* @param key The key to get value.
-	* @return True if delete success
-	* @js NA
-	*/
-	static bool deleteValueForKey(const char* key);
 protected:
     UserDefault();
     virtual ~UserDefault();
