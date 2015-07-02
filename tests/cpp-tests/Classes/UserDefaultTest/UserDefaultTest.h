@@ -16,8 +16,8 @@ public:
 
 private:
     void doTest();
-	void printValue();
-	cocos2d::Label* _label;
+    void printValue();
+    cocos2d::Label* _label;
 };
 
 #endif // _USERDEFAULT_TEST_H_
