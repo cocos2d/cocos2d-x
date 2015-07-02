@@ -640,6 +640,7 @@ void Slider::onPressStateChangedToDisabled()
     if (!_isSliderBallDisabledTexturedLoaded)
     {
         _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState());
+        _slidBallNormalRenderer->setVisible(true);
     }
     else
     {
