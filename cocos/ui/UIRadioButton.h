@@ -203,13 +203,6 @@ protected:
     RadioButton* _selectedRadioButton;
     bool _allowedNoSelection;
     
-private:
-    // Following methods are forbidden. Please use addRadioButton(), removeRadioButton() instead.
-    using Widget::addChild;
-    using Widget::addProtectedChild;
-    using Widget::removeChild;
-    using Widget::removeProtectedChild;
-    
 };
     
 }
