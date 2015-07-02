@@ -126,7 +126,7 @@ protected:
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-protected:
+	
     ccRadioButtonCallback _radioButtonEventCallback;
     RadioButtonGroup* _group;
     

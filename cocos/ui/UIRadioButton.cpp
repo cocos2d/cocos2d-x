@@ -188,7 +188,8 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
 {
     if(radioButton != nullptr)
     {
-        radioButton->_group = this;
+		CCASSERT(!radioButton->_group, "It already belongs to a group!");
+		radioButton->_group = this;
         _radioButtons.pushBack(radioButton);
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr)
@@ -269,7 +270,12 @@ void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
     {
         return;
     }
-    
+	if(!_radioButtons.contains(radioButton))
+	{
+		CCLOGERROR("The radio button does not belong to this group!");
+		return;
+	}
+	
     deselect();
     _selectedRadioButton = radioButton;
     if(_selectedRadioButton != nullptr)
