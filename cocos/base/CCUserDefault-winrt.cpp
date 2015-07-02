@@ -339,7 +339,7 @@ bool UserDefault::deleteValueForKey(const char* key)
 
     ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
     auto values = localSettings->Values;
-    values->Remove(key);
+    values->Remove(PlatformStringFromString(key));
     
     return true;
 }
