@@ -15,6 +15,7 @@ import string
 
 import utils_cocos
 
+from datetime import date
 from custom_error import Logging, CustomError
 from argparse import ArgumentParser
 
@@ -300,6 +301,32 @@ class SimulatorCompiler(object):
         for file_path in file_list:
             self.replace_keyword_with_file(file_path, keyword)
 
+    def update_bundle_version(self):
+        build_date = date.today().strftime("%Y%m%d")
+
+        if utils_cocos.os_is_mac():
+            # mac
+            info_plist_path = os.path.join(self.simulator_abs_path, "frameworks/runtime-src/proj.ios_mac/mac/Info.plist")
+            info_plist_content = self.get_content_from_file(info_plist_path)
+
+            match = re.compile('<key>CFBundleVersion</key>(\s)*<string>(.*?)</string>').findall(info_plist_content)
+            if len(match):
+                build_date_tag = "<string>%s</string>" % match[0][1]
+                keyword_map = { build_date_tag : "<string>%s</string>" % build_date }
+                self.replace_keyword_with_file(info_plist_path, keyword_map)
+
+        if utils_cocos.os_is_win32():
+            # win32
+            game_rc_path = os.path.join(self.simulator_abs_path,"frameworks/runtime-src/proj.win32/game.rc")
+            game_rc_content = self.get_content_from_file(game_rc_path)
+            match = re.compile('"Version[^\(]*\(.*\)"').findall(game_rc_content)
+            if len(match):
+                build_info_str = match[0]
+                m = re.match(r'"(Version[^\(]*)\(.*\)', build_info_str)
+                target_str = '"%s(%s)"' % (m.group(1), build_date)
+                keyword_map = { build_info_str : target_str}
+                self.replace_keyword_with_file(game_rc_path,keyword_map)
+
     def backup_files(self, files):
         for f in files:
             full_path = os.path.abspath(f)
@@ -330,9 +357,17 @@ class SimulatorCompiler(object):
 
         # backup some files
         modify_files = self.get_depend_project_file_list()
+        if utils_cocos.os_is_mac():
+            modify_files.append(os.path.join(self.simulator_abs_path, 'frameworks/runtime-src/proj.ios_mac/mac/Info.plist'))
+        elif utils_cocos.os_is_win32():
+            modify_files.append(os.path.join(self.simulator_abs_path, 'frameworks/runtime-src/proj.win32/game.rc'))
+
         self.backup_files(modify_files)
 
         try:
+            # modify bundle version
+            self.update_bundle_version()
+
             # modify project config files
             self.change_cocos2d_debug_macro_to_1(modify_files)
 
