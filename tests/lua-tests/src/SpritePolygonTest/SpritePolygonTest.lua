@@ -103,7 +103,7 @@ function SpritePolygonTest1:ctor()
     spp:setPosition(cc.p(s.width / 2 + offset.x, s.height / 2 + offset.y))
 
 
-    sp = cc.Sprite:create(filename)
+    local sp = cc.Sprite:create(filename)
     self:addChild(sp)
     sp:setPosition(cc.p(s.width/2 - offset.x, s.height/2 - offset.y))
 
@@ -119,7 +119,7 @@ function SpritePolygonTest1:ctor()
 
     temp = "SpritePolygon:\nPixels drawn: "
     local vertCount = "\nverts:" .. info:getVertCount()
-    local sppArea = cc.Label:createWithTTF(ttfConfig, temp .. info:getArea() .. vertCount)
+    local sppArea = cc.Label:createWithTTF(ttfConfig, temp .. math.floor(info:getArea()) .. vertCount)
     spp:addChild(sppArea)
     sppArea:setAnchorPoint(cc.p(0, 1))
     
@@ -212,7 +212,7 @@ function SpritePolygonTest2:make2Sprites()
 
     temp = "SpritePolygon:\nPixels drawn: "
     local vertCount = "\nverts:" .. info:getVertCount()
-    local sppArea = cc.Label:createWithTTF(ttfConfig, temp .. info:getArea() .. vertCount)
+    local sppArea = cc.Label:createWithTTF(ttfConfig, temp .. math.floor(info:getArea()) .. vertCount)
     self.spp:addChild(sppArea)
     sppArea:setAnchorPoint(cc.p(0, 1))
 end

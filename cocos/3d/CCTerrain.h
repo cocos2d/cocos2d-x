@@ -109,6 +109,18 @@ public:
         float _detailMapSize;
     };
 
+    /**
+     * Triangle
+     */
+    struct Triangle
+    {
+        Triangle(Vec3 p1, Vec3 p2, Vec3 p3);
+        bool getInsterctPoint(const Ray &ray, Vec3& interScetPoint) const;
+        void transform(Mat4 matrix);
+        Vec3 _p1, _p2, _p3;
+    };
+
+
    /**
     *TerrainData
     *This TerrainData struct warp all parameter that Terrain need to create
@@ -219,6 +231,9 @@ private:
 
         /**calculate the average slop of chunk*/
         void calculateSlope();
+
+        bool getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint);
+
         /**current LOD of the chunk*/
         int _currentLod;
 
@@ -244,6 +259,8 @@ private:
         /**chunk's estimated slope*/
         float _slope;
         std::vector<TerrainVertexData> _currentVertices;
+
+        std::vector<Triangle> _trianglesList;
     };
 
    /**
@@ -362,7 +379,7 @@ public:
     /**
      * Convert a world Space position (X,Z) to terrain space position (X,Z)
      */
-    Vec2 convertToTerrainSpace(Vec2 worldSpace);
+    Vec2 convertToTerrainSpace(Vec2 worldSpace) const;
 
     /**
      * reset the heightmap data.
@@ -444,6 +461,8 @@ protected:
     ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
 
     ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+    
+    Chunk * getChunkByIndex(int x,int y) const;
 
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;

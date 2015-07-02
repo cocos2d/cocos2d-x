@@ -219,6 +219,16 @@ void setKeepScreenOnJni(bool value) {
     }
 }
 
+void vibrateJni(float duration) {
+    JniMethodInfo t;
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "vibrate", "(F)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, duration);
+        
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 extern bool openURLJNI(const char* url) {
     JniMethodInfo t;
     

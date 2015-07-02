@@ -25,7 +25,6 @@
 #ifndef _PHYSICS3D_TEST_H_
 #define _PHYSICS3D_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
 

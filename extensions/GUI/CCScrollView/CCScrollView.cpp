@@ -587,7 +587,7 @@ void ScrollView::onAfterDraw()
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible
-    if (!isVisible() || !isVisitableByVisitingCamera())
+    if (!isVisible())
     {
         return;
     }

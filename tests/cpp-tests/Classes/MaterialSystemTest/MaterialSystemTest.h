@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(MaterialSystemTest);

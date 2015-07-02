@@ -27,6 +27,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet", "..\external\bu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "librecast", "..\external\recast\proj.win32\librecast.vcxproj", "{41E34993-647E-4282-8384-4AB1AE31A452}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjscocos2d", "..\cocos\scripting\js-bindings\proj.win32\libjscocos2d.vcxproj", "{39379840-825A-45A0-B363-C09FFEF864BD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests", "..\tests\js-tests\project\proj.win32\js-tests.vcxproj", "{D0F06A44-A245-4D13-A498-0120C203B539}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -95,6 +99,18 @@ Global
 		{41E34993-647E-4282-8384-4AB1AE31A452}.Release|ARM.ActiveCfg = Release|Win32
 		{41E34993-647E-4282-8384-4AB1AE31A452}.Release|Win32.ActiveCfg = Release|Win32
 		{41E34993-647E-4282-8384-4AB1AE31A452}.Release|Win32.Build.0 = Release|Win32
+		{39379840-825A-45A0-B363-C09FFEF864BD}.Debug|ARM.ActiveCfg = Debug|Win32
+		{39379840-825A-45A0-B363-C09FFEF864BD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{39379840-825A-45A0-B363-C09FFEF864BD}.Debug|Win32.Build.0 = Debug|Win32
+		{39379840-825A-45A0-B363-C09FFEF864BD}.Release|ARM.ActiveCfg = Release|Win32
+		{39379840-825A-45A0-B363-C09FFEF864BD}.Release|Win32.ActiveCfg = Release|Win32
+		{39379840-825A-45A0-B363-C09FFEF864BD}.Release|Win32.Build.0 = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|ARM.ActiveCfg = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Debug|Win32.Build.0 = Debug|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|ARM.ActiveCfg = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.ActiveCfg = Release|Win32
+		{D0F06A44-A245-4D13-A498-0120C203B539}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
