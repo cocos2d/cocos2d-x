@@ -4,14 +4,14 @@
 
 - [Environment requirement](#environment-requirement)
 - [How to run cpp-tests on Tizen](#how-to-run-cpp-tests-on-tizen)
-	- [Run on Tizen devices](#run-on-tizen-devices)
-	- [Run on Tizen emulator](#run-on-tizen-emulator)
-	- [Security profiles](#security-profiles)
+  - [Run on Tizen devices](#run-on-tizen-devices)
+  - [Run on Tizen emulator](#run-on-tizen-emulator)
+  - [Security profiles](#security-profiles)
 - [How to start a new game on Tizen](#how-to-start-a-new-game-on-tizen)
 
 Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 
-If had the Samsung Z1 device, you can get more information from the following two links:
+If you have the Samsung Z1 device, you can get more information from the following two links:
 
 * [Samsung Z developer page](http://developer.samsung.com/samsung-z)
 * [how to enable usb debugging option on Samsung Z1](https://developer.tizen.org/ko/forums/general-support/how-enable-usb-debugging-option-on-my-tizen-mobile-samsung-z1)
@@ -47,7 +47,7 @@ If had the Samsung Z1 device, you can get more information from the following tw
   
 ## Run on Tizen devices
 
-* change `ligcocos2dx` to debug mode and build it
+* change `libcocos2dx` to debug mode and build it
   * right click `libcocos2dx` and select `Build Configurations->Set Active->Debug`
   * right click `libcocos2dx` and select `Build Project`
 * change `cpp-tests` to debug mode and build it
@@ -67,7 +67,7 @@ If you meet `security profile` issue, you can refer to [Security profiles](#secu
 
   ![power-on-emulator](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-power-on-simulator.png)
 
-* change `ligcocos2dx` to emulator mode and build it
+* change `libcocos2dx` to emulator mode and build it
   * right click `libcocos2dx` and select `Build Configurations->Set Active->Emulator`
   * right click `libcocos2dx` and select `Build Project`
 * change `cpp-tests` to emulator mode and run it(`make sure screen is unlocked`)
