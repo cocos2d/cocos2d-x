@@ -45,20 +45,6 @@ class CC_GUI_DLL AbstractCheckButton : public Widget
     
 public:
     /**
-     * Default constructor.
-     *
-     * @lua new
-     */
-    AbstractCheckButton();
-    
-    /**
-     * Default destructor.
-     *
-     * @lua NA
-     */
-    virtual ~AbstractCheckButton();
-    
-    /**
      * Load all textures for initializing a check button.
      *
      * @param background    The background image name.
@@ -155,6 +141,18 @@ CC_CONSTRUCTOR_ACCESS:
                       TextureResType texType = TextureResType::LOCAL);
     
 protected:
+    /**
+     * Default constructor.
+     */
+    AbstractCheckButton();
+    
+    /**
+     * Default destructor.
+     *
+     * @lua NA
+     */
+    virtual ~AbstractCheckButton();
+    
     virtual void initRenderer() override;
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
