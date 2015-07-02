@@ -182,9 +182,9 @@ public:
     
     virtual void addRadioButton(RadioButton* radioButton);
     virtual void removeRadioButton(RadioButton* radioButton);
-	
-	ssize_t getNumberOfRadioButtons() const;
-	RadioButton* getRadioButtonByIndex(int index) const;
+    
+    ssize_t getNumberOfRadioButtons() const;
+    RadioButton* getRadioButtonByIndex(int index) const;
     
     void setAllowedNoSelection(bool allowedNoSelection);
     bool isAllowedNoSelection() const;
@@ -197,8 +197,8 @@ protected:
     
     void onChangedRadioButtonSelect(RadioButton* radioButton);
     void deselect();
-	
-	Vector<RadioButton*> _radioButtons;
+    
+    Vector<RadioButton*> _radioButtons;
     ccRadioButtonGroupCallback _radioButtonGroupEventCallback;
     RadioButton* _selectedRadioButton;
     bool _allowedNoSelection;

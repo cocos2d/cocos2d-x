@@ -149,7 +149,7 @@ void RadioButton::copySpecialProperties(Widget *widget)
         AbstractCheckButton::copySpecialProperties(widget);
         _radioButtonEventCallback = radioButton->_radioButtonEventCallback;
         _ccEventCallback = radioButton->_ccEventCallback;
-		_group = radioButton->_group;
+        _group = radioButton->_group;
     }
 }
 
@@ -164,7 +164,7 @@ RadioButtonGroup::~RadioButtonGroup()
 {
     _radioButtonGroupEventCallback = nullptr;
     _selectedRadioButton = nullptr;
-	_radioButtons.clear();
+    _radioButtons.clear();
 }
 
 RadioButtonGroup* RadioButtonGroup::create()
@@ -189,7 +189,7 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
     if(radioButton != nullptr)
     {
         radioButton->_group = this;
-		_radioButtons.pushBack(radioButton);
+        _radioButtons.pushBack(radioButton);
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr)
         {
@@ -200,13 +200,13 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
 
 void RadioButtonGroup::removeRadioButton(RadioButton* radioButton)
 {
-	ssize_t index = _radioButtons.getIndex(radioButton);
-	if( index == CC_INVALID_INDEX )
-	{
-		CCLOGERROR("The radio button does not belong to this group!");
-		return;
-	}
-	
+    ssize_t index = _radioButtons.getIndex(radioButton);
+    if( index == CC_INVALID_INDEX )
+    {
+        CCLOGERROR("The radio button does not belong to this group!");
+        return;
+    }
+    
     if(radioButton != nullptr)
     {
         radioButton->_group = nullptr;
@@ -214,28 +214,28 @@ void RadioButtonGroup::removeRadioButton(RadioButton* radioButton)
         {
             deselect();
         }
-		_radioButtons.erase(index);
-		
-		if(!_allowedNoSelection && _selectedRadioButton == nullptr && !_radioButtons.empty())
-		{
-			setSelectedButton(0);
-		}
+        _radioButtons.erase(index);
+        
+        if(!_allowedNoSelection && _selectedRadioButton == nullptr && !_radioButtons.empty())
+        {
+            setSelectedButton(0);
+        }
     }
 }
 
 ssize_t RadioButtonGroup::getNumberOfRadioButtons() const
 {
-	return _radioButtons.size();
+    return _radioButtons.size();
 }
 
 RadioButton* RadioButtonGroup::getRadioButtonByIndex(int index) const
 {
-	if(index >= _radioButtons.size())
-	{
-		CCLOGERROR("Out of array index! length=%d, requestedIndex=%d", (int)_radioButtons.size(), index);
-		return nullptr;
-	}
-	return _radioButtons.at(index);
+    if(index >= _radioButtons.size())
+    {
+        CCLOGERROR("Out of array index! length=%d, requestedIndex=%d", (int)_radioButtons.size(), index);
+        return nullptr;
+    }
+    return _radioButtons.at(index);
 }
 
 void RadioButtonGroup::deselect()
@@ -306,14 +306,14 @@ void RadioButtonGroup::copySpecialProperties(Widget *widget)
     {
         _radioButtonGroupEventCallback = radioButtonGroup->_radioButtonGroupEventCallback;
         _ccEventCallback = radioButtonGroup->_ccEventCallback;
-		_selectedRadioButton = radioButtonGroup->_selectedRadioButton;
-		_allowedNoSelection = radioButtonGroup->_allowedNoSelection;
-		
-		_radioButtons.clear();
-		for(const auto& radioButton : radioButtonGroup->_radioButtons)
-		{
-			_radioButtons.pushBack(radioButton);
-		}
+        _selectedRadioButton = radioButtonGroup->_selectedRadioButton;
+        _allowedNoSelection = radioButtonGroup->_allowedNoSelection;
+        
+        _radioButtons.clear();
+        for(const auto& radioButton : radioButtonGroup->_radioButtons)
+        {
+            _radioButtons.pushBack(radioButton);
+        }
     }
 }
 

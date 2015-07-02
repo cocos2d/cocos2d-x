@@ -32,20 +32,20 @@ DEFINE_TEST_SUITE(UIRadioButtonTests);
 class UIRadioButtonTest : public UIScene
 {
 public:
-	CREATE_FUNC(UIRadioButtonTest);
-	
-	UIRadioButtonTest();
-	~UIRadioButtonTest();
-	
-	virtual bool init() override;
-	
-	void addRadioButton(Ref* sender);
-	void deleteRadioButton(Ref* sender);
+    CREATE_FUNC(UIRadioButtonTest);
+    
+    UIRadioButtonTest();
+    ~UIRadioButtonTest();
+    
+    virtual bool init() override;
+    
+    void addRadioButton(Ref* sender);
+    void deleteRadioButton(Ref* sender);
 
 private:
-	cocos2d::ui::RadioButtonGroup* _radioButtonGroup;
-	cocos2d::ui::Text* _allowNoSelectionText;
-	
+    cocos2d::ui::RadioButtonGroup* _radioButtonGroup;
+    cocos2d::ui::Text* _allowNoSelectionText;
+    
 };
 
 
@@ -58,27 +58,27 @@ public:
     ~UIRadioButtonTwoGroupsTest();
 
     virtual bool init() override;
-	void onChangedRadioButtonGroup1(cocos2d::ui::RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type);
-	void onChangedRadioButtonGroup2(cocos2d::ui::RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type);
-	void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton,cocos2d::ui::RadioButton::EventType type);
-	void clearRadioButtonGroup(Ref* sender);
+    void onChangedRadioButtonGroup1(cocos2d::ui::RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type);
+    void onChangedRadioButtonGroup2(cocos2d::ui::RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type);
+    void onChangedRadioButtonSelect(cocos2d::ui::RadioButton* radioButton,cocos2d::ui::RadioButton::EventType type);
+    void clearRadioButtonGroup(Ref* sender);
 
     
 protected:
-	void addLog(const std::string& log);
-	
-	cocos2d::ui::RadioButtonGroup* _radioButtonGroups[2];
-	cocos2d::ui::Text* _groupEventLabel;
-	cocos2d::ui::Text* _buttonEventLabel;
-	cocos2d::ui::Text* _logConsole;
-	int _numberOfLogLines;
+    void addLog(const std::string& log);
+    
+    cocos2d::ui::RadioButtonGroup* _radioButtonGroups[2];
+    cocos2d::ui::Text* _groupEventLabel;
+    cocos2d::ui::Text* _buttonEventLabel;
+    cocos2d::ui::Text* _logConsole;
+    int _numberOfLogLines;
 };
 
 class UIRadioButtonTabTest : public UIScene
 {
 public:
-	CREATE_FUNC(UIRadioButtonTabTest);
-	virtual bool init() override;
+    CREATE_FUNC(UIRadioButtonTabTest);
+    virtual bool init() override;
 };
 
 #endif /* defined(__TestCpp__UIRadioButtonTest__) */
