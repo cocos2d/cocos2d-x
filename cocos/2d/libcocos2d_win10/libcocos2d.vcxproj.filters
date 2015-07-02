@@ -1764,7 +1764,13 @@
     <ClCompile Include="..\..\ui\UIButton.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ui\UICheckBox.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIRadioButton.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ui\UIImageView.cpp">
