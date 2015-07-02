@@ -32,14 +32,14 @@ IMPLEMENT_CLASS_GUI_INFO(RadioButton)
 
 RadioButton::RadioButton() :
 _radioButtonEventCallback(nullptr),
-_parentGroup(nullptr)
+_group(nullptr)
 {
 }
 
 RadioButton::~RadioButton()
 {
     _radioButtonEventCallback = nullptr;
-    _parentGroup = nullptr;
+    _group = nullptr;
 }
 
 RadioButton* RadioButton::create()
@@ -108,9 +108,9 @@ void RadioButton::dispatchSelectChangedEvent(bool selected)
         _ccEventCallback(this, static_cast<int>(eventType));
     }
     
-    if(selected && _parentGroup != nullptr)
+    if(selected && _group != nullptr)
     {
-        _parentGroup->onChangedRadioButtonSelect(this);
+        _group->onChangedRadioButtonSelect(this);
     }
     this->release();
 }
@@ -149,6 +149,7 @@ void RadioButton::copySpecialProperties(Widget *widget)
         AbstractCheckButton::copySpecialProperties(widget);
         _radioButtonEventCallback = radioButton->_radioButtonEventCallback;
         _ccEventCallback = radioButton->_ccEventCallback;
+		_group = radioButton->_group;
     }
 }
 
@@ -163,6 +164,7 @@ RadioButtonGroup::~RadioButtonGroup()
 {
     _radioButtonGroupEventCallback = nullptr;
     _selectedRadioButton = nullptr;
+	_radioButtons.clear();
 }
 
 RadioButtonGroup* RadioButtonGroup::create()
@@ -186,8 +188,8 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
 {
     if(radioButton != nullptr)
     {
-        radioButton->_parentGroup = this;
-        addProtectedChild(radioButton);
+        radioButton->_group = this;
+		_radioButtons.pushBack(radioButton);
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr)
         {
@@ -198,22 +200,42 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
 
 void RadioButtonGroup::removeRadioButton(RadioButton* radioButton)
 {
+	ssize_t index = _radioButtons.getIndex(radioButton);
+	if( index == CC_INVALID_INDEX )
+	{
+		CCLOGERROR("The radio button does not belong to this group!");
+		return;
+	}
+	
     if(radioButton != nullptr)
     {
-        radioButton->_parentGroup = nullptr;
-        bool selected = false;
+        radioButton->_group = nullptr;
         if(radioButton == _selectedRadioButton)
         {
             deselect();
-            selected = true;
         }
-        removeProtectedChild(radioButton);
-        
-        if(selected && !_allowedNoSelection && !_protectedChildren.empty())
-        {
-            setSelectedButton(0);
-        }
+		_radioButtons.erase(index);
+		
+		if(!_allowedNoSelection && _selectedRadioButton == nullptr && !_radioButtons.empty())
+		{
+			setSelectedButton(0);
+		}
     }
+}
+
+ssize_t RadioButtonGroup::getNumberOfRadioButtons() const
+{
+	return _radioButtons.size();
+}
+
+RadioButton* RadioButtonGroup::getRadioButtonByIndex(int index) const
+{
+	if(index >= _radioButtons.size())
+	{
+		CCLOGERROR("Out of array index! length=%d, requestedIndex=%d", (int)_radioButtons.size(), index);
+		return nullptr;
+	}
+	return _radioButtons.at(index);
 }
 
 void RadioButtonGroup::deselect()
@@ -228,14 +250,13 @@ void RadioButtonGroup::deselect()
 
 int RadioButtonGroup::getSelectedButtonIndex() const
 {
-    return (int) _protectedChildren.getIndex(_selectedRadioButton);
+    return (int) _radioButtons.getIndex(_selectedRadioButton);
 }
 
 void RadioButtonGroup::setSelectedButton(int index)
 {
-    CCASSERT(index < _protectedChildren.size(), "Out of array index!");
-    RadioButton* radioButton = dynamic_cast<RadioButton*>(_protectedChildren.at(index));
-    setSelectedButton(radioButton);
+    CCASSERT(index < _radioButtons.size(), "Out of array index!");
+    setSelectedButton(_radioButtons.at(index));
 }
 
 void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
@@ -285,6 +306,14 @@ void RadioButtonGroup::copySpecialProperties(Widget *widget)
     {
         _radioButtonGroupEventCallback = radioButtonGroup->_radioButtonGroupEventCallback;
         _ccEventCallback = radioButtonGroup->_ccEventCallback;
+		_selectedRadioButton = radioButtonGroup->_selectedRadioButton;
+		_allowedNoSelection = radioButtonGroup->_allowedNoSelection;
+		
+		_radioButtons.clear();
+		for(const auto& radioButton : radioButtonGroup->_radioButtons)
+		{
+			_radioButtons.pushBack(radioButton);
+		}
     }
 }
 
@@ -299,7 +328,7 @@ void RadioButtonGroup::onChangedRadioButtonSelect(RadioButton* radioButton)
     this->retain();
     if (_radioButtonGroupEventCallback)
     {
-        int index = (int) _protectedChildren.getIndex(radioButton);
+        int index = (int) _radioButtons.getIndex(radioButton);
         _radioButtonGroupEventCallback(_selectedRadioButton, index, EventType::SELECT_CHANGED);
     }
     if (_ccEventCallback)

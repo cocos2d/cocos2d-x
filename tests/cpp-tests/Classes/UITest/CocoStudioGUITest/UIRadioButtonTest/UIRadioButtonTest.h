@@ -32,10 +32,30 @@ DEFINE_TEST_SUITE(UIRadioButtonTests);
 class UIRadioButtonTest : public UIScene
 {
 public:
-    CREATE_FUNC(UIRadioButtonTest);
+	CREATE_FUNC(UIRadioButtonTest);
+	
+	UIRadioButtonTest();
+	~UIRadioButtonTest();
+	
+	virtual bool init() override;
+	
+	void addRadioButton(Ref* sender);
+	void deleteRadioButton(Ref* sender);
 
-    UIRadioButtonTest();
-    ~UIRadioButtonTest();
+private:
+	cocos2d::ui::RadioButtonGroup* _radioButtonGroup;
+	cocos2d::ui::Text* _allowNoSelectionText;
+	
+};
+
+
+class UIRadioButtonTwoGroupsTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIRadioButtonTwoGroupsTest);
+
+    UIRadioButtonTwoGroupsTest();
+    ~UIRadioButtonTwoGroupsTest();
 
     virtual bool init() override;
 	void onChangedRadioButtonGroup1(cocos2d::ui::RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type);
@@ -48,8 +68,6 @@ protected:
 	void addLog(const std::string& log);
 	
 	cocos2d::ui::RadioButtonGroup* _radioButtonGroups[2];
-	cocos2d::ui::RadioButtonGroup* _radioButtonGroup1;
-	cocos2d::ui::RadioButtonGroup* _radioButtonGroup2;
 	cocos2d::ui::Text* _groupEventLabel;
 	cocos2d::ui::Text* _buttonEventLabel;
 	cocos2d::ui::Text* _logConsole;

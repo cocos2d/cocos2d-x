@@ -128,7 +128,7 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
 protected:
     ccRadioButtonCallback _radioButtonEventCallback;
-    RadioButtonGroup* _parentGroup;
+    RadioButtonGroup* _group;
     
 };
 
@@ -182,6 +182,9 @@ public:
     
     virtual void addRadioButton(RadioButton* radioButton);
     virtual void removeRadioButton(RadioButton* radioButton);
+	
+	ssize_t getNumberOfRadioButtons() const;
+	RadioButton* getRadioButtonByIndex(int index) const;
     
     void setAllowedNoSelection(bool allowedNoSelection);
     bool isAllowedNoSelection() const;
@@ -194,7 +197,8 @@ protected:
     
     void onChangedRadioButtonSelect(RadioButton* radioButton);
     void deselect();
-    
+	
+	Vector<RadioButton*> _radioButtons;
     ccRadioButtonGroupCallback _radioButtonGroupEventCallback;
     RadioButton* _selectedRadioButton;
     bool _allowedNoSelection;

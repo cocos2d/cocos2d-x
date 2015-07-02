@@ -6,11 +6,120 @@ using namespace cocos2d::ui;
 UIRadioButtonTests::UIRadioButtonTests()
 {
 	ADD_TEST_CASE(UIRadioButtonTest);
+	ADD_TEST_CASE(UIRadioButtonTwoGroupsTest);
 	ADD_TEST_CASE(UIRadioButtonTabTest);
 }
 
+
 // UIRadioButtonTest
-UIRadioButtonTest::UIRadioButtonTest()
+UIRadioButtonTest::UIRadioButtonTest() :
+_radioButtonGroup(nullptr),
+_allowNoSelectionText(nullptr)
+{
+}
+UIRadioButtonTest::~UIRadioButtonTest()
+{
+}
+
+static const float BUTTON_WIDTH = 30;
+static float startPosX = 0;
+
+bool UIRadioButtonTest::init()
+{
+	if (UIScene::init())
+	{
+		Size widgetSize = _widget->getContentSize();
+		
+		// Create a radio button group
+		_radioButtonGroup = RadioButtonGroup::create();
+		_uiLayer->addChild(_radioButtonGroup);
+		
+		// Create the radio buttons
+		static const int NUMBER_OF_BUTTONS = 5;
+		startPosX = widgetSize.width / 2.0f - ((NUMBER_OF_BUTTONS - 1) / 2.0f) * BUTTON_WIDTH;
+		for(int i = 0; i < NUMBER_OF_BUTTONS; ++i)
+		{
+			RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
+			float posX = startPosX + BUTTON_WIDTH * i;
+			radioButton->setPosition(Vec2(posX, widgetSize.height / 2.0f + 10));
+			radioButton->setScale(1.2f);
+			_radioButtonGroup->addRadioButton(radioButton);
+			_uiLayer->addChild(radioButton);
+		}
+		
+		// Add button
+		Button* addButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+		addButton->setTitleText("Add");
+		addButton->setPosition(Vec2(widgetSize.width / 2.0f - 100, widgetSize.height / 2.0f - 65));
+		addButton->addClickEventListener(CC_CALLBACK_1(UIRadioButtonTest::addRadioButton, this));
+		addButton->setScale(0.7f);
+		_uiLayer->addChild(addButton);
+		
+		// Delete button
+		Button* deleteButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+		deleteButton->setTitleText("Delete");
+		deleteButton->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 65));
+		deleteButton->addClickEventListener(CC_CALLBACK_1(UIRadioButtonTest::deleteRadioButton, this));
+		deleteButton->setScale(0.7f);
+		_uiLayer->addChild(deleteButton);
+		
+		// Toggle button
+		Button* allowNoSelectionToggle = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+		allowNoSelectionToggle->setTitleText("Toggle Allow-No-Selection");
+		allowNoSelectionToggle->setPosition(Vec2(widgetSize.width / 2.0f + 100, widgetSize.height / 2.0f - 65));
+		allowNoSelectionToggle->addClickEventListener([this](Ref*) {
+			_radioButtonGroup->setAllowedNoSelection(!_radioButtonGroup->isAllowedNoSelection());
+			_allowNoSelectionText->setString(_radioButtonGroup->isAllowedNoSelection() ? "No selection is allowed." : "No selection is disallowed.");
+		});
+		allowNoSelectionToggle->setScale(0.7f);
+		_uiLayer->addChild(allowNoSelectionToggle);
+		
+		// Add a label for toggle
+		_allowNoSelectionText = Text::create("No selection is disallowed.", "fonts/Marker Felt.ttf", 20);
+		_allowNoSelectionText->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + 70));
+		_uiLayer->addChild(_allowNoSelectionText);
+
+		return true;
+	}
+	return false;
+}
+
+void UIRadioButtonTest::addRadioButton(Ref* sender)
+{
+	Vec2 pos;
+	if(_radioButtonGroup->getNumberOfRadioButtons() > 0)
+	{
+		RadioButton* lastRadioButton = _radioButtonGroup->getRadioButtonByIndex((int)_radioButtonGroup->getNumberOfRadioButtons() - 1);
+		pos = lastRadioButton->getPosition();
+	}
+	else
+	{
+		pos.x = startPosX - BUTTON_WIDTH;
+		pos.y = _widget->getContentSize().height / 2.0f + 10;
+	}
+	
+	RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
+	pos.x += + BUTTON_WIDTH;
+	radioButton->setPosition(pos);
+	_radioButtonGroup->addRadioButton(radioButton);
+	_uiLayer->addChild(radioButton);
+}
+
+void UIRadioButtonTest::deleteRadioButton(Ref* sender)
+{
+	if(_radioButtonGroup->getNumberOfRadioButtons() > 0)
+	{
+		RadioButton* radioButton = _radioButtonGroup->getRadioButtonByIndex((int)_radioButtonGroup->getNumberOfRadioButtons() - 1);
+		_radioButtonGroup->removeRadioButton(radioButton);
+		_uiLayer->removeChild(radioButton);
+	}
+}
+
+
+
+
+// UIRadioButtonTwoGroupsTest
+UIRadioButtonTwoGroupsTest::UIRadioButtonTwoGroupsTest()
 : _groupEventLabel(nullptr),
 _buttonEventLabel(nullptr),
 _logConsole(nullptr),
@@ -20,11 +129,11 @@ _numberOfLogLines(0)
 	_radioButtonGroups[1] = nullptr;
 }
 
-UIRadioButtonTest::~UIRadioButtonTest()
+UIRadioButtonTwoGroupsTest::~UIRadioButtonTwoGroupsTest()
 {
 }
 
-bool UIRadioButtonTest::init()
+bool UIRadioButtonTwoGroupsTest::init()
 {
     if (UIScene::init())
     {
@@ -58,14 +167,14 @@ bool UIRadioButtonTest::init()
 			_radioButtonGroups[type] = RadioButtonGroup::create();
 			if(type == 0)
 			{
-				_radioButtonGroups[type]->addEventListener(CC_CALLBACK_3(UIRadioButtonTest::onChangedRadioButtonGroup1, this));
+				_radioButtonGroups[type]->addEventListener(CC_CALLBACK_3(UIRadioButtonTwoGroupsTest::onChangedRadioButtonGroup1, this));
 				normalImage = "cocosui/radio_button_off.png";
 				selectedImage = "cocosui/radio_button_on.png";
 				posYAdjust = 35;
 			}
 			else
 			{
-				_radioButtonGroups[type]->addEventListener(CC_CALLBACK_3(UIRadioButtonTest::onChangedRadioButtonGroup2, this));
+				_radioButtonGroups[type]->addEventListener(CC_CALLBACK_3(UIRadioButtonTwoGroupsTest::onChangedRadioButtonGroup2, this));
 				normalImage = "cocosui/UIEditorTest/2.1/Button/button_common_box03_003 copy 221.png";
 				selectedImage = "cocosui/UIEditorTest/2.1/Button/button_common_box03_001.png";
 				posYAdjust = -15;
@@ -85,8 +194,9 @@ bool UIRadioButtonTest::init()
 				radioButton->setScale(1.5f);
 				radioButton->setPosition(Vec2(posX, posY));
 				
-				radioButton->addEventListener(CC_CALLBACK_2(UIRadioButtonTest::onChangedRadioButtonSelect, this));
+				radioButton->addEventListener(CC_CALLBACK_2(UIRadioButtonTwoGroupsTest::onChangedRadioButtonSelect, this));
 				radioButton->setTag(i);
+				_uiLayer->addChild(radioButton);
 				_radioButtonGroups[type]->addRadioButton(radioButton);
 			}
 		}
@@ -94,7 +204,7 @@ bool UIRadioButtonTest::init()
 		Button* clearButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
 		clearButton->setTitleText("Clear");
 		clearButton->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - 65));
-		clearButton->addClickEventListener(CC_CALLBACK_1(UIRadioButtonTest::clearRadioButtonGroup, this));
+		clearButton->addClickEventListener(CC_CALLBACK_1(UIRadioButtonTwoGroupsTest::clearRadioButtonGroup, this));
 		clearButton->setScale(0.8f);
 		_uiLayer->addChild(clearButton);
 		
@@ -107,7 +217,7 @@ bool UIRadioButtonTest::init()
     return false;
 }
 
-void UIRadioButtonTest::onChangedRadioButtonGroup1(RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type)
+void UIRadioButtonTwoGroupsTest::onChangedRadioButtonGroup1(RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type)
 {
 	CCASSERT(index == _radioButtonGroups[0]->getSelectedButtonIndex(), "The two indexes must match!");
 	__String* text = String::createWithFormat("RadioButtonGroup1 : %d", index);
@@ -115,7 +225,7 @@ void UIRadioButtonTest::onChangedRadioButtonGroup1(RadioButton* radioButton, int
 	addLog(text->getCString());
 }
 
-void UIRadioButtonTest::onChangedRadioButtonGroup2(RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type)
+void UIRadioButtonTwoGroupsTest::onChangedRadioButtonGroup2(RadioButton* radioButton, int index, cocos2d::ui::RadioButtonGroup::EventType type)
 {
 	CCASSERT(index == _radioButtonGroups[1]->getSelectedButtonIndex(), "The two indexes must match!");
 	__String* text = String::createWithFormat("RadioButtonGroup2 : %d", index);
@@ -123,7 +233,7 @@ void UIRadioButtonTest::onChangedRadioButtonGroup2(RadioButton* radioButton, int
 	addLog(text->getCString());
 }
 
-void UIRadioButtonTest::onChangedRadioButtonSelect(RadioButton* radioButton, RadioButton::EventType type)
+void UIRadioButtonTwoGroupsTest::onChangedRadioButtonSelect(RadioButton* radioButton, RadioButton::EventType type)
 {
 	if(radioButton == nullptr)
 	{
@@ -150,7 +260,7 @@ void UIRadioButtonTest::onChangedRadioButtonSelect(RadioButton* radioButton, Rad
 	addLog(text->getCString());
 }
 
-void UIRadioButtonTest::clearRadioButtonGroup(Ref* sender)
+void UIRadioButtonTwoGroupsTest::clearRadioButtonGroup(Ref* sender)
 {
 	for(int i = 0; i < 2; ++i)
 	{
@@ -158,7 +268,7 @@ void UIRadioButtonTest::clearRadioButtonGroup(Ref* sender)
 	}
 }
 
-void UIRadioButtonTest::addLog(const std::string& log)
+void UIRadioButtonTwoGroupsTest::addLog(const std::string& log)
 {
 	std::string existingLog = _logConsole->getString();
 	if(!existingLog.empty())
@@ -215,6 +325,7 @@ bool UIRadioButtonTabTest::init()
 			radioButton->setScale(BUTTON_SCALE);
 			radioButton->setZoomScale(0.05f);
 			radioButtonGroup->addRadioButton(radioButton);
+			_uiLayer->addChild(radioButton);
 		}
 		radioButtonGroup->setSelectedButton(0);
 		return true;
