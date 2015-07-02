@@ -38,6 +38,10 @@ namespace ui {
 
 class RadioButtonGroup;
 
+/**
+ *  RadioButton is a specific type of two-states button that is similar to CheckBox.
+ *  Additionally, it can be used together with RadioButtonGroup to interact with other radio buttons.
+ */
 class CC_GUI_DLL RadioButton : public AbstractCheckButton
 {
 
@@ -126,12 +130,16 @@ protected:
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-	
+    
     ccRadioButtonCallback _radioButtonEventCallback;
     RadioButtonGroup* _group;
     
 };
 
+/**
+ *  RadioButtonGroup groups designated radio buttons to make them interact to each other.
+ *  In one RadioButtonGroup, only one or no RadioButton can be checked.
+ */
 class CC_GUI_DLL RadioButtonGroup : public Widget
 {
     friend class RadioButton;
@@ -175,18 +183,71 @@ public:
      */
     void addEventListener(const ccRadioButtonGroupCallback& callback);
     
+    /**
+     * Get the index of selected radio button.
+     *
+     * @return the selected button's index. Returns -1 if no button is selected.
+     */
     virtual int getSelectedButtonIndex() const;
     
+    /**
+     * Select a radio button by index.
+     *
+     * @param index of the radio button
+     */
     virtual void setSelectedButton(int index);
+    
+    /**
+     * Select a radio button by instance.
+     *
+     * @param radio button instance
+     */
     virtual void setSelectedButton(RadioButton* radioButton);
     
+    /**
+     * Add a radio button into this group.
+     *
+     * @param radio button instance
+     */
     virtual void addRadioButton(RadioButton* radioButton);
+    
+    /**
+     * Remove a radio button from this group.
+     *
+     * @param radio button instance
+     */
     virtual void removeRadioButton(RadioButton* radioButton);
     
+    /**
+     * Get the number of radio buttons in this group.
+     *
+     * @return the number of radio buttons in this group
+     */
     ssize_t getNumberOfRadioButtons() const;
+    
+    /**
+     * Get a radio button in this group by index.
+     *
+     * @param index of the radio button
+     * @return radio button instance. Returns nullptr if out of index.
+     */
     RadioButton* getRadioButtonByIndex(int index) const;
     
+    /**
+     * Set a flag for allowing no-selection feature.
+     * If it is allowed, no radio button can be selected.
+     * If it is not allowed, one radio button must be selected all time except it is empty.
+     * Default is not allowed.
+     *
+     * @param true means allowing no-selection, false means disallowing no-selection.
+     */
     void setAllowedNoSelection(bool allowedNoSelection);
+    
+    /**
+     * Query whether no-selection is allowed or not.
+     *
+     * @param true means no-selection is allowed, false means no-selection is not allowed.
+     */
     bool isAllowedNoSelection() const;
     
     virtual std::string getDescription() const override;
