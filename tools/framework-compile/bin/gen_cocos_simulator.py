@@ -180,7 +180,7 @@ class SimulatorCompiler(object):
 
         command = ' '.join([
             "mkdir -p %s" % (os.path.join(self.simulator_abs_path, "src")),
-            " && %s compile -p mac -m %s -o \"%s\" --no-res" % (self.cocos_bin
+            " && %s compile -p mac -m %s -o \"%s\" --no-res --compile-script 0" % (self.cocos_bin
                 , "debug" if self.mode == 'debug' else "release"
                 , os.path.join(self.simulator_output_dir,"mac")),
             " && strip %s" % (os.path.join(self.simulator_output_dir,"mac","Simulator.app/Contents/MacOS/Simulator")),
@@ -198,7 +198,7 @@ class SimulatorCompiler(object):
             utils_cocos.execute_command(command, project_directory)
 
         command = ' '.join([
-            " %s compile -p ios -m %s -o \"%s\" --no-res" % (self.cocos_bin
+            " %s compile -p ios -m %s -o \"%s\" --no-res --compile-script 0" % (self.cocos_bin
                 , "debug" if self.mode == 'debug' else "release"
                 , os.path.join(self.simulator_output_dir,"ios")),
             " && strip %s" % (os.path.join(self.simulator_output_dir,"ios","Simulator.app/Simulator")),
@@ -228,7 +228,7 @@ class SimulatorCompiler(object):
             win32_src_dir = self.convert_path_to_win32(win32_src_dir)
             win32_dll_dir = self.convert_path_to_win32(os.path.join(os.path.dirname(self.cur_dir),"dll/"))
             command = ' '.join([
-                " %s compile -p win32 -m debug --no-res %s" % (self.cocos_bin, ver_param),
+                " %s compile -p win32 -m debug --no-res --compile-script 0 %s" % (self.cocos_bin, ver_param),
                 " && xcopy /Y %s*.dll %s" % (win32_src_dir, win32_output_dir),
                 " && xcopy /Y %s*.exe %s" % (win32_src_dir, win32_output_dir),
                 " && %s" % (lang_copy_command),
@@ -236,7 +236,7 @@ class SimulatorCompiler(object):
             ])
         else:
             command = ' '.join([
-                " %s compile -p win32 -m release --no-res -o %s %s" % (self.cocos_bin,win32_output_dir,ver_param),
+                " %s compile -p win32 -m release --no-res --compile-script 0 -o %s %s" % (self.cocos_bin,win32_output_dir,ver_param),
                 " && %s" % (lang_copy_command),
                 ])
 
@@ -252,7 +252,7 @@ class SimulatorCompiler(object):
             ])
 
         command = ' '.join([
-            " %s compile -p android --ndk-mode %s -o \"%s\" --no-res" % (self.cocos_bin
+            " %s compile -p android --ndk-mode %s -o \"%s\" --no-res --compile-script 0" % (self.cocos_bin
                  , "debug" if self.mode == 'debug' else "release"
                  , os.path.join(self.simulator_output_dir,"android")),
             "&& %s" % (rename_command),
