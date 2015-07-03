@@ -8,6 +8,7 @@ import shutil
 import excopy
 import json
 import utils_cocos
+import gen_prebuilt_mk
 
 from custom_error import CustomError
 from custom_error import Logging
@@ -21,11 +22,13 @@ class CocosLibsCompiler(object):
     KEY_XCODE_PROJS_INFO = 'xcode_projs_info'
     KEY_VS_PROJS_INFO = 'vs_projs_info'
     KEY_SUPPORT_VS_VERSIONS = 'support_vs_versions'
+    KEY_ANDROID_MKS = "android_mks"
     CHECK_KEYS = [
         KEY_LIBS_OUTPUT,
         KEY_XCODE_PROJS_INFO,
         KEY_VS_PROJS_INFO,
-        KEY_SUPPORT_VS_VERSIONS
+        KEY_SUPPORT_VS_VERSIONS,
+        KEY_ANDROID_MKS
     ]
 
     KEY_XCODE_TARGETS = 'targets'
@@ -87,9 +90,9 @@ class CocosLibsCompiler(object):
         if self.build_mac:
             self.compile_mac_ios()
         if self.build_android:
-            self.compile_android("js")
-            self.compile_android("lua")
-
+            self.compile_android()
+            # generate prebuilt mk files
+            self.modify_binary_mk()
 
     def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
         build_cmd = " ".join([
@@ -276,7 +279,7 @@ class CocosLibsCompiler(object):
                 mac_strip_cmd = "xcrun strip -S %s/*.a" % mac_out_dir
                 utils_cocos.execute_command(mac_strip_cmd)
 
-    def compile_android(self, language):
+    def compile_android(self):
         print("compile android")
         # build .so for android
         CONSOLE_PATH = "tools/cocos2d-console/bin"
@@ -290,17 +293,9 @@ class CocosLibsCompiler(object):
         else:
             cmd_path = os.path.join(console_dir, "cocos")
 
-        proj_name = "My%sGame" % language
-        proj_dir = engine_dir
-        proj_path = os.path.join(proj_dir, proj_name)
-        utils_cocos.rmdir(proj_path)
-
-        # create a runtime project
-        create_cmd = "%s new -l %s -t runtime -d %s %s" % (cmd_path, language, proj_dir, proj_name)
-        utils_cocos.execute_command(create_cmd)
-
-        # build it
-        build_cmd = "%s compile -s %s -p android --ndk-mode release -j 4 --app-abi %s" % (cmd_path, proj_path, self.app_abi)
+        # build the simulator project
+        proj_path = os.path.join(engine_dir, 'tools/simulator')
+        build_cmd = "%s compile -s %s -p android --ndk-mode release --app-abi %s" % (cmd_path, proj_path, self.app_abi)
         utils_cocos.execute_command(build_cmd)
 
         # copy .a to prebuilt dir
@@ -348,9 +343,6 @@ class CocosLibsCompiler(object):
             if os.path.exists(strip_cmd_path) and os.path.exists(os.path.join(android_out_dir, "x86")):
                 self.trip_libs(strip_cmd_path, os.path.join(android_out_dir, 'x86'))
 
-        # remove the project
-        utils_cocos.rmdir(proj_path)
-
     def trip_libs(self, strip_cmd, folder):
         if not os.path.isdir(folder):
             return
@@ -365,6 +357,16 @@ class CocosLibsCompiler(object):
         else:
             strip_cmd = "%s -S %s/*.a" % (strip_cmd, folder)
             utils_cocos.execute_command(strip_cmd)
+
+    def modify_binary_mk(self):
+        android_libs = os.path.join(self.lib_dir, "android")
+        android_mks = self.cfg_info[CocosLibsCompiler.KEY_ANDROID_MKS]
+        for mk_file in android_mks:
+            mk_file_path = os.path.join(self.repo_x, mk_file)
+            print('gen %s' % mk_file_path)
+            dst_file_path = os.path.join(os.path.dirname(mk_file_path), "prebuilt-mk", os.path.basename(mk_file_path))
+            tmp_obj = gen_prebuilt_mk.MKGenerator(mk_file_path, android_libs, dst_file_path)
+            tmp_obj.do_generate()
 
     def clean_libs(self):
         print("to clean libs")
