@@ -80,6 +80,8 @@ def build_templates(mode, templates, is_runtime):
 
             if node_name == "windows-universal":
                 #run wp8.1 and windows 8.1
+                if is_runtime and type == "lua":
+                    continue
                 wp_ret = os.system("cocos compile -p wp8_1 " + build_mode_args + " -s " + test_project_prefix + type + " --compile-script 0")
                 winrt_ret = os.system("cocos compile -p metro " + build_mode_args + " -s " + test_project_prefix + type + " --compile-script 0")
                 ret += wp_ret
