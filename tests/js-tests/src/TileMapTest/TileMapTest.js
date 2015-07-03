@@ -229,7 +229,7 @@ var TMXOrthoTest2 = TileDemo.extend({
     },
     onExit:function () {
         this._super();
-        director.setProjection(cc.Director.PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
     },
 
     // Automation
@@ -1122,7 +1122,7 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
     },
     onExit:function () {
         // At exit use any other projection.
-        //	director.setProjection:cc.Director.PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         this._super();
     },
     repositionSprite:function (dt) {
@@ -1196,7 +1196,7 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
     },
     onExit:function () {
         // At exit use any other projection.
-        //	director.setProjection:cc.Director.PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
         this._super();
     },
     repositionSprite:function (dt) {
@@ -1673,6 +1673,11 @@ var TileMapTestScene = TestScene.extend({
         cc.director.setDepthTest(true);
 
         director.runScene(this);
+    },
+    onExit:function () {
+        cc.log("onExit");
+        cc.director.setDepthTest(false);
+        this._super();
     }
 });
 

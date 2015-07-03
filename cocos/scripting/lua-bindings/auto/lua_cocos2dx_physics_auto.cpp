@@ -5,7 +5,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_physics_PhysicsShape_getFriction(lua_State* tolua_S)
 {
     int argc = 0;

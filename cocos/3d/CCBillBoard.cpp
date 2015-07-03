@@ -103,8 +103,6 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         return;
     }
     bool visibleByCamera = isVisitableByVisitingCamera();
-    if (!visibleByCamera && _children.empty())
-        return;
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
@@ -121,8 +119,6 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     Director* director = Director::getInstance();
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    
-    
     
     int i = 0;
     

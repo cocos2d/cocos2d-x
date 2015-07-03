@@ -262,7 +262,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
-    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
+    _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             Node::removeAllChildrenWithCleanup(true);
@@ -275,16 +275,16 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             }
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_purgeTextureListener, 1);
     
-    auto resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
+    _resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             _fontAtlas = nullptr;
             this->setTTFConfig(_fontConfig);
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(resetTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_resetTextureListener, 2);
 }
 
 Label::~Label()
@@ -295,6 +295,8 @@ Label::~Label()
     {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
+    _eventDispatcher->removeEventListener(_purgeTextureListener);
+    _eventDispatcher->removeEventListener(_resetTextureListener);
 
     CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
@@ -690,7 +692,7 @@ void Label::updateQuads()
             }
             if (_lettersInfo[ctr].position.y - letterDef.height < 0.f)
             {
-                _reusedRect.size.height = _lettersInfo[ctr].position.y;
+                _reusedRect.size.height = _lettersInfo[ctr].position.y < 0.f ? 0.f : _lettersInfo[ctr].position.y;
             }
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
@@ -712,8 +714,8 @@ bool Label::recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefiniti
 
     _lettersInfo[spriteIndex].def = letterDef;
     _lettersInfo[spriteIndex].position = point;
-    _lettersInfo[spriteIndex].contentSize.width = _lettersInfo[spriteIndex].def.width;
-    _lettersInfo[spriteIndex].contentSize.height = _lettersInfo[spriteIndex].def.height;
+    _lettersInfo[spriteIndex].contentSize.width = letterDef.width;
+    _lettersInfo[spriteIndex].contentSize.height = letterDef.height;
     _limitShowCount++;
 
     return _lettersInfo[spriteIndex].def.validDefinition;

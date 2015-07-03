@@ -77,6 +77,13 @@ CSNode3DTest::CSNode3DTest()
 {
     auto node = CSLoader::createNode("ccs-res/CocosStudio3DTest/Node3D.csb");
 
+    auto size = Director::getInstance()->getWinSize();
+    auto label = Label::create();
+    label->setString(std::string("Function demo, no content to show"));
+    label->setPosition(size.width / 2, size.height / 2);
+    label->setTextColor(Color4B::ORANGE);
+    node->addChild(label);
+
     addChild(node);
 }
 

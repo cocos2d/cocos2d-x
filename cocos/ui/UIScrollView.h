@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ui/UILayout.h"
 #include "ui/GUIExport.h"
+#include <list>
 
 NS_CC_BEGIN
 /**
@@ -304,7 +305,7 @@ public:
      *
      * @return The inner container size.
      */
-	const Size& getInnerContainerSize() const;
+    const Size& getInnerContainerSize() const;
 
     /**
      * Add callback function which will be called  when scrollview event triggered.
@@ -408,6 +409,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
+    enum class MoveDirection
+    {
+        TOP,
+        BOTTOM,
+        LEFT,
+        RIGHT,
+    };
+	
     virtual void initRenderer() override;
 
     virtual void onSizeChanged() override;
@@ -416,29 +425,33 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-
-
+	
+    bool isOutOfBoundary(MoveDirection dir) const;
+    bool isOutOfBoundaryTopOrBottom() const;
+    bool isOutOfBoundaryLeftOrRight() const;
+	
     void moveChildren(float offsetX, float offsetY);
-    void autoScrollChildren(float dt);
-    void bounceChildren(float dt);
-    void checkBounceBoundary();
-    bool checkNeedBounce();
-    void startAutoScrollChildrenWithOriginalSpeed(const Vec2& dir, float v, bool attenuated, float acceleration);
+	
+    void startInertiaScroll();
+    void processInertiaScrolling(float dt);
+	
+    void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
-    void jumpToDestination(const Vec2& des);
-    void stopAutoScrollChildren();
-    void startBounceChildren(float v);
-    void stopBounceChildren();
-    bool checkCustomScrollDestination(float* touchOffsetX, float* touchOffsetY);
+    void processAutoScrolling(float deltaTime);
 
+    bool startBounceBackIfNeeded();
+
+    void jumpToDestination(const Vec2& des);
+
+	
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    bool scrollChildrenVertical(float touchOffsetX, float touchOffsetY);
-    bool scrollChildrenHorizontal(float touchOffsetX, float touchOffestY);
-    bool scrollChildrenBoth(float touchOffsetX, float touchOffsetY);
-
-
-    bool bounceScrollChildren(float touchOffsetX, float touchOffsetY);
+    // Without bounce
+    bool processScrollUp(float* offsetYResult, float touchOffsetY);
+    bool processScrollDown(float* offsetYResult, float touchOffsetY);
+    bool processScrollLeft(float* offsetXResult, float touchOffsetX);
+    bool processScrollRight(float* offsetXResult, float touchOffsetX);
+	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
 
@@ -449,61 +462,45 @@ protected:
 
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
 
-    void recordSlidTime(float dt);
+    void processScrollEvent(MoveDirection dir, bool bounce);
+    void processScrollingEvent();
+    void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
 
-    void scrollToTopEvent();
-    void scrollToBottomEvent();
-    void scrollToLeftEvent();
-    void scrollToRightEvent();
-    void scrollingEvent();
-
-    void bounceTopEvent();
-    void bounceBottomEvent();
-    void bounceLeftEvent();
-    void bounceRightEvent();
+    Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
 
 protected:
     Layout* _innerContainer;
 
     Direction _direction;
-    Vec2 _autoScrollDir;
 
     float _topBoundary;
     float _bottomBoundary;
     float _leftBoundary;
     float _rightBoundary;
 
-    float _bounceTopBoundary;
-    float _bounceBottomBoundary;
-    float _bounceLeftBoundary;
-    float _bounceRightBoundary;
-
-
-    bool _autoScroll;
-    float _autoScrollAddUpTime;
-
-    float _autoScrollOriginalSpeed;
-    float _autoScrollAcceleration;
-    bool _isAutoScrollSpeedAttenuated;
-    bool _needCheckAutoScrollDestination;
-    Vec2 _autoScrollDestination;
-
     bool _bePressed;
-    float _slidTime;
-    Vec2 _moveChildPoint;
-    float _childFocusCancelOffset;
 
-    bool _leftBounceNeeded;
-    bool _topBounceNeeded;
-    bool _rightBounceNeeded;
-    bool _bottomBounceNeeded;
+    float _childFocusCancelOffsetInInch;
 
-    bool _bounceEnabled;
-    bool _bouncing;
-    Vec2 _bounceDir;
-    float _bounceOriginalSpeed;
     bool _inertiaScrollEnabled;
+    bool _inertiaScrolling;
+    Vec2 _inertiaInitiVelocity;
+    std::list<Vec2> _inertiaTouchDisplacements;
+    std::list<float> _inertiaTouchTimeDeltas;
+    long long _inertiaPrevTouchTimestamp;
+    float _inertiaScrollExpectedTime;
+    float _inertiaScrollElapsedTime;
 
+    bool _autoScrolling;
+    bool _autoScrollAttenuate;
+    Vec2 _autoScrollStartPosition;
+    Vec2 _autoScrollTargetDelta;
+    float _autoScrollDuration;
+    float _autoScrollAccumulatedTime;
+	
+    bool _bounceEnabled;
+    bool _bouncingBack;
+	
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

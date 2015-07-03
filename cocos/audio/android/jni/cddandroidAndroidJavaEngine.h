@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
-#include <unordered_map>
+#include <list>
 
 namespace CocosDenshion {
     namespace android {
@@ -62,7 +62,7 @@ namespace CocosDenshion {
         private :
             bool _implementBaseOnAudioEngine;
             float _effectVolume;
-            std::unordered_map<int, int> _soundIDs;
+            std::list<int> _soundIDs;
         };
     }
 }

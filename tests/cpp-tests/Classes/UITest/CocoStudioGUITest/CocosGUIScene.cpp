@@ -2,6 +2,7 @@
 
 #include "UIButtonTest/UIButtonTest.h"
 #include "UICheckBoxTest/UICheckBoxTest.h"
+#include "UIRadioButtonTest/UIRadioButtonTest.h"
 #include "UISliderTest/UISliderTest.h"
 #include "UIImageViewTest/UIImageViewTest.h"
 #include "UILoadingBarTest/UILoadingBarTest.h"
@@ -42,6 +43,7 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     addTest("Scale9Sprite Test", [](){ return new (std::nothrow) UIScale9SpriteTests; });
     addTest("Button Test", [](){ return new (std::nothrow) UIButtonTests; });
     addTest("CheckBox Test", [](){ return new (std::nothrow) UICheckBoxTests; });
+    addTest("RadioButton Test", [](){ return new (std::nothrow) UIRadioButtonTests; });
     addTest("Slider Test", [](){ return new (std::nothrow) UISliderTests; });
    
     addTest("ImageView Test", [](){ return new (std::nothrow) UIImageViewTests; });

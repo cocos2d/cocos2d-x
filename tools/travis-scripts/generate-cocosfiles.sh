@@ -6,7 +6,7 @@ PROJECT_ROOT="$DIR"/../..
 COMMITTAG="[AUTO][ci skip]: updating cocos2dx_files.json"
 PUSH_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 OUTPUT_FILE_PATH="${PROJECT_ROOT}/templates/cocos2dx_files.json"
-FETCH_REMOTE_BRANCH="v3"
+FETCH_REMOTE_BRANCH="v3.7-release"
 COMMIT_PATH="templates/cocos2dx_files.json"
 
 # Exit on error

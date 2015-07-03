@@ -262,6 +262,36 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @overload self, cc.Texture2D         
+-- @function [parent=#Sprite] createWithTexture
+-- @param self
+-- @param #cc.Texture2D texture
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+
+--------------------------------
+-- Creates a sprite with an sprite frame name.<br>
+-- A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.<br>
+-- If the SpriteFrame doesn't exist it will raise an exception.<br>
+-- param   spriteFrameName A null terminated string which indicates the sprite frame name.<br>
+-- return  An autoreleased sprite object.
+-- @function [parent=#Sprite] createWithSpriteFrameName 
+-- @param self
+-- @param #string spriteFrameName
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- Creates a sprite with an sprite frame.<br>
+-- param   spriteFrame    A sprite frame which involves a texture and a rect.<br>
+-- return  An autoreleased sprite object.
+-- @function [parent=#Sprite] createWithSpriteFrame 
+-- @param self
+-- @param #cc.SpriteFrame spriteFrame
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
 -- @overload self, cc.Node, int, string         
 -- @overload self, cc.Node, int, int         
 -- @function [parent=#Sprite] addChild

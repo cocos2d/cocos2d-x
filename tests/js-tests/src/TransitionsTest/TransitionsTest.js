@@ -179,6 +179,10 @@ var transitionsIdx = 0;
 // every .Scene each test used must inherit from TestScene,
 // make sure the test have the menu item for back to main menu
 var TransitionsTestScene = TestScene.extend({
+    onEnter: function () {
+        this._super();
+        director.setDepthTest(false);
+    },
     runThisTest:function () {
         var layer = new TestLayer1();
         this.addChild(layer);
