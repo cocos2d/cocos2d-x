@@ -108,6 +108,10 @@ def main():
     #     os.system("git clean -xdf -f")
     # else:
     #     print "local build, no need to cleanup"
+    #remove stats module
+    os.system("cd " + workspace)
+    os.system("rm tools/cocos2d-console/bin/cocos_stat.py")
+    os.system("rm tools/cocos2d-console/bin/cocos_stat.pyc")
 
     return(exit_code)
 
