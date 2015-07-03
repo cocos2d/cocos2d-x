@@ -20494,6 +20494,16 @@ bool
 },
 
 /**
+ * @method setAccelerometerInterval
+ * @param {float} arg0
+ */
+setAccelerometerInterval : function (
+float 
+)
+{
+},
+
+/**
  * @method setKeepScreenOn
  * @param {bool} arg0
  */
@@ -20503,21 +20513,11 @@ bool
 {
 },
 
- /**
+/**
  * @method vibrate
  * @param {float} arg0
  */
 vibrate : function (
-float
-)
-{
-},
-
-/**
- * @method setAccelerometerInterval
- * @param {float} arg0
- */
-setAccelerometerInterval : function (
 float 
 )
 {
