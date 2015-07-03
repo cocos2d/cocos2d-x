@@ -31,10 +31,12 @@ NS_CC_BEGIN
 
 namespace ui {
     
-	static const char* HALF_CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAIVBMVEVGVWtGVWtGVWtGVWtGVWtGVWtGVWtGVWtGVWtGVWtGVWt3DPc3AAAAC3RSTlMAAgMLLFBTYWNkZuZhN4QAAAAvSURBVAjXRchBDgAgCAPBIi0q/3+wxBiZU7cAjJpTNBSPvMLrf7tqgPkR6hB2xzpFkgIfM9q/8QAAAABJRU5ErkJggg==";
-	static const char* BODY_IMAGE_1_PIXEL_HEIGHT = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEVGVWvOwd1pAAAAAXRSTlNm5DccCwAAAApJREFUeAFjQAYAAA0AAWHNnKQAAAAASUVORK5CYII=";
+	static const char* HALF_CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAIVBMVEX///////////////////////////////////////////9/gMdvAAAAC3RSTlMAAgMLLFBTYWNkZuZhN4QAAAAvSURBVAjXRchBDgAgCAPBIi0q/3+wxBiZU7cAjJpTNBSPvMLrf7tqgPkR6hB2xzpFkgIfM9q/8QAAAABJRU5ErkJggg==";
+	static const char* BODY_IMAGE_1_PIXEL_HEIGHT = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEX///+nxBvIAAAAAXRSTlNm5DccCwAAAApJREFUeAFjQAYAAA0AAWHNnKQAAAAASUVORK5CYII=";
+	
+	static const Color3B DEFAULT_COLOR(52, 65, 87);
 	static const float DEFAULT_MARGIN = 30;
-	static const float AUTO_HIDE_TIME = 0.3f;
+	static const float DEFAULT_AUTO_HIDE_TIME = 0.2f;
 	
     static Sprite* createSpriteFromBase64(const char* base64String)
     {
@@ -63,6 +65,7 @@ namespace ui {
 	_margin(DEFAULT_MARGIN),
     _touching(false),
     _autoHideEnabled(true),
+	_autoHideTime(DEFAULT_AUTO_HIDE_TIME),
     _autoHideRemainingTime(0)
     {
         CCASSERT(direction != ScrollView::Direction::BOTH, "Illegal scroll direction for scroll bar!");
@@ -106,6 +109,8 @@ namespace ui {
         _body->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
         addChild(_body);
 		
+		setColor(DEFAULT_COLOR);
+		
         if(_direction == ScrollView::Direction::HORIZONTAL)
         {
             setRotation(90);
@@ -116,16 +121,6 @@ namespace ui {
             setOpacity(0);
         }
         return true;
-    }
-    
-    void ScrollViewBar::setMargin(float margin)
-    {
-        _margin = margin;
-    }
-    
-    float ScrollViewBar::getMargin() const
-    {
-        return _margin;
     }
     
 	void ScrollViewBar::setWidth(float width)
@@ -143,16 +138,20 @@ namespace ui {
 		return _body->getBoundingBox().size.width;
 	}
 	
-    void ScrollViewBar::setAutoHideEnabled(bool autoHideEnabled)
-    {
-        _autoHideEnabled = autoHideEnabled;
-    }
-    
-    bool ScrollViewBar::isAutoHideEnabled() const
-    {
-        return _autoHideEnabled;
-    }
-    
+	void ScrollViewBar::setColor(const Color3B& color)
+	{
+		CCASSERT(_body != nullptr && _upperHalfCircle != nullptr && _lowerHalfCircle != nullptr, "Internal sprites are not set!");
+		_body->setColor(color);
+		_upperHalfCircle->setColor(color);
+		_lowerHalfCircle->setColor(color);
+	}
+	
+	const Color3B& ScrollViewBar::getColor() const
+	{
+		CCASSERT(_body != nullptr, "The body sprite is null!");
+		return _body->getColor();
+	}
+
     void ScrollViewBar::setLength(float length)
     {
         float ratio = length / _body->getTextureRect().size.height;
@@ -174,10 +173,10 @@ namespace ui {
         }
         
         _autoHideRemainingTime -= deltaTime;
-        if(_autoHideRemainingTime <= AUTO_HIDE_TIME)
+        if(_autoHideRemainingTime <= _autoHideTime)
         {
             _autoHideRemainingTime = MAX(0, _autoHideRemainingTime);
-            this->setOpacity(255 * (_autoHideRemainingTime / AUTO_HIDE_TIME));
+            this->setOpacity(255 * (_autoHideRemainingTime / _autoHideTime));
         }
     }
     
@@ -192,7 +191,7 @@ namespace ui {
         
         if(_autoHideEnabled)
         {
-            _autoHideRemainingTime = AUTO_HIDE_TIME;
+            _autoHideRemainingTime = _autoHideTime;
         }
     }
 	
@@ -200,7 +199,7 @@ namespace ui {
     {
         if(_autoHideEnabled)
         {
-            _autoHideRemainingTime = AUTO_HIDE_TIME;
+            _autoHideRemainingTime = _autoHideTime;
             setOpacity(255);
         }
         

@@ -371,20 +371,90 @@ public:
      * @return True if inertia is enabled, false otherwise.
      */
     bool isInertiaScrollEnabled() const;
+    
+    /**
+     * @brief Toggle scroll bar enabled.
+     *
+     * @param enabled True if enable scroll bar, false otherwise.
+     */
+    void setScrollBarEnabled(bool enabled);
+    
+    /**
+     * @brief Query scroll bar state.
+     *
+     * @return True if scroll bar is enabled, false otherwise.
+     */
+    bool isScrollBarEnabled() const;
 	
 	/**
-	 * @brief Toggle scroll bar enabled.
+	 * @brief Set the margin between scroll bar and the container's border
 	 *
-	 * @param enabled True if enable scroll bar, false otherwise.
+	 * @param margin The margin between scroll bar and the container's border
 	 */
-	void setScrollBarEnabled(bool enabled);
+	void setScrollBarMargin(float margin);
 	
 	/**
-	 * @brief Query scroll bar state.
+	 * @brief Get the margin between scroll bar and the container's border
 	 *
-	 * @return True if scroll bar is enabled, false otherwise.
+	 * @return margin
 	 */
-	bool isScrollBarEnabled() const;
+	float getScrollBarMargin() const;
+	
+	/**
+	 * @brief Set the scroll bar's width
+	 *
+	 * @param width The scroll bar's width
+	 */
+	void setScrollBarWidth(float width);
+	
+	/**
+	 * @brief Get the scroll bar's width
+	 *
+	 * @return the scroll bar's width
+	 */
+	float getScrollBarWidth() const;
+	
+	/**
+	 * @brief Set the scroll bar's color
+	 *
+	 * @param the scroll bar's color
+	 */
+	void setScrollBarColor(const Color3B& color);
+	
+	/**
+	 * @brief Get the scroll bar's color
+	 *
+	 * @return the scroll bar's color
+	 */
+	const Color3B& getScrollBarColor() const;
+	
+	/**
+	 * @brief Set scroll bar auto hide state
+	 *
+	 * @param scroll bar auto hide state
+	 */
+	void setScrollBarAutoHideEnabled(bool autoHideEnabled);
+	
+	/**
+	 * @brief Query scroll bar auto hide state
+	 *
+	 * @return True if scroll bar auto hide is enabled, false otherwise.
+	 */
+	bool isScrollBarAutoHideEnabled() const;
+	
+	/**
+	 * @brief Set scroll bar auto hide time
+	 *
+	 * @param scroll bar auto hide time
+	 */
+	void setScrollBarAutoHideTime(float autoHideTime);
+	
+	/**
+	 * @brief Get the scroll bar's auto hide time
+	 *
+	 * @return the scroll bar's auto hide time
+	 */
+	float getScrollBarAutoHideTime() const;
 	
     /**
      * Set layout type for scrollview.
@@ -432,7 +502,7 @@ protected:
         LEFT,
         RIGHT,
     };
-	
+    
     virtual void initRenderer() override;
 
     virtual void onSizeChanged() override;
@@ -441,20 +511,20 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-	
-	virtual void initScrollBar();
-	virtual void removeScrollBar();
-	
-	bool isOutOfBoundary(MoveDirection dir) const;
-	bool isOutOfBoundaryTopOrBottom() const;
-	bool isOutOfBoundaryLeftOrRight() const;
-	
-	void moveChildren(float offsetX, float offsetY);
-	void moveChildrenToPosition(const Vec2& position);
-	
+    
+    virtual void initScrollBar();
+    virtual void removeScrollBar();
+    
+    bool isOutOfBoundary(MoveDirection dir) const;
+    bool isOutOfBoundaryTopOrBottom() const;
+    bool isOutOfBoundaryLeftOrRight() const;
+    
+    void moveChildren(float offsetX, float offsetY);
+    void moveChildrenToPosition(const Vec2& position);
+    
     void startInertiaScroll();
     void processInertiaScrolling(float dt);
-	
+    
     void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void processAutoScrolling(float deltaTime);
@@ -474,14 +544,14 @@ protected:
     virtual void handleReleaseLogic(Touch *touch);
 
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
-	
-	void processScrollEvent(MoveDirection dir, bool bounce);
+    
+    void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
-	void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
-	
-	Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
-	
-	void updateScrollBar(const Vec2& outOfBoundary);
+    void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
+    
+    Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
+    
+    void updateScrollBar(const Vec2& outOfBoundary);
 
 protected:
     Layout* _innerContainer;
@@ -512,14 +582,14 @@ protected:
     Vec2 _autoScrollTargetDelta;
     float _autoScrollDuration;
     float _autoScrollAccumulatedTime;
-	
+    
     bool _bounceEnabled;
     bool _bouncingBack;
-	
-	bool _scrollBarEnabled;
-	ScrollViewBar* _verticalScrollBar;
-	ScrollViewBar* _horizontalScrollBar;
-	
+    
+    bool _scrollBarEnabled;
+    ScrollViewBar* _verticalScrollBar;
+    ScrollViewBar* _horizontalScrollBar;
+    
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

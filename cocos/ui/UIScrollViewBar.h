@@ -47,14 +47,20 @@ public:
     
     static ScrollViewBar* create(ScrollView* parent, ScrollView::Direction direction);
     
-    virtual void setMargin(float margin);
-    virtual float getMargin() const;
-    
-	virtual void setWidth(float width);
-	virtual float getWidth() const;
+	void setMargin(float margin) { _margin = margin; }
+	float getMargin() const { return _margin; }
+		
+	void setWidth(float width);
+	float getWidth() const;
 	
-    void setAutoHideEnabled(bool autoHideEnabled);
-    bool isAutoHideEnabled() const;
+	void setColor(const Color3B& color) override;
+	const Color3B& getColor() const override;
+	
+	void setAutoHideEnabled(bool autoHideEnabled) { _autoHideEnabled = autoHideEnabled; }
+	bool isAutoHideEnabled() const { return _autoHideEnabled; }
+	
+	void setAutoHideTime(float autoHideTime) { _autoHideTime = autoHideTime; }
+	float getAutoHideTime() const { return _autoHideTime; }
 	
     virtual void onScrolled(const Vec2& outOfBoundary);
     
@@ -83,6 +89,7 @@ private:
     bool _touching;
     
     bool _autoHideEnabled;
+	float _autoHideTime;
     float _autoHideRemainingTime;
 	
 };

@@ -1046,6 +1046,141 @@ bool ScrollView::isScrollBarEnabled() const
 	return _scrollBarEnabled;
 }
 
+void ScrollView::setScrollBarMargin(float margin)
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		_verticalScrollBar->setMargin(margin);
+	}
+	if(_horizontalScrollBar != nullptr)
+	{
+		_horizontalScrollBar->setMargin(margin);
+	}
+}
+
+float ScrollView::getScrollBarMargin() const
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		return _verticalScrollBar->getMargin();
+	}
+	else if(_horizontalScrollBar != nullptr)
+	{
+		return _horizontalScrollBar->getMargin();
+	}
+	return 0;
+}
+
+void ScrollView::setScrollBarWidth(float width)
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		_verticalScrollBar->setWidth(width);
+	}
+	if(_horizontalScrollBar != nullptr)
+	{
+		_horizontalScrollBar->setWidth(width);
+	}
+}
+
+float ScrollView::getScrollBarWidth() const
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		return _verticalScrollBar->getWidth();
+	}
+	else if(_horizontalScrollBar != nullptr)
+	{
+		return _horizontalScrollBar->getWidth();
+	}
+	return 0;
+}
+
+void ScrollView::setScrollBarColor(const Color3B& color)
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		_verticalScrollBar->setColor(color);
+	}
+	if(_horizontalScrollBar != nullptr)
+	{
+		_horizontalScrollBar->setColor(color);
+	}
+}
+
+const Color3B& ScrollView::getScrollBarColor() const
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		return _verticalScrollBar->getColor();
+	}
+	else if(_horizontalScrollBar != nullptr)
+	{
+		return _horizontalScrollBar->getColor();
+	}
+	return Color3B::WHITE;
+}
+
+void ScrollView::setScrollBarAutoHideEnabled(bool autoHideEnabled)
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		_verticalScrollBar->setAutoHideEnabled(autoHideEnabled);
+	}
+	if(_horizontalScrollBar != nullptr)
+	{
+		_horizontalScrollBar->setAutoHideEnabled(autoHideEnabled);
+	}
+}
+
+bool ScrollView::isScrollBarAutoHideEnabled() const
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		return _verticalScrollBar->isAutoHideEnabled();
+	}
+	else if(_horizontalScrollBar != nullptr)
+	{
+		return _horizontalScrollBar->isAutoHideEnabled();
+	}
+	return false;
+}
+
+void ScrollView::setScrollBarAutoHideTime(float autoHideTime)
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		_verticalScrollBar->setAutoHideTime(autoHideTime);
+	}
+	if(_horizontalScrollBar != nullptr)
+	{
+		_horizontalScrollBar->setAutoHideTime(autoHideTime);
+	}
+}
+	
+float ScrollView::getScrollBarAutoHideTime() const
+{
+	CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+	if(_verticalScrollBar != nullptr)
+	{
+		return _verticalScrollBar->getAutoHideTime();
+	}
+	else if(_horizontalScrollBar != nullptr)
+	{
+		return _horizontalScrollBar->getAutoHideTime();
+	}
+	return 0;
+}
+
 Layout* ScrollView::getInnerContainer()const
 {
     return _innerContainer;
