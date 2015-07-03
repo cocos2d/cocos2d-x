@@ -1260,6 +1260,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\UIRadioButtonTest</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIFocusTest</Filter>
     </ClCompile>

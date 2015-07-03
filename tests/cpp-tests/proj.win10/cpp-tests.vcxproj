@@ -689,6 +689,7 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
