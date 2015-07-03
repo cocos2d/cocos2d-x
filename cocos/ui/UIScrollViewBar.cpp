@@ -68,6 +68,7 @@ namespace ui {
 	_autoHideTime(DEFAULT_AUTO_HIDE_TIME),
     _autoHideRemainingTime(0)
     {
+		CCASSERT(parent != nullptr, "Parent scroll view must not be null!");
         CCASSERT(direction != ScrollView::Direction::BOTH, "Illegal scroll direction for scroll bar!");
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
@@ -125,7 +126,6 @@ namespace ui {
     
 	void ScrollViewBar::setWidth(float width)
 	{
-		CCASSERT(_body != nullptr && _upperHalfCircle != nullptr && _lowerHalfCircle != nullptr, "Internal sprites are not set!");
 		float scale = width / _body->getContentSize().width;
 		_body->setScaleX(scale);
 		_upperHalfCircle->setScale(scale);
@@ -134,24 +134,9 @@ namespace ui {
 	
 	float ScrollViewBar::getWidth() const
 	{
-		CCASSERT(_body != nullptr, "The body sprite is null!");
 		return _body->getBoundingBox().size.width;
 	}
 	
-	void ScrollViewBar::setColor(const Color3B& color)
-	{
-		CCASSERT(_body != nullptr && _upperHalfCircle != nullptr && _lowerHalfCircle != nullptr, "Internal sprites are not set!");
-		_body->setColor(color);
-		_upperHalfCircle->setColor(color);
-		_lowerHalfCircle->setColor(color);
-	}
-	
-	const Color3B& ScrollViewBar::getColor() const
-	{
-		CCASSERT(_body != nullptr, "The body sprite is null!");
-		return _body->getColor();
-	}
-
     void ScrollViewBar::setLength(float length)
     {
         float ratio = length / _body->getTextureRect().size.height;
@@ -167,11 +152,16 @@ namespace ui {
     
     void ScrollViewBar::update(float deltaTime)
     {
-        if(!_autoHideEnabled || _touching || _autoHideRemainingTime <= 0)
+        if(!_autoHideEnabled || _autoHideRemainingTime <= 0)
         {
             return;
         }
-        
+		else if(_touching)
+		{
+			// If it is touching, don't auto hide.
+			return;
+		}
+			
         _autoHideRemainingTime -= deltaTime;
         if(_autoHideRemainingTime <= _autoHideTime)
         {
@@ -182,17 +172,27 @@ namespace ui {
     
     void ScrollViewBar::onTouchBegan()
     {
+		if(!_autoHideEnabled)
+		{
+			return;
+		}
         _touching = true;
     }
     
     void ScrollViewBar::onTouchEnded()
     {
+		if(!_autoHideEnabled)
+		{
+			return;
+		}
         _touching = false;
         
-        if(_autoHideEnabled)
-        {
-            _autoHideRemainingTime = _autoHideTime;
-        }
+		if(_autoHideRemainingTime <= 0)
+		{
+			// If the remaining time is 0, it means that it didn't moved after touch started so scroll bar is not showing.
+			return;
+		}
+		_autoHideRemainingTime = _autoHideTime;
     }
 	
     void ScrollViewBar::onScrolled(const Vec2& outOfBoundary)

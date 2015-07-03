@@ -493,6 +493,7 @@ bool UIScrollViewRotated::init()
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f + 100) );
         scrollView->setRotation(45);
 		scrollView->setScrollBarMargin(4);
+		scrollView->setScrollBarColor(Color3B::WHITE);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
