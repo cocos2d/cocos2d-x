@@ -421,7 +421,7 @@ public:
     /** @~english get specified position's height mapping to the terrain,use bi-linear interpolation method
         @~chinese 获取指定位置的高度映射到地形，使用双线性插值方法
         @param x @~english  the X position @~chinese X的位置
-        @param y @~english  the Z position @~chinese Z位置
+        @param z @~english  the Z position @~chinese Z位置
         @param normal @~english  the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip. @~chinese 在指定位置的法线矢量地形。如果这个参数为空或nullptr，正常计算应跳过。
         @return @~english the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0; @~chinese 地形的指定位置的高度值，如果（x，z）位置的地形边界，它将返回0；
      **/
@@ -516,7 +516,7 @@ public:
         @param worldSpace @~english  a world space position will be converted @~chinese 一个世界空间位置将被转换
         @return @~english a terrain space position @~chinese 地形的空间位置
     */
-    Vec2 convertToTerrainSpace(Vec2 worldSpace);
+    Vec2 convertToTerrainSpace(Vec2 worldSpace)const;
 
     /** @~english reset the heightmap data.
         @~chinese 复位高度图数据。
