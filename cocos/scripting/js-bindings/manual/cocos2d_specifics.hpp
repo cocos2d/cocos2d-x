@@ -265,6 +265,9 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 
+bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp);
+
 void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj);
 
 #endif

@@ -879,35 +879,6 @@ bool js_cocos2dx_ext_AssetsManager_getFailedAssets(JSContext *cx, uint32_t argc,
 }
 */
 
-bool js_cocos2dx_ext_retain(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ((Ref *)proxy->ptr)->retain();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
-}
-
-bool js_cocos2dx_ext_release(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ((Ref *)proxy->ptr)->release();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
-}
-
-
 __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
 : _cx(cx)
 , _url(url)
@@ -1077,11 +1048,11 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     get_or_create_js_obj(cx, global, "cc", &ccObj);
     
     JS::RootedObject am(cx, jsb_cocos2d_extension_AssetsManagerEx_prototype); 
-    JS_DefineFunction(cx, am, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, am, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, am, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, am, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS::RootedObject manifest(cx, jsb_cocos2d_extension_Manifest_prototype); 
-    JS_DefineFunction(cx, manifest, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, manifest, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, manifest, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, manifest, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "updateAssets", js_cocos2dx_ext_AssetsManager_updateAssets, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "getFailedAssets", js_cocos2dx_ext_AssetsManager_getFailedAssets, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
