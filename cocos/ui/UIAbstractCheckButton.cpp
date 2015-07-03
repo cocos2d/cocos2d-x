@@ -320,6 +320,7 @@ void AbstractCheckButton::onPressStateChangedToNormal()
     if (_isSelected)
     {
         _frontCrossRenderer->setVisible(true);
+        _frontCrossRendererAdaptDirty = true;
     }
 }
 
@@ -366,6 +367,7 @@ void AbstractCheckButton::onPressStateChangedToDisabled()
     if (_isSelected)
     {
         _frontCrossDisabledRenderer->setVisible(true);
+        _frontCrossDisabledRendererAdaptDirty = true;
     }
 }
 
