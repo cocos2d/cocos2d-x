@@ -86,7 +86,7 @@ def build_templates(mode, templates, is_runtime):
                 ret += winrt_ret
             else:
                 if node_name == "android":
-                    compile_project_commands += " --app-abi armeabi:armeabi-v7a:x86 "
+                    compile_project_commands += " --app-abi armeabi-v7a "
                 compile_ret = os.system(compile_project_commands + build_mode_args)
                 ret += compile_ret
 
