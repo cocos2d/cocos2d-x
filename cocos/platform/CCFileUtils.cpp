@@ -409,6 +409,87 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
     return ret;
 }
 
+bool FileUtils::writeStringToFile(std::string dataStr, const std::string& fullPath)
+{
+	Data retData;
+	retData.fastSet((unsigned char*)dataStr.c_str(), dataStr.size());
+
+	return writeDataToFile(retData, fullPath);
+}
+
+bool FileUtils::writeDataToFile(Data retData, const std::string& fullPath)
+{
+	unsigned char* buffer = nullptr;
+	size_t size = 0;
+	size_t readsize;
+	const char* mode = "wb";
+
+	CCASSERT(!fullPath.empty() && retData != nullptr, "Invalid parameters.");
+
+	auto fileutils = FileUtils::getInstance();
+	do
+	{
+		// Read the file from hardware
+		std::string fullPath = fileutils->fullPathForFilename(filename);
+		FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
+		CC_BREAK_IF(!fp);
+		size = retData.getSize();
+
+		fwrite(retData.getBytes, size, 1, fp);
+
+		fclose(fp);
+		
+	} while (0);
+
+	return true;
+}
+
+bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
+{
+	return writeToFile(dict, fullPath);
+}
+
+bool FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& fullPath)
+{
+	//CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
+	tinyxml2::XMLDocument *doc = new tinyxml2::XMLDocument();
+	if (nullptr == doc)
+		return false;
+
+	tinyxml2::XMLDeclaration *declaration = doc->NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\"");
+	if (nullptr == declaration)
+	{
+		delete doc;
+		return false;
+	}
+
+	doc->LinkEndChild(declaration);
+	tinyxml2::XMLElement *docType = doc->NewElement("!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"");
+	doc->LinkEndChild(docType);
+
+	tinyxml2::XMLElement *rootEle = doc->NewElement("plist");
+	rootEle->SetAttribute("version", "1.0");
+	if (nullptr == rootEle)
+	{
+		delete doc;
+		return false;
+	}
+	doc->LinkEndChild(rootEle);
+
+	tinyxml2::XMLElement *innerDict = generateElementForArray(vecData, doc);
+	if (nullptr == innerDict)
+	{
+		delete doc;
+		return false;
+	}
+	rootEle->LinkEndChild(innerDict);
+
+	bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(getSuitableFOpen(fullPath).c_str());
+
+	delete doc;
+	return ret;
+}
+
 /*
  * Generate tinyxml2::XMLElement for Object through a tinyxml2::XMLDocument
  */
@@ -1406,6 +1487,7 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
 {
     return filenameUtf8;
 }
+
 #endif
 
 NS_CC_END
