@@ -104,7 +104,7 @@ public:
     /** @~english Determines if the collsion is enable.  @~chinese 碰撞体是否启用。*/
     inline bool isCollisionEnabled() const { return _collisionEnable; }
     
-    /** @~english Enable or disable collision. @~chinese 启用或者禁用碰撞体。
+    /** @~english Enable or disable collision. @~chinese 启用或者禁用碰撞体。*/
     void setCollisionEnable(bool enable);
     
     /** @~english Remove the joint from the world.  @~chinese 删除关节。*/

@@ -69,6 +69,7 @@ public:
      * @~chinese 添加显示并使用_DisplayData来初始化显示。如果索引处已经有显示，则将其覆盖。
      * 如果索引为当前显示索引，则同时将显示更改为_index处显示。
      *
+<<<<<<< HEAD
      *	@param 	displayData @~english it include the display information, like DisplayType.
      *					If you want to create a sprite display, then create a `SpriteDisplayData` param
      * @~chinese 显示数据，包含显示信息，例如显示种类。
@@ -77,6 +78,13 @@ public:
      *	@param 	index @~english the index of the display you want to replace or add to
      *					-1 : append display from back
      * @~chinese 要添加或覆盖的显示的索引。为-1时将显示添加至最后
+=======
+     *    @param     displayData it include the display information, like DisplayType.
+     *                    If you want to create a sprite display, then create a SpriteDisplayData param
+     *
+     *    @param     index the index of the display you want to replace or add to
+     *                    -1 : append display from back
+>>>>>>> v3.7-release
      */
     void addDisplay(DisplayData *displayData, int index);
 

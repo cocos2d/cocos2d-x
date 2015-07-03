@@ -251,6 +251,9 @@
     <Filter Include="navmesh">
       <UniqueIdentifier>{cc4f6ca9-4231-479d-8e19-ede4dff3382e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\clipper">
+      <UniqueIdentifier>{e3a5fe25-a92e-4c98-9026-782b2b5b1388}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cocos2d.cpp" />
@@ -1797,15 +1800,6 @@
     <ClCompile Include="..\..\platform\winrt\WICImageLoader-winrt.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="..\MarchingSquare.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SpritePolygon.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SpritePolygonCache.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\external\poly2tri\common\shapes.cc">
       <Filter>external\poly2tri\common</Filter>
     </ClCompile>
@@ -1902,6 +1896,12 @@
     </ClCompile>
     <ClCompile Include="..\..\navmesh\CCNavMeshUtils.cpp">
       <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCAutoPolygon.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\clipper\clipper.cpp">
+      <Filter>external\clipper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3629,15 +3629,6 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\MarchingSquare.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SpritePolygon.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SpritePolygonCache.h">
-      <Filter>2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\external\poly2tri\poly2tri.h">
       <Filter>external\poly2tri</Filter>
     </ClInclude>
@@ -3733,6 +3724,12 @@
     </ClInclude>
     <ClInclude Include="..\..\navmesh\CCNavMeshUtils.h">
       <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCAutoPolygon.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\clipper\clipper.hpp">
+      <Filter>external\clipper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

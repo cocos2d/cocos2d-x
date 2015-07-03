@@ -58,8 +58,8 @@ public:
         OS_NACL,/** Nacl */
         OS_EMSCRIPTEN,/** Emscripten */
         OS_TIZEN,/** Tizen */
-        OS_WINRT,/** Winrt */
-        OS_WP8/** WP8 */
+        OS_WINRT,/** Windows Store Applications */
+        OS_WP8/** Windows Phone Applications */
     };
 
     /**

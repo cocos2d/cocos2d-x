@@ -167,7 +167,7 @@ public:
     */
     static ColliderDetector *create(Bone *bone);
 public:
-	/**
+    /**
      * @js ctor
      */
     ColliderDetector();

@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_spine_SkeletonRenderer_class;
 extern JSObject *jsb_spine_SkeletonRenderer_prototype;
 

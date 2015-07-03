@@ -1,18 +1,18 @@
-/****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
-
+/***************************************************************************
+ Copyright (c) 2015 Chukong Technologies Inc.
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,12 +34,13 @@
  */
 
 NS_CC_BEGIN
+
 /**
-@class CustomCommand
-@brief
-@~english
-Custom command is used for call custom openGL command which can not be done by other commands,
-such as stencil function, depth functions etc. The render command is executed by calling a call back function.
+ * @class CustomCommand
+ * @brief
+ * @~english
+ * Custom command is used for call custom openGL command which can not be done by other commands,
+ * such as stencil function, depth functions etc. The render command is executed by calling a call back function.
  * @~chinese 
  * Custom command用于调用自定义openGL命令,
  * 如模板功能,深度函数等,命令通过调用回调函数来执行。

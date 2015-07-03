@@ -355,6 +355,10 @@ public:
      */
     void calculateAABB();
     
+    /**
+     * force set this Sprite3D to 2D render queue
+     */
+    void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -369,6 +373,7 @@ protected:
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
+    bool                _force2DQueue; // add this mesh to 2D render queue
     
     std::string         _name;
     MeshCommand         _meshCommand;

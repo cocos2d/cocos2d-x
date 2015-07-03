@@ -396,6 +396,7 @@ void CheckBox::onPressStateChangedToNormal()
     if (_isSelected)
     {
         _frontCrossRenderer->setVisible(true);
+        _frontCrossRendererAdaptDirty = true;
     }
 }
 
@@ -443,6 +444,7 @@ void CheckBox::onPressStateChangedToDisabled()
     if (_isSelected)
     {
         _frontCrossDisabledRenderer->setVisible(true);
+        _frontCrossDisabledRendererAdaptDirty = true;
     }
 }
     

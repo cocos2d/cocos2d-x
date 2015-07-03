@@ -32,25 +32,25 @@ namespace cocostudio {
 
 enum FrameEasingType
 {
-	kframeEasingInstant,
+    kframeEasingInstant,
 
-	kframeEasingLinear,
+    kframeEasingLinear,
 
-	kframeEasingCubicIn,
-	kframeEasingCubicOut,
-	kframeEasingCubicInOut,
+    kframeEasingCubicIn,
+    kframeEasingCubicOut,
+    kframeEasingCubicInOut,
 
-	kframeEasingElasticIn,
-	kframeEasingElasticOut,
-	kframeEasingElasticInOut,
+    kframeEasingElasticIn,
+    kframeEasingElasticOut,
+    kframeEasingElasticInOut,
 
-	kframeEasingBounceIn,
-	kframeEasingBounceOut,
-	kframeEasingBounceInOut,
+    kframeEasingBounceIn,
+    kframeEasingBounceOut,
+    kframeEasingBounceInOut,
 
-	kframeEasingBackIn,
-	kframeEasingBackOut,
-	kframeEasingBackInOut,
+    kframeEasingBackIn,
+    kframeEasingBackOut,
+    kframeEasingBackInOut,
 };
 
 /**
@@ -60,8 +60,8 @@ enum FrameEasingType
 class CC_STUDIO_DLL ActionFrameEasing:public cocos2d::Ref
 {
 protected:
-	FrameEasingType _type;
-	float _fValue;
+    FrameEasingType _type;
+    float _fValue;
 public:
     /**
     * @~english Default constructor.

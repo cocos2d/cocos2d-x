@@ -195,6 +195,7 @@
     <ClCompile Include="..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.cpp" />
     <ClCompile Include="..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\..\..\extensions\physics-nodes\CCPhysicsSprite.cpp" />
+    <ClCompile Include="..\..\..\external\clipper\clipper.cpp" />
     <ClCompile Include="..\..\..\external\ConvertUTF\ConvertUTF.c">
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
       <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
@@ -662,6 +663,7 @@
     <ClCompile Include="..\CCAnimation.cpp" />
     <ClCompile Include="..\CCAnimationCache.cpp" />
     <ClCompile Include="..\CCAtlasNode.cpp" />
+    <ClCompile Include="..\CCAutoPolygon.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
     <ClCompile Include="..\CCClippingNode.cpp" />
     <ClCompile Include="..\CCClippingRectangleNode.cpp" />
@@ -715,9 +717,6 @@
     <ClCompile Include="..\CCTransitionPageTurn.cpp" />
     <ClCompile Include="..\CCTransitionProgress.cpp" />
     <ClCompile Include="..\CCTweenFunction.cpp" />
-    <ClCompile Include="..\MarchingSquare.cpp" />
-    <ClCompile Include="..\SpritePolygon.cpp" />
-    <ClCompile Include="..\SpritePolygonCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\extensions\cocos-ext.h" />
@@ -892,6 +891,7 @@
     <ClInclude Include="..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h" />
     <ClInclude Include="..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
+    <ClInclude Include="..\..\..\external\clipper\clipper.hpp" />
     <ClInclude Include="..\..\..\external\ConvertUTF\ConvertUTF.h" />
     <ClInclude Include="..\..\..\external\edtaa3func\edtaa3func.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h" />
@@ -1203,6 +1203,7 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h" />
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
     <ClInclude Include="..\..\renderer\CCGLProgram.h" />
     <ClInclude Include="..\..\renderer\CCGLProgramCache.h" />
@@ -1328,9 +1329,6 @@
     <ClInclude Include="..\CCTransitionPageTurn.h" />
     <ClInclude Include="..\CCTransitionProgress.h" />
     <ClInclude Include="..\CCTweenFunction.h" />
-    <ClInclude Include="..\MarchingSquare.h" />
-    <ClInclude Include="..\SpritePolygon.h" />
-    <ClInclude Include="..\SpritePolygonCache.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\base\CCController-iOS.mm" />
