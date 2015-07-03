@@ -44,103 +44,103 @@ class CC_GUI_DLL ScrollViewBar : public ProtectedNode
 {
 
 public:
-	/**
-	 * Default constructor
-	 * @js ctor
-	 * @lua new
-	 */
+    /**
+     * Default constructor
+     * @js ctor
+     * @lua new
+     */
     ScrollViewBar(ScrollView* parent, ScrollView::Direction direction);
     
-	/**
-	 * Default destructor
-	 * @js NA
-	 * @lua NA
-	 */
+    /**
+     * Default destructor
+     * @js NA
+     * @lua NA
+     */
     virtual ~ScrollViewBar();
     
-	/**
-	 * Create a ScrollView with its parent ScrollView and direction.
-	 * @return A ScrollViewBar instance.
-	 */
+    /**
+     * Create a ScrollView with its parent ScrollView and direction.
+     * @return A ScrollViewBar instance.
+     */
     static ScrollViewBar* create(ScrollView* parent, ScrollView::Direction direction);
-	
-	/**
-	 * @brief Set the margin between scroll bar and the parent ScrollView's border
-	 *
-	 * @param margin The margin between scroll bar and the parent ScrollView's border
-	 */
-	void setMargin(float margin) { _margin = margin; }
-	
-	/**
-	 * @brief Get the margin between scroll bar and the parent ScrollView's border
-	 *
-	 * @return margin
-	 */
-	float getMargin() const { return _margin; }
-	
-	/**
-	 * @brief Set the scroll bar's width
-	 *
-	 * @param width The scroll bar's width
-	 */
-	void setWidth(float width);
-	
-	/**
-	 * @brief Get the scroll bar's width
-	 *
-	 * @return the scroll bar's width
-	 */
-	float getWidth() const;
-	
-	/**
-	 * @brief Set scroll bar auto hide state
-	 *
-	 * @param scroll bar auto hide state
-	 */
-	void setAutoHideEnabled(bool autoHideEnabled) { _autoHideEnabled = autoHideEnabled; }
-	
-	/**
-	 * @brief Query scroll bar auto hide state
-	 *
-	 * @return True if scroll bar auto hide is enabled, false otherwise.
-	 */
-	bool isAutoHideEnabled() const { return _autoHideEnabled; }
-	
-	/**
-	 * @brief Set scroll bar auto hide time
-	 *
-	 * @param scroll bar auto hide time
-	 */
-	void setAutoHideTime(float autoHideTime) { _autoHideTime = autoHideTime; }
-	
-	/**
-	 * @brief Get the scroll bar's auto hide time
-	 *
-	 * @return the scroll bar's auto hide time
-	 */
-	float getAutoHideTime() const { return _autoHideTime; }
-	
-	/**
-	 * @brief This is called by parent ScrollView when the parent is scrolled. Don't call this directly.
-	 *
-	 * @param amount how much the inner container of ScrollView is out of boundary
-	 */
+    
+    /**
+     * @brief Set the margin between scroll bar and the parent ScrollView's border
+     *
+     * @param margin The margin between scroll bar and the parent ScrollView's border
+     */
+    void setMargin(float margin) { _margin = margin; }
+    
+    /**
+     * @brief Get the margin between scroll bar and the parent ScrollView's border
+     *
+     * @return margin
+     */
+    float getMargin() const { return _margin; }
+    
+    /**
+     * @brief Set the scroll bar's width
+     *
+     * @param width The scroll bar's width
+     */
+    void setWidth(float width);
+    
+    /**
+     * @brief Get the scroll bar's width
+     *
+     * @return the scroll bar's width
+     */
+    float getWidth() const;
+    
+    /**
+     * @brief Set scroll bar auto hide state
+     *
+     * @param scroll bar auto hide state
+     */
+    void setAutoHideEnabled(bool autoHideEnabled);
+    
+    /**
+     * @brief Query scroll bar auto hide state
+     *
+     * @return True if scroll bar auto hide is enabled, false otherwise.
+     */
+    bool isAutoHideEnabled() const { return _autoHideEnabled; }
+    
+    /**
+     * @brief Set scroll bar auto hide time
+     *
+     * @param scroll bar auto hide time
+     */
+    void setAutoHideTime(float autoHideTime) { _autoHideTime = autoHideTime; }
+    
+    /**
+     * @brief Get the scroll bar's auto hide time
+     *
+     * @return the scroll bar's auto hide time
+     */
+    float getAutoHideTime() const { return _autoHideTime; }
+    
+    /**
+     * @brief This is called by parent ScrollView when the parent is scrolled. Don't call this directly.
+     *
+     * @param amount how much the inner container of ScrollView is out of boundary
+     */
     virtual void onScrolled(const Vec2& outOfBoundary);
-	
-	/**
-	 * @lua NA
-	 */
+    
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
     virtual void update(float deltaTime) override;
     
-	/**
-	 * @brief This is called by parent ScrollView when a touch is began. Don't call this directly.
-	 */
+    /**
+     * @brief This is called by parent ScrollView when a touch is began. Don't call this directly.
+     */
     void onTouchBegan();
-	
-	/**
-	 * @brief This is called by parent ScrollView when a touch is ended. Don't call this directly.
-	 */
+    
+    /**
+     * @brief This is called by parent ScrollView when a touch is ended. Don't call this directly.
+     */
     void onTouchEnded();
     
 CC_CONSTRUCTOR_ACCESS:
@@ -162,9 +162,9 @@ private:
     bool _touching;
     
     bool _autoHideEnabled;
-	float _autoHideTime;
+    float _autoHideTime;
     float _autoHideRemainingTime;
-	
+    
 };
 
 }

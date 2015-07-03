@@ -385,77 +385,77 @@ public:
      * @return True if scroll bar is enabled, false otherwise.
      */
     bool isScrollBarEnabled() const;
-	
-	/**
-	 * @brief Set the margin between scroll bar and the container's border
-	 *
-	 * @param margin The margin between scroll bar and the container's border
-	 */
-	void setScrollBarMargin(float margin);
-	
-	/**
-	 * @brief Get the margin between scroll bar and the container's border
-	 *
-	 * @return margin
-	 */
-	float getScrollBarMargin() const;
-	
-	/**
-	 * @brief Set the scroll bar's width
-	 *
-	 * @param width The scroll bar's width
-	 */
-	void setScrollBarWidth(float width);
-	
-	/**
-	 * @brief Get the scroll bar's width
-	 *
-	 * @return the scroll bar's width
-	 */
-	float getScrollBarWidth() const;
-	
-	/**
-	 * @brief Set the scroll bar's color
-	 *
-	 * @param the scroll bar's color
-	 */
-	void setScrollBarColor(const Color3B& color);
-	
-	/**
-	 * @brief Get the scroll bar's color
-	 *
-	 * @return the scroll bar's color
-	 */
-	const Color3B& getScrollBarColor() const;
-	
-	/**
-	 * @brief Set scroll bar auto hide state
-	 *
-	 * @param scroll bar auto hide state
-	 */
-	void setScrollBarAutoHideEnabled(bool autoHideEnabled);
-	
-	/**
-	 * @brief Query scroll bar auto hide state
-	 *
-	 * @return True if scroll bar auto hide is enabled, false otherwise.
-	 */
-	bool isScrollBarAutoHideEnabled() const;
-	
-	/**
-	 * @brief Set scroll bar auto hide time
-	 *
-	 * @param scroll bar auto hide time
-	 */
-	void setScrollBarAutoHideTime(float autoHideTime);
-	
-	/**
-	 * @brief Get the scroll bar's auto hide time
-	 *
-	 * @return the scroll bar's auto hide time
-	 */
-	float getScrollBarAutoHideTime() const;
-	
+    
+    /**
+     * @brief Set the margin between scroll bar and the container's border
+     *
+     * @param margin The margin between scroll bar and the container's border
+     */
+    void setScrollBarMargin(float margin);
+    
+    /**
+     * @brief Get the margin between scroll bar and the container's border
+     *
+     * @return margin
+     */
+    float getScrollBarMargin() const;
+    
+    /**
+     * @brief Set the scroll bar's width
+     *
+     * @param width The scroll bar's width
+     */
+    void setScrollBarWidth(float width);
+    
+    /**
+     * @brief Get the scroll bar's width
+     *
+     * @return the scroll bar's width
+     */
+    float getScrollBarWidth() const;
+    
+    /**
+     * @brief Set the scroll bar's color
+     *
+     * @param the scroll bar's color
+     */
+    void setScrollBarColor(const Color3B& color);
+    
+    /**
+     * @brief Get the scroll bar's color
+     *
+     * @return the scroll bar's color
+     */
+    const Color3B& getScrollBarColor() const;
+    
+    /**
+     * @brief Set scroll bar auto hide state
+     *
+     * @param scroll bar auto hide state
+     */
+    void setScrollBarAutoHideEnabled(bool autoHideEnabled);
+    
+    /**
+     * @brief Query scroll bar auto hide state
+     *
+     * @return True if scroll bar auto hide is enabled, false otherwise.
+     */
+    bool isScrollBarAutoHideEnabled() const;
+    
+    /**
+     * @brief Set scroll bar auto hide time
+     *
+     * @param scroll bar auto hide time
+     */
+    void setScrollBarAutoHideTime(float autoHideTime);
+    
+    /**
+     * @brief Get the scroll bar's auto hide time
+     *
+     * @return the scroll bar's auto hide time
+     */
+    float getScrollBarAutoHideTime() const;
+    
     /**
      * Set layout type for scrollview.
      *
