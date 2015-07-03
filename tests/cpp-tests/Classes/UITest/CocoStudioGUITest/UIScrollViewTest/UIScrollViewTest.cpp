@@ -56,7 +56,7 @@ bool UIScrollViewTest_Vertical::init()
                                (widgetSize.height - backgroundSize.height) / 2.0f +
                                (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
 		scrollView->setScrollBarWidth(4);
-		scrollView->setScrollBarMargin(2);
+		scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
 		scrollView->setScrollBarColor(Color3B::WHITE);
         _uiLayer->addChild(scrollView);
         
@@ -130,7 +130,7 @@ bool UIScrollViewTest_Horizontal::init()
         scrollView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
         scrollView->setContentSize(Size(280.0f, 150.0f));
         scrollView->setInnerContainerSize(scrollView->getContentSize());
-		scrollView->setScrollBarMargin(4);
+		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
 		scrollView->setScrollBarColor(Color3B::YELLOW);
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -216,7 +216,7 @@ bool UIScrollViewTest_Both::init()
         scrollView->setBackGroundImage("cocosui/green_edit.png");
         scrollView->setContentSize(Size(210, 122.5));
 		scrollView->setScrollBarWidth(4);
-		scrollView->setScrollBarMargin(6);
+		scrollView->setScrollBarPositionFromCorner(Vec2(6, 6));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -333,7 +333,8 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
         sc->setContentSize(Size(100,100));
-		sc->setScrollBarMargin(4);
+		sc->setScrollBarPositionFromCornerForHorizontal(Vec2(5, sc->getContentSize().height - 5));
+		sc->setScrollBarPositionFromCornerForVertical(Vec2(sc->getContentSize().width - 5, 5));
 		sc->setScrollBarAutoHideEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
@@ -389,7 +390,7 @@ bool UIScrollViewNestTest::init()
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setContentSize(Size(280.0f, 150.0f));
         scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
-		scrollView->setScrollBarMargin(4);
+		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -435,7 +436,7 @@ bool UIScrollViewNestTest::init()
         sc->setPropagateTouchEvents(false);
         sc->setPosition(Vec2(180,100));
         sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
-		sc->setScrollBarMargin(4);
+		sc->setScrollBarPositionFromCorner(Vec2(4, 4));
         ImageView* iv = ImageView::create("cocosui/Hello.png");
         iv->setPosition(Vec2(240, 160));
         sc->addChild(iv);
@@ -448,6 +449,10 @@ bool UIScrollViewNestTest::init()
     
     return false;
 }
+
+
+
+
 // UIScrollViewRotated
 
 UIScrollViewRotated::UIScrollViewRotated()
@@ -492,7 +497,7 @@ bool UIScrollViewRotated::init()
                                      (widgetSize.height - backgroundSize.height) / 2.0f +
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f + 100) );
         scrollView->setRotation(45);
-		scrollView->setScrollBarMargin(4);
+		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
 		scrollView->setScrollBarColor(Color3B::WHITE);
         _uiLayer->addChild(scrollView);
         

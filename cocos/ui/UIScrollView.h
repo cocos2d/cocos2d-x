@@ -387,18 +387,39 @@ public:
     bool isScrollBarEnabled() const;
     
     /**
-     * @brief Set the margin between scroll bar and the container's border
+     * @brief Set the scroll bar positions from the left-bottom corner (horizontal) and right-top corner (vertical).
      *
-     * @param margin The margin between scroll bar and the container's border
+     * @param positionFromCorner The position from the left-bottom corner (horizontal) and right-top corner (vertical).
      */
-    void setScrollBarMargin(float margin);
+    void setScrollBarPositionFromCorner(const Vec2& positionFromCorner);
     
     /**
-     * @brief Get the margin between scroll bar and the container's border
+     * @brief Set the vertical scroll bar position from right-top corner.
      *
-     * @return margin
+     * @param positionFromCorner The position from right-top corner
      */
-    float getScrollBarMargin() const;
+    void setScrollBarPositionFromCornerForVertical(const Vec2& positionFromCorner);
+    
+    /**
+     * @brief Get the vertical scroll bar's position from right-top corner.
+     *
+     * @return positionFromCorner
+     */
+    const Vec2& getScrollBarPositionFromCornerForVertical() const;
+    
+    /**
+     * @brief Set the horizontal scroll bar position from left-bottom corner.
+     *
+     * @param positionFromCorner The position from left-bottom corner
+     */
+    void setScrollBarPositionFromCornerForHorizontal(const Vec2& positionFromCorner);
+    
+    /**
+     * @brief Get the horizontal scroll bar's position from right-top corner.
+     *
+     * @return positionFromCorner
+     */
+    const Vec2& getScrollBarPositionFromCornerForHorizontal() const;
     
     /**
      * @brief Set the scroll bar's width

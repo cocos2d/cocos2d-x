@@ -149,7 +149,7 @@ void ScrollView::onSizeChanged()
     float innerSizeWidth = MAX(orginInnerSizeWidth, _contentSize.width);
     float innerSizeHeight = MAX(orginInnerSizeHeight, _contentSize.height);
     _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
-	_innerContainer->setPosition(Vec2(0, _contentSize.height - _innerContainer->getContentSize().height));
+    _innerContainer->setPosition(Vec2(0, _contentSize.height - _innerContainer->getContentSize().height));
 }
 
 void ScrollView::setInnerContainerSize(const Size &size)
@@ -193,7 +193,7 @@ void ScrollView::setInnerContainerSize(const Size &size)
     {
         pos.y = _contentSize.height - (1.0f - _innerContainer->getAnchorPoint().y) * _innerContainer->getContentSize().height;
     }
-	_innerContainer->setPosition(pos);
+    _innerContainer->setPosition(pos);
 }
 
 const Size& ScrollView::getInnerContainerSize() const
@@ -1045,31 +1045,44 @@ bool ScrollView::isScrollBarEnabled() const
     return _scrollBarEnabled;
 }
 
-void ScrollView::setScrollBarMargin(float margin)
+void ScrollView::setScrollBarPositionFromCorner(const Vec2& positionFromCorner)
 {
-    CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
-    if(_verticalScrollBar != nullptr)
+    if(_direction != Direction::HORIZONTAL)
     {
-        _verticalScrollBar->setMargin(margin);
+        setScrollBarPositionFromCornerForVertical(positionFromCorner);
     }
-    if(_horizontalScrollBar != nullptr)
+    if(_direction != Direction::VERTICAL)
     {
-        _horizontalScrollBar->setMargin(margin);
+        setScrollBarPositionFromCornerForHorizontal(positionFromCorner);
     }
 }
 
-float ScrollView::getScrollBarMargin() const
+void ScrollView::setScrollBarPositionFromCornerForVertical(const Vec2& positionFromCorner)
 {
     CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
-    if(_verticalScrollBar != nullptr)
-    {
-        return _verticalScrollBar->getMargin();
-    }
-    else if(_horizontalScrollBar != nullptr)
-    {
-        return _horizontalScrollBar->getMargin();
-    }
-    return 0;
+    CCASSERT(_direction != Direction::HORIZONTAL, "Scroll view doesn't have a vertical scroll bar!");
+    _verticalScrollBar->setPositionFromCorner(positionFromCorner);
+}
+
+const Vec2& ScrollView::getScrollBarPositionFromCornerForVertical() const
+{
+    CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+    CCASSERT(_direction != Direction::HORIZONTAL, "Scroll view doesn't have a vertical scroll bar!");
+    return _verticalScrollBar->getPositionFromCorner();
+}
+
+void ScrollView::setScrollBarPositionFromCornerForHorizontal(const Vec2& positionFromCorner)
+{
+    CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+    CCASSERT(_direction != Direction::VERTICAL, "Scroll view doesn't have a horizontal scroll bar!");
+    _horizontalScrollBar->setPositionFromCorner(positionFromCorner);
+}
+
+const Vec2& ScrollView::getScrollBarPositionFromCornerForHorizontal() const
+{
+    CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
+    CCASSERT(_direction != Direction::VERTICAL, "Scroll view doesn't have a horizontal scroll bar!");
+    return _horizontalScrollBar->getPositionFromCorner();
 }
 
 void ScrollView::setScrollBarWidth(float width)
@@ -1258,7 +1271,14 @@ void ScrollView::copySpecialProperties(Widget *widget)
         setScrollBarEnabled(scrollView->isScrollBarEnabled());
         if(isScrollBarEnabled())
         {
-            setScrollBarMargin(scrollView->getScrollBarMargin());
+            if(_direction != Direction::HORIZONTAL)
+            {
+                setScrollBarPositionFromCornerForVertical(scrollView->getScrollBarPositionFromCornerForVertical());
+            }
+            if(_direction != Direction::VERTICAL)
+            {
+                setScrollBarPositionFromCornerForHorizontal(scrollView->getScrollBarPositionFromCornerForHorizontal());
+            }
             setScrollBarWidth(scrollView->getScrollBarWidth());
             setScrollBarColor(scrollView->getScrollBarColor());
             setScrollBarAutoHideEnabled(scrollView->isScrollBarAutoHideEnabled());

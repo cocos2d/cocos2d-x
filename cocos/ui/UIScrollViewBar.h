@@ -65,18 +65,18 @@ public:
     static ScrollViewBar* create(ScrollView* parent, ScrollView::Direction direction);
     
     /**
-     * @brief Set the margin between scroll bar and the parent ScrollView's border
+     * @brief Set the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
      *
-     * @param margin The margin between scroll bar and the parent ScrollView's border
+     * @param positionFromCorner The position from the left-bottom corner (horizontal) or right-top corner (vertical).
      */
-    void setMargin(float margin) { _margin = margin; }
+    void setPositionFromCorner(const Vec2& positionFromCorner) { _positionFromCorner = positionFromCorner; }
     
     /**
-     * @brief Get the margin between scroll bar and the parent ScrollView's border
+     * @brief Get the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
      *
-     * @return margin
+     * @return positionFromCorner
      */
-    float getMargin() const { return _margin; }
+    const Vec2& getPositionFromCorner() const { return _positionFromCorner; }
     
     /**
      * @brief Set the scroll bar's width
@@ -157,7 +157,7 @@ private:
     Sprite* _upperHalfCircle;
     Sprite* _lowerHalfCircle;
     Sprite* _body;
-    float _margin;
+    Vec2 _positionFromCorner;
     
     bool _touching;
     
