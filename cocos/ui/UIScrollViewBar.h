@@ -47,12 +47,15 @@ public:
     
     static ScrollViewBar* create(ScrollView* parent, ScrollView::Direction direction);
     
-    void setMargin(float margin);
-    float getMargin() const;
+    virtual void setMargin(float margin);
+    virtual float getMargin() const;
     
+	virtual void setWidth(float width);
+	virtual float getWidth() const;
+	
     void setAutoHideEnabled(bool autoHideEnabled);
     bool isAutoHideEnabled() const;
-    
+	
     virtual void onScrolled(const Vec2& outOfBoundary);
     
     virtual void onEnter() override;

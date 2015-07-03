@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "UIScrollViewBar.h"
-#include "CCDirector.h"
 #include "CCImage.h"
 #include "2d/CCSprite.h"
 #include "base64.h"
@@ -61,6 +60,7 @@ namespace ui {
     _upperHalfCircle(nullptr),
     _lowerHalfCircle(nullptr),
     _body(nullptr),
+	_margin(DEFAULT_MARGIN),
     _touching(false),
     _autoHideEnabled(true),
     _autoHideRemainingTime(0)
@@ -68,7 +68,6 @@ namespace ui {
         CCASSERT(direction != ScrollView::Direction::BOTH, "Illegal scroll direction for scroll bar!");
         setCascadeColorEnabled(true);
         setCascadeOpacityEnabled(true);
-        setMargin(DEFAULT_MARGIN);
     }
     
     ScrollViewBar::~ScrollViewBar()
@@ -121,14 +120,29 @@ namespace ui {
     
     void ScrollViewBar::setMargin(float margin)
     {
-        _margin = margin / Director::getInstance()->getContentScaleFactor();
+        _margin = margin;
     }
     
     float ScrollViewBar::getMargin() const
     {
-        return _margin * Director::getInstance()->getContentScaleFactor();
+        return _margin;
     }
     
+	void ScrollViewBar::setWidth(float width)
+	{
+		CCASSERT(_body != nullptr && _upperHalfCircle != nullptr && _lowerHalfCircle != nullptr, "Internal sprites are not set!");
+		float scale = width / _body->getContentSize().width;
+		_body->setScaleX(scale);
+		_upperHalfCircle->setScale(scale);
+		_lowerHalfCircle->setScale(-scale);
+	}
+	
+	float ScrollViewBar::getWidth() const
+	{
+		CCASSERT(_body != nullptr, "The body sprite is null!");
+		return _body->getBoundingBox().size.width;
+	}
+	
     void ScrollViewBar::setAutoHideEnabled(bool autoHideEnabled)
     {
         _autoHideEnabled = autoHideEnabled;
@@ -181,7 +195,7 @@ namespace ui {
             _autoHideRemainingTime = AUTO_HIDE_TIME;
         }
     }
-
+	
     void ScrollViewBar::onScrolled(const Vec2& outOfBoundary)
     {
         if(_autoHideEnabled)
