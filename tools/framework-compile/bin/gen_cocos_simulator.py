@@ -240,7 +240,7 @@ class SimulatorCompiler(object):
                 " && %s" % (lang_copy_command),
                 ])
 
-        ret = utils_cocos.execute_command(command, self.simulator_abs_path)
+        ret = utils_cocos.execute_command(command, self.simulator_abs_path, use_py_path=False)
 
         self.build_log += "Build win32 %s %s\n" % (self.mode, "success" if ret == 0 else "failed")
         return ret
