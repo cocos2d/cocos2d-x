@@ -131,7 +131,13 @@
     <ClCompile Include="..\UIButton.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\UIAbstractCheckButton.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="..\UICheckBox.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIRadioButton.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UIImageView.cpp">

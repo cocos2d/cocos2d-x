@@ -869,6 +869,9 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest\UICheckBoxTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp">
       <Filter>Classes\UITest\CocoStudioGUITest\UIFocusTest</Filter>
     </ClCompile>

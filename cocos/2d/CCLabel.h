@@ -546,6 +546,8 @@ protected:
     std::vector<SpriteBatchNode*> _batchNodes;
     FontAtlas *                   _fontAtlas;
     std::vector<LetterInfo>       _lettersInfo;
+    EventListenerCustom* _purgeTextureListener;
+    EventListenerCustom* _resetTextureListener;
 
     TTFConfig _fontConfig;
 
