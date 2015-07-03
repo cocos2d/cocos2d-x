@@ -943,6 +943,34 @@ void MinXmlHttpRequest::_notify(JSObject * callback)
     }
 }
 
+bool js_MinXmlHttpRequest_retain(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
+    if (thisObj) {
+        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
+        if (proxy) {
+            ((cocos2d::Ref *)proxy->ptr)->retain();
+            return true;
+        }
+    }
+    JS_ReportError(cx, "Invalid Native Object.");
+    return false;
+}
+
+bool js_MinXmlHttpRequest_release(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
+    if (thisObj) {
+        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
+        if (proxy) {
+            ((cocos2d::Ref *)proxy->ptr)->release();
+            return true;
+        }
+    }
+    JS_ReportError(cx, "Invalid Native Object.");
+    return false;
+}
+
 /**
  *  @brief Register XMLHttpRequest to be usable in JS and add properties and Mehtods.
  *  @param cx   Global Spidermonkey JS Context.
@@ -986,6 +1014,8 @@ void MinXmlHttpRequest::_js_register(JSContext *cx, JS::HandleObject global)
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getAllResponseHeaders),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getResponseHeader),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, overrideMimeType),
+        JS_FN("retain", js_MinXmlHttpRequest_retain, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("release", js_MinXmlHttpRequest_release, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     
