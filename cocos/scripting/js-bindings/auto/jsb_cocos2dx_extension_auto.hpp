@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocos2d_extension_Control_class;
 extern JSObject *jsb_cocos2d_extension_Control_prototype;
 

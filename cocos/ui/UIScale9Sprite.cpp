@@ -151,7 +151,7 @@ namespace ui {
             auto spriteFrame = sprite->getSpriteFrame();
             if (texture->isContain9PatchInfo())
             {
-                auto parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
+                auto& parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
                 if(!parsedCapInset.equals(Rect::ZERO))
                 {
                     this->_isPatch9 = true;

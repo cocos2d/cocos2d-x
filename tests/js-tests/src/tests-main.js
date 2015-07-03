@@ -378,14 +378,14 @@ var testNames = [
             return new EffectAdvanceScene();
         }
     },
-    {
-        title:"Facebook SDK Test",
-        platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
-        linksrc:"src/FacebookTest/FacebookTestsManager.js",
-        testScene:function () {
-            return new FacebookTestScene();
-        }
-    },
+    //{
+    //    title:"Facebook SDK Test",
+    //    platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
+    //    linksrc:"src/FacebookTest/FacebookTestsManager.js",
+    //    testScene:function () {
+    //        return new FacebookTestScene();
+    //    }
+    //},
     {
         title:"Font Test",
         resource:g_fonts,
@@ -536,6 +536,14 @@ var testNames = [
         linksrc:"src/Physics3DTest/Physics3DTest.js",
         testScene:function () {
             return new Physics3DTestScene();
+        }
+    },
+    {
+        title:"NavMesh Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/NavMeshTest/NavMeshTest.js",
+        testScene:function () {
+            return new nextNavMeshTest();
         }
     },
     {

@@ -285,6 +285,11 @@ public:
         @return @~english the material of given mesh index @~chinese 指定风格的材质
     */
     Material* getMaterial(int meshIndex) const;
+    
+    /**
+    * force set this Sprite3D to 2D render queue
+    */
+    void setForce2DQueue(bool force2D);
 
 CC_CONSTRUCTOR_ACCESS:
 

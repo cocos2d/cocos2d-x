@@ -208,7 +208,7 @@ public:
     virtual const cocos2d::Mat4& getNodeToParentTransform() const override;
     inline void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
     inline const cocos2d::BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
-	
+    
 
     /**
      * @~english Set contentsize and Calculate anchor point.

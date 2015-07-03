@@ -3,7 +3,6 @@
 
 #include "ui/CocosGUI.h"
 
-#include "../testBasic.h"
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
 

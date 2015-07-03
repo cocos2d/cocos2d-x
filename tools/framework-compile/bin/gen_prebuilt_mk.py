@@ -27,6 +27,10 @@ class MKGenerator(object):
     EXPORT_INCLUDE_PATTERN = r"^LOCAL_EXPORT_C_INCLUDES[ \t]+[\:\+]=[ \t]+(.+)"
     INCLUDE_MODULE_PATTERN = r"^\$\(call[ \t]*import-module,[ \t]*(.*)\)"
 
+
+    KEY_IS_MODULE = 'is_module'
+    KEY_MODULE_LINES = 'lines'
+
     def __init__(self, src_mk_path, lib_file_path, dst_mk_path=None):
         if os.path.isabs(src_mk_path):
             self.src_mk_path = src_mk_path
@@ -53,11 +57,10 @@ class MKGenerator(object):
         from utils_cocos import win2unix
         win2unix(self.src_mk_path)
 
-    def get_lib_file_name(self):
-        src_mk_obj = open(self.src_mk_path)
+    def get_lib_file_name(self, lines):
         module_file_name = None
         module_name = None
-        for line in src_mk_obj.readlines():
+        for line in lines:
             trim_line = line.lstrip(" ")
             trim_line = trim_line.rstrip(" ")
             match1 = re.match(MKGenerator.LIB_MODULE_FILENAME_PATTERN, trim_line)
@@ -74,8 +77,6 @@ class MKGenerator(object):
         elif module_name is not None:
             ret = "lib%s.a" % module_name
 
-        src_mk_obj.close()
-
         return ret
 
     def modidy_src_file(self, lines, new_src_file):
@@ -83,9 +84,11 @@ class MKGenerator(object):
 
         src_file_begin_flag = False
         added = False
+        found_src_file_cfg = False
         for line in lines:
             trim_line = line.lstrip(" ")
             if re.match(MKGenerator.SRC_FILE_CFG_PATTERN, trim_line):
+                found_src_file_cfg = True
                 if not added:
                     new_lines.append("LOCAL_SRC_FILES := %s\n" % new_src_file)
                     added = True
@@ -97,7 +100,16 @@ class MKGenerator(object):
             else:
                 new_lines.append(line)
 
-        return new_lines
+        if not found_src_file_cfg:
+            ret_lines = []
+            for line in new_lines:
+                ret_lines.append(line)
+                if re.match(MKGenerator.LIB_MODULE_FILENAME_PATTERN, line):
+                    ret_lines.append("LOCAL_SRC_FILES := %s\n" % new_src_file)
+        else:
+            ret_lines = new_lines
+
+        return ret_lines
 
     def remove_config(self, lines, cfg_key):
         new_lines = []
@@ -160,13 +172,14 @@ class MKGenerator(object):
                 new_path = "$(LOCAL_PATH)/%s/%s" % (rel_path, include_path)
             new_include_paths.append(new_path)
 
-        new_path_str = "LOCAL_EXPORT_C_INCLUDES := "
-        new_path_str += " \\\n".join(new_include_paths)
-        new_path_str += "\n"
-        if insert_idx >= 0:
-            new_lines.insert(insert_idx, new_path_str)
-        else:
-            new_lines.append(new_path_str)
+        if len(new_include_paths) > 0:
+            new_path_str = "LOCAL_EXPORT_C_INCLUDES := "
+            new_path_str += " \\\n".join(new_include_paths)
+            new_path_str += "\n"
+            if insert_idx >= 0:
+                new_lines.insert(insert_idx, new_path_str)
+            else:
+                new_lines.append(new_path_str)
 
         return new_lines
 
@@ -217,13 +230,76 @@ class MKGenerator(object):
             new_line = line.replace("LOCAL_STATIC_LIBRARIES", "LOCAL_WHOLE_STATIC_LIBRARIES")
             new_lines.append(new_line)
 
-        return new_lines
+        ret_lines = []
+        is_first_time = True
+        pattern = r'LOCAL_WHOLE_STATIC_LIBRARIES[ \t]*:=.*'
+        for line in new_lines:
+            ret_line = line
+            if re.match(pattern, line):
+                if is_first_time:
+                    is_first_time = False
+                else:
+                    ret_line = line.replace(":=", "+=")
+
+            ret_lines.append(ret_line)
+
+        return ret_lines
+
+    def split_modules(self, origin_lines):
+        ret = []
+        cur_module = {}
+        cur_module[MKGenerator.KEY_MODULE_LINES] = []
+        cur_module[MKGenerator.KEY_IS_MODULE] = False
+
+        pattern_begin = r'include[ \t]+\$\(CLEAR_VARS\)'
+        pattern_end = r'include[ \t]+\$\(BUILD_STATIC_LIBRARY\)'
+        for line in origin_lines:
+            if re.match(pattern_begin, line):
+                if len(cur_module[MKGenerator.KEY_MODULE_LINES]) > 0:
+                    ret.append(cur_module)
+
+                cur_module = {}
+                cur_module[MKGenerator.KEY_MODULE_LINES] = []
+                cur_module[MKGenerator.KEY_IS_MODULE] = True
+
+            cur_module[MKGenerator.KEY_MODULE_LINES].append(line)
+
+            if re.match(pattern_end, line):
+                if len(cur_module[MKGenerator.KEY_MODULE_LINES]) > 0:
+                    ret.append(cur_module)
+                cur_module = {}
+                cur_module[MKGenerator.KEY_MODULE_LINES] = []
+                cur_module[MKGenerator.KEY_IS_MODULE] = False
+
+        if len(cur_module[MKGenerator.KEY_MODULE_LINES]) > 0:
+            ret.append(cur_module)
+
+        return ret
+
+    def handle_module(self, module_lines, relative_path):
+        # modify the LOCAL_SRC_FILES
+        lib_file_name = self.get_lib_file_name(module_lines)
+        if lib_file_name is None:
+            raise Exception("The mk file %s not specify module name." % self.src_mk_path)
+        relative_path = "%s/$(TARGET_ARCH_ABI)/%s" % (relative_path, lib_file_name)
+        dst_lines = self.modidy_src_file(module_lines, relative_path)
+
+        # remove the LOCAL_C_INCLUDES & LOCAL_LDLIBS
+        dst_lines = self.remove_config(dst_lines, "LOCAL_C_INCLUDES")
+        dst_lines = self.remove_config(dst_lines, "LOCAL_LDLIBS")
+
+        # modify the LOCAL_EXPORT_C_INCLUDES
+        dst_lines = self.modify_export_c_include(dst_lines)
+
+        # modify the line $(include BUILD_STATIC_LIBRARY)
+        dst_lines = self.modify_include_cfg(dst_lines)
+
+        # use whole libs
+        dst_lines = self.use_whole_lib(dst_lines)
+
+        return dst_lines
 
     def do_generate(self):
-        lib_file_name = self.get_lib_file_name()
-        if lib_file_name is None:
-            raise Exception("The mk file %s not specify module name.")
-
         src_mk_obj = open(self.src_mk_path)
 
         # open the dst file
@@ -236,29 +312,23 @@ class MKGenerator(object):
             dst_mk_obj = open(self.dst_mk_path, "w")
 
         relative_path = os.path.relpath(self.lib_file_path, os.path.dirname(self.dst_mk_path))
-        relative_path = "%s/$(TARGET_ARCH_ABI)/%s" % (relative_path, lib_file_name)
 
         # read the src file
         src_lines = src_mk_obj.readlines()
 
-        # modify the LOCAL_SRC_FILES
-        dst_lines = self.modidy_src_file(src_lines, relative_path)
+        modules = self.split_modules(src_lines)
+        dst_lines = []
+        for module in modules:
+            if module[MKGenerator.KEY_IS_MODULE]:
+                ret_lines = self.handle_module(module[MKGenerator.KEY_MODULE_LINES], relative_path)
+            else:
+                ret_lines = module[MKGenerator.KEY_MODULE_LINES]
 
-        # remove the LOCAL_C_INCLUDES & LOCAL_LDLIBS
-        dst_lines = self.remove_config(dst_lines, "LOCAL_C_INCLUDES")
-        dst_lines = self.remove_config(dst_lines, "LOCAL_LDLIBS")
-
-        # modify the LOCAL_EXPORT_C_INCLUDES
-        dst_lines = self.modify_export_c_include(dst_lines)
-
-        # modify the line $(include BUILD_STATIC_LIBRARY)
-        dst_lines = self.modify_include_cfg(dst_lines)
+            for l in ret_lines:
+                dst_lines.append(l)
 
         # modify the import-module
         dst_lines = self.modify_import_module(dst_lines)
-
-        # use whole libs
-        dst_lines = self.use_whole_lib(dst_lines)
 
         dst_mk_obj.writelines(dst_lines)
 

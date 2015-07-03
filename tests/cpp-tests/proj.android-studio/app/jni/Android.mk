@@ -202,7 +202,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/VisibleRect.cpp \
 ../../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../../Classes/controller.cpp \
-../../../Classes/testBasic.cpp
+../../../Classes/testBasic.cpp \
+../../../Classes/NavMeshTest/NavMeshTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../../..

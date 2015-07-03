@@ -95,16 +95,15 @@ public final class Cocos2dxBitmap {
                 hAlignment = Layout.Alignment.ALIGN_CENTER;
                 break;
             case HORIZONTAL_ALIGN_RIGHT:
-                hAlignment = Layout.Alignment.valueOf("ALIGN_RIGHT");
+                hAlignment = Layout.Alignment.ALIGN_OPPOSITE;
                 break;
             case HORIZONTAL_ALIGN_LEFT:
-                hAlignment = Layout.Alignment.valueOf("ALIGN_LEFT");
                 break;
             default:
                 break;
         }
 
-        TextPaint paint = Cocos2dxBitmap.newPaint(fontName, fontSize, horizontalAlignment);
+        TextPaint paint = Cocos2dxBitmap.newPaint(fontName, fontSize);
         if (stroke) {
             paint.setStyle(TextPaint.Style.STROKE);
             paint.setStrokeWidth(strokeSize);
@@ -164,8 +163,7 @@ public final class Cocos2dxBitmap {
         return true;
     }
 
-    private static TextPaint newPaint(final String fontName, final int fontSize,
-            final int horizontalAlignment) {
+    private static TextPaint newPaint(final String fontName, final int fontSize) {
         final TextPaint paint = new TextPaint();
         paint.setTextSize(fontSize);
         paint.setAntiAlias(true);

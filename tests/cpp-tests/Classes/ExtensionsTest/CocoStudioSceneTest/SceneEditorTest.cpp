@@ -531,17 +531,17 @@ std::string BackgroundComponentTest::title() const
 void BackgroundComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void BackgroundComponentTest::onExit()
 {
-	ArmatureDataManager::destroyInstance();
+    ArmatureDataManager::destroyInstance();
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
@@ -550,20 +550,20 @@ void BackgroundComponentTest::onExit()
 
 cocos2d::Node* BackgroundComponentTest::createGameScene()
 {
-	_filePath = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
+    _filePath = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
-	defaultPlay();
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
+    defaultPlay();
     return _rootNode;
 }
 
 void BackgroundComponentTest::defaultPlay()
 {
-	ComAudio *Audio = static_cast<ComAudio*>(_rootNode->getComponent("CCBackgroundAudio"));
-	Audio->playBackgroundMusic();
+    ComAudio *Audio = static_cast<ComAudio*>(_rootNode->getComponent("CCBackgroundAudio"));
+    Audio->playBackgroundMusic();
 }
 
 
@@ -584,13 +584,13 @@ std::string AttributeComponentTest::title() const
 void AttributeComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
-		defaultPlay();
+        defaultPlay();
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void AttributeComponentTest::onExit()
@@ -604,33 +604,33 @@ void AttributeComponentTest::onExit()
 
 bool AttributeComponentTest::initData()
 {
-	bool bRet = false;
-	rapidjson::Document doc;
-	do {
-		CC_BREAK_IF(_rootNode == nullptr);
-		ComAttribute *attribute = static_cast<ComAttribute*>(_rootNode->getChildByTag(10015)->getComponent("CCComAttribute"));
-		CC_BREAK_IF(attribute == nullptr);
-		log("Name: %s, HP: %f, MP: %f", attribute->getString("name").c_str(), attribute->getFloat("maxHP"), attribute->getFloat("maxMP"));
+    bool bRet = false;
+    rapidjson::Document doc;
+    do {
+        CC_BREAK_IF(_rootNode == nullptr);
+        ComAttribute *attribute = static_cast<ComAttribute*>(_rootNode->getChildByTag(10015)->getComponent("CCComAttribute"));
+        CC_BREAK_IF(attribute == nullptr);
+        log("Name: %s, HP: %f, MP: %f", attribute->getString("name").c_str(), attribute->getFloat("maxHP"), attribute->getFloat("maxMP"));
 
-		bRet = true;
-	} while (0);
-	return bRet;
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 cocos2d::Node* AttributeComponentTest::createGameScene()
 {
-	_filePath = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
+    _filePath = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
     return _rootNode;
 }
 
 void AttributeComponentTest::defaultPlay()
 {
-	initData();
+    initData();
 }
 
 TriggerTest::TriggerTest()
@@ -652,7 +652,7 @@ std::string TriggerTest::title() const
 // on "init" you need to initialize your instance
 void TriggerTest::onEnter()
 {
-	SceneEditorTestBase::onEnter();
+    SceneEditorTestBase::onEnter();
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
     this->schedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
@@ -670,12 +670,12 @@ void TriggerTest::onEnter()
 
 void TriggerTest::onExit()
 {
-	sendEvent(TRIGGEREVENT_LEAVESCENE);
+    sendEvent(TRIGGEREVENT_LEAVESCENE);
     this->unschedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);
-	ArmatureDataManager::destroyInstance();
+    ArmatureDataManager::destroyInstance();
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
@@ -711,14 +711,14 @@ void TriggerTest::gameLogic(float dt)
 
 cocos2d::Node* TriggerTest::createGameScene()
 {
-	_filePath = "scenetest/TriggerTest/TriggerTest.json";
+    _filePath = "scenetest/TriggerTest/TriggerTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
     
-	defaultPlay();
+    defaultPlay();
     return _rootNode;
 }
 void TriggerTest::defaultPlay()

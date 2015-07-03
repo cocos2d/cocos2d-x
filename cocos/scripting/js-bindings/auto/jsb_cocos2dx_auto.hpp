@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocos2d_Texture2D_class;
 extern JSObject *jsb_cocos2d_Texture2D_prototype;
 
@@ -2861,6 +2860,31 @@ bool js_cocos2dx_ProtectedNode_removeAllProtectedChildren(JSContext *cx, uint32_
 bool js_cocos2dx_ProtectedNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ProtectedNode_ProtectedNode(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_Image_class;
+extern JSObject *jsb_cocos2d_Image_prototype;
+
+bool js_cocos2dx_Image_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Image_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Image(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_Image_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getDataLen(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_hasAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_initWithImageFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getFileType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getNumberOfMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getRenderFormat(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Sprite_class;
 extern JSObject *jsb_cocos2d_Sprite_prototype;
 
@@ -2893,6 +2917,7 @@ bool js_cocos2dx_Sprite_setAtlasIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_setDirty(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_isTextureRectRotated(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_getTextureRect(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Sprite_debugDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2900,36 +2925,7 @@ bool js_cocos2dx_Sprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_Sprite_isFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_isFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_setVertexRect(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_createWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_createWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_Sprite(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_Image_class;
-extern JSObject *jsb_cocos2d_Image_prototype;
-
-bool js_cocos2dx_Image_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_Image_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_Image(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_Image_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getDataLen(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_hasAlpha(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_initWithImageFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getFileType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getNumberOfMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getRenderFormat(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_RenderTexture_class;
 extern JSObject *jsb_cocos2d_RenderTexture_prototype;
@@ -3982,19 +3978,5 @@ bool js_cocos2dx_SimpleAudioEngine_unloadEffect(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_SpritePolygonCache_class;
-extern JSObject *jsb_cocos2d_SpritePolygonCache_prototype;
-
-bool js_cocos2dx_SpritePolygonCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_SpritePolygonCache_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_SpritePolygonCache(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_printInfo(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_h__

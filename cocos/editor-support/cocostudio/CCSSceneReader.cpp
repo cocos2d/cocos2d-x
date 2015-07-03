@@ -340,12 +340,16 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             createObject(subDict, gb, attachComponent);
         }
         
-        const rapidjson::Value &canvasSizeDict = DICTOOL->getSubDictionary_json(dict, "CanvasSize");
-        if (DICTOOL->checkObjectExist_json(canvasSizeDict))
+        if(dict.HasMember("CanvasSize"))
         {
-            int width = DICTOOL->getIntValue_json(canvasSizeDict, "_width");
-            int height = DICTOOL->getIntValue_json(canvasSizeDict, "_height");
-            gb->setContentSize(Size(width, height));
+            const rapidjson::Value &canvasSizeDict = DICTOOL->getSubDictionary_json(dict, "CanvasSize");
+            if (DICTOOL->checkObjectExist_json(canvasSizeDict))
+            {
+                int width = DICTOOL->getIntValue_json(canvasSizeDict, "_width");
+                int height = DICTOOL->getIntValue_json(canvasSizeDict, "_height");
+                gb->setContentSize(Size(width, height));
+            }
+
         }
         
         return gb;

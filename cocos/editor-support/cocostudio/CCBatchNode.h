@@ -40,7 +40,7 @@ class CC_STUDIO_DLL BatchNode : public cocos2d::Node
 public:
     static BatchNode *create();
 public:
-	/**
+    /**
      * @js ctor
      */
     BatchNode();

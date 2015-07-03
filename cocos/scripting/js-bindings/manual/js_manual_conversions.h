@@ -337,6 +337,7 @@ jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v);
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v);
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v);
 jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v);
+jsval vector4_to_jsval(JSContext *cx, const cocos2d::Vec4& v);
 jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v);
 jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v);
 

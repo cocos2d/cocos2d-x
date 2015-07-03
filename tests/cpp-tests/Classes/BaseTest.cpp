@@ -350,6 +350,7 @@ TestCase::TestCase()
 , _runTime(0.0f)
 {
     Director::getInstance()->getTextureCache()->removeUnusedTextures();
+    SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
 
     this->schedule([&](float dt){
         _runTime += dt;

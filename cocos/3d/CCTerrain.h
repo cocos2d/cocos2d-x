@@ -104,9 +104,9 @@ public:
     };
 
     /**
-        DetailMap
-        this struct maintain a detail map data ,including source file ,detail size.
-        the DetailMap can use for terrain splatting
+     *DetailMap
+     *this struct maintain a detail map data ,including source file ,detail size.
+     *the DetailMap can use for terrain splatting
      **/
     struct CC_DLL DetailMap
     {
@@ -120,8 +120,20 @@ public:
     };
 
     /**
-        TerrainData
-        This TerrainData struct warp all parameter that Terrain need to create
+     * Triangle
+     */
+    struct Triangle
+    {
+        Triangle(Vec3 p1, Vec3 p2, Vec3 p3);
+        bool getInsterctPoint(const Ray &ray, Vec3& interScetPoint) const;
+        void transform(Mat4 matrix);
+        Vec3 _p1, _p2, _p3;
+    };
+
+
+   /**
+    *TerrainData
+    *This TerrainData struct warp all parameter that Terrain need to create
     */
     struct CC_DLL TerrainData
     {
@@ -171,6 +183,7 @@ public:
         int _detailMapAmount;
         /** @~english the skirt height ratio, only effect when terrain use skirt to fix crack
             @~chinese 裙边的高度比，仅当地形使用裙边类型修复裂缝时有效
+        */
         float _skirtHeightRatio;
     };
 private:
@@ -193,9 +206,10 @@ private:
         int _selfLod;
         ChunkIndices _chunkIndices;
     };
-    /*
-        terrain vertices internal data format
-    **/
+
+    /**
+    *terrain vertices internal data format
+    */
     struct TerrainVertexData
     {
         /*constructor*/
@@ -277,6 +291,9 @@ private:
             @~chinese 计算块的平均斜率
         */
         void calculateSlope();
+
+        bool getInsterctPointWithRay(const Ray& ray, Vec3 &interscetPoint);
+
         /** @~english current LOD of the chunk
             @~chinese 当前的块LOD
         */
@@ -314,6 +331,8 @@ private:
         */
         float _slope;
         std::vector<TerrainVertexData> _currentVertices;
+
+        std::vector<Triangle> _trianglesList;
     };
 
     /**
@@ -589,7 +608,9 @@ protected:
 
     ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort* indices, int size);
 
-    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort* indices, int size);
+    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+    
+    Chunk * getChunkByIndex(int x,int y) const;
 
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;

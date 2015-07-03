@@ -38,28 +38,28 @@ THE SOFTWARE.
 
 #define CC_CREATE_NO_PARAM_NO_INIT(varType)\
 public: \
-	static inline varType *create(void){ \
-	varType *var = new varType();\
-	if (var)\
+    static inline varType *create(void){ \
+    varType *var = new varType();\
+    if (var)\
 {\
-	var->autorelease();\
-	return var;\
+    var->autorelease();\
+    return var;\
 }\
-	CC_SAFE_DELETE(var);\
-	return nullptr;\
+    CC_SAFE_DELETE(var);\
+    return nullptr;\
 }
 
 #define CC_CREATE_NO_PARAM(varType)\
 public: \
-	static inline varType *create(void){ \
-	varType *var = new varType();\
-	if (var && var->init())\
+    static inline varType *create(void){ \
+    varType *var = new varType();\
+    if (var && var->init())\
 {\
-	var->autorelease();\
-	return var;\
+    var->autorelease();\
+    return var;\
 }\
-	CC_SAFE_DELETE(var);\
-	return nullptr;\
+    CC_SAFE_DELETE(var);\
+    return nullptr;\
 }
 
 namespace cocostudio {
@@ -75,7 +75,7 @@ class CC_STUDIO_DLL BaseData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM_NO_INIT(BaseData)
 public:
-	/**
+    /**
      * @js ctor
      */
     BaseData();
@@ -117,9 +117,9 @@ public:
     */
     virtual cocos2d::Color4B getColor();
 public:
-    float x;					//! position x attribute
-    float y;					//! position y attribute
-    int zOrder;			//! zorder attribute, used to order the Bone's depth order
+    float x;                    //! position x attribute
+    float y;                    //! position y attribute
+    int zOrder;            //! zorder attribute, used to order the Bone's depth order
 
     /**
     * x y skewX skewY scaleX scaleY used to calculate transform matrix
@@ -169,7 +169,7 @@ public:
     */
     static const std::string changeDisplayToTexture(const std::string& displayName);
 public:
-	/**
+    /**
      * @js ctor
      */
     DisplayData();
@@ -187,7 +187,7 @@ public:
     */
     virtual void copy(DisplayData *displayData);
 
-    DisplayType displayType;	//! mark which type your display is
+    DisplayType displayType;    //! mark which type your display is
     std::string displayName;
 };
 
@@ -201,7 +201,7 @@ class CC_STUDIO_DLL SpriteDisplayData : public DisplayData
 public:
     CC_CREATE_NO_PARAM_NO_INIT(SpriteDisplayData)
 public:
-	/**
+    /**
      * @js ctor
      */
     SpriteDisplayData();
@@ -231,7 +231,7 @@ class CC_STUDIO_DLL ArmatureDisplayData  : public DisplayData
 public:
     CC_CREATE_NO_PARAM_NO_INIT(ArmatureDisplayData)
 public:
-	/**
+    /**
      * @js ctor
      */
     ArmatureDisplayData();
@@ -251,7 +251,7 @@ class CC_STUDIO_DLL ParticleDisplayData : public DisplayData
 public:
     CC_CREATE_NO_PARAM_NO_INIT(ParticleDisplayData)
 public:
-	/**
+    /**
      * @js ctor
      */
     ParticleDisplayData();
@@ -278,7 +278,7 @@ class CC_STUDIO_DLL BoneData : public BaseData
 public:
     CC_CREATE_NO_PARAM(BoneData)
 public:
-	/**
+    /**
      * @js ctor
      */
     BoneData(void);
@@ -329,7 +329,7 @@ class CC_STUDIO_DLL ArmatureData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM(ArmatureData)
 public:
-	/**
+    /**
      * @js ctor
      */
     ArmatureData();
@@ -391,7 +391,7 @@ class CC_STUDIO_DLL FrameData : public BaseData
 public:
     CC_CREATE_NO_PARAM_NO_INIT(FrameData)
 public:
-	/**
+    /**
      * @js ctor
      */
     FrameData();
@@ -444,7 +444,7 @@ class CC_STUDIO_DLL MovementBoneData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM(MovementBoneData)
 public:
-	/**
+    /**
      * @js ctor
      */
     MovementBoneData();
@@ -491,7 +491,7 @@ class CC_STUDIO_DLL MovementData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM_NO_INIT(MovementData)
 public:
-	/**
+    /**
      * @js ctor
      */
     MovementData(void);
@@ -521,7 +521,7 @@ public:
 public:
     std::string name;
     int duration;        //! the frames this movement will last
-    float scale;		  //! scale this movement
+    float scale;          //! scale this movement
 
     /**
     * Change to this movement will last durationTo frames. Use this effect can avoid too suddenly changing.
@@ -548,9 +548,9 @@ public:
     cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
-    * @brief	save movment bone data
-    * @key	const std::string& 
-    * @value	MovementBoneData *
+    * @brief    save movment bone data
+    * @key    const std::string& 
+    * @value    MovementBoneData *
     */
     cocos2d::Map<std::string, MovementBoneData*> movBoneDataDic;
 };
@@ -568,7 +568,7 @@ class CC_STUDIO_DLL AnimationData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM_NO_INIT(AnimationData)
 public:
-	/**
+    /**
      * @js ctor
      */
     AnimationData(void);
@@ -621,7 +621,7 @@ class CC_STUDIO_DLL ContourData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM(ContourData)
 public:
-	/**
+    /**
      * @js ctor
      */
     ContourData();
@@ -640,7 +640,7 @@ public:
     */
     virtual void addVertex(cocos2d::Vec2 &vertex);
 public:
-    std::vector<cocos2d::Vec2> vertexList;	//! Save contour vertex info, vertex saved in a Vec2
+    std::vector<cocos2d::Vec2> vertexList;    //! Save contour vertex info, vertex saved in a Vec2
 };
 
 
@@ -656,7 +656,7 @@ class CC_STUDIO_DLL TextureData : public cocos2d::Ref
 public:
     CC_CREATE_NO_PARAM(TextureData)
 public:
-	/**
+    /**
      * @js ctor
      */
     TextureData();
@@ -687,13 +687,13 @@ public:
     ContourData *getContourData(int index);
 public:
 
-    float height;		//! The texture's width, height
+    float height;        //! The texture's width, height
     float width;
 
-    float pivotX;		//! The texture's anchor point
+    float pivotX;        //! The texture's anchor point
     float pivotY;
 
-    std::string name;	//! The texture's name
+    std::string name;    //! The texture's name
 
     cocos2d::Vector<ContourData*> contourDataList;
 };
