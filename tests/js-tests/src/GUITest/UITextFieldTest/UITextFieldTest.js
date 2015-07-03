@@ -65,6 +65,7 @@ var UITextFieldTest = UIScene.extend({
             default:
                 break;
         }
+        this._bottomDisplayLabel.setString(textField.getString());
     }
 });
 
@@ -116,6 +117,7 @@ var UITextFieldTest_MaxLength = UIScene.extend({
             default:
                 break;
         }
+        this._bottomDisplayLabel.setString(textField.getString());
     }
 });
 
@@ -166,6 +168,7 @@ var UITextFieldTest_Password = UIScene.extend({
             default:
                 break;
         }
+        this._bottomDisplayLabel.setString(textField.getString());
     }
 });
 
@@ -226,6 +229,7 @@ var UITextFieldTest_LineWrap = UIScene.extend({
             default:
                 break;
         }
+        this._bottomDisplayLabel.setString(textField.getString());
     }
 });
 
@@ -276,6 +280,7 @@ var UITextFieldTest_TrueTypeFont = UIScene.extend({
             default:
                 break;
         }
+        this._bottomDisplayLabel.setString(textField.getString());
     }
 });
 
@@ -325,5 +330,6 @@ var UITextFieldTest_PlaceHolderColor = UIScene.extend({
             default:
                 break;
         }
+        this._bottomDisplayLabel.setString(textField.getString());
     }
 });

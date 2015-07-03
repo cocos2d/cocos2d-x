@@ -29,7 +29,7 @@
 #include "renderer/CCGLProgramState.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

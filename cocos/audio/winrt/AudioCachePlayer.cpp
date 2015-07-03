@@ -37,6 +37,7 @@ inline void ThrowIfFailed(HRESULT hr)
 // AudioCache
 AudioCache::AudioCache()
     : _isReady(false)
+    , _retry(false)
     , _fileFullPath("")
     , _srcReader(nullptr)
     , _fileFormat(FileFormat::UNKNOWN)
@@ -57,6 +58,10 @@ AudioCache::~AudioCache()
 
 void AudioCache::readDataTask()
 {
+    if (_isReady) {
+        return;
+    }
+
     std::wstring path(_fileFullPath.begin(), _fileFullPath.end());
 
     if (nullptr != _srcReader) {
@@ -68,30 +73,33 @@ void AudioCache::readDataTask()
     {
     case FileFormat::WAV:
         _srcReader = new (std::nothrow) WAVReader();
-        if (_srcReader && _srcReader->initialize(_fileFullPath)) {
-            _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
-            _audInfo._wfx = _srcReader->getWaveFormatInfo();
-            _isReady = true;
-            invokeCallbacks();
-        }
         break;
 
     case FileFormat::OGG:
+        _srcReader = new (std::nothrow) OGGReader();
         break;
 
     case FileFormat::MP3:
         _srcReader = new (std::nothrow) MP3Reader();
-        if (_srcReader && _srcReader->initialize(_fileFullPath)) {
-            _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
-            _audInfo._wfx = _srcReader->getWaveFormatInfo();
-            _isReady = true;
-            invokeCallbacks();
-        }
+
         break;
 
     case FileFormat::UNKNOWN:
     default:
         break;
+    }
+
+    if (_srcReader && _srcReader->initialize(_fileFullPath)) {
+        _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
+        _audInfo._wfx = _srcReader->getWaveFormatInfo();
+        _isReady = true;
+        _retry = false;
+        invokeCallbacks();
+    }
+
+    if (!_isReady) {
+        _retry = true;
+        log("Failed to read input file: %s.\n", _fileFullPath.c_str());
     }
 }
 
@@ -105,6 +113,10 @@ void AudioCache::addCallback(const std::function<void()> &callback)
         _callbacks.push_back(callback);
     }
     _cbMutex.unlock();
+
+    if (_retry) {
+        readDataTask();
+    }
 }
 
 void AudioCache::invokeCallbacks()
@@ -290,12 +302,16 @@ void AudioPlayer::setVolume(float volume)
         if (FAILED(_xaMasterVoice->SetVolume(volume))) {
             error();
         }
+        else {
+            _volume = volume;
+        }
     }
 }
 
 bool AudioPlayer::play2d(AudioCache* cache)
 {
     bool ret = false;
+    HRESULT hr = S_OK;
 
     if (cache != nullptr)
     {
@@ -308,12 +324,17 @@ bool AudioPlayer::play2d(AudioCache* cache)
             XAUDIO2_VOICE_SENDS sends = { 0 };
             sends.SendCount = 1;
             sends.pSends = descriptors;
-            ThrowIfFailed(_xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends));
+            hr = _xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends);
         }
 
-        _isStreaming = _cache->isStreamingSource();
-        _duration = getDuration();
-        ret = _play();
+        if (SUCCEEDED(hr)) {
+            _isStreaming = _cache->isStreamingSource();
+            _duration = getDuration();
+            ret = _play();
+        }
+        else {
+            error();
+        }
     }
 
     return ret;
@@ -321,28 +342,39 @@ bool AudioPlayer::play2d(AudioCache* cache)
 
 void AudioPlayer::init()
 {
-    memset(&_xaBuffer, 0, sizeof(_xaBuffer));
-    ThrowIfFailed(XAudio2Create(_xaEngine.ReleaseAndGetAddressOf()));
+    do {
+        memset(&_xaBuffer, 0, sizeof(_xaBuffer));
+        if (FAILED(XAudio2Create(_xaEngine.ReleaseAndGetAddressOf()))) {
+            error();
+            break;
+        }
 
 #if defined(_DEBUG)
-    XAUDIO2_DEBUG_CONFIGURATION debugConfig = { 0 };
-    debugConfig.BreakMask = XAUDIO2_LOG_ERRORS;
-    debugConfig.TraceMask = XAUDIO2_LOG_ERRORS;
-    _xaEngine->SetDebugConfiguration(&debugConfig);
+        XAUDIO2_DEBUG_CONFIGURATION debugConfig = { 0 };
+        debugConfig.BreakMask = XAUDIO2_LOG_ERRORS;
+        debugConfig.TraceMask = XAUDIO2_LOG_ERRORS;
+        _xaEngine->SetDebugConfiguration(&debugConfig);
 #endif
 
-    _xaEngine->RegisterForCallbacks(this);
-    ThrowIfFailed(_xaEngine->CreateMasteringVoice(&_xaMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia));
-    _ready = true;
-    _state = AudioPlayerState::READY;
+        _xaEngine->RegisterForCallbacks(this);
+        if (FAILED(_xaEngine->CreateMasteringVoice(&_xaMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia))) {
+            error();
+            break;
+        }
+
+        _ready = true;
+        _state = AudioPlayerState::READY;
+    } while (false);
 }
 
 void AudioPlayer::free()
 {
+    _ready = false;
     _stop();
     memset(&_xaBuffer, 0, sizeof(_xaBuffer));
 
     if (_xaEngine) {
+        _xaEngine->UnregisterForCallbacks(this);
         _xaEngine->StopEngine();
     }
 
@@ -371,7 +403,7 @@ bool AudioPlayer::_play(bool resume)
 
         if (_state == AudioPlayerState::PAUSED && !resume || nullptr == _xaSourceVoice) break;
 
-        if (FAILED(_xaSourceVoice->Start())) {
+        if (FAILED(_xaMasterVoice->SetVolume(_volume)) || FAILED(_xaSourceVoice->Start())) {
             error();
         }
         else {
@@ -406,6 +438,7 @@ void AudioPlayer::error()
     _criticalError = true;
     _ready = false;
     _state = AudioPlayerState::ERRORED;
+    CCLOG("Audio system encountered error.");
 }
 
 void AudioPlayer::popBuffer()
@@ -513,13 +546,15 @@ void AudioPlayer::OnProcessingPassEnd()
 void AudioPlayer::OnCriticalError(HRESULT err)
 {
     UNREFERENCED_PARAMETER(err);
-    error();
+    if (_ready) {
+        error();
+    }
 }
 
 // IXAudio2VoiceCallback
 void AudioPlayer::OnVoiceProcessingPassStart(UINT32 uBytesRequired)
 {
-    if (uBytesRequired && _isStreaming){
+    if (_ready && uBytesRequired && _isStreaming){
         submitBuffers();
     }
 }
@@ -530,7 +565,9 @@ void AudioPlayer::OnVoiceProcessingPassEnd()
 
 void AudioPlayer::OnStreamEnd()
 {
-    onBufferRunOut();
+    if (_ready) {
+        onBufferRunOut();
+    }
 }
 
 void AudioPlayer::OnBufferStart(void* pBufferContext)
@@ -541,14 +578,16 @@ void AudioPlayer::OnBufferStart(void* pBufferContext)
 void AudioPlayer::OnBufferEnd(void* pBufferContext)
 {
     UNREFERENCED_PARAMETER(pBufferContext);
-    updateState();
+    if (_ready) {
+        updateState();
+    }
 }
 
 void AudioPlayer::OnLoopEnd(void* pBufferContext)
 {
     UNREFERENCED_PARAMETER(pBufferContext);
 
-    if (!_loop) {
+    if (_ready && !_loop) {
         _stop();
     }
 }
@@ -557,7 +596,9 @@ void AudioPlayer::OnVoiceError(void* pBufferContext, HRESULT err)
 {
     UNREFERENCED_PARAMETER(pBufferContext);
     UNREFERENCED_PARAMETER(err);
-    error();
+    if (_ready) {
+        error();
+    }
 }
 
 #endif

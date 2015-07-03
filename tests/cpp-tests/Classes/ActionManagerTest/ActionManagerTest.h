@@ -1,7 +1,6 @@
 #ifndef _ACTION_MANAGER_TEST_H_
 #define _ACTION_MANAGER_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ActionManagerTests);

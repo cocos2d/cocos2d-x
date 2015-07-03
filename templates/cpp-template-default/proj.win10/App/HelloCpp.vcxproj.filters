@@ -79,6 +79,9 @@
     <None Include="$(ZLibBinPath)zlib.dll" />
     <None Include="$(WebsocketsBinPath)libwebsockets.dll" />
     <None Include="$(SQLiteBinPath)sqlite3.dll" />
+    <None Include="$(OggBinPath)libogg.dll" />
+    <None Include="$(OggBinPath)libvorbis.dll" />
+    <None Include="$(OggBinPath)libvorbisfile.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Cocos2dEngine\OpenGLESPage.xaml">

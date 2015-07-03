@@ -1,9 +1,9 @@
+#include "base/ccConfig.h"
 #ifndef __cocos2dx_3d_h__
 #define __cocos2dx_3d_h__
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-
 
 extern JSClass  *jsb_cocos2d_Animation3D_class;
 extern JSObject *jsb_cocos2d_Animation3D_prototype;
@@ -241,5 +241,5 @@ bool js_cocos2dx_3d_Bundle3D_createBundle(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_3d_Bundle3D_destroyBundle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Bundle3D_loadObj(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Bundle3D_Bundle3D(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_3d_h__

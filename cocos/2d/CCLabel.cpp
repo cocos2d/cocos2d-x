@@ -262,7 +262,7 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
-    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
+    _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             Node::removeAllChildrenWithCleanup(true);
@@ -275,16 +275,16 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             }
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_purgeTextureListener, 1);
     
-    auto resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
+    _resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             _fontAtlas = nullptr;
             this->setTTFConfig(_fontConfig);
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(resetTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_resetTextureListener, 2);
 }
 
 Label::~Label()
@@ -295,6 +295,8 @@ Label::~Label()
     {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
+    _eventDispatcher->removeEventListener(_purgeTextureListener);
+    _eventDispatcher->removeEventListener(_resetTextureListener);
 
     CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
@@ -682,6 +684,16 @@ void Label::updateQuads()
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
+            if (_lettersInfo[ctr].position.y > _contentSize.height)
+            {
+                auto clipTop = _lettersInfo[ctr].position.y - _contentSize.height;
+                _reusedRect.origin.y += clipTop;
+                _lettersInfo[ctr].position.y -= clipTop;
+            }
+            if (_lettersInfo[ctr].position.y - letterDef.height < 0.f)
+            {
+                _reusedRect.size.height = _lettersInfo[ctr].position.y < 0.f ? 0.f : _lettersInfo[ctr].position.y;
+            }
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
@@ -702,8 +714,8 @@ bool Label::recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefiniti
 
     _lettersInfo[spriteIndex].def = letterDef;
     _lettersInfo[spriteIndex].position = point;
-    _lettersInfo[spriteIndex].contentSize.width = _lettersInfo[spriteIndex].def.width;
-    _lettersInfo[spriteIndex].contentSize.height = _lettersInfo[spriteIndex].def.height;
+    _lettersInfo[spriteIndex].contentSize.width = letterDef.width;
+    _lettersInfo[spriteIndex].contentSize.height = letterDef.height;
     _limitShowCount++;
 
     return _lettersInfo[spriteIndex].def.validDefinition;
@@ -945,23 +957,40 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         }
     }
 
-    if (_currentLabelType == LabelType::TTF)
-    {
-        glprogram->setUniformLocationWith4f(_uniformTextColor,
-            _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
-
-        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-        {
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-        }
-    }
-
     glprogram->setUniformsForBuiltins(transform);
-
     for(const auto &child: _children)
     {
         child->updateTransform();
+    }
+    
+    if (_currentLabelType == LabelType::TTF)
+    {
+        switch (_currLabelEffect) {
+            case LabelEffect::OUTLINE:
+                //draw text with outline
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+                for (const auto& batchNode:_batchNodes)
+                {
+                    batchNode->getTextureAtlas()->drawQuads();
+                }
+                
+                //draw text without outline
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+                break;
+            case LabelEffect::GLOW:
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            case LabelEffect::NORMAL:
+                glprogram->setUniformLocationWith4f(_uniformTextColor,
+                                                    _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
+                break;
+            default:
+                break;
+        }
     }
 
     for (const auto& batchNode:_batchNodes)

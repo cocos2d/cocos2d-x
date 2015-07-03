@@ -76,5 +76,34 @@ public class AppActivity extends Cocos2dxActivity {
             }
         });
     }
+    public static void showAlertDialog(final String title, final String message, final boolean logicSwitch) {
+        app.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog alertDialog = new AlertDialog.Builder(app).create();
+                alertDialog.setTitle(title);
+                alertDialog.setMessage(message);
+                alertDialog.setCancelable(true);
+                alertDialog.setIcon(R.drawable.icon);
+                String buttonStr = "it's false";
+                if (logicSwitch)
+                {
+                	buttonStr = "it's true";
+                }
+                alertDialog.setButton(buttonStr, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        app.runOnGLThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"Javascript Java bridge!\")");
+                            }
+                        });
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+    }
 
 }

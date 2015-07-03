@@ -25,7 +25,6 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include "base/allocator/CCAllocatorStrategyPool.h"
 

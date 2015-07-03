@@ -63,7 +63,7 @@ function Physics3DTestDemo:shootBox(des)
     self:addChild(sprite)
     sprite:setPosition3D(self._camera:getPosition3D())
     sprite:setScale(0.5)
-    sprite:syncToNode()
+    sprite:syncNodeToPhysics()
     
     --optimize, only sync node to physics
     sprite:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE) --sync node to physics
@@ -184,7 +184,7 @@ function BasicPhysics3DDemo:extend()
     floor:setScaleZ(60)
     self:addChild(floor)
     floor:setCameraMask(cc.CameraFlag.USER1)
-    floor:syncToNode()
+    floor:syncNodeToPhysics()
     floor:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE)
 
     rbDes.mass = 1.0
@@ -204,7 +204,7 @@ function BasicPhysics3DDemo:extend()
                 local sprite = cc.PhysicsSprite3D:create("Sprite3DTest/box.c3t", rbDes)
                 sprite:setTexture("Images/CyanSquare.png")
                 sprite:setPosition3D(cc.vec3(x, y, z))
-                sprite:syncToNode()
+                sprite:syncNodeToPhysics()
                 sprite:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE)
                 sprite:setCameraMask(cc.CameraFlag.USER1)
                 sprite:setScale(0.8)
@@ -332,7 +332,7 @@ function Physics3DConstraintDemo:extend()
     sprite:setScale(0.4)
     sprite:setPosition3D(cc.vec3(-20.0, 5.0, 0.0))
     --sync node position to physics
-    component:syncToNode()
+    component:syncNodeToPhysics()
     --physics controlled, we will not set position for it, so we can skip sync node position to physics
     component:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE)
 
@@ -356,7 +356,7 @@ function Physics3DConstraintDemo:extend()
     sprite:addComponent(component)
     sprite:setCameraMask(cc.CameraFlag.USER1)
     self:addChild(sprite)
-    component:syncToNode()
+    component:syncNodeToPhysics()
     rigidBody:setAngularVelocity(cc.vec3(0,3,0))
     constraint = cc.Physics3DHingeConstraint:create(rigidBody, cc.vec3(4.0, 4.0, 0.5), cc.vec3(0.0, 1.0, 0.0))
     physicsWorld:addPhysics3DConstraint(constraint)
@@ -374,7 +374,7 @@ function Physics3DConstraintDemo:extend()
     sprite:addComponent(component)
     sprite:setCameraMask(cc.CameraFlag.USER1)
     self:addChild(sprite)
-    component:syncToNode()
+    component:syncNodeToPhysics()
     rigidBody:setLinearVelocity(cc.vec3(0,3,0))
 
     rbDes.mass = 0.0
@@ -388,10 +388,13 @@ function Physics3DConstraintDemo:extend()
     sprite:addComponent(component)
     sprite:setCameraMask(cc.CameraFlag.USER1)
     self:addChild(sprite)
-    component:syncToNode()
+    component:syncNodeToPhysics()
 
     local frameInA = cc.mat4.createRotationZ(cc.mat4.createIdentity(), math.pi / 2)
-    local frameInB = frameInA
+    local frameInB = {}
+    for i=1,16 do
+        frameInB[i] = frameInA[i]
+    end
     frameInA[14] = -5.0
     frameInB[14] = 5.0
     constraint = cc.Physics3DSliderConstraint:create(rigidBody, rigidBodyB, frameInA, frameInB, false)
@@ -411,7 +414,7 @@ function Physics3DConstraintDemo:extend()
     sprite:addComponent(component)
     sprite:setCameraMask(cc.CameraFlag.USER1)
     self:addChild(sprite)
-    component:syncToNode()
+    component:syncNodeToPhysics()
 
     frameInA = cc.mat4.createRotationZ(frameInA, math.pi / 2)
     frameInA[13] = 0.0
@@ -433,7 +436,7 @@ function Physics3DConstraintDemo:extend()
     sprite:addComponent(component)
     sprite:setCameraMask(cc.CameraFlag.USER1)
     self:addChild(sprite)
-    component:syncToNode()
+    component:syncNodeToPhysics()
     frameInA = cc.mat4.setIdentity(frameInA)
     constraint = cc.Physics3D6DofConstraint:create(rigidBody, frameInA, false)
     physicsWorld:addPhysics3DConstraint(constraint)
@@ -463,7 +466,7 @@ function Physics3DKinematicDemo:extend()
     floor:setPosition3D(cc.vec3(0.0, -1.0, 0.0))
     self:addChild(floor)
     floor:setCameraMask(cc.CameraFlag.USER1)
-    floor:syncToNode()
+    floor:syncNodeToPhysics()
     --static object sync is not needed
     floor:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE)
 
@@ -514,7 +517,7 @@ function Physics3DKinematicDemo:extend()
                 sprite:setScale(1.00 / sprite:getContentSize().width)
                 self:addChild(sprite)
                 sprite:setPosition3D(cc.vec3(x, y, z))
-                sprite:syncToNode()
+                sprite:syncNodeToPhysics()
                 sprite:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE)
             end
         end
@@ -608,7 +611,7 @@ function Physics3DTerrainDemo:extend()
     local component = cc.Physics3DComponent:create(rigidBody)
     terrain:addComponent(component)
     self:addChild(terrain)
-    component:syncToNode()
+    component:syncNodeToPhysics()
     component:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.NONE)
 
     --create several spheres
@@ -631,7 +634,7 @@ function Physics3DTerrainDemo:extend()
                 sprite:setScale(1.0 / sprite:getContentSize().width)
                 sprite:setPosition3D(cc.vec3(x, y, z))
                 self:addChild(sprite)
-                sprite:syncToNode()
+                sprite:syncNodeToPhysics()
                 sprite:setSyncFlag(cc.Physics3DComponent.PhysicsSyncFlag.PHYSICS_TO_NODE)
             end
         end

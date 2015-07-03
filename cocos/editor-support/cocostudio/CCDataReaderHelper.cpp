@@ -1417,29 +1417,33 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
     {
         displayData = new (std::nothrow) SpriteDisplayData();
 
-		const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
+        const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
         if(name != nullptr)
         {
             ((SpriteDisplayData *)displayData)->displayName = name;
         }
-		const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
-		if(!dicArray.IsNull())
-		{
-			rapidjson::SizeType index = 0;
-			const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);
-			if (!dic.IsNull())
-			{
-				SpriteDisplayData *sdd = (SpriteDisplayData *)displayData;
-				sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
-				sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
-				sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
-				sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
-				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
-				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
+        if(json.HasMember(SKIN_DATA))
+        {
+            const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
+            if(!dicArray.IsNull())
+            {
+                rapidjson::SizeType index = 0;
+                const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);
+                if (!dic.IsNull())
+                {
+                    SpriteDisplayData *sdd = (SpriteDisplayData *)displayData;
+                    sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
+                    sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
+                    sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
+                    sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
+                    sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
+                    sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
 
-                sdd->skinData.x *= dataInfo->contentScale;
-                sdd->skinData.y *= dataInfo->contentScale;
-			}
+                    sdd->skinData.x *= dataInfo->contentScale;
+                    sdd->skinData.y *= dataInfo->contentScale;
+                }
+            }
+
         }
     }
 

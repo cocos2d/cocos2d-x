@@ -121,6 +121,8 @@
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
+
+        setLayoutComponent(node, json);
     };
 
     parser.parseChild = function(node, children, resourcePath){
@@ -177,7 +179,8 @@
                 node.setTexture(path);
             else if(type === 1){
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
-                node.setSpriteFrame(spriteFrame);
+                if(spriteFrame)
+                    node.setSpriteFrame(spriteFrame);
             }
         });
 
@@ -327,6 +330,11 @@
         if (color != null)
             widget.setColor(getColor(color));
 
+        setLayoutComponent(widget, json);
+    };
+
+    var setLayoutComponent = function(widget, json){
+        
         var layoutComponent = ccui.LayoutComponent.bindLayoutComponent(widget);
         if(!layoutComponent)
             return;
@@ -562,8 +570,11 @@
 
         widget.setUnifySizeEnabled(false);
 
+        var color = json["CColor"];
+        json["CColor"] = null;
+        widget.setTextColor(getColor(color));
         this.widgetAttributes(widget, json, widget.isIgnoreContentAdaptWithSize());
-
+        json["CColor"] = color;
         return widget;
 
     };
@@ -1131,13 +1142,10 @@
         var volume = json["Volume"] || 0;
         cc.audioEngine.setMusicVolume(volume);
         //var name = json["Name"];
-        var resPath = "";
-        if(cc.loader.resPath)
-            resPath = (cc.loader.resPath + "/").replace(/\/\/$/, "/");
 
         loadTexture(json["FileData"], resourcePath, function(path, type){
             cc.loader.load(path, function(){
-                cc.audioEngine.playMusic(resPath + path, loop);
+                cc.audioEngine.playMusic(path, loop);
             });
         });
 
@@ -1235,6 +1243,7 @@
                 node.getAnimation().play(currentAnimationName, -1, isLoop);
 
         });
+        node.setColor(getColor(json["CColor"]));
         return node;
     };
 
@@ -1283,9 +1292,29 @@
     var get3DVector = function(json, name, defValue){
         var x = defValue, y = defValue, z = defValue;
         if(json && name && json[name]){
-            x = null != json[name]["ValueX"] ? json[name]["ValueX"] : defValue;
-            y = null != json[name]["ValueY"] ? json[name]["ValueY"] : defValue;
-            z = null != json[name]["ValueZ"] ? json[name]["ValueZ"] : defValue;
+            if(undefined !== json[name]["ValueX"]) {
+                x = json[name]["ValueX"];
+            } else if(undefined !== json[name]["X"]) {
+                x = json[name]["X"]
+            }
+            if(null === x || isNaN(x))
+                x = defValue;
+
+            if(undefined !== json[name]["ValueY"]) {
+                y = json[name]["ValueY"];
+            } else if(undefined !== json[name]["Y"]) {
+                y = json[name]["Y"]
+            }
+            if(null === y || isNaN(y))
+                y = defValue;
+
+            if(undefined !== json[name]["ValueZ"]) {
+                z = json[name]["ValueZ"];
+            } else if(undefined !== json[name]["Z"]) {
+                z = json[name]["Z"]
+            }
+            if(null === z || isNaN(z))
+                z = defValue;
         }
         var vec3 = cc.math.vec3(x, y, z);
         return vec3;
@@ -1334,8 +1363,18 @@
         var nearClip = 1;
         var farClip = 500;
         if(json["ClipPlane"]){
-            nearClip = json["ClipPlane"]["ValueX"];
-            farClip  = json["ClipPlane"]["ValueY"];
+            if(undefined !== json["ClipPlane"]["ValueX"]) {
+                nearClip = json["ClipPlane"]["ValueX"];
+            } else if(undefined !== json["ClipPlane"]["X"]) {
+                nearClip = json["ClipPlane"]["X"];
+            }
+
+            if(undefined !== json["ClipPlane"]["ValueY"]) {
+                farClip = json["ClipPlane"]["ValueY"];
+            } else if(undefined !== json["ClipPlane"]["Y"]) {
+                farClip = json["ClipPlane"]["Y"];
+            }
+
             if(null === nearClip || isNaN(nearClip))
                 nearClip = 1;
             if(null === farClip || isNaN(farClip))

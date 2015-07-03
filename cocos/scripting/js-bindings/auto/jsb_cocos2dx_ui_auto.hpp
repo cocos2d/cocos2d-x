@@ -1,9 +1,9 @@
+#include "base/ccConfig.h"
 #ifndef __cocos2dx_ui_h__
 #define __cocos2dx_ui_h__
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-
 
 extern JSClass  *jsb_cocos2d_ui_LayoutParameter_class;
 extern JSObject *jsb_cocos2d_ui_LayoutParameter_prototype;
@@ -783,5 +783,5 @@ bool js_cocos2dx_ui_LayoutComponent_setSize(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_ui_LayoutComponent_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_LayoutComponent_bindLayoutComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_LayoutComponent_LayoutComponent(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_ui_h__

@@ -187,6 +187,13 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- 
+-- @function [parent=#Sprite] debugDraw 
+-- @param self
+-- @param #bool on
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
 -- @overload self, string, rect_table         
 -- @overload self, string         
 -- @function [parent=#Sprite] initWithFile
@@ -254,16 +261,6 @@
 -- @param #rect_table rect
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
---------------------------------
--- @overload self, string         
--- @overload self         
--- @overload self, string, rect_table         
--- @function [parent=#Sprite] create
--- @param self
--- @param #string filename
--- @param #rect_table rect
--- @return Sprite#Sprite ret (return value: cc.Sprite)
-
 --------------------------------
 -- @overload self, cc.Texture2D, rect_table, bool         
 -- @overload self, cc.Texture2D         

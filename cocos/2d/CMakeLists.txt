@@ -66,9 +66,8 @@ set(COCOS_2D_SRC
   2d/CCSprite.cpp
   2d/CCSpriteFrameCache.cpp
   2d/CCSpriteFrame.cpp
-  2d/MarchingSquare.cpp
-  2d/SpritePolygon.cpp
-  2d/SpritePolygonCache.cpp
+  2d/CCAutoPolygon.cpp
+  ../external/clipper/clipper.cpp
   2d/CCTextFieldTTF.cpp
   2d/CCTileMapAtlas.cpp
   2d/CCTMXLayer.cpp

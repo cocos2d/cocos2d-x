@@ -28,7 +28,7 @@ cc.BuilderReader.registerController("HelloCocosBuilderLayer", {
     _openTest : function(ccbFileName) {
         if (cc.sys.isNative)
         {
-            cc.BuilderReader.setResourcePath("res/");
+            cc.BuilderReader.setResourcePath("res/resjs/");
         }
         else
         {
