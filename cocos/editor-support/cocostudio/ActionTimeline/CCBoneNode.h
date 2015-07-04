@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 cocos2d-x.org
+Copyright (c) 2014 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -26,7 +26,6 @@ THE SOFTWARE.
 #ifndef __CCBONENODE_H__
 #define __CCBONENODE_H__
 
-#include "base/CCMap.h"
 #include "base/CCProtocols.h"
 #include "2d/CCLayer.h"
 #include "CCTimelineMacro.h"
@@ -35,19 +34,25 @@ THE SOFTWARE.
 #include "CCSkinNode.h"
 
 NS_TIMELINE_BEGIN
+
 class SkeletonNode;
 
-bool CC_STUDIO_DLL nodePairComparisonLess(std::pair<std::string, Node*> p1, std::pair<std::string, Node*> p2);
-
-class CC_STUDIO_DLL BoneNode : public Node, public cocos2d::BlendProtocol
+class CC_STUDIO_DLL BoneNode : public cocos2d::Node, public cocos2d::BlendProtocol
 {
 public:
     static BoneNode* create();
     static BoneNode* create(const int &length);
     static BoneNode* create(const int &length, const cocos2d::Color4F & color);
 
-    virtual void addChild(Node* child, int localZOrder, const std::string &name) override;
-    virtual void removeChild(Node* child, bool cleanup /* = true */) override;
+
+    /**
+    *@brief: add a skin 
+    *@param: display, whether display this skin
+    *@param: hideOthers, whether hide other skins added to this bone
+    */
+    virtual void addDisplay(SkinNode* skin, bool display, bool hideOthers = false);
+
+    virtual void addChildBone(BoneNode* bone);
 
     virtual const  cocos2d::Vector<BoneNode*>& getChildBones() const { return _childBones; }
     virtual  cocos2d::Vector<BoneNode*>&  getChildBones() { return _childBones; }
@@ -56,12 +61,24 @@ public:
 
     virtual const  cocos2d::Vector<SkinNode*>& getSkins() const { return _boneSkins; }
     virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
-
- 
+    /**
+    *
+    * @brief: display skin
+    * @param: hideOthers, set other skins visible = false
+    */
     virtual void display(SkinNode* skin, bool hideOthers = false);
+
+    /**
+    *
+    * @brief: display all skins named skinName, if hide display only one skin,
+    *          prefer to use display(SkinNode* skin, bool hideOthers = false)
+    * @param: hideOthers, set other skins visible = false
+    */
+    virtual void display(const std::string &skinName, bool hideOthers = false);
 
     virtual cocos2d::Vector<SkinNode*> getDisplaying() const;
 
+    virtual SkeletonNode* getRootSkeletonNode() const;
 
     /**
     * @brief: get all bones in this bone tree
@@ -75,9 +92,13 @@ public:
     */
     cocos2d::Vector<SkinNode*> getAllSubSkins() const;
 
+
+    virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
+    virtual void removeChild(Node* child, bool cleanup /* = true */) override;
+
     // blendFunc
     virtual void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override;
-    virtual const BlendFunc & getBlendFunc() const override { return _blendFunc; }
+    virtual const cocos2d::BlendFunc & getBlendFunc() const override { return _blendFunc; }
 
 
     // bone operate
@@ -94,13 +115,15 @@ public:
 
     virtual cocos2d::Rect getBoundingBox() const override;
 
+    virtual cocos2d::Mat4 getBoneToSkeletonTransform() const;
+
+    virtual cocos2d::AffineTransform getBoneToSkeletonAffineTransform() const;
     // transform & draw
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 
 protected:
     BoneNode();
     virtual ~BoneNode();
-
 
     virtual void addChildBone(BoneNode* bone, int localZOrder, const std::string &name);
 
@@ -124,15 +147,17 @@ protected:
     virtual void setContentSize(const cocos2d::Size &size) override;
     virtual bool init() override;
 
+    virtual void sortAllChildren() override;
+
     virtual void updateVertices();
     virtual void updateColor() override;
 
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
 protected:
-    CustomCommand _customCommand;
-    BlendFunc     _blendFunc;
+    cocos2d::CustomCommand _customCommand;
+    cocos2d::BlendFunc     _blendFunc;
 
     float            _length;
     float            _width;
@@ -140,12 +165,11 @@ protected:
 
     cocos2d::Vector<BoneNode*> _childBones;
     cocos2d::Vector<SkinNode*> _boneSkins;
-    BoneNode*                  _rootBoneNode;
-
+    SkeletonNode*                  _rootSkeleton;
 private:
-    Vec2          _squareVertices[4];
-    Color4F       _squareColors[4];
-    Vec3          _noMVPVertices[4];
+    cocos2d::Vec2          _squareVertices[4];
+    cocos2d::Color4F       _squareColors[4];
+    cocos2d::Vec3          _noMVPVertices[4];
     CC_DISALLOW_COPY_AND_ASSIGN(BoneNode);
 };
 

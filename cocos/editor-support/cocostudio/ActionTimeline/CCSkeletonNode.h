@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 cocos2d-x.org
+Copyright (c) 2014 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -27,29 +27,104 @@ THE SOFTWARE.
 
 #include "CCPlatformMacros.h"
 #include "CCTimelineMacro.h"
-#include "renderer/CCGroupCommand.h"
+#include "renderer/CCRenderer.h"
 #include "cocostudio/CocosStudioExport.h"
+#include "base/CCMap.h"
 
 #include "CCBoneNode.h"
 
-namespace cocos2d {
-    class GroupCommand;
-}
+
+
+// for test
+
+#ifndef ENABLE_PHYSICS_BOX2D_DETECT
+#define  ENABLE_PHYSICS_BOX2D_DETECT    1
+#endif // !ENABLE_PHYSICS_BOX2D_DETECT
+
+//end test
+
+class b2Body;
+struct cpBody;
 
 NS_TIMELINE_BEGIN
 
 class CC_STUDIO_DLL SkeletonNode : public BoneNode
 {
+    friend class BoneNode;
+
 public:
     static SkeletonNode* create();
+
+    void setAllRackShow(bool showRack);
+
+    BoneNode* getBoneNode(const std::string& boneName);
+
+    /**
+    * @brief: display  skin added to boneName 
+    * @param: hideOthers, set other skins addd boneName visible = false
+    */
+    void display(const std::string& boneName, SkinNode* skin, bool hideOthers = false);
+
+    /**
+    * @brief: display all skins named skinName, if hide display only one skin,
+    *          prefer to use display(SkinNode* skin, bool hideOthers = false)
+    * @param: hideOthers, set other skins visible = false
+    */
+    void display(const std::string& boneName, const std::string& skinName, bool hideOthers = false);
+
+    /**
+    *@brief: change displays 
+    *@param: boneSkinNameMap, map <bone name, name of skin to display which added to bone>
+    */
+    void changeDisplays(std::map<std::string, std::string> boneSkinNameMap, bool hideOthers = true);
+
+    static cocos2d::Mat4 getSkinToSkeletonTransform(SkinNode* skin);
+
+    static cocos2d::AffineTransform getSkinToSkeltonAffineTransform(SkinNode* skin);
+
+    //override
 
     void setLength(float length) override;
     void setContentSize(const cocos2d::Size &size) override;
 
-    void setAllRackShow(bool showRack);
+
     bool isAllRackShow() const { return _isAllRackShow; }
 
     cocos2d::Rect getBoundingBox() const override;
+
+
+//     //physics
+// 
+// #if ENABLE_PHYSICS_BOX2D_DETECT
+//     virtual b2Fixture *getShapeList();
+//     /**
+//     *  @js NA
+//     *  @lua NA
+//     */
+//     virtual void setBody(b2Body *body);
+//     /**
+//     *  @js NA
+//     *  @lua NA
+//     */
+//     virtual b2Body *getBody() const;
+// #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+//     /**
+//     *  @js NA
+//     *  @lua NA
+//     */
+//     virtual cpShape *getShapeList();
+//     /**
+//     *  @js NA
+//     *  @lua NA
+//     */
+//     virtual void setBody(cpBody *body);
+//     /**
+//     *  @js NA
+//     *  @lua NA
+//     */
+//     virtual cpBody *getBody() const;
+// #endif
+
 protected:
     SkeletonNode();
     virtual ~SkeletonNode();
@@ -58,19 +133,25 @@ protected:
     virtual void updateVertices() override;
     virtual void updateColor() override;
 
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual void visit(cocos2d::Renderer *renderer, const  cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags) override;
 
 protected:
     bool _isAllRackShow;
 
+    cocos2d::Map<std::string, BoneNode*> _subBonesMap;
 private:
-    cocos2d::GroupCommand  _groupCommand;
+    cocos2d::Vec2          _squareVertices[8];
+    cocos2d::Color4F       _squareColors[8];
+    cocos2d::Vec3          _noMVPVertices[8];
 
-    Vec2          _squareVertices[8];
-    Color4F       _squareColors[8];
-    Vec3          _noMVPVertices[8];
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+    b2Body *_body;
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+    cpBody *_body;
+#endif
 
     CC_DISALLOW_COPY_AND_ASSIGN(SkeletonNode);
 };

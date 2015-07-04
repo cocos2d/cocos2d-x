@@ -26,14 +26,8 @@ THE SOFTWARE.
 #define  __CCSKINNODE_H__
 
 #include "2d/CCNode.h"
-#include "2d/CCSprite.h"
-#include "2d/CCParticleSystemQuad.h"
-#include "base/CCProtocols.h"
 
-
-#include "CCFrame.h"
 #include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
 
 
 NS_TIMELINE_BEGIN
