@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "UIScrollViewBar.h"
 #include "CCImage.h"
 #include "2d/CCSprite.h"
-#include "base64.h"
+#include "base/base64.h"
 
 NS_CC_BEGIN
 
