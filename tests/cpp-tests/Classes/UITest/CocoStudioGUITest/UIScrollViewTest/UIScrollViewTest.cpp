@@ -396,6 +396,8 @@ bool UIScrollViewNestTest::init()
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
                                      (widgetSize.height - backgroundSize.height) / 2.0f +
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+		scrollView->setScrollBarPositionFromCornerForVertical(Vec2(scrollView->getContentSize().width - 4, 4));
+		scrollView->setScrollBarColor(Color3B::BLUE);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -425,7 +427,7 @@ bool UIScrollViewNestTest::init()
         
         
         
-        // Create the scrollview by vertical
+        // Create the scrollview by both
         ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);

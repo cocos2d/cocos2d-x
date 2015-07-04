@@ -69,14 +69,14 @@ public:
      *
      * @param positionFromCorner The position from the left-bottom corner (horizontal) or right-top corner (vertical).
      */
-    void setPositionFromCorner(const Vec2& positionFromCorner) { _positionFromCorner = positionFromCorner; }
+    void setPositionFromCorner(const Vec2& positionFromCorner);
     
     /**
      * @brief Get the scroll bar position from the left-bottom corner (horizontal) or right-top corner (vertical).
      *
      * @return positionFromCorner
      */
-    const Vec2& getPositionFromCorner() const { return _positionFromCorner; }
+    Vec2 getPositionFromCorner() const;
     
     /**
      * @brief Set the scroll bar's width
@@ -147,18 +147,20 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 private:
-    float updateLength(float innerContainerMeasure, float scrollViewMeasure, float outOfBoundaryValue);
-    void updatePosition(float innerContainerMeasure, float scrollViewMeasure, float innerContainerPosition, float outOfBoundaryValue, float actualLength);
+    float calculateLength(float innerContainerMeasure, float scrollViewMeasure, float outOfBoundaryValue);
+    Vec2 calculatePosition(float innerContainerMeasure, float scrollViewMeasure, float innerContainerPosition, float outOfBoundaryValue, float actualLength);
     
-    void setLength(float length);
+    void updateLength(float length);
     
     ScrollView* _parent;
     ScrollView::Direction _direction;
     Sprite* _upperHalfCircle;
     Sprite* _lowerHalfCircle;
     Sprite* _body;
-    Vec2 _positionFromCorner;
-    
+//    Vec2 _positionFromCorner;
+    float _marginFromBoundary;
+    float _marginForLength;
+
     bool _touching;
     
     bool _autoHideEnabled;

@@ -62,6 +62,8 @@ _direction(direction),
 _upperHalfCircle(nullptr),
 _lowerHalfCircle(nullptr),
 _body(nullptr),
+_marginFromBoundary(DEFAULT_MARGIN),
+_marginForLength(DEFAULT_MARGIN),
 _touching(false),
 _autoHideEnabled(true),
 _autoHideTime(DEFAULT_AUTO_HIDE_TIME),
@@ -71,8 +73,6 @@ _autoHideRemainingTime(0)
     CCASSERT(direction != ScrollView::Direction::BOTH, "Illegal scroll direction for scroll bar!");
     setCascadeColorEnabled(true);
     setCascadeOpacityEnabled(true);
-    
-    _positionFromCorner = Vec2(DEFAULT_MARGIN, DEFAULT_MARGIN);
 }
 
 ScrollViewBar::~ScrollViewBar()
@@ -124,6 +124,32 @@ bool ScrollViewBar::init()
     }
     return true;
 }
+    
+void ScrollViewBar::setPositionFromCorner(const Vec2& positionFromCorner)
+{
+    if(_direction == ScrollView::Direction::VERTICAL)
+    {
+        _marginForLength = positionFromCorner.y;
+        _marginFromBoundary = positionFromCorner.x;
+    }
+    else
+    {
+        _marginForLength = positionFromCorner.x;
+        _marginFromBoundary = positionFromCorner.y;
+    }
+}
+
+Vec2 ScrollViewBar::getPositionFromCorner() const
+{
+    if(_direction == ScrollView::Direction::VERTICAL)
+    {
+        return Vec2(_marginFromBoundary, _marginForLength);
+    }
+    else
+    {
+        return Vec2(_marginForLength, _marginFromBoundary);
+    }
+}
 
 void ScrollViewBar::setWidth(float width)
 {
@@ -144,7 +170,7 @@ float ScrollViewBar::getWidth() const
     return _body->getBoundingBox().size.width;
 }
 
-void ScrollViewBar::setLength(float length)
+void ScrollViewBar::updateLength(float length)
 {
     float ratio = length / _body->getTextureRect().size.height;
     _body->setScaleY(ratio);
@@ -231,11 +257,13 @@ void ScrollViewBar::onScrolled(const Vec2& outOfBoundary)
         innerContainerPosition = -innerContainer->getPositionX();
     }
     
-    float length = updateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue);
-    updatePosition(innerContainerMeasure, scrollViewMeasure, innerContainerPosition, outOfBoundaryValue, length);
+    float length = calculateLength(innerContainerMeasure, scrollViewMeasure, outOfBoundaryValue);
+    Vec2 position = calculatePosition(innerContainerMeasure, scrollViewMeasure, innerContainerPosition, outOfBoundaryValue, length);
+    updateLength(length);
+    setPosition(position);
 }
 
-float ScrollViewBar::updateLength(float innerContainerMeasure, float scrollViewMeasure, float outOfBoundaryValue)
+float ScrollViewBar::calculateLength(float innerContainerMeasure, float scrollViewMeasure, float outOfBoundaryValue)
 {
     float denominatorValue = innerContainerMeasure;
     if(outOfBoundaryValue != 0)
@@ -246,13 +274,10 @@ float ScrollViewBar::updateLength(float innerContainerMeasure, float scrollViewM
     }
     
     float lengthRatio = scrollViewMeasure / denominatorValue;
-    float marginForLength = (_direction == ScrollView::Direction::HORIZONTAL ? _positionFromCorner.x : _positionFromCorner.y);
-    float length = fabsf(scrollViewMeasure - 2 * marginForLength) * lengthRatio;
-    setLength(length);
-    return length;
+    return fabsf(scrollViewMeasure - 2 * _marginForLength) * lengthRatio;
 }
 
-void ScrollViewBar::updatePosition(float innerContainerMeasure, float scrollViewMeasure, float innerContainerPosition, float outOfBoundaryValue, float length)
+Vec2 ScrollViewBar::calculatePosition(float innerContainerMeasure, float scrollViewMeasure, float innerContainerPosition, float outOfBoundaryValue, float length)
 {
     float denominatorValue = innerContainerMeasure - scrollViewMeasure;
     if(outOfBoundaryValue != 0)
@@ -267,16 +292,14 @@ void ScrollViewBar::updatePosition(float innerContainerMeasure, float scrollView
         positionRatio = MAX(positionRatio, 0);
         positionRatio = MIN(positionRatio, 1);
     }
-    float marginForLength = (_direction == ScrollView::Direction::HORIZONTAL ? _positionFromCorner.x : _positionFromCorner.y);
-    float marginFromBoundary = (_direction == ScrollView::Direction::HORIZONTAL ? _positionFromCorner.y : _positionFromCorner.x);
-    float position = (scrollViewMeasure - length - 2 * marginForLength) * positionRatio + marginForLength;
+    float position = (scrollViewMeasure - length - 2 * _marginForLength) * positionRatio + _marginForLength;
     if(_direction == ScrollView::Direction::VERTICAL)
     {
-        setPosition(_parent->getContentSize().width - marginFromBoundary, position);
+        return Vec2(_parent->getContentSize().width - _marginFromBoundary, position);
     }
-    else if(_direction == ScrollView::Direction::HORIZONTAL)
+    else
     {
-        setPosition(position, marginFromBoundary);
+        return Vec2(position, _marginFromBoundary);
     }
 }
 }

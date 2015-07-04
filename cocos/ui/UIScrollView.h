@@ -405,7 +405,7 @@ public:
      *
      * @return positionFromCorner
      */
-    const Vec2& getScrollBarPositionFromCornerForVertical() const;
+    Vec2 getScrollBarPositionFromCornerForVertical() const;
     
     /**
      * @brief Set the horizontal scroll bar position from left-bottom corner.
@@ -419,7 +419,7 @@ public:
      *
      * @return positionFromCorner
      */
-    const Vec2& getScrollBarPositionFromCornerForHorizontal() const;
+    Vec2 getScrollBarPositionFromCornerForHorizontal() const;
     
     /**
      * @brief Set the scroll bar's width

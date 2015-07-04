@@ -1064,7 +1064,7 @@ void ScrollView::setScrollBarPositionFromCornerForVertical(const Vec2& positionF
     _verticalScrollBar->setPositionFromCorner(positionFromCorner);
 }
 
-const Vec2& ScrollView::getScrollBarPositionFromCornerForVertical() const
+Vec2 ScrollView::getScrollBarPositionFromCornerForVertical() const
 {
     CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
     CCASSERT(_direction != Direction::HORIZONTAL, "Scroll view doesn't have a vertical scroll bar!");
@@ -1078,7 +1078,7 @@ void ScrollView::setScrollBarPositionFromCornerForHorizontal(const Vec2& positio
     _horizontalScrollBar->setPositionFromCorner(positionFromCorner);
 }
 
-const Vec2& ScrollView::getScrollBarPositionFromCornerForHorizontal() const
+Vec2 ScrollView::getScrollBarPositionFromCornerForHorizontal() const
 {
     CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
     CCASSERT(_direction != Direction::VERTICAL, "Scroll view doesn't have a horizontal scroll bar!");
