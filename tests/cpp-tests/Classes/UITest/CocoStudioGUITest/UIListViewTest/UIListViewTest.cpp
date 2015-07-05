@@ -67,10 +67,7 @@ bool UIListViewTest_Vertical::init()
         listView->setBackGroundImage("cocosui/green_edit.png");
         listView->setBackGroundImageScale9Enabled(true);
         listView->setContentSize(Size(240, 130));
-        listView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                    (backgroundSize.width - listView->getContentSize().width) / 2.0f,
-                                    (widgetSize.height - backgroundSize.height) / 2.0f +
-                                    (backgroundSize.height - listView->getContentSize().height) / 2.0f));
+		listView->setPosition(Vec2((widgetSize - listView->getContentSize()) / 2.0f));
         listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEvent, this));
         listView->addEventListener((ui::ListView::ccScrollViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEventScrollView,this));
 		listView->setScrollBarPositionFromCorner(Vec2(7, 7));
@@ -84,8 +81,7 @@ bool UIListViewTest_Vertical::init()
         Layout* default_item = Layout::create();
         default_item->setTouchEnabled(true);
         default_item->setContentSize(default_button->getContentSize());
-        default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f,
-                                          default_item->getContentSize().height / 2.0f));
+		default_button->setPosition(Vec2(default_item->getContentSize() / 2.0f));
         default_item->addChild(default_button);
         
         // set model
@@ -165,6 +161,41 @@ bool UIListViewTest_Vertical::init()
         
         // set items margin
         listView->setItemsMargin(2.0f);
+        
+        // Show the indexes of items on each boundary.
+        {
+            float position = 75;
+            // Labels
+            Text* labels[3];
+            labels[0] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
+            labels[0]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            labels[0]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, position));
+            _uiLayer->addChild(labels[0]);
+            labels[1] = Text::create("  ", "fonts/Marker Felt.ttf", 12);
+            labels[1]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            labels[1]->setPosition(_uiLayer->getContentSize() / 2 + Size(140, 0));
+            _uiLayer->addChild(labels[1]);
+            labels[2] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
+            labels[2]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            labels[2]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, -position));
+            _uiLayer->addChild(labels[2]);
+            
+            // Callback
+            listView->ScrollView::addEventListener([labels](Ref* ref, ScrollView::EventType eventType) {
+                ListView* listView = dynamic_cast<ListView*>(ref);
+                if(listView == nullptr || eventType != ScrollView::EventType::CONTAINER_MOVED)
+                {
+                    return;
+                }
+                auto bottom = listView->getBottommostItemInCurrentView();
+                auto center = listView->getCenterItemInCurrentView();
+                auto top = listView->getTopmostItemInCurrentView();
+                
+                labels[0]->setString(StringUtils::format("Top index=%zd", listView->getIndex(top)));
+                labels[1]->setString(StringUtils::format("Center\nindex=%zd", listView->getIndex(center)));
+                labels[2]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
+            });
+        }
         
         return true;
     }

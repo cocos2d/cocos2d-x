@@ -529,6 +529,118 @@ void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* 
     }
 }
     
+static Vec2 calculateItemPositionWithAnchor(Widget* item, const Vec2& itemAnchorPoint)
+{
+    Vec2 origin(item->getLeftBoundary(), item->getBottomBoundary());
+    Size size = item->getContentSize();
+    return origin + Vec2(size.width * itemAnchorPoint.x, size.height * itemAnchorPoint.y);
+}
+    
+static Widget* findClosestItem(const Vec2& targetPosition, const Vector<Widget*>& items, const Vec2& itemAnchorPoint, ssize_t firstIndex, float distanceFromFirst, ssize_t lastIndex, float distanceFromLast)
+{
+    CCASSERT(firstIndex >= 0 && lastIndex < items.size() && firstIndex <= lastIndex, "");
+    if (firstIndex == lastIndex)
+    {
+        return items.at(firstIndex);
+    }
+    if (lastIndex - firstIndex == 1)
+    {
+        if (distanceFromFirst <= distanceFromLast)
+        {
+            return items.at(firstIndex);
+        }
+        else
+        {
+            return items.at(lastIndex);
+        }
+    }
+    
+    // Binary search
+    ssize_t midIndex = (firstIndex + lastIndex) / 2;
+    Vec2 itemPosition = calculateItemPositionWithAnchor(items.at(midIndex), itemAnchorPoint);
+    float distanceFromMid = (targetPosition - itemPosition).length();
+    if (distanceFromFirst <= distanceFromLast)
+    {
+        // Left half
+        return findClosestItem(targetPosition, items, itemAnchorPoint, firstIndex, distanceFromFirst, midIndex, distanceFromMid);
+    }
+    else
+    {
+        // Right half
+        return findClosestItem(targetPosition, items, itemAnchorPoint, midIndex, distanceFromMid, lastIndex, distanceFromLast);
+    }
+}
+
+Widget* ListView::getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const
+{
+    if (_items.empty())
+    {
+        return nullptr;
+    }
+    
+    // Find the closest item through binary search
+    ssize_t firstIndex = 0;
+    Vec2 firstPosition = calculateItemPositionWithAnchor(_items.at(firstIndex), itemAnchorPoint);
+    float distanceFromFirst = (targetPosition - firstPosition).length();
+    
+    ssize_t lastIndex = _items.size() - 1;
+    Vec2 lastPosition = calculateItemPositionWithAnchor(_items.at(lastIndex), itemAnchorPoint);
+    float distanceFromLast = (targetPosition - lastPosition).length();
+    
+    return findClosestItem(targetPosition, _items, itemAnchorPoint, firstIndex, distanceFromFirst, lastIndex, distanceFromLast);
+}
+
+Widget* ListView::getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const
+{
+    // Calculate the target position
+    Size contentSize = getContentSize();
+    Vec2 targetPosition = -_innerContainer->getPosition();
+    targetPosition.x += contentSize.width * positionRatioInView.x;
+    targetPosition.y += contentSize.height * positionRatioInView.y;
+    return getClosestItemToPosition(targetPosition, itemAnchorPoint);
+}
+
+Widget* ListView::getCenterItemInCurrentView() const
+{
+    return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE);
+}
+
+Widget* ListView::getLeftmostItemInCurrentView() const
+{
+    if (_direction == Direction::HORIZONTAL)
+    {
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_LEFT);
+    }
+    return nullptr;
+}
+
+Widget* ListView::getRightmostItemInCurrentView() const
+{
+    if (_direction == Direction::HORIZONTAL)
+    {
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_RIGHT);
+    }
+    return nullptr;
+}
+
+Widget* ListView::getTopmostItemInCurrentView() const
+{
+    if (_direction == Direction::VERTICAL)
+    {
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_TOP);
+    }
+    return nullptr;
+}
+
+Widget* ListView::getBottommostItemInCurrentView() const
+{
+    if (_direction == Direction::VERTICAL)
+    {
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_BOTTOM);
+    }
+    return nullptr;
+}
+
 ssize_t ListView::getCurSelectedIndex() const
 {
     return _curSelectedIndex;

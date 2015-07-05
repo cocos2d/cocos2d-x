@@ -220,7 +220,54 @@ public:
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
     
-        
+	/**
+	 * @brief Query the closest item to a specific position in inner container.
+	 *
+	 * @param targetPosition Specifies the target position in inner container's coordinates.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @return A item instance if list view is not empty. Otherwise, returns null.
+	 */
+	Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint = Vec2::ANCHOR_MIDDLE) const;
+	
+	/**
+	 * @brief Query the closest item to a specific position in current view.
+	 *
+	 * @param positionRatioInView Specifies the target position with ratio in list view's content size.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @return A item instance if list view is not empty. Otherwise, returns null.
+	 */
+	Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint = Vec2::ANCHOR_MIDDLE) const;
+	
+    /**
+     * @brief Query the center item
+     * @return A item instance.
+     */
+    Widget* getCenterItemInCurrentView() const;
+    
+    /**
+     * @brief Query the leftmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getLeftmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the rightmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getRightmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the topmost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getTopmostItemInCurrentView() const;
+    
+    /**
+     * @brief Query the bottommost item in horizontal list
+     * @return A item instance.
+     */
+    Widget* getBottommostItemInCurrentView() const;
+    
     /**
      * @brief Query current selected widget's idnex.
      *
