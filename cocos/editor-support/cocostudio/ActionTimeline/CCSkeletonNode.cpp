@@ -255,6 +255,11 @@ BoneNode* SkeletonNode::getBoneNode(const std::string& boneName)
     return nullptr;
 }
 
+const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() const
+{
+    return _subBonesMap;
+}
+
 cocos2d::Mat4 SkeletonNode::getSkinToSkeletonTransform(SkinNode* skin)
 {
     auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
@@ -276,5 +281,6 @@ cocos2d::AffineTransform SkeletonNode::getSkinToSkeltonAffineTransform(SkinNode*
     }
     return AffineTransformConcat(skin->getNodeToParentAffineTransform(), boneParent->getBoneToSkeletonAffineTransform());
 }
+
 
 NS_TIMELINE_END

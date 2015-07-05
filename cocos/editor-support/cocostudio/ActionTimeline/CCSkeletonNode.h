@@ -60,6 +60,11 @@ public:
     BoneNode* getBoneNode(const std::string& boneName);
 
     /**
+    *get All bones in this skeleton, <bone's name, BoneNode>
+    */
+    const cocos2d::Map<std::string, BoneNode*>& getAllSubBonesMap() const;
+
+    /**
     * @brief: display  skin added to boneName 
     * @param: hideOthers, set other skins addd boneName visible = false
     */
@@ -92,38 +97,38 @@ public:
 
     cocos2d::Rect getBoundingBox() const override;
 
-
-//     //physics
 // 
-// #if ENABLE_PHYSICS_BOX2D_DETECT
-//     virtual b2Fixture *getShapeList();
-//     /**
-//     *  @js NA
-//     *  @lua NA
-//     */
-//     virtual void setBody(b2Body *body);
-//     /**
-//     *  @js NA
-//     *  @lua NA
-//     */
-//     virtual b2Body *getBody() const;
-// #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-//     /**
-//     *  @js NA
-//     *  @lua NA
-//     */
-//     virtual cpShape *getShapeList();
-//     /**
-//     *  @js NA
-//     *  @lua NA
-//     */
-//     virtual void setBody(cpBody *body);
-//     /**
-//     *  @js NA
-//     *  @lua NA
-//     */
-//     virtual cpBody *getBody() const;
-// #endif
+//      //physics
+//  
+//  #if ENABLE_PHYSICS_BOX2D_DETECT
+//      virtual b2Fixture *getShapeList();
+//      /**
+//      *  @js NA
+//      *  @lua NA
+//      */
+//      virtual void setBody(b2Body *body);
+//      /**
+//      *  @js NA
+//      *  @lua NA
+//      */
+//      virtual b2Body *getBody() const;
+//  #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+//      /**
+//      *  @js NA
+//      *  @lua NA
+//      */
+//      virtual cpShape *getShapeList();
+//      /**
+//      *  @js NA
+//      *  @lua NA
+//      */
+//      virtual void setBody(cpBody *body);
+//      /**
+//      *  @js NA
+//      *  @lua NA
+//      */
+//      virtual cpBody *getBody() const;
+//  #endif
 
 protected:
     SkeletonNode();
