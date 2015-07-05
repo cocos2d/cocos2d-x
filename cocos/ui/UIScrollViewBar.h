@@ -154,10 +154,11 @@ private:
     
     ScrollView* _parent;
     ScrollView::Direction _direction;
+	
     Sprite* _upperHalfCircle;
     Sprite* _lowerHalfCircle;
     Sprite* _body;
-//    Vec2 _positionFromCorner;
+	
     float _marginFromBoundary;
     float _marginForLength;
 
