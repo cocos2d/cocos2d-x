@@ -128,7 +128,7 @@ float UserDefault::getFloatForKey(const char* pKey)
 float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
 {
     float ret = (float)getDoubleForKey(pKey, (double)defaultValue);
- 
+
     return ret;
 }
 
@@ -180,7 +180,7 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
     {
         unsigned char* decodedData = nullptr;
         int decodedDataLen = base64Decode((unsigned char*) encodedData.c_str(), (unsigned int) encodedData.length(), &decodedData);
-        if (decodedData && decodedDataLen > 0) 
+        if (decodedData && decodedDataLen > 0)
         {
             ret.fastSet(decodedData, decodedDataLen);
         }
@@ -247,7 +247,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
 
     char *encodedData = 0;
     base64Encode(value.getBytes(), static_cast<unsigned int>(value.getSize()), &encodedData);
-    
+
     setPlatformKeyValue(pKey, dynamic_cast<PropertyValue^>(PropertyValue::CreateString(PlatformStringFromString(encodedData))));
 
     if (encodedData)
@@ -311,7 +311,7 @@ void UserDefault::initXMLFilePath()
     {
         _filePath += FileUtils::getInstance()->getWritablePath() + XML_FILE_NAME;
         _isFilePathInitialized = true;
-    }    
+    }
 }
 
 // create new xml file
@@ -327,6 +327,21 @@ const string& UserDefault::getXMLFilePath()
 
 void UserDefault::flush()
 {
+}
+
+void UserDefault::deleteValueForKey(const char* key)
+{
+    // check the params
+    if (!key)
+    {
+        CCLOG("the key is invalid");
+    }
+
+    ApplicationDataContainer^ localSettings = ApplicationData::Current->LocalSettings;
+    auto values = localSettings->Values;
+    values->Remove(PlatformStringFromString(key));
+
+    flush();
 }
 
 NS_CC_END
