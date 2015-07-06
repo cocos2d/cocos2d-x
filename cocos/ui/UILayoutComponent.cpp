@@ -673,7 +673,7 @@ namespace ui {
             page->forceDoLayout();
 
             Vector<Layout*> _layoutVector = page->getPages();
-            for each (auto item in _layoutVector)
+            for(auto& item : _layoutVector)
             {
                 ui::Helper::doLayout(item);
             }
