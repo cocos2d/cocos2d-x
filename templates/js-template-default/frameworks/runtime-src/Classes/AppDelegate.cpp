@@ -27,7 +27,9 @@
 #include "navmesh/jsb_cocos2dx_navmesh_manual.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "jsb_cocos2dx_experimental_video_auto.hpp"
 #include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
 #include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
 #endif
 
@@ -129,7 +131,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
 #endif
 
