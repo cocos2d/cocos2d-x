@@ -17,7 +17,7 @@ else:
 if('NODE_NAME' in os.environ):
     node_name = os.environ['NODE_NAME']
 else:
-    node_name = 'ios'
+    node_name = 'android'
 # for local debugging purpose, you could change the value to 0 and run
 # this scripts in your local machine
 remote_build = 1
@@ -56,8 +56,7 @@ def gen_scripting_bindings():
 
 
 def do_build_slaves():
-    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" +
-    os.sep + "slave-scripts" + os.sep + "framework" + os.sep
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep + "framework" + os.sep
 
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
