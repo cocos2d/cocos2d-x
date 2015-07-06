@@ -178,7 +178,6 @@ namespace cocostudio
             {
                 attribute = child->FirstAttribute();
                 clipPlane = getVec2Attribute(attribute);
-                break;
             }
             else if (name == "LeftImage")
             {
