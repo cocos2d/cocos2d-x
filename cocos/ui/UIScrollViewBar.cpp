@@ -48,14 +48,17 @@ static Sprite* createSpriteFromBase64(const char* base64String)
     CCASSERT(imageResult, "Failed to create image from base64!");
     free(decoded);
     
-    Texture2D *pTexture = new Texture2D();
-    pTexture->initWithImage(image);
-    pTexture->setAliasTexParameters();
+    Texture2D *texture = new Texture2D();
+    texture->initWithImage(image);
+    texture->setAliasTexParameters();
     image->release();
     
-    return Sprite::createWithTexture(pTexture);
-}
+    Sprite* sprite = Sprite::createWithTexture(texture);
+    texture->release();
     
+    return sprite;
+}
+
 ScrollViewBar::ScrollViewBar(ScrollView* parent, ScrollView::Direction direction):
 _parent(parent),
 _direction(direction),
