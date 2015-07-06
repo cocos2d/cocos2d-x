@@ -124,8 +124,7 @@ void BoneNode::addDisplay(SkinNode* skin, bool isDisplay, bool hideOthers /*= fa
         }
     }
     Node::addChild(skin);
-    if (isDisplay)
-        skin->setVisible(isDisplay);
+    skin->setVisible(isDisplay);
 }
 
 
@@ -165,13 +164,11 @@ void BoneNode::display(SkinNode* skin, bool hideOthers /*= false*/)
     {
         if (boneskin == skin)
         {
-            if (!boneskin->isVisible())
-                boneskin->setVisible(true);
+            boneskin->setVisible(true);
         }
-        else
+        else if (hideOthers)
         {
-            if (boneskin->isVisible())
-                boneskin->setVisible(false);
+            boneskin->setVisible(false);
         }
     }
 }
@@ -182,13 +179,11 @@ void BoneNode::display(const std::string &skinName, bool hideOthers)
     {
         if (skinName == skin->getName())
         {
-            if (skin->isVisible())
-                skin->setVisible(true);
+            skin->setVisible(true);
         }
         else if (hideOthers)
         {
-            if (!skin->isVisible())
-                skin->setVisible(false);
+            skin->setVisible(false);
         }
     }
 }
@@ -332,12 +327,16 @@ void BoneNode::setRackColor(const cocos2d::Color4F &color)
 cocos2d::Rect BoneNode::getBoundingBox() const
 {
     float minx, miny, maxx, maxy = 0;
-
+    minx = miny = maxx = maxy;
     bool first = true;
 
     Rect boundingBox = Rect(0, 0 , 0 , 0);
-    if (_isRackShow)
-        boundingBox = Rect(0, 0, _contentSize.width, _contentSize.height);
+    if (_isRackShow && _rootSkeleton != nullptr && _rootSkeleton->_isAllRackShow)
+    {
+        maxx = _contentSize.width;
+        maxy = _contentSize.height;
+        first = false;
+    }
 
     for (const auto& skin : _boneSkins)
     {
@@ -356,14 +355,13 @@ cocos2d::Rect BoneNode::getBoundingBox() const
         }
         else
         {
-            minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
-            miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
-            maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
-            maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
+            minx = MIN(r.getMinX(), minx);
+            miny = MIN(r.getMinY(), miny);
+            maxx = MAX(r.getMaxX(), maxx);
+            maxy = MAX(r.getMaxY(), maxy);
         }
-        boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
     }
-
+    boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
     return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 

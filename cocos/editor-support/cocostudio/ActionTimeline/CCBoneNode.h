@@ -46,7 +46,7 @@ public:
 
 
     /**
-    *@brief: add a skin 
+    *@brief: add a skin
     *@param: display, whether display this skin
     *@param: hideOthers, whether hide other skins added to this bone
     */

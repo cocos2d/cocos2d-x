@@ -24,6 +24,7 @@ THE SOFTWARE.
 #include "CCSkeletonNode.h"
 
 #include "base/CCDirector.h"
+#include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
@@ -65,24 +66,46 @@ bool SkeletonNode::init()
 cocos2d::Rect SkeletonNode::getBoundingBox() const
 {
     float minx, miny, maxx, maxy = 0;
-
+    minx = miny = maxx = maxy;
     cocos2d::Rect boundingBox = BoneNode::getBoundingBox();
-
+    bool first = true;
+    if (!boundingBox.equals(cocos2d::Rect::ZERO))
+    {
+        minx = boundingBox.getMinX();
+        miny = boundingBox.getMinY();
+        maxx = boundingBox.getMaxX();
+        maxy = boundingBox.getMaxY();
+        first = false;
+    }
+    auto nodetoParentTran = getNodeToParentAffineTransform();
     auto allbones = getAllSubBones();
     for (const auto& bone : allbones)
     {
-        cocos2d::Rect r = RectApplyAffineTransform(bone->getBoundingBox(), bone->getBoneToSkeletonAffineTransform());
+        auto boneParentTrans = static_cast<BoneNode*>(bone->getParent())->getBoneToSkeletonAffineTransform();
+        boneParentTrans = AffineTransformConcat(boneParentTrans, nodetoParentTran);
+        cocos2d::Rect r = RectApplyAffineTransform(bone->getBoundingBox(), boneParentTrans);
         if (r.equals(cocos2d::Rect::ZERO))
             continue;
 
-        minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
-        miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
-        maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
-        maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
+        if (first)
+        {
+            minx = r.getMinX();
+            miny = r.getMinY();
+            maxx = r.getMaxX();
+            maxy = r.getMaxY();
+
+            first = false;
+        }
+        else
+        {
+            minx = MIN(r.getMinX(), minx);
+            miny = MIN(r.getMinY(), miny);
+            maxx = MAX(r.getMaxX(), maxx);
+            maxy = MAX(r.getMaxY(), maxy);
+        }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-
-    return RectApplyTransform(boundingBox, getNodeToParentTransform());
+    return boundingBox;
 }
 
 SkeletonNode::SkeletonNode()
@@ -257,6 +280,19 @@ const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() co
     return _subBonesMap;
 }
 
+cocos2d::Mat4 SkeletonNode::getBoneToSkeletonTransform() const
+{
+    return _transform;
+}
+
+cocos2d::AffineTransform SkeletonNode::getBoneToSkeletonAffineTransform() const
+{
+    cocos2d::AffineTransform ret;
+    cocos2d::GLToCGAffine(_transform.m, &ret);
+
+    return ret;
+}
+
 cocos2d::Mat4 SkeletonNode::getSkinToSkeletonTransform(SkinNode* skin)
 {
     auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
@@ -278,6 +314,5 @@ cocos2d::AffineTransform SkeletonNode::getSkinToSkeltonAffineTransform(SkinNode*
     }
     return AffineTransformConcat(skin->getNodeToParentAffineTransform(), boneParent->getBoneToSkeletonAffineTransform());
 }
-
 
 NS_TIMELINE_END
