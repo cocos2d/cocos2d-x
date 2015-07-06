@@ -23,109 +23,33 @@ SkeletonNodeReader::~SkeletonNodeReader()
 
 }
 
-static SkeletonNodeReader* _instanceBoneNodeReader = nullptr;
+static SkeletonNodeReader* _instanceSkeletonNodeReader = nullptr;
 
 SkeletonNodeReader* SkeletonNodeReader::getInstance()
 {
-    if (_instanceBoneNodeReader == nullptr)
+    if (_instanceSkeletonNodeReader == nullptr)
     {
-        _instanceBoneNodeReader = new (std::nothrow) SkeletonNodeReader();
+        _instanceSkeletonNodeReader = new (std::nothrow) SkeletonNodeReader();
     }
-    return _instanceBoneNodeReader;
+    return _instanceSkeletonNodeReader;
 }
 
 void SkeletonNodeReader::destroyInstance()
 {
-    CC_SAFE_DELETE(_instanceBoneNodeReader);
-}
-
-Offset<Table> SkeletonNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
-    flatbuffers::FlatBufferBuilder *builder)
-{
-
-    auto temp = NodeReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-    auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
-
-    float length = 0;
-    cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
-
-    const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
-    while (attribute)
-    {
-        std::string name = attribute->Name();
-        std::string value = attribute->Value();
-
-        if (name == "Length")
-        {
-            length = atof(value.c_str());
-        }
-        attribute = attribute->Next();
-    }
-
-    const tinyxml2::XMLElement* child = objectData->FirstChildElement();
-    while (child)
-    {
-        std::string name = child->Name();
-        if (name == "BlendFunc")
-        {
-            const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
-
-            while (attribute)
-            {
-                name = attribute->Name();
-                std::string value = attribute->Value();
-
-                if (name == "Src")
-                {
-                    blendFunc.src = atoi(value.c_str());
-                }
-                else if (name == "Dst")
-                {
-                    blendFunc.dst = atoi(value.c_str());
-                }
-
-                attribute = attribute->Next();
-            }
-        }
-
-        child = child->NextSiblingElement();
-    }
-    flatbuffers::BlendFunc f_blendFunc(blendFunc.src, blendFunc.dst);
-
-    auto options = CreateBoneOptions(*builder,
-        nodeOptions,
-        length,
-        &f_blendFunc);
-
-    return *(Offset<Table>*)(&options);
-}
-
-void SkeletonNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
-    const flatbuffers::Table *nodeOptions)
-{
-
-    auto* bone = static_cast<SkeletonNode*>(node);
-    auto options = (flatbuffers::BoneOptions*)nodeOptions;
-
-    float length = options->length();
-    bone->setLength(length);
-
-    auto f_blendFunc = options->blendFunc();
-    if (f_blendFunc)
-    {
-        cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
-        blendFunc.src = f_blendFunc->src();
-        blendFunc.dst = f_blendFunc->dst();
-        bone->setBlendFunc(blendFunc);
-    }
+    CC_SAFE_DELETE(_instanceSkeletonNodeReader);
 }
 
 cocos2d::Node*  SkeletonNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
 {
     auto bone = SkeletonNode::create();
 
+    // self options
     auto options = (flatbuffers::BoneOptions*)nodeOptions;
     setPropsWithFlatBuffers(bone, (Table*)options);
+
+    // super options (node)
+    auto nodeReader = NodeReader::getInstance();
+    nodeReader->setPropsWithFlatBuffers(bone, (Table*)options->nodeOptions());
 
     return bone;
 }

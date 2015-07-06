@@ -125,8 +125,13 @@ cocos2d::Node*  BoneNodeReader::createNodeWithFlatBuffers(const flatbuffers::Tab
 {
     auto bone = BoneNode::create();
 
+    // self options
     auto options = (flatbuffers::BoneOptions*)nodeOptions;
     setPropsWithFlatBuffers(bone, (Table*)options);
+
+    // super options (node)
+    auto nodeReader = NodeReader::getInstance();
+    nodeReader->setPropsWithFlatBuffers(bone, (Table*)options->nodeOptions());
 
     return bone;
 }

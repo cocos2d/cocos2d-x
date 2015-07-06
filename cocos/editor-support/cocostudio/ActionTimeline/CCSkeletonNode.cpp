@@ -276,7 +276,7 @@ cocos2d::AffineTransform SkeletonNode::getSkinToSkeltonAffineTransform(SkinNode*
     auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
     if (boneParent == nullptr)
     {
-        CCLOG("skin %s is not a skin or have not been added to a bone");
+        CCLOG("skin %s is not a skin or have not been added to a bone", skin->getName().c_str());
         return cocos2d::AffineTransform::IDENTITY;
     }
     return AffineTransformConcat(skin->getNodeToParentAffineTransform(), boneParent->getBoneToSkeletonAffineTransform());

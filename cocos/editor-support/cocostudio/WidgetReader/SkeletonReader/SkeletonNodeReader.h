@@ -26,10 +26,9 @@ THE SOFTWARE.
 #define _SKELETONNODEREADER_H_
 
 #include "cocos2d.h"
-#include "cocostudio/WidgetReader/NodeReaderProtocol.h"
-#include "cocostudio/WidgetReader/NodeReaderDefine.h"
+#include "cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
 
-class SkeletonNodeReader : public cocos2d::Ref, public cocostudio::NodeReaderProtocol
+class SkeletonNodeReader : public  BoneNodeReader
 {
     DECLARE_CLASS_NODE_READER_INFO
 
@@ -42,10 +41,6 @@ public:
     /** @deprecated Use method destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purge();
     static void destroyInstance();
-
-    flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-        flatbuffers::FlatBufferBuilder* builder) override;
-    void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* boneOptions) override;
 
     cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* boneOptions) override;
 };

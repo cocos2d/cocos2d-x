@@ -93,7 +93,6 @@ void BoneNode::addChildBone(BoneNode* bone, int localZOrder, const std::string &
     _childBones.pushBack(bone);
     if (bone->_rootSkeleton == nullptr && _rootSkeleton != nullptr)
     {
-        bone->_rootSkeleton = _rootSkeleton;
         auto subBones = getAllSubBones();
         for (auto &subBone : subBones)
         {
@@ -102,7 +101,7 @@ void BoneNode::addChildBone(BoneNode* bone, int localZOrder, const std::string &
             if (_rootSkeleton->_subBonesMap.find(bonename) == _rootSkeleton->_subBonesMap.end())
                 _rootSkeleton->_subBonesMap.insert(subBone->getName(), subBone);
             else
-                CCLOG("already has a bone named %s in this skeleton %s", bonename, _rootSkeleton->getName());
+                CCLOG("already has a bone named %s in this skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
         }
     }
 }
