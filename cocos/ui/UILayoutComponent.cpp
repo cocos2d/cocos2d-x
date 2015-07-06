@@ -673,11 +673,9 @@ namespace ui {
             page->forceDoLayout();
 
             Vector<Layout*> _layoutVector = page->getPages();
-            Vector<Layout*>::iterator iter = _layoutVector.begin();
-            while (iter != _layoutVector.end())
+            for each (auto item in _layoutVector)
             {
-                ui::Helper::doLayout(*(iter));
-                iter++;
+                ui::Helper::doLayout(item);
             }
         }
         else
