@@ -424,10 +424,10 @@ void ScrollView::jumpToDestination(const Vec2 &des)
 void ScrollView::startInertiaScroll()
 {
     float totalDuration = 0;
-    for(auto i = _inertiaTouchTimeDeltas.begin(); i != _inertiaTouchTimeDeltas.end(); ++i)
-    {
-        totalDuration += (*i);
-    }
+	for(auto &timeDelta : _inertiaTouchTimeDeltas)
+	{
+		totalDuration += timeDelta;
+	}
     if(totalDuration == 0 || totalDuration >= 0.5f)
     {
         return;
@@ -437,6 +437,11 @@ void ScrollView::startInertiaScroll()
     
     // Calcualte the initial velocity
     Vec2 totalMovement;
+	for(auto &displacement : _inertiaTouchDisplacements)
+	{
+		totalMovement += displacement;
+	}
+	
     for(auto i = _inertiaTouchDisplacements.begin(); i != _inertiaTouchDisplacements.end(); ++i)
     {
         totalMovement += (*i);
