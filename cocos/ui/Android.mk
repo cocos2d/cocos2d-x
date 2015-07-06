@@ -20,7 +20,9 @@ UIListView.cpp \
 UIPageView.cpp \
 UIScrollView.cpp \
 UIButton.cpp \
+UIAbstractCheckButton.cpp \
 UICheckBox.cpp \
+UIRadioButton.cpp \
 UIImageView.cpp \
 UIText.cpp \
 UITextAtlas.cpp \

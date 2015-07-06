@@ -17,3 +17,4 @@ notifications:
 branches:
   only:
     - v3.7-release
+    - v3
