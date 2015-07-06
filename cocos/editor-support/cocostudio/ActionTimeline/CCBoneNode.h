@@ -113,6 +113,9 @@ public:
     virtual void setRackShow(bool ishow);
     virtual bool isRackShow() const { return _isRackShow; }
 
+    virtual void setRackColor(const cocos2d::Color4F &color);
+    virtual cocos2d::Color4F getRackColor() const { return _rackColor; }
+
     virtual cocos2d::Rect getBoundingBox() const override;
 
     virtual cocos2d::Mat4 getBoneToSkeletonTransform() const;
@@ -162,6 +165,7 @@ protected:
     float            _length;
     float            _width;
     bool             _isRackShow;
+    cocos2d::Color4F  _rackColor;
 
     cocos2d::Vector<BoneNode*> _childBones;
     cocos2d::Vector<SkinNode*> _boneSkins;

@@ -20,6 +20,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestProjectNodeForSimulator);
     ADD_TEST_CASE(TestTimelineNodeLoadedCallback);
     ADD_TEST_CASE(TestActionTimelineEase);
+    ADD_TEST_CASE(TestActionTimelineSkeleton);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -315,3 +316,53 @@ std::string TestActionTimelineEase::title() const
 {
     return "Test ActionTimelineEase";
 }
+
+//TestActionTimelineSkeleton
+void TestActionTimelineSkeleton::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer_skeleton.csb");
+    node->runAction(action);
+    node->setScale(0.2f);
+    node->setPosition(150, 200);
+    action->gotoFrameAndPlay(0);
+    addChild(node);
+
+    auto skeletonNode = static_cast<SkeletonNode*>(node);
+
+    auto debugDrawNode = DrawNode::create();
+    addChild(debugDrawNode);
+    debugDrawNode->setVisible(false);
+
+    auto drawBoxBtn = cocos2d::ui::Button::create();
+    addChild(drawBoxBtn);
+    debugDrawNode->setPosition(500, 300);
+
+    drawBoxBtn->setTitleText("Draw Box");
+    drawBoxBtn->addClickEventListener([debugDrawNode](Ref* sender)
+    {
+        if (debugDrawNode->isVisible())
+            debugDrawNode->setVisible(false);
+        else
+            debugDrawNode->setVisible(true);
+    });
+    skeletonNode->schedule([skeletonNode, debugDrawNode](float interval)
+    {
+        if (debugDrawNode->isVisible())
+        {
+            debugDrawNode->clear();
+            auto rect = skeletonNode->getBoundingBox();
+            cocos2d::Vec2 leftbottom(rect.getMinX(), rect.getMinY());
+            cocos2d::Vec2 righttop(rect.getMaxX(), rect.getMaxY());
+            debugDrawNode->drawRect(leftbottom, righttop, cocos2d::Color4F::YELLOW);
+        }
+    }, 1, "update debug draw");
+}
+
+std::string TestActionTimelineSkeleton::title() const
+{
+    return "Test ActionTimeline Skeleton";
+}
+

@@ -39,6 +39,7 @@ BoneNode::BoneNode()
 : _length(50)
 , _width(20)
 , _isRackShow(true)
+, _rackColor(Color4F::WHITE)
 , _rootSkeleton(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
@@ -101,7 +102,7 @@ void BoneNode::addChildBone(BoneNode* bone, int localZOrder, const std::string &
             if (_rootSkeleton->_subBonesMap.find(bonename) == _rootSkeleton->_subBonesMap.end())
                 _rootSkeleton->_subBonesMap.insert(subBone->getName(), subBone);
             else
-                CCLOG("already has a bone named %s in this skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
+                CCLOG("already has a bone named %s in skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
         }
     }
 }
@@ -281,10 +282,7 @@ void BoneNode::updateColor()
 {
     for (unsigned int i = 0; i < 4; i++)
     {
-        _squareColors[i].r = _displayedColor.r / 255.0f;
-        _squareColors[i].g = _displayedColor.g / 255.0f;
-        _squareColors[i].b = _displayedColor.b / 255.0f;
-        _squareColors[i].a = _displayedOpacity / 255.0f;
+        _squareColors[i] = _rackColor;
     }
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
@@ -322,6 +320,13 @@ BoneNode::~BoneNode()
 void BoneNode::setRackShow(bool ishow)
 {
     _isRackShow = ishow;
+}
+
+
+void BoneNode::setRackColor(const cocos2d::Color4F &color)
+{
+    _rackColor = color;
+    updateColor();
 }
 
 cocos2d::Rect BoneNode::getBoundingBox() const
