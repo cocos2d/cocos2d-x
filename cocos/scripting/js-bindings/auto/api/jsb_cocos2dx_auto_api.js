@@ -2972,7 +2972,7 @@ scene
 
 /**
  * @method getAnimationInterval
- * @return {double}
+ * @return {float}
  */
 getAnimationInterval : function (
 )
@@ -3022,10 +3022,10 @@ scene
 
 /**
  * @method setAnimationInterval
- * @param {double} arg0
+ * @param {float} arg0
  */
 setAnimationInterval : function (
-double 
+float 
 )
 {
 },
