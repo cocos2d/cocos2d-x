@@ -60,24 +60,24 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
 {
     tinyxml2::XMLElement* curNode = nullptr;
     tinyxml2::XMLElement* rootNode = nullptr;
-    
+
     if (! UserDefault::isXMLFileExist())
     {
         return nullptr;
     }
-    
+
     // check the key value
     if (! pKey)
     {
         return nullptr;
     }
-    
+
     do
     {
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         *doc = xmlDoc;
         ssize_t size;
-        
+
         std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath().c_str());
 
         if (xmlBuffer.empty())
@@ -100,10 +100,10 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         {
             // There is not xml node, delete xml file.
             remove(UserDefault::getInstance()->getXMLFilePath().c_str());
-            
+
             return nullptr;
         }
-        
+
         while (nullptr != curNode)
         {
             const char* nodeName = curNode->Value();
@@ -112,11 +112,11 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
                 // delete the node
                 break;
             }
-            
+
             curNode = curNode->NextSiblingElement();
         }
     } while (0);
-    
+
     return curNode;
 }
 
@@ -173,14 +173,14 @@ bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
         {
             const char* value = (const char*)node->FirstChild()->Value();
             bool ret = (! strcmp(value, "true"));
-            
+
             // set value in NSUserDefaults
             setBoolForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -209,14 +209,14 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
         if (node->FirstChild())
         {
             int ret = atoi((const char*)node->FirstChild()->Value());
-            
+
             // set value in NSUserDefaults
             setIntegerForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -226,7 +226,7 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
         }
     }
 #endif
-    
+
 	return getIntegerForKeyJNI(pKey, defaultValue);
 }
 
@@ -245,14 +245,14 @@ float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
         if (node->FirstChild())
         {
             float ret = utils::atof((const char*)node->FirstChild()->Value());
-            
+
             // set value in NSUserDefaults
             setFloatForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -281,14 +281,14 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
         if (node->FirstChild())
         {
             double ret = utils::atof((const char*)node->FirstChild()->Value());
-            
+
             // set value in NSUserDefaults
             setDoubleForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -317,14 +317,14 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
         if (node->FirstChild())
         {
             string ret = (const char*)node->FirstChild()->Value();
-            
+
             // set value in NSUserDefaults
             setStringForKey(pKey, ret);
             flush();
-            
+
             // delete xmle node
             deleteNode(doc, node);
-            
+
             return ret;
         }
         else
@@ -353,22 +353,22 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         if (node->FirstChild())
         {
             const char * encodedData = node->FirstChild()->Value();
-            
+
             unsigned char * decodedData;
             int decodedDataLen = base64Decode((unsigned char*)encodedData, (unsigned int)strlen(encodedData), &decodedData);
-            
+
             if (decodedData) {
                 Data ret;
                 ret.fastSet(decodedData, decodedDataLen);
-                
+
                 // set value in NSUserDefaults
                 setDataForKey(pKey, ret);
-                
+
                 flush();
-                
+
                 // delete xmle node
                 deleteNode(doc, node);
-                
+
                 return ret;
             }
         }
@@ -379,22 +379,22 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         }
     }
 #endif
-    
+
     char * encodedDefaultData = NULL;
     unsigned int encodedDefaultDataLen = !defaultValue.isNull() ? base64Encode(defaultValue.getBytes(), defaultValue.getSize(), &encodedDefaultData) : 0;
-    
+
     string encodedStr = getStringForKeyJNI(pKey, encodedDefaultData);
 
     if (encodedDefaultData)
         free(encodedDefaultData);
 
     CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
-      
+
     unsigned char * decodedData = NULL;
     int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);
 
     CCLOG("DECODED DATA: %s %d", decodedData, decodedDataLen);
-    
+
     if (decodedData && decodedDataLen) {
         Data ret;
         ret.fastSet(decodedData, decodedDataLen);
@@ -455,15 +455,15 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
 #ifdef KEEP_COMPATABILITY
     deleteNodeByKey(pKey);
 #endif
-    
+
     CCLOG("SET DATA FOR KEY: --%s--%d", value.getBytes(), (int)(value.getSize()));
     char * encodedData = nullptr;
     unsigned int encodedDataLen = base64Encode(value.getBytes(), value.getSize(), &encodedData);
 
     CCLOG("SET DATA ENCODED: --%s", encodedData);
-    
+
     setStringForKeyJNI(pKey, encodedData);
-    
+
     if (encodedData)
         free(encodedData);
 }
@@ -475,7 +475,7 @@ UserDefault* UserDefault::sharedUserDefault()
 }
 
 UserDefault* UserDefault::getInstance()
-{    
+{
     if (! _userDefault)
     {
 #ifdef KEEP_COMPATABILITY
@@ -519,6 +519,18 @@ void UserDefault::flush()
 {
 }
 
+void UserDefault::deleteValueForKey(const char* key)
+{
+    // check the params
+    if (!key)
+    {
+        CCLOG("the key is invalid");
+    }
+
+    deleteValueForKeyJNI(key);
+
+    flush();
+}
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
