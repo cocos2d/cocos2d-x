@@ -1034,6 +1034,11 @@ bool ScrollView::isInertiaScrollEnabled() const
 
 void ScrollView::setScrollBarEnabled(bool enabled)
 {
+	if(_scrollBarEnabled == enabled)
+	{
+		return;
+	}
+	
     if(_scrollBarEnabled)
     {
         removeScrollBar();
