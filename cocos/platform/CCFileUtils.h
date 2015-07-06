@@ -321,15 +321,58 @@ public:
      */
     virtual ValueMap getValueMapFromFile(const std::string& filename);
 
-    // Converts the contents of a file to a ValueMap.
-    // This method is used internally.
+	
+    /** Converts the contents of a file to a ValueMap.
+     *  This method is used internally.
+	 */
     virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
     
-
-    // Write a ValueMap to a plist file.
-    // This method is used internally.
+	/**
+	* write a ValueMap into a plist file
+	*
+	*@param dict the ValueMap want to save
+	*@param fullPath The full path to the file you want to save a string
+	*@return bool
+	*/
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
     
+	/**
+	 *  write a string into a file
+	 *
+	 * @param dataStr the string want to save
+	 * @param fullPath The full path to the file you want to save a string
+	 * @return bool True if write success
+	 */
+	virtual bool writeStringToFile(std::string dataStr, const std::string& fullPath);
+
+
+	/**
+	 * write Data into a file 
+	 *
+	 *@param retData the data want to save
+	 *@param fullPath The full path to the file you want to save a string
+	 *@return bool
+	 */
+	virtual bool writeDataToFile(Data retData, const std::string& fullPath);
+
+	/**
+	* write ValueMap into a plist file 
+	*
+	*@param dict the ValueMap want to save
+	*@param fullPath The full path to the file you want to save a string
+	*@return bool
+	*/
+	virtual bool writeValueMapToFile(ValueMap& dict, const std::string& fullPath);
+
+	/**
+	* write ValueVector into a plist file
+	*
+	*@param vecData the ValueVector want to save
+	*@param fullPath The full path to the file you want to save a string
+	*@return bool
+	*/
+	virtual bool writeValueVectorToFile(ValueVector vecData, const std::string& fullPath);
+
     /**
     * Windows fopen can't support UTF-8 filename
     * Need convert all parameters fopen and other 3rd-party libs
