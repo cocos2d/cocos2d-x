@@ -503,7 +503,7 @@ void UserDefault::flush()
 {
 }
 
-bool UserDefault::deleteValueForKey(const char* key)
+void UserDefault::deleteValueForKey(const char* key)
 {
     tinyxml2::XMLElement* rootNode;
     tinyxml2::XMLDocument* doc;
@@ -512,7 +512,8 @@ bool UserDefault::deleteValueForKey(const char* key)
     // check the params
     if (!key)
     {
-        return false;
+        CCLOG("the key is invalid");
+        return;
     }
 
     // find the node
@@ -521,7 +522,7 @@ bool UserDefault::deleteValueForKey(const char* key)
     // if node not exist, don't need to delete
     if (!node)
     {
-        return true;    
+        return;
     }
 
     // save file and free doc
@@ -530,11 +531,9 @@ bool UserDefault::deleteValueForKey(const char* key)
         doc->DeleteNode(node);
         doc->SaveFile(FileUtils::getInstance()->getSuitableFOpen(UserDefault::getInstance()->getXMLFilePath()).c_str());
         delete doc;
-
-        return true;
     }
 
-    return false;
+    flush();
 }
 
 NS_CC_END
