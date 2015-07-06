@@ -55,7 +55,7 @@ public:
     static Application* getInstance();
 
     /* override functions */
-    virtual void setAnimationInterval(double interval);
+    virtual void setAnimationInterval(float interval);
     virtual LanguageType getCurrentLanguage();
     virtual const char * getCurrentLanguageCode();
 

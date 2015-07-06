@@ -152,9 +152,9 @@ public:
     inline Scene* getRunningScene() { return _runningScene; }
 
     /** Gets the FPS value. */
-    inline double getAnimationInterval() { return _animationInterval; }
+    inline float getAnimationInterval() { return _animationInterval; }
     /** Sets the FPS value. FPS = 1/internal. */
-    virtual void setAnimationInterval(double interval) = 0;
+    virtual void setAnimationInterval(float interval) = 0;
 
     /** Whether or not to display the FPS on the bottom-left corner. */
     inline bool isDisplayStats() { return _displayStats; }
@@ -543,8 +543,8 @@ protected:
     //texture cache belongs to this director
     TextureCache *_textureCache;
 
-    double _animationInterval;
-    double _oldAnimationInterval;
+    float _animationInterval;
+    float _oldAnimationInterval;
 
     /* landscape mode ? */
     bool _landscape;
@@ -634,7 +634,7 @@ public:
     // Overrides
     //
     virtual void mainLoop() override;
-    virtual void setAnimationInterval(double value) override;
+    virtual void setAnimationInterval(float value) override;
     virtual void startAnimation() override;
     virtual void stopAnimation() override;
 
