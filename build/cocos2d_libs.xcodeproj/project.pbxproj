@@ -5612,6 +5612,7 @@
 				2905F9E618CF08D000240AA3 /* ui */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		1551A340158F2AB200E66CFE /* Products */ = {
 			isa = PBXGroup;
