@@ -14,7 +14,7 @@ elif [ $1 = "js" ];then
 fi
 
 echo "start building..."
-xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" clean | xcpretty
-xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
+xcodebuild -project $projectpath -target "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" clean | xcpretty
+xcodebuild -project $projectpath -target "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
 #the following commands must not be removed
-xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
+xcodebuild -project $projectpath -target "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
