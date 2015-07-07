@@ -222,12 +222,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1174.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.h">
-      <Filter>Classes\BugsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.h">
-      <Filter>Classes\BugsTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-Child.h">
       <Filter>Classes\BugsTest</Filter>
     </ClInclude>
@@ -802,6 +796,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.cpp">
       <Filter>Classes\NavMeshTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -871,12 +871,6 @@
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1174.cpp">
-      <Filter>Classes\BugsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.cpp">
-      <Filter>Classes\BugsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-Child.cpp">
@@ -1778,6 +1772,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.h">
       <Filter>Classes\NavMeshTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.h">
+      <Filter>Classes\BugsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

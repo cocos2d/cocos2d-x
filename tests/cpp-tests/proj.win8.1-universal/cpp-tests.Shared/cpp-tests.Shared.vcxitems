@@ -38,8 +38,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Box2DTestBed\Test.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Box2DTestBed\TestEntries.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Box2DTest\Box2dTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-350.cpp" />
@@ -50,7 +48,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-886.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-899.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-914.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-Child.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\BugsTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Camera3DTest\Camera3DTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
@@ -293,8 +293,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Box2DTestBed\Tests\VerticalStack.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Box2DTestBed\Tests\Web.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Box2DTest\Box2dTest.h" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.h" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1159.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-1174.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-350.h" />
@@ -305,7 +303,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-886.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-899.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-914.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-Child.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\BugsTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Camera3DTest\Camera3DTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ChipmunkTest\ChipmunkTest.h" />
