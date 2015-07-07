@@ -30,6 +30,10 @@
 
 NS_CC_BEGIN
 
+const std::string ComponentLua::ON_ENTER = "onEnter";
+const std::string ComponentLua::ON_EXIT = "onExit";
+const std::string ComponentLua::UPDATE = "update";
+
 #define KEY_COMPONENT  "component"
 
 int ComponentLua::_index = 0;
@@ -38,7 +42,7 @@ ComponentLua* ComponentLua::create(const std::string& scriptFileName)
 {
     CC_ASSERT(!scriptFileName.empty());
     
-    createComponentTable();
+    classInit();
     
     auto componentLua = new(std::nothrow) ComponentLua(scriptFileName);
     if (componentLua)
@@ -64,12 +68,30 @@ ComponentLua::~ComponentLua()
 
 void ComponentLua::update(float delta)
 {
-    if (_succeedLoadingScript && getLuaFunction("update"))
+    if (_succeedLoadingScript && getLuaFunction(ComponentLua::UPDATE))
     {
         getUserData();
         lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
         lua_pushnumber(l, delta);
         LuaEngine::getInstance()->getLuaStack()->executeFunction(2);
+    }
+}
+
+void ComponentLua::onEnter()
+{
+    if (_succeedLoadingScript && getLuaFunction(ComponentLua::ON_ENTER))
+    {
+        getUserData();
+        LuaEngine::getInstance()->getLuaStack()->executeFunction(1);
+    }
+}
+
+void ComponentLua::onExit()
+{
+    if (_succeedLoadingScript && getLuaFunction(ComponentLua::ON_EXIT))
+    {
+        getUserData();
+        LuaEngine::getInstance()->getLuaStack()->executeFunction(1);
     }
 }
 
@@ -79,7 +101,7 @@ bool ComponentLua::getLuaFunction(const std::string& functionName)
     
     lua_pushstring(l, KEY_COMPONENT);                // stack: "component"
     lua_rawget(l, LUA_REGISTRYINDEX);                // stack: table_of_component
-    lua_pushstring(l, _strIndex.c_str());             // stack: table_of_component strIndex
+    lua_pushstring(l, _strIndex.c_str());            // stack: table_of_component strIndex
     lua_rawget(l, -2);                               // stack: table_of_component table_of_this
     lua_pushstring(l, functionName.c_str());         // stack: table_of_component table_of_this "update"
     lua_rawget(l, -2);                               // stack: table_of_component table_of_this table_of_this["update"]
@@ -87,10 +109,10 @@ bool ComponentLua::getLuaFunction(const std::string& functionName)
     lua_remove(l, -2);                               // stack: table_of_this["update"]
     
     int type = lua_type(l, -1);
-    if (type != LUA_TFUNCTION)
-    {
-        CCLOG("can not get %s function from %s", functionName.c_str(), _scriptFileName.c_str());
-    }
+//    if (type != LUA_TFUNCTION)
+//    {
+//        CCLOG("can not get %s function from %s", functionName.c_str(), _scriptFileName.c_str());
+//    }
     
     return type == LUA_TFUNCTION;
 }
@@ -100,13 +122,13 @@ bool ComponentLua::loadAndExecuteScript()
     // register native functions
     auto engine = LuaEngine::getInstance();
     lua_State *l = engine->getLuaStack()->getLuaState();
-    register_all_cocos2dx_luacomponent(l);
     
     // load script
     int error = luaL_loadfile(l, _scriptFileName.c_str());
     if (error)
     {
-        CCLOG("ComponentLua::loadAndExecuteScript: can not load %s", _scriptFileName.c_str());
+        CCLOG("ComponentLua::loadAndExecuteScript: %s", lua_tostring(l, -1));
+        lua_pop(l, 1);
         return false;
     }
     
@@ -114,7 +136,8 @@ bool ComponentLua::loadAndExecuteScript()
     error = lua_pcall(l, 0, 1, 0);
     if (error)
     {
-        CCLOG("can not execute %s", _scriptFileName.c_str());
+        CCLOG("ComponentLua::loadAndExecuteScript: %s", lua_tostring(l, -1));
+        lua_pop(l, 1);
         return false;
     }
     
@@ -122,7 +145,7 @@ bool ComponentLua::loadAndExecuteScript()
     int type = lua_type(l, -1);
     if (type != LUA_TTABLE)
     {
-        CCLOG("can not get table from %s", _scriptFileName.c_str());
+        CCLOG("%s should return a table, or the script component can not work currectly", _scriptFileName.c_str());
         return false;
     }
     
@@ -130,7 +153,7 @@ bool ComponentLua::loadAndExecuteScript()
     return true;
 }
 
-void ComponentLua::createComponentTable()
+void ComponentLua::classInit()
 {
     static bool run = true;
     if (run)
@@ -138,15 +161,18 @@ void ComponentLua::createComponentTable()
         // LUA_REGISTRYINDEX["component"] = new table
         
         LuaEngine* engine = LuaEngine::getInstance();
-        ScriptEngineManager::getInstance()->setScriptEngine(engine);
         lua_State* l = engine->getLuaStack()->getLuaState();
         
         lua_pushstring(l, KEY_COMPONENT);              // stack: "component"
         lua_newtable(l);                               // stack: "component" table
         lua_rawset(l, LUA_REGISTRYINDEX);              // stack: -
+
+        register_all_cocos2dx_luacomponent(l);
         
         run = false;
     }
+    
+    
 }
 
 void ComponentLua::storeLuaTable()
@@ -175,7 +201,7 @@ void ComponentLua::storeLuaTable()
         lua_insert(l, -2);                     // stack: table_return_from_lua mt key key value
         lua_rawset(l, -4);                     // stack: table_return_from_lua mt key
     }
-    lua_pop(l, 3);
+    lua_pop(l, 2);
 }
 
 void ComponentLua::removeLuaTable()

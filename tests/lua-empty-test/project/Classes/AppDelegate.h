@@ -33,6 +33,10 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+    
+    const static int PLAYER_TAG;
+    const static int ENEMY_TAG;
+    const static int PROJECTTILE_TAG;
 };
 
 #endif // _APP_DELEGATE_H_

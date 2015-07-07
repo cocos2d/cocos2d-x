@@ -9,6 +9,10 @@
 USING_NS_CC;
 using namespace CocosDenshion;
 
+const int AppDelegate::PLAYER_TAG = 1;
+const int AppDelegate::ENEMY_TAG = 2;
+const int AppDelegate::PROJECTTILE_TAG = 3;
+
 AppDelegate::AppDelegate()
 {
     // fixed me
@@ -35,21 +39,36 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("Cpp Empty Test");
+        glview = GLViewImpl::create("Lua Empty Test");
         director->setOpenGLView(glview);
     }
     
-    director->setOpenGLView(glview);
-    auto& winSize = director->getWinSize();
+    // register lua engine
+    LuaEngine* engine = LuaEngine::getInstance();
+    ScriptEngineManager::getInstance()->setScriptEngine(engine);
+    lua_State* L = engine->getLuaStack()->getLuaState();
+    lua_module_register(L);
     
-    auto sprite = Sprite::create("res/crop.png");
-    sprite->setPosition(Vec2(winSize.width/2, winSize.height/2));
+    // create game scene
     auto scene = Scene::create();
-    scene->addChild(sprite);
+    auto sceneLuaComponent = ComponentLua::create("src/scene.lua");
+    scene->addComponent(sceneLuaComponent);
+    scene->scheduleUpdate();
     
-    auto luaUpdateComponent = ComponentLua::create("src/hello.lua");
-    sprite->addComponent(luaUpdateComponent);
-    sprite->scheduleUpdate();
+    // set background color
+    auto bgLayer = LayerColor::create(Color4B(0, 128, 255, 255));
+    scene->addChild(bgLayer);
+    
+    // add player
+    auto player = Sprite::create("res/Player.png", Rect(0, 0, 27, 40));
+    player->setTag(AppDelegate::PLAYER_TAG);
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    player->setPosition(origin.x + player->getContentSize().width/2,
+                        origin.y + visibleSize.height/2);
+    auto playerComponent = ComponentLua::create("src/player.lua");
+    player->addComponent(playerComponent);
+    scene->addChild(player);
     
     director->runWithScene(scene);
 
