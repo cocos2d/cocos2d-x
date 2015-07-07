@@ -1,6 +1,6 @@
 #!/bin/bash
 mycocos=tools/cocos2d-console/bin/cocos
-# $mycocos new -l $1
+$mycocos new -l $1
 
 if [ $1 = "cpp" ];then
     schemename="MyCppGame-desktop"
@@ -13,7 +13,7 @@ elif [ $1 = "js" ];then
     projectpath="MyJSGame/frameworks/runtime-src/proj.ios_mac/MyJSGame.xcodeproj"
 fi
 
-xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" clean | xcpretty
-xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
+xcodebuild -project $projectpath -target "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" clean | xcpretty
+xcodebuild -project $projectpath -target "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
 #the following commands must not be removed
-xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
+xcodebuild -project $projectpath -target "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
