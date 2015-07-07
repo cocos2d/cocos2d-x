@@ -22,8 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCCOMPONENT_LUA__
-#define __CCCOMPONENT_LUA__
+#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -38,7 +37,9 @@ public:
     
     ~ComponentLua();
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
 private:
     ComponentLua(const std::string& scriptFileName);
@@ -48,7 +49,7 @@ private:
     bool getLuaFunction(const std::string& functionName);
     void removeLuaTable();
     
-    static void createComponentTable();
+    static void classInit();
     
 private:
     // lua script file path
@@ -62,8 +63,11 @@ private:
     
     // the index used to get lua table, it is unique for every component
     static int _index;
+    
+    static const std::string ON_ENTER;
+    static const std::string ON_EXIT;
+    static const std::string UPDATE;
 };
 
 NS_CC_END
 
-#endif /* defined(__CCCOMPONENT_LUA__) */
