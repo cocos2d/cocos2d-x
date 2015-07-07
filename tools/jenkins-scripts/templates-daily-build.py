@@ -71,7 +71,7 @@ def do_build_slaves():
         elif(node_name == 'mac' or node_name == 'mac_bak'):
             slave_build_scripts = jenkins_script_path + "mac-build.sh"
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
-            slave_build_scripts = jenkins_script_path + "linux-build.sh cpp"
+            slave_build_scripts = jenkins_script_path + "linux-build.sh lua"
         elif(node_name == 'wp8'):
             if(branch != 'v4'):
                 slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
