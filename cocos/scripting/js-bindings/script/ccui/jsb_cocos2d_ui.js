@@ -48,7 +48,7 @@ ccui.Layout.RELATIVE = 3;
 ccui.Layout.CLIPPING_STENCIL = 0;
 ccui.Layout.CLIPPING_SCISSOR = 1;
 
-ccui.Layout.BACKGROUND_IMAGE_ZORDER = -2;
+ccui.Layout.BACKGROUND_IMAGE_ZORDER = -1;
 ccui.Layout.BACKGROUND_RENDERER_ZORDER = -2;
 
 /*
