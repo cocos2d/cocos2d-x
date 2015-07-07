@@ -26,7 +26,7 @@ else:
 
 # for local debugging purpose, you could change the value to 0 and run
 # this scripts in your local machine
-remote_build = 0
+remote_build = 1
 
 def download_3rd_library():
     #run download-deps.py
