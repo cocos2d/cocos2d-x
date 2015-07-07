@@ -26,7 +26,7 @@
 #ifndef _COCOS2D_CCLABEL_H_
 #define _COCOS2D_CCLABEL_H_
 
-#include "2d/CCSpriteBatchNode.h"
+#include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCFontAtlas.h"
 #include "base/ccTypes.h"
@@ -83,6 +83,9 @@ typedef struct _ttfConfig
     }
 }TTFConfig;
 
+class Sprite;
+class SpriteBatchNode;
+
 /**
  * @brief Label is a subclass of SpriteBatchNode that knows how to render text labels.
  *
@@ -99,7 +102,7 @@ typedef struct _ttfConfig
  * - http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  * @js NA
  */
-class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
+class CC_DLL Label : public Node, public LabelProtocol
 {
 public:
     static const int DistanceFieldFontSize;
@@ -435,7 +438,8 @@ public:
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 
-    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    virtual const BlendFunc& getBlendFunc() const { return _blendFunc; }
+    virtual void setBlendFunc(const BlendFunc &blendFunc);
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
@@ -448,9 +452,6 @@ public:
     virtual float getScaleX() const override;
     virtual float getScaleY() const override;
 
-    virtual void addChild(Node * child, int zOrder=0, int tag=0) override;
-    virtual void sortAllChildren() override;
-
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
@@ -461,6 +462,9 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+
+    virtual void removeAllChildrenWithCleanup(bool cleanup) override;
+    virtual void removeChild(Node* child, bool cleanup = true) override;
 
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
@@ -533,6 +537,8 @@ protected:
 
     void reset();
 
+    void drawSelf(Renderer* renderer, uint32_t flags);
+
     std::string _bmFontPath;
 
     bool _isOpacityModifyRGB;
@@ -543,7 +549,7 @@ protected:
     float         _systemFontSize;
     LabelType _currentLabelType;
 
-    std::vector<SpriteBatchNode*> _batchNodes;
+    Vector<SpriteBatchNode*> _batchNodes;
     FontAtlas *                   _fontAtlas;
     std::vector<LetterInfo>       _lettersInfo;
     EventListenerCustom* _purgeTextureListener;
@@ -607,8 +613,11 @@ protected:
 
     bool _clipEnabled;
     bool _blendFuncDirty;
+    BlendFunc _blendFunc;
     /// whether or not the sprite was inside bounds the previous frame
     bool _insideBounds;
+
+    std::unordered_map<int, Sprite*> _letters;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
