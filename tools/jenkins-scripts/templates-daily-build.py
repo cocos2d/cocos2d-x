@@ -17,7 +17,7 @@ else:
 if('NODE_NAME' in os.environ):
     node_name = os.environ['NODE_NAME']
 else:
-    node_name = 'linux'
+    node_name = 'ios'
 # for local debugging purpose, you could change the value to 0 and run
 # this scripts in your local machine
 remote_build = 0
@@ -61,13 +61,13 @@ def do_build_slaves():
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
         if(node_name == 'android') or (node_name == 'android_bak'):
-            slave_build_scripts = jenkins_script_path + "android-build.sh js"
+            slave_build_scripts = jenkins_script_path + "android-build.sh lua"
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
             slave_build_scripts = jenkins_script_path + "win32-build.bat"
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
             slave_build_scripts = jenkins_script_path + "windows-universal.bat"
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
-            slave_build_scripts = jenkins_script_path + "ios-build.sh"
+            slave_build_scripts = jenkins_script_path + "ios-build.sh js"
         elif(node_name == 'mac' or node_name == 'mac_bak'):
             slave_build_scripts = jenkins_script_path + "mac-build.sh"
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):

@@ -1,22 +1,19 @@
-#put xctool.sh into your PATH
+#!/bin/bash
+mycocos=tools/cocos2d-console/bin/cocos
+# $mycocos new -l $1
 
-#######
-# Cmake build
-####### 
-# DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# COCOS2DX_ROOT="$DIR"/../../..
-# cd ${COCOS2DX_ROOT}
-# mkdir mac-build
-# cd mac-build
-# cmake ..
-# make -j4
+if [ $1 = "cpp" ];then
+    schemename="MyCppGame-desktop"
+    projectpath="MyCppGame/proj.ios_mac/MyCppGame.xcodeproj"
+elif [ $1 = "lua" ];then
+    schemename="MyLuaGame-desktop"
+    projectpath="MyLuaGame/frameworks/runtime-src/proj.ios_mac/MyLuaGame.xcodeproj"
+elif [ $1 = "js" ];then
+    schemename="MyJSGame-desktop"
+    projectpath="MyJSGame/frameworks/runtime-src/proj.ios_mac/MyJSGame.xcodeproj"
+fi
 
-#######
-# xcode build
-####### 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-COCOS2DX_ROOT="$DIR"/../../..
-xcodebuild -project "$COCOS2DX_ROOT"/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" clean | xcpretty
-xcodebuild -project "$COCOS2DX_ROOT"/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" build | xcpretty
-#xcpretty has a bug, some xcodebuid fails return value would be treated as 0.
-xcodebuild -project "$COCOS2DX_ROOT"/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" build
+xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" clean | xcpretty
+xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
+#the following commands must not be removed
+xcodebuild -project $projectpath -scheme "${schemename}"  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
