@@ -66,6 +66,7 @@
     <ClCompile Include="..\UIRichText.cpp" />
     <ClCompile Include="..\UIScale9Sprite.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
+    <ClCompile Include="..\UIScrollViewBar.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
     <ClCompile Include="..\UIText.cpp" />
     <ClCompile Include="..\UITextAtlas.cpp" />
