@@ -125,6 +125,9 @@ public:
     virtual void onEnter() override;
     
     virtual std::string title() const override;
+private:
+    bool _changedDisplay;
+    bool _changedDisplays;
 };
 
 #endif  // __ANIMATION_SCENE_H__

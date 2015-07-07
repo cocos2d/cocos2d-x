@@ -58,7 +58,7 @@ public:
     void setAllRackShow(bool showRack);
 
     /**
-    *get bonenode in skeleton node bye bone name
+    *get bonenode in skeleton node by bone name
     */
     BoneNode* getBoneNode(const std::string& boneName);
 
@@ -68,24 +68,10 @@ public:
     const cocos2d::Map<std::string, BoneNode*>& getAllSubBonesMap() const;
 
     /**
-    * @brief: display  skin added to boneName 
-    * @param: hideOthers, set other skins addd boneName visible = false
-    */
-    void display(const std::string& boneName, SkinNode* skin, bool hideOthers = false);
-
-    /**
-    * @brief: display all skins named skinName, if hide display only one skin,
-    *          prefer to use display(SkinNode* skin, bool hideOthers = false)
-    * @param: hideOthers, set other skins visible = false
-    */
-    void display(const std::string& boneName, const std::string& skinName, bool hideOthers = false);
-
-
-    /**
     *@brief: change displays 
     *@param: boneSkinNameMap, map <bone name, name of skin to display which added to bone>
     */
-    void changeDisplays(std::map<std::string, std::string> boneSkinNameMap, bool hideOthers = true);
+    void changeDisplays(const std::map<std::string, std::string> &boneSkinNameMap);
 
     virtual cocos2d::Mat4 getBoneToSkeletonTransform() const override;
 

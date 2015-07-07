@@ -322,6 +322,7 @@ void TestActionTimelineSkeleton::onEnter()
 {
     ActionTimelineBaseTest::onEnter();
 
+    _changedDisplays = _changedDisplay = false;
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer_skeleton.csb");
     node->runAction(action);
@@ -359,7 +360,7 @@ void TestActionTimelineSkeleton::onEnter()
     // change display
     auto changeBoneDispBtn = cocos2d::ui::Button::create();
     addChild(changeBoneDispBtn);
-    changeBoneDispBtn->setPosition(Vec2(VisibleRect::right().x - 45, VisibleRect::top().y - 60));
+    changeBoneDispBtn->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::top().y - 60));
     changeBoneDispBtn->setTitleText("change bone display");
     changeBoneDispBtn->addClickEventListener([weapSkinToAdd, weaponHandeBone](Ref* sender)
     {
@@ -383,6 +384,8 @@ void TestActionTimelineSkeleton::onEnter()
     drawBoxBtn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 45));
     drawBoxBtn->setTitleText("Draw Box");
 
+    // compare to armature
+
     drawBoxBtn->addClickEventListener([debugDrawNode](Ref* sender)
     {
         debugDrawNode->setVisible(!debugDrawNode->isVisible());
@@ -392,7 +395,6 @@ void TestActionTimelineSkeleton::onEnter()
         if (debugDrawNode->isVisible())
         {
             debugDrawNode->clear();
-
 //             // skeleton boundingbox
              auto rect = skeletonNode->getBoundingBox();
              cocos2d::Vec2 leftbottom(rect.getMinX(), rect.getMinY());
@@ -422,7 +424,7 @@ void TestActionTimelineSkeleton::onEnter()
             // skin boundingbox 
 
             // get displaying nodes
-            auto currentskin = weaponHandeBone->getDisplaying().front();
+            auto currentskin = weaponHandeBone->getDisplayings().front();
             rect = currentskin->getBoundingBox();
             leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
             righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
@@ -443,14 +445,28 @@ void TestActionTimelineSkeleton::onEnter()
     }, 0, "update debug draw");
 
 
-    // change displays 
+    // change displays , can be use for dress up a skeleton
     auto changeBoneDispsBtn = cocos2d::ui::Button::create();
     addChild(changeBoneDispsBtn);
-    changeBoneDispsBtn->setPosition(Vec2(VisibleRect::right().x - 45, VisibleRect::top().y - 75));
+    changeBoneDispsBtn->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::top().y - 75));
     changeBoneDispsBtn->setTitleText("change bone displays");
-    std::map < std::string, std:: string> boneSkinNames;
-    boneSkinNames.insert(std::make_pair("", ""));
-
+    changeBoneDispsBtn->addClickEventListener([skeletonNode, this](Ref* sender)
+    {
+        std::map < std::string, std::string> boneSkinNames;
+        if (!_changedDisplays)
+        {
+            boneSkinNames.insert(std::make_pair("Layer20", "fire"));
+            boneSkinNames.insert(std::make_pair("Layer14", "fruit"));
+            _changedDisplays = true;
+        }
+        else
+        {
+            boneSkinNames.insert(std::make_pair("Layer20", "3"));
+            boneSkinNames.insert(std::make_pair("Layer14", "hat"));
+            _changedDisplays = false;
+        }
+        skeletonNode->changeDisplays(boneSkinNames);
+    });
 }
 
 std::string TestActionTimelineSkeleton::title() const

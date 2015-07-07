@@ -52,6 +52,9 @@ public:
     */
     virtual void addDisplay(SkinNode* skin, bool display, bool hideOthers = false);
 
+    /**
+    * add a child bone named bone->getName()
+    */
     virtual void addChildBone(BoneNode* bone);
 
     virtual const  cocos2d::Vector<BoneNode*>& getChildBones() const { return _childBones; }
@@ -59,8 +62,8 @@ public:
 
     virtual void removeFromParentBone(bool cleanup = false);
 
-    virtual const  cocos2d::Vector<SkinNode*>& getSkins() const { return _boneSkins; }
-    virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
+    virtual const  cocos2d::Vector<SkinNode*>& getDisplays() const { return _boneSkins; }
+    virtual  cocos2d::Vector<SkinNode*>&  getDisplays() { return _boneSkins; }
     /**
     *
     * @brief: display skin
@@ -76,7 +79,7 @@ public:
     */
     virtual void display(const std::string &skinName, bool hideOthers = false);
 
-    virtual cocos2d::Vector<SkinNode*> getDisplaying() const;
+    virtual cocos2d::Vector<SkinNode*> getDisplayings() const;
 
     virtual SkeletonNode* getRootSkeletonNode() const;
 
@@ -90,7 +93,7 @@ public:
     * @brief: get all skins in this bone tree
     *
     */
-    cocos2d::Vector<SkinNode*> getAllSubSkins() const;
+    cocos2d::Vector<SkinNode*> getAllSubDisplays() const;
 
 
     virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
@@ -116,6 +119,14 @@ public:
     virtual void setRackColor(const cocos2d::Color4F &color);
     virtual cocos2d::Color4F getRackColor() const { return _rackColor; }
 
+    /**
+    *get displayings rect in self transform
+    */
+    virtual cocos2d::Rect getDisplayingRect() const;
+
+    /**
+    * boundingbox depends getDisplayingRect, apply it in parent transform
+    */
     virtual cocos2d::Rect getBoundingBox() const override;
 
     virtual cocos2d::Mat4 getBoneToSkeletonTransform() const;
@@ -143,8 +154,6 @@ protected:
     */
     virtual void addSkin(SkinNode* skin, bool hide = false);
     virtual void removeSkin(SkinNode* skin);
-
-
 
     // override
     virtual void setContentSize(const cocos2d::Size &size) override;

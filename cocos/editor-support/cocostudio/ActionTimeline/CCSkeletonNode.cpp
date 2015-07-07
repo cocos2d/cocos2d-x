@@ -67,7 +67,7 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
 {
     float minx, miny, maxx, maxy = 0;
     minx = miny = maxx = maxy;
-    cocos2d::Rect boundingBox = BoneNode::getBoundingBox();
+    cocos2d::Rect boundingBox = getDisplayingRect();
     bool first = true;
     if (!boundingBox.equals(cocos2d::Rect::ZERO))
     {
@@ -77,13 +77,10 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
         maxy = boundingBox.getMaxY();
         first = false;
     }
-    auto nodetoParentTran = getNodeToParentAffineTransform();
     auto allbones = getAllSubBones();
     for (const auto& bone : allbones)
     {
-        auto boneParentTrans = static_cast<BoneNode*>(bone->getParent())->getBoneToSkeletonAffineTransform();
-        boneParentTrans = AffineTransformConcat(boneParentTrans, nodetoParentTran);
-        cocos2d::Rect r = RectApplyAffineTransform(bone->getBoundingBox(), boneParentTrans);
+        cocos2d::Rect r = RectApplyAffineTransform(bone->getDisplayingRect(), bone->getBoneToSkeletonAffineTransform());
         if (r.equals(cocos2d::Rect::ZERO))
             continue;
 
@@ -105,7 +102,7 @@ cocos2d::Rect SkeletonNode::getBoundingBox() const
         }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-    return boundingBox;
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());;
 }
 
 SkeletonNode::SkeletonNode()
@@ -239,29 +236,13 @@ void SkeletonNode::setContentSize(const cocos2d::Size &size)
     updateVertices();
 }
 
-void SkeletonNode::display(const std::string& boneName, SkinNode* skin, bool hideOthers /*= false*/)
-{
-    auto iter = _subBonesMap.find(boneName);
-    if (iter != _subBonesMap.end())
-    {
-        iter->second->display(skin, hideOthers);
-    }
-}
-
-void SkeletonNode::display(const std::string& boneName, const std::string& skinName, bool hideOthers /*= false*/)
-{
-    auto iter = _subBonesMap.find(boneName);
-    if (iter != _subBonesMap.end())
-    {
-        iter->second->display(skinName, hideOthers);
-    }
-}
-
-void SkeletonNode::changeDisplays(std::map<std::string, std::string> boneSkinNameMap, bool hideOthers /*= true*/)
+void SkeletonNode::changeDisplays(const std::map<std::string, std::string> &boneSkinNameMap)
 {
     for (auto &boneskin : boneSkinNameMap)
     {
-        display(boneskin.first, boneskin.second, hideOthers);
+        auto bone = getBoneNode(boneskin.first);
+        if ( nullptr != bone)
+            bone->display(boneskin.second, true);
     }
 }
 

@@ -188,7 +188,7 @@ void BoneNode::display(const std::string &skinName, bool hideOthers)
     }
 }
 
-cocos2d::Vector<SkinNode*> BoneNode::getDisplaying() const
+cocos2d::Vector<SkinNode*> BoneNode::getDisplayings() const
 {
     cocos2d::Vector<SkinNode*> displayingSkins;
     for (const auto &boneskin : _boneSkins)
@@ -240,6 +240,7 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
         _noMVPVertices[i] = Vec3(pos.x, pos.y, pos.z) / pos.w;
     }
 }
+
 
 void BoneNode::setContentSize(const cocos2d::Size &size)
 {
@@ -324,13 +325,13 @@ void BoneNode::setRackColor(const cocos2d::Color4F &color)
     updateColor();
 }
 
-cocos2d::Rect BoneNode::getBoundingBox() const
+cocos2d::Rect BoneNode::getDisplayingRect() const
 {
     float minx, miny, maxx, maxy = 0;
     minx = miny = maxx = maxy;
     bool first = true;
 
-    Rect boundingBox = Rect(0, 0 , 0 , 0);
+    Rect displayRect = Rect(0, 0, 0, 0);
     if (_isRackShow && _rootSkeleton != nullptr && _rootSkeleton->_isAllRackShow)
     {
         maxx = _contentSize.width;
@@ -360,8 +361,14 @@ cocos2d::Rect BoneNode::getBoundingBox() const
             maxx = MAX(r.getMaxX(), maxx);
             maxy = MAX(r.getMaxY(), maxy);
         }
+        displayRect.setRect(minx, miny, maxx - minx, maxy- miny);
     }
-    boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
+    return displayRect;
+}
+
+cocos2d::Rect BoneNode::getBoundingBox() const
+{
+    Rect boundingBox = getDisplayingRect();
     return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
@@ -391,13 +398,13 @@ cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
     return allBones;
 }
 
-cocos2d::Vector<SkinNode*> BoneNode::getAllSubSkins() const
+cocos2d::Vector<SkinNode*> BoneNode::getAllSubDisplays() const
 {
     auto allbones = getAllSubBones();
     cocos2d::Vector<SkinNode*> allskins;
     for (const auto& bone : allbones)
     {
-        for (const auto& skin : bone->getSkins())
+        for (const auto& skin : bone->getDisplays())
         {
             allskins.pushBack(skin);
         }
