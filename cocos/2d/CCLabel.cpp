@@ -26,6 +26,7 @@
 #include "2d/CCLabel.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCSprite.h"
+#include "2d/CCSpriteBatchNode.h"
 #include "2d/CCLabelTextFormatter.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
