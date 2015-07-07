@@ -146,9 +146,10 @@ public:
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @param key It's the related/absolute path of the file image.
+    @param checkFullPath If key not found, check key = fullPathForFilename(key). Default true
     @since v0.99.5
     */
-    Texture2D* getTextureForKey(const std::string& key) const;
+    Texture2D* getTextureForKey(const std::string& key, bool checkFullPath = true) const;
     CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
     /** Reload texture from the image file.
