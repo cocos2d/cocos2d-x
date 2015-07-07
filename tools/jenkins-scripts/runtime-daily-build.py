@@ -1,4 +1,4 @@
-#Cocos2D-X template project daily build
+#Cocos2D-X runtime project daily build
 
 import os
 import sys
@@ -17,12 +17,12 @@ else:
 if('NODE_NAME' in os.environ):
     node_name = os.environ['NODE_NAME']
 else:
-    node_name = 'windows-universal'
+    node_name = 'win32'
 
 if('language' in os.environ):
     language = os.environ['language']
 else:
-    language = 'cpp'
+    language = 'lua'
 
 # for local debugging purpose, you could change the value to 0 and run
 # this scripts in your local machine
@@ -62,7 +62,7 @@ def gen_scripting_bindings():
 
 
 def do_build_slaves():
-    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep + "templates" + os.sep
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep + "runtime" + os.sep
 
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
