@@ -9,7 +9,7 @@
 #include "Bug-PageViewLayout.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
-#include "CCFileUtils.h"
+#include "platform/CCFileUtils.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -21,7 +21,6 @@ bool BugPageViewLayer::init()
         auto size = Director::getInstance()->getWinSize();
 
         FileUtils::getInstance()->addSearchPath("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
-        FileUtils::getInstance()->addSearchPath("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest/Default", true);
         auto rootNode = CSLoader::createNode("cocosui/CustomTest/CustomWidgetCallbackBindTest/PageViewBugScene.csb");
         auto child = rootNode->getChildByName("ProjectNode_1");
         child->setContentSize(Size(480, 320));
