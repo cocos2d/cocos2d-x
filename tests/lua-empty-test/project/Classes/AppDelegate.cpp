@@ -1,17 +1,12 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
-#include "audio/include/SimpleAudioEngine.h"
+#include "audio/include/AudioEngine.h"
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 #include "lua_module_register.h"
 #include "CCComponentLua.h"
 
 USING_NS_CC;
-using namespace CocosDenshion;
-
-const int AppDelegate::PLAYER_TAG = 1;
-const int AppDelegate::ENEMY_TAG = 2;
-const int AppDelegate::PROJECTTILE_TAG = 3;
 
 AppDelegate::AppDelegate()
 {
@@ -22,7 +17,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     // end simple audio engine here, or it may crashed on win32
-    SimpleAudioEngine::getInstance()->end();
+//    SimpleAudioEngine::getInstance()->end();
     //CCScriptEngineManager::destroyInstance();
 }
 
@@ -49,11 +44,42 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_State* L = engine->getLuaStack()->getLuaState();
     lua_module_register(L);
     
+    director->getEventDispatcher()->addCustomEventListener("game over", std::bind(&AppDelegate::onEvent, this, std::placeholders::_1));
+    
+    auto scene = createScene();
+    director->runWithScene(scene);
+    
+    return true;
+}
+
+// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
+void AppDelegate::applicationDidEnterBackground()
+{
+    Director::getInstance()->stopAnimation();
+//    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+}
+
+// this function will be called when the app is active again
+void AppDelegate::applicationWillEnterForeground()
+{
+    Director::getInstance()->startAnimation();
+//    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+}
+
+void AppDelegate::onEvent(EventCustom *event)
+{
+    experimental::AudioEngine::stopAll();
+    auto scene = createScene();
+    Director::getInstance()->replaceScene(scene);
+}
+
+Scene* AppDelegate::createScene() const
+{
     // create game scene
     auto scene = Scene::create();
     auto sceneLuaComponent = ComponentLua::create("src/scene.lua");
+    sceneLuaComponent->setName("sceneLuaComponent");
     scene->addComponent(sceneLuaComponent);
-    scene->scheduleUpdate();
     
     // set background color
     auto bgLayer = LayerColor::create(Color4B(0, 128, 255, 255));
@@ -61,7 +87,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     // add player
     auto player = Sprite::create("res/Player.png", Rect(0, 0, 27, 40));
-    player->setTag(AppDelegate::PLAYER_TAG);
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();
     player->setPosition(origin.x + player->getContentSize().width/2,
@@ -70,21 +95,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     player->addComponent(playerComponent);
     scene->addChild(player);
     
-    director->runWithScene(scene);
-
-    return true;
+    return scene;
 }
 
-// This function will be called when the app is inactive. When comes a phone call,it's be invoked too
-void AppDelegate::applicationDidEnterBackground()
-{
-    Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-}
-
-// this function will be called when the app is active again
-void AppDelegate::applicationWillEnterForeground()
-{
-    Director::getInstance()->startAnimation();
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-}
