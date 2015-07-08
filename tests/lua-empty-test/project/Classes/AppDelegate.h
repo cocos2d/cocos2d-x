@@ -2,6 +2,8 @@
 #define  _APP_DELEGATE_H_
 
 #include "platform/CCApplication.h"
+#include "base/CCEventCustom.h"
+#include "2d/CCScene.h"
 
 /**
 @brief    The cocos2d Application.
@@ -34,9 +36,10 @@ public:
     */
     virtual void applicationWillEnterForeground();
     
-    const static int PLAYER_TAG;
-    const static int ENEMY_TAG;
-    const static int PROJECTTILE_TAG;
+    void onEvent(cocos2d::EventCustom *event);
+    
+private:
+    cocos2d::Scene* createScene() const;
 };
 
 #endif // _APP_DELEGATE_H_

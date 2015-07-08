@@ -1,7 +1,13 @@
 
-local ENEMY_TAG = 2
-
 local projectile = {
+
+    sceneLua = nil,
+
+    onEnter = function(self)
+        local sceneScriptComponent = tolua.cast(self:getOwner():getParent():getComponent("sceneLuaComponent"), "cc.ComponentLua")
+        self.sceneLua  = sceneScriptComponent:getScriptObject()
+    end,
+
     update = function(self, dt)
         -- if there is any enemy collides with this projectile, then
         -- remove this projectile and all collided enemies
@@ -10,21 +16,23 @@ local projectile = {
         local projectileX, projectileY = owner:getPosition()
         local projectileContentSize = owner:getContentSize()
         local projectileRect = cc.rect(projectileX, projectileY, 
-                projectileContentSize.width/2, projectileContentSize.height/2)
+                projectileContentSize.width, projectileContentSize.height)
 
         local scene = owner:getParent()
-        local enemies = self:getEnemies(scene)
+        local enemies = self.sceneLua.enemies
+        --local enemies = self:getEnemies()
         local removeOwner = false
-        
-        for _, enemy in pairs(enemies) do
+
+        for i = #enemies, 1, -1 do
+            local enemy = enemies[i]
             local enemyX, enemyY = enemy:getPosition()
             local enemyContentSize = enemy:getContentSize()
             local enemyRect = cc.rect(enemyX, enemyY, 
-                    enemyContentSize.width/2, enemyContentSize.height/2)
-
-            if cc.rectIntersectsRect(projectileRect, enemyRect) then
+                    enemyContentSize.width, enemyContentSize.height)
+            if cc.rectIntersectsRect(projectileRect, enemyRect) then 
+                table.remove(enemies, i)
                 scene:removeChild(enemy, true)
-
+                self.sceneLua:inscreaseCount()
                 removeOwner = true
             end
         end
@@ -32,21 +40,6 @@ local projectile = {
         if removeOwner == true then
             scene:removeChild(owner, true)
         end
-    end,
-
-    getEnemies = function(self, scene)
-        local children = scene:getChildren()
-        local enemies = {}
-
-        for _, child in pairs(children) do
-            local tag = child:getTag()
-
-            if tag == ENEMY_TAG then
-                table.insert(enemies, v)
-            end
-        end
-
-        return enemies
     end,
 }
 

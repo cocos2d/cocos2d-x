@@ -42,7 +42,7 @@ ComponentLua* ComponentLua::create(const std::string& scriptFileName)
 {
     CC_ASSERT(!scriptFileName.empty());
     
-    classInit();
+    initClass();
     
     auto componentLua = new(std::nothrow) ComponentLua(scriptFileName);
     if (componentLua)
@@ -64,6 +64,15 @@ ComponentLua::ComponentLua(const std::string& scriptFileName)
 ComponentLua::~ComponentLua()
 {
     removeLuaTable();
+}
+
+void ComponentLua::getScriptObject() const
+{
+    lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
+    lua_pushstring(l, KEY_COMPONENT);      // stack: "component"
+    lua_rawget(l, LUA_REGISTRYINDEX);      // stack: LUA_REGISTRYINDEX["component"]
+    lua_pushstring(l, _strIndex.c_str());  // stack: LUA_REGISTRYINDEX["component"] strIndex
+    lua_rawget(l, -2);                     // stack: LUA_REGISTRYINDEX["component"]
 }
 
 void ComponentLua::update(float delta)
@@ -153,7 +162,7 @@ bool ComponentLua::loadAndExecuteScript()
     return true;
 }
 
-void ComponentLua::classInit()
+void ComponentLua::initClass()
 {
     static bool run = true;
     if (run)
