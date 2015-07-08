@@ -495,6 +495,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     void onDraw(const Mat4& transform, bool transformUpdated);
+    void onDrawShadow(GLProgram* glProgram);
 
     struct LetterInfo
     {

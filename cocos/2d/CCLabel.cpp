@@ -1164,59 +1164,59 @@ void Label::updateContent()
     _contentDirty = false;
 }
 
+void Label::onDrawShadow(GLProgram* glProgram)
+{
+    if (_currentLabelType == LabelType::TTF)
+    {
+        glProgram->setUniformLocationWith4f(_uniformTextColor,
+            _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+        {
+            glProgram->setUniformLocationWith4f(_uniformEffectColor,
+                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+        }
+
+        glProgram->setUniformsForBuiltins(_shadowTransform);
+        for (auto it : _letters)
+        {
+            it.second->updateTransform();
+        }
+        for (const auto& batchNode : _batchNodes)
+        {
+            batchNode->getTextureAtlas()->drawQuads();
+        }
+    }
+    else
+    {
+        Color3B oldColor = _realColor;
+        GLubyte oldOPacity = _displayedOpacity;
+        _displayedOpacity = _shadowOpacity;
+        setColor(_shadowColor3B);
+
+        glProgram->setUniformsForBuiltins(_shadowTransform);
+        for (auto it : _letters)
+        {
+            it.second->updateTransform();
+        }
+        for (const auto& batchNode : _batchNodes)
+        {
+            batchNode->getTextureAtlas()->drawQuads();
+        }
+
+        _displayedOpacity = oldOPacity;
+        setColor(oldColor);
+    }
+}
+
 void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
-    if (_batchNodes.empty() || _limitShowCount <= 0)
-    {
-        return;
-    }
-
     auto glprogram = getGLProgram();
     glprogram->use();
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_shadowEnabled)
     {
-        if (_currentLabelType == LabelType::TTF)
-        {
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-            {
-                glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                    _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            }
-
-            getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (auto it : _letters)
-            {
-                it.second->updateTransform();
-            }
-            for (const auto& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-        }
-        else
-        {
-            Color3B oldColor = _realColor;
-            GLubyte oldOPacity = _displayedOpacity;
-            _displayedOpacity = _shadowOpacity;
-            setColor(_shadowColor3B);
-
-            getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (auto it : _letters)
-            {
-                it.second->updateTransform();
-            }
-            for (const auto& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-
-            _displayedOpacity = oldOPacity;
-            setColor(oldColor);
-        }
+        onDrawShadow(glprogram);
     }
 
     glprogram->setUniformsForBuiltins(transform);
@@ -1263,6 +1263,10 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
 
 void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    if (_batchNodes.empty() || _limitShowCount <= 0)
+    {
+        return;
+    }
     // Don't do calculate the culling if the transform was not updated
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
 #if CC_USE_CULLING
