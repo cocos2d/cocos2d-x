@@ -118,6 +118,9 @@ public:
     
     /**Change projection to 2D for grabbing.*/
     void set2DProjection(void);
+    
+    void setGridRect(const Rect& rect);
+    inline const Rect& getGridRect() const {return _gridRect;}
 
 protected:
     bool _active;
@@ -129,6 +132,7 @@ protected:
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
     Director::Projection _directorProjection;
+    Rect _gridRect;
 };
 
 /**

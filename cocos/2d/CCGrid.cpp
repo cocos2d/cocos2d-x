@@ -90,10 +90,17 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     _texture = texture;
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = flipped;
-
-    Size texSize = _texture->getContentSize();
-    _step.x = texSize.width / _gridSize.width;
-    _step.y = texSize.height / _gridSize.height;
+    
+    Rect gridRect(240,160,480,320);
+    if (gridRect.equals(Rect::ZERO)) {
+        auto size = _texture->getContentSize();
+        _gridRect.setRect(0, 0, size.width, size.height);
+    }
+    else{
+        _gridRect = gridRect;
+    }
+    _step.x = _gridRect.size.width/_gridSize.width;
+    _step.y = _gridRect.size.height/_gridSize.height;
 
     _grabber = new (std::nothrow) Grabber();
     if (_grabber)
@@ -193,6 +200,11 @@ void GridBase::set2DProjection()
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     GL::setProjectionMatrixDirty();
+}
+
+void GridBase::setGridRect(const cocos2d::Rect &rect)
+{
+    _gridRect = rect;
 }
 
 void GridBase::beforeDraw(void)
@@ -402,9 +414,9 @@ void Grid3D::calculateVertexPoints(void)
         {
             int idx = (y * _gridSize.width) + x;
 
-            GLfloat x1 = x * _step.x;
+            GLfloat x1 = x * _step.x + _gridRect.origin.x;
             GLfloat x2 = x1 + _step.x;
-            GLfloat y1 = y * _step.y;
+            GLfloat y1 = y * _step.y + _gridRect.origin.y;
             GLfloat y2= y1 + _step.y;
 
             GLushort a = (GLushort)(x * (_gridSize.height + 1) + y);

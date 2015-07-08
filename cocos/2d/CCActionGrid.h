@@ -140,6 +140,8 @@ public:
         CC_ASSERT(0);
         return nullptr;
     }
+    
+    Rect getGridRect() const;
 };
 
 /**

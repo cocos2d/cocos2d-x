@@ -34,6 +34,7 @@ static std::string effectsList[] =
     "SplitRows",
     "SplitCols",
     "PageTurn3D",
+    "PageTurn3DWithRect"
 }; 
 
 EffectTests::EffectTests()
@@ -289,6 +290,15 @@ public:
     }
 };
 
+class PageTurn3DWithRectDemo : public PageTurn3D
+{
+public:
+    static ActionInterval* create(float t)
+    {
+        return PageTurn3D::create(t, Size(15,10));
+    }
+};
+
 //------------------------------------------------------------------
 //
 // EffectBaseTest
@@ -324,6 +334,7 @@ ActionInterval* createEffect(int nIndex, float t)
         case 19: return SplitRowsDemo::create(t);
         case 20: return SplitColsDemo::create(t);
         case 21: return PageTurn3DDemo::create(t);
+        case 22: return PageTurn3DWithRectDemo::create(t);
     }
 
     return nullptr;

@@ -123,6 +123,12 @@ void Grid3DAction::setVertex(const Vec2& position, const Vec3& vertex)
     g->setVertex(position, vertex);
 }
 
+Rect Grid3DAction::getGridRect() const
+{
+    Grid3D *g = (Grid3D*)_gridNodeTarget->getGrid();
+    return g->getGridRect();
+}
+
 // implementation of TiledGrid3DAction
 
 GridBase* TiledGrid3DAction::getGrid(void)
