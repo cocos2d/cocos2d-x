@@ -283,6 +283,24 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
+AudioCache* AudioEngineImpl::preload(const std::string& filePath)
+{
+    AudioCache* audioCache = nullptr;
+    
+    auto it = _audioCaches.find(filePath);
+    if (it == _audioCaches.end()) {
+        audioCache = &_audioCaches[filePath];
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        
+        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    }
+    else {
+        audioCache = &it->second;
+    }
+    
+    return audioCache;
+}
+
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
     if (s_ALDevice == nullptr) {
@@ -303,16 +321,9 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
-        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
-    }
-    else {
-        audioCache = &it->second;
+    AudioCache* audioCache = preload(filePath);
+    if (audioCache == nullptr) {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     auto player = &_audioPlayers[_currentAudioID];
