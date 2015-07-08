@@ -47134,6 +47134,56 @@ int lua_cocos2dx_DrawNode_drawSolidCircle(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_DrawNode_setLineWidth(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::DrawNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::DrawNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode_setLineWidth'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.DrawNode:setLineWidth");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_DrawNode_setLineWidth'", nullptr);
+            return 0;
+        }
+        cobj->setLineWidth(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode:setLineWidth",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_DrawNode_setLineWidth'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_DrawNode_onDrawGLPoint(lua_State* tolua_S)
 {
     int argc = 0;
@@ -48040,6 +48090,7 @@ int lua_register_cocos2dx_DrawNode(lua_State* tolua_S)
         tolua_function(tolua_S,"drawLine",lua_cocos2dx_DrawNode_drawLine);
         tolua_function(tolua_S,"drawRect",lua_cocos2dx_DrawNode_drawRect);
         tolua_function(tolua_S,"drawSolidCircle",lua_cocos2dx_DrawNode_drawSolidCircle);
+        tolua_function(tolua_S,"setLineWidth",lua_cocos2dx_DrawNode_setLineWidth);
         tolua_function(tolua_S,"onDrawGLPoint",lua_cocos2dx_DrawNode_onDrawGLPoint);
         tolua_function(tolua_S,"drawDot",lua_cocos2dx_DrawNode_drawDot);
         tolua_function(tolua_S,"drawSegment",lua_cocos2dx_DrawNode_drawSegment);

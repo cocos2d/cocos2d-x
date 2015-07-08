@@ -44,6 +44,13 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
 
 --------------------------------
+-- 
+-- @function [parent=#DrawNode] setLineWidth 
+-- @param self
+-- @param #int lineWidth
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
 -- js NA
 -- @function [parent=#DrawNode] onDrawGLPoint 
 -- @param self

@@ -34936,6 +34936,26 @@ bool js_cocos2dx_DrawNode_drawSolidCircle(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_cocos2dx_DrawNode_drawSolidCircle : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_DrawNode_setLineWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_setLineWidth : Invalid Native Object");
+    if (argc == 1) {
+        int arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_setLineWidth : Error processing arguments");
+        cobj->setLineWidth(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_DrawNode_setLineWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_DrawNode_onDrawGLPoint(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35536,6 +35556,7 @@ void js_register_cocos2dx_DrawNode(JSContext *cx, JS::HandleObject global) {
         JS_FN("drawPoints", js_cocos2dx_DrawNode_drawPoints, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawRect", js_cocos2dx_DrawNode_drawRect, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawSolidCircle", js_cocos2dx_DrawNode_drawSolidCircle, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setLineWidth", js_cocos2dx_DrawNode_setLineWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDrawGLPoint", js_cocos2dx_DrawNode_onDrawGLPoint, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawDot", js_cocos2dx_DrawNode_drawDot, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawCatmullRom", js_cocos2dx_DrawNode_drawCatmullRom, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
