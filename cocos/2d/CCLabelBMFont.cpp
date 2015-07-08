@@ -127,7 +127,7 @@ const std::string& LabelBMFont::getString() const
 void LabelBMFont::setOpacityModifyRGB(bool var)
 {
     _label->setOpacityModifyRGB(var);
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         child->setOpacityModifyRGB(var);
     }
 }

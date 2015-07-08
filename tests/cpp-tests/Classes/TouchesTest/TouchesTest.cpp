@@ -76,7 +76,7 @@ PongLayer::PongLayer()
     
     _paddles = paddlesM;
     
-    for (auto& paddle : _paddles)
+    for (auto paddle : _paddles)
     {
         addChild(paddle);
     }

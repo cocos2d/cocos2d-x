@@ -288,19 +288,19 @@ void LabelMainScene::updateText(float dt)
     switch (_s_labelCurCase)
     {
     case kCaseLabelTTFUpdate:
-        for(const auto &child : children) {
+        for (const auto child : children) {
             Label* label = (Label*)child;
             label->setString(text);
         }
         break;
     case kCaseLabelBMFontUpdate:
-        for(const auto &child : children) {
+        for (const auto child : children) {
             auto label = (Label*)child;
             label->setString(text);
         }
         break;
     case kCaseLabelUpdate:
-        for(const auto &child : children) {
+        for (const auto child : children) {
             Label* label = (Label*)child;
             label->setString(text);
         }

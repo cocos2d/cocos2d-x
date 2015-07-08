@@ -161,7 +161,7 @@ void ScrollView::pause(Ref* sender)
     _container->pause();
 
     auto& children = _container->getChildren();
-    for(const auto &child : children) {
+    for(const auto child : children) {
         child->pause();
     }
 }
@@ -169,7 +169,7 @@ void ScrollView::pause(Ref* sender)
 void ScrollView::resume(Ref* sender)
 {
     auto& children = _container->getChildren();
-    for(const auto &child : children) {
+    for(const auto child : children) {
         child->resume();
     }
 

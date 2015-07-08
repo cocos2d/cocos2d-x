@@ -1335,7 +1335,7 @@ void ActionStacked::runActionsInSprite(Sprite *sprite)
 
 void ActionStacked::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
-    for ( auto &touch: touches ) {
+    for (auto touch: touches) {
         auto location = touch->getLocation();
         addNewSpriteWithCoords( location );
     }

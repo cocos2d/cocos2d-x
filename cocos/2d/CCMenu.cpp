@@ -315,12 +315,12 @@ void Menu::alignItemsVerticallyWithPadding(float padding)
 {
     float height = -padding;
 
-    for(const auto &child : _children)
+    for(const auto child : _children)
         height += child->getContentSize().height * child->getScaleY() + padding;
 
     float y = height / 2.0f;
     
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         child->setPosition(0, y - child->getContentSize().height * child->getScaleY() / 2.0f);
         y -= child->getContentSize().height * child->getScaleY() + padding;
     }
@@ -334,12 +334,12 @@ void Menu::alignItemsHorizontally(void)
 void Menu::alignItemsHorizontallyWithPadding(float padding)
 {
     float width = -padding;
-    for(const auto &child : _children)
+    for(const auto child : _children)
         width += child->getContentSize().width * child->getScaleX() + padding;
 
     float x = -width / 2.0f;
     
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         child->setPosition(x + child->getContentSize().width * child->getScaleX() / 2.0f, 0);
         x += child->getContentSize().width * child->getScaleX() + padding;
     }
@@ -375,7 +375,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     int columnsOccupied = 0;
     int rowColumns = 0;
 
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         CCASSERT(row < rows.size(), "");
         
         rowColumns = rows[row].asInt();
@@ -408,7 +408,7 @@ void Menu::alignItemsInColumnsWithArray(const ValueVector& rows)
     float x = 0.0;
     float y = (float)(height / 2);
 
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         if (rowColumns == 0)
         {
             rowColumns = rows[row].asInt();
@@ -470,7 +470,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     int rowsOccupied = 0;
     int columnRows;
 
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         // check if too many menu items for the amount of rows/columns
         CCASSERT(column < columns.size(), "");
 
@@ -509,7 +509,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
     float x = (float)(-width / 2);
     float y = 0.0;
 
-    for(const auto &child : _children) {
+    for(const auto child : _children) {
         if (columnRows == 0)
         {
             columnRows = columns[column].asInt();

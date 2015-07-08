@@ -147,7 +147,7 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
         glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4F)* _vertices.size(), &_vertices[0], GL_STATIC_DRAW);
         _dirtyBuffer = false;
     }
-    for (auto &iter : _primitiveList){
+    for (auto iter : _primitiveList){
         _stateBlock->setDepthWrite(iter->depthMask);
         if (iter->type == GL_POINTS){
             //glPointSize(iter->size);

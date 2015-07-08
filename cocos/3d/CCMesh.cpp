@@ -76,7 +76,7 @@ static const char          *s_ambientLightUniformColorName = "u_AmbientLightSour
 // helpers
 static void resetLightUniformValues()
 {
-    const auto& conf = Configuration::getInstance();
+    const auto conf = Configuration::getInstance();
     int maxDirLight = conf->getMaxSupportDirLightInShader();
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
@@ -282,7 +282,7 @@ void Mesh::setTexture(Texture2D* tex)
 
     if (_material) {
         auto technique = _material->_currentTechnique;
-        for(auto& pass: technique->_passes)
+        for(auto pass: technique->_passes)
         {
             // FIXME: Ideally it should use glProgramState->setUniformTexture()
             // and set CC_Texture0 that way. But trying to it, will trigger
@@ -438,7 +438,7 @@ void Mesh::calculateAABB()
                 while (root) {
                     auto parent = root->getParentBone();
                     bool parentInSkinBone = false;
-                    for (const auto& bone : _skin->_skinBones) {
+                    for (const auto bone : _skin->_skinBones) {
                         if (bone == parent)
                         {
                             parentInSkinBone = true;
@@ -482,11 +482,11 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
     CCASSERT(pass, "Invalid Pass");
     CCASSERT(scene, "Invalid scene");
 
-    const auto& conf = Configuration::getInstance();
+    const auto conf = Configuration::getInstance();
     int maxDirLight = conf->getMaxSupportDirLightInShader();
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
-    auto &lights = scene->getLights();
+    auto& lights = scene->getLights();
 
     auto glProgramState = pass->getGLProgramState();
     auto attributes = pass->getVertexAttributeBinding()->getVertexAttribsFlags();
@@ -499,7 +499,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
         GLint enabledPointLightNum = 0;
         GLint enabledSpotLightNum = 0;
         Vec3 ambientColor;
-        for (const auto& light : lights)
+        for (const auto light : lights)
         {
             bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & lightmask);
             if (useLight)
@@ -597,7 +597,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
     {
         Vec3 ambient(0.0f, 0.0f, 0.0f);
         bool hasAmbient = false;
-        for (const auto& light : lights)
+        for (const auto light : lights)
         {
             if (light->getLightType() == LightType::AMBIENT)
             {

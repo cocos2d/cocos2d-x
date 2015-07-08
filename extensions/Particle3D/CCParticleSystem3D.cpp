@@ -169,8 +169,8 @@ void ParticleSystem3D::update(float delta)
             _emitter->updateEmitter(particle, delta);
         }
 
-        for (auto& it : _affectors) {
-            it->updateAffector(particle, delta);
+        for (auto affector : _affectors) {
+            affector->updateAffector(particle, delta);
         }
 
         particle = _particlePool.getNext();

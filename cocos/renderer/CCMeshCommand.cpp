@@ -216,7 +216,7 @@ void MeshCommand::batchDraw()
 {
     if (_material)
     {
-        for(const auto& pass: _material->_currentTechnique->_passes)
+        for(const auto pass: _material->_currentTechnique->_passes)
         {
             pass->bind(_mv);
 
@@ -267,7 +267,7 @@ void MeshCommand::execute()
 
     if (_material)
     {
-        for(const auto& pass: _material->_currentTechnique->_passes)
+        for(const auto pass: _material->_currentTechnique->_passes)
         {
             pass->bind(_mv, true);
 

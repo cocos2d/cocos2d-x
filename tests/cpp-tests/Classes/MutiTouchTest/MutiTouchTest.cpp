@@ -62,7 +62,7 @@ static Map<int, TouchPoint*> s_map;
 
 void MutiTouchTest::onTouchesBegan(const std::vector<Touch*>& touches, Event  *event)
 {
-    for ( auto &item: touches )
+    for (auto item: touches)
     {
         auto touch = item;
         auto location = touch->getLocation();
@@ -75,7 +75,7 @@ void MutiTouchTest::onTouchesBegan(const std::vector<Touch*>& touches, Event  *e
 
 void MutiTouchTest::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
 {
-    for( auto &item: touches)
+    for (auto item: touches)
     {
         auto touch = item;
         auto pTP = s_map.at(touch->getID());
@@ -92,7 +92,7 @@ void MutiTouchTest::onTouchesMoved(const std::vector<Touch*>& touches, Event  *e
 
 void MutiTouchTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *event)
 {
-    for ( auto &item: touches )
+    for (auto item: touches)
     {
         auto touch = item;
         auto pTP = s_map.at(touch->getID());

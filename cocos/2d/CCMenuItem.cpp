@@ -907,7 +907,7 @@ void MenuItemToggle::addSubItem(MenuItem *item)
 
 MenuItemToggle::~MenuItemToggle()
 {
-    for(const auto &item : _subItems) {
+    for(const auto item : _subItems) {
         item->cleanup();
     }
 }
@@ -959,7 +959,7 @@ void MenuItemToggle::setEnabled(bool enabled)
     {
         MenuItem::setEnabled(enabled);
 
-        for(const auto &item : _subItems) {
+        for(const auto item : _subItems) {
             item->setEnabled(enabled);
         }
     }

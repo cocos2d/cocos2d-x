@@ -563,7 +563,7 @@ void Sprite3DFakeShadowTest::onTouchesMoved(const std::vector<Touch*>& touches, 
 
 void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event *event)
 {
-    for ( auto &item: touches )
+    for (auto item: touches)
     {
         auto touch = item;
         auto location = touch->getLocationInView();
@@ -1070,7 +1070,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
 
 void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    for(auto &effect : _effects)
+    for (auto &effect : _effects)
     {
         if(std::get<0>(effect) >=0)
             break;
@@ -1091,7 +1091,7 @@ void EffectSprite3D::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &tran
         renderer->addCommand(&_command);
     }
     
-    for(auto &effect : _effects)
+    for (auto &effect : _effects)
     {
         if(std::get<0>(effect) <=0)
             continue;

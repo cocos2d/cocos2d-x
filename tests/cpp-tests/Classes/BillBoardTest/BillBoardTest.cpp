@@ -205,14 +205,14 @@ BillBoardTest::BillBoardTest()
 
 void BillBoardTest::menuCallback_orientedPoint(Ref* sender)
 {
-    for (auto& billboard : _billboards) {
+    for (auto billboard : _billboards) {
         billboard->setMode(BillBoard::Mode::VIEW_POINT_ORIENTED);
     }
 }
 
 void BillBoardTest::menuCallback_orientedPlane(Ref* sender)
 {
-    for (auto& billboard : _billboards) {
+    for (auto billboard : _billboards) {
         billboard->setMode(BillBoard::Mode::VIEW_PLANE_ORIENTED);
     }
 }

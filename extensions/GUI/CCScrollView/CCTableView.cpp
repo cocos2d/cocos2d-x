@@ -102,7 +102,7 @@ void TableView::reloadData()
 {
     _oldDirection = Direction::NONE;
 
-    for(const auto &cell : _cellsUsed) {
+    for(const auto cell : _cellsUsed) {
         if(_tableViewDelegate != nullptr) {
             _tableViewDelegate->tableCellWillRecycle(this, cell);
         }

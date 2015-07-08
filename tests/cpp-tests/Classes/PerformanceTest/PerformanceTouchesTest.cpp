@@ -234,7 +234,7 @@ void TouchesPerformTest3::onEnter()
         
         CC_PROFILER_DISPLAY_TIMERS();
         
-        for (auto& touch : touches)
+        for (auto touch : touches)
         {
             touch->release();
         }
