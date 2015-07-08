@@ -142,45 +142,53 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
-int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume)
+AudioCache* AudioEngineImpl::preload(const std::string& filePath)
 {
     AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
+    do 
+    {
+        auto it = _audioCaches.find(filePath);
+        if (it == _audioCaches.end()) {
+            FileFormat fileFormat = FileFormat::UNKNOWN;
 
-        auto ext = filePath.substr(filePath.rfind('.'));
-        transform(ext.begin(), ext.end(), ext.begin(), tolower);
+            auto ext = filePath.substr(filePath.rfind('.'));
+            transform(ext.begin(), ext.end(), ext.begin(), tolower);
 
-        bool eraseCache = true;
+            if (ext.compare(".wav") == 0){
+                fileFormat = FileFormat::WAV;
+            }
+            else if (ext.compare(".ogg") == 0){
+                fileFormat = FileFormat::OGG;
+            }
+            else if (ext.compare(".mp3") == 0){
+                fileFormat = FileFormat::MP3;
+            }
+            else{
+                log("unsupported media type:%s\n", ext.c_str());
+                break;
+            }
 
-        if (ext.compare(".wav") == 0){
-            audioCache->_fileFormat = FileFormat::WAV;
-            eraseCache = false;
-        }
-        else if (ext.compare(".ogg") == 0){
-            audioCache->_fileFormat = FileFormat::OGG;
-            eraseCache = false;
-        }
-        else if (ext.compare(".mp3") == 0){
-            audioCache->_fileFormat = FileFormat::MP3;
-            eraseCache = false;
-        }
-        else{
-            log("unsupported media type:%s\n", ext.c_str());
-        }
+            audioCache = &_audioCaches[filePath];
+            audioCache->_fileFormat = fileFormat;
 
-        if (eraseCache){
-            _audioCaches.erase(filePath);
-            return AudioEngine::INVALID_AUDIO_ID;
+            std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+            audioCache->_fileFullPath = fullPath;
+            _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
         }
+        else {
+            audioCache = &it->second;
+        }
+    } while (false);
 
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        audioCache->_fileFullPath = fullPath;
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
-    }
-    else {
-        audioCache = &it->second;
+    return audioCache;
+}
+
+int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume)
+{
+    auto audioCache = preload(filePath);
+    if (audioCache == nullptr)
+    {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
 
     auto player = &_audioPlayers[_currentAudioID];

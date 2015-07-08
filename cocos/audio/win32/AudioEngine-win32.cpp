@@ -47,15 +47,18 @@ static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
 static bool MPG123_LAZYINIT = true;
 
+static AudioEngineThreadPool* s_threadPool = nullptr;
+
 namespace cocos2d {
     namespace experimental {
         class AudioEngineThreadPool
         {
         public:
             AudioEngineThreadPool()
-            : _running(true)
-            , _numThread(6)
+            : _numThread(6)
             {
+                s_threadPool = this;
+
                 _threads.reserve(_numThread);
                 _tasks.reserve(_numThread);
                 
@@ -88,21 +91,17 @@ namespace cocos2d {
             
             void destroy()
             {
-                _running = false;
+                std::unique_lock<std::mutex> lk(_sleepMutex);
                 _sleepCondition.notify_all();
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _threads[index].join();
-                }
-            }           
+            }
+
         private:
-            bool _running;
             std::vector<std::thread>  _threads;
             std::vector< std::function<void ()> > _tasks;
             
             void threadFunc(int index)
             {
-                while (_running) {
+                while (s_threadPool == this) {
                     std::function<void ()> task = nullptr;
                     _taskMutex.lock();
                     task = _tasks[index];
@@ -194,6 +193,54 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
+AudioCache* AudioEngineImpl::preload(const std::string& filePath)
+{
+    AudioCache* audioCache = nullptr;
+
+    do 
+    {
+        auto it = _audioCaches.find(filePath);
+        if (it != _audioCaches.end())
+        {
+            audioCache = &it->second;
+            break;
+        }
+
+        auto ext = strchr(filePath.c_str(), '.');
+        AudioCache::FileFormat fileFormat = AudioCache::FileFormat::UNKNOWN;
+
+        if (_stricmp(ext, ".ogg") == 0){
+            fileFormat = AudioCache::FileFormat::OGG;
+        }
+        else if (_stricmp(ext, ".mp3") == 0){
+            fileFormat = AudioCache::FileFormat::MP3;
+
+            if (MPG123_LAZYINIT){
+                auto error = mpg123_init();
+                if (error == MPG123_OK){
+                    MPG123_LAZYINIT = false;
+                }
+                else{
+                    log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
+                    break;
+                }
+            }
+        }
+        else{
+            log("unsupported media type:%s\n", ext);
+            break;
+        }
+
+        audioCache = &_audioCaches[filePath];
+        audioCache->_fileFormat = fileFormat;
+
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    } while (false);
+
+    return audioCache;
+}
+
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
     bool availableSourceExist = false;
@@ -209,48 +256,10 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
-        auto ext = strchr(filePath.c_str(), '.');
-        bool eraseCache = true;
-
-        if (_stricmp(ext, ".ogg") == 0){
-            audioCache->_fileFormat = AudioCache::FileFormat::OGG;
-            eraseCache = false;
-        }
-        else if (_stricmp(ext, ".mp3") == 0){
-            audioCache->_fileFormat = AudioCache::FileFormat::MP3;
-
-            if (MPG123_LAZYINIT){
-                auto error = mpg123_init();
-                if(error == MPG123_OK){
-                    MPG123_LAZYINIT = false;
-                    eraseCache = false;
-                }
-                else{
-                    log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
-                }
-            }
-            else{
-                eraseCache = false;
-            }
-        }
-        else{
-            log("unsupported media type:%s\n", ext);
-        }
-        
-        if (eraseCache){
-            _audioCaches.erase(filePath);
-            return AudioEngine::INVALID_AUDIO_ID;
-        }
-
-        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
-    }
-    else {
-        audioCache = &it->second;
+    AudioCache* audioCache = preload(filePath);
+    if (audioCache == nullptr)
+    {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     auto player = &_audioPlayers[_currentAudioID];
