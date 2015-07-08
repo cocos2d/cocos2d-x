@@ -99,7 +99,8 @@ public:
         BOUNCE_TOP,
         BOUNCE_BOTTOM,
         BOUNCE_LEFT,
-        BOUNCE_RIGHT
+        BOUNCE_RIGHT,
+        CONTAINER_MOVED
     };
 
     /**
@@ -308,6 +309,20 @@ public:
      * @return The inner container size.
      */
     const Size& getInnerContainerSize() const;
+    
+    /**
+     * Set inner container position
+     *
+     * @param position Inner container position.
+     */
+    void setInnerContainerPosition(const Vec2 &pos);
+    
+    /**
+     * Get inner container position
+     *
+     * @return The inner container position.
+     */
+    const Vec2 getInnerContainerPosition() const;
 
     /**
      * Add callback function which will be called  when scrollview event triggered.
