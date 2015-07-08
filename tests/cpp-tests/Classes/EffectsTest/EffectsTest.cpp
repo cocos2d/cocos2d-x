@@ -33,9 +33,8 @@ static std::string effectsList[] =
     "JumpTiles3D",
     "SplitRows",
     "SplitCols",
-    "PageTurn3D",
-    "PageTurn3DWithRect"
-}; 
+    "PageTurn3D"
+};
 
 EffectTests::EffectTests()
 {
@@ -290,15 +289,6 @@ public:
     }
 };
 
-class PageTurn3DWithRectDemo : public PageTurn3D
-{
-public:
-    static ActionInterval* create(float t)
-    {
-        return PageTurn3D::create(t, Size(15,10));
-    }
-};
-
 //------------------------------------------------------------------
 //
 // EffectBaseTest
@@ -334,7 +324,6 @@ ActionInterval* createEffect(int nIndex, float t)
         case 19: return SplitRowsDemo::create(t);
         case 20: return SplitColsDemo::create(t);
         case 21: return PageTurn3DDemo::create(t);
-        case 22: return PageTurn3DWithRectDemo::create(t);
     }
 
     return nullptr;
@@ -347,8 +336,13 @@ EffectBaseTest::EffectBaseTest(int actionIdx)
 	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
 	this->addChild(background,-20);
     
-    _gridNodeTarget = NodeGrid::create();
-    auto effect = createEffect(actionIdx, 3); 
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    Rect gridRect = Rect(visibleSize.width * 0.2,
+                         visibleSize.height * 0.2,
+                         visibleSize.width * 0.6,
+                         visibleSize.height * 0.6);
+    _gridNodeTarget = NodeGrid::create(gridRect);
+    auto effect = createEffect(actionIdx, 3);
     _gridNodeTarget->runAction(effect);
     addChild(_gridNodeTarget, 0, kTagBackground);
     

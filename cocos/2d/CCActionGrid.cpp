@@ -102,7 +102,7 @@ GridBase* GridAction::getGrid()
 
 GridBase* Grid3DAction::getGrid()
 {
-    return Grid3D::create(_gridSize);
+    return Grid3D::create(_gridSize, _gridNodeTarget->getGridRect());
 }
 
 Vec3 Grid3DAction::getVertex(const Vec2& position) const

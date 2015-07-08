@@ -64,8 +64,11 @@ public:
      @param texture The texture used for grab.
      @param flipped whether or not the grab texture should be flip by Y or not.
     */
-    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
+    bool initWithSize(const Size& gridSize, const Rect& rect);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
+
     /**@}*/
     /** @{
     Getter and setter of the active state of the grid.
@@ -142,9 +145,13 @@ class CC_DLL Grid3D : public GridBase
 {
 public:
     /** create one Grid. */
+    static Grid3D* create(const Size& gridSize);
+    /** craete one Grid. */
+    static Grid3D* create(const Size& gridSize, const Rect& rect);
+    /** create one Grid. */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid. */
-    static Grid3D* create(const Size& gridSize);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
     /**
      Constructor.
      * @js ctor

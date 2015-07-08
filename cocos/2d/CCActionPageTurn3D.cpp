@@ -25,6 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "2d/CCActionPageTurn3D.h"
 #include "2d/CCGrid.h"
+#include "2d/CCNodeGrid.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +59,7 @@ PageTurn3D *PageTurn3D::clone() const
 
 GridBase* PageTurn3D::getGrid()
 {
-    auto result = Grid3D::create(_gridSize);
+    auto result = Grid3D::create(_gridSize, _gridNodeTarget->getGridRect());
     result->setNeedDepthTestForBlit(true);
     return result;
 }

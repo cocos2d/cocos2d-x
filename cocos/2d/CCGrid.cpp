@@ -79,29 +79,28 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
     return pGridBase;
 }
 
-bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped)
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
 {
     bool ret = true;
-
+    
     _active = false;
     _reuseGrid = 0;
     _gridSize = gridSize;
-
+    
     _texture = texture;
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = flipped;
     
-    Rect gridRect(240,160,480,320);
-    if (gridRect.equals(Rect::ZERO)) {
+    if (rect.equals(Rect::ZERO)) {
         auto size = _texture->getContentSize();
         _gridRect.setRect(0, 0, size.width, size.height);
     }
     else{
-        _gridRect = gridRect;
+        _gridRect = rect;
     }
     _step.x = _gridRect.size.width/_gridSize.width;
     _step.y = _gridRect.size.height/_gridSize.height;
-
+    
     _grabber = new (std::nothrow) Grabber();
     if (_grabber)
     {
@@ -114,21 +113,26 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     
     _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     calculateVertexPoints();
-
+    
     return ret;
 }
 
-bool GridBase::initWithSize(const Size& gridSize)
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped)
+{
+    return initWithSize(gridSize, texture, flipped, Rect::ZERO);
+}
+
+bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &rect)
 {
     Director *director = Director::getInstance();
     Size s = director->getWinSizeInPixels();
     
     auto POTWide = ccNextPOT((unsigned int)s.width);
     auto POTHigh = ccNextPOT((unsigned int)s.height);
-
+    
     // we only use rgba8888
     Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
-
+    
     auto dataLen = POTWide * POTHigh * 4;
     void *data = calloc(dataLen, 1);
     if (! data)
@@ -137,23 +141,28 @@ bool GridBase::initWithSize(const Size& gridSize)
         this->release();
         return false;
     }
-
+    
     Texture2D *texture = new (std::nothrow) Texture2D();
     texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
-
+    
     free(data);
-
+    
     if (! texture)
     {
         CCLOG("cocos2d: Grid: error creating texture");
         return false;
     }
-
-    initWithSize(gridSize, texture, false);
-
+    
+    initWithSize(gridSize, texture, false, rect);
+    
     texture->release();
-
+    
     return true;
+}
+
+bool GridBase::initWithSize(const Size& gridSize)
+{
+    return initWithSize(gridSize, Rect::ZERO);
 }
 
 GridBase::~GridBase(void)
@@ -309,6 +318,46 @@ Grid3D* Grid3D::create(const Size& gridSize)
         }
     }
 
+    return ret;
+}
+
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    Grid3D *ret= new (std::nothrow) Grid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+Grid3D* Grid3D::create(const Size& gridSize, const Rect& rect)
+{
+    Grid3D *ret= new (std::nothrow) Grid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
     return ret;
 }
 
