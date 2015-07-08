@@ -38,7 +38,7 @@ namespace tinyobj {
         std::vector<float> positions;
         std::vector<float> normals;
         std::vector<float> texcoords;
-        std::vector<unsigned int> indices;
+        std::vector<unsigned short> indices;
         std::vector<int> material_ids; // per-mesh material ID
     } mesh_t;
     
