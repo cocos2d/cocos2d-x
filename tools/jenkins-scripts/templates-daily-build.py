@@ -1,12 +1,8 @@
-#Cocos2D-X templates daily build scripts
+#Cocos2D-X template project daily build
 
 import os
 import sys
 import traceback
-
-# for local debugging purpose, you could change the value to 0 and run
-# this scripts in your local machine
-remote_build = 1
 
 if('branch' in os.environ):
     branch = os.environ['branch']
@@ -21,99 +17,103 @@ else:
 if('NODE_NAME' in os.environ):
     node_name = os.environ['NODE_NAME']
 else:
-    node_name = 'mac'
+    node_name = 'windows-universal'
 
-if('build_mode' in os.environ):
-    build_mode = os.environ['build_mode']
+if('language' in os.environ):
+    language = os.environ['language']
 else:
-    build_mode = "debug"
+    language = 'cpp'
 
-#valide build_type are 'template' and 'runtime'
-if('build_type' in os.environ):
-    build_type = os.environ['build_type']
-else:
-    build_type = 'template'
+# for local debugging purpose, you could change the value to 0 and run
+# this scripts in your local machine
+remote_build = 1
 
-default_templates_types = ["cpp", "lua", "js"]
-runtime_templates_types = ["lua", "js"]
-default_templates_names = ["test_cpp", "test_lua", "test_js"]
-runtime_template_names = ["test_rt_lua", "test_rt_js"]
-
-def do_clean_up():
-    for name in default_templates_names:
-        commands = 'rm -rf ' + name
-        os.system(commands)
-    for name in runtime_template_names:
-        commands = 'rm -rf ' + name
-        os.system(commands)
+def download_3rd_library():
+    #run download-deps.py
+    print("prepare to downloading ...")
+    os.system('python download-deps.py -r no')
 
 
-def build_templates(mode, templates, is_runtime):
-    ret = 0
+def sync_remote_repo():
+    #reset path to workspace root
+    os.system("cd " + workspace)
+
+    #pull latest code
+    os.system("git fetch origin " + branch)
+    os.system("git checkout " + branch)
+    os.system("git merge origin/" + branch)
+    #clean workspace
+    print "Before checkout: git clean -xdf -f"
+    os.system("git clean -xdf -f")
+
+    #update submodule
+    git_update_submodule = "git submodule update --init --force"
+    ret = os.system(git_update_submodule)
+    if(ret != 0):
+        sys.exit(ret)
+
+
+def gen_scripting_bindings():
+    # Generate binding glue codes
     if(branch == 'v3' or branch == 'v4-develop'):
-        do_clean_up()
-        test_project_prefix = " test_"
-        if is_runtime:
-            test_project_prefix = " test_rt_"
+        ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
+    if(ret != 0):
+        sys.exit(ret)
 
-        #build for default templates
-        for type in templates:
-            #create project
-            create_project_commands = "cocos new  -l " + type
-            if is_runtime:
-                create_project_commands += " -t runtime " + test_project_prefix + type
-            else:
-                create_project_commands += test_project_prefix + type
-            create_ret = os.system(create_project_commands)
 
-            #create project failed
-            if create_ret != 0:
-                return 1
+def do_build_slaves():
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep + "templates" + os.sep
 
-            ret += create_ret
-            #compile
-            compile_project_commands = "cocos compile -p " + node_name + " -s " + test_project_prefix + type + " --compile-script 0"
-            build_mode_args = "  -m "
-            if node_name == "android":
-                build_mode_args = " --ndk-mode "
-            build_mode_args += mode
+    if(branch == 'v3' or branch == 'v4-develop'):
+        slave_build_scripts = ""
+        if(node_name == 'android') or (node_name == 'android_bak'):
+            slave_build_scripts = jenkins_script_path + "android-build.sh " + language
+        elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
+            slave_build_scripts = jenkins_script_path + "win32-build.bat " + language
+        elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
+            slave_build_scripts = jenkins_script_path + "windows-universal.bat " + language
+        elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
+            slave_build_scripts = jenkins_script_path + "ios-build.sh " + language
+        elif(node_name == 'mac' or node_name == 'mac_bak'):
+            slave_build_scripts = jenkins_script_path + "mac-build.sh " + language
+        elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
+            slave_build_scripts = jenkins_script_path + "linux-build.sh " + language
+        elif(node_name == 'wp8'):
+            if(branch != 'v4'):
+                slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
 
-            if node_name == "windows-universal":
-                #run wp8.1 and windows 8.1
-                # lua & js don't have runtime template
-                if is_runtime:
-                    continue
-                wp_ret = os.system("cocos compile -p wp8_1 " + build_mode_args + " -s " + test_project_prefix + type + " --compile-script 0")
-                winrt_ret = os.system("cocos compile -p metro " + build_mode_args + " -s " + test_project_prefix + type + " --compile-script 0")
-                ret += wp_ret
-                ret += winrt_ret
-            else:
-                if node_name == "android":
-                    compile_project_commands += " --app-abi armeabi:armeabi-v7a:x86 "
-                if node_name == "linux" and is_runtime:
-                    continue
-                compile_ret = os.system(compile_project_commands + build_mode_args)
-                ret += compile_ret
+        ret = os.system(slave_build_scripts)
 
+    #get build result
+    print "build finished and return " + str(ret)
     return ret
 
 
 def main():
-    #start build jobs on each slave
-    default_build_type = default_templates_types
-    default_flag = False
-    if build_type == "runtime":
-        default_build_type = runtime_templates_types
-        default_flag = True
-    ret = build_templates(build_mode, default_build_type, default_flag)
+    if remote_build == 1:
+        #syntronize local git repository with remote and merge the PR
+        sync_remote_repo()
+        #copy check_current_3rd_libs
+        download_3rd_library()
+        #generate jsb and luabindings
+        gen_scripting_bindings()
 
-    print "build finished and return " + str(ret)
+    #start build jobs on each slave
+    ret = do_build_slaves()
 
     exit_code = 1
     if ret == 0:
         exit_code = 0
     else:
         exit_code = 1
+
+    #clean workspace, we don't won't clean the repository
+    if remote_build == 1:
+        os.system("cd " + workspace)
+        os.system("git reset --hard")
+        os.system("git clean -xdf -f")
+    else:
+        print "local build, no need to cleanup"
 
     return(exit_code)
 

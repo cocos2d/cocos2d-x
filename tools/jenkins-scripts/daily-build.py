@@ -102,16 +102,12 @@ def main():
         exit_code = 1
 
     # #clean workspace, we don't won't clean the repository
-    # if remote_build == 1:
-    #     os.system("cd " + workspace)
-    #     os.system("git reset --hard")
-    #     os.system("git clean -xdf -f")
-    # else:
-    #     print "local build, no need to cleanup"
-    #remove stats module
-    os.system("cd " + workspace)
-    os.system("rm tools/cocos2d-console/bin/cocos_stat.py")
-    os.system("rm tools/cocos2d-console/bin/cocos_stat.pyc")
+    if remote_build == 1:
+        os.system("cd " + workspace)
+        os.system("git reset --hard")
+        os.system("git clean -xdf -f")
+    else:
+        print "local build, no need to cleanup"
 
     return(exit_code)
 

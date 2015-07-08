@@ -19,6 +19,7 @@ UIHelper.cpp \
 UIListView.cpp \
 UIPageView.cpp \
 UIScrollView.cpp \
+UIScrollViewBar.cpp \
 UIButton.cpp \
 UIAbstractCheckButton.cpp \
 UICheckBox.cpp \

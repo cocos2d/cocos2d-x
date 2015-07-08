@@ -11149,6 +11149,16 @@ color4f
 },
 
 /**
+ * @method setLineWidth
+ * @param {int} arg0
+ */
+setLineWidth : function (
+int 
+)
+{
+},
+
+/**
  * @method onDrawGLPoint
  * @param {mat4_object} arg0
  * @param {unsigned int} arg1

@@ -122,6 +122,9 @@
     <ClCompile Include="..\UIScrollView.cpp">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\UIScrollViewBar.cpp">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\UIListView.cpp">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClCompile>
