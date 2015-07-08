@@ -56,8 +56,8 @@ NS_CC_BEGIN
 class CC_DLL GLViewImpl : public GLView
 {
 public:
-    static GLViewImpl* create(const std::string& viewName);
-    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
+    static GLViewImpl* create(const std::string& viewName, bool resizable = false);
+    static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f, bool resizable = false);
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
     static GLViewImpl* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -111,11 +111,15 @@ public:
     id getCocoaWindow() { return glfwGetCocoaWindow(_mainWindow); }
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
+    virtual void makeContextCurrent() override;
+
+    virtual bool isResizable() const { return _resizable; }
+
 protected:
     GLViewImpl();
     virtual ~GLViewImpl();
 
-    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
+    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor, bool resizable);
     bool initWithFullScreen(const std::string& viewName);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -150,6 +154,8 @@ protected:
     float _mouseY;
 
     friend class GLFWEventHandler;
+
+    bool _resizable;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
