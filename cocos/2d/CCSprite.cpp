@@ -223,7 +223,7 @@ bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
     bool res = false;
-    if(initWithTexture(texture));
+    if(initWithTexture(texture))
     {
         _polyInfo = info;
         setContentSize(_polyInfo.rect.size/Director::getInstance()->getContentScaleFactor());
@@ -449,7 +449,7 @@ void Sprite::debugDraw(bool on)
         auto last = _polyInfo.triangles.indexCount/3;
         auto _indices = _polyInfo.triangles.indices;
         auto _verts = _polyInfo.triangles.verts;
-        for(unsigned int i = 0; i < last; i++)
+        for(ssize_t i = 0; i < last; i++)
         {
             //draw 3 lines
             Vec3 from =_verts[_indices[i*3]].vertices;
