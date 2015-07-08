@@ -2122,6 +2122,7 @@ bool js_cocos2dx_DrawNode_drawLine(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawSolidCircle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_DrawNode_setLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_onDrawGLPoint(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawDot(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawCatmullRom(JSContext *cx, uint32_t argc, jsval *vp);
