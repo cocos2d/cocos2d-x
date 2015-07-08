@@ -551,12 +551,12 @@ void TextureCache::removeTextureForKey(const std::string &textureKeyName)
     }
 }
 
-Texture2D* TextureCache::getTextureForKey(const std::string &textureKeyName) const
+Texture2D* TextureCache::getTextureForKey(const std::string &textureKeyName, bool checkFullPath) const
 {
     std::string key = textureKeyName;
     auto it = _textures.find(key);
 
-    if( it == _textures.end() ) {
+    if (checkFullPath && it == _textures.end()) {
         key = FileUtils::getInstance()->fullPathForFilename(textureKeyName);
         it = _textures.find(key);
     }
