@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -103,22 +103,22 @@ public:
         /** Destructor of SIODelegate. */
         virtual ~SIODelegate() {}
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
          * 
          * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
          *
          * @param client the connected SIOClient object.
          */
-        virtual void onConnect(SIOClient* client) = 0;
+		virtual void onConnect(SIOClient* client) { CCLOG("SIODelegate onConnect fired"); };
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
          * This function would be called wwhen the related SIOClient object recevie message or json message.
          *
          * @param client the connected SIOClient object.
          * @param data the message,it could be json message
          */
-        virtual void onMessage(SIOClient* client, const std::string& data) = 0;
+		virtual void onMessage(SIOClient* client, const std::string& data) { CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
         /**
          * Pure virtual callback function, this function should be overrided by the subclass.
          *
@@ -207,7 +207,7 @@ private:
 
     void onOpen();
     void onConnect();
-    void receivedDisconnect();
+	void socketClosed();
 
     friend class SIOClientImpl;
 
