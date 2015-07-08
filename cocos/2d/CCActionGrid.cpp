@@ -133,7 +133,7 @@ Rect Grid3DAction::getGridRect() const
 
 GridBase* TiledGrid3DAction::getGrid(void)
 {
-    return TiledGrid3D::create(_gridSize);
+    return TiledGrid3D::create(_gridSize, _gridNodeTarget->getGridRect());
 }
 
 Quad3 TiledGrid3DAction::getTile(const Vec2& pos) const

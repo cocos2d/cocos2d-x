@@ -79,47 +79,9 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
     return pGridBase;
 }
 
-bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+bool GridBase::initWithSize(const Size& gridSize)
 {
-    bool ret = true;
-    
-    _active = false;
-    _reuseGrid = 0;
-    _gridSize = gridSize;
-    
-    _texture = texture;
-    CC_SAFE_RETAIN(_texture);
-    _isTextureFlipped = flipped;
-    
-    if (rect.equals(Rect::ZERO)) {
-        auto size = _texture->getContentSize();
-        _gridRect.setRect(0, 0, size.width, size.height);
-    }
-    else{
-        _gridRect = rect;
-    }
-    _step.x = _gridRect.size.width/_gridSize.width;
-    _step.y = _gridRect.size.height/_gridSize.height;
-    
-    _grabber = new (std::nothrow) Grabber();
-    if (_grabber)
-    {
-        _grabber->grab(_texture);
-    }
-    else
-    {
-        ret = false;
-    }
-    
-    _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
-    calculateVertexPoints();
-    
-    return ret;
-}
-
-bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped)
-{
-    return initWithSize(gridSize, texture, flipped, Rect::ZERO);
+    return initWithSize(gridSize, Rect::ZERO);
 }
 
 bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &rect)
@@ -160,9 +122,47 @@ bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &
     return true;
 }
 
-bool GridBase::initWithSize(const Size& gridSize)
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    return initWithSize(gridSize, Rect::ZERO);
+    return initWithSize(gridSize, texture, flipped, Rect::ZERO);
+}
+
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    bool ret = true;
+    
+    _active = false;
+    _reuseGrid = 0;
+    _gridSize = gridSize;
+    
+    _texture = texture;
+    CC_SAFE_RETAIN(_texture);
+    _isTextureFlipped = flipped;
+    
+    if (rect.equals(Rect::ZERO)) {
+        auto size = _texture->getContentSize();
+        _gridRect.setRect(0, 0, size.width, size.height);
+    }
+    else{
+        _gridRect = rect;
+    }
+    _step.x = _gridRect.size.width/_gridSize.width;
+    _step.y = _gridRect.size.height/_gridSize.height;
+    
+    _grabber = new (std::nothrow) Grabber();
+    if (_grabber)
+    {
+        _grabber->grab(_texture);
+    }
+    else
+    {
+        ret = false;
+    }
+    
+    _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+    calculateVertexPoints();
+    
+    return ret;
 }
 
 GridBase::~GridBase(void)
@@ -281,26 +281,6 @@ void GridBase::calculateVertexPoints(void)
 
 // implementation of Grid3D
 
-Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
-{
-    Grid3D *ret= new (std::nothrow) Grid3D();
-
-    if (ret)
-    {
-        if (ret->initWithSize(gridSize, texture, flipped))
-        {
-            ret->autorelease();
-        }
-        else
-        {
-            delete ret;
-            ret = nullptr;
-        }
-    }
-
-    return ret;
-}
-
 Grid3D* Grid3D::create(const Size& gridSize)
 {
     Grid3D *ret= new (std::nothrow) Grid3D();
@@ -321,13 +301,13 @@ Grid3D* Grid3D::create(const Size& gridSize)
     return ret;
 }
 
-Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+Grid3D* Grid3D::create(const Size& gridSize, const Rect& rect)
 {
     Grid3D *ret= new (std::nothrow) Grid3D();
     
     if (ret)
     {
-        if (ret->initWithSize(gridSize, texture, flipped, rect))
+        if (ret->initWithSize(gridSize, rect))
         {
             ret->autorelease();
         }
@@ -341,13 +321,33 @@ Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, c
     return ret;
 }
 
-Grid3D* Grid3D::create(const Size& gridSize, const Rect& rect)
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
 {
     Grid3D *ret= new (std::nothrow) Grid3D();
     
     if (ret)
     {
-        if (ret->initWithSize(gridSize, rect))
+        if (ret->initWithSize(gridSize, texture, flipped))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    Grid3D *ret= new (std::nothrow) Grid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped, rect))
         {
             ret->autorelease();
         }
@@ -572,26 +572,6 @@ TiledGrid3D::~TiledGrid3D(void)
     CC_SAFE_FREE(_indices);
 }
 
-TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
-{
-    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
-
-    if (ret)
-    {
-        if (ret->initWithSize(gridSize, texture, flipped))
-        {
-            ret->autorelease();
-        }
-        else
-        {
-            delete ret;
-            ret = nullptr;
-        }
-    }
-
-    return ret;
-}
-
 TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
 {
     TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
@@ -609,6 +589,66 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
         }
     }
 
+    return ret;
+}
+
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, const Rect& rect)
+{
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
+{
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
     return ret;
 }
 
@@ -663,9 +703,9 @@ void TiledGrid3D::calculateVertexPoints(void)
     {
         for( y = 0; y < _gridSize.height; y++ )
         {
-            float x1 = x * _step.x;
+            float x1 = x * _step.x + _gridRect.origin.x;
             float x2 = x1 + _step.x;
-            float y1 = y * _step.y;
+            float y1 = y * _step.y + _gridRect.origin.y;
             float y2 = y1 + _step.y;
             
             *vertArray++ = x1;
