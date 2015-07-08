@@ -87,7 +87,7 @@ class Sprite;
 class SpriteBatchNode;
 
 /**
- * @brief Label is a subclass of SpriteBatchNode that knows how to render text labels.
+ * @brief Label is a subclass of Node that knows how to render text labels.
  *
  * Label can be created with:
  * - A true type font file.
@@ -102,7 +102,7 @@ class SpriteBatchNode;
  * - http://www.angelcode.com/products/bmfont/ (Free, Windows only)
  * @js NA
  */
-class CC_DLL Label : public Node, public LabelProtocol
+class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
     static const int DistanceFieldFontSize;
@@ -438,8 +438,8 @@ public:
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 
-    virtual const BlendFunc& getBlendFunc() const { return _blendFunc; }
-    virtual void setBlendFunc(const BlendFunc &blendFunc);
+    virtual const BlendFunc& getBlendFunc() const override { return _blendFunc; }
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
 
     virtual bool isOpacityModifyRGB() const override;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
