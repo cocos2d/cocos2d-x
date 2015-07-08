@@ -35,6 +35,8 @@
 #include <map>
 #include <fstream>
 #include <sstream>
+#include "platform/CCFileUtils.h"
+#include "base/ccUtils.h"
 
 #include "CCObjLoader.h"
 
@@ -242,7 +244,7 @@ namespace tinyobj {
     static inline float parseFloat(const char *&token) {
         token += strspn(token, " \t");
 #ifdef TINY_OBJ_LOADER_OLD_FLOAT_PARSER
-        float f = (float)atof(token);
+        float f = (float)utils::atof(token);
         token += strcspn(token, " \t\r");
 #else
         const char *end = token + strcspn(token, " \t\r");
@@ -410,6 +412,15 @@ namespace tinyobj {
         return true;
     }
     
+    static std::string& replacePathSeperator(std::string& path)
+    {
+        for (int i = 0; i < path.size(); i++) {
+            if (path[i] == '\\')
+                path[i] = '/';
+        }
+        return path;
+    }
+    
     std::string LoadMtl(std::map<std::string, int> &material_map,
                         std::vector<material_t> &materials,
                         std::istream &inStream) {
@@ -569,6 +580,7 @@ namespace tinyobj {
             if ((0 == strncmp(token, "map_Ka", 6)) && isSpace(token[6])) {
                 token += 7;
                 material.ambient_texname = token;
+                replacePathSeperator(material.ambient_texname);
                 continue;
             }
             
@@ -576,6 +588,7 @@ namespace tinyobj {
             if ((0 == strncmp(token, "map_Kd", 6)) && isSpace(token[6])) {
                 token += 7;
                 material.diffuse_texname = token;
+                replacePathSeperator(material.diffuse_texname);
                 continue;
             }
             
@@ -583,6 +596,7 @@ namespace tinyobj {
             if ((0 == strncmp(token, "map_Ks", 6)) && isSpace(token[6])) {
                 token += 7;
                 material.specular_texname = token;
+                replacePathSeperator(material.specular_texname);
                 continue;
             }
             
@@ -590,6 +604,7 @@ namespace tinyobj {
             if ((0 == strncmp(token, "map_Ns", 6)) && isSpace(token[6])) {
                 token += 7;
                 material.normal_texname = token;
+                replacePathSeperator(material.normal_texname);
                 continue;
             }
             
@@ -625,7 +640,7 @@ namespace tinyobj {
             filepath = matId;
         }
         
-        std::ifstream matIStream(filepath.c_str());
+        std::istringstream matIStream(cocos2d::FileUtils::getInstance()->getStringFromFile(filepath));
         std::string err = LoadMtl(matMap, materials, matIStream);
         if (!matIStream) {
             std::stringstream ss;
@@ -643,7 +658,7 @@ namespace tinyobj {
         
         std::stringstream err;
         
-        std::ifstream ifs(filename);
+        std::istringstream ifs(cocos2d::FileUtils::getInstance()->getStringFromFile(filename));
         if (!ifs) {
             err << "Cannot open file [" << filename << "]" << std::endl;
             return err.str();
