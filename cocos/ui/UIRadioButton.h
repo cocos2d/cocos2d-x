@@ -258,6 +258,7 @@ protected:
     
     void onChangedRadioButtonSelect(RadioButton* radioButton);
     void deselect();
+    void setSelectedButtonWithoutEventCallback(RadioButton* radioButton);
     
     Vector<RadioButton*> _radioButtons;
     ccRadioButtonGroupCallback _radioButtonGroupEventCallback;

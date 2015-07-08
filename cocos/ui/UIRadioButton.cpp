@@ -194,7 +194,7 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr)
         {
-            setSelectedButton(radioButton);
+            setSelectedButtonWithoutEventCallback(radioButton);
         }
     }
 }
@@ -219,7 +219,7 @@ void RadioButtonGroup::removeRadioButton(RadioButton* radioButton)
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr && !_radioButtons.empty())
         {
-            setSelectedButton(0);
+            setSelectedButtonWithoutEventCallback(0);
         }
     }
 }
@@ -262,6 +262,12 @@ void RadioButtonGroup::setSelectedButton(int index)
 
 void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
 {
+    setSelectedButtonWithoutEventCallback(radioButton);
+    onChangedRadioButtonSelect(_selectedRadioButton);
+}
+
+void RadioButtonGroup::setSelectedButtonWithoutEventCallback(RadioButton* radioButton)
+{
     if(!_allowedNoSelection && radioButton == nullptr)
     {
         return;
@@ -282,7 +288,6 @@ void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
     {
         _selectedRadioButton->setSelected(true);
     }
-    onChangedRadioButtonSelect(_selectedRadioButton);
 }
 
 std::string RadioButtonGroup::getDescription() const
