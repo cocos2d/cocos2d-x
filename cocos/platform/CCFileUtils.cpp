@@ -375,7 +375,6 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
 
 bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
 {
-    //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
     tinyxml2::XMLDocument *doc = new tinyxml2::XMLDocument();
     if (nullptr == doc)
         return false;
@@ -416,7 +415,6 @@ bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
 
 bool FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& fullPath)
 {
-    //CCLOG("tinyxml2 Dictionary %d writeToFile %s", dict->_ID, fullPath.c_str());
     tinyxml2::XMLDocument *doc = new tinyxml2::XMLDocument();
     if (nullptr == doc)
         return false;
