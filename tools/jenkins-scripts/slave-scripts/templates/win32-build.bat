@@ -11,4 +11,4 @@ if "%language%"=="js" set projectname=MyJSGame/frameworks/runtime-src/proj.win32
 
 echo %projectname%
 call "%VS120COMNTOOLS%vsvars32.bat"
-msbuild %projectname% /t:Build
+msbuild %projectname% /t:Build /m
