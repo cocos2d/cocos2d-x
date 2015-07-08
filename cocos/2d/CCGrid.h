@@ -63,6 +63,7 @@ public:
      @param gridSize the size of the grid.
      @param texture The texture used for grab.
      @param flipped whether or not the grab texture should be flip by Y or not.
+     @param rect The effct grid rect.
     */
     bool initWithSize(const Size& gridSize);
     bool initWithSize(const Size& gridSize, const Rect& rect);
@@ -122,7 +123,15 @@ public:
     /**Change projection to 2D for grabbing.*/
     void set2DProjection(void);
     
+    /**
+     * @brief Set the effect grid rect.
+     * @param rect The effect grid rect.
+     */
     void setGridRect(const Rect& rect);
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
     inline const Rect& getGridRect() const {return _gridRect;}
 
 protected:

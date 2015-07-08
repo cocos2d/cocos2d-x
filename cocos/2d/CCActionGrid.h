@@ -141,6 +141,10 @@ public:
         return nullptr;
     }
     
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
     Rect getGridRect() const;
 };
 

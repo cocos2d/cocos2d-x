@@ -27,13 +27,13 @@ EffectTests::EffectTests()
     ADD_TEST_CASE(SplitRowsDemo);
     ADD_TEST_CASE(SplitColsDemo);
     ADD_TEST_CASE(PageTurn3DDemo);
+    ADD_TEST_CASE(PageTurn3DRectDemo);
 }
 
 Shaky3DDemo::Shaky3DDemo()
 {
     _title = "Shaky3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* Shaky3DDemo::createEffect(float t)
@@ -45,7 +45,6 @@ Waves3DDemo::Waves3DDemo()
 {
     _title = "Waves3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* Waves3DDemo::createEffect(float t)
@@ -65,7 +64,6 @@ FlipX3DDemo::FlipX3DDemo()
 {
     _title = "FlipX3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* FlipY3DDemo::createEffect(float t)
@@ -81,7 +79,6 @@ FlipY3DDemo::FlipY3DDemo()
 {
     _title = "FlipY3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* Lens3DDemo::createEffect(float t)
@@ -94,7 +91,6 @@ Lens3DDemo::Lens3DDemo()
 {
     _title = "Lens3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* Ripple3DDemo::createEffect(float t)
@@ -107,7 +103,6 @@ Ripple3DDemo::Ripple3DDemo()
 {
     _title = "Ripple3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* LiquidDemo::createEffect(float t)
@@ -119,7 +114,6 @@ LiquidDemo::LiquidDemo()
 {
     _title = "Liquid";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* WavesDemo::createEffect(float t)
@@ -131,7 +125,6 @@ WavesDemo::WavesDemo()
 {
     _title = "Waves";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* TwirlDemo::createEffect(float t)
@@ -144,7 +137,6 @@ TwirlDemo::TwirlDemo()
 {
     _title = "Twirl";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* ShakyTiles3DDemo::createEffect(float t)
@@ -156,7 +148,6 @@ ShakyTiles3DDemo::ShakyTiles3DDemo()
 {
     _title = "ShakyTiles3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* ShatteredTiles3DDemo::createEffect(float t)
@@ -168,7 +159,6 @@ ShatteredTiles3DDemo::ShatteredTiles3DDemo()
 {
     _title = "ShatteredTiles3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* ShuffleTilesDemo::createEffect(float t)
@@ -184,7 +174,6 @@ ShuffleTilesDemo::ShuffleTilesDemo()
 {
     _title = "ShuffleTiles";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* FadeOutTRTilesDemo::createEffect(float t)
@@ -200,7 +189,6 @@ FadeOutTRTilesDemo::FadeOutTRTilesDemo()
 {
     _title = "FadeOutTRTiles";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* FadeOutBLTilesDemo::createEffect(float t)
@@ -216,7 +204,6 @@ FadeOutBLTilesDemo::FadeOutBLTilesDemo()
 {
     _title = "FadeOutBLTiles";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* FadeOutUpTilesDemo::createEffect(float t)
@@ -232,7 +219,6 @@ FadeOutUpTilesDemo::FadeOutUpTilesDemo()
 {
     _title = "FadeOutUpTiles";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* FadeOutDownTilesDemo::createEffect(float t)
@@ -248,7 +234,6 @@ FadeOutDownTilesDemo::FadeOutDownTilesDemo()
 {
     _title = "Waves3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* TurnOffTilesDemo::createEffect(float t)
@@ -264,7 +249,6 @@ TurnOffTilesDemo::TurnOffTilesDemo()
 {
     _title = "TurnOffTiles";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* WavesTiles3DDemo::createEffect(float t)
@@ -276,7 +260,6 @@ WavesTiles3DDemo::WavesTiles3DDemo()
 {
     _title = "WavesTiles3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* JumpTiles3DDemo::createEffect(float t)
@@ -288,7 +271,6 @@ JumpTiles3DDemo::JumpTiles3DDemo()
 {
     _title = "JumpTiles3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* SplitRowsDemo::createEffect(float t)
@@ -300,7 +282,6 @@ SplitRowsDemo::SplitRowsDemo()
 {
     _title = "SplitRows";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* SplitColsDemo::createEffect(float t)
@@ -312,7 +293,6 @@ SplitColsDemo::SplitColsDemo()
 {
     _title = "SplitCols";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
 }
 
 cocos2d::ActionInterval* PageTurn3DDemo::createEffect(float t)
@@ -324,48 +304,72 @@ PageTurn3DDemo::PageTurn3DDemo()
 {
     _title = "PageTurn3D";
     _subtitle = "";
-    _gridNodeTarget->runAction(createEffect(3));
+}
+
+cocos2d::ActionInterval* PageTurn3DRectDemo::createEffect(float t)
+{
+    return PageTurn3D::create(t, Size(15,10));
+}
+
+PageTurn3DRectDemo::PageTurn3DRectDemo()
+{
+    _title = "PageTurn3D-Rect";
+    _subtitle = "";
 }
 
 #define SID_RESTART        1
 
 EffectBaseTest::EffectBaseTest()
+: _gridNodeTarget(nullptr)
 {
-	LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
-	this->addChild(background,-20);
     
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Rect gridRect = Rect(visibleSize.width * 0.2,
-                         visibleSize.height * 0.2,
-                         visibleSize.width * 0.6,
-                         visibleSize.height * 0.6);
-    _gridNodeTarget = NodeGrid::create(gridRect);
-    addChild(_gridNodeTarget, 0);
-    
-    auto bg = Sprite::create(s_back3);
-    _gridNodeTarget->addChild(bg, 0);
-    bg->setPosition(VisibleRect::center());
+}
 
-    auto grossini = Sprite::create(s_pathSister2);
-    _gridNodeTarget->addChild(grossini, 1);
-    grossini->setPosition(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
-    auto sc = ScaleBy::create(2, 5);
-    auto sc_back = sc->reverse();
-    grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
-
-    auto tamara = Sprite::create(s_pathSister1);
-    _gridNodeTarget->addChild(tamara, 1);
-    tamara->setPosition(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
-    auto sc2 = ScaleBy::create(2, 5);
-    auto sc2_back = sc2->reverse();
-    tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr)) );
-    
-    auto label = Label::createWithTTF(title(), "fonts/Marker Felt.ttf", 32);
-    
-    label->setPosition(VisibleRect::center().x,VisibleRect::top().y-80);
-    addChild(label);
-    
-    schedule( CC_SCHEDULE_SELECTOR(EffectBaseTest::checkAnim) );
+bool EffectBaseTest::init()
+{
+    if(TestCase::init())
+    {
+        LayerColor *background = LayerColor::create( Color4B(32,128,32,255) );
+        this->addChild(background,-20);
+        if(isRectEffect())
+        {
+            Size visibleSize = Director::getInstance()->getVisibleSize();
+            Rect gridRect = Rect(visibleSize.width * 0.2,
+                                 visibleSize.height * 0.2,
+                                 visibleSize.width * 0.6,
+                                 visibleSize.height * 0.6);
+            _gridNodeTarget = NodeGrid::create(gridRect);
+        }
+        else
+        {
+            _gridNodeTarget = NodeGrid::create();
+        }
+        addChild(_gridNodeTarget, 0);
+        _gridNodeTarget->runAction(createEffect(3));
+        
+        auto bg = Sprite::create(s_back3);
+        _gridNodeTarget->addChild(bg, 0);
+        bg->setPosition(VisibleRect::center());
+        
+        auto grossini = Sprite::create(s_pathSister2);
+        _gridNodeTarget->addChild(grossini, 1);
+        grossini->setPosition(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
+        auto sc = ScaleBy::create(2, 5);
+        auto sc_back = sc->reverse();
+        grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
+        
+        auto tamara = Sprite::create(s_pathSister1);
+        _gridNodeTarget->addChild(tamara, 1);
+        tamara->setPosition(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
+        auto sc2 = ScaleBy::create(2, 5);
+        auto sc2_back = sc2->reverse();
+        tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr)) );
+        
+        schedule( CC_SCHEDULE_SELECTOR(EffectBaseTest::checkAnim) );
+        
+        return true;
+    }
+    return false;
 }
 
 void EffectBaseTest::checkAnim(float dt)

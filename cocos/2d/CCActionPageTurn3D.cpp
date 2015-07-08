@@ -78,7 +78,6 @@ void PageTurn3D::update(float time)
     float theta = deltaTheta>0.5?(float)M_PI_2*deltaTheta:(float)M_PI_2*(1-deltaTheta);
     
     float rotateByYAxis = (2-time)* M_PI;
-    log("%f",rotateByYAxis);
     
     float sinTheta = sinf(theta);
     float cosTheta = cosf(theta);

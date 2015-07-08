@@ -75,7 +75,15 @@ public:
      */
     void setTarget(Node *target);
     
+    /**
+     * @brief Set the effect grid rect.
+     * @param gridRect The effect grid rect.
+     */
     inline void setGridRect(const Rect& gridRect){_gridRect = gridRect;}
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
     inline const Rect& getGridRect() const { return _gridRect;}
 
     // overrides

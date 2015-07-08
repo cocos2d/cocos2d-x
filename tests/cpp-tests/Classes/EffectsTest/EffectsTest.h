@@ -11,13 +11,15 @@ public:
     EffectBaseTest();
     virtual ~EffectBaseTest();
 protected:
+    virtual bool init() override;
     virtual cocos2d::ActionInterval* createEffect(float t) {return nullptr;}
-    cocos2d::NodeGrid* _gridNodeTarget;
     void checkAnim(float dt);
+    virtual bool isRectEffect(){return false;}
     virtual std::string title() const override {return _title;};
     virtual std::string subtitle() const override {return _subtitle;};
     std::string _title;
     std::string _subtitle;
+    cocos2d::NodeGrid* _gridNodeTarget;
 };
 
 class Shaky3DDemo : public EffectBaseTest
@@ -217,4 +219,15 @@ public:
 protected:
     virtual cocos2d::ActionInterval* createEffect(float t) override;
 };
+
+class PageTurn3DRectDemo : public EffectBaseTest
+{
+public:
+    CREATE_FUNC(PageTurn3DRectDemo);
+    PageTurn3DRectDemo();
+protected:
+    virtual bool isRectEffect() override {return true;}
+    virtual cocos2d::ActionInterval* createEffect(float t) override;
+};
+
 #endif
