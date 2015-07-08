@@ -2,6 +2,7 @@
 
 set mycocos=tools/cocos2d-console/bin/cocos.bat
 set language=%1
+
 call %mycocos% new -l %language%
 
 set projectname=
@@ -11,4 +12,4 @@ if "%language%"=="js" set projectname=MyJSGame/frameworks/runtime-src/proj.win8.
 
 echo %projectname%
 call "%VS120COMNTOOLS%vsvars32.bat"
-msbuild %projectname% /t:Build
+msbuild %projectname% /t:Build /m
