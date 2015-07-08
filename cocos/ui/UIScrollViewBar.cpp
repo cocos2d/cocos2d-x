@@ -103,16 +103,16 @@ bool ScrollViewBar::init()
     
     _upperHalfCircle = createSpriteFromBase64(HALF_CIRCLE_IMAGE);
     _upperHalfCircle->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
-    addChild(_upperHalfCircle);
+    addProtectedChild(_upperHalfCircle);
     
     _lowerHalfCircle = Sprite::createWithTexture(_upperHalfCircle->getTexture(), _upperHalfCircle->getTextureRect(), _upperHalfCircle->isTextureRectRotated());
     _lowerHalfCircle->setScaleY(-1);
     _lowerHalfCircle->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
-    addChild(_lowerHalfCircle);
+    addProtectedChild(_lowerHalfCircle);
     
     _body = createSpriteFromBase64(BODY_IMAGE_1_PIXEL_HEIGHT);
     _body->setAnchorPoint(Vec2::ANCHOR_MIDDLE_BOTTOM);
-    addChild(_body);
+    addProtectedChild(_body);
     
     setColor(DEFAULT_COLOR);
     
