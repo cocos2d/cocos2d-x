@@ -25,10 +25,12 @@ bool BugDrawNodeLayer::init()
 
         auto drawNode = DrawNode::create();
         drawNode->drawLine(Vec2(0, 0), Vec2(size.width, size.height), Color4F(1, 0, 0, 0.5f));
+        Vec2 point = Vec2(size.width / 2, size.height / 2);
+        drawNode->drawPoint(point, 8, Color4F(1, 0, 0, 0.5f));
         addChild(drawNode);
 
         auto label = Label::create();
-        label->setString(std::string("If you see a red line, the bug is fixed!"));
+        label->setString(std::string("If you see a red line with a block at center, the bug is fixed!"));
         label->setPosition(size.width / 2, size.height / 4);
         label->setTextColor(Color4B::ORANGE);
         addChild(label);
