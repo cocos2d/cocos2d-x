@@ -1,8 +1,18 @@
+cc.FileUtils:getInstance():addSearchPath("src")
+require "cocos.init"
+require "gameoverscene"
+
 local scene = {
     -- add a new enemy every second
     durationOfAddEnemy = 1.0,
     -- how long past after last time of adding a new enemy
     totalDt = 0,
+    numEnemyDestroyed = 0,
+    enemies = {},
+
+    onEnter = function(self)
+        ccexp.AudioEngine:play2d("res/background.mp3", true)
+    end,
 
     update = function(self, dt)
         self.totalDt = self.totalDt + dt
@@ -18,7 +28,21 @@ local scene = {
         local enemyLuaComponent = cc.ComponentLua:create("src/enemy.lua")
         enemy:addComponent(enemyLuaComponent)
         owner:addChild(enemy)
+        table.insert(self.enemies, enemy)
     end,
+
+    looseGame = function(node)
+        local scene = GameOverScene.create("You Lose :[")
+        cc.Director:getInstance():replaceScene(scene)
+    end,
+
+    inscreaseCount = function(self)
+        self.numEnemyDestroyed = self.numEnemyDestroyed + 1
+        if self.numEnemyDestroyed >=5 then
+            local scene = GameOverScene.create("You Win!")
+            cc.Director:getInstance():replaceScene(scene)
+        end
+    end
 }
 
 return scene

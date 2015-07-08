@@ -37,6 +37,11 @@ public:
     
     ~ComponentLua();
     
+    /**
+     * This function is used to be invoked from lua side to get the corresponding script object of this component.
+     */
+    void getScriptObject() const;
+    
     virtual void update(float dt) override;
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -49,7 +54,7 @@ private:
     bool getLuaFunction(const std::string& functionName);
     void removeLuaTable();
     
-    static void classInit();
+    static void initClass();
     
 private:
     // lua script file path
