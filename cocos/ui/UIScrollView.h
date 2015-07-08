@@ -450,6 +450,20 @@ public:
     const Color3B& getScrollBarColor() const;
     
     /**
+     * @brief Set the scroll bar's opacity
+     *
+     * @param the scroll bar's opacity
+     */
+    void setScrollBarOpacity(GLubyte opacity);
+    
+    /**
+     * @brief Get the scroll bar's opacity
+     *
+     * @return the scroll bar's opacity
+     */
+    GLubyte getScrollBarOpacity() const;
+    
+    /**
      * @brief Set scroll bar auto hide state
      *
      * @param scroll bar auto hide state

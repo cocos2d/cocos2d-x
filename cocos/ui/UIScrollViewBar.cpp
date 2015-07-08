@@ -31,8 +31,8 @@ NS_CC_BEGIN
 
 namespace ui {
     
-static const char* HALF_CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAIVBMVEX///////////////////////////////////////////9/gMdvAAAAC3RSTlMAAgMLLFBTYWNkZuZhN4QAAAAvSURBVAjXRchBDgAgCAPBIi0q/3+wxBiZU7cAjJpTNBSPvMLrf7tqgPkR6hB2xzpFkgIfM9q/8QAAAABJRU5ErkJggg==";
-static const char* BODY_IMAGE_1_PIXEL_HEIGHT = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEX///+nxBvIAAAAAXRSTlNm5DccCwAAAApJREFUeAFjQAYAAA0AAWHNnKQAAAAASUVORK5CYII=";
+static const char* HALF_CIRCLE_IMAGE = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAMAAADAMI+zAAAAJ1BMVEX///////////////////////////////////////////////////9Ruv0SAAAADHRSTlMABgcbbW7Hz9Dz+PmlcJP5AAAAMElEQVR4AUXHwQ2AQAhFwYcLH1H6r1djzDK3ASxUpTBeK/uTCyz7dx54b44m4p5cD1MwAooEJyk3AAAAAElFTkSuQmCC";
+static const char* BODY_IMAGE_1_PIXEL_HEIGHT = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAABCAMAAADdNb8LAAAAA1BMVEX///+nxBvIAAAACklEQVR4AWNABgAADQABYc2cpAAAAABJRU5ErkJggg==";
 
 static const Color3B DEFAULT_COLOR(52, 65, 87);
 static const float DEFAULT_MARGIN = 20;
@@ -65,6 +65,7 @@ _direction(direction),
 _upperHalfCircle(nullptr),
 _lowerHalfCircle(nullptr),
 _body(nullptr),
+_opacity(100),
 _marginFromBoundary(DEFAULT_MARGIN),
 _marginForLength(DEFAULT_MARGIN),
 _touching(false),
@@ -123,7 +124,7 @@ bool ScrollViewBar::init()
     
     if(_autoHideEnabled)
     {
-        setOpacity(0);
+        ProtectedNode::setOpacity(0);
     }
     return true;
 }
@@ -165,7 +166,7 @@ void ScrollViewBar::setWidth(float width)
 void ScrollViewBar::setAutoHideEnabled(bool autoHideEnabled)
 {
     _autoHideEnabled = autoHideEnabled;
-    setOpacity(255);
+    ProtectedNode::setOpacity(_opacity);
 }
 
 float ScrollViewBar::getWidth() const
@@ -202,7 +203,7 @@ void ScrollViewBar::update(float deltaTime)
     if(_autoHideRemainingTime <= _autoHideTime)
     {
         _autoHideRemainingTime = MAX(0, _autoHideRemainingTime);
-        this->setOpacity(255 * (_autoHideRemainingTime / _autoHideTime));
+        ProtectedNode::setOpacity(_opacity * (_autoHideRemainingTime / _autoHideTime));
     }
 }
 
@@ -236,7 +237,7 @@ void ScrollViewBar::onScrolled(const Vec2& outOfBoundary)
     if(_autoHideEnabled)
     {
         _autoHideRemainingTime = _autoHideTime;
-        setOpacity(255);
+        ProtectedNode::setOpacity(_opacity);
     }
     
     Layout* innerContainer = _parent->getInnerContainer();
