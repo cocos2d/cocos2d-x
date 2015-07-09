@@ -80,6 +80,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue11699Test);
     ADD_TEST_CASE(LabelIssue12259Test);
     ADD_TEST_CASE(LabelIssue12409Test);
+    ADD_TEST_CASE(LabelAddChildTest);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -2010,4 +2011,27 @@ std::string LabelIssue12409Test::title() const
 std::string LabelIssue12409Test::subtitle() const
 {
     return "Testing auto-wrapping without space.";
+}
+
+LabelAddChildTest::LabelAddChildTest()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Label with child node:", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    auto jump = JumpBy::create(1.0f, Vec2::ZERO, 60, 1);
+    auto jump_4ever = RepeatForever::create(jump);
+    label->runAction(jump_4ever);
+
+    auto spite = Sprite::create("Images/SpookyPeas.png");
+    spite->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    spite->setPosition(label->getContentSize().width, label->getContentSize().height/2);
+    label->addChild(spite);
+}
+
+std::string LabelAddChildTest::title() const
+{
+    return "Label support add child nodes";
 }
