@@ -107,7 +107,7 @@ int Application::run()
     return EXIT_SUCCESS;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     //TODO do something else
     _animationInterval = interval*1000.0f;

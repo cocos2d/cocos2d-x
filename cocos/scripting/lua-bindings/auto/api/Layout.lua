@@ -323,6 +323,16 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Override function. Set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true. <br>
+-- param mask Mask being set<br>
+-- param applyChildren If true call this function recursively from this node to its children.
+-- @function [parent=#Layout] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Layout#Layout self (return value: ccui.Layout)
+        
+--------------------------------
 -- Default constructor<br>
 -- js ctor<br>
 -- lua new

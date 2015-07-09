@@ -2972,7 +2972,7 @@ scene
 
 /**
  * @method getAnimationInterval
- * @return {double}
+ * @return {float}
  */
 getAnimationInterval : function (
 )
@@ -3022,10 +3022,10 @@ scene
 
 /**
  * @method setAnimationInterval
- * @param {double} arg0
+ * @param {float} arg0
  */
 setAnimationInterval : function (
-double 
+float 
 )
 {
 },
@@ -11144,6 +11144,16 @@ int,
 float,
 float,
 color4f 
+)
+{
+},
+
+/**
+ * @method setLineWidth
+ * @param {int} arg0
+ */
+setLineWidth : function (
+int 
 )
 {
 },
@@ -20494,6 +20504,16 @@ bool
 },
 
 /**
+ * @method setAccelerometerInterval
+ * @param {float} arg0
+ */
+setAccelerometerInterval : function (
+float 
+)
+{
+},
+
+/**
  * @method setKeepScreenOn
  * @param {bool} arg0
  */
@@ -20503,21 +20523,11 @@ bool
 {
 },
 
- /**
+/**
  * @method vibrate
  * @param {float} arg0
  */
 vibrate : function (
-float
-)
-{
-},
-
-/**
- * @method setAccelerometerInterval
- * @param {float} arg0
- */
-setAccelerometerInterval : function (
 float 
 )
 {
