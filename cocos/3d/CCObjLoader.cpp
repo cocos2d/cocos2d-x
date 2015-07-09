@@ -275,7 +275,7 @@ void InitMaterial(ObjLoader::material_t& material)
 
 static std::string& replacePathSeperator(std::string& path)
 {
-    for (int i = 0; i < path.size(); i++) {
+    for (size_t i = 0; i < path.size(); i++) {
         if (path[i] == '\\')
             path[i] = '/';
     }

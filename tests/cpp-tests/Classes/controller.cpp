@@ -94,6 +94,7 @@ public:
         addTest("Unit Test", []() { return new UnitTests(); });
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
+        addTest("Vibrate", []() { return new VibrateTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
     }
 };

@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "../BaseTest.h"
+#include "2d/CCLabel.h"
 
 DEFINE_TEST_SUITE(UserDefaultTests);
 
@@ -15,6 +16,8 @@ public:
 
 private:
     void doTest();
+    void printValue();
+    cocos2d::Label* _label;
 };
 
 #endif // _USERDEFAULT_TEST_H_

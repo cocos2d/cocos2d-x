@@ -122,6 +122,9 @@
     <ClCompile Include="..\UIScrollView.cpp">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\UIScrollViewBar.cpp">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\UIListView.cpp">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClCompile>
@@ -131,7 +134,13 @@
     <ClCompile Include="..\UIButton.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\UIAbstractCheckButton.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="..\UICheckBox.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UIRadioButton.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UIImageView.cpp">

@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module Label
--- @extend SpriteBatchNode,LabelProtocol
+-- @extend Node,LabelProtocol,BlendProtocol
 -- @parent_module cc
 
 --------------------------------
@@ -58,6 +58,12 @@
 -- @function [parent=#Label] getTextColor 
 -- @param self
 -- @return color4b_table#color4b_table ret (return value: color4b_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Label] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- Makes the Label exactly this untransformed width.<br>
@@ -176,6 +182,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#Label] removeAllChildrenWithCleanup 
+-- @param self
+-- @param #bool cleanup
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
 -- @overload self, cc.Texture2D, int, int, int         
 -- @overload self, string, int, int, int         
 -- @overload self, string         
@@ -291,6 +304,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#Label] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
 --  Returns the Label's text horizontal alignment.
 -- @function [parent=#Label] getTextAlignment 
 -- @param self
@@ -392,15 +412,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] addChild 
--- @param self
--- @param #cc.Node child
--- @param #int zOrder
--- @param #int tag
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
 -- @function [parent=#Label] setScaleY 
 -- @param self
 -- @param #float scaleY
@@ -427,10 +438,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] setBlendFunc 
+-- @function [parent=#Label] getScaleX 
 -- @param self
--- @param #cc.BlendFunc blendFunc
--- @return Label#Label self (return value: cc.Label)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
@@ -440,12 +450,6 @@
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
 -- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] getScaleX 
--- @param self
--- @return float#float ret (return value: float)
         
 --------------------------------
 -- 
@@ -469,15 +473,17 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] sortAllChildren 
+-- @function [parent=#Label] updateDisplayedOpacity 
 -- @param self
+-- @param #unsigned char parentOpacity
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- 
--- @function [parent=#Label] updateDisplayedOpacity 
+-- @function [parent=#Label] removeChild 
 -- @param self
--- @param #unsigned char parentOpacity
+-- @param #cc.Node child
+-- @param #bool cleanup
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------

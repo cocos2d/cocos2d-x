@@ -26,6 +26,7 @@
 #include "2d/CCLabel.h"
 #include "2d/CCFontAtlasCache.h"
 #include "2d/CCSprite.h"
+#include "2d/CCSpriteBatchNode.h"
 #include "2d/CCLabelTextFormatter.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
@@ -41,6 +42,99 @@
 NS_CC_BEGIN
 
 const int Label::DistanceFieldFontSize = 50;
+
+/**
+ * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
+ */
+class LabelLetter : public Sprite
+{
+public:
+    LabelLetter()
+    {
+        _textureAtlas = nullptr;
+    }
+
+    static LabelLetter* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated = false)
+    {
+        auto letter = new (std::nothrow) LabelLetter();
+        if (letter && letter->initWithTexture(texture, rect, rotated))
+        {
+            letter->setVisible(false);
+            letter->autorelease();
+            return letter;
+        }
+        CC_SAFE_DELETE(letter);
+        return nullptr;
+    }
+
+    virtual void updateTransform() override
+    {
+        if (isDirty())
+        {
+            _transformToBatch = getNodeToParentTransform();
+            Size &size = _rect.size;
+
+            float x1 = _offsetPosition.x;
+            float y1 = _offsetPosition.y;
+            float x2 = x1 + size.width;
+            float y2 = y1 + size.height;
+            float x = _transformToBatch.m[12];
+            float y = _transformToBatch.m[13];
+
+            float cr = _transformToBatch.m[0];
+            float sr = _transformToBatch.m[1];
+            float cr2 = _transformToBatch.m[5];
+            float sr2 = -_transformToBatch.m[4];
+            float ax = x1 * cr - y1 * sr2 + x;
+            float ay = x1 * sr + y1 * cr2 + y;
+
+            float bx = x2 * cr - y1 * sr2 + x;
+            float by = x2 * sr + y1 * cr2 + y;
+            float cx = x2 * cr - y2 * sr2 + x;
+            float cy = x2 * sr + y2 * cr2 + y;
+            float dx = x1 * cr - y2 * sr2 + x;
+            float dy = x1 * sr + y2 * cr2 + y;
+
+            _quad.bl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(ax), SPRITE_RENDER_IN_SUBPIXEL(ay), _positionZ);
+            _quad.br.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(bx), SPRITE_RENDER_IN_SUBPIXEL(by), _positionZ);
+            _quad.tl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(dx), SPRITE_RENDER_IN_SUBPIXEL(dy), _positionZ);
+            _quad.tr.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(cx), SPRITE_RENDER_IN_SUBPIXEL(cy), _positionZ);
+
+            if (_textureAtlas)
+            {
+                _textureAtlas->updateQuad(&_quad, _atlasIndex);
+            }
+
+            _recursiveDirty = false;
+            setDirty(false);
+        }
+
+        Node::updateTransform();
+    }
+
+    virtual void updateColor()
+    {
+        if (_textureAtlas == nullptr)
+        {
+            return;
+        }
+
+        Color4B color4(_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity);
+        // special opacity for premultiplied textures
+        if (_opacityModifyRGB)
+        {
+            color4.r *= _displayedOpacity / 255.0f;
+            color4.g *= _displayedOpacity / 255.0f;
+            color4.b *= _displayedOpacity / 255.0f;
+        }
+        _quad.bl.colors = color4;
+        _quad.br.colors = color4;
+        _quad.tl.colors = color4;
+        _quad.tr.colors = color4;
+
+        _textureAtlas->updateQuad(&_quad, _atlasIndex);
+    }
+};
 
 Label* Label::create()
 {
@@ -257,17 +351,20 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
 , _effectColorF(Color4F::BLACK)
 , _uniformEffectColor(0)
 , _shadowDirty(false)
+, _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
 , _insideBounds(true)
 {
     setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     reset();
 
-    auto purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
+    _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
-            Node::removeAllChildrenWithCleanup(true);
+            for (auto it : _letters)
+            {
+                it.second->setTexture(nullptr);
+            }
             _batchNodes.clear();
-            _batchNodes.push_back(this);
 
             if (_fontAtlas)
             {
@@ -275,16 +372,20 @@ Label::Label(FontAtlas *atlas /* = nullptr */, TextHAlignment hAlignment /* = Te
             }
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(purgeTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_purgeTextureListener, 1);
     
-    auto resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
+    _resetTextureListener = EventListenerCustom::create(FontAtlas::CMD_RESET_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
             _fontAtlas = nullptr;
             this->setTTFConfig(_fontConfig);
+            for (auto it : _letters)
+            {
+                getLetter(it.first);
+            }
         }
     });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(resetTextureListener, this);
+    _eventDispatcher->addEventListenerWithFixedPriority(_resetTextureListener, 2);
 }
 
 Label::~Label()
@@ -295,8 +396,12 @@ Label::~Label()
     {
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
+    _eventDispatcher->removeEventListener(_purgeTextureListener);
+    _eventDispatcher->removeEventListener(_resetTextureListener);
 
     CC_SAFE_RELEASE_NULL(_reusedLetter);
+    CC_SAFE_RELEASE_NULL(_textSprite);
+    CC_SAFE_RELEASE_NULL(_shadowNode);
 }
 
 void Label::reset()
@@ -309,7 +414,6 @@ void Label::reset()
     _systemFontSize = 12;
 
     _batchNodes.clear();
-    _batchNodes.push_back(this);
 
     if (_fontAtlas)
     {
@@ -382,16 +486,6 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     }
 
     _fontAtlas = atlas;
-
-    if (_textureAtlas)
-    {
-        _textureAtlas->setTexture(_fontAtlas->getTexture(0));
-    }
-    else
-    {
-        SpriteBatchNode::initWithTexture(_fontAtlas->getTexture(0), 30);
-    }
-
     if (_reusedLetter == nullptr)
     {
         _reusedLetter = Sprite::create();
@@ -399,7 +493,6 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _reusedLetter->retain();
         _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
     }
-    _reusedLetter->setBatchNode(this);
 
     if (_fontAtlas)
     {
@@ -592,12 +685,21 @@ void Label::alignText()
         for (auto index = _batchNodes.size(); index < textures.size(); ++index)
         {
             auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
-            batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-            batchNode->setPosition(Vec2::ZERO);
-            Node::addChild(batchNode,0,Node::INVALID_TAG);
-            _batchNodes.push_back(batchNode);
+            if (batchNode)
+            {
+                _blendFunc = batchNode->getBlendFunc();
+                batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+                batchNode->setPosition(Vec2::ZERO);
+                _batchNodes.pushBack(batchNode);
+            }
         }
     }
+    if (_batchNodes.empty())
+    {
+        return;
+    }
+    _reusedLetter->setBatchNode(_batchNodes.at(0));
+
     LabelTextFormatter::createStringSprites(this);    
     if(_maxLineWidth > 0 && _contentSize.width > _maxLineWidth && LabelTextFormatter::multilineText(this) )      
         LabelTextFormatter::createStringSprites(this);
@@ -605,39 +707,36 @@ void Label::alignText()
     if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
 
-    if (!_children.empty())
+    if (!_letters.empty())
     {
-        int strLen = static_cast<int>(_currentUTF16String.length());
         Rect uvRect;
         Sprite* letterSprite;
-        for (auto index = 0; index < _children.size();) {
-            auto child = _children.at(index);
-            int tag = child->getTag();
-            if (tag >= strLen)
+        int letterIndex;
+
+        for (auto it = _letters.begin(); it != _letters.end();)
+        {
+            letterIndex = it->first;
+            letterSprite = it->second;
+
+            if (letterIndex >= _limitShowCount)
             {
-                child->removeFromParentAndCleanup(true);
-            }
-            else if (tag >= 0)
-            {
-                letterSprite = dynamic_cast<Sprite*>(child);
-                if (letterSprite)
-                {
-                    auto& letterDef = _lettersInfo[tag].def;
-                    uvRect.size.height = letterDef.height;
-                    uvRect.size.width = letterDef.width;
-                    uvRect.origin.x = letterDef.U;
-                    uvRect.origin.y = letterDef.V;
-                    
-                    letterSprite->setBatchNode(_batchNodes[letterDef.textureID]);
-                    letterSprite->setTextureRect(uvRect, false, uvRect.size);
-                    letterSprite->setPosition(_lettersInfo[tag].position.x + letterDef.width/2,
-                                              _lettersInfo[tag].position.y - letterDef.height/2);
-                }
-                ++index;
+                Node::removeChild(letterSprite, true);
+                it = _letters.erase(it);
             }
             else
             {
-                ++index;
+                auto& letterDef = _lettersInfo[letterIndex].def;
+                uvRect.size.height = letterDef.height;
+                uvRect.size.width = letterDef.width;
+                uvRect.origin.x = letterDef.U;
+                uvRect.origin.y = letterDef.V;
+
+                letterSprite->setBatchNode(_batchNodes.at(letterDef.textureID));
+                letterSprite->setTextureRect(uvRect, false, uvRect.size);
+                letterSprite->setPosition(_lettersInfo[letterIndex].position.x + letterDef.width / 2,
+                    _lettersInfo[letterIndex].position.y - letterDef.height / 2);
+
+                ++it;
             }
         }
     }
@@ -682,22 +781,25 @@ void Label::updateQuads()
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
-            if (_lettersInfo[ctr].position.y > _contentSize.height)
+            if (_labelHeight > 0.f)
             {
-                auto clipTop = _lettersInfo[ctr].position.y - _contentSize.height;
-                _reusedRect.origin.y += clipTop;
-                _lettersInfo[ctr].position.y -= clipTop;
-            }
-            if (_lettersInfo[ctr].position.y - letterDef.height < 0.f)
-            {
-                _reusedRect.size.height = _lettersInfo[ctr].position.y < 0.f ? 0.f : _lettersInfo[ctr].position.y;
+                if (_lettersInfo[ctr].position.y > _contentSize.height)
+                {
+                    auto clipTop = _lettersInfo[ctr].position.y - _contentSize.height;
+                    _reusedRect.origin.y += clipTop;
+                    _lettersInfo[ctr].position.y -= clipTop;
+                }
+                if (_lettersInfo[ctr].position.y - letterDef.height < 0.f)
+                {
+                    _reusedRect.size.height = _lettersInfo[ctr].position.y < 0.f ? 0.f : _lettersInfo[ctr].position.y;
+                }
             }
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
-            index = static_cast<int>(_batchNodes[letterDef.textureID]->getTextureAtlas()->getTotalQuads());
+            index = static_cast<int>(_batchNodes.at(letterDef.textureID)->getTextureAtlas()->getTotalQuads());
             _lettersInfo[ctr].atlasIndex = index;
-            _batchNodes[letterDef.textureID]->insertQuadFromSprite(_reusedLetter,index);
+            _batchNodes.at(letterDef.textureID)->insertQuadFromSprite(_reusedLetter,index);
         }     
     }
 }
@@ -731,16 +833,6 @@ bool Label::recordPlaceholderInfo(int spriteIndex)
     _limitShowCount++;
 
     return false;
-}
-
-void Label::addChild(Node * child, int zOrder/* =0 */, int tag/* =0 */)
-{
-    CCASSERT(0, "addChild: is not supported on Label.");
-}
-
-void Label::sortAllChildren()
-{
-    // Label ignore sort children
 }
 
 void Label::enableGlow(const Color4B& glowColor)
@@ -816,7 +908,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
         {
             if (shadowColor != _shadowColor4F)
             {
-                Node::removeChild(_shadowNode, true);
+                _shadowNode->release();
                 _shadowNode = nullptr;
                 createShadowSpriteForSystemFont();
             }
@@ -867,11 +959,7 @@ void Label::disableEffect(LabelEffect effect)
         if (_shadowEnabled)
         {
             _shadowEnabled = false;
-            if (_shadowNode)
-            {
-                Node::removeChild(_shadowNode, true);
-                _shadowNode = nullptr;
-            }
+            CC_SAFE_RELEASE_NULL(_shadowNode);
         }
         break;
     case cocos2d::LabelEffect::GLOW:
@@ -897,121 +985,6 @@ void Label::setFontScale(float fontScale)
 {
     _fontScale = fontScale * CC_CONTENT_SCALE_FACTOR();
     Node::setScale(_fontScale);
-}
-
-void Label::onDraw(const Mat4& transform, bool transformUpdated)
-{
-    // Optimization: Fast Dispatch
-    if( _textureAtlas == NULL || (_batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0) )
-    {
-        return;
-    }
-
-    auto glprogram = getGLProgram();
-    glprogram->use();
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-
-    if (_shadowEnabled)
-    {
-        if (_currentLabelType == LabelType::TTF)
-        {
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
-            {
-                glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                    _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            }
-
-            getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (const auto &child : _children)
-            {
-                child->updateTransform();
-            }
-            for (const auto& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-        }
-        else
-        {
-            Color3B oldColor = _realColor;
-            GLubyte oldOPacity = _displayedOpacity;
-            _displayedOpacity = _shadowOpacity;
-            setColor(_shadowColor3B);
-
-            getGLProgram()->setUniformsForBuiltins(_shadowTransform);
-            for (const auto &child : _children)
-            {
-                child->updateTransform();
-            }
-            for (const auto& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-
-            _displayedOpacity = oldOPacity;
-            setColor(oldColor);
-        }
-    }
-
-    glprogram->setUniformsForBuiltins(transform);
-    for(const auto &child: _children)
-    {
-        child->updateTransform();
-    }
-    
-    if (_currentLabelType == LabelType::TTF)
-    {
-        switch (_currLabelEffect) {
-            case LabelEffect::OUTLINE:
-                //draw text with outline
-                glprogram->setUniformLocationWith4f(_uniformTextColor,
-                                                    _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
-                glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-                for (const auto& batchNode:_batchNodes)
-                {
-                    batchNode->getTextureAtlas()->drawQuads();
-                }
-                
-                //draw text without outline
-                glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
-                break;
-            case LabelEffect::GLOW:
-                glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                                                    _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-            case LabelEffect::NORMAL:
-                glprogram->setUniformLocationWith4f(_uniformTextColor,
-                                                    _textColorF.r,_textColorF.g,_textColorF.b,_textColorF.a);
-                break;
-            default:
-                break;
-        }
-    }
-
-    for (const auto& batchNode:_batchNodes)
-    {
-        batchNode->getTextureAtlas()->drawQuads();
-    }
-}
-
-void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    // Don't do calculate the culling if the transform was not updated
-    bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
-#if CC_USE_CULLING
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
-
-    if(_insideBounds)
-#endif
-    {
-        _customCommand.init(_globalZOrder, transform, flags);
-        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-
-        renderer->addCommand(&_customCommand);
-    }
 }
 
 void Label::createSpriteForSystemFont()
@@ -1073,8 +1046,7 @@ void Label::createSpriteForSystemFont()
         _textSprite->setBlendFunc(_blendFunc);
     }
 
-    Node::addChild(_textSprite, 0, Node::INVALID_TAG);
-
+    _textSprite->retain();
     _textSprite->updateDisplayedColor(_displayedColor);
     _textSprite->updateDisplayedOpacity(_displayedOpacity);
 }
@@ -1112,8 +1084,8 @@ void Label::createShadowSpriteForSystemFont()
         _shadowNode->setCameraMask(getCameraMask());
         _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
-        Node::addChild(_shadowNode, 0, Node::INVALID_TAG);
 
+        _shadowNode->retain();
         _shadowNode->updateDisplayedColor(_displayedColor);
         _shadowNode->updateDisplayedOpacity(_displayedOpacity);
     }
@@ -1121,7 +1093,7 @@ void Label::createShadowSpriteForSystemFont()
 
 void Label::setCameraMask(unsigned short mask, bool applyChildren)
 {
-    SpriteBatchNode::setCameraMask(mask, applyChildren);
+    Node::setCameraMask(mask, applyChildren);
     
     if (_textSprite)
     {
@@ -1158,7 +1130,6 @@ void Label::updateContent()
         if (_fontAtlas)
         {
             _batchNodes.clear();
-            _batchNodes.push_back(this);
 
             FontAtlasCache::releaseFontAtlas(_fontAtlas);
             _fontAtlas = nullptr;
@@ -1167,16 +1138,8 @@ void Label::updateContent()
         _systemFontDirty = false;
     }
 
-    if (_textSprite)
-    {
-        Node::removeChild(_textSprite, true);
-        _textSprite = nullptr;
-        if (_shadowNode)
-        {
-            Node::removeChild(_shadowNode, true);
-            _shadowNode = nullptr;
-        }
-    }
+    CC_SAFE_RELEASE_NULL(_textSprite);
+    CC_SAFE_RELEASE_NULL(_shadowNode);
 
     if (_fontAtlas)
     {
@@ -1201,9 +1164,127 @@ void Label::updateContent()
     _contentDirty = false;
 }
 
+void Label::onDrawShadow(GLProgram* glProgram)
+{
+    if (_currentLabelType == LabelType::TTF)
+    {
+        glProgram->setUniformLocationWith4f(_uniformTextColor,
+            _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+        if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+        {
+            glProgram->setUniformLocationWith4f(_uniformEffectColor,
+                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+        }
+
+        glProgram->setUniformsForBuiltins(_shadowTransform);
+        for (auto it : _letters)
+        {
+            it.second->updateTransform();
+        }
+        for (const auto& batchNode : _batchNodes)
+        {
+            batchNode->getTextureAtlas()->drawQuads();
+        }
+    }
+    else
+    {
+        Color3B oldColor = _realColor;
+        GLubyte oldOPacity = _displayedOpacity;
+        _displayedOpacity = _shadowOpacity;
+        setColor(_shadowColor3B);
+
+        glProgram->setUniformsForBuiltins(_shadowTransform);
+        for (auto it : _letters)
+        {
+            it.second->updateTransform();
+        }
+        for (const auto& batchNode : _batchNodes)
+        {
+            batchNode->getTextureAtlas()->drawQuads();
+        }
+
+        _displayedOpacity = oldOPacity;
+        setColor(oldColor);
+    }
+}
+
+void Label::onDraw(const Mat4& transform, bool transformUpdated)
+{
+    auto glprogram = getGLProgram();
+    glprogram->use();
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
+    if (_shadowEnabled)
+    {
+        onDrawShadow(glprogram);
+    }
+
+    glprogram->setUniformsForBuiltins(transform);
+    for (auto it : _letters)
+    {
+        it.second->updateTransform();
+    }
+
+    if (_currentLabelType == LabelType::TTF)
+    {
+        switch (_currLabelEffect) {
+        case LabelEffect::OUTLINE:
+            //draw text with outline
+            glprogram->setUniformLocationWith4f(_uniformTextColor,
+                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+            for (const auto& batchNode : _batchNodes)
+            {
+                batchNode->getTextureAtlas()->drawQuads();
+            }
+
+            //draw text without outline
+            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                _effectColorF.r, _effectColorF.g, _effectColorF.b, 0.f);
+            break;
+        case LabelEffect::GLOW:
+            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+        case LabelEffect::NORMAL:
+            glprogram->setUniformLocationWith4f(_uniformTextColor,
+                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+            break;
+        default:
+            break;
+        }
+    }
+
+    for (const auto& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->drawQuads();
+    }
+}
+
+void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (_batchNodes.empty() || _limitShowCount <= 0)
+    {
+        return;
+    }
+    // Don't do calculate the culling if the transform was not updated
+    bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
+#if CC_USE_CULLING
+    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+
+    if (_insideBounds)
+#endif
+    {
+        _customCommand.init(_globalZOrder, transform, flags);
+        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+
+        renderer->addCommand(&_customCommand);
+    }
+}
+
 void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (! _visible || _originalUTF8String.empty())
+    if (! _visible || (_originalUTF8String.empty() && _children.empty()) )
     {
         return;
     }
@@ -1215,7 +1296,8 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
-    if (_shadowEnabled && _shadowBlurRadius <= 0 && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
+    if (!_originalUTF8String.empty() && _shadowEnabled && _shadowBlurRadius <= 0 
+        && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
     {
         _position.x += _shadowOffset.width;
         _position.y += _shadowOffset.height;
@@ -1230,7 +1312,8 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         _shadowDirty = false;
     }
 
-    if (!_textSprite && !isVisitableByVisitingCamera())
+    bool visibleByCamera = isVisitableByVisitingCamera();
+    if (_children.empty() && !_textSprite && !visibleByCamera)
     {
         return;
     }
@@ -1241,6 +1324,41 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
+    if (!_children.empty())
+    {
+        sortAllChildren();
+
+        int i = 0;
+        // draw children zOrder < 0
+        for (; i < _children.size(); i++)
+        {
+            auto node = _children.at(i);
+
+            if (node && node->getLocalZOrder() < 0)
+                node->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        // self draw
+        if (visibleByCamera)
+            this->drawSelf(renderer, flags);
+
+        for (auto it = _children.cbegin() + i; it != _children.cend(); ++it)
+        {
+            (*it)->visit(renderer, _modelViewTransform, flags);
+        }
+            
+    }
+    else if (visibleByCamera)
+    {
+        this->drawSelf(renderer, flags);
+    }
+
+    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+}
+
+void Label::drawSelf(Renderer* renderer, uint32_t flags)
+{
     if (_textSprite)
     {
         if (_shadowNode)
@@ -1253,12 +1371,6 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     {
         draw(renderer, _modelViewTransform, flags);
     }
-
-    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
-    // FIX ME: Why need to set _orderOfArrival to 0??
-    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
-    // setOrderOfArrival(0);
 }
 
 void Label::setSystemFontName(const std::string& systemFont)
@@ -1282,45 +1394,63 @@ void Label::setSystemFontSize(float fontSize)
 ///// PROTOCOL STUFF
 Sprite * Label::getLetter(int letterIndex)
 {
-    if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
+    Sprite* letter = nullptr;
+    do 
     {
-        return nullptr;
-    }
-
-    if (_contentDirty)
-    {
-        updateContent();
-    }
-    
-    if (! _textSprite && letterIndex < _limitShowCount)
-    {
-        const auto &letter = _lettersInfo[letterIndex];
-
-        if(! letter.def.validDefinition)
-            return nullptr;
-
-        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(letterIndex));
-
-        if (!sp)
+        if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
         {
-            Rect uvRect;
-            uvRect.size.height = letter.def.height;
-            uvRect.size.width  = letter.def.width;
-            uvRect.origin.x    = letter.def.U;
-            uvRect.origin.y    = letter.def.V;
+            break;
+        }  
 
-            sp = Sprite::createWithTexture(_fontAtlas->getTexture(letter.def.textureID),uvRect);
-            sp->setBatchNode(_batchNodes[letter.def.textureID]);
-            sp->setPosition(letter.position.x + uvRect.size.width / 2,
-                letter.position.y - uvRect.size.height / 2);
-            sp->setOpacity(_realOpacity);
-
-            _batchNodes[letter.def.textureID]->addSpriteWithoutQuad(sp, letter.atlasIndex, letterIndex);
+        auto contentDirty = _contentDirty;
+        if (contentDirty)
+        {
+            updateContent();
         }
-        return sp;
-    }
 
-    return nullptr;
+        if (_textSprite == nullptr && letterIndex < _limitShowCount)
+        {
+            const auto &letterInfo = _lettersInfo[letterIndex];
+            if (!letterInfo.def.validDefinition)
+            {
+                break;
+            } 
+
+            if (_letters.find(letterIndex) != _letters.end())
+            {
+                letter = _letters[letterIndex];
+            }
+
+            auto textureID = letterInfo.def.textureID;
+            Rect uvRect;
+            uvRect.size.height = letterInfo.def.height;
+            uvRect.size.width = letterInfo.def.width;
+            uvRect.origin.x = letterInfo.def.U;
+            uvRect.origin.y = letterInfo.def.V;
+
+            if (letter == nullptr)
+            {
+                letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
+                letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
+                letter->setAtlasIndex(letterInfo.atlasIndex);
+
+                letter->setPosition(letterInfo.position.x + uvRect.size.width / 2,
+                    letterInfo.position.y - uvRect.size.height / 2);
+                letter->setOpacity(_realOpacity);
+                addChild(letter);
+
+                _letters[letterIndex] = letter;
+            }
+            else if (contentDirty)
+            {
+                letter->setTexture(_fontAtlas->getTexture(textureID));
+                letter->setTextureRect(uvRect, false, uvRect.size);
+                letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
+            }
+        }
+    } while (false);
+
+    return letter;
 }
 
 void Label::setLineHeight(float height)
@@ -1411,10 +1541,7 @@ void Label::setOpacityModifyRGB(bool isOpacityModifyRGB)
 
 void Label::updateDisplayedColor(const Color3B& parentColor)
 {
-    _displayedColor.r = _realColor.r * parentColor.r/255.0;
-    _displayedColor.g = _realColor.g * parentColor.g/255.0;
-    _displayedColor.b = _realColor.b * parentColor.b/255.0;
-    updateColor();
+    Node::updateDisplayedColor(parentColor);
 
     if (_textSprite)
     {
@@ -1428,8 +1555,7 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
 
 void Label::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-    _displayedOpacity = _realOpacity * parentOpacity/255.0;
-    updateColor();
+    Node::updateDisplayedOpacity(parentOpacity);
 
     if (_textSprite)
     {
@@ -1463,7 +1589,7 @@ void Label::setTextColor(const Color4B &color)
 
 void Label::updateColor()
 {
-    if (nullptr == _textureAtlas)
+    if (_batchNodes.empty())
     {
         return;
     }
@@ -1530,6 +1656,25 @@ void Label::setBlendFunc(const BlendFunc &blendFunc)
         if (_shadowNode)
         {
             _shadowNode->setBlendFunc(blendFunc);
+        }
+    }
+}
+
+void Label::removeAllChildrenWithCleanup(bool cleanup)
+{
+    Node::removeAllChildrenWithCleanup(cleanup);
+    _letters.clear();
+}
+
+void Label::removeChild(Node* child, bool cleanup /* = true */)
+{
+    Node::removeChild(child, cleanup);
+    for (auto it : _letters)
+    {
+        if (it.second == child)
+        {
+            _letters.erase(it.first);
+            break;
         }
     }
 }

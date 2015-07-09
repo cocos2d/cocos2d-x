@@ -15,6 +15,15 @@
 -- @return UserDefault#UserDefault self (return value: cc.UserDefault)
         
 --------------------------------
+-- delete any value by key,<br>
+-- param key The key to delete value.<br>
+-- js NA
+-- @function [parent=#UserDefault] deleteValueForKey 
+-- @param self
+-- @param #char key
+-- @return UserDefault#UserDefault self (return value: cc.UserDefault)
+        
+--------------------------------
 -- @overload self, char, float         
 -- @overload self, char         
 -- @function [parent=#UserDefault] getFloatForKey
@@ -125,7 +134,7 @@
         
 --------------------------------
 --  All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.<br>
--- return True if the xml file exists, flase if not.<br>
+-- return True if the xml file exists, false if not.<br>
 -- js NA
 -- @function [parent=#UserDefault] isXMLFileExist 
 -- @param self

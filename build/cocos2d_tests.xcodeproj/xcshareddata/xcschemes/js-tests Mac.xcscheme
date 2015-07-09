@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A035A5441782290400987F6C"
+               BlueprintIdentifier = "1856634B1B4155D3009EF2AE"
                BuildableName = "js-tests Mac.app"
                BlueprintName = "js-tests Mac"
-               ReferencedContainer = "container:cocos2d_js_tests.xcodeproj">
+               ReferencedContainer = "container:cocos2d_tests.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A035A5441782290400987F6C"
+            BlueprintIdentifier = "1856634B1B4155D3009EF2AE"
             BuildableName = "js-tests Mac.app"
             BlueprintName = "js-tests Mac"
-            ReferencedContainer = "container:cocos2d_js_tests.xcodeproj">
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,10 +52,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A035A5441782290400987F6C"
+            BlueprintIdentifier = "1856634B1B4155D3009EF2AE"
             BuildableName = "js-tests Mac.app"
             BlueprintName = "js-tests Mac"
-            ReferencedContainer = "container:cocos2d_js_tests.xcodeproj">
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,10 +71,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A035A5441782290400987F6C"
+            BlueprintIdentifier = "1856634B1B4155D3009EF2AE"
             BuildableName = "js-tests Mac.app"
             BlueprintName = "js-tests Mac"
-            ReferencedContainer = "container:cocos2d_js_tests.xcodeproj">
+            ReferencedContainer = "container:cocos2d_tests.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

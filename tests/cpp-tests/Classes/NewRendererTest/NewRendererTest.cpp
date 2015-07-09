@@ -35,6 +35,7 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(NewCullingTest);
     ADD_TEST_CASE(VBOFullTest);
     ADD_TEST_CASE(CaptureScreenTest);
+    ADD_TEST_CASE(BugAutoCulling)
 };
 
 std::string MultiSceneTest::title() const
@@ -474,4 +475,34 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     {
         log("Capture screen failed.");
     }
+}
+
+BugAutoCulling::BugAutoCulling()
+{
+    Size s = Director::getInstance()->getWinSize();
+    for (int i=0; i<100; i++) {
+        auto sprite = Sprite::create("Images/grossini.png");
+        sprite->setPosition(s.width/2 + s.width/10 * i, s.height/2);
+        this->addChild(sprite);
+    }
+    this->scheduleOnce([=](float){
+        auto camera = Director::getInstance()->getRunningScene()->getCameras().front();
+        auto move  = MoveBy::create(2.0, Vec2(2 * s.width, 0));
+        camera->runAction(Sequence::create(move, move->reverse(),nullptr));
+    }, 1.0f, "lambda-autoculling-bug");
+}
+
+BugAutoCulling::~BugAutoCulling()
+{
+    
+}
+
+std::string BugAutoCulling::title() const
+{
+    return "Bug-AutoCulling";
+}
+
+std::string BugAutoCulling::subtitle() const
+{
+    return "Moving the camera to the right instead of moving the layer";
 }

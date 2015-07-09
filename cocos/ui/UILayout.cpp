@@ -410,7 +410,7 @@ void Layout::drawFullScreenQuadClearStencil()
 void Layout::onAfterDrawStencil()
 {
     glDepthMask(_currentDepthWriteMask);
-    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask);
+    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask != 0);
 
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
 //    RenderState::StateBlock::_defaultState->setStencilFunction(
@@ -1975,6 +1975,14 @@ Widget* Layout::findNextFocusedWidget(FocusDirection direction, Widget* current)
     else
     {
         return current;
+    }
+}
+    
+void Layout::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    Widget::setCameraMask(mask, applyChildren);
+    if (_clippingStencil){
+        _clippingStencil->setCameraMask(mask, applyChildren);
     }
 }
     
