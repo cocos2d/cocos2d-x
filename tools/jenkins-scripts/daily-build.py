@@ -113,12 +113,12 @@ def main():
         exit_code = 1
 
     # #clean workspace, we don't won't clean the repository
-    if remote_build == 1:
-        os.system("cd " + workspace)
-        os.system("git reset --hard")
-        os.system("git clean -xdf -f")
-    else:
-        print "local build, no need to cleanup"
+    # if remote_build == 1:
+    #     os.system("cd " + workspace)
+    #     os.system("git reset --hard")
+    #     os.system("git clean -xdf -f")
+    # else:
+    #     print "local build, no need to cleanup"
 
     return(exit_code)
 
