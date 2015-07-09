@@ -75,8 +75,9 @@ def main():
     except:
         print 'Can not find build in queue'
 
-    if(action == 'closed' or action == 'labeled'
-       or action == 'assigned' or action == 'unlabeled' or branch == 'v2' or branch == 'v3-doc'):
+    if(action == 'closed' or action == 'labeled' or action == 'unassigned'
+       or action == 'assigned' or action == 'unlabeled'
+       or branch == 'v2' or branch == 'v3-doc'):
         print 'pull request #' + str(pr_num) + ' is ' + action + ', no build triggered'
         return(0)
 
