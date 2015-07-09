@@ -18,6 +18,16 @@ if('NODE_NAME' in os.environ):
     node_name = os.environ['NODE_NAME']
 else:
     node_name = 'ios'
+
+if('language' in os.environ):
+    language = os.environ['language']
+else:
+    language = 'lua'
+
+if('daily_build_type' in os.environ):
+    daily_build_type = os.environ['daily_build_type']
+else:
+    daily_build_type = 'tests'
 # for local debugging purpose, you could change the value to 0 and run
 # this scripts in your local machine
 remote_build = 1
@@ -56,7 +66,7 @@ def gen_scripting_bindings():
 
 
 def do_build_slaves():
-    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep + daily_build_type + os.sep
 
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
@@ -76,6 +86,7 @@ def do_build_slaves():
             if(branch != 'v4'):
                 slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
 
+        slave_build_scripts += language
         ret = os.system(slave_build_scripts)
 
     #get build result
