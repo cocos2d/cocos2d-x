@@ -69,7 +69,7 @@ public:
 
     void setEndpoint(const std::string& endpoint){ _endpoint = endpoint; };
     const std::string& getEndpoint()const{ return _endpoint; };
-    void setEvent(std::string event){ _name = event; };
+    void setEvent(const std::string& event){ _name = event; };
     const std::string& getEvent()const{ return _name; };
 
     void addData(const std::string& data);
@@ -378,9 +378,9 @@ public:
     void connectToEndpoint(const std::string& endpoint);
     void disconnectFromEndpoint(const std::string& endpoint);
 
-    void send(std::string endpoint, std::string s);
+    void send(const std::string& endpoint, const std::string& s);
     void send(SocketIOPacket *packet);
-    void emit(std::string endpoint, std::string eventname, std::string args);
+    void emit(const std::string& endpoint, const std::string& eventname, const std::string& args);
 
 
 };
@@ -677,7 +677,7 @@ void SIOClientImpl::heartbeat(float dt)
 }
 
 
-void SIOClientImpl::send(std::string endpoint, std::string s)
+void SIOClientImpl::send(const std::string& endpoint, const std::string& s)
 {
     switch (_version) {
     case SocketIOPacket::SocketIOVersion::V09x:
@@ -708,7 +708,7 @@ void SIOClientImpl::send(SocketIOPacket *packet)
         CCLOGINFO("Cant send the message (%s) because disconnected", req.c_str());
 }
 
-void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::string args)
+void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventname, const std::string& args)
 {
     CCLOGINFO("Emitting event \"%s\"", eventname.c_str());
     SocketIOPacket *packet = SocketIOPacket::createPacketWithType("event", _version);
