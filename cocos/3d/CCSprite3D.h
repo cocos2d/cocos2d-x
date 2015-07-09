@@ -233,6 +233,8 @@ CC_CONSTRUCTOR_ACCESS:
     void onAABBDirty() { _aabbDirty = true; }
     
     void afterAsyncLoad(void* param);
+
+    static AABB getAABBRecursivelyImp(Node *node);
     
 protected:
 

@@ -118,6 +118,8 @@ public:
     
     /**get animate quality*/
     Animate3DQuality getQuality() const;
+
+    std::function<void(float keyTime, Animate3D* animate)> onAnimateUpdate;
     
 CC_CONSTRUCTOR_ACCESS:
     

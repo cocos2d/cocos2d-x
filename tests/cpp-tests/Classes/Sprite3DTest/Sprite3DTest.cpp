@@ -1032,10 +1032,12 @@ void Effect3DOutline::draw(const Mat4 &transform)
     _glProgramState->setUniformVec4("u_color", Vec4(color.r, color.g, color.b, color.a));
     if(_sprite && _sprite->getMesh())
     {
+        GLenum cullFace = GL_FRONT;
+        if (_sprite->getScaleX() < 0.0f || _sprite->getScaleY() < 0.0f || _sprite->getScaleZ() < 0.0f)
+            cullFace = GL_BACK;
         glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);
+        glCullFace(cullFace);
         glEnable(GL_DEPTH_TEST);
-        
         auto mesh = _sprite->getMesh();
         glBindBuffer(GL_ARRAY_BUFFER, mesh->getVertexBuffer());
         

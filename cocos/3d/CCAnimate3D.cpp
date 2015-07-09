@@ -367,6 +367,8 @@ void Animate3D::update(float t)
                     }
                     node->setAdditionalTransform(&transform);
                 }
+                if (onAnimateUpdate != nullptr)
+                    onAnimateUpdate(t * getDuration(), this);
             }
         }
     }
