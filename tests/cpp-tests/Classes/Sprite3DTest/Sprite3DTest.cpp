@@ -1243,17 +1243,17 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    // swich camera
+    // swich animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(15);
-    _menuItem = MenuItemFont::create("High Quality", CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
+    _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
+    _menuItem = MenuItemFont::create(getAnimationQualityMessage(), CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
     _menuItem->setColor(Color3B(0,200,20));
     auto menu = Menu::create(_menuItem,NULL);
     menu->setPosition(Vec2::ZERO);
     _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
     addChild(menu, 1);
-    
-    _animateQuality = (int)Animate3DQuality::QUALITY_HIGH;
+
     _sprits.clear();
     
     auto s = Director::getInstance()->getWinSize();
@@ -1303,18 +1303,25 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     }
 }
 
+std::string Sprite3DWithSkinTest::getAnimationQualityMessage() const
+{
+    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
+        return "None Quality";
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
+        return "Low Quality";
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
+        return "High Quality";
+    
+    return "";
+}
+
 void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
 {
     ++_animateQuality;
     if (_animateQuality > (int)Animate3DQuality::QUALITY_HIGH)
         _animateQuality = (int)Animate3DQuality::QUALITY_NONE;
     
-    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
-        _menuItem->setString("None Quality");
-    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
-        _menuItem->setString("Low Quality");
-    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
-        _menuItem->setString("High Quality");
+    _menuItem->setString(getAnimationQualityMessage());
     
     for (auto iter: _sprits)
     {
