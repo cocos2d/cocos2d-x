@@ -450,7 +450,7 @@ namespace cocostudio
 
             Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
             childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox);
+            node->addChild(childBox,0,"_innerSkyBox");
         }
 
         auto node3DReader = Node3DReader::getInstance();

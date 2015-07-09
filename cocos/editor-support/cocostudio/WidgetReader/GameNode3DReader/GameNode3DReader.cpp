@@ -413,7 +413,7 @@ namespace cocostudio
             Skybox* childBox = Skybox::create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
             unsigned short cameraFlag = 1 << 10;
             childBox->setCameraMask(cameraFlag, false);
-            node->addChild(childBox);
+            node->addChild(childBox,0,"_innerSkyBox");
         }
 
         std::string customProperty = options->customProperty()->c_str();
