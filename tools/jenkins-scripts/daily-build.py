@@ -71,20 +71,20 @@ def do_build_slaves():
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
         if(node_name == 'android') or (node_name == 'android_bak'):
-            slave_build_scripts = jenkins_script_path + "android-build.sh"
+            slave_build_scripts = jenkins_script_path + "android-build.sh "
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
-            slave_build_scripts = jenkins_script_path + "win32-build.bat"
+            slave_build_scripts = jenkins_script_path + "win32-build.bat "
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
-            slave_build_scripts = jenkins_script_path + "windows-universal.bat"
+            slave_build_scripts = jenkins_script_path + "windows-universal.bat "
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
-            slave_build_scripts = jenkins_script_path + "ios-build.sh"
+            slave_build_scripts = jenkins_script_path + "ios-build.sh "
         elif(node_name == 'mac' or node_name == 'mac_bak'):
-            slave_build_scripts = jenkins_script_path + "mac-build.sh"
+            slave_build_scripts = jenkins_script_path + "mac-build.sh "
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
-            slave_build_scripts = jenkins_script_path + "linux-build.sh"
+            slave_build_scripts = jenkins_script_path + "linux-build.sh "
         elif(node_name == 'wp8'):
             if(branch != 'v4'):
-                slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
+                slave_build_scripts = jenkins_script_path + "wp8-v3.bat "
 
         slave_build_scripts += language
         ret = os.system(slave_build_scripts)
