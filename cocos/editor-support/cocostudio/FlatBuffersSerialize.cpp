@@ -257,6 +257,25 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
             else if (name == "ObjectData") // nodeTree
             {
                 const tinyxml2::XMLElement* objectData = child;
+
+                const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+                while (attribute)
+                {
+                    std::string attriname = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (attriname == "ctype")
+                    {
+                        if (value == "GameNode3DObjectData")
+                        {
+                            rootType = "GameNode3DObjectData";
+                        }
+                        break;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
                 nodeTree = createNodeTree(objectData, rootType);
             }
             else if (name == "AnimationList") // animation list
@@ -1292,6 +1311,24 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
             else if (name == "ObjectData") // nodeTree
             {
                 const tinyxml2::XMLElement* objectData = child;
+
+                const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+                while (attribute)
+                {
+                    std::string attriname = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (attriname == "ctype")
+                    {
+                        if (value == "GameNode3DObjectData")
+                        {
+                            rootType = "GameNode3DObjectData";
+                        }
+                        break;
+                    }
+
+                    attribute = attribute->Next();
+                }
                 nodeTree = createNodeTreeForSimulator(objectData, rootType);
             }
             else if (name == "AnimationList") // animation list
