@@ -38,8 +38,6 @@ NS_CC_BEGIN
     namespace experimental{
 #define MAX_AUDIOINSTANCES 24
 
-class AudioEngineThreadPool;
-
 class AudioEngineImpl : public cocos2d::Ref
 {
 public:
@@ -66,8 +64,6 @@ public:
     
 private:
     void _play2d(AudioCache *cache, int audioID);
-    
-    AudioEngineThreadPool* _threadPool;
     
     ALuint _alSources[MAX_AUDIOINSTANCES];
     

@@ -35,9 +35,6 @@ NS_CC_BEGIN
     namespace experimental{
 #define MAX_AUDIOINSTANCES 32
 
-
- class AudioEngineThreadPool;
-
  class CC_DLL AudioEngineImpl : public cocos2d::Ref
  {
  public:
@@ -73,7 +70,6 @@ NS_CC_BEGIN
      std::vector<int> _toRemoveAudioIDs;
      bool _lazyInitLoop;
      int _currentAudioID;
-     AudioEngineThreadPool* _threadPool;
  };
 }
 

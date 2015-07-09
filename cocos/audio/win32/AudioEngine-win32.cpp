@@ -26,7 +26,7 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "AudioEngine-win32.h"
-#include <condition_variable>
+
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"
 #include "alext.h"
@@ -47,94 +47,9 @@ static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
 static bool MPG123_LAZYINIT = true;
 
-static AudioEngineThreadPool* s_threadPool = nullptr;
-
-namespace cocos2d {
-    namespace experimental {
-        class AudioEngineThreadPool
-        {
-        public:
-            AudioEngineThreadPool()
-            : _numThread(6)
-            {
-                s_threadPool = this;
-
-                _threads.reserve(_numThread);
-                _tasks.reserve(_numThread);
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _tasks.push_back(nullptr);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
-                    _threads[index].detach();
-                }
-            }
-            
-            void addTask(const std::function<void()> &task){
-                _taskMutex.lock();
-                int targetIndex = -1;
-                for (int index = 0; index < _numThread; ++index) {
-                    if (_tasks[index] == nullptr) {
-                        targetIndex = index;
-                        _tasks[index] = task;
-                        break;
-                    }
-                }
-                if (targetIndex == -1) {
-                    _tasks.push_back(task);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
-                    _threads[_numThread].detach();
-                    _numThread++;
-                }
-                _taskMutex.unlock();
-                _sleepCondition.notify_all();
-            }
-            
-            void destroy()
-            {
-                std::unique_lock<std::mutex> lk(_sleepMutex);
-                _sleepCondition.notify_all();
-            }
-
-        private:
-            std::vector<std::thread>  _threads;
-            std::vector< std::function<void ()> > _tasks;
-            
-            void threadFunc(int index)
-            {
-                while (s_threadPool == this) {
-                    std::function<void ()> task = nullptr;
-                    _taskMutex.lock();
-                    task = _tasks[index];
-                    _taskMutex.unlock();
-                    
-                    if (nullptr == task)
-                    {
-                        std::unique_lock<std::mutex> lk(_sleepMutex);
-                        _sleepCondition.wait(lk);
-                        continue;
-                    }
-                    
-                    task();
-                    
-                    _taskMutex.lock();
-                    _tasks[index] = nullptr;
-                    _taskMutex.unlock();
-                }
-            }
-            
-            int _numThread;
-            
-            std::mutex _taskMutex;
-            std::mutex _sleepMutex;
-            std::condition_variable _sleepCondition;
-        };
-    }
-}
-
 AudioEngineImpl::AudioEngineImpl()
 : _lazyInitLoop(true)
 , _currentAudioID(0)
-, _threadPool(nullptr)
 {
     
 }
@@ -153,10 +68,6 @@ AudioEngineImpl::~AudioEngineImpl()
     if (s_ALDevice) {
         alcCloseDevice(s_ALDevice);
         s_ALDevice = nullptr;
-    }
-    if (_threadPool) {
-        _threadPool->destroy();
-        delete _threadPool;
     }
 
     mpg123_exit();
@@ -185,7 +96,6 @@ bool AudioEngineImpl::init()
                 _alSourceUsed[_alSources[i]] = false;
             }
             
-            _threadPool = new (std::nothrow) AudioEngineThreadPool();
             ret = true;
         }
     }while (false);
@@ -235,7 +145,7 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath)
         audioCache->_fileFormat = fileFormat;
 
         audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
+        AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
     } while (false);
 
     return audioCache;

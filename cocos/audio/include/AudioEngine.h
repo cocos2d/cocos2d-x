@@ -288,7 +288,7 @@ public:
     static void preload(const std::string& filePath);
 
 protected:
-    
+    static void addTask(const std::function<void()> &task);
     static void remove(int audioID);
     
     struct ProfileHelper
@@ -341,6 +341,9 @@ protected:
     static ProfileHelper* _defaultProfileHelper;
     
     static AudioEngineImpl* _audioEngineImpl;
+
+    class AudioEngineThreadPool;
+    static AudioEngineThreadPool* s_threadPool;
     
     friend class AudioEngineImpl;
 };
