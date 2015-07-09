@@ -10,7 +10,7 @@ Core Developers:
     Qingkui Hu (samuele3hu)
     Huabing Xu (dabingnn)
     Wenhai Lin (Dhilan007)
-    Guanghui Qu (andyque）
+    Guanghui Qu (zilongshanren）
     Wensheng Yang (yangws)
     Yulei Liao (dualface)
     Huabin Ling (pandamicro)
@@ -758,7 +758,7 @@ Developers:
         Fix lua project template crash on iOS5.1 device
         Fix layout constant syntax error in lua-binding
         
-    andyque
+    zilongshanren
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
         Fixed a bug that move assignment operator doesn't clear previous content bug.
         Fixed the compile error of Map's getRandomObject.
