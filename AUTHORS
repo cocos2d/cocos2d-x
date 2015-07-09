@@ -402,6 +402,9 @@ Developers:
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
         Workaround for some problems due to UITextField of CCEditBoxImplIOS is attached as a view above OpenGL view.
         Enhance ScrollView with easing out scrolling.
+        Add scroll bar feature into ui::ScrollView.
+        Add RadioButton and RaidoButtonGroup widgets.
+        Add a setter for line width in DrawNode.
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -584,6 +587,7 @@ Developers:
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
         Implements a socket.io client extension and adds a test case.
         Implements 'SIODelegate::fireEventToScript' method to integrate JSB event handling with the original native code.
+        Update socket.io network extension to correctly detect and manage connection to socket.io server versions 0.9.x-1.x
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
