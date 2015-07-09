@@ -2,7 +2,7 @@
 
 set mycocos=tools/cocos2d-console/bin/cocos.bat
 set language=%1
-rmdir .git
+rmdir /s /q .git
 call %mycocos% new -l %language% -t runtime
 
 set projectname=
