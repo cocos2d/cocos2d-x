@@ -221,7 +221,6 @@ protected:
     std::mutex _requestMutex;
     std::mutex _responseMutex;
     
-    std::mutex _signalMutex;
     std::condition_variable _sleepCondition;
 
     bool _needQuit;

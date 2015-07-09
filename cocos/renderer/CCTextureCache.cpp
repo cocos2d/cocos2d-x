@@ -212,7 +212,8 @@ void TextureCache::unbindAllImageAsync()
 void TextureCache::loadImage()
 {
     AsyncStruct *asyncStruct = nullptr;
-    std::unique_lock<std::mutex> signal(_signalMutex);
+    std::mutex signalMutex;
+    std::unique_lock<std::mutex> signal(signalMutex);
     while (!_needQuit)
     {
         // pop an AsyncStruct from request queue
@@ -309,7 +310,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
 
         // release the asyncStruct
         delete asyncStruct;
-        --asyncStruct;
+        --_asyncRefCount;
     }
 
     if (0 == _asyncRefCount)
