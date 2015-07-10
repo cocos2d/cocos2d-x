@@ -287,6 +287,8 @@ public:
     
     void switchAnimationQualityCallback(cocos2d::Ref* sender);
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+    std::string getAnimationQualityMessage() const;
 private:
     std::vector<cocos2d::Sprite3D*> _sprits;
     int _animateQuality;
