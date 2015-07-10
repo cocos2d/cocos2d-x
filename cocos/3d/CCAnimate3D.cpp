@@ -94,6 +94,7 @@ bool Animate3D::initWithFrames(Animation3D* animation, int startFrame, int endFr
     float perFrameTime = 1.f / frameRate;
     float fromTime = startFrame * perFrameTime;
     float duration = (endFrame - startFrame) * perFrameTime;
+    _frameRate = frameRate;
     init(animation, fromTime, duration);
     return true;
 }
@@ -310,6 +311,7 @@ void Animate3D::update(float t)
                 s_fadeOutAnimates.erase(_target);
             }
         }
+        float lastTime = _lastTime;
         _lastTime = t;
         
         if (_quality != Animate3DQuality::QUALITY_NONE)
@@ -318,10 +320,13 @@ void Animate3D::update(float t)
             {
                 float transDst[3], rotDst[4], scaleDst[3];
                 float* trans = nullptr, *rot = nullptr, *scale = nullptr;
-                if (_playReverse)
+                if (_playReverse){
                     t = 1 - t;
+                    lastTime = 1.0 - lastTime;
+                }
                 
                 t = _start + t * _last;
+                lastTime = _start + lastTime * _last;
                 
                 for (const auto& it : _boneCurves) {
                     auto bone = it.first;
@@ -367,8 +372,18 @@ void Animate3D::update(float t)
                     }
                     node->setAdditionalTransform(&transform);
                 }
-                if (onAnimateUpdate != nullptr)
-                    onAnimateUpdate(t * getDuration(), this);
+                if (!_keyFrameUserInfos.empty() && keyFrameCallback != nullptr){
+                    float prekeyTime = lastTime * getDuration() * _frameRate;
+                    float keyTime = t * getDuration() * _frameRate;
+                    int preKey = ceilf(prekeyTime);
+                    int key = floorf(keyTime);
+                    if (preKey == key){
+                        auto iter = _keyFrameUserInfos.find(key);
+                        if (iter != _keyFrameUserInfos.end()){
+                            keyFrameCallback(iter->first, iter->second);
+                        }
+                    }
+                }
             }
         }
     }
@@ -418,6 +433,20 @@ Animate3DQuality Animate3D::getQuality() const
     return _quality;
 }
 
+Animate3D::DisplayedEventInfo* Animate3D::getKeyFrameUserInfo(int keyFrame)
+{
+    auto iter = _keyFrameUserInfos.find(keyFrame);
+    if (iter != _keyFrameUserInfos.end())
+        return iter->second;
+
+    return nullptr;
+}
+
+void Animate3D::setKeyFrameUserInfo(int keyFrame, DisplayedEventInfo *userInfo)
+{
+    _keyFrameUserInfos[keyFrame] = userInfo;
+}
+
 Animate3D::Animate3D()
 : _state(Animate3D::Animate3DState::Running)
 , _animation(nullptr)
@@ -429,6 +458,7 @@ Animate3D::Animate3D()
 , _accTransTime(0.0f)
 , _lastTime(0.0f)
 , _originInterval(0.0f)
+, _frameRate(30.0f)
 {
     setQuality(Animate3DQuality::QUALITY_HIGH);
 }
