@@ -144,7 +144,7 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
 
         // create audio player
         const SLInterfaceID ids[4] = {SL_IID_SEEK, SL_IID_PREFETCHSTATUS, SL_IID_VOLUME, SL_IID_PLAYBACKRATE};
-        const SLboolean req[4] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
+        const SLboolean req[4] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
         auto result = (*engineEngine)->CreateAudioPlayer(engineEngine, &_fdPlayerObject, &audioSrc, &audioSnk, 4, ids, req);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("create audio player fail"); break; }
 
