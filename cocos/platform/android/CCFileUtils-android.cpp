@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "android/asset_manager_jni.h"
 #include "jni/CocosPlayClient.h"
 #include <stdlib.h>
+#include <sys/stat.h>
 
 #define  LOG_TAG    "CCFileUtils-android.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -185,6 +186,59 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
         }
     }
     return bFound;
+}
+
+bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    if (dirPath.empty())
+    {
+        return false;
+    }
+
+    const char* s = dirPath.c_str();
+    bool startWithAssets = (dirPath.find("assets/") == 0);
+    int lenOfAssets = 7;
+
+    std::string tmpStr;
+    if (cocosplay::isEnabled() && !cocosplay::isDemo())
+    {
+        // redirect assets/*** path to cocosplay resource dir
+        tmpStr.append(_defaultResRootPath);
+        if ('/' != tmpStr[tmpStr.length() - 1])
+        {
+            tmpStr += '/';
+        }
+        tmpStr.append(s + lenOfAssets);
+    }
+
+    // find absolute path in flash memory
+    if (s[0] == '/')
+    {
+        CCLOG("find in flash memory dirPath(%s)", s);
+        struct stat st;
+        if (stat(s, &st) == 0)
+        {
+            return S_ISDIR(st.st_mode);
+        }
+    }
+
+    // find it in apk's assets dir
+    // Found "assets/" at the beginning of the path and we don't want it
+    CCLOG("find in apk dirPath(%s)", s);
+    if (startWithAssets)
+    {
+        s += lenOfAssets;
+    }
+    if (FileUtilsAndroid::assetmanager)
+    {
+        AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
+        if (aa && AAssetDir_getNextFileName(aa))
+        {
+            AAssetDir_close(aa);
+            return true;
+        }
+    }
+    return false;
 }
 
 bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const

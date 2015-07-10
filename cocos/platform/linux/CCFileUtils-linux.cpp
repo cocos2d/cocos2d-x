@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include <sys/stat.h>
 #include <stdio.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 #ifndef CC_RESOURCE_FOLDER_LINUX
 #define CC_RESOURCE_FOLDER_LINUX ("/Resources/")
@@ -119,6 +120,16 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
     
     struct stat sts;
     return (stat(strPath.c_str(), &sts) != -1) ? true : false;
+}
+
+bool FileUtilsLinux::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    struct stat st;
+    if (stat(dirPath.c_str(), &st) == 0)
+    {
+        return S_ISDIR(st.st_mode);
+    }
+    return false;
 }
 
 NS_CC_END

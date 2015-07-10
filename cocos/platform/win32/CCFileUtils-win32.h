@@ -53,8 +53,8 @@ public:
     virtual bool isAbsolutePath(const std::string& strPath) const;
 protected:
 
-    virtual bool isFileExistInternal(const std::string& strFilePath) const;
-    
+	virtual bool isFileExistInternal(const std::string& strFilePath) const override;
+	virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
     /**
      *  Gets resource file data
      *

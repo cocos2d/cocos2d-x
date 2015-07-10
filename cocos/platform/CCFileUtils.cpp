@@ -962,36 +962,6 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
     return (path[0] == '/');
 }
 
-bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    WIN32_FILE_ATTRIBUTE_DATA wfad;
-    std::wstring wdirPath(dirPath.begin(), dirPath.end());
-    if (GetFileAttributesEx(wdirPath.c_str(), GetFileExInfoStandard, &wfad))
-	{
-		return true;
-	}
-	return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
-    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
-        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
-    {
-		return true;
-    }
-    return false;
-#else
-    struct stat st;
-    if (stat(dirPath.c_str(), &st) == 0)
-    {
-        return S_ISDIR(st.st_mode);
-    }
-    return false;
-#endif
-
-
-}
-
 bool FileUtils::isDirectoryExist(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
@@ -1022,7 +992,6 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
             }
         }
     }
-    
     return false;
 }
 
