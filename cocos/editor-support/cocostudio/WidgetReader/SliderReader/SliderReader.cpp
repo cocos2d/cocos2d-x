@@ -466,7 +466,7 @@ namespace cocostudio
         auto options = (SliderOptions*)sliderOptions;
         
         int percent = options->percent();
-        slider->setPercent(percent);
+        //slider->setPercent(percent);
         
         bool imageFileExist = false;
         std::string imageErrorFilePath = "";
@@ -798,7 +798,7 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-        
+        slider->setPercent(percent);
     }
     
     Node* SliderReader::createNodeWithFlatBuffers(const flatbuffers::Table *sliderOptions)
