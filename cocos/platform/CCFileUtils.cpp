@@ -584,7 +584,6 @@ bool FileUtils::writeStringToFile(std::string dataStr, const std::string& fullPa
 
 bool FileUtils::writeDataToFile(Data retData, const std::string& fullPath)
 {
-    unsigned char* buffer = nullptr;
     size_t size = 0;
     const char* mode = "wb";
 
