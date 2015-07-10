@@ -1033,7 +1033,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
     if(_sprite && _sprite->getMesh())
     {
         GLenum cullFace = GL_FRONT;
-        if (_sprite->getScaleX() < 0.0f || _sprite->getScaleY() < 0.0f || _sprite->getScaleZ() < 0.0f)
+        if ((_sprite->getScaleX() * _sprite->getScaleY() * _sprite->getScaleZ()) < 0.0f)
             cullFace = GL_BACK;
         glEnable(GL_CULL_FACE);
         glCullFace(cullFace);
