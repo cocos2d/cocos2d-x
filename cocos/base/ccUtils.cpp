@@ -135,17 +135,17 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 succeedSaveToFile = image->saveToFile(outputFile);
                 delete image;
             });
-
-            // Don't call afterCaptured, call in mainThread function
-            return;
+        }
+        else
+        {
+            CCLOG("Malloc Image memory failed!");
+            if (afterCaptured)
+            {
+                afterCaptured(succeed, outputFile);
+            }
+            startedCapture = false;
         }
     } while (0);
-
-    if (afterCaptured)
-    {
-        afterCaptured(succeed, outputFile);
-    }
-    startedCapture = false;
 }
 
 /*
