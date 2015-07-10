@@ -52,8 +52,8 @@ static void _checkPath()
 {
     if (s_pszResourcePath.empty())
     {
-		// TODO: needs to be tested
-		s_pszResourcePath = convertPathFormatToUnixStyle(CCFileUtilsWinRT::getAppPath() + '\\' + "Assets\\Resources" + '\\');
+        // TODO: needs to be tested
+        s_pszResourcePath = convertPathFormatToUnixStyle(CCFileUtilsWinRT::getAppPath() + '\\' + "Assets\\Resources" + '\\');
     }
 }
 
@@ -123,7 +123,7 @@ bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 
 bool CCFileUtilsWinRT::isAbsolutePath(const std::string& strPath) const
 {
-    if (   strPath.length() > 2 
+    if (   strPath.length() > 2
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
         && strPath[1] == ':')
     {
@@ -138,13 +138,13 @@ static Data getData(const std::string& filename, bool forString)
     {
         CCASSERT(!filename.empty(), "Invalid filename!");
     }
-    
+
     Data ret;
     unsigned char* buffer = nullptr;
     ssize_t size = 0;
     const char* mode = nullptr;
     mode = "rb";
-    
+
     do
     {
         // Read the file from hardware
@@ -154,7 +154,7 @@ static Data getData(const std::string& filename, bool forString)
         fseek(fp,0,SEEK_END);
         size = ftell(fp);
         fseek(fp,0,SEEK_SET);
-        
+
         if (forString)
         {
             buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
@@ -164,11 +164,11 @@ static Data getData(const std::string& filename, bool forString)
         {
             buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
         }
-        
+
         size = fread(buffer, sizeof(unsigned char), size, fp);
         fclose(fp);
     } while (0);
-    
+
     if (nullptr == buffer || 0 == size)
     {
         std::string msg = "Get data from file(";
@@ -179,31 +179,31 @@ static Data getData(const std::string& filename, bool forString)
     {
         ret.fastSet(buffer, size);
     }
-    
+
     return ret;
 }
 
 std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
-	if (data.isNull())
-	{
-		return "";
-	}
+    if (data.isNull())
+    {
+        return "";
+    }
     std::string ret((const char*)data.getBytes());
     return ret;
 }
 
 string CCFileUtilsWinRT::getWritablePath() const
 {
-	auto localFolderPath = Windows::Storage::ApplicationData::Current->LocalFolder->Path;
-	return convertPathFormatToUnixStyle(std::string(PlatformStringToString(localFolderPath)) + '\\');
+    auto localFolderPath = Windows::Storage::ApplicationData::Current->LocalFolder->Path;
+    return convertPathFormatToUnixStyle(std::string(PlatformStringToString(localFolderPath)) + '\\');
 }
 
 string CCFileUtilsWinRT::getAppPath()
 {
-	Windows::ApplicationModel::Package^ package = Windows::ApplicationModel::Package::Current;
-	return convertPathFormatToUnixStyle(std::string(PlatformStringToString(package->InstalledLocation->Path)));
+    Windows::ApplicationModel::Package^ package = Windows::ApplicationModel::Package::Current;
+    return convertPathFormatToUnixStyle(std::string(PlatformStringToString(package->InstalledLocation->Path)));
 }
 
 NS_CC_END
