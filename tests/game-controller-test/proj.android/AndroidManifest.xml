@@ -33,6 +33,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity 
+            android:name="com.nibiru.lib.controller.InfoActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+        <service android:name="com.nibiru.lib.utils.NibiruControllerService" android:process=":controller" >
+            <intent-filter>
+                <action android:name="com.nibiru.controller.service" />
+            </intent-filter>
+        </service>
+        
     </application>
     <supports-screens android:anyDensity="true"
                       android:smallScreens="true"
