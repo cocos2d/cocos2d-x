@@ -56,7 +56,7 @@ public:
 
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
-	virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
 };
 
 // end of platform group
