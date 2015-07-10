@@ -185,4 +185,6 @@ void js_register_cocos2dx_GLNode(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    
+    anonEvaluate(cx, global, "(function () { cc.GLNode.extend = cc.Class.extend; })()");
 }
