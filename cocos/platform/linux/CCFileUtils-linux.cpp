@@ -117,7 +117,7 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
     { // Not absolute path, add the default root path at the beginning.
         strPath.insert(0, _defaultResRootPath);
     }
-    
+
     struct stat sts;
     return (stat(strPath.c_str(), &sts) != -1) ? true : false;
 }

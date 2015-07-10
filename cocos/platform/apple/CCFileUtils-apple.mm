@@ -451,9 +451,9 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
     NSPropertyListFormat format;
     NSError* error;
     NSDictionary* dict = [NSPropertyListSerialization propertyListWithData:file options:NSPropertyListImmutable format:&format error:&error];
-    
+
     ValueMap ret;
-    
+
     if (dict != nil)
     {
         for (id key in [dict allKeys])
@@ -467,21 +467,41 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
 
 bool FileUtilsApple::writeToFile(ValueMap& dict, const std::string &fullPath)
 {
+    return writeValueMapToFile(dict, fullPath);
+}
+
+bool FileUtils::writeValueMapToFile(ValueMap& dict, const std::string& fullPath)
+{
+    
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
     NSMutableDictionary *nsDict = [NSMutableDictionary dictionary];
-
+    
     for (auto iter = dict.begin(); iter != dict.end(); ++iter)
     {
         addObjectToNSDict(iter->first, iter->second, nsDict);
     }
-
+    
     NSString *file = [NSString stringWithUTF8String:fullPath.c_str()];
     // do it atomically
     [nsDict writeToFile:file atomically:YES];
-
+    
     return true;
 }
 
+bool FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& fullPath)
+{
+    NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
+    NSMutableArray* array = [NSMutableArray array];
+    
+    for (const auto &e : vecData)
+    {
+        addObjectToNSArray(e, array);
+    }
+    
+    [array writeToFile:path atomically:YES];
+    
+    return true;
+}
 ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
