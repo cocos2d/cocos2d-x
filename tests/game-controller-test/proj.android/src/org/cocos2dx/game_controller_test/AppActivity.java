@@ -38,7 +38,8 @@ public class AppActivity extends GameControllerActivity {
 		
 		//Manually specify an adapter.
 		this.connectController(DRIVERTYPE_NIBIRU);
-		this.connectController(DRIVERTYPE_MOGA);
+		//Nibiru SDK have already integrated with MOGA service.
+		//this.connectController(DRIVERTYPE_MOGA);
 		this.connectController(DRIVERTYPE_OUYA);
 	}
 }

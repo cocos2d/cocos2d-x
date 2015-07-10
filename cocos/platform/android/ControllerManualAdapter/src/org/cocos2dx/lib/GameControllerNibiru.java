@@ -62,7 +62,7 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 	public void onCreate(Context context) {
 		mContext = context;
 		
-		mControllerService = Controller.getControllerService();
+		mControllerService = Controller.getControllerService(context);
 		if (mControllerService != null) {
 			mControllerService.setControllerServiceListener(this);
 			mControllerService.setStateListener(this);
@@ -70,7 +70,7 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 			mControllerService.setSimpleStickListener(this);
 			//mControllerService.setAccListener(this);
 			//mControllerService.setGyroListener(this);
-			mControllerService.setEnableLR2(true);
+			mControllerService.setEnableL2R2(true);
 			mControllerService.setAutoKeyUpMode(false);
 			
 			mControllerService.checkNibiruInstall(mContext, false);
@@ -114,11 +114,11 @@ OnSimpleStickListener, OnAccListener, OnGyroListener, OnStateListener, GameContr
 			if( !mControllerService.hasDeviceConnected() ){
 				Bundle bun = new Bundle();
 				bun.putBoolean(ControllerService.FLAG_IS_SHOW_GAMEPAD_TIP, false);
-				try {
+				/*try {
 					mControllerService.showDeviceManagerUI(mContext, bun); 
 				} catch (ControllerServiceException e) {
 						e.printStackTrace(); 
-				}
+				}*/
 			} 
 		}
 	}
