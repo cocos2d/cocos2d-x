@@ -44,6 +44,7 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 #define DELAY_TIME_TO_REMOVE 0.5f
+#define OPEN_SL_REQUIRED_INTERFACE_COUNT 4
 
 void PlayOverEvent(SLPlayItf caller, void* context, SLuint32 playEvent)
 {
@@ -69,6 +70,8 @@ AudioPlayer::AudioPlayer()
     , _playOver(false)
     , _loop(false)
     , _assetFd(0)
+    , _minRate(1000)
+    , _maxRate(1000)
     , _delayTimeToRemove(-1.f)
 {
 
@@ -82,6 +85,7 @@ AudioPlayer::~AudioPlayer()
         _fdPlayerObject = nullptr;
         _fdPlayerPlay = nullptr;
         _fdPlayerVolume = nullptr;
+        _fdPlayerPlaybackRate = nullptr;
         _fdPlayerSeek = nullptr;
     }
     if(_assetFd > 0)
@@ -142,15 +146,25 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         SLDataSink audioSnk = {&loc_outmix, NULL};
 
         // create audio player
-        const SLInterfaceID ids[3] = {SL_IID_SEEK, SL_IID_PREFETCHSTATUS, SL_IID_VOLUME};
-        const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
-        auto result = (*engineEngine)->CreateAudioPlayer(engineEngine, &_fdPlayerObject, &audioSrc, &audioSnk, 3, ids, req);
+        const SLInterfaceID ids[OPEN_SL_REQUIRED_INTERFACE_COUNT] = {SL_IID_SEEK, SL_IID_PREFETCHSTATUS,
+                                                                     SL_IID_VOLUME, SL_IID_PLAYBACKRATE};
+        const SLboolean req[OPEN_SL_REQUIRED_INTERFACE_COUNT] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE,
+                                                                 SL_BOOLEAN_TRUE};
+        auto result = (*engineEngine)->CreateAudioPlayer(engineEngine, &_fdPlayerObject, &audioSrc, &audioSnk,
+                                                         OPEN_SL_REQUIRED_INTERFACE_COUNT, ids, req);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("create audio player fail"); break; }
 
         // realize the player
         result = (*_fdPlayerObject)->Realize(_fdPlayerObject, SL_BOOLEAN_FALSE);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("realize the player fail"); break; }
 
+        SLuint32 numSupportedInterfaces = 0;
+        result = slQueryNumSupportedEngineInterfaces(&numSupportedInterfaces);
+        if (numSupportedInterfaces < OPEN_SL_REQUIRED_INTERFACE_COUNT) {
+            log("Warning: AudioEngine OpenSL numSupportedInterfaces:%d is less than OPEN_SL_REQUIRED_INTERFACE_COUNT:%d",
+                numSupportedInterfaces, OPEN_SL_REQUIRED_INTERFACE_COUNT);
+        }
+        
         // get the play interface
         result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_PLAY, &_fdPlayerPlay);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the play interface fail"); break; }
@@ -162,6 +176,18 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         // get the volume interface
         result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_VOLUME, &_fdPlayerVolume);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the volume interface fail"); break; }
+
+        // get the pitch interface
+        result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_PLAYBACKRATE, &_fdPlayerPlaybackRate);
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the pitch interface fail"); break; }
+        
+        SLpermille stepSize;
+        SLuint32 capabilities;
+        auto rangeResult = (*_fdPlayerPlaybackRate)->GetRateRange(_fdPlayerPlaybackRate, 0, &_minRate, &_maxRate, &stepSize, &capabilities);
+        if(SL_RESULT_SUCCESS != rangeResult)
+        {
+            log("%s error:%u",__func__, rangeResult);
+        }
 
         _loop = loop;
         if (loop){
@@ -312,6 +338,30 @@ void AudioEngineImpl::update(float dt)
         
         auto scheduler = Director::getInstance()->getScheduler();
         scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
+    }
+}
+
+void AudioEngineImpl::setPitch(int audioID,float pitch)
+{
+    auto& player = _audioPlayers[audioID];
+    
+    SLpermille playbackRate = (SLpermille)1000 * pitch;
+    
+    if (playbackRate < player._minRate)
+    {
+        log("Warning: AudioEngine attempting to set rate:%d which is lower than minRate=%d.", playbackRate, player._minRate);
+        playbackRate = player._minRate;
+    }
+    else if (playbackRate > player._maxRate)
+    {
+        log("Warning: AudioEngine attempting to set rate:%d which is higher than maxRate=%d.", playbackRate, player._maxRate);
+        playbackRate = player._maxRate;
+    }
+    
+    auto result = (*player._fdPlayerPlaybackRate)->SetRate(player._fdPlayerPlaybackRate, playbackRate);
+    if(SL_RESULT_SUCCESS != result)
+    {
+        log("%s error:%u",__func__, result);
     }
 }
 
