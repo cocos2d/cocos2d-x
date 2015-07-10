@@ -137,9 +137,28 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
     
-    //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
-        return false;
+    {
+        int foundIndex = -1;
+        for (int charmapIndex = 0; charmapIndex < face->num_charmaps; charmapIndex++)
+        {
+            if (face->charmaps[charmapIndex]->encoding != FT_ENCODING_NONE)
+            {
+                foundIndex = charmapIndex;
+                break;
+            }
+        }
+
+        if (foundIndex == -1)
+        {
+            return false;
+        }
+
+        if (FT_Select_Charmap(face, face->charmaps[foundIndex]->encoding))
+        {
+            return false;
+        }
+    }
 
     // set the requested font size
     int dpi = 72;
