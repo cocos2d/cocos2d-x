@@ -82,7 +82,7 @@ bool AudioPlayer::play2d(AudioCache* cache)
     _audioCache = cache;
 
     alSourcei(_alSource, AL_BUFFER, NULL);
-    alSourcef(_alSource, AL_PITCH, 1.0f);
+    alSourcef(_alSource, AL_PITCH, _pitch);
     alSourcef(_alSource, AL_GAIN, _volume);
 
     if (_audioCache->_queBufferFrames == 0) {

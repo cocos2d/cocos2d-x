@@ -234,6 +234,19 @@ void AudioEngineImpl::setVolume(int audioID, float volume)
     }
 }
 
+void AudioEngineImpl::setPitch(int audioID, float pitch)
+{
+    auto& player = _audioPlayers[audioID];
+    
+    if (player._ready){
+        player.setPitch(pitch);
+    }
+    
+    if (player.isInError()) {
+        log("%s: audio id = %d, error.\n", __FUNCTION__, audioID);
+    }
+}
+
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
     auto& player = _audioPlayers[audioID];

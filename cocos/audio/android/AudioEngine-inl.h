@@ -56,6 +56,7 @@ private:
     SLObjectItf _fdPlayerObject;
     SLSeekItf _fdPlayerSeek;
     SLVolumeItf _fdPlayerVolume;
+    SLPlaybackRateItf _fdPlayerPlaybackRate;
 
     float _duration;
     int _audioID;
@@ -76,6 +77,7 @@ public:
     bool init();
     int play2d(const std::string &fileFullPath ,bool loop ,float volume);
     void setVolume(int audioID,float volume);
+    void setPitch(int audioID,float pitch);
     void setLoop(int audioID, bool loop);
     void pause(int audioID);
     void resume(int audioID);

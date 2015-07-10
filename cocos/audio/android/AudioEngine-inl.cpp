@@ -82,6 +82,7 @@ AudioPlayer::~AudioPlayer()
         _fdPlayerObject = nullptr;
         _fdPlayerPlay = nullptr;
         _fdPlayerVolume = nullptr;
+        _fdPlayerPlaybackRate = nullptr;
         _fdPlayerSeek = nullptr;
     }
     if(_assetFd > 0)
@@ -142,9 +143,9 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         SLDataSink audioSnk = {&loc_outmix, NULL};
 
         // create audio player
-        const SLInterfaceID ids[3] = {SL_IID_SEEK, SL_IID_PREFETCHSTATUS, SL_IID_VOLUME};
-        const SLboolean req[3] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
-        auto result = (*engineEngine)->CreateAudioPlayer(engineEngine, &_fdPlayerObject, &audioSrc, &audioSnk, 3, ids, req);
+        const SLInterfaceID ids[4] = {SL_IID_SEEK, SL_IID_PREFETCHSTATUS, SL_IID_VOLUME, SL_IID_PLAYBACKRATE};
+        const SLboolean req[4] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
+        auto result = (*engineEngine)->CreateAudioPlayer(engineEngine, &_fdPlayerObject, &audioSrc, &audioSnk, 4, ids, req);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("create audio player fail"); break; }
 
         // realize the player
@@ -162,6 +163,10 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         // get the volume interface
         result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_VOLUME, &_fdPlayerVolume);
         if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the volume interface fail"); break; }
+
+        // get the pitch interface
+        result = (*_fdPlayerObject)->GetInterface(_fdPlayerObject, SL_IID_PLAYBACKRATE, &_fdPlayerPlaybackRate);
+        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the pitch interface fail"); break; }
 
         _loop = loop;
         if (loop){
@@ -312,6 +317,27 @@ void AudioEngineImpl::update(float dt)
         
         auto scheduler = Director::getInstance()->getScheduler();
         scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
+    }
+}
+
+void AudioEngineImpl::setPitch(int audioID,float pitch)
+{
+    auto& player = _audioPlayers[audioID];
+    
+    SLpermille playbackRate = (SLpermille)1000 * pitch;
+    
+    if (playbackRate < 500)
+    {
+        playbackRate = 500;
+    }
+    else if (playbackRate > 2000)
+    {
+        playbackRate = 2000;
+    }
+    
+    auto result = (*player._fdPlayerPlaybackRate)->SetRate(player._fdPlayerPlaybackRate, playbackRate);
+    if(SL_RESULT_SUCCESS != result){
+        log("%s error:%u",__func__, result);
     }
 }
 
