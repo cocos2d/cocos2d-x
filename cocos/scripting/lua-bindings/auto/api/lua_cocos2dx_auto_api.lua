@@ -767,11 +767,6 @@
 
 
 --------------------------------------------------------
--- the cc SpriteBatchNode
--- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
-
-
---------------------------------------------------------
 -- the cc Label
 -- @field [parent=#cc] Label#Label Label preloaded module
 
@@ -1239,6 +1234,11 @@
 --------------------------------------------------------
 -- the cc AnimationCache
 -- @field [parent=#cc] AnimationCache#AnimationCache AnimationCache preloaded module
+
+
+--------------------------------------------------------
+-- the cc SpriteBatchNode
+-- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
 
 
 --------------------------------------------------------
