@@ -6086,6 +6086,18 @@ str
 },
 
 /**
+ * @method getFileSize
+ * @param {String} arg0
+ * @return {long}
+ */
+getFileSize : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
  * @method getValueMapFromData
  * @param {char} arg0
  * @param {int} arg1
@@ -6122,15 +6134,17 @@ array
 },
 
 /**
- * @method getFileSize
+ * @method writeStringToFile
  * @param {String} arg0
- * @return {long}
+ * @param {String} arg1
+ * @return {bool}
  */
-getFileSize : function (
+writeStringToFile : function (
+str, 
 str 
 )
 {
-    return 0;
+    return false;
 },
 
 /**
@@ -6165,6 +6179,20 @@ str,
 bool 
 )
 {
+},
+
+/**
+ * @method writeValueVectorToFile
+ * @param {Array} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeValueVectorToFile : function (
+array, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -6211,6 +6239,20 @@ str
 )
 {
     return ;
+},
+
+/**
+ * @method writeValueMapToFile
+ * @param {map_object} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeValueMapToFile : function (
+map, 
+str 
+)
+{
+    return false;
 },
 
 /**
