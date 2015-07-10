@@ -979,7 +979,10 @@ static GLProgramState* getGLProgramStateForAttribs(MeshVertexData* meshVertexDat
     }
     else
     {
-        shader = GLProgram::SHADER_3D_POSITION;
+        if (hasNormal && usesLight)
+            shader = GLProgram::SHADER_3D_POSITION_NORMAL;
+        else
+            shader = GLProgram::SHADER_3D_POSITION;
     }
 
     CCASSERT(shader, "Couldn't find shader for sprite");
