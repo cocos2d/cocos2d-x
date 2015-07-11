@@ -562,6 +562,55 @@ int ActionNode::getLastFrameIndex()
     }
     return frameindex;
 }
+
+Spawn* ActionNode::skipToLastFrame()
+{
+    if (_object == nullptr)
+    {
+        return nullptr;
+    }
+    Vector<FiniteTimeAction*> cSpawnArray;
+    
+    for (int n = 0; n < _frameArrayNum; n++)
+    {
+        auto cArray = _frameArray.at(n);
+        if (cArray->size() <= 0)
+        {
+            continue;
+        }
+            
+        Vector<FiniteTimeAction*> cSequenceArray;
+        auto frameCount = cArray->size();
+        // for the judge size above, last index = frameCount - 1 is safe here.
+        int nLastFrameIndex = frameCount - 1;
+        auto frame = cArray->at(nLastFrameIndex);
+    
+        // get last action per frame
+        Action* cAction = frame->getAction(0);
+        cSequenceArray.pushBack(static_cast<FiniteTimeAction*>(cAction));
+        Sequence* cSequence = Sequence::create(cSequenceArray);
+            
+        if (cSequence != nullptr)
+        {
+            cSpawnArray.pushBack(cSequence);
+        }
+    }
+        
+    if (_action == nullptr)
+    {
+        CC_SAFE_RELEASE_NULL(_actionSpawn);
+    }
+    else
+    {
+        CC_SAFE_RELEASE_NULL(_action);
+    }
+    
+    _actionSpawn = Spawn::create(cSpawnArray);
+    CC_SAFE_RETAIN(_actionSpawn);
+    return _actionSpawn;
+        
+        
+}
     
 bool ActionNode::updateActionToTimeLine(float fTime)
 {
