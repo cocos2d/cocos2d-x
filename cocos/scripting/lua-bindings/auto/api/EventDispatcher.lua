@@ -55,6 +55,16 @@
 -- @return EventDispatcher#EventDispatcher self (return value: cc.EventDispatcher)
         
 --------------------------------
+--  Dispatches a Custom Event with a event name an optional user data.<br>
+-- param eventName The name of the event which needs to be dispatched.<br>
+-- param optionalUserData The optional user data, it's a void*, the default value is nullptr.
+-- @function [parent=#EventDispatcher] dispatchCustomEvent 
+-- @param self
+-- @param #string eventName
+-- @param #void optionalUserData
+-- @return EventDispatcher#EventDispatcher self (return value: cc.EventDispatcher)
+        
+--------------------------------
 --  Resumes all listeners which are associated the specified target.<br>
 -- param target A given target node.<br>
 -- param recursive True if resume recursively, the default value is false.
