@@ -83,7 +83,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
     * init Skybox.
     */
-    virtual bool init();
+    virtual bool init() override;
     
     /**
      * initialize with texture path

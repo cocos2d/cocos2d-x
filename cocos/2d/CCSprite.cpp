@@ -43,12 +43,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
-
 // MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
@@ -223,7 +217,7 @@ bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
     bool res = false;
-    if(initWithTexture(texture));
+    if(initWithTexture(texture))
     {
         _polyInfo = info;
         setContentSize(_polyInfo.rect.size/Director::getInstance()->getContentScaleFactor());
@@ -343,7 +337,7 @@ void Sprite::setTexture(const std::string &filename)
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same
-    CCASSERT(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
 
@@ -449,7 +443,7 @@ void Sprite::debugDraw(bool on)
         auto last = _polyInfo.triangles.indexCount/3;
         auto _indices = _polyInfo.triangles.indices;
         auto _verts = _polyInfo.triangles.verts;
-        for(unsigned int i = 0; i < last; i++)
+        for(ssize_t i = 0; i < last; i++)
         {
             //draw 3 lines
             Vec3 from =_verts[_indices[i*3]].vertices;
@@ -626,10 +620,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices.set(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ);
-            _quad.br.vertices.set(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ);
-            _quad.tl.vertices.set(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ);
-            _quad.tr.vertices.set(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ);
+            _quad.bl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(ax), SPRITE_RENDER_IN_SUBPIXEL(ay), _positionZ);
+            _quad.br.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(bx), SPRITE_RENDER_IN_SUBPIXEL(by), _positionZ);
+            _quad.tl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(dx), SPRITE_RENDER_IN_SUBPIXEL(dy), _positionZ);
+            _quad.tr.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(cx), SPRITE_RENDER_IN_SUBPIXEL(cy), _positionZ);
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS

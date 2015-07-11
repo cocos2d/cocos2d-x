@@ -38,3 +38,4 @@ before_install:
 branches:
   only:
     - v3.7-release
+    - v3

@@ -492,7 +492,7 @@ void ClippingNode::onAfterDrawStencil()
 
     // restore the depth test state
     glDepthMask(_currentDepthWriteMask);
-    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask);
+    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask != 0);
 
     //if (currentDepthTestEnabled) {
     //    glEnable(GL_DEPTH_TEST);

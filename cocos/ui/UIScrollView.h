@@ -39,6 +39,8 @@ class EventFocusListener;
 
 namespace ui {
 
+class ScrollViewBar;
+
 /**
  *Scrollview scroll event type.
  *@deprecated use @see `ScrollView::EventType` instead.
@@ -369,7 +371,112 @@ public:
      * @return True if inertia is enabled, false otherwise.
      */
     bool isInertiaScrollEnabled() const;
-
+    
+    /**
+     * @brief Toggle scroll bar enabled.
+     *
+     * @param enabled True if enable scroll bar, false otherwise.
+     */
+    void setScrollBarEnabled(bool enabled);
+    
+    /**
+     * @brief Query scroll bar state.
+     *
+     * @return True if scroll bar is enabled, false otherwise.
+     */
+    bool isScrollBarEnabled() const;
+    
+    /**
+     * @brief Set the scroll bar positions from the left-bottom corner (horizontal) and right-top corner (vertical).
+     *
+     * @param positionFromCorner The position from the left-bottom corner (horizontal) and right-top corner (vertical).
+     */
+    void setScrollBarPositionFromCorner(const Vec2& positionFromCorner);
+    
+    /**
+     * @brief Set the vertical scroll bar position from right-top corner.
+     *
+     * @param positionFromCorner The position from right-top corner
+     */
+    void setScrollBarPositionFromCornerForVertical(const Vec2& positionFromCorner);
+    
+    /**
+     * @brief Get the vertical scroll bar's position from right-top corner.
+     *
+     * @return positionFromCorner
+     */
+    Vec2 getScrollBarPositionFromCornerForVertical() const;
+    
+    /**
+     * @brief Set the horizontal scroll bar position from left-bottom corner.
+     *
+     * @param positionFromCorner The position from left-bottom corner
+     */
+    void setScrollBarPositionFromCornerForHorizontal(const Vec2& positionFromCorner);
+    
+    /**
+     * @brief Get the horizontal scroll bar's position from right-top corner.
+     *
+     * @return positionFromCorner
+     */
+    Vec2 getScrollBarPositionFromCornerForHorizontal() const;
+    
+    /**
+     * @brief Set the scroll bar's width
+     *
+     * @param width The scroll bar's width
+     */
+    void setScrollBarWidth(float width);
+    
+    /**
+     * @brief Get the scroll bar's width
+     *
+     * @return the scroll bar's width
+     */
+    float getScrollBarWidth() const;
+    
+    /**
+     * @brief Set the scroll bar's color
+     *
+     * @param the scroll bar's color
+     */
+    void setScrollBarColor(const Color3B& color);
+    
+    /**
+     * @brief Get the scroll bar's color
+     *
+     * @return the scroll bar's color
+     */
+    const Color3B& getScrollBarColor() const;
+    
+    /**
+     * @brief Set scroll bar auto hide state
+     *
+     * @param scroll bar auto hide state
+     */
+    void setScrollBarAutoHideEnabled(bool autoHideEnabled);
+    
+    /**
+     * @brief Query scroll bar auto hide state
+     *
+     * @return True if scroll bar auto hide is enabled, false otherwise.
+     */
+    bool isScrollBarAutoHideEnabled() const;
+    
+    /**
+     * @brief Set scroll bar auto hide time
+     *
+     * @param scroll bar auto hide time
+     */
+    void setScrollBarAutoHideTime(float autoHideTime);
+    
+    /**
+     * @brief Get the scroll bar's auto hide time
+     *
+     * @return the scroll bar's auto hide time
+     */
+    float getScrollBarAutoHideTime() const;
+    
     /**
      * Set layout type for scrollview.
      *
@@ -416,7 +523,7 @@ protected:
         LEFT,
         RIGHT,
     };
-	
+    
     virtual void initRenderer() override;
 
     virtual void onSizeChanged() override;
@@ -425,16 +532,20 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
     virtual void copyClonedWidgetChildren(Widget* model) override;
-	
+    
+    virtual void initScrollBar();
+    virtual void removeScrollBar();
+    
     bool isOutOfBoundary(MoveDirection dir) const;
     bool isOutOfBoundaryTopOrBottom() const;
     bool isOutOfBoundaryLeftOrRight() const;
-	
+    
     void moveChildren(float offsetX, float offsetY);
-	
+    void moveChildrenToPosition(const Vec2& position);
+    
     void startInertiaScroll();
     void processInertiaScrolling(float dt);
-	
+    
     void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void processAutoScrolling(float deltaTime);
@@ -443,30 +554,25 @@ protected:
 
     void jumpToDestination(const Vec2& des);
 
-	
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    // Without bounce
-    bool processScrollUp(float* offsetYResult, float touchOffsetY);
-    bool processScrollDown(float* offsetYResult, float touchOffsetY);
-    bool processScrollLeft(float* offsetXResult, float touchOffsetX);
-    bool processScrollRight(float* offsetXResult, float touchOffsetX);
-	
     void startRecordSlidAction();
     virtual void endRecordSlidAction();
 
     //ScrollViewProtocol
-    virtual void handlePressLogic(Touch *touch) ;
-    virtual void handleMoveLogic(Touch *touch) ;
-    virtual void handleReleaseLogic(Touch *touch) ;
+    virtual void handlePressLogic(Touch *touch);
+    virtual void handleMoveLogic(Touch *touch);
+    virtual void handleReleaseLogic(Touch *touch);
 
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch *touch) override;
-
+    
     void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
     void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
-
+    
     Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
+    
+    void updateScrollBar(const Vec2& outOfBoundary);
 
 protected:
     Layout* _innerContainer;
@@ -497,10 +603,14 @@ protected:
     Vec2 _autoScrollTargetDelta;
     float _autoScrollDuration;
     float _autoScrollAccumulatedTime;
-	
+    
     bool _bounceEnabled;
     bool _bouncingBack;
-	
+    
+    bool _scrollBarEnabled;
+    ScrollViewBar* _verticalScrollBar;
+    ScrollViewBar* _horizontalScrollBar;
+    
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

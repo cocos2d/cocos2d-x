@@ -270,7 +270,7 @@ void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
     {
         return;
     }
-    if(!_radioButtons.contains(radioButton))
+    if(radioButton != nullptr && !_radioButtons.contains(radioButton))
     {
         CCLOGERROR("The radio button does not belong to this group!");
         return;

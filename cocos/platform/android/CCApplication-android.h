@@ -51,7 +51,7 @@ public:
     @brief    Callback by Director to limit FPS.
     @param interval The time, expressed in seconds, between current frame and next.
     */
-    void setAnimationInterval(double interval);
+    void setAnimationInterval(float interval);
 
     /**
     @brief    Run the message loop.
