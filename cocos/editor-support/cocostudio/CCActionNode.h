@@ -181,6 +181,11 @@ protected:
 protected:
 	virtual cocos2d::Node* getActionNode();
 	virtual cocos2d::Spawn * refreshActionProperty();
+	/**
+     	* Skip the action.
+	*/
+    	virtual cocos2d::Spawn * skipToLastFrame();
+
 	virtual void runAction();
 	virtual void initActionNodeFromRoot(cocos2d::Ref* root);
 	virtual void easingToFrame(float duration,float delayTime,ActionFrame* srcFrame,ActionFrame* destFrame);
