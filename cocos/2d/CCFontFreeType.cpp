@@ -97,6 +97,8 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _stroker(nullptr)
 , _distanceFieldEnabled(distanceFieldEnabled)
 , _outlineSize(0.0f)
+, _lineHeight(0)
+, _fontAtlas(nullptr)
 {
     if (outline > 0)
     {
@@ -147,6 +149,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     
     // store the face globally
     _fontRef = face;
+    _lineHeight = static_cast<int>(_fontRef->size->metrics.height >> 6);
     
     // done and good
     return true;
@@ -172,17 +175,21 @@ FontFreeType::~FontFreeType()
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    FontAtlas *atlas = new (std::nothrow) FontAtlas(*this);
-    if (_usedGlyphs != GlyphCollection::DYNAMIC)
+    if (_fontAtlas == nullptr)
     {
-        std::u16string utf16;
-        if (StringUtils::UTF8ToUTF16(getCurrentGlyphCollection(), utf16))
+        _fontAtlas = new (std::nothrow) FontAtlas(*this);
+        if (_fontAtlas && _usedGlyphs != GlyphCollection::DYNAMIC)
         {
-            atlas->prepareLetterDefinitions(utf16);
+            std::u16string utf16;
+            if (StringUtils::UTF8ToUTF16(getCurrentGlyphCollection(), utf16))
+            {
+                _fontAtlas->prepareLetterDefinitions(utf16);
+            }
         }
+        this->release();
     }
-    this->release();
-    return atlas;
+    
+    return _fontAtlas;
 }
 
 int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
@@ -232,11 +239,6 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
         return 0;
     
     return (static_cast<int>(kerning.x >> 6));
-}
-
-int FontFreeType::getFontMaxHeight() const
-{
-    return (static_cast<int>(_fontRef->size->metrics.height >> 6));
 }
 
 int FontFreeType::getFontAscender() const
@@ -313,7 +315,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
 
             outRect.origin.x = blendImageMinX;
-            outRect.origin.y = -blendImageMaxY;
+            outRect.origin.y = -blendImageMaxY + _outlineSize;
 
             long index, index2;
             auto blendImage = new unsigned char[blendWidth * blendHeight * 2];

@@ -20,6 +20,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestProjectNodeForSimulator);
     ADD_TEST_CASE(TestTimelineNodeLoadedCallback);
     ADD_TEST_CASE(TestActionTimelineEase);
+    ADD_TEST_CASE(TestActionTimelineSkeleton);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -315,3 +316,161 @@ std::string TestActionTimelineEase::title() const
 {
     return "Test ActionTimelineEase";
 }
+
+//TestActionTimelineSkeleton
+void TestActionTimelineSkeleton::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+
+    _changedDisplays = _changedDisplay = false;
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer_skeleton.csb");
+    node->runAction(action);
+    node->setScale(0.2f);
+    node->setPosition(150, 150);
+    action->gotoFrameAndPlay(0);
+    addChild(node);
+
+    auto skeletonNode = static_cast<SkeletonNode*>(node);
+    const std::string weapBoneName = "Layer20";
+    auto weaponHandeBone = skeletonNode->getBoneNode(weapBoneName);
+    
+    /***********   debug draw bones  *************/
+    auto boneDrawsBtn = cocos2d::ui::Button::create();
+    addChild(boneDrawsBtn);
+    boneDrawsBtn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 30));
+    boneDrawsBtn->setTitleText("Draw bone");
+
+    boneDrawsBtn->addClickEventListener([skeletonNode](Ref* sender)
+    {
+        skeletonNode->setAllRackShow(!skeletonNode->isAllRackShow());
+    });
+
+
+    /***************** change bone display **************************/
+
+    // add display
+    auto weapSkinToAdd = Sprite::create("ActionTimeline/testAnimationResource/girl_arms.png");
+    weapSkinToAdd->setName("Knife");
+    weapSkinToAdd->setPosition(Vec2(135, 23));
+    weapSkinToAdd->setScale(3.0f);
+    weapSkinToAdd->setRotation(86);
+    weaponHandeBone->addDisplay(weapSkinToAdd, false);
+
+    // change display
+    auto changeBoneDispBtn = cocos2d::ui::Button::create();
+    addChild(changeBoneDispBtn);
+    changeBoneDispBtn->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::top().y - 60));
+    changeBoneDispBtn->setTitleText("change bone display");
+    changeBoneDispBtn->addClickEventListener([weapSkinToAdd, weaponHandeBone](Ref* sender)
+    {
+        // or use skeletonNode->display(bone name, skin name, hide)
+        if (weapSkinToAdd->isVisible())
+            weaponHandeBone->display("3", true);
+        else
+        {
+            weaponHandeBone->display(weapSkinToAdd, true);
+        }
+    });
+
+
+
+    /*************** debug draw boundingbox and transforms ***************/
+    auto debugDrawNode = DrawNode::create();
+    addChild(debugDrawNode);
+
+    auto drawBoxBtn = cocos2d::ui::Button::create();
+    addChild(drawBoxBtn);
+    drawBoxBtn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 45));
+    drawBoxBtn->setTitleText("Draw Box");
+
+    // compare to armature
+
+    drawBoxBtn->addClickEventListener([debugDrawNode](Ref* sender)
+    {
+        debugDrawNode->setVisible(!debugDrawNode->isVisible());
+    });
+    skeletonNode->schedule([skeletonNode, weaponHandeBone, debugDrawNode](float interval)
+    {
+        if (debugDrawNode->isVisible())
+        {
+            debugDrawNode->clear();
+//             // skeleton boundingbox
+             auto rect = skeletonNode->getBoundingBox();
+             cocos2d::Vec2 leftbottom(rect.getMinX(), rect.getMinY());
+             cocos2d::Vec2 righttop(rect.getMaxX(), rect.getMaxY());
+             debugDrawNode->drawRect(leftbottom, righttop, cocos2d::Color4F::YELLOW);
+
+            // bone boundingbox
+            rect = weaponHandeBone->getBoundingBox();
+            leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
+            righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
+            cocos2d::Vec2 lefttop(rect.getMinX(), rect.getMaxY());
+            cocos2d::Vec2 rightbottom(rect.getMaxX(), rect.getMinY());
+            auto skeletonToP = skeletonNode->getNodeToParentAffineTransform();
+            auto bonePtoSkeletonPTrans = AffineTransformConcat(
+                static_cast<BoneNode*>((weaponHandeBone->getParent())
+                )->getBoneToSkeletonAffineTransform(),
+                skeletonToP);
+            leftbottom = PointApplyAffineTransform(leftbottom, bonePtoSkeletonPTrans);
+            righttop = PointApplyAffineTransform(righttop, bonePtoSkeletonPTrans);
+            lefttop = PointApplyAffineTransform(lefttop, bonePtoSkeletonPTrans);
+            rightbottom = PointApplyAffineTransform(rightbottom, bonePtoSkeletonPTrans);
+            debugDrawNode->drawLine(leftbottom, rightbottom, Color4F::BLUE);
+            debugDrawNode->drawLine(rightbottom, righttop, Color4F::BLUE);
+            debugDrawNode->drawLine(righttop, lefttop, Color4F::BLUE);
+            debugDrawNode->drawLine(lefttop, leftbottom, Color4F::BLUE);
+
+            // skin boundingbox 
+
+            // get displaying nodes
+            auto currentskin = weaponHandeBone->getDisplayings().front();
+            rect = currentskin->getBoundingBox();
+            leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
+            righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
+            lefttop.x = rect.getMinX(); lefttop.y =  rect.getMaxY();
+            rightbottom.x = rect.getMaxX(); rightbottom.y = rect.getMinY();
+            auto boneToSkeletonParentTrans = AffineTransformConcat(
+                weaponHandeBone->getBoneToSkeletonAffineTransform(), skeletonToP);
+            leftbottom = PointApplyAffineTransform(leftbottom, boneToSkeletonParentTrans);
+            righttop = PointApplyAffineTransform(righttop, boneToSkeletonParentTrans);
+            lefttop = PointApplyAffineTransform(lefttop, boneToSkeletonParentTrans);
+            rightbottom = PointApplyAffineTransform(rightbottom, boneToSkeletonParentTrans);
+
+            debugDrawNode->drawLine(leftbottom, rightbottom, Color4F::GREEN);
+            debugDrawNode->drawLine(rightbottom, righttop, Color4F::GREEN);
+            debugDrawNode->drawLine(righttop, lefttop, Color4F::GREEN);
+            debugDrawNode->drawLine(lefttop, leftbottom, Color4F::GREEN);
+        }
+    }, 0, "update debug draw");
+
+
+    // change displays , can be use for dress up a skeleton
+    auto changeBoneDispsBtn = cocos2d::ui::Button::create();
+    addChild(changeBoneDispsBtn);
+    changeBoneDispsBtn->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::top().y - 75));
+    changeBoneDispsBtn->setTitleText("change bone displays");
+    changeBoneDispsBtn->addClickEventListener([skeletonNode, this](Ref* sender)
+    {
+        std::map < std::string, std::string> boneSkinNames;
+        if (!_changedDisplays)
+        {
+            boneSkinNames.insert(std::make_pair("Layer20", "fire"));
+            boneSkinNames.insert(std::make_pair("Layer14", "fruit"));
+            _changedDisplays = true;
+        }
+        else
+        {
+            boneSkinNames.insert(std::make_pair("Layer20", "3"));
+            boneSkinNames.insert(std::make_pair("Layer14", "hat"));
+            _changedDisplays = false;
+        }
+        skeletonNode->changeDisplays(boneSkinNames);
+    });
+}
+
+std::string TestActionTimelineSkeleton::title() const
+{
+    return "Test ActionTimeline Skeleton";
+}
+

@@ -705,10 +705,14 @@ getCurrentFocusedWidget : function (
 /**
  * @method hitTest
  * @param {vec2_object} arg0
+ * @param {cc.Camera} arg1
+ * @param {vec3_object} arg2
  * @return {bool}
  */
 hitTest : function (
-vec2 
+vec2, 
+camera, 
+vec3 
 )
 {
     return false;
@@ -1656,9 +1660,9 @@ Button : function (
 };
 
 /**
- * @class CheckBox
+ * @class AbstractCheckButton
  */
-ccui.CheckBox = {
+ccui.AbstractCheckButton = {
 
 /**
  * @method loadTextureBackGroundSelected
@@ -1802,6 +1806,13 @@ texturerestype
 {
 },
 
+};
+
+/**
+ * @class CheckBox
+ */
+ccui.CheckBox = {
+
 /**
  * @method create
 * @param {String|String} str
@@ -1839,6 +1850,162 @@ createInstance : function (
  * @constructor
  */
 CheckBox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RadioButton
+ */
+ccui.RadioButton = {
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {String|String} str
+* @param {String|ccui.Widget::TextureResType} str
+* @param {String} str
+* @param {String} str
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {ccui.RadioButton|ccui.RadioButton|ccui.RadioButton}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+texturerestype 
+)
+{
+    return ccui.RadioButton;
+},
+
+/**
+ * @method createInstance
+ * @return {cc.Ref}
+ */
+createInstance : function (
+)
+{
+    return cc.Ref;
+},
+
+/**
+ * @method RadioButton
+ * @constructor
+ */
+RadioButton : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RadioButtonGroup
+ */
+ccui.RadioButtonGroup = {
+
+/**
+ * @method removeRadioButton
+ * @param {ccui.RadioButton} arg0
+ */
+removeRadioButton : function (
+radiobutton 
+)
+{
+},
+
+/**
+ * @method isAllowedNoSelection
+ * @return {bool}
+ */
+isAllowedNoSelection : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getSelectedButtonIndex
+ * @return {int}
+ */
+getSelectedButtonIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setAllowedNoSelection
+ * @param {bool} arg0
+ */
+setAllowedNoSelection : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getRadioButtonByIndex
+ * @param {int} arg0
+ * @return {ccui.RadioButton}
+ */
+getRadioButtonByIndex : function (
+int 
+)
+{
+    return ccui.RadioButton;
+},
+
+/**
+ * @method getNumberOfRadioButtons
+ * @return {long}
+ */
+getNumberOfRadioButtons : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method addRadioButton
+ * @param {ccui.RadioButton} arg0
+ */
+addRadioButton : function (
+radiobutton 
+)
+{
+},
+
+/**
+ * @method setSelectedButton
+* @param {ccui.RadioButton|int} radiobutton
+*/
+setSelectedButton : function(
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccui.RadioButtonGroup}
+ */
+create : function (
+)
+{
+    return ccui.RadioButtonGroup;
+},
+
+/**
+ * @method RadioButtonGroup
+ * @constructor
+ */
+RadioButtonGroup : function (
 )
 {
 },
@@ -3059,6 +3226,16 @@ ListView : function (
 ccui.Slider = {
 
 /**
+ * @method setMaxPercent
+ * @param {int} arg0
+ */
+setMaxPercent : function (
+int 
+)
+{
+},
+
+/**
  * @method setPercent
  * @param {int} arg0
  */
@@ -3078,6 +3255,16 @@ str,
 texturerestype 
 )
 {
+},
+
+/**
+ * @method getMaxPercent
+ * @return {int}
+ */
+getMaxPercent : function (
+)
+{
+    return 0;
 },
 
 /**

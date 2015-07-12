@@ -204,6 +204,7 @@
                     if(!spriteFrame && plist){
                         if(cc.loader.getRes(resourcePath + plist)){
                             cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
+                            spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
                         }else{
                             cc.log("%s need to be preloaded", resourcePath + plist);
                         }

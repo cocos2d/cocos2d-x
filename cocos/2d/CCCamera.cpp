@@ -474,7 +474,7 @@ void Camera::clearBackground(float depth)
          The other values don't need to be updated since they were restored to their original values
          */
         glStencilMask(0xFFFFF);
-        RenderState::StateBlock::_defaultState->setStencilWrite(0xFFFFF);
+//        RenderState::StateBlock::_defaultState->setStencilWrite(0xFFFFF);
 
         /* BUG: RenderState does not support glColorMask yet. */
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);

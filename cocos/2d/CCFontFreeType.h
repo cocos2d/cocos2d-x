@@ -66,7 +66,7 @@ public:
     
     unsigned char       * getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
-    virtual int           getFontMaxHeight() const override;  
+    virtual int           getFontMaxHeight() const override { return _lineHeight; }
     virtual int           getFontAscender() const;
 
 protected:
@@ -90,6 +90,8 @@ private:
     std::string       _fontName;
     bool              _distanceFieldEnabled;
     float             _outlineSize;
+    int _lineHeight;
+    FontAtlas* _fontAtlas;
 };
 
 /// @endcond

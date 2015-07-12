@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 cocos2d-x.org
+Copyright (c) 2014 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 
 #include "CCBoneNode.h"
 #include "CCSkeletonNode.h"
@@ -34,17 +35,12 @@ using namespace cocos2d;
 
 NS_TIMELINE_BEGIN
 
-bool nodePairComparisonLess(std::pair<std::string, Node*> p1, std::pair<std::string, Node*> p2)
-{
-    return nodeComparisonLess(p1.second, p2.second);
-}
-
-
 BoneNode::BoneNode()
 : _length(50)
 , _width(20)
 , _isRackShow(true)
-, _rootBoneNode(nullptr)
+, _rackColor(Color4F::WHITE)
+, _rootSkeleton(nullptr)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
@@ -96,25 +92,51 @@ BoneNode* BoneNode::create(const int &length, const cocos2d::Color4F & color)
 void BoneNode::addChildBone(BoneNode* bone, int localZOrder, const std::string &name)
 {
     _childBones.pushBack(bone);
-    if (bone->_rootBoneNode == nullptr && _rootBoneNode != nullptr)
+    if (bone->_rootSkeleton == nullptr && _rootSkeleton != nullptr)
     {
-        bone->_rootBoneNode = _rootBoneNode;
         auto subBones = getAllSubBones();
         for (auto &subBone : subBones)
         {
-            subBone->_rootBoneNode = _rootBoneNode;
+            subBone->_rootSkeleton = _rootSkeleton;
+            auto bonename = subBone->getName();
+            if (_rootSkeleton->_subBonesMap.find(bonename) == _rootSkeleton->_subBonesMap.end())
+                _rootSkeleton->_subBonesMap.insert(subBone->getName(), subBone);
+            else
+                CCLOG("already has a bone named %s in skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
         }
     }
 }
 
+void BoneNode::addChildBone(BoneNode* bone)
+{
+    Node::addChild(bone);
+}
+
+
+void BoneNode::addDisplay(SkinNode* skin, bool isDisplay, bool hideOthers /*= false*/)
+{
+    CCASSERT(skin != nullptr, "Argument must be non-nil");
+    if (hideOthers)
+    {
+        for (auto &bonskin : _boneSkins)
+        {
+            bonskin->setVisible(false);
+        }
+    }
+    Node::addChild(skin);
+    skin->setVisible(isDisplay);
+}
+
+
 void BoneNode::removeChildBone(BoneNode* bone, bool cleaup /*= false*/)
 {
     _childBones.eraseObject(bone);
-    bone->_rootBoneNode = nullptr;
+    bone->_rootSkeleton = nullptr;
     auto subBones = getAllSubBones();
     for (auto &subBone : subBones)
     {
-        subBone->_rootBoneNode = nullptr;
+        subBone->_rootSkeleton = nullptr;
+        _rootSkeleton->_subBonesMap.erase(subBone->getName());
     }
 }
 
@@ -138,22 +160,35 @@ void BoneNode::removeSkin(SkinNode* skin)
 
 void BoneNode::display(SkinNode* skin, bool hideOthers /*= false*/)
 {
-    if (!skin->isVisible())
-        skin->setVisible(true);
-
-    if (hideOthers)
+    for (auto boneskin : _boneSkins)
     {
-        for (auto boneskin : _boneSkins)
+        if (boneskin == skin)
         {
-            if (boneskin != skin)
-            {
-                boneskin->setVisible(false);
-            }
+            boneskin->setVisible(true);
+        }
+        else if (hideOthers)
+        {
+            boneskin->setVisible(false);
         }
     }
 }
 
-cocos2d::Vector<SkinNode*> BoneNode::getDisplaying() const
+void BoneNode::display(const std::string &skinName, bool hideOthers)
+{
+    for (auto &skin : _boneSkins)
+    {
+        if (skinName == skin->getName())
+        {
+            skin->setVisible(true);
+        }
+        else if (hideOthers)
+        {
+            skin->setVisible(false);
+        }
+    }
+}
+
+cocos2d::Vector<SkinNode*> BoneNode::getDisplayings() const
 {
     cocos2d::Vector<SkinNode*> displayingSkins;
     for (const auto &boneskin : _boneSkins)
@@ -191,14 +226,10 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
 {
     if (!_isRackShow)
         return;
-// 
-//     auto rootSkeleton = static_cast<SkeletonNode*>(_rootBoneNode);
-//     if (nullptr == rootSkeleton) // batch bones to SkeletonNode
-//     {
-        _customCommand.init(_globalZOrder, transform, flags);
-        _customCommand.func = CC_CALLBACK_0(BoneNode::onDraw, this, transform, flags);
-        renderer->addCommand(&_customCommand);
-//    }
+
+    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.func = CC_CALLBACK_0(BoneNode::onDraw, this, transform, flags);
+    renderer->addCommand(&_customCommand);
 
     for (int i = 0; i < 4; ++i)
     {
@@ -209,6 +240,7 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
         _noMVPVertices[i] = Vec3(pos.x, pos.y, pos.z) / pos.w;
     }
 }
+
 
 void BoneNode::setContentSize(const cocos2d::Size &size)
 {
@@ -226,7 +258,7 @@ bool BoneNode::init()
 {
     _anchorPoint = Vec2(0, .5f);
     setContentSize(cocos2d::Size(_length, _width));
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+    setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
     return true;
 }
 
@@ -246,10 +278,7 @@ void BoneNode::updateColor()
 {
     for (unsigned int i = 0; i < 4; i++)
     {
-        _squareColors[i].r = _displayedColor.r / 255.0f;
-        _squareColors[i].g = _displayedColor.g / 255.0f;
-        _squareColors[i].b = _displayedColor.b / 255.0f;
-        _squareColors[i].a = _displayedOpacity / 255.0f;
+        _squareColors[i] = _rackColor;
     }
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
@@ -261,9 +290,6 @@ void BoneNode::onDraw(const Mat4& transform, uint32_t flags)
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
 
-    //
-    // Attributes
-    //
 #ifdef EMSCRIPTEN
     setGLBufferData(_noMVPVertices, 4 * sizeof(Vec3), 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -292,18 +318,31 @@ void BoneNode::setRackShow(bool ishow)
     _isRackShow = ishow;
 }
 
-cocos2d::Rect BoneNode::getBoundingBox() const
+
+void BoneNode::setRackColor(const cocos2d::Color4F &color)
+{
+    _rackColor = color;
+    updateColor();
+}
+
+cocos2d::Rect BoneNode::getDisplayingRect() const
 {
     float minx, miny, maxx, maxy = 0;
-
+    minx = miny = maxx = maxy;
     bool first = true;
 
-    Rect boundingBox = Rect(0, 0, 0, 0);
+    Rect displayRect = Rect(0, 0, 0, 0);
+    if (_isRackShow && _rootSkeleton != nullptr && _rootSkeleton->_isAllRackShow)
+    {
+        maxx = _contentSize.width;
+        maxy = _contentSize.height;
+        first = false;
+    }
 
     for (const auto& skin : _boneSkins)
     {
         Rect r = skin->getBoundingBox();
-        if (r.equals(Rect::ZERO))
+        if (!skin->isVisible() || r.equals(Rect::ZERO))
             continue;
 
         if (first)
@@ -317,15 +356,20 @@ cocos2d::Rect BoneNode::getBoundingBox() const
         }
         else
         {
-            minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
-            miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
-            maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
-            maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
+            minx = MIN(r.getMinX(), minx);
+            miny = MIN(r.getMinY(), miny);
+            maxx = MAX(r.getMaxX(), maxx);
+            maxy = MAX(r.getMaxY(), maxy);
         }
-        boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
+        displayRect.setRect(minx, miny, maxx - minx, maxy- miny);
     }
+    return displayRect;
+}
 
-    return RectApplyTransform(boundingBox, getNodeToParentTransform());
+cocos2d::Rect BoneNode::getBoundingBox() const
+{
+    Rect boundingBox = getDisplayingRect();
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
 cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
@@ -354,13 +398,13 @@ cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
     return allBones;
 }
 
-cocos2d::Vector<SkinNode*> BoneNode::getAllSubSkins() const
+cocos2d::Vector<SkinNode*> BoneNode::getAllSubDisplays() const
 {
     auto allbones = getAllSubBones();
     cocos2d::Vector<SkinNode*> allskins;
     for (const auto& bone : allbones)
     {
-        for (const auto& skin : bone->getSkins())
+        for (const auto& skin : bone->getDisplays())
         {
             allskins.pushBack(skin);
         }
@@ -405,10 +449,6 @@ void BoneNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t p
             (*it)->visit(renderer, _modelViewTransform, flags);
 
     }
-    // self draw
-    //if (this->_rootBoneNode == nullptr)
-    //    this->draw(renderer, _modelViewTransform, flags);
-
     _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
@@ -446,6 +486,50 @@ void BoneNode::removeChild(Node* child, bool cleanup /* = true */)
             removeSkin(skin);
         }
     }
+}
+
+void BoneNode::sortAllChildren()
+{
+    Node::sortAllChildren();
+    std::sort(_childBones.begin(), _childBones.end(), nodeComparisonLess);
+    std::sort(_boneSkins.begin(), _boneSkins.end(), nodeComparisonLess);
+}
+
+cocos2d::Mat4 BoneNode::getBoneToSkeletonTransform() const
+{
+    auto retMat = Mat4::IDENTITY;
+    if (_rootSkeleton == nullptr)
+    {
+        CCLOG("can not tranform before added to Skeleton");
+        return retMat;
+    }
+
+    retMat = this->getNodeToParentTransform();
+    for (Node *p = _parent; p != _rootSkeleton; p = p->getParent())
+    {
+        retMat = p->getNodeToParentTransform() * retMat;
+    }
+    return retMat;
+}
+
+cocos2d::AffineTransform BoneNode::getBoneToSkeletonAffineTransform() const
+{
+
+    auto retTrans = AffineTransform::IDENTITY;
+    if (_rootSkeleton == nullptr)
+    {
+        CCLOG("can not tranform before added to Skeleton");
+        return retTrans;
+    }
+    retTrans = this->getNodeToParentAffineTransform();
+    for (Node *p = _parent; p != _rootSkeleton; p = p->getParent())
+        retTrans = AffineTransformConcat(retTrans, p->getNodeToParentAffineTransform());
+    return retTrans;
+}
+
+SkeletonNode* BoneNode::getRootSkeletonNode() const
+{
+    return _rootSkeleton;
 }
 
 NS_TIMELINE_END

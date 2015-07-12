@@ -26,6 +26,13 @@
 #include "jsb_cocos2dx_navmesh_auto.hpp"
 #include "navmesh/jsb_cocos2dx_navmesh_manual.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCJavascriptJavaBridge.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -121,6 +128,13 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if CC_USE_NAVMESH
     sc->addRegisterCallback(register_all_cocos2dx_navmesh);
     sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

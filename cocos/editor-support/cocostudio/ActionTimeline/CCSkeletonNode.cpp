@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 cocos2d-x.org
+Copyright (c) 2014 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -24,11 +24,18 @@ THE SOFTWARE.
 #include "CCSkeletonNode.h"
 
 #include "base/CCDirector.h"
+#include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGroupCommand.h"
 #include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include <stack>
+
+#if ENABLE_PHYSICS_BOX2D_DETECT
+#include "Box2D/Box2D.h"
+#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
+#include "chipmunk.h"
+#endif
+
 
 NS_TIMELINE_BEGIN
 
@@ -48,37 +55,54 @@ SkeletonNode* SkeletonNode::create()
 
 bool SkeletonNode::init()
 {
-    _anchorPoint = Vec2(.5f, .5f);
+    _anchorPoint = cocos2d::Vec2(.5f, .5f);
     setContentSize(cocos2d::Size(20, 20));
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
-    _rootBoneNode = this;
+    setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+    _rootSkeleton = this;
     return true;
 }
 
 
 cocos2d::Rect SkeletonNode::getBoundingBox() const
 {
-    auto allbones = getAllSubBones();
-
     float minx, miny, maxx, maxy = 0;
-
-
-    Rect boundingBox = BoneNode::getBoundingBox();
-
+    minx = miny = maxx = maxy;
+    cocos2d::Rect boundingBox = getDisplayingRect();
+    bool first = true;
+    if (!boundingBox.equals(cocos2d::Rect::ZERO))
+    {
+        minx = boundingBox.getMinX();
+        miny = boundingBox.getMinY();
+        maxx = boundingBox.getMaxX();
+        maxy = boundingBox.getMaxY();
+        first = false;
+    }
+    auto allbones = getAllSubBones();
     for (const auto& bone : allbones)
     {
-        Rect r = bone->getBoundingBox();
-        if (r.equals(Rect::ZERO))
+        cocos2d::Rect r = RectApplyAffineTransform(bone->getDisplayingRect(), bone->getBoneToSkeletonAffineTransform());
+        if (r.equals(cocos2d::Rect::ZERO))
             continue;
 
-        minx = r.getMinX() < boundingBox.getMinX() ? r.getMinX() : boundingBox.getMinX();
-        miny = r.getMinY() < boundingBox.getMinY() ? r.getMinY() : boundingBox.getMinY();
-        maxx = r.getMaxX() > boundingBox.getMaxX() ? r.getMaxX() : boundingBox.getMaxX();
-        maxy = r.getMaxY() > boundingBox.getMaxY() ? r.getMaxY() : boundingBox.getMaxY();
+        if (first)
+        {
+            minx = r.getMinX();
+            miny = r.getMinY();
+            maxx = r.getMaxX();
+            maxy = r.getMaxY();
+
+            first = false;
+        }
+        else
+        {
+            minx = MIN(r.getMinX(), minx);
+            miny = MIN(r.getMinY(), miny);
+            maxx = MAX(r.getMaxX(), maxx);
+            maxy = MAX(r.getMaxY(), maxy);
+        }
     }
     boundingBox.setRect(minx, miny, maxx - minx, maxy - miny);
-
-    return RectApplyTransform(boundingBox, getNodeToParentTransform());
+    return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());;
 }
 
 SkeletonNode::SkeletonNode()
@@ -111,16 +135,13 @@ void SkeletonNode::updateColor()
 {
     for (unsigned int i = 0; i < 8; i++)
     {
-        _squareColors[i].r = _displayedColor.r / 255.0f;
-        _squareColors[i].g = _displayedColor.g / 255.0f;
-        _squareColors[i].b = _displayedColor.b / 255.0f;
-        _squareColors[i].a = _displayedOpacity / 255.0f;
+        _squareColors[i] = _rackColor;
     }
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
 
-void SkeletonNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
+void SkeletonNode::visit(cocos2d::Renderer *renderer, const  cocos2d::Mat4& parentTransform, uint32_t parentFlags)
 {
     BoneNode::visit(renderer, parentTransform, parentFlags);
     if (this->_visible)
@@ -128,7 +149,6 @@ void SkeletonNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32
         this->draw(renderer, parentTransform, parentFlags);
     }
 }
-
 
 void SkeletonNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
@@ -142,11 +162,11 @@ void SkeletonNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transf
 
             for (int i = 0; i < 8; ++i)
             {
-                Vec4 pos;
+                cocos2d::Vec4 pos;
                 pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
                 pos.w = 1;
                 _modelViewTransform.transformVector(&pos);
-                _noMVPVertices[i] = Vec3(pos.x, pos.y, pos.z) / pos.w;
+                _noMVPVertices[i] = cocos2d::Vec3(pos.x, pos.y, pos.z) / pos.w;
             }
         }
 
@@ -166,7 +186,7 @@ void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+    cocos2d::GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION | cocos2d::GL::VERTEX_ATTRIB_FLAG_COLOR);
 
     //
     // Attributes
@@ -179,8 +199,8 @@ void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
 #else
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
+    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 #endif // EMSCRIPTEN
 
     cocos2d::GL::blendFunc(_blendFunc.src, _blendFunc.dst);
@@ -214,6 +234,66 @@ void SkeletonNode::setContentSize(const cocos2d::Size &size)
         _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
     }
     updateVertices();
+}
+
+void SkeletonNode::changeDisplays(const std::map<std::string, std::string> &boneSkinNameMap)
+{
+    for (auto &boneskin : boneSkinNameMap)
+    {
+        auto bone = getBoneNode(boneskin.first);
+        if ( nullptr != bone)
+            bone->display(boneskin.second, true);
+    }
+}
+
+BoneNode* SkeletonNode::getBoneNode(const std::string& boneName)
+{
+    auto iter = _subBonesMap.find(boneName);
+    if (iter != _subBonesMap.end())
+    {
+        return iter->second;
+    }
+    return nullptr;
+}
+
+const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() const
+{
+    return _subBonesMap;
+}
+
+cocos2d::Mat4 SkeletonNode::getBoneToSkeletonTransform() const
+{
+    return _transform;
+}
+
+cocos2d::AffineTransform SkeletonNode::getBoneToSkeletonAffineTransform() const
+{
+    cocos2d::AffineTransform ret;
+    cocos2d::GLToCGAffine(_transform.m, &ret);
+
+    return ret;
+}
+
+cocos2d::Mat4 SkeletonNode::getSkinToSkeletonTransform(SkinNode* skin)
+{
+    auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
+    if (boneParent == nullptr)
+    {
+        CCLOG("skin %s is not a skin or have not been added to a bone");
+        return cocos2d::Mat4::IDENTITY;
+    }
+    return boneParent->getBoneToSkeletonTransform() * skin->getNodeToParentTransform();
+}
+
+cocos2d::AffineTransform SkeletonNode::getSkinToSkeltonAffineTransform(SkinNode* skin)
+{
+    auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
+    if (boneParent == nullptr)
+    {
+        CCLOG("skin %s is not a skin or have not been added to a bone", skin->getName().c_str());
+        return cocos2d::AffineTransform::IDENTITY;
+    }
+    return AffineTransformConcat(skin->getNodeToParentAffineTransform(), boneParent->getBoneToSkeletonAffineTransform());
 }
 
 NS_TIMELINE_END
