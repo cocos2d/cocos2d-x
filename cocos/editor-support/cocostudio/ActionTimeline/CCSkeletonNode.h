@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __CCSKELETONNODE_H__
 #define  __CCSKELETONNODE_H__
 
-#include "CCPlatformMacros.h"
 #include "CCTimelineMacro.h"
 #include "renderer/CCRenderer.h"
 #include "cocostudio/CocosStudioExport.h"

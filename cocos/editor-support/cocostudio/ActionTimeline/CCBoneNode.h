@@ -149,8 +149,8 @@ protected:
 
 
     // Skins
-    /* @brief: !Add skin to bone
-    /* @param hide: this skin
+    /* @brief: Add skin to bone
+    *  @param hide this skin
     */
     virtual void addSkin(SkinNode* skin, bool hide = false);
     virtual void removeSkin(SkinNode* skin);
@@ -167,18 +167,19 @@ protected:
     virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
+    
 protected:
     cocos2d::CustomCommand _customCommand;
     cocos2d::BlendFunc     _blendFunc;
 
-    float            _length;
-    float            _width;
-    bool             _isRackShow;
+    float             _length;
+    float             _width;
+    bool              _isRackShow;
     cocos2d::Color4F  _rackColor;
 
     cocos2d::Vector<BoneNode*> _childBones;
     cocos2d::Vector<SkinNode*> _boneSkins;
-    SkeletonNode*                  _rootSkeleton;
+    SkeletonNode*              _rootSkeleton;
 private:
     cocos2d::Vec2          _squareVertices[4];
     cocos2d::Color4F       _squareColors[4];

@@ -170,13 +170,11 @@ void SkeletonNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transf
             }
         }
 
-        //auto transp = this->getWorldToNodeTransform();
         auto allbones = getAllSubBones();
         for (auto &subbone : allbones)
         {
-            //auto ptran = subbone->getParent()->getNodeToWorldTransform();
-            //ptran.multiply(transp);
-            subbone->draw(renderer, transform/*ptran*/, flags);
+            auto ptran = transform * subbone->getBoneToSkeletonTransform();
+            subbone->draw(renderer, ptran, flags);
         }
     }
 }
@@ -263,15 +261,16 @@ const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() co
 
 cocos2d::Mat4 SkeletonNode::getBoneToSkeletonTransform() const
 {
-    return _transform;
+    if(nullptr != dynamic_cast<BoneNode*>(_parent))
+        return BoneNode::getBoneToSkeletonTransform();
+    return cocos2d::Mat4::IDENTITY;
 }
 
 cocos2d::AffineTransform SkeletonNode::getBoneToSkeletonAffineTransform() const
 {
-    cocos2d::AffineTransform ret;
-    cocos2d::GLToCGAffine(_transform.m, &ret);
-
-    return ret;
+    if(nullptr != dynamic_cast<BoneNode*>(_parent))
+        return BoneNode::getBoneToSkeletonAffineTransform();
+    return cocos2d::AffineTransform::IDENTITY;
 }
 
 cocos2d::Mat4 SkeletonNode::getSkinToSkeletonTransform(SkinNode* skin)
@@ -279,7 +278,7 @@ cocos2d::Mat4 SkeletonNode::getSkinToSkeletonTransform(SkinNode* skin)
     auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
     if (boneParent == nullptr)
     {
-        CCLOG("skin %s is not a skin or have not been added to a bone");
+        CCLOG("skin %s is not a skin or have not been added to a bone", skin->getName().c_str());
         return cocos2d::Mat4::IDENTITY;
     }
     return boneParent->getBoneToSkeletonTransform() * skin->getNodeToParentTransform();
