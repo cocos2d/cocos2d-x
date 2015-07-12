@@ -266,10 +266,21 @@ void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
 #endif
 }
 
+/////////////////////////////////
+// greentwip fix for key codes //
+/////////////////////////////////
+
 void Layer::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* unused_event)
 {
-    CC_UNUSED_PARAM(keyCode);
     CC_UNUSED_PARAM(unused_event);
+#if CC_ENABLE_SCRIPT_BINDING
+    if(kScriptTypeNone != _scriptType)
+    {
+        KeypadScriptData data(keyCode, true, this);
+        ScriptEvent event(kKeypadEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+#endif
 }
 
 void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
@@ -278,12 +289,13 @@ void Layer::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* unused_event)
 #if CC_ENABLE_SCRIPT_BINDING
     if(kScriptTypeNone != _scriptType)
     {
-        KeypadScriptData data(keyCode, this);
+        KeypadScriptData data(keyCode, false, this);
         ScriptEvent event(kKeypadEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
 }
+//////////////////////////////////////
 
 /// isKeyboardEnabled getter
 bool Layer::isKeyboardEnabled() const

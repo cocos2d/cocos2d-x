@@ -70,16 +70,23 @@ struct LuaEventAccelerationData
     }
 };
 
-struct LuaEventKeyboarData
+/////////////////////////////////
+// greentwip fix for key codes //
+/////////////////////////////////
+
+struct LuaEventKeyboardData
 {
     int keyCode;
+    bool is_pressed_;
     Event* event;
     
-    LuaEventKeyboarData(int inKeyCode,Event* inEvent)
-    :keyCode(inKeyCode),event(inEvent)
+    LuaEventKeyboardData(int inKeyCode, bool is_pressed, Event* inEvent)
+    :keyCode(inKeyCode), is_pressed_(is_pressed), event(inEvent)
     {
     }
 };
+
+/////////////////////////////////
 
 struct LuaEventTouchData
 {

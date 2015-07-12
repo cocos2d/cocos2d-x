@@ -454,18 +454,33 @@ struct KeypadScriptData
      * @js NA
      */
     void* nativeObject;
-    
+
+    /////////////////////////////////
+    // greentwip fix for key codes //
+    /////////////////////////////////
+
+    /**
+     * pressed information. true for pressed false for released.
+     *
+     * @lua NA
+     * @js NA
+     */
+    bool is_pressed_;
+
     /**
      * Constructor of KeypadScriptData.
      *
      * @lua NA
      * @js NA
      */
-    KeypadScriptData(EventKeyboard::KeyCode inActionType,void* inNativeObject)
-    : actionType(inActionType),nativeObject(inNativeObject)
+    KeypadScriptData(EventKeyboard::KeyCode inActionType, bool is_pressed, void* inNativeObject)
+    : actionType(inActionType), is_pressed_(is_pressed), nativeObject(inNativeObject)
     {
     }
+    /////////////////////////////////
 };
+
+
 
 
 /**
