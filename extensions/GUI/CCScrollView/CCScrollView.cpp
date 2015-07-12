@@ -651,12 +651,14 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
         return false;
     }
     
-    Rect frame = getViewRect();
+	Vec2 nsp = convertToNodeSpace(touch->getLocation());
+	Rect bb;
+	bb.size = _contentSize;
 
     //dispatcher does not know about clipping. reject touches outside visible bounds.
     if (_touches.size() > 2 ||
         _touchMoved          ||
-        !frame.containsPoint(touch->getLocation()))
+		!bb.containsPoint(nsp))
     {
         return false;
     }
