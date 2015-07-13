@@ -314,8 +314,10 @@ public:
      */
     void formatText();
    
-    void setAutoReSize(bool isAutoReSize){_isAutoReSize = isAutoReSize;}
-    bool isAutoReSize() const{ return _isAutoReSize;}
+    void setAutoReSize(bool isAutoReSizeHeight,bool isAutoReSizeWidth = false){_isAutoReSizeHeight=isAutoReSizeHeight;_isAutoReSizeWidth = isAutoReSizeWidth;}
+    bool isAutoReSizeBothWidthAndHeight() const{ return _isAutoReSizeWidth&&_isAutoReSizeHeight;}
+    bool isAutoReSizeWidth() const{ return _isAutoReSizeWidth;}
+    bool isAutoReSizeHeight() const{ return _isAutoReSizeHeight;}
     
     //override functions.
     virtual void setAnchorPoint(const Vec2 &pt) override;
@@ -343,7 +345,8 @@ protected:
     float _leftSpaceWidth;
     float _verticalSpace;
     Node* _elementRenderersContainer;
-    bool  _isAutoReSize;
+    bool  _isAutoReSizeWidth;
+    bool  _isAutoReSizeHeight;
 };
     
 }
