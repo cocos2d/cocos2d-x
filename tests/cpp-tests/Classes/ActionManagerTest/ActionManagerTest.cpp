@@ -18,6 +18,7 @@ ActionManagerTests::ActionManagerTests()
     ADD_TEST_CASE(PauseTest);
     ADD_TEST_CASE(StopActionTest);
     ADD_TEST_CASE(StopAllActionsTest);
+    ADD_TEST_CASE(StopActionsByFlagsTest);
     ADD_TEST_CASE(ResumeTest);
 }
 
@@ -290,4 +291,54 @@ void ResumeTest::resumeGrossini(float time)
     auto pGrossini = getChildByTag(kTagGrossini);
     auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(pGrossini);
+}
+
+//------------------------------------------------------------------
+//
+// StopActionsByFlagsTest
+//
+//------------------------------------------------------------------
+void StopActionsByFlagsTest::onEnter()
+{
+    ActionManagerTest::onEnter();
+
+    auto l = Label::createWithTTF("Should stop scale & move after 4 seconds but keep rotate", "fonts/Thonburi.ttf", 16.0f);
+    addChild(l);
+    l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 75) );
+
+    auto pMove1 = MoveBy::create(2, Vec2(200, 0));
+    auto pMove2 = MoveBy::create(2, Vec2(-200, 0));
+    auto pSequenceMove = Sequence::createWithTwoActions(pMove1, pMove2);
+    auto pRepeatMove = RepeatForever::create(pSequenceMove);
+    pRepeatMove->setFlags(kMoveFlag | kRepeatForeverFlag);
+
+    auto pScale1 = ScaleBy::create(2, 1.5f);
+    auto pScale2 = ScaleBy::create(2, 1.0f/1.5f);
+    auto pSequenceScale = Sequence::createWithTwoActions(pScale1, pScale2);
+    auto pRepeatScale = RepeatForever::create(pSequenceScale);
+    pRepeatScale->setFlags(kScaleFlag | kRepeatForeverFlag);
+
+    auto pRotate = RotateBy::create(2, 360);
+    auto pRepeatRotate = RepeatForever::create(pRotate);
+    pRepeatRotate->setFlags(kRotateFlag | kRepeatForeverFlag);
+
+    auto pChild = Sprite::create(s_pathGrossini);
+    pChild->setPosition( VisibleRect::center() );
+
+    addChild(pChild, 1, kTagGrossini);
+    pChild->runAction(pRepeatMove);
+    pChild->runAction(pRepeatScale);
+    pChild->runAction(pRepeatRotate);
+    this->scheduleOnce((SEL_SCHEDULE)&StopActionsByFlagsTest::stopAction, 4);
+}
+
+void StopActionsByFlagsTest::stopAction(float time)
+{
+    auto sprite = getChildByTag(kTagGrossini);
+    sprite->stopActionsByFlags(kMoveFlag | kScaleFlag);
+}
+
+std::string StopActionsByFlagsTest::subtitle() const
+{
+    return "Stop All Actions By Flags Test";
 }

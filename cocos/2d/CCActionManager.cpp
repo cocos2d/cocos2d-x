@@ -315,6 +315,37 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target)
     }
 }
 
+void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
+{
+    if (flags == 0)
+    {
+        return;
+    }
+    CCASSERT(target != nullptr, "");
+
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+
+    if (element)
+    {
+        auto limit = element->actions->num;
+        for (int i = 0; i < limit;)
+        {
+            Action *action = (Action*)element->actions->arr[i];
+
+            if ((action->getFlags() & flags) != 0 && action->getOriginalTarget() == target)
+            {
+                removeActionAtIndex(i, element);
+                --limit;
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
+}
+
 // get
 
 // FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
