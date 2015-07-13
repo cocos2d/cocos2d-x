@@ -382,7 +382,21 @@ void RichText::formarRenderers()
             maxHeights[i] = maxHeight;
             newContentSizeHeight += maxHeights[i];
         }
-        
+        if(_isAutoReSize)
+        {
+            _customSize.height =newContentSizeHeight;
+            if(_elementRenders.size()==1)
+            {
+                Vector<Node*>* row = (_elementRenders[0]);
+                float maxWidth = 0.0f;
+                for (ssize_t j=0; j<row->size(); j++)
+                {
+                    Node* l = row->at(j);
+                    maxWidth += l->getContentSize().width;
+                }
+                _customSize.width = maxWidth;
+            }
+        }
         
         float nextPosY = _customSize.height;
         for (size_t i=0; i<_elementRenders.size(); i++)
@@ -400,7 +414,7 @@ void RichText::formarRenderers()
                 nextPosX += l->getContentSize().width;
             }
         }
-        _elementRenderersContainer->setContentSize(_contentSize);
+        _elementRenderersContainer->setContentSize(_customSize);
         delete [] maxHeights;
     }
     
