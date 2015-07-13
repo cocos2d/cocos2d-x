@@ -152,6 +152,13 @@
         }
     };
 
+    var getSkyboxRes = function(json, key) {
+        if(json.hasOwnProperty(key) && json[key].hasOwnProperty("Path")) {
+            return json[key]["Path"];
+        }
+        return "";
+    }
+
     /**
      * SingleNode
      * @param json
@@ -164,6 +171,25 @@
         var color = json["CColor"];
         if(color != null)
             node.setColor(getColor(color));
+
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+        {
+            var leftFileData = getSkyboxRes(json, "LeftImage");
+            var rightFileData = getSkyboxRes(json, "RightImage");
+            var upFileData = getSkyboxRes(json, "UpImage");
+            var downFileData = getSkyboxRes(json, "DownImage");
+            var forwardFileData = getSkyboxRes(json, "ForwardImage");
+            var backFileData = getSkyboxRes(json, "BackImage");
+            var cameraFlag = json["SkyBoxMask"];
+            if(undefined === cameraFlag || isNaN(cameraFlag)) {
+                cameraFlag = 1024;
+            }
+
+            var skyBox = new jsb.Skybox();
+            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+            skyBox.setCameraMask(cameraFlag, false);
+            node.addChild(skyBox, 0, "_innerSkyBox");
+        }
 
         return node;
     };
@@ -1390,28 +1416,49 @@
             this.general3DAttributes(node, json);
 
             var camMode = json["UserCameraFlagMode"];
-            switch(camMode){
-                case "USER1":
-                    node.setCameraFlag(cc.CameraFlag.USER1); break;
-                case "USER2":
-                    node.setCameraFlag(cc.CameraFlag.USER2); break;
-                case "USER3":
-                    node.setCameraFlag(cc.CameraFlag.USER3); break;
-                case "USER4":
-                    node.setCameraFlag(cc.CameraFlag.USER4); break;
-                case "USER5":
-                    node.setCameraFlag(cc.CameraFlag.USER5); break;
-                case "USER6":
-                    node.setCameraFlag(cc.CameraFlag.USER6); break;
-                case "USER7":
-                    node.setCameraFlag(cc.CameraFlag.USER7); break;
-                case "USER8":
-                    node.setCameraFlag(cc.CameraFlag.USER8); break;
-                case "DEFAULT":
-                    node.setCameraFlag(cc.CameraFlag.DEFAULT); break;
-                default:
-                    node.setCameraFlag(cc.CameraFlag.USER1);
+            var cameraFlagData = json["CameraFlagData"];
+            var cameraFlag = cc.CameraFlag.USER1;
+            if(undefined === cameraFlagData || isNaN(cameraFlagData) || 0 === cameraFlagData)
+            {
+                switch(camMode){
+                    case "USER1":
+                        cameraFlag = cc.CameraFlag.USER1; break;
+                    case "USER2":
+                        cameraFlag = cc.CameraFlag.USER2; break;
+                    case "USER3":
+                        cameraFlag = cc.CameraFlag.USER3; break;
+                    case "USER4":
+                        cameraFlag = cc.CameraFlag.USER4; break;
+                    case "USER5":
+                        cameraFlag = cc.CameraFlag.USER5; break;
+                    case "USER6":
+                        cameraFlag = cc.CameraFlag.USER6; break;
+                    case "USER7":
+                        cameraFlag = cc.CameraFlag.USER7; break;
+                    case "USER8":
+                        cameraFlag = cc.CameraFlag.USER8; break;
+                    case "DEFAULT":
+                        cameraFlag = cc.CameraFlag.DEFAULT; break;
+                }
+            } else {
+                cameraFlag = cameraFlagData;
             }
+            node.setCameraFlag(cameraFlag);
+        }
+
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+        {
+            var leftFileData = getSkyboxRes(json, "LeftImage");
+            var rightFileData = getSkyboxRes(json, "RightImage");
+            var upFileData = getSkyboxRes(json, "UpImage");
+            var downFileData = getSkyboxRes(json, "DownImage");
+            var forwardFileData = getSkyboxRes(json, "ForwardImage");
+            var backFileData = getSkyboxRes(json, "BackImage");
+
+            var skyBox = new jsb.Skybox();
+            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+            skyBox.setCameraMask(cameraFlag);
+            node.addChild(skyBox, 0, "_innerSkyBox");
         }
 
         return node;
