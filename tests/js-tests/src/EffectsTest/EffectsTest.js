@@ -31,6 +31,11 @@ var effectsTestSceneIdx = -1;
 
 var EffecstsBaseLayer = BaseTestLayer.extend({
 
+<<<<<<< Updated upstream
+=======
+    _gridNodeTarget: null,
+    _SetRect:false,
+>>>>>>> Stashed changes
     code:function () {
         return "";
     },
@@ -53,16 +58,37 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
         director.runScene(s);
     },
     onEnter:function () {
-       this._super();
+        this._super();
 
+        this._SetRect = CheckWhetherRect();
         var node = new cc.Node();
+<<<<<<< Updated upstream
 	    var nodeGrid = new cc.NodeGrid();
+=======
+
+        //Whether to demonstrate the effects inside a smaller rect
+        if(this._SetRect == false)
+            var nodeGrid = new cc.NodeGrid();
+        else
+        {
+            var visiablesize = director.getVisibleSize();
+            var gridRect = new cc.rect(visiablesize.width*0.1,
+                visiablesize.height*0.1,
+                visiablesize.width*0.4,
+                visiablesize.height*0.4);
+            var nodeGrid = new cc.NodeGrid(gridRect);
+        }
+>>>>>>> Stashed changes
         nodeGrid.addChild(node);
-	    nodeGrid.runAction( this.getEffect(3) );
+	    nodeGrid.runAction(this.getEffect(3));
         this.addChild( nodeGrid );
 
         // back gradient
+<<<<<<< Updated upstream
         var gradient = new cc.LayerGradient( cc.color(0,0,0,255), cc.color(98,99,117,255));
+=======
+        var gradient = new cc.LayerGradient( cc.color(255,0,0,255), cc.color(255,255,0,255));
+>>>>>>> Stashed changes
         node.addChild( gradient );
 
         // back image
@@ -482,3 +508,10 @@ var previousEffectsTest = function () {
 var restartEffectsTest = function () {
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
+<<<<<<< Updated upstream
+=======
+//TODO:Better to set a smarter way to check
+var CheckWhetherRect = function(){
+    return true;
+}
+>>>>>>> Stashed changes
