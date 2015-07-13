@@ -2270,6 +2270,7 @@ Animate::Animate()
 , _executedLoops(0)
 , _animation(nullptr)
 , _frameDisplayedEvent(nullptr)
+, _currFrameIndex(0)
 {
 
 }
@@ -2383,7 +2384,8 @@ void Animate::update(float t)
         float splitTime = _splitTimes->at(i);
 
         if( splitTime <= t ) {
-            AnimationFrame* frame = frames.at(i);
+            _currFrameIndex = i;
+            AnimationFrame* frame = frames.at(_currFrameIndex);
             frameToDisplay = frame->getSpriteFrame();
             static_cast<Sprite*>(_target)->setSpriteFrame(frameToDisplay);
 
