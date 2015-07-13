@@ -313,7 +313,10 @@ public:
      * It's usually called internally.
      */
     void formatText();
-
+   
+    void setAutoReSize(bool isAutoReSize){_isAutoReSize = isAutoReSize;}
+    bool isAutoReSize() const{ return _isAutoReSize;}
+    
     //override functions.
     virtual void setAnchorPoint(const Vec2 &pt) override;
     virtual Size getVirtualRendererSize() const override;
