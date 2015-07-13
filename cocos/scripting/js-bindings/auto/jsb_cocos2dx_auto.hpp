@@ -127,6 +127,7 @@ bool js_cocos2dx_Node_getEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Node_setSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setGLProgramState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_stopActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
@@ -410,8 +411,10 @@ bool js_cocos2dx_Action_getOriginalTarget(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_Action_stop(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_getTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Action_getFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_step(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_setTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Action_setFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_isDone(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1840,6 +1843,7 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_ActionManager_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_removeAllActions(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_addAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp);
