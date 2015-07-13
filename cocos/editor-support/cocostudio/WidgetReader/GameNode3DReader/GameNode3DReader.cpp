@@ -145,9 +145,6 @@ namespace cocostudio
 
             if (name == "LeftImage")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-
                 attribute = child->FirstAttribute();
 
                 while (attribute)
@@ -166,7 +163,6 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         leftPlistFile = value;
-                        texture = value;
                     }
 
                     attribute = attribute->Next();
@@ -175,14 +171,11 @@ namespace cocostudio
                 if (leftResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(leftPlistFile));
                 }
             }
             else if (name == "RightImage")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-
                 attribute = child->FirstAttribute();
 
                 while (attribute)
@@ -201,7 +194,6 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         rightPlistFile = value;
-                        texture = value;
                     }
 
                     attribute = attribute->Next();
@@ -210,14 +202,11 @@ namespace cocostudio
                 if (rightResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(rightPlistFile));
                 }
             }
             else if (name == "UpImage")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-
                 attribute = child->FirstAttribute();
 
                 while (attribute)
@@ -236,7 +225,6 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         upPlistFile = value;
-                        texture = value;
                     }
 
                     attribute = attribute->Next();
@@ -245,14 +233,11 @@ namespace cocostudio
                 if (upResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(upPlistFile));
                 }
             }
             else if (name == "DownImage")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-
                 attribute = child->FirstAttribute();
 
                 while (attribute)
@@ -271,7 +256,6 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         downPlistFile = value;
-                        texture = value;
                     }
 
                     attribute = attribute->Next();
@@ -280,14 +264,11 @@ namespace cocostudio
                 if (downResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(downPlistFile));
                 }
             }
             else if (name == "ForwardImage")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-
                 attribute = child->FirstAttribute();
 
                 while (attribute)
@@ -306,7 +287,6 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         forwardPlistFile = value;
-                        texture = value;
                     }
 
                     attribute = attribute->Next();
@@ -315,14 +295,11 @@ namespace cocostudio
                 if (forwardResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(forwardPlistFile));
                 }
             }
             else if (name == "BackImage")
             {
-                std::string texture = "";
-                std::string texturePng = "";
-
                 attribute = child->FirstAttribute();
 
                 while (attribute)
@@ -341,7 +318,6 @@ namespace cocostudio
                     else if (name == "Plist")
                     {
                         backPlistFile = value;
-                        texture = value;
                     }
 
                     attribute = attribute->Next();
@@ -350,7 +326,7 @@ namespace cocostudio
                 if (backResourceType == 1)
                 {
                     FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
-                    fbs->_textures.push_back(builder->CreateString(texture));
+                    fbs->_textures.push_back(builder->CreateString(backPlistFile));
                 }
             }
 
