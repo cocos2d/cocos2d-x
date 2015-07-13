@@ -147,12 +147,12 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     }
 
     public void handleOnPause() {
-    	/**
-    	 * onPause may be invoked before onSurfaceCreated, 
-    	 * and engine will be initialized correctly after
-    	 * onSurfaceCreated is invoked. Can not invoke any
-    	 * native method before onSurfaceCreated is invoked
-    	 */
+        /**
+         * onPause may be invoked before onSurfaceCreated, 
+         * and engine will be initialized correctly after
+         * onSurfaceCreated is invoked. Can not invoke any
+         * native method before onSurfaceCreated is invoked
+         */
         if (! mNativeInitCompleted)
             return;
 
