@@ -8,6 +8,7 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestSearchPath);
     ADD_TEST_CASE(TestFilenameLookup);
     ADD_TEST_CASE(TestIsFileExist);
+    ADD_TEST_CASE(TestIsDirectoryExist);
     ADD_TEST_CASE(TestFileFuncs);
     ADD_TEST_CASE(TestDirectoryFuncs);
     ADD_TEST_CASE(TextWritePlist);
@@ -15,6 +16,7 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestWriteData);
     ADD_TEST_CASE(TestWriteValueMap);
     ADD_TEST_CASE(TestWriteValueVector);
+    ADD_TEST_CASE(TestUnicodePath);
 }
 
 // TestResolutionDirectories
@@ -122,7 +124,7 @@ void TestSearchPath::onEnter()
         if (fp)
         {
             char szReadBuf[100] = {0};
-            size_t read = fread(szReadBuf, 1, strlen(szBuf), fp);
+            size_t read = fread(szReadBuf, 1, strlen(szReadBuf), fp);
             if (read > 0)
                 log("The content of file from writable path: %s", szReadBuf);
             fclose(fp);
@@ -228,6 +230,61 @@ std::string TestIsFileExist::title() const
 }
 
 std::string TestIsFileExist::subtitle() const
+{
+    return "";
+}
+
+// TestIsDirectoryExist
+
+void TestIsDirectoryExist::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto util = FileUtils::getInstance();
+    int x = s.width/2, y = s.height/3;
+    
+    Label* label = nullptr;
+    std::string dir;
+    char msg[512];
+    auto getMsg = [&dir, &msg](bool b)->const char *
+    {
+        snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
+        return msg;
+    };
+    
+    dir = "Images";
+    label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
+    label->setPosition(x, y * 2);
+    this->addChild(label);
+    
+    dir = util->getWritablePath();
+    label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
+    label->setPosition(x, y * 1);
+    this->addChild(label);
+
+    dir = util->getWritablePath();
+    label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
+    label->setPosition(x, y * 1);
+    this->addChild(label);
+}
+
+void TestIsDirectoryExist::onExit()
+{
+    
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    
+    // reset filename lookup
+    sharedFileUtils->purgeCachedEntries();
+    
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsDirectoryExist::title() const
+{
+    return "FileUtils: check whether the directory exists";
+}
+
+std::string TestIsDirectoryExist::subtitle() const
 {
     return "";
 }
@@ -798,6 +855,104 @@ std::string TestWriteValueVector::title() const
 }
 
 std::string TestWriteValueVector::subtitle() const
+{
+    return "";
+}
+
+// TestUnicodePath
+
+void TestUnicodePath::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    auto s = Director::getInstance()->getWinSize();
+    auto util = FileUtils::getInstance();
+    
+    int x = s.width/2,
+    y = s.height/5;
+    Label* label = nullptr;
+    
+    std::string dir = "中文路径/";
+    std::string filename = "测试文件.test";
+    
+    std::string act;
+    char msg[512];
+    auto getMsg = [&act, &msg](bool b, const std::string& path)->const char *
+    {
+        snprintf((char *)msg, 512, "%s for %s path: \"%s\"", b ? "success" : "failed", act.c_str(), path.c_str());
+        return msg;
+    };
+    
+    // Check whether unicode dir should be create or not
+    std::string dirPath = util->getWritablePath() + dir;
+    if (!util->isDirectoryExist(dirPath))
+    {
+        util->createDirectory(dirPath);
+    }
+    
+    act = "create";
+    bool isExist = util->isDirectoryExist(dirPath);
+    label = Label::createWithSystemFont(getMsg(isExist, dirPath), "", 12, Size(s.width, 0));
+    label->setPosition(x, y * 4);
+    this->addChild(label);
+    
+    if (isExist)
+    {
+        // Check whether unicode file should be create or not
+        std::string filePath = dirPath + filename;
+        if (! util->isFileExist(filePath))
+        {
+            std::string writeDataStr = " 测试字符串.";
+            Data writeData;
+            writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
+            util->writeDataToFile(writeData, filePath);
+        }
+        
+        isExist = util->isFileExist(filePath);
+        label = Label::createWithSystemFont(getMsg(isExist, filePath), "", 12, Size(s.width, 0));
+        label->setPosition(x, y * 3);
+        this->addChild(label);
+        
+        act = "remove";
+        if (isExist)
+        {
+            // read file content and log it
+            unsigned char* buffer = nullptr;
+            Data readData = util->getDataFromFile(filePath);
+            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (readData.getSize() + 1));
+            memcpy(buffer, readData.getBytes(), readData.getSize());
+            buffer[readData.getSize()] = '\0';
+            // vc can't treat unicode string correctly, don't use unicode string in code
+            log("The content of file from writable path: %s", buffer);
+            free(buffer);
+            
+            // remove test file
+            label = Label::createWithSystemFont(getMsg(util->removeFile(filePath), filePath), "", 12, Size(s.width, 0));
+            label->setPosition(x, y * 2);
+            this->addChild(label);
+        }
+        
+        // remove test dir
+        label = Label::createWithSystemFont(getMsg(util->removeDirectory(dirPath), dirPath), "", 12, Size(s.width, 0));
+        label->setPosition(x, y * 1);
+        this->addChild(label);
+    }
+}
+
+void TestUnicodePath::onExit()
+{
+    
+    FileUtils *sharedFileUtils = FileUtils::getInstance();
+    sharedFileUtils->purgeCachedEntries();
+    sharedFileUtils->setFilenameLookupDictionary(ValueMap());
+    FileUtilsDemo::onExit();
+}
+
+std::string TestUnicodePath::title() const
+{
+    return "FileUtils: check unicode path";
+}
+
+std::string TestUnicodePath::subtitle() const
 {
     return "";
 }

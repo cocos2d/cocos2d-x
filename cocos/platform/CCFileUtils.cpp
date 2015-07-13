@@ -1059,7 +1059,7 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-
+// windows os implement should override in platform specific FileUtiles class
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
     CCASSERT(false, "FileUtils not support isDirectoryExistInternal");
@@ -1097,6 +1097,7 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
 }
 
 #else
+// default implements for unix like os
 #include <sys/types.h>
 #include <errno.h>
 #include <dirent.h>
@@ -1222,6 +1223,7 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
 }
 
 #endif
+
 long FileUtils::getFileSize(const std::string &filepath)
 {
     CCASSERT(!filepath.empty(), "Invalid path");
