@@ -73,6 +73,9 @@ Scene::Scene()
     
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
+    
+    _isCaptureScreenEnabled = false;
+    _captureScreenCommand = nullptr;
 }
 
 Scene::~Scene()
@@ -209,6 +212,13 @@ void Scene::render(Renderer* renderer)
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
     
+    if(_isCaptureScreenEnabled && _captureScreenCommand)
+    {
+        renderer->addCommand(_captureScreenCommand);
+        _isCaptureScreenEnabled = false;
+        _captureScreenCommand = nullptr;
+    }
+    
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
@@ -236,6 +246,11 @@ void Scene::removeAllChildren()
         addChild(_defaultCamera);
         _defaultCamera->release();
     }
+}
+
+void Scene::setCaptureScreenCommand(CustomCommand* captureScreenCommand){
+    _captureScreenCommand = captureScreenCommand;
+    _isCaptureScreenEnabled = true;
 }
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION

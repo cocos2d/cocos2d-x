@@ -38,6 +38,7 @@ class BaseLight;
 class Renderer;
 class EventListenerCustom;
 class EventCustom;
+class CustomCommand;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif
@@ -114,6 +115,11 @@ public:
     /** override function */
     virtual void removeAllChildren() override;
     
+    /** Set capture screen command.
+    * @param captureScreenCommand A custom command for capture screen.
+    */
+    void setCaptureScreenCommand(CustomCommand* captureScreenCommand);
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
@@ -139,6 +145,9 @@ protected:
     EventListenerCustom*       _event;
 
     std::vector<BaseLight *> _lights;
+    
+    bool _isCaptureScreenEnabled;
+    CustomCommand* _captureScreenCommand;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);

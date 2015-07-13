@@ -156,7 +156,10 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     static CustomCommand captureScreenCommand;
     captureScreenCommand.init(std::numeric_limits<float>::max());
     captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
+    auto runningScene = Director::getInstance()->getRunningScene();
+    if (runningScene) {
+        runningScene->setCaptureScreenCommand(&captureScreenCommand);
+    }
 }
     
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
