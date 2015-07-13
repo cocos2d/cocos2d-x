@@ -173,7 +173,6 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
                 CCLOG("%s", msg.c_str());
                 return false;
             }
-
         }
         else
         {
@@ -204,7 +203,7 @@ static Data getData(const std::string& filename, bool forString)
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
         // check if the filename uses correct case characters
-        CC_BREAK_IF(!checkFileName(fullPath, filename));
+        checkFileName(fullPath, filename);
 
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
@@ -289,7 +288,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         std::string fullPath = fullPathForFilename(filename);
 
          // check if the filename uses correct case characters
-        CC_BREAK_IF(!checkFileName(fullPath, filename));
+        checkFileName(fullPath, filename);
 
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
