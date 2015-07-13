@@ -343,6 +343,7 @@ protected:
     float _leftSpaceWidth;
     float _verticalSpace;
     Node* _elementRenderersContainer;
+    bool  _isAutoReSize;
 };
     
 }
