@@ -140,8 +140,8 @@ ccs._parser = cc.Class.extend({
         return json["widgetTree"];
     },
 
-    parse: function(file, json){
-        var resourcePath = this._dirname(file);
+    parse: function(file, json, resourcePath){
+        resourcePath = resourcePath || this._dirname(file);
         this.pretreatment(json, resourcePath);
         var node = this.parseNode(this.getNodeJson(json), resourcePath, file);
         node && this.deferred(json, resourcePath, node, file);

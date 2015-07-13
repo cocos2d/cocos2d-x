@@ -17,7 +17,7 @@
     "vs_projs_info" : {
         "tools/simulator/frameworks/runtime-src/proj.win32/simulator.sln" : {
             "build_targets" : [
-                "simulator"
+                "libluacocos2d", "libjscocos2d", "libsimulator"
             ],
             "rename_targets" : [
                 "libSpine", "libbox2d", "libbullet", "librecast",

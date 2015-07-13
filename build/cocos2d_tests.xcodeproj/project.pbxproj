@@ -883,6 +883,10 @@
 		688669711AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */; };
 		688669721AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */; };
 		826294431AAF071500CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
+		94D793D91B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */; };
+		94D793DA1B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */; };
+		94D793DB1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */; };
+		94D793DC1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1945,6 +1949,10 @@
 		70A7F72D191D3E4900F0F206 /* shaderTest.psh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderTest.psh.h; sourceTree = "<group>"; };
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
 		826294421AAF071500CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-CCDrawNode.cpp"; sourceTree = "<group>"; };
+		94D793D61B4B7A3600F60F10 /* Bug-CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-CCDrawNode.h"; sourceTree = "<group>"; };
+		94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-PageViewLayout.cpp"; sourceTree = "<group>"; };
+		94D793D81B4B7A3600F60F10 /* Bug-PageViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-PageViewLayout.h"; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -2733,6 +2741,10 @@
 		1AC3597618CECF0B00F37B72 /* BugsTest */ = {
 			isa = PBXGroup;
 			children = (
+				94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */,
+				94D793D61B4B7A3600F60F10 /* Bug-CCDrawNode.h */,
+				94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */,
+				94D793D81B4B7A3600F60F10 /* Bug-PageViewLayout.h */,
 				1AC3597718CECF0B00F37B72 /* Bug-1159.cpp */,
 				1AC3597818CECF0B00F37B72 /* Bug-1159.h */,
 				1AC3597918CECF0B00F37B72 /* Bug-1174.cpp */,
@@ -5388,6 +5400,7 @@
 				1AC35BEB18CECF0C00F37B72 /* CCControlSliderTest.cpp in Sources */,
 				1AC35C4D18CECF0C00F37B72 /* SpineTest.cpp in Sources */,
 				3E92EA821921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
+				94D793DB1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */,
 				1AC35C1D18CECF0C00F37B72 /* NewRendererTest.cpp in Sources */,
 				1AC35B6718CECF0C00F37B72 /* AnimationsTestLayer.cpp in Sources */,
 				29080DB7191B595E0066F8DF /* UIListViewTest_Editor.cpp in Sources */,
@@ -5533,6 +5546,7 @@
 				1AC35B2518CECF0C00F37B72 /* ActionsProgressTest.cpp in Sources */,
 				1AC35B6518CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B7118CECF0C00F37B72 /* TestHeaderLayer.cpp in Sources */,
+				94D793D91B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */,
 				29080D93191B595E0066F8DF /* CustomImageTest.cpp in Sources */,
 				1AC35B2118CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3D18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
@@ -5673,6 +5687,7 @@
 				1AC35B2818CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4A18CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
 				B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */,
+				94D793DC1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */,
 				C04F935B1941B05400E9FEAB /* TileMapTest2.cpp in Sources */,
 				1AC35B4418CECF0C00F37B72 /* Bug-624.cpp in Sources */,
 				1AC35BF818CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
@@ -5781,6 +5796,7 @@
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
 				182C5CBB1A95B30500C30D34 /* CocosStudio3DTest.cpp in Sources */,
 				1AC35B7418CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
+				94D793DA1B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */,
 				29080D9E191B595E0066F8DF /* CustomParticleWidgetReader.cpp in Sources */,
 				1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,
 				29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */,
