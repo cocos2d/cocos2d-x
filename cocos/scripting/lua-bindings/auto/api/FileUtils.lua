@@ -127,7 +127,7 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
---  Checks whether to pop up a message box when failed to load an image. <br>
+--  Checks whether to pop up a message box when failed to load an image.<br>
 -- return True if pop up a message box when failed to load an image, false if not.
 -- @function [parent=#FileUtils] isPopupNotify 
 -- @param self
@@ -150,7 +150,10 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
+-- write a ValueMap into a plist file<br>
+-- param dict the ValueMap want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool
 -- @function [parent=#FileUtils] writeToFile 
 -- @param self
 -- @param #map_table dict
@@ -168,7 +171,18 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- 
+-- Retrieve the file size.<br>
+-- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
+-- param filepath The path of the file, it could be a relative or absolute path.<br>
+-- return The file size.
+-- @function [parent=#FileUtils] getFileSize 
+-- @param self
+-- @param #string filepath
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+--  Converts the contents of a file to a ValueMap.<br>
+-- This method is used internally.
 -- @function [parent=#FileUtils] getValueMapFromData 
 -- @param self
 -- @param #char filedata
@@ -205,14 +219,15 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Retrieve the file size.<br>
--- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
--- param filepath The path of the file, it could be a relative or absolute path.<br>
--- return The file size.
--- @function [parent=#FileUtils] getFileSize 
+-- write a string into a file<br>
+-- param dataStr the string want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool True if write success
+-- @function [parent=#FileUtils] writeStringToFile 
 -- @param self
--- @param #string filepath
--- @return long#long ret (return value: long)
+-- @param #string dataStr
+-- @param #string fullPath
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Sets the array that contains the search order of the resources.<br>
@@ -244,6 +259,17 @@
 -- @param #string path
 -- @param #bool front
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
+-- write ValueVector into a plist file<br>
+-- param vecData the ValueVector want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool
+-- @function [parent=#FileUtils] writeValueVectorToFile 
+-- @param self
+-- @param #array_table vecData
+-- @param #string fullPath
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Checks whether a file exists.<br>
@@ -283,6 +309,17 @@
 -- @param self
 -- @param #string filenameUtf8
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- write ValueMap into a plist file<br>
+-- param dict the ValueMap want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool
+-- @function [parent=#FileUtils] writeValueMapToFile 
+-- @param self
+-- @param #map_table dict
+-- @param #string fullPath
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Sets writable path.
