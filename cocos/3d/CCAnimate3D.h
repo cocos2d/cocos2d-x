@@ -127,7 +127,7 @@ public:
     };
     void setKeyFrameUserInfo(int keyFrame, DisplayedEventInfo *userInfo);
     DisplayedEventInfo* getKeyFrameUserInfo(int keyFrame);
-    std::function<void(int keyFrame, const DisplayedEventInfo *userInfo)> keyFrameCallback;
+    std::function<void(int keyFrame, const DisplayedEventInfo *deInfo)> keyFrameCallback;
 
     
 CC_CONSTRUCTOR_ACCESS:
@@ -172,7 +172,7 @@ protected:
     
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
-    std::map<int, DisplayedEventInfo*> _keyFrameUserInfos;
+    std::unordered_map<int, DisplayedEventInfo*> _keyFrameUserInfos;
 
     //sprite animates
     static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;

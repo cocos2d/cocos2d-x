@@ -55,6 +55,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DForceDepthTest);
     ADD_TEST_CASE(Sprite3DCubeMapTest);
     ADD_TEST_CASE(NodeAnimationTest);
+    ADD_TEST_CASE(Animate3DCallbackTest);
     ADD_TEST_CASE(Issue9767);
 };
 
@@ -2574,3 +2575,58 @@ std::string Issue9767::subtitle() const
     return "";
 }
 
+Animate3DCallbackTest::Animate3DCallbackTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto sprite3d = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite3d->setPosition(Vec2(s.width / 2.0f, s.height / 2.0f));
+    sprite3d->setScale(3.0f);
+    sprite3d->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
+    this->addChild(sprite3d);
+
+    //test attach
+    auto weapon = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite3d->getAttachNode("Bip001 R Hand")->addChild(weapon);
+
+    auto animation = Animation3D::create("Sprite3DTest/orc.c3b");
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        animate->setSpeed(-animate->getSpeed());
+        sprite3d->runAction(RepeatForever::create(animate));
+
+        ValueMap *valuemap0 = new ValueMap;
+        (*valuemap0)["state"] = Value(false);
+        _userInfoList.push_back(new Animate3D::DisplayedEventInfo{ weapon, valuemap0 });
+        animate->setKeyFrameUserInfo(10, _userInfoList.back());
+
+        ValueMap *valuemap1 = new ValueMap;
+        (*valuemap1)["state"] = Value(true);
+        _userInfoList.push_back(new Animate3D::DisplayedEventInfo{ weapon, valuemap1 });
+        animate->setKeyFrameUserInfo(50, _userInfoList.back());
+
+        animate->keyFrameCallback = [=](int keyFrame, const Animate3D::DisplayedEventInfo *deInfo){
+            auto vmap = deInfo->userInfo;
+            auto val = vmap->at("state");
+            deInfo->target->setVisible(val.asBool());
+        };
+    }
+}
+
+Animate3DCallbackTest::~Animate3DCallbackTest()
+{
+    for (auto iter : _userInfoList){
+        delete iter->userInfo;
+        delete iter;
+    }
+}
+
+std::string Animate3DCallbackTest::title() const
+{
+    return "Testing Animate3DCallback";
+}
+
+std::string Animate3DCallbackTest::subtitle() const
+{
+    return "";
+}

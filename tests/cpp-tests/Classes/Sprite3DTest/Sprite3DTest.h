@@ -532,6 +532,20 @@ protected:
 #endif
 };
 
+class Animate3DCallbackTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DCallbackTest);
+    Animate3DCallbackTest();
+    ~Animate3DCallbackTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+
+    std::vector<cocos2d::Animate3D::DisplayedEventInfo *> _userInfoList;
+};
+
 /// issue 9767 setGLProgram
 class Issue9767 : public Sprite3DTestDemo
 {

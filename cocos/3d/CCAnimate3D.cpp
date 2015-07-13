@@ -375,14 +375,35 @@ void Animate3D::update(float t)
                 if (!_keyFrameUserInfos.empty() && keyFrameCallback != nullptr){
                     float prekeyTime = lastTime * getDuration() * _frameRate;
                     float keyTime = t * getDuration() * _frameRate;
-                    int preKey = ceilf(prekeyTime);
-                    int key = floorf(keyTime);
-                    if (preKey == key){
-                        auto iter = _keyFrameUserInfos.find(key);
-                        if (iter != _keyFrameUserInfos.end()){
-                            keyFrameCallback(iter->first, iter->second);
+                    if (_playReverse){
+                        int preKey = floorf(prekeyTime);
+                        int key = ceilf(keyTime);
+                        if (key <= preKey){
+                            auto k = preKey;
+                            do
+                            {
+                                auto iter = _keyFrameUserInfos.find(k);
+                                if (iter != _keyFrameUserInfos.end())
+                                    keyFrameCallback(iter->first, iter->second);
+                                --k;
+                            } while (key < k);
                         }
                     }
+                    else{
+                        int preKey = ceilf(prekeyTime);
+                        int key = floorf(keyTime);
+                        if (preKey <= key){
+                            auto k = preKey;
+                            do 
+                            {
+                                auto iter = _keyFrameUserInfos.find(k);
+                                if (iter != _keyFrameUserInfos.end())
+                                    keyFrameCallback(iter->first, iter->second);
+                                ++k;
+                            } while (k < key);
+                        }
+                    }
+
                 }
             }
         }
