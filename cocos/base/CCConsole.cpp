@@ -123,12 +123,12 @@ static bool isFloat( std::string myString ) {
 static ssize_t mydprintf(int sock, const char *format, ...)
 {
     va_list args;
-	char buf[16386];
+    char buf[16386];
 
-	va_start(args, format);
-	vsnprintf(buf, sizeof(buf), format, args);
-	va_end(args);
-	return send(sock, buf, strlen(buf),0);
+    va_start(args, format);
+    vsnprintf(buf, sizeof(buf), format, args);
+    va_end(args);
+    return send(sock, buf, strlen(buf),0);
 }
 
 static void sendPrompt(int fd)
@@ -235,20 +235,53 @@ void SendLogToWindow(const char *log)
 
 static void _log(const char *format, va_list args)
 {
-    char buf[MAX_LOG_LENGTH];
+    int bufferSize = MAX_LOG_LENGTH;
+    char* buf = nullptr;
 
-    vsnprintf(buf, MAX_LOG_LENGTH-3, format, args);
+    do
+    {
+        buf = new (std::nothrow) char[bufferSize];
+        if (buf == nullptr)
+            return; // not enough memory
+
+        int ret = vsnprintf(buf, bufferSize - 3, format, args);
+        if (ret < 0)
+        {
+            bufferSize *= 2;
+
+            delete [] buf;
+        }
+        else
+            break;
+
+    } while (true);
+
     strcat(buf, "\n");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
 
 #elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-    WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
-    OutputDebugStringW(wszBuf);
-    WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), nullptr, FALSE);
-    printf("%s", buf);
+
+    int pos = 0;
+    int len = strlen(buf);
+    char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
+    WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
+
+    do
+    {
+        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
+
+        tempBuf[MAX_LOG_LENGTH] = 0;
+
+        MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
+        OutputDebugStringW(wszBuf);
+        WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, tempBuf, sizeof(tempBuf), nullptr, FALSE);
+        printf("%s", tempBuf);
+
+        pos += MAX_LOG_LENGTH;
+
+    } while (pos < len);
     SendLogToWindow(buf);
     fflush(stdout);
 #else
@@ -258,7 +291,7 @@ static void _log(const char *format, va_list args)
 #endif
 
     Director::getInstance()->getConsole()->log(buf);
-
+    delete [] buf;
 }
 
 // FIXME: Deprecated
@@ -290,7 +323,7 @@ Console::Console()
 , _bindAddress("")
 {
     // VS2012 doesn't support initializer list, so we create a new array and assign its elements to '_command'.
-	Command commands[] = {     
+    Command commands[] = {     
         { "allocator", "Display allocator diagnostics for all allocators", std::bind(&Console::commandAllocator, this, std::placeholders::_1, std::placeholders::_2) },
         { "config", "Print the Configuration object", std::bind(&Console::commandConfig, this, std::placeholders::_1, std::placeholders::_2) },
         { "debugmsg", "Whether or not to forward the debug messages on the console. Args: [on | off]", [&](int fd, const std::string& args) {
@@ -326,10 +359,10 @@ Console::Console()
     };
 
      ;
-	for (int i = 0; i < sizeof(commands)/sizeof(commands[0]); ++i)
-	{
-		_commands[commands[i].name] = commands[i];
-	}
+    for (int i = 0; i < sizeof(commands)/sizeof(commands[0]); ++i)
+    {
+        _commands[commands[i].name] = commands[i];
+    }
 }
 
 Console::~Console()
@@ -1190,7 +1223,7 @@ void Console::loop()
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     closesocket(_listenfd);
-	WSACleanup();
+    WSACleanup();
 #else
     close(_listenfd);
 #endif
