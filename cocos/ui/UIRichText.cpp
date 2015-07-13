@@ -382,7 +382,14 @@ void RichText::formarRenderers()
             maxHeights[i] = maxHeight;
             newContentSizeHeight += maxHeights[i];
         }
-        
+        /*
+         *如果 用户设置 txt:setContentSize(460, 0)，height设置为0，视为自动适应大小的RichText
+         *亦可单独弄一个方法用于设置是”否自动设置RichText的高度“，但是，我觉得ContentSize的hight设置为0，就自动设置高度是蛮合理的。与Label的setDimensions用法相似
+         */
+        if(_customSize.height == 0)
+        {
+            _customSize.height =newContentSizeHeight;
+        }
         
         float nextPosY = _customSize.height;
         for (size_t i=0; i<_elementRenders.size(); i++)
@@ -400,7 +407,7 @@ void RichText::formarRenderers()
                 nextPosX += l->getContentSize().width;
             }
         }
-        _elementRenderersContainer->setContentSize(_contentSize);
+        _elementRenderersContainer->setContentSize(_customSize);//这里改成使用_customSize
         delete [] maxHeights;
     }
     
