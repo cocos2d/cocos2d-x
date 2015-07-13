@@ -5174,6 +5174,18 @@ ReverseTime : function (
 cc.Animate = {
 
 /**
+ * @method initWithAnimation
+ * @param {cc.Animation} arg0
+ * @return {bool}
+ */
+initWithAnimation : function (
+animation 
+)
+{
+    return false;
+},
+
+/**
  * @method getAnimation
 * @return {cc.Animation|cc.Animation}
 */
@@ -5184,15 +5196,13 @@ getAnimation : function(
 },
 
 /**
- * @method initWithAnimation
- * @param {cc.Animation} arg0
- * @return {bool}
+ * @method getCurrentFrameIndex
+ * @return {int}
  */
-initWithAnimation : function (
-animation 
+getCurrentFrameIndex : function (
 )
 {
-    return false;
+    return 0;
 },
 
 /**

@@ -14715,6 +14715,36 @@ void js_register_cocos2dx_ReverseTime(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_cocos2d_Animate_class;
 JSObject *jsb_cocos2d_Animate_prototype;
 
+bool js_cocos2dx_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate* cobj = (cocos2d::Animate *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Animate_initWithAnimation : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Animation* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Animation*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animate_initWithAnimation : Error processing arguments");
+        bool ret = cobj->initWithAnimation(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Animate_initWithAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -14763,34 +14793,22 @@ bool js_cocos2dx_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Animate_getAnimation : wrong number of arguments");
     return false;
 }
-bool js_cocos2dx_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Animate_getCurrentFrameIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Animate* cobj = (cocos2d::Animate *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Animate_initWithAnimation : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Animation* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Animation*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animate_initWithAnimation : Error processing arguments");
-        bool ret = cobj->initWithAnimation(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Animate_getCurrentFrameIndex : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getCurrentFrameIndex();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Animate_initWithAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_Animate_getCurrentFrameIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Animate_setAnimation(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14909,8 +14927,9 @@ void js_register_cocos2dx_Animate(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("getAnimation", js_cocos2dx_Animate_getAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithAnimation", js_cocos2dx_Animate_initWithAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnimation", js_cocos2dx_Animate_getAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCurrentFrameIndex", js_cocos2dx_Animate_getCurrentFrameIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimation", js_cocos2dx_Animate_setAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
