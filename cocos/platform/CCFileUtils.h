@@ -497,7 +497,7 @@ protected:
      *  @param dirPath The directory (with absolute path) to look up for
      *  @return Returns true if the directory found at the given absolute path, otherwise returns false
      */
-    virtual bool isDirectoryExistInternal(const std::string& dirPath) const;
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const = 0;
 
     /**
      *  Gets full path for filename, resolution directory and search path.

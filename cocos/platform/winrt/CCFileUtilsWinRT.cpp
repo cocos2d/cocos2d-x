@@ -121,6 +121,17 @@ bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
     return ret;
 }
 
+bool CCFileUtilsWinRT::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    WIN32_FILE_ATTRIBUTE_DATA wfad;
+    std::wstring wdirPath(dirPath.begin(), dirPath.end());
+    if (GetFileAttributesEx(wdirPath.c_str(), GetFileExInfoStandard, &wfad))
+    {
+        return true;
+    }
+    return false;
+}
+
 bool CCFileUtilsWinRT::isAbsolutePath(const std::string& strPath) const
 {
     if (   strPath.length() > 2

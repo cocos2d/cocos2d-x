@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 #include "CCFileUtils-apple.h"
 
+#include <ftw.h>
+
 #include <string>
 #include <stack>
 
@@ -390,6 +392,16 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
     }
 
     return ret;
+}
+
+bool FileUtilsApple::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    struct stat st;
+    if (stat(dirPath.c_str(), &st) == 0)
+    {
+        return S_ISDIR(st.st_mode);
+    }
+    return false;
 }
 
 std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const

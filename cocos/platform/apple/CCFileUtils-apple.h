@@ -57,6 +57,7 @@ public:
     void setBundle(NSBundle* bundle);
 private:
     virtual bool isFileExistInternal(const std::string& filePath) const override;
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
     NSBundle* getBundle() const;
     NSBundle* _bundle;
 };
