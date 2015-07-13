@@ -86,7 +86,6 @@ var TestController = cc.LayerGradient.extend({
 
     ctor:function() {
         this._super(cc.color(0,0,0,255), cc.color(0x46,0x82,0xB4,255));
-
         // globals
         director = cc.director;
         winSize = director.getWinSize();
