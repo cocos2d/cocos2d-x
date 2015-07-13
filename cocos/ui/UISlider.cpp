@@ -563,12 +563,14 @@ void Slider::barRendererScaleChangedWithSize()
             if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
             {
                 _barRenderer->setScale(1.0f);
-                return;
             }
-            float bscaleX = _contentSize.width / btextureSize.width;
-            float bscaleY = _contentSize.height / btextureSize.height;
-            _barRenderer->setScaleX(bscaleX);
-            _barRenderer->setScaleY(bscaleY);
+            else
+            {
+                float bscaleX = _contentSize.width / btextureSize.width;
+                float bscaleY = _contentSize.height / btextureSize.height;
+                _barRenderer->setScaleX(bscaleX);
+                _barRenderer->setScaleY(bscaleY);
+            }
         }
     }
     _barRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
