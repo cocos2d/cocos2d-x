@@ -23618,6 +23618,56 @@ int lua_register_cocos2dx_DelayTime(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_initWithAnimation'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Animation* arg0;
+
+        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0, "cc.Animate:initWithAnimation");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animate_initWithAnimation'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithAnimation(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate:initWithAnimation",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate_initWithAnimation'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 {
     int argc = 0;
@@ -23665,7 +23715,7 @@ int lua_cocos2dx_Animate_getAnimation(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
+int lua_cocos2dx_Animate_getCurrentFrameIndex(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Animate* cobj = nullptr;
@@ -23685,32 +23735,29 @@ int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_initWithAnimation'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Animate_getCurrentFrameIndex'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        cocos2d::Animation* arg0;
-
-        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0, "cc.Animate:initWithAnimation");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animate_initWithAnimation'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animate_getCurrentFrameIndex'", nullptr);
             return 0;
         }
-        bool ret = cobj->initWithAnimation(arg0);
-        tolua_pushboolean(tolua_S,(bool)ret);
+        int ret = cobj->getCurrentFrameIndex();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate:initWithAnimation",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate:getCurrentFrameIndex",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate_initWithAnimation'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Animate_getCurrentFrameIndex'.",&tolua_err);
 #endif
 
     return 0;
@@ -23851,8 +23898,9 @@ int lua_register_cocos2dx_Animate(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Animate");
         tolua_function(tolua_S,"new",lua_cocos2dx_Animate_constructor);
-        tolua_function(tolua_S,"getAnimation",lua_cocos2dx_Animate_getAnimation);
         tolua_function(tolua_S,"initWithAnimation",lua_cocos2dx_Animate_initWithAnimation);
+        tolua_function(tolua_S,"getAnimation",lua_cocos2dx_Animate_getAnimation);
+        tolua_function(tolua_S,"getCurrentFrameIndex",lua_cocos2dx_Animate_getCurrentFrameIndex);
         tolua_function(tolua_S,"setAnimation",lua_cocos2dx_Animate_setAnimation);
         tolua_function(tolua_S,"create", lua_cocos2dx_Animate_create);
     tolua_endmodule(tolua_S);
