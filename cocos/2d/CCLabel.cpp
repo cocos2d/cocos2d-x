@@ -908,7 +908,7 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
 
     if (!_systemFontDirty && !_contentDirty && _textSprite)
     {
-        auto& fontDef = _getFontDefinition();
+        auto fontDef = _getFontDefinition();
         if (_shadowNode)
         {
             if (shadowColor != _shadowColor4F)
@@ -1134,7 +1134,7 @@ void Label::updateContent()
     }
     else
     {
-        auto& fontDef = _getFontDefinition();
+        auto fontDef = _getFontDefinition();
         createSpriteForSystemFont(fontDef);
         if (_shadowEnabled)
         {
