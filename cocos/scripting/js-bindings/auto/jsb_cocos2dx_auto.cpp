@@ -5068,6 +5068,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Node.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d___NodeRGBA_class;
@@ -5176,6 +5177,7 @@ void js_register_cocos2dx___NodeRGBA(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.NodeRGBA.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Scene_class;
@@ -5479,6 +5481,7 @@ void js_register_cocos2dx_Scene(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Scene.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_GLView_class;
@@ -9689,6 +9692,7 @@ void js_register_cocos2dx_SpriteFrame(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.SpriteFrame.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_AnimationFrame_class;
@@ -15299,6 +15303,7 @@ void js_register_cocos2dx_TargetedAction(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TargetedAction.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ActionFloat_class;
@@ -15512,6 +15517,7 @@ void js_register_cocos2dx_ActionFloat(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionFloat.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Configuration_class;
@@ -20483,6 +20489,7 @@ void js_register_cocos2dx_ActionCamera(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionCamera.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_OrbitCamera_class;
@@ -24099,6 +24106,7 @@ void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JS::HandleObject globa
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseBezierAction.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuadraticActionIn_class;
@@ -24243,6 +24251,7 @@ void js_register_cocos2dx_EaseQuadraticActionIn(JSContext *cx, JS::HandleObject 
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuadraticActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuadraticActionOut_class;
@@ -24387,6 +24396,7 @@ void js_register_cocos2dx_EaseQuadraticActionOut(JSContext *cx, JS::HandleObject
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuadraticActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuadraticActionInOut_class;
@@ -24531,6 +24541,7 @@ void js_register_cocos2dx_EaseQuadraticActionInOut(JSContext *cx, JS::HandleObje
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuadraticActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuarticActionIn_class;
@@ -24675,6 +24686,7 @@ void js_register_cocos2dx_EaseQuarticActionIn(JSContext *cx, JS::HandleObject gl
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuarticActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuarticActionOut_class;
@@ -24819,6 +24831,7 @@ void js_register_cocos2dx_EaseQuarticActionOut(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuarticActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuarticActionInOut_class;
@@ -24963,6 +24976,7 @@ void js_register_cocos2dx_EaseQuarticActionInOut(JSContext *cx, JS::HandleObject
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuarticActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuinticActionIn_class;
@@ -25107,6 +25121,7 @@ void js_register_cocos2dx_EaseQuinticActionIn(JSContext *cx, JS::HandleObject gl
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuinticActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuinticActionOut_class;
@@ -25251,6 +25266,7 @@ void js_register_cocos2dx_EaseQuinticActionOut(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuinticActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuinticActionInOut_class;
@@ -25395,6 +25411,7 @@ void js_register_cocos2dx_EaseQuinticActionInOut(JSContext *cx, JS::HandleObject
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuinticActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCircleActionIn_class;
@@ -25539,6 +25556,7 @@ void js_register_cocos2dx_EaseCircleActionIn(JSContext *cx, JS::HandleObject glo
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCircleActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCircleActionOut_class;
@@ -25683,6 +25701,7 @@ void js_register_cocos2dx_EaseCircleActionOut(JSContext *cx, JS::HandleObject gl
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCircleActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCircleActionInOut_class;
@@ -25827,6 +25846,7 @@ void js_register_cocos2dx_EaseCircleActionInOut(JSContext *cx, JS::HandleObject 
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCircleActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCubicActionIn_class;
@@ -25971,6 +25991,7 @@ void js_register_cocos2dx_EaseCubicActionIn(JSContext *cx, JS::HandleObject glob
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCubicActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCubicActionOut_class;
@@ -26115,6 +26136,7 @@ void js_register_cocos2dx_EaseCubicActionOut(JSContext *cx, JS::HandleObject glo
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCubicActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCubicActionInOut_class;
@@ -26259,6 +26281,7 @@ void js_register_cocos2dx_EaseCubicActionInOut(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCubicActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ActionInstant_class;
@@ -30412,6 +30435,7 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JS::HandleObject global) 
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionManager.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_PageTurn3D_class;
@@ -33048,6 +33072,7 @@ void js_register_cocos2dx_ActionTween(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionTween.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_GLProgramState_class;
@@ -35796,6 +35821,7 @@ void js_register_cocos2dx_DrawNode(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.DrawNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Label_class;
@@ -37276,6 +37302,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Label.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LabelAtlas_class;
@@ -37595,6 +37622,7 @@ void js_register_cocos2dx_LabelAtlas(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_AtlasNode_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LabelAtlas.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LabelBMFont_class;
@@ -38133,6 +38161,7 @@ void js_register_cocos2dx_LabelBMFont(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LabelBMFont.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LabelTTF_class;
@@ -39040,6 +39069,7 @@ void js_register_cocos2dx_LabelTTF(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LabelTTF.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Layer_class;
@@ -39172,6 +39202,7 @@ void js_register_cocos2dx_Layer(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Layer.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d___LayerRGBA_class;
@@ -39620,6 +39651,7 @@ void js_register_cocos2dx_LayerColor(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Layer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LayerColor.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LayerGradient_class;
@@ -40094,6 +40126,7 @@ void js_register_cocos2dx_LayerGradient(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_LayerColor_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LayerGradient.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LayerMultiplex_class;
@@ -40296,6 +40329,7 @@ void js_register_cocos2dx_LayerMultiplex(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_Layer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LayerMultiplex.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItem_class;
@@ -40584,6 +40618,7 @@ void js_register_cocos2dx_MenuItem(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItem.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemLabel_class;
@@ -40869,6 +40904,7 @@ void js_register_cocos2dx_MenuItemLabel(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_MenuItem_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemLabel.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemAtlasFont_class;
@@ -41038,6 +41074,7 @@ void js_register_cocos2dx_MenuItemAtlasFont(JSContext *cx, JS::HandleObject glob
         p->parentProto = jsb_cocos2d_MenuItemLabel_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemAtlasFont.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemFont_class;
@@ -41345,6 +41382,7 @@ void js_register_cocos2dx_MenuItemFont(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_MenuItemLabel_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemFont.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemSprite_class;
@@ -41754,6 +41792,7 @@ void js_register_cocos2dx_MenuItemSprite(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_MenuItem_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemSprite.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemImage_class;
@@ -42025,6 +42064,7 @@ void js_register_cocos2dx_MenuItemImage(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_MenuItemSprite_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemImage.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemToggle_class;
@@ -42280,6 +42320,7 @@ void js_register_cocos2dx_MenuItemToggle(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_MenuItem_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemToggle.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Menu_class;
@@ -42527,6 +42568,7 @@ void js_register_cocos2dx_Menu(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Layer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Menu.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MotionStreak_class;
@@ -43043,6 +43085,7 @@ void js_register_cocos2dx_MotionStreak(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MotionStreak.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_NodeGrid_class;
@@ -43756,6 +43799,7 @@ void js_register_cocos2dx_ParticleBatchNode(JSContext *cx, JS::HandleObject glob
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ParticleBatchNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ParticleSystem_class;
@@ -45948,6 +45992,7 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ParticleSystem.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ParticleSystemQuad_class;
@@ -48636,6 +48681,7 @@ void js_register_cocos2dx_ProgressTimer(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ProgressTimer.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ProtectedNode_class;
@@ -50510,6 +50556,7 @@ void js_register_cocos2dx_Sprite(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Sprite.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_RenderTexture_class;
@@ -51311,6 +51358,7 @@ void js_register_cocos2dx_RenderTexture(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.RenderTexture.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TransitionEaseScene_class;
@@ -51668,6 +51716,7 @@ void js_register_cocos2dx_TransitionScene(JSContext *cx, JS::HandleObject global
         p->parentProto = jsb_cocos2d_Scene_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TransitionScene.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TransitionSceneOriented_class;
@@ -58311,6 +58360,7 @@ void js_register_cocos2dx_GridBase(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.GridBase.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Grid3D_class;
@@ -58523,6 +58573,7 @@ void js_register_cocos2dx_Grid3D(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_GridBase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Grid3D.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TiledGrid3D_class;
@@ -58695,6 +58746,7 @@ void js_register_cocos2dx_TiledGrid3D(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_GridBase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TiledGrid3D.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_BaseLight_class;
@@ -60515,6 +60567,7 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.GLProgram.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_GLProgramCache_class;
@@ -63887,6 +63940,7 @@ void js_register_cocos2dx_SpriteBatchNode(JSContext *cx, JS::HandleObject global
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.SpriteBatchNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_SpriteFrameCache_class;
@@ -64735,6 +64789,7 @@ void js_register_cocos2dx_TextFieldTTF(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Label_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TextFieldTTF.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ParallaxNode_class;
@@ -64980,6 +65035,7 @@ void js_register_cocos2dx_ParallaxNode(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ParallaxNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TMXObjectGroup_class;
@@ -66432,6 +66488,7 @@ void js_register_cocos2dx_TMXMapInfo(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TMXMapInfo.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TMXLayer_class;
@@ -67153,6 +67210,7 @@ void js_register_cocos2dx_TMXLayer(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_SpriteBatchNode_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TMXLayer.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TMXTiledMap_class;
@@ -67716,6 +67774,7 @@ void js_register_cocos2dx_TMXTiledMap(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TMXTiledMap.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TileMapAtlas_class;
@@ -67991,6 +68050,7 @@ void js_register_cocos2dx_TileMapAtlas(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_AtlasNode_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TileMapAtlas.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Component_class;
@@ -68276,6 +68336,7 @@ void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Component.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ComponentContainer_class;

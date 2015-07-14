@@ -1883,6 +1883,7 @@ void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JS::HandleObjec
         p->parentProto = jsb_spine_SkeletonRenderer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { sp.SkeletonAnimation.extend = cc.Class.extend; })()");
 }
 
 void register_all_cocos2dx_spine(JSContext* cx, JS::HandleObject obj) {
