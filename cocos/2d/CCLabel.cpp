@@ -682,16 +682,7 @@ void Label::updateQuads()
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
-            if (_lettersInfo[ctr].position.y > _contentSize.height)
-            {
-                auto clipTop = _lettersInfo[ctr].position.y - _contentSize.height;
-                _reusedRect.origin.y += clipTop;
-                _lettersInfo[ctr].position.y -= clipTop;
-            }
-            if (_lettersInfo[ctr].position.y - letterDef.height < 0.f)
-            {
-                _reusedRect.size.height = _lettersInfo[ctr].position.y < 0.f ? 0.f : _lettersInfo[ctr].position.y;
-            }
+            
             _reusedLetter->setTextureRect(_reusedRect,false,_reusedRect.size);
 
             _reusedLetter->setPosition(_lettersInfo[ctr].position);
