@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*- coding: UTF-8 -*-
+#-*- coding: utf-8 -*-
 
 import os
 import sys
@@ -18,6 +18,9 @@ def is_32bit_windows():
 
 def os_is_mac():
     return sys.platform == 'darwin'
+
+def os_is_linux():
+    return sys.platform == "linux" or sys.platform == "linux2"
 
 def convert_to_python_path(path):
     return path.replace("\\","/")

@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#-*- coding: UTF-8 -*-
+#-*- coding: utf-8 -*-
 
 import os
 import sys
@@ -321,6 +321,8 @@ class CocosLibsCompiler(object):
                 sys_folder_name = "windows%s" % bit_str
             elif utils_cocos.os_is_mac():
                 sys_folder_name = "darwin-x86_64"
+            elif utils_cocos.os_is_linux:
+                sys_folder_name = "linux-x86_64"
 
             # set strip execute file name
             if utils_cocos.os_is_win32():
