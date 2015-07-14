@@ -162,7 +162,8 @@ public:
     * @return An automatically released Label object.
     * @see TTFConfig setTTFConfig setMaxLineWidth
     */
-    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
+    static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, 
+        TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
 
     /**
     * Allocates and initializes a Label, with a bitmap font file.
@@ -441,7 +442,7 @@ public:
     virtual const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
 
-    virtual bool isOpacityModifyRGB() const override;
+    virtual bool isOpacityModifyRGB() const override { return _isOpacityModifyRGB; }
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
@@ -455,7 +456,6 @@ public:
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
-
     virtual Rect getBoundingBox() const override;
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
@@ -469,13 +469,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
-
     CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
-    CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
-
-    /**
-     * @deprecated Use `getLineHeight` instead.
-     */
+    CC_DEPRECATED_ATTRIBUTE FontDefinition getFontDefinition() const { return _getFontDefinition(); }
     CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
 
 CC_CONSTRUCTOR_ACCESS:
@@ -483,8 +478,8 @@ CC_CONSTRUCTOR_ACCESS:
      * Constructor of Label.
      * @js NA
      */
-    Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT,
-      TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
+    Label(TextHAlignment hAlignment = TextHAlignment::LEFT,
+      TextVAlignment vAlignment = TextVAlignment::TOP);
 
     /**
      * Destructor of Label.
@@ -494,131 +489,123 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Label();
 
 protected:
-    void onDraw(const Mat4& transform, bool transformUpdated);
-    void onDrawShadow(GLProgram* glProgram);
-
     struct LetterInfo
     {
         FontLetterDefinition def;
-
         Vec2 position;
         Size  contentSize;
         int   atlasIndex;
     };
-    enum class LabelType {
 
+    enum class LabelType {
         TTF,
         BMFONT,
         CHARMAP,
         STRING_TEXTURE
     };
 
-    virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
+    virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
 
-    bool recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex);
-    bool recordPlaceholderInfo(int spriteIndex);
-
-    void setFontScale(float fontScale);
-
-    virtual void alignText();
-
-    bool computeHorizontalKernings(const std::u16string& stringToRender);
+    void setCorrectionScale(float fontScale);
 
     void computeStringNumLines();
 
+    void onDraw(const Mat4& transform, bool transformUpdated);
+    void onDrawShadow(GLProgram* glProgram);
+    void drawSelf(Renderer* renderer, uint32_t flags);
+
+    virtual void alignText();
+    bool computeHorizontalKernings(const std::u16string& stringToRender);
+    bool recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex);
+    bool recordPlaceholderInfo(int spriteIndex);
+    
     void updateQuads();
 
-    virtual void updateColor() override;
+    void createSpriteForSystemFont(const FontDefinition& fontDef);
+    void createShadowSpriteForSystemFont(const FontDefinition& fontDef);
 
     virtual void updateShaderProgram();
 
-    void createSpriteForSystemFont();
-
-    void createShadowSpriteForSystemFont();
-
     void reset();
 
-    void drawSelf(Renderer* renderer, uint32_t flags);
+    FontDefinition _getFontDefinition() const;
+
+    virtual void updateColor() override;
+
+    LabelType _currentLabelType;
+    bool _contentDirty;
+    std::u16string _currentUTF16String;
+    std::string _originalUTF8String;
+    int _currNumLines;
 
     std::string _bmFontPath;
-
-    bool _isOpacityModifyRGB;
-    bool _contentDirty;
+    TTFConfig _fontConfig;
+    float _outlineSize;
 
     bool _systemFontDirty;
     std::string _systemFont;
-    float         _systemFontSize;
-    LabelType _currentLabelType;
-
-    Vector<SpriteBatchNode*> _batchNodes;
-    FontAtlas *                   _fontAtlas;
-    std::vector<LetterInfo>       _lettersInfo;
-    EventListenerCustom* _purgeTextureListener;
-    EventListenerCustom* _resetTextureListener;
-
-    TTFConfig _fontConfig;
-
-    //compatibility with older LabelTTF
+    float _systemFontSize;
     Sprite* _textSprite;
-    FontDefinition _fontDefinition;
-    bool  _compatibleMode;
+    Sprite* _shadowNode;
+
+    FontAtlas* _fontAtlas;
+    Vector<SpriteBatchNode*> _batchNodes;
+    std::vector<LetterInfo> _lettersInfo;
 
     //! used for optimization
     Sprite *_reusedLetter;
     Rect _reusedRect;
     int _limitShowCount;
 
-    float _additionalKerning;
+    //layout relevant properties.
     float _commonLineHeight;
-    bool  _lineBreakWithoutSpaces;
-    int * _horizontalKernings;
-
+    float _additionalKerning;   
+    int* _horizontalKernings;
+    bool _lineBreakWithoutSpaces;
     float _maxLineWidth;
-    Size  _labelDimensions;
+    Size _labelDimensions;
     float _labelWidth;
     float _labelHeight;
     TextHAlignment _hAlignment;
     TextVAlignment _vAlignment;
 
-    int           _currNumLines;
-    std::u16string _currentUTF16String;
-    std::string          _originalUTF8String;
+    //the correction scale for distance field.
+    float _correctionScale;
 
-    float _fontScale;
+    LabelEffect _currLabelEffect;
+    Color4F _effectColorF;
+    Color4B _textColor;
+    Color4F _textColorF;
 
+    CustomCommand _customCommand;
+    Mat4  _shadowTransform;
+    GLuint _uniformEffectColor;
+    GLuint _uniformTextColor;
     bool _useDistanceField;
     bool _useA8Shader;
 
-    LabelEffect _currLabelEffect;
-    Color4B _effectColor;
-    Color4F _effectColorF;
-
-    GLuint _uniformEffectColor;
-    GLuint _uniformTextColor;
-    CustomCommand _customCommand;
-
-    bool    _shadowDirty;
-    bool    _shadowEnabled;
-    Size    _shadowOffset;
-    int     _shadowBlurRadius;
-    Mat4  _shadowTransform;
+    bool _shadowDirty;
+    bool _shadowEnabled;
+    Size _shadowOffset;
+    
     Color4F _shadowColor4F;
     Color3B _shadowColor3B;
     GLubyte _shadowOpacity;
-    Sprite*   _shadowNode;
-
-    int     _outlineSize;
-
-    Color4B _textColor;
-    Color4F _textColorF;
+    float _shadowBlurRadius;
 
     bool _clipEnabled;
     bool _blendFuncDirty;
     BlendFunc _blendFunc;
-    /// whether or not the sprite was inside bounds the previous frame
+
+    /// whether or not the label was inside bounds the previous frame
     bool _insideBounds;
 
+    bool _isOpacityModifyRGB;
+
     std::unordered_map<int, Sprite*> _letters;
+
+    EventListenerCustom* _purgeTextureListener;
+    EventListenerCustom* _resetTextureListener;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
