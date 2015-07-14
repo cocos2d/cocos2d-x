@@ -251,7 +251,6 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
                 CCLOG("%s", msg.c_str());
                 return false;
             }
-
         }
         else
         {
@@ -282,7 +281,7 @@ static Data getData(const std::string& filename, bool forString)
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
         // check if the filename uses correct case characters
-        CC_BREAK_IF(!checkFileName(fullPath, filename));
+        checkFileName(fullPath, filename);
 
         HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
@@ -364,7 +363,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         std::string fullPath = fullPathForFilename(filename);
 
          // check if the filename uses correct case characters
-        CC_BREAK_IF(!checkFileName(fullPath, filename));
+        checkFileName(fullPath, filename);
 
         HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);

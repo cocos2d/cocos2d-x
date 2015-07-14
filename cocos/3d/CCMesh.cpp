@@ -273,6 +273,9 @@ void Mesh::setTexture(Texture2D* tex)
     // Texture must be saved for future use
     // it doesn't matter if the material is already set or not
     // This functionality is added for compatibility issues
+    if (tex == nullptr)
+        tex = getDummyTexture();
+    
     if (tex != _texture)
     {
         CC_SAFE_RETAIN(tex);
