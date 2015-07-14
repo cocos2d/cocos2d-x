@@ -109,6 +109,9 @@ Device-Release/
 # CTags
 tags
 
+# Ignore web dir
+/web
+
 #include
 !/tools/cocos2d-console/console/bin/
 !/plugin-x/plugin-x_ios.xcworkspace/
