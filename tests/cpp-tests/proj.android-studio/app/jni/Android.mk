@@ -95,6 +95,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/NewAudioEngineTest/NewAudioEngineTest.cpp \
 ../../../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 ../../../Classes/NewRendererTest/NewRendererTest.cpp \
+../../../Classes/NavMeshTest/NavMeshTest.cpp \
 ../../../Classes/NodeTest/NodeTest.cpp \
 ../../../Classes/OpenURLTest/OpenURLTest.cpp \
 ../../../Classes/ParallaxTest/ParallaxTest.cpp \
@@ -201,10 +202,10 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/UnitTest/UnitTest.cpp \
 ../../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../../Classes/VisibleRect.cpp \
+../../../Classes/VibrateTest/VibrateTest.cpp \
 ../../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../../Classes/controller.cpp \
-../../../Classes/testBasic.cpp \
-../../../Classes/NavMeshTest/NavMeshTest.cpp
+../../../Classes/testBasic.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../../..

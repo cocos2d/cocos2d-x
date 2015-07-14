@@ -106,6 +106,32 @@ static std::string StringWideCharToUtf8(const std::wstring& strWideChar)
     return ret;
 }
 
+static std::string UTF8StringToMultiByte(const std::string& strUtf8)
+{
+    std::string ret;
+    if (!strUtf8.empty())
+    {
+        std::wstring strWideChar = StringUtf8ToWideChar(strUtf8);
+        int nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* ansiString = new char[nNum + 1];
+            ansiString[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, ansiString, nNum + 1, nullptr, FALSE);
+
+            ret = ansiString;
+            delete[] ansiString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Ansi code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
+}
+
 static void _checkPath()
 {
     if (0 == s_resourcePath.length())
@@ -160,6 +186,11 @@ bool FileUtilsWin32::isDirectoryExistInternal(const std::string& dirPath) const
     return false;
 }
 
+std::string FileUtilsWin32::getSuitableFOpen(const std::string& filenameUtf8) const
+{
+    return UTF8StringToMultiByte(filenameUtf8);
+}
+
 bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
@@ -177,17 +208,6 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
     if(attr == INVALID_FILE_ATTRIBUTES || (attr & FILE_ATTRIBUTE_DIRECTORY))
         return false;   //  not a file
     return true;
-}
-
-bool FileUtilsWin32::isDirectoryExistInternal(const std::string& dirPath) const
-{
-    unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
-    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
-        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
-    {
-        return true;
-    }
-    return false;
 }
 
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const

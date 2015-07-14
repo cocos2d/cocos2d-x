@@ -51,6 +51,7 @@ public:
     bool init();
     virtual std::string getWritablePath() const override;
     virtual bool isAbsolutePath(const std::string& strPath) const override;
+    virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const override;
 protected:
 
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
@@ -105,7 +106,7 @@ protected:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling delete[] on any Non-NULL pointer returned.
      */
-    virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
+    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t * size) override;
 
     /**
      *  Gets string from a file.
