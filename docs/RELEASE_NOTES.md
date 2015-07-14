@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x v3.7 RC0 Release Notes](#cocos2d-x-v37-rc0-release-notes)
+- [Cocos2d-x v3.7 RC1 Release Notes](#cocos2d-x-v37-rc0-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -32,7 +32,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x v3.7 RC0 Release Notes #
+# Cocos2d-x v3.7 RC1 Release Notes #
 
 # Misc Information
 
@@ -169,11 +169,11 @@ cocos new -l cpp|js|lua MyGame
 * JS: Merged JSB and web engine into Cocos2d-x for a All-in-one engine
 * JS: Added `ccui.VideoPlayer` and `ccui.WebView` for iOS/Android/Web
 * console: Supported build & run Android Studio project with cocos console
-* sdkbox: super EASY way to integrate 3rd party SDKs into cocos2d-x
+* SDKBOX: super EASY way to integrate 3rd party SDKs into cocos2d-x
 
 ## Download
 
-[Cocos2d-x v3.7 RC0](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7rc0.zip) including : C++, Lua & JS
+[Cocos2d-x v3.7 RC1](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7rc1.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
@@ -237,11 +237,14 @@ Samsung have provided a series of Enhanced API to optimize Cocos2d-x games for S
 In the previous versions, the resources file name's case is ignored on win32 platform, but not ignored in other platforms. This will lead to some unexpected issues, especially when user develop with win32 platform and pulish to other platforms like Android. In win32, the file name may be found without matching the case, but on other platforms it won't be found. So we decided to make win32 platform's resources case sensitive. Please make sure you are using the correct file name for your resources.
 
 ### SDKBOX
+
 SDKBOX is a project that's built by part of the cocos2d-x team, in order to makes integrating 3rd party SDKs super EASY.
 With SDKBOX you can integrate services like In App Purchase with one command
+
 ```
 sdkbox import -b iap
 ```
+
 Currently supported service including
 
 * [Tune](http://cocos2d-x.org/sdkbox/tune)
@@ -252,9 +255,6 @@ Currently supported service including
 * [Kochava](http://cocos2d-x.org/sdkbox/kochava)
 * [Google Analytics](http://cocos2d-x.org/sdkbox/googleanalytics)
 * [Flurry Analytics](http://cocos2d-x.org/sdkbox/flurryanalytics)
-
-
-
 
 ## The Next Step
 
