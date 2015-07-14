@@ -92,6 +92,7 @@ private:
     float             _outlineSize;
     int _lineHeight;
     FontAtlas* _fontAtlas;
+    FT_Bitmap* _currBitmap;
 };
 
 /// @endcond
