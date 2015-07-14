@@ -75,7 +75,7 @@ namespace ui {
         virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
             
         /**
-         * This method is called when the return button was pressed or the outside area of keyboard was touched.
+         * This method is called when the return button was pressed.
          * @param editBox The edit box object that generated the event.
          */
         virtual void editBoxReturn(EditBox* editBox) = 0;
