@@ -205,7 +205,7 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame != nullptr, "");
+    CCASSERT(spriteFrame != nullptr, "spriteFrame can't be nullptr!");
 
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
@@ -673,7 +673,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "childSprite's texture name should be equal to _textureAtlas's texture name!");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
 
@@ -694,7 +694,8 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(),
+                 "childSprite's texture name should be equal to _textureAtlas's texture name.");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
         

@@ -1027,7 +1027,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                     return true;
                 }
                 
-                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(), "");
+                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(),
+                         "touchesIter ID should be equal to mutableTouchesIter's ID.");
                 
                 if (isClaimed && listener->_isRegistered && listener->_needSwallow)
                 {
