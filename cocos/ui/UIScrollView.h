@@ -313,7 +313,7 @@ public:
     /**
      * Set inner container position
      *
-     * @param position Inner container position.
+     * @param pos Inner container position.
      */
     void setInnerContainerPosition(const Vec2 &pos);
     
