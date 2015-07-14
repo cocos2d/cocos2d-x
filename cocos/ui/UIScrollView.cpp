@@ -603,7 +603,9 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
         processScrollEvent(MoveDirection::RIGHT, false);
     }
     
-    return !scrolledToBottom && !scrolledToTop && !scrolledToLeft && !scrolledToRight;
+    bool scrollEnabledUpDown = (!scrolledToBottom && !scrolledToTop);
+    bool scrollEnabledLeftRight = (!scrolledToLeft && !scrolledToRight);
+    return scrollEnabledUpDown || scrollEnabledLeftRight;
 }
 
 void ScrollView::scrollToBottom(float second, bool attenuated)
