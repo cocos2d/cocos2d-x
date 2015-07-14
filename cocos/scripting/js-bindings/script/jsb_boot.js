@@ -367,6 +367,20 @@ cc.path = {
         if(index < 0) return null;
         return pathStr.substring(index, pathStr.length);
     },
+
+    /**
+     * Get the main name of a file name
+     * @param {string} fileName
+     * @returns {string}
+     */
+    mainFileName: function(fileName){
+        if(fileName){
+           var idx = fileName.lastIndexOf(".");
+            if(idx !== -1)
+               return fileName.substring(0,idx);
+        }
+        return fileName;
+    },
     
     /**
      * Get the file name of a file path.
