@@ -948,6 +948,8 @@ void Sprite::updateColor(void)
     _quad.tl.colors = color4;
     _quad.tr.colors = color4;
 
+    _polyInfo.setQuad(&_quad);
+
     // renders using batch node
     if (_batchNode)
     {
