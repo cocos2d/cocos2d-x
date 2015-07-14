@@ -27,8 +27,8 @@
 //
 
 cc._emptyLoader = {
-    load : function(realUrl, url){
-        return null;
+    load : function(realUrl, url, res, cb){
+        cb && cb(null, null);
     }
 };
 
@@ -39,21 +39,22 @@ cc.loader.register([
                     cc._emptyLoader);
 
 cc._txtLoader = {
-    load : function(realUrl, url){
-        return jsb.fileUtils.getStringFromFile(realUrl);
+    load : function(realUrl, url, res, cb){
+        cb && cb(null, jsb.fileUtils.getStringFromFile(realUrl));
     }
 };
 cc.loader.register(["txt", "xml", "vsh", "fsh", "tmx", "tsx"], cc._txtLoader);
 
 cc._jsonLoader = {
-    load : function(realUrl, url){
-        var data = jsb.fileUtils.getStringFromFile(realUrl);
+    load : function(realUrl, url, res, cb){
+        var data = jsb.fileUtils.getStringFromFile(realUrl), result;
         try{
-            return JSON.parse(data);
+            result = JSON.parse(data);
         }catch(e){
             cc.error(e);
-            return null;
+            result = null;
         }
+        cb && cb(null, result);
     }
 };
 cc.loader.register(["json", "ExportJson"], cc._jsonLoader);
@@ -73,16 +74,16 @@ cc._imgLoader = {
 cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 
 cc._plistLoader = {
-    load : function(realUrl, url){
+    load : function(realUrl, url, res, cb){
         var content = jsb.fileUtils.getStringFromFile(realUrl);
-        return cc.plistParser.parse(content);
+        cb && cb(null, cc.plistParser.parse(content));
     }
 };
 cc.loader.register(["plist"], cc._plistLoader);
 
 cc._binaryLoader = {
-    load : function(realUrl, url){
-        return cc.loader.loadBinarySync(realUrl);
+    load : function(realUrl, url, res, cb){
+        cb && cb(null, cc.loader.loadBinarySync(realUrl));
     }
 };
 cc.loader.register(["ccbi"], cc._binaryLoader);
@@ -166,9 +167,9 @@ cc._fntLoader = {
         return fnt;
     },
 
-    load : function(realUrl, url){
+    load : function(realUrl, url, res, cb){
         var data = jsb.fileUtils.getStringFromFile(realUrl);
-        return this.parseFnt(data, url);
+        cb && cb(null, this.parseFnt(data, url));
     }
 };
 cc.loader.register(["fnt"], cc._fntLoader);
