@@ -57,13 +57,13 @@ void GridAction::startWithTarget(Node *target)
     if (targetGrid && targetGrid->getReuseGrid() > 0)
     {
         if (targetGrid->isActive() && targetGrid->getGridSize().width == _gridSize.width
-            && targetGrid->getGridSize().height == _gridSize.height /*&& dynamic_cast<GridBase*>(targetGrid) != nullptr*/)
+            && targetGrid->getGridSize().height == _gridSize.height)
         {
             targetGrid->reuse();
         }
         else
         {
-            CCASSERT(0, "");
+            CCASSERT(0, "Invalid grid parameters!");
         }
     }
     else
@@ -93,7 +93,7 @@ GridAction* GridAction::reverse() const
 GridBase* GridAction::getGrid()
 {
     // Abstract class needs implementation
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement this method!");
 
     return nullptr;
 }

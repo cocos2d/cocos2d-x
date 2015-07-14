@@ -168,8 +168,8 @@ void ActionManager::resumeTargets(const Vector<Node*>& targetsToResume)
 
 void ActionManager::addAction(Action *action, Node *target, bool paused)
 {
-    CCASSERT(action != nullptr, "");
-    CCASSERT(target != nullptr, "");
+    CCASSERT(action != nullptr, "action can't be nullptr!");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
 
     tHashElement *element = nullptr;
     // we should convert it to Ref*, because we save it as Ref*
@@ -186,7 +186,7 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 
      actionAllocWithHashElement(element);
  
-     CCASSERT(! ccArrayContainsObject(element->actions, action), "");
+     CCASSERT(! ccArrayContainsObject(element->actions, action), "action already be added!");
      ccArrayAppendObject(element->actions, action);
  
      action->startWithTarget(target);
@@ -265,8 +265,8 @@ void ActionManager::removeAction(Action *action)
 
 void ActionManager::removeActionByTag(int tag, Node *target)
 {
-    CCASSERT(tag != Action::INVALID_TAG, "");
-    CCASSERT(target != nullptr, "");
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -289,8 +289,8 @@ void ActionManager::removeActionByTag(int tag, Node *target)
 
 void ActionManager::removeAllActionsByTag(int tag, Node *target)
 {
-    CCASSERT(tag != Action::INVALID_TAG, "");
-    CCASSERT(target != nullptr, "");
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
     
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -321,7 +321,7 @@ void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
     {
         return;
     }
-    CCASSERT(target != nullptr, "");
+    CCASSERT(target != nullptr, "target can't be nullptr!");
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
@@ -352,7 +352,7 @@ void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
 // and, it is not possible to get the address of a reference
 Action* ActionManager::getActionByTag(int tag, const Node *target) const
 {
-    CCASSERT(tag != Action::INVALID_TAG, "");
+    CCASSERT(tag != Action::INVALID_TAG, "Invalid tag value!");
 
     tHashElement *element = nullptr;
     HASH_FIND_PTR(_targets, &target, element);
