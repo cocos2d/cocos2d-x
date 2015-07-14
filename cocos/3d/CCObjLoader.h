@@ -44,8 +44,8 @@ namespace tinyobj {
     } material_t;
     
     /**
-     * @~english Model's indices struct
-     * @~chinese .obj模型顶点结构体
+     * @~english Model's mesh struct
+     * @~chinese .obj模型mesh结构体
      **/
     typedef struct {
         std::vector<float> positions;
@@ -65,8 +65,8 @@ namespace tinyobj {
     } shape_t;
     
     /**
-     * @brief @~english 
-     * @~chinese 
+     * @brief @~english Material reader
+     * @~chinese 材质读取类
      * @js NA
      * @lua NA
      **/
@@ -93,35 +93,49 @@ namespace tinyobj {
         std::string m_mtlBasePath;
     };
 
-    /** Loads .obj from a file.
-     * 'shapes' will be filled with parsed shape data
+    /** @~english Loads .obj from a file.
+     * shapes will be filled with parsed shape data
      * The function returns error string.
      * Returns empty string when loading .obj success.
-     * 'mtl_basepath' is optional, and used for base path for .mtl file.
-     *
-     * @~chinese 通过.obj文件读取模型
-     * @param shapes @~english will be filled with parsed shape data
-     * @~chinese 输出的.obj信息
-     * @param filename @~english The .obj file path .
+     * mtl_basepath is optional, and used for base path for .mtl file.
+     * @~chinese 通过.obj文件读取模型，shapes用读取到的模型形状数据填满。函数返回出错字符串，当模型读取成功时返回空字符串。
+     * @param shapes @~english Model shapes which will be filled by parsed data.
+     * @~chinese 模型形状，将被读取的模型数据填充。
+     * @param filename @~english The .obj file path.
      * @~chinese .obj文件路径
-     * @param mtl_basepath @~english It's optional, and used for base path for .mtl file
-     * @~chinese 可选的材质基路径，将在此基础上查询材质文件
-     * @return @~english The function returns error string, return empty string when loading .obj success.
+     * @param mtl_basepath @~english It's optional, it is the base path of .mtl file
+     * @~chinese 材质文件路径，可选参数。
+     * @return @~english The function returns error string, return empty string when loading .obj succeed.
      * @~chinese 当模型读取成功，返回空字符串，反之返回带有错误信息的字符串
      */
     std::string LoadObj(std::vector<shape_t> &shapes,       // [output]
                         std::vector<material_t> &materials, // [output]
                         const char *filename, const char *mtl_basepath = NULL);
     
-    /// Loads object from a std::istream, uses GetMtlIStreamFn to retrieve
-    /// std::istream for materials.
-    /// Returns empty string when loading .obj success.
+    /** @~english Loads object from a std::istream and material reader object.
+     * @~chinese 从流和材质读取对象中读取obj文件。
+     * @param shapes @~english Model shapes which will be filled by parsed data.
+     * @~chinese 模型形状，将被读取的模型数据填充。
+     * @param materials @~english Materials filled by parased data.
+     * @~chinese 读取的材质对象
+     * @param inStream @~english Stream used to read .obj file.
+     * @~chinese 用来读取obj文件的数据流。
+     * @param readMatFn @~english Object used to read material.
+     * @~chinese 材质对象。
+     * @return @~english Error string, empty string when loading .obj success.
+     * @~chinese 返回错误信息，当读取成功时为空字符串。
+     */
     std::string LoadObj(std::vector<shape_t> &shapes,       // [output]
                         std::vector<material_t> &materials, // [output]
                         std::istream &inStream, MaterialReader &readMatFn);
     
-    /// Loads materials into std::map
-    /// Returns an empty string if successful
+    /** @~english Loads materials from stream.
+     * @~chinese 从数据流中加载材质。
+     * @param material_map @~english Used to store material name its index. @~chinese 材质映射用来存储材质名称和其索引。
+     * @param materials @~english Materials filled by parased data. @~chinese 材质对象。
+     * @param inStream @~english Stream used to read material. @~chinese 用来读取材质对象的数据流。
+     * @return @~english An empty string if successful, error string other wise. @~chinese 如果成功返回空字符串，否则返回错误信息。
+     */
     std::string LoadMtl(std::map<std::string, int> &material_map,
                         std::vector<material_t> &materials, std::istream &inStream);
 }
