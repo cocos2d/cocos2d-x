@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -430,6 +430,11 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
     _audioPlayers[audioID]._finishCallback = callback;
+}
+
+void AudioEngineImpl::preload(const std::string& filePath)
+{
+    CCLOG("Preload not support on Anroid");
 }
 
 #endif

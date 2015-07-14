@@ -42,93 +42,6 @@ using namespace cocos2d::experimental;
 static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
 
-namespace cocos2d {
-    namespace experimental {
-        class AudioEngineThreadPool
-        {
-        public:
-            AudioEngineThreadPool()
-            : _running(true)
-            , _numThread(6)
-            {
-                _threads.reserve(_numThread);
-                _tasks.reserve(_numThread);
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _tasks.push_back(nullptr);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
-                }
-            }
-            
-            void addTask(const std::function<void()> &task){
-                _taskMutex.lock();
-                int targetIndex = -1;
-                for (int index = 0; index < _numThread; ++index) {
-                    if (_tasks[index] == nullptr) {
-                        targetIndex = index;
-                        _tasks[index] = task;
-                        break;
-                    }
-                }
-                if (targetIndex == -1) {
-                    _tasks.push_back(task);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
-                    
-                    _numThread++;
-                }
-                _taskMutex.unlock();
-                
-                _sleepCondition.notify_all();
-            }
-            
-            void destroy()
-            {
-                _running = false;
-                _sleepCondition.notify_all();
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _threads[index].join();
-                }
-            }
-            
-        private:
-            bool _running;
-            std::vector<std::thread>  _threads;
-            std::vector< std::function<void ()> > _tasks;
-            
-            void threadFunc(int index)
-            {
-                while (_running) {
-                    std::function<void ()> task = nullptr;
-                    _taskMutex.lock();
-                    task = _tasks[index];
-                    _taskMutex.unlock();
-                    
-                    if (nullptr == task)
-                    {
-                        std::unique_lock<std::mutex> lk(_sleepMutex);
-                        _sleepCondition.wait(lk);
-                        continue;
-                    }
-                    
-                    task();
-                    
-                    _taskMutex.lock();
-                    _tasks[index] = nullptr;
-                    _taskMutex.unlock();
-                }
-            }
-            
-            int _numThread;
-            
-            std::mutex _taskMutex;
-            std::mutex _sleepMutex;
-            std::condition_variable _sleepCondition;
-            
-        };
-    }
-}
-
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 @interface AudioEngineSessionHandler : NSObject
 {
@@ -220,8 +133,7 @@ static id s_AudioEngineSessionHandler = nullptr;
 #endif
 
 AudioEngineImpl::AudioEngineImpl()
-: _threadPool(nullptr)
-, _lazyInitLoop(true)
+: _lazyInitLoop(true)
 , _currentAudioID(0)
 {
     
@@ -240,10 +152,7 @@ AudioEngineImpl::~AudioEngineImpl()
     if (s_ALDevice) {
         alcCloseDevice(s_ALDevice);
     }
-    if (_threadPool) {
-        _threadPool->destroy();
-        delete _threadPool;
-    }
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     [s_AudioEngineSessionHandler release];
 #endif
@@ -275,12 +184,29 @@ bool AudioEngineImpl::init()
                 _alSourceUsed[_alSources[i]] = false;
             }
             
-            _threadPool = new (std::nothrow) AudioEngineThreadPool();
             ret = true;
         }
     }while (false);
     
     return ret;
+}
+
+AudioCache* AudioEngineImpl::preload(const std::string& filePath)
+{
+    AudioCache* audioCache = nullptr;
+    
+    auto it = _audioCaches.find(filePath);
+    if (it == _audioCaches.end()) {
+        audioCache = &_audioCaches[filePath];
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        
+        AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    }
+    else {
+        audioCache = &it->second;
+    }
+    
+    return audioCache;
 }
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
@@ -303,16 +229,9 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
-        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
-    }
-    else {
-        audioCache = &it->second;
+    AudioCache* audioCache = preload(filePath);
+    if (audioCache == nullptr) {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     auto player = &_audioPlayers[_currentAudioID];

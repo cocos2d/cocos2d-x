@@ -897,6 +897,16 @@ func
 },
 
 /**
+ * @method stopActionsByFlags
+ * @param {unsigned int} arg0
+ */
+stopActionsByFlags : function (
+int 
+)
+{
+},
+
+/**
  * @method setNormalizedPosition
  * @param {vec2_object} arg0
  */
@@ -3245,6 +3255,16 @@ getTarget : function (
 },
 
 /**
+ * @method getFlags
+ * @return {unsigned int}
+ */
+getFlags : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method step
  * @param {float} arg0
  */
@@ -3259,6 +3279,16 @@ float
  * @param {int} arg0
  */
 setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method setFlags
+ * @param {unsigned int} arg0
+ */
+setFlags : function (
 int 
 )
 {
@@ -5174,6 +5204,18 @@ ReverseTime : function (
 cc.Animate = {
 
 /**
+ * @method initWithAnimation
+ * @param {cc.Animation} arg0
+ * @return {bool}
+ */
+initWithAnimation : function (
+animation 
+)
+{
+    return false;
+},
+
+/**
  * @method getAnimation
 * @return {cc.Animation|cc.Animation}
 */
@@ -5184,15 +5226,13 @@ getAnimation : function(
 },
 
 /**
- * @method initWithAnimation
- * @param {cc.Animation} arg0
- * @return {bool}
+ * @method getCurrentFrameIndex
+ * @return {int}
  */
-initWithAnimation : function (
-animation 
+getCurrentFrameIndex : function (
 )
 {
-    return false;
+    return 0;
 },
 
 /**
@@ -6086,6 +6126,18 @@ str
 },
 
 /**
+ * @method getFileSize
+ * @param {String} arg0
+ * @return {long}
+ */
+getFileSize : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
  * @method getValueMapFromData
  * @param {char} arg0
  * @param {int} arg1
@@ -6122,15 +6174,17 @@ array
 },
 
 /**
- * @method getFileSize
+ * @method writeStringToFile
  * @param {String} arg0
- * @return {long}
+ * @param {String} arg1
+ * @return {bool}
  */
-getFileSize : function (
+writeStringToFile : function (
+str, 
 str 
 )
 {
-    return 0;
+    return false;
 },
 
 /**
@@ -6165,6 +6219,20 @@ str,
 bool 
 )
 {
+},
+
+/**
+ * @method writeValueVectorToFile
+ * @param {Array} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeValueVectorToFile : function (
+array, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -6211,6 +6279,20 @@ str
 )
 {
     return ;
+},
+
+/**
+ * @method writeValueMapToFile
+ * @param {map_object} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeValueMapToFile : function (
+map, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -9485,6 +9567,18 @@ node
  * @param {cc.Node} arg1
  */
 removeActionByTag : function (
+int, 
+node 
+)
+{
+},
+
+/**
+ * @method removeActionsByFlags
+ * @param {unsigned int} arg0
+ * @param {cc.Node} arg1
+ */
+removeActionsByFlags : function (
 int, 
 node 
 )

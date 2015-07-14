@@ -288,7 +288,7 @@ Sprite::Sprite(void)
 , _insideBounds(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
-    debugDraw(true)
+    debugDraw(true);
 #endif //CC_SPRITE_DEBUG_DRAW
 }
 

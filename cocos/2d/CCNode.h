@@ -1229,6 +1229,13 @@ public:
     void stopAllActionsByTag(int tag);
 
     /**
+     * Removes all actions from the running action list by its flags.
+     *
+     * @param flags   A flag field that removes actions based on bitwise AND.
+     */
+    void stopActionsByFlags(unsigned int flags);
+
+    /**
      * Gets an action from the running action list by its tag.
      *
      * @see `setTag(int)`, `getTag()`.
