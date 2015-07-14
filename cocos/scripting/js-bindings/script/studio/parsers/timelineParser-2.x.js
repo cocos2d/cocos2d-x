@@ -220,8 +220,6 @@
         var node,
             self = this;
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be preloaded", path);
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
             node.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
@@ -859,8 +857,6 @@
         ];
         textureList.forEach(function(item){
             loadTexture(json[item.name], resourcePath, function(path, type){
-                if(type === 0 && !loader.getRes(path))
-                    cc.log("%s need to be preloaded", path);
                 item.handle.call(widget, path, type);
             });
         });
@@ -1025,8 +1021,6 @@
         var startCharMap = json["StartChar"];
 
         loadTexture(json["LabelAtlasFileImage_CNB"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be preloaded", path);
             if(type === 0){
                 widget.setProperty(stringValue, path, itemWidth, itemHeight, startCharMap);
             }
@@ -1051,8 +1045,6 @@
         widget.setString(text);
 
         loadTexture(json["LabelBMFontFile_CNB"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be pre loaded", path);
             widget.setFntFile(path);
         });
         widget.ignoreContentAdaptWithSize(true);
