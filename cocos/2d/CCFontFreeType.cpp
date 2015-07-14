@@ -24,12 +24,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCFontFreeType.h"
+#include FT_BBOX_H
+#include FT_BITMAP_H
 
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "edtaa3func.h"
-#include FT_BBOX_H
 
 NS_CC_BEGIN
 
@@ -283,10 +284,14 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         {
             if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
                 break;
+            if (_fontRef->glyph->bitmap.pixel_mode != FT_PIXEL_MODE_GRAY)
+            {
+                log("Unsupported pixel mode:%d with distance field feature", _currBitmap->pixel_mode);
+            }
         }
         else
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Glyph(_fontRef, glyphIndex, FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
@@ -300,10 +305,16 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
 
         outWidth  = _fontRef->glyph->bitmap.width;
         outHeight = _fontRef->glyph->bitmap.rows;
+
+        _currBitmap = &_fontRef->glyph->bitmap;
         ret = _fontRef->glyph->bitmap.buffer;
 
         if (_outlineSize > 0)
         {
+            if (_currBitmap->pixel_mode != FT_PIXEL_MODE_GRAY)
+            {
+                log("Unsupported pixel mode:%d with outline feature", _currBitmap->pixel_mode);
+            }
             auto copyBitmap = new unsigned char[outWidth * outHeight];
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));
 
@@ -579,22 +590,51 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
     }
     else
     {
-        for (long y = 0; y < bitmapHeight; ++y)
+        switch (_currBitmap->pixel_mode)
         {
-            long bitmap_y = y * bitmapWidth;
-
-            for (int x = 0; x < bitmapWidth; ++x)
+        case FT_PIXEL_MODE_GRAY:
+            for (long y = 0; y < bitmapHeight; ++y)
             {
-                unsigned char cTemp = bitmap[bitmap_y + x];
+                long bitmap_y = y * bitmapWidth;
 
-                // the final pixel
-                dest[(iX + ( iY * FontAtlas::CacheTextureWidth ) )] = cTemp;
+                for (int x = 0; x < bitmapWidth; ++x)
+                {
+                    unsigned char cTemp = bitmap[bitmap_y + x];
 
-                iX += 1;
+                    // the final pixel
+                    dest[(iX + (iY * FontAtlas::CacheTextureWidth))] = cTemp;
+
+                    iX += 1;
+                }
+
+                iX = posX;
+                iY += 1;
             }
+            break;
+        case FT_PIXEL_MODE_MONO:
+            for (long y = 0; y < bitmapHeight; ++y)
+            {
+                long bitmap_y = y * bitmapWidth;
 
-            iX  = posX;
-            iY += 1;
+                for (int x = 0; x < bitmapWidth; ++x)
+                {
+                    int index = y * _currBitmap->pitch + x / 8;
+                    
+                    auto cTemp = bitmap[index] & (1 << (7 - (x % 8)));
+                    
+                    // the final pixel
+                    dest[(iX + (iY * FontAtlas::CacheTextureWidth))] = cTemp ? 255 : 0;
+
+                    iX += 1;
+                }
+
+                iX = posX;
+                iY += 1;
+            }
+            break;
+        default:
+            log("Unsupported pixel mode:%d", _currBitmap->pixel_mode);
+            break;
         }
     } 
 }
