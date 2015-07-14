@@ -57,6 +57,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(NodeAnimationTest);
     ADD_TEST_CASE(Issue9767);
     ADD_TEST_CASE(Sprite3DClippingTest);
+    ADD_TEST_CASE(Sprite3DTestMeshLight);
 };
 
 //------------------------------------------------------------------
@@ -1243,17 +1244,17 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    // swich camera
+    // swich animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(15);
-    _menuItem = MenuItemFont::create("High Quality", CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
+    _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
+    _menuItem = MenuItemFont::create(getAnimationQualityMessage(), CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
     _menuItem->setColor(Color3B(0,200,20));
     auto menu = Menu::create(_menuItem,NULL);
     menu->setPosition(Vec2::ZERO);
     _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
     addChild(menu, 1);
-    
-    _animateQuality = (int)Animate3DQuality::QUALITY_HIGH;
+
     _sprits.clear();
     
     auto s = Director::getInstance()->getWinSize();
@@ -1303,18 +1304,25 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     }
 }
 
+std::string Sprite3DWithSkinTest::getAnimationQualityMessage() const
+{
+    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
+        return "None Quality";
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
+        return "Low Quality";
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
+        return "High Quality";
+    
+    return "";
+}
+
 void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
 {
     ++_animateQuality;
     if (_animateQuality > (int)Animate3DQuality::QUALITY_HIGH)
         _animateQuality = (int)Animate3DQuality::QUALITY_NONE;
     
-    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
-        _menuItem->setString("None Quality");
-    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
-        _menuItem->setString("Low Quality");
-    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
-        _menuItem->setString("High Quality");
+    _menuItem->setString(getAnimationQualityMessage());
     
     for (auto iter: _sprits)
     {
@@ -2606,6 +2614,38 @@ std::string Sprite3DClippingTest::title() const
 }
 
 std::string Sprite3DClippingTest::subtitle() const
+{
+    return "";
+}
+
+Sprite3DTestMeshLight::Sprite3DTestMeshLight()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto _sprite = Sprite3D::create("Sprite3DTest/mesh_model.c3b");
+    _sprite->setPosition(Vec2(0, 0));
+    _sprite->setScale(0.05f);
+    _sprite->setCameraMask(2);
+
+    PointLight * light = PointLight::create(Vec3(0, 0, 400), Color3B(255, 255, 255), 1000.0f);
+
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    addChild(_sprite);
+    addChild(light);
+}
+
+std::string Sprite3DTestMeshLight::title() const
+{
+    return "3D mesh with light without texture";
+}
+
+std::string Sprite3DTestMeshLight::subtitle() const
 {
     return "";
 }

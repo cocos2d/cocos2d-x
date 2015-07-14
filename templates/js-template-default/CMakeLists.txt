@@ -257,6 +257,9 @@ message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 add_subdirectory(frameworks/cocos2d-x/external/xxhash)
 include_directories(frameworks/cocos2d-x/external/xxhash)
 
+#buid recast
+add_subdirectory(frameworks/cocos2d-x/external/recast)
+
 set(GAME_SRC
   frameworks/runtime-src/proj.linux/main.cpp
   frameworks/runtime-src/Classes/AppDelegate.cpp
@@ -277,6 +280,7 @@ add_executable(${APP_NAME}
 target_link_libraries(${APP_NAME}
   jscocos2d
   cocos2d
+  recast
 )
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")

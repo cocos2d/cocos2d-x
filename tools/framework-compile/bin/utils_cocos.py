@@ -92,26 +92,25 @@ def get_vs_cmd_path(vs_version):
         reg_flag_list = [ _winreg.KEY_WOW64_64KEY, _winreg.KEY_WOW64_32KEY ]
 
     # Find VS path
-    vsPath = None
+    msbuild_path = None
     for reg_flag in reg_flag_list:
         try:
             vs = _winreg.OpenKey(
                 _winreg.HKEY_LOCAL_MACHINE,
-                r"SOFTWARE\Microsoft\VisualStudio",
+                r"SOFTWARE\Microsoft\MSBuild\ToolsVersions\%s" % vs_ver,
                 0,
                 _winreg.KEY_READ | reg_flag
             )
-            key = _winreg.OpenKey(vs, r"SxS\VS7")
-            vsPath, type = _winreg.QueryValueEx(key, vs_ver)
+            msbuild_path, type = _winreg.QueryValueEx(vs, 'MSBuildToolsPath')
         except:
             continue
 
-        if vsPath is not None:
+        if msbuild_path is not None and os.path.exists(msbuild_path):
             break
 
     # generate devenv path
-    if vsPath is not None:
-        commandPath = os.path.join(vsPath, "Common7", "IDE", "devenv")
+    if msbuild_path is not None:
+        commandPath = os.path.join(msbuild_path, "MSBuild.exe")
     else:
         commandPath = None
 

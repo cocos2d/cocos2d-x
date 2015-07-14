@@ -161,6 +161,9 @@
         var node = new cc.Node();
 
         this.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color != null)
+            node.setColor(getColor(color));
 
         return node;
     };
