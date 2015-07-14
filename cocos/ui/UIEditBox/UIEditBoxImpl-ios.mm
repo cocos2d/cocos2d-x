@@ -33,11 +33,19 @@
 #include "2d/CCLabel.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
-#define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS*)editBox_)
+#define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS *)_editBox)
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
+#pragma mark - Internal Classes
+
+/** TODO: Missing doc - Why is this subclass necessary?
+ */
+@interface UICustomUITextField : UITextField
+@end
+
 @implementation UICustomUITextField
+
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
@@ -46,105 +54,126 @@ static const int CC_EDIT_BOX_PADDING = 5;
     return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
                       bounds.size.width - padding*2, bounds.size.height - padding*2);
 }
-- (CGRect)editingRectForBounds:(CGRect)bounds {
+
+- (CGRect)editingRectForBounds:(CGRect)bounds
+{
     return [self textRectForBounds:bounds];
 }
+
 @end
 
+#pragma mark - UIEditBox private declerations
+
+@interface UIEditBoxImplIOS_objc ()
+
+@property (nonatomic, retain) UITextField *textField;
+@property (nonatomic, assign) void *editBox;
+
+@end
+
+#pragma mark - UIEditBox iOS implementation
 
 @implementation UIEditBoxImplIOS_objc
 
-@synthesize textField = textField_;
-@synthesize editState = editState_;
-@synthesize editBox = editBox_;
+#pragma mark - Init & Dealloc
 
-- (void)dealloc
-{
-    [textField_ resignFirstResponder];
-    [textField_ removeFromSuperview];
-    self.textField = NULL;
-    [super dealloc];
-}
-
--(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox
+- (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox
 {
     self = [super init];
     
     if (self)
     {
-        editState_ = NO;
-        self.textField = [[[UICustomUITextField alloc] initWithFrame: frameRect] autorelease];
+        _editState = NO;
+        UITextField *textField = [[[UICustomUITextField alloc] initWithFrame: frameRect] autorelease];
 
-        [textField_ setTextColor:[UIColor whiteColor]];
-         //TODO: need to delete hard code here.
-        textField_.font = [UIFont systemFontOfSize:frameRect.size.height*2/3];
-		textField_.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        textField_.backgroundColor = [UIColor clearColor];
-        textField_.borderStyle = UITextBorderStyleNone;
-        textField_.delegate = self;
-        textField_.hidden = true;
-		textField_.returnKeyType = UIReturnKeyDefault;
-        [textField_ addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+        textField.textColor = [UIColor whiteColor];
+         // TODO: need to delete hard code here.
+        textField.font = [UIFont systemFontOfSize:frameRect.size.height*2/3];
+		textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        textField.backgroundColor = [UIColor clearColor];
+        textField.borderStyle = UITextBorderStyleNone;
+        textField.delegate = self;
+        textField.hidden = true;
+		textField.returnKeyType = UIReturnKeyDefault;
+        
+        [textField addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+        
+        self.textField = textField;
         self.editBox = editBox;
     }
     
     return self;
 }
 
--(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
+- (void)dealloc
+{
+    [_textField resignFirstResponder];
+    [_textField removeFromSuperview];
+    
+    self.textField = NULL;
+    
+    [super dealloc];
+}
+
+#pragma mark - Public methods
+
+- (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
-    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+    CCEAGLView *eaglview = (CCEAGLView *)view->getEAGLView();
 
     [eaglview doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
--(void) setPosition:(CGPoint) pos
+- (void)setPosition:(CGPoint)pos
 {
-    CGRect frame = [textField_ frame];
+    // TODO: Handle anchor point?
+    CGRect frame = _textField.frame;
     frame.origin = pos;
-    [textField_ setFrame:frame];
+    
+    _textField.frame = frame;
 }
 
--(void) setContentSize:(CGSize) size
+- (void)setContentSize:(CGSize)size
 {
-    CGRect frame = [textField_ frame];
+    CGRect frame = _textField.frame;
     frame.size = size;
-    [textField_ setFrame:frame];
+    
+    _textField.frame = frame;
 }
 
--(void) visit
+- (void)visit
 {
     
 }
 
--(void) openKeyboard
+- (void)openKeyboard
 {
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
-    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+    CCEAGLView *eaglview = (CCEAGLView *)view->getEAGLView();
 
-    [eaglview addSubview:textField_];
-    [textField_ becomeFirstResponder];
+    [eaglview addSubview:_textField];
+    [_textField becomeFirstResponder];
 }
 
--(void) closeKeyboard
+- (void)closeKeyboard
 {
-    [textField_ resignFirstResponder];
-    [textField_ removeFromSuperview];
+    [_textField resignFirstResponder];
+    [_textField removeFromSuperview];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
-    if (sender == textField_) {
+    if (sender == _textField) {
         [sender resignFirstResponder];
     }
     return NO;
 }
 
--(void)animationSelector
+- (void)animationSelector
 {
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
-    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+    CCEAGLView *eaglview = (CCEAGLView *)view->getEAGLView();
 
     [eaglview doAnimationWhenAnotherEditBeClicked];
 }
@@ -152,7 +181,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
 {
     CCLOG("textFieldShouldBeginEditing...");
-    editState_ = YES;
+    _editState = YES;
 
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
@@ -161,31 +190,34 @@ static const int CC_EDIT_BOX_PADDING = 5;
     {
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
-    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    
+    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
+    
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getEditBox());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    cocos2d::ui::EditBox *pEditBox= getEditBoxImplIOS()->getEditBox();
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began", pEditBox);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
+    
     return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)sender
 {
     CCLOG("textFieldShouldEndEditing...");
-    editState_ = NO;
+    _editState = NO;
     getEditBoxImplIOS()->refreshInactiveText();
     
-    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getEditBox());
@@ -193,23 +225,24 @@ static const int CC_EDIT_BOX_PADDING = 5;
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    cocos2d::ui::EditBox *pEditBox= getEditBoxImplIOS()->getEditBox();
+    if (pEditBox != nullptr && 0 != pEditBox->getScriptEditBoxHandler())
     {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended", pEditBox);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName, 0, sizeof(data.eventName));
         strncpy(data.eventName, "return", sizeof(data.eventName));
-        event.data = (void*)&data;
+        event.data = (void *)&data;
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
     
-	if(editBox_ != nil)
+	if (_editBox != nil)
 	{
 		getEditBoxImplIOS()->onEndEditing();
 	}
+    
     return YES;
 }
 
@@ -220,15 +253,15 @@ static const int CC_EDIT_BOX_PADDING = 5;
  * @param string The replacement string.
  * @return YES if the specified text range should be replaced; otherwise, NO to keep the old text.
  */
-- (BOOL)textField:(UITextField *) textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (getEditBoxImplIOS()->getMaxLength() < 0)
     {
         return YES;
     }
     
-    NSUInteger oldLength = [textField.text length];
-    NSUInteger replacementLength = [string length];
+    NSUInteger oldLength = textField.text.length;
+    NSUInteger replacementLength = string.length;
     NSUInteger rangeLength = range.length;
     
     NSUInteger newLength = oldLength - rangeLength + replacementLength;
@@ -239,10 +272,10 @@ static const int CC_EDIT_BOX_PADDING = 5;
 /**
  * Called each time when the text field's text has changed.
  */
-- (void) textChanged
+- (void)textChanged
 {
     // NSLog(@"text is %@", self.textField.text);
-    cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
         pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
@@ -253,7 +286,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {
         cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
         cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif

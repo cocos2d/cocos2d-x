@@ -36,31 +36,18 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface UICustomUITextField : UITextField
-{
-}
-
-@end
-
 
 @interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
-{
-    UICustomUITextField* textField_;
-    void* editBox_;
-    BOOL editState_;
-}
 
-@property(nonatomic, retain) UITextField* textField;
-@property(nonatomic, readonly, getter = isEditState) BOOL editState;
-@property(nonatomic, assign) void* editBox;
+@property (nonatomic, readonly, getter = isEditState) BOOL editState;
 
--(id) initWithFrame: (CGRect) frameRect editBox: (void*) editBox;
--(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
--(void) setPosition:(CGPoint) pos;
--(void) setContentSize:(CGSize) size;
--(void) visit;
--(void) openKeyboard;
--(void) closeKeyboard;
+- (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
+- (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+- (void)setPosition:(CGPoint) pos;
+- (void)setContentSize:(CGSize) size;
+- (void)visit;
+- (void)openKeyboard;
+- (void)closeKeyboard;
 
 @end
 
