@@ -29,6 +29,7 @@
 cc._emptyLoader = {
     load : function(realUrl, url, res, cb){
         cb && cb(null, null);
+        return null;
     }
 };
 
@@ -40,7 +41,9 @@ cc.loader.register([
 
 cc._txtLoader = {
     load : function(realUrl, url, res, cb){
-        cb && cb(null, jsb.fileUtils.getStringFromFile(realUrl));
+        var result = jsb.fileUtils.getStringFromFile(realUrl);
+        cb && cb(null, result);
+        return result;
     }
 };
 cc.loader.register(["txt", "xml", "vsh", "fsh", "tmx", "tsx"], cc._txtLoader);
@@ -55,6 +58,7 @@ cc._jsonLoader = {
             result = null;
         }
         cb && cb(null, result);
+        return result;
     }
 };
 cc.loader.register(["json", "ExportJson"], cc._jsonLoader);
@@ -76,14 +80,18 @@ cc.loader.register(["png", "jpg", "bmp","jpeg","gif"], cc._imgLoader);
 cc._plistLoader = {
     load : function(realUrl, url, res, cb){
         var content = jsb.fileUtils.getStringFromFile(realUrl);
-        cb && cb(null, cc.plistParser.parse(content));
+        var result = cc.plistParser.parse(content);
+        cb && cb(null, result);
+        return result;
     }
 };
 cc.loader.register(["plist"], cc._plistLoader);
 
 cc._binaryLoader = {
     load : function(realUrl, url, res, cb){
-        cb && cb(null, cc.loader.loadBinarySync(realUrl));
+        var result = cc.loader.loadBinarySync(realUrl);
+        cb && cb(null, result);
+        return result;
     }
 };
 cc.loader.register(["ccbi"], cc._binaryLoader);
@@ -168,8 +176,11 @@ cc._fntLoader = {
     },
 
     load : function(realUrl, url, res, cb){
-        var data = jsb.fileUtils.getStringFromFile(realUrl);
-        cb && cb(null, this.parseFnt(data, url));
+        var data = jsb.fileUtils.getStringFromFile(realUrl), result = null;
+        if (data)
+            result = this.parseFnt(data, url);
+        cb && cb(null, result);
+        return result;
     }
 };
 cc.loader.register(["fnt"], cc._fntLoader);
