@@ -143,6 +143,16 @@ public:
      * @param tag Used to identify the action easily.
      */
     inline void setTag(int tag) { _tag = tag; }
+    /** Returns a flag field that is used to group the actions easily.
+     *
+     * @return A tag.
+     */
+    inline unsigned int getFlags() const { return _flags; }
+    /** Changes the flag field that is used to group the actions easily.
+     *
+     * @param tag Used to identify the action easily.
+     */
+    inline void setFlags(unsigned int flags) { _flags = flags; }
 
 CC_CONSTRUCTOR_ACCESS:
     Action();
@@ -159,6 +169,8 @@ protected:
     Node    *_target;
     /** The action tag. An identifier of the action. */
     int     _tag;
+    /** The action flag field. To categorize action into certain groups.*/
+    unsigned int _flags;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Action);

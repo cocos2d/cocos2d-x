@@ -481,6 +481,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
     if (_fontAtlas)
     {
+        _batchNodes.clear();
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
         _fontAtlas = nullptr;
     }

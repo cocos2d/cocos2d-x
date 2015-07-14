@@ -897,6 +897,16 @@ func
 },
 
 /**
+ * @method stopActionsByFlags
+ * @param {unsigned int} arg0
+ */
+stopActionsByFlags : function (
+int 
+)
+{
+},
+
+/**
  * @method setNormalizedPosition
  * @param {vec2_object} arg0
  */
@@ -3245,6 +3255,16 @@ getTarget : function (
 },
 
 /**
+ * @method getFlags
+ * @return {unsigned int}
+ */
+getFlags : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method step
  * @param {float} arg0
  */
@@ -3259,6 +3279,16 @@ float
  * @param {int} arg0
  */
 setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method setFlags
+ * @param {unsigned int} arg0
+ */
+setFlags : function (
 int 
 )
 {
@@ -9537,6 +9567,18 @@ node
  * @param {cc.Node} arg1
  */
 removeActionByTag : function (
+int, 
+node 
+)
+{
+},
+
+/**
+ * @method removeActionsByFlags
+ * @param {unsigned int} arg0
+ * @param {cc.Node} arg1
+ */
+removeActionsByFlags : function (
 int, 
 node 
 )

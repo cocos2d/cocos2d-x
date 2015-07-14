@@ -80,6 +80,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue11699Test);
     ADD_TEST_CASE(LabelIssue12409Test);
     ADD_TEST_CASE(LabelAddChildTest);
+    ADD_TEST_CASE(LabelIssue12775Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1996,4 +1997,23 @@ LabelAddChildTest::LabelAddChildTest()
 std::string LabelAddChildTest::title() const
 {
     return "Label support add child nodes";
+}
+
+LabelIssue12775Test::LabelIssue12775Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello", "fonts/xingkai-incomplete.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue12775Test::title() const
+{
+    return "Test for Issue #12775";
+}
+
+std::string LabelIssue12775Test::subtitle() const
+{
+    return "Should not crash if the font not contain a Unicode charmap.";
 }
