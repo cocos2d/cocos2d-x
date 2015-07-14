@@ -394,14 +394,29 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
     return ret;
 }
 
-bool FileUtilsApple::isDirectoryExistInternal(const std::string& dirPath) const
+static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
 {
-    struct stat st;
-    if (stat(dirPath.c_str(), &st) == 0)
+    auto ret = remove(fpath);
+    if (ret)
     {
-        return S_ISDIR(st.st_mode);
+        log("Fail to remove: %s ",fpath);
     }
-    return false;
+    
+    return ret;
+}
+
+bool FileUtilsApple::removeDirectory(const std::string& path)
+{
+    if (path.size() > 0 && path[path.size() - 1] != '/')
+    {
+        CCLOGERROR("Fail to remove directory, path must termniate with '/': %s", path.c_str());
+        return false;
+    }
+
+    if (nftw(path.c_str(),unlink_cb, 64, FTW_DEPTH | FTW_PHYS))
+        return false;
+    else
+        return true;
 }
 
 std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const
