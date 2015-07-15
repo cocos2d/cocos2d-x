@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "platform/CCImage.h"
@@ -151,14 +152,26 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
 /*
  * Capture screen interface
  */
+static EventListenerCustom* s_captureScreenListener;
+static CustomCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
-    static CustomCommand captureScreenCommand;
-    captureScreenCommand.init(std::numeric_limits<float>::max());
-    captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
+    if (s_captureScreenListener)
+    {
+        CCLOG("Warning: CaptureScreen has been caled yet, don't call more than once in one frame.");
+        return;
+    }
+    s_captureScreenCommand.init(std::numeric_limits<float>::max());
+    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
+    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
+        auto director = Director::getInstance();
+        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+        s_captureScreenListener = nullptr;
+        director->getRenderer()->addCommand(&s_captureScreenCommand);
+        director->getRenderer()->render();
+    });
 }
-    
+
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
 {
     std::vector<Node*> vec;

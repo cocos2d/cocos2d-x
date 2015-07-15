@@ -105,6 +105,10 @@ private:
     std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
     int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _reskinGirl;
+    
+    // for capture screen
+    static const int SNAPSHOT_TAG = 119;
+    std::string _snapshotFile;
 };
 
 /** Define the sub scenes in test. */
@@ -651,6 +655,50 @@ void Scene3DTestScene::createDetailDlg()
     auto title = Label::createWithTTF("Detail Dialog","fonts/arial.ttf",16);
     title->setPosition(dlgSize.width / 2, dlgSize.height - margin * 2);
     _detailDlg->addChild(title);
+
+    
+    // add capture screen buttons
+    ui::Button* capture = ui::Button::create("cocosui/animationbuttonnormal.png",
+                                             "cocosui/animationbuttonpressed.png");
+    capture->setScale(0.5);
+    capture->setAnchorPoint(Vec2(0.5, 0));
+    capture->setPosition(Vec2(dlgSize.width / 3, margin));
+    capture->addClickEventListener([this](Ref* sender)
+    {
+        Director::getInstance()->getTextureCache()->removeTextureForKey(_snapshotFile);
+        _osdScene->removeChildByTag(SNAPSHOT_TAG);
+        _snapshotFile = "CaptureScreenTest.png";
+        utils::captureScreen([this](bool succeed, const std::string& outputFile)
+        {
+            if (!succeed)
+            {
+                log("Capture screen failed.");
+                return;
+            }
+            auto sp = Sprite::create(outputFile);
+            _osdScene->addChild(sp, 0, SNAPSHOT_TAG);
+            Size s = Director::getInstance()->getWinSize();
+            sp->setPosition(s.width / 2, s.height / 2);
+            sp->setScale(0.25);
+            _snapshotFile = outputFile;
+        }, _snapshotFile);
+    });
+    capture->setTitleText("Take Snapshot");
+    capture->setName("Take Snapshot");
+    _detailDlg->addChild(capture);
+    
+    ui::Button* remove = ui::Button::create("cocosui/animationbuttonnormal.png",
+                                            "cocosui/animationbuttonpressed.png");
+    remove->setScale(0.5);
+    remove->setAnchorPoint(Vec2(0.5, 0));
+    remove->setPosition(Vec2(dlgSize.width * 2 / 3, margin));
+    remove->addClickEventListener([this](Ref* sender)
+    {
+        _osdScene->removeChildByTag(SNAPSHOT_TAG);
+    });
+    remove->setTitleText("Del Snapshot");
+    remove->setName("Del Snapshot");
+    _detailDlg->addChild(remove);
     
     // add a spine ffd animation on it
     auto skeletonNode =
@@ -662,7 +710,7 @@ void Scene3DTestScene::createDetailDlg()
     
     skeletonNode->setScale(0.25);
     Size windowSize = Director::getInstance()->getWinSize();
-    skeletonNode->setPosition(Vec2(dlgSize.width / 2, 20));
+    skeletonNode->setPosition(Vec2(dlgSize.width / 2, remove->getContentSize().height / 2 + 2 * margin));
     _detailDlg->addChild(skeletonNode);
 }
 
@@ -706,7 +754,7 @@ void Scene3DTestScene::createDescDlg()
     "- OSD scene contains description dialog.\n"
     "\n"
     "Click \"Description\" button to hide this dialog.\n");
-    auto text = Label::createWithSystemFont(desc, "Helvetica", 9, textSize);
+    auto text = Label::createWithSystemFont(desc, "", 9, textSize);
     text->setAnchorPoint(Vec2(0, 1));
     text->setPosition(textPos);
     _descDlg->addChild(text);
