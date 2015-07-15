@@ -99,11 +99,11 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
             __Array *extraPropsNames = static_cast<__Array*>(pNode->getUserObject());
             if (! extraPropsNames)
             {
-                extraPropsNames = Array::create();
+                extraPropsNames = __Array::create();
                 pNode->setUserObject(extraPropsNames);
             }
             
-            extraPropsNames->addObject(String::create(propertyName));
+            extraPropsNames->addObject(__String::create(propertyName));
         }
 
         switch(type) 

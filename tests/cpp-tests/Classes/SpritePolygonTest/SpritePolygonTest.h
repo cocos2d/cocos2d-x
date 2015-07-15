@@ -8,7 +8,7 @@ DEFINE_TEST_SUITE(SpritePolygonTest);
 class SpritePolygonTestCase : public TestCase
 {
 protected:
-    virtual void onBackCallback(Ref* sender);
+    virtual void onBackCallback(Ref* sender)override;
     std::string _title;
     std::string _subtitle;
     virtual std::string title() const override {return _title;};

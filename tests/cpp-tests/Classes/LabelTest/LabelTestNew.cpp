@@ -1581,7 +1581,7 @@ const char* LabelAlignmentTest::getCurrentAlignment()
         break;
     }
 
-    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal).c_str();
 }
 
 std::string LabelAlignmentTest::title() const
