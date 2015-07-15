@@ -1525,6 +1525,11 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
             _shadowNode->updateDisplayedColor(_displayedColor);
         }
     }
+
+    for (auto it : _letters)
+    {
+        it.second->updateDisplayedColor(_displayedColor);;
+    }
 }
 
 void Label::updateDisplayedOpacity(GLubyte parentOpacity)
@@ -1538,6 +1543,11 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
         {
             _shadowNode->updateDisplayedOpacity(_displayedOpacity);
         }
+    }
+
+    for (auto it : _letters)
+    {
+        it.second->updateDisplayedOpacity(_displayedOpacity);;
     }
 }
 

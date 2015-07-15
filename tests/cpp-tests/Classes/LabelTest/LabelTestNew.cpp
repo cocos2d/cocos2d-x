@@ -81,6 +81,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue12409Test);
     ADD_TEST_CASE(LabelAddChildTest);
     ADD_TEST_CASE(LabelIssue12775Test);
+    ADD_TEST_CASE(LabelIssue11585Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -2016,4 +2017,30 @@ std::string LabelIssue12775Test::title() const
 std::string LabelIssue12775Test::subtitle() const
 {
     return "Should not crash if the font not contain a Unicode charmap.";
+}
+
+LabelIssue11585Test::LabelIssue11585Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    label->getLetter(0)->setColor(Color3B::RED);
+    label->getLetter(1)->setColor(Color3B::GREEN);
+    label->getLetter(2)->setColor(Color3B::BLUE);
+    auto action = RepeatForever::create(Sequence::create( 
+        FadeOut::create(2), FadeIn::create(2),nullptr));
+    label->runAction(action);
+}
+
+std::string LabelIssue11585Test::title() const
+{
+    return "Test for Issue #11585";
+}
+
+std::string LabelIssue11585Test::subtitle() const
+{
+    return "The color of letter should not be overridden by fade action.";
 }
