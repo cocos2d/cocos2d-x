@@ -71,7 +71,7 @@ bool UIListViewTest_Vertical::init()
                                     (backgroundSize.height - listView->getContentSize().height) / 2.0f));
         listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEvent, this));
         listView->addEventListener((ui::ListView::ccScrollViewCallback)CC_CALLBACK_2(UIListViewTest_Vertical::selectedItemEventScrollView,this));
-        
+		listView->setScrollBarPositionFromCorner(Vec2(7, 7));
         _uiLayer->addChild(listView);
         
         
@@ -268,6 +268,7 @@ bool UIListViewTest_Horizontal::init()
                                     (widgetSize.height - backgroundSize.height) / 2.0f +
                                     (backgroundSize.height - listView->getContentSize().height) / 2.0f));
         listView->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(UIListViewTest_Horizontal::selectedItemEvent, this));
+		listView->setScrollBarPositionFromCorner(Vec2(7, 7));
         _uiLayer->addChild(listView);
         
         

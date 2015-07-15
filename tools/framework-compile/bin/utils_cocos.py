@@ -22,7 +22,7 @@ def os_is_mac():
 def convert_to_python_path(path):
     return path.replace("\\","/")
 
-def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
+def execute_command(cmdstring, cwd=None, timeout=None, shell=True, use_py_path=True):
     """ 执行一个SHELL命令
         封装了subprocess的Popen方法, 支持超时判断，支持读取stdout和stderr
         参数:
@@ -38,7 +38,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
     import subprocess
     import time
 
-    if os_is_win32():
+    if os_is_win32() and use_py_path:
         cmdstring = convert_to_python_path(cmdstring)
 
     print("")
@@ -120,7 +120,7 @@ def get_vs_cmd_path(vs_version):
 def rmdir(folder):
     if os.path.exists(folder):
         if sys.platform == 'win32':
-            execute_command("rd /s/q %s" % folder)
+            execute_command("rd /s/q \"%s\"" % folder)
         else:
             shutil.rmtree(folder)
 

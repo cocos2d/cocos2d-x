@@ -64,7 +64,7 @@ class TestFileFuncs : public FileUtilsDemo
 {
 public:
     CREATE_FUNC(TestFileFuncs);
-    
+
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -74,7 +74,7 @@ class TestDirectoryFuncs : public FileUtilsDemo
 {
 public:
     CREATE_FUNC(TestDirectoryFuncs);
-    
+
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -91,4 +91,47 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TestWriteString : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestWriteString);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TestWriteData : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestWriteData);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TestWriteValueMap : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestWriteValueMap);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class TestWriteValueVector : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestWriteValueVector);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 #endif /* __FILEUTILSTEST_H__ */

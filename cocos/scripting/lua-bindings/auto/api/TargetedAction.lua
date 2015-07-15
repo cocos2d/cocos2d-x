@@ -47,6 +47,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TargetedAction] reverse 
+-- @param self
+-- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
+        
+--------------------------------
+-- 
 -- @function [parent=#TargetedAction] clone 
 -- @param self
 -- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
@@ -58,17 +64,17 @@
 -- @return TargetedAction#TargetedAction self (return value: cc.TargetedAction)
         
 --------------------------------
--- 
--- @function [parent=#TargetedAction] reverse 
--- @param self
--- @return TargetedAction#TargetedAction ret (return value: cc.TargetedAction)
-        
---------------------------------
 -- param time In seconds.
 -- @function [parent=#TargetedAction] update 
 -- @param self
 -- @param #float time
 -- @return TargetedAction#TargetedAction self (return value: cc.TargetedAction)
+        
+--------------------------------
+-- 
+-- @function [parent=#TargetedAction] isDone 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

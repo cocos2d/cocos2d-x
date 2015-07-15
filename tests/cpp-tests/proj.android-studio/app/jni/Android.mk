@@ -161,6 +161,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp \
+../../../Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp \
 ../../../Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp \
@@ -202,7 +203,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/VisibleRect.cpp \
 ../../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../../Classes/controller.cpp \
-../../../Classes/testBasic.cpp
+../../../Classes/testBasic.cpp \
+../../../Classes/NavMeshTest/NavMeshTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../../..

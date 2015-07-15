@@ -30,4 +30,6 @@ CocostudioParserTests::CocostudioParserTests()
     addTestCase("cocostudio 1.3", [](){ return CocostudioParserJsonScene::create("cocosui/UIEditorTest/cocostudio1_3/CocostudioV1_3_1.ExportJson"); });
     addTestCase("cocostudio 1.4", [](){ return CocostudioParserJsonScene::create("cocosui/UIEditorTest/cocostudio1_4/Cocostudio1_4_1.ExportJson"); });
     addTestCase("cocostudio 1.5", [](){ return CocostudioParserJsonScene::create("cocosui/UIEditorTest/cocostudio1_5/Cocostudio1_5_1.ExportJson"); });
+    addTestCase("cocostudio 1.6", [](){ return CocostudioParserJsonScene::create("cocosui/UIEditorTest/cocostudio1_6/CocoStudio1.6Demo_1.ExportJson"); });
+    
 }

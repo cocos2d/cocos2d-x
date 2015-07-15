@@ -55,8 +55,9 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DForceDepthTest);
     ADD_TEST_CASE(Sprite3DCubeMapTest);
     ADD_TEST_CASE(NodeAnimationTest);
-    ADD_TEST_CASE(Animate3DCallbackTest);
     ADD_TEST_CASE(Issue9767);
+    ADD_TEST_CASE(Sprite3DClippingTest);
+    ADD_TEST_CASE(Animate3DCallbackTest);
 };
 
 //------------------------------------------------------------------
@@ -2472,8 +2473,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
         _skyBox->setTexture(_textureCube);
         addChild(_skyBox);
-
-        _skyBox->setScale(700.f);
     }
 
     addChild(_camera);
@@ -2575,6 +2574,44 @@ std::string Issue9767::subtitle() const
     return "";
 }
 
+Sprite3DClippingTest::Sprite3DClippingTest()
+{
+    auto size = Director::getInstance()->getWinSize();
+    auto stencil = Sprite::create("Images/close.png");
+    auto clipSprite3D = ClippingNode::create();
+    clipSprite3D->setStencil(stencil);
+    this->addChild(clipSprite3D);
+    clipSprite3D->setScale(3.0f);
+    
+    auto sprite3D = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite3D->setScale(1.0f);
+    sprite3D->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
+    clipSprite3D->addChild(sprite3D);//5
+    
+    clipSprite3D->setPosition(Vec2(size.width / 2, size.height / 2));
+    
+    auto seq = Sequence::create(ScaleTo::create(2.f, 3), ScaleTo::create(2.f, 0.5f), NULL);
+    sprite3D->runAction(RepeatForever::create(seq));
+    auto animation = Animation3D::create("Sprite3DTest/orc.c3b");
+    auto animate = Animate3D::create(animation);
+    sprite3D->runAction(RepeatForever::create(animate));
+    sprite3D->setForce2DQueue(true);
+}
+
+Sprite3DClippingTest::~Sprite3DClippingTest()
+{
+    
+}
+
+std::string Sprite3DClippingTest::title() const
+{
+    return "Sprite3D Clipping Test";
+}
+
+std::string Sprite3DClippingTest::subtitle() const
+{
+    return "";
+}
 Animate3DCallbackTest::Animate3DCallbackTest()
 {
     auto s = Director::getInstance()->getWinSize();

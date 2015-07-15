@@ -21,9 +21,15 @@ UserDefaultTests::UserDefaultTests()
 UserDefaultTest::UserDefaultTest()
 {
     auto s = Director::getInstance()->getWinSize();
-    auto label = Label::createWithTTF("CCUserDefault test see log", "fonts/arial.ttf", 28);
+    auto label = Label::createWithTTF("CCUserDefault test Log data see console", "fonts/arial.ttf", 22);
     addChild(label, 0);
     label->setPosition( Vec2(s.width/2, s.height-50) );
+
+    this->_label = Label::createWithTTF("result", "fonts/arial.ttf", 12);
+    addChild(this->_label, 0);
+
+    label->setPosition(Vec2(s.width / 2, s.height - 50));
+    this->_label->setPosition(Vec2(s.width / 2, s.height / 2));
 
     doTest();
 }
@@ -75,7 +81,7 @@ void setData2(const char* key)
 
 void UserDefaultTest::doTest()
 {
-    CCLOG("********************** init value ***********************");
+    this->_label->setString(this->_label->getString() + "\n" + "********************** init value ***********************");
 
     // set default value
 
@@ -90,29 +96,7 @@ void UserDefaultTest::doTest()
     setData<float>("float_data");
     setData<double>("double_data");
 
-    // print value
-
-    std::string ret = UserDefault::getInstance()->getStringForKey("string");
-    CCLOG("string is %s", ret.c_str());
-
-    double d = UserDefault::getInstance()->getDoubleForKey("double");
-    CCLOG("double is %f", d);
-
-    int i = UserDefault::getInstance()->getIntegerForKey("integer");
-    CCLOG("integer is %d", i);
-
-    float f = UserDefault::getInstance()->getFloatForKey("float");
-    CCLOG("float is %f", f);
-
-    bool b = UserDefault::getInstance()->getBoolForKey("bool");
-    if (b)
-    {
-        CCLOG("bool is true");
-    }
-    else
-    {
-        CCLOG("bool is false");
-    }
+    printValue();
 
     logData<int>("int_data");
     logData<float>("float_data");
@@ -120,7 +104,7 @@ void UserDefaultTest::doTest()
 
     //CCUserDefault::getInstance()->flush();
 
-    CCLOG("********************** after change value ***********************");
+    this->_label->setString(this->_label->getString() + "\n" + "********************** after change value ***********************");
 
     // change the value
 
@@ -137,35 +121,59 @@ void UserDefaultTest::doTest()
     UserDefault::getInstance()->flush();
 
     // print value
-
-    ret = UserDefault::getInstance()->getStringForKey("string");
-    CCLOG("string is %s", ret.c_str());
-
-    d = UserDefault::getInstance()->getDoubleForKey("double");
-    CCLOG("double is %f", d);
-
-    i = UserDefault::getInstance()->getIntegerForKey("integer");
-    CCLOG("integer is %d", i);
-
-    f = UserDefault::getInstance()->getFloatForKey("float");
-    CCLOG("float is %f", f);
-
-    b = UserDefault::getInstance()->getBoolForKey("bool");
-    if (b)
-    {
-        CCLOG("bool is true");
-    }
-    else
-    {
-        CCLOG("bool is false");
-    }
+    printValue();
 
     logData<int>("int_data");
     logData<float>("float_data");
     logData<double>("double_data");
+
+    this->_label->setString(this->_label->getString() + "\n" + "********************** after delete value ***********************");
+
+    UserDefault::getInstance()->deleteValueForKey("string");
+    UserDefault::getInstance()->deleteValueForKey("integer");
+    UserDefault::getInstance()->deleteValueForKey("float");
+    UserDefault::getInstance()->deleteValueForKey("double");
+    UserDefault::getInstance()->deleteValueForKey("bool");
+
+    // print value
+    printValue();
 }
 
+void UserDefaultTest::printValue()
+{
+    char strTemp[256] = "";
+    // print value
+    std::string ret = UserDefault::getInstance()->getStringForKey("string");
+    sprintf(strTemp, "string is %s", ret.c_str());
+    this->_label->setString(this->_label->getString() + "\n" + strTemp);
+
+    double d = UserDefault::getInstance()->getDoubleForKey("double");
+    sprintf(strTemp, "double is %f", d);
+    this->_label->setString(this->_label->getString() + "\n" + strTemp);
+
+    int i = UserDefault::getInstance()->getIntegerForKey("integer");
+    sprintf(strTemp, "integer is %d", i);
+    this->_label->setString(this->_label->getString() + "\n" + strTemp);
+
+    float f = UserDefault::getInstance()->getFloatForKey("float");
+    sprintf(strTemp, "float is %f", f);
+    this->_label->setString(this->_label->getString() + "\n" + strTemp);
+
+    bool b = UserDefault::getInstance()->getBoolForKey("bool");
+    if (b)
+    {
+        sprintf(strTemp, "bool is true");
+        this->_label->setString(this->_label->getString() + "\n" + strTemp);
+    }
+    else
+    {
+        sprintf(strTemp, "bool is false");
+        this->_label->setString(this->_label->getString() + "\n" + strTemp);
+    }
+}
 
 UserDefaultTest::~UserDefaultTest()
 {
 }
+
+

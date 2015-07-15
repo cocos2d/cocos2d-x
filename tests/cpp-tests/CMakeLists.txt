@@ -169,6 +169,7 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp
+  Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
   Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest_Editor.cpp
@@ -205,6 +206,7 @@ set(TESTS_SRC
   Classes/UnitTest/UnitTest.cpp
   Classes/UserDefaultTest/UserDefaultTest.cpp
   Classes/VisibleRect.cpp
+  Classes/VibrateTest/VibrateTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp

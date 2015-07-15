@@ -5,6 +5,10 @@ LOCAL_MODULE := cocos_ui_static
 
 LOCAL_MODULE_FILENAME := libui
 
+ifeq ($(USE_ARM_MODE),1)
+LOCAL_ARM_MODE := arm
+endif
+
 LOCAL_SRC_FILES := \
 UIWidget.cpp \
 UILayout.cpp \
@@ -15,8 +19,11 @@ UIHelper.cpp \
 UIListView.cpp \
 UIPageView.cpp \
 UIScrollView.cpp \
+UIScrollViewBar.cpp \
 UIButton.cpp \
+UIAbstractCheckButton.cpp \
 UICheckBox.cpp \
+UIRadioButton.cpp \
 UIImageView.cpp \
 UIText.cpp \
 UITextAtlas.cpp \

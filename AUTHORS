@@ -7,12 +7,34 @@ Core Developers:
     XiaoMing Zhang (Minggo)
     JianHua Chen (James)
     Zhe Wang (Walzer)
+    Hao Wu (Wu-Hao)
     Qingkui Hu (samuele3hu)
     Huabing Xu (dabingnn)
-    Bo Yu (boyu0)
-    Wenhai Lin(Dhilan007)
-    Guanghui Qu(andyque）
+    Wenhai Lin (WenhaiLin)
+    Guanghui Qu (zilongshanren）
+    Wensheng Yang (yangws)
+    Yulei Liao (dualface)
+    Huabin Ling (pandamicro)
+    Long Jiang (jianglong0156)
+    Sijie Fu (fusijie)
 
+Framework & Tools Developers:
+    Bin Zhang (natural-law)
+
+Web Developers:
+    Sijie Wang (VisualSJ)
+
+3D Developers:
+    Xiao Yang (super626)
+    Yintao Hou (masterhou)
+
+Editor Support Developers:
+    Cheng Zhang (chengstory)
+    Feng Xiao (xiaofeng11)
+
+Windows Platforms Developers (Collaborators from Microsoft):
+    Dale Stammen (stammen)
+    Anniruddh (anniruddh)
 
 Developers:
     Rolando Abarca
@@ -71,12 +93,14 @@ Developers:
 
     stari4ek
         Fix VideoPlayer on Android ignore search paths
+        Label: Improve rendering of letter's inner shapes when outline is used
 
     FlagellumDei
         Center the window correctly on windows
 
     ggggamer
         fixed memory leak of preloadEffect on windows
+        Some small performance improvements
 
     CodeSnooker
         Added Method to create a CCMenuItemToggle from a CCArray with a target selector
@@ -377,6 +401,10 @@ Developers:
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
         Workaround for some problems due to UITextField of CCEditBoxImplIOS is attached as a view above OpenGL view.
+        Enhance ScrollView with easing out scrolling.
+        Add scroll bar feature into ui::ScrollView.
+        Add RadioButton and RaidoButtonGroup widgets.
+        Add a setter for line width in DrawNode.
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -559,6 +587,7 @@ Developers:
         Fixing a bug that the submenu of ExtensionTest in TestCpp can't scroll.
         Implements a socket.io client extension and adds a test case.
         Implements 'SIODelegate::fireEventToScript' method to integrate JSB event handling with the original native code.
+        Update socket.io network extension to correctly detect and manage connection to socket.io server versions 0.9.x-1.x
         
     pktangyue
         Fixing a bug that CCScale9Sprite::setInsetLeft/XXX can't work for rotated sprite frame.
@@ -734,7 +763,7 @@ Developers:
         Fix lua project template crash on iOS5.1 device
         Fix layout constant syntax error in lua-binding
         
-    andyque
+    zilongshanren
         Fixed a bug that missing to check self assignment of Vector<T>, Map<K,V>, Value and String.
         Fixed a bug that move assignment operator doesn't clear previous content bug.
         Fixed the compile error of Map's getRandomObject.
@@ -1134,6 +1163,17 @@ Developers:
     namezero111111
         ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
 
+    shinhirota
+        JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
+
+    oscr
+        Fix two issues with download-deps.py
+        Capitalize default option in download-deps.py
+        platform: Added debug flag -Wextra to linux CMakeFile
+
+    iris-wy
+        platform: Fixed warning "Service Intent must be explicit" on Android
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
@@ -1145,6 +1185,8 @@ Retired Core Developers:
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.
+
+    Bo Yu (boyu0)
 
 Cocos2d-x can not grow so fast without the active community.
 Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!

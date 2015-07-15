@@ -26,7 +26,6 @@
 #ifndef _ACTIONS__PROGRESS_TEST_H_
 #define _ACTIONS__PROGRESS_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ActionsProgressTests);

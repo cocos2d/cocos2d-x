@@ -563,6 +563,16 @@ blendfunc
 },
 
 /**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
+)
+{
+},
+
+/**
  * @method getPrimitiveType
  * @return {unsigned int}
  */
@@ -758,20 +768,20 @@ reload : function (
 
 /**
  * @method init
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
-str,
-str,
-str,
-str,
-str,
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {bool}
+ */
+init : function (
+str, 
+str, 
+str, 
+str, 
+str, 
 str 
 )
 {
@@ -1128,6 +1138,16 @@ str
  */
 setBlendFunc : function (
 blendfunc 
+)
+{
+},
+
+/**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
 )
 {
 },

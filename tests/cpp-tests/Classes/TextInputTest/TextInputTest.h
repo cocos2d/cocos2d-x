@@ -1,7 +1,6 @@
 #ifndef __TEXT_INPUT_TEST_H__
 #define __TEXT_INPUT_TEST_H__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 class KeyboardNotificationLayer;

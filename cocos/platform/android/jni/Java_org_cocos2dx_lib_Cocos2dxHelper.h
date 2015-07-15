@@ -40,6 +40,7 @@ extern void enableAccelerometerJni();
 extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
 extern void setKeepScreenOnJni(bool value);
+extern void vibrateJni(float duration);
 extern bool openURLJNI(const char* url);
 // functions for UserDefault
 extern bool getBoolForKeyJNI(const char* key, bool defaultValue);
@@ -52,5 +53,5 @@ extern void setIntegerForKeyJNI(const char* key, int value);
 extern void setFloatForKeyJNI(const char* key, float value);
 extern void setDoubleForKeyJNI(const char* key, double value);
 extern void setStringForKeyJNI(const char* key, const char* value);
-
+extern void deleteValueForKeyJNI(const char* key);
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

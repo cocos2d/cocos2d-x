@@ -194,6 +194,11 @@ public:
      if meshIndex == -1, then it will be applied to all the meshes that belong to the sprite.
      */
     Material* getMaterial(int meshIndex) const;
+    
+    /**
+    * force set this Sprite3D to 2D render queue
+    */
+    void setForce2DQueue(bool force2D);
 
 CC_CONSTRUCTOR_ACCESS:
     

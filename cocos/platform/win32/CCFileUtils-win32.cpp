@@ -105,7 +105,7 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
     {
         return false;
     }
-    
+
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
@@ -121,9 +121,20 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
     return true;
 }
 
+bool FileUtilsWin32::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
+    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
+        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
+    {
+        return true;
+    }
+    return false;
+}
+
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 {
-    if (   (strPath.length() > 2 
+    if (   (strPath.length() > 2
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
         && strPath[1] == ':') || (strPath[0] == '/' && strPath[1] == '/'))
     {
@@ -139,9 +150,9 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
     size_t len = tmpPath.length();
     size_t nl = filename.length();
     std::string realName;
-    
+
     while (tmpPath.length() >= len - nl && tmpPath.length()>2)
-	{
+    {
         //CCLOG("%s", tmpPath.c_str());
         WIN32_FIND_DATAA data;
         HANDLE h = FindFirstFileA(tmpPath.c_str(), &data);
@@ -158,7 +169,7 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
             {
                 std::string msg = "File path error: \"";
                 msg.append(filename).append("\" the real name is: ").append(realName);
-            
+
                 CCLOG("%s", msg.c_str());
                 return false;
             }
@@ -174,7 +185,7 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
             tmpPath = tmpPath.substr(0, tmpPath.rfind("/"));
         } while (tmpPath.back() == '.');
     }
-	return true;
+    return true;
 }
 
 static Data getData(const std::string& filename, bool forString)
@@ -200,7 +211,7 @@ static Data getData(const std::string& filename, bool forString)
 
         HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
-        
+
         size = ::GetFileSize(fileHandle, nullptr);
 
         if (forString)
@@ -224,10 +235,10 @@ static Data getData(const std::string& filename, bool forString)
             {
                 free(buffer);
                 buffer = nullptr;
-            }    
+            }
         }
     } while (0);
-    
+
     Data ret;
 
     if (buffer == nullptr || size == 0)
@@ -254,15 +265,15 @@ static Data getData(const std::string& filename, bool forString)
 std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
-	if (data.isNull())
-	{
-		return "";
-	}
+    if (data.isNull())
+    {
+        return "";
+    }
 
     std::string ret((const char*)data.getBytes());
     return ret;
 }
-    
+
 Data FileUtilsWin32::getDataFromFile(const std::string& filename)
 {
     return getData(filename, false);
@@ -285,7 +296,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
 
         HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
-        
+
         *size = ::GetFileSize(fileHandle, nullptr);
 
         pBuffer = (unsigned char*) malloc(*size);
@@ -300,7 +311,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
             pBuffer = nullptr;
         }
     } while (0);
-    
+
     if (! pBuffer)
     {
         std::string msg = "Get data from file(";
@@ -328,7 +339,7 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
 {
     std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
-    
+
     return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
 }
 

@@ -10,6 +10,8 @@
 		0541A74F1973876100E45470 /* JavaScriptObjCBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 0541A74D1973876100E45470 /* JavaScriptObjCBridge.h */; };
 		0541A7501973876100E45470 /* JavaScriptObjCBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0541A74E1973876100E45470 /* JavaScriptObjCBridge.mm */; };
 		0541A75B19738AD200E45470 /* JavaScriptObjCBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0541A74E1973876100E45470 /* JavaScriptObjCBridge.mm */; };
+		185664961B4253C7009EF2AE /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A119F0D18BDF1FF00352BAA /* libjs_static.a */; };
+		185664971B4253CB009EF2AE /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A119F0F18BDF20900352BAA /* libjs_static.a */; };
 		1A119E8318BDF19200352BAA /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A119E2F18BDF19200352BAA /* jsb_cocos2dx_auto.cpp */; };
 		1A119E8418BDF19200352BAA /* jsb_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A119E2F18BDF19200352BAA /* jsb_cocos2dx_auto.cpp */; };
 		1A119E8518BDF19200352BAA /* jsb_cocos2dx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1A119E3018BDF19200352BAA /* jsb_cocos2dx_auto.hpp */; };
@@ -124,8 +126,6 @@
 		1A119F0618BDF19200352BAA /* jsb_cocos2dx_spine_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A119E8118BDF19200352BAA /* jsb_cocos2dx_spine_manual.cpp */; };
 		1A119F0718BDF19200352BAA /* jsb_cocos2dx_spine_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A119E8218BDF19200352BAA /* jsb_cocos2dx_spine_manual.h */; };
 		1A119F0818BDF19200352BAA /* jsb_cocos2dx_spine_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A119E8218BDF19200352BAA /* jsb_cocos2dx_spine_manual.h */; };
-		1A119F0E18BDF1FF00352BAA /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A119F0D18BDF1FF00352BAA /* libjs_static.a */; };
-		1A119F1018BDF20900352BAA /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A119F0F18BDF20900352BAA /* libjs_static.a */; };
 		1A1D3B7818C44FD000922D3C /* jsb_event_dispatcher_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1D3B7618C44FD000922D3C /* jsb_event_dispatcher_manual.cpp */; };
 		1A1D3B7918C44FD000922D3C /* jsb_event_dispatcher_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A1D3B7618C44FD000922D3C /* jsb_event_dispatcher_manual.cpp */; };
 		1A1D3B7A18C44FD000922D3C /* jsb_event_dispatcher_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A1D3B7718C44FD000922D3C /* jsb_event_dispatcher_manual.h */; };
@@ -172,21 +172,6 @@
 		BA4095C31A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA4095C01A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp */; };
 		BA4095C41A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */; };
 		BA4095C51A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */; };
-		BA623E09191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623DFC191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp */; };
-		BA623E0A191A195F00761F37 /* jsb_pluginx_basic_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623DFD191A195F00761F37 /* jsb_pluginx_basic_conversions.h */; };
-		BA623E0B191A195F00761F37 /* jsb_pluginx_extension_registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623DFE191A195F00761F37 /* jsb_pluginx_extension_registration.cpp */; };
-		BA623E0C191A195F00761F37 /* jsb_pluginx_extension_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623DFF191A195F00761F37 /* jsb_pluginx_extension_registration.h */; };
-		BA623E0D191A195F00761F37 /* jsb_pluginx_manual_callback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623E00191A195F00761F37 /* jsb_pluginx_manual_callback.cpp */; };
-		BA623E0E191A195F00761F37 /* jsb_pluginx_manual_callback.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623E01191A195F00761F37 /* jsb_pluginx_manual_callback.h */; };
-		BA623E0F191A195F00761F37 /* jsb_pluginx_manual_protocols.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623E02191A195F00761F37 /* jsb_pluginx_manual_protocols.cpp */; };
-		BA623E10191A195F00761F37 /* jsb_pluginx_manual_protocols.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623E03191A195F00761F37 /* jsb_pluginx_manual_protocols.h */; };
-		BA623E11191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623E04191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.cpp */; };
-		BA623E12191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623E05191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.h */; };
-		BA623E13191A195F00761F37 /* pluginxUTF8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623E06191A195F00761F37 /* pluginxUTF8.cpp */; };
-		BA623E14191A195F00761F37 /* pluginxUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623E07191A195F00761F37 /* pluginxUTF8.h */; };
-		BA623E15191A195F00761F37 /* uthash.h in Headers */ = {isa = PBXBuildFile; fileRef = BA623E08191A195F00761F37 /* uthash.h */; };
-		BA623E18191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA623E16191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.cpp */; };
-		BA623E19191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BA623E17191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.hpp */; };
 		BAEE4D711AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEE4D6F1AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.cpp */; };
 		BAEE4D721AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BAEE4D6F1AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.cpp */; };
 		BAEE4D731AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = BAEE4D701AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.hpp */; };
@@ -271,8 +256,8 @@
 		1A119E8018BDF19200352BAA /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		1A119E8118BDF19200352BAA /* jsb_cocos2dx_spine_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_spine_manual.cpp; sourceTree = "<group>"; };
 		1A119E8218BDF19200352BAA /* jsb_cocos2dx_spine_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_spine_manual.h; sourceTree = "<group>"; };
-		1A119F0D18BDF1FF00352BAA /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = ../../external/spidermonkey/prebuilt/ios/libjs_static.a; sourceTree = "<group>"; };
-		1A119F0F18BDF20900352BAA /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = ../../external/spidermonkey/prebuilt/mac/libjs_static.a; sourceTree = "<group>"; };
+		1A119F0D18BDF1FF00352BAA /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = ../../../../external/spidermonkey/prebuilt/ios/libjs_static.a; sourceTree = "<group>"; };
+		1A119F0F18BDF20900352BAA /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = ../../../../external/spidermonkey/prebuilt/mac/libjs_static.a; sourceTree = "<group>"; };
 		1A1D3B7618C44FD000922D3C /* jsb_event_dispatcher_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_event_dispatcher_manual.cpp; sourceTree = "<group>"; };
 		1A1D3B7718C44FD000922D3C /* jsb_event_dispatcher_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_event_dispatcher_manual.h; sourceTree = "<group>"; };
 		1A5410A418B785A10016A3AF /* libjscocos2d Mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libjscocos2d Mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,21 +287,6 @@
 		B38AD56D1B1D38700057DD7F /* jsb_cocos2dx_experimental_video_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_experimental_video_auto.hpp; sourceTree = "<group>"; };
 		BA4095C01A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_conversions.cpp; sourceTree = "<group>"; };
 		BA4095C11A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_cocos2dx_studio_conversions.h; sourceTree = "<group>"; };
-		BA623DFC191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_basic_conversions.cpp; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_basic_conversions.cpp; sourceTree = "<group>"; };
-		BA623DFD191A195F00761F37 /* jsb_pluginx_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_pluginx_basic_conversions.h; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_basic_conversions.h; sourceTree = "<group>"; };
-		BA623DFE191A195F00761F37 /* jsb_pluginx_extension_registration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_extension_registration.cpp; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_extension_registration.cpp; sourceTree = "<group>"; };
-		BA623DFF191A195F00761F37 /* jsb_pluginx_extension_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_pluginx_extension_registration.h; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_extension_registration.h; sourceTree = "<group>"; };
-		BA623E00191A195F00761F37 /* jsb_pluginx_manual_callback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_manual_callback.cpp; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_manual_callback.cpp; sourceTree = "<group>"; };
-		BA623E01191A195F00761F37 /* jsb_pluginx_manual_callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_pluginx_manual_callback.h; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_manual_callback.h; sourceTree = "<group>"; };
-		BA623E02191A195F00761F37 /* jsb_pluginx_manual_protocols.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_manual_protocols.cpp; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_manual_protocols.cpp; sourceTree = "<group>"; };
-		BA623E03191A195F00761F37 /* jsb_pluginx_manual_protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_pluginx_manual_protocols.h; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_manual_protocols.h; sourceTree = "<group>"; };
-		BA623E04191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_pluginx_spidermonkey_specifics.cpp; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_spidermonkey_specifics.cpp; sourceTree = "<group>"; };
-		BA623E05191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jsb_pluginx_spidermonkey_specifics.h; path = ../../../../plugin/jsbindings/manual/jsb_pluginx_spidermonkey_specifics.h; sourceTree = "<group>"; };
-		BA623E06191A195F00761F37 /* pluginxUTF8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pluginxUTF8.cpp; path = ../../../../plugin/jsbindings/manual/pluginxUTF8.cpp; sourceTree = "<group>"; };
-		BA623E07191A195F00761F37 /* pluginxUTF8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pluginxUTF8.h; path = ../../../../plugin/jsbindings/manual/pluginxUTF8.h; sourceTree = "<group>"; };
-		BA623E08191A195F00761F37 /* uthash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uthash.h; path = ../../../../plugin/jsbindings/manual/uthash.h; sourceTree = "<group>"; };
-		BA623E16191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsb_cocos2dx_pluginx_auto.cpp; path = ../../../../plugin/jsbindings/auto/jsb_cocos2dx_pluginx_auto.cpp; sourceTree = "<group>"; };
-		BA623E17191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = jsb_cocos2dx_pluginx_auto.hpp; path = ../../../../plugin/jsbindings/auto/jsb_cocos2dx_pluginx_auto.hpp; sourceTree = "<group>"; };
 		BAEE4D6F1AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_3d_extension_auto.cpp; sourceTree = "<group>"; };
 		BAEE4D701AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_3d_extension_auto.hpp; sourceTree = "<group>"; };
 		BAFA58F91B319F05004F9246 /* jsb_cocos2dx_navmesh_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_navmesh_auto.cpp; sourceTree = "<group>"; };
@@ -332,7 +302,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A119F1018BDF20900352BAA /* libjs_static.a in Frameworks */,
+				185664971B4253CB009EF2AE /* libjs_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,7 +310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A119F0E18BDF1FF00352BAA /* libjs_static.a in Frameworks */,
+				185664961B4253C7009EF2AE /* libjs_static.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,8 +363,6 @@
 				1A119E3F18BDF19200352BAA /* jsb_cocos2dx_studio_auto.hpp */,
 				1AB5E62918D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.cpp */,
 				1AB5E62A18D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.hpp */,
-				BA623E16191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.cpp */,
-				BA623E17191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.hpp */,
 				BAFA58F91B319F05004F9246 /* jsb_cocos2dx_navmesh_auto.cpp */,
 				BAFA58FA1B319F05004F9246 /* jsb_cocos2dx_navmesh_auto.hpp */,
 			);
@@ -439,7 +407,6 @@
 				1A119E7E18BDF19200352BAA /* spidermonkey_specifics.h */,
 				1A119E7F18BDF19200352BAA /* spine */,
 				1AB5E62F18D05BF30088DAA4 /* ui */,
-				BA623DFB191A192700761F37 /* pluginx */,
 			);
 			name = manual;
 			path = ../manual;
@@ -603,26 +570,6 @@
 			name = experimental;
 			sourceTree = "<group>";
 		};
-		BA623DFB191A192700761F37 /* pluginx */ = {
-			isa = PBXGroup;
-			children = (
-				BA623DFC191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp */,
-				BA623DFD191A195F00761F37 /* jsb_pluginx_basic_conversions.h */,
-				BA623DFE191A195F00761F37 /* jsb_pluginx_extension_registration.cpp */,
-				BA623DFF191A195F00761F37 /* jsb_pluginx_extension_registration.h */,
-				BA623E00191A195F00761F37 /* jsb_pluginx_manual_callback.cpp */,
-				BA623E01191A195F00761F37 /* jsb_pluginx_manual_callback.h */,
-				BA623E02191A195F00761F37 /* jsb_pluginx_manual_protocols.cpp */,
-				BA623E03191A195F00761F37 /* jsb_pluginx_manual_protocols.h */,
-				BA623E04191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.cpp */,
-				BA623E05191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.h */,
-				BA623E06191A195F00761F37 /* pluginxUTF8.cpp */,
-				BA623E07191A195F00761F37 /* pluginxUTF8.h */,
-				BA623E08191A195F00761F37 /* uthash.h */,
-			);
-			name = pluginx;
-			sourceTree = "<group>";
-		};
 		BAFA59001B319F38004F9246 /* navmesh */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,11 +662,9 @@
 				4B22F4AC1B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h in Headers */,
 				1A119E8C18BDF19200352BAA /* jsb_cocos2dx_builder_auto.hpp in Headers */,
 				4BE089E51ADF965E00D65D4B /* jsb_cocos2dx_experimental_webView_auto.hpp in Headers */,
-				BA623E19191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.hpp in Headers */,
 				1A119EAA18BDF19200352BAA /* js_bindings_chipmunk_auto_classes.h in Headers */,
 				1A119E9E18BDF19200352BAA /* jsb_cocos2dx_spine_auto.hpp in Headers */,
 				1A119EEC18BDF19200352BAA /* jsb_opengl_registration.h in Headers */,
-				BA623E15191A195F00761F37 /* uthash.h in Headers */,
 				1A119F0418BDF19200352BAA /* spidermonkey_specifics.h in Headers */,
 				1A119EE818BDF19200352BAA /* jsb_opengl_manual.h in Headers */,
 				1A119ED618BDF19200352BAA /* js_bindings_core.h in Headers */,
@@ -731,28 +676,22 @@
 				1A119EFE18BDF19200352BAA /* XMLHTTPRequest.h in Headers */,
 				1AB5E63618D05BF30088DAA4 /* jsb_cocos2dx_ui_manual.h in Headers */,
 				1A119EE418BDF19200352BAA /* jsb_opengl_functions.h in Headers */,
-				BA623E10191A195F00761F37 /* jsb_pluginx_manual_protocols.h in Headers */,
 				1AB5E62E18D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.hpp in Headers */,
 				1A119EDA18BDF19200352BAA /* js_bindings_opengl.h in Headers */,
 				1A119EC818BDF19200352BAA /* jsb_cocos2dx_studio_manual.h in Headers */,
 				426390001B0EC1B7004C53A2 /* jsb_cocos2dx_physics3d_auto.hpp in Headers */,
 				420BBCFA1AA48EE900493976 /* jsb_cocos2dx_3d_manual.h in Headers */,
-				BA623E0C191A195F00761F37 /* jsb_pluginx_extension_registration.h in Headers */,
 				1A119EAC18BDF19200352BAA /* js_bindings_chipmunk_auto_classes_registration.h in Headers */,
 				420BBCF31AA48EDE00493976 /* jsb_cocos2dx_3d_auto.hpp in Headers */,
 				1A119EBA18BDF19200352BAA /* js_bindings_chipmunk_registration.h in Headers */,
 				1A119EB018BDF19200352BAA /* js_bindings_chipmunk_functions.h in Headers */,
 				4BE089EC1ADF967400D65D4B /* jsb_cocos2dx_experimental_webView_manual.h in Headers */,
-				BA623E0E191A195F00761F37 /* jsb_pluginx_manual_callback.h in Headers */,
 				BAFA58FE1B319F05004F9246 /* jsb_cocos2dx_navmesh_auto.hpp in Headers */,
 				1A119EB218BDF19200352BAA /* js_bindings_chipmunk_functions_registration.h in Headers */,
 				1A119EF218BDF19200352BAA /* js_bindings_system_functions_registration.h in Headers */,
 				1A119E8618BDF19200352BAA /* jsb_cocos2dx_auto.hpp in Headers */,
-				BA623E12191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.h in Headers */,
 				1A119F0818BDF19200352BAA /* jsb_cocos2dx_spine_manual.h in Headers */,
 				B38AD56F1B1D38700057DD7F /* jsb_cocos2dx_experimental_video_auto.hpp in Headers */,
-				BA623E0A191A195F00761F37 /* jsb_pluginx_basic_conversions.h in Headers */,
-				BA623E14191A195F00761F37 /* pluginxUTF8.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,8 +837,6 @@
 				42638FFE1B0EC1B7004C53A2 /* jsb_cocos2dx_physics3d_auto.cpp in Sources */,
 				1A119EE618BDF19200352BAA /* jsb_opengl_manual.cpp in Sources */,
 				1A119F0618BDF19200352BAA /* jsb_cocos2dx_spine_manual.cpp in Sources */,
-				BA623E0F191A195F00761F37 /* jsb_pluginx_manual_protocols.cpp in Sources */,
-				BA623E13191A195F00761F37 /* pluginxUTF8.cpp in Sources */,
 				BAEE4D721AC3FFAD003BEB0F /* jsb_cocos2dx_3d_extension_auto.cpp in Sources */,
 				1A119EB818BDF19200352BAA /* js_bindings_chipmunk_registration.cpp in Sources */,
 				1A119E8418BDF19200352BAA /* jsb_cocos2dx_auto.cpp in Sources */,
@@ -912,13 +849,8 @@
 				1A119EE218BDF19200352BAA /* jsb_opengl_functions.cpp in Sources */,
 				1A119EA818BDF19200352BAA /* js_bindings_chipmunk_auto_classes.cpp in Sources */,
 				BA4095C31A6F730A005E53F6 /* jsb_cocos2dx_studio_conversions.cpp in Sources */,
-				BA623E0B191A195F00761F37 /* jsb_pluginx_extension_registration.cpp in Sources */,
-				BA623E11191A195F00761F37 /* jsb_pluginx_spidermonkey_specifics.cpp in Sources */,
 				BAFA590A1B319F7E004F9246 /* jsb_cocos2dx_navmesh_conversions.cpp in Sources */,
-				BA623E18191A196F00761F37 /* jsb_cocos2dx_pluginx_auto.cpp in Sources */,
 				1A119F0018BDF19200352BAA /* ScriptingCore.cpp in Sources */,
-				BA623E09191A195F00761F37 /* jsb_pluginx_basic_conversions.cpp in Sources */,
-				BA623E0D191A195F00761F37 /* jsb_pluginx_manual_callback.cpp in Sources */,
 				B38AD56A1B1D384A0057DD7F /* jsb_cocos2dx_experimental_video_manual.cpp in Sources */,
 				1A1D3B7918C44FD000922D3C /* jsb_event_dispatcher_manual.cpp in Sources */,
 			);
