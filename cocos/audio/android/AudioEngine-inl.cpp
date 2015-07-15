@@ -161,7 +161,7 @@ bool AudioPlayer::init(SLEngineItf engineEngine, SLObjectItf outputMixObject,con
         SLuint32 numSupportedInterfaces = 0;
         result = slQueryNumSupportedEngineInterfaces(&numSupportedInterfaces);
         if (numSupportedInterfaces < OPEN_SL_REQUIRED_INTERFACE_COUNT) {
-            ERRORLOG("Warning: AudioEngine OpenSL numSupportedInterfaces:%d is less than OPEN_SL_REQUIRED_INTERFACE_COUNT:%d",
+            log("Warning: AudioEngine OpenSL numSupportedInterfaces:%d is less than OPEN_SL_REQUIRED_INTERFACE_COUNT:%d",
                 numSupportedInterfaces, OPEN_SL_REQUIRED_INTERFACE_COUNT);
         }
         
@@ -349,12 +349,12 @@ void AudioEngineImpl::setPitch(int audioID,float pitch)
     
     if (playbackRate < player._minRate)
     {
-        ERRORLOG("Warning: AudioEngine attempting to set rate:%d which is lower than minRate=%d.", playbackRate, player._minRate);
+        log("Warning: AudioEngine attempting to set rate:%d which is lower than minRate=%d.", playbackRate, player._minRate);
         playbackRate = player._minRate;
     }
     else if (playbackRate > player._maxRate)
     {
-        ERRORLOG("Warning: AudioEngine attempting to set rate:%d which is higher than maxRate=%d.", playbackRate, player._maxRate);
+        log("Warning: AudioEngine attempting to set rate:%d which is higher than maxRate=%d.", playbackRate, player._maxRate);
         playbackRate = player._maxRate;
     }
     
