@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #include "base/CCConfiguration.h"
 #include "platform/CCFileUtils.h"
+#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 
@@ -366,6 +367,9 @@ void Configuration::loadConfigFile(const std::string& filename)
         _animate3DQuality = (Animate3DQuality)_valueDict[name].asInt();
     else
         _valueDict[name] = Value((int)_animate3DQuality);
+    
+    if (GLProgramCache::isInstanceCreated())
+        GLProgramCache::getInstance()->reloadDefaultGLProgramsRelativeToLights();
 }
 
 NS_CC_END
