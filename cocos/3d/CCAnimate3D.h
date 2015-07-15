@@ -118,6 +118,17 @@ public:
     
     /**get animate quality*/
     Animate3DQuality getQuality() const;
+
+
+    struct DisplayedEventInfo
+    {
+        Node* target;
+        const ValueMap* userInfo;
+    };
+    void setKeyFrameUserInfo(int keyFrame, DisplayedEventInfo *userInfo);
+    DisplayedEventInfo* getKeyFrameUserInfo(int keyFrame);
+    std::function<void(int keyFrame, const DisplayedEventInfo *deInfo)> keyFrameCallback;
+
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -151,6 +162,7 @@ protected:
     float      _accTransTime; // acculate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
+    float      _frameRate;
     
     // animation quality
     EvaluateType _translateEvaluate;
@@ -160,6 +172,7 @@ protected:
     
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
+    std::unordered_map<int, DisplayedEventInfo*> _keyFrameUserInfos;
 
     //sprite animates
     static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;

@@ -565,4 +565,18 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Animate3DCallbackTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DCallbackTest);
+    Animate3DCallbackTest();
+    ~Animate3DCallbackTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+
+    std::vector<cocos2d::Animate3D::DisplayedEventInfo *> _userInfoList;
+};
+
 #endif
