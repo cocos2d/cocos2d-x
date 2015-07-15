@@ -1034,6 +1034,11 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnCleanup) {
         cleanupSchedulesAndActions(p);
+        
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "cleanup", js_cocos2dx_Node_cleanup))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "cleanup", 1, &dataVal, &retval);
+        }
     }
 
     return ret;
