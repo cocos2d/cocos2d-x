@@ -62,7 +62,8 @@ private:
     int _audioID;
     int _assetFd;
     float _delayTimeToRemove;
-
+    SLpermille _minRate, _maxRate;
+    
     std::function<void (int, const std::string &)> _finishCallback;
 
     friend class AudioEngineImpl;
