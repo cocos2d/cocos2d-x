@@ -54,8 +54,8 @@
 * Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
 * ndk-r10c for Android
-* Visual Studio 2013  or newer for Windows (win32)
-* Visual Studio 2013  or newer for Windows Phone 8
+* Visual Studio 2013 or newer for Windows (win32)
+* Visual Studio 2013 update4 or newer for Windows Phone 8
 
 ## How to run tests
 
@@ -120,7 +120,6 @@ Then
 
 * For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln` or `cocos2d-js-win32.sln`
 * For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln` or `cocos2d-js-win8.1-universal.sln`
-* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
 * Select running target
 * Click run button
 
