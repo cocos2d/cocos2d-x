@@ -2,6 +2,12 @@
       "do_default":{
          "exclude_from_template":[
             "frameworks/runtime-src"
+         ],
+         "append_dir": [
+            {
+                "from": "web",
+                "to": "frameworks/cocos2d-html5"
+            }
          ]
       },
       "do_add_native_support":{
