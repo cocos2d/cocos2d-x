@@ -2629,33 +2629,26 @@ Animate3DCallbackTest::Animate3DCallbackTest()
     if (animation)
     {
         auto animate = Animate3D::create(animation);
-        animate->setSpeed(-animate->getSpeed());
         sprite3d->runAction(RepeatForever::create(animate));
 
-        ValueMap *valuemap0 = new ValueMap;
-        (*valuemap0)["state"] = Value(false);
-        _userInfoList.push_back(new Animate3D::DisplayedEventInfo{ weapon, valuemap0 });
-        animate->setKeyFrameUserInfo(10, _userInfoList.back());
+        ValueMap valuemap0;
+        valuemap0["state"] = Value(false);
+        animate->setKeyFrameUserInfo(10, valuemap0);
 
-        ValueMap *valuemap1 = new ValueMap;
-        (*valuemap1)["state"] = Value(true);
-        _userInfoList.push_back(new Animate3D::DisplayedEventInfo{ weapon, valuemap1 });
-        animate->setKeyFrameUserInfo(50, _userInfoList.back());
+        ValueMap valuemap1;
+        valuemap1["state"] = Value(true);
+        animate->setKeyFrameUserInfo(50, valuemap1);
 
         animate->keyFrameCallback = [=](int keyFrame, const Animate3D::DisplayedEventInfo *deInfo){
             auto vmap = deInfo->userInfo;
             auto val = vmap->at("state");
-            deInfo->target->setVisible(val.asBool());
+            weapon->setVisible(val.asBool());
         };
     }
 }
 
 Animate3DCallbackTest::~Animate3DCallbackTest()
 {
-    for (auto iter : _userInfoList){
-        delete iter->userInfo;
-        delete iter;
-    }
 }
 
 std::string Animate3DCallbackTest::title() const
