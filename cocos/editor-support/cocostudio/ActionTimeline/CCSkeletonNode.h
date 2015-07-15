@@ -31,19 +31,9 @@ THE SOFTWARE.
 #include "base/CCMap.h"
 
 #include "CCBoneNode.h"
+#include <deque>
 
-
-
-// for test
-
-#ifndef ENABLE_PHYSICS_BOX2D_DETECT
-#define  ENABLE_PHYSICS_BOX2D_DETECT    1
-#endif // !ENABLE_PHYSICS_BOX2D_DETECT
-
-//end test
-
-class b2Body;
-struct cpBody;
+typedef std::map < std::string, std::string > StdStringMap;
 
 NS_TIMELINE_BEGIN
 
@@ -53,8 +43,6 @@ class CC_STUDIO_DLL SkeletonNode : public BoneNode
 
 public:
     static SkeletonNode* create();
-
-    void setAllRackShow(bool showRack);
 
     /**
     *get bonenode in skeleton node by bone name
@@ -68,9 +56,22 @@ public:
 
     /**
     *@brief: change displays 
-    *@param: boneSkinNameMap, map <bone name, name of skin to display which added to bone>
+    *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
     */
-    void changeDisplays(const std::map<std::string, std::string> &boneSkinNameMap);
+    void changeDisplays(const StdStringMap& boneSkinNameMap);
+
+    /**
+    *@brief: change displays
+    *@param: suitName have
+    */
+    void changeDisplays(const std::string& suitName);
+
+    /**
+    * add a boneSkinNameMap asa suit
+    *@param: suitName, key
+    *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
+    */
+    void addSuitInfo(std::string suitName, StdStringMap boneSkinNameMap);
 
     virtual cocos2d::Mat4 getBoneToSkeletonTransform() const override;
 
@@ -80,48 +81,9 @@ public:
 
     static cocos2d::AffineTransform getSkinToSkeltonAffineTransform(SkinNode* skin);
 
-    //override
-
     void setLength(float length) override;
-    void setContentSize(const cocos2d::Size &size) override;
-
-
-    bool isAllRackShow() const { return _isAllRackShow; }
 
     cocos2d::Rect getBoundingBox() const override;
-
-// 
-//      //physics
-//  
-//  #if ENABLE_PHYSICS_BOX2D_DETECT
-//      virtual b2Fixture *getShapeList();
-//      /**
-//      *  @js NA
-//      *  @lua NA
-//      */
-//      virtual void setBody(b2Body *body);
-//      /**
-//      *  @js NA
-//      *  @lua NA
-//      */
-//      virtual b2Body *getBody() const;
-//  #elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-//      /**
-//      *  @js NA
-//      *  @lua NA
-//      */
-//      virtual cpShape *getShapeList();
-//      /**
-//      *  @js NA
-//      *  @lua NA
-//      */
-//      virtual void setBody(cpBody *body);
-//      /**
-//      *  @js NA
-//      *  @lua NA
-//      */
-//      virtual cpBody *getBody() const;
-//  #endif
 
 protected:
     SkeletonNode();
@@ -131,26 +93,29 @@ protected:
     virtual void updateVertices() override;
     virtual void updateColor() override;
 
-    virtual void visit(cocos2d::Renderer *renderer, const  cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags) override;
 
 protected:
-    bool _isAllRackShow;
-
     cocos2d::Map<std::string, BoneNode*> _subBonesMap;
 private:
     cocos2d::Vec2          _squareVertices[8];
     cocos2d::Color4F       _squareColors[8];
     cocos2d::Vec3          _noMVPVertices[8];
 
+    bool                           _sortedAllBonesDirty;
+    cocos2d::Vector<BoneNode*>     _sortedAllBones;      // for draw faster, cache a list from _subBonesMap, sorted by z order
+    std::vector<cocos2d::Vec3>     _batchedBoneVetices;
+    std::vector<cocos2d::Color4F>  _batchedBoneColors;
+    int                            _batchedVeticesCount;
+    cocos2d::CustomCommand         _batchBoneCommand;
 
-#if ENABLE_PHYSICS_BOX2D_DETECT
-    b2Body *_body;
-#elif ENABLE_PHYSICS_CHIPMUNK_DETECT
-    cpBody *_body;
-#endif
+    void updateSortedAllBones();
+    void batchDrawAllSubBones(const cocos2d::Mat4 &transform);
+    void batchSubBone(BoneNode* bone);
 
+
+    std::map<std::string, StdStringMap> _suitMap; // map< suit name, map< bone name, skin name> >
     CC_DISALLOW_COPY_AND_ASSIGN(SkeletonNode);
 };
 

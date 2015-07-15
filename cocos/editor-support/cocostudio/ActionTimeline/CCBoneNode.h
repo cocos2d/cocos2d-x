@@ -42,15 +42,20 @@ class CC_STUDIO_DLL BoneNode : public cocos2d::Node, public cocos2d::BlendProtoc
 public:
     static BoneNode* create();
     static BoneNode* create(const int &length);
-    static BoneNode* create(const int &length, const cocos2d::Color4F & color);
 
+
+    /**
+    *@brief: add a skin
+    *@param: display, whether display this skin
+    */
+    virtual void addSkin(SkinNode* skin, bool display);
 
     /**
     *@brief: add a skin
     *@param: display, whether display this skin
     *@param: hideOthers, whether hide other skins added to this bone
     */
-    virtual void addDisplay(SkinNode* skin, bool display, bool hideOthers = false);
+    virtual void addSkin(SkinNode* skin, bool display, bool hideOthers);
 
     /**
     * add a child bone named bone->getName()
@@ -60,44 +65,42 @@ public:
     virtual const  cocos2d::Vector<BoneNode*>& getChildBones() const { return _childBones; }
     virtual  cocos2d::Vector<BoneNode*>&  getChildBones() { return _childBones; }
 
-    virtual void removeFromParentBone(bool cleanup = false);
+    virtual void removeFromParent() override;
 
-    virtual const  cocos2d::Vector<SkinNode*>& getDisplays() const { return _boneSkins; }
-    virtual  cocos2d::Vector<SkinNode*>&  getDisplays() { return _boneSkins; }
+    virtual const  cocos2d::Vector<SkinNode*>& getSkins() const { return _boneSkins; }
+    virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
+
     /**
     *
     * @brief: display skin
-    * @param: hideOthers, set other skins visible = false
+    * @param: hideOthers, set other skins visible 
     */
-    virtual void display(SkinNode* skin, bool hideOthers = false);
+    virtual void displaySkin(SkinNode* skin, bool hideOthers);
 
     /**
     *
     * @brief: display all skins named skinName, if hide display only one skin,
     *          prefer to use display(SkinNode* skin, bool hideOthers = false)
-    * @param: hideOthers, set other skins visible = false
+    * @param: hideOthers, set other skins visible
     */
-    virtual void display(const std::string &skinName, bool hideOthers = false);
+    virtual void displaySkins(const std::string &skinName, bool hideOthers );
 
-    virtual cocos2d::Vector<SkinNode*> getDisplayings() const;
+    virtual cocos2d::Vector<SkinNode*> getDisplayingSkins() const;
 
     virtual SkeletonNode* getRootSkeletonNode() const;
 
     /**
     * @brief: get all bones in this bone tree
-    *
     */
     cocos2d::Vector<BoneNode*> getAllSubBones() const;
 
     /**
     * @brief: get all skins in this bone tree
-    *
     */
     cocos2d::Vector<SkinNode*> getAllSubDisplays() const;
 
-
     virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
-    virtual void removeChild(Node* child, bool cleanup /* = true */) override;
+    virtual void removeChild(Node* child, bool cleanup ) override;
 
     // blendFunc
     virtual void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override;
@@ -106,23 +109,23 @@ public:
 
     // bone operate
     virtual void setLength(float length);
-    virtual float getLength() const { return _length; }
+    virtual float getLength() const { return _contentSize.width; }
 
     // no need to change this at usual
     virtual void setWidth(float width);
-    virtual float getWidth() const { return _width; }
+    virtual float getWidth() const { return _contentSize.height; }
 
     // is rack show
-    virtual void setRackShow(bool ishow);
-    virtual bool isRackShow() const { return _isRackShow; }
+    virtual void setDebugDrawEnabled(bool isDebugDraw);
+    virtual bool isDebugDrawEnabled() const { return _isRackShow; }
 
-    virtual void setRackColor(const cocos2d::Color4F &color);
-    virtual cocos2d::Color4F getRackColor() const { return _rackColor; }
+    virtual void setDebugDrawColor(const cocos2d::Color4F &color);
+    virtual cocos2d::Color4F getDebugDrawColor() const { return _rackColor; }
 
     /**
     *get displayings rect in self transform
     */
-    virtual cocos2d::Rect getDisplayingRect() const;
+    virtual cocos2d::Rect getVisibleSkinsRect() const;
 
     /**
     * boundingbox depends getDisplayingRect, apply it in parent transform
@@ -132,48 +135,53 @@ public:
     virtual cocos2d::Mat4 getBoneToSkeletonTransform() const;
 
     virtual cocos2d::AffineTransform getBoneToSkeletonAffineTransform() const;
+
     // transform & draw
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 
-protected:
-    BoneNode();
-    virtual ~BoneNode();
-
-    virtual void addChildBone(BoneNode* bone, int localZOrder, const std::string &name);
-
-    /*
-    * @param cleaup : True if all running actions and callbacks
-    *                 on the child node will be cleanup, false otherwise.
+    /**
+    * get bone debugdraw's vertices, return a Vec2[4]
     */
-    virtual void removeChildBone(BoneNode* bone, bool cleaup = false);
-
-
-    // Skins
-    /* @brief: Add skin to bone
-    *  @param hide this skin
-    */
-    virtual void addSkin(SkinNode* skin, bool hide = false);
-    virtual void removeSkin(SkinNode* skin);
+    virtual void batchToSkeleton() const;
 
     // override
     virtual void setContentSize(const cocos2d::Size &size) override;
+
+    virtual void setLocalZOrder(int localZOrder) override;
+
+    virtual void setName(const std::string& name) override;
+
+#ifdef CC_STUDIO_ENABLED_VIEW
+    virtual bool isPointOnRack(const cocos2d::Vec2& bonePoint);
+#endif
+
+CC_CONSTRUCTOR_ACCESS :
+    BoneNode();
+    virtual ~BoneNode();
     virtual bool init() override;
+
+protected:
+    virtual void addToBoneChildren(BoneNode* bone);
+
+    virtual void removeFromBoneChildren(BoneNode* bone);
+
+    virtual void removeFromParentBone();
+   
+    virtual void addToSkinList(SkinNode* skin);
+    virtual void removeFromSkinList(SkinNode* skin);
 
     virtual void sortAllChildren() override;
 
     virtual void updateVertices();
     virtual void updateColor() override;
 
-    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
-    
+
 protected:
     cocos2d::CustomCommand _customCommand;
     cocos2d::BlendFunc     _blendFunc;
 
-    float             _length;
-    float             _width;
     bool              _isRackShow;
     cocos2d::Color4F  _rackColor;
 
