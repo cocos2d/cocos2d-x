@@ -343,7 +343,7 @@ void TestActionTimelineSkeleton::onEnter()
 
     boneDrawsBtn->addClickEventListener([skeletonNode](Ref* sender)
     {
-        skeletonNode->setAllRackShow(!skeletonNode->isAllRackShow());
+        skeletonNode->setDebugDrawEnabled(!skeletonNode->isDebugDrawEnabled());
     });
 
 
@@ -355,7 +355,7 @@ void TestActionTimelineSkeleton::onEnter()
     weapSkinToAdd->setPosition(Vec2(135, 23));
     weapSkinToAdd->setScale(3.0f);
     weapSkinToAdd->setRotation(86);
-    weaponHandeBone->addDisplay(weapSkinToAdd, false);
+    weaponHandeBone->addSkin(weapSkinToAdd, false);
 
     // change display
     auto changeBoneDispBtn = cocos2d::ui::Button::create();
@@ -366,10 +366,10 @@ void TestActionTimelineSkeleton::onEnter()
     {
         // or use skeletonNode->display(bone name, skin name, hide)
         if (weapSkinToAdd->isVisible())
-            weaponHandeBone->display("3", true);
+            weaponHandeBone->displaySkins("3", true);
         else
         {
-            weaponHandeBone->display(weapSkinToAdd, true);
+            weaponHandeBone->displaySkin(weapSkinToAdd, true);
         }
     });
 
@@ -424,7 +424,7 @@ void TestActionTimelineSkeleton::onEnter()
             // skin boundingbox 
 
             // get displaying nodes
-            auto currentskin = weaponHandeBone->getDisplayings().front();
+            auto currentskin = weaponHandeBone->getDisplayingSkins().front();
             rect = currentskin->getBoundingBox();
             leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
             righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
@@ -450,22 +450,29 @@ void TestActionTimelineSkeleton::onEnter()
     addChild(changeBoneDispsBtn);
     changeBoneDispsBtn->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::top().y - 75));
     changeBoneDispsBtn->setTitleText("change bone displays");
+
+    std::map < std::string, std::string> boneSkinNames;
+    boneSkinNames.insert(std::make_pair("Layer20", "fire"));
+    boneSkinNames.insert(std::make_pair("Layer14", "fruit"));
+    skeletonNode->addSuitInfo("fruitKnife", boneSkinNames);
+
+    std::map < std::string, std::string> boneSkinNames2;
+    boneSkinNames2.insert(std::make_pair("Layer20", "3"));
+    boneSkinNames2.insert(std::make_pair("Layer14", "hat"));
+    skeletonNode->addSuitInfo("cowboy", boneSkinNames2);
+
     changeBoneDispsBtn->addClickEventListener([skeletonNode, this](Ref* sender)
     {
-        std::map < std::string, std::string> boneSkinNames;
         if (!_changedDisplays)
         {
-            boneSkinNames.insert(std::make_pair("Layer20", "fire"));
-            boneSkinNames.insert(std::make_pair("Layer14", "fruit"));
+            skeletonNode->changeDisplays("fruitKnife");
             _changedDisplays = true;
         }
         else
         {
-            boneSkinNames.insert(std::make_pair("Layer20", "3"));
-            boneSkinNames.insert(std::make_pair("Layer14", "hat"));
+            skeletonNode->changeDisplays("cowboy");
             _changedDisplays = false;
         }
-        skeletonNode->changeDisplays(boneSkinNames);
     });
 }
 

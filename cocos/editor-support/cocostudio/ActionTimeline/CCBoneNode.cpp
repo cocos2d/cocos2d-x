@@ -309,7 +309,7 @@ void BoneNode::onDraw(const Mat4& transform, uint32_t flags)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
 #else
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-#endif
+#endif //CC_STUDIO_ENABLED_VIEW
 
 }
 
@@ -519,7 +519,7 @@ bool BoneNode::isPointOnRack(const cocos2d::Vec2& bonePoint)
     }
     return false;
 }
-#endif
+#endif //CC_STUDIO_ENABLED_VIEW
 
 void BoneNode::batchToSkeleton() const
 {
@@ -536,7 +536,7 @@ void BoneNode::batchToSkeleton() const
     }
 
     int count = _rootSkeleton->_batchedVeticesCount;
-    if (count + 4 > _rootSkeleton->_batchedBoneVetices.capacity())
+    if (count + 4 > (int)(_rootSkeleton->_batchedBoneVetices.capacity()))
     {
         _rootSkeleton->_batchedBoneVetices.resize(count + 100);
         _rootSkeleton->_batchedBoneColors.resize(count + 100);
@@ -555,7 +555,29 @@ void BoneNode::batchToSkeleton() const
         _rootSkeleton->_batchedBoneColors[count + i] = _squareColors[i];
     }
     _rootSkeleton->_batchedVeticesCount += 4;
-#endif
+#endif //CC_STUDIO_ENABLED_VIEW
+}
+
+void BoneNode::setLocalZOrder(int localZOrder)
+{
+    Node::setLocalZOrder(localZOrder);
+    if (_rootSkeleton != nullptr)
+        _rootSkeleton->_sortedAllBonesDirty = true;
+}
+
+void BoneNode::setName(const std::string& name)
+{
+    auto oldname = getName();
+    Node::setName(name);
+    if (_rootSkeleton != nullptr)
+    {
+        auto iter = _rootSkeleton->_subBonesMap.find(oldname);
+        if (iter != _rootSkeleton->_subBonesMap.end())
+        {
+            _rootSkeleton->_subBonesMap.erase(iter);
+            _rootSkeleton->_subBonesMap.insert(name, iter->second);
+        }
+    }
 }
 
 NS_TIMELINE_END
