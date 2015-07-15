@@ -1009,6 +1009,8 @@ bool UIButtonDisableDefaultTest::init()
         button->setZoomScale(0.4f);
         button->setPressedActionEnabled(true);
         button->setBright(false);
+        button->setScale9Enabled(true);
+        button->setCapInsets(Rect(3,3,5,5));
         button->addClickEventListener([=](Ref*){
             button->setBright(true);
         });

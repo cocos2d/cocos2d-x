@@ -58,6 +58,7 @@ namespace ui {
         ,_flippedX(false)
         ,_flippedY(false)
         ,_isPatch9(false)
+        ,_brightState(State::NORMAL)
 
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
@@ -556,6 +557,7 @@ namespace ui {
         }
 
         applyBlendFunc();
+        this->setState(_brightState);
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
@@ -1051,7 +1053,11 @@ namespace ui {
         CC_SAFE_DELETE(pReturn);
         return NULL;
     }
-
+    
+    Scale9Sprite::State Scale9Sprite::getState()const
+    {
+        return _brightState;
+    }
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
     {
@@ -1070,7 +1076,7 @@ namespace ui {
         default:
             break;
         }
-
+        
         if (nullptr != _scale9Image)
         {
             _scale9Image->setGLProgramState(glState);
@@ -1083,6 +1089,7 @@ namespace ui {
                 sp->setGLProgramState(glState);
             }
         }
+        _brightState = state;
     }
 
 /** sets the opacity.
