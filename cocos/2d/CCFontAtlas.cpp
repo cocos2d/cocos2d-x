@@ -204,7 +204,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
 
                 if (bitmapHeight > _currLineHeight)
                 {
-                    _currLineHeight = bitmapHeight + 1;
+                    _currLineHeight = static_cast<int>(bitmapHeight) + 1;
                 }
                 if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
                 {

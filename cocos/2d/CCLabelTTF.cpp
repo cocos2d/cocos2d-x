@@ -223,9 +223,11 @@ void LabelTTF::setTextDefinition(const FontDefinition& theDefinition)
     _contentDirty = true;
 }
 
-const FontDefinition& LabelTTF::getTextDefinition() const
+const FontDefinition& LabelTTF::getTextDefinition()
 {
-    return _renderLabel->getFontDefinition();
+    auto fontDef = _renderLabel->getFontDefinition();
+    memcpy(&_fontDef, &fontDef, sizeof(FontDefinition));
+    return _fontDef;
 }
 
 void LabelTTF::setBlendFunc(const BlendFunc &blendFunc)

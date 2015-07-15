@@ -88,9 +88,9 @@ public:
     
 protected:
 
-    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
-    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
-    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)override{};
+    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)override{};
+    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)override;
 
 protected:
     cocos2d::Label *_debugLabel;
@@ -112,9 +112,9 @@ public:
 
 protected:
 
-    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
-    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
-    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)override{};
+    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)override{};
+    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)override;
 
 protected:
     cocos2d::Label *_obstacleLabel;

@@ -79,7 +79,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
     else if(file_extension == ".CSB")
     {
         do {
-            std::string binaryFilePath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+            std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(fileName);
             auto fileData = FileUtils::getInstance()->getDataFromFile(binaryFilePath);
             auto fileDataBytes = fileData.getBytes();
             CC_BREAK_IF(fileData.isNull());
@@ -429,7 +429,7 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
         {
             if (pRender == nullptr || attachComponent == AttachComponentType::EMPTY_NODE)
             {
-                gb = CCNode::create();
+                gb = Node::create();
                 if (pRender != nullptr)
                 {
                     _vecComs.push_back(pRender);

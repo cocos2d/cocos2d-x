@@ -374,7 +374,9 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
-    
+
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
     if (_dirtyGLLine)
     {
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
@@ -415,7 +417,9 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t flags)
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
-    
+
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
     if (_dirtyGLPoint)
     {
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);

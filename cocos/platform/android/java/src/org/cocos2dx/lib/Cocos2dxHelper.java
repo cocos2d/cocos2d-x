@@ -49,7 +49,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;  //Enhance API modification
 import android.view.Display;
 import android.view.WindowManager;
-import android.content.ServiceConnection;  //Enhance API modification	
+import android.content.ServiceConnection;  //Enhance API modification
 
 import com.enhance.gameservice.IGameTuningService;  //Enhance API modification
 

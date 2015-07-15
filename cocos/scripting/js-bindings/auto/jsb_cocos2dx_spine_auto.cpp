@@ -145,24 +145,6 @@ bool js_cocos2dx_spine_SkeletonRenderer_setBonesToSetupPose(JSContext *cx, uint3
     JS_ReportError(cx, "js_cocos2dx_spine_SkeletonRenderer_setBonesToSetupPose : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_spine_SkeletonRenderer_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::SkeletonRenderer* cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_isOpacityModifyRGB : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isOpacityModifyRGB();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_spine_SkeletonRenderer_isOpacityModifyRGB : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_spine_SkeletonRenderer_initWithData(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -229,26 +211,6 @@ bool js_cocos2dx_spine_SkeletonRenderer_setSlotsToSetupPose(JSContext *cx, uint3
     }
 
     JS_ReportError(cx, "js_cocos2dx_spine_SkeletonRenderer_setSlotsToSetupPose : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    spine::SkeletonRenderer* cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB : Error processing arguments");
-        cobj->setOpacityModifyRGB(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_spine_SkeletonRenderer_setToSetupPose(JSContext *cx, uint32_t argc, jsval *vp)
@@ -914,11 +876,9 @@ void js_register_cocos2dx_spine_SkeletonRenderer(JSContext *cx, JS::HandleObject
         JS_FN("getDebugSlotsEnabled", js_cocos2dx_spine_SkeletonRenderer_getDebugSlotsEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAttachment", js_cocos2dx_spine_SkeletonRenderer_setAttachment, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBonesToSetupPose", js_cocos2dx_spine_SkeletonRenderer_setBonesToSetupPose, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isOpacityModifyRGB", js_cocos2dx_spine_SkeletonRenderer_isOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithData", js_cocos2dx_spine_SkeletonRenderer_initWithData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDebugSlotsEnabled", js_cocos2dx_spine_SkeletonRenderer_setDebugSlotsEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSlotsToSetupPose", js_cocos2dx_spine_SkeletonRenderer_setSlotsToSetupPose, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOpacityModifyRGB", js_cocos2dx_spine_SkeletonRenderer_setOpacityModifyRGB, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setToSetupPose", js_cocos2dx_spine_SkeletonRenderer_setToSetupPose, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBlendFunc", js_cocos2dx_spine_SkeletonRenderer_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawSkeleton", js_cocos2dx_spine_SkeletonRenderer_drawSkeleton, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1883,6 +1843,7 @@ void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JS::HandleObjec
         p->parentProto = jsb_spine_SkeletonRenderer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { sp.SkeletonAnimation.extend = cc.Class.extend; })()");
 }
 
 void register_all_cocos2dx_spine(JSContext* cx, JS::HandleObject obj) {

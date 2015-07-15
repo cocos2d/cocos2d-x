@@ -287,6 +287,8 @@ public:
     
     void switchAnimationQualityCallback(cocos2d::Ref* sender);
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+    std::string getAnimationQualityMessage() const;
 private:
     std::vector<cocos2d::Sprite3D*> _sprits;
     int _animateQuality;
@@ -563,6 +565,18 @@ public:
     ~Sprite3DClippingTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class Sprite3DTestMeshLight : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DTestMeshLight);
+    Sprite3DTestMeshLight();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    cocos2d::Sprite3D* _sprite;
 };
 
 #endif
