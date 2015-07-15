@@ -37,7 +37,7 @@ public:
     UILoadingBarTest_Left();
     ~UILoadingBarTest_Left();
     virtual bool init() override;
-    void update(float delta);
+    void update(float delta)override;
     
 protected:
     int _count;
@@ -51,7 +51,7 @@ public:
     UILoadingBarTest_Right();
     ~UILoadingBarTest_Right();
     virtual bool init() override;
-    void update(float delta);
+    void update(float delta)override;
     
 protected:
     int _count;
@@ -65,7 +65,7 @@ public:
     UILoadingBarTest_Left_Scale9();
     ~UILoadingBarTest_Left_Scale9();
     virtual bool init() override;
-    void update(float delta);
+    void update(float delta)override;
     
 protected:
     int _count;
@@ -79,7 +79,7 @@ public:
     UILoadingBarTest_Right_Scale9();
     ~UILoadingBarTest_Right_Scale9();
     virtual bool init() override;
-    void update(float delta);
+    void update(float delta)override;
     
 protected:
     int _count;

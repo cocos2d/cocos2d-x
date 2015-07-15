@@ -26,7 +26,7 @@ private:
 class ArmatureBaseTest : public TestCase
 {
 public:
-	virtual std::string title() const;
+	virtual std::string title() const override;
     virtual bool init() override;
 
 protected:
@@ -105,8 +105,8 @@ public:
 
     virtual void onEnter() override;
     virtual std::string title() const override;
-    virtual void addArmatureToParent(cocostudio::Armature *armature);
-    virtual void removeArmatureFromParent(int tag);
+    virtual void addArmatureToParent(cocostudio::Armature *armature)override;
+    virtual void removeArmatureFromParent(int tag)override;
 
     cocostudio::BatchNode *batchNode;
 };
@@ -260,7 +260,7 @@ public:
     
     virtual void onEnter() override;
     virtual std::string title() const override;
-    virtual void update(float delta);
+    virtual void update(float delta)override;
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
