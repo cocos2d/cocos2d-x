@@ -125,8 +125,9 @@ public:
         Node* target;
         const ValueMap* userInfo;
     };
-    void setKeyFrameUserInfo(int keyFrame, DisplayedEventInfo *userInfo);
-    DisplayedEventInfo* getKeyFrameUserInfo(int keyFrame);
+    void setKeyFrameUserInfo(int keyFrame, const ValueMap &userInfo);
+    const ValueMap* getKeyFrameUserInfo(int keyFrame) const;
+    ValueMap* getKeyFrameUserInfo(int keyFrame);
     std::function<void(int keyFrame, const DisplayedEventInfo *deInfo)> keyFrameCallback;
 
     
@@ -172,7 +173,7 @@ protected:
     
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
-    std::unordered_map<int, DisplayedEventInfo*> _keyFrameUserInfos;
+    std::unordered_map<int, ValueMap> _keyFrameUserInfos;
 
     //sprite animates
     static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;

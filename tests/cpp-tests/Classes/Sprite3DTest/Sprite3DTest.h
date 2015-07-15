@@ -573,10 +573,6 @@ public:
     ~Animate3DCallbackTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-protected:
-
-    std::vector<cocos2d::Animate3D::DisplayedEventInfo *> _userInfoList;
 };
 
 #endif

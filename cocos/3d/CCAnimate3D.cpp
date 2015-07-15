@@ -375,6 +375,8 @@ void Animate3D::update(float t)
                 if (!_keyFrameUserInfos.empty() && keyFrameCallback != nullptr){
                     float prekeyTime = lastTime * getDuration() * _frameRate;
                     float keyTime = t * getDuration() * _frameRate;
+                    DisplayedEventInfo eventInfo;
+                    eventInfo.target = _target;
                     if (_playReverse){
                         int preKey = floorf(prekeyTime);
                         int key = ceilf(keyTime);
@@ -383,8 +385,10 @@ void Animate3D::update(float t)
                             do
                             {
                                 auto iter = _keyFrameUserInfos.find(k);
-                                if (iter != _keyFrameUserInfos.end())
-                                    keyFrameCallback(iter->first, iter->second);
+                                if (iter != _keyFrameUserInfos.end()){
+                                    eventInfo.userInfo = &iter->second;
+                                    keyFrameCallback(iter->first, &eventInfo);
+                                }
                                 --k;
                             } while (key < k);
                         }
@@ -397,8 +401,11 @@ void Animate3D::update(float t)
                             do 
                             {
                                 auto iter = _keyFrameUserInfos.find(k);
-                                if (iter != _keyFrameUserInfos.end())
-                                    keyFrameCallback(iter->first, iter->second);
+                                if (iter != _keyFrameUserInfos.end()){
+                                    eventInfo.userInfo = &iter->second;
+                                    keyFrameCallback(iter->first, &eventInfo);
+                                }
+
                                 ++k;
                             } while (k < key);
                         }
@@ -454,16 +461,25 @@ Animate3DQuality Animate3D::getQuality() const
     return _quality;
 }
 
-Animate3D::DisplayedEventInfo* Animate3D::getKeyFrameUserInfo(int keyFrame)
+const ValueMap* Animate3D::getKeyFrameUserInfo(int keyFrame) const
 {
     auto iter = _keyFrameUserInfos.find(keyFrame);
     if (iter != _keyFrameUserInfos.end())
-        return iter->second;
+        return &iter->second;
 
     return nullptr;
 }
 
-void Animate3D::setKeyFrameUserInfo(int keyFrame, DisplayedEventInfo *userInfo)
+ValueMap* Animate3D::getKeyFrameUserInfo(int keyFrame)
+{
+    auto iter = _keyFrameUserInfos.find(keyFrame);
+    if (iter != _keyFrameUserInfos.end())
+        return &iter->second;
+
+    return nullptr;
+}
+
+void Animate3D::setKeyFrameUserInfo(int keyFrame, const ValueMap &userInfo)
 {
     _keyFrameUserInfos[keyFrame] = userInfo;
 }
