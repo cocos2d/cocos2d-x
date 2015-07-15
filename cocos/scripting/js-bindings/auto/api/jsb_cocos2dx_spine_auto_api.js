@@ -51,16 +51,6 @@ setBonesToSetupPose : function (
 },
 
 /**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
-)
-{
-    return false;
-},
-
-/**
  * @method initWithData
  * @param {spSkeletonData} arg0
  * @param {bool} arg1
@@ -86,16 +76,6 @@ bool
  * @method setSlotsToSetupPose
  */
 setSlotsToSetupPose : function (
-)
-{
-},
-
-/**
- * @method setOpacityModifyRGB
- * @param {bool} arg0
- */
-setOpacityModifyRGB : function (
-bool 
 )
 {
 },
