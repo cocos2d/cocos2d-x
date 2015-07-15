@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
+#include <condition_variable>
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
@@ -61,8 +62,110 @@ AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper = nullptr;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
 
+AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
+
+class AudioEngine::AudioEngineThreadPool
+{
+public:
+    AudioEngineThreadPool(bool detach)
+        : _numThread(6)
+        , _detach(detach)
+    {
+        s_threadPool = this;
+
+        _threads.reserve(_numThread);
+        _tasks.reserve(_numThread);
+
+        for (int index = 0; index < _numThread; ++index) {
+            _tasks.push_back(nullptr);
+            _threads.push_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, index)));
+            if (_detach)
+            {
+                _threads[index].detach();
+            }
+        }
+    }
+
+    void addTask(const std::function<void()> &task){
+        _taskMutex.lock();
+        int targetIndex = -1;
+        for (int index = 0; index < _numThread; ++index) {
+            if (_tasks[index] == nullptr) {
+                targetIndex = index;
+                _tasks[index] = task;
+                break;
+            }
+        }
+        if (targetIndex == -1) {
+            _tasks.push_back(task);
+            _threads.push_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, _numThread)));
+            if (_detach)
+            {
+                _threads[_numThread].detach();
+            }
+            _numThread++;
+        }
+        _taskMutex.unlock();
+        _sleepCondition.notify_all();
+    }
+
+    void destroy()
+    {
+        std::unique_lock<std::mutex> lk(_sleepMutex);
+        _sleepCondition.notify_all();
+
+        if (!_detach)
+        {
+            for (int index = 0; index < _numThread; ++index) {
+                _threads[index].join();
+            }
+        }
+    }
+
+private:
+    std::vector<std::thread>  _threads;
+    std::vector< std::function<void()> > _tasks;
+
+    void threadFunc(int index)
+    {
+        while (s_threadPool == this) {
+            std::function<void()> task = nullptr;
+            _taskMutex.lock();
+            task = _tasks[index];
+            _taskMutex.unlock();
+
+            if (nullptr == task)
+            {
+                std::unique_lock<std::mutex> lk(_sleepMutex);
+                _sleepCondition.wait(lk);
+                continue;
+            }
+
+            task();
+
+            _taskMutex.lock();
+            _tasks[index] = nullptr;
+            _taskMutex.unlock();
+        }
+    }
+
+    int _numThread;
+
+    std::mutex _taskMutex;
+    std::mutex _sleepMutex;
+    std::condition_variable _sleepCondition;
+    bool _detach;
+};
+
 void AudioEngine::end()
 {
+    if (s_threadPool)
+    {
+        s_threadPool->destroy();
+        delete s_threadPool;
+        s_threadPool = nullptr;
+    }
+
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
 
@@ -81,6 +184,18 @@ bool AudioEngine::lazyInit()
            return false;
         }
     }
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+    if (_audioEngineImpl && s_threadPool == nullptr)
+    {
+        s_threadPool = new (std::nothrow) AudioEngineThreadPool(true);
+    }
+#elif CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+    if (_audioEngineImpl && s_threadPool == nullptr)
+    {
+        s_threadPool = new (std::nothrow) AudioEngineThreadPool(false);
+    }
+#endif
 
     return true;
 }
@@ -412,6 +527,30 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
         return &it->second.profile;
     } else {
         return nullptr;
+    }
+}
+
+void AudioEngine::preload(const std::string& filePath)
+{
+    lazyInit();
+
+    if (_audioEngineImpl)
+    {
+        if (!FileUtils::getInstance()->isFileExist(filePath)){
+            return;
+        }
+
+        _audioEngineImpl->preload(filePath);
+    }
+}
+
+void AudioEngine::addTask(const std::function<void()> &task)
+{
+    lazyInit();
+
+    if (_audioEngineImpl && s_threadPool)
+    {
+        s_threadPool->addTask(task);
     }
 }
 

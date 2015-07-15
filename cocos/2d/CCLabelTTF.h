@@ -100,7 +100,7 @@ public:
     void setTextDefinition(const FontDefinition& theDefinition);
     
     /** get the text definition used by this label */
-    const FontDefinition& getTextDefinition() const;
+    const FontDefinition& getTextDefinition();
     
     
     
@@ -163,6 +163,7 @@ public:
 protected:
     Label*    _renderLabel;
     bool _contentDirty;
+    FontDefinition _fontDef;
 };
 
 

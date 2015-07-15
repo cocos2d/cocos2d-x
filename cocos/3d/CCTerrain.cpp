@@ -460,12 +460,12 @@ Terrain::~Terrain()
         }
     }
 
-    for(int i =0;i<_chunkLodIndicesSet.size();i++)
+    for(size_t i =0;i<_chunkLodIndicesSet.size();i++)
     {
         glDeleteBuffers(1,&(_chunkLodIndicesSet[i]._chunkIndices._indices));
     }
 
-    for(int i =0;i<_chunkLodIndicesSkirtSet.size();i++)
+    for(size_t i =0;i<_chunkLodIndicesSkirtSet.size();i++)
     {
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
@@ -686,7 +686,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLOD(int neighborLod[4], int selfLod
         int test[5];
         memcpy(test,neighborLod,sizeof(int [4]));
         test[4] = selfLod;
-        for(int i =0;i<_chunkLodIndicesSet.size();i++)
+        for(size_t i =0;i<_chunkLodIndicesSet.size();i++)
         {
             if(memcmp(test,_chunkLodIndicesSet[i]._relativeLod,sizeof(test))==0)
             {
@@ -723,7 +723,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLODSkrit(int selfLod, bool * result
     return badResult;
     }
 
-    for(int i =0;i<_chunkLodIndicesSkirtSet.size();i++)
+    for(size_t i =0;i<_chunkLodIndicesSkirtSet.size();i++)
     {
         if(_chunkLodIndicesSkirtSet[i]._selfLod == selfLod)
         {
@@ -1234,7 +1234,7 @@ void Terrain::Chunk::updateIndicesLOD()
 void Terrain::Chunk::calculateAABB()
 {
     std::vector<Vec3>pos;
-    for(int i =0;i<_originalVertices.size();i++)
+    for(size_t i =0;i<_originalVertices.size();i++)
     {
         pos.push_back(_originalVertices[i]._position);
     }
@@ -1245,7 +1245,7 @@ void Terrain::Chunk::calculateSlope()
 {
     //find max slope
     auto lowest = _originalVertices[0]._position;
-    for(int i = 0;i<_originalVertices.size();i++)
+    for(size_t i = 0;i<_originalVertices.size();i++)
     {
         if(_originalVertices[i]._position.y< lowest.y)
         {
@@ -1253,7 +1253,7 @@ void Terrain::Chunk::calculateSlope()
         }
     }
     auto highest = _originalVertices[0]._position;
-    for(int i = 0;i<_originalVertices.size();i++)
+    for(size_t i = 0;i<_originalVertices.size();i++)
     {
         if(_originalVertices[i]._position.y> highest.y)
         {

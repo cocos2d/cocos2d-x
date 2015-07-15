@@ -36,7 +36,7 @@ def do_build_slaves():
     global branch
     global node_name
 
-    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep + "tests" + os.sep
 
     if(branch != 'v1' and branch != 'v2'):
         slave_build_scripts = ""

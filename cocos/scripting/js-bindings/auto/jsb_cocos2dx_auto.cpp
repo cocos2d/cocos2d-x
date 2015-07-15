@@ -2385,6 +2385,26 @@ bool js_cocos2dx_Node_setOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_Node_setOnEnterCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_Node_stopActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_stopActionsByFlags : Invalid Native Object");
+    if (argc == 1) {
+        unsigned int arg0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_stopActionsByFlags : Error processing arguments");
+        cobj->stopActionsByFlags(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Node_stopActionsByFlags : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Node_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4909,6 +4929,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JS::HandleObject global) {
         JS_FN("setSkewX", js_cocos2dx_Node_setSkewX, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGLProgramState", js_cocos2dx_Node_setGLProgramState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOnEnterCallback", js_cocos2dx_Node_setOnEnterCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopActionsByFlags", js_cocos2dx_Node_stopActionsByFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setNormalizedPosition", js_cocos2dx_Node_setNormalizedPosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setonExitTransitionDidStartCallback", js_cocos2dx_Node_setonExitTransitionDidStartCallback, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("convertTouchToNodeSpace", js_cocos2dx_Node_convertTouchToNodeSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -5047,6 +5068,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Node.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d___NodeRGBA_class;
@@ -5155,6 +5177,7 @@ void js_register_cocos2dx___NodeRGBA(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.NodeRGBA.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Scene_class;
@@ -5458,6 +5481,7 @@ void js_register_cocos2dx_Scene(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Scene.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_GLView_class;
@@ -8088,6 +8112,24 @@ bool js_cocos2dx_Action_getTarget(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Action_getTarget : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Action_getFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Action* cobj = (cocos2d::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Action_getFlags : Invalid Native Object");
+    if (argc == 0) {
+        unsigned int ret = cobj->getFlags();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Action_getFlags : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Action_step(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8126,6 +8168,26 @@ bool js_cocos2dx_Action_setTag(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Action_setTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_Action_setFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Action* cobj = (cocos2d::Action *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Action_setFlags : Invalid Native Object");
+    if (argc == 1) {
+        unsigned int arg0;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Action_setFlags : Error processing arguments");
+        cobj->setFlags(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Action_setFlags : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8249,8 +8311,10 @@ void js_register_cocos2dx_Action(JSContext *cx, JS::HandleObject global) {
         JS_FN("stop", js_cocos2dx_Action_stop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("update", js_cocos2dx_Action_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTarget", js_cocos2dx_Action_getTarget, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFlags", js_cocos2dx_Action_getFlags, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("step", js_cocos2dx_Action_step, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTag", js_cocos2dx_Action_setTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFlags", js_cocos2dx_Action_setFlags, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTag", js_cocos2dx_Action_getTag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTarget", js_cocos2dx_Action_setTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDone", js_cocos2dx_Action_isDone, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -9628,6 +9692,7 @@ void js_register_cocos2dx_SpriteFrame(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.SpriteFrame.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_AnimationFrame_class;
@@ -14715,6 +14780,36 @@ void js_register_cocos2dx_ReverseTime(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_cocos2d_Animate_class;
 JSObject *jsb_cocos2d_Animate_prototype;
 
+bool js_cocos2dx_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate* cobj = (cocos2d::Animate *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Animate_initWithAnimation : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Animation* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Animation*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animate_initWithAnimation : Error processing arguments");
+        bool ret = cobj->initWithAnimation(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Animate_initWithAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -14763,34 +14858,22 @@ bool js_cocos2dx_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Animate_getAnimation : wrong number of arguments");
     return false;
 }
-bool js_cocos2dx_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Animate_getCurrentFrameIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Animate* cobj = (cocos2d::Animate *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Animate_initWithAnimation : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Animation* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Animation*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Animate_initWithAnimation : Error processing arguments");
-        bool ret = cobj->initWithAnimation(arg0);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Animate_getCurrentFrameIndex : Invalid Native Object");
+    if (argc == 0) {
+        int ret = cobj->getCurrentFrameIndex();
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Animate_initWithAnimation : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_Animate_getCurrentFrameIndex : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Animate_setAnimation(JSContext *cx, uint32_t argc, jsval *vp)
@@ -14909,8 +14992,9 @@ void js_register_cocos2dx_Animate(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("getAnimation", js_cocos2dx_Animate_getAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithAnimation", js_cocos2dx_Animate_initWithAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAnimation", js_cocos2dx_Animate_getAnimation, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCurrentFrameIndex", js_cocos2dx_Animate_getCurrentFrameIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnimation", js_cocos2dx_Animate_setAnimation, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -15219,6 +15303,7 @@ void js_register_cocos2dx_TargetedAction(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TargetedAction.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ActionFloat_class;
@@ -15432,6 +15517,7 @@ void js_register_cocos2dx_ActionFloat(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionFloat.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Configuration_class;
@@ -17212,6 +17298,28 @@ bool js_cocos2dx_FileUtils_getValueMapFromFile(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_cocos2dx_FileUtils_getValueMapFromFile : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_FileUtils_getFileSize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_getFileSize : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_getFileSize : Error processing arguments");
+        long ret = cobj->getFileSize(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = long_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_FileUtils_getFileSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_FileUtils_getValueMapFromData(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -17278,26 +17386,28 @@ bool js_cocos2dx_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_cocos2dx_FileUtils_setSearchPaths : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_FileUtils_getFileSize(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_FileUtils_writeStringToFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_getFileSize : Invalid Native Object");
-    if (argc == 1) {
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_writeStringToFile : Invalid Native Object");
+    if (argc == 2) {
         std::string arg0;
+        std::string arg1;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_getFileSize : Error processing arguments");
-        long ret = cobj->getFileSize(arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_writeStringToFile : Error processing arguments");
+        bool ret = cobj->writeStringToFile(arg0, arg1);
         jsval jsret = JSVAL_NULL;
-        jsret = long_to_jsval(cx, ret);
+        jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_FileUtils_getFileSize : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_FileUtils_writeStringToFile : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_FileUtils_setSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17378,6 +17488,30 @@ bool js_cocos2dx_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_cocos2dx_FileUtils_addSearchPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_FileUtils_writeValueVectorToFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_writeValueVectorToFile : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::ValueVector arg0;
+        std::string arg1;
+        ok &= jsval_to_ccvaluevector(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_writeValueVectorToFile : Error processing arguments");
+        bool ret = cobj->writeValueVectorToFile(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_FileUtils_writeValueVectorToFile : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_FileUtils_isFileExist(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17462,6 +17596,30 @@ bool js_cocos2dx_FileUtils_getSuitableFOpen(JSContext *cx, uint32_t argc, jsval 
     }
 
     JS_ReportError(cx, "js_cocos2dx_FileUtils_getSuitableFOpen : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_FileUtils_writeValueMapToFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_writeValueMapToFile : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::ValueMap arg0;
+        std::string arg1;
+        ok &= jsval_to_ccvaluemap(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_writeValueMapToFile : Error processing arguments");
+        bool ret = cobj->writeValueMapToFile(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_FileUtils_writeValueMapToFile : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_FileUtils_setWritablePath(JSContext *cx, uint32_t argc, jsval *vp)
@@ -17685,17 +17843,20 @@ void js_register_cocos2dx_FileUtils(JSContext *cx, JS::HandleObject global) {
         JS_FN("getSearchPaths", js_cocos2dx_FileUtils_getSearchPaths, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("writeToFile", js_cocos2dx_FileUtils_writeToFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getValueMapFromFile", js_cocos2dx_FileUtils_getValueMapFromFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getFileSize", js_cocos2dx_FileUtils_getFileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getValueMapFromData", js_cocos2dx_FileUtils_getValueMapFromData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeDirectory", js_cocos2dx_FileUtils_removeDirectory, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSearchPaths", js_cocos2dx_FileUtils_setSearchPaths, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getFileSize", js_cocos2dx_FileUtils_getFileSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("writeStringToFile", js_cocos2dx_FileUtils_writeStringToFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSearchResolutionsOrder", js_cocos2dx_FileUtils_setSearchResolutionsOrder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addSearchResolutionsOrder", js_cocos2dx_FileUtils_addSearchResolutionsOrder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addSearchPath", js_cocos2dx_FileUtils_addSearchPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("writeValueVectorToFile", js_cocos2dx_FileUtils_writeValueVectorToFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isFileExist", js_cocos2dx_FileUtils_isFileExist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("purgeCachedEntries", js_cocos2dx_FileUtils_purgeCachedEntries, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("fullPathFromRelativeFile", js_cocos2dx_FileUtils_fullPathFromRelativeFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSuitableFOpen", js_cocos2dx_FileUtils_getSuitableFOpen, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("writeValueMapToFile", js_cocos2dx_FileUtils_writeValueMapToFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWritablePath", js_cocos2dx_FileUtils_setWritablePath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPopupNotify", js_cocos2dx_FileUtils_setPopupNotify, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDirectoryExist", js_cocos2dx_FileUtils_isDirectoryExist, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -20328,6 +20489,7 @@ void js_register_cocos2dx_ActionCamera(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionCamera.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_OrbitCamera_class;
@@ -23944,6 +24106,7 @@ void js_register_cocos2dx_EaseBezierAction(JSContext *cx, JS::HandleObject globa
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseBezierAction.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuadraticActionIn_class;
@@ -24088,6 +24251,7 @@ void js_register_cocos2dx_EaseQuadraticActionIn(JSContext *cx, JS::HandleObject 
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuadraticActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuadraticActionOut_class;
@@ -24232,6 +24396,7 @@ void js_register_cocos2dx_EaseQuadraticActionOut(JSContext *cx, JS::HandleObject
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuadraticActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuadraticActionInOut_class;
@@ -24376,6 +24541,7 @@ void js_register_cocos2dx_EaseQuadraticActionInOut(JSContext *cx, JS::HandleObje
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuadraticActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuarticActionIn_class;
@@ -24520,6 +24686,7 @@ void js_register_cocos2dx_EaseQuarticActionIn(JSContext *cx, JS::HandleObject gl
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuarticActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuarticActionOut_class;
@@ -24664,6 +24831,7 @@ void js_register_cocos2dx_EaseQuarticActionOut(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuarticActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuarticActionInOut_class;
@@ -24808,6 +24976,7 @@ void js_register_cocos2dx_EaseQuarticActionInOut(JSContext *cx, JS::HandleObject
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuarticActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuinticActionIn_class;
@@ -24952,6 +25121,7 @@ void js_register_cocos2dx_EaseQuinticActionIn(JSContext *cx, JS::HandleObject gl
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuinticActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuinticActionOut_class;
@@ -25096,6 +25266,7 @@ void js_register_cocos2dx_EaseQuinticActionOut(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuinticActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseQuinticActionInOut_class;
@@ -25240,6 +25411,7 @@ void js_register_cocos2dx_EaseQuinticActionInOut(JSContext *cx, JS::HandleObject
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseQuinticActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCircleActionIn_class;
@@ -25384,6 +25556,7 @@ void js_register_cocos2dx_EaseCircleActionIn(JSContext *cx, JS::HandleObject glo
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCircleActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCircleActionOut_class;
@@ -25528,6 +25701,7 @@ void js_register_cocos2dx_EaseCircleActionOut(JSContext *cx, JS::HandleObject gl
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCircleActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCircleActionInOut_class;
@@ -25672,6 +25846,7 @@ void js_register_cocos2dx_EaseCircleActionInOut(JSContext *cx, JS::HandleObject 
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCircleActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCubicActionIn_class;
@@ -25816,6 +25991,7 @@ void js_register_cocos2dx_EaseCubicActionIn(JSContext *cx, JS::HandleObject glob
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCubicActionIn.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCubicActionOut_class;
@@ -25960,6 +26136,7 @@ void js_register_cocos2dx_EaseCubicActionOut(JSContext *cx, JS::HandleObject glo
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCubicActionOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_EaseCubicActionInOut_class;
@@ -26104,6 +26281,7 @@ void js_register_cocos2dx_EaseCubicActionInOut(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_ActionEase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.EaseCubicActionInOut.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ActionInstant_class;
@@ -29825,6 +30003,36 @@ bool js_cocos2dx_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_cocos2dx_ActionManager_removeActionByTag : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_cocos2dx_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ActionManager* cobj = (cocos2d::ActionManager *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionManager_removeActionsByFlags : Invalid Native Object");
+    if (argc == 2) {
+        unsigned int arg0;
+        cocos2d::Node* arg1;
+        ok &= jsval_to_uint32(cx, args.get(0), &arg0);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionManager_removeActionsByFlags : Error processing arguments");
+        cobj->removeActionsByFlags(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ActionManager_removeActionsByFlags : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
 bool js_cocos2dx_ActionManager_removeAllActions(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -30183,6 +30391,7 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JS::HandleObject global) 
     static JSFunctionSpec funcs[] = {
         JS_FN("getActionByTag", js_cocos2dx_ActionManager_getActionByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeActionByTag", js_cocos2dx_ActionManager_removeActionByTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeActionsByFlags", js_cocos2dx_ActionManager_removeActionsByFlags, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllActions", js_cocos2dx_ActionManager_removeAllActions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addAction", js_cocos2dx_ActionManager_addAction, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resumeTarget", js_cocos2dx_ActionManager_resumeTarget, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -30226,6 +30435,7 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JS::HandleObject global) 
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionManager.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_PageTurn3D_class;
@@ -32862,6 +33072,7 @@ void js_register_cocos2dx_ActionTween(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ActionTween.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_GLProgramState_class;
@@ -34936,6 +35147,26 @@ bool js_cocos2dx_DrawNode_drawSolidCircle(JSContext *cx, uint32_t argc, jsval *v
     JS_ReportError(cx, "js_cocos2dx_DrawNode_drawSolidCircle : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_DrawNode_setLineWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::DrawNode* cobj = (cocos2d::DrawNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_DrawNode_setLineWidth : Invalid Native Object");
+    if (argc == 1) {
+        int arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_DrawNode_setLineWidth : Error processing arguments");
+        cobj->setLineWidth(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_DrawNode_setLineWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_DrawNode_onDrawGLPoint(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -35536,6 +35767,7 @@ void js_register_cocos2dx_DrawNode(JSContext *cx, JS::HandleObject global) {
         JS_FN("drawPoints", js_cocos2dx_DrawNode_drawPoints, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawRect", js_cocos2dx_DrawNode_drawRect, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawSolidCircle", js_cocos2dx_DrawNode_drawSolidCircle, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setLineWidth", js_cocos2dx_DrawNode_setLineWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onDrawGLPoint", js_cocos2dx_DrawNode_onDrawGLPoint, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawDot", js_cocos2dx_DrawNode_drawDot, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawCatmullRom", js_cocos2dx_DrawNode_drawCatmullRom, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -35589,778 +35821,7 @@ void js_register_cocos2dx_DrawNode(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
-}
-
-JSClass  *jsb_cocos2d_SpriteBatchNode_class;
-JSObject *jsb_cocos2d_SpriteBatchNode_prototype;
-
-bool js_cocos2dx_SpriteBatchNode_appendChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_appendChild : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Sprite* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_appendChild : Error processing arguments");
-        cobj->appendChild(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_appendChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad : Invalid Native Object");
-    if (argc == 3) {
-        cocos2d::Sprite* arg0;
-        int arg1;
-        int arg2;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad : Error processing arguments");
-        cocos2d::SpriteBatchNode* ret = cobj->addSpriteWithoutQuad(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad : wrong number of arguments: %d, was expecting %d", argc, 3);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_reorderBatch(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_reorderBatch : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_reorderBatch : Error processing arguments");
-        cobj->reorderBatch(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_reorderBatch : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_initWithTexture(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_initWithTexture : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Texture2D* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithTexture : Error processing arguments");
-        bool ret = cobj->initWithTexture(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 2) {
-        cocos2d::Texture2D* arg0;
-        ssize_t arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithTexture : Error processing arguments");
-        bool ret = cobj->initWithTexture(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_initWithTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getBlendFunc : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
-        jsval jsret = JSVAL_NULL;
-        jsret = blendfunc_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Sprite* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild : Error processing arguments");
-        ssize_t ret = cobj->lowestAtlasIndexInChild(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_atlasIndexForChild : Invalid Native Object");
-    if (argc == 2) {
-        cocos2d::Sprite* arg0;
-        int arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_atlasIndexForChild : Error processing arguments");
-        ssize_t ret = cobj->atlasIndexForChild(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_atlasIndexForChild : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setTextureAtlas : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::TextureAtlas* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::TextureAtlas*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setTextureAtlas : Error processing arguments");
-        cobj->setTextureAtlas(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_setTextureAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_initWithFile : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithFile : Error processing arguments");
-        bool ret = cobj->initWithFile(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 2) {
-        std::string arg0;
-        ssize_t arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithFile : Error processing arguments");
-        bool ret = cobj->initWithFile(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_initWithFile : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_getTexture(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getTexture : Invalid Native Object");
-    if (argc == 0) {
-        cocos2d::Texture2D* ret = cobj->getTexture();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Texture2D>(cx, (cocos2d::Texture2D*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getTexture : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity : Invalid Native Object");
-    if (argc == 0) {
-        cobj->increaseAtlasCapacity();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getTextureAtlas : Invalid Native Object");
-    if (argc == 0) {
-        cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TextureAtlas>(cx, (cocos2d::TextureAtlas*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getTextureAtlas : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_insertQuadFromSprite(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_insertQuadFromSprite : Invalid Native Object");
-    if (argc == 2) {
-        cocos2d::Sprite* arg0;
-        ssize_t arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_insertQuadFromSprite : Error processing arguments");
-        cobj->insertQuadFromSprite(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_insertQuadFromSprite : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setTexture : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Texture2D* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setTexture : Error processing arguments");
-        cobj->setTexture(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_setTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder : Invalid Native Object");
-    if (argc == 2) {
-        cocos2d::Sprite* arg0;
-        ssize_t arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder : Error processing arguments");
-        ssize_t ret = cobj->rebuildIndexInOrder(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Sprite* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild : Error processing arguments");
-        ssize_t ret = cobj->highestAtlasIndexInChild(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = ssize_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_removeChildAtIndex : Invalid Native Object");
-    if (argc == 2) {
-        ssize_t arg0;
-        bool arg1;
-        ok &= jsval_to_ssize(cx, args.get(0), &arg0);
-        arg1 = JS::ToBoolean(args.get(1));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_removeChildAtIndex : Error processing arguments");
-        cobj->removeChildAtIndex(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_removeChildAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Sprite* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas : Error processing arguments");
-        cobj->removeSpriteFromAtlas(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setBlendFunc : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::BlendFunc arg0;
-        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setBlendFunc : Error processing arguments");
-        cobj->setBlendFunc(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_SpriteBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_create : Error processing arguments");
-        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::create(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 2) {
-        std::string arg0;
-        ssize_t arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_create : Error processing arguments");
-        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::create(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_create : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_SpriteBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        cocos2d::Texture2D* arg0;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_createWithTexture : Error processing arguments");
-        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::createWithTexture(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 2) {
-        cocos2d::Texture2D* arg0;
-        ssize_t arg1;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_createWithTexture : Error processing arguments");
-        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::createWithTexture(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_createWithTexture : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_SpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    cocos2d::SpriteBatchNode* cobj = new (std::nothrow) cocos2d::SpriteBatchNode();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::SpriteBatchNode> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::SpriteBatchNode");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    return true;
-}
-
-
-extern JSObject *jsb_cocos2d_Node_prototype;
-
-void js_cocos2d_SpriteBatchNode_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (SpriteBatchNode)", obj);
-}
-
-static bool js_cocos2d_SpriteBatchNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    cocos2d::SpriteBatchNode *nobj = new (std::nothrow) cocos2d::SpriteBatchNode();
-    if (nobj) {
-        nobj->autorelease();
-    }
-    js_proxy_t* p = jsb_new_proxy(nobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::SpriteBatchNode");
-    bool isFound = false;
-    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    args.rval().setUndefined();
-    return true;
-}
-void js_register_cocos2dx_SpriteBatchNode(JSContext *cx, JS::HandleObject global) {
-    jsb_cocos2d_SpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocos2d_SpriteBatchNode_class->name = "SpriteBatchNode";
-    jsb_cocos2d_SpriteBatchNode_class->addProperty = JS_PropertyStub;
-    jsb_cocos2d_SpriteBatchNode_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocos2d_SpriteBatchNode_class->getProperty = JS_PropertyStub;
-    jsb_cocos2d_SpriteBatchNode_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocos2d_SpriteBatchNode_class->enumerate = JS_EnumerateStub;
-    jsb_cocos2d_SpriteBatchNode_class->resolve = JS_ResolveStub;
-    jsb_cocos2d_SpriteBatchNode_class->convert = JS_ConvertStub;
-    jsb_cocos2d_SpriteBatchNode_class->finalize = js_cocos2d_SpriteBatchNode_finalize;
-    jsb_cocos2d_SpriteBatchNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_PS_END
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("appendChild", js_cocos2dx_SpriteBatchNode_appendChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addSpriteWithoutQuad", js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("reorderBatch", js_cocos2dx_SpriteBatchNode_reorderBatch, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithTexture", js_cocos2dx_SpriteBatchNode_initWithTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBlendFunc", js_cocos2dx_SpriteBatchNode_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("lowestAtlasIndexInChild", js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("atlasIndexForChild", js_cocos2dx_SpriteBatchNode_atlasIndexForChild, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTextureAtlas", js_cocos2dx_SpriteBatchNode_setTextureAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithFile", js_cocos2dx_SpriteBatchNode_initWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTexture", js_cocos2dx_SpriteBatchNode_getTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("increaseAtlasCapacity", js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTextureAtlas", js_cocos2dx_SpriteBatchNode_getTextureAtlas, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("insertQuadFromSprite", js_cocos2dx_SpriteBatchNode_insertQuadFromSprite, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTexture", js_cocos2dx_SpriteBatchNode_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("rebuildIndexInOrder", js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("highestAtlasIndexInChild", js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeChildAtIndex", js_cocos2dx_SpriteBatchNode_removeChildAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeSpriteFromAtlas", js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setBlendFunc", js_cocos2dx_SpriteBatchNode_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("ctor", js_cocos2d_SpriteBatchNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_SpriteBatchNode_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithTexture", js_cocos2dx_SpriteBatchNode_createWithTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_cocos2d_SpriteBatchNode_prototype = JS_InitClass(
-        cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
-        jsb_cocos2d_SpriteBatchNode_class,
-        js_cocos2dx_SpriteBatchNode_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "SpriteBatchNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::SpriteBatchNode> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_SpriteBatchNode_class;
-        p->proto = jsb_cocos2d_SpriteBatchNode_prototype;
-        p->parentProto = jsb_cocos2d_Node_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
+    anonEvaluate(cx, global, "(function () { cc.DrawNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Label_class;
@@ -36538,6 +35999,24 @@ bool js_cocos2dx_Label_getTextColor(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Label_getTextColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Label_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getBlendFunc : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        jsval jsret = JSVAL_NULL;
+        jsret = blendfunc_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Label_setWidth(JSContext *cx, uint32_t argc, jsval *vp)
@@ -36848,6 +36327,26 @@ bool js_cocos2dx_Label_getAdditionalKerning(JSContext *cx, uint32_t argc, jsval 
     }
 
     JS_ReportError(cx, "js_cocos2dx_Label_getAdditionalKerning : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Label_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_removeAllChildrenWithCleanup : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_removeAllChildrenWithCleanup : Error processing arguments");
+        cobj->removeAllChildrenWithCleanup(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_removeAllChildrenWithCleanup : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Label_setCharMap(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37202,6 +36701,26 @@ bool js_cocos2dx_Label_getSystemFontSize(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_cocos2dx_Label_getSystemFontSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Label_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setBlendFunc : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::BlendFunc arg0;
+        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setBlendFunc : Error processing arguments");
+        cobj->setBlendFunc(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Label_getTextAlignment(JSContext *cx, uint32_t argc, jsval *vp)
@@ -37659,7 +37178,7 @@ bool js_cocos2dx_Label_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 
-extern JSObject *jsb_cocos2d_SpriteBatchNode_prototype;
+extern JSObject *jsb_cocos2d_Node_prototype;
 
 void js_cocos2d_Label_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Label)", obj);
@@ -37707,6 +37226,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         JS_FN("getHeight", js_cocos2dx_Label_getHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("disableEffect", js_cocos2dx_Label_disableEffect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextColor", js_cocos2dx_Label_getTextColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBlendFunc", js_cocos2dx_Label_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setWidth", js_cocos2dx_Label_setWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMaxLineWidth", js_cocos2dx_Label_getMaxLineWidth, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHorizontalAlignment", js_cocos2dx_Label_getHorizontalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -37722,6 +37242,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         JS_FN("getStringNumLines", js_cocos2dx_Label_getStringNumLines, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("enableOutline", js_cocos2dx_Label_enableOutline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAdditionalKerning", js_cocos2dx_Label_getAdditionalKerning, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllChildrenWithCleanup", js_cocos2dx_Label_removeAllChildrenWithCleanup, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCharMap", js_cocos2dx_Label_setCharMap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDimensions", js_cocos2dx_Label_getDimensions, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxLineWidth", js_cocos2dx_Label_setMaxLineWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -37737,6 +37258,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         JS_FN("getLetter", js_cocos2dx_Label_getLetter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAdditionalKerning", js_cocos2dx_Label_setAdditionalKerning, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSystemFontSize", js_cocos2dx_Label_getSystemFontSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBlendFunc", js_cocos2dx_Label_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextAlignment", js_cocos2dx_Label_getTextAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBMFontFilePath", js_cocos2dx_Label_getBMFontFilePath, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setHorizontalAlignment", js_cocos2dx_Label_setHorizontalAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -37756,7 +37278,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
 
     jsb_cocos2d_Label_prototype = JS_InitClass(
         cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_SpriteBatchNode_prototype),
+        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
         jsb_cocos2d_Label_class,
         js_cocos2dx_Label_constructor, 0, // constructor
         properties,
@@ -37777,9 +37299,10 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
         p->jsclass = jsb_cocos2d_Label_class;
         p->proto = jsb_cocos2d_Label_prototype;
-        p->parentProto = jsb_cocos2d_SpriteBatchNode_prototype;
+        p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Label.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LabelAtlas_class;
@@ -38099,6 +37622,7 @@ void js_register_cocos2dx_LabelAtlas(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_AtlasNode_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LabelAtlas.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LabelBMFont_class;
@@ -38637,6 +38161,7 @@ void js_register_cocos2dx_LabelBMFont(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LabelBMFont.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LabelTTF_class;
@@ -39544,6 +39069,7 @@ void js_register_cocos2dx_LabelTTF(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LabelTTF.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Layer_class;
@@ -39676,6 +39202,7 @@ void js_register_cocos2dx_Layer(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Layer.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d___LayerRGBA_class;
@@ -40124,6 +39651,7 @@ void js_register_cocos2dx_LayerColor(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Layer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LayerColor.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LayerGradient_class;
@@ -40598,6 +40126,7 @@ void js_register_cocos2dx_LayerGradient(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_LayerColor_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LayerGradient.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_LayerMultiplex_class;
@@ -40800,6 +40329,7 @@ void js_register_cocos2dx_LayerMultiplex(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_Layer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.LayerMultiplex.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItem_class;
@@ -41088,6 +40618,7 @@ void js_register_cocos2dx_MenuItem(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItem.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemLabel_class;
@@ -41373,6 +40904,7 @@ void js_register_cocos2dx_MenuItemLabel(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_MenuItem_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemLabel.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemAtlasFont_class;
@@ -41542,6 +41074,7 @@ void js_register_cocos2dx_MenuItemAtlasFont(JSContext *cx, JS::HandleObject glob
         p->parentProto = jsb_cocos2d_MenuItemLabel_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemAtlasFont.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemFont_class;
@@ -41849,6 +41382,7 @@ void js_register_cocos2dx_MenuItemFont(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_MenuItemLabel_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemFont.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemSprite_class;
@@ -42258,6 +41792,7 @@ void js_register_cocos2dx_MenuItemSprite(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_MenuItem_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemSprite.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemImage_class;
@@ -42529,6 +42064,7 @@ void js_register_cocos2dx_MenuItemImage(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_MenuItemSprite_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemImage.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MenuItemToggle_class;
@@ -42784,6 +42320,7 @@ void js_register_cocos2dx_MenuItemToggle(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_MenuItem_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MenuItemToggle.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Menu_class;
@@ -43031,6 +42568,7 @@ void js_register_cocos2dx_Menu(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Layer_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Menu.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_MotionStreak_class;
@@ -43547,6 +43085,7 @@ void js_register_cocos2dx_MotionStreak(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.MotionStreak.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_NodeGrid_class;
@@ -44260,6 +43799,7 @@ void js_register_cocos2dx_ParticleBatchNode(JSContext *cx, JS::HandleObject glob
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ParticleBatchNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ParticleSystem_class;
@@ -46452,6 +45992,7 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ParticleSystem.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ParticleSystemQuad_class;
@@ -49140,6 +48681,7 @@ void js_register_cocos2dx_ProgressTimer(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ProgressTimer.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ProtectedNode_class;
@@ -51014,6 +50556,7 @@ void js_register_cocos2dx_Sprite(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Sprite.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_RenderTexture_class;
@@ -51815,6 +51358,7 @@ void js_register_cocos2dx_RenderTexture(JSContext *cx, JS::HandleObject global) 
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.RenderTexture.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TransitionEaseScene_class;
@@ -52172,6 +51716,7 @@ void js_register_cocos2dx_TransitionScene(JSContext *cx, JS::HandleObject global
         p->parentProto = jsb_cocos2d_Scene_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TransitionScene.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TransitionSceneOriented_class;
@@ -58815,6 +58360,7 @@ void js_register_cocos2dx_GridBase(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.GridBase.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Grid3D_class;
@@ -59027,6 +58573,7 @@ void js_register_cocos2dx_Grid3D(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_GridBase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Grid3D.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TiledGrid3D_class;
@@ -59199,6 +58746,7 @@ void js_register_cocos2dx_TiledGrid3D(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_GridBase_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TiledGrid3D.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_BaseLight_class;
@@ -61019,6 +60567,7 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.GLProgram.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_GLProgramCache_class;
@@ -63621,6 +63170,779 @@ void js_register_cocos2dx_AnimationCache(JSContext *cx, JS::HandleObject global)
     }
 }
 
+JSClass  *jsb_cocos2d_SpriteBatchNode_class;
+JSObject *jsb_cocos2d_SpriteBatchNode_prototype;
+
+bool js_cocos2dx_SpriteBatchNode_appendChild(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_appendChild : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Sprite* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_appendChild : Error processing arguments");
+        cobj->appendChild(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_appendChild : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad : Invalid Native Object");
+    if (argc == 3) {
+        cocos2d::Sprite* arg0;
+        int arg1;
+        int arg2;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad : Error processing arguments");
+        cocos2d::SpriteBatchNode* ret = cobj->addSpriteWithoutQuad(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_reorderBatch(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_reorderBatch : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_reorderBatch : Error processing arguments");
+        cobj->reorderBatch(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_reorderBatch : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_initWithTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_initWithTexture : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Texture2D* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithTexture : Error processing arguments");
+        bool ret = cobj->initWithTexture(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 2) {
+        cocos2d::Texture2D* arg0;
+        ssize_t arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithTexture : Error processing arguments");
+        bool ret = cobj->initWithTexture(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_initWithTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getBlendFunc : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        jsval jsret = JSVAL_NULL;
+        jsret = blendfunc_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Sprite* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild : Error processing arguments");
+        ssize_t ret = cobj->lowestAtlasIndexInChild(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = ssize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_atlasIndexForChild : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Sprite* arg0;
+        int arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_atlasIndexForChild : Error processing arguments");
+        ssize_t ret = cobj->atlasIndexForChild(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = ssize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_atlasIndexForChild : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setTextureAtlas : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::TextureAtlas* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TextureAtlas*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setTextureAtlas : Error processing arguments");
+        cobj->setTextureAtlas(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_setTextureAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_initWithFile : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithFile : Error processing arguments");
+        bool ret = cobj->initWithFile(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        ssize_t arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_initWithFile : Error processing arguments");
+        bool ret = cobj->initWithFile(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_initWithFile : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_getTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getTexture : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Texture2D* ret = cobj->getTexture();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Texture2D>(cx, (cocos2d::Texture2D*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getTexture : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity : Invalid Native Object");
+    if (argc == 0) {
+        cobj->increaseAtlasCapacity();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getTextureAtlas : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::TextureAtlas* ret = cobj->getTextureAtlas();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TextureAtlas>(cx, (cocos2d::TextureAtlas*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getTextureAtlas : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_insertQuadFromSprite(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_insertQuadFromSprite : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Sprite* arg0;
+        ssize_t arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_insertQuadFromSprite : Error processing arguments");
+        cobj->insertQuadFromSprite(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_insertQuadFromSprite : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setTexture : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Texture2D* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setTexture : Error processing arguments");
+        cobj->setTexture(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_setTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Sprite* arg0;
+        ssize_t arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder : Error processing arguments");
+        ssize_t ret = cobj->rebuildIndexInOrder(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = ssize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Sprite* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild : Error processing arguments");
+        ssize_t ret = cobj->highestAtlasIndexInChild(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = ssize_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_removeChildAtIndex : Invalid Native Object");
+    if (argc == 2) {
+        ssize_t arg0;
+        bool arg1;
+        ok &= jsval_to_ssize(cx, args.get(0), &arg0);
+        arg1 = JS::ToBoolean(args.get(1));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_removeChildAtIndex : Error processing arguments");
+        cobj->removeChildAtIndex(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_removeChildAtIndex : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Sprite* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Sprite*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas : Error processing arguments");
+        cobj->removeSpriteFromAtlas(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_setBlendFunc : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::BlendFunc arg0;
+        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_setBlendFunc : Error processing arguments");
+        cobj->setBlendFunc(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpriteBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_create : Error processing arguments");
+        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        ssize_t arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_create : Error processing arguments");
+        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_SpriteBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        cocos2d::Texture2D* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_createWithTexture : Error processing arguments");
+        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::createWithTexture(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 2) {
+        cocos2d::Texture2D* arg0;
+        ssize_t arg1;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpriteBatchNode_createWithTexture : Error processing arguments");
+        cocos2d::SpriteBatchNode* ret = cocos2d::SpriteBatchNode::createWithTexture(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpriteBatchNode>(cx, (cocos2d::SpriteBatchNode*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_createWithTexture : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_SpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::SpriteBatchNode* cobj = new (std::nothrow) cocos2d::SpriteBatchNode();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::SpriteBatchNode> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::SpriteBatchNode");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_Node_prototype;
+
+void js_cocos2d_SpriteBatchNode_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (SpriteBatchNode)", obj);
+}
+
+static bool js_cocos2d_SpriteBatchNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    cocos2d::SpriteBatchNode *nobj = new (std::nothrow) cocos2d::SpriteBatchNode();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::SpriteBatchNode");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+void js_register_cocos2dx_SpriteBatchNode(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_SpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_SpriteBatchNode_class->name = "SpriteBatchNode";
+    jsb_cocos2d_SpriteBatchNode_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_SpriteBatchNode_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_SpriteBatchNode_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_SpriteBatchNode_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_SpriteBatchNode_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_SpriteBatchNode_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_SpriteBatchNode_class->convert = JS_ConvertStub;
+    jsb_cocos2d_SpriteBatchNode_class->finalize = js_cocos2d_SpriteBatchNode_finalize;
+    jsb_cocos2d_SpriteBatchNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("appendChild", js_cocos2dx_SpriteBatchNode_appendChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addSpriteWithoutQuad", js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reorderBatch", js_cocos2dx_SpriteBatchNode_reorderBatch, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithTexture", js_cocos2dx_SpriteBatchNode_initWithTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBlendFunc", js_cocos2dx_SpriteBatchNode_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("lowestAtlasIndexInChild", js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("atlasIndexForChild", js_cocos2dx_SpriteBatchNode_atlasIndexForChild, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTextureAtlas", js_cocos2dx_SpriteBatchNode_setTextureAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithFile", js_cocos2dx_SpriteBatchNode_initWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTexture", js_cocos2dx_SpriteBatchNode_getTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("increaseAtlasCapacity", js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTextureAtlas", js_cocos2dx_SpriteBatchNode_getTextureAtlas, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("insertQuadFromSprite", js_cocos2dx_SpriteBatchNode_insertQuadFromSprite, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTexture", js_cocos2dx_SpriteBatchNode_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("rebuildIndexInOrder", js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("highestAtlasIndexInChild", js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeChildAtIndex", js_cocos2dx_SpriteBatchNode_removeChildAtIndex, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeSpriteFromAtlas", js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBlendFunc", js_cocos2dx_SpriteBatchNode_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2d_SpriteBatchNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_SpriteBatchNode_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithTexture", js_cocos2dx_SpriteBatchNode_createWithTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_SpriteBatchNode_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
+        jsb_cocos2d_SpriteBatchNode_class,
+        js_cocos2dx_SpriteBatchNode_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "SpriteBatchNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::SpriteBatchNode> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_SpriteBatchNode_class;
+        p->proto = jsb_cocos2d_SpriteBatchNode_prototype;
+        p->parentProto = jsb_cocos2d_Node_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { cc.SpriteBatchNode.extend = cc.Class.extend; })()");
+}
+
 JSClass  *jsb_cocos2d_SpriteFrameCache_class;
 JSObject *jsb_cocos2d_SpriteFrameCache_prototype;
 
@@ -64467,6 +64789,7 @@ void js_register_cocos2dx_TextFieldTTF(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Label_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TextFieldTTF.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ParallaxNode_class;
@@ -64712,6 +65035,7 @@ void js_register_cocos2dx_ParallaxNode(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.ParallaxNode.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TMXObjectGroup_class;
@@ -66164,6 +66488,7 @@ void js_register_cocos2dx_TMXMapInfo(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TMXMapInfo.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TMXLayer_class;
@@ -66885,6 +67210,7 @@ void js_register_cocos2dx_TMXLayer(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_SpriteBatchNode_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TMXLayer.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TMXTiledMap_class;
@@ -67448,6 +67774,7 @@ void js_register_cocos2dx_TMXTiledMap(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TMXTiledMap.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_TileMapAtlas_class;
@@ -67723,6 +68050,7 @@ void js_register_cocos2dx_TileMapAtlas(JSContext *cx, JS::HandleObject global) {
         p->parentProto = jsb_cocos2d_AtlasNode_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.TileMapAtlas.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_Component_class;
@@ -68008,6 +68336,7 @@ void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global) {
         p->parentProto = NULL;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { cc.Component.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocos2d_ComponentContainer_class;
@@ -68922,7 +69251,6 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_CatmullRomTo(cx, ns);
     js_register_cocos2dx_Waves3D(cx, ns);
     js_register_cocos2dx_EaseExponentialOut(cx, ns);
-    js_register_cocos2dx_SpriteBatchNode(cx, ns);
     js_register_cocos2dx_Label(cx, ns);
     js_register_cocos2dx_Application(cx, ns);
     js_register_cocos2dx_DelayTime(cx, ns);
@@ -68937,6 +69265,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_EventAcceleration(cx, ns);
     js_register_cocos2dx_EaseCubicActionIn(cx, ns);
     js_register_cocos2dx_TextureCache(cx, ns);
+    js_register_cocos2dx_SpriteBatchNode(cx, ns);
     js_register_cocos2dx_Configuration(cx, ns);
     js_register_cocos2dx_ActionTween(cx, ns);
     js_register_cocos2dx_TransitionFadeDown(cx, ns);
