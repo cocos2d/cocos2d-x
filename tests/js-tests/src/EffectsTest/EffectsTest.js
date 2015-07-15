@@ -31,6 +31,7 @@ var effectsTestSceneIdx = -1;
 
 var EffecstsBaseLayer = BaseTestLayer.extend({
 
+    _gridNodeTarget: null,
     code:function () {
         return "";
     },
@@ -56,13 +57,27 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
        this._super();
 
         var node = new cc.Node();
-	    var nodeGrid = new cc.NodeGrid();
+        node.setPosition(-winSize.width/2,0);
+        //if true
+        var visiablesize = director.getVisibleSize();
+        var gridRect = new cc.rect(visiablesize.width*0.1,
+                                   visiablesize.height*0.1,
+                                   visiablesize.width*0.5,
+                                   visiablesize.height*0.5);
+        //var actionGrid = new cc.GridAction();
+
+        var nodeGrid = cc.NodeGrid.create(gridRect); 
+
+        //if false
+        //var nodeGrid = new cc.NodeGrid();
+        cc.GridAction.prototype._gridNodeTarget = nodeGrid;
         nodeGrid.addChild(node);
 	    nodeGrid.runAction( this.getEffect(3) );
         this.addChild( nodeGrid );
 
         // back gradient
-        var gradient = new cc.LayerGradient( cc.color(0,0,0,255), cc.color(98,99,117,255));
+        //var gradient = new cc.LayerGradient( cc.color(0,0,0,255), cc.color(98,99,117,255));
+        var gradient = new cc.LayerGradient( cc.color(255,0,0,255), cc.color(255,255,0,255));
         node.addChild( gradient );
 
         // back image
@@ -482,3 +497,7 @@ var previousEffectsTest = function () {
 var restartEffectsTest = function () {
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
+/*var isRectEffect = function (choose) {
+    if(choose)  return true;
+    return false;
+};*/
