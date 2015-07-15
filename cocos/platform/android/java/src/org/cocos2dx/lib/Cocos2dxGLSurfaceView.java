@@ -33,6 +33,8 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.ArrayList;
+
 public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     // ===========================================================
     // Constants
@@ -55,6 +57,20 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
     private Cocos2dxRenderer mCocos2dxRenderer;
     private Cocos2dxEditText mCocos2dxEditText;
+
+    private class TouchInfo {
+        public int id;
+        public float x;
+        public float y;
+
+        TouchInfo(int id, float x, float y) {
+            this.id = id;
+            this.x = x;
+            this.y = y;
+        }
+    }
+    private ArrayList<TouchInfo> mBufferedTouchDownList = new ArrayList();
+    private ArrayList<TouchInfo> mBufferedTouchUpList = new ArrayList();
 
     // ===========================================================
     // Constructors
@@ -179,6 +195,50 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         //super.onPause();
     }
 
+    private void flushBufferedTouchDownEvent() {
+        final int pointerNumber = mBufferedTouchDownList.size();
+        if (0 < pointerNumber) {
+            final int[] ids = new int[pointerNumber];
+            final float[] xs = new float[pointerNumber];
+            final float[] ys = new float[pointerNumber];
+            for (int i = 0; i < pointerNumber; i++) {
+                TouchInfo info = mBufferedTouchDownList.get(i);
+                ids[i] = info.id;
+                xs[i] = info.x;
+                ys[i] = info.y;
+            }
+            mBufferedTouchDownList.clear();
+            this.queueEvent(new Runnable() {
+                @Override
+                public void run() {
+                    Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleTouchEvent(MotionEvent.ACTION_DOWN, ids, xs, ys);
+                }
+            });
+        }
+    }
+
+    private void flushBufferedTouchUpEvent() {
+        final int pointerNumber = mBufferedTouchUpList.size();
+        if (0 < pointerNumber) {
+            final int[] ids = new int[pointerNumber];
+            final float[] xs = new float[pointerNumber];
+            final float[] ys = new float[pointerNumber];
+            for (int i = 0; i < pointerNumber; i++) {
+                TouchInfo info = mBufferedTouchUpList.get(i);
+                ids[i] = info.id;
+                xs[i] = info.x;
+                ys[i] = info.y;
+            }
+            mBufferedTouchUpList.clear();
+            this.queueEvent(new Runnable() {
+                @Override
+                public void run() {
+                    Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleTouchEvent(MotionEvent.ACTION_UP, ids, xs, ys);
+                }
+            });
+        }
+    }
+
     @Override
     public boolean onTouchEvent(final MotionEvent pMotionEvent) {
         // these data are used in ACTION_MOVE and ACTION_CANCEL
@@ -195,75 +255,64 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
         switch (pMotionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_POINTER_DOWN:
+                flushBufferedTouchUpEvent();
                 final int indexPointerDown = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
                 final int idPointerDown = pMotionEvent.getPointerId(indexPointerDown);
                 final float xPointerDown = pMotionEvent.getX(indexPointerDown);
                 final float yPointerDown = pMotionEvent.getY(indexPointerDown);
 
-                this.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idPointerDown, xPointerDown, yPointerDown);
-                    }
-                });
+                mBufferedTouchDownList.add(new TouchInfo(idPointerDown, xPointerDown, yPointerDown));
                 break;
 
             case MotionEvent.ACTION_DOWN:
+                flushBufferedTouchUpEvent();
                 // there are only one finger on the screen
                 final int idDown = pMotionEvent.getPointerId(0);
                 final float xDown = xs[0];
                 final float yDown = ys[0];
 
-                this.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionDown(idDown, xDown, yDown);
-                    }
-                });
+                mBufferedTouchDownList.add(new TouchInfo(idDown, xDown, yDown));
                 break;
 
             case MotionEvent.ACTION_MOVE:
+                flushBufferedTouchDownEvent();
+                flushBufferedTouchUpEvent();
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionMove(ids, xs, ys);
+                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleTouchEvent(MotionEvent.ACTION_MOVE, ids, xs, ys);
                     }
                 });
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
+                flushBufferedTouchDownEvent();
                 final int indexPointUp = pMotionEvent.getAction() >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
                 final int idPointerUp = pMotionEvent.getPointerId(indexPointUp);
                 final float xPointerUp = pMotionEvent.getX(indexPointUp);
                 final float yPointerUp = pMotionEvent.getY(indexPointUp);
 
-                this.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionUp(idPointerUp, xPointerUp, yPointerUp);
-                    }
-                });
+                mBufferedTouchUpList.add(new TouchInfo(idPointerUp, xPointerUp, yPointerUp));
                 break;
 
             case MotionEvent.ACTION_UP:
+                flushBufferedTouchDownEvent();
                 // there are only one finger on the screen
                 final int idUp = pMotionEvent.getPointerId(0);
                 final float xUp = xs[0];
                 final float yUp = ys[0];
 
-                this.queueEvent(new Runnable() {
-                    @Override
-                    public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionUp(idUp, xUp, yUp);
-                    }
-                });
+                mBufferedTouchUpList.add(new TouchInfo(idUp, xUp, yUp));
+                flushBufferedTouchUpEvent();
                 break;
 
             case MotionEvent.ACTION_CANCEL:
+                flushBufferedTouchDownEvent();
+                flushBufferedTouchUpEvent();
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {
-                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleActionCancel(ids, xs, ys);
+                        Cocos2dxGLSurfaceView.this.mCocos2dxRenderer.handleTouchEvent(MotionEvent.ACTION_CANCEL, ids, xs, ys);
                     }
                 });
                 break;
