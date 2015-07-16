@@ -41,8 +41,8 @@ Git user attention
 Download stable versions
 -----------------------
 
-[Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
-[Cocos2d-JS Lite version](http://www.cocos2d-x.org/filecenter/jsbuilder)
+* [Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
+* [Cocos2d-JS Lite version](http://www.cocos2d-x.org/filecenter/jsbuilder)
 
 How to start a new game
 -----------------------
