@@ -427,7 +427,7 @@ private:
     void  setAlignmentTop(cocos2d::Ref* sender);
     void  setAlignmentMiddle(cocos2d::Ref* sender);
     void  setAlignmentBottom(cocos2d::Ref* sender);
-    const char* getCurrentAlignment();
+    std::string getCurrentAlignment();
 
     cocos2d::Label* _label;
     cocos2d::TextHAlignment _horizAlign;
