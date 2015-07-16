@@ -25,11 +25,12 @@ THE SOFTWARE.
 
 #include "2d/CCFontFreeType.h"
 
+#include FT_BBOX_H
+#include "edtaa3func.h"
+
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
-#include "edtaa3func.h"
-#include FT_BBOX_H
 
 NS_CC_BEGIN
 
@@ -99,6 +100,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _outlineSize(0.0f)
 , _lineHeight(0)
 , _fontAtlas(nullptr)
+, _encoding(FT_ENCODING_UNICODE)
 {
     if (outline > 0)
     {
@@ -137,9 +139,33 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
     
-    //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
-        return false;
+    {
+        int foundIndex = -1;
+        for (int charmapIndex = 0; charmapIndex < face->num_charmaps; charmapIndex++)
+        {
+            if (face->charmaps[charmapIndex]->encoding != FT_ENCODING_NONE)
+            {
+                foundIndex = charmapIndex;
+                break;
+            }
+        }
+        
+        if (foundIndex == -1)
+        {
+            return false;
+        }
+        
+        _encoding = face->charmaps[foundIndex]->encoding;
+        if (FT_Select_Charmap(face, _encoding))
+        {
+            return false;
+        }
+        
+        if (_encoding != FT_ENCODING_GB2312) {
+            CCLOG("Unsupported encoding:%d", _encoding);
+        }
+    }
 
     // set the requested font size
     int dpi = 72;
@@ -246,7 +272,42 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
-unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
+/*
+unsigned short UnicodeToGB2312(unsigned short u16Code)
+{
+    unsigned short retCode = 0;
+    char gbCode[2];
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    WideCharToMultiByte(936, NULL, (LPCWCH)&u16Code, 1, gbCode, sizeof(wchar_t), NULL, NULL);
+#else
+    if (_iconv == nullptr) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+        _iconv = iconv_open("gb2312", "utf8");
+#else
+        _iconv = iconv_open("gb2312", "utf-16le");
+#endif
+    }
+
+    if (_iconv) {
+        char* outBuffer= gbCode;
+        size_t outLen = 2;
+        size_t srcLen = 2;
+        char* srcs = (char*)&u16Code;
+
+        iconv(_iconv, (char**)&srcs, &srcLen, &outBuffer, &outLen); 
+    }
+#endif
+    
+    char* dst = (char*)&retCode;
+    dst[0] = gbCode[1];
+    dst[1] = gbCode[0];
+    
+    log("_iconv:%d,gbCode:%d,%d", (size_t)_iconv, gbCode[0], gbCode[1]);
+    return retCode;
+}*/
+
+unsigned char* FontFreeType::getGlyphBitmap(unsigned short u16Code, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
     unsigned char * ret = nullptr;
@@ -256,8 +317,8 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         if (!_fontRef)
             break;
 
-        auto glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-        if(!glyphIndex)
+        auto glyphIndex = FT_Get_Char_Index(_fontRef, u16Code);
+        if(glyphIndex == 0)
             break;
 
         if (_distanceFieldEnabled)
@@ -289,7 +350,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));
 
             FT_BBox bbox;
-            auto outlineBitmap = getGlyphBitmapWithOutline(theChar,bbox);
+            auto outlineBitmap = getGlyphBitmapWithOutline(u16Code,bbox);
             if(outlineBitmap == nullptr)
             {
                 ret = nullptr;
@@ -372,11 +433,11 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
     }
 }
 
-unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox)
+unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short u16Code, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
 
-    FT_UInt gindex = FT_Get_Char_Index(_fontRef, theChar);
+    FT_UInt gindex = FT_Get_Char_Index(_fontRef, u16Code);
     if (FT_Load_Glyph(_fontRef, gindex, FT_LOAD_NO_BITMAP) == 0)
     {
         if (_fontRef->glyph->format == FT_GLYPH_FORMAT_OUTLINE)

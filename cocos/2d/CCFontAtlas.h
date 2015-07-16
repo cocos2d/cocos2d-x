@@ -41,6 +41,7 @@ class Font;
 class Texture2D;
 class EventCustom;
 class EventListenerCustom;
+class FontFreeType;
 
 struct FontLetterDefinition
 {
@@ -82,11 +83,12 @@ public:
 
     inline const std::unordered_map<ssize_t, Texture2D*>& getTextures() const{ return _atlasTextures;}
     void  addTexture(Texture2D *texture, int slot);
-    float getCommonLineHeight() const;
+
+    float getCommonLineHeight() const { return _commonLineHeight; }
     void  setCommonLineHeight(float newHeight);
     
     Texture2D* getTexture(int slot);
-    const Font* getFont() const;
+    const Font* getFont() const { return _font; }
 
     /** listen the event that renderer was recreated on Android/WP8
      It only has effect on Android and WP8.
@@ -112,10 +114,16 @@ public:
 
 protected:
     void relaseTextures();
+
+    void findNewCharacters(const std::u16string& u16SrcString, std::unordered_map<unsigned short, unsigned short>& newCharsMap);
+
+    void conversionU16TOGB2312(const std::u16string& newChars, std::unordered_map<unsigned short, unsigned short>& newCharsMap);
+
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<unsigned short, FontLetterDefinition> _fontLetterDefinitions;
     float _commonLineHeight;
     Font * _font;
+    FontFreeType* _fontFreeType;
 
     // Dynamic GlyphCollection related stuff
     int _currentPage;
@@ -128,6 +136,8 @@ protected:
     int _fontAscender;
     EventListenerCustom* _rendererRecreatedListener;
     bool _antialiasEnabled;
+
+    void* _iconv;
 };
 
 NS_CC_END
