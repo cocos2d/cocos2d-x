@@ -48,6 +48,7 @@
 * Windows 7 or newer
 * Windows Phone 8.1
 * Linux Ubuntu 14.04 or newer
+* Mordern browsers and IE 9+ (On mobile platforms, only iOS and Android 5 activated WebGL support)
 
 ## Compiler Requirements
 
