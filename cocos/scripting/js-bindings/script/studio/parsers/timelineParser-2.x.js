@@ -1266,9 +1266,12 @@
                         cc.log("%s need to be preloaded", resourcePath + plist);
                 }
             }
-            if(type !== 0)
-                cb(path, type);
-            else
+            if(type !== 0){
+                if(cc.spriteFrameCache.getSpriteFrame(path))
+                    cb(path, type);
+                else
+                    cc.log("failed to get spriteFrame: %s", path);
+            }else
                 cb(resourcePath + path, type);
         }
     };
