@@ -165,6 +165,7 @@ void PageView::insertPage(Layout* page, int idx)
     _doLayoutDirty = true;
 }
 
+
 void PageView::removePage(Layout* page)
 {
     if (!page)
@@ -172,8 +173,14 @@ void PageView::removePage(Layout* page)
         return;
     }
     removeChild(page);
+    auto pageCount = _pages.size();
     _pages.eraseObject(page);
-    
+
+    if (_curPageIdx >= pageCount)
+    {
+        _curPageIdx = pageCount - 1;
+    }
+
     _doLayoutDirty = true;
 }
 
@@ -194,6 +201,7 @@ void PageView::removeAllPages()
         removeChild(node);
     }
     _pages.clear();
+    _curPageIdx = 0;
 }
 
 void PageView::updateBoundaryPages()
@@ -249,7 +257,9 @@ void PageView::updateAllPagesPosition()
     {
         _curPageIdx = pageCount-1;
     }
-    
+    // If the layout is dirty, don't trigger auto scroll
+    _isAutoScrolling = false;
+
     float pageWidth = getContentSize().width;
     for (int i=0; i<pageCount; i++)
     {
