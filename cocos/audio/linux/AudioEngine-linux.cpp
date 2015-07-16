@@ -6,6 +6,8 @@
 #include "AudioPlayer.h"
 #include "FmodAudioPlayer.h"
 
+#include "cocos2d.h"
+
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 using namespace CocosDenshion;
@@ -30,7 +32,8 @@ bool AudioEngineImpl::init(){
 };
 
 int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume){
-  return oAudioPlayer->playEffect(fileFullPath.c_str(), loop, 1.0f, 0.0f, volume);
+      std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileFullPath);
+  return oAudioPlayer->playEffect(fullPath.c_str(), loop, 1.0f, 0.0f, volume);
 };
 
 void AudioEngineImpl::setVolume(int audioID,float volume){
