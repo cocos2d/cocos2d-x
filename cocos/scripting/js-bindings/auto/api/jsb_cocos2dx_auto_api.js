@@ -1710,14 +1710,6 @@ char
 },
 
 /**
- * @method cleanup
- */
-cleanup : function (
-)
-{
-},
-
-/**
  * @method getComponent
  * @param {String} arg0
  * @return {cc.Component}
