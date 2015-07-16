@@ -69,7 +69,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         public int action = Integer.MAX_VALUE;
         public long timestamp = 0;
 
-        private ArrayList<TouchInfo> mInfo = new ArrayList<>();
+        private ArrayList<TouchInfo> mInfo = new ArrayList();
         private int mTop;
 
         // this function should called in main thread
@@ -116,8 +116,8 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
             action = Integer.MAX_VALUE;
         }
     }
-    private final LinkedList<TouchEvent> mProductQueue = new LinkedList<>();
-    private final LinkedList<TouchEvent> mConsumerQueue = new LinkedList<>();
+    private final LinkedList<TouchEvent> mProductQueue = new LinkedList();
+    private final LinkedList<TouchEvent> mConsumerQueue = new LinkedList();
 
     // ===========================================================
     // Constructors
