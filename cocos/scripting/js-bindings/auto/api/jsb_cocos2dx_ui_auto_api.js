@@ -4520,15 +4520,13 @@ isUsingCustomScrollThreshold : function (
 },
 
 /**
- * @method getPage
+ * @method setCurPageIndex
  * @param {long} arg0
- * @return {ccui.Layout}
  */
-getPage : function (
+setCurPageIndex : function (
 long 
 )
 {
-    return ccui.Layout;
 },
 
 /**
@@ -4581,6 +4579,18 @@ scrollToPage : function (
 long 
 )
 {
+},
+
+/**
+ * @method getPage
+ * @param {long} arg0
+ * @return {ccui.Layout}
+ */
+getPage : function (
+long 
+)
+{
+    return ccui.Layout;
 },
 
 /**

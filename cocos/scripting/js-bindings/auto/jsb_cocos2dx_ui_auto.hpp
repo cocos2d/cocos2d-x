@@ -590,12 +590,13 @@ bool js_cocos2dx_ui_PageView_getCustomScrollThreshold(JSContext *cx, uint32_t ar
 bool js_cocos2dx_ui_PageView_getCurPageIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_addWidgetToPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_isUsingCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ui_PageView_getPage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_PageView_setCurPageIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removePage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_setUsingCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_setCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_insertPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_scrollToPage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_PageView_getPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removePageAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_getPages(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removeAllPages(JSContext *cx, uint32_t argc, jsval *vp);
