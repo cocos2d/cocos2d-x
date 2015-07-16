@@ -24,6 +24,12 @@
 
 #import "HttpAsynConnection.h"
 
+#ifdef COCOS2D_DEBUG
+#    define DLog(...) NSLog(__VA_ARGS__)
+#else
+#    define DLog(...) /* */
+#endif
+
 @interface HttpAsynConnection ()
 
 @property (readwrite) NSString *statusString;
@@ -61,7 +67,7 @@
 
 - (void) startRequest:(NSURLRequest *)request
 {
-    NSLog(@"Starting to load %@", srcURL);
+    DLog(@"Starting to load %@", srcURL);
     finish = false;
 
     self.responseData = [NSMutableData data];
@@ -90,10 +96,10 @@
  **/
 - (void) connection:(NSURLConnection *)connection 
  didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"Received response from request to url %@", srcURL);
+    DLog(@"Received response from request to url %@", srcURL);
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
+    //DLog(@"All headers = %@", [httpResponse allHeaderFields]);
     self.responseHeader = [httpResponse allHeaderFields];
 
     responseCode = httpResponse.statusCode;
@@ -127,7 +133,7 @@
 - (void)connection:(NSURLConnection *)connection 
     didReceiveData:(NSData *)data
 {
-    //NSLog(@"get some data");
+    //DLog(@"get some data");
     [responseData appendData:data];
     getDataTime++;
 }
@@ -139,7 +145,7 @@
 - (void)connection:(NSURLConnection *)connection 
   didFailWithError:(NSError *)error
 {
-    //NSLog(@"Load failed with error %@", [error localizedDescription]);
+    //DLog(@"Load failed with error %@", [error localizedDescription]);
     self.connError = error;
     
     finish = true;
