@@ -26,6 +26,8 @@
 #include "2d/CCFontAtlas.h"
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 #include <iconv.h>
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #endif
 
 #include "2d/CCFontFreeType.h"
@@ -173,16 +175,18 @@ bool FontAtlas::getLetterDefinitionForChar(char16_t letteCharUTF16, FontLetterDe
 void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unordered_map<unsigned short, unsigned short>& newCharsMap)
 {
     size_t strLen = newChars.length();
-    auto gb2312Text = new (std::nothrow) char[strLen * 2];
+    auto gb2312StrSize = strLen * 2;
+    auto gb2312Text = new (std::nothrow) char[gb2312StrSize];
+    memset(gb2312Text, 0, gb2312StrSize);
 
     switch (_fontFreeType->getEncoding())
     {
     case FT_ENCODING_GB2312:
     {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-        WideCharToMultiByte(936, NULL, (LPCWCH)newChars.c_str(), strLen, (LPSTR)gb2312Text, strLen * 2, NULL, NULL);
+        WideCharToMultiByte(936, NULL, (LPCWCH)newChars.c_str(), strLen, (LPSTR)gb2312Text, gb2312StrSize, NULL, NULL);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-
+        conversionEncodingJNI((char*)newChars.c_str(), gb2312StrSize, "UTF-16LE", gb2312Text, "GB2312");
 #else
         if (_iconv == nullptr)
         {
@@ -198,7 +202,7 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unord
             char* pin = (char*)newChars.c_str();
             char* pout = gb2312Text;
             size_t inLen = strLen * 2;
-            size_t outLen = inLen;
+            size_t outLen = gb2312StrSize;
 
             iconv(_iconv, (char**)&pin, &inLen, &pout, &outLen);
         }
@@ -258,7 +262,6 @@ void FontAtlas::findNewCharacters(const std::u16string& u16SrcString, std::unord
         }
     }
 
-    //conversion encoding if needed.
     if (!newChars.empty())
     {
         switch (charEncoding)

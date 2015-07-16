@@ -272,41 +272,6 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
-/*
-unsigned short UnicodeToGB2312(unsigned short u16Code)
-{
-    unsigned short retCode = 0;
-    char gbCode[2];
-    
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-    WideCharToMultiByte(936, NULL, (LPCWCH)&u16Code, 1, gbCode, sizeof(wchar_t), NULL, NULL);
-#else
-    if (_iconv == nullptr) {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        _iconv = iconv_open("gb2312", "utf8");
-#else
-        _iconv = iconv_open("gb2312", "utf-16le");
-#endif
-    }
-
-    if (_iconv) {
-        char* outBuffer= gbCode;
-        size_t outLen = 2;
-        size_t srcLen = 2;
-        char* srcs = (char*)&u16Code;
-
-        iconv(_iconv, (char**)&srcs, &srcLen, &outBuffer, &outLen); 
-    }
-#endif
-    
-    char* dst = (char*)&retCode;
-    dst[0] = gbCode[1];
-    dst[1] = gbCode[0];
-    
-    log("_iconv:%d,gbCode:%d,%d", (size_t)_iconv, gbCode[0], gbCode[1]);
-    return retCode;
-}*/
-
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short u16Code, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
