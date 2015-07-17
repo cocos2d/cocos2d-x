@@ -192,6 +192,9 @@
         "src/TerrainTest/TerrainTest.js",
         "src/Physics3DTest/Physics3DTest.js",
         "src/NavMeshTest/NavMeshTest.js",
-        "src/VibrateTest/VibrateTest.js"
+        "src/VibrateTest/VibrateTest.js",
+
+        "src/NativeTest/NativeTest.js",
+        "src/NativeTest/FileUtils/FileUtilsTest.js"
     ]
 }

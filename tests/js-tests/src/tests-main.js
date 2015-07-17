@@ -378,6 +378,14 @@ var testNames = [
             return new EffectAdvanceScene();
         }
     },
+    {
+        title:"Native Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/NativeTest/NativeTest.js",
+        testScene:function () {
+            return new NativeTestScene();
+        }
+    },
     //{
     //    title:"Facebook SDK Test",
     //    platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
