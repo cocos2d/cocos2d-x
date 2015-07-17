@@ -198,7 +198,7 @@
 
 - (void)openKeyboard
 {
-    NSView *contentView = [self getNSWindow].contentView;
+    NSView *contentView = self.window.contentView;
     
     if (!_secure) {
         [contentView addSubview:_textField];
