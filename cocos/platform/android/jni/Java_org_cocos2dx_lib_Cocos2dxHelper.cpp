@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
 #define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxHelper"
 
