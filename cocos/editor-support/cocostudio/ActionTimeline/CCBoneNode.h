@@ -43,10 +43,8 @@ public:
     static BoneNode* create();
     static BoneNode* create(const int &length);
 
-
-
     using Node::addChild;
-    // add child, deal with BoneNode , and SkinNode
+    // add child, deal with BoneNode and SkinNode
     virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
     virtual void addChild(cocos2d::Node* child, int localZOrder, int tag) override;
 
@@ -72,20 +70,19 @@ public:
     virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
 
     /**
-    *
     * @brief: display skin
     * @param: hideOthers, set other skins invisible 
     */
     virtual void displaySkin(SkinNode* skin, bool hideOthers);
 
     /**
-    *
     * @brief: display all skins named skinName, if hide display only one skin,
     *         prefer to use display(SkinNode* skin, bool hideOthers = false)
     * @param: hideOthers, set other skins invisible
     */
     virtual void displaySkin(const std::string &skinName, bool hideOthers );
 
+    // get the skins which is visible (displaying skins)
     virtual cocos2d::Vector<SkinNode*> getVisibleSkins() const;
     
     virtual SkeletonNode* getRootSkeletonNode() const;
@@ -104,22 +101,20 @@ public:
     virtual void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override;
     virtual const cocos2d::BlendFunc & getBlendFunc() const override { return _blendFunc; }
 
+    // is rack show, bone can be drawn when bone is visible && enable debug draw
+    virtual void setDebugDrawEnabled(bool isDebugDraw);
+    virtual bool isDebugDrawEnabled() const { return _isRackShow; }
 
-    
     virtual void setDebugDrawLength(float length);
     virtual float getDebugDrawLength() const { return _rackLength; }
 
     virtual void setDebugDrawWidth(float width);
     virtual float getDebugDrawWidth() const { return _rackWidth; }
 
-    // is rack show, bone can be drawn when bone is visible && enable debug draw
-    virtual void setDebugDrawEnabled(bool isDebugDraw);
-    virtual bool isDebugDrawEnabled() const { return _isRackShow; }
-
     virtual void setDebugDrawColor(const cocos2d::Color4F &color);
     virtual cocos2d::Color4F getDebugDrawColor() const { return _rackColor; }
 
-
+    // get bone's bondingbox, depends on getVisibleSkinsRect, apply on node to parent's tranform
     cocos2d::Rect BoneNode::getBoundingBox() const override;
 
     /**
@@ -140,7 +135,7 @@ public:
     cocos2d::Mat4 BoneNode::getBoneToSkeletonTransform() const;
 
 #ifdef CC_STUDIO_ENABLED_VIEW
-    // hit test , bonePoint is self coordinate
+    // hit test , bonePoint is in self coordinate
     virtual bool isPointOnRack(const cocos2d::Vec2& bonePoint);
 #endif
 
