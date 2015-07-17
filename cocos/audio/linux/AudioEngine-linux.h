@@ -30,8 +30,13 @@
 
 #include <functional>
 #include <iostream>
+#include <map>
+#include "fmod.hpp"
+#include "fmod_errors.h"
+
 
 #include "base/CCRef.h"
+
 
 NS_CC_BEGIN
     namespace experimental{
@@ -62,33 +67,19 @@ public:
     /**
      * other implementations return AudioCache, but that value is unused in main AudioEngine.cpp
      */ 
-    void preload(const std::string& filePath);
+    int preload(const std::string& filePath);
     
     void update(float dt);
     
 private:
-    /*void _play2d(AudioCache *cache, int audioID);
+  
+    int find(const std::string &path);
+    FMOD::Channel * getChannel(FMOD::Sound *);
+  
+    std::map<int, FMOD::Sound*> mapEffectSound;
     
-    ALuint _alSources[MAX_AUDIOINSTANCES];
-    
-    //source,used
-    std::unordered_map<ALuint, bool> _alSourceUsed;
-    
-    //filePath,bufferInfo
-    std::unordered_map<std::string, AudioCache> _audioCaches;
-    
-    //audioID,AudioInfo
-    std::unordered_map<int, AudioPlayer>  _audioPlayers;
-    
-    std::mutex _threadMutex;
-    
-    std::vector<AudioCache*> _toRemoveCaches;
-    std::vector<int> _toRemoveAudioIDs;
-    
-    bool _lazyInitLoop;
-    
-    int _currentAudioID;
-    */
+    FMOD::System* pSystem;
+	
 };
 }
 NS_CC_END
