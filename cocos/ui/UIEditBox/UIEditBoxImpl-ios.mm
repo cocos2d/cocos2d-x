@@ -110,7 +110,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     [_textField resignFirstResponder];
     [_textField removeFromSuperview];
     
-    self.textField = NULL;
+    self.textField = nil;
     
     [super dealloc];
 }
@@ -140,11 +140,6 @@ static const int CC_EDIT_BOX_PADDING = 5;
     frame.size = size;
     
     _textField.frame = frame;
-}
-
-- (void)visit
-{
-    
 }
 
 - (void)openKeyboard
@@ -177,6 +172,30 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
     [eaglview doAnimationWhenAnotherEditBeClicked];
 }
+
+/**
+ * Called each time when the text field's text has changed.
+ */
+- (void)textChanged
+{
+    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
+    if (pDelegate != NULL)
+    {
+        pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
+    }
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
+        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed", pEditBox);
+        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
+        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+#endif
+}
+
+#pragma mark - UITextField delegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
 {
@@ -267,29 +286,6 @@ static const int CC_EDIT_BOX_PADDING = 5;
     NSUInteger newLength = oldLength - rangeLength + replacementLength;
     
     return newLength <= getEditBoxImplIOS()->getMaxLength();
-}
-
-/**
- * Called each time when the text field's text has changed.
- */
-- (void)textChanged
-{
-    // NSLog(@"text is %@", self.textField.text);
-    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
-    if (pDelegate != NULL)
-    {
-        pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
-    }
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-#endif
 }
 
 @end

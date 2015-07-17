@@ -43,9 +43,10 @@
 
 - (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
 - (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
-- (void)setPosition:(CGPoint) pos;
-- (void)setContentSize:(CGSize) size;
-- (void)visit;
+
+- (void)setPosition:(CGPoint)pos;
+- (void)setContentSize:(CGSize)size;
+
 - (void)openKeyboard;
 - (void)closeKeyboard;
 
