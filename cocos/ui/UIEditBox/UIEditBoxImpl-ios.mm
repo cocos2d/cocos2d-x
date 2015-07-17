@@ -54,8 +54,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
 
     float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
-    return CGRectMake(bounds.origin.x + padding, bounds.origin.y + padding,
-                      bounds.size.width - padding*2, bounds.size.height - padding*2);
+    return CGRectInset(bounds, padding, padding);
 }
 
 - (CGRect)editingRectForBounds:(CGRect)bounds
