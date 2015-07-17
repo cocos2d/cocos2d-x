@@ -245,21 +245,12 @@ void TestIsDirectoryExist::onEnter()
     
     Label* label = nullptr;
     std::string dir;
-    
-    auto getMsg = [&dir](bool b)->std::string
+    auto getMsg = [&dir](bool b)-> std::string
     {
         char msg[512];
         snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
         return std::string(msg);
     };
-    
-//    auto getMsg = [&act](bool b, const std::string& path)-> std::string
-//    {
-//        char msg[512];
-//        snprintf((char *)msg, 512, "%s for %s path: \"%s\"", b ? "success" : "failed", act.c_str(), path.c_str());
-//        return std::string(msg);
-//    };
-    
     
     dir = "Images";
     label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
@@ -882,7 +873,7 @@ void TestUnicodePath::onEnter()
     
     std::string dir = "中文路径/";
     std::string filename = "测试文件.test";
-    
+
     std::string act;
     auto getMsg = [&act](bool b, const std::string& path)-> std::string
     {

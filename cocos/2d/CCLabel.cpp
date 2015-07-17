@@ -342,7 +342,7 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
     _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
         {
-            for (auto it : _letters)
+            for (auto&& it : _letters)
             {
                 it.second->setTexture(nullptr);
             }
@@ -361,7 +361,7 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
         {
             _fontAtlas = nullptr;
             this->setTTFConfig(_fontConfig);
-            for (auto it : _letters)
+            for (auto&& it : _letters)
             {
                 getLetter(it.first);
             }
@@ -756,7 +756,7 @@ void Label::alignText()
         }
     }
 
-    for (const auto& batchNode : _batchNodes)
+    for (auto&& batchNode : _batchNodes)
     {
         batchNode->getTextureAtlas()->removeAllQuads();
     }
@@ -1157,11 +1157,11 @@ void Label::onDrawShadow(GLProgram* glProgram)
         }
 
         glProgram->setUniformsForBuiltins(_shadowTransform);
-        for (auto it : _letters)
+        for (auto&& it : _letters)
         {
             it.second->updateTransform();
         }
-        for (const auto& batchNode : _batchNodes)
+        for (auto&& batchNode : _batchNodes)
         {
             batchNode->getTextureAtlas()->drawQuads();
         }
@@ -1174,11 +1174,11 @@ void Label::onDrawShadow(GLProgram* glProgram)
         setColor(_shadowColor3B);
 
         glProgram->setUniformsForBuiltins(_shadowTransform);
-        for (auto it : _letters)
+        for (auto&& it : _letters)
         {
             it.second->updateTransform();
         }
-        for (const auto& batchNode : _batchNodes)
+        for (auto&& batchNode : _batchNodes)
         {
             batchNode->getTextureAtlas()->drawQuads();
         }
@@ -1200,7 +1200,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
     }
 
     glprogram->setUniformsForBuiltins(transform);
-    for (auto it : _letters)
+    for (auto&& it : _letters)
     {
         it.second->updateTransform();
     }
@@ -1214,7 +1214,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
                 _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
             glprogram->setUniformLocationWith4f(_uniformEffectColor,
                 _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-            for (const auto& batchNode : _batchNodes)
+            for (auto&& batchNode : _batchNodes)
             {
                 batchNode->getTextureAtlas()->drawQuads();
             }
@@ -1235,7 +1235,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         }
     }
 
-    for (const auto& batchNode : _batchNodes)
+    for (auto&& batchNode : _batchNodes)
     {
         batchNode->getTextureAtlas()->drawQuads();
     }
@@ -1525,6 +1525,11 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
             _shadowNode->updateDisplayedColor(_displayedColor);
         }
     }
+
+    for (auto&& it : _letters)
+    {
+        it.second->updateDisplayedColor(_displayedColor);;
+    }
 }
 
 void Label::updateDisplayedOpacity(GLubyte parentOpacity)
@@ -1538,6 +1543,11 @@ void Label::updateDisplayedOpacity(GLubyte parentOpacity)
         {
             _shadowNode->updateDisplayedOpacity(_displayedOpacity);
         }
+    }
+
+    for (auto&& it : _letters)
+    {
+        it.second->updateDisplayedOpacity(_displayedOpacity);;
     }
 }
 
@@ -1576,7 +1586,7 @@ void Label::updateColor()
 
     cocos2d::TextureAtlas* textureAtlas;
     V3F_C4B_T2F_Quad *quads;
-    for (const auto& batchNode:_batchNodes)
+    for (auto&& batchNode:_batchNodes)
     {
         textureAtlas = batchNode->getTextureAtlas();
         quads = textureAtlas->getQuads();
@@ -1639,7 +1649,7 @@ void Label::removeAllChildrenWithCleanup(bool cleanup)
 void Label::removeChild(Node* child, bool cleanup /* = true */)
 {
     Node::removeChild(child, cleanup);
-    for (auto it : _letters)
+    for (auto&& it : _letters)
     {
         if (it.second == child)
         {
