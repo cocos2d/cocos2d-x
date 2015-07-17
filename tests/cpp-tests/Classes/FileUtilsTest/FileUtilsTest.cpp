@@ -245,11 +245,11 @@ void TestIsDirectoryExist::onEnter()
     
     Label* label = nullptr;
     std::string dir;
-    char msg[512];
-    auto getMsg = [&dir, &msg](bool b)->const char *
+    auto getMsg = [&dir](bool b)-> std::string
     {
+        char msg[512];
         snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
-        return msg;
+        return std::string(msg);
     };
     
     dir = "Images";
@@ -873,13 +873,13 @@ void TestUnicodePath::onEnter()
     
     std::string dir = "中文路径/";
     std::string filename = "测试文件.test";
-    
+
     std::string act;
-    char msg[512];
-    auto getMsg = [&act, &msg](bool b, const std::string& path)->const char *
+    auto getMsg = [&act](bool b, const std::string& path)-> std::string
     {
+        char msg[512];
         snprintf((char *)msg, 512, "%s for %s path: \"%s\"", b ? "success" : "failed", act.c_str(), path.c_str());
-        return msg;
+        return std::string(msg);
     };
     
     // Check whether unicode dir should be create or not
