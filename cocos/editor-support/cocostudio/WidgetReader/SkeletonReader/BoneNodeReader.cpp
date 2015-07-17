@@ -109,7 +109,7 @@ void BoneNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
     auto options = (flatbuffers::BoneOptions*)nodeOptions;
 
     float length = options->length();
-    bone->setLength(length);
+    bone->setDebugDrawLength(length);
 
     auto f_blendFunc = options->blendFunc();
     if (f_blendFunc)

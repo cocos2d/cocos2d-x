@@ -366,13 +366,12 @@ void TestActionTimelineSkeleton::onEnter()
     {
         // or use skeletonNode->display(bone name, skin name, hide)
         if (weapSkinToAdd->isVisible())
-            weaponHandeBone->displaySkins("3", true);
+            weaponHandeBone->displaySkin("3", true);
         else
         {
             weaponHandeBone->displaySkin(weapSkinToAdd, true);
         }
     });
-
 
 
     /*************** debug draw boundingbox and transforms ***************/
@@ -384,8 +383,7 @@ void TestActionTimelineSkeleton::onEnter()
     drawBoxBtn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 45));
     drawBoxBtn->setTitleText("Draw Box");
 
-    // compare to armature
-
+    
     drawBoxBtn->addClickEventListener([debugDrawNode](Ref* sender)
     {
         debugDrawNode->setVisible(!debugDrawNode->isVisible());
@@ -395,13 +393,16 @@ void TestActionTimelineSkeleton::onEnter()
         if (debugDrawNode->isVisible())
         {
             debugDrawNode->clear();
-//             // skeleton boundingbox
-             auto rect = skeletonNode->getBoundingBox();
-             cocos2d::Vec2 leftbottom(rect.getMinX(), rect.getMinY());
-             cocos2d::Vec2 righttop(rect.getMaxX(), rect.getMaxY());
-             debugDrawNode->drawRect(leftbottom, righttop, cocos2d::Color4F::YELLOW);
+             // skeleton boundingbox
+              auto rect = skeletonNode->getBoundingBox();
+              cocos2d::Vec2 leftbottom(rect.getMinX(), rect.getMinY());
+              cocos2d::Vec2 righttop(rect.getMaxX(), rect.getMaxY());
+              debugDrawNode->drawRect(leftbottom, righttop, cocos2d::Color4F::YELLOW);
 
             // bone boundingbox
+           /*  // debug draw contentsize
+           rect = cocos2d::Rect(Vec2(.0f, .0f), weaponHandeBone->getContentSize());
+              rect = RectApplyAffineTransform(rect, weaponHandeBone->getNodeToParentAffineTransform());*/
             rect = weaponHandeBone->getBoundingBox();
             leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
             righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
@@ -423,24 +424,24 @@ void TestActionTimelineSkeleton::onEnter()
 
             // skin boundingbox 
 
-            // get displaying nodes
-            auto currentskin = weaponHandeBone->getDisplayingSkins().front();
-            rect = currentskin->getBoundingBox();
-            leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
-            righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
-            lefttop.x = rect.getMinX(); lefttop.y =  rect.getMaxY();
-            rightbottom.x = rect.getMaxX(); rightbottom.y = rect.getMinY();
-            auto boneToSkeletonParentTrans = AffineTransformConcat(
-                weaponHandeBone->getBoneToSkeletonAffineTransform(), skeletonToP);
-            leftbottom = PointApplyAffineTransform(leftbottom, boneToSkeletonParentTrans);
-            righttop = PointApplyAffineTransform(righttop, boneToSkeletonParentTrans);
-            lefttop = PointApplyAffineTransform(lefttop, boneToSkeletonParentTrans);
-            rightbottom = PointApplyAffineTransform(rightbottom, boneToSkeletonParentTrans);
-
-            debugDrawNode->drawLine(leftbottom, rightbottom, Color4F::GREEN);
-            debugDrawNode->drawLine(rightbottom, righttop, Color4F::GREEN);
-            debugDrawNode->drawLine(righttop, lefttop, Color4F::GREEN);
-            debugDrawNode->drawLine(lefttop, leftbottom, Color4F::GREEN);
+             // get displaying nodes
+             auto currentskin = weaponHandeBone->getVisibleSkins().front();
+             rect = currentskin->getBoundingBox();
+             leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
+             righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
+             lefttop.x = rect.getMinX(); lefttop.y =  rect.getMaxY();
+             rightbottom.x = rect.getMaxX(); rightbottom.y = rect.getMinY();
+             auto boneToSkeletonParentTrans = AffineTransformConcat(
+                 weaponHandeBone->getBoneToSkeletonAffineTransform(), skeletonToP);
+             leftbottom = PointApplyAffineTransform(leftbottom, boneToSkeletonParentTrans);
+             righttop = PointApplyAffineTransform(righttop, boneToSkeletonParentTrans);
+             lefttop = PointApplyAffineTransform(lefttop, boneToSkeletonParentTrans);
+             rightbottom = PointApplyAffineTransform(rightbottom, boneToSkeletonParentTrans);
+ 
+             debugDrawNode->drawLine(leftbottom, rightbottom, Color4F::GREEN);
+             debugDrawNode->drawLine(rightbottom, righttop, Color4F::GREEN);
+             debugDrawNode->drawLine(righttop, lefttop, Color4F::GREEN);
+             debugDrawNode->drawLine(lefttop, leftbottom, Color4F::GREEN);
         }
     }, 0, "update debug draw");
 
@@ -454,23 +455,23 @@ void TestActionTimelineSkeleton::onEnter()
     std::map < std::string, std::string> boneSkinNames;
     boneSkinNames.insert(std::make_pair("Layer20", "fire"));
     boneSkinNames.insert(std::make_pair("Layer14", "fruit"));
-    skeletonNode->addSuitInfo("fruitKnife", boneSkinNames);
+    skeletonNode->addSkinGroup("fruitKnife", boneSkinNames);
 
     std::map < std::string, std::string> boneSkinNames2;
     boneSkinNames2.insert(std::make_pair("Layer20", "3"));
     boneSkinNames2.insert(std::make_pair("Layer14", "hat"));
-    skeletonNode->addSuitInfo("cowboy", boneSkinNames2);
+    skeletonNode->addSkinGroup("cowboy", boneSkinNames2);
 
     changeBoneDispsBtn->addClickEventListener([skeletonNode, this](Ref* sender)
     {
         if (!_changedDisplays)
         {
-            skeletonNode->changeDisplays("fruitKnife");
+            skeletonNode->changeSkins("fruitKnife");
             _changedDisplays = true;
         }
         else
         {
-            skeletonNode->changeDisplays("cowboy");
+            skeletonNode->changeSkins("cowboy");
             _changedDisplays = false;
         }
     });

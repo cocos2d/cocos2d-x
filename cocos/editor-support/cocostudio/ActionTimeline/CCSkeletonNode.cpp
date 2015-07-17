@@ -49,7 +49,8 @@ SkeletonNode* SkeletonNode::create()
 bool SkeletonNode::init()
 {
     _anchorPoint = Vec2(.5f, .5f);
-    setContentSize(Size(20, 20));
+    _rackLength = _rackWidth = 20;
+    updateVertices();
     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
     _rootSkeleton = this;
     return true;
@@ -108,15 +109,17 @@ SkeletonNode::~SkeletonNode()
 
 void SkeletonNode::updateVertices()
 {
-    const float radius = _contentSize.width * .5f;
-    const float radius_2 = radius * .25f;
-    if (radius != _squareVertices[0].x )
+    if (_rackLength != _squareVertices[6].x || _rackWidth != _squareVertices[3].y)
     {
-        _squareVertices[0].x = _squareVertices[4].x = _squareVertices[7].x = _squareVertices[3].x = radius;
-        _squareVertices[5].y = _squareVertices[2].y = _squareVertices[1].y = _squareVertices[6].y = radius;
-        _squareVertices[6].x = _squareVertices[3].y = _contentSize.width;
-        _squareVertices[1].x = _squareVertices[7].y = radius + radius_2;
-        _squareVertices[2].x = _squareVertices[4].y = radius - radius_2;
+        const float radiusl = _rackLength * .5f;
+        const float radiusw = _rackWidth * .5f;
+        const float radiusl_2 = radiusl * .25f;
+        const float radiusw_2 = radiusw * .25f;
+        _squareVertices[0].x = _squareVertices[4].x = _squareVertices[7].x = _squareVertices[3].x = radiusl;
+        _squareVertices[5].y = _squareVertices[2].y = _squareVertices[1].y = _squareVertices[6].y = radiusw;
+        _squareVertices[6].x = _rackLength;  _squareVertices[3].y = _rackWidth;
+        _squareVertices[1].x = radiusl + radiusl_2; _squareVertices[7].y = radiusw + radiusw_2;
+        _squareVertices[2].x = radiusl - radiusl_2; _squareVertices[4].y = radiusw - radiusw_2;
 
         _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
     }
@@ -149,7 +152,6 @@ void SkeletonNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32
             _noMVPVertices[i] = Vec3(pos.x, pos.y, pos.z) / pos.w;
         }
 
-
         this->draw(renderer, parentTransform, parentFlags);
         _batchBoneCommand.init(_globalZOrder, parentTransform, parentFlags);
         _batchBoneCommand.func = CC_CALLBACK_0(SkeletonNode::batchDrawAllSubBones, this, parentTransform);
@@ -159,15 +161,17 @@ void SkeletonNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32
 
 void SkeletonNode::batchDrawAllSubBones(const Mat4 &transform)
 {
-    if (_sortedAllBonesDirty)
-        updateSortedAllBones();
-
-    //_batchedBoneVetices.clear();
-    //_batchedBoneColors.clear();
-    _batchedVeticesCount = 0;
-    for (const auto& bone : _sortedAllBones)
+    if (_subDrawBonesDirty)
     {
-        bone->batchToSkeleton();
+        updateAllDrawBones();
+    }
+    if (_subDrawBonesOrderDirty)
+        sortAllDrawBones();
+
+    _batchedVeticesCount = 0;
+    for (const auto& bone : _subDrawBones)
+    {
+        batchBoneDrawToSkeleton(bone);
     }
     Vec3* vetices = _batchedBoneVetices.data();
     Color4F* veticesColor = _batchedBoneColors.data();
@@ -240,27 +244,22 @@ void SkeletonNode::onDraw(const Mat4 &transform, uint32_t flags)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
 }
 
-void SkeletonNode::setLength(float length)
-{
-    setContentSize(Size(length, length));
-}
-
-void SkeletonNode::changeDisplays(const StdStringMap& boneSkinNameMap)
+void SkeletonNode::changeSkins(const std::map<std::string, std::string>& boneSkinNameMap)
 {
     for (auto &boneskin : boneSkinNameMap)
     {
         auto bone = getBoneNode(boneskin.first);
         if ( nullptr != bone)
-            bone->displaySkins(boneskin.second, true);
+            bone->displaySkin(boneskin.second, true);
     }
 }
 
-void SkeletonNode::changeDisplays(const std::string& suitName)
+void SkeletonNode::changeSkins(const std::string& skinGroupName)
 {
-    auto suit = _suitMap.find(suitName);
-    if (suit != _suitMap.end())
+    auto suit = _skinGroupMap.find(skinGroupName);
+    if (suit != _skinGroupMap.end())
     {
-        changeDisplays(suit->second);
+        changeSkins(suit->second);
     }
 }
 
@@ -279,56 +278,27 @@ const Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() const
     return _subBonesMap;
 }
 
-Mat4 SkeletonNode::getBoneToSkeletonTransform() const
+void SkeletonNode::addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap)
 {
-    if(nullptr != dynamic_cast<BoneNode*>(_parent))
-        return BoneNode::getBoneToSkeletonTransform();
-    return Mat4::IDENTITY;
+    _skinGroupMap.insert(std::make_pair(groupName, boneSkinNameMap));
 }
 
-AffineTransform SkeletonNode::getBoneToSkeletonAffineTransform() const
+void SkeletonNode::updateAllDrawBones()
 {
-    if(nullptr != dynamic_cast<BoneNode*>(_parent))
-        return BoneNode::getBoneToSkeletonAffineTransform();
-    return AffineTransform::IDENTITY;
-}
-
-Mat4 SkeletonNode::getSkinToSkeletonTransform(SkinNode* skin)
-{
-    auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
-    if (boneParent == nullptr)
-    {
-        CCLOG("skin %s is not a skin or have not been added to a bone", skin->getName().c_str());
-        return Mat4::IDENTITY;
-    }
-    return boneParent->getBoneToSkeletonTransform() * skin->getNodeToParentTransform();
-}
-
-AffineTransform SkeletonNode::getSkinToSkeltonAffineTransform(SkinNode* skin)
-{
-    auto boneParent = dynamic_cast<BoneNode*>(skin->getParent());
-    if (boneParent == nullptr)
-    {
-        CCLOG("skin %s is not a skin or have not been added to a bone", skin->getName().c_str());
-        return AffineTransform::IDENTITY;
-    }
-    return AffineTransformConcat(skin->getNodeToParentAffineTransform(), boneParent->getBoneToSkeletonAffineTransform());
-}
-
-void SkeletonNode::addSuitInfo(std::string suitName, StdStringMap boneSkinNameMap)
-{
-    _suitMap.insert(std::make_pair(suitName, boneSkinNameMap));
-}
-
-void SkeletonNode::updateSortedAllBones()
-{
-    _sortedAllBones.clear();
+    _subDrawBones.clear();
     for (const auto& bonepair : _subBonesMap)
     {
-        _sortedAllBones.pushBack(bonepair.second);
+        auto bone = bonepair.second;
+        if (bone->isVisible() && bone->isDebugDrawEnabled())
+            _subDrawBones.pushBack(bone);
     }
-    std::sort(_sortedAllBones.begin(), _sortedAllBones.end(), nodeComparisonLess);
-    _sortedAllBonesDirty = false;
+    _subDrawBonesDirty = false;
+}
+
+void SkeletonNode::sortAllDrawBones()
+{
+    std::sort(_subDrawBones.begin(), _subDrawBones.end(), nodeComparisonLess);
+    _subDrawBonesOrderDirty = false;
 }
 
 NS_TIMELINE_END

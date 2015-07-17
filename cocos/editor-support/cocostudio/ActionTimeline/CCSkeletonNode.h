@@ -31,9 +31,6 @@ THE SOFTWARE.
 #include "base/CCMap.h"
 
 #include "CCBoneNode.h"
-#include <deque>
-
-typedef std::map < std::string, std::string > StdStringMap;
 
 NS_TIMELINE_BEGIN
 
@@ -58,30 +55,20 @@ public:
     *@brief: change displays 
     *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
     */
-    void changeDisplays(const StdStringMap& boneSkinNameMap);
+    void changeSkins(const std::map<std::string, std::string>& boneSkinNameMap);
 
     /**
     *@brief: change displays
-    *@param: suitName have
+    *@param: skinGroupName have
     */
-    void changeDisplays(const std::string& suitName);
+    void changeSkins(const std::string& skinGroupName);
 
     /**
-    * add a boneSkinNameMap asa suit
-    *@param: suitName, key
+    *@brief: add a boneSkinNameMap as a SkinGroup named groupName
+    *@param: groupName, key
     *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
     */
-    void addSuitInfo(std::string suitName, StdStringMap boneSkinNameMap);
-
-    virtual cocos2d::Mat4 getBoneToSkeletonTransform() const override;
-
-    virtual cocos2d::AffineTransform getBoneToSkeletonAffineTransform() const override;
-
-    static cocos2d::Mat4 getSkinToSkeletonTransform(SkinNode* skin);
-
-    static cocos2d::AffineTransform getSkinToSkeltonAffineTransform(SkinNode* skin);
-
-    void setLength(float length) override;
+    void addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap);
 
     cocos2d::Rect getBoundingBox() const override;
 
@@ -98,25 +85,29 @@ protected:
 
 protected:
     cocos2d::Map<std::string, BoneNode*> _subBonesMap;
+
 private:
     cocos2d::Vec2          _squareVertices[8];
     cocos2d::Color4F       _squareColors[8];
     cocos2d::Vec3          _noMVPVertices[8];
 
-    bool                           _sortedAllBonesDirty;
-    cocos2d::Vector<BoneNode*>     _sortedAllBones;      // for draw faster, cache a list from _subBonesMap, sorted by z order
+    std::map<std::string, std::map<std::string, std::string> > _skinGroupMap; // map< suit name, map< bone name, skin name> >
+    CC_DISALLOW_COPY_AND_ASSIGN(SkeletonNode);
+
+
+    // for batch draw sub bones
+    bool                           _subDrawBonesDirty;
+    bool                           _subDrawBonesOrderDirty;
+    cocos2d::Vector<BoneNode*>     _subDrawBones;      // for draw faster, cache a list from _subBonesMap, sorted by render order
     std::vector<cocos2d::Vec3>     _batchedBoneVetices;
     std::vector<cocos2d::Color4F>  _batchedBoneColors;
     int                            _batchedVeticesCount;
     cocos2d::CustomCommand         _batchBoneCommand;
 
-    void updateSortedAllBones();
+    void updateAllDrawBones();
+    void sortAllDrawBones();
     void batchDrawAllSubBones(const cocos2d::Mat4 &transform);
     void batchSubBone(BoneNode* bone);
-
-
-    std::map<std::string, StdStringMap> _suitMap; // map< suit name, map< bone name, skin name> >
-    CC_DISALLOW_COPY_AND_ASSIGN(SkeletonNode);
 };
 
 NS_TIMELINE_END

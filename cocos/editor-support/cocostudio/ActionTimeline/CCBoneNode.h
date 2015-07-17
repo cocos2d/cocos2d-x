@@ -44,6 +44,17 @@ public:
     static BoneNode* create(const int &length);
 
 
+
+    using Node::addChild;
+    // add child, deal with BoneNode , and SkinNode
+    virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
+    virtual void addChild(cocos2d::Node* child, int localZOrder, int tag) override;
+
+    virtual void removeChild(Node* child, bool cleanup) override;
+
+    virtual const  cocos2d::Vector<BoneNode*>& getChildBones() const { return _childBones; }
+    virtual cocos2d::Vector<BoneNode*>&  getChildBones() { return _childBones; }
+
     /**
     *@brief: add a skin
     *@param: display, whether display this skin
@@ -57,36 +68,26 @@ public:
     */
     virtual void addSkin(SkinNode* skin, bool display, bool hideOthers);
 
-    /**
-    * add a child bone named bone->getName()
-    */
-    virtual void addChildBone(BoneNode* bone);
-
-    virtual const  cocos2d::Vector<BoneNode*>& getChildBones() const { return _childBones; }
-    virtual  cocos2d::Vector<BoneNode*>&  getChildBones() { return _childBones; }
-
-    virtual void removeFromParent() override;
-
     virtual const  cocos2d::Vector<SkinNode*>& getSkins() const { return _boneSkins; }
     virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
 
     /**
     *
     * @brief: display skin
-    * @param: hideOthers, set other skins visible 
+    * @param: hideOthers, set other skins invisible 
     */
     virtual void displaySkin(SkinNode* skin, bool hideOthers);
 
     /**
     *
     * @brief: display all skins named skinName, if hide display only one skin,
-    *          prefer to use display(SkinNode* skin, bool hideOthers = false)
-    * @param: hideOthers, set other skins visible
+    *         prefer to use display(SkinNode* skin, bool hideOthers = false)
+    * @param: hideOthers, set other skins invisible
     */
-    virtual void displaySkins(const std::string &skinName, bool hideOthers );
+    virtual void displaySkin(const std::string &skinName, bool hideOthers );
 
-    virtual cocos2d::Vector<SkinNode*> getDisplayingSkins() const;
-
+    virtual cocos2d::Vector<SkinNode*> getVisibleSkins() const;
+    
     virtual SkeletonNode* getRootSkeletonNode() const;
 
     /**
@@ -97,61 +98,49 @@ public:
     /**
     * @brief: get all skins in this bone tree
     */
-    cocos2d::Vector<SkinNode*> getAllSubDisplays() const;
-
-    virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
-    virtual void removeChild(Node* child, bool cleanup ) override;
+    cocos2d::Vector<SkinNode*> getAllSubSkins() const;
 
     // blendFunc
     virtual void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override;
     virtual const cocos2d::BlendFunc & getBlendFunc() const override { return _blendFunc; }
 
 
-    // bone operate
-    virtual void setLength(float length);
-    virtual float getLength() const { return _contentSize.width; }
+    
+    virtual void setDebugDrawLength(float length);
+    virtual float getDebugDrawLength() const { return _rackLength; }
 
-    // no need to change this at usual
-    virtual void setWidth(float width);
-    virtual float getWidth() const { return _contentSize.height; }
+    virtual void setDebugDrawWidth(float width);
+    virtual float getDebugDrawWidth() const { return _rackWidth; }
 
-    // is rack show
+    // is rack show, bone can be drawn when bone is visible && enable debug draw
     virtual void setDebugDrawEnabled(bool isDebugDraw);
     virtual bool isDebugDrawEnabled() const { return _isRackShow; }
 
     virtual void setDebugDrawColor(const cocos2d::Color4F &color);
     virtual cocos2d::Color4F getDebugDrawColor() const { return _rackColor; }
 
+
+    cocos2d::Rect BoneNode::getBoundingBox() const override;
+
     /**
     *get displayings rect in self transform
     */
     virtual cocos2d::Rect getVisibleSkinsRect() const;
 
-    /**
-    * boundingbox depends getDisplayingRect, apply it in parent transform
-    */
-    virtual cocos2d::Rect getBoundingBox() const override;
-
-    virtual cocos2d::Mat4 getBoneToSkeletonTransform() const;
-
-    virtual cocos2d::AffineTransform getBoneToSkeletonAffineTransform() const;
-
     // transform & draw
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-
-    /**
-    * get bone debugdraw's vertices, return a Vec2[4]
-    */
-    virtual void batchToSkeleton() const;
-
-    // override
-    virtual void setContentSize(const cocos2d::Size &size) override;
 
     virtual void setLocalZOrder(int localZOrder) override;
 
     virtual void setName(const std::string& name) override;
 
+    virtual void setVisible(bool visible) override;
+
+    cocos2d::AffineTransform BoneNode::getBoneToSkeletonAffineTransform() const;
+    cocos2d::Mat4 BoneNode::getBoneToSkeletonTransform() const;
+
 #ifdef CC_STUDIO_ENABLED_VIEW
+    // hit test , bonePoint is self coordinate
     virtual bool isPointOnRack(const cocos2d::Vec2& bonePoint);
 #endif
 
@@ -161,15 +150,23 @@ CC_CONSTRUCTOR_ACCESS :
     virtual bool init() override;
 
 protected:
-    virtual void addToBoneChildren(BoneNode* bone);
 
-    virtual void removeFromBoneChildren(BoneNode* bone);
+    virtual void addToChildrenListHelper(Node * child);
+    virtual void removeFromChildrenListHelper(Node * child);
 
-    virtual void removeFromParentBone();
-   
+    // add bone to children bone list, and add bone to skeleton's subbone map
+    virtual void addToBoneList(BoneNode* bone);
+
+    // remove bone from children bone list, and remove bone from skeleton's subbone map
+    virtual void removeFromBoneList(BoneNode* bone);
+
+    // add skin to skin list
     virtual void addToSkinList(SkinNode* skin);
+
+    // remove skin from skin list
     virtual void removeFromSkinList(SkinNode* skin);
 
+    // sort all _children ,  bone list and skin list
     virtual void sortAllChildren() override;
 
     virtual void updateVertices();
@@ -177,6 +174,9 @@ protected:
 
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
+    // for batch bone's draw to _rootSkeleton
+    // a help function for SkeletonNode
+    virtual void batchBoneDrawToSkeleton(BoneNode* bone) const; 
 
 protected:
     cocos2d::CustomCommand _customCommand;
@@ -184,6 +184,8 @@ protected:
 
     bool              _isRackShow;
     cocos2d::Color4F  _rackColor;
+    int               _rackLength;
+    int               _rackWidth;
 
     cocos2d::Vector<BoneNode*> _childBones;
     cocos2d::Vector<SkinNode*> _boneSkins;
