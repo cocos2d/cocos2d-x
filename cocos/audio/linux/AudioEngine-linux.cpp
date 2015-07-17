@@ -3,11 +3,10 @@
  */ 
 #include <cstring>
 #include "AudioEngine-linux.h"
-#include "AudioPlayer.h"
 #include "cocos2d.h"
 using namespace cocos2d;
 using namespace cocos2d::experimental;
-using namespace CocosDenshion;
+//using namespace CocosDenshion;
 
 
 void ERRCHECKWITHEXIT(FMOD_RESULT result) {
@@ -85,6 +84,7 @@ bool AudioEngineImpl::pause(int audioID){
     FMOD::Sound * sound = mapEffectSound[audioID]; 
     FMOD::Channel *channel = getChannel(sound);
     channel->setPaused(true); 
+    AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PAUSED;
     return true; 
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::pause: invalid audioID: %d\n", audioID);
@@ -110,6 +110,7 @@ try{
     
     //channel->setLoopCount(0);
     channel->setPaused(false); 
+     AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
     printf("DEBUG: AudioEngineImpl::resume done\n"); 
     
     return true; 
@@ -138,12 +139,12 @@ void AudioEngineImpl::stopAll(){
 
 float AudioEngineImpl::getDuration(int audioID){
   /*@todo: unimplemented*/
-  return -1.0f;
+  return AudioEngine::TIME_UNKNOWN;
 };
 
 float AudioEngineImpl::getCurrentTime(int audioID){
   /*@todo: unimplemented*/
-  return -1.0f;
+  return AudioEngine::TIME_UNKNOWN;
 };
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time){
