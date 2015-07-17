@@ -33,6 +33,9 @@
 #include "2d/CCLabel.h"
 #import "platform/ios/CCEAGLView-ios.h"
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #define getEditBoxImplIOS() ((cocos2d::ui::EditBoxImplIOS *)_editBox)
 
 static const int CC_EDIT_BOX_PADDING = 5;
@@ -62,12 +65,23 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 @end
 
-#pragma mark - UIEditBox private declerations
+#pragma mark - UIEditBox ios implementation
 
-@interface UIEditBoxImplIOS_objc ()
+
+@interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
 
 @property (nonatomic, retain) UITextField *textField;
 @property (nonatomic, assign) void *editBox;
+@property (nonatomic, readonly, getter = isEditState) BOOL editState;
+
+- (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
+- (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
+
+- (void)setPosition:(CGPoint)pos;
+- (void)setContentSize:(CGSize)size;
+
+- (void)openKeyboard;
+- (void)closeKeyboard;
 
 @end
 

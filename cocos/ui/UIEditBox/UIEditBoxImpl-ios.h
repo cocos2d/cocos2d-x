@@ -33,24 +33,7 @@
 #include "extensions/ExtensionMacros.h"
 #include "UIEditBoxImpl.h"
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-
-@interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
-
-@property (nonatomic, readonly, getter = isEditState) BOOL editState;
-
-- (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
-- (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
-
-- (void)setPosition:(CGPoint)pos;
-- (void)setContentSize:(CGSize)size;
-
-- (void)openKeyboard;
-- (void)closeKeyboard;
-
-@end
+@class UIEditBoxImplIOS_objc;
 
 NS_CC_BEGIN
 
