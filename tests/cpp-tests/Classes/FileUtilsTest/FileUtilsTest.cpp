@@ -249,9 +249,8 @@ void TestIsDirectoryExist::onEnter()
     auto getMsg = [&dir, &msg](bool b)->const char *
     {
         snprintf((char *)msg, 512, "%s for dir: \"%s\"", b ? "success" : "failed", dir.c_str());
-        return msg;
     };
-    
+
     dir = "Images";
     label = Label::createWithSystemFont(getMsg(util->isDirectoryExist(dir)), "", 20);
     label->setPosition(x, y * 2);
@@ -879,7 +878,6 @@ void TestUnicodePath::onEnter()
     auto getMsg = [&act, &msg](bool b, const std::string& path)->const char *
     {
         snprintf((char *)msg, 512, "%s for %s path: \"%s\"", b ? "success" : "failed", act.c_str(), path.c_str());
-        return msg;
     };
     
     // Check whether unicode dir should be create or not
