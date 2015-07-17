@@ -122,16 +122,6 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
     return (stat(strPath.c_str(), &sts) != -1) ? true : false;
 }
 
-bool FileUtilsLinux::isDirectoryExistInternal(const std::string& dirPath) const
-{
-    struct stat st;
-    if (stat(dirPath.c_str(), &st) == 0)
-    {
-        return S_ISDIR(st.st_mode);
-    }
-    return false;
-}
-
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX

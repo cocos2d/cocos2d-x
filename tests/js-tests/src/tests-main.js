@@ -176,7 +176,7 @@ var TestController = cc.LayerGradient.extend({
                     return true;
                 }
             }, this);
-       }
+        }
     },
     onEnter:function(){
         this._super();

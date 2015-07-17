@@ -130,6 +130,8 @@ public:
     /**
      * @lua NA
      */
+    virtual void setOpacity(GLubyte opacity) override { _opacity = opacity; }
+    virtual GLubyte getOpacity() const override { return _opacity; }
     virtual void onEnter() override;
     virtual void update(float deltaTime) override;
     
@@ -158,6 +160,8 @@ private:
     Sprite* _upperHalfCircle;
     Sprite* _lowerHalfCircle;
     Sprite* _body;
+    
+    GLubyte _opacity;
 	
     float _marginFromBoundary;
     float _marginForLength;

@@ -43,10 +43,6 @@ THE SOFTWARE.
 #include "base/CCNinePatchImageParser.h"
 
 
-#ifdef EMSCRIPTEN
-#include <emscripten/emscripten.h>
-#include "platform/emscripten/CCTextureCacheEmscripten.h"
-#endif // EMSCRIPTEN
 
 using namespace std;
 

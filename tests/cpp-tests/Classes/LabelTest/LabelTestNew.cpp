@@ -78,9 +78,9 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10773Test);
     ADD_TEST_CASE(LabelIssue11576Test);
     ADD_TEST_CASE(LabelIssue11699Test);
-    ADD_TEST_CASE(LabelIssue12259Test);
     ADD_TEST_CASE(LabelIssue12409Test);
     ADD_TEST_CASE(LabelAddChildTest);
+    ADD_TEST_CASE(LabelIssue12775Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1581,7 +1581,7 @@ const char* LabelAlignmentTest::getCurrentAlignment()
         break;
     }
 
-    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal).c_str();
 }
 
 std::string LabelAlignmentTest::title() const
@@ -1938,43 +1938,6 @@ std::string LabelIssue11699Test::subtitle() const
     return "Outline should match with the characters exactly.";
 }
 
-LabelIssue12259Test::LabelIssue12259Test()
-{
-    auto center = VisibleRect::center();
-
-    auto label = Label::createWithTTF("Hello", "fonts/arial.ttf", 100);
-    label->setDimensions(0, 70);
-    label->setPosition(center.x, center.y);
-    addChild(label);
-
-    auto drawNode = DrawNode::create();
-    auto labelSize = label->getContentSize();
-    auto origin = Director::getInstance()->getWinSize();
-
-    origin.width = origin.width / 2 - (labelSize.width / 2);
-    origin.height = origin.height / 2 - (labelSize.height / 2);
-
-    Vec2 vertices[4] =
-    {
-        Vec2(origin.width, origin.height),
-        Vec2(labelSize.width + origin.width, origin.height),
-        Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
-        Vec2(origin.width, labelSize.height + origin.height)
-    };
-    drawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
-    addChild(drawNode);
-}
-
-std::string LabelIssue12259Test::title() const
-{
-    return "Test for Issue #12259";
-}
-
-std::string LabelIssue12259Test::subtitle() const
-{
-    return "the texture of character should be cropped.";
-}
-
 LabelIssue12409Test::LabelIssue12409Test()
 {
     auto center = VisibleRect::center();
@@ -2034,4 +1997,23 @@ LabelAddChildTest::LabelAddChildTest()
 std::string LabelAddChildTest::title() const
 {
     return "Label support add child nodes";
+}
+
+LabelIssue12775Test::LabelIssue12775Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello", "fonts/xingkai-incomplete.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue12775Test::title() const
+{
+    return "Test for Issue #12775";
+}
+
+std::string LabelIssue12775Test::subtitle() const
+{
+    return "Should not crash if the font not contain a Unicode charmap.";
 }

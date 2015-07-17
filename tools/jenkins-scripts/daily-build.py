@@ -73,9 +73,15 @@ def do_build_slaves():
         if(node_name == 'android') or (node_name == 'android_bak'):
             slave_build_scripts = jenkins_script_path + "android-build.sh "
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
-            slave_build_scripts = jenkins_script_path + "win32-build.bat "
+            if daily_build_type == "runtime" or daily_build_type == "templates":
+                slave_build_scripts = jenkins_script_path + "win32-" + language + ".bat "
+            else:
+                slave_build_scripts = jenkins_script_path + "win32-build.bat "
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
-            slave_build_scripts = jenkins_script_path + "windows-universal.bat "
+            if daily_build_type == "runtime" or daily_build_type == "templates":
+                slave_build_scripts = jenkins_script_path + "windows-universal-" + language + ".bat "
+            else:
+                slave_build_scripts = jenkins_script_path + "windows-universal.bat "
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
             slave_build_scripts = jenkins_script_path + "ios-build.sh "
         elif(node_name == 'mac' or node_name == 'mac_bak'):
@@ -86,8 +92,14 @@ def do_build_slaves():
             if(branch != 'v4'):
                 slave_build_scripts = jenkins_script_path + "wp8-v3.bat "
 
+        if daily_build_type == 'templates':
+            ret = os.system("python tools/cocos2d-console/bin/cocos.py new -l " + language)
+        elif daily_build_type == 'runtime':
+            ret = os.system("python tools/cocos2d-console/bin/cocos.py new -l " + language + " -t runtime")
+        else:
+            ret = 0
         slave_build_scripts += language
-        ret = os.system(slave_build_scripts)
+        ret = ret + os.system(slave_build_scripts)
 
     #get build result
     print "build finished and return " + str(ret)
