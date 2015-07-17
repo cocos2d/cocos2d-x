@@ -35,20 +35,30 @@ var fileUtilsBase = BaseTestLayer.extend({
 
     ctor:function() {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        var label = new cc.LabelTTF("Back", "Arial", 20);
+        var menuItem = new cc.MenuItemLabel(label, this.backtoNativeTest, this);
+        var menu = new cc.Menu(menuItem);
+        menu.x = 0;
+        menu.y = 0;
+        menuItem.x = winSize.width - 50;
+        menuItem.y = 25;
+        this.addChild(menu, 1);
     },
-
+    backtoNativeTest:function(sender) {
+        new NativeTestScene().runThisTest();
+    },
     onRestartCallback:function (sender) {
-        var s = new fileUtilsScene();
+        var s = new FileUtilsScene();
         s.addChild(restartfileUtils());
         director.runScene(s);
     },
     onNextCallback:function (sender) {
-        var s = new fileUtilsScene();
+        var s = new FileUtilsScene();
         s.addChild(nextfileUtils());
         director.runScene(s);
     },
     onBackCallback:function (sender) {
-        var s = new fileUtilsScene();
+        var s = new FileUtilsScene();
         s.addChild(previousfileUtils());
         director.runScene(s);
     },
@@ -117,16 +127,16 @@ var TestWriteValueMap = fileUtilsBase.extend({
         this.addChild(readResult);
         readResult.setPosition(winSize.width / 2, winSize.height  / 3);
 
-        var valueMap;
+        var valueMap = {};
 
-        var mapInValueMap;
+        var mapInValueMap = {};
         mapInValueMap["string1"] = "string in dictInMap key 0";
         mapInValueMap["string2"] = "string in dictInMap key 1";
         valueMap["data0"] = mapInValueMap;
 
         valueMap["data1"] = "string in array";
 
-        var arrayInMap;
+        var arrayInMap = [];
         arrayInMap[arrayInMap.length] = "string 0 in arrayInMap";
         arrayInMap[arrayInMap.length] = "string 1 in arrayInMap";
         valueMap["data2"] = arrayInMap;
@@ -165,29 +175,29 @@ var TestWriteValueMap = fileUtilsBase.extend({
         var readValueMap = jsb.fileUtils.getValueMapFromFile(fullPath);
         var readDataStr = "read data:\n";
         // read value map data
-        var readMapInMap = readValueMap["data0"].asValueMap();
-        readDataStr += "  mapValue:[\"string1\"][" + readMapInMap["string1"].asString() + "]\n";
-        readDataStr += "  mapValue:[\"string2\"][" + readMapInMap["string2"].asString() + "]\n";
+        var readMapInMap = readValueMap["data0"];
+        readDataStr += "  mapValue:[\"string1\"][" + readMapInMap["string1"] + "]\n";
+        readDataStr += "  mapValue:[\"string2\"][" + readMapInMap["string2"] + "]\n";
 
         // read string data
-        readDataStr += "  stringValue:" + readValueMap["data1"].asString() + "\n";
+        readDataStr += "  stringValue:" + readValueMap["data1"] + "\n";
 
         // read value vector data
-        var readVectorInMap = readValueMap["data2"].asValueVector();
+        var readVectorInMap = readValueMap["data2"];
         readDataStr += "  vectorValue:[1]" + readVectorInMap[0] + "\n";
         readDataStr += "  vectorValue:[2]" + readVectorInMap[1] + "\n";
 
         // read bool data
-        readDataStr += "  boolValue:" + StringUtils::format("%d", readValueMap["data3"].asBool()) + "\n";
+        readDataStr += "  boolValue:" + readValueMap["data3"] + "\n";
 
         // read int data
-        readDataStr += "  intValue:" + StringUtils::format("%d", readValueMap["data4"].asInt()) + "\n";
+        readDataStr += "  intValue:" + readValueMap["data4"] + "\n";
 
         // read float data
-        readDataStr += "  floatValue:" + readValueMap["data5"].asFloat()) + "\n";
+        readDataStr += "  floatValue:" + readValueMap["data5"] + "\n";
 
         // read double data
-        readDataStr += "  doubleValue:" + readValueMap["data6"].asDouble()) + "\n";
+        readDataStr += "  doubleValue:" + readValueMap["data6"] + "\n";
 
         readResult.setString(readDataStr);
 
@@ -209,18 +219,18 @@ var TestWriteValueVector = fileUtilsBase.extend({
         this.addChild(readResult);
         readResult.setPosition(winSize.width / 2, winSize.height  / 3);
 
-        var array;
+        var array = [];
 
-        var mapInArray;
+        var mapInArray = {};
         mapInArray["string1"] = "string in dictInArray key 0";
         mapInArray["string2"] = "string in dictInArray key 1";
         array[array.length] = mapInArray;
 
         array[array.length] = "string in array";
 
-        var arrayInArray;
-        arrayInArray[array.length] = "string 0 in arrayInArray";
-        arrayInArray[array.length] = "string 1 in arrayInArray";
+        var arrayInArray = [];
+        arrayInArray[arrayInArray.length] = "string 0 in arrayInArray";
+        arrayInArray[arrayInArray.length] = "string 1 in arrayInArray";
         array[array.length] = arrayInArray;
 
         //add boolean to the plist
@@ -316,8 +326,8 @@ var FileUtilsScene = cc.Scene.extend({
 
 var startFileUtilsTest = function()
 {
-    fileUtilsSceneIdx = -1;
-    var s = new fileUtilsScene();
+    fileUtilsSceneIdx = 0;
+    var s = new FileUtilsScene();
     s.addChild(restartfileUtils());
     director.runScene(s);
 }
