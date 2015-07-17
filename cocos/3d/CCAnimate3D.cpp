@@ -27,6 +27,9 @@
 #include "3d/CCSkeleton3D.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
+#include "base/CCEventCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -280,6 +283,16 @@ void Animate3D::step(float dt)
     ActionInterval::step(dt);
 }
 
+bool cmpEventInfoAsc(Animate3D::Animate3DDisplayedEventInfo* info1, Animate3D::Animate3DDisplayedEventInfo* info2)
+{
+    return info1->frame < info2->frame;
+}
+
+bool cmpEventInfoDes(Animate3D::Animate3DDisplayedEventInfo* info1, Animate3D::Animate3DDisplayedEventInfo* info2)
+{
+    return info1->frame > info2->frame;
+}
+
 void Animate3D::update(float t)
 {
     if (_target)
@@ -372,45 +385,30 @@ void Animate3D::update(float t)
                     }
                     node->setAdditionalTransform(&transform);
                 }
-                if (!_keyFrameUserInfos.empty() && keyFrameCallback != nullptr){
+                if (!_keyFrameUserInfos.empty()){
                     float prekeyTime = lastTime * getDuration() * _frameRate;
                     float keyTime = t * getDuration() * _frameRate;
-                    DisplayedEventInfo eventInfo;
-                    eventInfo.target = _target;
-                    if (_playReverse){
-                        int preKey = floorf(prekeyTime);
-                        int key = ceilf(keyTime);
-                        if (key <= preKey){
-                            auto k = preKey;
-                            do
+                    std::vector<Animate3DDisplayedEventInfo*> eventInfos;
+                    for (auto keyFrame : _keyFrameUserInfos)
+                    {
+                        if ((!_playReverse && keyFrame.first >= prekeyTime && keyFrame.first < keyTime)
+                            || (_playReverse && keyFrame.first >= keyTime && keyFrame.first < prekeyTime))
                             {
-                                auto iter = _keyFrameUserInfos.find(k);
-                                if (iter != _keyFrameUserInfos.end()){
-                                    eventInfo.userInfo = &iter->second;
-                                    keyFrameCallback(iter->first, &eventInfo);
-                                }
-                                --k;
-                            } while (key < k);
-                        }
+                                auto& frameEvent = _keyFrameEvent[keyFrame.first];
+                                if (frameEvent == nullptr)
+                                    frameEvent = new (std::nothrow) EventCustom(Animate3DDisplayedNotification);
+                                auto eventInfo = &_displayedEventInfo[keyFrame.first];
+                                eventInfo->target = _target;
+                                eventInfo->frame = keyFrame.first;
+                                eventInfo->userInfo = &_keyFrameUserInfos[keyFrame.first];
+                                eventInfos.push_back(eventInfo);
+                                frameEvent->setUserData((void*)eventInfo);
+                            }
                     }
-                    else{
-                        int preKey = ceilf(prekeyTime);
-                        int key = floorf(keyTime);
-                        if (preKey <= key){
-                            auto k = preKey;
-                            do 
-                            {
-                                auto iter = _keyFrameUserInfos.find(k);
-                                if (iter != _keyFrameUserInfos.end()){
-                                    eventInfo.userInfo = &iter->second;
-                                    keyFrameCallback(iter->first, &eventInfo);
-                                }
-
-                                ++k;
-                            } while (k < key);
-                        }
+                    std::sort(eventInfos.begin(), eventInfos.end(), _playReverse ? cmpEventInfoDes : cmpEventInfoAsc);
+                    for (auto eventInfo : eventInfos) {
+                        Director::getInstance()->getEventDispatcher()->dispatchEvent(_keyFrameEvent[eventInfo->frame]);
                     }
-
                 }
             }
         }
@@ -502,6 +500,11 @@ Animate3D::Animate3D()
 Animate3D::~Animate3D()
 {
     removeFromMap();
+    
+    for (auto& it : _keyFrameEvent) {
+        delete it.second;
+    }
+    _keyFrameEvent.clear();
     
     CC_SAFE_RELEASE(_animation);
 }

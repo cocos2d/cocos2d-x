@@ -26,6 +26,8 @@
 #include "Sprite3DTest.h"
 #include "DrawNode3D.h"
 
+#include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
+
 #include <algorithm>
 #include "../testResource.h"
 
@@ -2614,36 +2616,51 @@ std::string Sprite3DClippingTest::subtitle() const
 }
 Animate3DCallbackTest::Animate3DCallbackTest()
 {
+    FileUtils::getInstance()->addSearchPath("Particle3D/materials");
+    FileUtils::getInstance()->addSearchPath("Particle3D/scripts");
+    
     auto s = Director::getInstance()->getWinSize();
-    auto sprite3d = Sprite3D::create("Sprite3DTest/orc.c3b");
-    sprite3d->setPosition(Vec2(s.width / 2.0f, s.height / 2.0f));
-    sprite3d->setScale(3.0f);
-    sprite3d->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
-    this->addChild(sprite3d);
+    _sprite3d = Sprite3D::create("Sprite3DTest/ReskinGirl.c3b");
+    _sprite3d->setPosition(Vec2(s.width / 2.0f, s.height / 3.0f));
+    _sprite3d->setScale(3.0f);
+    _sprite3d->setRotation3D(Vec3(0.0f, 90.0f, 0.0f));
+    this->addChild(_sprite3d);
+    
+    _sprite3d->getMeshByName("Girl_UpperBody02")->setVisible(false);
+    _sprite3d->getMeshByName("Girl_LowerBody02")->setVisible(false);
+    _sprite3d->getMeshByName("Girl_Shoes02")->setVisible(false);
+    _sprite3d->getMeshByName("Girl_Hair02")->setVisible(false);
+    
+    
+    auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
+    rootps->stopParticleSystem();
+    rootps->setScale(4.0f);
+    this->addChild(rootps, 0, 100);
 
-    //test attach
-    auto weapon = Sprite3D::create("Sprite3DTest/axe.c3b");
-    sprite3d->getAttachNode("Bip001 R Hand")->addChild(weapon);
-
-    auto animation = Animation3D::create("Sprite3DTest/orc.c3b");
+    auto animation = Animation3D::create("Sprite3DTest/ReskinGirl.c3b");
     if (animation)
     {
         auto animate = Animate3D::create(animation);
-        sprite3d->runAction(RepeatForever::create(animate));
+        _sprite3d->runAction(RepeatForever::create(animate));
 
         ValueMap valuemap0;
-        valuemap0["state"] = Value(false);
-        animate->setKeyFrameUserInfo(10, valuemap0);
-
-        ValueMap valuemap1;
-        valuemap1["state"] = Value(true);
-        animate->setKeyFrameUserInfo(50, valuemap1);
-
-        animate->keyFrameCallback = [=](int keyFrame, const Animate3D::DisplayedEventInfo *deInfo){
-            auto vmap = deInfo->userInfo;
-            auto val = vmap->at("state");
-            weapon->setVisible(val.asBool());
-        };
+        animate->setKeyFrameUserInfo(275, valuemap0);
+        
+        auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
+        {
+            auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
+            auto node = getChildByTag(100);
+            if (node)
+            {
+                auto mat = _sprite3d->getNodeToWorldTransform() * _sprite3d->getSkeleton()->getBoneByName("Bip01 R Hand")->getWorldMat();
+                node->setPosition3D(Vec3(mat.m[12] + 100, mat.m[13], mat.m[14]));
+                ((PUParticleSystem3D*)node)->startParticleSystem();
+            }
+                
+            
+            CCLOG("frame %d", info->frame);
+        });
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     }
 }
 
@@ -2653,7 +2670,7 @@ Animate3DCallbackTest::~Animate3DCallbackTest()
 
 std::string Animate3DCallbackTest::title() const
 {
-    return "Testing Animate3DCallback";
+    return "Testing Animate3D Callback";
 }
 
 std::string Animate3DCallbackTest::subtitle() const

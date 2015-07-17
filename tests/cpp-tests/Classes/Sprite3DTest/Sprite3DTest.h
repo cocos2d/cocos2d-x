@@ -573,6 +573,9 @@ public:
     ~Animate3DCallbackTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite3d;
 };
 
 #endif
