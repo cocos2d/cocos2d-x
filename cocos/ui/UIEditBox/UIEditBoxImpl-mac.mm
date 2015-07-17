@@ -31,6 +31,8 @@
 #include "UIEditBox.h"
 #include "deprecated/CCString.h"
 
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
 #define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac *)_editBox)
 
@@ -353,13 +355,13 @@ bool EditBoxImplMac::initWithSize(const Size& size)
 
 void EditBoxImplMac::setFont(const char* pFontName, int fontSize)
 {
-	NSString * fntName = [NSString stringWithUTF8String:pFontName];
+    NSString * fntName = [NSString stringWithUTF8String:pFontName];
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleFactor = glview->getScaleX();
-	NSFont *textFont = [NSFont fontWithName:fntName size:fontSize  * scaleFactor / retinaFactor];
-	if (textFont != nil) {
-		[_sysEdit.textField setFont:textFont];
+    NSFont *textFont = [NSFont fontWithName:fntName size:fontSize  * scaleFactor / retinaFactor];
+    if (textFont != nil) {
+        [_sysEdit.textField setFont:textFont];
         [_sysEdit.secureTextField setFont:textFont];
     }
 }
@@ -514,12 +516,12 @@ void EditBoxImplMac::updatePosition(float dt)
 
 void EditBoxImplMac::adjustTextFieldPosition()
 {
-	Size contentSize = _editBox->getContentSize();
-	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
+    Size contentSize = _editBox->getContentSize();
+    Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
-	
-	Vec2 designCoord = Vec2(rect.origin.x, rect.origin.y + rect.size.height);
+    
+    Vec2 designCoord = Vec2(rect.origin.x, rect.origin.y + rect.size.height);
     [_sysEdit setPosition:convertDesignCoordToScreenCoord(designCoord, _inRetinaMode)];
 }
 
@@ -544,8 +546,8 @@ void EditBoxImplMac::setContentSize(const Size& size)
 void EditBoxImplMac::setAnchorPoint(const Vec2& anchorPoint)
 {
     CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
-	_anchorPoint = anchorPoint;
-	setPosition(_position);
+    _anchorPoint = anchorPoint;
+    setPosition(_position);
 }
 
 void EditBoxImplMac::visit(void)

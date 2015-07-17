@@ -30,9 +30,6 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
-
 #include "UIEditBoxImpl.h"
 
 @class UIEditBoxImplMac;
