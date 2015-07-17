@@ -56,43 +56,33 @@ extern "C" {
 
 
 namespace {
-int lua_print(lua_State * luastate)
+int get_string_for_print(lua_State * L, std::string* out)
 {
-    int nargs = lua_gettop(luastate);
+	int n = lua_gettop(L);  /* number of arguments */
+	int i;
 
-    std::string t;
-    for (int i=1; i <= nargs; i++)
-    {
-        if (lua_istable(luastate, i))
-            t += "table";
-        else if (lua_isnone(luastate, i))
-            t += "none";
-        else if (lua_isnil(luastate, i))
-            t += "nil";
-        else if (lua_isboolean(luastate, i))
-        {
-            if (lua_toboolean(luastate, i) != 0)
-                t += "true";
-            else
-                t += "false";
-        }
-        else if (lua_isfunction(luastate, i))
-            t += "function";
-        else if (lua_islightuserdata(luastate, i))
-            t += "lightuserdata";
-        else if (lua_isthread(luastate, i))
-            t += "thread";
-        else
-        {
-            const char * str = lua_tostring(luastate, i);
-            if (str)
-                t += lua_tostring(luastate, i);
-            else
-                t += lua_typename(luastate, lua_type(luastate, i));
-        }
-        if (i!=nargs)
-            t += "\t";
-    }
+	lua_getglobal(L, "tostring");
+	for (i=1; i<=n; i++) {
+		const char *s;
+		lua_pushvalue(L, -1);  /* function to be called */
+		lua_pushvalue(L, i);   /* value to print */
+		lua_call(L, 1, 1);
+		size_t sz;
+		s = lua_tolstring(L, -1, &sz);  /* get result */
+		if (s == NULL)
+			return luaL_error(L, LUA_QL("tostring") " must return a string to "
+							  LUA_QL("print"));
+		if (i>1) out->append("\t");
+		out->append(s, sz);
+		lua_pop(L, 1);  /* pop result */
+	}
+	return 0;
+}
+
+int lua_print(lua_State * L)
+{
+	std::string t;
+	get_string_for_print(L, &t);
     CCLOG("[LUA-print] %s", t.c_str());
 
     return 0;
@@ -100,42 +90,9 @@ int lua_print(lua_State * luastate)
     
 int lua_release_print(lua_State * L)
 {
-    int nargs = lua_gettop(L);
-    
-    std::string t;
-    for (int i=1; i <= nargs; i++)
-    {
-        if (lua_istable(L, i))
-            t += "table";
-        else if (lua_isnone(L, i))
-            t += "none";
-        else if (lua_isnil(L, i))
-            t += "nil";
-        else if (lua_isboolean(L, i))
-        {
-            if (lua_toboolean(L, i) != 0)
-                t += "true";
-            else
-                t += "false";
-        }
-        else if (lua_isfunction(L, i))
-            t += "function";
-        else if (lua_islightuserdata(L, i))
-            t += "lightuserdata";
-        else if (lua_isthread(L, i))
-            t += "thread";
-        else
-        {
-            const char * str = lua_tostring(L, i);
-            if (str)
-                t += lua_tostring(L, i);
-            else
-                t += lua_typename(L, lua_type(L, i));
-        }
-        if (i!=nargs)
-            t += "\t";
-    }
-    log("[LUA-print] %s", t.c_str());
+	std::string t;
+	get_string_for_print(L, &t);
+	log("[LUA-print] %s", t.c_str());
     
     return 0;
 }
