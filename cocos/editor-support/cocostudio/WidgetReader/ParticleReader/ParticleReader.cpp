@@ -153,11 +153,11 @@ namespace cocostudio
     void ParticleReader::setPropsWithFlatBuffers(cocos2d::Node *node,
                                                  const flatbuffers::Table *particleOptions)
     {
-        auto particle = static_cast<ParticleSystemQuad*>(node);
+        auto particle = dynamic_cast<ParticleSystemQuad*>(node);
         auto options = (ParticleSystemOptions*)particleOptions;
         
         auto f_blendFunc = options->blendFunc();
-        if (f_blendFunc)
+        if (particle && f_blendFunc)
         {
             cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
             blendFunc.src = f_blendFunc->src();
@@ -208,15 +208,12 @@ namespace cocostudio
                 particle->setPositionType(ParticleSystem::PositionType::GROUPED);
             }
         }
-        //else
-        //{
-        //    Node* node = Node::create();
-        //    setPropsWithFlatBuffers(node, (Table*)particleOptions);
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-        //    node->addChild(label);
-        //    return node;
-        //}
+        else
+        {
+            Node* node = Node::create();
+            setPropsWithFlatBuffers(node, (Table*)particleOptions);
+            return node;
+        }
         
         return particle;
     }

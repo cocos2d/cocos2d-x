@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include <Shlobj.h>
 #include <cstdlib>
+#include <regex>
 
 using namespace std;
 
@@ -53,6 +54,81 @@ static inline std::string convertPathFormatToUnixStyle(const std::string& path)
             ret[i] = '/';
         }
     }
+    return ret;
+}
+
+static std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
+{
+    std::wstring ret;
+    if (!strUtf8.empty())
+    {
+        int nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, nullptr, 0);
+        if (nNum)
+        {
+            WCHAR* wideCharString = new WCHAR[nNum + 1];
+            wideCharString[0] = 0;
+
+            nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, wideCharString, nNum + 1);
+
+            ret = wideCharString;
+            delete[] wideCharString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to WideChar code:0x%x", GetLastError());
+        }
+    }
+    return ret;
+}
+
+static std::string StringWideCharToUtf8(const std::wstring& strWideChar)
+{
+    std::string ret;
+    if (!strWideChar.empty())
+    {
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* utf8String = new char[nNum + 1];
+            utf8String[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, utf8String, nNum + 1, nullptr, FALSE);
+
+            ret = utf8String;
+            delete[] utf8String;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Utf8 code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
+}
+
+static std::string UTF8StringToMultiByte(const std::string& strUtf8)
+{
+    std::string ret;
+    if (!strUtf8.empty())
+    {
+        std::wstring strWideChar = StringUtf8ToWideChar(strUtf8);
+        int nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* ansiString = new char[nNum + 1];
+            ansiString[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, ansiString, nNum + 1, nullptr, FALSE);
+
+            ret = ansiString;
+            delete[] ansiString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Ansi code:0x%x", GetLastError());
+        }
+    }
+
     return ret;
 }
 
@@ -99,23 +175,36 @@ bool FileUtilsWin32::init()
     return FileUtils::init();
 }
 
+bool FileUtilsWin32::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    unsigned long fAttrib = GetFileAttributes(StringUtf8ToWideChar(dirPath).c_str());
+    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
+        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
+    {
+        return true;
+    }
+    return false;
+}
+
+std::string FileUtilsWin32::getSuitableFOpen(const std::string& filenameUtf8) const
+{
+    return UTF8StringToMultiByte(filenameUtf8);
+}
+
 bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
     if (0 == strFilePath.length())
     {
         return false;
     }
-    
+
     std::string strPath = strFilePath;
     if (!isAbsolutePath(strPath))
     { // Not absolute path, add the default root path at the beginning.
         strPath.insert(0, _defaultResRootPath);
     }
 
-    WCHAR utf16Buf[CC_MAX_PATH] = {0};
-    MultiByteToWideChar(CP_UTF8, 0, strPath.c_str(), -1, utf16Buf, sizeof(utf16Buf)/sizeof(utf16Buf[0]));
-
-    DWORD attr = GetFileAttributesW(utf16Buf);
+    DWORD attr = GetFileAttributesW(StringUtf8ToWideChar(strPath).c_str());
     if(attr == INVALID_FILE_ATTRIBUTES || (attr & FILE_ATTRIBUTE_DIRECTORY))
         return false;   //  not a file
     return true;
@@ -123,7 +212,7 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 {
-    if (   (strPath.length() > 2 
+    if (   (strPath.length() > 2
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
         && strPath[1] == ':') || (strPath[0] == '/' && strPath[1] == '/'))
     {
@@ -139,9 +228,9 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
     size_t len = tmpPath.length();
     size_t nl = filename.length();
     std::string realName;
-    
+
     while (tmpPath.length() >= len - nl && tmpPath.length()>2)
-	{
+    {
         //CCLOG("%s", tmpPath.c_str());
         WIN32_FIND_DATAA data;
         HANDLE h = FindFirstFileA(tmpPath.c_str(), &data);
@@ -158,11 +247,10 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
             {
                 std::string msg = "File path error: \"";
                 msg.append(filename).append("\" the real name is: ").append(realName);
-            
+
                 CCLOG("%s", msg.c_str());
                 return false;
             }
-
         }
         else
         {
@@ -174,7 +262,7 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
             tmpPath = tmpPath.substr(0, tmpPath.rfind("/"));
         } while (tmpPath.back() == '.');
     }
-	return true;
+    return true;
 }
 
 static Data getData(const std::string& filename, bool forString)
@@ -193,14 +281,11 @@ static Data getData(const std::string& filename, bool forString)
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
         // check if the filename uses correct case characters
-        CC_BREAK_IF(!checkFileName(fullPath, filename));
+        checkFileName(fullPath, filename);
 
-        WCHAR wszBuf[CC_MAX_PATH] = {0};
-        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
-
-        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
+        HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
-        
+
         size = ::GetFileSize(fileHandle, nullptr);
 
         if (forString)
@@ -224,10 +309,10 @@ static Data getData(const std::string& filename, bool forString)
             {
                 free(buffer);
                 buffer = nullptr;
-            }    
+            }
         }
     } while (0);
-    
+
     Data ret;
 
     if (buffer == nullptr || size == 0)
@@ -254,15 +339,15 @@ static Data getData(const std::string& filename, bool forString)
 std::string FileUtilsWin32::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
-	if (data.isNull())
-	{
-		return "";
-	}
+    if (data.isNull())
+    {
+        return "";
+    }
 
     std::string ret((const char*)data.getBytes());
     return ret;
 }
-    
+
 Data FileUtilsWin32::getDataFromFile(const std::string& filename)
 {
     return getData(filename, false);
@@ -278,14 +363,11 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         std::string fullPath = fullPathForFilename(filename);
 
          // check if the filename uses correct case characters
-        CC_BREAK_IF(!checkFileName(fullPath, filename));
+        checkFileName(fullPath, filename);
 
-        WCHAR wszBuf[CC_MAX_PATH] = {0};
-        MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
-
-        HANDLE fileHandle = ::CreateFileW(wszBuf, GENERIC_READ, FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
+        HANDLE fileHandle = ::CreateFile(StringUtf8ToWideChar(fullPath).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
         CC_BREAK_IF(fileHandle == INVALID_HANDLE_VALUE);
-        
+
         *size = ::GetFileSize(fileHandle, nullptr);
 
         pBuffer = (unsigned char*) malloc(*size);
@@ -300,7 +382,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
             pBuffer = nullptr;
         }
     } while (0);
-    
+
     if (! pBuffer)
     {
         std::string msg = "Get data from file(";
@@ -328,7 +410,7 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
 {
     std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
-    
+
     return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
 }
 
@@ -340,49 +422,191 @@ string FileUtilsWin32::getWritablePath() const
     }
 
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
-    char full_path[CC_MAX_PATH + 1];
-    ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);
+    WCHAR full_path[CC_MAX_PATH + 1] = { 0 };
+    ::GetModuleFileName(nullptr, full_path, CC_MAX_PATH + 1);
 
     // Debug app uses executable directory; Non-debug app uses local app data directory
 //#ifndef _DEBUG
-        // Get filename of executable only, e.g. MyGame.exe
-        char *base_name = strrchr(full_path, '\\');
+    // Get filename of executable only, e.g. MyGame.exe
+    WCHAR *base_name = wcsrchr(full_path, '\\');
+    wstring retPath;
+    if(base_name)
+    {
+        WCHAR app_data_path[CC_MAX_PATH + 1];
 
-        if(base_name)
+        // Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
+        if (SUCCEEDED(SHGetFolderPath(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, app_data_path)))
         {
-            char app_data_path[CC_MAX_PATH + 1];
+            wstring ret(app_data_path);
 
-            // Get local app data directory, e.g. C:\Documents and Settings\username\Local Settings\Application Data
-            if (SUCCEEDED(SHGetFolderPathA(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, app_data_path)))
+            // Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame.exe
+            ret += base_name;
+
+            // Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame
+            ret = ret.substr(0, ret.rfind(L"."));
+
+            ret += L"\\";
+
+            // Create directory
+            if (SUCCEEDED(SHCreateDirectoryEx(nullptr, ret.c_str(), nullptr)))
             {
-                string ret((char*)app_data_path);
+                retPath = ret;
+            }
+        }
+    }
+    if (retPath.empty())
+//#endif // not defined _DEBUG
+    {
+        // If fetching of local app data directory fails, use the executable one
+        retPath = full_path;
 
-                // Adding executable filename, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame.exe
-                ret += base_name;
+        // remove xxx.exe
+        retPath = retPath.substr(0, retPath.rfind(L"\\") + 1);
+    }
 
-                // Remove ".exe" extension, e.g. C:\Documents and Settings\username\Local Settings\Application Data\MyGame
-                ret = ret.substr(0, ret.rfind("."));
+    return convertPathFormatToUnixStyle(StringWideCharToUtf8(retPath));
+}
 
-                ret += "\\";
+bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+{
+    CCASSERT(!path.empty(), "Invalid path");
+    std::string oldPath = path + oldname;
+    std::string newPath = path + name;
 
-                // Create directory
-                if (SUCCEEDED(SHCreateDirectoryExA(nullptr, ret.c_str(), nullptr)))
+    std::regex pat("\\/");
+    std::string _old = std::regex_replace(oldPath, pat, "\\");
+    std::string _new = std::regex_replace(newPath, pat, "\\");
+
+    std::wstring _wNew = StringUtf8ToWideChar(_new);
+
+    if (FileUtils::getInstance()->isFileExist(_new))
+    {
+        if (!DeleteFile(_wNew.c_str()))
+        {
+            CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newPath.c_str(), GetLastError());
+        }
+    }
+
+    if (MoveFile(StringUtf8ToWideChar(_old).c_str(), _wNew.c_str()))
+    {
+        return true;
+    }
+    else
+    {
+        CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldPath.c_str(), newPath.c_str(), GetLastError());
+        return false;
+    }
+}
+
+bool FileUtilsWin32::createDirectory(const std::string& dirPath)
+{
+    CCASSERT(!dirPath.empty(), "Invalid path");
+
+    if (isDirectoryExist(dirPath))
+        return true;
+
+    std::wstring path = StringUtf8ToWideChar(dirPath);
+
+    // Split the path
+    size_t start = 0;
+    size_t found = path.find_first_of(L"/\\", start);
+    std::wstring subpath;
+    std::vector<std::wstring> dirs;
+
+    if (found != std::wstring::npos)
+    {
+        while (true)
+        {
+            subpath = path.substr(start, found - start + 1);
+            if (!subpath.empty())
+                dirs.push_back(subpath);
+            start = found + 1;
+            found = path.find_first_of(L"/\\", start);
+            if (found == std::wstring::npos)
+            {
+                if (start < path.length())
                 {
-                    return convertPathFormatToUnixStyle(ret);
+                    dirs.push_back(path.substr(start));
+                }
+                break;
+            }
+        }
+    }
+
+    if ((GetFileAttributes(path.c_str())) == INVALID_FILE_ATTRIBUTES)
+    {
+        subpath = L"";
+        for (unsigned int i = 0; i < dirs.size(); ++i)
+        {
+            subpath += dirs[i];
+
+            std::string utf8Path = StringWideCharToUtf8(subpath);
+            if (!isDirectoryExist(utf8Path))
+            {
+                BOOL ret = CreateDirectory(subpath.c_str(), NULL);
+                if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
+                {
+                    CCLOGERROR("Fail create directory %s !Error code is 0x%x", utf8Path.c_str(), GetLastError());
+                    return false;
                 }
             }
         }
-//#endif // not defined _DEBUG
+    }
+    return true;
+}
 
-    // If fetching of local app data directory fails, use the executable one
-    string ret((char*)full_path);
+bool FileUtilsWin32::removeFile(const std::string &filepath)
+{
+    std::regex pat("\\/");
+    std::string win32path = std::regex_replace(filepath, pat, "\\");
 
-    // remove xxx.exe
-    ret =  ret.substr(0, ret.rfind("\\") + 1);
+    if (DeleteFile(StringUtf8ToWideChar(win32path).c_str()))
+    {
+        return true;
+    }
+    else
+    {
+        CCLOGERROR("Fail remove file %s !Error code is 0x%x", filepath.c_str(), GetLastError());
+        return false;
+    }
+}
 
-    ret = convertPathFormatToUnixStyle(ret);
-
-    return ret;
+bool FileUtilsWin32::removeDirectory(const std::string& dirPath)
+{
+    std::wstring wpath = StringUtf8ToWideChar(dirPath);
+    std::wstring files = wpath + L"*.*";
+    WIN32_FIND_DATA wfd;
+    HANDLE  search = FindFirstFileEx(files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
+    bool ret = true;
+    if (search != INVALID_HANDLE_VALUE)
+    {
+        BOOL find = true;
+        while (find)
+        {
+            //. ..
+            if (wfd.cFileName[0] != '.')
+            {
+                std::wstring temp = wpath + wfd.cFileName;
+                if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                {
+                    temp += '/';
+                    ret = ret && this->removeDirectory(StringWideCharToUtf8(temp));
+                }
+                else
+                {
+                    SetFileAttributes(temp.c_str(), FILE_ATTRIBUTE_NORMAL);
+                    ret = ret && DeleteFile(temp.c_str());
+                }
+            }
+            find = FindNextFile(search, &wfd);
+        }
+        FindClose(search);
+    }
+    if (ret && RemoveDirectory(wpath.c_str()))
+    {
+        return true;
+    }
+    return false;
 }
 
 NS_CC_END

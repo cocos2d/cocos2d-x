@@ -311,6 +311,8 @@ public:
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
+    void setLineWidth(int lineWidth);
+    
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
     virtual ~DrawNode();
@@ -350,6 +352,8 @@ protected:
     bool        _dirty;
     bool        _dirtyGLPoint;
     bool        _dirtyGLLine;
+    
+    int         _lineWidth;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);

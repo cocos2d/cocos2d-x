@@ -34,9 +34,6 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 #include "base/ccTypes.h"
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -68,9 +65,6 @@ class GLProgram;
 * Be aware that the content of the generated textures will be upside-down!
 */
 class CC_DLL Texture2D : public Ref
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** @typedef Texture2D::PixelFormat

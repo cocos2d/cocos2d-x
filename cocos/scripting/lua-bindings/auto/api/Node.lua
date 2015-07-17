@@ -306,6 +306,14 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- Removes all actions from the running action list by its flags.<br>
+-- param flags   A flag field that removes actions based on bitwise AND.
+-- @function [parent=#Node] stopActionsByFlags 
+-- @param self
+-- @param #unsigned int flags
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 --  Sets the position (x,y) using values between 0 and 1.<br>
 -- The positions in pixels is calculated like the following:<br>
 -- code pseudo code<br>

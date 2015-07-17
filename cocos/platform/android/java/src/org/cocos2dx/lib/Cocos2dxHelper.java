@@ -49,7 +49,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;  //Enhance API modification
 import android.view.Display;
 import android.view.WindowManager;
-import android.content.ServiceConnection;  //Enhance API modification	
+import android.content.ServiceConnection;  //Enhance API modification
 
 import com.enhance.gameservice.IGameTuningService;  //Enhance API modification
 
@@ -523,6 +523,13 @@ public class Cocos2dxHelper {
         SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
+        editor.commit();
+    }
+    
+    public static void deleteValueForKey(String key) {
+        SharedPreferences settings = sActivity.getSharedPreferences(Cocos2dxHelper.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.remove(key);
         editor.commit();
     }
     

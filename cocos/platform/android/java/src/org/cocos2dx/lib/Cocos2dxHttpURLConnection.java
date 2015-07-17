@@ -144,7 +144,7 @@ public class Cocos2dxHttpURLConnection
         }
     }
 
-	//Add header
+    //Add header
     static void addRequestHeader(HttpURLConnection urlConnection, String key, String value) {
         urlConnection.setRequestProperty(key, value);
     }
@@ -181,7 +181,7 @@ public class Cocos2dxHttpURLConnection
     }
 
     static String getResponseHeaders(HttpURLConnection http) {
-    	Map<String, List<String>> headers = http.getHeaderFields();
+        Map<String, List<String>> headers = http.getHeaderFields();
         if (null == headers) {
             return null;
         }

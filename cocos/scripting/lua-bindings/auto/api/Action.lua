@@ -64,6 +64,13 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
+--  Returns a flag field that is used to group the actions easily.<br>
+-- return A tag.
+-- @function [parent=#Action] getFlags 
+-- @param self
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
+        
+--------------------------------
 --  Called every frame with it's delta time, dt in seconds. DON'T override unless you know what you are doing. <br>
 -- param dt In seconds.
 -- @function [parent=#Action] step 
@@ -77,6 +84,14 @@
 -- @function [parent=#Action] setTag 
 -- @param self
 -- @param #int tag
+-- @return Action#Action self (return value: cc.Action)
+        
+--------------------------------
+--  Changes the flag field that is used to group the actions easily.<br>
+-- param tag Used to identify the action easily.
+-- @function [parent=#Action] setFlags 
+-- @param self
+-- @param #unsigned int flags
 -- @return Action#Action self (return value: cc.Action)
         
 --------------------------------

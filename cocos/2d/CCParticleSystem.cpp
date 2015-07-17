@@ -384,7 +384,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 else if( dictionary.find("textureImageData") != dictionary.end() )
                 {                        
                     std::string textureData = dictionary.at("textureImageData").asString();
-                    CCASSERT(!textureData.empty(), "");
+                    CCASSERT(!textureData.empty(), "textureData can't be empty!");
                     
                     auto dataLen = textureData.size();
                     if (dataLen != 0)

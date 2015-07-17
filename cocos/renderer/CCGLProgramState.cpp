@@ -239,7 +239,7 @@ void UniformValue::setVec4v(ssize_t size, const Vec4* pointer)
 
 void UniformValue::setMat4(const Mat4& value)
 {
-    CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
+    CCASSERT(_uniform->type == GL_FLOAT_MAT4, "_uniform's type should be equal GL_FLOAT_MAT4.");
 	memcpy(_value.matrixValue, &value, sizeof(_value.matrixValue));
     _type = Type::VALUE;
 }

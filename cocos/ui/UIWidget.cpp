@@ -783,7 +783,9 @@ void Widget::propagateTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
+        widgetParent->_hittedByCamera = _hittedByCamera;
         widgetParent->interceptTouchEvent(event, sender, touch);
+        widgetParent->_hittedByCamera = nullptr;
     }
 }
 
@@ -974,7 +976,9 @@ void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
     Widget* widgetParent = getWidgetParent();
     if (widgetParent)
     {
+        widgetParent->_hittedByCamera = _hittedByCamera;
         widgetParent->interceptTouchEvent(event,sender,touch);
+        widgetParent->_hittedByCamera = nullptr;
     }
 
 }
@@ -1292,7 +1296,7 @@ void Widget::copyProperties(Widget *widget)
 
     float Widget::getScale()const
     {
-        CCASSERT(this->getScaleX() == this->getScaleY(), "");
+        CCASSERT(this->getScaleX() == this->getScaleY(), "scaleX should be equal to scaleY.");
         return this->getScaleX();
     }
 

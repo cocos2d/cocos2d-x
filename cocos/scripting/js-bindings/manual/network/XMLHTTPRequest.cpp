@@ -29,6 +29,7 @@
 #include "XMLHTTPRequest.h"
 #include <string>
 #include <algorithm>
+#include "cocos2d_specifics.hpp"
 
 using namespace std;
 
@@ -986,6 +987,8 @@ void MinXmlHttpRequest::_js_register(JSContext *cx, JS::HandleObject global)
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getAllResponseHeaders),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, getResponseHeader),
         JS_BINDED_FUNC_FOR_DEF(MinXmlHttpRequest, overrideMimeType),
+        JS_FN("retain", js_cocos2dx_retain, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("release", js_cocos2dx_release, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
     

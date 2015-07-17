@@ -128,6 +128,7 @@ protected:
     int _fontAscender;
     EventListenerCustom* _rendererRecreatedListener;
     bool _antialiasEnabled;
+    int _currLineHeight;
 };
 
 NS_CC_END

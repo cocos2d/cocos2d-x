@@ -13,8 +13,8 @@ class PerformceAllocScene : public TestCase
 public:
     virtual bool init() override;
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void updateQuantityOfNodes() = 0;
 
     const char* profilerName();
