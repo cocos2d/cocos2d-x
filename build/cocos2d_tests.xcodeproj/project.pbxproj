@@ -864,6 +864,16 @@
 		D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		EDD7E2FB1B566C1E009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */; };
+		EDD7E2FC1B566E4E009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */; };
+		EDD7E2FD1B566E58009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */; };
+		EDD7E2FE1B566E62009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */; };
+		EDD7E2FF1B566E6F009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */; };
+		EDD7E3001B566E7F009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */; };
+		EDD7E3021B566E8A009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E3011B566E8A009F9DEB /* libiconv.dylib */; };
+		EDD7E3031B566E98009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E3011B566E8A009F9DEB /* libiconv.dylib */; };
+		EDD7E3041B566EA0009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E3011B566E8A009F9DEB /* libiconv.dylib */; };
+		EDD7E3051B566EA8009F9DEB /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EDD7E3011B566E8A009F9DEB /* libiconv.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1817,6 +1827,8 @@
 		D0FD03631A3B546400825BB5 /* AllocatorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllocatorTest.h; path = AllocatorTest/AllocatorTest.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
+		EDD7E3011B566E8A009F9DEB /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1824,6 +1836,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E2FD1B566E58009F9DEB /* libiconv.dylib in Frameworks */,
 				15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */,
 				15427B79198B879900DC375D /* libluacocos2d iOS.a in Frameworks */,
 				15CBA9E0196EEBD4005877BB /* MediaPlayer.framework in Frameworks */,
@@ -1845,6 +1858,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E3041B566EA0009F9DEB /* libiconv.dylib in Frameworks */,
 				1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */,
 				1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */,
 				1A0EE2A718CDF6DA004CD58F /* libz.dylib in Frameworks */,
@@ -1862,6 +1876,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E3021B566E8A009F9DEB /* libiconv.dylib in Frameworks */,
 				15EFA270198B25B9000C57D3 /* libcocos2d Mac.a in Frameworks */,
 				15EFA25B198A4A47000C57D3 /* libluacocos2d Mac.a in Frameworks */,
 				1A0EE2CA18CDF733004CD58F /* libz.dylib in Frameworks */,
@@ -1880,6 +1895,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E2FB1B566C1E009F9DEB /* libiconv.dylib in Frameworks */,
 				1A0EE40318CDF775004CD58F /* libcocos2d iOS.a in Frameworks */,
 				1A0EE40618CDF775004CD58F /* CoreMotion.framework in Frameworks */,
 				1A0EE40718CDF775004CD58F /* libz.dylib in Frameworks */,
@@ -1898,6 +1914,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E2FF1B566E6F009F9DEB /* libiconv.dylib in Frameworks */,
 				15EFA68B198B3AD8000C57D3 /* libcocos2d iOS.a in Frameworks */,
 				15EFA68D198B3AD8000C57D3 /* libluacocos2d iOS.a in Frameworks */,
 				15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */,
@@ -1918,6 +1935,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E3031B566E98009F9DEB /* libiconv.dylib in Frameworks */,
 				59E170151AB42EB10007F2BF /* Security.framework in Frameworks */,
 				15EFA273198B265A000C57D3 /* libluacocos2d Mac.a in Frameworks */,
 				1ABCA2C318CD92420087CE3A /* libcocos2d Mac.a in Frameworks */,
@@ -1937,6 +1955,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E2FC1B566E4E009F9DEB /* libiconv.dylib in Frameworks */,
 				52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */,
 				15EFA66F198B356E000C57D3 /* libluacocos2d iOS.a in Frameworks */,
 				15EFA666198B34D7000C57D3 /* libcocos2d iOS.a in Frameworks */,
@@ -1958,6 +1977,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E3051B566EA8009F9DEB /* libiconv.dylib in Frameworks */,
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
 				826294431AAF071500CB7CF7 /* Security.framework in Frameworks */,
 				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
@@ -1976,6 +1996,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E2FE1B566E62009F9DEB /* libiconv.dylib in Frameworks */,
 				3E61773D1960FBD200DE83F5 /* GameController.framework in Frameworks */,
 				3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */,
 				3E6177241960FAED00DE83F5 /* CoreMotion.framework in Frameworks */,
@@ -1995,6 +2016,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDD7E3001B566E7F009F9DEB /* libiconv.dylib in Frameworks */,
 				52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */,
 				3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */,
 				1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */,
@@ -3767,6 +3789,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EDD7E3011B566E8A009F9DEB /* libiconv.dylib */,
+				EDD7E2FA1B566C1E009F9DEB /* libiconv.dylib */,
 				826294421AAF071500CB7CF7 /* Security.framework */,
 				52B47A331A534B2B004E4C60 /* Security.framework */,
 				15EE465A19A7200300AF29F1 /* libcurl.a */,
