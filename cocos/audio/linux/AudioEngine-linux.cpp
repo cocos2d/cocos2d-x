@@ -52,8 +52,6 @@ bool AudioEngineImpl::init(){
   ERRCHECKWITHEXIT(result);
 
   mapEffectSound.clear();
-  printf("DEBUG: AudioEngineImpl::system initialized\n"); 
-
   return true;
 };
 
@@ -74,8 +72,15 @@ void AudioEngineImpl::setVolume(int audioID,float volume){
 };
 
 void AudioEngineImpl::setLoop(int audioID, bool loop){
- printf("AudioEngineImpl::setLoop: UNIMPLEMENTED! audioID: %d\n", audioID);
-  /*@todo: unimplemented!*/
+ printf("AudioEngineImpl::setLoop: audioID: %d\n", audioID);
+  try{
+    FMOD::Sound * sound = mapEffectSound[audioID]; 
+    FMOD::Channel *channel = getChannel(sound);
+    channel->setLoopCount(loop?-1:0); 
+    AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PAUSED;
+  }catch(const std::out_of_range& oor){
+      printf("AudioEngineImpl::setLoop: invalid audioID: %d\n", audioID);
+  }
 };
 
 bool AudioEngineImpl::pause(int audioID){
