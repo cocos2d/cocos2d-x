@@ -34,6 +34,7 @@ IMPLEMENT_CLASS_GUI_INFO(ListView)
 ListView::ListView():
 _model(nullptr),
 _gravity(Gravity::CENTER_VERTICAL),
+_magneticType(MagneticType::NONE),
 _itemsMargin(0.0f),
 _curSelectedIndex(-1),
 _refreshViewDirty(true),
@@ -377,6 +378,16 @@ void ListView::setGravity(Gravity gravity)
     }
     _gravity = gravity;
     _refreshViewDirty = true;
+}
+
+void ListView::setMagneticType(MagneticType magneticType)
+{
+    _magneticType = magneticType;
+}
+
+ListView::MagneticType ListView::getMagneticType() const
+{
+    return _magneticType;
 }
 
 void ListView::setItemsMargin(float margin)

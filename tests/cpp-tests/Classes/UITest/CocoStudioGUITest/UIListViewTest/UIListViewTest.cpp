@@ -7,6 +7,8 @@ const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 UIListViewTests::UIListViewTests()
 {
+    ADD_TEST_CASE(UIListViewTest_MagneticVertical);
+    ADD_TEST_CASE(UIListViewTest_MagneticHorizontal);
     ADD_TEST_CASE(UIListViewTest_ScrollToItemVertical);
     ADD_TEST_CASE(UIListViewTest_ScrollToItemHorizontal);
     ADD_TEST_CASE(UIListViewTest_Vertical);
@@ -644,6 +646,138 @@ bool UIListViewTest_ScrollToItem::init()
     // Add list items
     static const Size BUTTON_SIZE(50, 40);
     for (int i = 0; i < NUMBER_OF_ITEMS; ++i)
+    {
+        auto pButton = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        pButton->setContentSize(BUTTON_SIZE);
+        pButton->setScale9Enabled(true);
+        pButton->setTitleText(StringUtils::format("Button-%d", i));
+        _listView->pushBackCustomItem(pButton);
+    }
+    return true;
+}
+
+
+
+// UIListViewTest_Magnetic
+bool UIListViewTest_Magnetic::init()
+{
+    if(!UIScene::init())
+    {
+        return false;
+    }
+    
+    Size layerSize = _uiLayer->getContentSize();
+    
+    _titleLabel = Text::create("Magnetic scroll", "fonts/Marker Felt.ttf", 32);
+    _titleLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _titleLabel->setPosition(Vec2(layerSize / 2) + Vec2(0, _titleLabel->getContentSize().height * 3.15f));
+    _uiLayer->addChild(_titleLabel, 3);
+    
+    // Create the list view
+    _listView = ListView::create();
+    _listView->setDirection(getListViewDirection());
+    _listView->setBounceEnabled(true);
+    _listView->setBackGroundImage("cocosui/green_edit.png");
+    _listView->setBackGroundImageScale9Enabled(true);
+    _listView->setContentSize(layerSize / 2);
+    _listView->setScrollBarPositionFromCorner(Vec2(7, 7));
+    _listView->setItemsMargin(2.0f);
+    _listView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _listView->setPosition(layerSize / 2);
+    _uiLayer->addChild(_listView);
+    
+    // Guide line for center align
+    {
+        DrawNode* pNode = DrawNode::create();
+        Vec2 center = layerSize / 2;
+        if(getListViewDirection() == ScrollView::Direction::HORIZONTAL)
+        {
+            float halfY = 110;
+            pNode->drawLine(Vec2(center.x, center.y - halfY), Vec2(center.x, center.y + halfY), Color4F(0, 0, 0, 1));
+        }
+        else
+        {
+            float halfX = 150;
+            pNode->drawLine(Vec2(center.x - halfX, center.y), Vec2(center.x + halfX, center.y), Color4F(0, 0, 0, 1));
+        }
+        pNode->setLineWidth(2);
+        _uiLayer->addChild(pNode);
+    }
+    
+    // Show the indexes of items on each boundary.
+    {
+        Text* labels[5];
+        for(int i = 0; i < 5; ++i)
+        {
+            labels[i] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
+            labels[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _uiLayer->addChild(labels[i]);
+        }
+        float deltaX = 145, deltaY = 90;
+        labels[0]->setPosition(_uiLayer->getContentSize() / 2 + Size(-deltaX, 0));   // left
+        labels[1]->setPosition(_uiLayer->getContentSize() / 2 + Size(deltaX, 0));   // right
+        labels[2]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, deltaY));   // top
+        labels[3]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, -deltaY));   // bottom
+        labels[4]->setPosition(_uiLayer->getContentSize() / 2 + Size(deltaX, deltaY));  // center
+        
+        // Callback
+        _listView->ScrollView::addEventListener([labels](Ref* ref, ScrollView::EventType eventType) {
+            ListView* listView = dynamic_cast<ListView*>(ref);
+            if(listView == nullptr || eventType != ScrollView::EventType::CONTAINER_MOVED)
+            {
+                return;
+            }
+            auto left = listView->getLeftmostItemInCurrentView();
+            auto right = listView->getRightmostItemInCurrentView();
+            auto top = listView->getTopmostItemInCurrentView();
+            auto bottom = listView->getBottommostItemInCurrentView();
+            auto center = listView->getCenterItemInCurrentView();
+            
+            labels[0]->setString(StringUtils::format("Left\nindex=%zd", listView->getIndex(left)));
+            labels[1]->setString(StringUtils::format("RIght\nindex=%zd", listView->getIndex(right)));
+            labels[2]->setString(StringUtils::format("Top index=%zd", listView->getIndex(top)));
+            labels[3]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
+            labels[4]->setString(StringUtils::format("Center\nindex=%zd", listView->getIndex(center)));
+        });
+    }
+    
+    // Initial magnetic type
+    _listView->setMagneticType(ListView::MagneticType::CENTER);
+    _titleLabel->setString("MagneticType - CENTER");
+    
+    // Magnetic change button
+    auto pButton = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+    pButton->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    pButton->setScale(0.8f);
+    pButton->setPosition(Vec2(layerSize / 2) + Vec2(130, -60));
+    pButton->setTitleText("Next Magnetic");
+    pButton->addClickEventListener([this](Ref*) {
+        ListView::MagneticType eCurrentType = _listView->getMagneticType();
+        ListView::MagneticType eNextType;
+        std::string sString;
+        if(eCurrentType == ListView::MagneticType::NONE)
+        {
+            eNextType = ListView::MagneticType::BOTH_END;
+            sString = "BOTH_END";
+        }
+        else if(eCurrentType == ListView::MagneticType::BOTH_END)
+        {
+            eNextType = ListView::MagneticType::CENTER;
+            sString = "CENTER";
+        }
+        else if(eCurrentType == ListView::MagneticType::CENTER)
+        {
+            eNextType = ListView::MagneticType::NONE;
+            sString = "NONE";
+        }
+        _listView->setMagneticType(eNextType);
+        _titleLabel->setString(StringUtils::format("MagneticType - %s", sString.c_str()));
+    });
+    _uiLayer->addChild(pButton);
+    
+    // Add list items
+    static const Size BUTTON_SIZE(50, 40);
+    for (int i = 0; i < 20; ++i)
     {
         auto pButton = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         pButton->setContentSize(BUTTON_SIZE);

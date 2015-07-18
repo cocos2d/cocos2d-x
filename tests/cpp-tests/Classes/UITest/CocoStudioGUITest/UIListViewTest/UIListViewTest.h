@@ -84,6 +84,8 @@ public:
     virtual bool init() override;
 };
 
+
+// Test for scroll to item
 class UIListViewTest_ScrollToItem : public UIScene
 {
 protected:
@@ -109,6 +111,38 @@ class UIListViewTest_ScrollToItemHorizontal : public UIListViewTest_ScrollToItem
 {
 public:
     CREATE_FUNC(UIListViewTest_ScrollToItemHorizontal);
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
+    {
+        return cocos2d::ui::ScrollView::Direction::HORIZONTAL;
+    }
+};
+
+
+// Test for magnetic scroll
+class UIListViewTest_Magnetic : public UIScene
+{
+protected:
+    virtual bool init() override;
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const = 0;
+    
+    cocos2d::ui::ListView* _listView;
+    cocos2d::ui::Text* _titleLabel;
+};
+
+class UIListViewTest_MagneticVertical : public UIListViewTest_Magnetic
+{
+public:
+    CREATE_FUNC(UIListViewTest_MagneticVertical);
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
+    {
+        return cocos2d::ui::ScrollView::Direction::VERTICAL;
+    }
+};
+
+class UIListViewTest_MagneticHorizontal : public UIListViewTest_Magnetic
+{
+public:
+    CREATE_FUNC(UIListViewTest_MagneticHorizontal);
     virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
     {
         return cocos2d::ui::ScrollView::Direction::HORIZONTAL;

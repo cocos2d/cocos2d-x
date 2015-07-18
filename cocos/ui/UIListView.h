@@ -87,6 +87,22 @@ public:
     };
     
     /**
+     * ListView supports magnetic scroll.
+     * With CENTER type, ListView tries to align its items in center of current view.
+     * With BOTH_END type, ListView tries to align its items in left or right end if it is horizontal, top or bottom in vertical. The aligning side (left or right, top or bottom) is determined by user's scroll direction.
+     */
+    enum class MagneticType
+    {
+        NONE,
+        CENTER,
+        BOTH_END,
+        LEFT,
+        RIGHT,
+        TOP,
+        BOTTOM,
+    };
+    
+    /**
      * ListView item click callback.
      */
     typedef std::function<void(Ref*, EventType)> ccListViewCallback;
@@ -192,6 +208,17 @@ public:
      * @see `ListViewGravity`
      */
     void setGravity(Gravity gravity);
+    
+    /**
+     * Set magnetic type of ListView.
+     * @see `MagneticType`
+     */
+    void setMagneticType(MagneticType magneticType);
+    
+    /**
+     * Get magnetic type of ListView.
+     */
+    MagneticType getMagneticType() const;
     
     /**
      * Set the margin between each item in ListView.
@@ -343,6 +370,8 @@ protected:
     Vector<Widget*> _items;
     
     Gravity _gravity;
+    
+    MagneticType _magneticType;
     
     float _itemsMargin;
     
