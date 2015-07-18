@@ -128,8 +128,6 @@ try{
 };
 
 bool AudioEngineImpl::stop(int audioID){
-   printf("AudioEngineImpl::stop: audioID: %d\n", audioID);
-
   try{
     FMOD::Sound * sound = mapEffectSound[audioID]; 
     FMOD::Channel *channel = getChannel(sound);
@@ -145,18 +143,47 @@ void AudioEngineImpl::stopAll(){
 };
 
 float AudioEngineImpl::getDuration(int audioID){
-  /*@todo: unimplemented*/
-  return AudioEngine::TIME_UNKNOWN;
+  try{
+    FMOD::Sound * sound = mapEffectSound[audioID]; 
+	unsigned int length; 
+	FMOD_RESULT result = sound->getLength(&length, FMOD_TIMEUNIT_MS);
+	ERRCHECK(result);
+	float duration = (float)length / 1000.0f; 
+	printf("AudioEngineImpl::getDuration audioid %d: %.3f\n", audioID, duration);
+	return duration;
+    }catch(const std::out_of_range& oor){
+      printf("AudioEngineImpl::getDuration: invalid audioID: %d\n", audioID);
+	return AudioEngine::TIME_UNKNOWN;
+  }
 };
 
 float AudioEngineImpl::getCurrentTime(int audioID){
-  /*@todo: unimplemented*/
-  return AudioEngine::TIME_UNKNOWN;
+ try{
+    FMOD::Sound * sound = mapEffectSound[audioID]; 
+	FMOD::Channel * channel = getChannel(sound);
+	unsigned int position; 
+	FMOD_RESULT result = channel->getPosition(&position, FMOD_TIMEUNIT_MS);
+	ERRCHECK(result);
+	float currenttime = position /1000.0f;
+	printf("AudioEngineImpl::getCurrentTime %d %.3f\n", audioID, currenttime);
+	return currenttime; 
+    }catch(const std::out_of_range& oor){
+      printf("AudioEngineImpl::getCurrentTime: invalid audioID: %d\n", audioID);
+	return AudioEngine::TIME_UNKNOWN;
+  }
 };
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time){
-  /*@todo: unimplemented*/
-  return false; 
+ try{
+    FMOD::Sound * sound = mapEffectSound[audioID]; 
+	FMOD::Channel * channel = getChannel(sound);
+	unsigned int position = (unsigned int)(time * 1000.0f); 
+	printf("AudioEngineImpl::setCurrentTime %d %d\n", audioID, position);
+    FMOD_RESULT result = channel->setPosition(position, FMOD_TIMEUNIT_MS);
+    ERRCHECK(result);
+	}catch(const std::out_of_range& oor){
+      printf("AudioEngineImpl::setCurrentTime: invalid audioID: %d\n", audioID);
+  }
 };
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback){
