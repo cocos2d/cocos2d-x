@@ -65,7 +65,9 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
 
 void AudioEngineImpl::setVolume(int audioID,float volume){
   try{
-    mapEffectSound[audioID]->setMusicChannelVolume(0, volume);
+    FMOD::Sound * sound = mapEffectSound[audioID]; 
+    FMOD::Channel *channel = getChannel(sound);
+	channel->setVolume(volume);
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setVolume: invalid audioID: %d\n", audioID);
   }
