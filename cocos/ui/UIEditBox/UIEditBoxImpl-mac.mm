@@ -222,6 +222,11 @@
 - (BOOL)textFieldShouldReturn:(NSTextField *)sender
 {
     if (sender == textField_ || sender == secureTextField_) {
+        cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplMac()->getDelegate();
+        if (pDelegate != NULL)
+        {
+            pDelegate->editBoxReturn(getEditBoxImplMac()->getEditBox());
+        }
         [sender resignFirstResponder];
     }
     return NO;
@@ -258,7 +263,6 @@
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplMac()->getEditBox());
-        pDelegate->editBoxReturn(getEditBoxImplMac()->getEditBox());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING

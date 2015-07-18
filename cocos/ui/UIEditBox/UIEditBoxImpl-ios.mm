@@ -136,6 +136,11 @@ static const int CC_EDIT_BOX_PADDING = 5;
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
     if (sender == textField_) {
+        cocos2d::ui::EditBoxDelegate* pDelegate = getEditBoxImplIOS()->getDelegate();
+        if (pDelegate != NULL)
+        {
+            pDelegate->editBoxReturn(getEditBoxImplIOS()->getEditBox());
+        }
         [sender resignFirstResponder];
     }
     return NO;
@@ -189,7 +194,6 @@ static const int CC_EDIT_BOX_PADDING = 5;
     if (pDelegate != NULL)
     {
         pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getEditBox());
-        pDelegate->editBoxReturn(getEditBoxImplIOS()->getEditBox());
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
