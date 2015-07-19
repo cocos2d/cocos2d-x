@@ -31,8 +31,6 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 NS_CC_BEGIN
 
-namespace ui {
-
 static const float INERTIA_DEACCELERATION = 700.0f;
 static const float INERTIA_VELOCITY_MAX = 2500;
 static const float BOUNCE_BACK_DURATION = 1.0f;
@@ -45,6 +43,8 @@ static float convertDistanceFromPointToInch(const Vec2& dis)
     float distance = Vec2(dis.x * glview->getScaleX() / dpi, dis.y * glview->getScaleY() / dpi).getLength();
     return distance;
 }
+
+namespace ui {
 
 IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
@@ -482,11 +482,6 @@ void ScrollView::startInertiaScroll()
 	{
 		totalMovement += displacement;
 	}
-	
-    for(auto i = _inertiaTouchDisplacements.begin(); i != _inertiaTouchDisplacements.end(); ++i)
-    {
-        totalMovement += (*i);
-    }
     totalMovement.x = (_direction == Direction::VERTICAL ? 0 : totalMovement.x);
     totalMovement.y = (_direction == Direction::HORIZONTAL ? 0 : totalMovement.y);
     
@@ -803,36 +798,26 @@ void ScrollView::jumpToPercentBothDirection(const Vec2& percent)
     jumpToDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
 }
 
-void ScrollView::startRecordSlidAction()
+void ScrollView::handlePressLogic(Touch *touch)
 {
-    if (_inertiaScrolling)
+    _bePressed = true;
+    
+    if(_inertiaScrollEnabled)
     {
-        _inertiaScrolling = false;
+        if (_inertiaScrolling)
+        {
+            _inertiaScrolling = false;
+        }
+        _inertiaPrevTouchTimestamp = utils::getTimeInMilliseconds();
+        _inertiaTouchDisplacements.clear();
+        _inertiaTouchTimeDeltas.clear();
     }
+    
     if(_autoScrolling)
     {
         _autoScrolling = false;
         _bouncingBack = false;
     }
-}
-
-void ScrollView::endRecordSlidAction()
-{
-    bool bounceBackStarted = startBounceBackIfNeeded();
-    if(!bounceBackStarted && _inertiaScrollEnabled)
-    {
-        startInertiaScroll();
-    }
-}
-
-void ScrollView::handlePressLogic(Touch *touch)
-{
-    startRecordSlidAction();
-    _bePressed = true;
-
-    _inertiaPrevTouchTimestamp = utils::getTimeInMilliseconds();
-    _inertiaTouchDisplacements.clear();
-    _inertiaTouchTimeDeltas.clear();
     
     if(_verticalScrollBar != nullptr)
     {
@@ -856,23 +841,31 @@ void ScrollView::handleMoveLogic(Touch *touch)
     Vec3 delta3 = currPt - prevPt;
     Vec2 delta(delta3.x, delta3.y);
     scrollChildren(delta.x, delta.y);
-
-    while(_inertiaTouchDisplacements.size() > 5)
+    
+    if(_inertiaScrollEnabled)
     {
-        _inertiaTouchDisplacements.pop_front();
-        _inertiaTouchTimeDeltas.pop_front();
+        while(_inertiaTouchDisplacements.size() > 5)
+        {
+            _inertiaTouchDisplacements.pop_front();
+            _inertiaTouchTimeDeltas.pop_front();
+        }
+        _inertiaTouchDisplacements.push_back(delta);
+        
+        long long timestamp = utils::getTimeInMilliseconds();
+        _inertiaTouchTimeDeltas.push_back((timestamp - _inertiaPrevTouchTimestamp) / 1000.0f);
+        _inertiaPrevTouchTimestamp = timestamp;
     }
-    _inertiaTouchDisplacements.push_back(delta);
-
-    long long timestamp = utils::getTimeInMilliseconds();
-    _inertiaTouchTimeDeltas.push_back((timestamp - _inertiaPrevTouchTimestamp) / 1000.0f);
-    _inertiaPrevTouchTimestamp = timestamp;
 }
 
 void ScrollView::handleReleaseLogic(Touch *touch)
 {
-    endRecordSlidAction();
     _bePressed = false;
+    
+    bool bounceBackStarted = startBounceBackIfNeeded();
+    if(!bounceBackStarted && _inertiaScrollEnabled)
+    {
+        startInertiaScroll();
+    }
     
     if(_verticalScrollBar != nullptr)
     {

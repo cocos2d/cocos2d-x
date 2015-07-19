@@ -585,10 +585,6 @@ protected:
 
     virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
 
-    void startRecordSlidAction();
-    virtual void endRecordSlidAction();
-
-    //ScrollViewProtocol
     virtual void handlePressLogic(Touch *touch);
     virtual void handleMoveLogic(Touch *touch);
     virtual void handleReleaseLogic(Touch *touch);
