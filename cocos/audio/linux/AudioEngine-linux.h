@@ -71,13 +71,27 @@ public:
     int preload(const std::string& filePath);
     
     void update(float dt);
+	
+	/**
+	 * used internally by ffmod callback 
+	 */ 
+	void onSoundFinished(FMOD::Channel * channel); 
     
 private:
   
     int find(const std::string &path);
-    FMOD::Channel * getChannel(FMOD::Sound *);
   
-    std::map<int, FMOD::Sound*> mapEffectSound;
+	FMOD::Channel * getChannel(FMOD::Sound *);
+  
+	struct AudioInfo{
+		size_t id; 
+		std::string path; 
+		FMOD::Sound * sound;
+		FMOD::Channel * channel; 
+		std::function<void (int, const std::string &)> callback;
+	};
+	
+    std::map<int, AudioInfo> mapEffectSound;
     
     FMOD::System* pSystem;
 	
