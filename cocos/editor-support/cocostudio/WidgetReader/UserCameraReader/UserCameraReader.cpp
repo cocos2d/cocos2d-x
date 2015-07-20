@@ -84,11 +84,11 @@ namespace cocostudio
             attriname = attribute->Name();
             std::string value = attribute->Value();
             
-            if (attriname == "ValueX")
+            if (attriname == "X")
             {
                 ret.x = atof(value.c_str());
             }
-            else if (attriname == "ValueY")
+            else if (attriname == "Y")
             {
                 ret.y = atof(value.c_str());
             }
@@ -125,6 +125,7 @@ namespace cocostudio
                 else if(value == "USER1") cameraFlag = 1 << 1;
                 else if(value == "USER2") cameraFlag = 1 << 2;
                 else if(value == "USER3") cameraFlag = 1 << 3;
+                else if(value == "USER4") cameraFlag = 1 << 4;
             }
             
             attribute = attribute->Next();

@@ -48,7 +48,9 @@ typedef Vec2 Vect;
 const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
 
 /**
- * @addtogroup core
+ * @addtogroup physics
+ * @{
+ * @addtogroup physics_2d
  * @{
  */
 
@@ -560,6 +562,8 @@ protected:
 };
 
 /** @} */
+/** @} */
+
 
 NS_CC_END
 

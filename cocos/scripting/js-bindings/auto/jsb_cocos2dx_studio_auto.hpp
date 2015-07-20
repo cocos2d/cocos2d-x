@@ -1,9 +1,9 @@
+#include "base/ccConfig.h"
 #ifndef __cocos2dx_studio_h__
 #define __cocos2dx_studio_h__
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-
 
 extern JSClass  *jsb_cocostudio_ActionObject_class;
 extern JSObject *jsb_cocostudio_ActionObject_prototype;
@@ -754,5 +754,5 @@ bool js_cocos2dx_studio_ObjectExtensionData_getCustomProperty(JSContext *cx, uin
 bool js_cocos2dx_studio_ObjectExtensionData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ObjectExtensionData_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ObjectExtensionData_ObjectExtensionData(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_studio_h__

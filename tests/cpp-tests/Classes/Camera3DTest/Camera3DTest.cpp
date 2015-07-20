@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Camera3DTest.h"
+#include "testResource.h"
 
 USING_NS_CC;
 
@@ -41,6 +42,7 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(CameraCullingDemo);
     ADD_TEST_CASE(FogTestDemo);
     ADD_TEST_CASE(CameraArcBallDemo);
+    ADD_TEST_CASE(CameraFrameBufferTest);
 }
 
 //------------------------------------------------------------------
@@ -85,7 +87,7 @@ CameraRotationTest::CameraRotationTest()
     l1->setScale(3);
     bill1->addChild(l1);
 
-    auto p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    auto p1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
     p1->setPosition(30,80);
     bill1->addChild(p1);
     
@@ -101,7 +103,7 @@ CameraRotationTest::CameraRotationTest()
     l2->setScale(3);
     bill2->addChild(l2);
     
-    auto p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    auto p2 = ParticleSystemQuad::create("Particles/SmallSun.plist");
     p2->setPosition(30,80);
     bill2->addChild(p2);
 
@@ -1409,4 +1411,70 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
             _camera->setPosition3D(cameraPos);
         }
     }
+}
+
+CameraFrameBufferTest::CameraFrameBufferTest()
+{
+    
+}
+
+CameraFrameBufferTest::~CameraFrameBufferTest()
+{
+    
+}
+
+std::string CameraFrameBufferTest::title() const
+{
+    return "Camera FrameBuffer Object Test";
+}
+
+void CameraFrameBufferTest::onEnter()
+{
+    auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
+    auto size = Director::getInstance()->getWinSize();
+    auto fboSize = Size(sizeInpixels.width * 1, sizeInpixels.height * 1.5);
+    auto fbo = experimental::FrameBuffer::create(1, fboSize.width, fboSize.height);
+    
+    CameraBaseTest::onEnter();
+    //auto sprite = Sprite::createWithTexture(fbo);
+    //sprite->setPosition(Vec2(100,100));
+    //std::string filename = "Sprite3DTest/girl.c3b";
+    //auto sprite = Sprite3D::create(filename);
+    //sprite->setScale(1.0);
+    //auto animation = Animation3D::create(filename);
+    //if (animation)
+    //{
+    //    auto animate = Animate3D::create(animation);
+        
+    //    sprite->runAction(RepeatForever::create(animate));
+    //}
+    //sprite->setPosition(Vec2(100,100));
+    auto rt = experimental::RenderTarget::create(fboSize.width, fboSize.height);
+    auto rtDS = experimental::RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
+    fbo->attachRenderTarget(rt);
+    fbo->attachDepthStencilTarget(rtDS);
+    auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
+    sprite->setScale(0.3);
+    sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
+    sprite->setPosition(size.width/2, size.height/2);
+    addChild(sprite);
+    
+    auto sprite2 = Sprite::create(s_pathGrossini);
+    sprite2->setPosition(Vec2(size.width/5,size.height/5));
+    addChild(sprite2);
+    sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
+    auto move = MoveBy::create(1.0, Vec2(100,100));
+    sprite2->runAction(
+                       RepeatForever::create(
+                                             Sequence::createWithTwoActions(
+                                                                            move, move->reverse())
+                                             )
+                       );
+    
+    auto camera = Camera::create();
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setDepth(-1);
+    camera->setFrameBufferObject(fbo);
+    fbo->setClearColor(Color4F(1,1,1,1));
+    addChild(camera);
 }

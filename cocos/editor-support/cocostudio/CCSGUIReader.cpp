@@ -493,7 +493,7 @@ Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::Value& data, c
         const char* file = DICTOOL->getStringValueFromArray_json(data, "textures", i);
         std::string tp = fullPath;
         tp.append(file);
-        CCSpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(tp.c_str());
     }
     float fileDesignWidth = DICTOOL->getFloatValue_json(data, "designWidth");
     float fileDesignHeight = DICTOOL->getFloatValue_json(data, "designHeight");
@@ -713,7 +713,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
         
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,TextureResType::PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName,Widget::TextureResType::PLIST);
         }
         else
         {
@@ -733,7 +733,7 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
     {
         if (useMergedTexture)
         {
-            button->loadTextures(normalFileName, pressedFileName, disabledFileName,TextureResType::PLIST);
+            button->loadTextures(normalFileName, pressedFileName, disabledFileName,Widget::TextureResType::PLIST);
         }
         else
         {
@@ -794,7 +794,7 @@ void WidgetPropertiesReader0250::setPropsForCheckBoxFromJsonDictionary(Widget*wi
     
     if (useMergedTexture)
     {
-        checkBox->loadTextures(backGroundFileName, backGroundSelectedFileName, frontCrossFileName,backGroundDisabledFileName,frontCrossDisabledFileName,TextureResType::PLIST);
+        checkBox->loadTextures(backGroundFileName, backGroundSelectedFileName, frontCrossFileName,backGroundDisabledFileName,frontCrossDisabledFileName,Widget::TextureResType::PLIST);
     }
     else
     {
@@ -829,7 +829,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
     {
         if (useMergedTexture)
         {
-            imageView->loadTexture(imageFileName,TextureResType::PLIST);
+            imageView->loadTexture(imageFileName,Widget::TextureResType::PLIST);
         }
         else
         {
@@ -856,7 +856,7 @@ void WidgetPropertiesReader0250::setPropsForImageViewFromJsonDictionary(Widget*w
     {
         if (useMergedTexture)
         {
-            imageView->loadTexture(imageFileName,TextureResType::PLIST);
+            imageView->loadTexture(imageFileName,Widget::TextureResType::PLIST);
         }
         else
         {
@@ -974,7 +974,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
         float ch = DICTOOL->getFloatValue_json(options, "capInsetsHeight");
         if (useMergedTexture)
         {
-            panel->setBackGroundImage(imageFileName,TextureResType::PLIST);
+            panel->setBackGroundImage(imageFileName,Widget::TextureResType::PLIST);
         }
         else
         {
@@ -987,7 +987,7 @@ void WidgetPropertiesReader0250::setPropsForLayoutFromJsonDictionary(Widget*widg
         
         if (useMergedTexture)
         {
-            panel->setBackGroundImage(imageFileName,TextureResType::PLIST);
+            panel->setBackGroundImage(imageFileName,Widget::TextureResType::PLIST);
         }
         else
         {
@@ -1029,7 +1029,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
             const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             if (useMergedTexture)
             {
-                slider->loadBarTexture(imageFileName,TextureResType::PLIST);
+                slider->loadBarTexture(imageFileName,Widget::TextureResType::PLIST);
             }
             else
             {
@@ -1044,7 +1044,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
             const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
             if (useMergedTexture)
             {
-                slider->loadBarTexture(imageFileName,TextureResType::PLIST);
+                slider->loadBarTexture(imageFileName,Widget::TextureResType::PLIST);
             }
             else
             {
@@ -1065,7 +1065,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
     const char* disabledFileName_tp =  (disabledFileName && (strcmp(disabledFileName, "") != 0))?tp_d.append(disabledFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,TextureResType::PLIST);
+        slider->loadSlidBallTextures(normalFileName,pressedFileName,disabledFileName,Widget::TextureResType::PLIST);
     }
     else
     {
@@ -1078,7 +1078,7 @@ void WidgetPropertiesReader0250::setPropsForSliderFromJsonDictionary(Widget*widg
     const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        slider->loadProgressBarTexture(imageFileName, TextureResType::PLIST);
+        slider->loadProgressBarTexture(imageFileName, Widget::TextureResType::PLIST);
     }
     else
     {
@@ -1147,7 +1147,7 @@ void WidgetPropertiesReader0250::setPropsForLoadingBarFromJsonDictionary(Widget 
     const char* imageFileName_tp = (imageFileName && (strcmp(imageFileName, "") != 0))?tp_b.append(imageFileName).c_str():nullptr;
     if (useMergedTexture)
     {
-        loadingBar->loadTexture(imageFileName,TextureResType::PLIST);
+        loadingBar->loadTexture(imageFileName,Widget::TextureResType::PLIST);
     }
     else
     {
@@ -1412,7 +1412,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
                             }
                             else
                             {
-                                if (dynamic_cast<Layout*>(widget))
+                                if (nullptr == dynamic_cast<Layout*>(widget))
                                 {
                                     if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                                     {
@@ -1504,7 +1504,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 }
                 else
                 {
-                    if (dynamic_cast<Layout*>(widget))
+                    if (nullptr == dynamic_cast<Layout*>(widget))
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {

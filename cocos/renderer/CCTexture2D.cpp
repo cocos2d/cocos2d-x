@@ -670,7 +670,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
             CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%d != height=%d", i, width, height);
         }
 
-        GLenum err = glGetError();
+        err = glGetError();
         if (err != GL_NO_ERROR)
         {
             CCLOG("cocos2d: Texture2D: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
@@ -1164,16 +1164,8 @@ void Texture2D::drawAtPoint(const Vec2& point)
     GL::bindTexture2D( _name );
 
 
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
@@ -1197,16 +1189,8 @@ void Texture2D::drawInRect(const Rect& rect)
 
     GL::bindTexture2D( _name );
 
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -1427,7 +1411,7 @@ const Rect& Texture2D::getSpriteFrameCapInset( cocos2d::SpriteFrame *spriteFrame
     }
     else
     {
-        auto capInsetMap = this->_ninePatchInfo->capInsetMap;
+        auto &capInsetMap = this->_ninePatchInfo->capInsetMap;
         if(capInsetMap.find(spriteFrame) != capInsetMap.end())
         {
             return capInsetMap.at(spriteFrame);

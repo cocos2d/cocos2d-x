@@ -367,7 +367,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 
                 Texture2D *tex = nullptr;
                 
-                if (textureName.length() > 0)
+                if (!textureName.empty())
                 {
                     // set not pop-up message box when load image failed
                     bool notify = FileUtils::getInstance()->isPopupNotify();
@@ -384,7 +384,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 else if( dictionary.find("textureImageData") != dictionary.end() )
                 {                        
                     std::string textureData = dictionary.at("textureImageData").asString();
-                    CCASSERT(!textureData.empty(), "");
+                    CCASSERT(!textureData.empty(), "textureData can't be empty!");
                     
                     auto dataLen = textureData.size();
                     if (dataLen != 0)
@@ -404,7 +404,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         CCASSERT(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
+                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, _plistFile + textureName));
 
                         image->release();
                     }

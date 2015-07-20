@@ -68,13 +68,11 @@ bool AudioPlayer::play2d(AudioCache* cache)
     alSourcei(_alSource, AL_BUFFER, 0);
     alSourcef(_alSource, AL_PITCH, 1.0f);
     alSourcef(_alSource, AL_GAIN, _volume);
+    alSourcei(_alSource, AL_LOOPING, AL_FALSE);
     
     if (_audioCache->_queBufferFrames == 0) {
         if (_loop) {
             alSourcei(_alSource, AL_LOOPING, AL_TRUE);
-        }
-        else {
-            alSourcei(_alSource, AL_LOOPING, AL_FALSE);
         }
         alSourcei(_alSource, AL_BUFFER, _audioCache->_alBufferId);
         

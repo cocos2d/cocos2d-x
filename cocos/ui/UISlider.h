@@ -61,7 +61,11 @@ public:
      */
     enum class EventType
     {
-        ON_PERCENTAGE_CHANGED
+        ON_PERCENTAGE_CHANGED,
+        //@since v3.7
+        ON_SLIDEBALL_DOWN,
+        ON_SLIDEBALL_UP,
+        ON_SLIDEBALL_CANCEL
     };
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
@@ -204,6 +208,21 @@ public:
      * @return percent Percent value from 1 to 100.
      */
     int getPercent()const;
+
+    /**
+     * Set a large value could give more control to the precision.
+     * @since v3.7
+     * @param percent The max percent of Slider.
+     */
+    void setMaxPercent(int percent);
+
+    /**
+     * Query the maximum percent of Slider. The default value is 100.
+     * @since v3.7
+     * @return The maximum percent of the Slider.
+     */
+    int getMaxPercent()const;
+
     
     CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     /**
@@ -212,7 +231,7 @@ public:
      * @param callback An given call back function called when slider's percent has changed to slider.
      */
     void addEventListener(const ccSliderCallback& callback);
-    
+
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
@@ -228,7 +247,7 @@ public:
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
     //override the widget's hitTest function to perfom its own
-    virtual bool hitTest(const Vec2 &pt) override;
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     /**
      * Returns the "class name" of widget.
      */
@@ -251,12 +270,20 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     virtual void initRenderer() override;
-    float getPercentWithBallPos(float location)const;
-    void percentChangedEvent();
+    float getPercentWithBallPos(const Vec2 &pt) const;
+    void percentChangedEvent(EventType event);
     virtual void onPressStateChangedToNormal() override;
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
+
+    void setupBarTexture();
+    void loadBarTexture(SpriteFrame* spriteframe);
+    void setupProgressBarTexture();
+    void loadProgressBarTexture(SpriteFrame* spriteframe);
+    void loadSlidBallTextureNormal(SpriteFrame* spriteframe);
+    void loadSlidBallTexturePressed(SpriteFrame* spriteframe);
+    void loadSlidBallTextureDisabled(SpriteFrame* spriteframe);
    
     void barRendererScaleChangedWithSize();
     void progressBarRendererScaleChangedWithSize();
@@ -276,6 +303,7 @@ protected:
     
     float _barLength;
     int _percent;
+    int _maxPercent;
     
     bool _scale9Enabled;
     bool _prevIgnoreSize;
@@ -283,12 +311,9 @@ protected:
     float _zoomScale;
     float _sliderBallNormalTextureScaleX;
     float _sliderBallNormalTextureScaleY;
-    
-    std::string _textureFile;
-    std::string _progressBarTextureFile;
-    std::string _slidBallNormalTextureFile;
-    std::string _slidBallPressedTextureFile;
-    std::string _slidBallDisabledTextureFile;
+
+    bool _isSliderBallPressedTextureLoaded;
+    bool _isSliderBallDisabledTexturedLoaded;
 
     Rect _capInsetsBarRenderer;
     Rect _capInsetsProgressBarRenderer;
@@ -308,7 +333,7 @@ protected:
 #endif
     
     ccSliderCallback  _eventCallback;
-    
+
     TextureResType _barTexType;
     TextureResType _progressBarTexType;
     TextureResType _ballNTexType;

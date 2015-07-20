@@ -41,12 +41,19 @@ var ReflectionTestLayer = BaseTestLayer.extend({
                 cc.log("ret val is "+ret);
             }
         }, this);
-        menuItem.x = winSize.width / 2;
-        menuItem.y = winSize.height / 2;
 
-        var menu = new cc.Menu(menuItem);
-        menu.x = 0;
-        menu.y = 0;
+        var label2 = new cc.LabelTTF("CallReflectionWithBool", "Arial", 35);
+        var menuItem2 = new cc.MenuItemLabel(label2, function(){
+            if(cc.sys.os == cc.sys.OS_ANDROID){
+                jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;Z)V", "How are you ?", "I'm great !", true);
+            }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){
+                var ret = jsb.reflection.callStaticMethod("NativeOcClass","callNativeUIWithTitle:andContent:addBool:","cocos2d-js","Yes! you call a Native UI from Reflection", true);
+                cc.log("ret val is "+ret);
+            }
+        }, this);
+
+        var menu = new cc.Menu(menuItem, menuItem2);
+        menu.alignItemsVerticallyWithPadding(4);
         
         this.addChild(menu);
     }

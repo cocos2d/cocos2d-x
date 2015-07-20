@@ -79,7 +79,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
     else if(file_extension == ".CSB")
     {
         do {
-            std::string binaryFilePath = CCFileUtils::getInstance()->fullPathForFilename(fileName);
+            std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(fileName);
             auto fileData = FileUtils::getInstance()->getDataFromFile(binaryFilePath);
             auto fileDataBytes = fileData.getBytes();
             CC_BREAK_IF(fileData.isNull());
@@ -340,12 +340,16 @@ Node* SceneReader::createObject(const rapidjson::Value &dict, cocos2d::Node* par
             createObject(subDict, gb, attachComponent);
         }
         
-        const rapidjson::Value &canvasSizeDict = DICTOOL->getSubDictionary_json(dict, "CanvasSize");
-        if (DICTOOL->checkObjectExist_json(canvasSizeDict))
+        if(dict.HasMember("CanvasSize"))
         {
-            int width = DICTOOL->getIntValue_json(canvasSizeDict, "_width");
-            int height = DICTOOL->getIntValue_json(canvasSizeDict, "_height");
-            gb->setContentSize(Size(width, height));
+            const rapidjson::Value &canvasSizeDict = DICTOOL->getSubDictionary_json(dict, "CanvasSize");
+            if (DICTOOL->checkObjectExist_json(canvasSizeDict))
+            {
+                int width = DICTOOL->getIntValue_json(canvasSizeDict, "_width");
+                int height = DICTOOL->getIntValue_json(canvasSizeDict, "_height");
+                gb->setContentSize(Size(width, height));
+            }
+
         }
         
         return gb;
@@ -425,7 +429,7 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
         {
             if (pRender == nullptr || attachComponent == AttachComponentType::EMPTY_NODE)
             {
-                gb = CCNode::create();
+                gb = Node::create();
                 if (pRender != nullptr)
                 {
                     _vecComs.push_back(pRender);

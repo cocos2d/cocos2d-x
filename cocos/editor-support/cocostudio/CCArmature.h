@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -176,7 +176,7 @@ public:
      *  @lua NA
      */
     inline const cocos2d::BlendFunc &getBlendFunc(void) const override{ return _blendFunc; }
-	
+    
 
     /**
      * Set contentsize and Calculate anchor point.

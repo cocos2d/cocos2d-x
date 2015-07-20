@@ -188,7 +188,7 @@ public:
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
      */
-    class StateBlock : public Ref
+    class CC_DLL StateBlock : public Ref
     {
         friend class RenderState;
         friend class Pass;
@@ -200,6 +200,13 @@ public:
          * Creates a new StateBlock with default render state settings.
          */
         static StateBlock* create();
+
+        /** The recommended way to create StateBlocks is by calling `create`.
+         * Don't use `new` or `delete` on them.
+         * 
+         */
+        StateBlock();
+        ~StateBlock();
 
         /**
          * Binds the state in this StateBlock to the renderer.
@@ -294,45 +301,45 @@ public:
          */
         void setDepthFunction(DepthFunction func);
 
-        /**
-         * Toggles stencil testing.
-         *
-         * By default, stencil testing is disabled.
-         *
-         * @param enabled true to enable, false to disable.
-         */
-        void setStencilTest(bool enabled);
-
-        /**
-         * Sets the stencil writing mask.
-         *
-         * By default, the stencil writing mask is all 1's.
-         *
-         * @param mask Bit mask controlling writing to individual stencil planes.
-         */
-        void setStencilWrite(unsigned int mask);
-
-        /**
-         * Sets the stencil function.
-         *
-         * By default, the function is set to STENCIL_ALWAYS, the reference value is 0, and the mask is all 1's.
-         *
-         * @param func The stencil function.
-         * @param ref The stencil reference value.
-         * @param mask The stencil mask.
-         */
-        void setStencilFunction(StencilFunction func, int ref, unsigned int mask);
-
-        /**
-         * Sets the stencil operation.
-         *
-         * By default, stencil fail, stencil pass/depth fail, and stencil and depth pass are set to STENCIL_OP_KEEP.
-         *
-         * @param sfail The stencil operation if the stencil test fails.
-         * @param dpfail The stencil operation if the stencil test passes, but the depth test fails.
-         * @param dppass The stencil operation if both the stencil test and depth test pass.
-         */
-        void setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass);
+//        /**
+//         * Toggles stencil testing.
+//         *
+//         * By default, stencil testing is disabled.
+//         *
+//         * @param enabled true to enable, false to disable.
+//         */
+//        void setStencilTest(bool enabled);
+//
+//        /**
+//         * Sets the stencil writing mask.
+//         *
+//         * By default, the stencil writing mask is all 1's.
+//         *
+//         * @param mask Bit mask controlling writing to individual stencil planes.
+//         */
+//        void setStencilWrite(unsigned int mask);
+//
+//        /**
+//         * Sets the stencil function.
+//         *
+//         * By default, the function is set to STENCIL_ALWAYS, the reference value is 0, and the mask is all 1's.
+//         *
+//         * @param func The stencil function.
+//         * @param ref The stencil reference value.
+//         * @param mask The stencil mask.
+//         */
+//        void setStencilFunction(StencilFunction func, int ref, unsigned int mask);
+//
+//        /**
+//         * Sets the stencil operation.
+//         *
+//         * By default, stencil fail, stencil pass/depth fail, and stencil and depth pass are set to STENCIL_OP_KEEP.
+//         *
+//         * @param sfail The stencil operation if the stencil test fails.
+//         * @param dpfail The stencil operation if the stencil test passes, but the depth test fails.
+//         * @param dppass The stencil operation if both the stencil test and depth test pass.
+//         */
+//        void setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass);
 
         /**
          * Sets a render state from the given name and value strings.
@@ -349,14 +356,57 @@ public:
         uint32_t getHash() const;
         bool isDirty() const;
 
+        /** StateBlock bits to be used with invalidate */
+        enum
+        {
+            RS_BLEND = (1 << 0),
+            RS_BLEND_FUNC = (1 << 1),
+            RS_CULL_FACE = (1 << 2),
+            RS_DEPTH_TEST = (1 << 3),
+            RS_DEPTH_WRITE = (1 << 4),
+            RS_DEPTH_FUNC = (1 << 5),
+            RS_CULL_FACE_SIDE = (1 << 6),
+//            RS_STENCIL_TEST = (1 << 7),
+//            RS_STENCIL_WRITE = (1 << 8),
+//            RS_STENCIL_FUNC = (1 << 9),
+//            RS_STENCIL_OP = (1 << 10),
+            RS_FRONT_FACE = (1 << 11),
+            
+            RS_ALL_ONES = 0xFFFFFFFF,
+        };
+
+        /** 
+         * Invalidates the default StateBlock.
+         *
+         * Only call it if you are calling GL calls directly. Invoke this function
+         * at the end of your custom draw call.
+         * This function restores the default render state its defaults values.
+         * Since this function might call GL calls, it must be called in a GL context is present.
+         *
+         * @param stateBits Bitwise-OR of the states that needs to be invalidated
+         */
+        static void invalidate(long stateBits);
+
+        /**
+         * Restores the global Render State to the default state
+         *
+         * The difference between `invalidate()` and `restore()`, is that `restore()` will
+         * restore the global Render State based on its current state. Only the
+         * states that were changed will be restored.
+         *
+         * Rule of thumb:
+         
+         - call `restore()` if you want to restore to the default state after using `StateBlock`.
+         - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
+
+         */
+        static void restore(long stateOverrideBits);
+
         static StateBlock* _defaultState;
 
     protected:
-        StateBlock();
-        ~StateBlock();
 
         void bindNoRestore();
-        static void restore(long stateOverrideBits);
         static void enableDepthWrite();
 
         void cloneInto(StateBlock* renderState) const;

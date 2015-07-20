@@ -1439,6 +1439,11 @@ public:
     Animation* getAnimation() { return _animation; }
     const Animation* getAnimation() const { return _animation; }
 
+    /**
+     * Gets the index of sprite frame currently displayed.
+     * @return int  the index of sprite frame currently displayed.
+     */
+    int getCurrentFrameIndex() { return _currFrameIndex; }
     //
     // Overrides
     //
@@ -1462,6 +1467,7 @@ protected:
     std::vector<float>* _splitTimes;
     int             _nextFrame;
     SpriteFrame*    _origFrame;
+    int _currFrameIndex;
     unsigned int    _executedLoops;
     Animation*      _animation;
 
@@ -1509,6 +1515,10 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
+    //
+    // Overrides
+    //
+    virtual bool isDone(void) const override;
     
 CC_CONSTRUCTOR_ACCESS:
     TargetedAction();

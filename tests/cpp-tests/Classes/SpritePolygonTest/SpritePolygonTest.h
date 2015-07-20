@@ -1,13 +1,14 @@
 #ifndef __cocos2d_tests__SpritePolygonTest__
-#include "../testBasic.h"
+
 #include "../BaseTest.h"
-#include "2d/SpritePolygon.h"
+#include "ui/CocosGUI.h"
+
 DEFINE_TEST_SUITE(SpritePolygonTest);
 
 class SpritePolygonTestCase : public TestCase
 {
 protected:
-    virtual void onBackCallback(Ref* sender);
+    virtual void onBackCallback(Ref* sender)override;
     std::string _title;
     std::string _subtitle;
     virtual std::string title() const override {return _title;};
@@ -16,13 +17,28 @@ protected:
 
 class SpritePolygonTestDemo : public SpritePolygonTestCase
 {
-public:
-    void initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon *inst);
 protected:
-    cocos2d::experimental::SpritePolygon* spp;
+    void initTouchDebugDraw();
+    cocos2d::Sprite* spp;
     cocos2d::Sprite* sp;
-    cocos2d::DrawNode *debugForNormalSprite;
 };
+
+class SpritePolygonTest1 : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTest1);
+    SpritePolygonTest1();
+    void make2Sprites();
+};
+
+class SpritePolygonTest2 : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTest2);
+    SpritePolygonTest2();
+    void make2Sprites();
+};
+
 
 class SpritePolygonPerformance : public SpritePolygonTestCase
 {
@@ -41,6 +57,7 @@ protected:
     int continuousLowDt;
     float continuousHighDtTime;
     float waitingTime;
+
     
     int _posX;
     int _posY;
@@ -55,76 +72,58 @@ protected:
     virtual void incrementStats();
     
     void initIncrementStats();
-    int _incVert;
-    int _incTri;
-    int _incPix;
+    unsigned int _incVert;
+    unsigned int _incTri;
+    unsigned int _incPix;
 };
 
-class SpritePolygonPerformanceTestStatic : public SpritePolygonPerformance
-{
-public:
-    CREATE_FUNC(SpritePolygonPerformanceTestStatic);
-    SpritePolygonPerformanceTestStatic();
-protected:
-    cocos2d::experimental::SpritePolygon* makeSprite();
-    void initIncrementStats();
-};
-
-class SpritePerformanceTestStatic : public SpritePolygonPerformance
-{
-public:
-    CREATE_FUNC(SpritePerformanceTestStatic);
-    SpritePerformanceTestStatic();
-protected:
-    cocos2d::Sprite* makeSprite();
-    void initIncrementStats();
-};
-
-class SpritePolygonPerformanceTestDynamic : public SpritePolygonPerformanceTestStatic
+class SpritePolygonPerformanceTestDynamic : public SpritePolygonPerformance
 {
 public:
     CREATE_FUNC(SpritePolygonPerformanceTestDynamic);
     SpritePolygonPerformanceTestDynamic();
 protected:
-    cocos2d::experimental::SpritePolygon* makeSprite();
+    cocos2d::Sprite* makeSprite();
+    cocos2d::PolygonInfo _pinfo;
+    void initIncrementStats();
 };
 
-class SpritePerformanceTestDynamic : public SpritePerformanceTestStatic
+class SpritePerformanceTestDynamic : public SpritePolygonPerformance
 {
 public:
     CREATE_FUNC(SpritePerformanceTestDynamic);
     SpritePerformanceTestDynamic();
 protected:
     cocos2d::Sprite* makeSprite();
+    void initIncrementStats();
 };
 
-
-class SpritePolygonTest1 : public SpritePolygonTestDemo
+class SpritePolygonTestSlider : public SpritePolygonTestCase
 {
 public:
-    CREATE_FUNC(SpritePolygonTest1);
-    SpritePolygonTest1();
+    CREATE_FUNC(SpritePolygonTestSlider);
+    SpritePolygonTestSlider();
+protected:
+    cocos2d::Label *_epsilonLabel;
+    cocos2d::Sprite* makeSprite(const std::string& filename, const cocos2d::Vec2& pos);
+    void makeSprites(const std::string* list, const int count, const float y);
+    cocos2d::TTFConfig _ttfConfig;
+    void changeEpsilon(Ref *pSender, cocos2d::ui::Slider::EventType type);
+    void updateLabel(const cocos2d::Sprite* sp, const cocos2d::PolygonInfo &pinfo);
 };
 
-class SpritePolygonTest2 : public SpritePolygonTestDemo
-{
-public:
-    CREATE_FUNC(SpritePolygonTest2);
-    SpritePolygonTest2();
-};
-
-class SpritePolygonTest3 : public SpritePolygonTestDemo
+class SpritePolygonTest3 : public SpritePolygonTestSlider
 {
 public:
     CREATE_FUNC(SpritePolygonTest3);
     SpritePolygonTest3();
 };
-
-class SpritePolygonTest4 : public SpritePolygonTestDemo
+class SpritePolygonTest4 : public SpritePolygonTestSlider
 {
 public:
     CREATE_FUNC(SpritePolygonTest4);
     SpritePolygonTest4();
 };
+
 
 #endif /* defined(__cocos2d_tests__SpritePolygonTest__) */

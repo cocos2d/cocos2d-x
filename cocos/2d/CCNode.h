@@ -57,6 +57,7 @@ class Material;
 class PhysicsBody;
 class PhysicsWorld;
 #endif
+class Camera;
 
 /**
  * @addtogroup _2d
@@ -1228,6 +1229,13 @@ public:
     void stopAllActionsByTag(int tag);
 
     /**
+     * Removes all actions from the running action list by its flags.
+     *
+     * @param flags   A flag field that removes actions based on bitwise AND.
+     */
+    void stopActionsByFlags(unsigned int flags);
+
+    /**
      * Gets an action from the running action list by its tag.
      *
      * @see `setTag(int)`, `getTag()`.
@@ -1874,6 +1882,24 @@ private:
     friend class Scene;
 #endif //CC_USTPS
 };
+
+
+/**
+ * This is a helper function, checks a GL screen point is in content rectangle space.
+ *
+ * The content rectangle defined by origin(0,0) and content size.
+ * This function convert GL screen point to near and far planes as points Pn and Pf,
+ * then calculate the intersect point P which the line PnPf intersect with content rectangle.
+ * If P in content rectangle means this node be hitted.
+ *
+ * @param pt        The point in GL screen space.
+ * @param camera    Which camera used to unproject pt to near/far planes.
+ * @param w2l       World to local transform matrix, used to convert Pn and Pf to rectangle space.
+ * @param rect      The test recangle in local space.
+ * @parma p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
+ * @return true if the point is in content rectangle, flase otherwise.
+ */
+bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
 
 // NodeRGBA
 

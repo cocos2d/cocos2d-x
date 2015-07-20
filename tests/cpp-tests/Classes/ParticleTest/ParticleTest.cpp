@@ -1007,6 +1007,8 @@ ParticleTests::ParticleTests()
     ADD_TEST_CASE(ParticleAutoBatching);
     ADD_TEST_CASE(ParticleVisibleTest);
     ADD_TEST_CASE(ParticleResetTotalParticles);
+
+    ADD_TEST_CASE(ParticleIssue12310);
 }
 
 ParticleDemo::~ParticleDemo(void)
@@ -1314,7 +1316,7 @@ void ParticleReorder::reorderParticles(float dt)
 class RainbowEffect : public ParticleSystemQuad
 {
 public:
-    bool init();
+    bool init()override;
     virtual bool initWithTotalParticles(int numberOfParticles) override;
     virtual void update(float dt) override;
 };
@@ -1983,4 +1985,29 @@ std::string ParticleResetTotalParticles::subtitle() const
     return "it should work as well";
 }
 
+void ParticleIssue12310::onEnter()
+{
+    ParticleDemo::onEnter();
 
+    _color->setColor(Color3B::BLACK);
+    removeChild(_background, true);
+    _background = nullptr;
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto particle = ParticleSystemQuad::create("Particles/BoilingFoam.plist");
+    particle->setPosition(Vec2(winSize.width * 0.35f, winSize.height * 0.5f));
+    addChild(particle);
+
+    _emitter = particle;
+    _emitter->retain();
+
+    auto particle2 = ParticleSystemQuad::create("Particles/BoilingFoamStar.plist");
+    particle2->setPosition(Vec2(winSize.width * 0.65f, winSize.height * 0.5f));
+    addChild(particle2);
+}
+
+std::string ParticleIssue12310::subtitle() const
+{
+    return "You should see two Particle Emitters using different texture.";
+}

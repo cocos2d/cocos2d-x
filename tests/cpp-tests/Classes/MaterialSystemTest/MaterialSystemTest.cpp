@@ -26,6 +26,7 @@
 #include "MaterialSystemTest.h"
 
 #include <ctime>
+#include <spine/spine-cocos2dx.h>
 
 #include "../testResource.h"
 #include "cocos2d.h"
@@ -47,6 +48,8 @@ MaterialSystemTest::MaterialSystemTest()
     ADD_TEST_CASE(Material_MultipleSprite3D);
     ADD_TEST_CASE(Material_Sprite3DTest);
     ADD_TEST_CASE(Material_parsePerformance);
+    ADD_TEST_CASE(Material_invalidate);
+    ADD_TEST_CASE(Material_renderState);
 }
 
 std::string MaterialSystemBaseTest::title() const
@@ -217,22 +220,22 @@ void Material_AutoBindings::onEnter()
     Material *mat1 = Material::createWithProperties(properties);
 
     auto spriteBlur = Sprite::create("Images/grossini.png");
-    spriteBlur->setNormalizedPosition(Vec2(0.2, 0.5));
+    spriteBlur->setNormalizedPosition(Vec2(0.2f, 0.5f));
     this->addChild(spriteBlur);
     spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteOutline = Sprite::create("Images/grossini.png");
-    spriteOutline->setNormalizedPosition(Vec2(0.4, 0.5));
+    spriteOutline->setNormalizedPosition(Vec2(0.4f, 0.5f));
     this->addChild(spriteOutline);
     spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteNoise = Sprite::create("Images/grossini.png");
-    spriteNoise->setNormalizedPosition(Vec2(0.6, 0.5));
+    spriteNoise->setNormalizedPosition(Vec2(0.6f, 0.5f));
     this->addChild(spriteNoise);
     spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
-    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8, 0.5));
+    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8f, 0.5f));
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
 
@@ -379,6 +382,131 @@ void Material_parsePerformance::onEnter()
 std::string Material_parsePerformance::subtitle() const
 {
     return "Testing parsing performance";
+}
+
+//
+//
+//
+void Material_invalidate::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+    // ORC
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setNormalizedPosition(Vec2(0.3f,0.3f));
+
+    auto rotate = RotateBy::create(5, Vec3(0,360,0));
+    auto repeat = RepeatForever::create(rotate);
+    sprite->runAction(repeat);
+
+    // SPINE
+    auto skeletonNode = spine::SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
+    skeletonNode->setAnimation(0, "walk", true);
+    skeletonNode->setSkin("goblin");
+
+    skeletonNode->setScale(0.25);
+    skeletonNode->setNormalizedPosition(Vec2(0.6f,0.3f));
+    this->addChild(skeletonNode);
+}
+
+std::string Material_invalidate::subtitle() const
+{
+    return "Testing RenderState::StateBlock::invalidate()";
+}
+
+void Material_invalidate::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
+{
+    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.func = []() {
+        glDisable(GL_DEPTH_TEST);
+        CHECK_GL_ERROR_DEBUG();
+
+        glDepthMask(false);
+        CHECK_GL_ERROR_DEBUG();
+
+        glEnable(GL_CULL_FACE);
+        CHECK_GL_ERROR_DEBUG();
+
+        glCullFace((GLenum)GL_FRONT);
+        CHECK_GL_ERROR_DEBUG();
+
+        glFrontFace((GLenum)GL_CW);
+        CHECK_GL_ERROR_DEBUG();
+
+        glDisable(GL_BLEND);
+        CHECK_GL_ERROR_DEBUG();
+
+        // a non-optimal way is to pass all bits, but that would be very inefficient
+//        RenderState::StateBlock::invalidate(RenderState::StateBlock::RS_ALL_ONES);
+
+        RenderState::StateBlock::invalidate(RenderState::StateBlock::RS_DEPTH_TEST |
+                                            RenderState::StateBlock::RS_DEPTH_WRITE |
+                                            RenderState::StateBlock::RS_CULL_FACE |
+                                            RenderState::StateBlock::RS_CULL_FACE_SIDE |
+                                            RenderState::StateBlock::RS_FRONT_FACE |
+                                            RenderState::StateBlock::RS_BLEND);
+    };
+
+    renderer->addCommand(&_customCommand);
+}
+
+//
+//
+//
+void Material_renderState::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+    // ORC
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setNormalizedPosition(Vec2(0.3f,0.3f));
+
+    auto rotate = RotateBy::create(5, Vec3(0,360,0));
+    auto repeat = RepeatForever::create(rotate);
+    sprite->runAction(repeat);
+
+    // SPINE
+    auto skeletonNode = spine::SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
+    skeletonNode->setAnimation(0, "walk", true);
+    skeletonNode->setSkin("goblin");
+
+    skeletonNode->setScale(0.25);
+    skeletonNode->setNormalizedPosition(Vec2(0.6f,0.3f));
+    this->addChild(skeletonNode);
+
+    _stateBlock.setDepthTest(false);
+    _stateBlock.setDepthWrite(false);
+    _stateBlock.setCullFace(true);
+    _stateBlock.setCullFaceSide(RenderState::CULL_FACE_SIDE_FRONT);
+    _stateBlock.setFrontFace(RenderState::FRONT_FACE_CW);
+    _stateBlock.setBlend(false);
+}
+
+std::string Material_renderState::subtitle() const
+{
+    return "You should see a Spine animation on the right";
+}
+
+void Material_renderState::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
+{
+    _customCommand.init(_globalZOrder, transform, flags);
+    _customCommand.func = [this]() {
+
+        this->_stateBlock.bind();
+
+        // should do something...
+        // and after that, restore
+
+        this->_stateBlock.restore(0);
+    };
+    
+    renderer->addCommand(&_customCommand);
 }
 
 // MARK: Helper functions

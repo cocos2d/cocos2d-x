@@ -1,7 +1,6 @@
 #ifndef __CONFIGURATIONTEST_H__
 #define __CONFIGURATIONTEST_H__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ConfigurationTests);

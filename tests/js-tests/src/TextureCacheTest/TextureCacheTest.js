@@ -49,6 +49,79 @@ var TextureCacheTestBase = BaseTestLayer.extend({
     }
 });
 
+var TextureLoadImgTest = TextureCacheTestBase.extend({
+    _title: "Load Same Image Twice",
+    _labelFirst:null,
+    _labelSecond:null,
+    ctor: function () {
+        this._super();
+
+        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
+            var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
+            label.x = winSize.width / 2;
+            label.y = winSize.height / 2;
+            this.addChild(label, 100);
+            return;
+        }
+
+        this._labelFirst = new cc.LabelTTF("load first image");
+        this._labelFirst.attr({
+            x:cc.winSize.width/2,
+            y:cc.winSize.height/2 + 30
+        });
+        this.addChild(this._labelFirst, 1);
+
+
+        this._labelSecond = new cc.LabelTTF("load second image");
+        this._labelSecond.attr({
+            x:cc.winSize.width/2,
+            y:cc.winSize.height/2 - 30
+        });
+        this.addChild(this._labelSecond, 1);
+
+        var url = "http://cn.cocos2d-x.org/image/logo.png";
+        cc.textureCache.addImageAsync(url, this.texFirstLoaded, this);
+        cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
+    },
+
+    texFirstLoaded: function(texture) {
+        if (!texture)
+        {
+            this._labelFirst.setString("texFirstLoaded fail");
+            return;
+        }
+
+        if (this.sprite) {
+            this.removeChild(this.sprite);
+        }
+        this.sprite = new cc.Sprite(texture);
+        this.sprite.x = cc.winSize.width/2;
+        this.sprite.y = cc.winSize.height/2;
+        this.addChild(this.sprite);
+
+        this._labelFirst.setString("texFirstLoaded successful");
+    },
+
+    texSecondLoaded: function(texture) {
+
+        if (!texture)
+        {
+            this._labelSecond.setString("texSecondLoaded fail");
+            return;
+        }
+
+        if (this.sprite2) {
+            this.removeChild(this.sprite2);
+        }
+        this.sprite2 = new cc.Sprite(texture);
+        this.sprite2.x = cc.winSize.width/2;
+        this.sprite2.y = cc.winSize.height/2 + 70;
+        this.addChild(this.sprite2);
+
+        this._labelSecond.setString("texSecondLoaded successful");
+    }
+});
+
 var TextureCacheTest = TextureCacheTestBase.extend({
     _title:"Texture Cache Loading Test",
     _labelLoading:null,
@@ -244,6 +317,7 @@ var TexCacheTestScene = TestScene.extend({
 });
 
 var arrayOfTexCacheTest = [
+    TextureLoadImgTest,
     TextureCacheTest,
     RemoteTextureTest
 ];

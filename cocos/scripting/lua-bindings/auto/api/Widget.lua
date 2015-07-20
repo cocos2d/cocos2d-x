@@ -386,11 +386,15 @@
 --------------------------------
 -- Checks a point is in widget's content space.<br>
 -- This function is used for determining touch area of widget.<br>
--- param pt The point in `Vec2`.<br>
+-- param pt        The point in `Vec2`.<br>
+-- param camera    The camera look at widget, used to convert GL screen point to near/far plane.<br>
+-- param p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.<br>
 -- return true if the point is in widget's content space, flase otherwise.
 -- @function [parent=#Widget] hitTest 
 -- @param self
 -- @param #vec2_table pt
+-- @param #cc.Camera camera
+-- @param #vec3_table p
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

@@ -21,6 +21,17 @@
 #include "network/XMLHTTPRequest.h"
 #include "network/jsb_websocket.h"
 #include "network/jsb_socketio.h"
+#include "jsb_cocos2dx_physics3d_auto.hpp"
+#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
+#include "jsb_cocos2dx_navmesh_auto.hpp"
+#include "navmesh/jsb_cocos2dx_navmesh_manual.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCJavascriptJavaBridge.h"
@@ -108,6 +119,24 @@ bool AppDelegate::applicationDidFinishLaunching()
     // 3d extension can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
     
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    // Physics 3d can be commented out to reduce the package
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d);
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
+#endif
+
+#if CC_USE_NAVMESH
+    sc->addRegisterCallback(register_all_cocos2dx_navmesh);
+    sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

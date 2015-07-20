@@ -187,6 +187,11 @@ bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, cocos2d::Vec2* ret);
 bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret);
 bool jsval_to_vector4(JSContext *cx, JS::HandleValue vp, cocos2d::Vec4* ret);
 bool jsval_to_blendfunc(JSContext *cx, JS::HandleValue vp, cocos2d::BlendFunc* ret);
+bool jsval_to_vector_vec2(JSContext* cx, JS::HandleValue v, std::vector<cocos2d::Vec2>* ret);
+bool jsval_to_cctex2f(JSContext* cx, JS::HandleValue vp, cocos2d::Tex2F* ret);
+bool jsval_to_v3fc4bt2f(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F* ret);
+bool jsval_to_v3fc4bt2f_quad(JSContext* cx, JS::HandleValue v, cocos2d::V3F_C4B_T2F_Quad* ret);
+bool jsval_to_vector_v3fc4bt2f(JSContext* cx, JS::HandleValue v, std::vector<cocos2d::V3F_C4B_T2F>* ret);
 
 template <class T>
 bool jsval_to_ccmap_string_key(JSContext *cx, JS::HandleValue v, cocos2d::Map<std::string, T>* ret)
@@ -332,7 +337,9 @@ jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v);
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v);
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v);
 jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v);
+jsval vector4_to_jsval(JSContext *cx, const cocos2d::Vec4& v);
 jsval blendfunc_to_jsval(JSContext *cx, const cocos2d::BlendFunc& v);
+jsval vector_vec2_to_jsval(JSContext *cx, const std::vector<cocos2d::Vec2>& v);
 
 #endif /* __JS_MANUAL_CONVERSIONS_H__ */
 

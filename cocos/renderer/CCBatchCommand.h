@@ -28,7 +28,7 @@
 #include "renderer/CCRenderCommand.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 

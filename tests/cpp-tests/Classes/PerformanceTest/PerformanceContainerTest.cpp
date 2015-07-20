@@ -482,7 +482,7 @@ std::string ArrayPerfTest::subtitle() const
 void ArrayPerfTest::generateTestFunctions()
 {
     auto createArray = [this](){
-        __Array* ret = Array::create();
+        __Array* ret = __Array::create();
         
         for( int i=0; i<quantityOfNodes; ++i)
         {
@@ -495,7 +495,7 @@ void ArrayPerfTest::generateTestFunctions()
     
     TestFunction testFunctions[] = {
         { "addObject",    [=](){
-            __Array* nodeVector = Array::create();
+            __Array* nodeVector = __Array::create();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -503,7 +503,7 @@ void ArrayPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "insertObject",      [=](){
-            __Array* nodeVector = Array::create();
+            __Array* nodeVector = __Array::create();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -940,7 +940,7 @@ void DictionaryStringKeyPerfTest::generateTestFunctions()
         } } ,
         
         { "allKeysForObject",    [=](){
-            __Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = __Dictionary::create();
             
             Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
             Node* sameNode = Node::create();
@@ -1170,7 +1170,7 @@ std::string TemplateMapIntKeyPerfTest::subtitle() const
 void DictionaryIntKeyPerfTest::generateTestFunctions()
 {
     auto createDict = [this](){
-        __Dictionary* ret = Dictionary::create();
+        __Dictionary* ret = __Dictionary::create();
         
         for( int i=0; i<quantityOfNodes; ++i)
         {
@@ -1183,7 +1183,7 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
     
     TestFunction testFunctions[] = {
         { "setObject",    [=](){
-            __Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = __Dictionary::create();
             
             CC_PROFILER_START(this->profilerName());
             for( int i=0; i<quantityOfNodes; ++i)
@@ -1256,7 +1256,7 @@ void DictionaryIntKeyPerfTest::generateTestFunctions()
         } } ,
         
         { "allKeysForObject",    [=](){
-            __Dictionary* dict = Dictionary::create();
+            __Dictionary* dict = __Dictionary::create();
             
             Node** nodes = (Node**) malloc(sizeof(Node*) * quantityOfNodes);
             Node* sameNode = Node::create();

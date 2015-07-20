@@ -36,9 +36,7 @@
 
 NS_CC_BEGIN
     namespace experimental{
-#define MAX_AUDIOINSTANCES 32
-
-class AudioEngineThreadPool;
+#define MAX_AUDIOINSTANCES 24
 
 class AudioEngineImpl : public cocos2d::Ref
 {
@@ -61,13 +59,11 @@ public:
     
     void uncache(const std::string& filePath);
     void uncacheAll();
-    
+    AudioCache* preload(const std::string& filePath);
     void update(float dt);
     
 private:
     void _play2d(AudioCache *cache, int audioID);
-    
-    AudioEngineThreadPool* _threadPool;
     
     ALuint _alSources[MAX_AUDIOINSTANCES];
     

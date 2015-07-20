@@ -104,6 +104,13 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
+-- force set this Sprite3D to 2D render queue
+-- @function [parent=#Mesh] setForce2DQueue 
+-- @param self
+-- @param #bool force2D
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
 -- skin setter
 -- @function [parent=#Mesh] setSkin 
 -- @param self

@@ -83,7 +83,7 @@ int Application::run()
 	return 0;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
     LARGE_INTEGER nFreq;
     QueryPerformanceFrequency(&nFreq);
@@ -214,7 +214,11 @@ LanguageType Application::getCurrentLanguage()
 
 Application::Platform  Application::getTargetPlatform()
 {
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     return Platform::OS_WP8;
+#else
+    return Platform::OS_WINRT;
+#endif
 }
 
 bool Application::openURL(const std::string &url)

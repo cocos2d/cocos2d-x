@@ -92,9 +92,9 @@
         "CCSprite": function(node, component, resourcePath){
             var child = new cc.Sprite();
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0)
+                if(type === 0)
                     child.setTexture(path);
-                else if(type == 1){
+                else if(type === 1){
                     var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
                     child.setSpriteFrame(spriteFrame);
                 }
@@ -106,7 +106,7 @@
         "CCTMXTiledMap": function(node, component, resourcePath){
             var child = null;
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0)
+                if(type === 0)
                     child = new cc.TMXTiledMap(path);
             });
             var render = new ccs.ComRender(child, "CCTMXTiledMap");
@@ -116,7 +116,7 @@
         "CCParticleSystemQuad": function(node, component, resourcePath){
             var child = null;
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0)
+                if(type === 0)
                     child = new cc.ParticleSystem(path);
                 else
                     cc.log("unknown resourcetype on CCParticleSystemQuad!");
@@ -129,7 +129,7 @@
         "CCArmature": function(node, component, resourcePath){
             var child = null;
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0){
+                if(type === 0){
                     var jsonDict = cc.loader.getRes(path);
                     if (!jsonDict) cc.log("Please load the resource [%s] first!", path);
                     var armature_data = jsonDict["armature_data"];
@@ -153,7 +153,7 @@
         "CCComAudio": function(node, component, resourcePath){
             var audio = null;
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0){
+                if(type === 0){
                     audio = new ccs.ComAudio();
                     audio.preloadEffect(path);
                     var name = component["name"];
@@ -166,9 +166,9 @@
         "CCComAttribute": function(node, component, resourcePath){
             var attribute = null;
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0){
+                if(type === 0){
                     attribute = new ccs.ComAttribute();
-                    if (path != "")
+                    if (path !== "")
                         attribute.parse(path);
                     node.addComponent(attribute);
                 }else
@@ -179,7 +179,7 @@
         "CCBackgroundAudio": function(node, component, resourcePath){
             var audio = null;
             loadTexture(component["fileData"], resourcePath, function(path, type){
-                if(type == 0){
+                if(type === 0){
                     audio = new ccs.ComAudio();
                     audio.preloadBackgroundMusic(path);
                     audio.setFile(path);var bLoop = Boolean(component["loop"] || 0);

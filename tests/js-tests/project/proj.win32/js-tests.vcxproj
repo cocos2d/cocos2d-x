@@ -122,7 +122,7 @@ xcopy "$(ProjectDir)..\..\src" "$(OutDir)\src\" /e /Y
 xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\res\" /e /Y
 copy "$(ProjectDir)..\..\main.js" "$(OutDir)"
 copy "$(ProjectDir)..\..\project.json" "$(OutDir)"
-xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\res\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\res\resjs\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>

@@ -50,7 +50,7 @@ Configuration::Configuration()
 , _maxDirLightInShader(1)
 , _maxPointLightInShader(1)
 , _maxSpotLightInShader(1)
-, _animate3DQuality(Animate3DQuality::QUALITY_HIGH)
+, _animate3DQuality(Animate3DQuality::QUALITY_LOW)
 {
 }
 
@@ -221,7 +221,11 @@ bool Configuration::supportsETC() const
 
 bool Configuration::supportsS3TC() const
 {
+#ifdef GL_EXT_texture_compression_s3tc
     return _supportsS3TC;
+#else
+    return false;
+#endif
 }
 
 bool Configuration::supportsATITC() const

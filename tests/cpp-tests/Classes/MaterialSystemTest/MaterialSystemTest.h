@@ -24,7 +24,6 @@
 
 #pragma once
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(MaterialSystemTest);
@@ -109,6 +108,33 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+};
+
+class Material_invalidate : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_invalidate);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+
+    cocos2d::CustomCommand _customCommand;
+};
+
+class Material_renderState : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_renderState);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+
+    cocos2d::RenderState::StateBlock _stateBlock;
+    cocos2d::CustomCommand _customCommand;
 };
 
 

@@ -24,7 +24,9 @@ set(COCOS_UI_SRC
 
   ui/CocosGUI.cpp
   ui/UIButton.cpp
+  ui/UIAbstractCheckButton.cpp
   ui/UICheckBox.cpp
+  ui/UIRadioButton.cpp
   ui/UIDeprecated.cpp
   ui/UIHBox.cpp
   ui/UIHelper.cpp
@@ -39,6 +41,7 @@ set(COCOS_UI_SRC
   ui/UIRichText.cpp
   ui/UIScale9Sprite.cpp
   ui/UIScrollView.cpp
+  ui/UIScrollViewBar.cpp
   ui/UISlider.cpp
   ui/UIText.cpp
   ui/UITextAtlas.cpp

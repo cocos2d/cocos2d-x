@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -59,13 +59,13 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #ifndef __CC_SOCKETIO_H__
 #define __CC_SOCKETIO_H__
 
+#include <string>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
-#include <string>
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 
@@ -103,22 +103,22 @@ public:
         /** Destructor of SIODelegate. */
         virtual ~SIODelegate() {}
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
          * 
          * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
          *
          * @param client the connected SIOClient object.
          */
-        virtual void onConnect(SIOClient* client) = 0;
+        virtual void onConnect(SIOClient* client) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate onConnect fired"); };
         /**
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
          * This function would be called wwhen the related SIOClient object recevie message or json message.
          *
          * @param client the connected SIOClient object.
          * @param data the message,it could be json message
          */
-        virtual void onMessage(SIOClient* client, const std::string& data) = 0;
+        virtual void onMessage(SIOClient* client, const std::string& data) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
         /**
          * Pure virtual callback function, this function should be overrided by the subclass.
          *
@@ -143,7 +143,7 @@ public:
          * @param eventName the event's name.
          * @param data the event's data information.
          */
-        virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
+        virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
 
     /**
@@ -207,7 +207,7 @@ private:
 
     void onOpen();
     void onConnect();
-    void receivedDisconnect();
+    void socketClosed();
 
     friend class SIOClientImpl;
 
@@ -242,13 +242,13 @@ public:
      *
      * @param s message.
      */
-    void send(std::string s);
+    void send(const std::string& s);
     /**
      *  Emit the eventname and the args to the endpoint that _path point to.
      * @param eventname
      * @param args
      */
-    void emit(std::string eventname, std::string args);
+    void emit(const std::string& eventname, const std::string& args);
     /**
      * Used to register a socket.io event callback.
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).

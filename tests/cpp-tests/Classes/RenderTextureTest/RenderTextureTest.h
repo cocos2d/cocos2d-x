@@ -95,7 +95,7 @@ public:
     CREATE_FUNC(RenderTextureTargetNode);
     RenderTextureTargetNode();
     
-    virtual void update(float t);
+    virtual void update(float t)override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     

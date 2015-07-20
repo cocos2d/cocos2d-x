@@ -1,0 +1,179 @@
+{
+    "template_copy_config" : [
+        {
+            "from": "templates/cpp-template-default",
+            "to": "cpp-template-binary",
+            "exclude": [
+                "*android-studio",
+                "*win10",
+                "*wp8",
+                "*win8.1-universal",
+                "*linux",
+                "*CMakeLists.txt",
+                "Resources",
+                "cocos-project-template.json"
+            ]
+        },
+        {
+            "from": "templates/lua-template-default",
+            "to": "lua-template-binary",
+            "include" : [
+                "config.json",
+                ".settings",
+                ".project"
+            ]
+        },
+        {
+            "from": "templates/lua-template-default/frameworks",
+            "to": "lua-template-binary/frameworks",
+            "exclude": [
+                "*android-studio",
+                "*win10",
+                "*wp8",
+                "*win8.1-universal",
+                "*linux",
+                "*CMakeLists.txt"
+            ]
+        },
+        {
+            "from": "templates/lua-template-default/src",
+            "to": "lua-template-binary/src",
+            "exclude": [
+                "app/*"
+            ]
+        },
+        {
+            "from": "templates/js-template-runtime",
+            "to": "js-template-binary",
+            "exclude": [
+                "*android-studio",
+                "*win10",
+                "*wp8",
+                "*win8.1-universal",
+                "*linux",
+                "*CMakeLists.txt",
+                "res/*",
+                "runtime/*"
+            ]
+        },
+        {
+            "from": "web",
+            "to": "js-template-binary/frameworks/cocos2d-html5"
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
+            "to": "lua-template-binary/frameworks/runtime-src/Classes/ide-support/",
+            "exclude": [
+                "RuntimeJsImpl.*"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/Classes",
+            "to": "lua-template-binary/frameworks/runtime-src/Classes",
+            "include": [
+                "lua_module_register.h"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+            "to": "lua-template-binary/frameworks/runtime-src/proj.ios_mac/ios",
+            "exclude": [
+                "RootViewController.*",
+                "Info.plist"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+            "to": "lua-template-binary/frameworks/runtime-src/proj.ios_mac/mac",
+            "exclude": [
+                "Info.plist",
+                "Icon.icns",
+                "build-cfg.json"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/proj.win32",
+            "to": "lua-template-binary/frameworks/runtime-src/proj.win32/",
+            "include": [
+                "build-cfg.json",
+                "game.rc",
+                "main.cpp",
+                "main.h",
+                "res",
+                "resource.h",
+                "SimulatorWin.cpp",
+                "SimulatorWin.h"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/Classes",
+            "to": "js-template-binary/frameworks/runtime-src/Classes",
+            "include": [
+                "js_module_register.h"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
+            "to": "js-template-binary/frameworks/runtime-src/Classes/ide-support/",
+            "exclude": [
+                "RuntimeLuaImpl.*",
+                "lua_debugger.*"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+            "to": "js-template-binary/frameworks/runtime-src/proj.ios_mac/ios",
+            "exclude": [
+                "RootViewController.*",
+                "Info.plist"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+            "to": "js-template-binary/frameworks/runtime-src/proj.ios_mac/mac",
+            "exclude": [
+                "Info.plist",
+                "Icon.icns",
+                "build-cfg.json"
+            ]
+        },
+        {
+            "from": "tools/simulator/frameworks/runtime-src/proj.win32",
+            "to": "js-template-binary/frameworks/runtime-src/proj.win32/",
+            "include": [
+                "build-cfg.json",
+                "game.rc",
+                "main.cpp",
+                "main.h",
+                "res",
+                "resource.h",
+                "SimulatorWin.cpp",
+                "SimulatorWin.h"
+            ]
+        },
+        {
+            "from": "cocos/platform/android/java/src",
+            "to": "cpp-template-binary/proj.android/src"
+        },
+        {
+            "from": "cocos/platform/android/java/src",
+            "to": "lua-template-binary/frameworks/runtime-src/proj.android/src"
+        },
+        {
+            "from": "cocos/platform/android/java/src",
+            "to": "js-template-binary/frameworks/runtime-src/proj.android/src"
+        },
+        {
+            "from": "tools/framework-compile/bin-templates/cpp-template-default",
+            "to": "cpp-template-binary"
+        },
+        {
+            "from": "tools/framework-compile/bin-templates/lua-template-runtime",
+            "to": "lua-template-binary"
+        },
+        {
+            "from": "tools/framework-compile/bin-templates/js-template-runtime",
+            "to": "js-template-binary"
+        }
+    ]
+}

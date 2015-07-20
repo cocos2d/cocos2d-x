@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <CLCompile Include="$(MSBuildThisFileDirectory)App.xaml.cpp" />
@@ -621,6 +621,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UserDefaultTest\UserDefaultTest.h">
       <Filter>Classes\UserDefaultTest</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\VibrateTest\VibrateTest.h">
+      <Filter>Classes\VibrateTest</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClInclude>
@@ -793,6 +796,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.cpp">
       <Filter>Classes\Scene3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.cpp">
+      <Filter>Classes\NavMeshTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1212,6 +1225,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>Classes\UserDefaultTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\VibrateTest\VibrateTest.cpp">
+      <Filter>Classes\VibrateTest</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
     </ClCompile>
@@ -1614,6 +1630,9 @@
     <Filter Include="Classes\UserDefaultTest">
       <UniqueIdentifier>{b8edd306-886d-4fa6-a97c-b930adc2de36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\VibrateTest">
+      <UniqueIdentifier>{3bd8ffaa-c24f-455b-bb31-25b038490329}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\ZwoptexTest">
       <UniqueIdentifier>{3fd77e97-6478-4076-bcce-78366417556f}</UniqueIdentifier>
     </Filter>
@@ -1710,6 +1729,9 @@
     <Filter Include="Classes\Scene3DTest">
       <UniqueIdentifier>{77f319c0-fd62-4505-b872-a2fd52375636}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\NavMeshTest">
+      <UniqueIdentifier>{63894b40-d29e-4744-8cac-bd3d12916fe3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
@@ -1757,6 +1779,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.h">
       <Filter>Classes\Scene3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.h">
+      <Filter>Classes\NavMeshTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.h">
+      <Filter>Classes\BugsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
