@@ -80,6 +80,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelFNTOpacity : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFNTOpacity);
+
+    LabelFNTOpacity();
+    virtual std::string title() const override;
+
+    virtual std::string subtitle() const override;
+};
+
 class LabelFNTHundredLabels : public AtlasDemoNew
 {
 public:
