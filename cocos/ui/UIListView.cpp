@@ -514,7 +514,14 @@ void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* 
     
 ssize_t ListView::getCurSelectedIndex() const
 {
-    return _curSelectedIndex;
+    if (_curSelectedIndex < _items.size())
+    {
+        return _curSelectedIndex;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 void ListView::onSizeChanged()
