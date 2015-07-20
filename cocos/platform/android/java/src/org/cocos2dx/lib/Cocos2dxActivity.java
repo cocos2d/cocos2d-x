@@ -77,12 +77,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         
         public EGLConfig selectConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs, int[] attribs)
         {
+            EGLConfig closestConfig = null;
+            int[] currentAttribs = new int[]{attribs[0], attribs[1], attribs[2], attribs[3], attribs[4], attribs[5]};
             for (EGLConfig config : configs) {
                 int d = findConfigAttrib(egl, display, config,
                         EGL10.EGL_DEPTH_SIZE, 0);
                 int s = findConfigAttrib(egl, display, config,
                         EGL10.EGL_STENCIL_SIZE, 0);
-                if ((d >= attribs[4]) && (s >= attribs[5])) {
+                if ((d >= currentAttribs[4]) && (s >= currentAttribs[5])) {
                     int r = findConfigAttrib(egl, display, config,
                             EGL10.EGL_RED_SIZE, 0);
                     int g = findConfigAttrib(egl, display, config,
@@ -91,20 +93,31 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                               EGL10.EGL_BLUE_SIZE, 0);
                     int a = findConfigAttrib(egl, display, config,
                             EGL10.EGL_ALPHA_SIZE, 0);
-                    if ((r >= attribs[0]) && (g >= attribs[1])
-                            && (b >= attribs[2]) && (a >= attribs[3])) {
-                        return config;
+                    if ((r >= currentAttribs[0]) && (g >= currentAttribs[1])
+                            && (b >= currentAttribs[2]) && (a >= currentAttribs[3])) {
+                        currentAttribs[0] = r;
+                        currentAttribs[1] = g;
+                        currentAttribs[2] = b;
+                        currentAttribs[3] = a;
+                        currentAttribs[4] = d;
+                        currentAttribs[5] = s;
+
+                        closestConfig = config;
                     }
                 }
             }
-            return null;
+            return closestConfig;
         }
 
         private int findConfigAttrib(EGL10 egl, EGLDisplay display,
                 EGLConfig config, int attribute, int defaultValue) {
-            int[] value = new int[1];
-            if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
-                return value[0];
+            try {
+                int[] value = new int[1];
+                if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
+                    return value[0];
+                }
+            } catch (Exception e) {
+
             }
             return defaultValue;
         }
