@@ -111,10 +111,7 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     // Methods
     // ===========================================================
 
-    private static native void nativeTouchesBegin(final int id, final float x, final float y);
-    private static native void nativeTouchesEnd(final int id, final float x, final float y);
-    private static native void nativeTouchesMove(final int[] ids, final float[] xs, final float[] ys);
-    private static native void nativeTouchesCancel(final int[] ids, final float[] xs, final float[] ys);
+    private static native void nativeTouches(final int action, final int[] ids, final float[] xs, final float[] ys);
     private static native boolean nativeKeyEvent(final int keyCode,boolean isPressed);
     private static native void nativeRender();
     private static native void nativeInit(final int width, final int height);
@@ -122,20 +119,8 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
     private static native void nativeOnPause();
     private static native void nativeOnResume();
 
-    public void handleActionDown(final int id, final float x, final float y) {
-        Cocos2dxRenderer.nativeTouchesBegin(id, x, y);
-    }
-
-    public void handleActionUp(final int id, final float x, final float y) {
-        Cocos2dxRenderer.nativeTouchesEnd(id, x, y);
-    }
-
-    public void handleActionCancel(final int[] ids, final float[] xs, final float[] ys) {
-        Cocos2dxRenderer.nativeTouchesCancel(ids, xs, ys);
-    }
-
-    public void handleActionMove(final int[] ids, final float[] xs, final float[] ys) {
-        Cocos2dxRenderer.nativeTouchesMove(ids, xs, ys);
+    public void handleTouchEvent(final int action, final int[] ids, final float[] xs, final float[] ys) {
+        Cocos2dxRenderer.nativeTouches(action, ids, xs, ys);
     }
 
     public void handleKeyDown(final int keyCode) {
