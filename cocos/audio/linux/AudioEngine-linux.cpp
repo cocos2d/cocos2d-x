@@ -80,7 +80,7 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
   setLoop(id, loop);
   setVolume(id, volume);
   printf("DEBUG: AudioEngineImpl::play2d with id %d\n", id); 
-  if(id > 0) 
+  if(id >= 0) 
     resume(id); 
   return id; 
 };
@@ -238,13 +238,13 @@ void AudioEngineImpl::uncacheAll(){
 */ 
 int AudioEngineImpl::preload(const std::string& filePath){
   int id = find(filePath); 
-  if(id < 1){
+  if(id < 0){
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
 	FMOD::Sound * sound = NULL; 
 	FMOD_RESULT result = pSystem->createSound(fullPath.c_str(), FMOD_LOOP_NORMAL, 0, &sound);
     if (ERRCHECK(result)){
       printf("sound effect in %s could not be preload\n", filePath.c_str());
-      return 0;
+      return -1;
     }
     id = mapEffectSound.size() + 1;
 	auto& audioRef = mapEffectSound[id];
@@ -264,19 +264,14 @@ void AudioEngineImpl::update(float dt){
 };
 
 int AudioEngineImpl::find(const std::string &path){
-  static const int buffSize = 200;
-  static char cBuffer[buffSize]; 
   std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);  
-  size_t id = 0; 
   for (auto it = mapEffectSound.cbegin(); it != mapEffectSound.cend(); ++it) {
-    //it->second.path //sound->getName(cBuffer, buffSize);
-    //if(std::strcmp(cBuffer, fullPath.c_str())== 0){
     if(it->second.path == path)
 	{
 	  return it->first; 
     }
   }
-  return id; 
+  return -1; 
 }
 
 
