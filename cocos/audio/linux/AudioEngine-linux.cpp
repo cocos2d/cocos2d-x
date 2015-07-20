@@ -8,6 +8,8 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 //using namespace CocosDenshion;
 
+AudioEngineImpl * g_instance = nullptr;
+
 
 void ERRCHECKWITHEXIT(FMOD_RESULT result) {
 	if (result != FMOD_OK) {
@@ -32,7 +34,9 @@ FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLB
 {
 	if(controlType == FMOD_CHANNEL_CALLBACKTYPE_END){
 		printf("channelCallback\n");
-		//AudioEngine::_audioEngineImpl->onSoundFinished(channel);
+		g_instance->onSoundFinished((FMOD::Channel *)channel);
+	}else{
+		printf("other callback mode\n");
 	}
     return FMOD_OK;
 }
@@ -65,11 +69,16 @@ bool AudioEngineImpl::init(){
   ERRCHECKWITHEXIT(result);
 
   mapEffectSound.clear();
+  
+  g_instance = this; 
+  
   return true;
 };
 
 int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume){
   int id = preload(fileFullPath); 
+  setLoop(id, loop);
+  setVolume(id, volume);
   printf("DEBUG: AudioEngineImpl::play2d with id %d\n", id); 
   if(id > 0) 
     resume(id); 
@@ -78,9 +87,7 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float vo
 
 void AudioEngineImpl::setVolume(int audioID,float volume){
   try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-    FMOD::Channel *channel = getChannel(sound);
-	channel->setVolume(volume);
+	mapEffectSound[audioID].channel->setVolume(volume);
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setVolume: invalid audioID: %d\n", audioID);
   }
@@ -89,9 +96,7 @@ void AudioEngineImpl::setVolume(int audioID,float volume){
 void AudioEngineImpl::setLoop(int audioID, bool loop){
  printf("AudioEngineImpl::setLoop: audioID: %d\n", audioID);
   try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-    FMOD::Channel *channel = getChannel(sound);
-    channel->setLoopCount(loop?-1:0); 
+    mapEffectSound[audioID].channel->setLoopCount(loop?-1:0); 
     AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PAUSED;
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setLoop: invalid audioID: %d\n", audioID);
@@ -101,9 +106,7 @@ void AudioEngineImpl::setLoop(int audioID, bool loop){
 bool AudioEngineImpl::pause(int audioID){
  printf("AudioEngineImpl::pause: audioID: %d\n", audioID);
   try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-    FMOD::Channel *channel = getChannel(sound);
-    channel->setPaused(true); 
+    mapEffectSound[audioID].channel->setPaused(true); 
     AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PAUSED;
     return true; 
   }catch(const std::out_of_range& oor){
@@ -124,6 +127,7 @@ try{
       if(ERRCHECK(result)){
 		return false; 
       }
+      channel->setUserData((void *)mapEffectSound[audioID].id);
       mapEffectSound[audioID].channel = channel; 
     }
     
@@ -141,9 +145,8 @@ try{
 
 bool AudioEngineImpl::stop(int audioID){
   try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-    FMOD::Channel *channel = getChannel(sound);
-    channel->stop(); 
+    mapEffectSound[audioID].channel->stop(); 
+	mapEffectSound[audioID].channel = nullptr; 
     return true; 
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::stop: invalid audioID: %d\n", audioID);
@@ -171,10 +174,8 @@ float AudioEngineImpl::getDuration(int audioID){
 
 float AudioEngineImpl::getCurrentTime(int audioID){
  try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-	FMOD::Channel * channel = getChannel(sound);
 	unsigned int position; 
-	FMOD_RESULT result = channel->getPosition(&position, FMOD_TIMEUNIT_MS);
+	FMOD_RESULT result = mapEffectSound[audioID].channel->getPosition(&position, FMOD_TIMEUNIT_MS);
 	ERRCHECK(result);
 	float currenttime = position /1000.0f;
 	//printf("AudioEngineImpl::getCurrentTime %d %.3f\n", audioID, currenttime);
@@ -187,11 +188,9 @@ float AudioEngineImpl::getCurrentTime(int audioID){
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time){
  try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-	FMOD::Channel * channel = getChannel(sound);
 	unsigned int position = (unsigned int)(time * 1000.0f); 
 	printf("AudioEngineImpl::setCurrentTime %d %d\n", audioID, position);
-    FMOD_RESULT result = channel->setPosition(position, FMOD_TIMEUNIT_MS);
+    FMOD_RESULT result = mapEffectSound[audioID].channel->setPosition(position, FMOD_TIMEUNIT_MS);
     ERRCHECK(result);
 	}catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setCurrentTime: invalid audioID: %d\n", audioID);
@@ -200,11 +199,9 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time){
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback){
  try{
-    FMOD::Sound * sound = mapEffectSound[audioID].sound; 
-	FMOD::Channel * channel = getChannel(sound);
-
+	 printf("AUdioEngineImpl::setFInishCallback %d\n", audioID);
+	FMOD::Channel * channel = mapEffectSound[audioID].channel;
 	FMOD_RESULT result = channel->setCallback(channelCallback);
-    
 	ERRCHECK(result);
 	}catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setFinishCallback: invalid audioID: %d\n", audioID);
@@ -213,7 +210,17 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
 
 
 void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
+	size_t id; 
+	try{
+	printf("AudioEngineImpl::OnSoundFinished ");
+	void * data;
+	channel->getUserData(&data);
+	id = (size_t) data; 
 	
+	mapEffectSound[id].callback(id, mapEffectSound[id].path);
+	}catch(const std::out_of_range& oor){
+      printf("AudioEngineImpl::onSoundFinished: invalid audioID: %d\n", id);
+  }
 }; 
 
     
@@ -244,6 +251,7 @@ int AudioEngineImpl::preload(const std::string& filePath){
 	audioRef.sound = sound; 
 	audioRef.id = (size_t) id; 
 	audioRef.channel = nullptr; 
+	audioRef.path = filePath;
     //we are going to use UserData to store pointer to Channel when playing
     audioRef.sound->setUserData((void *)id);
   }
@@ -259,11 +267,13 @@ int AudioEngineImpl::find(const std::string &path){
   static const int buffSize = 200;
   static char cBuffer[buffSize]; 
   std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);  
-  unsigned short id = 0; 
+  size_t id = 0; 
   for (auto it = mapEffectSound.cbegin(); it != mapEffectSound.cend(); ++it) {
-    it->second.sound->getName(cBuffer, buffSize);
-    if(std::strcmp(cBuffer, fullPath.c_str())== 0){
-      return it->first; 
+    //it->second.path //sound->getName(cBuffer, buffSize);
+    //if(std::strcmp(cBuffer, fullPath.c_str())== 0){
+    if(it->second.path == path)
+	{
+	  return it->first; 
     }
   }
   return id; 
@@ -271,7 +281,6 @@ int AudioEngineImpl::find(const std::string &path){
 
 
 FMOD::Channel * AudioEngineImpl::getChannel(FMOD::Sound *sound){
-  FMOD::Channel *channel = nullptr;
   size_t id; 
   void * data;
   sound->getUserData(&data);
