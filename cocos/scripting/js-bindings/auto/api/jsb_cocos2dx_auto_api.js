@@ -1010,9 +1010,11 @@ getRotation3D : function (
 
 /**
  * @method getNodeToParentAffineTransform
- * @return {cc.AffineTransform}
- */
-getNodeToParentAffineTransform : function (
+* @param {cc.Node} node
+* @return {cc.AffineTransform|cc.AffineTransform}
+*/
+getNodeToParentAffineTransform : function(
+node 
 )
 {
     return cc.AffineTransform;
@@ -1172,9 +1174,11 @@ getChildrenCount : function (
 
 /**
  * @method getNodeToParentTransform
- * @return {mat4_object}
- */
-getNodeToParentTransform : function (
+* @param {cc.Node} node
+* @return {mat4_object|mat4_object}
+*/
+getNodeToParentTransform : function(
+node 
 )
 {
     return cc.Mat4;

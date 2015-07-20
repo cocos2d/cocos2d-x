@@ -2645,19 +2645,46 @@ bool js_cocos2dx_Node_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_Node_getNodeToParentAffineTransform(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getNodeToParentAffineTransform : Invalid Native Object");
-    if (argc == 0) {
-        cocos2d::AffineTransform ret = cobj->getNodeToParentAffineTransform();
-        jsval jsret = JSVAL_NULL;
-        jsret = ccaffinetransform_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
+    bool ok = true;
 
-    JS_ReportError(cx, "js_cocos2dx_Node_getNodeToParentAffineTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS::RootedObject obj(cx);
+    cocos2d::Node* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getNodeToParentAffineTransform : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            cocos2d::Node* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocos2d::AffineTransform ret = cobj->getNodeToParentAffineTransform(arg0);
+            jsval jsret = JSVAL_NULL;
+            jsret = ccaffinetransform_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            cocos2d::AffineTransform ret = cobj->getNodeToParentAffineTransform();
+            jsval jsret = JSVAL_NULL;
+            jsret = ccaffinetransform_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_Node_getNodeToParentAffineTransform : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_Node_convertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2974,19 +3001,46 @@ bool js_cocos2dx_Node_getChildrenCount(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_Node_getNodeToParentTransform(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getNodeToParentTransform : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::Mat4& ret = cobj->getNodeToParentTransform();
-        jsval jsret = JSVAL_NULL;
-        jsret = matrix_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
+    bool ok = true;
 
-    JS_ReportError(cx, "js_cocos2dx_Node_getNodeToParentTransform : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS::RootedObject obj(cx);
+    cocos2d::Node* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getNodeToParentTransform : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            cocos2d::Node* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Mat4 ret = cobj->getNodeToParentTransform(arg0);
+            jsval jsret = JSVAL_NULL;
+            jsret = matrix_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            const cocos2d::Mat4& ret = cobj->getNodeToParentTransform();
+            jsval jsret = JSVAL_NULL;
+            jsret = matrix_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_Node_getNodeToParentTransform : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_Node_convertToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp)
