@@ -38,6 +38,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTPadding);
     ADD_TEST_CASE(LabelFNTOffset);
     ADD_TEST_CASE(LabelFNTColor);
+    ADD_TEST_CASE(LabelFNTOpacity);
     ADD_TEST_CASE(LabelFNTHundredLabels);
     ADD_TEST_CASE(LabelFNTMultiLine);
     ADD_TEST_CASE(LabelFNTandTTFEmpty);
@@ -329,6 +330,31 @@ std::string LabelFNTColor::title() const
 std::string LabelFNTColor::subtitle() const
 {
     return "Testing color";
+}
+
+LabelFNTOpacity::LabelFNTOpacity()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 100");
+    label->setOpacity(100);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 2));
+
+    label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 200");
+    label->setOpacity(200);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 3));
+}
+
+std::string LabelFNTOpacity::title() const
+{
+    return "New Label + .FNT file";
+}
+
+std::string LabelFNTOpacity::subtitle() const
+{
+    return "Testing opacity";
 }
 
 LabelFNTHundredLabels::LabelFNTHundredLabels()
