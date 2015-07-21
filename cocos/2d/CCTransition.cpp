@@ -191,6 +191,14 @@ void TransitionScene::onExit()
 // custom cleanup
 void TransitionScene::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::cleanup();
 
     if( _isSendCleanupToScene )

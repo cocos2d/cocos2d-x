@@ -4193,22 +4193,6 @@ bool js_cocos2dx_Node_setOpacity(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Node_setOpacity : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_cleanup : Invalid Native Object");
-    if (argc == 0) {
-        cobj->cleanup();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Node_cleanup : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_Node_getComponent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5008,7 +4992,6 @@ void js_register_cocos2dx_Node(JSContext *cx, JS::HandleObject global) {
         JS_FN("setLocalZOrder", js_cocos2dx_Node_setLocalZOrder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCascadeColorEnabled", js_cocos2dx_Node_setCascadeColorEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setOpacity", js_cocos2dx_Node_setOpacity, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("cleanup", js_cocos2dx_Node_cleanup, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getComponent", js_cocos2dx_Node_getComponent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentSize", js_cocos2dx_Node_getContentSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopAllActionsByTag", js_cocos2dx_Node_stopAllActionsByTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

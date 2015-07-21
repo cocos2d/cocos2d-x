@@ -4,6 +4,17 @@ cocos2d-x-3.8 ??
     [FIX]           renderer: UI component can't click correctly by moving UI and camera far away of origin.
     [FIX]           JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
 
+cocos2d-x-3.7final July.21 2015
+    [REFINE]        JS: Improve manual binding code for `retain`, `release`, `onEnter`, `onExit`, `onEnterTransitionDidFinish` and `onExitTransitionDidStart`
+    [REFINE]        web: Add compatible Uint16Array defintion
+
+    [FIX]           Scale9Sprite: Fixed Scale9Sprite gray state issue while `setCapInsets` called
+    [FIX]           studio: Fixed parser issue by checking texture existance
+    [FIX]           studio: Fixed Armature parser issue
+    [FIX]           JS: Fixed cleanup overriding issue in JS that it will cause `too much recursion` error
+    [FIX]           web: Fixed url check regular expression not supporting localhost issue
+    [FIX]           web: Fixed issue that sprite doesn't update texture rect correctly in some condition
+
 cocos2d-x-3.7rc1  July.14 2015
     [REFINE]        framework: Used msbuild to generating engine prebuilt libs on win32.
     [REFINE]        3d: Used shader with normal while creating mesh with normals
