@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x v3.7 RC1 Release Notes](#cocos2d-x-v37-rc0-release-notes)
+- [Cocos2d-x v3.7 Release Notes](#cocos2d-x-v37-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -32,7 +32,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x v3.7 RC1 Release Notes #
+# Cocos2d-x v3.7 Release Notes #
 
 # Misc Information
 
@@ -173,7 +173,7 @@ cocos new -l cpp|js|lua MyGame
 
 ## Download
 
-[Cocos2d-x v3.7 RC1](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7rc1.zip) including : C++, Lua & JS
+[Cocos2d-x v3.7](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
