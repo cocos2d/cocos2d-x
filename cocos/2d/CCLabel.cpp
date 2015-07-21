@@ -702,6 +702,7 @@ void Label::alignText()
             auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
             if (batchNode)
             {
+                _isOpacityModifyRGB = batchNode->getTexture()->hasPremultipliedAlpha();
                 _blendFunc = batchNode->getBlendFunc();
                 batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
                 batchNode->setPosition(Vec2::ZERO);

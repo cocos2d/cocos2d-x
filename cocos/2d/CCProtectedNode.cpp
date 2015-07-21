@@ -63,6 +63,14 @@ ProtectedNode * ProtectedNode::create(void)
 
 void ProtectedNode::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Node::cleanup();
     // timers
     for( const auto &child: _protectedChildren)
