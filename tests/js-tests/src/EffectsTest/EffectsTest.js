@@ -32,7 +32,7 @@ var effectsTestSceneIdx = -1;
 var EffecstsBaseLayer = BaseTestLayer.extend({
 
     _gridNodeTarget: null,
-    _SetRect:false,
+    _doSetRect:false,
     code:function () {
         return "";
     },
@@ -57,16 +57,17 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
     onEnter:function () {
         this._super();
 
-        this._SetRect = CheckWhetherRect();
         var node = new cc.Node();
 
         //Whether to demonstrate the effects inside a smaller rect
-        if(this._SetRect == false)
+        if(this._doSetRect === false)
+        {
             var nodeGrid = new cc.NodeGrid();
+        }
         else
         {
             var visiablesize = director.getVisibleSize();
-            var gridRect = new cc.rect(visiablesize.width*0.1,
+            var gridRect = cc.rect(visiablesize.width*0.1,
                 visiablesize.height*0.1,
                 visiablesize.width*0.4,
                 visiablesize.height*0.4);
@@ -497,7 +498,3 @@ var previousEffectsTest = function () {
 var restartEffectsTest = function () {
     return new arrayOfEffectsTest[effectsTestSceneIdx]();
 };
-//TODO:Better to set a smarter way to check
-var CheckWhetherRect = function(){
-    return true;
-}
