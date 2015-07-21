@@ -164,8 +164,6 @@ var SysTestScene = TestScene.extend({
         sysTestSceneIdx = (num || num == 0) ? (num - 1) : -1;
         var layer = nextSysTest();
         this.addChild(layer);
-        //var clearColor = cc.color(255, 0, 0, 255);
-        //director.setClearColor(clearColor);
         director.runScene(this);
     }
 });
