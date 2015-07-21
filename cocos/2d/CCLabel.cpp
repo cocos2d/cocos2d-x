@@ -1672,8 +1672,12 @@ FontDefinition Label::_getFontDefinition() const
     systemFontDef._fontFillColor.g = _textColor.g;
     systemFontDef._fontFillColor.b = _textColor.b;
     systemFontDef._fontAlpha = _textColor.a;
-    systemFontDef._shadow._shadowEnabled = false;
-
+    
+    systemFontDef._shadow._shadowEnabled = _shadowEnabled;
+    systemFontDef._shadow._shadowOffset = _shadowOffset;
+    systemFontDef._shadow._shadowBlur = _shadowBlurRadius;
+    systemFontDef._shadow._shadowOpacity = _shadowOpacity;
+    
     if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0.f)
     {
         systemFontDef._stroke._strokeEnabled = true;

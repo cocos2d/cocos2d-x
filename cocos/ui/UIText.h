@@ -224,12 +224,6 @@ public:
      * @param alignment Horizontal text alignment type
      */
     void setTextHorizontalAlignment(TextHAlignment alignment);
-    
-    /** Sets text horizontal alignment.
-     *
-     * @param alignment Horizontal text alignment type
-     */
-    void setTextTTFConfig(TTFConfig ttfConfig);
 
     /** Gets text horizontal alignment.
      *

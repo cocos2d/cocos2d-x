@@ -205,12 +205,6 @@ void Text::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     _labelRenderer->setHorizontalAlignment(alignment);
 }
-    
-void Text::setTextTTFConfig(TTFConfig ttfConfig)
-{
-    TTFConfig config = ttfConfig;
-    _labelRenderer->setTTFConfig(config);
-}
 
 TextHAlignment Text::getTextHorizontalAlignment()const
 {
@@ -397,7 +391,10 @@ void Text::copySpecialProperties(Widget *widget)
         setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());
         setTextAreaSize(label->_labelRenderer->getDimensions());
         setContentSize(label->getContentSize());
-        setTextTTFConfig(label->_labelRenderer->getTTFConfig());
+        
+        // copy shadow and outline
+        FontDefinition fntDef = label->_labelRenderer->_getFontDefinition();
+        _labelRenderer->setFontDefinition(fntDef);
     }
 }
 
