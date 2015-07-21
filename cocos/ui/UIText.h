@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 #include "base/ccTypes.h"
+#include "2d/CCLabel.h"
 
 /**
  * @addtogroup ui
@@ -223,6 +224,12 @@ public:
      * @param alignment Horizontal text alignment type
      */
     void setTextHorizontalAlignment(TextHAlignment alignment);
+    
+    /** Sets text horizontal alignment.
+     *
+     * @param alignment Horizontal text alignment type
+     */
+    void setTextTTFConfig(TTFConfig ttfConfig);
 
     /** Gets text horizontal alignment.
      *
