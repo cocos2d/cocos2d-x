@@ -74,7 +74,7 @@ var EffecstsBaseLayer = BaseTestLayer.extend({
             var nodeGrid = new cc.NodeGrid(gridRect);
         }
         nodeGrid.addChild(node);
-	    nodeGrid.runAction(this.getEffect(3));
+        nodeGrid.runAction(this.getEffect(3));
         this.addChild( nodeGrid );
 
         // back gradient
