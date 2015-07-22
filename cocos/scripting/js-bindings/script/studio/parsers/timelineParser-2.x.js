@@ -358,6 +358,28 @@
             widget.setColor(getColor(color));
 
         setLayoutComponent(widget, json);
+        bindCallback(widget, json);
+    };
+
+    var bindCallback = function(widget, json){
+        var callBackType = json["CallBackType"];
+        var callBackName = json["CallBackName"];
+        if(callBackType === "Click"){
+            widget.addClickEventListener(function(){
+                if(widget.onLocateClickCallback)
+                    widget.onLocateClickCallback(callBackName);
+            });
+        }else if(callBackType === "Touch"){
+            widget.addTouchEventListener(function(){
+                if(widget.onLocateTouchCallback)
+                    widget.onLocateTouchCallback(callBackName);
+            });
+        }else if(callBackType === "Event"){
+            widget.addCCSEventListener(function(){
+                if(widget.onLocateEventCallback)
+                    widget.onLocateEventCallback(callBackName);
+            });
+        }
     };
 
     var setLayoutComponent = function(widget, json){
@@ -401,6 +423,7 @@
         layoutComponent.setPercentHeightEnabled(sizeYPercentEnable);
         layoutComponent.setPercentWidth(sizeXPercent);
         layoutComponent.setPercentHeight(sizeYPercent);
+        layoutComponent.setPercentWidthEnabled(sizeXPercentEnable || sizeYPercentEnable);
         layoutComponent.setStretchWidthEnabled(stretchHorizontalEnabled);
         layoutComponent.setStretchHeightEnabled(stretchVerticalEnabled);
 
