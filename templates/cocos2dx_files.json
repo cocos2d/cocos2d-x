@@ -2831,7 +2831,7 @@
         "external/freetype2/prebuilt/mac/libfreetype.a", 
         "external/freetype2/prebuilt/win10/arm/freetype.lib", 
         "external/freetype2/prebuilt/win10/win32/freetype.lib", 
-        "external/freetype2/prebuilt/win32/freetype250.lib", 
+        "external/freetype2/prebuilt/win32/freetype.lib", 
         "external/freetype2/prebuilt/winrt_8.1/arm/freetype.lib", 
         "external/freetype2/prebuilt/winrt_8.1/win32/freetype.lib", 
         "external/freetype2/prebuilt/wp_8.1/arm/freetype.lib", 
