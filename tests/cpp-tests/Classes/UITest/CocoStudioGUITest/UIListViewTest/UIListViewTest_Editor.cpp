@@ -52,7 +52,7 @@ void UIListViewTest_Vertical_Editor::setupListView(ListView* listView)
     float itemMargin = listView->getItemsMargin();
 
     auto item0 = Text::create();
-    item0->setString(String::createWithFormat("Item margin: %d", static_cast<int>(itemMargin))->getCString());
+    item0->setString(StringUtils::format("Item margin: %d", static_cast<int>(itemMargin)));
     listView->addChild(item0);
 
     auto item1 = Layout::create();

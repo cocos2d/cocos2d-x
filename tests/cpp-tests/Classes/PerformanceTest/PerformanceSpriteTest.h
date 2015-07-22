@@ -52,8 +52,8 @@ class SpriteMainScene : public TestCase
 public:
     virtual ~SpriteMainScene();
     virtual bool init() override;
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 
     void initWithSubTest(int nSubTest, int nNodes);
     void updateNodes();

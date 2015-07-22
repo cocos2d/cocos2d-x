@@ -151,16 +151,24 @@ public:
     /**
      * Scroll to a page with a given index.
      *
-     * @param idx   A given index in the PageView.
+     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
      */
     void scrollToPage(ssize_t idx);
-    
+
+
     /**
      * Gets current displayed page index.
      * @return current page index.
      */
     ssize_t getCurPageIndex() const;
-    
+
+    /**
+     * Jump to a page with a given index without scrolling.
+     * This is the different between scrollToPage.
+     *
+     * @param index A given index in PageView. Index start from 0 to pageCount -1.
+     */
+    void setCurPageIndex(ssize_t index);
      
     /**
      * @brief Get all the pages in the PageView.

@@ -24,8 +24,8 @@ public:
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void generateTestFunctions() = 0;
     
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void updateQuantityOfNodes();
     
     const char* profilerName();

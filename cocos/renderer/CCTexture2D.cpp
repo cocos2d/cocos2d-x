@@ -1164,16 +1164,8 @@ void Texture2D::drawAtPoint(const Vec2& point)
     GL::bindTexture2D( _name );
 
 
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
@@ -1197,16 +1189,8 @@ void Texture2D::drawInRect(const Rect& rect)
 
     GL::bindTexture2D( _name );
 
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 

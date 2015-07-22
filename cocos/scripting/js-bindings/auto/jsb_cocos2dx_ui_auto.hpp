@@ -590,12 +590,13 @@ bool js_cocos2dx_ui_PageView_getCustomScrollThreshold(JSContext *cx, uint32_t ar
 bool js_cocos2dx_ui_PageView_getCurPageIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_addWidgetToPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_isUsingCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ui_PageView_getPage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_PageView_setCurPageIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removePage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_setUsingCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_setCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_insertPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_scrollToPage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_PageView_getPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removePageAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_getPages(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removeAllPages(JSContext *cx, uint32_t argc, jsval *vp);
@@ -725,6 +726,7 @@ bool js_cocos2dx_ui_Scale9Sprite_setFlippedY(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_ui_Scale9Sprite_setFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_resizableSpriteWithCapInsets(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_disableCascadeOpacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Scale9Sprite_getState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_setState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_setInsetBottom(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
