@@ -15,6 +15,7 @@ bool Bug12847Layer::init()
 {
     if (BugsTestBase::init())
     {
+        Director::getInstance()->setProjection(Director::Projection::_2D);
         auto _visibleSize = Director::getInstance()->getVisibleSize();
         
         //Create with Sprite
@@ -53,10 +54,10 @@ bool Bug12847Layer::init()
 
 void Bug12847Layer::update(float dt)
 {
-    sprite1->setPositionY(sprite1->getPositionY() + 0.1f);
-    sprite2->setPositionY(sprite2->getPositionY() + 0.1f);
-    sprite3->setPositionY(sprite3->getPositionY() + 0.1f);
-    sprite4->setPositionY(sprite4->getPositionY() + 0.1f);
+    sprite1->setPositionY(sprite1->getPositionY() + 0.01f);
+    sprite2->setPositionY(sprite2->getPositionY() + 0.01f);
+    sprite3->setPositionY(sprite3->getPositionY() + 0.01f);
+    sprite4->setPositionY(sprite4->getPositionY() + 0.01f);
 }
 
 void Bug12847Layer::onEnter()
