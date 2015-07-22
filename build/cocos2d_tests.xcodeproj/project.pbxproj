@@ -883,6 +883,8 @@
 		688669711AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */; };
 		688669721AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */; };
 		826294431AAF071500CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
+		850F8A241B5F3A4F00780603 /* Bug-12847.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 850F8A221B5F3A4F00780603 /* Bug-12847.cpp */; };
+		850F8A251B5F3A4F00780603 /* Bug-12847.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 850F8A221B5F3A4F00780603 /* Bug-12847.cpp */; };
 		94D793D91B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */; };
 		94D793DA1B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */; };
 		94D793DB1B4B7A3600F60F10 /* Bug-PageViewLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */; };
@@ -1949,6 +1951,8 @@
 		70A7F72D191D3E4900F0F206 /* shaderTest.psh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderTest.psh.h; sourceTree = "<group>"; };
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
 		826294421AAF071500CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		850F8A221B5F3A4F00780603 /* Bug-12847.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-12847.cpp"; sourceTree = "<group>"; };
+		850F8A231B5F3A4F00780603 /* Bug-12847.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-12847.h"; sourceTree = "<group>"; };
 		94D793D51B4B7A3600F60F10 /* Bug-CCDrawNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-CCDrawNode.cpp"; sourceTree = "<group>"; };
 		94D793D61B4B7A3600F60F10 /* Bug-CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-CCDrawNode.h"; sourceTree = "<group>"; };
 		94D793D71B4B7A3600F60F10 /* Bug-PageViewLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-PageViewLayout.cpp"; sourceTree = "<group>"; };
@@ -2766,6 +2770,8 @@
 				1AC3598D18CECF0B00F37B72 /* BugsTest.h */,
 				59620E8D1921E5CF002021B6 /* Bug-Child.cpp */,
 				59620E8E1921E5CF002021B6 /* Bug-Child.h */,
+				850F8A221B5F3A4F00780603 /* Bug-12847.cpp */,
+				850F8A231B5F3A4F00780603 /* Bug-12847.h */,
 			);
 			path = BugsTest;
 			sourceTree = "<group>";
@@ -5415,6 +5421,7 @@
 				1AC35B2918CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
 				29080DA1191B595E0066F8DF /* GUIEditorTest.cpp in Sources */,
 				1AC35B3718CECF0C00F37B72 /* Bug-1159.cpp in Sources */,
+				850F8A241B5F3A4F00780603 /* Bug-12847.cpp in Sources */,
 				A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */,
 				29080D1C191B574B0066F8DF /* UITest.cpp in Sources */,
 				1AC35C3118CECF0C00F37B72 /* PerformanceRendererTest.cpp in Sources */,
@@ -5768,6 +5775,7 @@
 				1AC35B3018CECF0C00F37B72 /* Box2dView.cpp in Sources */,
 				29080DAE191B595E0066F8DF /* UIImageViewTest.cpp in Sources */,
 				1AC35C1018CECF0C00F37B72 /* LabelTest.cpp in Sources */,
+				850F8A251B5F3A4F00780603 /* Bug-12847.cpp in Sources */,
 				59620E901921E5CF002021B6 /* Bug-Child.cpp in Sources */,
 				29080DC8191B595E0066F8DF /* UISceneManager.cpp in Sources */,
 				1AC35C6A18CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
