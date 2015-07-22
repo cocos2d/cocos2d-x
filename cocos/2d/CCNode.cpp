@@ -221,19 +221,21 @@ bool Node::init()
 
 void Node::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+    else if (_scriptType == kScriptTypeLua)
+    {
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnCleanup);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     // actions
     this->stopAllActions();
     this->unscheduleAllCallbacks();
-
-#if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
-    {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-#endif // #if CC_ENABLE_SCRIPT_BINDING
 
     // timers
     for( const auto &child: _children)

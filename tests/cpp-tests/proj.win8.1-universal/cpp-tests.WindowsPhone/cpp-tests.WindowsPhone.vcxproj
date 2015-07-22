@@ -84,8 +84,8 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
@@ -107,8 +107,8 @@
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">pch.h</ForcedIncludeFiles>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Use</PrecompiledHeader>
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</SDLCheck>

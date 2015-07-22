@@ -608,27 +608,23 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             for (int k = 0; k < 2; ++k)
             {
                 VBox* innerBox = VBox::create();
-                
                 for (int j = 0; j < 3; j++)
                 {
                     Button *btn = Button::create("cocosui/animationbuttonnormal.png",
                                                  "cocosui/animationbuttonpressed.png");
                     btn->setName(StringUtils::format("button %d", j));
-                    
                     innerBox->addChild(btn);
                 }
                 
                 LinearLayoutParameter *parameter = LinearLayoutParameter::create();
                 parameter->setMargin(Margin(0,0,100,0));
                 innerBox->setLayoutParameter(parameter);
-                
                 outerBox->addChild(innerBox);
-                
             }
             
             pageView->addPage(outerBox);
             _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
-
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
         });
         _uiLayer->addChild(button);
         
@@ -649,6 +645,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
                 CCLOG("There is no page to remove!");
             }
             _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
 
         });
         _uiLayer->addChild(button2);
@@ -663,11 +660,19 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         {
             pageView->removeAllPages();
             _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
 
         });
         _uiLayer->addChild(button3);
 
-        
+        auto button4 = (ui::Button*)button3->clone();
+        button4->setTitleText("Scroll to Page4");
+        button4->setNormalizedPosition(Vec2(0.85,0.5));
+        button4->addClickEventListener([=](Ref* sender){
+            pageView->scrollToPage(3);
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
+        });
+        _uiLayer->addChild(button4);
         
         return true;
     }

@@ -189,7 +189,7 @@ var TerrainSimple = TerrainTestDemo.extend({
 });
 
 var TerrainWalkThru = (function(){
-    const PlayerState = {
+    var PlayerState = {
         LEFT : 0,
         RIGHT : 1,
         IDLE : 2,
@@ -197,8 +197,8 @@ var TerrainWalkThru = (function(){
         BACKWARD : 4
     };
 
-    const PLAYER_HEIGHT = 0;
-    const camera_offset = cc.math.vec3(0, 45, 60);
+    var PLAYER_HEIGHT = 0;
+    var camera_offset = cc.math.vec3(0, 45, 60);
 
     var Player = jsb.Sprite3D.extend({
         _targetPos:null,
