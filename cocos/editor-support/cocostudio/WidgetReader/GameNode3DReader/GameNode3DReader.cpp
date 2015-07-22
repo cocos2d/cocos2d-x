@@ -22,12 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UserCameraReader.h"
+#include "GameNode3DReader.h"
 
+#include "cocostudio/CCObjectExtensionData.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/CSParse3DBinary_generated.h"
+
 #include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -37,113 +39,46 @@ using namespace flatbuffers;
 
 namespace cocostudio
 {
-    IMPLEMENT_CLASS_NODE_READER_INFO(UserCameraReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(GameNode3DReader)
     
-    UserCameraReader::UserCameraReader()
+    GameNode3DReader::GameNode3DReader()
     {
         
     }
     
-    UserCameraReader::~UserCameraReader()
+    GameNode3DReader::~GameNode3DReader()
     {
         
     }
     
-    static UserCameraReader* _instanceUserCameraReader = nullptr;
+    static GameNode3DReader* _instanceNode3DReader = nullptr;
     
-    UserCameraReader* UserCameraReader::getInstance()
+    GameNode3DReader* GameNode3DReader::getInstance()
     {
-        if (!_instanceUserCameraReader)
+        if (!_instanceNode3DReader)
         {
-            _instanceUserCameraReader = new UserCameraReader();
+            _instanceNode3DReader = new GameNode3DReader();
         }
         
-        return _instanceUserCameraReader;
+        return _instanceNode3DReader;
     }
     
-    void UserCameraReader::purge()
+    void GameNode3DReader::purge()
     {
-        CC_SAFE_DELETE(_instanceUserCameraReader);
+        CC_SAFE_DELETE(_instanceNode3DReader);
     }
     
-    void UserCameraReader::destroyInstance()
+    void GameNode3DReader::destroyInstance()
     {
-        CC_SAFE_DELETE(_instanceUserCameraReader);
+        CC_SAFE_DELETE(_instanceNode3DReader);
     }
     
-    Vec2 UserCameraReader::getVec2Attribute(const tinyxml2::XMLAttribute* attribute) const
+    Offset<Table> GameNode3DReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+        flatbuffers::FlatBufferBuilder *builder)
     {
-        if(!attribute)
-            return Vec2::ZERO;
-        
-        Vec2 ret;
-        std::string attriname;
-        
-        while (attribute)
-        {
-            attriname = attribute->Name();
-            std::string value = attribute->Value();
-            
-            if (attriname == "X")
-            {
-                ret.x = atof(value.c_str());
-            }
-            else if (attriname == "Y")
-            {
-                ret.y = atof(value.c_str());
-            }
-            
-            attribute = attribute->Next();
-        }
-
-        return ret;
-    }
-    
-    Offset<Table> UserCameraReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
-                                                             flatbuffers::FlatBufferBuilder *builder)
-    {
-        auto temp = Node3DReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
-        auto node3DOptions = *(Offset<Node3DOption>*)(&temp);
-        
-        float fov = 60.f;
-        unsigned int cameraFlag = 0;
+        std::string name = "";
+        int skyBoxMask = 1;
         bool skyBoxEnabled = false;
-
-        std::string attriname;
-        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
-        while(attribute)
-        {
-            attriname = attribute->Name();
-            std::string value = attribute->Value();
-            
-            if(attriname == "Fov")
-            {
-                fov = atof(value.c_str());
-            }
-            else if(attriname == "UserCameraFlagMode")
-            {
-                if (cameraFlag == 0)
-                {
-                    if (value == "DEFAULT")  cameraFlag = 1;
-                    else if (value == "USER1") cameraFlag = 1 << 1;
-                    else if (value == "USER2") cameraFlag = 1 << 2;
-                    else if (value == "USER3") cameraFlag = 1 << 3;
-                    else if (value == "USER4") cameraFlag = 1 << 4;
-                }
-            }
-            else if (attriname == "CameraFlagData")
-            {
-                cameraFlag = atoi(value.c_str());
-            }
-            else if (attriname == "SkyBoxEnabled")
-            {
-                skyBoxEnabled = (value == "True") ? true : false;
-            }
-            
-            attribute = attribute->Next();
-        }
-
-        Vec2 clipPlane(1, 1000);
 
         std::string leftPath = "";
         std::string leftPlistFile = "";
@@ -168,19 +103,47 @@ namespace cocostudio
         std::string backPath = "";
         std::string backPlistFile = "";
         int backResourceType = 0;
-        
-        // FileData
+
+        std::string frameEvent = "";
+        std::string customProperty = "";
+
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string attriname = attribute->Name();
+            std::string value = attribute->Value();
+
+            if (attriname == "Name")
+            {
+                name = value;
+            }
+            else if (attriname == "SkyBoxEnabled")
+            {
+                skyBoxEnabled = (value == "True") ? true : false;
+            }
+            else if (attriname == "skyBoxMask")
+            {
+                skyBoxMask = atoi(value.c_str());
+            }
+            else if (attriname == "UserData")
+            {
+                customProperty = value;
+            }
+            else if (attriname == "FrameEvent")
+            {
+                frameEvent = value;
+            }
+            
+            attribute = attribute->Next();
+        }
+
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
         while (child)
         {
             std::string name = child->Name();
-            
-            if (name == "ClipPlane")
-            {
-                attribute = child->FirstAttribute();
-                clipPlane = getVec2Attribute(attribute);
-            }
-            else if (name == "LeftImage")
+
+            if (name == "LeftImage")
             {
                 attribute = child->FirstAttribute();
 
@@ -366,54 +329,52 @@ namespace cocostudio
                     fbs->_textures.push_back(builder->CreateString(backPlistFile));
                 }
             }
-            
+
             child = child->NextSiblingElement();
         }
-        
-        auto options = CreateUserCameraOptions(*builder,
-                                             node3DOptions,
-                                             fov,
-                                             clipPlane.x,
-                                             clipPlane.y,
-                                             cameraFlag,
-                                             skyBoxEnabled,
-                                             CreateResourceData(*builder,
-                                                         builder->CreateString(leftPath),
-                                                         builder->CreateString(leftPlistFile),
-                                                         leftResourceType),
-                                             CreateResourceData(*builder,
-                                                         builder->CreateString(rightPath),
-                                                         builder->CreateString(rightPlistFile),
-                                                         rightResourceType),
-                                             CreateResourceData(*builder,
-                                                         builder->CreateString(upPath),
-                                                         builder->CreateString(upPlistFile),
-                                                         upResourceType),
-                                             CreateResourceData(*builder,
-                                                         builder->CreateString(downPath),
-                                                         builder->CreateString(downPlistFile),
-                                                         downResourceType),
-                                             CreateResourceData(*builder,
-                                                         builder->CreateString(forwardPath),
-                                                         builder->CreateString(forwardPlistFile),
-                                                         forwardResourceType),
-                                             CreateResourceData(*builder,
-                                                         builder->CreateString(backPath),
-                                                         builder->CreateString(backPlistFile),
-                                                         backResourceType)
-                                             );
-        
+
+        auto options = CreateGameNode3DOption(*builder,
+            builder->CreateString(name),
+            skyBoxMask,
+            skyBoxEnabled,
+            CreateResourceData(*builder,
+                                builder->CreateString(leftPath),
+                                builder->CreateString(leftPlistFile),
+                                leftResourceType),
+            CreateResourceData(*builder,
+                                builder->CreateString(rightPath),
+                                builder->CreateString(rightPlistFile),
+                                rightResourceType),
+            CreateResourceData(*builder,
+                                builder->CreateString(upPath),
+                                builder->CreateString(upPlistFile),
+                                upResourceType),
+            CreateResourceData(*builder,
+                                builder->CreateString(downPath),
+                                builder->CreateString(downPlistFile),
+                                downResourceType),
+            CreateResourceData(*builder,
+                                builder->CreateString(forwardPath),
+                                builder->CreateString(forwardPlistFile),
+                                forwardResourceType),
+            CreateResourceData(*builder,
+                                builder->CreateString(backPath),
+                                builder->CreateString(backPlistFile),
+                                backResourceType),
+            builder->CreateString(frameEvent),
+            builder->CreateString(customProperty)
+            );
+
         return *(Offset<Table>*)(&options);
     }
     
-    void UserCameraReader::setPropsWithFlatBuffers(cocos2d::Node *node,
-                                                   const flatbuffers::Table* userCameraDOptions)
+    void GameNode3DReader::setPropsWithFlatBuffers(cocos2d::Node *node,
+                                                   const flatbuffers::Table* node3DOptions)
     {
-        auto options = (UserCameraOptions*)userCameraDOptions;
+        auto options = (GameNode3DOption*)node3DOptions;
         
-        Camera* camera = static_cast<Camera*>(node);
-        int cameraFlag = options->cameraFlag();
-        camera->setCameraFlag((CameraFlag)cameraFlag);
+        std::string name = options->name()->c_str();
+        node->setName(name);
 
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
@@ -425,32 +386,28 @@ namespace cocostudio
             auto forwardFileData = options->forwardFileData()->path()->c_str();
             auto backFileData = options->backFileData()->path()->c_str();
 
-            Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
-            childBox->setCameraMask(cameraFlag);
+            Skybox* childBox = Skybox::create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+            unsigned short cameraFlag = 1 << 10;
+            childBox->setCameraMask(cameraFlag, false);
             node->addChild(childBox,0,"_innerSkyBox");
         }
 
-        auto node3DReader = Node3DReader::getInstance();
-        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
+        std::string customProperty = options->customProperty()->c_str();
+        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        extensionData->setCustomProperty(customProperty);
+        node->setUserObject(extensionData);
     }
     
-    Node* UserCameraReader::createNodeWithFlatBuffers(const flatbuffers::Table *userCameraDOptions)
+    Node* GameNode3DReader::createNodeWithFlatBuffers(const flatbuffers::Table *node3DOptions)
     {
-        auto options = (UserCameraOptions*)userCameraDOptions;
+        Node* node = Node::create();
         
-        float fov = options->fov();
-        float nearClip = options->nearClip();
-        float farClip = options->farClip();
+        setPropsWithFlatBuffers(node, (Table*)node3DOptions);
         
-        auto size = Director::getInstance()->getWinSize();
-        Camera* camera = Camera::createPerspective(fov, size.width / size.height, nearClip, farClip);
-        
-        setPropsWithFlatBuffers(camera, userCameraDOptions);
-        
-        return camera;
+        return node;
     }
 
-    int UserCameraReader::getResourceType(std::string key)
+    int GameNode3DReader::getResourceType(std::string key)
     {
         if (key == "Normal" || key == "Default")
         {

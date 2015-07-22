@@ -73,5 +73,16 @@ public:
     virtual std::string title() const override;
 };
 
+class CSSceneSkyBoxTest : public CocosStudio3DTestDemo
+{
+private:
+    cocos2d::Camera *_camera;
+public:
+    CREATE_FUNC(CSSceneSkyBoxTest);
+    CSSceneSkyBoxTest();
+    virtual std::string title() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+};
+
 
 #endif
