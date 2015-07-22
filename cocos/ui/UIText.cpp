@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIText.h"
 #include "platform/CCFileUtils.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
@@ -376,7 +377,7 @@ Widget* Text::createCloneInstance()
 {
     return Text::create();
 }
-
+    
 void Text::copySpecialProperties(Widget *widget)
 {
     Text* label = dynamic_cast<Text*>(widget);
@@ -393,8 +394,16 @@ void Text::copySpecialProperties(Widget *widget)
         setContentSize(label->getContentSize());
         
         // copy shadow and outline
-        FontDefinition fntDef = label->_labelRenderer->_getFontDefinition();
-        _labelRenderer->setFontDefinition(fntDef);
+        if (Type::SYSTEM == _type)
+        {
+            TTFConfig config = label->_labelRenderer->getTTFConfig();
+            _labelRenderer->setTTFConfig(config);
+        }
+        else if (Type::TTF == _type)
+        {
+            FontDefinition fntDef = label->_labelRenderer->_getFontDefinition();
+            _labelRenderer->setFontDefinition(fntDef);
+        }
     }
 }
 

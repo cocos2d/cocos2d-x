@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 #include "base/ccTypes.h"
-#include "2d/CCLabel.h"
 
 /**
  * @addtogroup ui
@@ -313,13 +312,13 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
 protected:
+    Label* _labelRenderer;
     bool _touchScaleChangeEnabled;
     float _normalScaleValueX;
     float _normalScaleValueY;
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    Label* _labelRenderer;
     bool _labelRendererAdaptDirty;
     Type _type;
 };
