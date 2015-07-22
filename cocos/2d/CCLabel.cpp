@@ -702,6 +702,7 @@ void Label::alignText()
             auto batchNode = SpriteBatchNode::createWithTexture(textures.at(index));
             if (batchNode)
             {
+                _isOpacityModifyRGB = batchNode->getTexture()->hasPremultipliedAlpha();
                 _blendFunc = batchNode->getBlendFunc();
                 batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
                 batchNode->setPosition(Vec2::ZERO);
@@ -1273,7 +1274,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     {
         updateContent();
     }
-
+    
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     if (!_originalUTF8String.empty() && _shadowEnabled && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
@@ -1318,9 +1319,8 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
             else
                 break;
         }
-        // self draw
-        if (visibleByCamera)
-            this->drawSelf(renderer, flags);
+        
+        this->drawSelf(visibleByCamera, renderer, flags);
 
         for (auto it = _children.cbegin() + i; it != _children.cend(); ++it)
         {
@@ -1328,15 +1328,15 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         }
             
     }
-    else if (visibleByCamera)
+    else
     {
-        this->drawSelf(renderer, flags);
+        this->drawSelf(visibleByCamera, renderer, flags);
     }
 
     _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void Label::drawSelf(Renderer* renderer, uint32_t flags)
+void Label::drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags)
 {
     if (_textSprite)
     {
@@ -1346,7 +1346,7 @@ void Label::drawSelf(Renderer* renderer, uint32_t flags)
         }
         _textSprite->visit(renderer, _modelViewTransform, flags);
     }
-    else
+    else if (visibleByCamera)
     {
         draw(renderer, _modelViewTransform, flags);
     }

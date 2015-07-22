@@ -5249,6 +5249,16 @@ disableCascadeOpacity : function (
 },
 
 /**
+ * @method getState
+ * @return {ccui.Scale9Sprite::State}
+ */
+getState : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setState
  * @param {ccui.Scale9Sprite::State} arg0
  */

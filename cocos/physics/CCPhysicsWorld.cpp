@@ -936,9 +936,12 @@ void PhysicsDebugDraw::drawShape(PhysicsShape& shape)
         {
             case CP_CIRCLE_SHAPE:
             {
+                
                 float radius = PhysicsHelper::cpfloat2float(cpCircleShapeGetRadius(subShape));
-                Vec2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)))
-                + PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
+                Vec2 centre = PhysicsHelper::cpv2point(cpBodyGetPos(cpShapeGetBody(subShape)));
+                Vec2 offset = PhysicsHelper::cpv2point(cpCircleShapeGetOffset(subShape));
+                Vec2 rotation(PhysicsHelper::cpv2point(cpBodyGetRot(cpShapeGetBody(subShape))));
+		              centre += offset.rotate(rotation);
                 
                 static const int CIRCLE_SEG_NUM = 12;
                 Vec2 seg[CIRCLE_SEG_NUM] = {};
