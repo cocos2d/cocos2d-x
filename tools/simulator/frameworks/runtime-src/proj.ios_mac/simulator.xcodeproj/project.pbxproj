@@ -78,6 +78,8 @@
 		F293B3D915EB7BE500256477 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D815EB7BE500256477 /* Foundation.framework */; };
 		F293B3DB15EB7BE500256477 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3DA15EB7BE500256477 /* CoreGraphics.framework */; };
 		F293BB9C15EB831F00256477 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F293BB7E15EB831F00256477 /* AppDelegate.cpp */; };
+		FA68C4D31B5F64D200255D90 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA68C4D21B5F64D200255D90 /* libiconv.dylib */; };
+		FA68C4D51B5F64DA00255D90 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA68C4D41B5F64DA00255D90 /* libiconv.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +279,8 @@
 		F293B3DA15EB7BE500256477 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F293BB7E15EB831F00256477 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		F293BB7F15EB831F00256477 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Classes/AppDelegate.h; sourceTree = "<group>"; };
+		FA68C4D21B5F64D200255D90 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
+		FA68C4D41B5F64DA00255D90 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA68C4D51B5F64DA00255D90 /* libiconv.dylib in Frameworks */,
 				87A2EC1E1AB34BEE00513747 /* Security.framework in Frameworks */,
 				9FB5D60E1A691A02002361CA /* libjscocos2d Mac.a in Frameworks */,
 				9FB5D5F91A691342002361CA /* libsqlite3.dylib in Frameworks */,
@@ -307,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA68C4D31B5F64D200255D90 /* libiconv.dylib in Frameworks */,
 				9FB5D60A1A6917D8002361CA /* libsqlite3.dylib in Frameworks */,
 				9FB5D6081A691774002361CA /* libjscocos2d iOS.a in Frameworks */,
 				9FD6FC0C1A5D278E0028EDC6 /* libsimulator iOS.a in Frameworks */,
@@ -467,6 +473,8 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA68C4D41B5F64DA00255D90 /* libiconv.dylib */,
+				FA68C4D21B5F64D200255D90 /* libiconv.dylib */,
 				87A2EC1D1AB34BEE00513747 /* Security.framework */,
 				9FB5D60C1A69184C002361CA /* libjs_static.a */,
 				9FB5D6091A6917D8002361CA /* libsqlite3.dylib */,
