@@ -113,7 +113,8 @@ void BoneNode::removeFromBoneList(BoneNode* bone)
 {
     _childBones.eraseObject(bone);
     bone->_rootSkeleton = nullptr;
-    auto subBones = getAllSubBones();
+    auto subBones = bone->getAllSubBones();
+    subBones.pushBack(bone);
     for (auto &subBone : subBones)
     {
         subBone->_rootSkeleton = nullptr;
@@ -131,7 +132,8 @@ void BoneNode::addToBoneList(BoneNode* bone)
     _childBones.pushBack(bone);
     if (bone->_rootSkeleton == nullptr && _rootSkeleton != nullptr)
     {
-        auto subBones = getAllSubBones();
+        auto subBones = bone->getAllSubBones();
+        subBones.pushBack(bone);
         for (auto &subBone : subBones)
         {
             subBone->_rootSkeleton = _rootSkeleton;
@@ -147,6 +149,12 @@ void BoneNode::addToBoneList(BoneNode* bone)
             }
             else
                 CCLOG("already has a bone named %s in skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
+        }
+
+        if (bone->_isRackShow && bone->_visible)
+        {
+            _rootSkeleton->_subDrawBonesDirty = true;
+            _rootSkeleton->_subDrawBonesOrderDirty = true;
         }
     }
 }
@@ -251,37 +259,6 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
     return displayRect;
 }
 
-AffineTransform BoneNode::getBoneToSkeletonAffineTransform() const
-{
-    auto retTrans = AffineTransform::IDENTITY;
-    if (_rootSkeleton == nullptr)
-    {
-        CCLOG("can not tranform before added to Skeleton");
-        return retTrans;
-    }
-    retTrans = this->getNodeToParentAffineTransform();
-    for (Node *p = _parent; p != _rootSkeleton; p = p->getParent())
-        retTrans = AffineTransformConcat(retTrans, p->getNodeToParentAffineTransform());
-    return retTrans;
-}
-
-Mat4 BoneNode::getBoneToSkeletonTransform() const
-{
-    auto retMat = Mat4::IDENTITY;
-    if (_rootSkeleton == nullptr)
-    {
-        CCLOG("can not tranform before added to Skeleton");
-        return retMat;
-    }
-
-    retMat = this->getNodeToParentTransform();
-    for (Node *p = _parent; p != _rootSkeleton; p = p->getParent())
-    {
-        retMat = p->getNodeToParentTransform() * retMat;
-    }
-    return retMat;
-}
-
 void BoneNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
@@ -303,7 +280,6 @@ void BoneNode::setDebugDrawEnabled(bool isDebugDraw)
 {
     if (_isRackShow == isDebugDraw)
         return;
-
     _isRackShow = isDebugDraw;
     if (_visible && nullptr != _rootSkeleton)
     {
@@ -317,6 +293,7 @@ void BoneNode::setDebugDrawColor(const cocos2d::Color4F &color)
     _rackColor = color;
     updateColor();
 }
+
 
 void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
@@ -343,9 +320,8 @@ BoneNode::~BoneNode()
 
 bool BoneNode::init()
 {
-    _anchorPoint = Vec2(0, .5f);
     _rackLength = 50;
-    _rackWidth  = 20;
+    _rackWidth = 20;
     updateVertices();
     setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
     return true;
@@ -353,13 +329,17 @@ bool BoneNode::init()
 
 void BoneNode::updateVertices()
 {
-    if (_rackLength != _squareVertices[2].x || _squareVertices[3].y != _rackWidth / 2)
+    if (_rackLength != _squareVertices[2].x - _anchorPointInPoints.x || _squareVertices[3].y != _rackWidth / 2 - _anchorPointInPoints.y)
     {
-         _squareVertices[0].x = _squareVertices[2].x = _rackLength * .1f;
-         _squareVertices[1].y = _squareVertices[3].y = _rackWidth * .5f;
-         _squareVertices[2].y = _rackWidth;
-         _squareVertices[3].x = _rackLength;
+        _squareVertices[0].x = _squareVertices[2].x = _rackLength * .1f;
+        _squareVertices[2].y = _rackWidth * .5f;
+        _squareVertices[0].y = -_squareVertices[2].y;
+        _squareVertices[3].x = _rackLength;
 
+        for (int i = 0; i < 4; i++)
+        {
+            _squareVertices[i] += _anchorPointInPoints;
+        }
         _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
     }
 }
@@ -468,9 +448,9 @@ SkeletonNode* BoneNode::getRootSkeletonNode() const
 #ifdef CC_STUDIO_ENABLED_VIEW
 bool BoneNode::isPointOnRack(const cocos2d::Vec2& bonePoint)
 {
-    if (bonePoint.x >= 0.0f && bonePoint.y >= 0.0f
+    if (bonePoint.x >= 0.0f && bonePoint.y >= _squareVertices[0].y
         && bonePoint.x <= _rackLength &&
-        bonePoint.y <=_rackWidth)
+        bonePoint.y <= _squareVertices[2].y)
     {
         if (_rackLength != 0.0f && _rackWidth != 0.0f)
         {
@@ -538,11 +518,14 @@ void BoneNode::setName(const std::string& name)
     Node::setName(name);
     if (_rootSkeleton != nullptr)
     {
-        auto iter = _rootSkeleton->_subBonesMap.find(oldname);
-        if (iter != _rootSkeleton->_subBonesMap.end())
+        auto oiter = _rootSkeleton->_subBonesMap.find(oldname);
+        auto niter = _rootSkeleton->_subBonesMap.find(name);
+        if (oiter != _rootSkeleton->_subBonesMap.end() &&
+            niter == _rootSkeleton->_subBonesMap.end())
         {
-            _rootSkeleton->_subBonesMap.erase(iter);
-            _rootSkeleton->_subBonesMap.insert(name, iter->second);
+            auto node = oiter->second;
+            _rootSkeleton->_subBonesMap.erase(oiter);
+            _rootSkeleton->_subBonesMap.insert(name, node);
         }
     }
 }
@@ -570,6 +553,11 @@ void BoneNode::removeFromChildrenListHelper(Node * child)
     if (nullptr != bone)
     {
         removeFromBoneList(bone);
+        if (bone->_isRackShow)
+        {
+            _rootSkeleton->_subDrawBonesDirty = true;
+            _rootSkeleton->_subDrawBonesOrderDirty = true;
+        }
     }
     else
     {
@@ -592,6 +580,18 @@ void BoneNode::setVisible(bool visible)
         _rootSkeleton->_subDrawBonesDirty = true;
         _rootSkeleton->_subDrawBonesOrderDirty = true;
     }
+}
+
+void BoneNode::setContentSize(const Size& contentSize)
+{
+    Node::setContentSize(contentSize);
+    updateVertices();
+}
+
+void BoneNode::setAnchorPoint(const Vec2& anchorPoint)
+{
+    Node::setAnchorPoint(anchorPoint);
+    updateVertices();
 }
 
 NS_TIMELINE_END

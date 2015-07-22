@@ -115,7 +115,7 @@ public:
     virtual cocos2d::Color4F getDebugDrawColor() const { return _rackColor; }
 
     // get bone's bondingbox, depends on getVisibleSkinsRect, apply on node to parent's tranform
-    cocos2d::Rect BoneNode::getBoundingBox() const override;
+    cocos2d::Rect getBoundingBox() const override;
 
     /**
     *get displayings rect in self transform
@@ -131,8 +131,9 @@ public:
 
     virtual void setVisible(bool visible) override;
 
-    cocos2d::AffineTransform BoneNode::getBoneToSkeletonAffineTransform() const;
-    cocos2d::Mat4 BoneNode::getBoneToSkeletonTransform() const;
+    virtual void setContentSize(const cocos2d::Size& contentSize);
+
+    virtual void setAnchorPoint(const cocos2d::Vec2& anchorPoint);
 
 #ifdef CC_STUDIO_ENABLED_VIEW
     // hit test , bonePoint is in self coordinate
@@ -169,8 +170,8 @@ protected:
 
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
-    // for batch bone's draw to _rootSkeleton
     // a help function for SkeletonNode
+    // for batch bone's draw to _rootSkeleton
     virtual void batchBoneDrawToSkeleton(BoneNode* bone) const; 
 
 protected:
