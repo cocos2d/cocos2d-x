@@ -188,7 +188,7 @@
             var skyBox = new jsb.Skybox();
             skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
             skyBox.setCameraMask(cameraFlag, false);
-            node.addChild(skyBox, 0, "_innerSkyBox");
+            node.addChild(skyBox);
         }
 
         return node;
@@ -1458,7 +1458,7 @@
             var skyBox = new jsb.Skybox();
             skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
             skyBox.setCameraMask(cameraFlag);
-            node.addChild(skyBox, 0, "_innerSkyBox");
+            node.addChild(skyBox);
         }
 
         return node;
