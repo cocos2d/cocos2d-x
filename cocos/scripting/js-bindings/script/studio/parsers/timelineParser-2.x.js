@@ -364,21 +364,16 @@
     var bindCallback = function(widget, json){
         var callBackType = json["CallBackType"];
         var callBackName = json["CallBackName"];
+        var callBack = function(e){
+            if(typeof widget[callBackName] === "function")
+                widget[callBackName](e);
+        };
         if(callBackType === "Click"){
-            widget.addClickEventListener(function(){
-                if(widget.onLocateClickCallback)
-                    widget.onLocateClickCallback(callBackName);
-            });
+            widget.addClickEventListener(callBack);
         }else if(callBackType === "Touch"){
-            widget.addTouchEventListener(function(){
-                if(widget.onLocateTouchCallback)
-                    widget.onLocateTouchCallback(callBackName);
-            });
+            widget.addTouchEventListener(callBack);
         }else if(callBackType === "Event"){
-            widget.addCCSEventListener(function(){
-                if(widget.onLocateEventCallback)
-                    widget.onLocateEventCallback(callBackName);
-            });
+            widget.addCCSEventListener(callBack);
         }
     };
 
