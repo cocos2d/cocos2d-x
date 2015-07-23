@@ -26,9 +26,8 @@
 #define __cocos2d_libs__CCObjectExtensionData__
 
 #include <string>
-
-#include "base/CCRef.h"
-
+#include "CCComBase.h"
+#include "2d/CCComponent.h"
 #include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
@@ -41,22 +40,42 @@ namespace cocostudio
 
 namespace cocostudio
 {
-    class CC_STUDIO_DLL ObjectExtensionData : public cocos2d::Ref
+    class CC_STUDIO_DLL ComExtensionData : public cocos2d::Component
     {
-        
+        DECLARE_CLASS_COMPONENT_INFO
     public:
-        static ObjectExtensionData* create();
-        
+		/**
+		* @js NA
+		* @lua NA
+		*/
+		virtual void onEnter() override;
+		/**
+		* @js NA
+		* @lua NA
+		*/
+		virtual void onExit() override;
+		/**
+		* @js NA
+		* @lua NA
+		*/
+		virtual void onAdd() override;
+		/**
+		* @js NA
+		* @lua NA
+		*/
+		virtual void onRemove() override;
+        static ComExtensionData* create();
+        virtual bool init() override;
+
         virtual void setCustomProperty(const std::string& customProperty) { _customProperty = customProperty; }
         virtual std::string getCustomProperty() const { return _customProperty; };
         
         virtual void setActionTag(int actionTag);
         virtual const int getActionTag() const;
         
-    CC_CONSTRUCTOR_ACCESS:
-        ObjectExtensionData();
-        ~ObjectExtensionData();
-        virtual bool init();
+    public:
+        ComExtensionData();
+        ~ComExtensionData();
         
     protected:
         std::string _customProperty;
