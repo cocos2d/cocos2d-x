@@ -411,7 +411,7 @@ void TestActionTimelineSkeleton::onEnter()
             auto skeletonToP = skeletonNode->getNodeToParentAffineTransform();
             auto bonePtoSkeletonPTrans = AffineTransformConcat(
                 static_cast<BoneNode*>((weaponHandeBone->getParent())
-                )->getBoneToSkeletonAffineTransform(),
+                )->getNodeToParentAffineTransform(skeletonNode),
                 skeletonToP);
             leftbottom = PointApplyAffineTransform(leftbottom, bonePtoSkeletonPTrans);
             righttop = PointApplyAffineTransform(righttop, bonePtoSkeletonPTrans);
@@ -432,7 +432,7 @@ void TestActionTimelineSkeleton::onEnter()
              lefttop.x = rect.getMinX(); lefttop.y =  rect.getMaxY();
              rightbottom.x = rect.getMaxX(); rightbottom.y = rect.getMinY();
              auto boneToSkeletonParentTrans = AffineTransformConcat(
-                 weaponHandeBone->getBoneToSkeletonAffineTransform(), skeletonToP);
+                 weaponHandeBone->getNodeToParentAffineTransform(skeletonNode), skeletonToP);
              leftbottom = PointApplyAffineTransform(leftbottom, boneToSkeletonParentTrans);
              righttop = PointApplyAffineTransform(righttop, boneToSkeletonParentTrans);
              lefttop = PointApplyAffineTransform(lefttop, boneToSkeletonParentTrans);

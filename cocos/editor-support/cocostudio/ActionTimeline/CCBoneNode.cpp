@@ -259,37 +259,6 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
     return displayRect;
 }
 
-AffineTransform BoneNode::getBoneToSkeletonAffineTransform() const
-{
-    auto retTrans = AffineTransform::IDENTITY;
-    if (_rootSkeleton == nullptr)
-    {
-        CCLOG("can not tranform before added to Skeleton");
-        return retTrans;
-    }
-    retTrans = this->getNodeToParentAffineTransform();
-    for (Node *p = _parent; p != _rootSkeleton; p = p->getParent())
-        retTrans = AffineTransformConcat(retTrans, p->getNodeToParentAffineTransform());
-    return retTrans;
-}
-
-Mat4 BoneNode::getBoneToSkeletonTransform() const
-{
-    auto retMat = Mat4::IDENTITY;
-    if (_rootSkeleton == nullptr)
-    {
-        CCLOG("can not tranform before added to Skeleton");
-        return retMat;
-    }
-
-    retMat = this->getNodeToParentTransform();
-    for (Node *p = _parent; p != _rootSkeleton; p = p->getParent())
-    {
-        retMat = p->getNodeToParentTransform() * retMat;
-    }
-    return retMat;
-}
-
 void BoneNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;

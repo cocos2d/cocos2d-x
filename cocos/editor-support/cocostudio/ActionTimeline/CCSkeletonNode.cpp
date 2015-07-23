@@ -73,7 +73,8 @@ Rect SkeletonNode::getBoundingBox() const
     auto allbones = getAllSubBones();
     for (const auto& bone : allbones)
     {
-        Rect r = RectApplyAffineTransform(bone->getVisibleSkinsRect(), bone->getBoneToSkeletonAffineTransform());
+        Rect r = RectApplyAffineTransform(bone->getVisibleSkinsRect(),
+                                          bone->getNodeToParentAffineTransform(bone->getRootSkeletonNode()));
         if (r.equals(Rect::ZERO))
             continue;
 

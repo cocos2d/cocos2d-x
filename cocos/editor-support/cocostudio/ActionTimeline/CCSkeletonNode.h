@@ -72,11 +72,12 @@ public:
 
     cocos2d::Rect getBoundingBox() const override;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
     SkeletonNode();
     virtual ~SkeletonNode();
     virtual bool init() override;
-
+    
+protected:
     virtual void updateVertices() override;
     virtual void updateColor() override;
 

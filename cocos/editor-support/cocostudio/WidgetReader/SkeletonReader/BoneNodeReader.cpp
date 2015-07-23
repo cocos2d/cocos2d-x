@@ -69,12 +69,12 @@ Offset<Table> BoneNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLEl
         std::string name = child->Name();
         if (name == "BlendFunc")
         {
-            const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+            const tinyxml2::XMLAttribute* battribute = child->FirstAttribute();
 
-            while (attribute)
+            while (battribute)
             {
-                name = attribute->Name();
-                std::string value = attribute->Value();
+                name = battribute->Name();
+                std::string value = battribute->Value();
 
                 if (name == "Src")
                 {
@@ -85,7 +85,7 @@ Offset<Table> BoneNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLEl
                     blendFunc.dst = atoi(value.c_str());
                 }
 
-                attribute = attribute->Next();
+                battribute = battribute->Next();
             }
         }
 
