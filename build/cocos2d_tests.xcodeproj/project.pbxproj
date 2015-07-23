@@ -4684,9 +4684,6 @@
 			attributes = {
 				LastUpgradeCheck = 0600;
 				TargetAttributes = {
-					185663961B4155DD009EF2AE = {
-						DevelopmentTeam = NQ596S94Q5;
-					};
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = U7E7529TA5;
 					};
@@ -4727,6 +4724,7 @@
 				1A0EE1C618CDF6DA004CD58F /* cpp-empty-test Mac */,
 				1ABCA28518CD91510087CE3A /* lua-tests Mac */,
 				1A0EE2B818CDF733004CD58F /* lua-empty-test Mac */,
+				1856634B1B4155D3009EF2AE /* js-tests Mac */,
 				A07A517B1783A1CC0073F6A7 /* build all tests iOS */,
 				A07A517F1783A1D20073F6A7 /* cpp-tests iOS */,
 				1A0EE31818CDF775004CD58F /* cpp-empty-test iOS */,
@@ -4734,7 +4732,6 @@
 				1A0EE41918CDF799004CD58F /* lua-empty-test iOS */,
 				3E6176FF1960FAED00DE83F5 /* game-controller-test IOS */,
 				15CBA015196EE56C005877BB /* lua-game-controller-test iOS */,
-				1856634B1B4155D3009EF2AE /* js-tests Mac */,
 				185663961B4155DD009EF2AE /* js-tests iOS */,
 			);
 		};
@@ -6062,6 +6059,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks",
@@ -6071,7 +6069,7 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-game-controller-test/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib",
@@ -6094,6 +6092,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks",
@@ -6103,7 +6102,7 @@
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-game-controller-test/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/usr/lib",
@@ -6193,6 +6192,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6202,7 +6202,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/curl/prebuilt/ios",
@@ -6229,6 +6229,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -6239,7 +6240,7 @@
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/curl/prebuilt/ios",
@@ -6334,12 +6335,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -6351,12 +6353,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -6369,12 +6372,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
@@ -6396,12 +6400,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
@@ -6463,12 +6468,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/curl/prebuilt/ios",
@@ -6490,12 +6496,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-tests/project/proj.ios_mac/ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 					"/Users/cocos2d/MyWork/cocos2d-x-develop/external/curl/prebuilt/ios",
@@ -6551,13 +6558,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/game-controller-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "game-controller-test IOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6570,13 +6578,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/game-controller-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "game-controller-test IOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6604,6 +6613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_BITCODE = NO;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6613,6 +6623,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMPRESS_PNG_FILES = NO;
+				ENABLE_BITCODE = NO;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6623,6 +6634,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6631,7 +6643,7 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
@@ -6649,6 +6661,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../tests/cpp-tests/proj.ios/Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -6657,7 +6670,7 @@
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
