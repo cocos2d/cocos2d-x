@@ -238,7 +238,7 @@ Vec2 Camera::project(const Vec3& src) const
     Vec4 clipPos;
     getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
     
-    CCASSERT(clipPos.w != 0.0f, "");
+    CCASSERT(clipPos.w != 0.0f, "clipPos.w can't be 0.0f!");
     float ndcX = clipPos.x / clipPos.w;
     float ndcY = clipPos.y / clipPos.w;
     
@@ -255,7 +255,7 @@ Vec2 Camera::projectGL(const Vec3& src) const
     Vec4 clipPos;
     getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
     
-    CCASSERT(clipPos.w != 0.0f, "");
+    CCASSERT(clipPos.w != 0.0f, "clipPos.w can't be 0.0f!");
     float ndcX = clipPos.x / clipPos.w;
     float ndcY = clipPos.y / clipPos.w;
     

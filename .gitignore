@@ -146,3 +146,4 @@ tests/cpp-tests/Resources/audio
 /*/*/prebuilt-mk/Android.mk
 /*/*/*/prebuilt-mk/Android.mk
 /*/*/*/*/prebuilt-mk/Android.mk
+*.xcscmblueprint

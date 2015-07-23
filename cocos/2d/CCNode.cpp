@@ -221,19 +221,21 @@ bool Node::init()
 
 void Node::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+    else if (_scriptType == kScriptTypeLua)
+    {
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnCleanup);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     // actions
     this->stopAllActions();
     this->unscheduleAllCallbacks();
-
-#if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
-    {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-#endif // #if CC_ENABLE_SCRIPT_BINDING
 
     // timers
     for( const auto &child: _children)
@@ -1574,6 +1576,14 @@ void Node::stopAllActionsByTag(int tag)
 {
     CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
     _actionManager->removeAllActionsByTag(tag, this);
+}
+
+void Node::stopActionsByFlags(unsigned int flags)
+{
+    if (flags > 0)
+    {
+        _actionManager->removeActionsByFlags(flags, this);
+    }
 }
 
 Action * Node::getActionByTag(int tag)

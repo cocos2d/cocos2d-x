@@ -12,8 +12,8 @@ class PerformanceCallbackScene : public TestCase
 {
 public:
     virtual void onEnter() override;
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void onUpdate(float dt) {};
     
     void dumpProfilerInfo(float dt);

@@ -64,7 +64,7 @@ void UISliderTest_Editor::sliderEvent(Ref *pSender, Slider::EventType type)
         case Slider::EventType::ON_PERCENTAGE_CHANGED:
         {
             Slider* slider = static_cast<Slider*>(pSender);
-            _displayValueLabel->setString(CCString::createWithFormat("percent %d", slider->getPercent())->getCString());
+            _displayValueLabel->setString(StringUtils::format("percent %d", slider->getPercent()));
         }
             break;
             

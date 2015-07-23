@@ -2684,6 +2684,16 @@ bool
 },
 
 /**
+ * @method setScrollBarOpacity
+ * @param {unsigned char} arg0
+ */
+setScrollBarOpacity : function (
+char 
+)
+{
+},
+
+/**
  * @method setScrollBarEnabled
  * @param {bool} arg0
  */
@@ -2768,6 +2778,16 @@ jumpToBottom : function (
 },
 
 /**
+ * @method setInnerContainerPosition
+ * @param {vec2_object} arg0
+ */
+setInnerContainerPosition : function (
+vec2 
+)
+{
+},
+
+/**
  * @method setDirection
  * @param {ccui.ScrollView::Direction} arg0
  */
@@ -2813,6 +2833,16 @@ setInnerContainerSize : function (
 size 
 )
 {
+},
+
+/**
+ * @method getInnerContainerPosition
+ * @return {vec2_object}
+ */
+getInnerContainerPosition : function (
+)
+{
+    return cc.Vec2;
 },
 
 /**
@@ -2870,6 +2900,16 @@ vec2
  * @param {bool} arg0
  */
 setInertiaScrollEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setScrollBarAutoHideEnabled
+ * @param {bool} arg0
+ */
+setScrollBarAutoHideEnabled : function (
 bool 
 )
 {
@@ -3008,13 +3048,13 @@ bool
 },
 
 /**
- * @method setScrollBarAutoHideEnabled
- * @param {bool} arg0
+ * @method getScrollBarOpacity
+ * @return {unsigned char}
  */
-setScrollBarAutoHideEnabled : function (
-bool 
+getScrollBarOpacity : function (
 )
 {
+    return 0;
 },
 
 /**
@@ -4480,15 +4520,13 @@ isUsingCustomScrollThreshold : function (
 },
 
 /**
- * @method getPage
+ * @method setCurPageIndex
  * @param {long} arg0
- * @return {ccui.Layout}
  */
-getPage : function (
+setCurPageIndex : function (
 long 
 )
 {
-    return ccui.Layout;
 },
 
 /**
@@ -4541,6 +4579,18 @@ scrollToPage : function (
 long 
 )
 {
+},
+
+/**
+ * @method getPage
+ * @param {long} arg0
+ * @return {ccui.Layout}
+ */
+getPage : function (
+long 
+)
+{
+    return ccui.Layout;
 },
 
 /**
@@ -5196,6 +5246,16 @@ rect
 disableCascadeOpacity : function (
 )
 {
+},
+
+/**
+ * @method getState
+ * @return {ccui.Scale9Sprite::State}
+ */
+getState : function (
+)
+{
+    return 0;
 },
 
 /**

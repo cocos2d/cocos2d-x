@@ -50,7 +50,8 @@ JSTouchDelegate::~JSTouchDelegate()
 
 void JSTouchDelegate::setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate)
 {
-    CCASSERT(sTouchDelegateMap.find(pJSObj) == sTouchDelegateMap.end(), "");
+    CCASSERT(sTouchDelegateMap.find(pJSObj) == sTouchDelegateMap.end(),
+             "pJSObj can't be found in sTouchDelegateMap.");
     sTouchDelegateMap.insert(TouchDelegatePair(pJSObj, pDelegate));
 }
 
@@ -68,7 +69,7 @@ JSTouchDelegate* JSTouchDelegate::getDelegateForJSObject(JSObject* pJSObj)
 void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
 {
     TouchDelegateMap::iterator iter = sTouchDelegateMap.find(pJSObj);
-    CCASSERT(iter != sTouchDelegateMap.end(), "");
+    CCASSERT(iter != sTouchDelegateMap.end(), "pJSObj can't be found in sTouchDelegateMap!");
     sTouchDelegateMap.erase(pJSObj);
 }
 
@@ -1386,7 +1387,7 @@ void JSScheduleWrapper::dump()
             jsfuncTargetCount++;
         }
     }
-    CCASSERT(nativeTargetsCount == jsfuncTargetCount, "");
+    CCASSERT(nativeTargetsCount == jsfuncTargetCount, "nativeTargetsCount should be equal to jsfuncTargetCount.");
     CCLOG("\n---------JSScheduleWrapper dump end--------------\n");
 #endif
 }
@@ -2370,90 +2371,98 @@ bool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
 
 bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ((Ref *)proxy->ptr)->retain();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_retain : Invalid Native Object");
+    
+    cobj->retain();
+    args.rval().setUndefined();
+    return true;
 }
 
 bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ((Ref *)proxy->ptr)->release();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Ref* cobj = (cocos2d::Ref *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_release : Invalid Native Object");
+    
+    cobj->release();
+    args.rval().setUndefined();
+    return true;
 }
 
 bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ScriptingCore::getInstance()->setCalledFromScript(true);
-            static_cast<Node*>(proxy->ptr)->onEnter();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onEnter : Invalid Native Object");
+    
+    ScriptingCore::getInstance()->setCalledFromScript(true);
+    cobj->onEnter();
+    args.rval().setUndefined();
+    return true;
 }
 
 bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ScriptingCore::getInstance()->setCalledFromScript(true);
-            static_cast<Node*>(proxy->ptr)->onExit();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onExit : Invalid Native Object");
+    
+    ScriptingCore::getInstance()->setCalledFromScript(true);
+    cobj->onExit();
+    args.rval().setUndefined();
+    return true;
 }
 
 bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ScriptingCore::getInstance()->setCalledFromScript(true);
-            static_cast<Node*>(proxy->ptr)->onEnterTransitionDidFinish();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onEnterTransitionDidFinish : Invalid Native Object");
+    
+    ScriptingCore::getInstance()->setCalledFromScript(true);
+    cobj->onEnterTransitionDidFinish();
+    args.rval().setUndefined();
+    return true;
 }
 
 bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ScriptingCore::getInstance()->setCalledFromScript(true);
-            static_cast<Node*>(proxy->ptr)->onExitTransitionDidStart();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onExitTransitionDidStart : Invalid Native Object");
+    
+    ScriptingCore::getInstance()->setCalledFromScript(true);
+    cobj->onExitTransitionDidStart();
+    args.rval().setUndefined();
+    return true;
+}
+
+bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_cleanup : Invalid Native Object");
+    
+    ScriptingCore::getInstance()->setCalledFromScript(true);
+    cobj->cleanup();
+    args.rval().setUndefined();
+    return true;
 }
 
 bool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6145,6 +6154,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "onExit", js_cocos2dx_Node_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "cleanup", js_cocos2dx_Node_cleanup, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "schedule", js_CCNode_schedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "scheduleOnce", js_CCNode_scheduleOnce, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "scheduleUpdateWithPriority", js_cocos2dx_CCNode_scheduleUpdateWithPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);

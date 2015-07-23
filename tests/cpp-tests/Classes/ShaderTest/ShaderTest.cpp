@@ -401,8 +401,8 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-    GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
-                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
+    GLchar * fragSource = (GLchar*) FileUtils::getInstance()->getStringFromFile(
+                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh")).c_str();
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
@@ -530,7 +530,7 @@ bool ShaderRetroEffect::init()
 {
     if( ShaderTestDemo::init() ) {
 
-        GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"))->getCString();
+        GLchar * fragSource = (GLchar*) FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh")).c_str();
         auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
 
         auto director = Director::getInstance();

@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x v3.7 RC0 Release Notes](#cocos2d-x-v37-rc0-release-notes)
+- [Cocos2d-x v3.7 Release Notes](#cocos2d-x-v37-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -27,11 +27,12 @@
     - [Nine Patch format support](#nine-patch-format-support)
     - [Android Studio support](#android-studio-support)
     - [Samsung Enhanced API support](#samsung-enhanced-api-support)
+    - [SDKBOX](#sdkbox)
   - [The Next Step](#the-next-step)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x v3.7 RC0 Release Notes #
+# Cocos2d-x v3.7 Release Notes #
 
 # Misc Information
 
@@ -47,14 +48,15 @@
 * Windows 7 or newer
 * Windows Phone 8.1
 * Linux Ubuntu 14.04 or newer
+* Mordern browsers and IE 9+ (On mobile platforms, only iOS and Android 5 activated WebGL support)
 
 ## Compiler Requirements
 
 * Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
 * ndk-r10c for Android
-* Visual Studio 2013  or newer for Windows (win32)
-* Visual Studio 2013  or newer for Windows Phone 8
+* Visual Studio 2013 or newer for Windows (win32)
+* Visual Studio 2013 update4 or newer for Windows Phone 8
 
 ## How to run tests
 
@@ -65,9 +67,9 @@ You can use [Cocos Console](www.cocos2d-x.org/wiki/Cocos2d-console) command line
 In console application:
 ```
 // Enter cpp test folder
-cd tests/cpp-tests 
+cd tests/cpp-tests
 // Or enter js test folder
-cd tests/js-tests 
+cd tests/js-tests
 // Or enter lua test folder
 cd tests/lua-tests
 
@@ -119,7 +121,6 @@ Then
 
 * For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln` or `cocos2d-js-win32.sln`
 * For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln` or `cocos2d-js-win8.1-universal.sln`
-* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
 * Select running target
 * Click run button
 
@@ -168,10 +169,11 @@ cocos new -l cpp|js|lua MyGame
 * JS: Merged JSB and web engine into Cocos2d-x for a All-in-one engine
 * JS: Added `ccui.VideoPlayer` and `ccui.WebView` for iOS/Android/Web
 * console: Supported build & run Android Studio project with cocos console
+* SDKBOX: super EASY way to integrate 3rd party SDKs into cocos2d-x
 
 ## Download
 
-[Cocos2d-x v3.7 RC0](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7rc0.zip) including : C++, Lua & JS
+[Cocos2d-x v3.7](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
@@ -233,6 +235,26 @@ Samsung have provided a series of Enhanced API to optimize Cocos2d-x games for S
 ### Win32 platform resource name become case sensitive
 
 In the previous versions, the resources file name's case is ignored on win32 platform, but not ignored in other platforms. This will lead to some unexpected issues, especially when user develop with win32 platform and pulish to other platforms like Android. In win32, the file name may be found without matching the case, but on other platforms it won't be found. So we decided to make win32 platform's resources case sensitive. Please make sure you are using the correct file name for your resources.
+
+### SDKBOX
+
+SDKBOX is a project that's built by part of the cocos2d-x team, in order to makes integrating 3rd party SDKs super EASY.
+With SDKBOX you can integrate services like In App Purchase with one command
+
+```
+sdkbox import -b iap
+```
+
+Currently supported service including
+
+* [Tune](http://cocos2d-x.org/sdkbox/tune)
+* [In App Purchase](http://cocos2d-x.org/sdkbox/iap)
+* [AdColony](http://cocos2d-x.org/sdkbox/adcolony)
+* [Vungle](http://cocos2d-x.org/sdkbox/vungle)
+* [Chartboost](http://cocos2d-x.org/sdkbox/chartboost)
+* [Kochava](http://cocos2d-x.org/sdkbox/kochava)
+* [Google Analytics](http://cocos2d-x.org/sdkbox/googleanalytics)
+* [Flurry Analytics](http://cocos2d-x.org/sdkbox/flurryanalytics)
 
 ## The Next Step
 

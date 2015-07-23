@@ -54,7 +54,7 @@ public:
     CREATE_FUNC(TouchesPerformTest3);
 
     virtual void onEnter() override;
-    virtual std::string title() const;
+    virtual std::string title() const override;
 };
 
 

@@ -27,7 +27,7 @@ if(cc.sys.isNative)(function(){
 
 var Particle3DTestIdx = -1;
 
-const PARTICLE_SYSTEM_TAG = 0x0001;
+var PARTICLE_SYSTEM_TAG = 0x0001;
 
 jsb.fileUtils.addSearchPath("res/Sprite3DTest");
 jsb.fileUtils.addSearchPath("res/Particle3D/materials");

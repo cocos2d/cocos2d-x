@@ -259,6 +259,15 @@ void PageView::updateAllPagesPosition()
     }
 }
 
+void PageView::setCurPageIndex( ssize_t index )
+{
+    if (index < 0 || index >= this->getPageCount())
+    {
+        return;
+    }
+    _curPageIdx = index;
+    _doLayoutDirty = true;
+}
 
 void PageView::scrollToPage(ssize_t idx)
 {
