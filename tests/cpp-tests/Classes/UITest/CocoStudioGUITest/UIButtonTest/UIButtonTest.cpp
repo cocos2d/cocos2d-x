@@ -20,6 +20,7 @@ UIButtonTests::UIButtonTests()
     ADD_TEST_CASE(UIButtonNormalDefaultTest);
     ADD_TEST_CASE(UIButtonDisableDefaultTest);
     ADD_TEST_CASE(UIButtonCloneTest);
+    ADD_TEST_CASE(Issue12249);
 }
 
 // UIButtonTest
@@ -1091,6 +1092,61 @@ bool UIButtonCloneTest::init()
         CCASSERT(buttonCopy->getTitleRenderer() == nullptr,
                  "Copied Button title render must be nullptr ");
 
+        return true;
+    }
+    return false;
+}
+
+// https://github.com/cocos2d/cocos2d-x/issues/12249
+Issue12249::Issue12249()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+bool Issue12249::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("Test Issue 12249", "fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+                                             widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("This test case two buttons should seem to be same!",
+                                   "fonts/Marker Felt.ttf",20);
+        alert->setColor(Color3B(159, 168, 176));
+        
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f
+                                - alert->getContentSize().height * 2.0f));
+        
+        _uiLayer->addChild(alert);
+        
+        // Create the button 1
+        Button* button = nullptr, *button2 = nullptr;
+        float btnWidth = 100;
+        button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button->setScale9Enabled(true);
+        button->setContentSize(Size(btnWidth, button->getContentSize().height));
+        button->setTitleText("Scale9 Button 1");
+        button->setPosition(Vec2(widgetSize.width / 2.0f - btnWidth, widgetSize.height / 2.0f));
+        _uiLayer->addChild(button);
+
+        // create button 2, load texture after button creation
+        button2 = Button::create();
+        button2->setScale9Enabled(true);
+        button2->loadTextures("cocosui/button.png", "cocosui/buttonHighlighted.png", "");
+        button2->setContentSize(Size(btnWidth, button2->getContentSize().height));
+        button2->setTitleText("Scale9 Button 2");
+        button2->setPosition(Vec2(widgetSize.width / 2.0f + btnWidth, widgetSize.height / 2.0f));
+        _uiLayer->addChild(button2);
+        
         return true;
     }
     return false;
