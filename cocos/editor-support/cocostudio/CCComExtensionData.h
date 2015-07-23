@@ -44,26 +44,26 @@ namespace cocostudio
     {
         DECLARE_CLASS_COMPONENT_INFO
     public:
-		/**
-		* @js NA
-		* @lua NA
-		*/
-		virtual void onEnter() override;
-		/**
-		* @js NA
-		* @lua NA
-		*/
-		virtual void onExit() override;
-		/**
-		* @js NA
-		* @lua NA
-		*/
-		virtual void onAdd() override;
-		/**
-		* @js NA
-		* @lua NA
-		*/
-		virtual void onRemove() override;
+        /**
+        * @js NA
+        * @lua NA
+        */
+        virtual void onEnter() override;
+        /**
+        * @js NA
+        * @lua NA
+        */
+        virtual void onExit() override;
+        /**
+        * @js NA
+        * @lua NA
+        */
+        virtual void onAdd() override;
+        /**
+        * @js NA
+        * @lua NA
+        */
+        virtual void onRemove() override;
         static ComExtensionData* create();
         virtual bool init() override;
 
