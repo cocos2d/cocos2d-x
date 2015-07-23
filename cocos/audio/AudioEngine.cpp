@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #include <condition_variable>
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
@@ -39,6 +39,8 @@
 #include "win32/AudioEngine-win32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "winrt/AudioEngine-winrt.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+#include "linux/AudioEngine-linux.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
