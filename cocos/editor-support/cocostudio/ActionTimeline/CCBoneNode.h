@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2014 cocos2d-x.org
-
+Copyright (c) 2015 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,11 +27,12 @@ THE SOFTWARE.
 #define __CCBONENODE_H__
 
 #include "base/CCProtocols.h"
-#include "2d/CCLayer.h"
+#include "2d/CCNode.h"
+#include "renderer/CCCustomCommand.h"
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
-
 #include "CCSkinNode.h"
+
 
 NS_TIMELINE_BEGIN
 
@@ -41,17 +42,28 @@ class CC_STUDIO_DLL BoneNode : public cocos2d::Node, public cocos2d::BlendProtoc
 {
 public:
     static BoneNode* create();
-    static BoneNode* create(const int &length);
+    static BoneNode* create(int length);
 
     using Node::addChild;
-    // add child, deal with BoneNode and SkinNode
+    // add child, and add child to bone list and skeleton's sub bone map or add it to skin list
     virtual void addChild(cocos2d::Node* child, int localZOrder, const std::string &name) override;
     virtual void addChild(cocos2d::Node* child, int localZOrder, int tag) override;
 
+    // remove child, and remove child from bone list and skeleton's sub bone map or rmeove it from skin list
     virtual void removeChild(Node* child, bool cleanup) override;
 
+    // get child bone list
     virtual const  cocos2d::Vector<BoneNode*>& getChildBones() const { return _childBones; }
     virtual cocos2d::Vector<BoneNode*>&  getChildBones() { return _childBones; }
+
+    
+    // get this bone's root skeleton, return null while bone is not in a skeleton
+    virtual SkeletonNode* getRootSkeletonNode() const;
+    
+    /**
+     * @brief: get all bones in this bone tree
+     */
+    cocos2d::Vector<BoneNode*> getAllSubBones() const;
 
     /**
     *@brief: add a skin
@@ -65,9 +77,6 @@ public:
     *@param: hideOthers, whether hide other skins added to this bone
     */
     virtual void addSkin(SkinNode* skin, bool display, bool hideOthers);
-
-    virtual const  cocos2d::Vector<SkinNode*>& getSkins() const { return _boneSkins; }
-    virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
 
     /**
     * @brief: display skin
@@ -85,13 +94,12 @@ public:
     // get the skins which is visible (displaying skins)
     virtual cocos2d::Vector<SkinNode*> getVisibleSkins() const;
     
-    virtual SkeletonNode* getRootSkeletonNode() const;
-
     /**
-    * @brief: get all bones in this bone tree
-    */
-    cocos2d::Vector<BoneNode*> getAllSubBones() const;
-
+     * get skins in this bone's children
+     */
+    virtual const  cocos2d::Vector<SkinNode*>& getSkins() const { return _boneSkins; }
+    virtual  cocos2d::Vector<SkinNode*>&  getSkins() { return _boneSkins; }
+    
     /**
     * @brief: get all skins in this bone tree
     */
@@ -101,16 +109,19 @@ public:
     virtual void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override;
     virtual const cocos2d::BlendFunc & getBlendFunc() const override { return _blendFunc; }
 
-    // is rack show, bone can be drawn when bone is visible && enable debug draw
+    // debug draw show, bone's debugdraw can be draw when bone is visible && enable debug draw
     virtual void setDebugDrawEnabled(bool isDebugDraw);
     virtual bool isDebugDrawEnabled() const { return _isRackShow; }
 
+    // bone's debug draw's length
     virtual void setDebugDrawLength(float length);
     virtual float getDebugDrawLength() const { return _rackLength; }
 
+    // bone's debug draw's width
     virtual void setDebugDrawWidth(float width);
     virtual float getDebugDrawWidth() const { return _rackWidth; }
 
+    // bone's debug draw's width
     virtual void setDebugDrawColor(const cocos2d::Color4F &color);
     virtual cocos2d::Color4F getDebugDrawColor() const { return _rackColor; }
 
@@ -125,15 +136,20 @@ public:
     // transform & draw
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 
+    // set localzorder, and dirty the debugdraw to make debugdraw's render layer right
     virtual void setLocalZOrder(int localZOrder) override;
 
+    // set name, and repalace the subbone map in skeleton
     virtual void setName(const std::string& name) override;
 
+    // set visible, and dirty the debugdraw to make debugdraw's render layer right
     virtual void setVisible(bool visible) override;
 
-    virtual void setContentSize(const cocos2d::Size& contentSize);
+    // set contentsize, and reculate debugdraw
+    virtual void setContentSize(const cocos2d::Size& contentSize) override;
 
-    virtual void setAnchorPoint(const cocos2d::Vec2& anchorPoint);
+    // set localzorder, and reculate debugdraw
+    virtual void setAnchorPoint(const cocos2d::Vec2& anchorPoint) override;
     
 #ifdef CC_STUDIO_ENABLED_VIEW
     // hit test , bonePoint is in self coordinate

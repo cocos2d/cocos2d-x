@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2014 cocos2d-x.org
-
+Copyright (c) 2015 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -187,17 +187,9 @@ void SkeletonNode::batchDrawAllSubBones(const Mat4 &transform)
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
 
-#ifdef EMSCRIPTEN
-    setGLBufferData(vetices, _batchedVeticesCount * sizeof(Vec3), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(veticesColor, _batchedVeticesCount * sizeof(Color4F), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, vetices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, veticesColor);
-#endif // EMSCRIPTEN
 
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     

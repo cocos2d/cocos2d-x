@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
-
+Copyright (c) 2015 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,10 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #ifndef __CCSKINNODE_H__
-#define  __CCSKINNODE_H__
+#define __CCSKINNODE_H__
 
 #include "2d/CCNode.h"
-
 #include "CCTimelineMacro.h"
 
 

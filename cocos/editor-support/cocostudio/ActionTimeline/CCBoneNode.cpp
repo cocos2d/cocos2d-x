@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2014 cocos2d-x.org
-
+Copyright (c) 2015 Chukong Technologies Inc.
+ 
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include "CCBoneNode.h"
 #include "CCSkeletonNode.h"
+#include "CCSkinNode.h"
 
 using namespace cocos2d;
 
@@ -57,7 +58,7 @@ BoneNode* BoneNode::create()
 }
 
 
-BoneNode* BoneNode::create(const int &length)
+BoneNode* BoneNode::create(int length)
 {
     BoneNode* ret = new (std::nothrow) BoneNode();
     if (ret && ret->init())
@@ -259,7 +260,7 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
     return displayRect;
 }
 
-void BoneNode::setBlendFunc(const BlendFunc &blendFunc)
+void BoneNode::setBlendFunc(const BlendFunc& blendFunc)
 {
     _blendFunc = blendFunc;
 }
@@ -354,35 +355,25 @@ void BoneNode::updateColor()
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
-void BoneNode::onDraw(const Mat4& transform, uint32_t flags)
+void BoneNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
 
-#ifdef EMSCRIPTEN
-    setGLBufferData(_noMVPVertices, 4 * sizeof(Vec3), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-#endif // EMSCRIPTEN
 
     cocos2d::GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 #ifdef CC_STUDIO_ENABLED_VIEW
-#ifdef EMSCRIPTEN
-    setGLBufferData(_noMVPVertices, 4 * sizeof(Vec3), 0);
-#else
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-#endif
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+    
     glEnable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     glDrawArrays(GL_LINE_LOOP, 0, 4);
