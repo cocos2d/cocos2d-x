@@ -200,5 +200,44 @@
                 "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
             ]
         }
+    },
+    "change_orientation": {
+        "modify_files": [
+            {
+                "file_path": "config.json",
+                "pattern": "\\\"isLandscape\\\"\\s*:.*,",
+                "replace_string": "\"isLandscape\": false,"
+            },
+            {
+                "file_path": "src/config.lua",
+                "pattern": "width\\s*=.*,",
+                "replace_string": "width = 640,"
+            },
+            {
+                "file_path": "src/config.lua",
+                "pattern": "height\\s*=.*,",
+                "replace_string": "height = 960,"
+            },
+            {
+                "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+                "pattern": "UIInterfaceOrientationLandscapeRight",
+                "replace_string": "UIInterfaceOrientationPortrait"
+            },
+            {
+                "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+                "pattern": "UIInterfaceOrientationLandscapeLeft",
+                "replace_string": "UIInterfaceOrientationPortraitUpsideDown"
+            },
+            {
+                "file_path": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+                "pattern": "android:screenOrientation=\\\".*\\\"",
+                "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+                "file_path": "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml",
+                "pattern": "android:screenOrientation=\\\".*\\\"",
+                "replace_string": "android:screenOrientation=\"portrait\""
+            }
+        ]
     }
 }
