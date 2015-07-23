@@ -43,6 +43,7 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_navmesh_auto.cpp \
                    ../auto/jsb_cocos2dx_spine_auto.cpp \
                    ../auto/jsb_cocos2dx_auto.cpp \
+                   ../auto/jsb_cocos2dx_audioengine_auto.cpp \
                    ../auto/jsb_cocos2dx_studio_auto.cpp \
                    ../auto/jsb_cocos2dx_builder_auto.cpp \
                    ../auto/jsb_cocos2dx_ui_auto.cpp \
