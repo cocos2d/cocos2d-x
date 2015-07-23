@@ -1842,6 +1842,17 @@
 		826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
 		8525E3A21B291E42008EE815 /* clipper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8525E3A11B291E42008EE815 /* clipper.hpp */; };
 		8525E3A31B291E42008EE815 /* clipper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 8525E3A11B291E42008EE815 /* clipper.hpp */; };
+		85505F041B60E3AB003F2CD4 /* CCBoneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306631B60B583001E6D43 /* CCBoneNode.cpp */; };
+		85505F051B60E3B2003F2CD4 /* CCBoneNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306641B60B583001E6D43 /* CCBoneNode.h */; };
+		85505F061B60E3B6003F2CD4 /* CCSkeletonNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */; };
+		85505F071B60E3BA003F2CD4 /* CCSkeletonNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306661B60B583001E6D43 /* CCSkeletonNode.h */; };
+		85505F081B60E3BD003F2CD4 /* CCSkinNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306671B60B583001E6D43 /* CCSkinNode.cpp */; };
+		85505F091B60E3C1003F2CD4 /* CCSkinNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306681B60B583001E6D43 /* CCSkinNode.h */; };
+		85505F0A1B60E3CE003F2CD4 /* BoneNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306701B60B5B2001E6D43 /* BoneNodeReader.cpp */; };
+		85505F0B1B60E3D1003F2CD4 /* BoneNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306711B60B5B2001E6D43 /* BoneNodeReader.h */; };
+		85505F0C1B60E3D5003F2CD4 /* CSBoneBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306721B60B5B2001E6D43 /* CSBoneBinary_generated.h */; };
+		85505F0D1B60E3D8003F2CD4 /* SkeletonNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306731B60B5B2001E6D43 /* SkeletonNodeReader.cpp */; };
+		85505F0E1B60E3DB003F2CD4 /* SkeletonNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306741B60B5B2001E6D43 /* SkeletonNodeReader.h */; };
 		85B3743A1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
 		85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
@@ -10078,6 +10089,7 @@
 				B665E3111AA80A6500DDB1C5 /* CCPUObserver.h in Headers */,
 				15AE18B819AAD33D00C27E9E /* CCBSequenceProperty.h in Headers */,
 				B665E2311AA80A6500DDB1C5 /* CCPUBoxColliderTranslator.h in Headers */,
+				85505F0B1B60E3D1003F2CD4 /* BoneNodeReader.h in Headers */,
 				B6CAB4DE1AF9AA1A00B9B856 /* SpuPreferredPenetrationDirections.h in Headers */,
 				503DD8E41926736A00CD74DD /* CCDirectorCaller-ios.h in Headers */,
 				15AE198119AAD35700C27E9E /* CCTimelineMacro.h in Headers */,
@@ -10087,6 +10099,7 @@
 				B6CAB4D61AF9AA1A00B9B856 /* SpuGatheringCollisionTask.h in Headers */,
 				15AE1B7719AADA9A00C27E9E /* UIPageView.h in Headers */,
 				50ABBD8A1925AB4100A911A9 /* CCCustomCommand.h in Headers */,
+				85505F0C1B60E3D5003F2CD4 /* CSBoneBinary_generated.h in Headers */,
 				299754F7193EC95400A54AC3 /* ObjectFactory.h in Headers */,
 				15FB20921AE7C57D00C31518 /* advancing_front.h in Headers */,
 				50ABBE881925AB6F00A911A9 /* ccMacros.h in Headers */,
@@ -10262,6 +10275,7 @@
 				B665E3A11AA80A6500DDB1C5 /* CCPUPositionEmitter.h in Headers */,
 				15AE194E19AAD35100C27E9E /* CCDataReaderHelper.h in Headers */,
 				B665E2691AA80A6500DDB1C5 /* CCPUDoExpireEventHandlerTranslator.h in Headers */,
+				85505F091B60E3C1003F2CD4 /* CCSkinNode.h in Headers */,
 				15AE1ADB19AAD41000C27E9E /* b2Rope.h in Headers */,
 				D0FD03561A3B51AA00825BB5 /* CCAllocatorMacros.h in Headers */,
 				B665E42D1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffector.h in Headers */,
@@ -10435,6 +10449,7 @@
 				15AE1BAE19AADFDF00C27E9E /* UILayoutParameter.h in Headers */,
 				15AE18C819AAD33D00C27E9E /* CCMenuItemImageLoader.h in Headers */,
 				B6CAB3AC1AF9AA1A00B9B856 /* btContactConstraint.h in Headers */,
+				85505F051B60E3B2003F2CD4 /* CCBoneNode.h in Headers */,
 				B665E2491AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffectorTranslator.h in Headers */,
 				B6CAB4461AF9AA1A00B9B856 /* btParallelConstraintSolver.h in Headers */,
 				15AE18D119AAD33D00C27E9E /* CCNodeLoaderLibrary.h in Headers */,
@@ -10479,6 +10494,7 @@
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
 				B665E22D1AA80A6500DDB1C5 /* CCPUBoxCollider.h in Headers */,
 				B6CAB22E1AF9AA1A00B9B856 /* btCollisionObject.h in Headers */,
+				85505F071B60E3BA003F2CD4 /* CCSkeletonNode.h in Headers */,
 				15AE1AD519AAD40300C27E9E /* b2WeldJoint.h in Headers */,
 				15AE18B019AAD33D00C27E9E /* CCBKeyframe.h in Headers */,
 				15AE18C419AAD33D00C27E9E /* CCLayerGradientLoader.h in Headers */,
@@ -10750,6 +10766,7 @@
 				15AE193319AAD35100C27E9E /* CCActionNode.h in Headers */,
 				B6CAB1F01AF9AA1A00B9B856 /* btBroadphaseProxy.h in Headers */,
 				B6CAAFF51AF9A9E100B9B856 /* CCPhysics3DObject.h in Headers */,
+				85505F0E1B60E3DB003F2CD4 /* SkeletonNodeReader.h in Headers */,
 				B6CAB35E1AF9AA1A00B9B856 /* gim_radixsort.h in Headers */,
 				50ABBED21925AB6F00A911A9 /* TGAlib.h in Headers */,
 				B665E2951AA80A6500DDB1C5 /* CCPUEmitter.h in Headers */,
@@ -11938,6 +11955,7 @@
 				B665E32F1AA80A6500DDB1C5 /* CCPUOnCountObserverTranslator.cpp in Sources */,
 				15AE192419AAD35100C27E9E /* CocoLoader.cpp in Sources */,
 				B665E3BB1AA80A6500DDB1C5 /* CCPURibbonTrailRender.cpp in Sources */,
+				85505F041B60E3AB003F2CD4 /* CCBoneNode.cpp in Sources */,
 				50ABBE421925AB6F00A911A9 /* CCDirector.cpp in Sources */,
 				15AE1C0319AAE01E00C27E9E /* CCTableView.cpp in Sources */,
 				B6CAB5361AF9AA1A00B9B856 /* btVector3.cpp in Sources */,
@@ -12086,6 +12104,7 @@
 				15FB20941AE7C57D00C31518 /* cdt.cc in Sources */,
 				B665E34B1AA80A6500DDB1C5 /* CCPUOnPositionObserver.cpp in Sources */,
 				B6CAB42A1AF9AA1A00B9B856 /* btRaycastVehicle.cpp in Sources */,
+				85505F081B60E3BD003F2CD4 /* CCSkinNode.cpp in Sources */,
 				15AE1AD619AAD40300C27E9E /* b2WheelJoint.cpp in Sources */,
 				299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */,
 				1A5701DF180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
@@ -12266,6 +12285,7 @@
 				B6CAB40C1AF9AA1A00B9B856 /* btMultiBodyJointMotor.cpp in Sources */,
 				B6CAB2D21AF9AA1A00B9B856 /* btMultiSphereShape.cpp in Sources */,
 				B29A7DFC19EE1B7700872B35 /* spine-cocos2dx.cpp in Sources */,
+				85505F0D1B60E3D8003F2CD4 /* SkeletonNodeReader.cpp in Sources */,
 				D0FD03501A3B51AA00825BB5 /* CCAllocatorGlobal.cpp in Sources */,
 				B665E2231AA80A6500DDB1C5 /* CCPUBehaviourTranslator.cpp in Sources */,
 				B665E3D71AA80A6600DDB1C5 /* CCPUScriptParser.cpp in Sources */,
@@ -12319,6 +12339,7 @@
 				50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */,
 				B6CAB4301AF9AA1A00B9B856 /* btWheelInfo.cpp in Sources */,
 				15AE19B019AAD39700C27E9E /* ScrollViewReader.cpp in Sources */,
+				85505F061B60E3B6003F2CD4 /* CCSkeletonNode.cpp in Sources */,
 				50ABBE941925AB6F00A911A9 /* CCProfiling.cpp in Sources */,
 				5012169B1AC473A3009A4BEA /* CCTechnique.cpp in Sources */,
 				15AE182D19AAD2F700C27E9E /* CCMeshVertexIndexData.cpp in Sources */,
@@ -12389,6 +12410,7 @@
 				15AE1B7419AADA9A00C27E9E /* UILoadingBar.cpp in Sources */,
 				50ABBEA41925AB6F00A911A9 /* CCScriptSupport.cpp in Sources */,
 				B6CAB3E81AF9AA1A00B9B856 /* btDiscreteDynamicsWorld.cpp in Sources */,
+				85505F0A1B60E3CE003F2CD4 /* BoneNodeReader.cpp in Sources */,
 				501216A11AC473AD009A4BEA /* CCMaterial.cpp in Sources */,
 				B665E3971AA80A6500DDB1C5 /* CCPUPointEmitter.cpp in Sources */,
 				B6CAB1E81AF9AA1A00B9B856 /* btAxisSweep3.cpp in Sources */,
