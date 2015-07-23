@@ -120,7 +120,7 @@ public:
 class TestTimelineExtensionData : public ActionTimelineBaseTest
 {
 public:
-	CREATE_FUNC(TestTimelineExtensionData);
+    CREATE_FUNC(TestTimelineExtensionData);
     virtual void onEnter() override;
     virtual std::string title() const override;
 };
