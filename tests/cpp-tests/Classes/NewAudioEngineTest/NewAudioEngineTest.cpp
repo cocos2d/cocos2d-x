@@ -303,7 +303,7 @@ bool AudioControlTest::init()
         }
     });
     _playItem = playItem;
-    playItem->setPosition(layerSize.width * 0.3f,layerSize.height * 0.7f);
+    playItem->setPosition(layerSize.width * 0.3f,layerSize.height * 0.8f);
     addChild(playItem);
     
     auto stopItem = TextButton::create("stop", [&](TextButton* button){
@@ -314,7 +314,7 @@ bool AudioControlTest::init()
             ((TextButton*)_playItem)->setEnabled(true);
         }
     });
-    stopItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.7f);
+    stopItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.8f);
     addChild(stopItem);
     
     auto pauseItem = TextButton::create("pause", [&](TextButton* button){
@@ -322,7 +322,7 @@ bool AudioControlTest::init()
             AudioEngine::pause(_audioID);
         }
     });
-    pauseItem->setPosition(layerSize.width * 0.3f,layerSize.height * 0.6f);
+    pauseItem->setPosition(layerSize.width * 0.3f,layerSize.height * 0.7f);
     addChild(pauseItem);
     
     auto resumeItem = TextButton::create("resume", [&](TextButton* button){
@@ -330,32 +330,38 @@ bool AudioControlTest::init()
             AudioEngine::resume(_audioID);
         }
     });
-    resumeItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.6f);
+    resumeItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.7f);
     addChild(resumeItem);
     
     auto loopItem = TextButton::create("enable-loop", [&](TextButton* button){
         _loopEnabled = !_loopEnabled;
-        
-        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
+
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID) {
             AudioEngine::setLoop(_audioID, _loopEnabled);
         }
-        if(_loopEnabled){
+        if (_loopEnabled){
             button->setString("disable-loop");
         }
         else {
             button->setString("enable-loop");
         }
     });
-    loopItem->setPosition(layerSize.width * 0.3f,layerSize.height * 0.5f);
+    loopItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
     addChild(loopItem);
     
+    auto preloadItem = TextButton::create("preload", [&](TextButton* button){
+        AudioEngine::preload("background.mp3");
+    });
+    preloadItem->setPosition(layerSize.width * 0.3f, layerSize.height * 0.6f);
+    addChild(preloadItem);
+
     auto uncacheItem = TextButton::create("uncache", [&](TextButton* button){
         AudioEngine::uncache("background.mp3");
         
         _audioID = AudioEngine::INVALID_AUDIO_ID;
         ((TextButton*)_playItem)->setEnabled(true);
     });
-    uncacheItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.5f);
+    uncacheItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.6f);
     addChild(uncacheItem);
     
     auto volumeSlider = SliderEx::create();

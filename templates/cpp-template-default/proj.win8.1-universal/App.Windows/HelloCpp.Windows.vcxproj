@@ -123,7 +123,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>CC_ENABLE_BULLET_INTEGRATION=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -136,7 +136,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>CC_ENABLE_BULLET_INTEGRATION=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -146,7 +146,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>CC_ENABLE_BULLET_INTEGRATION=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -159,7 +159,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>CC_ENABLE_BULLET_INTEGRATION=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -169,7 +169,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>CC_ENABLE_BULLET_INTEGRATION=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -182,7 +182,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>CC_ENABLE_BULLET_INTEGRATION=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

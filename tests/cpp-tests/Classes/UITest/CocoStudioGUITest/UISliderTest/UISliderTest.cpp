@@ -349,6 +349,7 @@ bool UISliderNewEventCallbackTest::init()
         slider->addEventListener([=](Ref* widget,Slider::EventType type)
         {
             Slider* slider = (Slider*)widget;
+            CC_UNUSED_PARAM(slider);
             if(type == Slider::EventType::ON_SLIDEBALL_DOWN)
             {
                 CCLOG("slider button pressed!");

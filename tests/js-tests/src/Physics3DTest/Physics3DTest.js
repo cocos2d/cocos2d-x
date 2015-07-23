@@ -27,13 +27,13 @@ var Physics3DTestIdx = -1;
 
 var physicsScene = null;
 
-const START_POS_X = -0.5;
-const START_POS_Y = -2.5;
-const START_POS_Z = -0.5;
+var START_POS_X = -0.5;
+var START_POS_Y = -2.5;
+var START_POS_Z = -0.5;
 
-const ARRAY_SIZE_X = 4;
-const ARRAY_SIZE_Y = 3;
-const ARRAY_SIZE_Z = 4;
+var ARRAY_SIZE_X = 4;
+var ARRAY_SIZE_Y = 3;
+var ARRAY_SIZE_Z = 4;
 
 var Physics3DTestDemo = cc.Layer.extend({
     _title:"Physics3D Test",

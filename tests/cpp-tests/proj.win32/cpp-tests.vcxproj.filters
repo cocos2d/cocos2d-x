@@ -792,9 +792,6 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIRadioButtonTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UIFocusTest</Filter>
     </ClCompile>
@@ -968,6 +965,16 @@
     </ClCompile>
     <ClCompile Include="..\Classes\Scene3DTest\Scene3DTest.cpp">
       <Filter>Classes\Scene3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-CCDrawNode.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BugsTest\Bug-PageViewLayout.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp">
+      <Filter>Classes\BugsTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1759,6 +1766,15 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Scene3DTest\Scene3DTest.h">
       <Filter>Classes\Scene3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-CCDrawNode.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-PageViewLayout.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BugsTest\Bug-12847.h">
+      <Filter>Classes\BugsTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

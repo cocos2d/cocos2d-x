@@ -38,6 +38,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTPadding);
     ADD_TEST_CASE(LabelFNTOffset);
     ADD_TEST_CASE(LabelFNTColor);
+    ADD_TEST_CASE(LabelFNTOpacity);
     ADD_TEST_CASE(LabelFNTHundredLabels);
     ADD_TEST_CASE(LabelFNTMultiLine);
     ADD_TEST_CASE(LabelFNTandTTFEmpty);
@@ -78,9 +79,11 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10773Test);
     ADD_TEST_CASE(LabelIssue11576Test);
     ADD_TEST_CASE(LabelIssue11699Test);
-    ADD_TEST_CASE(LabelIssue12259Test);
     ADD_TEST_CASE(LabelIssue12409Test);
     ADD_TEST_CASE(LabelAddChildTest);
+    ADD_TEST_CASE(LabelIssue12775Test);
+    ADD_TEST_CASE(LabelIssue11585Test);
+    ADD_TEST_CASE(LabelFullTypeFontTest);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -328,6 +331,31 @@ std::string LabelFNTColor::title() const
 std::string LabelFNTColor::subtitle() const
 {
     return "Testing color";
+}
+
+LabelFNTOpacity::LabelFNTOpacity()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 100");
+    label->setOpacity(100);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 2));
+
+    label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 200");
+    label->setOpacity(200);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 3));
+}
+
+std::string LabelFNTOpacity::title() const
+{
+    return "New Label + .FNT file";
+}
+
+std::string LabelFNTOpacity::subtitle() const
+{
+    return "Testing opacity";
 }
 
 LabelFNTHundredLabels::LabelFNTHundredLabels()
@@ -1554,7 +1582,7 @@ void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
     _label->setString(getCurrentAlignment());
 }
 
-const char* LabelAlignmentTest::getCurrentAlignment()
+std::string LabelAlignmentTest::getCurrentAlignment()
 {
     const char* vertical = nullptr;
     const char* horizontal = nullptr;
@@ -1581,7 +1609,7 @@ const char* LabelAlignmentTest::getCurrentAlignment()
         break;
     }
 
-    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal);
 }
 
 std::string LabelAlignmentTest::title() const
@@ -1938,43 +1966,6 @@ std::string LabelIssue11699Test::subtitle() const
     return "Outline should match with the characters exactly.";
 }
 
-LabelIssue12259Test::LabelIssue12259Test()
-{
-    auto center = VisibleRect::center();
-
-    auto label = Label::createWithTTF("Hello", "fonts/arial.ttf", 100);
-    label->setDimensions(0, 70);
-    label->setPosition(center.x, center.y);
-    addChild(label);
-
-    auto drawNode = DrawNode::create();
-    auto labelSize = label->getContentSize();
-    auto origin = Director::getInstance()->getWinSize();
-
-    origin.width = origin.width / 2 - (labelSize.width / 2);
-    origin.height = origin.height / 2 - (labelSize.height / 2);
-
-    Vec2 vertices[4] =
-    {
-        Vec2(origin.width, origin.height),
-        Vec2(labelSize.width + origin.width, origin.height),
-        Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
-        Vec2(origin.width, labelSize.height + origin.height)
-    };
-    drawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
-    addChild(drawNode);
-}
-
-std::string LabelIssue12259Test::title() const
-{
-    return "Test for Issue #12259";
-}
-
-std::string LabelIssue12259Test::subtitle() const
-{
-    return "the texture of character should be cropped.";
-}
-
 LabelIssue12409Test::LabelIssue12409Test()
 {
     auto center = VisibleRect::center();
@@ -2034,4 +2025,63 @@ LabelAddChildTest::LabelAddChildTest()
 std::string LabelAddChildTest::title() const
 {
     return "Label support add child nodes";
+}
+
+LabelIssue12775Test::LabelIssue12775Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello", "fonts/xingkai-incomplete.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue12775Test::title() const
+{
+    return "Test for Issue #12775";
+}
+
+std::string LabelIssue12775Test::subtitle() const
+{
+    return "Should not crash if the font not contain a Unicode charmap.";
+}
+
+LabelIssue11585Test::LabelIssue11585Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    label->getLetter(0)->setColor(Color3B::RED);
+    label->getLetter(1)->setColor(Color3B::GREEN);
+    label->getLetter(2)->setColor(Color3B::BLUE);
+    auto action = RepeatForever::create(Sequence::create( 
+        FadeOut::create(2), FadeIn::create(2),nullptr));
+    label->runAction(action);
+}
+
+std::string LabelIssue11585Test::title() const
+{
+    return "Test for Issue #11585";
+}
+
+std::string LabelIssue11585Test::subtitle() const
+{
+    return "The color of letter should not be overridden by fade action.";
+}
+
+LabelFullTypeFontTest::LabelFullTypeFontTest()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello 中国", "XueJ2312F.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelFullTypeFontTest::title() const
+{
+    return "Test font supported by FullType";
 }

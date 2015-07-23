@@ -77,7 +77,7 @@ void Application::setAnimationInterval(float interval)
 {
   JniMethodInfo methodInfo;
   if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval",
-                                       "(D)V"))
+                                       "(F)V"))
   {
     CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
   }

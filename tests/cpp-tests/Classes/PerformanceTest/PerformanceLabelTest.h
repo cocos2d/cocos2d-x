@@ -14,7 +14,7 @@ public:
 
     virtual ~LabelMainScene();
 
-    std::string title() const;
+    std::string title() const override;
     virtual bool init() override;
     void updateNodes();
 
