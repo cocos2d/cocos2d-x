@@ -65,9 +65,7 @@ public:
     void uncache(const std::string& filePath);
     void uncacheAll();
     
-    /**
-     * other implementations return AudioCache, but that value is unused in main AudioEngine.cpp
-     */ 
+
     int preload(const std::string& filePath);
     
     void update(float dt);
@@ -88,6 +86,8 @@ private:
 		std::string path; 
 		FMOD::Sound * sound;
 		FMOD::Channel * channel; 
+		bool loop; 
+		float volume; 
 		std::function<void (int, const std::string &)> callback;
 	};
 	

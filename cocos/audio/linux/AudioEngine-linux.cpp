@@ -33,10 +33,8 @@ bool ERRCHECK(FMOD_RESULT result) {
 FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE controlType, void *commandData1, void *commandData2)
 {
 	if(controlType == FMOD_CHANNEL_CALLBACKTYPE_END){
-		printf("channelCallback\n");
 		g_instance->onSoundFinished((FMOD::Channel *)channel);
 	}else{
-		printf("other callback mode\n");
 	}
     return FMOD_OK;
 }
@@ -70,9 +68,8 @@ bool AudioEngineImpl::init(){
 
   mapEffectSound.clear();
   
-   auto scheduler = cocos2d::Director::getInstance()->getScheduler();
-   scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
-
+  auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+  scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
   
   g_instance = this; 
   
@@ -81,12 +78,10 @@ bool AudioEngineImpl::init(){
 
 int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume){
   int id = preload(fileFullPath); 
-  //mapEffectSound[id].channel->setMode();  
-  mapEffectSound[id].channel->setLoopCount(loop?-1:0); 
-    mapEffectSound[id].channel->setPaused(true); 
-    mapEffectSound[id].channel->setVolume(volume);
-    AudioEngine::_audioIDInfoMap[id].state = AudioEngine::AudioState::PAUSED;
-  printf("DEBUG: AudioEngineImpl::play2d with id %d loop %d volume %.3f\n", id, loop, volume); 
+  mapEffectSound[id].loop=loop;  
+  mapEffectSound[id].channel->setPaused(true); 
+  mapEffectSound[id].volume = volume;
+  AudioEngine::_audioIDInfoMap[id].state = AudioEngine::AudioState::PAUSED;
   if(id >= 0) 
     resume(id); 
   return id; 
@@ -101,17 +96,14 @@ void AudioEngineImpl::setVolume(int audioID,float volume){
 };
 
 void AudioEngineImpl::setLoop(int audioID, bool loop){
- printf("AudioEngineImpl::setLoop: audioID: %d\n", audioID);
   try{
     mapEffectSound[audioID].channel->setLoopCount(loop?-1:0); 
-    //AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PAUSED;
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::setLoop: invalid audioID: %d\n", audioID);
   }
 };
 
 bool AudioEngineImpl::pause(int audioID){
- printf("AudioEngineImpl::pause: audioID: %d\n", audioID);
   try{
     mapEffectSound[audioID].channel->setPaused(true); 
     AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PAUSED;
@@ -123,24 +115,24 @@ bool AudioEngineImpl::pause(int audioID){
 };
 
 bool AudioEngineImpl::resume(int audioID){
-   printf("AudioEngineImpl::resume: audioID: %d\n", audioID);
 try{
 
     if(!mapEffectSound[audioID].channel){
-    printf("DEBUG: AudioEngineImpl::resume no channel\n"); 
-		FMOD::Channel *channel = nullptr;
+      FMOD::Channel *channel = nullptr;
       //starts the sound in pause mode, use the channel to unpause
       FMOD_RESULT result = pSystem->playSound(FMOD_CHANNEL_FREE, mapEffectSound[audioID].sound, true, &channel);
       if(ERRCHECK(result)){
 		return false; 
       }
+      channel->setMode(mapEffectSound[audioID].loop?FMOD_LOOP_NORMAL:FMOD_LOOP_OFF);  
+      channel->setLoopCount(mapEffectSound[audioID].loop?-1:0); 
+      channel->setVolume(mapEffectSound[audioID].volume);
       channel->setUserData((void *)mapEffectSound[audioID].id);
       mapEffectSound[audioID].channel = channel; 
     }
     
     mapEffectSound[audioID].channel->setPaused(false); 
-     AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
-    printf("DEBUG: AudioEngineImpl::resume done\n"); 
+    AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
     
     return true; 
   }catch(const std::out_of_range& oor){
@@ -152,7 +144,7 @@ try{
 bool AudioEngineImpl::stop(int audioID){
   try{
     mapEffectSound[audioID].channel->stop(); 
-	mapEffectSound[audioID].channel = nullptr; 
+    mapEffectSound[audioID].channel = nullptr; 
     return true; 
   }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::stop: invalid audioID: %d\n", audioID);
@@ -170,7 +162,6 @@ float AudioEngineImpl::getDuration(int audioID){
 	FMOD_RESULT result = sound->getLength(&length, FMOD_TIMEUNIT_MS);
 	ERRCHECK(result);
 	float duration = (float)length / 1000.0f; 
-	printf("AudioEngineImpl::getDuration audioid %d: %.3f\n", audioID, duration);
 	return duration;
     }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::getDuration: invalid audioID: %d\n", audioID);
@@ -184,7 +175,6 @@ float AudioEngineImpl::getCurrentTime(int audioID){
 	FMOD_RESULT result = mapEffectSound[audioID].channel->getPosition(&position, FMOD_TIMEUNIT_MS);
 	ERRCHECK(result);
 	float currenttime = position /1000.0f;
-	//printf("AudioEngineImpl::getCurrentTime %d %.3f\n", audioID, currenttime);
 	return currenttime; 
     }catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::getCurrentTime: invalid audioID: %d\n", audioID);
@@ -195,7 +185,6 @@ float AudioEngineImpl::getCurrentTime(int audioID){
 bool AudioEngineImpl::setCurrentTime(int audioID, float time){
  try{
 	unsigned int position = (unsigned int)(time * 1000.0f); 
-	printf("AudioEngineImpl::setCurrentTime %d %d\n", audioID, position);
     FMOD_RESULT result = mapEffectSound[audioID].channel->setPosition(position, FMOD_TIMEUNIT_MS);
     ERRCHECK(result);
 	}catch(const std::out_of_range& oor){
@@ -205,7 +194,6 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time){
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback){
  try{
-	 printf("AUdioEngineImpl::setFInishCallback %d\n", audioID);
 	FMOD::Channel * channel = mapEffectSound[audioID].channel;
 	mapEffectSound[audioID].callback = callback; 
 	FMOD_RESULT result = channel->setCallback(channelCallback);
@@ -219,13 +207,13 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
 void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
 	size_t id; 
 	try{
-	printf("AudioEngineImpl::OnSoundFinished ");
 	void * data;
 	channel->getUserData(&data);
 	id = (size_t) data; 
 	if(mapEffectSound[id].callback){
 	 mapEffectSound[id].callback(id, mapEffectSound[id].path);
 	}
+	mapEffectSound[id].channel = nullptr; 
 	}catch(const std::out_of_range& oor){
       printf("AudioEngineImpl::onSoundFinished: invalid audioID: %d\n", id);
   }
@@ -233,11 +221,23 @@ void AudioEngineImpl::onSoundFinished(FMOD::Channel * channel){
 
     
 void AudioEngineImpl::uncache(const std::string& filePath){
-  /*@todo: unimplemented*/
+int id = find(filePath); 
+  if(id > -1){
+    auto& audioRef = mapEffectSound[id];
+    if(audioRef.sound)
+      audioRef.sound->release();
+    mapEffectSound.erase(id);
+  }
 };
 
 void AudioEngineImpl::uncacheAll(){
-  /*@todo: unimplemented*/
+for (auto it = mapEffectSound.cbegin(); it != mapEffectSound.cend(); ++it) {
+    auto& audioRef = it->second;
+    if(audioRef.sound){
+      audioRef.sound->release();
+    }
+  }
+  mapEffectSound.clear();
 };
 
     
@@ -249,7 +249,7 @@ int AudioEngineImpl::preload(const std::string& filePath){
   if(id < 0){
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
 	FMOD::Sound * sound = NULL; 
-	FMOD_RESULT result = pSystem->createSound(fullPath.c_str(), FMOD_LOOP_NORMAL, 0, &sound);
+	FMOD_RESULT result = pSystem->createSound(fullPath.c_str(), FMOD_LOOP_OFF, 0, &sound);
     if (ERRCHECK(result)){
       printf("sound effect in %s could not be preload\n", filePath.c_str());
       return -1;
