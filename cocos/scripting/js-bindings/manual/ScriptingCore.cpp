@@ -601,6 +601,8 @@ void ScriptingCore::createGlobalContext() {
     // Removed in Firefox v34
     js::SetDefaultObjectForContext(_cx, _global.ref());
     
+    runScript("script/jsb_prepare.js");
+    
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(_cx, _global.ref());

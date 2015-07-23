@@ -512,7 +512,7 @@ protected:
 
     void onDraw(const Mat4& transform, bool transformUpdated);
     void onDrawShadow(GLProgram* glProgram);
-    void drawSelf(Renderer* renderer, uint32_t flags);
+    void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
 
     virtual void alignText();
     bool computeHorizontalKernings(const std::u16string& stringToRender);
