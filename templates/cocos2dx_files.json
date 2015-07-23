@@ -5679,6 +5679,7 @@
         "cocos/scripting/js-bindings/script/jsb_opengl.js", 
         "cocos/scripting/js-bindings/script/jsb_opengl_constants.js", 
         "cocos/scripting/js-bindings/script/jsb_pool.js", 
+        "cocos/scripting/js-bindings/script/jsb_prepare.js", 
         "cocos/scripting/js-bindings/script/jsb_property_apis.js", 
         "cocos/scripting/js-bindings/script/jsb_property_impls.js", 
         "cocos/scripting/js-bindings/script/jsb_spine.js", 
