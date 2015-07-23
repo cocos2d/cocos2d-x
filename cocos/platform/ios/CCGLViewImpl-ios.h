@@ -73,6 +73,7 @@ public:
     virtual bool isOpenGLReady() override;
     virtual void end() override;
     virtual void swapBuffers() override;
+    virtual void setBuffers() override;
     virtual void setIMEKeyboardState(bool bOpen) override;
 
 protected:

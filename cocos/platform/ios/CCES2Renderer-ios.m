@@ -68,117 +68,170 @@
         depthFormat_ = depthFormat;
         pixelFormat_ = pixelFormat;
         multiSampling_ = multiSampling;
-
-        // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
-        glGenFramebuffers(1, &defaultFramebuffer_);
-        NSAssert( defaultFramebuffer_, @"Can't create default frame buffer");
-
-        glGenRenderbuffers(1, &colorRenderbuffer_);
-        NSAssert( colorRenderbuffer_, @"Can't create default render buffer");
-
-        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
-        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
-
+        
         if (multiSampling_)
         {
             GLint maxSamplesAllowed;
             glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
             samplesToUse_ = MIN(maxSamplesAllowed,requestedSamples);
-            
+        }
+        
+        defaultFramebuffer_ = 0;
+        colorRenderbuffer_ = 0;
+        depthBuffer_ = 0;
+        msaaColorbuffer_ = 0;
+        msaaFramebuffer_ = 0;
+
+    }
+
+    return self;
+}
+
+- (BOOL)createFramebuffer:(CAEAGLLayer *)layer;
+{
+    if (context_ && !defaultFramebuffer_) {
+        
+        // Create default framebuffer object. The backing will be allocated for the current layer in
+        glGenFramebuffers(1, &defaultFramebuffer_);
+        NSAssert( defaultFramebuffer_, @"Can't create default frame buffer");
+        
+        glGenRenderbuffers(1, &colorRenderbuffer_);
+        NSAssert( colorRenderbuffer_, @"Can't create default render buffer");
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
+        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer_);
+        
+        if (multiSampling_)
+        {
             /* Create the MSAA framebuffer (offscreen) */
             glGenFramebuffers(1, &msaaFramebuffer_);
             NSAssert( msaaFramebuffer_, @"Can't create default MSAA frame buffer");
             glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer_);
             
         }
-
+        
         CHECK_GL_ERROR();
-    }
-
-    return self;
-}
-
-- (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
-{
-    // Allocate color buffer backing based on the current layer size
-    glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
-
-    if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
-    {
-        NSLog(@"failed to call context");
-    }
-    
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
-
-    NSLog(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
-
-    if (multiSampling_)
-    {
-        if ( msaaColorbuffer_) {
-            glDeleteRenderbuffers(1, &msaaColorbuffer_);
-            msaaColorbuffer_ = 0;
+        
+        // Allocate color buffer backing based on the current layer size
+        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+        
+        if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
+        {
+            NSLog(@"failed to call context");
         }
         
-        /* Create the offscreen MSAA color buffer.
-         After rendering, the contents of this will be blitted into ColorRenderbuffer */
+        glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
+        glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
         
-        //msaaFrameBuffer needs to be binded
-        glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer_);
-        glGenRenderbuffers(1, &msaaColorbuffer_);
-        NSAssert(msaaFramebuffer_, @"Can't create MSAA color buffer");
+        NSLog(@"cocos2d: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
         
-        glBindRenderbuffer(GL_RENDERBUFFER, msaaColorbuffer_);
+        if (multiSampling_)
+        {
+            if ( msaaColorbuffer_) {
+                glDeleteRenderbuffers(1, &msaaColorbuffer_);
+                msaaColorbuffer_ = 0;
+            }
+            
+            /* Create the offscreen MSAA color buffer.
+             After rendering, the contents of this will be blitted into ColorRenderbuffer */
+            
+            //msaaFrameBuffer needs to be binded
+            glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer_);
+            glGenRenderbuffers(1, &msaaColorbuffer_);
+            NSAssert(msaaFramebuffer_, @"Can't create MSAA color buffer");
+            
+            glBindRenderbuffer(GL_RENDERBUFFER, msaaColorbuffer_);
+            
+            glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, pixelFormat_ , backingWidth_, backingHeight_);
+            
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, msaaColorbuffer_);
+            
+            GLenum error;
+            if ( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
+            {
+                NSLog(@"Failed to make complete framebuffer object 0x%X", error);
+                return NO;
+            }
+        }
         
-        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, pixelFormat_ , backingWidth_, backingHeight_);
+        CHECK_GL_ERROR();
         
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, msaaColorbuffer_);
+        if (depthFormat_)
+        {
+            if( ! depthBuffer_ ) {
+                glGenRenderbuffers(1, &depthBuffer_);
+                NSAssert(depthBuffer_, @"Can't create depth buffer");
+            }
+            
+            glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
+            
+            if( multiSampling_ )
+                glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
+            else
+                glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
+            
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
+            
+            if (depthFormat_ == GL_DEPTH24_STENCIL8_OES) {
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
+            }
+            
+            // bind color buffer
+            glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
+        }
+        
+        CHECK_GL_ERROR();
         
         GLenum error;
-        if ( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
+        if( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
         {
             NSLog(@"Failed to make complete framebuffer object 0x%X", error);
             return NO;
         }
+        
+        return YES;
     }
+    
+    return NO;
+    
+}
 
-    CHECK_GL_ERROR();
-
-    if (depthFormat_)
-    {
-        if( ! depthBuffer_ ) {
-            glGenRenderbuffers(1, &depthBuffer_);
-            NSAssert(depthBuffer_, @"Can't create depth buffer");
+- (void)deleteFramebuffer
+{
+    if (context_) {
+        [EAGLContext setCurrentContext:context_];
+        
+        if (defaultFramebuffer_) {
+            glDeleteFramebuffers(1, &defaultFramebuffer_);
+            defaultFramebuffer_ = 0;
         }
-
-        glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer_);
         
-        if( multiSampling_ )
-            glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, depthFormat_,backingWidth_, backingHeight_);
-        else
-            glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
-
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
+        if (colorRenderbuffer_) {
+            glDeleteRenderbuffers(1, &colorRenderbuffer_);
+            colorRenderbuffer_ = 0;
+        }
         
-        if (depthFormat_ == GL_DEPTH24_STENCIL8_OES) {
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
-		}
-
-        // bind color buffer
-        glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);        
+        if (multiSampling_)
+        {
+            if (msaaFramebuffer_) {
+                glDeleteFramebuffers(1, &msaaFramebuffer_);
+                msaaFramebuffer_ = 0;
+            }
+        }
     }
+}
 
-    CHECK_GL_ERROR();
-
-    GLenum error;
-    if( (error=glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE)
-    {
-        NSLog(@"Failed to make complete framebuffer object 0x%X", error);
-        return NO;
+- (void)setFramebuffer:(CAEAGLLayer *)layer;
+{
+    if (context_) {
+        [EAGLContext setCurrentContext:context_];
+        
+        if (!defaultFramebuffer_)
+            [self createFramebuffer:layer];
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer_);
     }
-
-    return YES;
 }
 
 -(CGSize) backingSize

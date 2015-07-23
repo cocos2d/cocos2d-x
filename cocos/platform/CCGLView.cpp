@@ -120,6 +120,10 @@ void GLView::pollEvents()
 {
 }
 
+void GLView::setBuffers()
+{
+}
+
 void GLView::updateDesignResolutionSize()
 {
     if (_screenSize.width > 0 && _screenSize.height > 0
