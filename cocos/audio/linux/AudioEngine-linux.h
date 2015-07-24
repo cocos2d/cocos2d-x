@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -35,9 +35,7 @@
 #include "fmod_errors.h"
 #include "AudioEngine.h"
 
-
 #include "base/CCRef.h"
-
 
 NS_CC_BEGIN
     namespace experimental{
@@ -69,32 +67,32 @@ public:
     int preload(const std::string& filePath);
     
     void update(float dt);
-	
-	/**
-	 * used internally by ffmod callback 
-	 */ 
-	void onSoundFinished(FMOD::Channel * channel); 
+    
+    /**
+     * used internally by ffmod callback 
+     */ 
+    void onSoundFinished(FMOD::Channel * channel); 
     
 private:
   
     int find(const std::string &path);
   
-	FMOD::Channel * getChannel(FMOD::Sound *);
+    FMOD::Channel * getChannel(FMOD::Sound *);
   
-	struct AudioInfo{
-		size_t id; 
-		std::string path; 
-		FMOD::Sound * sound;
-		FMOD::Channel * channel; 
-		bool loop; 
-		float volume; 
-		std::function<void (int, const std::string &)> callback;
-	};
-	
+    struct AudioInfo{
+        size_t id; 
+        std::string path; 
+        FMOD::Sound * sound;
+        FMOD::Channel * channel; 
+        bool loop; 
+        float volume; 
+        std::function<void (int, const std::string &)> callback;
+    };
+    
     std::map<int, AudioInfo> mapEffectSound;
     
     FMOD::System* pSystem;
-	
+    
 };
 }
 NS_CC_END

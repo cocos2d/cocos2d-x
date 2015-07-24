@@ -25,8 +25,6 @@
 #include "platform/CCPlatformConfig.h"
 #include <condition_variable>
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
@@ -555,5 +553,3 @@ void AudioEngine::addTask(const std::function<void()> &task)
         s_threadPool->addTask(task);
     }
 }
-
-#endif
