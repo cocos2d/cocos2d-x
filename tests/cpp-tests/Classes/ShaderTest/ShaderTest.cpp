@@ -401,17 +401,25 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-    GLchar * fragSource = (GLchar*) FileUtils::getInstance()->getStringFromFile(
-                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh")).c_str();
-    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
+	GLchar * fragSource = nullptr;
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+    fragSource = (GLchar*) String::createWithContentsOfFile(
+                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
+#else
+	fragSource = (GLchar*)String::createWithContentsOfFile(
+								FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh").c_str())->getCString();
+#endif
+	auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     setGLProgramState(glProgramState);
     
     auto size = getTexture()->getContentSizeInPixels();
     getGLProgramState()->setUniformVec2("resolution", size);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
     getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
+#endif
 }
 
 void SpriteBlur::setBlurRadius(float radius)
@@ -487,7 +495,6 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();
@@ -496,7 +503,7 @@ bool ShaderBlur::init()
 
         addChild(_blurSprite);
         addChild(sprite);
-
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         createSliderCtls();
 #endif
         return true;
