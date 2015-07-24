@@ -641,4 +641,14 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelFullTypeFontTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFullTypeFontTest);
+
+    LabelFullTypeFontTest();
+
+    virtual std::string title() const override;
+};
+
 #endif
