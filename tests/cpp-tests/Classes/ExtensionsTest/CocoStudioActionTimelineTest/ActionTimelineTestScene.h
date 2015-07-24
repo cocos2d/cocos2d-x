@@ -43,7 +43,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 protected:
     cocostudio::timeline::ActionTimeline* action;
@@ -115,6 +115,19 @@ public:
     
     virtual void onEnter() override;
     virtual std::string title() const override;
+};
+
+class TestActionTimelineSkeleton : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestActionTimelineSkeleton);
+
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+private:
+    bool _changedDisplay;
+    bool _changedDisplays;
 };
 
 class TestTimelineExtensionData : public ActionTimelineBaseTest
