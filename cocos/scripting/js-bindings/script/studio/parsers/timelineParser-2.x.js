@@ -1177,15 +1177,13 @@
      */
     parser.initSimpleAudio = function(json, resourcePath){
 
+        var node = new ccs.ComAudio();
         var loop = json["Loop"] || false;
-        var volume = json["Volume"] || 0;
-        cc.audioEngine.setMusicVolume(volume);
-        //var name = json["Name"];
-
+        //var volume = json["Volume"] || 0;
+        //cc.audioEngine.setMusicVolume(volume);
+        node.setLoop(loop);
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            cc.loader.load(path, function(){
-                cc.audioEngine.playMusic(path, loop);
-            });
+            node.setFile(path);
         });
 
     };
