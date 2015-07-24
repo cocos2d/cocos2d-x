@@ -98,6 +98,6 @@ ccs.ActionTimelineData.prototype._ctor = function(actionTag) {
     }
 };
 
-ccs.ObjectExtensionData.prototype._ctor = function() {
-    ccs.ObjectExtensionData.prototype.init.call(this);
+ccs.ComExtensionData.prototype._ctor = function() {
+    ccs.ComExtensionData.prototype.init.call(this);
 };

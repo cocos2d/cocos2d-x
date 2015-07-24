@@ -67,3 +67,7 @@ ccs.Sprite.extend = ccs.Sprite.extend || cc.Sprite.extend;
  */
 ccs.Component = ccs.Component || cc.Component;
 ccs.Component.extend = ccs.Component.extend || cc.Component.extend;
+
+ccs.SkinNode.extend = cc.Class.extend;
+ccs.BoneNode.extend = cc.Class.extend;
+ccs.SkeletonNode.extend = cc.Class.extend;
