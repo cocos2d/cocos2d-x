@@ -298,6 +298,7 @@
 {
     self.textInput.ccui_placeholderFont = font;
 }
+
 - (void)setText:(NSString *)text
 {
     self.textInput.ccui_text = text;

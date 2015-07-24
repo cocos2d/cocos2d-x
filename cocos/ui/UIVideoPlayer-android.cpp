@@ -71,11 +71,11 @@ using namespace cocos2d::experimental::ui;
 static std::unordered_map<int, VideoPlayer*> s_allVideoPlayers;
 
 VideoPlayer::VideoPlayer()
-: _videoPlayerIndex(-1)
-, _eventCallback(nullptr)
+: _fullScreenDirty(false)
 , _fullScreenEnabled(false)
-, _fullScreenDirty(false)
 , _keepAspectRatioEnabled(false)
+, _videoPlayerIndex(-1)
+, _eventCallback(nullptr)
 {
     _videoPlayerIndex = createVideoWidgetJNI();
     s_allVideoPlayers[_videoPlayerIndex] = this;

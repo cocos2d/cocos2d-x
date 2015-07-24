@@ -41,6 +41,7 @@ elseif(MACOSX)
     set(COCOS_AUDIO_PLATFORM_SRC
         ${COCOS_AUDIO_PLATFORM_SRC_C}
         audio/apple/AudioCache.mm
+        audio/apple/AudioDecoder.mm
         audio/apple/AudioEngine-inl.mm
         audio/apple/AudioPlayer.mm
         audio/mac/SimpleAudioEngine.mm

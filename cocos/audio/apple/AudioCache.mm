@@ -70,10 +70,10 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
-: _totalFrames(0)
-, _framesRead(0)
-, _format(-1)
+: _format(-1)
 , _duration(0.0f)
+, _totalFrames(0)
+, _framesRead(0)
 , _alBufferId(INVALID_AL_BUFFER_ID)
 , _pcmData(nullptr)
 , _queBufferFrames(0)

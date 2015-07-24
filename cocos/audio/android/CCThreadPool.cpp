@@ -102,7 +102,7 @@ ThreadPool *ThreadPool::newSingleThreadPool()
 }
 
 ThreadPool::ThreadPool(int minNum, int maxNum)
-        : _isStop(false), _isDone(false), _idleThreadNum(0), _minThreadNum(minNum),
+        : _isDone(false), _isStop(false), _idleThreadNum(0), _minThreadNum(minNum),
           _maxThreadNum(maxNum), _initedThreadNum(0), _shrinkInterval(DEFAULT_SHRINK_INTERVAL),
           _shrinkStep(DEFAULT_SHRINK_STEP), _stretchStep(DEFAULT_STRETCH_STEP),
           _isFixedSize(false)

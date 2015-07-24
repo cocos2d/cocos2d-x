@@ -13,6 +13,10 @@ if(ANDROID)
    set(COCOS_NETWORK_PLATFORM_SRC
         network/CCDownloader-android.cpp
         )
+elseif(MACOSX)
+   set(COCOS_NETWORK_PLATFORM_SRC
+        network/CCDownloader-apple.mm
+        )
 endif()
 
 set(COCOS_NETWORK_SRC

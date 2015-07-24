@@ -46,7 +46,7 @@ static GLuint __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
-    _handle(0), _attributes(), _meshIndexData(nullptr), _glProgramState(nullptr)
+    _handle(0), _meshIndexData(nullptr), _glProgramState(nullptr), _attributes()
 {
 }
 

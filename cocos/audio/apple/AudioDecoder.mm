@@ -25,6 +25,8 @@
 #include "audio/apple/AudioDecoder.h"
 #include "audio/apple/AudioMacros.h"
 
+#import <Foundation/Foundation.h>
+
 #define LOG_TAG "AudioDecoder"
 
 namespace cocos2d { namespace experimental {
