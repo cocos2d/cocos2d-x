@@ -461,7 +461,7 @@ void ShaderBlur::createSliderCtls()
         slider->setMinimumValue(0.0f);
         slider->setMaximumValue(25.0f);
         slider->setScale(0.6f);
-        slider->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f));
+        slider->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f + 24.0f));
         slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::onRadiusChanged), Control::EventType::VALUE_CHANGED);
         slider->setValue(2.0f);
         addChild(slider);
@@ -469,7 +469,7 @@ void ShaderBlur::createSliderCtls()
         
         auto label = Label::createWithTTF("Blur Radius", "fonts/arial.ttf", 12.0f);
         addChild(label);
-        label->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f - 24.0f));
+        label->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f));
     }
     
     {
@@ -478,7 +478,7 @@ void ShaderBlur::createSliderCtls()
         slider->setMinimumValue(0.0f);
         slider->setMaximumValue(11.0f);
         slider->setScale(0.6f);
-        slider->setPosition(Vec2(screenSize.width * 3 / 4.0f, screenSize.height / 3.0f));
+        slider->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f - 10.0f));
         slider->addTargetWithActionForControlEvents(this, cccontrol_selector(ShaderBlur::onSampleNumChanged), Control::EventType::VALUE_CHANGED);
         slider->setValue(7.0f);
         addChild(slider);
@@ -486,7 +486,7 @@ void ShaderBlur::createSliderCtls()
         
         auto label = Label::createWithTTF("Blur Sample Num", "fonts/arial.ttf", 12.0f);
         addChild(label);
-        label->setPosition(Vec2(screenSize.width * 3 / 4.0f, screenSize.height / 3.0f - 24.0f));
+        label->setPosition(Vec2(screenSize.width / 4.0f, screenSize.height / 3.0f - 34.0f));
     }
  
 }
@@ -498,13 +498,21 @@ bool ShaderBlur::init()
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();
-        _blurSprite->setPosition(Vec2(s.width/3, s.height/2));
-        sprite->setPosition(Vec2(2*s.width/3, s.height/2));
+        _blurSprite->setPosition(Vec2(s.width/3, s.height/2 + 30.0f));
+        sprite->setPosition(Vec2(2*s.width/3, s.height/2 + 30.0f));
 
         addChild(_blurSprite);
         addChild(sprite);
+        
+        auto label = Label::createWithTTF("Normal Sprite", "fonts/arial.ttf", 12.0f);
+        addChild(label);
+        label->setPosition(Vec2(2*s.width/3, s.height/3.0f));
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         createSliderCtls();
+#else
+        auto label_blur = Label::createWithTTF("Blur Sprite", "fonts/arial.ttf", 12.0f);
+        addChild(label_blur);
+        label_blur->setPosition(Vec2(s.width/3, s.height/3.0f));
 #endif
         return true;
     }
