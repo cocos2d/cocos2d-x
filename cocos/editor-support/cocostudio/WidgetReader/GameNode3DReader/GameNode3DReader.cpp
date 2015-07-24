@@ -24,7 +24,7 @@
 
 #include "GameNode3DReader.h"
 
-#include "cocostudio/CCObjectExtensionData.h"
+#include "cocostudio/CCComExtensionData.h"
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/CSParse3DBinary_generated.h"
 
@@ -393,9 +393,13 @@ namespace cocostudio
         }
 
         std::string customProperty = options->customProperty()->c_str();
-        ObjectExtensionData* extensionData = ObjectExtensionData::create();
-        extensionData->setCustomProperty(customProperty);
-        node->setUserObject(extensionData);
+        ComExtensionData* extensionData = ComExtensionData::create();
+        extensionData->setCustomProperty(customProperty);\
+        if (node->getComponent("ComExtensionData"))
+        {
+            node->removeComponent("ComExtensionData");
+        }
+        node->addComponent(extensionData);
     }
     
     Node* GameNode3DReader::createNodeWithFlatBuffers(const flatbuffers::Table *node3DOptions)
@@ -411,7 +415,7 @@ namespace cocostudio
     {
         if (key == "Normal" || key == "Default")
         {
-            return 	0;
+            return     0;
         }
 
         FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();

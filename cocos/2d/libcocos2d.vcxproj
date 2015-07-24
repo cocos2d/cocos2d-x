@@ -510,7 +510,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\CCDisplayFactory.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCDisplayManager.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCInputDelegate.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\CCObjectExtensionData.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\CCComExtensionData.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCProcessBase.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCSGUIReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCSkin.cpp" />
@@ -1097,7 +1097,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\CCDisplayFactory.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCDisplayManager.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCInputDelegate.h" />
-    <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CCComExtensionData.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCProcessBase.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCSGUIReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCSkin.h" />

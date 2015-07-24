@@ -5,7 +5,7 @@
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
 #include "../ActionTimeline/CCActionTimeline.h"
-#include "cocostudio/CCObjectExtensionData.h"
+#include "cocostudio/CCComExtensionData.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2.h"
@@ -805,10 +805,14 @@ namespace cocostudio
         
         std::string customProperty = options->customProperty()->c_str();
         
-        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        ComExtensionData* extensionData = ComExtensionData::create();
         extensionData->setCustomProperty(customProperty);
         extensionData->setActionTag(actionTag);
-        node->setUserObject(extensionData);
+        if (node->getComponent("ComExtensionData"))
+        {
+            node->removeComponent(extensionData);
+        }
+        node->addComponent(extensionData);
         
         bool touchEnabled = options->touchEnabled() != 0;
         widget->setTouchEnabled(touchEnabled);
