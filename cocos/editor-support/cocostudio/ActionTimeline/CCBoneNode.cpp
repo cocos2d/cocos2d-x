@@ -32,15 +32,15 @@ THE SOFTWARE.
 #include "CCSkeletonNode.h"
 #include "CCSkinNode.h"
 
-using namespace cocos2d;
-
 NS_TIMELINE_BEGIN
 
 BoneNode::BoneNode()
 : _isRackShow(true)
-, _rackColor(Color4F::WHITE)
+, _rackColor(cocos2d::Color4F::WHITE)
+, _rackLength(50)
+, _rackWidth(20)
 , _rootSkeleton(nullptr)
-, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
+, _blendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED)
 {
 }
 
@@ -215,7 +215,7 @@ cocos2d::Vector<SkinNode*> BoneNode::getVisibleSkins() const
 
 cocos2d::Rect BoneNode::getBoundingBox() const
 {
-    Rect boundingBox = getVisibleSkinsRect();
+    cocos2d::Rect boundingBox = getVisibleSkinsRect();
     return RectApplyAffineTransform(boundingBox, this->getNodeToParentAffineTransform());
 }
 
@@ -225,7 +225,7 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
     minx = miny = maxx = maxy;
     bool first = true;
 
-    Rect displayRect = Rect(0, 0, 0, 0);
+    cocos2d::Rect displayRect = cocos2d::Rect(0, 0, 0, 0);
     if (_isRackShow && _rootSkeleton != nullptr && _rootSkeleton->_isRackShow)
     {
         maxx = _rackLength;
@@ -235,8 +235,8 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
 
     for (const auto& skin : _boneSkins)
     {
-        Rect r = skin->getBoundingBox();
-        if (!skin->isVisible() || r.equals(Rect::ZERO))
+        cocos2d::Rect r = skin->getBoundingBox();
+        if (!skin->isVisible() || r.equals(cocos2d::Rect::ZERO))
             continue;
 
         if (first)
@@ -260,7 +260,7 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
     return displayRect;
 }
 
-void BoneNode::setBlendFunc(const BlendFunc& blendFunc)
+void BoneNode::setBlendFunc(const cocos2d::BlendFunc& blendFunc)
 {
     _blendFunc = blendFunc;
 }
@@ -307,11 +307,11 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
 
     for (int i = 0; i < 4; ++i)
     {
-        Vec4 pos;
+        cocos2d::Vec4 pos;
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _noMVPVertices[i] = Vec3(pos.x, pos.y, pos.z) / pos.w;
+        _noMVPVertices[i] = cocos2d::Vec3(pos.x, pos.y, pos.z) / pos.w;
     }
 }
 
@@ -355,16 +355,16 @@ void BoneNode::updateColor()
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
-void BoneNode::onDraw(const Mat4 &transform, uint32_t flags)
+void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+    cocos2d::GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION | cocos2d::GL::VERTEX_ATTRIB_FLAG_COLOR);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
+    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
     cocos2d::GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
@@ -428,8 +428,8 @@ cocos2d::Vector<SkinNode*> BoneNode::getAllSubSkins() const
 void BoneNode::sortAllChildren()
 {
     Node::sortAllChildren();
-    std::sort(_childBones.begin(), _childBones.end(), nodeComparisonLess);
-    std::sort(_boneSkins.begin(), _boneSkins.end(), nodeComparisonLess);
+    std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
+    std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
 }
 
 SkeletonNode* BoneNode::getRootSkeletonNode() const
@@ -464,14 +464,14 @@ bool BoneNode::isPointOnRack(const cocos2d::Vec2& bonePoint)
 
 void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
 {
-    Vec3 vpos[4];
+    cocos2d::Vec3 vpos[4];
     for (int i = 0; i < 4; i++)
     {
-        Vec4 pos;
+        cocos2d::Vec4 pos;
         pos.x = bone->_squareVertices[i].x; pos.y = bone->_squareVertices[i].y; pos.z = bone->_positionZ;
         pos.w = 1;
         bone->_modelViewTransform.transformVector(&pos);  // call after visit
-        vpos[i] = Vec3(pos.x, pos.y, pos.z) / pos.w;
+        vpos[i] = cocos2d::Vec3(pos.x, pos.y, pos.z) / pos.w;
     }
 
     int count = bone->_rootSkeleton->_batchedVeticesCount;
@@ -574,13 +574,13 @@ void BoneNode::setVisible(bool visible)
     }
 }
 
-void BoneNode::setContentSize(const Size& contentSize)
+void BoneNode::setContentSize(const cocos2d::Size& contentSize)
 {
     Node::setContentSize(contentSize);
     updateVertices();
 }
 
-void BoneNode::setAnchorPoint(const Vec2& anchorPoint)
+void BoneNode::setAnchorPoint(const cocos2d::Vec2& anchorPoint)
 {
     Node::setAnchorPoint(anchorPoint);
     updateVertices();
