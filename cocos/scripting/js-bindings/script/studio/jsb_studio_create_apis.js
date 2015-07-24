@@ -61,8 +61,8 @@ ccs.Skin.prototype._ctor = function(fileName, rect) {
         if(fileName[0] == "#"){
             ccs.Skin.prototype.initWithSpriteFrameName.call(this, fileName.substr(1));
         } else {
-            rect ? ccs.Skin.prototype.initWithFile.call(this, fileName)
-                : ccs.Skin.prototype.initWithFile.call(this, fileName, rect);
+            rect ? ccs.Skin.prototype.initWithFile.call(this, fileName, rect)
+                : ccs.Skin.prototype.initWithFile.call(this, fileName);
         }
     }
 };
