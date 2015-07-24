@@ -401,15 +401,15 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-	GLchar * fragSource = nullptr;
+    GLchar * fragSource = nullptr;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
 #else
-	fragSource = (GLchar*)String::createWithContentsOfFile(
+    fragSource = (GLchar*)String::createWithContentsOfFile(
 								FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh").c_str())->getCString();
 #endif
-	auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     setGLProgramState(glProgramState);
