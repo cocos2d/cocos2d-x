@@ -547,7 +547,9 @@ var g_extensions = [
     ccbjs + "ccb/markerfelt24shadow.fnt",
 
     ccbjs + "ccb/grossini-generic.plist",
-    ccbjs + "ccb/animated-grossini.plist"
+    ccbjs + "ccb/animated-grossini.plist",
+
+    "ActionTimeline/DemoPlayer_skeleton.json"
 ];
 
 var g_cocoStudio = [
