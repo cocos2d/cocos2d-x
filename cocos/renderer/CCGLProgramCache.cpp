@@ -31,6 +31,9 @@ THE SOFTWARE.
 #include "renderer/ccShaders.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -80,11 +83,6 @@ GLProgramCache* GLProgramCache::getInstance()
     return _sharedGLProgramCache;
 }
 
-bool GLProgramCache::isInstanceCreated()
-{
-    return _sharedGLProgramCache != 0;
-}
-
 void GLProgramCache::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(_sharedGLProgramCache);
@@ -120,6 +118,13 @@ GLProgramCache::~GLProgramCache()
 bool GLProgramCache::init()
 {
     loadDefaultGLPrograms();
+    
+    auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* event){
+        reloadDefaultGLProgramsRelativeToLights();
+    });
+    
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+    
     return true;
 }
 

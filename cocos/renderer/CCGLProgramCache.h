@@ -63,9 +63,6 @@ public:
 
     /** returns the shared instance */
     static GLProgramCache* getInstance();
-    
-    /** Is the GLProgrameCache instance created? */
-    static bool isInstanceCreated();
 
     /** purges the cache. It releases the retained instance. */
     static void destroyInstance();

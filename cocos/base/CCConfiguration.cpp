@@ -26,13 +26,17 @@ THE SOFTWARE.
 
 #include "base/CCConfiguration.h"
 #include "platform/CCFileUtils.h"
-#include "renderer/CCGLProgramCache.h"
+#include "base/CCEventCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion();
 
 Configuration* Configuration::s_sharedConfiguration = nullptr;
+
+const char* Configuration::CONFIG_FILE_LOADED = "config_file_loaded";
 
 Configuration::Configuration()
 : _maxTextureSize(0) 
@@ -53,6 +57,7 @@ Configuration::Configuration()
 , _maxSpotLightInShader(1)
 , _animate3DQuality(Animate3DQuality::QUALITY_HIGH)
 {
+    _loadedEvent = new EventCustom(CONFIG_FILE_LOADED);
 }
 
 bool Configuration::init()
@@ -83,6 +88,7 @@ bool Configuration::init()
 
 Configuration::~Configuration()
 {
+    CC_SAFE_DELETE(_loadedEvent);
 }
 
 std::string Configuration::getInfo() const
@@ -368,8 +374,7 @@ void Configuration::loadConfigFile(const std::string& filename)
     else
         _valueDict[name] = Value((int)_animate3DQuality);
     
-    if (GLProgramCache::isInstanceCreated())
-        GLProgramCache::getInstance()->reloadDefaultGLProgramsRelativeToLights();
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(_loadedEvent);
 }
 
 NS_CC_END
