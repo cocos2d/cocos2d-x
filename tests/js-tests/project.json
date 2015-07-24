@@ -118,6 +118,7 @@
         "src/ExtensionsTest/PluginXTest/PluginXTestsManager.js",
         "src/ExtensionsTest/PluginXTest/IOSIAPTest.js",
         "src/ExtensionsTest/PluginXTest/AnalyticsTest.js",
+        "src/ExtensionsTest/ActionTimelineTest/ActionTimelineTest.js",
         "src/CocoStudioTest/ArmatureTest/ArmatureTest.js",
         "src/CocoStudioTest/ComponentsTest/ComponentsTestScene.js",
         "src/CocoStudioTest/ComponentsTest/EnemyController.js",
