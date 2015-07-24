@@ -101,3 +101,12 @@ ccs.ActionTimelineData.prototype._ctor = function(actionTag) {
 ccs.ComExtensionData.prototype._ctor = function() {
     ccs.ComExtensionData.prototype.init.call(this);
 };
+
+ccs.BoneNode.prototype._ctor = function (length) {
+    ccs.BoneNode.prototype.init.call(this);
+    length !== undefined && this.setDebugDrawLength(length);
+};
+
+ccs.SkeletonNode.prototype._ctor = function () {
+    ccs.SkeletonNode.prototype.init.call(this);
+};
