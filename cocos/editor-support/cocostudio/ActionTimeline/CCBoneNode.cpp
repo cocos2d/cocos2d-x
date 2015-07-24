@@ -30,7 +30,6 @@ THE SOFTWARE.
 
 #include "CCBoneNode.h"
 #include "CCSkeletonNode.h"
-#include "CCSkinNode.h"
 
 NS_TIMELINE_BEGIN
 
