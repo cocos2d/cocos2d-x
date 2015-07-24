@@ -1812,9 +1812,6 @@
     <ClCompile Include="..\..\extensions\Particle3D\CCParticleSystem3D.cpp">
       <Filter>extension\Particle3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\CCObjectExtensionData.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -1918,6 +1915,9 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCSkinNode.cpp">
       <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\CCComExtensionData.cpp">
+      <Filter>cocostudio\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3634,9 +3634,6 @@
     <ClInclude Include="..\..\extensions\Particle3D\CCParticleSystem3D.h">
       <Filter>extension\Particle3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\external\poly2tri\poly2tri.h">
       <Filter>external\poly2tri</Filter>
     </ClInclude>
@@ -3746,6 +3743,9 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCSkinNode.h">
       <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CCComExtensionData.h">
+      <Filter>cocostudio\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

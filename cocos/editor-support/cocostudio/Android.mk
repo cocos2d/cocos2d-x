@@ -79,7 +79,7 @@ ActionTimeline/CCSkinNode.cpp \
 FlatBuffersSerialize.cpp \
 WidgetCallBackHandlerProtocol.cpp \
 WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
-CCObjectExtensionData.cpp \
+CCComExtensionData.cpp \
 CocoStudio.cpp
 
 

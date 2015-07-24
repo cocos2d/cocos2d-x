@@ -1728,9 +1728,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCObjectExtensionData.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -1857,6 +1854,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h">
       <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCComExtensionData.h">
+      <Filter>cocostudio\components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3410,9 +3410,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCObjectExtensionData.cpp">
-      <Filter>cocostudio\json</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -3539,6 +3536,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCComExtensionData.cpp">
+      <Filter>cocostudio\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

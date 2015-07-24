@@ -22,17 +22,29 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCObjectExtensionData.h"
+#include "CCComExtensionData.h"
 
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
 
 
 namespace cocostudio
 {
-    
-    ObjectExtensionData* ObjectExtensionData::create()
+    IMPLEMENT_CLASS_COMPONENT_INFO(ComExtensionData)
+    ComExtensionData::ComExtensionData()
+    : _customProperty("")
+    , _timelineData(nullptr)
     {
-        ObjectExtensionData * ret = new (std::nothrow) ObjectExtensionData();
+        _name = "ComExtensionData";
+    }
+
+    ComExtensionData::~ComExtensionData()
+    {
+        CC_SAFE_RELEASE(_timelineData);
+    }
+
+    ComExtensionData* ComExtensionData::create()
+    {
+        ComExtensionData * ret = new (std::nothrow) ComExtensionData();
         if (ret && ret->init())
         {
             ret->autorelease();
@@ -44,18 +56,8 @@ namespace cocostudio
         return ret;
     }
     
-    ObjectExtensionData::ObjectExtensionData()
-    : _customProperty("")
-    , _timelineData(nullptr)
-    {
-    }
     
-    ObjectExtensionData::~ObjectExtensionData()
-    {
-        CC_SAFE_RELEASE(_timelineData);
-    }
-    
-    bool ObjectExtensionData::init()
+    bool ComExtensionData::init()
     {
         _timelineData = cocostudio::timeline::ActionTimelineData::create(0);
         CC_SAFE_RETAIN(_timelineData);
@@ -63,12 +65,30 @@ namespace cocostudio
         return true;
     }
     
-    void ObjectExtensionData::setActionTag(int actionTag)
+    void ComExtensionData::onEnter()
+    {
+    }
+
+    void ComExtensionData::onExit()
+    {
+        onRemove();
+    }
+
+    void ComExtensionData::onAdd()
+    {
+    }
+
+    void ComExtensionData::onRemove()
+    {
+        CC_SAFE_RELEASE_NULL(_timelineData);
+    }
+
+    void ComExtensionData::setActionTag(int actionTag)
     {
         _timelineData->setActionTag(actionTag);
     }
     
-    const int ObjectExtensionData::getActionTag() const
+    const int ComExtensionData::getActionTag() const
     {
         return _timelineData->getActionTag();
     }

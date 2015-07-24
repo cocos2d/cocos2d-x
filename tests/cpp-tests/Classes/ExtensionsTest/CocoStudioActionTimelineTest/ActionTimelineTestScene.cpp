@@ -3,6 +3,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 #include "VisibleRect.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
 
 
 USING_NS_CC;
@@ -21,6 +22,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestTimelineNodeLoadedCallback);
     ADD_TEST_CASE(TestActionTimelineEase);
     ADD_TEST_CASE(TestActionTimelineSkeleton);
+    ADD_TEST_CASE(TestTimelineExtensionData);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -482,3 +484,33 @@ std::string TestActionTimelineSkeleton::title() const
     return "Test ActionTimeline Skeleton";
 }
 
+
+// TestTimelineExtensionData
+void TestTimelineExtensionData::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+
+    Node* node = CSLoader::createNode("ActionTimeline/TestAnimation.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/TestAnimation.csb");
+    node->runAction(action);
+    action->gotoFrameAndPlay(0);
+
+    auto projectNode = node->getChildByTag(29);
+    auto userdata = ((ComExtensionData*)(projectNode->getComponent("ComExtensionData")))->getCustomProperty();
+
+    auto size = Director::getInstance()->getWinSize();
+    auto label = Label::create();
+    label->setString(userdata);
+    label->setPosition(size.width / 2 + 300, size.height / 2 + 300);
+    label->setTextColor(Color4B::ORANGE);
+    node->addChild(label);
+    node->setPosition(-300, -300);
+
+    addChild(node);
+
+}
+
+std::string TestTimelineExtensionData::title() const
+{
+    return "Test Timeline extension data";
+}
