@@ -761,6 +761,18 @@ Size Director::getWinSizeInPixels() const
     return Size(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
 }
 
+Vec2 Director::getScreenCenter() const
+{
+    Size screenSize = this->getWinSize();
+    return Vec2(screenSize.width * 0.5f, screenSize.height * 0.5f);
+}
+
+Vec2 Director::getScreenCenterInPixels() const
+{
+    Size screenSize = this->getWinSizeInPixels();
+    return Vec2(screenSize.width * 0.5f, screenSize.height * 0.5f);
+}
+
 Size Director::getVisibleSize() const
 {
     if (_openGLView)

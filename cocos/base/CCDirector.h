@@ -237,6 +237,12 @@ public:
     /** Returns the size of the OpenGL view in pixels. */
     Size getWinSizeInPixels() const;
     
+    /** Returns the center coordinate of the OpenGL view in points. */
+    Vec2 getScreenCenter() const;
+    
+    /** Returns the center coordinate of the OpenGL view in pixels. */
+    Vec2 getScreenCenterInPixels() const;
+    
     /** 
      * Returns visible size of the OpenGL view in points.
      * The value is equal to `Director::getWinSize()` if don't invoke `GLView::setDesignResolutionSize()`.
