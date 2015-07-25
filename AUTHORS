@@ -22,6 +22,7 @@ Framework & Tools Developers:
 
 Web Developers:
     Sijie Wang (VisualSJ)
+    Menghe Zhang (ZhangMenghe)
 
 3D Developers:
     Xiao Yang (super626)
@@ -135,6 +136,7 @@ Developers:
         Added Dutch Language support.
         Added clang support for Windows.
         Cmake update and remove old scripts from build folder
+        Fixed building with system prebuilt libs on Linux
 
     mchinen
         fix emulator issue for OpenGL ES 2.0 on Android
