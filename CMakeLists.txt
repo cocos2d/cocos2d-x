@@ -326,16 +326,23 @@ cocos_find_package(TIFF TIFF REQUIRED)
 cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
 cocos_find_package(CURL CURL REQUIRED)
 
-add_subdirectory(external/flatbuffers)
-set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
-message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
+# flatbuffers
+if(USE_PREBUILT_LIBS)
+  add_subdirectory(external/flatbuffers)
+  set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
+  message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
+else()
+  cocos_find_package(flatbuffers flatbuffers REQUIRED)
+endif()
 
-
-# build xxhash
-add_subdirectory(external/xxhash)
-set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
-set(XXHASH_LIBRARIES xxhash)
-
+# xxhash
+if(USE_PREBUILT_LIBS)
+  add_subdirectory(external/xxhash)
+  set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
+  set(XXHASH_LIBRARIES xxhash)
+else()
+  cocos_find_package(xxhash xxhash REQUIRED)
+endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 

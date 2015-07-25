@@ -811,7 +811,8 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
         }
     }
     
-    if (sceneGraphPriorityListeners)
+    auto scene = Director::getInstance()->getRunningScene();
+    if (scene && sceneGraphPriorityListeners)
     {
         if (!shouldStopPropagation)
         {
@@ -829,7 +830,7 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
             // second, for all camera call all listeners
             // get a copy of cameras, prevent it's been modified in linstener callback
             // if camera's depth is greater, process it earler
-            auto cameras = Director::getInstance()->getRunningScene()->getCameras();
+            auto cameras = scene->getCameras();
             Camera* camera;
             for (int j = int(cameras.size()) - 1; j >= 0; --j)
             {
