@@ -105,7 +105,7 @@ var runActionTimeLineTest;
                 menus.push(menuItem);
             });
             var menuItem = new cc.MenuItemFont("Back", function(){
-                var scene = new ExtensionsTestScene();
+                var scene = new CocoStudioTestScene();
                 scene.runThisTest();
             }, this);
             menuItem.setPosition(325, -175);

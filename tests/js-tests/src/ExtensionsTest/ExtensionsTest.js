@@ -87,12 +87,6 @@ var extensionsTestItemNames = [
         testScene:function () {
             runCCPoolTest();
         }
-    },
-    {
-        itemTitle:"ActionTimeLineTest",
-        testScene:function () {
-            runActionTimeLineTest();
-        }
     }
 ];
 
