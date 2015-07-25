@@ -89,15 +89,17 @@ var TestWriteString = fileUtilsBase.extend({
         readResult.setPosition(winSize.width / 2, winSize.height  / 3);
 
         var writablePath = jsb.fileUtils.getWritablePath();
+        writablePath += "cocos/fileUtilTest/";
         var fileName = "writeStringTest.txt";
 
         // writeTest
         var writeDataStr = "the string data will be write into a file";
         var fullPath = writablePath + fileName;
+        jsb.fileUtils.createDirectory(writablePath);
         if (jsb.fileUtils.writeStringToFile(writeDataStr, fullPath))
         {
             log("see the plist file at %s", fullPath);
-            writeResult.setString("write success:" + writeDataStr);
+            writeResult.setString("write success:\n" + fullPath);
         }
         else
         {
@@ -160,11 +162,13 @@ var TestWriteValueMap = fileUtilsBase.extend({
 
         // end with /
         var writablePath = jsb.fileUtils.getWritablePath();
+        writablePath += "cocos/fileUtilTest/";
         var fullPath = writablePath + "testWriteValueMap.plist";
+        jsb.fileUtils.createDirectory(writablePath);
         if (jsb.fileUtils.writeValueMapToFile(valueMap, fullPath))
         {
             cc.log("see the plist file at %s", fullPath);
-            writeResult.setString("write success");
+            writeResult.setString("write success:\n" + fullPath);
         }
         else
         {
@@ -252,11 +256,13 @@ var TestWriteValueVector = fileUtilsBase.extend({
 
         // end with /
         var writablePath = jsb.fileUtils.getWritablePath();
+        writablePath += "cocos/fileUtilTest/";
         var fullPath = writablePath + "testWriteValueVector.plist";
+        jsb.fileUtils.createDirectory(writablePath);
         if (jsb.fileUtils.writeValueVectorToFile(array, fullPath))
         {
             cc.log("see the plist file at %s", fullPath);
-            writeResult.setString("write success");
+            writeResult.setString("write success:\n" + fullPath);
         }
         else
         {
