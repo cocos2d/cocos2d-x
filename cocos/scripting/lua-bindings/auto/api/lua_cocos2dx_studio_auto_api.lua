@@ -276,4 +276,9 @@
 -- @field [parent=#ccs] ActionTimelineNode#ActionTimelineNode ActionTimelineNode preloaded module
 
 
+--------------------------------------------------------
+-- the ccs ComExtensionData
+-- @field [parent=#ccs] ComExtensionData#ComExtensionData ComExtensionData preloaded module
+
+
 return nil
