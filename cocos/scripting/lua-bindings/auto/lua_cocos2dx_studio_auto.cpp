@@ -1,5 +1,6 @@
 #include "lua_cocos2dx_studio_auto.hpp"
 #include "CocoStudio.h"
+#include "CCComExtensionData.h"
 #include "lua-cocos-studio-conversions.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -22699,6 +22700,331 @@ int lua_register_cocos2dx_studio_ActionTimelineNode(lua_State* tolua_S)
     g_typeCast["ActionTimelineNode"] = "ccs.ActionTimelineNode";
     return 1;
 }
+
+int lua_cocos2dx_studio_ComExtensionData_setActionTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_setActionTag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ComExtensionData:setActionTag");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_setActionTag'", nullptr);
+            return 0;
+        }
+        cobj->setActionTag(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:setActionTag",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_setActionTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_getCustomProperty(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_getCustomProperty'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_getCustomProperty'", nullptr);
+            return 0;
+        }
+        std::string ret = cobj->getCustomProperty();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:getCustomProperty",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_getCustomProperty'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_getActionTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'", nullptr);
+            return 0;
+        }
+        const int ret = cobj->getActionTag();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:getActionTag",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_setCustomProperty(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_setCustomProperty'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.ComExtensionData:setCustomProperty");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_setCustomProperty'", nullptr);
+            return 0;
+        }
+        cobj->setCustomProperty(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:setCustomProperty",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_setCustomProperty'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_create'", nullptr);
+            return 0;
+        }
+        cocostudio::ComExtensionData* ret = cocostudio::ComExtensionData::create();
+        object_to_luaval<cocostudio::ComExtensionData>(tolua_S, "ccs.ComExtensionData",(cocostudio::ComExtensionData*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ComExtensionData:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_createInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_createInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::Ref* ret = cocostudio::ComExtensionData::createInstance();
+        object_to_luaval<cocos2d::Ref>(tolua_S, "cc.Ref",(cocos2d::Ref*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ComExtensionData:createInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_createInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocostudio::ComExtensionData();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.ComExtensionData");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:ComExtensionData",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_studio_ComExtensionData_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (ComExtensionData)");
+    return 0;
+}
+
+int lua_register_cocos2dx_studio_ComExtensionData(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccs.ComExtensionData");
+    tolua_cclass(tolua_S,"ComExtensionData","ccs.ComExtensionData","cc.Component",nullptr);
+
+    tolua_beginmodule(tolua_S,"ComExtensionData");
+        tolua_function(tolua_S,"new",lua_cocos2dx_studio_ComExtensionData_constructor);
+        tolua_function(tolua_S,"setActionTag",lua_cocos2dx_studio_ComExtensionData_setActionTag);
+        tolua_function(tolua_S,"getCustomProperty",lua_cocos2dx_studio_ComExtensionData_getCustomProperty);
+        tolua_function(tolua_S,"getActionTag",lua_cocos2dx_studio_ComExtensionData_getActionTag);
+        tolua_function(tolua_S,"setCustomProperty",lua_cocos2dx_studio_ComExtensionData_setCustomProperty);
+        tolua_function(tolua_S,"create", lua_cocos2dx_studio_ComExtensionData_create);
+        tolua_function(tolua_S,"createInstance", lua_cocos2dx_studio_ComExtensionData_createInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocostudio::ComExtensionData).name();
+    g_luaType[typeName] = "ccs.ComExtensionData";
+    g_typeCast["ComExtensionData"] = "ccs.ComExtensionData";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx_studio(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -22756,6 +23082,7 @@ TOLUA_API int register_all_cocos2dx_studio(lua_State* tolua_S)
 	lua_register_cocos2dx_studio_SceneReader(tolua_S);
 	lua_register_cocos2dx_studio_ActionTimelineCache(tolua_S);
 	lua_register_cocos2dx_studio_AlphaFrame(tolua_S);
+	lua_register_cocos2dx_studio_ComExtensionData(tolua_S);
 	lua_register_cocos2dx_studio_AnimationData(tolua_S);
 	lua_register_cocos2dx_studio_AnchorPointFrame(tolua_S);
 	lua_register_cocos2dx_studio_ActionScaleFrame(tolua_S);
