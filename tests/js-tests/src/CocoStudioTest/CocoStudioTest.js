@@ -51,6 +51,12 @@ var cocoStudioTestItemNames = [
         testScene:function(){
             runParserTest();
         }
+    },
+    {
+        itemTitle:"ActionTimeLineTest",
+        testScene:function () {
+            runActionTimeLineTest();
+        }
     }
 ];
 

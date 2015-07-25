@@ -547,9 +547,7 @@ var g_extensions = [
     ccbjs + "ccb/markerfelt24shadow.fnt",
 
     ccbjs + "ccb/grossini-generic.plist",
-    ccbjs + "ccb/animated-grossini.plist",
-
-    "ActionTimeline/DemoPlayer_skeleton.json"
+    ccbjs + "ccb/animated-grossini.plist"
 ];
 
 var g_cocoStudio = [
@@ -908,7 +906,9 @@ var g_cocoStudio = [
     "Particles/BoilingFoam.plist",
     "ccs-res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
     "ccs-res/cocosui/CustomImageViewTest/NewProject_20.plist",
-    "ccs-res/cocosui/CustomImageViewTest/NewProject_20.png"
+    "ccs-res/cocosui/CustomImageViewTest/NewProject_20.png",
+
+    "ActionTimeline/DemoPlayer_skeleton.json"
 ];
 
 var g_ui = [
