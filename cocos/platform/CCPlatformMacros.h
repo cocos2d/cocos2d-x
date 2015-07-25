@@ -78,6 +78,30 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
     } \
 }
 
+/** @def CREATE_SCENE_FUNC(__TYPE__)
+ * Define a createScene function for a specific node, such as Layer.
+ *
+ * @param __TYPE__  class type to add createScene(), such as Layer.
+ */
+#define CREATE_SCENE_FUNC(__TYPE__) \
+static cocos2d::Scene* createScene() \
+{ \
+__TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+if (pRet && pRet->init()) \
+{ \
+pRet->autorelease(); \
+cocos2d::Scene * scene = cocos2d::Scene::create(); \
+scene->addChild(pRet); \
+return scene; \
+} \
+else \
+{ \
+delete pRet; \
+pRet = NULL; \
+return NULL; \
+} \
+}
+
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
  * Enable it if you want to cache the texture data.
  * Not enabling for Emscripten any more -- doesn't seem necessary and don't want
