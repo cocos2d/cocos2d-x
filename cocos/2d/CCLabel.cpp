@@ -281,49 +281,22 @@ Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, i
 bool Label::setCharMap(const std::string& plistFile)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(plistFile);
-
-    if (!newAtlas)
-    {
-        reset();
-        return false;
-    }
-
-    _currentLabelType = LabelType::CHARMAP;
-    setFontAtlas(newAtlas);
-
-    return true;
+    
+    return setAtlasByType(newAtlas, LabelType::CHARMAP);
 }
 
 bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
-
-    if (!newAtlas)
-    {
-        reset();
-        return false;
-    }
-
-    _currentLabelType = LabelType::CHARMAP;
-    setFontAtlas(newAtlas);
-
-    return true;
+    
+    return setAtlasByType(newAtlas, LabelType::CHARMAP);
 }
 
 bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
 
-    if (!newAtlas)
-    {
-        reset();
-        return false;
-    }
-
-    _currentLabelType = LabelType::CHARMAP;
-    setFontAtlas(newAtlas);
-
-    return true;
+    return setAtlasByType(newAtlas, LabelType::CHARMAP);
 }
 
 Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
@@ -524,21 +497,8 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     }
 }
 
-bool Label::setTTFConfig(const TTFConfig& ttfConfig)
+void Label::enableTTFConfigEffect()
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
-
-    if (!newAtlas)
-    {
-        reset();
-        return false;
-    }
-    _systemFontDirty = false;
-
-    _currentLabelType = LabelType::TTF;
-    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
-
-    _fontConfig = ttfConfig;
     if (_fontConfig.outlineSize > 0)
     {
         _fontConfig.distanceFieldEnabled = false;
@@ -547,16 +507,63 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
         _currLabelEffect = LabelEffect::OUTLINE;
         updateShaderProgram();
     }
-    else 
+    else
     {
         _currLabelEffect = LabelEffect::NORMAL;
         updateShaderProgram();
-        if(ttfConfig.distanceFieldEnabled)
+        if(_fontConfig.distanceFieldEnabled)
         {
-            this->setCorrectionScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
+            this->setCorrectionScale(1.0f * _fontConfig.fontSize / DistanceFieldFontSize);
         }
     }
 
+}
+
+bool Label::setTTFConfig(const TTFConfig& ttfConfig)
+{
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
+    
+    bool ret = true;
+    _fontConfig = ttfConfig;
+    
+    ret = setAtlasByType(newAtlas, LabelType::TTF);
+    
+    enableTTFConfigEffect();
+    
+    return ret;
+}
+
+bool Label::setAtlasByType(FontAtlas* newAtlas, LabelType labelType)
+{
+    if (!newAtlas)
+    {
+        reset();
+        return false;
+    }
+    
+    bool distanceEnable = false;
+    bool useA8Shader = false;
+    
+    _currentLabelType = labelType;
+    
+    switch (labelType)
+    {
+        case LabelType::TTF:
+            _systemFontDirty = false;
+            distanceEnable = _fontConfig.distanceFieldEnabled;
+            useA8Shader = true;
+            break;
+        case LabelType::BMFONT:
+            break;
+        case LabelType::CHARMAP:
+            break;
+        case LabelType::STRING_TEXTURE:
+            break;
+        default:
+            break;
+    }
+    
+    setFontAtlas(newAtlas, distanceEnable, useA8Shader);
     return true;
 }
 
@@ -564,16 +571,8 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
 
-    if (!newAtlas)
-    {
-        reset();
-        return false;
-    }
     _bmFontPath = bmfontFilePath;
-    _currentLabelType = LabelType::BMFONT;
-    setFontAtlas(newAtlas);
-
-    return true;
+    return setAtlasByType(newAtlas, LabelType::BMFONT);
 }
 
 void Label::setString(const std::string& text)

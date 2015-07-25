@@ -505,7 +505,10 @@ protected:
         CHARMAP,
         STRING_TEXTURE
     };
-
+    
+    void enableTTFConfigEffect();
+    bool setAtlasByType(FontAtlas* newAtlas, LabelType labelType);
+    
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     void setCorrectionScale(float fontScale);
