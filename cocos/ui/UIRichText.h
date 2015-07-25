@@ -313,7 +313,12 @@ public:
      * It's usually called internally.
      */
     void formatText();
-
+   
+    void setAutoReSize(bool isAutoReSizeHeight,bool isAutoReSizeWidth = false){_isAutoReSizeHeight=isAutoReSizeHeight;_isAutoReSizeWidth = isAutoReSizeWidth;}
+    bool isAutoReSizeBothWidthAndHeight() const{ return _isAutoReSizeWidth&&_isAutoReSizeHeight;}
+    bool isAutoReSizeWidth() const{ return _isAutoReSizeWidth;}
+    bool isAutoReSizeHeight() const{ return _isAutoReSizeHeight;}
+    
     //override functions.
     virtual void setAnchorPoint(const Vec2 &pt) override;
     virtual Size getVirtualRendererSize() const override;
@@ -340,6 +345,8 @@ protected:
     float _leftSpaceWidth;
     float _verticalSpace;
     Node* _elementRenderersContainer;
+    bool  _isAutoReSizeWidth;
+    bool  _isAutoReSizeHeight;
 };
     
 }
