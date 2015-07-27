@@ -528,11 +528,16 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
     
+    _fontConfig = ttfConfig;
     bool ret = setAtlasByType(newAtlas, LabelType::TTF);
     if (ret)
     {
-        _fontConfig = ttfConfig;
         enableTTFConfigEffect();
+    }
+    else
+    {
+        TTFConfig tmp;
+        _fontConfig = tmp;
     }
     
     return ret;
