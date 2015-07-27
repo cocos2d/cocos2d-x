@@ -357,3 +357,7 @@ jsb.Physics3DPointToPointConstraint.prototype._ctor = function(first, second, th
 jsb.Physics3DRigidBody.prototype._ctor = function(rigidBodyInfo){
     this.init(rigidBodyInfo);
 }
+
+jsb.Physics3DWorld.prototype._ctor = function(worldDesInfo){
+    this.init(worldDesInfo);
+}
