@@ -279,3 +279,36 @@ jsb.BillBoard.prototype._ctor = function(filename, rect, mode = jsb.BillBoard.Mo
         this.setMode(filename);
     }
 }
+
+jsb._Animation3D = jsb.Animation3D;
+
+jsb.Animation3D = function(fileName, animationName = ""){
+    if (!(this instanceof jsb.Animation3D))
+        throw new Error("Constructor can not called as a function, Please use new");
+
+    return jsb._Animation3D.create(fileName, animationName);
+}
+
+jsb.Animation3D.create = function(fileName, animationName = ""){
+    return jsb._Animation3D.create(fileName, animationName);
+}
+
+/* static Animate3D* create(Animation3D* animation);
+   static Animate3D* create(Animation3D* animation, float fromTime, float duration);
+   static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
+ */
+jsb.Animate3D.prototype._ctor = function(first, second, third, fourth){
+    if (arguments.length == 1) {
+        this.init(first);
+    }
+    else if (arguments.length == 3){
+        this.init(first, second, third);
+    }
+    else if (arguments.length == 4) {
+        this.init(first, second, third, fourth);
+    }
+    else
+    {
+        throw new Error("error arguments");
+    }
+}
