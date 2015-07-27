@@ -405,8 +405,7 @@ void TextField::setString(const std::string& text)
     {
         int max = _textFieldRenderer->getMaxLength();
         long text_count = StringUtils::getCharacterCountInUTF8String(text);
-        long total = text_count + StringUtils::getCharacterCountInUTF8String(getString());
-        if (total > max)
+        if (text_count > max)
         {
             strText = Helper::getSubStringOfUTF8String(strText, 0, max);
         }
