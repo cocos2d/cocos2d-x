@@ -528,12 +528,12 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
     
-    bool ret = true;
-    _fontConfig = ttfConfig;
-    
-    ret = setAtlasByType(newAtlas, LabelType::TTF);
-    
-    enableTTFConfigEffect();
+    bool ret = setAtlasByType(newAtlas, LabelType::TTF);
+    if (ret)
+    {
+        _fontConfig = ttfConfig;
+        enableTTFConfigEffect();
+    }
     
     return ret;
 }
@@ -1722,7 +1722,7 @@ FontDefinition Label::_getFontDefinition() const
     return systemFontDef;
 }
 
-void Label::getFontConfigInfo(Label* copyToLabel)
+void Label::getFontConfigInfo(Label* copyToLabel) const
 {
     switch (_currentLabelType)
     {
