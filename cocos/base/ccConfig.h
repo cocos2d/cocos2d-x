@@ -195,6 +195,17 @@ THE SOFTWARE.
 #define CC_SPRITE_DEBUG_DRAW 0
 #endif
 
+/** @def CC_LABEL_DEBUG_DRAW
+* If enabled, all subclasses of Label will draw a bounding box.
+* Useful for debugging purposes only. It is recommended to leave it disabled.
+* To enable set it to a value different than 0. Disabled by default:
+* 0 -- disabled
+* 1 -- draw bounding box
+*/
+#ifndef CC_LABEL_DEBUG_DRAW
+#define CC_LABEL_DEBUG_DRAW 0
+#endif
+
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
  * If enabled, all subclasses of Sprite that are rendered using an SpriteBatchNode draw a bounding box.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
