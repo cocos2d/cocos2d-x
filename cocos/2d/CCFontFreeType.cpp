@@ -24,12 +24,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCFontFreeType.h"
-
+#include FT_BBOX_H
+#include "edtaa3func.h"
+#include "CCFontAtlas.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
-#include "edtaa3func.h"
-#include FT_BBOX_H
 
 NS_CC_BEGIN
 
