@@ -334,7 +334,7 @@ var TerrainWalkThru = (function(){
 
             var animation = new jsb.Animation3D("Sprite3DTest/girl.c3b", "Take 001");
             if(animation){
-                var animate = jsb.Animate3D.create(animation);
+                var animate = new jsb.Animate3D(animation);
                 this._player.runAction(cc.repeatForever(animate));
             }
 

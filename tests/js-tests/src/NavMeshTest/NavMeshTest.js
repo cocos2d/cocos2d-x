@@ -158,7 +158,7 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
         physicsScene.addChild(node);
 
         var animation = new jsb.Animation3D(filePath);
-        var animate = jsb.Animate3D.create(animation);
+        var animate = new jsb.Animate3D(animation);
 
         if (animate){
             agentNode.runAction(new cc.RepeatForever(animate));
