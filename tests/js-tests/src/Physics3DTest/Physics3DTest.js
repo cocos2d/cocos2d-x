@@ -319,7 +319,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         this._world = physicsScene.getPhysics3DWorld();
 
         //create point to point constraint
-        var constraint = jsb.Physics3DPointToPointConstraint.create(rigidBody, cc.math.vec3(2.5, 2.5, 2.5));
+        var constraint = new jsb.Physics3DPointToPointConstraint(rigidBody, cc.math.vec3(2.5, 2.5, 2.5));
         this._world.addPhysics3DConstraint(constraint);
 
         //create hinge constraint
@@ -437,7 +437,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
                 var mat = cc.math.mat4GetInversed(result.hitObj.getWorldTransform());
                 var position =  cc.math.mat4TransformPoint(mat, result.hitPosition);
 
-                this._constraint = jsb.Physics3DPointToPointConstraint.create(result.hitObj, position);
+                this._constraint = new jsb.Physics3DPointToPointConstraint(result.hitObj, position);
                 this._world.addPhysics3DConstraint(this._constraint, true);
                 this._pickingDistance = cc.math.vec3Length(cc.math.vec3Sub(result.hitPosition, nearP));
                 return;

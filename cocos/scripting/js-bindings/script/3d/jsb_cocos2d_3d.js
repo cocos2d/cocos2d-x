@@ -340,3 +340,16 @@ jsb.Physics3DComponent.prototype._ctor = function(physicsObj, translateInPhysics
     this.setPhysics3DObject(physicsObj);
     this.setTransformInPhysics(translateInPhysics, rotInPhsyics);
 }
+
+jsb.Physics3DPointToPointConstraint.prototype._ctor = function(first, second, third, fourth){
+    if (arguments.length == 2 ) {
+        this.init(first, second);
+    }
+    else if (arguments.length == 4 ) {
+        this.init(first, second, third, fourth);
+    }
+    else
+    {
+        throw new Error("error arguments");
+    }
+}
