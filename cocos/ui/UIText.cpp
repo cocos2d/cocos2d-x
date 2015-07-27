@@ -394,12 +394,12 @@ void Text::copySpecialProperties(Widget *widget)
         setContentSize(label->getContentSize());
         
         // copy shadow and outline
-        if (Type::SYSTEM == _type)
+        if (Type::TTF == _type)
         {
             TTFConfig config = label->_labelRenderer->getTTFConfig();
             _labelRenderer->setTTFConfig(config);
         }
-        else if (Type::TTF == _type)
+        else if (Type::SYSTEM == _type)
         {
             FontDefinition fntDef = label->_labelRenderer->_getFontDefinition();
             _labelRenderer->setFontDefinition(fntDef);
