@@ -392,6 +392,9 @@ void Text::copySpecialProperties(Widget *widget)
         setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());
         setTextAreaSize(label->_labelRenderer->getDimensions());
         setContentSize(label->getContentSize());
+        
+        // copy shadow and outline
+        _labelRenderer->getFontConfigInfo(label->_labelRenderer);
     }
 }
 
