@@ -475,6 +475,7 @@ public:
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
     FontDefinition _getFontDefinition() const;
+    void getFontConfigByType(Label* copyToLabel);
     
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,

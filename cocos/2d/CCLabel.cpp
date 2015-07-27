@@ -445,7 +445,7 @@ void Label::updateShaderProgram()
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         break;
-    case cocos2d::LabelEffect::OUTLINE: 
+    case cocos2d::LabelEffect::OUTLINE:
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_OUTLINE));
         _uniformEffectColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_effectColor");
         break;
@@ -537,6 +537,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     
     return ret;
 }
+
 
 bool Label::setAtlasByType(FontAtlas* newAtlas, LabelType labelType)
 {
@@ -1690,11 +1691,7 @@ FontDefinition Label::_getFontDefinition() const
     systemFontDef._fontFillColor.g = _textColor.g;
     systemFontDef._fontFillColor.b = _textColor.b;
     systemFontDef._fontAlpha = _textColor.a;
-    
-    systemFontDef._shadow._shadowEnabled = _shadowEnabled;
-    systemFontDef._shadow._shadowOffset = _shadowOffset;
-    systemFontDef._shadow._shadowBlur = _shadowBlurRadius;
-    systemFontDef._shadow._shadowOpacity = _shadowOpacity;
+    systemFontDef._shadow._shadowEnabled = false;
     
     if (_currLabelEffect == LabelEffect::OUTLINE && _outlineSize > 0.f)
     {
@@ -1719,6 +1716,29 @@ FontDefinition Label::_getFontDefinition() const
 #endif
 
     return systemFontDef;
+}
+
+void Label::getFontConfigByType(Label* copyToLabel)
+{
+    switch (_currentLabelType)
+    {
+        case LabelType::TTF :
+        {
+            TTFConfig tmp = getTTFConfig();
+            copyToLabel->setTTFConfig(tmp);
+        }
+            break;
+        default:
+        {
+            FontDefinition tmp = _getFontDefinition();
+            tmp._shadow._shadowEnabled = _shadowEnabled;
+            tmp._shadow._shadowOffset = _shadowOffset;
+            tmp._shadow._shadowBlur = _shadowBlurRadius;
+            tmp._shadow._shadowOpacity = _shadowOpacity;
+            copyToLabel->setFontDefinition(tmp);
+        }
+            break;
+    }
 }
 
 NS_CC_END
