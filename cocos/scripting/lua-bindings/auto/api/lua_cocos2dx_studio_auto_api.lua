@@ -277,6 +277,16 @@
 
 
 --------------------------------------------------------
+-- the ccs BoneNode
+-- @field [parent=#ccs] BoneNode#BoneNode BoneNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs SkeletonNode
+-- @field [parent=#ccs] SkeletonNode#SkeletonNode SkeletonNode preloaded module
+
+
+--------------------------------------------------------
 -- the ccs ComExtensionData
 -- @field [parent=#ccs] ComExtensionData#ComExtensionData ComExtensionData preloaded module
 
