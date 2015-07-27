@@ -353,3 +353,7 @@ jsb.Physics3DPointToPointConstraint.prototype._ctor = function(first, second, th
         throw new Error("error arguments");
     }
 }
+
+jsb.Physics3DRigidBody.prototype._ctor = function(rigidBodyInfo){
+    this.init(rigidBodyInfo);
+}

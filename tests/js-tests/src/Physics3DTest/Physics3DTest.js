@@ -302,7 +302,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         rbDes.mass = 10;
         rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(5, 5, 5));
 
-        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var rigidBody = new jsb.Physics3DRigidBody(rbDes);
         var quat = cc.math.quaternion(cc.math.vec3(0, 1, 0), cc.degreesToRadians(180));
         var component = new jsb.Physics3DComponent(rigidBody, cc.math.vec3(0, -3, 0), quat);
 
@@ -325,7 +325,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         //create hinge constraint
         rbDes.mass = 1;
         rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(8, 8, 1));
-        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        rigidBody = new jsb.Physics3DRigidBody(rbDes);
         component = new jsb.Physics3DComponent(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
@@ -343,7 +343,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         //create slider constraint
         rbDes.mass = 1;
         rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 2, 3));
-        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        rigidBody = new jsb.Physics3DRigidBody(rbDes);
         component = new jsb.Physics3DComponent(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
@@ -358,7 +358,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
 
         rbDes.mass = 0;
         rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
-        var rigidBodyB = jsb.Physics3DRigidBody.create(rbDes);
+        var rigidBodyB = new jsb.Physics3DRigidBody(rbDes);
         component = new jsb.Physics3DComponent(rigidBodyB);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
@@ -379,7 +379,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         //create ConeTwist constraint
         rbDes.mass = 1;
         rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
-        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        rigidBody = new jsb.Physics3DRigidBody(rbDes);
         component = new jsb.Physics3DComponent(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
@@ -398,7 +398,7 @@ var Physics3DConstraintDemo = Physics3DTestDemo.extend({
         //create 6 dof constraint
         rbDes.mass = 1;
         rbDes.shape = jsb.Physics3DShape.createBox(cc.math.vec3(3, 3, 3));
-        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        rigidBody = new jsb.Physics3DRigidBody(rbDes);
         component = new jsb.Physics3DComponent(rigidBody);
         sprite = new jsb.Sprite3D("Sprite3DTest/box.c3t");
         sprite.setTexture("Sprite3DTest/plane.png");
@@ -570,7 +570,7 @@ var Physics3DCollisionCallbackDemo = Physics3DTestDemo.extend({
         rbDes.mass = 0;
         rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
 
-        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var rigidBody = new jsb.Physics3DRigidBody(rbDes);
         var component = new jsb.Physics3DComponent(rigidBody);
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss.c3b");
         sprite.addComponent(component);
@@ -633,7 +633,7 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
         var heightData = terrain.getHeightData();
         var size = terrain.getTerrainSize();
         rbDes.shape = jsb.Physics3DShape.createHeightfield(size.width, size.height, heightData, 1.0, terrain.getMinHeight(), terrain.getMaxHeight(), true, false, true);
-        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var rigidBody = new jsb.Physics3DRigidBody(rbDes);
         var component = new jsb.Physics3DComponent(rigidBody);
         terrain.addComponent(component);
         component.syncNodeToPhysics();
@@ -671,7 +671,7 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
         var trianglesList = jsb.Bundle3D.getTrianglesList("Sprite3DTest/boss.c3b");
         rbDes.mass = 0;
         rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
-        rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        rigidBody = new jsb.Physics3DRigidBody(rbDes);
         component = new jsb.Physics3DComponent(rigidBody);
         var sprite = new jsb.Sprite3D("Sprite3DTest/boss.c3b");
         sprite.addComponent(component);

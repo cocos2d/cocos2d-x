@@ -76,7 +76,7 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
         var rbDes = jsb.physics3DRigidBodyDes();
         rbDes.mass = 0;
         rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
-        var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
+        var rigidBody = new jsb.Physics3DRigidBody(rbDes);
         var component = new jsb.Physics3DComponent(rigidBody);
         var sprite = jsb.Sprite3D.create("NavMesh/scene.obj");
         sprite.addComponent(component);
