@@ -66,11 +66,11 @@ void TestActionTimeline::onEnter()
 {
     ActionTimelineBaseTest::onEnter();
 
-    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
-    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
+    Data data = FileUtils::getInstance()->getDataFromFile("ActionTimeline/DemoPlayer.csb");
+    Node* node = CSLoader::createNodeWithDataBuffer(data);
+    ActionTimeline* action = CSLoader::createTimelineWithDataBuffer(data, "ActionTimeline/DemoPlayer.csb");
     node->runAction(action);
     action->gotoFrameAndPlay(0);
-//    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
 
     node->setScale(0.2f);
     node->setPosition(VisibleRect::center());
