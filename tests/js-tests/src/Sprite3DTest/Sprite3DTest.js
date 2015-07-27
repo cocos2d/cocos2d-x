@@ -1190,7 +1190,7 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         var light = jsb.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
         this.addChild(light);
         //set the ambient light 
-        var ambient = jsb.AmbientLight.create(cc.color(55, 55, 55));
+        var ambient = new jsb.AmbientLight(cc.color(55, 55, 55));
         this.addChild(ambient);
 
         //create a listener

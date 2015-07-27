@@ -325,3 +325,18 @@ jsb.Skybox.prototype._ctor = function(positive_x, negative_x, positive_y, negati
         throw new Error("error arguments");
     }
 }
+
+jsb.DirectionLight.prototype._ctor = function(direction, color){
+    this.setDirection(direction);
+    this.setColor(color);
+}
+
+jsb.AmbientLight.prototype._ctor = function(color){
+    this.setColor(color);
+}
+
+jsb.Physics3DComponent.prototype._ctor = function(physicsObj, translateInPhysics = cc.math.vec3(), rotInPhsyics = new cc.math.Quaternion()){
+    this.init();
+    this.setPhysics3DObject(physicsObj);
+    this.setTransformInPhysics(translateInPhysics, rotInPhsyics);
+}

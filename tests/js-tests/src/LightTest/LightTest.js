@@ -209,12 +209,12 @@ var LightTest = LightTestDemo.extend({
     },
 
     addLights:function(){
-        this._ambientLight = jsb.AmbientLight.create(cc.color(200, 200, 200));
+        this._ambientLight = new jsb.AmbientLight(cc.color(200, 200, 200));
         this._ambientLight.setEnabled(true);
         this.addChild(this._ambientLight);
         this._ambientLight.setCameraMask(2);
 
-        this._directionalLight = jsb.DirectionLight.create(cc.math.vec3(-1, -1, 0), cc.color(200, 200, 200));
+        this._directionalLight = new jsb.DirectionLight(cc.math.vec3(-1, -1, 0), cc.color(200, 200, 200));
         this._directionalLight.setEnabled(false);
         this.addChild(this._directionalLight);
         this._directionalLight.setCameraMask(2);

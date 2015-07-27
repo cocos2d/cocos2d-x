@@ -77,7 +77,7 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
         rbDes.mass = 0;
         rbDes.shape = jsb.Physics3DShape.createMesh(trianglesList, trianglesList.length/3);
         var rigidBody = jsb.Physics3DRigidBody.create(rbDes);
-        var component = jsb.Physics3DComponent.create(rigidBody);
+        var component = new jsb.Physics3DComponent(rigidBody);
         var sprite = jsb.Sprite3D.create("NavMesh/scene.obj");
         sprite.addComponent(component);
         sprite.setCameraMask(cc.CameraFlag.USER1);
@@ -90,11 +90,11 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
         physicsScene.setNavMesh(navMesh);
         physicsScene.setNavMeshDebugCamera(this._camera);
 
-        var ambientLight = jsb.AmbientLight.create(cc.color(64, 64, 64));
+        var ambientLight = new jsb.AmbientLight(cc.color(64, 64, 64));
         ambientLight.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(ambientLight);
 
-        var dirLight = jsb.DirectionLight.create(cc.math.vec3(1.2, -1.1, 0.5), cc.color(255, 255, 255));
+        var dirLight = new jsb.DirectionLight(cc.math.vec3(1.2, -1.1, 0.5), cc.color(255, 255, 255));
         dirLight.setCameraMask(cc.CameraFlag.USER1);
         this.addChild(dirLight);
     },
