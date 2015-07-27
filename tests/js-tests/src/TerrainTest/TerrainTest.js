@@ -332,7 +332,7 @@ var TerrainWalkThru = (function(){
             this._player.setScale(0.08);
             this._player.y = this._terrain.getHeight(this._player.x, this._player.getVertexZ()) + PLAYER_HEIGHT;
 
-            var animation = jsb.Animation3D.create("Sprite3DTest/girl.c3b", "Take 001");
+            var animation = new jsb.Animation3D("Sprite3DTest/girl.c3b", "Take 001");
             if(animation){
                 var animate = jsb.Animate3D.create(animation);
                 this._player.runAction(cc.repeatForever(animate));

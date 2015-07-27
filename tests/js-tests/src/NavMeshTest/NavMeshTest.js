@@ -157,7 +157,7 @@ var NavMeshBaseTestDemo = NavMeshTestScene.extend({
         node.setCameraMask(cc.CameraFlag.USER1);
         physicsScene.addChild(node);
 
-        var animation = jsb.Animation3D.create(filePath);
+        var animation = new jsb.Animation3D(filePath);
         var animate = jsb.Animate3D.create(animation);
 
         if (animate){

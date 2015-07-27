@@ -372,7 +372,7 @@ var Camera3DTest = (function(){
             sprite.setPosition3D(postion);
             sprite.setGlobalZOrder(globalZOrder);
             if(playAnimation){
-                var animation = jsb.Animation3D.create(file, "Take 001");
+                var animation = new jsb.Animation3D(file, "Take 001");
                 if(animation){
                     var animate = jsb.Animate3D.create(animation);
                     sprite.runAction(cc.repeatForever(animate));

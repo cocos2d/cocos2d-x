@@ -182,7 +182,7 @@ var LightTest = LightTestDemo.extend({
         orc.setScale(2.0);
         var axe = new jsb.Sprite3D("Sprite3DTest/axe.c3b");
         orc.getAttachNode("Bip001 R Hand").addChild(axe);
-        var animation = jsb.Animation3D.create("Sprite3DTest/orc.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/orc.c3b");
         if(animation){
             var animate = jsb.Animate3D.create(animation);
             orc.runAction(cc.repeatForever(animate));

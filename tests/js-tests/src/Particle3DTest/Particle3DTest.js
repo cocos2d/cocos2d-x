@@ -377,7 +377,7 @@ var Particle3DWithSprite3DDemo = Particle3DTestDemo.extend({
         sprite.setPosition3D(cc.math.vec3(-20, 0, 0));
         sprite.setRotation3D(cc.math.vec3(0, 180, 0));
         sprite.setCameraMask(2);
-        var animation = jsb.Animation3D.create(c3bfileName);
+        var animation = new jsb.Animation3D(c3bfileName);
         if(animation){
             var animate = jsb.Animate3D.create(animation);
             sprite.runAction(cc.repeatForever(animate));
