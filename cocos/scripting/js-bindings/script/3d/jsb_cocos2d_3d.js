@@ -312,3 +312,16 @@ jsb.Animate3D.prototype._ctor = function(first, second, third, fourth){
         throw new Error("error arguments");
     }
 }
+
+jsb.Skybox.prototype._ctor = function(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z){
+    if (arguments.length == 0 ) {
+        this.init();
+    }
+    else if (arguments.length == 6 ) {
+        this.init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
+    }
+    else
+    {
+        throw new Error("error arguments");
+    }
+}
