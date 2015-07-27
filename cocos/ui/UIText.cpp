@@ -23,8 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIText.h"
-#include "2d/CCLabel.h"
 #include "platform/CCFileUtils.h"
+#include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
@@ -377,7 +377,7 @@ Widget* Text::createCloneInstance()
 {
     return Text::create();
 }
-
+    
 void Text::copySpecialProperties(Widget *widget)
 {
     Text* label = dynamic_cast<Text*>(widget);
@@ -392,6 +392,9 @@ void Text::copySpecialProperties(Widget *widget)
         setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());
         setTextAreaSize(label->_labelRenderer->getDimensions());
         setContentSize(label->getContentSize());
+        
+        // copy shadow and outline
+        _labelRenderer->getFontConfigByType(label->_labelRenderer);
     }
 }
 

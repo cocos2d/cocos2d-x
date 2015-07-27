@@ -90,6 +90,7 @@ LabelTTFAlignmentNew::LabelTTFAlignmentNew()
 {
     auto s = Director::getInstance()->getWinSize();
 
+    
     TTFConfig config("fonts/tahoma.ttf",16);
 
     auto ttf0 = Label::createWithTTF(config,"Alignment 0\nnew line",TextHAlignment::LEFT);

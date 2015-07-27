@@ -312,13 +312,13 @@ protected:
     virtual void copySpecialProperties(Widget* model) override;
     virtual void adaptRenderers() override;
 protected:
+    Label* _labelRenderer;
     bool _touchScaleChangeEnabled;
     float _normalScaleValueX;
     float _normalScaleValueY;
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    Label* _labelRenderer;
     bool _labelRendererAdaptDirty;
     Type _type;
 };
