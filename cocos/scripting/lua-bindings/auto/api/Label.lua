@@ -145,7 +145,7 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- 
+-- Return length of string.
 -- @function [parent=#Label] getStringLength 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -159,7 +159,7 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- 
+-- Return the number of lines of text.
 -- @function [parent=#Label] getStringNumLines 
 -- @param self
 -- @return int#int ret (return value: int)
