@@ -18,6 +18,12 @@ local function XMLHttpRequestLayer()
         labelStatusCode:setPosition(cc.p(winSize.width / 2,  winSize.height - margin - 6 * space))
         layer:addChild(labelStatusCode)
 
+        -- Response Header Label
+        local labelServerHeader = cc.Label:createWithTTF("HTTP Server Header", s_markerFeltFontPath, 20)
+        labelServerHeader:setAnchorPoint(cc.p(0.5, 0.5))
+        labelServerHeader:setPosition(cc.p(winSize.width / 2,  winSize.height - margin - 7 * space))
+        layer:addChild(labelServerHeader)
+
         local menuRequest = cc.Menu:create()
         menuRequest:setPosition(cc.p(0,0))
         layer:addChild(menuRequest)
@@ -32,7 +38,9 @@ local function XMLHttpRequestLayer()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
                     local statusString = "Http Status Code:"..xhr.statusText
                     labelStatusCode:setString(statusString)
+                    labelServerHeader:setString("Http Sever:" .. xhr:getResponseHeader("Server"))
                     print(xhr.response)
+                    print(xhr:getAllResponseHeaders())
                 else
                     print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
                 end
@@ -42,6 +50,7 @@ local function XMLHttpRequestLayer()
             xhr:send()
 
             labelStatusCode:setString("waiting...")
+            labelServerHeader:setString("waiting...")
         end
 
         local labelGet  = cc.Label:createWithTTF("Test Get", s_arialPath, 22)
@@ -59,7 +68,9 @@ local function XMLHttpRequestLayer()
             local function onReadyStateChange()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
                     labelStatusCode:setString("Http Status Code:"..xhr.statusText)
+                    labelServerHeader:setString("Http Sever:" .. xhr:getResponseHeader("Server"))
                     print(xhr.response)
+                    print(xhr:getAllResponseHeaders())
                 else
                     print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
                 end
@@ -68,6 +79,7 @@ local function XMLHttpRequestLayer()
             xhr:send()
             
             labelStatusCode:setString("waiting...")
+            labelServerHeader:setString("waiting...")
         end
 
         local labelPost = cc.Label:createWithTTF("Test Post", s_arialPath, 22)
@@ -97,7 +109,9 @@ local function XMLHttpRequestLayer()
                         end 
                     end
                     labelStatusCode:setString("Http Status Code:"..xhr.statusText)
+                    labelServerHeader:setString("Http Sever:" .. xhr:getResponseHeader("Server"))
                     print(strInfo)
+                    print(xhr:getAllResponseHeaders())
                 else
                     print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
                 end
@@ -107,6 +121,7 @@ local function XMLHttpRequestLayer()
             xhr:send()
             
             labelStatusCode:setString("waiting...")
+            labelServerHeader:setString("waiting...")
         end
 
         local labelPostBinary = cc.Label:createWithTTF("Test Post Binary", s_arialPath, 22)
@@ -126,10 +141,12 @@ local function XMLHttpRequestLayer()
             local function onReadyStateChange()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
                     labelStatusCode:setString("Http Status Code:"..xhr.statusText)
+                    labelServerHeader:setString("Http Sever:" .. xhr:getResponseHeader("Server"))
                     local response   = xhr.response
                     local output = json.decode(response,1)
                     table.foreach(output,function(i, v) print (i, v) end)
                     print("headers are")
+                    print(xhr:getAllResponseHeaders())
                     table.foreach(output.headers,print)
                 else
                     print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
@@ -140,6 +157,7 @@ local function XMLHttpRequestLayer()
             xhr:send()
             
             labelStatusCode:setString("waiting...")
+            labelServerHeader:setString("waiting...")
         end
 
         local labelPostJson = cc.Label:createWithTTF("Test Post Json", s_arialPath, 22)
