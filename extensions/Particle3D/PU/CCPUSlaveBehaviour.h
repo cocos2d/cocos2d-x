@@ -48,10 +48,10 @@ public:
 
     /** See ParticleBehaviour.
     */
-    virtual void updateBehaviour(PUParticle3D *particle, float deltaTime);
+    virtual void updateBehaviour(PUParticle3D *particle, float deltaTime) override;
 
     virtual PUSlaveBehaviour* clone() override;
-    virtual void copyAttributesTo (PUBehaviour* behaviour);
+    virtual void copyAttributesTo (PUBehaviour* behaviour) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUSlaveBehaviour();

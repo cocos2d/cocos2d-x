@@ -28,6 +28,18 @@
 
 var ccui = ccui || {};
 
+cc.EditBox = ccui.EditBox;
+delete ccui.EditBox;
+
+cc.Scale9Sprite = ccui.Scale9Sprite;
+
+// GUI
+/**
+ * @type {Object}
+ * UI Helper
+ */
+ccui.helper = ccui.Helper;
+
 // =====================Constants=====================
 
 /*

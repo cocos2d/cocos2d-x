@@ -428,7 +428,6 @@ public:
     CREATE_FUNC(LabelAlignmentTest);
 
     LabelAlignmentTest();
-    virtual ~LabelAlignmentTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
@@ -438,11 +437,8 @@ private:
     void  setAlignmentTop(cocos2d::Ref* sender);
     void  setAlignmentMiddle(cocos2d::Ref* sender);
     void  setAlignmentBottom(cocos2d::Ref* sender);
-    std::string getCurrentAlignment();
 
     cocos2d::Label* _label;
-    cocos2d::TextHAlignment _horizAlign;
-    cocos2d::TextVAlignment _vertAlign;
 };
 
 class LabelIssue4428Test : public AtlasDemoNew
@@ -639,6 +635,16 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class LabelFullTypeFontTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFullTypeFontTest);
+
+    LabelFullTypeFontTest();
+
+    virtual std::string title() const override;
 };
 
 #endif
