@@ -184,6 +184,7 @@ void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *c
 void register_all_cocos2dx_physics3d(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInA(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx, uint32_t argc, jsval *vp);

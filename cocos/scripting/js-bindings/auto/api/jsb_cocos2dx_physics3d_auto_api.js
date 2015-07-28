@@ -1242,6 +1242,24 @@ getPivotPointInB : function (
 },
 
 /**
+ * @method init
+* @param {cc.Physics3DRigidBody|cc.Physics3DRigidBody} physics3drigidbody
+* @param {cc.Physics3DRigidBody|vec3_object} physics3drigidbody
+* @param {vec3_object} vec3
+* @param {vec3_object} vec3
+* @return {bool|bool}
+*/
+init : function(
+physics3drigidbody,
+physics3drigidbody,
+vec3,
+vec3 
+)
+{
+    return false;
+},
+
+/**
  * @method setPivotPointInA
  * @param {vec3_object} arg0
  */
