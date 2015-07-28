@@ -5559,6 +5559,8 @@
         "cocos/scripting/js-bindings/auto/jsb_cocos2dx_studio_auto.hpp", 
         "cocos/scripting/js-bindings/auto/jsb_cocos2dx_ui_auto.cpp", 
         "cocos/scripting/js-bindings/auto/jsb_cocos2dx_ui_auto.hpp", 
+        "cocos/scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_conversions.cpp", 
+        "cocos/scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_conversions.h", 
         "cocos/scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.cpp", 
         "cocos/scripting/js-bindings/manual/3d/jsb_cocos2dx_3d_manual.h", 
         "cocos/scripting/js-bindings/manual/ScriptingCore.cpp", 
