@@ -1410,14 +1410,6 @@ Mat4 Node::transform(const Mat4& parentTransform)
 
 void Node::onEnter()
 {
-    if (_onEnterCallback)
-        _onEnterCallback();
-
-    if (_componentContainer && !_componentContainer->isEmpty())
-    {
-        _componentContainer->onEnter();
-    }
-
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1425,6 +1417,14 @@ void Node::onEnter()
             return;
     }
 #endif
+    
+    if (_onEnterCallback)
+        _onEnterCallback();
+
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onEnter();
+    }
     
     _isTransitionFinished = false;
     
@@ -1445,9 +1445,6 @@ void Node::onEnter()
 
 void Node::onEnterTransitionDidFinish()
 {
-    if (_onEnterTransitionDidFinishCallback)
-        _onEnterTransitionDidFinishCallback();
-        
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1455,6 +1452,9 @@ void Node::onEnterTransitionDidFinish()
             return;
     }
 #endif
+    
+    if (_onEnterTransitionDidFinishCallback)
+        _onEnterTransitionDidFinishCallback();
 
     _isTransitionFinished = true;
     for( const auto &child: _children)
@@ -1470,9 +1470,6 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    if (_onExitTransitionDidStartCallback)
-        _onExitTransitionDidStartCallback();
-    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1480,6 +1477,9 @@ void Node::onExitTransitionDidStart()
             return;
     }
 #endif
+    
+    if (_onExitTransitionDidStartCallback)
+        _onExitTransitionDidStartCallback();
     
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
@@ -1494,14 +1494,6 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
-    if (_onExitCallback)
-        _onExitCallback();
-    
-    if (_componentContainer && !_componentContainer->isEmpty())
-    {
-        _componentContainer->onExit();
-    }
-
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1509,6 +1501,14 @@ void Node::onExit()
             return;
     }
 #endif
+    
+    if (_onExitCallback)
+        _onExitCallback();
+    
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onExit();
+    }
     
     this->pause();
     
