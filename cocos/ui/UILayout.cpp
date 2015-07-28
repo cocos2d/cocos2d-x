@@ -123,6 +123,14 @@ void Layout::onEnter()
     
 void Layout::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Widget::onExit();
     if (_clippingStencil)
     {

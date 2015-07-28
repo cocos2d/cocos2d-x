@@ -362,6 +362,14 @@ void ProtectedNode::onEnter()
 
 void ProtectedNode::onEnterTransitionDidFinish()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+            return;
+    }
+#endif
+    
     Node::onEnterTransitionDidFinish();
     for( const auto &child: _protectedChildren)
         child->onEnterTransitionDidFinish();
@@ -369,6 +377,14 @@ void ProtectedNode::onEnterTransitionDidFinish()
 
 void ProtectedNode::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+            return;
+    }
+#endif
+    
     Node::onExitTransitionDidStart();
     for( const auto &child: _protectedChildren)
         child->onExitTransitionDidStart();
@@ -376,6 +392,14 @@ void ProtectedNode::onExitTransitionDidStart()
 
 void ProtectedNode::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Node::onExit();
     for( const auto &child: _protectedChildren)
         child->onExit();

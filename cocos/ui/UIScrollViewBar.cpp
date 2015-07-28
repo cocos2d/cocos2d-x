@@ -183,6 +183,14 @@ void ScrollViewBar::updateLength(float length)
 
 void ScrollViewBar::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     ProtectedNode::onEnter();
     scheduleUpdate();
 }

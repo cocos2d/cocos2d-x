@@ -1422,6 +1422,14 @@ namespace ui {
 
     void Scale9Sprite::onExit()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+                return;
+        }
+#endif
+        
         Node::onExit();
         for( const auto &child: _protectedChildren)
             child->onExit();
@@ -1429,6 +1437,14 @@ namespace ui {
 
     void Scale9Sprite::onEnterTransitionDidFinish()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+                return;
+        }
+#endif
+        
         Node::onEnterTransitionDidFinish();
         for( const auto &child: _protectedChildren)
             child->onEnterTransitionDidFinish();
@@ -1436,6 +1452,14 @@ namespace ui {
 
     void Scale9Sprite::onExitTransitionDidStart()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+                return;
+        }
+#endif
+        
         Node::onExitTransitionDidStart();
         for( const auto &child: _protectedChildren)
             child->onExitTransitionDidStart();

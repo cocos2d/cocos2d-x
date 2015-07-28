@@ -626,6 +626,14 @@ void ParticleSystem::onEnter()
 
 void ParticleSystem::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     this->unscheduleUpdate();
     Node::onExit();
 }

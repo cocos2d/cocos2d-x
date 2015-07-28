@@ -464,6 +464,14 @@ void Armature::onEnter()
 
 void Armature::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Node::onExit();
     unscheduleUpdate();
 }

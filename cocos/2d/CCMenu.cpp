@@ -201,11 +201,27 @@ void Menu::addChild(Node * child, int zOrder, const std::string &name)
 
 void Menu::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Layer::onEnter();
 }
 
 void Menu::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     if (_state == Menu::State::TRACKING_TOUCH)
     {
         if (_selectedItem)
