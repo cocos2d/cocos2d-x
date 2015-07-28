@@ -1675,6 +1675,7 @@ bool js_cocos2dx_Grid3DAction_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_cocos2dx_Grid3DAction_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Grid3DAction(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_Grid3DAction_getGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_TiledGrid3DAction_class;
 extern JSObject *jsb_cocos2d_TiledGrid3DAction_prototype;
@@ -2507,6 +2508,7 @@ void js_register_cocos2dx_NodeGrid(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_NodeGrid_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_getGrid(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_NodeGrid_getGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_NodeGrid(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -3379,7 +3381,9 @@ void js_cocos2dx_GridBase_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_GridBase(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_GridBase_setGridSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GridBase_setGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_afterBlit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GridBase_getGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_afterDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_beforeDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_calculateVertexPoints(JSContext *cx, uint32_t argc, jsval *vp);
