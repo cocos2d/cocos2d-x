@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_TIMELINE_BEGIN
 
 BoneNode::BoneNode()
-: _isRackShow(true)
+: _isRackShow(false)
 , _rackColor(cocos2d::Color4F::WHITE)
 , _rackLength(50)
 , _rackWidth(20)
@@ -323,6 +323,7 @@ bool BoneNode::init()
     _rackLength = 50;
     _rackWidth = 20;
     updateVertices();
+    updateColor();
     setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
     return true;
 }
