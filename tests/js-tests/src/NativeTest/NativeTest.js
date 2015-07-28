@@ -33,6 +33,13 @@ var nativetestItemNames = [
         testScene:function () {
             startFileUtilsTest();
         }
+    },
+
+    {
+        itemTitle:"JSBExtendTest",
+        testScene:function () {
+            cc.director.runScene(new JSBExtendTest());
+        }
     }
 ];
 
