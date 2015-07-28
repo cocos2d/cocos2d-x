@@ -41,6 +41,7 @@ class Font;
 class Texture2D;
 class EventCustom;
 class EventListenerCustom;
+class FontFreeType;
 
 struct FontLetterDefinition
 {
@@ -109,10 +110,17 @@ public:
 
 protected:
     void relaseTextures();
+
+    void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+
+    void conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
+
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<char16_t, FontLetterDefinition> _letterDefinitions;
     float _lineHeight;
     Font* _font;
+    FontFreeType* _fontFreeType;
+    void* _iconv;
 
     // Dynamic GlyphCollection related stuff
     int _currentPage;
