@@ -111,7 +111,10 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
 {
     Node::setPosition(newPosition);
     auto position = getPosition();
-    _center = Vec2(position.x * CC_CONTENT_SCALE_FACTOR(), position.y * CC_CONTENT_SCALE_FACTOR());
+    auto frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto retinaFactor = Director::getInstance()->getOpenGLView()->getRetinaFactor();
+    _center = Vec2(position.x * frameSize.width / visibleSize.width * retinaFactor, position.y * frameSize.height / visibleSize.height * retinaFactor);
     getGLProgramState()->setUniformVec2("center", _center);
 }
 
@@ -544,8 +547,10 @@ ShaderRetroEffect::ShaderRetroEffect()
 bool ShaderRetroEffect::init()
 {
     if( ShaderTestDemo::init() ) {
+        
+        auto fragStr = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"));
+        GLchar * fragSource = (GLchar*)fragStr.c_str();
 
-        GLchar * fragSource = (GLchar*) FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh")).c_str();
         auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
 
         auto director = Director::getInstance();
