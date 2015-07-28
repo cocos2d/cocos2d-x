@@ -587,10 +587,6 @@ bool Widget::isHighlighted() const
 
 void Widget::setHighlighted(bool hilight)
 {
-    if (hilight == _highlight)
-    {
-        return;
-    }
     _highlight = hilight;
     if (_bright)
     {
