@@ -28,12 +28,12 @@
 #include "AudioCache.h"
 #include <thread>
 #include <algorithm>
-#include "base/CCConsole.h"
-#include "platform/CCFileUtils.h"
-#include "mpg123.h"
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
-#include "base/ccUtils.h"
+#include "platform/CCFileUtils.h"
+#include "mpg123.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 
 #define PCMDATA_CACHEMAXSIZE 2621440
 
@@ -44,6 +44,7 @@ AudioCache::AudioCache()
 , _pcmDataSize(0)
 , _bytesOfRead(0)
 , _alBufferReady(false)
+, _loadFail(false)
 , _fileFormat(FileFormat::UNKNOWN)
 , _queBufferFrames(0)
 , _queBufferBytes(0)
@@ -255,12 +256,19 @@ ExitThread:
     
     _readDataTaskMutex.unlock();
     if (_queBufferFrames > 0)
+    {
         _alBufferReady = true;
+    } 
+    else
+    {
+        _loadFail = true;
+    }
     
-    invokingCallbacks();
+    invokingLoadCallbacks();
+    invokingPlayCallbacks();
 }
 
-void AudioCache::invokingCallbacks()
+void AudioCache::invokingPlayCallbacks()
 {
     _callbackMutex.lock();
     auto count = _callbacks.size();
@@ -271,7 +279,7 @@ void AudioCache::invokingCallbacks()
     _callbackMutex.unlock();
 }
 
-void AudioCache::addCallbacks(const std::function<void ()> &callback)
+void AudioCache::addPlayCallback(const std::function<void()>& callback)
 {
     _callbackMutex.lock();
     if (_alBufferReady) {
@@ -280,6 +288,31 @@ void AudioCache::addCallbacks(const std::function<void ()> &callback)
         _callbacks.push_back(callback);
     }
     _callbackMutex.unlock();
+}
+
+void AudioCache::invokingLoadCallbacks()
+{
+    auto scheduler = Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([&](){
+        auto count = _loadCallbacks.size();
+        for (size_t index = 0; index < count; ++index) {
+            _loadCallbacks[index](_alBufferReady);
+        }
+        _loadCallbacks.clear();
+    });
+}
+
+void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
+{
+    if (_alBufferReady) {
+        callback(true);
+    }
+    else if (_loadFail){
+        callback(false);
+    }
+    else {
+        _loadCallbacks.push_back(callback);
+    }
 }
 
 #endif

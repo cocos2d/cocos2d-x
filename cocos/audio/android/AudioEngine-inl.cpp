@@ -432,9 +432,13 @@ void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (i
     _audioPlayers[audioID]._finishCallback = callback;
 }
 
-void AudioEngineImpl::preload(const std::string& filePath)
+void AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
 {
     CCLOG("Preload not support on Anroid");
+    if (callback)
+    {
+        callback(false);
+    }
 }
 
 #endif
