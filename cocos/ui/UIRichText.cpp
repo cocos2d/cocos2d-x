@@ -178,7 +178,7 @@ void RichText::formatText()
 {
     if (_formatTextDirty)
     {
-        this->removeAllChildren();
+        this->removeAllProtectedChildren();
         _elementRenders.clear();
         if (_ignoreSize)
         {
@@ -353,7 +353,7 @@ void RichText::formarRenderers()
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
             l->setPosition(nextPosX, 0.0f);
-            this->addChild(l, 1);
+            this->addProtectedChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
@@ -391,7 +391,7 @@ void RichText::formarRenderers()
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
                 l->setPosition(nextPosX, nextPosY);
-                this->addChild(l, 1);
+                this->addProtectedChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }
         }
