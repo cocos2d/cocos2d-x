@@ -41,7 +41,7 @@
 
 NS_CC_BEGIN
 
-const int Label::DistanceFieldFontSize = 50;
+const int Label::DistanceFieldFontSize = 100;
 
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
