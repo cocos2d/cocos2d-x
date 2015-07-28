@@ -318,7 +318,7 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     return nullptr;
 }
 
-ActionTimeline* CSLoader::createTimelineWithDataBuffer(const Data data, const std::string& filename)
+ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& filename)
 {
     std::string suffix = getExtentionName(filename);
     CCLOG("suffix = %s", suffix.c_str());
@@ -824,12 +824,12 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
-cocos2d::Node* CSLoader::createNodeWithDataBuffer(const Data data)
+cocos2d::Node* CSLoader::createNode(const Data data)
 {
-    return createNodeWithDataBuffer(data, nullptr);
+    return createNode(data, nullptr);
 }
 
-Node * CSLoader::createNodeWithDataBuffer(const Data data, const ccNodeLoadCallback &callback)
+Node * CSLoader::createNode(const Data data, const ccNodeLoadCallback &callback)
 {
     CSLoader * loader = CSLoader::getInstance();
     Node * node = nullptr;
@@ -979,7 +979,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
             {
                 Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
-                node = createNodeWithDataBuffer(buf, callback);
+                node = createNode(buf, callback);
                 action = timeline::ActionTimelineCache::getInstance()->loadAnimationWithDataBuffer(buf, filePath);
             }
             else

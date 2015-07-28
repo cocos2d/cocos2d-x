@@ -79,11 +79,11 @@ public:
     
     static cocos2d::Node* createNode(const std::string& filename);
     static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
-    static cocos2d::Node* createNodeWithDataBuffer(const Data data);
-    static cocos2d::Node* createNodeWithDataBuffer(const Data data, const ccNodeLoadCallback &callback);
+    static cocos2d::Node* createNode(const Data data);
+    static cocos2d::Node* createNode(const Data data, const ccNodeLoadCallback &callback);
 
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
-    static cocostudio::timeline::ActionTimeline* createTimelineWithDataBuffer(const Data data, const std::string& filename);
+    static cocostudio::timeline::ActionTimeline* createTimeline(const Data data, const std::string& filename);
 
     /*
     static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename);

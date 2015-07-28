@@ -67,8 +67,8 @@ void TestActionTimeline::onEnter()
     ActionTimelineBaseTest::onEnter();
 
     Data data = FileUtils::getInstance()->getDataFromFile("ActionTimeline/DemoPlayer.csb");
-    Node* node = CSLoader::createNodeWithDataBuffer(data);
-    ActionTimeline* action = CSLoader::createTimelineWithDataBuffer(data, "ActionTimeline/DemoPlayer.csb");
+    Node* node = CSLoader::createNode(data);
+    ActionTimeline* action = CSLoader::createTimeline(data, "ActionTimeline/DemoPlayer.csb");
     node->runAction(action);
     action->gotoFrameAndPlay(0);
 
