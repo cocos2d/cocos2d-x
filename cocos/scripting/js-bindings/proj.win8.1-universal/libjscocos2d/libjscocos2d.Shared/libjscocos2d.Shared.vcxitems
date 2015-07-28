@@ -24,6 +24,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_spine_auto.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_ui_auto.hpp" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_conversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h" />
@@ -72,6 +73,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_spine_auto.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_ui_auto.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_conversions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\3d\jsb_cocos2dx_3d_manual.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\chipmunk\js_bindings_chipmunk_functions.cpp" />

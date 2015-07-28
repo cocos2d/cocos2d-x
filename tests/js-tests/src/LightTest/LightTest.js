@@ -182,9 +182,9 @@ var LightTest = LightTestDemo.extend({
         orc.setScale(2.0);
         var axe = new jsb.Sprite3D("Sprite3DTest/axe.c3b");
         orc.getAttachNode("Bip001 R Hand").addChild(axe);
-        var animation = jsb.Animation3D.create("Sprite3DTest/orc.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/orc.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             orc.runAction(cc.repeatForever(animate));
         }
         this.addChild(orc);
@@ -209,12 +209,12 @@ var LightTest = LightTestDemo.extend({
     },
 
     addLights:function(){
-        this._ambientLight = jsb.AmbientLight.create(cc.color(200, 200, 200));
+        this._ambientLight = new jsb.AmbientLight(cc.color(200, 200, 200));
         this._ambientLight.setEnabled(true);
         this.addChild(this._ambientLight);
         this._ambientLight.setCameraMask(2);
 
-        this._directionalLight = jsb.DirectionLight.create(cc.math.vec3(-1, -1, 0), cc.color(200, 200, 200));
+        this._directionalLight = new jsb.DirectionLight(cc.math.vec3(-1, -1, 0), cc.color(200, 200, 200));
         this._directionalLight.setEnabled(false);
         this.addChild(this._directionalLight);
         this._directionalLight.setCameraMask(2);
