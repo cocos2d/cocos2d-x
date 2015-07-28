@@ -12,10 +12,25 @@
 -- @return GridBase#GridBase self (return value: cc.GridBase)
         
 --------------------------------
+-- brief Set the effect grid rect.<br>
+-- param rect The effect grid rect.
+-- @function [parent=#GridBase] setGridRect 
+-- @param self
+-- @param #rect_table rect
+-- @return GridBase#GridBase self (return value: cc.GridBase)
+        
+--------------------------------
 -- 
 -- @function [parent=#GridBase] afterBlit 
 -- @param self
 -- @return GridBase#GridBase self (return value: cc.GridBase)
+        
+--------------------------------
+-- brief Get the effect grid rect.<br>
+-- return Return the effect grid rect.
+-- @function [parent=#GridBase] getGridRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- 
@@ -95,13 +110,16 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- @overload self, size_table, rect_table         
 -- @overload self, size_table         
 -- @overload self, size_table, cc.Texture2D, bool         
+-- @overload self, size_table, cc.Texture2D, bool, rect_table         
 -- @function [parent=#GridBase] initWithSize
 -- @param self
 -- @param #size_table gridSize
 -- @param #cc.Texture2D texture
 -- @param #bool flipped
+-- @param #rect_table rect
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
