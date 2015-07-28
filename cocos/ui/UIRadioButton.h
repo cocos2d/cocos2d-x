@@ -219,6 +219,11 @@ public:
     virtual void removeRadioButton(RadioButton* radioButton);
     
     /**
+     * Remove all radio button from this group.
+     */
+    virtual void removeAllRadioButtons();
+    
+    /**
      * Get the number of radio buttons in this group.
      *
      * @return the number of radio buttons in this group

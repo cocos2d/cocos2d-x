@@ -224,6 +224,14 @@ void RadioButtonGroup::removeRadioButton(RadioButton* radioButton)
     }
 }
 
+void RadioButtonGroup::removeAllRadioButtons()
+{
+    while(!_radioButtons.empty())
+    {
+        removeRadioButton(_radioButtons.at(0));
+    }
+}
+
 ssize_t RadioButtonGroup::getNumberOfRadioButtons() const
 {
     return _radioButtons.size();
