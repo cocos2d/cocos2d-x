@@ -298,66 +298,99 @@ jsb.Animation3D.create = function(fileName, animationName = ""){
    static Animate3D* createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate = 30.f);
  */
 jsb.Animate3D.prototype._ctor = function(first, second, third, fourth){
-    if (arguments.length == 1) {
+    if (arguments.length === 1) {
         this.init(first);
     }
-    else if (arguments.length == 3){
+    else if (arguments.length === 3){
         this.init(first, second, third);
     }
-    else if (arguments.length == 4) {
+    else if (arguments.length === 4) {
         this.init(first, second, third, fourth);
     }
     else
     {
-        throw new Error("error arguments");
+        throw new Error("jsb.Animate3D constructor: arguments error");
     }
 }
 
 jsb.Skybox.prototype._ctor = function(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z){
-    if (arguments.length == 0 ) {
+    if (arguments.length === 0 ) {
         this.init();
     }
-    else if (arguments.length == 6 ) {
+    else if (arguments.length === 6 ) {
         this.init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
     }
     else
     {
-        throw new Error("error arguments");
+        throw new Error("jsb.Skybox constructor: arguments error");
     }
 }
 
 jsb.DirectionLight.prototype._ctor = function(direction, color){
-    this.setDirection(direction);
-    this.setColor(color);
+    if (arguments.length === 2 ) {
+        this.setDirection(direction);
+        this.setColor(color);
+    }
+    else
+    {
+        throw new Error("jsb.DirectionLight constructor: arguments error");
+    }
+
 }
 
 jsb.AmbientLight.prototype._ctor = function(color){
-    this.setColor(color);
+    if (arguments.length === 1 ) {
+        this.setColor(color);
+    }
+    else {
+        throw new Error("jsb.AmbientLight constructor: arguments error");
+    }
+
 }
 
 jsb.Physics3DComponent.prototype._ctor = function(physicsObj, translateInPhysics = cc.math.vec3(), rotInPhsyics = new cc.math.Quaternion()){
-    this.init();
-    this.setPhysics3DObject(physicsObj);
-    this.setTransformInPhysics(translateInPhysics, rotInPhsyics);
-}
+    if (arguments.length > 3 || arguments.length < 1) {
+        throw new Error("jsb.Physics3DComponent constructor: arguments error");
+    }
+    else
+    {
+        this.init();
+        this.setPhysics3DObject(physicsObj);
+        this.setTransformInPhysics(translateInPhysics, rotInPhsyics);
+    }
 
+}
+/*
+ static Physics3DPointToPointConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotPointInA);
+ static Physics3DPointToPointConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB);
+ */
 jsb.Physics3DPointToPointConstraint.prototype._ctor = function(first, second, third, fourth){
-    if (arguments.length == 2 ) {
+    if (arguments.length === 2 ) {
         this.init(first, second);
     }
-    else if (arguments.length == 4 ) {
+    else if (arguments.length === 4 ) {
         this.init(first, second, third, fourth);
     }
     else
     {
-        throw new Error("error arguments");
+        throw new Error("jsb.Physics3DPointToPointConstraint constructor: arguments error");
     }
 }
 
 jsb.Physics3DRigidBody.prototype._ctor = function(rigidBodyInfo){
-    this.init(rigidBodyInfo);
+    if (arguments.length === 1 ) {
+        this.init(rigidBodyInfo);
+    }
+    else {
+        throw new Error("jsb.Physics3DRigidBody constructor: arguments error");
+    }
 }
 
 jsb.Physics3DWorld.prototype._ctor = function(worldDesInfo){
-    this.init(worldDesInfo);
+    if (arguments.length === 1 ) {
+        this.init(worldDesInfo);
+    }
+    else {
+        throw new Error("jsb.Physics3DWorld constructor: arguments error");
+    }
 }

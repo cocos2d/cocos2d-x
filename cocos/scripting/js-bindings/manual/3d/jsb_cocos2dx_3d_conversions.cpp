@@ -30,9 +30,7 @@
 #include "js_manual_conversions.h"
 #include "CCPhysics3DShape.h"
 
-using namespace cocos2d;
-
-bool jsval_to_Physics3DRigidBodyDes(JSContext *cx, JS::HandleValue v, Physics3DRigidBodyDes** bodyDes)
+bool jsval_to_Physics3DRigidBodyDes(JSContext *cx, JS::HandleValue v, cocos2d::Physics3DRigidBodyDes** bodyDes)
 {
     JS::RootedObject tmp(cx);
     JS::RootedValue massValue(cx);
@@ -42,7 +40,7 @@ bool jsval_to_Physics3DRigidBodyDes(JSContext *cx, JS::HandleValue v, Physics3DR
     JS::RootedValue disableSleepValue(cx);
     double mass;
     cocos2d::Vec3 localInertia;
-    Physics3DShape* shape = nullptr;
+    cocos2d::Physics3DShape* shape = nullptr;
     cocos2d::Mat4 originalTransform;
     bool disableSleep;
 
@@ -59,13 +57,13 @@ bool jsval_to_Physics3DRigidBodyDes(JSContext *cx, JS::HandleValue v, Physics3DR
 
 
     js_proxy_t *jsProxy = jsb_get_js_proxy(shapeValue.toObjectOrNull());
-    shape = (Physics3DShape*)(jsProxy ? jsProxy->ptr : NULL);
+    shape = (cocos2d::Physics3DShape*)(jsProxy ? jsProxy->ptr : nullptr);
 
     disableSleep = JS::ToBoolean(disableSleepValue);
 
     JSB_PRECONDITION3(ok, cx, false, "Error processing arguments");
 
-    Physics3DRigidBodyDes *bodyDesPtr = new Physics3DRigidBodyDes();
+    cocos2d::Physics3DRigidBodyDes *bodyDesPtr = new cocos2d::Physics3DRigidBodyDes();
     *bodyDes = bodyDesPtr;
     (*bodyDes)->mass = mass;
     (*bodyDes)->localInertia = localInertia;
