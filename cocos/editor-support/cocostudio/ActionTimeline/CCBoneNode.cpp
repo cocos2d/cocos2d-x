@@ -398,12 +398,9 @@ cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
         allBones.pushBack(top);
         boneStack.pop();
         auto topchildren = top->getChildBones();
-        if (topchildren.size() > 0)
+        for (const auto& childbone : topchildren)
         {
-            for (const auto& childbone : topchildren)
-            {
-                boneStack.push(childbone);
-            }
+            boneStack.push(childbone);
         }
     }
     return allBones;
