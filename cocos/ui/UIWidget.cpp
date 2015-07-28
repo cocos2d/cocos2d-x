@@ -241,7 +241,7 @@ void Widget::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
             return;
     }
 #endif

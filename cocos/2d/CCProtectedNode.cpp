@@ -66,7 +66,7 @@ void ProtectedNode::cleanup()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
             return;
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
@@ -365,7 +365,7 @@ void ProtectedNode::onEnterTransitionDidFinish()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
             return;
     }
 #endif
@@ -380,7 +380,7 @@ void ProtectedNode::onExitTransitionDidStart()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
             return;
     }
 #endif
@@ -395,7 +395,7 @@ void ProtectedNode::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
             return;
     }
 #endif

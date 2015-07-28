@@ -173,7 +173,7 @@ void ClippingNode::onEnterTransitionDidFinish()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
             return;
     }
 #endif
@@ -191,7 +191,7 @@ void ClippingNode::onExitTransitionDidStart()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
             return;
     }
 #endif
@@ -209,7 +209,7 @@ void ClippingNode::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
             return;
     }
 #endif

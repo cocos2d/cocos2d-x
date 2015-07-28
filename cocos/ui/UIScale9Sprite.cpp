@@ -1395,7 +1395,7 @@ namespace ui {
 #if CC_ENABLE_SCRIPT_BINDING
         if (_scriptType == kScriptTypeJavascript)
         {
-            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
                 return;
         }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
@@ -1425,7 +1425,7 @@ namespace ui {
 #if CC_ENABLE_SCRIPT_BINDING
         if (_scriptType == kScriptTypeJavascript)
         {
-            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
                 return;
         }
 #endif
@@ -1440,7 +1440,7 @@ namespace ui {
 #if CC_ENABLE_SCRIPT_BINDING
         if (_scriptType == kScriptTypeJavascript)
         {
-            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
                 return;
         }
 #endif
@@ -1455,7 +1455,7 @@ namespace ui {
 #if CC_ENABLE_SCRIPT_BINDING
         if (_scriptType == kScriptTypeJavascript)
         {
-            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
                 return;
         }
 #endif
