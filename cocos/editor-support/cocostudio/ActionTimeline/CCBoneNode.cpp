@@ -112,6 +112,10 @@ void BoneNode::removeChild(Node* child, bool cleanup /* = true */)
 void BoneNode::removeFromBoneList(BoneNode* bone)
 {
     _childBones.eraseObject(bone);
+    auto skeletonNode = dynamic_cast<SkeletonNode*>(bone);
+    if (bone != nullptr) // nested skeleton
+        return;
+
     bone->_rootSkeleton = nullptr;
     auto subBones = bone->getAllSubBones();
     subBones.pushBack(bone);
@@ -424,9 +428,12 @@ cocos2d::Vector<SkinNode*> BoneNode::getAllSubSkins() const
 
 void BoneNode::sortAllChildren()
 {
-    Node::sortAllChildren();
-    std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
-    std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
+    if (_reorderChildDirty)
+    {
+        std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
+        std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
+        Node::sortAllChildren();
+    }
 }
 
 SkeletonNode* BoneNode::getRootSkeletonNode() const
