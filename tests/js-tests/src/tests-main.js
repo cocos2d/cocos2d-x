@@ -176,7 +176,7 @@ var TestController = cc.LayerGradient.extend({
                     return true;
                 }
             }, this);
-       }
+        }
     },
     onEnter:function(){
         this._super();
@@ -379,13 +379,21 @@ var testNames = [
         }
     },
     {
-        title:"Facebook SDK Test",
-        platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
-        linksrc:"src/FacebookTest/FacebookTestsManager.js",
+        title:"Native Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/NativeTest/NativeTest.js",
         testScene:function () {
-            return new FacebookTestScene();
+            return new NativeTestScene();
         }
     },
+    //{
+    //    title:"Facebook SDK Test",
+    //    platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
+    //    linksrc:"src/FacebookTest/FacebookTestsManager.js",
+    //    testScene:function () {
+    //        return new FacebookTestScene();
+    //    }
+    //},
     {
         title:"Font Test",
         resource:g_fonts,
@@ -536,6 +544,14 @@ var testNames = [
         linksrc:"src/Physics3DTest/Physics3DTest.js",
         testScene:function () {
             return new Physics3DTestScene();
+        }
+    },
+    {
+        title:"NavMesh Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/NavMeshTest/NavMeshTest.js",
+        testScene:function () {
+            return new nextNavMeshTest();
         }
     },
     {
@@ -695,6 +711,14 @@ var testNames = [
         linksrc:"src/SysTest/SysTest.js",
         testScene:function () {
             return new SysTestScene();
+        }
+    },
+    {
+        title:"Vibrate Test",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/VibrateTest/VibrateTest.js",
+        testScene:function () {
+            return new VibrateTestScene();
         }
     },
     {

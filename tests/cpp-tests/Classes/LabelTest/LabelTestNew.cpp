@@ -38,6 +38,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTPadding);
     ADD_TEST_CASE(LabelFNTOffset);
     ADD_TEST_CASE(LabelFNTColor);
+    ADD_TEST_CASE(LabelFNTOpacity);
     ADD_TEST_CASE(LabelFNTHundredLabels);
     ADD_TEST_CASE(LabelFNTMultiLine);
     ADD_TEST_CASE(LabelFNTandTTFEmpty);
@@ -78,7 +79,11 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10773Test);
     ADD_TEST_CASE(LabelIssue11576Test);
     ADD_TEST_CASE(LabelIssue11699Test);
-    ADD_TEST_CASE(LabelIssue12259Test);
+    ADD_TEST_CASE(LabelIssue12409Test);
+    ADD_TEST_CASE(LabelAddChildTest);
+    ADD_TEST_CASE(LabelIssue12775Test);
+    ADD_TEST_CASE(LabelIssue11585Test);
+    ADD_TEST_CASE(LabelFullTypeFontTest);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -326,6 +331,31 @@ std::string LabelFNTColor::title() const
 std::string LabelFNTColor::subtitle() const
 {
     return "Testing color";
+}
+
+LabelFNTOpacity::LabelFNTOpacity()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 100");
+    label->setOpacity(100);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 2));
+
+    label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 200");
+    label->setOpacity(200);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 3));
+}
+
+std::string LabelFNTOpacity::title() const
+{
+    return "New Label + .FNT file";
+}
+
+std::string LabelFNTOpacity::subtitle() const
+{
+    return "Testing opacity";
 }
 
 LabelFNTHundredLabels::LabelFNTHundredLabels()
@@ -1490,96 +1520,42 @@ LabelAlignmentTest::LabelAlignmentTest()
     menu->setPosition(Vec2(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
 
-    _horizAlign = TextHAlignment::LEFT;
-    _vertAlign = TextVAlignment::TOP;
-
-    TTFConfig ttfConfig("fonts/arial.ttf", 32);
-    _label = Label::create();
-    _label->setDimensions(200,160);
-    _label->setAlignment(_horizAlign,_vertAlign);
-    _label->setTTFConfig(ttfConfig);
-    _label->setString(getCurrentAlignment());
+    TTFConfig ttfConfig("fonts/arial.ttf", 50);
+    _label = Label::createWithTTF(ttfConfig, "abc efg hijk lmn opq rst uvw xyz");
+    _label->setDimensions(200, 160);
     _label->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     _label->setPosition(pos);
     addChild(_label);
-
-}
-
-LabelAlignmentTest::~LabelAlignmentTest()
-{
-    
 }
 
 void LabelAlignmentTest::setAlignmentLeft(Ref* sender)
 {
-    _horizAlign = TextHAlignment::LEFT;
-    _label->setHorizontalAlignment(_horizAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setHorizontalAlignment(TextHAlignment::LEFT);
 }
 
 void LabelAlignmentTest::setAlignmentCenter(Ref* sender)
 {
-    _horizAlign = TextHAlignment::CENTER;
-    _label->setHorizontalAlignment(_horizAlign);
-    _label->setString(getCurrentAlignment()); 
+    _label->setHorizontalAlignment(TextHAlignment::CENTER);
 }
 
 void LabelAlignmentTest::setAlignmentRight(Ref* sender)
 {
-    _horizAlign = TextHAlignment::RIGHT;
-    _label->setHorizontalAlignment(_horizAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setHorizontalAlignment(TextHAlignment::RIGHT);
 }
 
 void LabelAlignmentTest::setAlignmentTop(Ref* sender)
 {
-    _vertAlign = TextVAlignment::TOP;
-    _label->setVerticalAlignment(_vertAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setVerticalAlignment(TextVAlignment::TOP);
 }
 
 void LabelAlignmentTest::setAlignmentMiddle(Ref* sender)
 {
-    _vertAlign = TextVAlignment::CENTER;
-    _label->setVerticalAlignment(_vertAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
 }
 
 void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
 {
-    _vertAlign = TextVAlignment::BOTTOM;
-    _label->setVerticalAlignment(_vertAlign);
-    _label->setString(getCurrentAlignment());
-}
-
-const char* LabelAlignmentTest::getCurrentAlignment()
-{
-    const char* vertical = nullptr;
-    const char* horizontal = nullptr;
-    switch (_vertAlign) {
-    case TextVAlignment::TOP:
-        vertical = "Top";
-        break;
-    case TextVAlignment::CENTER:
-        vertical = "Middle";
-        break;
-    case TextVAlignment::BOTTOM:
-        vertical = "Bottom";
-        break;
-    }
-    switch (_horizAlign) {
-    case TextHAlignment::LEFT:
-        horizontal = "Left";
-        break;
-    case TextHAlignment::CENTER:
-        horizontal = "Center";
-        break;
-    case TextHAlignment::RIGHT:
-        horizontal = "Right";
-        break;
-    }
-
-    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    _label->setVerticalAlignment(TextVAlignment::BOTTOM);
 }
 
 std::string LabelAlignmentTest::title() const
@@ -1589,7 +1565,7 @@ std::string LabelAlignmentTest::title() const
 
 std::string LabelAlignmentTest::subtitle() const
 {
-    return "Select the buttons on the sides to change alignment";
+    return "Test text alignment";
 }
 
 LabelIssue4428Test::LabelIssue4428Test()
@@ -1936,39 +1912,122 @@ std::string LabelIssue11699Test::subtitle() const
     return "Outline should match with the characters exactly.";
 }
 
-LabelIssue12259Test::LabelIssue12259Test()
+LabelIssue12409Test::LabelIssue12409Test()
 {
     auto center = VisibleRect::center();
 
-    auto label = Label::createWithTTF("Hello", "fonts/arial.ttf", 100);
-    label->setDimensions(0, 70);
+    auto label = Label::createWithTTF("abcdefghijklmn", "fonts/arial.ttf", 30);
+    label->setWidth(70);
+    label->setLineBreakWithoutSpace(true);
     label->setPosition(center.x, center.y);
     addChild(label);
 
-    auto drawNode = DrawNode::create();
     auto labelSize = label->getContentSize();
-    auto origin = Director::getInstance()->getWinSize();
-
-    origin.width = origin.width / 2 - (labelSize.width / 2);
-    origin.height = origin.height / 2 - (labelSize.height / 2);
-
+    auto winSize = Director::getInstance()->getWinSize();
+    Vec2 labelOrigin;
+    labelOrigin.x = winSize.width / 2 - (labelSize.width / 2);
+    labelOrigin.y = winSize.height / 2 - (labelSize.height / 2);
     Vec2 vertices[4] =
     {
-        Vec2(origin.width, origin.height),
-        Vec2(labelSize.width + origin.width, origin.height),
-        Vec2(labelSize.width + origin.width, labelSize.height + origin.height),
-        Vec2(origin.width, labelSize.height + origin.height)
+        Vec2(labelOrigin.x, labelOrigin.y),
+        Vec2(labelOrigin.x + labelSize.width, labelOrigin.y),
+        Vec2(labelOrigin.x + labelSize.width, labelOrigin.y + labelSize.height),
+        Vec2(labelOrigin.x, labelOrigin.y + labelSize.height)
     };
+
+    auto drawNode = DrawNode::create();
     drawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
     addChild(drawNode);
 }
 
-std::string LabelIssue12259Test::title() const
+std::string LabelIssue12409Test::title() const
 {
-    return "Test for Issue #12259";
+    return "Test for Issue #12409";
 }
 
-std::string LabelIssue12259Test::subtitle() const
+std::string LabelIssue12409Test::subtitle() const
 {
-    return "the texture of character should be cropped.";
+    return "Testing auto-wrapping without space.";
+}
+
+LabelAddChildTest::LabelAddChildTest()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Label with child node:", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    auto jump = JumpBy::create(1.0f, Vec2::ZERO, 60, 1);
+    auto jump_4ever = RepeatForever::create(jump);
+    label->runAction(jump_4ever);
+
+    auto spite = Sprite::create("Images/SpookyPeas.png");
+    spite->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    spite->setPosition(label->getContentSize().width, label->getContentSize().height/2);
+    label->addChild(spite);
+}
+
+std::string LabelAddChildTest::title() const
+{
+    return "Label support add child nodes";
+}
+
+LabelIssue12775Test::LabelIssue12775Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello", "fonts/xingkai-incomplete.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue12775Test::title() const
+{
+    return "Test for Issue #12775";
+}
+
+std::string LabelIssue12775Test::subtitle() const
+{
+    return "Should not crash if the font not contain a Unicode charmap.";
+}
+
+LabelIssue11585Test::LabelIssue11585Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    label->getLetter(0)->setColor(Color3B::RED);
+    label->getLetter(1)->setColor(Color3B::GREEN);
+    label->getLetter(2)->setColor(Color3B::BLUE);
+    auto action = RepeatForever::create(Sequence::create( 
+        FadeOut::create(2), FadeIn::create(2),nullptr));
+    label->runAction(action);
+}
+
+std::string LabelIssue11585Test::title() const
+{
+    return "Test for Issue #11585";
+}
+
+std::string LabelIssue11585Test::subtitle() const
+{
+    return "The color of letter should not be overridden by fade action.";
+}
+
+LabelFullTypeFontTest::LabelFullTypeFontTest()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello 中国", "XueJ2312F.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelFullTypeFontTest::title() const
+{
+    return "Test font supported by FullType";
 }

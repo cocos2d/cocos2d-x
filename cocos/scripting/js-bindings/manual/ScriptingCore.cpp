@@ -601,6 +601,8 @@ void ScriptingCore::createGlobalContext() {
     // Removed in Firefox v34
     js::SetDefaultObjectForContext(_cx, _global.ref());
     
+    runScript("script/jsb_prepare.js");
+    
     for (std::vector<sc_register_sth>::iterator it = registrationList.begin(); it != registrationList.end(); it++) {
         sc_register_sth callback = *it;
         callback(_cx, _global.ref());
@@ -1034,6 +1036,11 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnCleanup) {
         cleanupSchedulesAndActions(p);
+        
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "cleanup", js_cocos2dx_Node_cleanup))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "cleanup", 1, &dataVal, &retval);
+        }
     }
 
     return ret;

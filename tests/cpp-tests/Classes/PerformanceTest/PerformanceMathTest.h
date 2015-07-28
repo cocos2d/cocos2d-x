@@ -18,8 +18,8 @@ public:
     
     virtual void onEnter() override;
     
-    virtual std::string title() const { return "Math Performance Test"; }
-    virtual std::string subtitle() const { return "PerformanceMathLayer subTitle"; }
+    virtual std::string title() const override{ return "Math Performance Test"; }
+    virtual std::string subtitle() const override{ return "PerformanceMathLayer subTitle"; }
     
     void addLoopCount(cocos2d::Ref* sender);
     void subLoopCount(cocos2d::Ref* sender);
@@ -46,7 +46,7 @@ public:
     
     virtual void doPerformanceTest(float dt) override;
     
-    virtual std::string subtitle() const { return "Mat4 * Mat4"; }
+    virtual std::string subtitle() const override{ return "Mat4 * Mat4"; }
 private:
 };
 
@@ -62,7 +62,7 @@ public:
     
     virtual void doPerformanceTest(float dt) override;
     
-    virtual std::string subtitle() const { return "Mat4 TransformVec4"; }
+    virtual std::string subtitle() const override{ return "Mat4 TransformVec4"; }
     
 };
 

@@ -41,12 +41,12 @@ public:
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 
 //    virtual void registerWithTouchDispatcher();
-    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
-    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
-    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)override;
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event)override;
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)override;
     
-    void onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* event);
-    void onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* event);
+    void onKeyPressed(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* event)override;
+    void onKeyReleased(cocos2d::EventKeyboard::KeyCode code, cocos2d::Event* event)override;
     //virtual void accelerometer(UIAccelerometer* accelerometer, cocos2d::Acceleration* acceleration);
 
     static Box2DView* viewWithEntryID(int entryId);

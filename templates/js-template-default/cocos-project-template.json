@@ -2,6 +2,12 @@
       "do_default":{
          "exclude_from_template":[
             "frameworks/runtime-src"
+         ],
+         "append_dir": [
+            {
+                "from": "web",
+                "to": "frameworks/cocos2d-html5"
+            }
          ]
       },
       "do_add_native_support":{
@@ -95,6 +101,50 @@
                "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
             ]
          }
-    }
+      },
+      "change_orientation": {
+         "modify_files": [
+            {
+               "file_path": "frameworks/runtime-src/Classes/AppDelegate.cpp",
+               "pattern": "GLViewImpl::createWithRect\\((.*),\\s*Rect\\(\\s*(\\d+),\\s*(\\d+),\\s*(\\d+),\\s*(\\d+)\\)\\)",
+               "replace_string": "GLViewImpl::createWithRect(\\1, Rect(\\2, \\3, \\5, \\4))"
+            },
+            {
+               "file_path": "main.js",
+               "pattern": "setDesignResolutionSize\\(\\s*(\\d+),\\s*(\\d+),(.*)\\)",
+               "replace_string": "setDesignResolutionSize(\\2, \\1,\\3)"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+               "pattern": "UIInterfaceOrientationLandscapeRight",
+               "replace_string": "UIInterfaceOrientationPortrait"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+               "pattern": "UIInterfaceOrientationLandscapeLeft",
+               "replace_string": "UIInterfaceOrientationPortraitUpsideDown"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "pattern": "android:screenOrientation=\\\".*\\\"",
+               "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml",
+               "pattern": "android:screenOrientation=\\\".*\\\"",
+               "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.win8.1-universal/App.Windows/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            }
+         ]
+      }
 }
 

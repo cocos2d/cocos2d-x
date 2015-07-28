@@ -767,11 +767,6 @@
 
 
 --------------------------------------------------------
--- the cc SpriteBatchNode
--- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
-
-
---------------------------------------------------------
 -- the cc Label
 -- @field [parent=#cc] Label#Label Label preloaded module
 
@@ -932,13 +927,23 @@
 
 
 --------------------------------------------------------
--- the cc Sprite
--- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
+-- the cc Image
+-- @field [parent=#cc] Image#Image Image preloaded module
 
 
 --------------------------------------------------------
--- the cc Image
--- @field [parent=#cc] Image#Image Image preloaded module
+-- the cc PolygonInfo
+-- @field [parent=#cc] PolygonInfo#PolygonInfo PolygonInfo preloaded module
+
+
+--------------------------------------------------------
+-- the cc AutoPolygon
+-- @field [parent=#cc] AutoPolygon#AutoPolygon AutoPolygon preloaded module
+
+
+--------------------------------------------------------
+-- the cc Sprite
+-- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
 
 
 --------------------------------------------------------
@@ -1232,6 +1237,11 @@
 
 
 --------------------------------------------------------
+-- the cc SpriteBatchNode
+-- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc SpriteFrameCache
 -- @field [parent=#cc] SpriteFrameCache#SpriteFrameCache SpriteFrameCache preloaded module
 
@@ -1279,11 +1289,6 @@
 --------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
-
-
---------------------------------------------------------
--- the cc SpritePolygonCache
--- @field [parent=#cc] SpritePolygonCache#SpritePolygonCache SpritePolygonCache preloaded module
 
 
 return nil

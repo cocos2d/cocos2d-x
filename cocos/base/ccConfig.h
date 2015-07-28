@@ -195,6 +195,17 @@ THE SOFTWARE.
 #define CC_SPRITE_DEBUG_DRAW 0
 #endif
 
+/** @def CC_LABEL_DEBUG_DRAW
+* If enabled, all subclasses of Label will draw a bounding box.
+* Useful for debugging purposes only. It is recommended to leave it disabled.
+* To enable set it to a value different than 0. Disabled by default:
+* 0 -- disabled
+* 1 -- draw bounding box
+*/
+#ifndef CC_LABEL_DEBUG_DRAW
+#define CC_LABEL_DEBUG_DRAW 0
+#endif
+
 /** @def CC_SPRITEBATCHNODE_DEBUG_DRAW
  * If enabled, all subclasses of Sprite that are rendered using an SpriteBatchNode draw a bounding box.
  * Useful for debugging purposes only. It is recommended to leave it disabled.
@@ -256,7 +267,13 @@ THE SOFTWARE.
 #ifndef CC_USE_3D_PHYSICS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define CC_USE_3D_PHYSICS 1
-#define CC_USE_3D_PHYSICS 1
+#endif
+#endif
+
+#if (CC_USE_3D_PHYSICS)
+/** Use bullet physics engine. */
+#ifndef CC_ENABLE_BULLET_INTEGRATION
+#define CC_ENABLE_BULLET_INTEGRATION 1
 #endif
 #endif
 

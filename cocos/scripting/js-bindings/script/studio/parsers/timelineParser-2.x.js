@@ -161,6 +161,9 @@
         var node = new cc.Node();
 
         this.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color != null)
+            node.setColor(getColor(color));
 
         return node;
     };
@@ -179,7 +182,8 @@
                 node.setTexture(path);
             else if(type === 1){
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
-                node.setSpriteFrame(spriteFrame);
+                if(spriteFrame)
+                    node.setSpriteFrame(spriteFrame);
             }
         });
 
@@ -216,8 +220,6 @@
         var node,
             self = this;
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be preloaded", path);
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
             node.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
@@ -333,13 +335,13 @@
     };
 
     var setLayoutComponent = function(widget, json){
-        
+
         var layoutComponent = ccui.LayoutComponent.bindLayoutComponent(widget);
         if(!layoutComponent)
             return;
 
-        var positionXPercentEnabled = json["PositionPercentXEnable"] || false;
-        var positionYPercentEnabled = json["PositionPercentYEnable"] || false;
+        var positionXPercentEnabled = json["PositionPercentXEnable"] || json["PositionPercentXEnabled"] || false;
+        var positionYPercentEnabled = json["PositionPercentYEnable"] || json["PositionPercentYEnabled"] || false;
         var positionXPercent = 0,
             positionYPercent = 0,
             PrePosition = json["PrePosition"];
@@ -347,8 +349,8 @@
             positionXPercent = PrePosition["X"] || 0;
             positionYPercent = PrePosition["Y"] || 0;
         }
-        var sizeXPercentEnable = json["PercentWidthEnable"] || false;
-        var sizeYPercentEnable = json["PercentHeightEnable"] || false;
+        var sizeXPercentEnable = json["PercentWidthEnable"] || json["PercentWidthEnabled"]  || false;
+        var sizeYPercentEnable = json["PercentHeightEnable"]|| json["PercentHeightEnabled"]  || false;
         var sizeXPercent = 0,
             sizeYPercent = 0,
             PreSize = json["PreSize"];
@@ -546,7 +548,7 @@
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
-                    fontName = path.match(/([^\/]+)\.ttf/);
+                    fontName = path.match(/([^\/]+)\.(\S+)/);
                     fontName = fontName ? fontName[1] : "";
                 }
                 widget.setFontName(fontName);
@@ -630,7 +632,7 @@
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
-                    fontName = path.match(/([^\/]+)\.ttf/);
+                    fontName = path.match(/([^\/]+)\.(\S+)/);
                     fontName = fontName ? fontName[1] : "";
                 }
                 widget.setTitleFontName(fontName);
@@ -855,8 +857,6 @@
         ];
         textureList.forEach(function(item){
             loadTexture(json[item.name], resourcePath, function(path, type){
-                if(type === 0 && !loader.getRes(path))
-                    cc.log("%s need to be preloaded", path);
                 item.handle.call(widget, path, type);
             });
         });
@@ -1021,8 +1021,6 @@
         var startCharMap = json["StartChar"];
 
         loadTexture(json["LabelAtlasFileImage_CNB"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be preloaded", path);
             if(type === 0){
                 widget.setProperty(stringValue, path, itemWidth, itemHeight, startCharMap);
             }
@@ -1047,8 +1045,6 @@
         widget.setString(text);
 
         loadTexture(json["LabelBMFontFile_CNB"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be pre loaded", path);
             widget.setFntFile(path);
         });
         widget.ignoreContentAdaptWithSize(true);
@@ -1105,7 +1101,7 @@
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
-                    fontName = path.match(/([^\/]+)\.ttf/);
+                    fontName = path.match(/([^\/]+)\.(\S+)/);
                     fontName = fontName ? fontName[1] : "";
                 }
                 widget.setFontName(fontName);
@@ -1221,8 +1217,6 @@
 
         var currentAnimationName = json["CurrentAnimationName"];
 
-        parser.generalAttributes(node, json);
-
         loadTexture(json["FileData"], resourcePath, function(path, type){
             var plists, pngs;
             var armJson = cc.loader.getRes(path);
@@ -1240,8 +1234,15 @@
             node.init(getFileName(path));
             if(isAutoPlay)
                 node.getAnimation().play(currentAnimationName, -1, isLoop);
+            else{
+                node.getAnimation().play(currentAnimationName);
+                node.getAnimation().gotoAndPause(0);
+            }
 
         });
+
+        parser.generalAttributes(node, json);
+
         node.setColor(getColor(json["CColor"]));
         return node;
     };
@@ -1261,13 +1262,16 @@
                     loadedPlist[resourcePath + plist] = true;
                     cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
                 }else{
-                    if(!loadedPlist[resourcePath + plist])
+                    if(!loadedPlist[resourcePath + plist] && !cc.spriteFrameCache.getSpriteFrame(path))
                         cc.log("%s need to be preloaded", resourcePath + plist);
                 }
             }
-            if(type !== 0)
-                cb(path, type);
-            else
+            if(type !== 0){
+                if(cc.spriteFrameCache.getSpriteFrame(path))
+                    cb(path, type);
+                else
+                    cc.log("failed to get spriteFrame: %s", path);
+            }else
                 cb(resourcePath + path, type);
         }
     };
@@ -1291,9 +1295,29 @@
     var get3DVector = function(json, name, defValue){
         var x = defValue, y = defValue, z = defValue;
         if(json && name && json[name]){
-            x = null != json[name]["ValueX"] ? json[name]["ValueX"] : defValue;
-            y = null != json[name]["ValueY"] ? json[name]["ValueY"] : defValue;
-            z = null != json[name]["ValueZ"] ? json[name]["ValueZ"] : defValue;
+            if(undefined !== json[name]["ValueX"]) {
+                x = json[name]["ValueX"];
+            } else if(undefined !== json[name]["X"]) {
+                x = json[name]["X"]
+            }
+            if(null === x || isNaN(x))
+                x = defValue;
+
+            if(undefined !== json[name]["ValueY"]) {
+                y = json[name]["ValueY"];
+            } else if(undefined !== json[name]["Y"]) {
+                y = json[name]["Y"]
+            }
+            if(null === y || isNaN(y))
+                y = defValue;
+
+            if(undefined !== json[name]["ValueZ"]) {
+                z = json[name]["ValueZ"];
+            } else if(undefined !== json[name]["Z"]) {
+                z = json[name]["Z"]
+            }
+            if(null === z || isNaN(z))
+                z = defValue;
         }
         var vec3 = cc.math.vec3(x, y, z);
         return vec3;
@@ -1342,8 +1366,18 @@
         var nearClip = 1;
         var farClip = 500;
         if(json["ClipPlane"]){
-            nearClip = json["ClipPlane"]["ValueX"];
-            farClip  = json["ClipPlane"]["ValueY"];
+            if(undefined !== json["ClipPlane"]["ValueX"]) {
+                nearClip = json["ClipPlane"]["ValueX"];
+            } else if(undefined !== json["ClipPlane"]["X"]) {
+                nearClip = json["ClipPlane"]["X"];
+            }
+
+            if(undefined !== json["ClipPlane"]["ValueY"]) {
+                farClip = json["ClipPlane"]["ValueY"];
+            } else if(undefined !== json["ClipPlane"]["Y"]) {
+                farClip = json["ClipPlane"]["Y"];
+            }
+
             if(null === nearClip || isNaN(nearClip))
                 nearClip = 1;
             if(null === farClip || isNaN(farClip))

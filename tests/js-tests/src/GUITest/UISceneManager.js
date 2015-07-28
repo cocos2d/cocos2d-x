@@ -531,6 +531,17 @@
         ]
     };
 
+    if (cc.sys.isNative) {
+        testingItems["UIS9NinePatchTest"] = [
+        {
+                title: "UIS9NinePatchTest",
+                func: function () {
+                    return new UIS9NinePatchTest();
+                }
+            }
+        ];
+    }
+
     if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || !cc.sys.isNative)
     {
         testingItems["UIVideoPlayer"] = [

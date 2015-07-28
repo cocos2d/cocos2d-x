@@ -6670,6 +6670,7 @@ void js_register_cocos2dx_studio_Armature(JSContext *cx, JS::HandleObject global
         p->parentProto = jsb_cocos2d_Node_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { ccs.Armature.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocostudio_Skin_class;
@@ -8398,6 +8399,7 @@ void js_register_cocos2dx_studio_ComController(JSContext *cx, JS::HandleObject g
         p->parentProto = jsb_cocos2d_Component_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    anonEvaluate(cx, global, "(function () { ccs.ComController.extend = cc.Class.extend; })()");
 }
 
 JSClass  *jsb_cocostudio_ComRender_class;

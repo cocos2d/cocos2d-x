@@ -232,8 +232,7 @@ bool UITextTest_IgnoreConentSize::init()
                                 widgetSize.height / 2.0f));
         leftText->ignoreContentAdaptWithSize(false);
         leftText->setTextAreaSize(Size(60,60));
-        leftText->setString("Text line with break\nText line \
-                   with break\nText line with break\nText line with break\n");
+        leftText->setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
         leftText->setTouchScaleChangeEnabled(true);
         leftText->setTouchEnabled(true);
         _uiLayer->addChild(leftText);
@@ -243,8 +242,7 @@ bool UITextTest_IgnoreConentSize::init()
                                       "fonts/Marker Felt.ttf",10);
         rightText->setPosition(Vec2(widgetSize.width / 2.0f + 50,
                                    widgetSize.height / 2.0f));
-        rightText->setString("Text line with break\nText line  \
-                    with break\nText line with break\nText line with break\n");
+        rightText->setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
         //note:setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
         rightText->setTextAreaSize(Size(100,30));
         rightText->ignoreContentAdaptWithSize(false);

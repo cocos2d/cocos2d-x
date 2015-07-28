@@ -1,6 +1,7 @@
 #include "Scene3DTest.h"
 
 #include "ui/CocosGUI.h"
+#include "renderer/CCRenderState.h"
 #include <spine/spine-cocos2dx.h>
 
 #include "../testResource.h"
@@ -9,74 +10,209 @@
 USING_NS_CC;
 using namespace spine;
 
-////////////////////////////////////////////////////////////////////////////////
-// Implements Scene3DTestScene
+class SkeletonAnimationCullingFix : public SkeletonAnimation
+{
+public:
+    SkeletonAnimationCullingFix(const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
+    : SkeletonAnimation(skeletonDataFile, atlasFile, scale)
+    {}
+    
+    virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags) override
+    {
+        glDisable(GL_CULL_FACE);
+        SkeletonAnimation::drawSkeleton(transform, transformFlags);
+        RenderState::StateBlock::invalidate(cocos2d::RenderState::StateBlock::RS_ALL_ONES);
+    }
+    
+    static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
+    {
+        SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix(skeletonDataFile, atlasFile, scale);
+        node->autorelease();
+        return node;
+    }
+};
 
-class Scene3DTestScene : public TerrainWalkThru
+////////////////////////////////////////////////////////////////////////////////
+// Declare Scene3DTestScene
+
+/** Scene3DTestScene designed for test 2D-3D mixed render for common 3D game usage.
+ *
+ *  Scene has three logic sub scenes:
+ *  -   World scene for maintain 3D game world objects, there are two cameras in this
+ *      scene, one for skybox, another for other 3D models.
+ *  -   UI scene, the root scene, maintain a menu in main UI.
+ *  -   Dialog scene maintain two dialogs, which has 3D models on it and another
+ *      2D elements above on 3D models, there are three cameras for them.
+ *  -   OSD scene, maintain the UI element, like the description dialog, above
+ *  -   on other elements.
+ */
+class Scene3DTestScene : public TestCase
 {
 public:
     CREATE_FUNC(Scene3DTestScene);
     
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    cocos2d::EventListenerCustom* _backToForegroundListener;
-#endif
+    bool onTouchBegan(Touch* touch, Event* event) { return true; }
+    void onTouchEnd(Touch*, Event*);
     
 private:
     Scene3DTestScene();
     virtual ~Scene3DTestScene();
     bool init() override;
     
-    void create3DWorld();
+    void createWorld3D();
     void createUI();
     void createPlayerDlg();
     void createDetailDlg();
     void createDescDlg();
     
+    // init in init()
     std::vector<Camera *> _gameCameras;
+    Node* _worldScene;
+    Node* _dlgScene;
+    Node* _osdScene;
     
+    // init in createWorld3D()
+    TextureCube*        _textureCube;
+    Skybox*             _skyBox;
+    cocos2d::Terrain*   _terrain;
+    Player *            _player;
+    Node*               _monsters[2];
+    
+    // init in createUI()
+    Node* _playerItem;
+    Node* _detailItem;
+    Node* _descItem;
+    Node* _ui;
+    
+    // init in createPlayerDlg()
     Node* _playerDlg;
+    // init in createDetailDlg()
     Node* _detailDlg;
+    // init in createDescDlg()
     Node* _descDlg;
+    enum SkinType
+    {
+        HAIR = 0,
+        GLASSES,
+        FACE,
+        UPPER_BODY,
+        HAND,
+        PANTS,
+        SHOES,
+        MAX_TYPE,
+    };
     
-    TextureCube* _textureCube;
-    Skybox* _skyBox;
+    std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
+    int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
+    cocos2d::Sprite3D* _reskinGirl;
+    
+    // for capture screen
+    static const int SNAPSHOT_TAG = 119;
+    std::string _snapshotFile;
 };
 
-enum GAME_LAYER {
-    LAYER_SKYBOX = 0,
-    LAYER_GAME,
-    LAYER_UI,
-    LAYER_ACTOR,
-    LAYER_ZOOM,
-    LAYER_OSD,
+/** Define the sub scenes in test. */
+enum GAME_SCENE {
+    SCENE_UI = 0,
+    SCENE_WORLD,
+    SCENE_DIALOG,
+    SCENE_OSD,
+    SCENE_COUNT,
+};
+
+/** Define the layers in scene, layer seperated by camera mask. */
+enum SCENE_LAYER {
+    LAYER_BACKGROUND = 0,
+    LAYER_DEFAULT,
+    LAYER_MIDDLE,
+    LAYER_TOP,
     LAYER_COUNT,
 };
 
-static CameraFlag s_CF[LAYER_COUNT] = {
-    CameraFlag::DEFAULT,
-    CameraFlag::USER1,
-    CameraFlag::USER2,
-    CameraFlag::USER3,
-    CameraFlag::USER4,
-    CameraFlag::USER5,
+/** Define the all cameras, which in Scene3DTest, render order. */
+enum GAME_CAMERAS_ORDER {
+    CAMERA_WORLD_3D_SKYBOX = 0,
+    CAMERA_WORLD_3D_SCENE,
+    CAMERA_UI_2D,
+    CAMERA_DIALOG_2D_BASE,
+    CAMERA_DIALOG_3D_MODEL,
+    CAMERA_DIALOG_2D_ABOVE,
+    CAMERA_OSD_2D_BASE,
+    CAMERA_OSD_3D_MODEL,
+    CAMERA_OSD_2D_ABOVE,
+    CAMERA_COUNT,
 };
 
-static unsigned short s_CM[LAYER_COUNT] = {
+/*
+ Defined s_CF and s_CM to avoid force convertion when call Camera::setCameraFlag
+ and Node::setCameraMask.
+ 
+ Useage:
+ -   Camera::setCameraFlag(s_CF[<SCENE_LAYER_INDEX>]);
+ -   Node::setCameraMask(s_CM[<SCENE_LAYER_INDEX>]);
+ 
+ Note:
+ For LAYER_DEFAULT, we use CameraFlag::DEFAULT, thus we don't need to set
+ camera flag/mask for this layer, for other layers we must to set camera
+ flag/mask to distinguish between each other.
+ */
+static CameraFlag s_CF[LAYER_COUNT] =
+{
+    CameraFlag::USER1,      //  LAYER_BACKGROUND
+    CameraFlag::DEFAULT,    //  LAYER_DEFAULT
+    CameraFlag::USER3,      //  LAYER_MIDDLE
+    CameraFlag::USER4,      //  LAYER_TOP
+};
+
+static unsigned short s_CM[LAYER_COUNT] =
+{
     (unsigned short)s_CF[0],
     (unsigned short)s_CF[1],
     (unsigned short)s_CF[2],
     (unsigned short)s_CF[3],
-    (unsigned short)s_CF[4],
-    (unsigned short)s_CF[5],
 };
 
+static const char * s_CameraNames[CAMERA_COUNT] =
+{
+    "World 3D Skybox",
+    "World 3D Scene",
+    "UI 2D",
+    "Dialog 2D Base",
+    "Dialog 3D Model",
+    "Dialog 2D Above",
+    "OSD 2D Base",
+    "OSD 3D Model",
+    "OSD 2D Above"
+};
+
+/** The scenes, located in different position, won't see each other. */
+static Vec3 s_scenePositons[SCENE_COUNT] = {
+    Vec3(0, 0, 0),          //  center  :   UI scene
+    Vec3(0, 10000, 0),      //  top     :   World sub scene
+    Vec3(10000, 0, 0),      //  right   :   Dialog sub scene
+    Vec3(0, -10000, 0),     //  bottom  :   OSD sub scene
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// Implements Scene3DTestScene
 
 Scene3DTestScene::Scene3DTestScene()
-: _playerDlg(nullptr)
+: _worldScene(nullptr)
+, _dlgScene(nullptr)
+, _osdScene(nullptr)
+, _textureCube(nullptr)
+, _skyBox(nullptr)
+, _terrain(nullptr)
+, _player(nullptr)
+, _playerItem(nullptr)
+, _detailItem(nullptr)
+, _descItem(nullptr)
+, _ui(nullptr)
+, _playerDlg(nullptr)
 , _detailDlg(nullptr)
 , _descDlg(nullptr)
 {
+    _monsters[0] = _monsters[1] = nullptr;
 }
 
 Scene3DTestScene::~Scene3DTestScene()
@@ -88,116 +224,147 @@ bool Scene3DTestScene::init()
     bool ret = false;
     do
     {
-        CC_BREAK_IF(false == TerrainWalkThru::init());
-        
-        Director::getInstance()->setDisplayStats(false);
+        CC_BREAK_IF(false == TestCase::init());
 
-        // prepare for camera creation, we need create three custom cameras
-        _gameCameras.resize(LAYER_COUNT);
-        
-        Camera *ca = nullptr;
+        // prepare for camera creation, we need several custom cameras
+        _gameCameras.resize(CAMERA_COUNT);
         auto visibleSize = Director::getInstance()->getVisibleSize();
-        // first, create a camera to look the skybox
-        ca = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 10, 1000);
+        Camera *ca = nullptr;   // temp variable
+        
+        ////////////////////////////////////////////////////////////////////////
+        // create world 3D scene, this scene has two camera
+        _worldScene = Node::create();
+        // create a camera to look the skybox
+        ca = _gameCameras[CAMERA_WORLD_3D_SKYBOX] =
+            Camera::createPerspective(60,
+                                      visibleSize.width / visibleSize.height,
+                                      10,
+                                      1000);
+        ca->setDepth(CAMERA_WORLD_3D_SKYBOX);
+        ca->setName(s_CameraNames[CAMERA_WORLD_3D_SKYBOX]);
+        ca->setCameraFlag(s_CF[LAYER_BACKGROUND]);
         ca->setPosition3D(Vec3(0.f, 0.f, 50.f));
-        ca->setCameraFlag(s_CF[LAYER_SKYBOX]);
-        ca->setDepth(LAYER_SKYBOX);
-        _gameCameras[LAYER_SKYBOX] = ca;
-        this->addChild(ca);
+        _worldScene->addChild(ca);
+        // create a camera to look the 3D models in world 3D scene
+        ca = _gameCameras[CAMERA_WORLD_3D_SCENE] =
+            Camera::createPerspective(60,
+                                      visibleSize.width/visibleSize.height,
+                                      0.1,
+                                      200);
+        ca->setDepth(CAMERA_WORLD_3D_SCENE);
+        ca->setName(s_CameraNames[CAMERA_WORLD_3D_SCENE]);
+        _worldScene->addChild(ca);
+        // create 3D objects and add to world scene
+        createWorld3D();
+        _worldScene->addChild(_skyBox);
+        _worldScene->addChild(_terrain);
+        _worldScene->addChild(_player);
+        _worldScene->addChild(_monsters[0]);
+        _worldScene->addChild(_monsters[1]);
+        // move camera above player
+        ca->setPosition3D(_player->getPosition3D()+Vec3(0, 45, 60));
+        ca->setRotation3D(Vec3(-45,0,0));
+        _worldScene->setPosition3D(s_scenePositons[SCENE_WORLD]);
+        this->addChild(_worldScene);
         
-        // second, create a camera to look the 3D game scene
-        // it has been create in TerrainWalkThru::init
-        ca = this->_camera;
-        ca->setCameraFlag(s_CF[LAYER_GAME]);
-        ca->setDepth(LAYER_GAME);
-        _gameCameras[LAYER_GAME] = ca;
-        
-        // third, use the default camera to look 2D base UI layer
-        ca =this->getDefaultCamera();
-        ca->setCameraFlag(s_CF[LAYER_UI]);
-        ca->setDepth(LAYER_UI);
-        _gameCameras[LAYER_UI] = ca;
-
-        // forth, create a camera to look the 3D model in dialogs
-        ca = Camera::create();
-        ca->setCameraFlag(s_CF[LAYER_ACTOR]);
-        ca->setDepth(LAYER_ACTOR);
-        _gameCameras[LAYER_ACTOR] = ca;
-        this->addChild(ca);
-        
-        // fifth, create a camera to look the UI element over on the 3D models
-        ca = Camera::create();
-        ca->setCameraFlag(s_CF[LAYER_ZOOM]);
-        ca->setDepth(LAYER_ZOOM);
-        _gameCameras[LAYER_ZOOM] = ca;
-        this->addChild(ca);
-        
-        // sixth, create a camera to look the OSD UI
-        ca = Camera::create();
-        ca->setCameraFlag(s_CF[LAYER_OSD]);
-        ca->setDepth(LAYER_OSD);
-        _gameCameras[LAYER_OSD] = ca;
-        this->addChild(ca);
-
-        // create all object in game
-        create3DWorld();
+        ////////////////////////////////////////////////////////////////////////
+        // test scene is UI scene, use default camera
+        // use the default camera to look 2D base UI layer
+        ca = _gameCameras[CAMERA_UI_2D] = this->getDefaultCamera();
+        ca->setDepth(CAMERA_UI_2D);
+        ca->setName(s_CameraNames[CAMERA_UI_2D]);
+        // create UI element and add to ui scene
         createUI();
-        createPlayerDlg();
-        createDetailDlg();
-        createDescDlg();
+        this->addChild(_ui);
         
+        ////////////////////////////////////////////////////////////////////////
+        // create dialog scene, this scene has two dialog and three cameras
+        _dlgScene = Node::create();
+        // use default camera to render the base 2D elements
+        ca = _gameCameras[CAMERA_DIALOG_2D_BASE] = Camera::create();
+        ca->setDepth(CAMERA_DIALOG_2D_BASE);
+        ca->setName(s_CameraNames[CAMERA_DIALOG_2D_BASE]);
+        _dlgScene->addChild(ca);
+        // create a camera to look the 3D model in dialog scene
+        ca = _gameCameras[CAMERA_DIALOG_3D_MODEL] = Camera::create();
+        ca->setDepth(CAMERA_DIALOG_3D_MODEL);
+        ca->setName(s_CameraNames[CAMERA_DIALOG_3D_MODEL]);
+        ca->setCameraFlag(s_CF[LAYER_MIDDLE]);
+        _dlgScene->addChild(ca);
+        // create a camera to look the UI element over on the 3D models
+        ca = _gameCameras[CAMERA_DIALOG_2D_ABOVE] = Camera::create();
+        ca->setDepth(CAMERA_DIALOG_2D_ABOVE);
+        ca->setName(s_CameraNames[CAMERA_DIALOG_2D_ABOVE]);
+        ca->setCameraFlag(s_CF[LAYER_TOP]);
+        _dlgScene->addChild(ca);
+        // create dialogs and add to dialog scene
+        createPlayerDlg();
+        _dlgScene->addChild(_playerDlg);
+        createDetailDlg();
+        _dlgScene->addChild(_detailDlg);
+        // add dialog scene to test scene, which can't see the other element
+        _dlgScene->setPosition3D(s_scenePositons[SCENE_DIALOG]);
+        this->addChild(_dlgScene);
+
+        ////////////////////////////////////////////////////////////////////////
+        // create description scene, this scene has a dialog and three cameras
+        _osdScene = Node::create();
+        // use default camera for render 2D element
+        ca = _gameCameras[CAMERA_OSD_2D_BASE] = Camera::create();
+        ca->setDepth(CAMERA_OSD_2D_BASE);
+        ca->setName(s_CameraNames[CAMERA_OSD_2D_BASE]);
+        _osdScene->addChild(ca);
+        // create a camera to look the 3D model in dialog scene
+        ca = _gameCameras[CAMERA_OSD_3D_MODEL] = Camera::create();
+        ca->setDepth(CAMERA_OSD_3D_MODEL);
+        ca->setName(s_CameraNames[CAMERA_OSD_3D_MODEL]);
+        ca->setCameraFlag(s_CF[LAYER_MIDDLE]);
+        _osdScene->addChild(ca);
+        // create a camera to look the UI element over on the 3D models
+        ca = _gameCameras[CAMERA_OSD_2D_ABOVE] = Camera::create();
+        ca->setDepth(CAMERA_OSD_2D_ABOVE);
+        ca->setName(s_CameraNames[CAMERA_OSD_2D_ABOVE]);
+        ca->setCameraFlag(s_CF[LAYER_TOP]);
+        _osdScene->addChild(ca);
+        // create desc dialog and add to osd scene
+        createDescDlg();
+        _osdScene->addChild(_descDlg);
+        // add osd scene to test scene, which can't see the other elements
+        _osdScene->setPosition3D(s_scenePositons[SCENE_OSD]);
+        this->addChild(_osdScene);
+
         _playerDlg->setVisible(false);
         _detailDlg->setVisible(false);
-        //_terrain->setVisible(false);
+        _descDlg->setVisible(false);
+
+        ////////////////////////////////////////////////////////////////////////
+        // add touch envent callback
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchBegan = CC_CALLBACK_2(Scene3DTestScene::onTouchBegan, this);
+        listener->onTouchEnded = CC_CALLBACK_2(Scene3DTestScene::onTouchEnd, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
         ret = true;
     } while (0);
     
     return ret;
 }
 
-void Scene3DTestScene::create3DWorld()
+void Scene3DTestScene::createWorld3D()
 {
-    // terrain and player has been create in TerrainWalkThru::init
-    // we only need override there camera mask
-    _terrain->setCameraMask(s_CM[LAYER_GAME]);
-    _player->setCameraMask(s_CM[LAYER_GAME]);
-    _player->setScale(_player->getScale() * 1.5);
-    
-    // add two Sprite3D monster, one is transparent
-    auto monster = Sprite3D::create("Sprite3DTest/orc.c3b");
-    monster->setRotation3D(Vec3(0,180,0));
-    monster->setPosition3D(_player->getPosition3D() + Vec3(50, -10, 0));
-    monster->setCameraMask(s_CM[LAYER_GAME]);
-    monster->setOpacity(128);
-    this->addChild(monster);
-    monster = Sprite3D::create("Sprite3DTest/orc.c3b");
-    monster->setRotation3D(Vec3(0,180,0));
-    monster->setPosition3D(_player->getPosition3D() + Vec3(-50, -5, 0));
-    monster->setCameraMask(s_CM[LAYER_GAME]);
-    this->addChild(monster);
-
-    // add a particle 3d above player
-    auto rootps = PUParticleSystem3D::create("Particle3D/scripts/blackHole.pu", "Particle3D/materials/pu_mediapack_01.material");
-    rootps->setScale(2);
-    rootps->setPosition3D(Vec3(0, 150, 0));
-    rootps->setCameraMask(s_CM[LAYER_GAME]);
-    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
-    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
-    rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
-    rootps->startParticleSystem();
-    
-    _player->addChild(rootps, 0);
-
-    // then, create skybox
+    // create skybox
     //create and set our custom shader
-    auto shader = GLProgram::createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
+    auto shader = GLProgram::createWithFilenames("Sprite3DTest/cube_map.vert",
+                                                 "Sprite3DTest/cube_map.frag");
     auto state = GLProgramState::create(shader);
     
     // create the second texture for cylinder
-    _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
-                                       "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
-                                       "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
-    _textureCube->retain();
+    _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg",
+                                       "Sprite3DTest/skybox/right.jpg",
+                                       "Sprite3DTest/skybox/top.jpg",
+                                       "Sprite3DTest/skybox/bottom.jpg",
+                                       "Sprite3DTest/skybox/front.jpg",
+                                       "Sprite3DTest/skybox/back.jpg");
     //set texture parameters
     Texture2D::TexParams tRepeatParams;
     tRepeatParams.magFilter = GL_LINEAR;
@@ -211,86 +378,161 @@ void Scene3DTestScene::create3DWorld()
     
     // add skybox
     _skyBox = Skybox::create();
-    _skyBox->retain();
-    _skyBox->setCameraMask(s_CM[LAYER_SKYBOX]);
+    _skyBox->setCameraMask(s_CM[LAYER_BACKGROUND]);
     _skyBox->setTexture(_textureCube);
     _skyBox->setScale(700.f);
-    this->addChild(_skyBox);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
-                                                            [this](EventCustom*)
-                                                            {
-                                                                auto state = _skyBox->getGLProgramState();
-                                                                auto glProgram = state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                                
-                                                                _textureCube->reloadTexture();
-                                                                
-                                                                Texture2D::TexParams tRepeatParams;
-                                                                tRepeatParams.magFilter = GL_NEAREST;
-                                                                tRepeatParams.minFilter = GL_NEAREST;
-                                                                tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
-                                                                tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
-                                                                _textureCube->setTexParameters(tRepeatParams);
-                                                                state->setUniformTexture("u_cubeTex", _textureCube);
-                                                                
-                                                                _skyBox->reload();
-                                                                _skyBox->setTexture(_textureCube);
-                                                            });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-#endif
+    // create terrain
+    Terrain::DetailMap r("TerrainTest/dirt.jpg");
+    Terrain::DetailMap g("TerrainTest/Grass2.jpg",10);
+    Terrain::DetailMap b("TerrainTest/road.jpg");
+    Terrain::DetailMap a("TerrainTest/GreenSkin.jpg",20);
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg",
+                              "TerrainTest/alphamap.png",
+                              r,g,b,a,Size(32,32),40.0f,2);
+    _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+    _terrain->setMaxDetailMapAmount(4);
+    _terrain->setDrawWire(false);
+    
+    _terrain->setSkirtHeightRatio(3);
+    _terrain->setLODDistance(64,128,192);
+    
+    // create player
+    _player = Player::create("Sprite3DTest/girl.c3b",
+                             _gameCameras[CAMERA_WORLD_3D_SCENE],
+                             _terrain);
+    _player->setScale(0.08);
+    _player->setPositionY(_terrain->getHeight(_player->getPositionX(),
+                                              _player->getPositionZ()));
+    
+    auto animation = Animation3D::create("Sprite3DTest/girl.c3b","Take 001");
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        _player->runAction(RepeatForever::create(animate));
+    }
+    // add a particle 3d above player
+    auto rootps =
+        PUParticleSystem3D::create("Particle3D/scripts/blackHole.pu",
+                                   "Particle3D/materials/pu_mediapack_01.material");
+    rootps->setScale(2);
+    rootps->setPosition3D(Vec3(0, 150, 0));
+    auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
+    auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+    rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
+    rootps->startParticleSystem();
+    
+    _player->addChild(rootps, 0);
+    
+    // add BillBoard for test blend
+    auto billboard = BillBoard::create("Images/btn-play-normal.png");
+    billboard->setPosition3D(Vec3(0,180,0));
+    _player->addChild(billboard);
+    
+    // create two Sprite3D monster, one is transparent
+    auto monster = Sprite3D::create("Sprite3DTest/orc.c3b");
+    monster->setRotation3D(Vec3(0,180,0));
+    monster->setPosition3D(_player->getPosition3D() + Vec3(50, -10, 0));
+    monster->setOpacity(128);
+    _monsters[0] = monster;
+    monster = Sprite3D::create("Sprite3DTest/orc.c3b");
+    monster->setRotation3D(Vec3(0,180,0));
+    monster->setPosition3D(_player->getPosition3D() + Vec3(-50, -5, 0));
+    _monsters[1] = monster;
 }
 
 void Scene3DTestScene::createUI()
 {
-    // add player button
-    auto showLeftDlgItem = MenuItemImage::create("Images/Pea.png", "Images/Pea.png", [this](Ref* sender){
+    _ui = Layer::create();
+    
+    // first, add menu to ui
+    // create player button
+    auto showPlayerDlgItem = MenuItemImage::create("Images/Pea.png",
+                                                   "Images/Pea.png",
+                                                   [this](Ref* sender){
         this->_playerDlg->setVisible(!this->_playerDlg->isVisible());
     });
-    showLeftDlgItem->setPosition(VisibleRect::left().x + 30, VisibleRect::top().y - 30);
+    showPlayerDlgItem->setName("showPlayerDlgItem");
+    showPlayerDlgItem->setPosition(VisibleRect::left().x + 30, VisibleRect::top().y - 30);
     
-    // add discription button
+    // create discription button
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     auto descItem = MenuItemLabel::create(Label::createWithTTF(ttfConfig, "Description"),
                                           [this](Ref* sender)
     {
-        this->_descDlg->setVisible(!this->_descDlg->isVisible());
+        if (this->_descDlg->isVisible())
+        {
+            // hide descDlg
+            _descDlg->setVisible(false);
+        }
+        else
+        {
+            // animate show descDlg
+            _descDlg->setVisible(true);
+            _descDlg->setScale(0);
+            _descDlg->runAction(ScaleTo::create(2, 1.0));
+        }
     });
+    descItem->setName("descItem");
     descItem->setPosition(Vec2(VisibleRect::right().x - 50, VisibleRect::top().y - 25));
-    
-    // add back button
-    auto backItem = MenuItemLabel::create(Label::createWithTTF(ttfConfig, "Back"),
-                                          [this](Ref* sender){
-                                              this->getTestSuite()->backsUpOneLevel();
-                                          });
-    backItem->setPosition(Vec2(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25));
-    
-    MenuItemImage *moveCameraLeft = nullptr, *moveCameraRight = nullptr;
-//    auto uiCamera = _gameCameras[LAYER_UI];
-//    moveCameraLeft = MenuItemImage::create(s_pathClose, s_pathClose, [uiCamera](Ref* sender){
-//        uiCamera->setPositionX(uiCamera->getPositionX() - 10);
-//    });
-//    moveCameraLeft->setPosition(VisibleRect::left().x + 30, VisibleRect::left().y);
-//    
-//    moveCameraRight = MenuItemImage::create(s_pathClose, s_pathClose, [uiCamera](Ref* sender){
-//        uiCamera->setPositionX(uiCamera->getPositionX() + 10);
-//    });
-//    moveCameraRight->setPosition(VisibleRect::right().x - 30, VisibleRect::right().y);
 
-    auto menu = Menu::create(showLeftDlgItem,
+    auto menu = Menu::create(showPlayerDlgItem,
                              descItem,
-                             backItem,
-                             moveCameraLeft,
-                             moveCameraRight,
                              nullptr);
     menu->setPosition(Vec2::ZERO);
-    menu->setCameraMask(s_CM[LAYER_UI], true);
-    this->addChild(menu);
+    _ui->addChild(menu);
     
+    // second, add cameras control button to ui
+    auto createCameraButton = [this](int tag, const char* text)-> Node *
+    {
+        auto cb = ui::CheckBox::create("cocosui/check_box_normal.png",
+                                       "cocosui/check_box_normal_press.png",
+                                       "cocosui/check_box_active.png",
+                                       "cocosui/check_box_normal_disable.png",
+                                       "cocosui/check_box_active_disable.png");
+        cb->setTag(tag);
+        cb->setSelected(true);
+        if (text) cb->setName(text);
+        cb->setAnchorPoint(Vec2(0, 0.5));
+        cb->setScale(0.8);
+        cb->addClickEventListener([this](Ref* sender)
+            {
+                auto index = static_cast<Node *>(sender)->getTag();
+                auto camera = this->_gameCameras[index];
+                camera->setVisible(!camera->isVisible());
+            });
+        if (text)
+        {
+            auto label = ui::Text::create();
+            label->setString(text);
+            label->setAnchorPoint(Vec2(0, 0));
+            label->setPositionX(cb->getContentSize().width);
+            cb->addChild(label);
+        }
+        return cb;
+    };
+    
+    Vec2 pos = VisibleRect::leftBottom();
+    pos.y += 30;
+    float stepY = 25;
+    for (int i = CAMERA_COUNT - 1; i >= 0; --i)
+    {
+        // if hide CAMERA_UI_2D, the menu won't show again
+        // so skip it
+        if (CAMERA_UI_2D == i)
+        {
+            continue;
+        }
+        auto cameraBtn = createCameraButton(i, s_CameraNames[i]);
+        cameraBtn->setPosition(pos);
+        _ui->addChild(cameraBtn);
+        pos.y += stepY;
+    }
+    auto labelCameras = ui::Text::create();
+    labelCameras->setString("Cameras");
+    labelCameras->setAnchorPoint(Vec2(0, 0));
+    labelCameras->setPosition(pos);
+    _ui->addChild(labelCameras);
 }
 
 void Scene3DTestScene::createPlayerDlg()
@@ -333,7 +575,8 @@ void Scene3DTestScene::createPlayerDlg()
     itemBg->setPosition(itemPos);
     _playerDlg->addChild(itemBg);
     
-    auto item = ui::Button::create("crystal.png", "", "", ui::TextureResType::PLIST);
+    auto item = ui::Button::create("crystal.png", "", "", ui::Widget::TextureResType::PLIST);
+    item->setTitleText("Crystal");
     item->setScale(1.5);
     item->setAnchorPoint(itemAnchor);
     item->setPosition(itemPos);
@@ -342,18 +585,14 @@ void Scene3DTestScene::createPlayerDlg()
     });
     _playerDlg->addChild(item);
     
-    // after add ui element, add player dialog to scene
-    _playerDlg->setCameraMask(s_CM[LAYER_UI]);
-    this->addChild(_playerDlg);
-    
     // second, add 3d actor, which on dialog layer
     std::string filename = "Sprite3DTest/girl.c3b";
     auto girl = Sprite3D::create(filename);
     girl->setScale(0.5);
     girl->setPosition(bgSize.width / 2, margin * 2);
-    girl->setCameraMask(s_CM[LAYER_ACTOR]);
+    girl->setCameraMask(s_CM[LAYER_MIDDLE]);
     playerBg->addChild(girl);
-    
+
     // third, add zoom in/out button, which is 2d ui element and over 3d actor
     ui::Button* zoomIn = ui::Button::create("cocosui/animationbuttonnormal.png",
                                     "cocosui/animationbuttonpressed.png");
@@ -364,7 +603,8 @@ void Scene3DTestScene::createPlayerDlg()
         girl->setScale(girl->getScale() * 2);
     });
     zoomIn->setTitleText("Zoom In");
-    zoomIn->setCameraMask(s_CM[LAYER_ZOOM]);
+    zoomIn->setName("Zoom In");
+    zoomIn->setCameraMask(s_CM[LAYER_TOP]);
     playerBg->addChild(zoomIn);
 
     ui::Button* zoomOut = ui::Button::create("cocosui/animationbuttonnormal.png",
@@ -376,8 +616,22 @@ void Scene3DTestScene::createPlayerDlg()
         girl->setScale(girl->getScale() / 2);
     });
     zoomOut->setTitleText("Zoom Out");
-    zoomOut->setCameraMask(s_CM[LAYER_ZOOM]);
+    zoomOut->setName("Zoom Out");
+    zoomOut->setCameraMask(s_CM[LAYER_TOP]);
     playerBg->addChild(zoomOut);
+    
+    // forth, add slider bar
+    ui::Slider* slider = ui::Slider::create("cocosui/slidbar.png", "cocosui/sliderballnormal.png");
+    slider->setScale9Enabled(true);
+    slider->setPosition(Vec2(bgSize.width / 2, margin));
+    slider->setContentSize(Size(bgSize.width - margin, slider->getContentSize().height));
+    slider->addEventListener([girl, slider](Ref* sender,ui::Slider::EventType type)
+    {
+        girl->setRotation3D(Vec3(0, 360 * slider->getPercent() / 100, 0));
+    });
+    slider->setName("Slider");
+    slider->setCameraMask(s_CM[LAYER_TOP]);
+    playerBg->addChild(slider);
 }
 
 void Scene3DTestScene::createDetailDlg()
@@ -401,37 +655,63 @@ void Scene3DTestScene::createDetailDlg()
     auto title = Label::createWithTTF("Detail Dialog","fonts/arial.ttf",16);
     title->setPosition(dlgSize.width / 2, dlgSize.height - margin * 2);
     _detailDlg->addChild(title);
+
+    
+    // add capture screen buttons
+    ui::Button* capture = ui::Button::create("cocosui/animationbuttonnormal.png",
+                                             "cocosui/animationbuttonpressed.png");
+    capture->setScale(0.5);
+    capture->setAnchorPoint(Vec2(0.5, 0));
+    capture->setPosition(Vec2(dlgSize.width / 3, margin));
+    capture->addClickEventListener([this](Ref* sender)
+    {
+        Director::getInstance()->getTextureCache()->removeTextureForKey(_snapshotFile);
+        _osdScene->removeChildByTag(SNAPSHOT_TAG);
+        _snapshotFile = "CaptureScreenTest.png";
+        utils::captureScreen([this](bool succeed, const std::string& outputFile)
+        {
+            if (!succeed)
+            {
+                log("Capture screen failed.");
+                return;
+            }
+            auto sp = Sprite::create(outputFile);
+            _osdScene->addChild(sp, 0, SNAPSHOT_TAG);
+            Size s = Director::getInstance()->getWinSize();
+            sp->setPosition(s.width / 2, s.height / 2);
+            sp->setScale(0.25);
+            _snapshotFile = outputFile;
+        }, _snapshotFile);
+    });
+    capture->setTitleText("Take Snapshot");
+    capture->setName("Take Snapshot");
+    _detailDlg->addChild(capture);
+    
+    ui::Button* remove = ui::Button::create("cocosui/animationbuttonnormal.png",
+                                            "cocosui/animationbuttonpressed.png");
+    remove->setScale(0.5);
+    remove->setAnchorPoint(Vec2(0.5, 0));
+    remove->setPosition(Vec2(dlgSize.width * 2 / 3, margin));
+    remove->addClickEventListener([this](Ref* sender)
+    {
+        _osdScene->removeChildByTag(SNAPSHOT_TAG);
+    });
+    remove->setTitleText("Del Snapshot");
+    remove->setName("Del Snapshot");
+    _detailDlg->addChild(remove);
     
     // add a spine ffd animation on it
-    auto skeletonNode = SkeletonAnimation::createWithFile("spine/goblins-ffd.json", "spine/goblins-ffd.atlas", 1.5f);
+    auto skeletonNode =
+        SkeletonAnimationCullingFix::createWithFile("spine/goblins-ffd.json",
+                                          "spine/goblins-ffd.atlas",
+                                          1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     
     skeletonNode->setScale(0.25);
     Size windowSize = Director::getInstance()->getWinSize();
-    skeletonNode->setPosition(Vec2(dlgSize.width / 2, 20));
+    skeletonNode->setPosition(Vec2(dlgSize.width / 2, remove->getContentSize().height / 2 + 2 * margin));
     _detailDlg->addChild(skeletonNode);
-    
-    scheduleUpdate();
-    
-    EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = [skeletonNode] (Touch* touch, Event* event) -> bool {
-        if (!skeletonNode->getDebugBonesEnabled())
-            skeletonNode->setDebugBonesEnabled(true);
-        else if (skeletonNode->getTimeScale() == 1)
-            skeletonNode->setTimeScale(0.3f);
-        else
-        {
-            skeletonNode->setTimeScale(1);
-            skeletonNode->setDebugBonesEnabled(false);
-        }
-        return true;
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
-    // after add ui element, add dialog to scene
-    _detailDlg->setCameraMask(s_CM[LAYER_UI]);
-    this->addChild(_detailDlg);
 }
 
 void Scene3DTestScene::createDescDlg()
@@ -442,7 +722,7 @@ void Scene3DTestScene::createDescDlg()
     Vec2 pos = VisibleRect::center();
     float margin = 10;
     
-    // create dialog
+    // first, create dialog, add title and description text on it
     _descDlg = ui::Scale9Sprite::createWithSpriteFrameName("button_actived.png");
     _descDlg->setContentSize(dlgSize);
     _descDlg->setOpacity(224);
@@ -452,12 +732,12 @@ void Scene3DTestScene::createDescDlg()
     auto title = Label::createWithTTF("Description Dialog","fonts/arial.ttf",16);
     title->setPosition(dlgSize.width / 2, dlgSize.height - margin * 2);
     _descDlg->addChild(title);
-    
+
     // add a label to retain description text
     Size textSize(400, 220);
-    auto desc =
-    "Scene 3D test for 2D and 3D mix rendering.\n"
-    "\n"
+    Vec2 textPos(margin, dlgSize.height - (20 + margin));
+    std::string desc = std::string(
+    "    Scene 3D test for 2D and 3D mix rendering.\n"
     "- Game world composite with terrain, skybox and 3D objects.\n"
     "- UI composite with 2D nodes.\n"
     "- Click the icon at the topleft conner, will show a player dialog which "
@@ -466,15 +746,178 @@ void Scene3DTestScene::createDescDlg()
     "on 3D model.\n"
     " - This description dialog should above all other elements.\n"
     "\n"
-    "Click \"Description\" button to hide this dialog.\n";
-    auto text = Label::createWithSystemFont(desc, "Helvetica", 12, textSize);
+    "    Game scene composite with root scene and three sub scene. These scene "
+    " located at different location, they can't see each other.\n"
+    "- Root scene contains ui layer\n"
+    "- World scene contains skybox and 3d scene.\n"
+    "- Dialog scene contains actor dialog and detail dialog.\n"
+    "- OSD scene contains description dialog.\n"
+    "\n"
+    "Click \"Description\" button to hide this dialog.\n");
+    auto text = Label::createWithSystemFont(desc, "", 9, textSize);
     text->setAnchorPoint(Vec2(0, 1));
-    text->setPosition(margin, dlgSize.height - (20 + margin));
+    text->setPosition(textPos);
     _descDlg->addChild(text);
     
-    // after add ui element, add dialog to scene
-    _descDlg->setCameraMask(s_CM[LAYER_OSD]);
-    this->addChild(_descDlg);
+    // second, add a 3D model
+    std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
+    Vec2 girlPos(textPos.x + textSize.width - 40, margin);
+    _reskinGirl = Sprite3D::create(fileName);
+    _reskinGirl->setCameraMask(s_CM[LAYER_MIDDLE]);
+    _reskinGirl->setScale(2.5);
+    _reskinGirl->setPosition(girlPos);
+    _descDlg->addChild(_reskinGirl);
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        _reskinGirl->runAction(RepeatForever::create(animate));
+    }
+    
+    auto& body = _skins[(int)SkinType::UPPER_BODY];
+    body.push_back("Girl_UpperBody01");
+    body.push_back("Girl_UpperBody02");
+    
+    auto& pants = _skins[(int)SkinType::PANTS];
+    pants.push_back("Girl_LowerBody01");
+    pants.push_back("Girl_LowerBody02");
+    
+    auto& shoes = _skins[(int)SkinType::SHOES];
+    shoes.push_back("Girl_Shoes01");
+    shoes.push_back("Girl_Shoes02");
+    
+    auto& hair = _skins[(int)SkinType::HAIR];
+    hair.push_back("Girl_Hair01");
+    hair.push_back("Girl_Hair02");
+    
+    auto& face = _skins[(int)SkinType::FACE];
+    face.push_back("Girl_Face01");
+    face.push_back("Girl_Face02");
+    
+    auto& hand = _skins[(int)SkinType::HAND];
+    hand.push_back("Girl_Hand01");
+    hand.push_back("Girl_Hand02");
+    
+    auto& glasses = _skins[(int)SkinType::GLASSES];
+    glasses.push_back("");
+    glasses.push_back("Girl_Glasses01");
+    
+    memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
+    
+    auto applyCurSkin = [this]()
+    {
+        for (ssize_t i = 0; i < this->_reskinGirl->getMeshCount(); i++) {
+            auto mesh = this->_reskinGirl->getMeshByIndex(static_cast<int>(i));
+            bool isVisible = false;
+            for (int j = 0; j < (int)SkinType::MAX_TYPE; j++) {
+                if (mesh->getName() == _skins[j].at(_curSkin[j]))
+                {
+                    isVisible = true;
+                    break;
+                }
+            }
+            this->_reskinGirl->getMeshByIndex(static_cast<int>(i))->setVisible(isVisible);
+        }
+    };
+    applyCurSkin();
+    
+    // third, add reskin buttons above 3D model
+    static const std::string btnTexts[SkinType::MAX_TYPE] =
+    {
+        "Hair",
+        "Glasses",
+        "Face",
+        "Coat",
+        "Hand",
+        "Pants",
+        "Shoes",
+    };
+    Vec2 btnPos(dlgSize.width - margin, margin);
+    for (int i = SkinType::MAX_TYPE - 1; i >= 0; --i) {
+        auto btn = ui::Button::create("cocosui/animationbuttonnormal.png",
+                                      "cocosui/animationbuttonpressed.png");
+        btn->setScale(0.5);
+        btn->setTag(i);
+        btn->setAnchorPoint(Vec2(1, 0));
+        btn->setPosition(btnPos);
+        btnPos.y += 20;
+        btn->addClickEventListener([this, applyCurSkin](Ref* sender)
+        {
+            auto index = static_cast<Node *>(sender)->getTag();
+            if (index < SkinType::MAX_TYPE)
+            {
+                _curSkin[index] = (_curSkin[index] + 1) % _skins[index].size();
+                applyCurSkin();
+            }
+        });
+        btn->setTitleText(btnTexts[i]);
+        btn->setCameraMask(s_CM[LAYER_TOP]);
+        _descDlg->addChild(btn);
+    }
+}
+
+void Scene3DTestScene::onTouchEnd(Touch* touch, Event* event)
+{
+    auto location = touch->getLocation();
+    auto camera = _gameCameras[CAMERA_WORLD_3D_SCENE];
+    if(camera != Camera::getVisitingCamera())
+    {
+        return;
+    }
+
+    if(_player)
+    {
+        Vec3 nearP(location.x, location.y, 0.0f), farP(location.x, location.y, 1.0f);
+        // first, convert screen touch location to the world location on near and far plane
+        auto size = Director::getInstance()->getWinSize();
+        camera->unprojectGL(size, &nearP, &nearP);
+        camera->unprojectGL(size, &farP, &farP);
+        // second, convert world location to terrain's local position on near/far plane
+        auto worldToNodeMat = _terrain->getNodeToWorldTransform();
+        worldToNodeMat.inverse();
+        worldToNodeMat.transformPoint(&nearP);
+        worldToNodeMat.transformPoint(&farP);
+        // create a ray from point which on near plane to point which on far plane
+        Vec3 dir = farP - nearP;
+        dir.normalize();
+        Vec3 rayStep = 15*dir;
+        Vec3 rayPos =  nearP;
+        Vec3 rayStartPosition = nearP;
+        Vec3 lastRayPosition =rayPos;
+        rayPos += rayStep;
+        // Linear search - Loop until find a point inside and outside the terrain Vector3
+        float height = _terrain->getHeight(rayPos.x,rayPos.z);
+        
+        while (rayPos.y > height)
+        {
+            lastRayPosition = rayPos;
+            rayPos += rayStep;
+            height = _terrain->getHeight(rayPos.x,rayPos.z);
+        }
+        
+        Vec3 startPosition = lastRayPosition;
+        Vec3 endPosition = rayPos;
+        
+        for (int i= 0; i< 32; i++)
+        {
+            // Binary search pass
+            Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
+            if (middlePoint.y < height)
+                endPosition = middlePoint;
+            else
+                startPosition = middlePoint;
+        }
+        Vec3 collisionPoint = (startPosition + endPosition) * 0.5f;
+        dir = collisionPoint - _player->getPosition3D();
+        dir.y = 0;
+        dir.normalize();
+        _player->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
+        dir.cross(dir,Vec3(0,0,-1),&_player->_headingAxis);
+        _player->_targetPos=collisionPoint;
+        _player->forward();
+    }
+    event->stopPropagation();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -11,6 +11,7 @@ UIPageViewTests::UIPageViewTests()
     ADD_TEST_CASE(UIPageViewCustomScrollThreshold);
     ADD_TEST_CASE(UIPageViewTouchPropagationTest);
     ADD_TEST_CASE(UIPageViewDynamicAddAndRemoveTest);
+    ADD_TEST_CASE(UIPageViewJumpToPageTest);
 }
 
 // UIPageViewTest
@@ -99,7 +100,7 @@ void UIPageViewTest::pageViewEvent(Ref *pSender, PageView::EventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -209,7 +210,7 @@ void UIPageViewButtonTest::pageViewEvent(Ref *pSender, PageView::EventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -314,7 +315,7 @@ void UIPageViewCustomScrollThreshold::sliderEvent(Ref *pSender, Slider::EventTyp
         }
         pageView->setCustomScrollThreshold(percent * 0.01 * pageView->getContentSize().width);
         
-        _displayValueLabel->setString(String::createWithFormat("Scroll Threshold: %f", pageView->getCustomScrollThreshold())->getCString());
+        _displayValueLabel->setString(StringUtils::format("Scroll Threshold: %f", pageView->getCustomScrollThreshold()));
     }
 }
 
@@ -505,7 +506,7 @@ void UIPageViewTouchPropagationTest::pageViewEvent(Ref *pSender, PageView::Event
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -607,27 +608,23 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             for (int k = 0; k < 2; ++k)
             {
                 VBox* innerBox = VBox::create();
-                
                 for (int j = 0; j < 3; j++)
                 {
                     Button *btn = Button::create("cocosui/animationbuttonnormal.png",
                                                  "cocosui/animationbuttonpressed.png");
                     btn->setName(StringUtils::format("button %d", j));
-                    
                     innerBox->addChild(btn);
                 }
                 
                 LinearLayoutParameter *parameter = LinearLayoutParameter::create();
                 parameter->setMargin(Margin(0,0,100,0));
                 innerBox->setLayoutParameter(parameter);
-                
                 outerBox->addChild(innerBox);
-                
             }
             
             pageView->addPage(outerBox);
-            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
-
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
         });
         _uiLayer->addChild(button);
         
@@ -647,7 +644,8 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             {
                 CCLOG("There is no page to remove!");
             }
-            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
 
         });
         _uiLayer->addChild(button2);
@@ -661,12 +659,20 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button3->addClickEventListener([=](Ref* sender)
         {
             pageView->removeAllPages();
-            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
 
         });
         _uiLayer->addChild(button3);
 
-        
+        auto button4 = (ui::Button*)button3->clone();
+        button4->setTitleText("Scroll to Page4");
+        button4->setNormalizedPosition(Vec2(0.85,0.5));
+        button4->addClickEventListener([=](Ref* sender){
+            pageView->scrollToPage(3);
+            CCLOG("current page index = %zd", pageView->getCurPageIndex());
+        });
+        _uiLayer->addChild(button4);
         
         return true;
     }
@@ -682,7 +688,7 @@ void UIPageViewDynamicAddAndRemoveTest::pageViewEvent(Ref *pSender, PageView::Ev
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -691,3 +697,114 @@ void UIPageViewDynamicAddAndRemoveTest::pageViewEvent(Ref *pSender, PageView::Ev
     }
 }
 
+
+// UIPageViewJumpToPageTest
+UIPageViewJumpToPageTest::UIPageViewJumpToPageTest()
+: _displayValueLabel(nullptr)
+{
+
+}
+
+UIPageViewJumpToPageTest::~UIPageViewJumpToPageTest()
+{
+}
+
+bool UIPageViewJumpToPageTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the dragpanel events will be displayed
+        _displayValueLabel = Text::create("setCurPageIndex API Test", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f +
+                                              _displayValueLabel->getContentSize().height * 1.5));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the black background
+        Text* alert = Text::create("PageView", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+
+        // Create the page view
+        PageView* pageView = PageView::create();
+        pageView->setContentSize(Size(240.0f, 130.0f));
+        Size backgroundSize = background->getContentSize();
+        pageView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                  (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
+                                  (widgetSize.height - backgroundSize.height) / 2.0f +
+                                  (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
+
+        pageView->removeAllPages();
+
+        int pageCount = 4;
+        for (int i = 0; i < pageCount; ++i)
+        {
+            Layout* layout = Layout::create();
+            layout->setContentSize(Size(240.0f, 130.0f));
+
+            ImageView* imageView = ImageView::create("cocosui/scrollviewbg.png");
+            imageView->setScale9Enabled(true);
+            imageView->setContentSize(Size(240, 130));
+            imageView->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            layout->addChild(imageView);
+
+            Text* label = Text::create(StringUtils::format("page %d",(i+1)), "fonts/Marker Felt.ttf", 30);
+            label->setColor(Color3B(192, 192, 192));
+            label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
+            layout->addChild(label);
+
+            pageView->insertPage(layout,i);
+        }
+
+        pageView->setCurPageIndex(1);
+
+        //add buttons to jump to specific page
+        auto button1 = ui::Button::create();
+        button1->setNormalizedPosition(Vec2(0.1, 0.75));
+        button1->setTitleText("Jump to Page1");
+        CCLOG("button1 content Size = %f, %f", button1->getContentSize().width,
+              button1->getContentSize().height);
+        button1->addClickEventListener([=](Ref*){
+            pageView->setCurPageIndex(0);
+        });
+        _uiLayer->addChild(button1);
+
+        auto button2 = static_cast<ui::Button*>(button1->clone());
+        button2->setTitleText("Jump to Page2");
+        button2->setNormalizedPosition(Vec2(0.1, 0.65));
+        CCLOG("button2 content Size = %f, %f", button2->getContentSize().width,
+              button2->getContentSize().height);
+        button2->addClickEventListener([=](Ref*){
+            pageView->setCurPageIndex(1);
+        });
+        _uiLayer->addChild(button2);
+
+        auto button3 = static_cast<ui::Button*>(button2->clone());
+        button3->setTitleText("Jump to Page3");
+        button3->setNormalizedPosition(Vec2(0.9, 0.75));
+        button3->addClickEventListener([=](Ref*){
+            pageView->setCurPageIndex(2);
+        });
+        _uiLayer->addChild(button3);
+
+        auto button4 = static_cast<ui::Button*>(button2->clone());
+        button4->setTitleText("Jump to Page4");
+        button4->setNormalizedPosition(Vec2(0.9, 0.65));
+        button4->addClickEventListener([=](Ref*){
+            pageView->setCurPageIndex(3);
+        });
+        _uiLayer->addChild(button4);
+        _uiLayer->addChild(pageView);
+
+        return true;
+    }
+    return false;
+}

@@ -107,6 +107,10 @@ Rect::Rect(float x, float y, float width, float height)
 {
     setRect(x, y, width, height);
 }
+Rect::Rect(const Vec2& pos, const Size& dimension)
+{
+    setRect(pos.x, pos.y, dimension.width, dimension.height);
+}
 
 Rect::Rect(const Rect& other)
 {

@@ -26,7 +26,6 @@
 #ifndef _ActionsTest_H_
 #define _ActionsTest_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ActionsTests);

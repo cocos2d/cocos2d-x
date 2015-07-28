@@ -5,7 +5,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_studio_ActionFrame_getAction(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15793,6 +15792,56 @@ int lua_cocos2dx_studio_Frame_clone(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_studio_Frame_setTweenType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::Frame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Frame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::Frame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Frame_setTweenType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::tweenfunc::TweenType arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.Frame:setTweenType");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Frame_setTweenType'", nullptr);
+            return 0;
+        }
+        cobj->setTweenType(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Frame:setTweenType",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Frame_setTweenType'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_Frame_setNode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15936,6 +15985,53 @@ int lua_cocos2dx_studio_Frame_isEnterWhenPassed(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Frame_isEnterWhenPassed'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_Frame_getTweenType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::Frame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Frame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::Frame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Frame_getTweenType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Frame_getTweenType'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getTweenType();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Frame:getTweenType",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Frame_getTweenType'.",&tolua_err);
 #endif
 
     return 0;
@@ -16388,9 +16484,11 @@ int lua_register_cocos2dx_studio_Frame(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Frame");
         tolua_function(tolua_S,"clone",lua_cocos2dx_studio_Frame_clone);
+        tolua_function(tolua_S,"setTweenType",lua_cocos2dx_studio_Frame_setTweenType);
         tolua_function(tolua_S,"setNode",lua_cocos2dx_studio_Frame_setNode);
         tolua_function(tolua_S,"setTimeline",lua_cocos2dx_studio_Frame_setTimeline);
         tolua_function(tolua_S,"isEnterWhenPassed",lua_cocos2dx_studio_Frame_isEnterWhenPassed);
+        tolua_function(tolua_S,"getTweenType",lua_cocos2dx_studio_Frame_getTweenType);
         tolua_function(tolua_S,"getEasingParams",lua_cocos2dx_studio_Frame_getEasingParams);
         tolua_function(tolua_S,"setEasingParams",lua_cocos2dx_studio_Frame_setEasingParams);
         tolua_function(tolua_S,"getFrameIndex",lua_cocos2dx_studio_Frame_getFrameIndex);

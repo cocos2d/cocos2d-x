@@ -38,7 +38,7 @@ endif()
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.6)
+set(COCOS2D_X_VERSION 3.7)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 include(CocosBuildHelpers)
@@ -116,8 +116,8 @@ if(MSVC)
 else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall -Wextra -DCOCOS2D_DEBUG=1")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
   if(CLANG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
@@ -155,8 +155,8 @@ if(MINGW)
   add_definitions(-D__SSIZE_T)
 
   if(CLANG)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions ")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions ")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
   endif()
 endif()
 
@@ -326,16 +326,23 @@ cocos_find_package(TIFF TIFF REQUIRED)
 cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
 cocos_find_package(CURL CURL REQUIRED)
 
-add_subdirectory(external/flatbuffers)
-set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
-message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
+# flatbuffers
+if(USE_PREBUILT_LIBS)
+  add_subdirectory(external/flatbuffers)
+  set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
+  message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
+else()
+  cocos_find_package(flatbuffers flatbuffers REQUIRED)
+endif()
 
-
-# build xxhash
-add_subdirectory(external/xxhash)
-set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
-set(XXHASH_LIBRARIES xxhash)
-
+# xxhash
+if(USE_PREBUILT_LIBS)
+  add_subdirectory(external/xxhash)
+  set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
+  set(XXHASH_LIBRARIES xxhash)
+else()
+  cocos_find_package(xxhash xxhash REQUIRED)
+endif()
 # libcocos2d.a
 add_subdirectory(cocos)
 

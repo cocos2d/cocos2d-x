@@ -56,7 +56,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName() override;
 };
 
 class IterateSpriteSheetIterator : public IterateSpriteSheet
@@ -69,7 +69,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class IterateSpriteSheetForEach : public IterateSpriteSheet
@@ -81,7 +81,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 
@@ -89,10 +89,10 @@ class AddRemoveSpriteSheet : public NodeChildrenMainScene
 {
 public:
     virtual ~AddRemoveSpriteSheet();
-    virtual void updateQuantityOfNodes();
-    virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt) = 0;
-    virtual const char* testName();
+    virtual void updateQuantityOfNodes()override;
+    virtual void initWithQuantityOfNodes(unsigned int nNodes)override;
+    virtual void update(float dt)override = 0 ;
+    virtual const char* testName()override;
 
 protected:
     cocos2d::SpriteBatchNode    *batchNode;
@@ -113,7 +113,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 ///
@@ -127,7 +127,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class AddSpriteSheet : public AddRemoveSpriteSheet
@@ -139,7 +139,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class GetSpriteSheet : public AddRemoveSpriteSheet
@@ -151,7 +151,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class RemoveSprite : public AddRemoveSpriteSheet
@@ -163,7 +163,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class RemoveSpriteSheet : public AddRemoveSpriteSheet
@@ -175,7 +175,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class ReorderSpriteSheet : public AddRemoveSpriteSheet
@@ -187,7 +187,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class SortAllChildrenSpriteSheet : public AddRemoveSpriteSheet
@@ -199,7 +199,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual const char* testName();
+    virtual const char* testName()override;
 };
 
 class VisitSceneGraph : public NodeChildrenMainScene

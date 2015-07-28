@@ -43,12 +43,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
-
 // MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
@@ -78,6 +72,18 @@ Sprite* Sprite::create(const std::string& filename)
 {
     Sprite *sprite = new (std::nothrow) Sprite();
     if (sprite && sprite->initWithFile(filename))
+    {
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
+Sprite* Sprite::create(const PolygonInfo& info)
+{
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if(sprite && sprite->initWithPolygon(info))
     {
         sprite->autorelease();
         return sprite;
@@ -199,12 +205,25 @@ bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame != nullptr, "");
+    CCASSERT(spriteFrame != nullptr, "spriteFrame can't be nullptr!");
 
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
 
     return bRet;
+}
+
+bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
+{
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
+    bool res = false;
+    if(initWithTexture(texture))
+    {
+        _polyInfo = info;
+        setContentSize(_polyInfo.rect.size/Director::getInstance()->getContentScaleFactor());
+        res = true;
+    }
+    return res;
 }
 
 // designated initializer
@@ -268,8 +287,7 @@ Sprite::Sprite(void)
 , _insideBounds(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
-    _debugDrawNode = DrawNode::create();
-    addChild(_debugDrawNode);
+    debugDraw(true);
 #endif //CC_SPRITE_DEBUG_DRAW
 }
 
@@ -318,7 +336,7 @@ void Sprite::setTexture(const std::string &filename)
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same
-    CCASSERT(! _batchNode || texture->getName() == _batchNode->getTexture()->getName(), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
 
@@ -405,7 +423,50 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
         _quad.tl.vertices.set(x1, y2, 0.0f);
         _quad.tr.vertices.set(x2, y2, 0.0f);
     }
+    
+    _polyInfo.setQuad(&_quad);
 }
+
+void Sprite::debugDraw(bool on)
+{
+    DrawNode* draw = getChildByName<DrawNode*>("debugDraw");
+    if(on)
+    {
+        if(!draw)
+        {
+            draw = DrawNode::create();
+            draw->setName("debugDraw");
+            addChild(draw);
+        }
+        draw->setVisible(true);
+        draw->clear();
+        //draw lines
+        auto last = _polyInfo.triangles.indexCount/3;
+        auto _indices = _polyInfo.triangles.indices;
+        auto _verts = _polyInfo.triangles.verts;
+        for(ssize_t i = 0; i < last; i++)
+        {
+            //draw 3 lines
+            Vec3 from =_verts[_indices[i*3]].vertices;
+            Vec3 to = _verts[_indices[i*3+1]].vertices;
+            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+            
+            from =_verts[_indices[i*3+1]].vertices;
+            to = _verts[_indices[i*3+2]].vertices;
+            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+            
+            from =_verts[_indices[i*3+2]].vertices;
+            to = _verts[_indices[i*3]].vertices;
+            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+        }
+    }
+    else
+    {
+        if(draw)
+            draw->setVisible(false);
+    }
+}
+
 
 // override this method to generate "double scale" sprites
 void Sprite::setVertexRect(const Rect& rect)
@@ -560,10 +621,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices.set(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ);
-            _quad.br.vertices.set(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ);
-            _quad.tl.vertices.set(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ);
-            _quad.tr.vertices.set(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ);
+            _quad.bl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(ax), SPRITE_RENDER_IN_SUBPIXEL(ay), _positionZ);
+            _quad.br.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(bx), SPRITE_RENDER_IN_SUBPIXEL(by), _positionZ);
+            _quad.tl.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(dx), SPRITE_RENDER_IN_SUBPIXEL(dy), _positionZ);
+            _quad.tr.vertices.set(SPRITE_RENDER_IN_SUBPIXEL(cx), SPRITE_RENDER_IN_SUBPIXEL(cy), _positionZ);
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -598,31 +659,9 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, getRenderedTriangles(), transform, flags);
+        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
-        
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        Vec2 vertices[4] = {
-            Vec2( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-            Vec2( _quad.br.vertices.x, _quad.br.vertices.y ),
-            Vec2( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-            Vec2( _quad.tl.vertices.x, _quad.tl.vertices.y ),
-        };
-        _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
-#endif //CC_SPRITE_DEBUG_DRAW
     }
-}
-
-TrianglesCommand::Triangles Sprite::getRenderedTriangles() const
-{
-    static unsigned short indices[6] = {0, 1, 2, 3, 2, 1};
-    TrianglesCommand::Triangles result;
-    result.indices = indices;
-    result.verts = (V3F_C4B_T2F*)&_quad;
-    result.vertCount = 4;
-    result.indexCount = 6;
-    return result;
 }
 
 // MARK: visit, draw, transform
@@ -635,7 +674,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "childSprite's texture name should be equal to _textureAtlas's texture name!");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
 
@@ -656,7 +695,8 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "");
+        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(),
+                 "childSprite's texture name should be equal to _textureAtlas's texture name.");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
         
@@ -904,10 +944,9 @@ void Sprite::updateColor(void)
         color4.b *= _displayedOpacity/255.0f;
     }
 
-    _quad.bl.colors = color4;
-    _quad.br.colors = color4;
-    _quad.tl.colors = color4;
-    _quad.tr.colors = color4;
+    for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+        _polyInfo.triangles.verts[i].colors = color4;
+    }
 
     // renders using batch node
     if (_batchNode)
@@ -1054,7 +1093,7 @@ void Sprite::updateBlendFunc(void)
 {
     CCASSERT(! _batchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
 
-    // it is possible to have an untextured sprite
+    // it is possible to have an untextured spritec
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
@@ -1075,6 +1114,16 @@ std::string Sprite::getDescription() const
     else
         texture_id = _texture->getName();
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
+}
+
+PolygonInfo Sprite::getPolygonInfo() const
+{
+    return _polyInfo;
+}
+
+void Sprite::setPolygonInfo(const PolygonInfo& info)
+{
+    _polyInfo = info;
 }
 
 NS_CC_END

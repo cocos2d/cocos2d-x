@@ -8,14 +8,14 @@ DEFINE_TEST_SUITE(ParticleTests);
 class ParticleDemo : public TestCase
 {
 protected:
-    cocos2d::ParticleSystemQuad*    _emitter;
-    cocos2d::Sprite*            _background;
-    cocos2d::LayerColor*		 _color;
+    cocos2d::ParticleSystemQuad* _emitter;
+    cocos2d::Sprite* _background;
+    cocos2d::LayerColor* _color;
 
 public:
-    ~ParticleDemo(void);
+    ~ParticleDemo();
 
-    virtual void onEnter(void);
+    virtual void onEnter()override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

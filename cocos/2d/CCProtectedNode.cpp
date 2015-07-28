@@ -63,6 +63,14 @@ ProtectedNode * ProtectedNode::create(void)
 
 void ProtectedNode::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Node::cleanup();
     // timers
     for( const auto &child: _protectedChildren)
@@ -271,7 +279,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible || !isVisitableByVisitingCamera())
+    if (!_visible)
     {
         return;
     }

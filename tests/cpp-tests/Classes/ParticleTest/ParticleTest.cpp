@@ -1316,7 +1316,7 @@ void ParticleReorder::reorderParticles(float dt)
 class RainbowEffect : public ParticleSystemQuad
 {
 public:
-    bool init();
+    bool init()override;
     virtual bool initWithTotalParticles(int numberOfParticles) override;
     virtual void update(float dt) override;
 };
@@ -2000,6 +2000,7 @@ void ParticleIssue12310::onEnter()
     addChild(particle);
 
     _emitter = particle;
+    _emitter->retain();
 
     auto particle2 = ParticleSystemQuad::create("Particles/BoilingFoamStar.plist");
     particle2->setPosition(Vec2(winSize.width * 0.65f, winSize.height * 0.5f));

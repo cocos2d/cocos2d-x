@@ -897,6 +897,16 @@ func
 },
 
 /**
+ * @method stopActionsByFlags
+ * @param {unsigned int} arg0
+ */
+stopActionsByFlags : function (
+int 
+)
+{
+},
+
+/**
  * @method setNormalizedPosition
  * @param {vec2_object} arg0
  */
@@ -1705,14 +1715,6 @@ bool
  */
 setOpacity : function (
 char 
-)
-{
-},
-
-/**
- * @method cleanup
- */
-cleanup : function (
 )
 {
 },
@@ -2972,7 +2974,7 @@ scene
 
 /**
  * @method getAnimationInterval
- * @return {double}
+ * @return {float}
  */
 getAnimationInterval : function (
 )
@@ -3022,10 +3024,10 @@ scene
 
 /**
  * @method setAnimationInterval
- * @param {double} arg0
+ * @param {float} arg0
  */
 setAnimationInterval : function (
-double 
+float 
 )
 {
 },
@@ -3245,6 +3247,16 @@ getTarget : function (
 },
 
 /**
+ * @method getFlags
+ * @return {unsigned int}
+ */
+getFlags : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method step
  * @param {float} arg0
  */
@@ -3259,6 +3271,16 @@ float
  * @param {int} arg0
  */
 setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method setFlags
+ * @param {unsigned int} arg0
+ */
+setFlags : function (
 int 
 )
 {
@@ -5174,6 +5196,18 @@ ReverseTime : function (
 cc.Animate = {
 
 /**
+ * @method initWithAnimation
+ * @param {cc.Animation} arg0
+ * @return {bool}
+ */
+initWithAnimation : function (
+animation 
+)
+{
+    return false;
+},
+
+/**
  * @method getAnimation
 * @return {cc.Animation|cc.Animation}
 */
@@ -5184,15 +5218,13 @@ getAnimation : function(
 },
 
 /**
- * @method initWithAnimation
- * @param {cc.Animation} arg0
- * @return {bool}
+ * @method getCurrentFrameIndex
+ * @return {int}
  */
-initWithAnimation : function (
-animation 
+getCurrentFrameIndex : function (
 )
 {
-    return false;
+    return 0;
 },
 
 /**
@@ -6086,6 +6118,18 @@ str
 },
 
 /**
+ * @method getFileSize
+ * @param {String} arg0
+ * @return {long}
+ */
+getFileSize : function (
+str 
+)
+{
+    return 0;
+},
+
+/**
  * @method getValueMapFromData
  * @param {char} arg0
  * @param {int} arg1
@@ -6122,15 +6166,17 @@ array
 },
 
 /**
- * @method getFileSize
+ * @method writeStringToFile
  * @param {String} arg0
- * @return {long}
+ * @param {String} arg1
+ * @return {bool}
  */
-getFileSize : function (
+writeStringToFile : function (
+str, 
 str 
 )
 {
-    return 0;
+    return false;
 },
 
 /**
@@ -6165,6 +6211,20 @@ str,
 bool 
 )
 {
+},
+
+/**
+ * @method writeValueVectorToFile
+ * @param {Array} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeValueVectorToFile : function (
+array, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -6211,6 +6271,20 @@ str
 )
 {
     return ;
+},
+
+/**
+ * @method writeValueMapToFile
+ * @param {map_object} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+writeValueMapToFile : function (
+map, 
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -9492,6 +9566,18 @@ node
 },
 
 /**
+ * @method removeActionsByFlags
+ * @param {unsigned int} arg0
+ * @param {cc.Node} arg1
+ */
+removeActionsByFlags : function (
+int, 
+node 
+)
+{
+},
+
+/**
  * @method removeAllActions
  */
 removeAllActions : function (
@@ -11149,6 +11235,16 @@ color4f
 },
 
 /**
+ * @method setLineWidth
+ * @param {int} arg0
+ */
+setLineWidth : function (
+int 
+)
+{
+},
+
+/**
  * @method onDrawGLPoint
  * @param {mat4_object} arg0
  * @param {unsigned int} arg1
@@ -11430,268 +11526,6 @@ DrawNode : function (
 };
 
 /**
- * @class SpriteBatchNode
- */
-cc.SpriteBatchNode = {
-
-/**
- * @method appendChild
- * @param {cc.Sprite} arg0
- */
-appendChild : function (
-sprite 
-)
-{
-},
-
-/**
- * @method addSpriteWithoutQuad
- * @param {cc.Sprite} arg0
- * @param {int} arg1
- * @param {int} arg2
- * @return {cc.SpriteBatchNode}
- */
-addSpriteWithoutQuad : function (
-sprite, 
-int, 
-int 
-)
-{
-    return cc.SpriteBatchNode;
-},
-
-/**
- * @method reorderBatch
- * @param {bool} arg0
- */
-reorderBatch : function (
-bool 
-)
-{
-},
-
-/**
- * @method initWithTexture
- * @param {cc.Texture2D} arg0
- * @param {long} arg1
- * @return {bool}
- */
-initWithTexture : function (
-texture2d, 
-long 
-)
-{
-    return false;
-},
-
-/**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return cc.BlendFunc;
-},
-
-/**
- * @method lowestAtlasIndexInChild
- * @param {cc.Sprite} arg0
- * @return {long}
- */
-lowestAtlasIndexInChild : function (
-sprite 
-)
-{
-    return 0;
-},
-
-/**
- * @method atlasIndexForChild
- * @param {cc.Sprite} arg0
- * @param {int} arg1
- * @return {long}
- */
-atlasIndexForChild : function (
-sprite, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method setTextureAtlas
- * @param {cc.TextureAtlas} arg0
- */
-setTextureAtlas : function (
-textureatlas 
-)
-{
-},
-
-/**
- * @method initWithFile
- * @param {String} arg0
- * @param {long} arg1
- * @return {bool}
- */
-initWithFile : function (
-str, 
-long 
-)
-{
-    return false;
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
- * @method increaseAtlasCapacity
- */
-increaseAtlasCapacity : function (
-)
-{
-},
-
-/**
- * @method getTextureAtlas
- * @return {cc.TextureAtlas}
- */
-getTextureAtlas : function (
-)
-{
-    return cc.TextureAtlas;
-},
-
-/**
- * @method insertQuadFromSprite
- * @param {cc.Sprite} arg0
- * @param {long} arg1
- */
-insertQuadFromSprite : function (
-sprite, 
-long 
-)
-{
-},
-
-/**
- * @method setTexture
- * @param {cc.Texture2D} arg0
- */
-setTexture : function (
-texture2d 
-)
-{
-},
-
-/**
- * @method rebuildIndexInOrder
- * @param {cc.Sprite} arg0
- * @param {long} arg1
- * @return {long}
- */
-rebuildIndexInOrder : function (
-sprite, 
-long 
-)
-{
-    return 0;
-},
-
-/**
- * @method highestAtlasIndexInChild
- * @param {cc.Sprite} arg0
- * @return {long}
- */
-highestAtlasIndexInChild : function (
-sprite 
-)
-{
-    return 0;
-},
-
-/**
- * @method removeChildAtIndex
- * @param {long} arg0
- * @param {bool} arg1
- */
-removeChildAtIndex : function (
-long, 
-bool 
-)
-{
-},
-
-/**
- * @method removeSpriteFromAtlas
- * @param {cc.Sprite} arg0
- */
-removeSpriteFromAtlas : function (
-sprite 
-)
-{
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @param {long} arg1
- * @return {cc.SpriteBatchNode}
- */
-create : function (
-str, 
-long 
-)
-{
-    return cc.SpriteBatchNode;
-},
-
-/**
- * @method createWithTexture
- * @param {cc.Texture2D} arg0
- * @param {long} arg1
- * @return {cc.SpriteBatchNode}
- */
-createWithTexture : function (
-texture2d, 
-long 
-)
-{
-    return cc.SpriteBatchNode;
-},
-
-/**
- * @method SpriteBatchNode
- * @constructor
- */
-SpriteBatchNode : function (
-)
-{
-},
-
-};
-
-/**
  * @class Label
  */
 cc.Label = {
@@ -11764,6 +11598,16 @@ getTextColor : function (
 )
 {
     return cc.Color4B;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
 },
 
 /**
@@ -11918,6 +11762,16 @@ getAdditionalKerning : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method removeAllChildrenWithCleanup
+ * @param {bool} arg0
+ */
+removeAllChildrenWithCleanup : function (
+bool 
+)
+{
 },
 
 /**
@@ -12078,6 +11932,16 @@ getSystemFontSize : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -16256,6 +16120,200 @@ ProtectedNode : function (
 };
 
 /**
+ * @class Image
+ */
+cc.Image = {
+
+/**
+ * @method hasPremultipliedAlpha
+ * @return {bool}
+ */
+hasPremultipliedAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getDataLen
+ * @return {long}
+ */
+getDataLen : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method saveToFile
+ * @param {String} arg0
+ * @param {bool} arg1
+ * @return {bool}
+ */
+saveToFile : function (
+str, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method hasAlpha
+ * @return {bool}
+ */
+hasAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isCompressed
+ * @return {bool}
+ */
+isCompressed : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getHeight
+ * @return {int}
+ */
+getHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithImageFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithImageFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getWidth
+ * @return {int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBitPerPixel
+ * @return {int}
+ */
+getBitPerPixel : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFileType
+ * @return {cc.Image::Format}
+ */
+getFileType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNumberOfMipmaps
+ * @return {int}
+ */
+getNumberOfMipmaps : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRenderFormat
+ * @return {cc.Texture2D::PixelFormat}
+ */
+getRenderFormat : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getData
+ * @return {unsigned char}
+ */
+getData : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMipmaps
+ * @return {cc._MipmapInfo}
+ */
+getMipmaps : function (
+)
+{
+    return cc._MipmapInfo;
+},
+
+/**
+ * @method initWithRawData
+ * @param {unsigned char} arg0
+ * @param {long} arg1
+ * @param {int} arg2
+ * @param {int} arg3
+ * @param {int} arg4
+ * @param {bool} arg5
+ * @return {bool}
+ */
+initWithRawData : function (
+char, 
+long, 
+int, 
+int, 
+int, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPVRImagesHavePremultipliedAlpha
+ * @param {bool} arg0
+ */
+setPVRImagesHavePremultipliedAlpha : function (
+bool 
+)
+{
+},
+
+/**
+ * @method Image
+ * @constructor
+ */
+Image : function (
+)
+{
+},
+
+};
+
+/**
  * @class Sprite
  */
 cc.Sprite = {
@@ -16527,6 +16585,16 @@ getTextureRect : function (
 },
 
 /**
+ * @method debugDraw
+ * @param {bool} arg0
+ */
+debugDraw : function (
+bool 
+)
+{
+},
+
+/**
  * @method initWithFile
 * @param {String|String} str
 * @param {rect_object} rect
@@ -16603,258 +16671,10 @@ rect
 },
 
 /**
- * @method create
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {cc.Sprite|cc.Sprite|cc.Sprite}
-*/
-create : function(
-str,
-rect 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object} rect
-* @param {bool} bool
-* @return {cc.Sprite|cc.Sprite}
-*/
-createWithTexture : function(
-texture2d,
-rect,
-bool 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrameName
- * @param {String} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrameName : function (
-str 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrame
- * @param {cc.SpriteFrame} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrame : function (
-spriteframe 
-)
-{
-    return cc.Sprite;
-},
-
-/**
  * @method Sprite
  * @constructor
  */
 Sprite : function (
-)
-{
-},
-
-};
-
-/**
- * @class Image
- */
-cc.Image = {
-
-/**
- * @method hasPremultipliedAlpha
- * @return {bool}
- */
-hasPremultipliedAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getDataLen
- * @return {long}
- */
-getDataLen : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method saveToFile
- * @param {String} arg0
- * @param {bool} arg1
- * @return {bool}
- */
-saveToFile : function (
-str, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method hasAlpha
- * @return {bool}
- */
-hasAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isCompressed
- * @return {bool}
- */
-isCompressed : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getHeight
- * @return {int}
- */
-getHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithImageFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithImageFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method getWidth
- * @return {int}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getBitPerPixel
- * @return {int}
- */
-getBitPerPixel : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getFileType
- * @return {cc.Image::Format}
- */
-getFileType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getNumberOfMipmaps
- * @return {int}
- */
-getNumberOfMipmaps : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getRenderFormat
- * @return {cc.Texture2D::PixelFormat}
- */
-getRenderFormat : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getData
- * @return {unsigned char}
- */
-getData : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMipmaps
- * @return {cc._MipmapInfo}
- */
-getMipmaps : function (
-)
-{
-    return cc._MipmapInfo;
-},
-
-/**
- * @method initWithRawData
- * @param {unsigned char} arg0
- * @param {long} arg1
- * @param {int} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @param {bool} arg5
- * @return {bool}
- */
-initWithRawData : function (
-char, 
-long, 
-int, 
-int, 
-int, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method setPVRImagesHavePremultipliedAlpha
- * @param {bool} arg0
- */
-setPVRImagesHavePremultipliedAlpha : function (
-bool 
-)
-{
-},
-
-/**
- * @method Image
- * @constructor
- */
-Image : function (
 )
 {
 },
@@ -20538,6 +20358,16 @@ bool
 },
 
 /**
+ * @method setAccelerometerInterval
+ * @param {float} arg0
+ */
+setAccelerometerInterval : function (
+float 
+)
+{
+},
+
+/**
  * @method setKeepScreenOn
  * @param {bool} arg0
  */
@@ -20548,10 +20378,10 @@ bool
 },
 
 /**
- * @method setAccelerometerInterval
+ * @method vibrate
  * @param {float} arg0
  */
-setAccelerometerInterval : function (
+vibrate : function (
 float 
 )
 {
@@ -20731,6 +20561,268 @@ getInstance : function (
  * @constructor
  */
 AnimationCache : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SpriteBatchNode
+ */
+cc.SpriteBatchNode = {
+
+/**
+ * @method appendChild
+ * @param {cc.Sprite} arg0
+ */
+appendChild : function (
+sprite 
+)
+{
+},
+
+/**
+ * @method addSpriteWithoutQuad
+ * @param {cc.Sprite} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @return {cc.SpriteBatchNode}
+ */
+addSpriteWithoutQuad : function (
+sprite, 
+int, 
+int 
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
+ * @method reorderBatch
+ * @param {bool} arg0
+ */
+reorderBatch : function (
+bool 
+)
+{
+},
+
+/**
+ * @method initWithTexture
+ * @param {cc.Texture2D} arg0
+ * @param {long} arg1
+ * @return {bool}
+ */
+initWithTexture : function (
+texture2d, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method lowestAtlasIndexInChild
+ * @param {cc.Sprite} arg0
+ * @return {long}
+ */
+lowestAtlasIndexInChild : function (
+sprite 
+)
+{
+    return 0;
+},
+
+/**
+ * @method atlasIndexForChild
+ * @param {cc.Sprite} arg0
+ * @param {int} arg1
+ * @return {long}
+ */
+atlasIndexForChild : function (
+sprite, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method setTextureAtlas
+ * @param {cc.TextureAtlas} arg0
+ */
+setTextureAtlas : function (
+textureatlas 
+)
+{
+},
+
+/**
+ * @method initWithFile
+ * @param {String} arg0
+ * @param {long} arg1
+ * @return {bool}
+ */
+initWithFile : function (
+str, 
+long 
+)
+{
+    return false;
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method increaseAtlasCapacity
+ */
+increaseAtlasCapacity : function (
+)
+{
+},
+
+/**
+ * @method getTextureAtlas
+ * @return {cc.TextureAtlas}
+ */
+getTextureAtlas : function (
+)
+{
+    return cc.TextureAtlas;
+},
+
+/**
+ * @method insertQuadFromSprite
+ * @param {cc.Sprite} arg0
+ * @param {long} arg1
+ */
+insertQuadFromSprite : function (
+sprite, 
+long 
+)
+{
+},
+
+/**
+ * @method setTexture
+ * @param {cc.Texture2D} arg0
+ */
+setTexture : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method rebuildIndexInOrder
+ * @param {cc.Sprite} arg0
+ * @param {long} arg1
+ * @return {long}
+ */
+rebuildIndexInOrder : function (
+sprite, 
+long 
+)
+{
+    return 0;
+},
+
+/**
+ * @method highestAtlasIndexInChild
+ * @param {cc.Sprite} arg0
+ * @return {long}
+ */
+highestAtlasIndexInChild : function (
+sprite 
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeChildAtIndex
+ * @param {long} arg0
+ * @param {bool} arg1
+ */
+removeChildAtIndex : function (
+long, 
+bool 
+)
+{
+},
+
+/**
+ * @method removeSpriteFromAtlas
+ * @param {cc.Sprite} arg0
+ */
+removeSpriteFromAtlas : function (
+sprite 
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {long} arg1
+ * @return {cc.SpriteBatchNode}
+ */
+create : function (
+str, 
+long 
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
+ * @method createWithTexture
+ * @param {cc.Texture2D} arg0
+ * @param {long} arg1
+ * @return {cc.SpriteBatchNode}
+ */
+createWithTexture : function (
+texture2d, 
+long 
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
+ * @method SpriteBatchNode
+ * @constructor
+ */
+SpriteBatchNode : function (
 )
 {
 },
@@ -22648,75 +22740,6 @@ getInstance : function (
 )
 {
     return cc.SimpleAudioEngine;
-},
-
-};
-
-/**
- * @class SpritePolygonCache
- */
-cc.SpritePolygonCache = {
-
-/**
- * @method isSpritePolygonCachExist
- * @param {String} arg0
- * @param {rect_object} arg1
- * @return {bool}
- */
-isSpritePolygonCachExist : function (
-str, 
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method removeAllSpritePolygonCache
- */
-removeAllSpritePolygonCache : function (
-)
-{
-},
-
-/**
- * @method removeSpritePolygonCache
- * @param {String} arg0
- * @param {rect_object} arg1
- */
-removeSpritePolygonCache : function (
-str, 
-rect 
-)
-{
-},
-
-/**
- * @method destroyInstance
- */
-destroyInstance : function (
-)
-{
-},
-
-/**
- * @method printInfo
- * @param {cc._SpritePolygonInfo} arg0
- */
-printInfo : function (
-_spritepolygoninfo 
-)
-{
-},
-
-/**
- * @method getInstance
- * @return {cc.SpritePolygonCache}
- */
-getInstance : function (
-)
-{
-    return cc.SpritePolygonCache;
 },
 
 };

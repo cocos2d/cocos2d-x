@@ -128,7 +128,7 @@ CCBReader::~CCBReader()
 
 void CCBReader::setCCBRootPath(const char* ccbRootPath)
 {
-    CCASSERT(ccbRootPath != nullptr, "");
+    CCASSERT(ccbRootPath != nullptr, "ccbRootPath can't be nullptr!");
     _CCBRootPath = ccbRootPath;
 }
 

@@ -74,7 +74,7 @@ BillBoardRotationTest::BillBoardRotationTest()
     root->runAction(rp);
     
     auto jump = JumpBy::create(1, Vec2(0, 0), 30, 1);
-    auto scale = ScaleBy::create(2, 2, 2, 0.1);
+    auto scale = ScaleBy::create(2.f, 2.f, 2.f, 0.1f);
     auto seq = Sequence::create(jump,scale, NULL);
     
     auto rot = RotateBy::create(2, Vec3(-90, 0, 0));

@@ -81,7 +81,8 @@ public:
     virtual bool isAbsolutePath(const std::string& strPath) const;
     
 private:
-    virtual bool isFileExistInternal(const std::string& strFilePath) const;
+    virtual bool isFileExistInternal(const std::string& strFilePath) const override;
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
     Data getData(const std::string& filename, bool forString);
 
     static AAssetManager* assetmanager;

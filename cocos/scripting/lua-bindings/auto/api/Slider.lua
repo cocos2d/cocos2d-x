@@ -5,6 +5,15 @@
 -- @parent_module ccui
 
 --------------------------------
+-- Set a large value could give more control to the precision.<br>
+-- since v3.7<br>
+-- param percent The max percent of Slider.
+-- @function [parent=#Slider] setMaxPercent 
+-- @param self
+-- @param #int percent
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
 -- Changes the progress direction of slider.<br>
 -- param percent  Percent value from 1 to 100.
 -- @function [parent=#Slider] setPercent 
@@ -21,6 +30,14 @@
 -- @param #string disabled
 -- @param #int resType
 -- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
+-- Query the maximum percent of Slider. The default value is 100.<br>
+-- since v3.7<br>
+-- return The maximum percent of the Slider.
+-- @function [parent=#Slider] getMaxPercent 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Load normal state texture for slider ball.<br>
@@ -202,6 +219,8 @@
 -- @function [parent=#Slider] hitTest 
 -- @param self
 -- @param #vec2_table pt
+-- @param #cc.Camera camera
+-- @param #vec3_table p
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
