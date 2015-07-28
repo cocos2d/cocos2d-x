@@ -2,6 +2,7 @@
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "cocos2d_specifics.hpp"
 #include "CCPhysics3D.h"
+#include "3d/jsb_cocos2dx_3d_conversions.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -3189,6 +3190,82 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB(JSCo
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::Physics3DPointToPointConstraint* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Physics3DPointToPointConstraint *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init : Invalid Native Object");
+    do {
+        if (argc == 4) {
+            cocos2d::Physics3DRigidBody* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Physics3DRigidBody* arg1;
+            do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
+                if (!args.get(1).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(1).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg1 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Vec3 arg2;
+            ok &= jsval_to_vector3(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            cocos2d::Vec3 arg3;
+            ok &= jsval_to_vector3(cx, args.get(3), &arg3);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->init(arg0, arg1, arg2, arg3);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            cocos2d::Physics3DRigidBody* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Physics3DRigidBody*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Vec3 arg1;
+            ok &= jsval_to_vector3(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->init(arg0, arg1);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init : wrong number of arguments");
+    return false;
+}
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -3369,6 +3446,7 @@ void js_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(JSContext *c
     static JSFunctionSpec funcs[] = {
         JS_FN("getPivotPointInA", js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInA, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPivotPointInB", js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPivotPointInA", js_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPivotPointInB", js_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

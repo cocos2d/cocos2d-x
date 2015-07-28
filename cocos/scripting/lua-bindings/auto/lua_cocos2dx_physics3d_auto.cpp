@@ -5449,6 +5449,77 @@ int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB(lua_
 
     return 0;
 }
+int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DPointToPointConstraint* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DPointToPointConstraint",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Physics3DPointToPointConstraint*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 4) {
+            cocos2d::Physics3DRigidBody* arg0;
+            ok &= luaval_to_object<cocos2d::Physics3DRigidBody>(tolua_S, 2, "cc.Physics3DRigidBody",&arg0, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Physics3DRigidBody* arg1;
+            ok &= luaval_to_object<cocos2d::Physics3DRigidBody>(tolua_S, 3, "cc.Physics3DRigidBody",&arg1, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg2;
+            ok &= luaval_to_vec3(tolua_S, 4, &arg2, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg3;
+            ok &= luaval_to_vec3(tolua_S, 5, &arg3, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            bool ret = cobj->init(arg0, arg1, arg2, arg3);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            cocos2d::Physics3DRigidBody* arg0;
+            ok &= luaval_to_object<cocos2d::Physics3DRigidBody>(tolua_S, 2, "cc.Physics3DRigidBody",&arg0, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg1;
+            ok &= luaval_to_vec3(tolua_S, 3, &arg1, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            bool ret = cobj->init(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Physics3DPointToPointConstraint:init",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA(lua_State* tolua_S)
 {
     int argc = 0;
@@ -5661,6 +5732,7 @@ int lua_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(lua_State* t
         tolua_function(tolua_S,"new",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_constructor);
         tolua_function(tolua_S,"getPivotPointInA",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInA);
         tolua_function(tolua_S,"getPivotPointInB",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB);
+        tolua_function(tolua_S,"init",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init);
         tolua_function(tolua_S,"setPivotPointInA",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA);
         tolua_function(tolua_S,"setPivotPointInB",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_create);
