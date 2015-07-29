@@ -160,12 +160,13 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 		CGSize dimensions = CGSizeMake(info->width, info->height);
 		
         
-		if(dimensions.width <= 0 && dimensions.height <= 0) {
-			dimensions.width = realDimensions.width;
-			dimensions.height = realDimensions.height;
-		} else if (dimensions.height <= 0) {
-			dimensions.height = realDimensions.height;
-		}
+    if(dimensions.width <= 0) {
+        dimensions.width = realDimensions.width;
+    }
+        
+    if (dimensions.height <= 0) {
+        dimensions.height = realDimensions.height;
+    }
         
 		NSInteger POTWide = dimensions.width;
 		NSInteger POTHigh = MAX(dimensions.height, realDimensions.height);
