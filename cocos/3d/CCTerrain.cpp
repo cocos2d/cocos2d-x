@@ -76,8 +76,12 @@ Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
     return terrain;
 }
 
-void cocos2d::Terrain::setLightMap(std::string fileName)
+void cocos2d::Terrain::setLightMap(const std::string& fileName)
 {
+    if (_lightMap)
+    {
+        _lightMap->release();
+    }
     auto image = new (std::nothrow)Image();
     image->initWithImageFile(fileName);
     _lightMap = new (std::nothrow)Texture2D();
@@ -91,7 +95,7 @@ void cocos2d::Terrain::setLightMap(std::string fileName)
 
 }
 
-void cocos2d::Terrain::setLightDir(Vec3 lightDir)
+void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
 {
     _lightDir = lightDir;
 }
@@ -471,6 +475,7 @@ Terrain::~Terrain()
 {
     CC_SAFE_RELEASE(_stateBlock);
     if (_alphaMap) _alphaMap->release();
+    if (_lightMap) _lightMap->release();
     _heightMapImage->release();
     delete _quadRoot;
     for(int i=0;i<4;i++)
@@ -679,7 +684,10 @@ Terrain::Chunk * cocos2d::Terrain::getChunkByIndex(int x, int y) const
 
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
 {
-    _alphaMap->release();
+    if (_alphaMap)
+    {
+        _alphaMap->release();
+    }
     _alphaMap = newAlphaMapTexture;
 }
 
@@ -1272,7 +1280,7 @@ void Terrain::Chunk::updateIndicesLOD()
 void Terrain::Chunk::calculateAABB()
 {
     std::vector<Vec3>pos;
-    for(int i =0;i<_originalVertices.size();i++)
+    for(size_t i =0;i<_originalVertices.size();i++)
     {
         pos.push_back(_originalVertices[i]._position);
     }

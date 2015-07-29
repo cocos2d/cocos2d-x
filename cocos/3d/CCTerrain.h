@@ -304,9 +304,9 @@ private:
     friend QuadTree;
     friend Chunk;
 public:
-    void setLightMap(std::string fileName);
+    void setLightMap(const std::string& fileName);
 
-    void setLightDir(Vec3 lightDir);
+    void setLightDir(const Vec3& lightDir);
     /*init function*/
     /**initialize all Properties which terrain need */
     bool initProperties();
