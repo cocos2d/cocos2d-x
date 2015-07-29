@@ -102,7 +102,7 @@ var Slider = ccui.Slider.extend({
         this.setPercent(100 * this._ratio);
     },
     getRatio: function () {
-        return this._ratio;
+        return this.getPercent() / 100;
     }
 });
 
@@ -218,11 +218,11 @@ var AudioControlTest = AudioEngineBase.extend({
         var timeSlider = new Slider();
         timeSlider.addEventListener(function(slider, event) {
             switch(event){
-                case ccui.Slider.EventType.ON_PERCENTAGE_CHANGED:
-                case ccui.Slider.EventType.ON_SLIDEBALL_DOWN:
+                case ccui.Slider.EVENT_PERCENTAGE_CHANGED:
+                case ccui.Slider.EVENT_SLIDEBALL_DOWN:
                     self._updateTimeSlider = false;
                     break;
-                case ccui.Slider.EventType.ON_SLIDEBALL_UP:
+                case ccui.Slider.EVENT_SLIDEBALL_UP:
                     if (self._audioID !== jsb.AudioEngine.INVALID_AUDIO_ID && 
                         self._duration !== jsb.AudioEngine.TIME_UNKNOWN) {
                         var ratio = slider.getPercent() / 100;
@@ -230,7 +230,7 @@ var AudioControlTest = AudioEngineBase.extend({
                         jsb.AudioEngine.setCurrentTime(self._audioID, self._duration * ratio);
                         slider.setRatio(ratio);
                     }
-                case ccui.Slider.EventType.ON_SLIDEBALL_CANCEL:
+                case ccui.Slider.EVENT_SLIDEBALL_CANCEL:
                     self._updateTimeSlider = true;
                     break;
             }
@@ -258,7 +258,7 @@ var AudioControlTest = AudioEngineBase.extend({
     update: function (dt) {
         if (this._audioID !== jsb.AudioEngine.INVALID_AUDIO_ID ) {
             if(this._duration === jsb.AudioEngine.TIME_UNKNOWN){
-                this._duration = jsb.AudioEngine.getDuration(_audioID);
+                this._duration = jsb.AudioEngine.getDuration(this._audioID);
             }
             if(this._duration != jsb.AudioEngine.TIME_UNKNOWN){
                 var time = jsb.AudioEngine.getCurrentTime(this._audioID);
@@ -273,10 +273,10 @@ var AudioControlTest = AudioEngineBase.extend({
 
 window.AudioTestFlow = new FlowControl([
     AudioControlTest,
-    PlaySimultaneouslyTest,
-    AudioProfileTest,
-    InvalidAudioFileTest,
-    LargeAudioFileTest
+    // PlaySimultaneouslyTest,
+    // AudioProfileTest,
+    // InvalidAudioFileTest,
+    // LargeAudioFileTest
 ]);
 
 })(window);
