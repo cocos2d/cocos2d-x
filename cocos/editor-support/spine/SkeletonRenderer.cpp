@@ -1,25 +1,26 @@
 /******************************************************************************
  * Spine Runtimes Software License
- * Version 2.1
+ * Version 2.3
  * 
- * Copyright (c) 2013, Esoteric Software
+ * Copyright (c) 2013-2015, Esoteric Software
  * All rights reserved.
  * 
  * You are granted a perpetual, non-exclusive, non-sublicensable and
- * non-transferable license to install, execute and perform the Spine Runtimes
- * Software (the "Software") solely for internal use. Without the written
- * permission of Esoteric Software (typically granted by licensing Spine), you
- * may not (a) modify, translate, adapt or otherwise create derivative works,
- * improvements of the Software or develop new applications using the Software
- * or (b) remove, delete, alter or obscure any trademarks or any copyright,
- * trademark, patent or other intellectual property or proprietary rights
- * notices on or in the Software, including any copy thereof. Redistributions
- * in binary or source form must include this license and terms.
+ * non-transferable license to use, install, execute and perform the Spine
+ * Runtimes Software (the "Software") and derivative works solely for personal
+ * or internal use. Without the written permission of Esoteric Software (see
+ * Section 2 of the Spine Software License Agreement), you may not (a) modify,
+ * translate, adapt or otherwise create derivative works, improvements of the
+ * Software or develop new applications using the Software or (b) remove,
+ * delete, alter or obscure any trademarks or any copyright, trademark, patent
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
  * 
  * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
  * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
@@ -158,7 +159,7 @@ void SkeletonRenderer::drawSkeleton (const Mat4 &transform, uint32_t transformFl
 	_skeleton->b = nodeColor.b / (float)255;
 	_skeleton->a = getDisplayedOpacity() / (float)255;
 
-	int additive = -1;
+	int blendMode = -1;
 	Color4B color;
 	const float* uvs = nullptr;
 	int verticesCount = 0;
@@ -215,10 +216,22 @@ void SkeletonRenderer::drawSkeleton (const Mat4 &transform, uint32_t transformFl
 		default: ;
 		} 
 		if (texture) {
-			if (slot->data->additiveBlending != additive) {
+			if (slot->data->blendMode != blendMode) {
 				_batch->flush();
-				GL::blendFunc(_blendFunc.src, slot->data->additiveBlending ? GL_ONE : _blendFunc.dst);
-				additive = slot->data->additiveBlending;
+				blendMode = slot->data->blendMode;
+				switch (slot->data->blendMode) {
+				case SP_BLEND_MODE_ADDITIVE:
+					GL::blendFunc(_premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA, GL_ONE);
+					break;
+				case SP_BLEND_MODE_MULTIPLY:
+					GL::blendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+					break;
+				case SP_BLEND_MODE_SCREEN:
+					GL::blendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
+					break;
+				default:
+					GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+				}
 			}
 			color.a = _skeleton->a * slot->a * a * 255;
 			float multiplier = _premultipliedAlpha ? color.a : 255;
