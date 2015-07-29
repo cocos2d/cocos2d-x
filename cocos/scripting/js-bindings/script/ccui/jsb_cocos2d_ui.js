@@ -340,6 +340,12 @@ ccui.TextField.EVENT_DELETE_BACKWARD = 3;
 
 ccui.TextField.RENDERER_ZORDER = -1;
 
+/*
+ * UIRadioButton
+ */
+ccui.RadioButton.EVENT_SELECTED = 0;
+ccui.RadioButton.EVENT_UNSELECTED = 1;
+ccui.RadioButtonGroup.EVENT_SELECT_CHANGED = 0;
 
 /*
  * UIMargin
