@@ -566,6 +566,17 @@ void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
                (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
 }
 
+Rect GLViewImpl::getScissorRect() const
+{
+    GLfloat params[4];
+    glGetFloatv(GL_SCISSOR_BOX, params);
+    float x = (params[0] - _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor) / (_scaleX * _retinaFactor * _frameZoomFactor);
+    float y = (params[1] - _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor) / (_scaleY * _retinaFactor  * _frameZoomFactor);
+    float w = params[2] / (_scaleX * _retinaFactor * _frameZoomFactor);
+    float h = params[3] / (_scaleY * _retinaFactor  * _frameZoomFactor);
+    return Rect(x, y, w, h);
+}
+
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
     CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);

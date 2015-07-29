@@ -72,7 +72,7 @@ public:
 
     virtual void setViewPortInPoints(float x , float y , float w , float h) override;
     virtual void setScissorInPoints(float x , float y , float w , float h) override;
-
+    virtual Rect getScissorRect() const override;
 
     bool windowShouldClose() override;
     void pollEvents() override;
