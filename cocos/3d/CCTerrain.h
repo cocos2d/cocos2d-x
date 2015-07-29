@@ -304,6 +304,9 @@ private:
     friend QuadTree;
     friend Chunk;
 public:
+    void setLightMap(std::string fileName);
+
+    void setLightDir(Vec3 lightDir);
     /*init function*/
     /**initialize all Properties which terrain need */
     bool initProperties();
@@ -424,7 +427,6 @@ public:
     std::vector<float> getHeightData() const;
     
 protected:
-    
     Terrain();
     virtual ~Terrain();
     void onDraw(const Mat4 &transform, uint32_t flags);
@@ -475,11 +477,13 @@ protected:
     float _lodDistance[3];
     Texture2D * _detailMapTextures[4];
     Texture2D * _alphaMap;
+    Texture2D * _lightMap;
+    Vec3 _lightDir;
     CustomCommand _customCommand;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> _vertices;
-    std::vector<GLushort> _indices;
+    std::vector<unsigned int> _indices;
     int _imageWidth;
     int _imageHeight;
     Size _chunkSize;
@@ -499,8 +503,10 @@ protected:
     GLint _detailMapLocation[4];
     GLint _alphaMapLocation;
     GLint _alphaIsHasAlphaMapLocation;
+    GLint _lightMapCheckLocation;
+    GLint _lightMapLocation;
     GLint _detailMapSizeLocation[4];
-
+    GLint _lightDirLocation;
     RenderState::StateBlock* _stateBlock;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
