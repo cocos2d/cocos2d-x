@@ -24,11 +24,11 @@ import json
 import shutil
 
 def dumpUsage():
-    print "Usage: create_project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMING_LANGUAGE"
+    print "Usage: create_project.py -project PROJECT_NAME -package PACKAGE_NAME -language PROGRAMMING_LANGUAGE"
     print "Options:"
     print "  -project   PROJECT_NAME          Project name, for example: MyGame"
     print "  -package   PACKAGE_NAME          Package name, for example: com.MyCompany.MyAwesomeGame"
-    print "  -language  PROGRAMING_LANGUAGE   Major programing lanauge you want to used, should be [cpp | lua | javascript]"
+    print "  -language  PROGRAMMING_LANGUAGE   Major programming languages you want to use, should be [cpp | lua | javascript]"
     print ""
     print "Sample 1: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame"
     print "Sample 2: ./create_project.py -project MyGame -package com.MyCompany.AwesomeGame -language javascript"
@@ -57,7 +57,7 @@ def checkParams(context):
             # choose a scripting language
             context["language"] = sys.argv[i+1]
     
-    # pinrt error log our required paramters are not ready
+    # print error log because our required parameters are not ready
     raise_error = False
     if context["dst_project_name"] == "undefined":
         print "Invalid -project parameter"
