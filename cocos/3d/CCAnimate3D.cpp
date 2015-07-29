@@ -308,6 +308,8 @@ void Animate3D::update(float t)
                 _weight = 0.0f;
                 
                 s_fadeOutAnimates.erase(_target);
+                _target->stopAction(this);
+                return;
             }
         }
         _lastTime = t;
@@ -442,10 +444,17 @@ void Animate3D::removeFromMap()
     //remove this action from map
     if (_target)
     {
-        Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-        s_fadeInAnimates.erase(sprite);
-        s_fadeOutAnimates.erase(sprite);
-        s_runningAnimates.erase(sprite);
+        auto it = s_fadeInAnimates.find(_target);
+        if (it != s_fadeInAnimates.end() && it->second == this)
+            s_fadeInAnimates.erase(it);
+        
+        it = s_fadeOutAnimates.find(_target);
+        if (it != s_fadeOutAnimates.end() && it->second == this)
+            s_fadeOutAnimates.erase(it);
+        
+        it = s_runningAnimates.find(_target);
+        if (it != s_runningAnimates.end() && it->second == this)
+            s_runningAnimates.erase(it);
     }
 }
 
