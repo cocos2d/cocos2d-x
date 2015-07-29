@@ -514,6 +514,39 @@ void TestActionTimelineSkeleton::onEnter()
         leftleg->setVisible(!leftleg->isVisible());
         // bug fixed while leftleg's child hide with leftleg's visible
     });
+
+
+    /*************    Skeleton nest Skeleton test       *************/
+    auto nestSkeletonBtn = cocos2d::ui::Button::create();
+    nestSkeletonBtn->setTitleText("Skeleton Nest");
+    nestSkeletonBtn->setPosition(Vec2(VisibleRect::right().x - 40, VisibleRect::top().y - 120));
+    addChild(nestSkeletonBtn);
+    auto nestSkeleton = static_cast<SkeletonNode*>(CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb"));
+    nestSkeleton->retain();
+    ActionTimeline* nestSkeletonAction = action->clone();
+    nestSkeletonAction->retain();
+    nestSkeleton->runAction(nestSkeletonAction);
+    nestSkeleton->setScale(0.2f);
+    nestSkeleton->setPosition(150, 300);
+    nestSkeletonAction->gotoFrameAndPlay(0);
+    // show debug draws, or comment this for hide bones draws
+    for (auto& nestbonechild : nestSkeleton->getAllSubBonesMap())
+    {
+        nestbonechild.second->setDebugDrawEnabled(true);
+    }
+
+    nestSkeletonBtn->addClickEventListener([leftleg, nestSkeleton, nestSkeletonAction](Ref* sender)
+    {
+        if (nestSkeleton->getParent() == nullptr)
+        {
+            leftleg->addChild(nestSkeleton);
+        }
+        else
+        {
+            nestSkeleton->removeFromParentAndCleanup(false);
+        }
+        // bug fixed while leftleg's child hide with leftleg's visible
+    });
 }
 
 std::string TestActionTimelineSkeleton::title() const
