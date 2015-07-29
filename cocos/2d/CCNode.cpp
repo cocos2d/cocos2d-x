@@ -2344,8 +2344,8 @@ bool isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, 
     // second, get three points which define content plane
     //  these points define a plane P(u, w) = A + uB + wC
     Vec3 A = Vec3(rect.origin.x, rect.origin.y, 0);
-    Vec3 B(rect.size.width, 0, 0);
-    Vec3 C(0, rect.size.height, 0);
+    Vec3 B(rect.origin.x + rect.size.width, rect.origin.y, 0);
+    Vec3 C(rect.origin.x, rect.origin.y + rect.size.height, 0);
     B = B - A;
     C = C - A;
     
