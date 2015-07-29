@@ -37,6 +37,12 @@ var nativetestItemNames = [
         testScene:function () {
             AudioTestFlow.start();
         }
+    },
+    {
+        itemTitle:"JSBExtendTest",
+        testScene:function () {
+            cc.director.runScene(new JSBExtendTest());
+        }
     }
 ];
 

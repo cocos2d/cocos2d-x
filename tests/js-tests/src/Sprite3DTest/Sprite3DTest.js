@@ -306,9 +306,9 @@ var Sprite3DWithSkinTest = Sprite3DTestDemo.extend({
         this.addChild(sprite);
         sprite.setPosition(position);
 
-        var animation = jsb.Animation3D.create("Sprite3DTest/orc.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/orc.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             var inverse = Math.random() < 0.33 ? true : false;
 
             var rand2 = Math.random();
@@ -371,14 +371,14 @@ var Animate3DTest = (function(){
             this.addChild(sprite);
             this._sprite = sprite;
 
-            var animation = jsb.Animation3D.create("Sprite3DTest/tortoise.c3b");
+            var animation = new jsb.Animation3D("Sprite3DTest/tortoise.c3b");
             if(animation){
-                var animate = jsb.Animate3D.create(animation, 0, 1.933);
+                var animate = new jsb.Animate3D(animation, 0, 1.933);
                 this._swim = new cc.RepeatForever(animate);
                 sprite.runAction(this._swim);
 
                 this._swim.retain();
-                this._hurt = jsb.Animate3D.create(animation, 1.933, 2.8);
+                this._hurt = new jsb.Animate3D(animation, 1.933, 2.8);
                 this._hurt.retain();
 
                 this._state = State.SWIMMING;
@@ -484,9 +484,9 @@ var AttachmentTest = Sprite3DTestDemo.extend({
         var sp = new jsb.Sprite3D("Sprite3DTest/axe.c3b");
         sprite.getAttachNode("Bip001 R Hand").addChild(sp);
 
-        var animation = jsb.Animation3D.create("Sprite3DTest/orc.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/orc.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             sprite.runAction(cc.repeatForever(animate));
         }
 
@@ -566,9 +566,9 @@ var Sprite3DReskinTest = (function(){
             sprite.setRotation3D(cc.math.vec3(0, 0, 0));
             this.addChild(sprite);
             sprite.setPosition(cc.p(position.x, position.y - 60));
-            var animation = jsb.Animation3D.create("Sprite3DTest/ReskinGirl.c3b");
+            var animation = new jsb.Animation3D("Sprite3DTest/ReskinGirl.c3b");
             if(animation){
-                var animate = jsb.Animate3D.create(animation);
+                var animate = new jsb.Animate3D(animation);
                 sprite.runAction(cc.repeatForever(animate));
             }
             this._sprite = sprite;
@@ -700,9 +700,9 @@ var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
         this.addChild(sprite);
 
         this._sprite = sprite;
-        var animation = jsb.Animation3D.create("Sprite3DTest/tortoise.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/tortoise.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             sprite.runAction(cc.repeatForever(animate));
         }
 
@@ -810,9 +810,9 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
         var sp = new jsb.Sprite3D("Sprite3DTest/axe.c3b");
         sprite.getAttachNode("Bip001 R Hand").addChild(sp);
 
-        var animation = jsb.Animation3D.create(fileName);
+        var animation = new jsb.Animation3D(fileName);
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             sprite.runAction(cc.repeatForever(animate));
         }
 
@@ -829,9 +829,9 @@ var Sprite3DMirrorTest = Sprite3DTestDemo.extend({
         sp = new jsb.Sprite3D("Sprite3DTest/axe.c3b");
         sprite.getAttachNode("Bip001 R Hand").addChild(sp);
         
-        var animation = jsb.Animation3D.create(fileName);
+        var animation = new jsb.Animation3D(fileName);
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             sprite.runAction(cc.repeatForever(animate));
         }
     }
@@ -854,9 +854,9 @@ var QuaternionTest = Sprite3DTestDemo.extend({
         sprite.setPosition(cc.p(s.width/2 + this._radius * Math.cos(this._accAngle), s.height / 2 + this._radius * Math.sin(this._accAngle)));
         this.addChild(sprite);
         this._sprite = sprite;
-        var animation = jsb.Animation3D.create("Sprite3DTest/tortoise.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/tortoise.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation, 0, 1.933);
+            var animate = new jsb.Animate3D(animation, 0, 1.933);
             sprite.runAction(cc.repeatForever(animate));
         }
 
@@ -937,9 +937,9 @@ var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
 
         var sprite = new jsb.Sprite3D("Sprite3DTest/girl.c3b");
         sprite.setScale(0.15);
-        var animation = jsb.Animation3D.create("Sprite3DTest/girl.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/girl.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             sprite.runAction(cc.repeatForever(animate));
         }
 
@@ -1006,9 +1006,9 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
 
         var sprite = new jsb.Sprite3D("Sprite3DTest/girl.c3b");
         sprite.setScale(0.5);
-        var animation = jsb.Animation3D.create("Sprite3DTest/girl.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/girl.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             sprite.runAction(cc.repeatForever(animate));
         }
         sprite.setPosition(s.width/4, s.height/4);
@@ -1139,9 +1139,9 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
         effect2.setOutlineWidth(0.02);
         sprite.addEffect(effect2, -2);
 
-        var animation = jsb.Animation3D.create("Sprite3DTest/orc.c3b");
+        var animation = new jsb.Animation3D("Sprite3DTest/orc.c3b");
         if(animation){
-            var animate = jsb.Animate3D.create(animation);
+            var animate = new jsb.Animate3D(animation);
             var inverse = Math.random() < 0.33 ? true : false;
 
             var rand2 = Math.random();
@@ -1190,7 +1190,7 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         var light = jsb.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
         this.addChild(light);
         //set the ambient light 
-        var ambient = jsb.AmbientLight.create(cc.color(55, 55, 55));
+        var ambient = new jsb.AmbientLight(cc.color(55, 55, 55));
         this.addChild(ambient);
 
         //create a listener

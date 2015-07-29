@@ -315,8 +315,6 @@ public:
     void formatText();
 
     //override functions.
-    virtual void setAnchorPoint(const Vec2 &pt) override;
-    virtual Size getVirtualRendererSize() const override;
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual std::string getDescription() const override;
     
@@ -339,7 +337,6 @@ protected:
     std::vector<Vector<Node*>*> _elementRenders;
     float _leftSpaceWidth;
     float _verticalSpace;
-    Node* _elementRenderersContainer;
 };
     
 }
