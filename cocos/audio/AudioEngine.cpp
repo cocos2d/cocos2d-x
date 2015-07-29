@@ -23,11 +23,12 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#include <condition_variable>
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "audio/include/AudioEngine.h"
+#include <condition_variable>
+#include <queue>
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
 
@@ -67,101 +68,82 @@ AudioEngine::AudioEngineThreadPool* AudioEngine::s_threadPool = nullptr;
 class AudioEngine::AudioEngineThreadPool
 {
 public:
-    AudioEngineThreadPool(bool detach)
-        : _numThread(6)
-        , _detach(detach)
+    AudioEngineThreadPool(bool detach, int threads = 4)
+        : _detach(detach)
+        , _stop(false)
     {
-        s_threadPool = this;
-
-        _threads.reserve(_numThread);
-        _tasks.reserve(_numThread);
-
-        for (int index = 0; index < _numThread; ++index) {
-            _tasks.push_back(nullptr);
-            _threads.push_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, index)));
+        for (int index = 0; index < threads; ++index)
+        {
+            _workers.emplace_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this)));
             if (_detach)
             {
-                _threads[index].detach();
+                _workers[index].detach();
             }
         }
     }
 
     void addTask(const std::function<void()> &task){
-        _taskMutex.lock();
-        int targetIndex = -1;
-        for (int index = 0; index < _numThread; ++index) {
-            if (_tasks[index] == nullptr) {
-                targetIndex = index;
-                _tasks[index] = task;
-                break;
-            }
-        }
-        if (targetIndex == -1) {
-            _tasks.push_back(task);
-            _threads.push_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, _numThread)));
-            if (_detach)
-            {
-                _threads[_numThread].detach();
-            }
-            _numThread++;
-        }
-        _taskMutex.unlock();
-        _sleepCondition.notify_all();
+        std::unique_lock<std::mutex> lk(_queueMutex);
+        _taskQueue.emplace(task);
+        _taskCondition.notify_one();
     }
 
-    void destroy()
+    ~AudioEngineThreadPool()
     {
-        std::unique_lock<std::mutex> lk(_sleepMutex);
-        _sleepCondition.notify_all();
+        {
+            std::unique_lock<std::mutex> lk(_queueMutex);
+            _stop = true;
+            _taskCondition.notify_all();
+        }
 
         if (!_detach)
         {
-            for (int index = 0; index < _numThread; ++index) {
-                _threads[index].join();
+            for (auto&& worker : _workers) {
+                worker.join();
             }
         }
     }
 
 private:
-    std::vector<std::thread>  _threads;
-    std::vector< std::function<void()> > _tasks;
-
-    void threadFunc(int index)
+    void threadFunc()
     {
-        while (s_threadPool == this) {
+        while (true) {
             std::function<void()> task = nullptr;
-            _taskMutex.lock();
-            task = _tasks[index];
-            _taskMutex.unlock();
-
-            if (nullptr == task)
             {
-                std::unique_lock<std::mutex> lk(_sleepMutex);
-                _sleepCondition.wait(lk);
-                continue;
+                std::unique_lock<std::mutex> lk(_queueMutex);
+                if (_stop)
+                {
+                    break;
+                }
+                if (!_taskQueue.empty())
+                {
+                    task = std::move(_taskQueue.front());
+                    _taskQueue.pop();
+                }
+                else
+                {
+                    _taskCondition.wait(lk);
+                    continue;
+                }
             }
 
             task();
-
-            _taskMutex.lock();
-            _tasks[index] = nullptr;
-            _taskMutex.unlock();
         }
     }
 
-    int _numThread;
+    std::vector<std::thread>  _workers;
+    std::queue< std::function<void()> > _taskQueue;
 
-    std::mutex _taskMutex;
-    std::mutex _sleepMutex;
-    std::condition_variable _sleepCondition;
+    std::mutex _queueMutex;
+    std::condition_variable _taskCondition;
     bool _detach;
+    bool _stop;
 };
 
 void AudioEngine::end()
 {
     if (s_threadPool)
     {
-        s_threadPool->destroy();
         delete s_threadPool;
         s_threadPool = nullptr;
     }
@@ -255,7 +237,6 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
-            audioRef.is3dAudio = false;
             audioRef.filePath = &it->first;
 
             if (profileHelper) {
@@ -530,21 +511,25 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     }
 }
 
-void AudioEngine::preload(const std::string& filePath)
+void AudioEngine::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
 {
     lazyInit();
 
     if (_audioEngineImpl)
     {
         if (!FileUtils::getInstance()->isFileExist(filePath)){
+            if (callback)
+            {
+                callback(false);
+            }
             return;
         }
 
-        _audioEngineImpl->preload(filePath);
+        _audioEngineImpl->preload(filePath, callback);
     }
 }
 
-void AudioEngine::addTask(const std::function<void()> &task)
+void AudioEngine::addTask(const std::function<void()>& task)
 {
     lazyInit();
 
