@@ -936,6 +936,18 @@
 		D0FD03641A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		ED545A6D1B68A18300C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
+		ED545A6E1B68A18B00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
+		ED545A6F1B68A18C00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
+		ED545A701B68A18F00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
+		ED545A711B68A19000C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
+		ED545A731B68A1AC00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED545A741B68A1B400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED545A751B68A1B500C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED545A761B68A1B600C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED545A771B68A1B600C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED545A781B68A1B800C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED545A791B68A1B900C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -1993,6 +2005,8 @@
 		D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AllocatorTest.cpp; path = AllocatorTest/AllocatorTest.cpp; sourceTree = "<group>"; };
 		D0FD03631A3B546400825BB5 /* AllocatorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllocatorTest.h; path = AllocatorTest/AllocatorTest.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		ED545A6C1B68A18300C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		ED545A721B68A1AC00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -2010,6 +2024,7 @@
 				15CBA9D7196EEA63005877BB /* AudioToolbox.framework in Frameworks */,
 				15CBA9D4196EEA33005877BB /* OpenAL.framework in Frameworks */,
 				15CBA9D9196EEA7D005877BB /* QuartzCore.framework in Frameworks */,
+				ED545A781B68A1B800C3958E /* libiconv.dylib in Frameworks */,
 				15CBA9D5196EEA43005877BB /* CoreGraphics.framework in Frameworks */,
 				15CBA9D2196EEA33005877BB /* OpenGLES.framework in Frameworks */,
 				15CBA9D0196EEA05005877BB /* UIKit.framework in Frameworks */,
@@ -2028,6 +2043,7 @@
 				185663F31B415706009EF2AE /* libcurl.dylib in Frameworks */,
 				185663EF1B415681009EF2AE /* libjscocos2d Mac.a in Frameworks */,
 				185663581B4155D3009EF2AE /* Security.framework in Frameworks */,
+				ED545A711B68A19000C3958E /* libiconv.dylib in Frameworks */,
 				1856635A1B4155D3009EF2AE /* libcocos2d Mac.a in Frameworks */,
 				1856635B1B4155D3009EF2AE /* libz.dylib in Frameworks */,
 				1856635C1B4155D3009EF2AE /* IOKit.framework in Frameworks */,
@@ -2050,6 +2066,7 @@
 				185663A71B4155DD009EF2AE /* libcocos2d iOS.a in Frameworks */,
 				185663A81B4155DD009EF2AE /* MediaPlayer.framework in Frameworks */,
 				185663A91B4155DD009EF2AE /* libz.dylib in Frameworks */,
+				ED545A791B68A1B900C3958E /* libiconv.dylib in Frameworks */,
 				185663AA1B4155DD009EF2AE /* CoreMotion.framework in Frameworks */,
 				185663AB1B4155DD009EF2AE /* AudioToolbox.framework in Frameworks */,
 				185663AC1B4155DD009EF2AE /* OpenAL.framework in Frameworks */,
@@ -2068,6 +2085,7 @@
 			files = (
 				1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */,
 				1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */,
+				ED545A6E1B68A18B00C3958E /* libiconv.dylib in Frameworks */,
 				1A0EE2A718CDF6DA004CD58F /* libz.dylib in Frameworks */,
 				1A0EE2A818CDF6DA004CD58F /* Foundation.framework in Frameworks */,
 				1A0EE2A918CDF6DA004CD58F /* AudioToolbox.framework in Frameworks */,
@@ -2089,6 +2107,7 @@
 				1A0EE2CB18CDF733004CD58F /* IOKit.framework in Frameworks */,
 				1A0EE2CC18CDF733004CD58F /* Foundation.framework in Frameworks */,
 				1A0EE2CD18CDF733004CD58F /* AudioToolbox.framework in Frameworks */,
+				ED545A701B68A18F00C3958E /* libiconv.dylib in Frameworks */,
 				1A0EE2CE18CDF733004CD58F /* ApplicationServices.framework in Frameworks */,
 				1A0EE2CF18CDF733004CD58F /* OpenAL.framework in Frameworks */,
 				1A0EE2D018CDF733004CD58F /* QuartzCore.framework in Frameworks */,
@@ -2107,6 +2126,7 @@
 				1A0EE40818CDF775004CD58F /* Foundation.framework in Frameworks */,
 				1A0EE40918CDF775004CD58F /* AudioToolbox.framework in Frameworks */,
 				1A0EE40A18CDF775004CD58F /* OpenAL.framework in Frameworks */,
+				ED545A741B68A1B400C3958E /* libiconv.dylib in Frameworks */,
 				1A0EE40B18CDF775004CD58F /* QuartzCore.framework in Frameworks */,
 				1A0EE40C18CDF775004CD58F /* CoreGraphics.framework in Frameworks */,
 				1A0EE40D18CDF775004CD58F /* OpenGLES.framework in Frameworks */,
@@ -2119,6 +2139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED545A761B68A1B600C3958E /* libiconv.dylib in Frameworks */,
 				15EFA68B198B3AD8000C57D3 /* libcocos2d iOS.a in Frameworks */,
 				15EFA68D198B3AD8000C57D3 /* libluacocos2d iOS.a in Frameworks */,
 				15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */,
@@ -2142,6 +2163,7 @@
 				59E170151AB42EB10007F2BF /* Security.framework in Frameworks */,
 				15EFA273198B265A000C57D3 /* libluacocos2d Mac.a in Frameworks */,
 				1ABCA2C318CD92420087CE3A /* libcocos2d Mac.a in Frameworks */,
+				ED545A6F1B68A18C00C3958E /* libiconv.dylib in Frameworks */,
 				1ABCA36118CD9AC00087CE3A /* libz.dylib in Frameworks */,
 				1ABCA35F18CD9AAE0087CE3A /* IOKit.framework in Frameworks */,
 				1ABCA35E18CD9AA50087CE3A /* Foundation.framework in Frameworks */,
@@ -2167,6 +2189,7 @@
 				1ABCA3A918CD9F130087CE3A /* AudioToolbox.framework in Frameworks */,
 				1ABCA3A718CD9F0D0087CE3A /* OpenAL.framework in Frameworks */,
 				1ABCA3A518CD9F060087CE3A /* QuartzCore.framework in Frameworks */,
+				ED545A751B68A1B500C3958E /* libiconv.dylib in Frameworks */,
 				1ABCA3A318CD9EFE0087CE3A /* CoreGraphics.framework in Frameworks */,
 				1ABCA3A118CD9EF60087CE3A /* OpenGLES.framework in Frameworks */,
 				1ABCA39F18CD9EE50087CE3A /* UIKit.framework in Frameworks */,
@@ -2179,6 +2202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED545A6D1B68A18300C3958E /* libiconv.dylib in Frameworks */,
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
 				826294431AAF071500CB7CF7 /* Security.framework in Frameworks */,
 				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
@@ -2200,6 +2224,7 @@
 				3E61773D1960FBD200DE83F5 /* GameController.framework in Frameworks */,
 				3E6177221960FAED00DE83F5 /* libcocos2d iOS.a in Frameworks */,
 				3E6177241960FAED00DE83F5 /* CoreMotion.framework in Frameworks */,
+				ED545A771B68A1B600C3958E /* libiconv.dylib in Frameworks */,
 				3E6177251960FAED00DE83F5 /* libz.dylib in Frameworks */,
 				3E6177261960FAED00DE83F5 /* Foundation.framework in Frameworks */,
 				3E6177271960FAED00DE83F5 /* AudioToolbox.framework in Frameworks */,
@@ -2216,6 +2241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED545A731B68A1AC00C3958E /* libiconv.dylib in Frameworks */,
 				52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */,
 				3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */,
 				1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */,
@@ -4092,6 +4118,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ED545A721B68A1AC00C3958E /* libiconv.dylib */,
+				ED545A6C1B68A18300C3958E /* libiconv.dylib */,
 				18FC4D5E1B4257CD00B76F95 /* libsqlite3.dylib */,
 				185664921B424694009EF2AE /* Cocoa.framework */,
 				185663F11B4156F5009EF2AE /* libcurl.3.dylib */,
