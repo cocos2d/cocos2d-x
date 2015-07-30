@@ -128,7 +128,8 @@ protected:
     int _currentPageDataSize;
     float _currentPageOrigX;
     float _currentPageOrigY;
-    float _letterPadding;
+    int _letterPadding;
+    int _letterEdgeExtend;
 
     int _fontAscender;
     EventListenerCustom* _rendererRecreatedListener;
