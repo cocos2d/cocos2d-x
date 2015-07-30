@@ -75,6 +75,11 @@ public:
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
 private:
+    static const char* _glyphASCII;
+    static const char* _glyphNEHE;
+    static FT_Library _FTlibrary;
+    static bool _FTInitialized;
+
     FontFreeType(bool distanceFieldEnabled = false, int outline = 0);
     virtual ~FontFreeType();
 
@@ -85,18 +90,22 @@ private:
     
     int getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
     unsigned char* getGlyphBitmapWithOutline(unsigned short code, FT_BBox &bbox);
+
+    void setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs = nullptr);
+    const char* getGlyphCollection() const;
     
-    static FT_Library _FTlibrary;
-    static bool       _FTInitialized;
-    FT_Face           _fontRef;
-    FT_Stroker        _stroker;
-    std::string       _fontName;
-    bool              _distanceFieldEnabled;
-    float             _outlineSize;
+    FT_Face _fontRef;
+    FT_Stroker _stroker;
+    FT_Encoding _encoding;
+
+    std::string _fontName;
+    bool _distanceFieldEnabled;
+    float _outlineSize;
     int _lineHeight;
     FontAtlas* _fontAtlas;
 
-    FT_Encoding _encoding;
+    GlyphCollection _usedGlyphs;
+    std::string _customGlyphs;
 };
 
 /// @endcond

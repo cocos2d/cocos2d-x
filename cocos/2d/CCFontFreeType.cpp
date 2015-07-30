@@ -38,6 +38,9 @@ FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
 
+const char* FontFreeType::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
+const char* FontFreeType::_glyphNEHE = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
+
 typedef struct _DataRef
 {
     Data data;
@@ -53,7 +56,7 @@ FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, G
     if (!tempFont)
         return nullptr;
     
-    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
+    tempFont->setGlyphCollection(glyphs, customGlyphs);
     
     if (!tempFont->createFontObject(fontName, fontSize))
     {
@@ -100,6 +103,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _lineHeight(0)
 , _fontAtlas(nullptr)
 , _encoding(FT_ENCODING_UNICODE)
+, _usedGlyphs(GlyphCollection::ASCII)
 {
     if (outline > 0)
     {
@@ -202,7 +206,7 @@ FontAtlas * FontFreeType::createFontAtlas()
         if (_fontAtlas && _usedGlyphs != GlyphCollection::DYNAMIC)
         {
             std::u16string utf16;
-            if (StringUtils::UTF8ToUTF16(getCurrentGlyphCollection(), utf16))
+            if (StringUtils::UTF8ToUTF16(getGlyphCollection(), utf16))
             {
                 _fontAtlas->prepareLetterDefinitions(utf16);
             }
@@ -599,6 +603,38 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
             iY += 1;
         }
     } 
+}
+
+void FontFreeType::setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs /* = nullptr */)
+{
+    _usedGlyphs = glyphs;
+    if (glyphs == GlyphCollection::CUSTOM)
+    {
+        _customGlyphs = customGlyphs;
+    }
+}
+
+const char* FontFreeType::getGlyphCollection() const
+{
+    const char* glyphCollection = nullptr;
+    switch (_usedGlyphs)
+    {
+    case cocos2d::GlyphCollection::DYNAMIC:
+        break;
+    case cocos2d::GlyphCollection::NEHE:
+        glyphCollection = _glyphNEHE;
+        break;
+    case cocos2d::GlyphCollection::ASCII:
+        glyphCollection = _glyphASCII;
+        break;
+    case cocos2d::GlyphCollection::CUSTOM:
+        glyphCollection = _customGlyphs.c_str();
+        break;
+    default:
+        break;
+    }
+
+    return glyphCollection;
 }
 
 NS_CC_END
