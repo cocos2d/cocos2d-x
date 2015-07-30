@@ -107,8 +107,6 @@ class EventListenerCustom;
 class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
-    static const int DistanceFieldFontSize;
-
     /// @name Creators
     /// @{
 
@@ -455,12 +453,6 @@ public:
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
-    virtual void setScale(float scale) override;
-    virtual void setScaleX(float scaleX) override;
-    virtual void setScaleY(float scaleY) override;
-    virtual float getScaleX() const override;
-    virtual float getScaleY() const override;
-
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
@@ -515,8 +507,6 @@ protected:
     };
 
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
-
-    void setCorrectionScale(float fontScale);
 
     void computeStringNumLines();
 
@@ -590,9 +580,6 @@ protected:
     float _letterOffsetY;
     float _tailoredTopY;
     float _tailoredBottomY;
-
-    //the correction scale for distance field.
-    float _correctionScale;
 
     LabelEffect _currLabelEffect;
     Color4F _effectColorF;

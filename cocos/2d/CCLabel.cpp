@@ -41,8 +41,6 @@
 
 NS_CC_BEGIN
 
-const int Label::DistanceFieldFontSize = 50;
-
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
  */
@@ -449,7 +447,6 @@ void Label::reset()
     _shadowEnabled = false;
     _shadowBlurRadius = 0.f;
 
-    _correctionScale = 1.f;
     _useDistanceField = false;
     _useA8Shader = false;
     _clipEnabled = false;
@@ -556,10 +553,6 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     {
         _currLabelEffect = LabelEffect::NORMAL;
         updateShaderProgram();
-        if(ttfConfig.distanceFieldEnabled)
-        {
-            this->setCorrectionScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
-        }
     }
 
     return true;
@@ -636,57 +629,6 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
     {
         _lineBreakWithoutSpaces = breakWithoutSpace;
         _contentDirty = true;     
-    }
-}
-
-void Label::setScale(float scale)
-{
-    if (_useDistanceField)
-    {
-        scale *= _correctionScale;
-    } 
-    Node::setScale(scale);
-}
-
-void Label::setScaleX(float scaleX)
-{
-    if (_useDistanceField)
-    {
-        scaleX *= _correctionScale;
-    } 
-    Node::setScaleX(scaleX);
-}
-
-void Label::setScaleY(float scaleY)
-{
-    if (_useDistanceField)
-    {
-        scaleY *= _correctionScale;
-    } 
-    Node::setScaleY(scaleY);
-}
-
-float Label::getScaleY() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleY / _correctionScale;
-    }
-    else
-    {
-        return _scaleY;
-    }
-}
-
-float Label::getScaleX() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleX / _correctionScale;
-    }
-    else
-    {
-        return _scaleX;
     }
 }
 
@@ -981,12 +923,6 @@ void Label::disableEffect(LabelEffect effect)
     default:
         break;
     }
-}
-
-void Label::setCorrectionScale(float correctionScale)
-{
-    _correctionScale = correctionScale * CC_CONTENT_SCALE_FACTOR();
-    Node::setScale(_correctionScale);
 }
 
 void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
