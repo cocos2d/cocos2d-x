@@ -1254,6 +1254,7 @@
         "docs/cocos2dx_portrait.png", 
         "docs/doxygen.config", 
         "docs/doxygen_white_book.config", 
+        "docs/framework_architecture.jpg", 
         "docs/img-cocos.jpg", 
         "download-deps.py", 
         "extensions/Android.mk", 
