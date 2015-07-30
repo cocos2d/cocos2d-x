@@ -2,7 +2,7 @@
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "cocos2d_specifics.hpp"
 #include "CCPhysics3D.h"
-#include "3d/jsb_cocos2dx_3d_conversions.h"
+#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
