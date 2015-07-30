@@ -60822,20 +60822,36 @@ void js_register_cocos2dx_GLProgram(JSContext *cx, JS::HandleObject global) {
 JSClass  *jsb_cocos2d_GLProgramCache_class;
 JSObject *jsb_cocos2d_GLProgramCache_prototype;
 
-bool js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLProgramCache_loadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_loadDefaultGLPrograms : Invalid Native Object");
     if (argc == 0) {
-        cobj->reloadDefaultGLPrograms();
+        cobj->loadDefaultGLPrograms();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_GLProgramCache_loadDefaultGLPrograms : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_GLProgramCache_reloadDefaultGLProgramsRelativeToLights(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_reloadDefaultGLProgramsRelativeToLights : Invalid Native Object");
+    if (argc == 0) {
+        cobj->reloadDefaultGLProgramsRelativeToLights();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramCache_reloadDefaultGLProgramsRelativeToLights : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_GLProgramCache_addGLProgram(JSContext *cx, uint32_t argc, jsval *vp)
@@ -60868,6 +60884,22 @@ bool js_cocos2dx_GLProgramCache_addGLProgram(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_GLProgramCache_addGLProgram : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
+bool js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms : Invalid Native Object");
+    if (argc == 0) {
+        cobj->reloadDefaultGLPrograms();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_GLProgramCache_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -60895,22 +60927,6 @@ bool js_cocos2dx_GLProgramCache_getGLProgram(JSContext *cx, uint32_t argc, jsval
     }
 
     JS_ReportError(cx, "js_cocos2dx_GLProgramCache_getGLProgram : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_GLProgramCache_loadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::GLProgramCache* cobj = (cocos2d::GLProgramCache *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramCache_loadDefaultGLPrograms : Invalid Native Object");
-    if (argc == 0) {
-        cobj->loadDefaultGLPrograms();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_GLProgramCache_loadDefaultGLPrograms : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_GLProgramCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
@@ -61000,10 +61016,11 @@ void js_register_cocos2dx_GLProgramCache(JSContext *cx, JS::HandleObject global)
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("reloadDefaultShaders", js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addProgram", js_cocos2dx_GLProgramCache_addGLProgram, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getProgram", js_cocos2dx_GLProgramCache_getGLProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadDefaultShaders", js_cocos2dx_GLProgramCache_loadDefaultGLPrograms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reloadDefaultGLProgramsRelativeToLights", js_cocos2dx_GLProgramCache_reloadDefaultGLProgramsRelativeToLights, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addProgram", js_cocos2dx_GLProgramCache_addGLProgram, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("reloadDefaultShaders", js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getProgram", js_cocos2dx_GLProgramCache_getGLProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
