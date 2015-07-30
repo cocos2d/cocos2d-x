@@ -4171,6 +4171,53 @@ int lua_cocos2dx_physics3d_Physics3DWorld_collisionChecking(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DWorld* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DWorld",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Physics3DWorld*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback'", nullptr);
+            return 0;
+        }
+        cobj->setGhostPairCallback();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DWorld:setGhostPairCallback",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4730,6 +4777,7 @@ int lua_register_cocos2dx_physics3d_Physics3DWorld(lua_State* tolua_S)
         tolua_function(tolua_S,"stepSimulate",lua_cocos2dx_physics3d_Physics3DWorld_stepSimulate);
         tolua_function(tolua_S,"needCollisionChecking",lua_cocos2dx_physics3d_Physics3DWorld_needCollisionChecking);
         tolua_function(tolua_S,"collisionChecking",lua_cocos2dx_physics3d_Physics3DWorld_collisionChecking);
+        tolua_function(tolua_S,"setGhostPairCallback",lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback);
         tolua_function(tolua_S,"removeAllPhysics3DObjects",lua_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects);
         tolua_function(tolua_S,"isDebugDrawEnabled",lua_cocos2dx_physics3d_Physics3DWorld_isDebugDrawEnabled);
         tolua_function(tolua_S,"removeAllPhysics3DConstraints",lua_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DConstraints);
