@@ -947,6 +947,15 @@ Widget : function (
 {
 },
 
+/**
+ * @method Widget
+ * @constructor
+ */
+Widget : function (
+)
+{
+},
+
 };
 
 /**
@@ -1311,6 +1320,15 @@ Layout : function (
 {
 },
 
+/**
+ * @method Layout
+ * @constructor
+ */
+Layout : function (
+)
+{
+},
+
 };
 
 /**
@@ -1657,6 +1675,15 @@ Button : function (
 {
 },
 
+/**
+ * @method Button
+ * @constructor
+ */
+Button : function (
+)
+{
+},
+
 };
 
 /**
@@ -1854,6 +1881,15 @@ CheckBox : function (
 {
 },
 
+/**
+ * @method CheckBox
+ * @constructor
+ */
+CheckBox : function (
+)
+{
+},
+
 };
 
 /**
@@ -1891,6 +1927,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method RadioButton
+ * @constructor
+ */
+RadioButton : function (
+)
+{
 },
 
 /**
@@ -2010,6 +2055,15 @@ RadioButtonGroup : function (
 {
 },
 
+/**
+ * @method RadioButtonGroup
+ * @constructor
+ */
+RadioButtonGroup : function (
+)
+{
+},
+
 };
 
 /**
@@ -2115,6 +2169,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method ImageView
+ * @constructor
+ */
+ImageView : function (
+)
+{
 },
 
 /**
@@ -2414,6 +2477,15 @@ Text : function (
 {
 },
 
+/**
+ * @method Text
+ * @constructor
+ */
+Text : function (
+)
+{
+},
+
 };
 
 /**
@@ -2505,6 +2577,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method TextAtlas
+ * @constructor
+ */
+TextAtlas : function (
+)
+{
 },
 
 /**
@@ -2639,6 +2720,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method LoadingBar
+ * @constructor
+ */
+LoadingBar : function (
+)
+{
 },
 
 /**
@@ -3198,6 +3288,15 @@ ScrollView : function (
 {
 },
 
+/**
+ * @method ScrollView
+ * @constructor
+ */
+ScrollView : function (
+)
+{
+},
+
 };
 
 /**
@@ -3397,6 +3496,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method ListView
+ * @constructor
+ */
+ListView : function (
+)
+{
 },
 
 /**
@@ -3645,6 +3753,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method Slider
+ * @constructor
+ */
+Slider : function (
+)
+{
 },
 
 /**
@@ -4388,6 +4505,15 @@ TextField : function (
 {
 },
 
+/**
+ * @method TextField
+ * @constructor
+ */
+TextField : function (
+)
+{
+},
+
 };
 
 /**
@@ -4457,6 +4583,15 @@ createInstance : function (
 )
 {
     return cc.Ref;
+},
+
+/**
+ * @method TextBMFont
+ * @constructor
+ */
+TextBMFont : function (
+)
+{
 },
 
 /**
@@ -4660,6 +4795,15 @@ PageView : function (
 {
 },
 
+/**
+ * @method PageView
+ * @constructor
+ */
+PageView : function (
+)
+{
+},
+
 };
 
 /**
@@ -4791,6 +4935,15 @@ RichElement : function (
 {
 },
 
+/**
+ * @method RichElement
+ * @constructor
+ */
+RichElement : function (
+)
+{
+},
+
 };
 
 /**
@@ -4840,6 +4993,15 @@ float
 )
 {
     return ccui.RichElementText;
+},
+
+/**
+ * @method RichElementText
+ * @constructor
+ */
+RichElementText : function (
+)
+{
 },
 
 /**
@@ -4903,6 +5065,15 @@ RichElementImage : function (
 {
 },
 
+/**
+ * @method RichElementImage
+ * @constructor
+ */
+RichElementImage : function (
+)
+{
+},
+
 };
 
 /**
@@ -4944,6 +5115,15 @@ node
 )
 {
     return ccui.RichElementCustomNode;
+},
+
+/**
+ * @method RichElementCustomNode
+ * @constructor
+ */
+RichElementCustomNode : function (
+)
+{
 },
 
 /**
@@ -5031,6 +5211,15 @@ RichText : function (
 {
 },
 
+/**
+ * @method RichText
+ * @constructor
+ */
+RichText : function (
+)
+{
+},
+
 };
 
 /**
@@ -5060,6 +5249,15 @@ size
 )
 {
     return ccui.HBox;
+},
+
+/**
+ * @method HBox
+ * @constructor
+ */
+HBox : function (
+)
+{
 },
 
 /**
@@ -5111,6 +5309,15 @@ VBox : function (
 {
 },
 
+/**
+ * @method VBox
+ * @constructor
+ */
+VBox : function (
+)
+{
+},
+
 };
 
 /**
@@ -5140,6 +5347,15 @@ size
 )
 {
     return ccui.RelativeBox;
+},
+
+/**
+ * @method RelativeBox
+ * @constructor
+ */
+RelativeBox : function (
+)
+{
 },
 
 /**
@@ -5579,6 +5795,15 @@ Scale9Sprite : function (
 {
 },
 
+/**
+ * @method Scale9Sprite
+ * @constructor
+ */
+Scale9Sprite : function (
+)
+{
+},
+
 };
 
 /**
@@ -5792,6 +6017,15 @@ scale9sprite
 )
 {
     return ccui.EditBox;
+},
+
+/**
+ * @method EditBox
+ * @constructor
+ */
+EditBox : function (
+)
+{
 },
 
 /**
@@ -6325,6 +6559,152 @@ node
  * @constructor
  */
 LayoutComponent : function (
+)
+{
+},
+
+/**
+ * @method LayoutComponent
+ * @constructor
+ */
+LayoutComponent : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScrollViewBar
+ */
+ccui.ScrollViewBar = {
+
+/**
+ * @method setAutoHideEnabled
+ * @param {bool} arg0
+ */
+setAutoHideEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method onScrolled
+ * @param {vec2_object} arg0
+ */
+onScrolled : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method isAutoHideEnabled
+ * @return {bool}
+ */
+isAutoHideEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setAutoHideTime
+ * @param {float} arg0
+ */
+setAutoHideTime : function (
+float 
+)
+{
+},
+
+/**
+ * @method getWidth
+ * @return {float}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionFromCorner
+ * @return {vec2_object}
+ */
+getPositionFromCorner : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setPositionFromCorner
+ * @param {vec2_object} arg0
+ */
+setPositionFromCorner : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getAutoHideTime
+ * @return {float}
+ */
+getAutoHideTime : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setWidth
+ * @param {float} arg0
+ */
+setWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ccui.ScrollView} arg0
+ * @param {ccui.ScrollView::Direction} arg1
+ * @return {ccui.ScrollViewBar}
+ */
+create : function (
+scrollview, 
+direction 
+)
+{
+    return ccui.ScrollViewBar;
+},
+
+/**
+ * @method ScrollViewBar
+ * @constructor
+ * @param {ccui.ScrollView} arg0
+ * @param {ccui.ScrollView::Direction} arg1
+ */
+ScrollViewBar : function (
+scrollview, 
+direction 
+)
+{
+},
+
+/**
+ * @method ScrollViewBar
+ * @constructor
+ * @param {ccui.ScrollView} arg0
+ * @param {ccui.ScrollView::Direction} arg1
+ */
+ScrollViewBar : function (
+scrollview, 
+direction 
 )
 {
 },

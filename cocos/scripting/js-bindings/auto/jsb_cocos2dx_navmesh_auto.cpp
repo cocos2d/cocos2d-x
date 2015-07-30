@@ -614,7 +614,6 @@ extern JSObject *jsb_cocos2d_Component_prototype;
 void js_cocos2d_NavMeshAgent_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (NavMeshAgent)", obj);
 }
-
 void js_register_cocos2dx_navmesh_NavMeshAgent(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_NavMeshAgent_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_NavMeshAgent_class->name = "NavMeshAgent";
@@ -907,7 +906,6 @@ extern JSObject *jsb_cocos2d_Component_prototype;
 void js_cocos2d_NavMeshObstacle_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (NavMeshObstacle)", obj);
 }
-
 void js_register_cocos2dx_navmesh_NavMeshObstacle(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_NavMeshObstacle_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_NavMeshObstacle_class->name = "NavMeshObstacle";
@@ -1233,7 +1231,6 @@ bool js_cocos2dx_navmesh_NavMesh_constructor(JSContext *cx, uint32_t argc, jsval
 void js_cocos2d_NavMesh_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (NavMesh)", obj);
 }
-
 void js_register_cocos2dx_navmesh_NavMesh(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_NavMesh_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_NavMesh_class->name = "NavMesh";
