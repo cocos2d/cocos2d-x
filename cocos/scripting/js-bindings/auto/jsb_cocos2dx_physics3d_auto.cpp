@@ -2,7 +2,7 @@
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "cocos2d_specifics.hpp"
 #include "CCPhysics3D.h"
-#include "3d/jsb_cocos2dx_3d_conversions.h"
+#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -2356,6 +2356,22 @@ bool js_cocos2dx_physics3d_Physics3DWorld_collisionChecking(JSContext *cx, uint3
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_collisionChecking : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Physics3DWorld* cobj = (cocos2d::Physics3DWorld *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setGhostPairCallback();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_physics3d_Physics3DWorld_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -2783,6 +2799,7 @@ void js_register_cocos2dx_physics3d_Physics3DWorld(JSContext *cx, JS::HandleObje
         JS_FN("stepSimulate", js_cocos2dx_physics3d_Physics3DWorld_stepSimulate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("needCollisionChecking", js_cocos2dx_physics3d_Physics3DWorld_needCollisionChecking, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("collisionChecking", js_cocos2dx_physics3d_Physics3DWorld_collisionChecking, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setGhostPairCallback", js_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_physics3d_Physics3DWorld_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllPhysics3DObjects", js_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isDebugDrawEnabled", js_cocos2dx_physics3d_Physics3DWorld_isDebugDrawEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
