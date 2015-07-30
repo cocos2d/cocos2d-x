@@ -469,4 +469,19 @@ float
 {
 },
 
+/**
+ * @method SkeletonAnimation
+ * @constructor
+* @param {spSkeletonData|String|String} spskeletondata
+* @param {bool|spAtlas|String} bool
+* @param {float|float} float
+*/
+SkeletonAnimation : function(
+str,
+str,
+float 
+)
+{
+},
+
 };

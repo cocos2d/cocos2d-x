@@ -331,7 +331,6 @@ extern JSObject *jsb_cocos2d_Node_prototype;
 void js_cocos2d_ParticleSystem3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ParticleSystem3D)", obj);
 }
-
 void js_register_cocos2dx_3d_extension_ParticleSystem3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_ParticleSystem3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_ParticleSystem3D_class->name = "ParticleSystem3D";
@@ -1145,7 +1144,6 @@ extern JSObject *jsb_cocos2d_ParticleSystem3D_prototype;
 void js_cocos2d_PUParticleSystem3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PUParticleSystem3D)", obj);
 }
-
 void js_register_cocos2dx_3d_extension_PUParticleSystem3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_PUParticleSystem3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_PUParticleSystem3D_class->name = "PUParticleSystem3D";

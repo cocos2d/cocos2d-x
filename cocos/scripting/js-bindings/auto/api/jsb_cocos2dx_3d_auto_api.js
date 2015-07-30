@@ -1217,6 +1217,15 @@ Sprite3D : function (
 {
 },
 
+/**
+ * @method Sprite3D
+ * @constructor
+ */
+Sprite3D : function (
+)
+{
+},
+
 };
 
 /**
