@@ -18596,6 +18596,16 @@ framebuffer
 },
 
 /**
+ * @method isViewProjectionUpdated
+ * @return {bool}
+ */
+isViewProjectionUpdated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method initPerspective
  * @param {float} arg0
  * @param {float} arg1
