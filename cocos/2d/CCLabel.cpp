@@ -30,6 +30,7 @@
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
@@ -1258,7 +1259,15 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     // Don't do calculate the culling if the transform was not updated
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
 #if CC_USE_CULLING
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        _insideBounds = (transformUpdated || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    }
+    else
+    {
+        _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
 
     if (_insideBounds)
 #endif
