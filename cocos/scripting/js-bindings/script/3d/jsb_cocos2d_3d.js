@@ -405,3 +405,17 @@ jsb.PointLight.prototype._ctor = function(position, color, range){
         throw new Error("jsb.PointLight constructor: arguments error");
     }
 }
+
+jsb.SpotLight.prototype._ctor = function(direction, position, color, innerAngle, outerAngle, range){
+    if (arguments.length === 6 ) {
+        this.setDirection(direction);
+        this.setPosition3D(position);
+        this.setColor(color);
+        this.setInnerAngle(innerAngle);
+        this.setOuterAngle(outerAngle);
+        this.setRange(range);
+    }
+    else {
+        throw new Error("jsb.SpotLight constructor: arguments error");
+    }
+}

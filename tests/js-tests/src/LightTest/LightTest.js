@@ -224,7 +224,7 @@ var LightTest = LightTestDemo.extend({
         this.addChild(this._pointLight);
         this._pointLight.setCameraMask(2);
 
-        this._spotLight = jsb.SpotLight.create(cc.math.vec3(-1, -1, 0), cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 0, 0.5, 10000);
+        this._spotLight = new jsb.SpotLight(cc.math.vec3(-1, -1, 0), cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 0, 0.5, 10000);
         this._spotLight.setEnabled(false);
         this.addChild(this._spotLight);
         this._spotLight.setCameraMask(2);
