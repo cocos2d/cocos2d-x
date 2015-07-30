@@ -113,7 +113,7 @@ void BoneNode::removeFromBoneList(BoneNode* bone)
 {
     _childBones.eraseObject(bone);
     auto skeletonNode = dynamic_cast<SkeletonNode*>(bone);
-    if (bone != nullptr) // nested skeleton
+    if (skeletonNode != nullptr) // nested skeleton
         return;
 
     bone->_rootSkeleton = nullptr;
