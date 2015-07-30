@@ -518,7 +518,7 @@ void Physics3DCollider::setRestitution(float rest)
     _btGhostObject->setRestitution(rest);
 }
 
-bool Physics3DCollider::IsTrigger() const
+bool Physics3DCollider::isTrigger() const
 {
     return (_btGhostObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) != 0;
 }

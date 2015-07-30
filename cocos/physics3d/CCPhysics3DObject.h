@@ -404,7 +404,7 @@ public:
     void setTrigger(bool isTrigger);
 
     /** Check is a trigger. */
-    bool IsTrigger() const;
+    bool isTrigger() const;
 
     /** Set restitution. */
     void setRestitution(float rest);
