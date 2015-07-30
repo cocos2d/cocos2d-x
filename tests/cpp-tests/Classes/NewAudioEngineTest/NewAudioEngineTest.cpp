@@ -168,6 +168,7 @@ namespace {
         }
         
         float getRatio () {
+            _ratio = 1.0f * _percent / _maxPercent;
             return _ratio;
         }
         
@@ -305,7 +306,6 @@ bool AudioControlTest::init()
                     float ratio = (float)slider->getPercent() / 100;
                     ratio = clampf(ratio, 0.0f, 1.0f);
                     AudioEngine::setCurrentTime(_audioID, _duration * ratio);
-                    slider->setRatio(ratio);
                 }
             case Slider::EventType::ON_SLIDEBALL_CANCEL:
                 _updateTimeSlider = true;
