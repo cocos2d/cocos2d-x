@@ -927,6 +927,14 @@ collisionChecking : function (
 },
 
 /**
+ * @method setGhostPairCallback
+ */
+setGhostPairCallback : function (
+)
+{
+},
+
+/**
  * @method init
  * @param {cc.Physics3DWorldDes} arg0
  * @return {bool}

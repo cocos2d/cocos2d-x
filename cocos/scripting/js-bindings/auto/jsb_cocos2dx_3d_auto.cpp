@@ -217,7 +217,6 @@ bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval 
 void js_cocos2d_Animation3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Animation3D)", obj);
 }
-
 void js_register_cocos2dx_3d_Animation3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Animation3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Animation3D_class->name = "Animation3D";
@@ -748,7 +747,6 @@ extern JSObject *jsb_cocos2d_ActionInterval_prototype;
 void js_cocos2d_Animate3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Animate3D)", obj);
 }
-
 void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Animate3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Animate3D_class->name = "Animate3D";
@@ -889,7 +887,6 @@ extern JSObject *jsb_cocos2d_Node_prototype;
 void js_cocos2d_AttachNode_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (AttachNode)", obj);
 }
-
 void js_register_cocos2dx_3d_AttachNode(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_AttachNode_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_AttachNode_class->name = "AttachNode";
@@ -1214,7 +1211,6 @@ extern JSObject *jsb_cocos2d_Sprite_prototype;
 void js_cocos2d_BillBoard_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (BillBoard)", obj);
 }
-
 void js_register_cocos2dx_3d_BillBoard(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_BillBoard_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_BillBoard_class->name = "BillBoard";
@@ -1889,7 +1885,6 @@ bool js_cocos2dx_3d_Mesh_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void js_cocos2d_Mesh_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Mesh)", obj);
 }
-
 void js_register_cocos2dx_3d_Mesh(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Mesh_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Mesh_class->name = "Mesh";
@@ -2218,7 +2213,6 @@ bool js_cocos2dx_3d_Skeleton3D_constructor(JSContext *cx, uint32_t argc, jsval *
 void js_cocos2d_Skeleton3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Skeleton3D)", obj);
 }
-
 void js_register_cocos2dx_3d_Skeleton3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Skeleton3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Skeleton3D_class->name = "Skeleton3D";
@@ -2453,7 +2447,6 @@ extern JSObject *jsb_cocos2d_Node_prototype;
 void js_cocos2d_Skybox_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Skybox)", obj);
 }
-
 void js_register_cocos2dx_3d_Skybox(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Skybox_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Skybox_class->name = "Skybox";
@@ -3422,15 +3415,7 @@ bool js_cocos2dx_3d_Sprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
-
-extern JSObject *jsb_cocos2d_Node_prototype;
-
-void js_cocos2d_Sprite3D_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Sprite3D)", obj);
-}
-
-static bool js_cocos2d_Sprite3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_3d_Sprite3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -3446,6 +3431,13 @@ static bool js_cocos2d_Sprite3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().setUndefined();
     return true;
 }
+
+extern JSObject *jsb_cocos2d_Node_prototype;
+
+void js_cocos2d_Sprite3D_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Sprite3D)", obj);
+}
+    
 void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Sprite3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Sprite3D_class->name = "Sprite3D";
@@ -3497,7 +3489,7 @@ void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
         JS_FN("getSkeleton", js_cocos2dx_3d_Sprite3D_getSkeleton, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setForceDepthWrite", js_cocos2dx_3d_Sprite3D_setForceDepthWrite, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshByName", js_cocos2dx_3d_Sprite3D_getMeshByName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("ctor", js_cocos2d_Sprite3D_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2dx_3d_Sprite3D_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -3612,7 +3604,6 @@ bool js_cocos2dx_3d_Sprite3DCache_getInstance(JSContext *cx, uint32_t argc, jsva
 void js_cocos2d_Sprite3DCache_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Sprite3DCache)", obj);
 }
-
 void js_register_cocos2dx_3d_Sprite3DCache(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Sprite3DCache_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Sprite3DCache_class->name = "Sprite3DCache";
@@ -4190,7 +4181,6 @@ extern JSObject *jsb_cocos2d_Node_prototype;
 void js_cocos2d_Terrain_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Terrain)", obj);
 }
-
 void js_register_cocos2dx_3d_Terrain(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Terrain_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Terrain_class->name = "Terrain";
@@ -4354,7 +4344,6 @@ extern JSObject *jsb_cocos2d_Texture2D_prototype;
 void js_cocos2d_TextureCube_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (TextureCube)", obj);
 }
-
 void js_register_cocos2dx_3d_TextureCube(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_TextureCube_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_TextureCube_class->name = "TextureCube";
@@ -4669,10 +4658,6 @@ bool js_cocos2dx_3d_Bundle3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     cocos2d::Bundle3D* cobj = new (std::nothrow) cocos2d::Bundle3D();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
     TypeTest<cocos2d::Bundle3D> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
@@ -4697,8 +4682,19 @@ bool js_cocos2dx_3d_Bundle3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 
 void js_cocos2d_Bundle3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Bundle3D)", obj);
-}
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
+        cocos2d::Bundle3D *nobj = static_cast<cocos2d::Bundle3D *>(nproxy->ptr);
+        if (nobj)
+            delete nobj;
+        
+        jsb_remove_proxy(nproxy, jsproxy);
+    }
+}
 void js_register_cocos2dx_3d_Bundle3D(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_Bundle3D_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_Bundle3D_class->name = "Bundle3D";

@@ -605,6 +605,15 @@ ControlButton : function (
 {
 },
 
+/**
+ * @method ControlButton
+ * @constructor
+ */
+ControlButton : function (
+)
+{
+},
+
 };
 
 /**
@@ -963,6 +972,15 @@ ControlColourPicker : function (
 {
 },
 
+/**
+ * @method ControlColourPicker
+ * @constructor
+ */
+ControlColourPicker : function (
+)
+{
+},
+
 };
 
 /**
@@ -1182,6 +1200,15 @@ char
 )
 {
     return cc.ControlPotentiometer;
+},
+
+/**
+ * @method ControlPotentiometer
+ * @constructor
+ */
+ControlPotentiometer : function (
+)
+{
 },
 
 /**
@@ -1437,6 +1464,15 @@ ControlSlider : function (
 {
 },
 
+/**
+ * @method ControlSlider
+ * @constructor
+ */
+ControlSlider : function (
+)
+{
+},
+
 };
 
 /**
@@ -1669,6 +1705,15 @@ ControlStepper : function (
 {
 },
 
+/**
+ * @method ControlStepper
+ * @constructor
+ */
+ControlStepper : function (
+)
+{
+},
+
 };
 
 /**
@@ -1762,6 +1807,15 @@ label
 )
 {
     return cc.ControlSwitch;
+},
+
+/**
+ * @method ControlSwitch
+ * @constructor
+ */
+ControlSwitch : function (
+)
+{
 },
 
 /**
@@ -2127,6 +2181,15 @@ ScrollView : function (
 {
 },
 
+/**
+ * @method ScrollView
+ * @constructor
+ */
+ScrollView : function (
+)
+{
+},
+
 };
 
 /**
@@ -2170,6 +2233,15 @@ create : function (
 )
 {
     return cc.TableViewCell;
+},
+
+/**
+ * @method TableViewCell
+ * @constructor
+ */
+TableViewCell : function (
+)
+{
 },
 
 /**
@@ -2308,6 +2380,15 @@ dequeueCell : function (
 )
 {
     return cc.TableViewCell;
+},
+
+/**
+ * @method TableView
+ * @constructor
+ */
+TableView : function (
+)
+{
 },
 
 /**

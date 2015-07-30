@@ -478,7 +478,6 @@ bool js_cocos2dx_studio_ActionObject_constructor(JSContext *cx, uint32_t argc, j
 void js_cocostudio_ActionObject_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionObject)", obj);
 }
-
 void js_register_cocos2dx_studio_ActionObject(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ActionObject_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ActionObject_class->name = "ActionObject";
@@ -782,7 +781,6 @@ bool js_cocos2dx_studio_ActionManagerEx_getInstance(JSContext *cx, uint32_t argc
 void js_cocostudio_ActionManagerEx_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionManagerEx)", obj);
 }
-
 void js_register_cocos2dx_studio_ActionManagerEx(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ActionManagerEx_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ActionManagerEx_class->name = "ActionManager";
@@ -940,7 +938,6 @@ bool js_cocos2dx_studio_BaseData_constructor(JSContext *cx, uint32_t argc, jsval
 void js_cocostudio_BaseData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (BaseData)", obj);
 }
-
 void js_register_cocos2dx_studio_BaseData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_BaseData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_BaseData_class->name = "BaseData";
@@ -1113,7 +1110,6 @@ bool js_cocos2dx_studio_MovementData_constructor(JSContext *cx, uint32_t argc, j
 void js_cocostudio_MovementData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (MovementData)", obj);
 }
-
 void js_register_cocos2dx_studio_MovementData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_MovementData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_MovementData_class->name = "MovementData";
@@ -1304,7 +1300,6 @@ bool js_cocos2dx_studio_AnimationData_constructor(JSContext *cx, uint32_t argc, 
 void js_cocostudio_AnimationData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (AnimationData)", obj);
 }
-
 void js_register_cocos2dx_studio_AnimationData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_AnimationData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_AnimationData_class->name = "AnimationData";
@@ -1459,7 +1454,6 @@ bool js_cocos2dx_studio_ContourData_constructor(JSContext *cx, uint32_t argc, js
 void js_cocostudio_ContourData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ContourData)", obj);
 }
-
 void js_register_cocos2dx_studio_ContourData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ContourData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ContourData_class->name = "ContourData";
@@ -1650,7 +1644,6 @@ bool js_cocos2dx_studio_TextureData_constructor(JSContext *cx, uint32_t argc, js
 void js_cocostudio_TextureData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (TextureData)", obj);
 }
-
 void js_register_cocos2dx_studio_TextureData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_TextureData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_TextureData_class->name = "TextureData";
@@ -2046,7 +2039,6 @@ bool js_cocos2dx_studio_ProcessBase_constructor(JSContext *cx, uint32_t argc, js
 void js_cocostudio_ProcessBase_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ProcessBase)", obj);
 }
-
 void js_register_cocos2dx_studio_ProcessBase(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ProcessBase_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ProcessBase_class->name = "ProcessBase";
@@ -2345,7 +2337,6 @@ extern JSObject *jsb_cocostudio_ProcessBase_prototype;
 void js_cocostudio_Tween_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Tween)", obj);
 }
-
 void js_register_cocos2dx_studio_Tween(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_Tween_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_Tween_class->name = "Tween";
@@ -2415,7 +2406,6 @@ JSObject *jsb_cocostudio_ColliderFilter_prototype;
 void js_cocostudio_ColliderFilter_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ColliderFilter)", obj);
 }
-
 void js_register_cocos2dx_studio_ColliderFilter(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ColliderFilter_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ColliderFilter_class->name = "ColliderFilter";
@@ -2476,7 +2466,6 @@ JSObject *jsb_cocostudio_ColliderBody_prototype;
 void js_cocostudio_ColliderBody_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ColliderBody)", obj);
 }
-
 void js_register_cocos2dx_studio_ColliderBody(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ColliderBody_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ColliderBody_class->name = "ColliderBody";
@@ -2779,7 +2768,6 @@ bool js_cocos2dx_studio_ColliderDetector_create(JSContext *cx, uint32_t argc, js
 void js_cocostudio_ColliderDetector_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ColliderDetector)", obj);
 }
-
 void js_register_cocos2dx_studio_ColliderDetector(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ColliderDetector_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ColliderDetector_class->name = "ColliderDetector";
@@ -3049,7 +3037,6 @@ bool js_cocos2dx_studio_DecorativeDisplay_create(JSContext *cx, uint32_t argc, j
 void js_cocostudio_DecorativeDisplay_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (DecorativeDisplay)", obj);
 }
-
 void js_register_cocos2dx_studio_DecorativeDisplay(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_DecorativeDisplay_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_DecorativeDisplay_class->name = "DecorativeDisplay";
@@ -3714,7 +3701,6 @@ bool js_cocos2dx_studio_DisplayManager_constructor(JSContext *cx, uint32_t argc,
 void js_cocostudio_DisplayManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (DisplayManager)", obj);
 }
-
 void js_register_cocos2dx_studio_DisplayManager(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_DisplayManager_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_DisplayManager_class->name = "DisplayManager";
@@ -4628,7 +4614,6 @@ extern JSObject *jsb_cocos2d_Node_prototype;
 void js_cocostudio_Bone_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Bone)", obj);
 }
-
 void js_register_cocos2dx_studio_Bone(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_Bone_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_Bone_class->name = "Bone";
@@ -4746,7 +4731,6 @@ extern JSObject *jsb_cocos2d_Node_prototype;
 void js_cocostudio_BatchNode_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (BatchNode)", obj);
 }
-
 void js_register_cocos2dx_studio_BatchNode(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_BatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_BatchNode_class->name = "BatchNode";
@@ -5238,7 +5222,6 @@ extern JSObject *jsb_cocostudio_ProcessBase_prototype;
 void js_cocostudio_ArmatureAnimation_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ArmatureAnimation)", obj);
 }
-
 void js_register_cocos2dx_studio_ArmatureAnimation(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ArmatureAnimation_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ArmatureAnimation_class->name = "ArmatureAnimation";
@@ -5813,7 +5796,6 @@ bool js_cocos2dx_studio_ArmatureDataManager_getInstance(JSContext *cx, uint32_t 
 void js_cocostudio_ArmatureDataManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ArmatureDataManager)", obj);
 }
-
 void js_register_cocos2dx_studio_ArmatureDataManager(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ArmatureDataManager_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ArmatureDataManager_class->name = "ArmatureDataManager";
@@ -6569,15 +6551,7 @@ bool js_cocos2dx_studio_Armature_constructor(JSContext *cx, uint32_t argc, jsval
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
-
-extern JSObject *jsb_cocos2d_Node_prototype;
-
-void js_cocostudio_Armature_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Armature)", obj);
-}
-
-static bool js_cocostudio_Armature_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_studio_Armature_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -6593,6 +6567,13 @@ static bool js_cocostudio_Armature_ctor(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().setUndefined();
     return true;
 }
+
+extern JSObject *jsb_cocos2d_Node_prototype;
+
+void js_cocostudio_Armature_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Armature)", obj);
+}
+    
 void js_register_cocos2dx_studio_Armature(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_Armature_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_Armature_class->name = "Armature";
@@ -6635,7 +6616,7 @@ void js_register_cocos2dx_studio_Armature(JSContext *cx, JS::HandleObject global
         JS_FN("getOffsetPoints", js_cocos2dx_studio_Armature_getOffsetPoints, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBlendFunc", js_cocos2dx_studio_Armature_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBoneDic", js_cocos2dx_studio_Armature_getBoneDic, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("ctor", js_cocostudio_Armature_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2dx_studio_Armature_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -6885,7 +6866,6 @@ extern JSObject *jsb_cocos2d_Sprite_prototype;
 void js_cocostudio_Skin_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Skin)", obj);
 }
-
 void js_register_cocos2dx_studio_Skin(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_Skin_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_Skin_class->name = "Skin";
@@ -7252,7 +7232,6 @@ extern JSObject *jsb_cocos2d_Component_prototype;
 void js_cocostudio_ComAttribute_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ComAttribute)", obj);
 }
-
 void js_register_cocos2dx_studio_ComAttribute(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ComAttribute_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ComAttribute_class->name = "ComAttribute";
@@ -7926,7 +7905,6 @@ extern JSObject *jsb_cocos2d_Component_prototype;
 void js_cocostudio_ComAudio_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ComAudio)", obj);
 }
-
 void js_register_cocos2dx_studio_ComAudio(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ComAudio_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ComAudio_class->name = "ComAudio";
@@ -8206,7 +8184,6 @@ bool js_cocos2dx_studio_InputDelegate_setTouchMode(JSContext *cx, uint32_t argc,
 void js_cocostudio_InputDelegate_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (InputDelegate)", obj);
 }
-
 void js_register_cocos2dx_studio_InputDelegate(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_InputDelegate_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_InputDelegate_class->name = "InputDelegate";
@@ -8321,15 +8298,7 @@ bool js_cocos2dx_studio_ComController_constructor(JSContext *cx, uint32_t argc, 
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
-
-extern JSObject *jsb_cocos2d_Component_prototype;
-
-void js_cocostudio_ComController_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (ComController)", obj);
-}
-
-static bool js_cocostudio_ComController_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+static bool js_cocos2dx_studio_ComController_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -8345,6 +8314,13 @@ static bool js_cocostudio_ComController_ctor(JSContext *cx, uint32_t argc, jsval
     args.rval().setUndefined();
     return true;
 }
+
+extern JSObject *jsb_cocos2d_Component_prototype;
+
+void js_cocostudio_ComController_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ComController)", obj);
+}
+    
 void js_register_cocos2dx_studio_ComController(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ComController_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ComController_class->name = "ComController";
@@ -8364,7 +8340,7 @@ void js_register_cocos2dx_studio_ComController(JSContext *cx, JS::HandleObject g
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("ctor", js_cocostudio_ComController_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2dx_studio_ComController_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -8599,7 +8575,6 @@ extern JSObject *jsb_cocos2d_Component_prototype;
 void js_cocostudio_ComRender_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ComRender)", obj);
 }
-
 void js_register_cocos2dx_studio_ComRender(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ComRender_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ComRender_class->name = "ComRender";
@@ -8948,7 +8923,6 @@ bool js_cocos2dx_studio_Frame_getNode(JSContext *cx, uint32_t argc, jsval *vp)
 void js_cocostudio_timeline_Frame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Frame)", obj);
 }
-
 void js_register_cocos2dx_studio_Frame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_Frame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_Frame_class->name = "Frame";
@@ -9111,7 +9085,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_VisibleFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (VisibleFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_VisibleFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_VisibleFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_VisibleFrame_class->name = "VisibleFrame";
@@ -9266,7 +9239,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_TextureFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (TextureFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_TextureFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_TextureFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_TextureFrame_class->name = "TextureFrame";
@@ -9421,7 +9393,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_RotationFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (RotationFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_RotationFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_RotationFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_RotationFrame_class->name = "RotationFrame";
@@ -9614,7 +9585,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_SkewFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (SkewFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_SkewFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_SkewFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_SkewFrame_class->name = "SkewFrame";
@@ -9733,7 +9703,6 @@ extern JSObject *jsb_cocostudio_timeline_SkewFrame_prototype;
 void js_cocostudio_timeline_RotationSkewFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (RotationSkewFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_RotationSkewFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_RotationSkewFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_RotationSkewFrame_class->name = "RotationSkewFrame";
@@ -9962,7 +9931,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_PositionFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (PositionFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_PositionFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_PositionFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_PositionFrame_class->name = "PositionFrame";
@@ -10179,7 +10147,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_ScaleFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ScaleFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_ScaleFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_ScaleFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_ScaleFrame_class->name = "ScaleFrame";
@@ -10337,7 +10304,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_AnchorPointFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (AnchorPointFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_AnchorPointFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_AnchorPointFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_AnchorPointFrame_class->name = "AnchorPointFrame";
@@ -10646,7 +10612,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_InnerActionFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (InnerActionFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_InnerActionFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_InnerActionFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_InnerActionFrame_class->name = "InnerActionFrame";
@@ -10809,7 +10774,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_ColorFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ColorFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_ColorFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_ColorFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_ColorFrame_class->name = "ColorFrame";
@@ -10964,7 +10928,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_AlphaFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (AlphaFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_AlphaFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_AlphaFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_AlphaFrame_class->name = "AlphaFrame";
@@ -11135,7 +11098,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_EventFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (EventFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_EventFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_EventFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_EventFrame_class->name = "EventFrame";
@@ -11291,7 +11253,6 @@ extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
 void js_cocostudio_timeline_ZOrderFrame_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ZOrderFrame)", obj);
 }
-
 void js_register_cocos2dx_studio_ZOrderFrame(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_ZOrderFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_ZOrderFrame_class->name = "ZOrderFrame";
@@ -11720,7 +11681,6 @@ bool js_cocos2dx_studio_Timeline_constructor(JSContext *cx, uint32_t argc, jsval
 void js_cocostudio_timeline_Timeline_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Timeline)", obj);
 }
-
 void js_register_cocos2dx_studio_Timeline(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_Timeline_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_Timeline_class->name = "Timeline";
@@ -11911,7 +11871,6 @@ bool js_cocos2dx_studio_ActionTimelineData_constructor(JSContext *cx, uint32_t a
 void js_cocostudio_timeline_ActionTimelineData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionTimelineData)", obj);
 }
-
 void js_register_cocos2dx_studio_ActionTimelineData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_ActionTimelineData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_ActionTimelineData_class->name = "ActionTimelineData";
@@ -11999,8 +11958,8 @@ bool js_cocos2dx_studio_ActionTimeline_setFrameEventCallFunc(JSContext *cx, uint
 		            }
 		        } while (0);
 		            JS::RootedValue rval(cx);
-		            bool ok = func->invoke(1, &largv[0], &rval);
-		            if (!ok && JS_IsExceptionPending(cx)) {
+		            bool succeed = func->invoke(1, &largv[0], &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
 		        };
@@ -12164,8 +12123,8 @@ bool js_cocos2dx_studio_ActionTimeline_setLastFrameCallFunc(JSContext *cx, uint3
 		        auto lambda = [=]() -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            JS::RootedValue rval(cx);
-		            bool ok = func->invoke(0, nullptr, &rval);
-		            if (!ok && JS_IsExceptionPending(cx)) {
+		            bool succeed = func->invoke(0, nullptr, &rval);
+		            if (!succeed && JS_IsExceptionPending(cx)) {
 		                JS_ReportPendingException(cx);
 		            }
 		        };
@@ -12639,7 +12598,6 @@ extern JSObject *jsb_cocos2d_Action_prototype;
 void js_cocostudio_timeline_ActionTimeline_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ActionTimeline)", obj);
 }
-
 void js_register_cocos2dx_studio_ActionTimeline(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_timeline_ActionTimeline_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_timeline_ActionTimeline_class->name = "ActionTimeline";
@@ -12873,7 +12831,6 @@ bool js_cocos2dx_studio_ObjectExtensionData_constructor(JSContext *cx, uint32_t 
 void js_cocostudio_ObjectExtensionData_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (ObjectExtensionData)", obj);
 }
-
 void js_register_cocos2dx_studio_ObjectExtensionData(JSContext *cx, JS::HandleObject global) {
     jsb_cocostudio_ObjectExtensionData_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocostudio_ObjectExtensionData_class->name = "ObjectExtensionData";
