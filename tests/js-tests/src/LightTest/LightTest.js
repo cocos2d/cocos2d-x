@@ -219,7 +219,7 @@ var LightTest = LightTestDemo.extend({
         this.addChild(this._directionalLight);
         this._directionalLight.setCameraMask(2);
 
-        this._pointLight = jsb.PointLight.create(cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 10000);
+        this._pointLight = new jsb.PointLight(cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 10000);
         this._pointLight.setEnabled(false);
         this.addChild(this._pointLight);
         this._pointLight.setCameraMask(2);

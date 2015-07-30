@@ -394,3 +394,14 @@ jsb.Physics3DWorld.prototype._ctor = function(worldDesInfo){
         throw new Error("jsb.Physics3DWorld constructor: arguments error");
     }
 }
+
+jsb.PointLight.prototype._ctor = function(position, color, range){
+    if (arguments.length === 3 ) {
+        this.setPosition3D(position);
+        this.setColor(color);
+        this.setRange(range);
+    }
+    else {
+        throw new Error("jsb.PointLight constructor: arguments error");
+    }
+}

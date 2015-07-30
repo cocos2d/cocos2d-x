@@ -1187,7 +1187,7 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         this.setCameraMask(2);
 
         //add a point light
-        var light = jsb.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
+        var light = new jsb.PointLight(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
         this.addChild(light);
         //set the ambient light 
         var ambient = new jsb.AmbientLight(cc.color(55, 55, 55));
