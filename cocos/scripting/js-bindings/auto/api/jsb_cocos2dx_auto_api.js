@@ -18596,6 +18596,16 @@ framebuffer
 },
 
 /**
+ * @method isViewProjectionUpdated
+ * @return {bool}
+ */
+isViewProjectionUpdated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method initPerspective
  * @param {float} arg0
  * @param {float} arg1
@@ -19732,9 +19742,17 @@ GLProgram : function (
 cc.ShaderCache = {
 
 /**
- * @method reloadDefaultGLPrograms
+ * @method loadDefaultGLPrograms
  */
-reloadDefaultGLPrograms : function (
+loadDefaultGLPrograms : function (
+)
+{
+},
+
+/**
+ * @method reloadDefaultGLProgramsRelativeToLights
+ */
+reloadDefaultGLProgramsRelativeToLights : function (
 )
 {
 },
@@ -19752,6 +19770,14 @@ str
 },
 
 /**
+ * @method reloadDefaultGLPrograms
+ */
+reloadDefaultGLPrograms : function (
+)
+{
+},
+
+/**
  * @method getGLProgram
  * @param {String} arg0
  * @return {cc.GLProgram}
@@ -19761,14 +19787,6 @@ str
 )
 {
     return cc.GLProgram;
-},
-
-/**
- * @method loadDefaultGLPrograms
- */
-loadDefaultGLPrograms : function (
-)
-{
 },
 
 /**

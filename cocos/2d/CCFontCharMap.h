@@ -32,6 +32,7 @@
 
 NS_CC_BEGIN
 
+class Texture2D;
 class FontCharMap : public Font
 {  
 public:

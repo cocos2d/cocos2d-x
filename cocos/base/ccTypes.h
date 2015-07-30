@@ -427,6 +427,19 @@ enum class CC_DLL TextHAlignment
     RIGHT
 };
 
+/**
+* @brief Possible GlyphCollection used by Label.
+*
+* Specify a collections of characters to be load when Label created.
+* Consider using DYNAMIC.
+*/
+enum class GlyphCollection {
+    DYNAMIC,
+    NEHE,
+    ASCII,
+    CUSTOM
+};
+
 // Types for animation in particle systems
 
 /** @struct T2F_Quad
