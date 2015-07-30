@@ -58,7 +58,7 @@ EditBoxImplAndroid::EditBoxImplAndroid(EditBox* pEditText)
 
 EditBoxImplAndroid::~EditBoxImplAndroid()
 {
-	
+    notifyEditTextDialogIsReleased();
 }
 
 void EditBoxImplAndroid::doAnimationWhenKeyboardMove(float duration, float distance)
