@@ -151,7 +151,7 @@ var TerrainSimple = TerrainTestDemo.extend({
             0.1
         );
 
-        var terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+        var terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
         terrain.setLODDistance(3.2,6.4,9.6);
         terrain.setMaxDetailMapAmount(4);
         this.addChild(terrain);
@@ -319,7 +319,7 @@ var TerrainWalkThru = (function(){
                 2
             );
 
-            this._terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+            this._terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
             this._terrain.setLODDistance(64, 128, 192);
             this._terrain.setMaxDetailMapAmount(4);
             this._terrain.setCameraMask(2);

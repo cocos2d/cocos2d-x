@@ -620,7 +620,7 @@ var Physics3DTerrainDemo = Physics3DTestDemo.extend({
             1
         );
 
-        var terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+        var terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
         terrain.setSkirtHeightRatio(3);
         terrain.setLODDistance(64, 128, 192);
         terrain.setMaxDetailMapAmount(4);
