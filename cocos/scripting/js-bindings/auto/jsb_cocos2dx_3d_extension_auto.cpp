@@ -325,7 +325,6 @@ bool js_cocos2dx_3d_extension_ParticleSystem3D_constructor(JSContext *cx, uint32
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Node_prototype;
 
 void js_cocos2d_ParticleSystem3D_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -1137,7 +1136,6 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_constructor(JSContext *cx, uint
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_ParticleSystem3D_prototype;
 

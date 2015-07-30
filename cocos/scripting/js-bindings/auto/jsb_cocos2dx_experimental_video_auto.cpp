@@ -337,7 +337,6 @@ bool js_cocos2dx_experimental_video_VideoPlayer_constructor(JSContext *cx, uint3
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_ui_Widget_prototype;
 
 void js_cocos2d_experimental_ui_VideoPlayer_finalize(JSFreeOp *fop, JSObject *obj) {

@@ -397,7 +397,6 @@ bool js_cocos2dx_experimental_webView_WebView_constructor(JSContext *cx, uint32_
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_ui_Widget_prototype;
 
 void js_cocos2d_experimental_ui_WebView_finalize(JSFreeOp *fop, JSObject *obj) {

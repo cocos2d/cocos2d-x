@@ -2314,15 +2314,6 @@ Armature : function (
 {
 },
 
-/**
- * @method Armature
- * @constructor
- */
-Armature : function (
-)
-{
-},
-
 };
 
 /**
@@ -2953,15 +2944,6 @@ create : function (
 )
 {
     return ccs.ComController;
-},
-
-/**
- * @method ComController
- * @constructor
- */
-ComController : function (
-)
-{
 },
 
 /**

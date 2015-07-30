@@ -229,7 +229,6 @@ bool js_cocos2dx_physics3d_Physics3DShape_createSphere(JSContext *cx, uint32_t a
 }
 
 
-
 void js_cocos2d_Physics3DShape_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DShape)", obj);
 }
@@ -499,7 +498,6 @@ bool js_cocos2dx_physics3d_Physics3DObject_needCollisionCallback(JSContext *cx, 
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DObject_needCollisionCallback : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-
 
 void js_cocos2d_Physics3DObject_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DObject)", obj);
@@ -1020,7 +1018,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_init(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_init : Invalid Native Object");
     if (argc == 1) {
         cocos2d::Physics3DRigidBodyDes* arg0;
-        ok &= jsval_to_Physics3DRigidBodyDes(cx, args.get(0), &arg0);
+        cocos2d::Physics3DRigidBodyDes tempObj;arg0=&tempObj;ok &= jsval_to_physics3DRigidBodyDes(cx, args.get(0), arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_init : Error processing arguments");
         bool ret = cobj->init(arg0);
         jsval jsret = JSVAL_NULL;
@@ -1610,7 +1608,6 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_constructor(JSContext *cx, uint32_
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Physics3DObject_prototype;
 
 void js_cocos2d_Physics3DRigidBody_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -2033,7 +2030,6 @@ bool js_cocos2dx_physics3d_Physics3DComponent_constructor(JSContext *cx, uint32_
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Component_prototype;
 
 void js_cocos2d_Physics3DComponent_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -2210,7 +2206,6 @@ bool js_cocos2dx_physics3d_PhysicsSprite3D_constructor(JSContext *cx, uint32_t a
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Sprite3D_prototype;
 
@@ -2764,8 +2759,6 @@ bool js_cocos2dx_physics3d_Physics3DWorld_constructor(JSContext *cx, uint32_t ar
     return true;
 }
 
-
-
 void js_cocos2d_Physics3DWorld_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DWorld)", obj);
 }
@@ -3091,7 +3084,6 @@ bool js_cocos2dx_physics3d_Physics3DConstraint_getbtContraint(JSContext *cx, uin
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DConstraint_getbtContraint : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-
 
 void js_cocos2d_Physics3DConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Physics3DConstraint)", obj);
@@ -3426,7 +3418,6 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_constructor(JSContext
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
@@ -4351,7 +4342,6 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_constructor(JSContext *cx, u
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
@@ -5729,7 +5719,6 @@ bool js_cocos2dx_physics3d_Physics3DSliderConstraint_constructor(JSContext *cx, 
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
 void js_cocos2d_Physics3DSliderConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -6349,7 +6338,6 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_constructor(JSContext *c
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 
 void js_cocos2d_Physics3DConeTwistConstraint_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -6759,7 +6747,6 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_constructor(JSContext *cx, ui
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Physics3DConstraint_prototype;
 

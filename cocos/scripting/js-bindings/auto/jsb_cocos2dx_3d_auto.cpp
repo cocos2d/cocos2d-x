@@ -212,8 +212,6 @@ bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval 
     return true;
 }
 
-
-
 void js_cocos2d_Animation3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Animation3D)", obj);
 }
@@ -741,7 +739,6 @@ bool js_cocos2dx_3d_Animate3D_constructor(JSContext *cx, uint32_t argc, jsval *v
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_ActionInterval_prototype;
 
 void js_cocos2d_Animate3D_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -880,7 +877,6 @@ bool js_cocos2dx_3d_AttachNode_constructor(JSContext *cx, uint32_t argc, jsval *
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -1204,7 +1200,6 @@ bool js_cocos2dx_3d_BillBoard_constructor(JSContext *cx, uint32_t argc, jsval *v
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Sprite_prototype;
 
@@ -1880,8 +1875,6 @@ bool js_cocos2dx_3d_Mesh_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
-
-
 void js_cocos2d_Mesh_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Mesh)", obj);
 }
@@ -2208,8 +2201,6 @@ bool js_cocos2dx_3d_Skeleton3D_constructor(JSContext *cx, uint32_t argc, jsval *
     return true;
 }
 
-
-
 void js_cocos2d_Skeleton3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Skeleton3D)", obj);
 }
@@ -2440,7 +2431,6 @@ bool js_cocos2dx_3d_Skybox_constructor(JSContext *cx, uint32_t argc, jsval *vp)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -3414,8 +3404,7 @@ bool js_cocos2dx_3d_Sprite3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
     if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
-}
-static bool js_cocos2dx_3d_Sprite3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+}static bool js_cocos2dx_3d_Sprite3D_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -3598,7 +3587,6 @@ bool js_cocos2dx_3d_Sprite3DCache_getInstance(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_cocos2dx_3d_Sprite3DCache_getInstance : wrong number of arguments");
     return false;
 }
-
 
 
 void js_cocos2d_Sprite3DCache_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -4338,7 +4326,6 @@ bool js_cocos2dx_3d_TextureCube_constructor(JSContext *cx, uint32_t argc, jsval 
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Texture2D_prototype;
 
 void js_cocos2d_TextureCube_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -4677,8 +4664,6 @@ bool js_cocos2dx_3d_Bundle3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
-
 
 void js_cocos2d_Bundle3D_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (Bundle3D)", obj);

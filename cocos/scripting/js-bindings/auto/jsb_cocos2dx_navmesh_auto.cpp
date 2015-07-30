@@ -608,7 +608,6 @@ bool js_cocos2dx_navmesh_NavMeshAgent_constructor(JSContext *cx, uint32_t argc, 
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_Component_prototype;
 
 void js_cocos2d_NavMeshAgent_finalize(JSFreeOp *fop, JSObject *obj) {
@@ -899,7 +898,6 @@ bool js_cocos2dx_navmesh_NavMeshObstacle_constructor(JSContext *cx, uint32_t arg
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
 
 extern JSObject *jsb_cocos2d_Component_prototype;
 
@@ -1225,8 +1223,6 @@ bool js_cocos2dx_navmesh_NavMesh_constructor(JSContext *cx, uint32_t argc, jsval
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
 }
-
-
 
 void js_cocos2d_NavMesh_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (NavMesh)", obj);
