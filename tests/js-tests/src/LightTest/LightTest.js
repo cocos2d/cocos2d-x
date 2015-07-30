@@ -141,7 +141,7 @@ var LightTest = LightTestDemo.extend({
         this.scheduleUpdate();
 
         var s = cc.winSize;
-        var camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, s.width/s.height, 1, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         camera.setPosition3D(cc.math.vec3(0, 100, 100));
         camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));

@@ -47,7 +47,7 @@ var Physics3DTestDemo = cc.Layer.extend({
         this._super();
 
         var size = cc.winSize;
-        this._camera = cc.Camera.createPerspective(30.0, size.width / size.height, 1.0, 1000.0);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 30.0, size.width / size.height, 1.0, 1000.0);
         this._camera.setPosition3D(cc.math.vec3(0, 50, 100));
         this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
         this._camera.setCameraFlag(cc.CameraFlag.USER1);

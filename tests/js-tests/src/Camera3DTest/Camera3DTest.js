@@ -343,7 +343,7 @@ var Camera3DTest = (function(){
             this.schedule(this.updateCamera, 0);
 
             if(this._camera == null){
-                this._camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
+                this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, s.width/s.height, 1, 1000);
                 this._camera.setCameraFlag(cc.CameraFlag.USER1);
                 layer3D.addChild(this._camera);
             }
@@ -768,7 +768,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
 
     switchViewCallback:function(sender){
         if(!this._cameraFirst){
-            var camera = cc.Camera.createPerspective(30, cc.winSize.width/cc.winSize.height, 10, 200);
+            var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 30, cc.winSize.width/cc.winSize.height, 10, 200);
             camera.setCameraFlag(cc.CameraFlag.USER8);
             camera.setPosition3D(cc.math.vec3(-100, 0, 0));
             camera.lookAt(cc.math.vec3(1000, 0, 0));
@@ -782,7 +782,7 @@ var CameraCullingDemo = Camera3DTestDemo.extend({
         }
 
         if(!this._cameraThird){
-            var camera = cc.Camera.createPerspective(60, cc.winSize.width/ cc.winSize.height, 1, 1000);
+            var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, cc.winSize.width/ cc.winSize.height, 1, 1000);
             camera.setCameraFlag(cc.CameraFlag.USER8);
             camera.setPosition3D(cc.math.vec3(0, 130, 130));
             camera.lookAt(cc.math.vec3(0, 0, 0));
@@ -965,7 +965,7 @@ var CameraArcBallDemo = Camera3DTestDemo.extend({
         this.addChild(layer3D);
         this._layer3D = layer3D;
 
-        this._camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, cc.winSize.width/cc.winSize.height, 1, 1000);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this._camera.setPosition3D(cc.math.vec3(0, 10, 50));
         this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
@@ -1183,7 +1183,7 @@ var FogTestDemo = Camera3DTestDemo.extend({
         this._sprite3D2.setScale(2);
         this._sprite3D2.setRotation3D(cc.math.vec3(-90, 180, 0));
 
-        this._camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, cc.winSize.width/cc.winSize.height, 1, 1000);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this._camera.setPosition3D(cc.math.vec3(0, 30, 40));
         this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));

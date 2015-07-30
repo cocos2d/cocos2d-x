@@ -34,7 +34,11 @@ cc.CameraFlag = {
     USER7 : 1 << 7,
     USER8 : 1 << 8
 };
-
+cc.Camera.Mode = {
+    DEFAULT : 0,
+    PERSPECTIVE : 1,
+    ORTHOGRAPHIC : 2
+};
 cc.LightType = {
     DIRECTIONAL : 0,
     POINT : 1,
@@ -417,5 +421,35 @@ jsb.SpotLight.prototype._ctor = function(direction, position, color, innerAngle,
     }
     else {
         throw new Error("jsb.SpotLight constructor: arguments error");
+    }
+}
+
+jsb.Terrain.prototype._ctor = function(parameter, fixedType = jsb.Terrain.INCREASE_LOWER){
+    if (arguments.length === 2 || arguments.length === 1) {
+        this.init(parameter, fixedType);
+    }
+    else {
+        throw new Error("jsb.Terrain constructor: arguments error");
+    }
+}
+
+/**
+ * Camera* Camera::create()
+ * Camera* Camera::createPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane)
+ * Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane)
+ */
+cc.Camera.prototype._ctor = function(cameraMode, first, second, third, fourth){
+    if (arguments.length === 1 && cameraMode == cc.Camera.Mode.DEFAULT) {
+        this.initDefault();
+        this.setDepth(0);
+    }
+    else if (arguments.length === 5 && cameraMode == cc.Camera.Mode.PERSPECTIVE) {
+        this.initPerspective(first, second, third, fourth);
+    }
+    else if (arguments.length === 5 && cameraMode == cc.Camera.Mode.ORTHOGRAPHIC) {
+        this.initOrthographic(first, second, third, fourth);
+    }
+    else {
+        throw new Error("jsb.Camera constructor: arguments error");
     }
 }
