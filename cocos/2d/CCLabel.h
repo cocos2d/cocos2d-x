@@ -38,19 +38,6 @@ NS_CC_BEGIN
  * @{
  */
 
-/**
- * @brief Possible GlyphCollection used by Label.
- *
- * Specify a collections of characters to be load when Label created.
- * Consider using DYNAMIC.
- */
-enum class GlyphCollection {
-    DYNAMIC,
-    NEHE,
-    ASCII,
-    CUSTOM
-};
-
 
 /**
  * @struct TTFConfig
