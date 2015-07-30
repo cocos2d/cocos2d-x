@@ -389,7 +389,7 @@ public:
         {
             //not found
             m_overlappingObjects.push_back(otherObject);
-            if (_collider->onTriggerEnter != nullptr && _collider->IsTrigger())
+            if (_collider->onTriggerEnter != nullptr && _collider->isTrigger())
                 _collider->onTriggerEnter(getPhysicsObject(otherObject));
         }
     }
@@ -405,7 +405,7 @@ public:
             m_overlappingObjects[index] = m_overlappingObjects[m_overlappingObjects.size() - 1];
             m_overlappingObjects.pop_back();
 
-            if (_collider->onTriggerExit != nullptr && _collider->IsTrigger())
+            if (_collider->onTriggerExit != nullptr && _collider->isTrigger())
                 _collider->onTriggerExit(getPhysicsObject(otherObject));
         }
     }
