@@ -308,6 +308,9 @@ ccui.LoadingBar.RENDERER_ZORDER = -1;
  */
 //Slider event type
 ccui.Slider.EVENT_PERCENT_CHANGED = 0;
+ccui.Slider.EVENT_SLIDEBALL_DOWN = 1;
+ccui.Slider.EVENT_SLIDEBALL_UP = 2;
+ccui.Slider.EVENT_SLIDEBALL_CANCEL = 3;
 
 //Render zorder
 ccui.Slider.BASEBAR_RENDERER_ZORDER = -3;
