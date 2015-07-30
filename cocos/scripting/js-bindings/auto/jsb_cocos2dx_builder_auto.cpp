@@ -934,8 +934,6 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
     return true;
 }
 
-
-
 void js_cocosbuilder_CCBAnimationManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (CCBAnimationManager)", obj);
 }
@@ -1712,7 +1710,6 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_cocos2dx_builder_CCBReader_constructor : wrong number of arguments");
     return false;
 }
-
 
 
 void js_cocosbuilder_CCBReader_finalize(JSFreeOp *fop, JSObject *obj) {

@@ -1986,30 +1986,12 @@ Node : function (
 {
 },
 
-/**
- * @method Node
- * @constructor
- */
-Node : function (
-)
-{
-},
-
 };
 
 /**
  * @class __NodeRGBA
  */
 cc.NodeRGBA = {
-
-/**
- * @method __NodeRGBA
- * @constructor
- */
-__NodeRGBA : function (
-)
-{
-},
 
 /**
  * @method __NodeRGBA
@@ -2107,15 +2089,6 @@ create : function (
 )
 {
     return cc.Scene;
-},
-
-/**
- * @method Scene
- * @constructor
- */
-Scene : function (
-)
-{
 },
 
 /**
@@ -3794,15 +3767,6 @@ SpriteFrame : function (
 {
 },
 
-/**
- * @method SpriteFrame
- * @constructor
- */
-SpriteFrame : function (
-)
-{
-},
-
 };
 
 /**
@@ -5358,15 +5322,6 @@ TargetedAction : function (
 {
 },
 
-/**
- * @method TargetedAction
- * @constructor
- */
-TargetedAction : function (
-)
-{
-},
-
 };
 
 /**
@@ -5408,15 +5363,6 @@ func
 )
 {
     return cc.ActionFloat;
-},
-
-/**
- * @method ActionFloat
- * @constructor
- */
-ActionFloat : function (
-)
-{
 },
 
 /**
@@ -7180,15 +7126,6 @@ ActionCamera : function (
 {
 },
 
-/**
- * @method ActionCamera
- * @constructor
- */
-ActionCamera : function (
-)
-{
-},
-
 };
 
 /**
@@ -8025,15 +7962,6 @@ EaseBezierAction : function (
 {
 },
 
-/**
- * @method EaseBezierAction
- * @constructor
- */
-EaseBezierAction : function (
-)
-{
-},
-
 };
 
 /**
@@ -8051,15 +7979,6 @@ actioninterval
 )
 {
     return cc.EaseQuadraticActionIn;
-},
-
-/**
- * @method EaseQuadraticActionIn
- * @constructor
- */
-EaseQuadraticActionIn : function (
-)
-{
 },
 
 /**
@@ -8099,15 +8018,6 @@ EaseQuadraticActionOut : function (
 {
 },
 
-/**
- * @method EaseQuadraticActionOut
- * @constructor
- */
-EaseQuadraticActionOut : function (
-)
-{
-},
-
 };
 
 /**
@@ -8125,15 +8035,6 @@ actioninterval
 )
 {
     return cc.EaseQuadraticActionInOut;
-},
-
-/**
- * @method EaseQuadraticActionInOut
- * @constructor
- */
-EaseQuadraticActionInOut : function (
-)
-{
 },
 
 /**
@@ -8173,15 +8074,6 @@ EaseQuarticActionIn : function (
 {
 },
 
-/**
- * @method EaseQuarticActionIn
- * @constructor
- */
-EaseQuarticActionIn : function (
-)
-{
-},
-
 };
 
 /**
@@ -8199,15 +8091,6 @@ actioninterval
 )
 {
     return cc.EaseQuarticActionOut;
-},
-
-/**
- * @method EaseQuarticActionOut
- * @constructor
- */
-EaseQuarticActionOut : function (
-)
-{
 },
 
 /**
@@ -8247,15 +8130,6 @@ EaseQuarticActionInOut : function (
 {
 },
 
-/**
- * @method EaseQuarticActionInOut
- * @constructor
- */
-EaseQuarticActionInOut : function (
-)
-{
-},
-
 };
 
 /**
@@ -8273,15 +8147,6 @@ actioninterval
 )
 {
     return cc.EaseQuinticActionIn;
-},
-
-/**
- * @method EaseQuinticActionIn
- * @constructor
- */
-EaseQuinticActionIn : function (
-)
-{
 },
 
 /**
@@ -8321,15 +8186,6 @@ EaseQuinticActionOut : function (
 {
 },
 
-/**
- * @method EaseQuinticActionOut
- * @constructor
- */
-EaseQuinticActionOut : function (
-)
-{
-},
-
 };
 
 /**
@@ -8347,15 +8203,6 @@ actioninterval
 )
 {
     return cc.EaseQuinticActionInOut;
-},
-
-/**
- * @method EaseQuinticActionInOut
- * @constructor
- */
-EaseQuinticActionInOut : function (
-)
-{
 },
 
 /**
@@ -8395,15 +8242,6 @@ EaseCircleActionIn : function (
 {
 },
 
-/**
- * @method EaseCircleActionIn
- * @constructor
- */
-EaseCircleActionIn : function (
-)
-{
-},
-
 };
 
 /**
@@ -8421,15 +8259,6 @@ actioninterval
 )
 {
     return cc.EaseCircleActionOut;
-},
-
-/**
- * @method EaseCircleActionOut
- * @constructor
- */
-EaseCircleActionOut : function (
-)
-{
 },
 
 /**
@@ -8469,15 +8298,6 @@ EaseCircleActionInOut : function (
 {
 },
 
-/**
- * @method EaseCircleActionInOut
- * @constructor
- */
-EaseCircleActionInOut : function (
-)
-{
-},
-
 };
 
 /**
@@ -8495,15 +8315,6 @@ actioninterval
 )
 {
     return cc.EaseCubicActionIn;
-},
-
-/**
- * @method EaseCubicActionIn
- * @constructor
- */
-EaseCubicActionIn : function (
-)
-{
 },
 
 /**
@@ -8543,15 +8354,6 @@ EaseCubicActionOut : function (
 {
 },
 
-/**
- * @method EaseCubicActionOut
- * @constructor
- */
-EaseCubicActionOut : function (
-)
-{
-},
-
 };
 
 /**
@@ -8569,15 +8371,6 @@ actioninterval
 )
 {
     return cc.EaseCubicActionInOut;
-},
-
-/**
- * @method EaseCubicActionInOut
- * @constructor
- */
-EaseCubicActionInOut : function (
-)
-{
 },
 
 /**
@@ -9908,15 +9701,6 @@ pauseAllRunningActions : function (
 )
 {
     return new Array();
-},
-
-/**
- * @method ActionManager
- * @constructor
- */
-ActionManager : function (
-)
-{
 },
 
 /**
@@ -11749,15 +11533,6 @@ DrawNode : function (
 {
 },
 
-/**
- * @method DrawNode
- * @constructor
- */
-DrawNode : function (
-)
-{
-},
-
 };
 
 /**
@@ -12308,15 +12083,6 @@ Label : function (
 {
 },
 
-/**
- * @method Label
- * @constructor
- */
-Label : function (
-)
-{
-},
-
 };
 
 /**
@@ -12382,15 +12148,6 @@ int
 )
 {
     return cc.LabelAtlas;
-},
-
-/**
- * @method LabelAtlas
- * @constructor
- */
-LabelAtlas : function (
-)
-{
 },
 
 /**
@@ -12551,15 +12308,6 @@ vec2
 )
 {
     return cc.LabelBMFont;
-},
-
-/**
- * @method LabelBMFont
- * @constructor
- */
-LabelBMFont : function (
-)
-{
 },
 
 /**
@@ -12897,15 +12645,6 @@ LabelTTF : function (
 {
 },
 
-/**
- * @method LabelTTF
- * @constructor
- */
-LabelTTF : function (
-)
-{
-},
-
 };
 
 /**
@@ -12921,15 +12660,6 @@ create : function (
 )
 {
     return cc.Layer;
-},
-
-/**
- * @method Layer
- * @constructor
- */
-Layer : function (
-)
-{
 },
 
 /**
@@ -13056,15 +12786,6 @@ float
 )
 {
     return cc.LayerColor;
-},
-
-/**
- * @method LayerColor
- * @constructor
- */
-LayerColor : function (
-)
-{
 },
 
 /**
@@ -13244,15 +12965,6 @@ LayerGradient : function (
 {
 },
 
-/**
- * @method LayerGradient
- * @constructor
- */
-LayerGradient : function (
-)
-{
-},
-
 };
 
 /**
@@ -13298,15 +13010,6 @@ layer
  */
 switchTo : function (
 int 
-)
-{
-},
-
-/**
- * @method LayerMultiplex
- * @constructor
- */
-LayerMultiplex : function (
 )
 {
 },
@@ -13412,15 +13115,6 @@ MenuItem : function (
 {
 },
 
-/**
- * @method MenuItem
- * @constructor
- */
-MenuItem : function (
-)
-{
-},
-
 };
 
 /**
@@ -13501,15 +13195,6 @@ MenuItemLabel : function (
 {
 },
 
-/**
- * @method MenuItemLabel
- * @constructor
- */
-MenuItemLabel : function (
-)
-{
-},
-
 };
 
 /**
@@ -13537,15 +13222,6 @@ func
 )
 {
     return false;
-},
-
-/**
- * @method MenuItemAtlasFont
- * @constructor
- */
-MenuItemAtlasFont : function (
-)
-{
 },
 
 /**
@@ -13654,15 +13330,6 @@ getFontName : function (
  */
 setFontSize : function (
 int 
-)
-{
-},
-
-/**
- * @method MenuItemFont
- * @constructor
- */
-MenuItemFont : function (
 )
 {
 },
@@ -13796,15 +13463,6 @@ MenuItemSprite : function (
 {
 },
 
-/**
- * @method MenuItemSprite
- * @constructor
- */
-MenuItemSprite : function (
-)
-{
-},
-
 };
 
 /**
@@ -13868,15 +13526,6 @@ func
 )
 {
     return false;
-},
-
-/**
- * @method MenuItemImage
- * @constructor
- */
-MenuItemImage : function (
-)
-{
 },
 
 /**
@@ -13966,15 +13615,6 @@ MenuItemToggle : function (
 {
 },
 
-/**
- * @method MenuItemToggle
- * @constructor
- */
-MenuItemToggle : function (
-)
-{
-},
-
 };
 
 /**
@@ -14046,15 +13686,6 @@ float
  * @method alignItemsHorizontally
  */
 alignItemsHorizontally : function (
-)
-{
-},
-
-/**
- * @method Menu
- * @constructor
- */
-Menu : function (
 )
 {
 },
@@ -14231,15 +13862,6 @@ str
 )
 {
     return cc.MotionStreak;
-},
-
-/**
- * @method MotionStreak
- * @constructor
- */
-MotionStreak : function (
-)
-{
 },
 
 /**
@@ -14474,15 +14096,6 @@ int
 )
 {
     return cc.ParticleBatchNode;
-},
-
-/**
- * @method ParticleBatchNode
- * @constructor
- */
-ParticleBatchNode : function (
-)
-{
 },
 
 /**
@@ -15526,15 +15139,6 @@ ParticleSystem : function (
 {
 },
 
-/**
- * @method ParticleSystem
- * @constructor
- */
-ParticleSystem : function (
-)
-{
-},
-
 };
 
 /**
@@ -16405,15 +16009,6 @@ ProgressTimer : function (
 {
 },
 
-/**
- * @method ProgressTimer
- * @constructor
- */
-ProgressTimer : function (
-)
-{
-},
-
 };
 
 /**
@@ -17106,15 +16701,6 @@ Sprite : function (
 {
 },
 
-/**
- * @method Sprite
- * @constructor
- */
-Sprite : function (
-)
-{
-},
-
 };
 
 /**
@@ -17401,15 +16987,6 @@ RenderTexture : function (
 {
 },
 
-/**
- * @method RenderTexture
- * @constructor
- */
-RenderTexture : function (
-)
-{
-},
-
 };
 
 /**
@@ -17498,15 +17075,6 @@ scene
 )
 {
     return cc.TransitionScene;
-},
-
-/**
- * @method TransitionScene
- * @constructor
- */
-TransitionScene : function (
-)
-{
 },
 
 /**
@@ -19431,15 +18999,6 @@ Grid3D : function (
 {
 },
 
-/**
- * @method Grid3D
- * @constructor
- */
-Grid3D : function (
-)
-{
-},
-
 };
 
 /**
@@ -19463,15 +19022,6 @@ rect
 )
 {
     return cc.TiledGrid3D;
-},
-
-/**
- * @method TiledGrid3D
- * @constructor
- */
-TiledGrid3D : function (
-)
-{
 },
 
 /**
@@ -20173,15 +19723,6 @@ str
 )
 {
     return cc.GLProgram;
-},
-
-/**
- * @method GLProgram
- * @constructor
- */
-GLProgram : function (
-)
-{
 },
 
 /**
@@ -21352,15 +20893,6 @@ SpriteBatchNode : function (
 {
 },
 
-/**
- * @method SpriteBatchNode
- * @constructor
- */
-SpriteBatchNode : function (
-)
-{
-},
-
 };
 
 /**
@@ -21658,15 +21190,6 @@ TextFieldTTF : function (
 {
 },
 
-/**
- * @method TextFieldTTF
- * @constructor
- */
-TextFieldTTF : function (
-)
-{
-},
-
 };
 
 /**
@@ -21728,15 +21251,6 @@ create : function (
 )
 {
     return cc.ParallaxNode;
-},
-
-/**
- * @method ParallaxNode
- * @constructor
- */
-ParallaxNode : function (
-)
-{
 },
 
 /**
@@ -22304,15 +21818,6 @@ TMXMapInfo : function (
 {
 },
 
-/**
- * @method TMXMapInfo
- * @constructor
- */
-TMXMapInfo : function (
-)
-{
-},
-
 };
 
 /**
@@ -22581,15 +22086,6 @@ TMXLayer : function (
 {
 },
 
-/**
- * @method TMXLayer
- * @constructor
- */
-TMXLayer : function (
-)
-{
-},
-
 };
 
 /**
@@ -22808,15 +22304,6 @@ TMXTiledMap : function (
 {
 },
 
-/**
- * @method TMXTiledMap
- * @constructor
- */
-TMXTiledMap : function (
-)
-{
-},
-
 };
 
 /**
@@ -22921,15 +22408,6 @@ TileMapAtlas : function (
 {
 },
 
-/**
- * @method TileMapAtlas
- * @constructor
- */
-TileMapAtlas : function (
-)
-{
-},
-
 };
 
 /**
@@ -23015,15 +22493,6 @@ create : function (
 )
 {
     return cc.Component;
-},
-
-/**
- * @method Component
- * @constructor
- */
-Component : function (
-)
-{
 },
 
 /**
