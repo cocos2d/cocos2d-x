@@ -335,11 +335,26 @@ void SkeletonNode::addSkinGroup(std::string groupName, std::map<std::string, std
 void SkeletonNode::updateAllDrawBones()
 {
     _subDrawBones.clear();
-    for (const auto& bonepair : _subBonesMap)
+    // get All Visible SubBones
+    // get all sub bones as visit with visible
+    std::stack<BoneNode*> boneStack;
+    for (const auto& bone : _childBones)
     {
-        auto bone = bonepair.second;
         if (bone->isVisible() && bone->isDebugDrawEnabled())
-            _subDrawBones.pushBack(bone);
+            boneStack.push(bone);
+    }
+
+    while (boneStack.size() > 0)
+    {
+        auto top = boneStack.top();
+        _subDrawBones.pushBack(top);
+        boneStack.pop();
+        auto topChildren = top->getChildBones();
+        for (const auto& childbone : topChildren)
+        {
+            if (childbone->isVisible() && childbone->isDebugDrawEnabled())
+                boneStack.push(childbone);
+        }
     }
     _subDrawBonesDirty = false;
 }

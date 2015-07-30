@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_TIMELINE_BEGIN
 
 BoneNode::BoneNode()
-: _isRackShow(true)
+: _isRackShow(false)
 , _rackColor(cocos2d::Color4F::WHITE)
 , _rackLength(50)
 , _rackWidth(20)
@@ -112,6 +112,10 @@ void BoneNode::removeChild(Node* child, bool cleanup /* = true */)
 void BoneNode::removeFromBoneList(BoneNode* bone)
 {
     _childBones.eraseObject(bone);
+    auto skeletonNode = dynamic_cast<SkeletonNode*>(bone);
+    if (skeletonNode != nullptr) // nested skeleton
+        return;
+
     bone->_rootSkeleton = nullptr;
     auto subBones = bone->getAllSubBones();
     subBones.pushBack(bone);
@@ -323,6 +327,7 @@ bool BoneNode::init()
     _rackLength = 50;
     _rackWidth = 20;
     updateVertices();
+    updateColor();
     setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
     return true;
 }
@@ -398,12 +403,9 @@ cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
         allBones.pushBack(top);
         boneStack.pop();
         auto topchildren = top->getChildBones();
-        if (topchildren.size() > 0)
+        for (const auto& childbone : topchildren)
         {
-            for (const auto& childbone : topchildren)
-            {
-                boneStack.push(childbone);
-            }
+            boneStack.push(childbone);
         }
     }
     return allBones;
@@ -426,9 +428,12 @@ cocos2d::Vector<SkinNode*> BoneNode::getAllSubSkins() const
 
 void BoneNode::sortAllChildren()
 {
-    Node::sortAllChildren();
-    std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
-    std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
+    if (_reorderChildDirty)
+    {
+        std::sort(_childBones.begin(), _childBones.end(), cocos2d::nodeComparisonLess);
+        std::sort(_boneSkins.begin(), _boneSkins.end(), cocos2d::nodeComparisonLess);
+        Node::sortAllChildren();
+    }
 }
 
 SkeletonNode* BoneNode::getRootSkeletonNode() const
@@ -566,7 +571,7 @@ void BoneNode::setVisible(bool visible)
         return;
 
     Node::setVisible(visible);
-    if (_isRackShow)
+    if (_isRackShow && _rootSkeleton != nullptr)
     {
         _rootSkeleton->_subDrawBonesDirty = true;
         _rootSkeleton->_subDrawBonesOrderDirty = true;

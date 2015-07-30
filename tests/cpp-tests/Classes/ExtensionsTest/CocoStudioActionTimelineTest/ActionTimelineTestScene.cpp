@@ -343,9 +343,14 @@ void TestActionTimelineSkeleton::onEnter()
     boneDrawsBtn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 30));
     boneDrawsBtn->setTitleText("Draw bone");
 
-    boneDrawsBtn->addClickEventListener([skeletonNode](Ref* sender)
+    _isAllBonesDraw = true;
+    skeletonNode->setDebugDrawEnabled(_isAllBonesDraw);
+    setAllSubBonesDebugDraw(skeletonNode, _isAllBonesDraw);
+    boneDrawsBtn->addClickEventListener([skeletonNode, this](Ref* sender)
     {
-        skeletonNode->setDebugDrawEnabled(!skeletonNode->isDebugDrawEnabled());
+        _isAllBonesDraw = !_isAllBonesDraw;
+        skeletonNode->setDebugDrawEnabled(_isAllBonesDraw);
+        setAllSubBonesDebugDraw(skeletonNode, _isAllBonesDraw);
     });
 
 
@@ -402,9 +407,6 @@ void TestActionTimelineSkeleton::onEnter()
               debugDrawNode->drawRect(leftbottom, righttop, cocos2d::Color4F::YELLOW);
 
             // bone boundingbox
-           /*  // debug draw contentsize
-           rect = cocos2d::Rect(Vec2(.0f, .0f), weaponHandeBone->getContentSize());
-              rect = RectApplyAffineTransform(rect, weaponHandeBone->getNodeToParentAffineTransform());*/
             rect = weaponHandeBone->getBoundingBox();
             leftbottom.x = rect.getMinX(); leftbottom.y = rect.getMinY();
             righttop.x = rect.getMaxX(); righttop.y = rect.getMaxY();
@@ -477,11 +479,88 @@ void TestActionTimelineSkeleton::onEnter()
             _changedDisplays = false;
         }
     });
+
+
+    /*********** test cases for bugs        **********/
+    // bug: #13060 https://github.com/cocos2d/cocos2d-x/issues/13060
+    // bug: bone draw at the other edge when move to outside right edge.
+    BoneNode* bugtestBoneNode = BoneNode::create(500);
+    bugtestBoneNode->setRotation(-10);
+    bugtestBoneNode->retain();
+    bugtestBoneNode->setDebugDrawEnabled(true);
+    bugtestBoneNode->setPosition(Vec2(1500, VisibleRect::top().y - 90));
+    auto bug13060Btn = cocos2d::ui::Button::create();
+    bug13060Btn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 90));
+    bug13060Btn->setTitleText("bug #13060");
+    addChild(bug13060Btn);
+    bug13060Btn->addClickEventListener([bugtestBoneNode, skeletonNode](Ref* sender)
+    {
+        if (bugtestBoneNode->getParent() == nullptr)
+            skeletonNode->addChild(bugtestBoneNode);
+        else
+            bugtestBoneNode->removeFromParent();
+         // bug fixed while bugtestBoneNode not be drawn at the bottom edge 
+    });
+
+    // bug: #13005 https://github.com/cocos2d/cocos2d-x/issues/#13005
+    // bug: BoneNode 's debugdraw can not be controlled by ancestor's visible
+    auto leftleg = skeletonNode->getBoneNode("Layer26");
+    auto bug13005Btn = cocos2d::ui::Button::create();
+    addChild(bug13005Btn);
+    bug13005Btn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 105));
+    bug13005Btn->setTitleText("bug #13005");
+    bug13005Btn->addClickEventListener([leftleg](Ref* sender)
+    {
+        leftleg->setVisible(!leftleg->isVisible());
+        // bug fixed while leftleg's child hide with leftleg's visible
+    });
+
+
+    /*************    Skeleton nest Skeleton test       *************/
+    auto nestSkeletonBtn = cocos2d::ui::Button::create();
+    nestSkeletonBtn->setTitleText("Skeleton Nest");
+    nestSkeletonBtn->setPosition(Vec2(VisibleRect::right().x - 40, VisibleRect::top().y - 120));
+    addChild(nestSkeletonBtn);
+    auto nestSkeleton = static_cast<SkeletonNode*>(CSLoader::createNode("ActionTimeline/DemoPlayer_skeleton.csb"));
+    nestSkeleton->retain();
+    ActionTimeline* nestSkeletonAction = action->clone();
+    nestSkeletonAction->retain();
+    nestSkeleton->runAction(nestSkeletonAction);
+    nestSkeleton->setScale(0.2f);
+    nestSkeleton->setPosition(150, 300);
+    nestSkeletonAction->gotoFrameAndPlay(0);
+    // show debug draws, or comment this for hide bones draws
+    for (auto& nestbonechild : nestSkeleton->getAllSubBonesMap())
+    {
+        nestbonechild.second->setDebugDrawEnabled(true);
+    }
+
+    nestSkeletonBtn->addClickEventListener([leftleg, nestSkeleton, nestSkeletonAction](Ref* sender)
+    {
+        if (nestSkeleton->getParent() == nullptr)
+        {
+            leftleg->addChild(nestSkeleton);
+        }
+        else
+        {
+            nestSkeleton->removeFromParentAndCleanup(false);
+        }
+        // bug fixed while leftleg's child hide with leftleg's visible
+    });
 }
 
 std::string TestActionTimelineSkeleton::title() const
 {
     return "Test ActionTimeline Skeleton";
+}
+
+void TestActionTimelineSkeleton::setAllSubBonesDebugDraw(SkeletonNode* rootSkeleton, bool isShow)
+{
+    auto boneMap = rootSkeleton->getAllSubBonesMap();
+    for (auto& bonePair : boneMap)
+    {
+        bonePair.second->setDebugDrawEnabled(isShow);
+    }
 }
 
 
