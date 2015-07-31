@@ -8759,7 +8759,7 @@ int lua_cocos2dx_ui_Text_getFontSize(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_getFontSize'", nullptr);
             return 0;
         }
-        int ret = cobj->getFontSize();
+        double ret = cobj->getFontSize();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -9148,13 +9148,13 @@ int lua_cocos2dx_ui_Text_init(lua_State* tolua_S)
     {
         std::string arg0;
         std::string arg1;
-        int arg2;
+        double arg2;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Text:init");
 
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Text:init");
 
-        ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccui.Text:init");
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "ccui.Text:init");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_init'", nullptr);
@@ -9601,9 +9601,9 @@ int lua_cocos2dx_ui_Text_setFontSize(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        int arg0;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.Text:setFontSize");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.Text:setFontSize");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_setFontSize'", nullptr);
@@ -9891,8 +9891,8 @@ int lua_cocos2dx_ui_Text_create(lua_State* tolua_S)
             std::string arg1;
             ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.Text:create");
             if (!ok) { break; }
-            int arg2;
-            ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccui.Text:create");
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "ccui.Text:create");
             if (!ok) { break; }
             cocos2d::ui::Text* ret = cocos2d::ui::Text::create(arg0, arg1, arg2);
             object_to_luaval<cocos2d::ui::Text>(tolua_S, "ccui.Text",(cocos2d::ui::Text*)ret);
