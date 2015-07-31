@@ -2143,7 +2143,7 @@ enableShadow : function (
 
 /**
  * @method getFontSize
- * @return {int}
+ * @return {float}
  */
 getFontSize : function (
 )
@@ -2225,13 +2225,13 @@ str
  * @method init
  * @param {String} arg0
  * @param {String} arg1
- * @param {int} arg2
+ * @param {float} arg2
  * @return {bool}
  */
 init : function (
 str, 
 str, 
-int 
+float 
 )
 {
     return false;
@@ -2321,10 +2321,10 @@ getTextHorizontalAlignment : function (
 
 /**
  * @method setFontSize
- * @param {int} arg0
+ * @param {float} arg0
  */
 setFontSize : function (
-int 
+float 
 )
 {
 },
@@ -2383,13 +2383,13 @@ texthalignment
  * @method create
 * @param {String} str
 * @param {String} str
-* @param {int} int
+* @param {float} float
 * @return {ccui.Text|ccui.Text}
 */
 create : function(
 str,
 str,
-int 
+float 
 )
 {
     return ccui.Text;
