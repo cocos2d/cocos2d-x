@@ -593,9 +593,9 @@ public:
     virtual Vec3 getRotation3D() const;
     
     /**
-     * Set rotation by quaternion.
+     * Set rotation by quaternion. You should make sure the quaternion is normalized.
      *
-     * @param quat The rotation in quaternion.
+     * @param quat The rotation in quaternion, note that the quat must be normalized.
      * @js NA
      */
     virtual void setRotationQuat(const Quaternion& quat);
