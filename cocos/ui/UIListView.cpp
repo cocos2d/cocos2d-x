@@ -512,7 +512,7 @@ void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* 
         Widget* parent = sender;
         while (parent)
         {
-            if (parent && parent->getParent() == _innerContainer)
+            if (parent && (parent->getParent() == _innerContainer))
             {
                 _curSelectedIndex = getIndex(parent);
                 break;
