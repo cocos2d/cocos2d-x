@@ -426,7 +426,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Terrain();
     virtual ~Terrain();
-    bool init(TerrainData &parameter, CrackFixedType fixedType);
+    bool initTerrain(TerrainData &parameter, CrackFixedType fixedType);
 protected:
     void onDraw(const Mat4 &transform, uint32_t flags);
 
