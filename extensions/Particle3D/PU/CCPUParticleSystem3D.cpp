@@ -428,7 +428,7 @@ void PUParticleSystem3D::resumeParticleSystem()
 
 void PUParticleSystem3D::update(float delta)
 {
-    if (_isMarkedForEmission) return;
+    if (!_isEnabled || _isMarkedForEmission) return;
     if (_state != State::RUNNING){
         if (_state == State::PAUSE) 
             return;
@@ -1171,6 +1171,7 @@ void PUParticleSystem3D::removeAllListener()
 
 void PUParticleSystem3D::draw( Renderer *renderer, const Mat4 &transform, uint32_t flags )
 {
+    if (!_isEnabled) return;
     if (getAliveParticleCount() <= 0) return;
     if (_render)
         _render->render(renderer, transform, this);
