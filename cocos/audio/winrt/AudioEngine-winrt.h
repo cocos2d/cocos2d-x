@@ -32,6 +32,9 @@
 #include "AudioCachePlayer.h"
 
 NS_CC_BEGIN
+
+class Scheduler;
+
     namespace experimental{
 #define MAX_AUDIOINSTANCES 32
 
@@ -70,6 +73,7 @@ NS_CC_BEGIN
      std::vector<int> _toRemoveAudioIDs;
      bool _lazyInitLoop;
      int _currentAudioID;
+     Scheduler* _scheduler;
  };
 }
 

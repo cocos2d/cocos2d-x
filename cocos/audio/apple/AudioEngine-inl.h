@@ -35,6 +35,9 @@
 #include "AudioPlayer.h"
 
 NS_CC_BEGIN
+
+class Scheduler;
+
     namespace experimental{
 #define MAX_AUDIOINSTANCES 24
 
@@ -84,7 +87,7 @@ private:
     bool _lazyInitLoop;
     
     int _currentAudioID;
-    
+    Scheduler* _scheduler;
 };
 }
 NS_CC_END
