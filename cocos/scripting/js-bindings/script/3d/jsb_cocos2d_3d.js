@@ -82,6 +82,19 @@ jsb.Terrain.CrackFixedType = {
     INCREASE_LOWER : 1
 };
 
+jsb.Physics3DShape.ShapeType =
+{
+    UNKNOWN : 0,
+    BOX : 1,
+    SPHERE : 2,
+    CYLINDER : 3,
+    CAPSULE : 4,
+    CONVEX : 5,
+    MESH : 6,
+    HEIGHT_FIELD : 7,
+    COMPOUND : 8,
+};
+
 jsb.Terrain.DetailMap = function(file, size = 35){
     this.file = file;
     this.size = size;
@@ -452,4 +465,50 @@ cc.Camera.prototype._ctor = function(cameraMode, first, second, third, fourth){
     else {
         throw new Error("jsb.Camera constructor: arguments error");
     }
+}
+
+/**
+ *  static Physics3DShape* createBox(const cocos2d::Vec3& extent);
+ *  static Physics3DShape* createSphere(float radius);
+ *  static Physics3DShape* createCylinder(float radius, float height);
+ *  static Physics3DShape* createCapsule(float radius, float height);
+ *  static Physics3DShape* createConvexHull(const cocos2d::Vec3 *points, int numPoints);
+ *  static Physics3DShape* createMesh(const cocos2d::Vec3 *triangles, int numTriangles);
+ *  static Physics3DShape* createHeightfield(int heightStickWidth,int heightStickLength
+ *   , const void* heightfieldData, float heightScale
+ *   , float minHeight, float maxHeight
+ *   , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
+ *  static Physics3DShape* createCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
+ */
+
+jsb.Physics3DShape.prototype._ctor = function(shapeType/*......*/){
+    // the create function param numbers
+    // type:argumentsLength
+    var argumentsArr = {};
+    argumentsArr[jsb.Physics3DShape.ShapeType.BOX] = [1];
+    argumentsArr[jsb.Physics3DShape.ShapeType.SPHERE] = [1];
+    argumentsArr[jsb.Physics3DShape.ShapeType.CYLINDER] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.CAPSULE] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.CONVEX] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.MESH] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.HEIGHT_FIELD] = [8, 9];
+    argumentsArr[jsb.Physics3DShape.ShapeType.COMPOUND] = [1];
+
+    if (!argumentsArr[""+shapeType] || argumentsArr[""+shapeType].indexOf(arguments.length - 1) < 0)
+    {
+        throw new Error("jsb.Physics3DShape constructor: arguments error");
+    }
+
+    var initFunction = {};
+
+    initFunction[jsb.Physics3DShape.ShapeType.BOX] = "initBox";
+    initFunction[jsb.Physics3DShape.ShapeType.SPHERE] = "initSphere";
+    initFunction[jsb.Physics3DShape.ShapeType.CYLINDER] = "initCylinder";
+    initFunction[jsb.Physics3DShape.ShapeType.CAPSULE] = "initCapsule";
+    initFunction[jsb.Physics3DShape.ShapeType.CONVEX] = "initConvexHull";
+    initFunction[jsb.Physics3DShape.ShapeType.MESH] = "initMesh";
+    initFunction[jsb.Physics3DShape.ShapeType.HEIGHT_FIELD] = "initHeightfield";
+    initFunction[jsb.Physics3DShape.ShapeType.COMPOUND] = "initCompoundShape";
+
+    this[initFunction[""+shapeType]].apply(this, Array.prototype.slice.call(arguments, 1));
 }

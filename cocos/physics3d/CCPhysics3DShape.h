@@ -130,7 +130,7 @@ public:
     btCollisionShape* getbtShape() const { return _btShape; }
 #endif
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
     Physics3DShape();
     ~Physics3DShape();
     
@@ -144,10 +144,10 @@ protected:
         , const void* heightfieldData, float heightScale
         , float minHeight, float maxHeight
         , bool useFloatDatam, bool flipQuadEdges
-        , bool useDiamondSubdivision);
+        , bool useDiamondSubdivision = false);
     bool initCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
     
-    
+protected:
     ShapeType _shapeType; //shape type
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
