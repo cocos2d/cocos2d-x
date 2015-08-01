@@ -322,7 +322,7 @@ bool js_cocos2dx_physics3d_Physics3dShape_initHeightfield(JSContext *cx, uint32_
 
         bool ret = false;
         if (argc == 8)
-            ret = cobj->initHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7);
+            ret = cobj->initHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7, false);
         else if (argc == 9)
             ret = cobj->initHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7, arg8);
 

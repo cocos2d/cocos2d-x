@@ -144,7 +144,7 @@ CC_CONSTRUCTOR_ACCESS:
         , const void* heightfieldData, float heightScale
         , float minHeight, float maxHeight
         , bool useFloatDatam, bool flipQuadEdges
-        , bool useDiamondSubdivision = false);
+        , bool useDiamondSubdivision);
     bool initCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
     
 protected:
