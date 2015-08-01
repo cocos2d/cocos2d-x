@@ -60,7 +60,6 @@ bool UIEditBoxTest::init()
         _editName = ui::EditBox::create(editBoxSize, ui::Scale9Sprite::create(pNormalSprite));
         _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
         _editName->setFontName("Paint Boy");
-        _editName->setFontSize(25);
         _editName->setFontColor(Color3B::RED);
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
@@ -86,6 +85,7 @@ bool UIEditBoxTest::init()
         _editEmail->setPlaceHolder("Email:");
         _editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
         _editEmail->setDelegate(this);
+        _editEmail->setFontSize(30);
         addChild(_editEmail);
         
         return true;
