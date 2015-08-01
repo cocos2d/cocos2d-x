@@ -268,6 +268,59 @@ int lua_register_cocos2dx_3d_Animation3D(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        int arg0;
+        cocos2d::ValueMap arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Animate3D:setKeyFrameUserInfo");
+
+        ok &= luaval_to_ccvaluemap(tolua_S, 3, &arg1, "cc.Animate3D:setKeyFrameUserInfo");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo'", nullptr);
+            return 0;
+        }
+        cobj->setKeyFrameUserInfo(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate3D:setKeyFrameUserInfo",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Animate3D_getSpeed(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1058,6 +1111,7 @@ int lua_register_cocos2dx_3d_Animate3D(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Animate3D");
         tolua_function(tolua_S,"new",lua_cocos2dx_3d_Animate3D_constructor);
+        tolua_function(tolua_S,"setKeyFrameUserInfo",lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo);
         tolua_function(tolua_S,"getSpeed",lua_cocos2dx_3d_Animate3D_getSpeed);
         tolua_function(tolua_S,"setQuality",lua_cocos2dx_3d_Animate3D_setQuality);
         tolua_function(tolua_S,"setWeight",lua_cocos2dx_3d_Animate3D_setWeight);
