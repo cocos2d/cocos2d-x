@@ -82,6 +82,19 @@ jsb.Terrain.CrackFixedType = {
     INCREASE_LOWER : 1
 };
 
+jsb.Physics3DShape.ShapeType =
+{
+    UNKNOWN : 0,
+    BOX : 1,
+    SPHERE : 2,
+    CYLINDER : 3,
+    CAPSULE : 4,
+    CONVEX : 5,
+    MESH : 6,
+    HEIGHT_FIELD : 7,
+    COMPOUND : 8,
+};
+
 jsb.Terrain.DetailMap = function(file, size = 35){
     this.file = file;
     this.size = size;
@@ -288,7 +301,7 @@ jsb._Animation3D = jsb.Animation3D;
 
 jsb.Animation3D = function(fileName, animationName = ""){
     if (!(this instanceof jsb.Animation3D)){
-        cc.error("Constructor can not called as a function, Please use new");
+        cc.error("Animation3D Constructor can not called as a function, Please use new");
         return;
     }
 
@@ -450,3 +463,138 @@ cc.Camera.prototype._ctor = function(cameraMode, first, second, third, fourth){
         cc.error("jsb.Camera constructor: arguments error");
     }
 }
+
+/**
+ *  static Physics3DShape* createBox(const cocos2d::Vec3& extent);
+ *  static Physics3DShape* createSphere(float radius);
+ *  static Physics3DShape* createCylinder(float radius, float height);
+ *  static Physics3DShape* createCapsule(float radius, float height);
+ *  static Physics3DShape* createConvexHull(const cocos2d::Vec3 *points, int numPoints);
+ *  static Physics3DShape* createMesh(const cocos2d::Vec3 *triangles, int numTriangles);
+ *  static Physics3DShape* createHeightfield(int heightStickWidth,int heightStickLength
+ *   , const void* heightfieldData, float heightScale
+ *   , float minHeight, float maxHeight
+ *   , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
+ *  static Physics3DShape* createCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
+ */
+
+jsb.Physics3DShape.prototype._ctor = function(shapeType/*......*/){
+    // the create function param numbers
+    // type:argumentsLength
+    var argumentsArr = {};
+    argumentsArr[jsb.Physics3DShape.ShapeType.BOX] = [1];
+    argumentsArr[jsb.Physics3DShape.ShapeType.SPHERE] = [1];
+    argumentsArr[jsb.Physics3DShape.ShapeType.CYLINDER] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.CAPSULE] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.CONVEX] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.MESH] = [2];
+    argumentsArr[jsb.Physics3DShape.ShapeType.HEIGHT_FIELD] = [8, 9];
+    argumentsArr[jsb.Physics3DShape.ShapeType.COMPOUND] = [1];
+
+    if (!argumentsArr[""+shapeType] || argumentsArr[""+shapeType].indexOf(arguments.length - 1) < 0)
+    {
+        cc.error("jsb.Physics3DShape constructor: arguments error");
+        return;
+    }
+
+    var initFunction = {};
+
+    initFunction[jsb.Physics3DShape.ShapeType.BOX] = "initBox";
+    initFunction[jsb.Physics3DShape.ShapeType.SPHERE] = "initSphere";
+    initFunction[jsb.Physics3DShape.ShapeType.CYLINDER] = "initCylinder";
+    initFunction[jsb.Physics3DShape.ShapeType.CAPSULE] = "initCapsule";
+    initFunction[jsb.Physics3DShape.ShapeType.CONVEX] = "initConvexHull";
+    initFunction[jsb.Physics3DShape.ShapeType.MESH] = "initMesh";
+    initFunction[jsb.Physics3DShape.ShapeType.HEIGHT_FIELD] = "initHeightfield";
+    initFunction[jsb.Physics3DShape.ShapeType.COMPOUND] = "initCompoundShape";
+
+    this[initFunction[""+shapeType]].apply(this, Array.prototype.slice.call(arguments, 1));
+}
+
+/**
+ *  static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Mat4& rbAFrame, bool useReferenceFrameA = false);
+ *  static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotInA, const cocos2d::Vec3& axisInA, bool useReferenceFrameA = false);
+ *  static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotInA,const cocos2d::Vec3& pivotInB, cocos2d::Vec3& axisInA, cocos2d::Vec3& axisInB, bool useReferenceFrameA = false);
+ *  static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& rbAFrame, const cocos2d::Mat4& rbBFrame, bool useReferenceFrameA = false);
+ *
+ */
+jsb._Physics3DHingeConstraint = jsb.Physics3DHingeConstraint;
+
+jsb.Physics3DHingeConstraint = function(/*arguments*/){
+    if (!(this instanceof jsb.Physics3DHingeConstraint)){
+        cc.error("Physics3DHingeConstraint Constructor can not called as a function, Please use new");
+        return;
+    }
+
+    return jsb._Physics3DHingeConstraint.create.apply(this, arguments);
+}
+
+jsb.Physics3DHingeConstraint.create = function(/*arguments*/){
+    return jsb._Physics3DHingeConstraint.create.apply(this, arguments);
+}
+
+
+jsb._Physics3DSliderConstraint = jsb.Physics3DSliderConstraint;
+
+jsb.Physics3DSliderConstraint = function(/*arguments*/){
+    if (!(this instanceof jsb.Physics3DSliderConstraint)){
+        cc.error("Physics3DSliderConstraint Constructor can not called as a function, Please use new");
+        return;
+    }
+
+    return jsb._Physics3DSliderConstraint.create.apply(this, arguments);
+}
+
+jsb.Physics3DSliderConstraint.create = function(/*arguments*/){
+    return jsb._Physics3DSliderConstraint.create.apply(this, arguments);
+}
+
+jsb._Physics3DConeTwistConstraint = jsb.Physics3DConeTwistConstraint;
+
+jsb.Physics3DConeTwistConstraint = function(/*arguments*/){
+    if (!(this instanceof jsb.Physics3DConeTwistConstraint)){
+        cc.error("Physics3DConeTwistConstraint Constructor can not called as a function, Please use new");
+        return;
+    }
+
+    return jsb._Physics3DConeTwistConstraint.create.apply(this, arguments);
+}
+
+jsb.Physics3DConeTwistConstraint.create = function(/*arguments*/){
+    return jsb._Physics3DConeTwistConstraint.create.apply(this, arguments);
+}
+
+jsb._Physics3D6DofConstraint = jsb.Physics3D6DofConstraint;
+
+jsb.Physics3D6DofConstraint = function(/*arguments*/){
+    if (!(this instanceof jsb.Physics3D6DofConstraint)){
+        cc.error("Physics3D6DofConstraint Constructor can not called as a function, Please use new");
+        return;
+    }
+
+    return jsb._Physics3D6DofConstraint.create.apply(this, arguments);
+}
+
+jsb.Physics3D6DofConstraint.create = function(/*arguments*/){
+    return jsb._Physics3D6DofConstraint.create.apply(this, arguments);
+}
+
+jsb._PhysicsSprite3D = jsb.PhysicsSprite3D;
+
+jsb.PhysicsSprite3D = function(/*arguments*/){
+    if (!(this instanceof jsb.PhysicsSprite3D)){
+        cc.error("PhysicsSprite3D Constructor can not called as a function, Please use new");
+        return;
+    }
+
+    return jsb._PhysicsSprite3D.create.apply(this, arguments);
+}
+
+jsb.PhysicsSprite3D.create = function(/*arguments*/){
+    return jsb._PhysicsSprite3D.create.apply(this, arguments);
+}
+
+jsb.PhysicsSprite3D.createWithCollider = function(/*arguments*/){
+    return jsb._PhysicsSprite3D.createWithCollider.apply(this, arguments);
+}
+
