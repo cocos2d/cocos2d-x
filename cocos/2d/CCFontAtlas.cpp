@@ -64,6 +64,7 @@ FontAtlas::FontAtlas(Font &theFont)
         _currentPage = 0;
         _currentPageOrigX = 0;
         _currentPageOrigY = 0;
+        _letterEdgeExtend = 2;
         _letterPadding = 0;
 
         if (_fontFreeType->isDistanceFieldEnabled())
@@ -299,7 +300,8 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
         return false;
     }
 
-    float offsetAdjust = _letterPadding / 2;  
+    int adjustForDistanceMap = _letterPadding / 2;
+    int adjustForExtend = _letterEdgeExtend / 2;
     long bitmapWidth;
     long bitmapHeight;
     Rect tempRect;
@@ -316,14 +318,14 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
         if (bitmap && bitmapWidth > 0 && bitmapHeight > 0)
         {
             tempDef.validDefinition = true;
-            tempDef.width = tempRect.size.width + _letterPadding;
-            tempDef.height = tempRect.size.height + _letterPadding;
-            tempDef.offsetX = tempRect.origin.x + offsetAdjust;
-            tempDef.offsetY = _fontAscender + tempRect.origin.y - offsetAdjust;
+            tempDef.width = tempRect.size.width + _letterPadding + _letterEdgeExtend;
+            tempDef.height = tempRect.size.height + _letterPadding + _letterEdgeExtend;
+            tempDef.offsetX = tempRect.origin.x + adjustForDistanceMap + adjustForExtend;
+            tempDef.offsetY = _fontAscender + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
 
             if (bitmapHeight > _currLineHeight)
             {
-                _currLineHeight = static_cast<int>(bitmapHeight) + _letterPadding + 1;
+                _currLineHeight = static_cast<int>(bitmapHeight) + _letterPadding + _letterEdgeExtend + 1;
             }
             if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
             {
@@ -364,7 +366,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
                     tex->release();
                 }
             }
-            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX, _currentPageOrigY, bitmap, bitmapWidth, bitmapHeight);
+            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX + adjustForExtend, _currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight);
 
             tempDef.U = _currentPageOrigX;
             tempDef.V = _currentPageOrigY;
