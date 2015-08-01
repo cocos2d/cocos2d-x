@@ -278,26 +278,23 @@ void PageView::updateAllPagesPosition()
     // If the layout is dirty, don't trigger auto scroll
     _isAutoScrolling = false;
 
-    if (_direction == Direction::HORIZONTAL)
+    for (int i=0; i<pageCount; i++)
     {
-        float pageWidth = getContentSize().width;
-        for (int i=0; i<pageCount; i++)
-        {
-            Layout* page = _pages.at(i);
-            page->setPosition(Vec2((i-_curPageIdx) * pageWidth, 0));
-            
-        }
+        Layout* page = _pages.at(i);
+        Vec2 newPosition;
 
-    }
-    else if(_direction == Direction::VERTICAL)
-    {
-        float pageHeight = getContentSize().height;
-        for (int i=0; i<pageCount; i++)
+        if (_direction == Direction::HORIZONTAL)
         {
-            Layout* page = _pages.at(i);
-            page->setPosition(Vec2(0,(i-_curPageIdx) * pageHeight));
-            
+            float pageWidth = getContentSize().width;
+            newPosition =  Vec2((i-_curPageIdx) * pageWidth, 0);
         }
+        else if(_direction == Direction::VERTICAL)
+        {
+            float pageHeight = getContentSize().height;
+            newPosition = Vec2(0,(i-_curPageIdx) * pageHeight);
+
+        }
+        page->setPosition(newPosition);
     }
 }
 
@@ -615,29 +612,27 @@ void PageView::handleReleaseLogic(Touch *touch)
         ssize_t pageCount = this->getPageCount();
         
         auto contentSize = getContentSize();
-        if (!_usingCustomScrollThreshold)
-        {
-            if (_direction == Direction::HORIZONTAL)
-            {
-                _customScrollThreshold = contentSize.width / 2.0;
-            }
-            else if(_direction == Direction::VERTICAL)
-            {
-                _customScrollThreshold = contentSize.height / 2.0;
-            }
-        }
-        float boundary = _customScrollThreshold;
+       
         float moveBoundray = 0.0f;
+        float scrollDistance;
         if (_direction == Direction::HORIZONTAL)
         {
             curPagePos.y = 0;
             moveBoundray = curPagePos.x;
+            scrollDistance = contentSize.width / 2.0;
         }
-        else
+        else if(_direction == Direction::VERTICAL)
         {
             curPagePos.x = 0;
             moveBoundray = curPagePos.y;
+            scrollDistance  = contentSize.height / 2.0;
         }
+
+        if (!_usingCustomScrollThreshold)
+        {
+            _customScrollThreshold = scrollDistance;
+        }
+        float boundary = _customScrollThreshold;
         
         if (moveBoundray <= -boundary)
         {
