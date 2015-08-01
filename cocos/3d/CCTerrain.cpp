@@ -54,27 +54,32 @@ static bool isPOT(int number)
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
 {
     Terrain * terrain = new (std::nothrow)Terrain();
-    terrain->setSkirtHeightRatio(parameter._skirtHeightRatio);
-    terrain->_terrainData = parameter;
-    terrain->_crackFixedType = fixedType;
-    terrain->_isCameraViewChanged = true;
-    //chunksize
-    terrain->_chunkSize = parameter._chunkSize;
-    bool initResult =true;
-
-    //init heightmap
-    initResult &= terrain->initHeightMap(parameter._heightMapSrc.c_str());
-    //init textures alpha map,detail Maps
-    initResult &= terrain->initTextures();
-    initResult &= terrain->initProperties();
-    terrain->autorelease();
-    if(!initResult)
+    if (terrain->initWithTerrainData(parameter, fixedType))
     {
-        CC_SAFE_DELETE(terrain);
-    }    
+        terrain->autorelease();
+        return terrain;
+    }
+    CC_SAFE_DELETE(terrain);
     return terrain;
 }
+bool Terrain::initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType)
+{
+    this->setSkirtHeightRatio(parameter._skirtHeightRatio);
+    this->_terrainData = parameter;
+    this->_crackFixedType = fixedType;
+    this->_isCameraViewChanged = true;
+    //chunksize
+    this->_chunkSize = parameter._chunkSize;
+    bool initResult = true;
 
+    //init heightmap
+    initResult &= this->initHeightMap(parameter._heightMapSrc.c_str());
+    //init textures alpha map,detail Maps
+    initResult &= this->initTextures();
+    initResult &= this->initProperties();
+    
+    return initResult;
+}
 bool Terrain::initProperties()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);

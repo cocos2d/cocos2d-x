@@ -422,11 +422,12 @@ public:
      * get the terrain's height data
      */
     std::vector<float> getHeightData() const;
-    
-protected:
-    
+
+CC_CONSTRUCTOR_ACCESS:
     Terrain();
     virtual ~Terrain();
+    bool initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType);
+protected:
     void onDraw(const Mat4 &transform, uint32_t flags);
 
     /**

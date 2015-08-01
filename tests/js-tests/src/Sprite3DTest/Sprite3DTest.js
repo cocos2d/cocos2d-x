@@ -929,7 +929,7 @@ var UseCaseSprite3D1 = Sprite3DTestDemo.extend({
 
         var s = cc.winSize;
         //setup camera
-        var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 40, s.width/s.height, 0.01, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         camera.setPosition3D(cc.math.vec3(0, 30, 100));
         camera.lookAt(cc.math.vec3(0, 0, 0));
@@ -992,7 +992,7 @@ var UseCaseSprite3D2 = Sprite3DTestDemo.extend({
 
         var s = cc.winSize;
         //setup camera
-        var camera = cc.Camera.createPerspective(40, s.width/s.height, 0.01, 1000);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 40, s.width/s.height, 0.01, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         camera.setPosition3D(cc.math.vec3(0, 30, 100));
         camera.lookAt(cc.math.vec3(0, 0, 0));
@@ -1175,7 +1175,7 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         //the assets are from the OpenVR demo
         //get the visible size.
         var visibleSize = cc.director.getVisibleSize();
-        this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, visibleSize.width/visibleSize.height, 0.1, 200);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this._camera.setPosition3D(cc.math.vec3(0, 25, 15));
         this._camera.setRotation3D(cc.math.vec3(-35, 0, 0));
@@ -1187,7 +1187,7 @@ var Sprite3DLightMapTest = Sprite3DTestDemo.extend({
         this.setCameraMask(2);
 
         //add a point light
-        var light = jsb.PointLight.create(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
+        var light = new jsb.PointLight(cc.math.vec3(35, 75, -20.5), cc.color(255, 255, 255), 150);
         this.addChild(light);
         //set the ambient light 
         var ambient = new jsb.AmbientLight(cc.color(55, 55, 55));
@@ -1239,7 +1239,7 @@ var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
 
         var visibleSize = cc.director.getVisibleSize();
         //use custom camera
-        var camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, visibleSize.width/visibleSize.height, 0.1, 200);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         this.addChild(camera);
         this.setCameraMask(2);
@@ -1373,7 +1373,7 @@ var Sprite3DFakeShadowTest = Sprite3DTestDemo.extend({
         state.setUniformTexture("u_shadowTexture", shadowTexture);
         state.setUniformVec3("u_target_pos", this._targetPos);
         
-        this._camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, s.width/s.height, 1, 1000);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this._camera.setPosition3D(cc.math.vec3(0, 20, 25));
         this._camera.lookAt(cc.math.vec3(0, 0, 0));
@@ -1498,7 +1498,7 @@ var Sprite3DBasicToonShaderTest = Sprite3DTestDemo.extend({
     ctor:function(){
         this._super();
 
-        var camera = cc.Camera.createPerspective(60, cc.winSize.width/cc.winSize.height, 1, 1000);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, cc.winSize.width/cc.winSize.height, 1, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         this.addChild(camera);
         this.setCameraMask(2);
@@ -1541,7 +1541,7 @@ var Sprite3DCubeMapTest = Sprite3DTestDemo.extend({
         this._super();
 
         var visibleSize = cc.director.getVisibleSize();
-        var camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 10, 1000);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, visibleSize.width/visibleSize.height, 10, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         camera.setPosition3D(cc.math.vec3(0, 0, 50));
 

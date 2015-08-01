@@ -133,7 +133,7 @@ var TerrainSimple = TerrainTestDemo.extend({
         var visibleSize = cc.director.getVisibleSize();
 
         //use custom camera
-        this._camera = cc.Camera.createPerspective(60,visibleSize.width/visibleSize.height,0.1,800);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60,visibleSize.width/visibleSize.height,0.1,800);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this._camera.setPosition3D(cc.math.vec3(-1, 1.6, 4));
         this.addChild(this._camera);
@@ -151,7 +151,7 @@ var TerrainSimple = TerrainTestDemo.extend({
             0.1
         );
 
-        var terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+        var terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
         terrain.setLODDistance(3.2,6.4,9.6);
         terrain.setMaxDetailMapAmount(4);
         this.addChild(terrain);
@@ -302,7 +302,7 @@ var TerrainWalkThru = (function(){
             }, this);
 
             var visibleSize = cc.director.getVisibleSize();
-            this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+            this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, visibleSize.width/visibleSize.height, 0.1, 200);
             this._camera.setCameraFlag(cc.CameraFlag.USER1);
             this.addChild(this._camera);
 
@@ -319,7 +319,7 @@ var TerrainWalkThru = (function(){
                 2
             );
 
-            this._terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+            this._terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
             this._terrain.setLODDistance(64, 128, 192);
             this._terrain.setMaxDetailMapAmount(4);
             this._terrain.setCameraMask(2);

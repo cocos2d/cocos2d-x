@@ -141,7 +141,7 @@ var LightTest = LightTestDemo.extend({
         this.scheduleUpdate();
 
         var s = cc.winSize;
-        var camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 1000);
+        var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, s.width/s.height, 1, 1000);
         camera.setCameraFlag(cc.CameraFlag.USER1);
         camera.setPosition3D(cc.math.vec3(0, 100, 100));
         camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
@@ -219,12 +219,12 @@ var LightTest = LightTestDemo.extend({
         this.addChild(this._directionalLight);
         this._directionalLight.setCameraMask(2);
 
-        this._pointLight = jsb.PointLight.create(cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 10000);
+        this._pointLight = new jsb.PointLight(cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 10000);
         this._pointLight.setEnabled(false);
         this.addChild(this._pointLight);
         this._pointLight.setCameraMask(2);
 
-        this._spotLight = jsb.SpotLight.create(cc.math.vec3(-1, -1, 0), cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 0, 0.5, 10000);
+        this._spotLight = new jsb.SpotLight(cc.math.vec3(-1, -1, 0), cc.math.vec3(0, 0, 0), cc.color(200, 200, 200), 0, 0.5, 10000);
         this._spotLight.setEnabled(false);
         this.addChild(this._spotLight);
         this._spotLight.setCameraMask(2);

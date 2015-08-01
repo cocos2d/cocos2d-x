@@ -34,7 +34,11 @@ cc.CameraFlag = {
     USER7 : 1 << 7,
     USER8 : 1 << 8
 };
-
+cc.Camera.Mode = {
+    DEFAULT : 0,
+    PERSPECTIVE : 1,
+    ORTHOGRAPHIC : 2
+};
 cc.LightType = {
     DIRECTIONAL : 0,
     POINT : 1,
@@ -283,8 +287,10 @@ jsb.BillBoard.prototype._ctor = function(filename, rect, mode = jsb.BillBoard.Mo
 jsb._Animation3D = jsb.Animation3D;
 
 jsb.Animation3D = function(fileName, animationName = ""){
-    if (!(this instanceof jsb.Animation3D))
-        throw new Error("Constructor can not called as a function, Please use new");
+    if (!(this instanceof jsb.Animation3D)){
+        cc.error("Constructor can not called as a function, Please use new");
+        return;
+    }
 
     return jsb._Animation3D.create(fileName, animationName);
 }
@@ -307,9 +313,8 @@ jsb.Animate3D.prototype._ctor = function(first, second, third, fourth){
     else if (arguments.length === 4) {
         this.init(first, second, third, fourth);
     }
-    else
-    {
-        throw new Error("jsb.Animate3D constructor: arguments error");
+    else {
+        cc.error("jsb.Animate3D constructor: arguments error");
     }
 }
 
@@ -320,9 +325,8 @@ jsb.Skybox.prototype._ctor = function(positive_x, negative_x, positive_y, negati
     else if (arguments.length === 6 ) {
         this.init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
     }
-    else
-    {
-        throw new Error("jsb.Skybox constructor: arguments error");
+    else {
+        cc.error("jsb.Skybox constructor: arguments error");
     }
 }
 
@@ -331,9 +335,8 @@ jsb.DirectionLight.prototype._ctor = function(direction, color){
         this.setDirection(direction);
         this.setColor(color);
     }
-    else
-    {
-        throw new Error("jsb.DirectionLight constructor: arguments error");
+    else {
+        cc.error("jsb.DirectionLight constructor: arguments error");
     }
 
 }
@@ -343,17 +346,16 @@ jsb.AmbientLight.prototype._ctor = function(color){
         this.setColor(color);
     }
     else {
-        throw new Error("jsb.AmbientLight constructor: arguments error");
+        cc.error("jsb.AmbientLight constructor: arguments error");
     }
 
 }
 
 jsb.Physics3DComponent.prototype._ctor = function(physicsObj, translateInPhysics = cc.math.vec3(), rotInPhsyics = new cc.math.Quaternion()){
     if (arguments.length > 3 || arguments.length < 1) {
-        throw new Error("jsb.Physics3DComponent constructor: arguments error");
+        cc.error("jsb.Physics3DComponent constructor: arguments error");
     }
-    else
-    {
+    else {
         this.init();
         this.setPhysics3DObject(physicsObj);
         this.setTransformInPhysics(translateInPhysics, rotInPhsyics);
@@ -371,9 +373,8 @@ jsb.Physics3DPointToPointConstraint.prototype._ctor = function(first, second, th
     else if (arguments.length === 4 ) {
         this.init(first, second, third, fourth);
     }
-    else
-    {
-        throw new Error("jsb.Physics3DPointToPointConstraint constructor: arguments error");
+    else {
+        cc.error("jsb.Physics3DPointToPointConstraint constructor: arguments error");
     }
 }
 
@@ -382,7 +383,7 @@ jsb.Physics3DRigidBody.prototype._ctor = function(rigidBodyInfo){
         this.init(rigidBodyInfo);
     }
     else {
-        throw new Error("jsb.Physics3DRigidBody constructor: arguments error");
+        cc.error("jsb.Physics3DRigidBody constructor: arguments error");
     }
 }
 
@@ -391,6 +392,61 @@ jsb.Physics3DWorld.prototype._ctor = function(worldDesInfo){
         this.init(worldDesInfo);
     }
     else {
-        throw new Error("jsb.Physics3DWorld constructor: arguments error");
+        cc.error("jsb.Physics3DWorld constructor: arguments error");
+    }
+}
+
+jsb.PointLight.prototype._ctor = function(position, color, range){
+    if (arguments.length === 3 ) {
+        this.setPosition3D(position);
+        this.setColor(color);
+        this.setRange(range);
+    }
+    else {
+        cc.error("jsb.PointLight constructor: arguments error");
+    }
+}
+
+jsb.SpotLight.prototype._ctor = function(direction, position, color, innerAngle, outerAngle, range){
+    if (arguments.length === 6 ) {
+        this.setDirection(direction);
+        this.setPosition3D(position);
+        this.setColor(color);
+        this.setInnerAngle(innerAngle);
+        this.setOuterAngle(outerAngle);
+        this.setRange(range);
+    }
+    else {
+        cc.error("jsb.SpotLight constructor: arguments error");
+    }
+}
+
+jsb.Terrain.prototype._ctor = function(parameter, fixedType = jsb.Terrain.INCREASE_LOWER){
+    if (arguments.length === 2 || arguments.length === 1) {
+        this.initWithTerrainData(parameter, fixedType);
+    }
+    else {
+        cc.error("jsb.Terrain constructor: arguments error");
+    }
+}
+
+/**
+ * Camera* Camera::create()
+ * Camera* Camera::createPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane)
+ * Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane)
+ */
+cc.Camera.prototype._ctor = function(cameraMode, first, second, third, fourth){
+    if (arguments.length === 1 && cameraMode == cc.Camera.Mode.DEFAULT) {
+        this.initDefault();
+        this.setDepth(0);
+    }
+    else if (arguments.length === 5 && cameraMode == cc.Camera.Mode.PERSPECTIVE) {
+        this.initPerspective(first, second, third, fourth);
+    }
+    else if (arguments.length === 5 && cameraMode == cc.Camera.Mode.ORTHOGRAPHIC) {
+        this.initOrthographic(first, second, third, fourth);
+    }
+    else {
+        cc.error("jsb.Camera constructor: arguments error");
     }
 }
