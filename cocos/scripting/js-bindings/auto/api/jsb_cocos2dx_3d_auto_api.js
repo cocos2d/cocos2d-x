@@ -87,6 +87,18 @@ Animation3D : function (
 jsb.Animate3D = {
 
 /**
+ * @method setKeyFrameUserInfo
+ * @param {int} arg0
+ * @param {map_object} arg1
+ */
+setKeyFrameUserInfo : function (
+int, 
+map 
+)
+{
+},
+
+/**
  * @method getSpeed
  * @return {float}
  */

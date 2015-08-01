@@ -26,6 +26,7 @@ bool js_cocos2dx_3d_Animate3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_cocos2dx_3d_Animate3D_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_3d_Animate3D_setKeyFrameUserInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animate3D_getSpeed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animate3D_setQuality(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp);
