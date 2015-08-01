@@ -1400,6 +1400,20 @@ vec3
 },
 
 /**
+ * @method initWithTerrainData
+ * @param {cc.Terrain::TerrainData} arg0
+ * @param {cc.Terrain::CrackFixedType} arg1
+ * @return {bool}
+ */
+initWithTerrainData : function (
+terraindata, 
+crackfixedtype 
+)
+{
+    return false;
+},
+
+/**
  * @method setLODDistance
  * @param {float} arg0
  * @param {float} arg1
@@ -1491,6 +1505,15 @@ getMinHeight : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method Terrain
+ * @constructor
+ */
+Terrain : function (
+)
+{
 },
 
 };

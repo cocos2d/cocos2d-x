@@ -5217,6 +5217,60 @@ int lua_cocos2dx_3d_Terrain_initProperties(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Terrain_initWithTerrainData(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Terrain",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_initWithTerrainData'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Terrain::TerrainData arg0;
+        cocos2d::Terrain::CrackFixedType arg1;
+
+        #pragma warning NO CONVERSION TO NATIVE FOR TerrainData
+		ok = false;
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Terrain:initWithTerrainData");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_initWithTerrainData'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithTerrainData(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:initWithTerrainData",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_initWithTerrainData'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Terrain_setLODDistance(lua_State* tolua_S)
 {
     int argc = 0;
@@ -5567,6 +5621,43 @@ int lua_cocos2dx_3d_Terrain_getMinHeight(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Terrain_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::Terrain();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Terrain");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:Terrain",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
 static int lua_cocos2dx_3d_Terrain_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Terrain)");
@@ -5579,6 +5670,7 @@ int lua_register_cocos2dx_3d_Terrain(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Terrain","cc.Terrain","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Terrain");
+        tolua_function(tolua_S,"new",lua_cocos2dx_3d_Terrain_constructor);
         tolua_function(tolua_S,"initHeightMap",lua_cocos2dx_3d_Terrain_initHeightMap);
         tolua_function(tolua_S,"setMaxDetailMapAmount",lua_cocos2dx_3d_Terrain_setMaxDetailMapAmount);
         tolua_function(tolua_S,"setDrawWire",lua_cocos2dx_3d_Terrain_setDrawWire);
@@ -5591,6 +5683,7 @@ int lua_register_cocos2dx_3d_Terrain(lua_State* tolua_S)
         tolua_function(tolua_S,"convertToTerrainSpace",lua_cocos2dx_3d_Terrain_convertToTerrainSpace);
         tolua_function(tolua_S,"initTextures",lua_cocos2dx_3d_Terrain_initTextures);
         tolua_function(tolua_S,"initProperties",lua_cocos2dx_3d_Terrain_initProperties);
+        tolua_function(tolua_S,"initWithTerrainData",lua_cocos2dx_3d_Terrain_initWithTerrainData);
         tolua_function(tolua_S,"setLODDistance",lua_cocos2dx_3d_Terrain_setLODDistance);
         tolua_function(tolua_S,"getTerrainSize",lua_cocos2dx_3d_Terrain_getTerrainSize);
         tolua_function(tolua_S,"getNormal",lua_cocos2dx_3d_Terrain_getNormal);

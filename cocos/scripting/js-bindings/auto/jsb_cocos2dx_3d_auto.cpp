@@ -2,6 +2,7 @@
 #include "cocos2d_specifics.hpp"
 #include "cocos2d.h"
 #include "CCBundle3D.h"
+#include "3d/jsb_cocos2dx_3d_manual.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -3978,6 +3979,30 @@ bool js_cocos2dx_3d_Terrain_getHeight(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_3d_Terrain_getHeight : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_3d_Terrain_initWithTerrainData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Terrain* cobj = (cocos2d::Terrain *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Terrain_initWithTerrainData : Invalid Native Object");
+    if (argc == 2) {
+        cocos2d::Terrain::TerrainData arg0;
+        cocos2d::Terrain::CrackFixedType arg1;
+        ok &= jsval_to_TerrainData(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Terrain_initWithTerrainData : Error processing arguments");
+        bool ret = cobj->initWithTerrainData(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Terrain_initWithTerrainData : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
 bool js_cocos2dx_3d_Terrain_setLODDistance(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4163,6 +4188,34 @@ bool js_cocos2dx_3d_Terrain_getMinHeight(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_3d_Terrain_getMinHeight : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_3d_Terrain_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::Terrain* cobj = new (std::nothrow) cocos2d::Terrain();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::Terrain> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Terrain");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
 
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -4200,6 +4253,7 @@ void js_register_cocos2dx_3d_Terrain(JSContext *cx, JS::HandleObject global) {
         JS_FN("initTextures", js_cocos2dx_3d_Terrain_initTextures, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initProperties", js_cocos2dx_3d_Terrain_initProperties, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getHeight", js_cocos2dx_3d_Terrain_getHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithTerrainData", js_cocos2dx_3d_Terrain_initWithTerrainData, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLODDistance", js_cocos2dx_3d_Terrain_setLODDistance, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTerrainSize", js_cocos2dx_3d_Terrain_getTerrainSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getIntersectionPoint", js_cocos2dx_3d_Terrain_getIntersectionPoint, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -4217,7 +4271,7 @@ void js_register_cocos2dx_3d_Terrain(JSContext *cx, JS::HandleObject global) {
         cx, global,
         JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
         jsb_cocos2d_Terrain_class,
-        dummy_constructor<cocos2d::Terrain>, 0, // no constructor
+        js_cocos2dx_3d_Terrain_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
