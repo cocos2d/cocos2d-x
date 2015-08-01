@@ -126,4 +126,20 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIPageViewVerticalTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewVerticalTest);
+    
+    UIPageViewVerticalTest();
+    ~UIPageViewVerticalTest();
+    virtual bool init() override;
+    
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */

@@ -249,6 +249,10 @@ ccui.PageView.EVENT_TURNING = 0;
 ccui.PageView.TOUCH_DIR_LEFT = 0;
 ccui.PageView.TOUCH_DIR_RIGHT = 1;
 
+//PageView direction
+ccui.PageView.DIRECTION_HORIZONTAL = 0;
+ccui.PageView.DIRECTION_VERTICAL = 1;
+
 /*
  * UIButton
  */
