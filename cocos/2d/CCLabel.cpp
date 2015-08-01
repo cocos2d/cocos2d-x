@@ -30,6 +30,7 @@
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
@@ -40,8 +41,6 @@
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
-
-const int Label::DistanceFieldFontSize = 50;
 
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
@@ -449,7 +448,6 @@ void Label::reset()
     _shadowEnabled = false;
     _shadowBlurRadius = 0.f;
 
-    _correctionScale = 1.f;
     _useDistanceField = false;
     _useA8Shader = false;
     _clipEnabled = false;
@@ -531,7 +529,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
 bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(&ttfConfig);
 
     if (!newAtlas)
     {
@@ -556,10 +554,6 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     {
         _currLabelEffect = LabelEffect::NORMAL;
         updateShaderProgram();
-        if(ttfConfig.distanceFieldEnabled)
-        {
-            this->setCorrectionScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
-        }
     }
 
     return true;
@@ -636,57 +630,6 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
     {
         _lineBreakWithoutSpaces = breakWithoutSpace;
         _contentDirty = true;     
-    }
-}
-
-void Label::setScale(float scale)
-{
-    if (_useDistanceField)
-    {
-        scale *= _correctionScale;
-    } 
-    Node::setScale(scale);
-}
-
-void Label::setScaleX(float scaleX)
-{
-    if (_useDistanceField)
-    {
-        scaleX *= _correctionScale;
-    } 
-    Node::setScaleX(scaleX);
-}
-
-void Label::setScaleY(float scaleY)
-{
-    if (_useDistanceField)
-    {
-        scaleY *= _correctionScale;
-    } 
-    Node::setScaleY(scaleY);
-}
-
-float Label::getScaleY() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleY / _correctionScale;
-    }
-    else
-    {
-        return _scaleY;
-    }
-}
-
-float Label::getScaleX() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleX / _correctionScale;
-    }
-    else
-    {
-        return _scaleX;
     }
 }
 
@@ -983,12 +926,6 @@ void Label::disableEffect(LabelEffect effect)
     }
 }
 
-void Label::setCorrectionScale(float correctionScale)
-{
-    _correctionScale = correctionScale * CC_CONTENT_SCALE_FACTOR();
-    Node::setScale(_correctionScale);
-}
-
 void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
@@ -1258,7 +1195,15 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     // Don't do calculate the culling if the transform was not updated
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
 #if CC_USE_CULLING
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        _insideBounds = (transformUpdated || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    }
+    else
+    {
+        _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
 
     if (_insideBounds)
 #endif

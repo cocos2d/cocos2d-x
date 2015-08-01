@@ -54,7 +54,7 @@ static bool isPOT(int number)
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
 {
     Terrain * terrain = new (std::nothrow)Terrain();
-    if (terrain->init(parameter, fixedType))
+    if (terrain->initWithTerrainData(parameter, fixedType))
     {
         terrain->autorelease();
         return terrain;
@@ -62,7 +62,7 @@ Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
     CC_SAFE_DELETE(terrain);
     return terrain;
 }
-bool Terrain::init(TerrainData &parameter, CrackFixedType fixedType)
+bool Terrain::initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType)
 {
     this->setSkirtHeightRatio(parameter._skirtHeightRatio);
     this->_terrainData = parameter;

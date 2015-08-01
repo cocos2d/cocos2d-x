@@ -84,6 +84,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue12775Test);
     ADD_TEST_CASE(LabelIssue11585Test);
     ADD_TEST_CASE(LabelFullTypeFontTest);
+    ADD_TEST_CASE(LabelIssue10688Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -2030,4 +2031,30 @@ LabelFullTypeFontTest::LabelFullTypeFontTest()
 std::string LabelFullTypeFontTest::title() const
 {
     return "Test font supported by FullType";
+}
+
+LabelIssue10688Test::LabelIssue10688Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Glow MenuItemLabel", "fonts/arial.ttf", 30);
+    label->setTextColor(Color4B::RED);
+    label->enableGlow(Color4B::YELLOW);
+    auto menuItem1 = MenuItemLabel::create(label, [](Ref*){});
+    menuItem1->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    menuItem1->setPosition(center.x - label->getContentSize().width/2, center.y);
+
+    auto menu = Menu::create(menuItem1, NULL);
+    menu->setPosition(Vec2::ZERO);
+    this->addChild(menu);
+}
+
+std::string LabelIssue10688Test::title() const
+{
+    return "Test for Issue #10688";
+}
+
+std::string LabelIssue10688Test::subtitle() const
+{
+    return "The MenuItemLabel should be displayed in the middle of the screen.";
 }

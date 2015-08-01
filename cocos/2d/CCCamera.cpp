@@ -539,4 +539,10 @@ int Camera::getRenderOrder() const
     return result;
 }
 
+void Camera::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    _viewProjectionUpdated = _transformUpdated;
+    return Node::visit(renderer, parentTransform, parentFlags);
+}
+
 NS_CC_END

@@ -205,6 +205,7 @@ bool js_cocos2dx_3d_Terrain_convertToTerrainSpace(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_3d_Terrain_initTextures(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_initProperties(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Terrain_initWithTerrainData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_setLODDistance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getTerrainSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getIntersectionPoint(JSContext *cx, uint32_t argc, jsval *vp);
@@ -213,6 +214,7 @@ bool js_cocos2dx_3d_Terrain_reload(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getImageHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getMaxHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getMinHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Terrain_Terrain(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_TextureCube_class;
 extern JSObject *jsb_cocos2d_TextureCube_prototype;

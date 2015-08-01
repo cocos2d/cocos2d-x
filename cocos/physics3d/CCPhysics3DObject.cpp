@@ -370,6 +370,190 @@ bool Physics3DRigidBody::isKinematic() const
     return false;
 }
 
+class btCollider : public btGhostObject
+{
+public:
+    btCollider(Physics3DCollider *collider)
+        : _collider(collider)
+    {};
+    ~btCollider(){};
+
+    ///this method is mainly for expert/internal use only.
+    virtual void	addOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btBroadphaseProxy* thisProxy = 0) override
+    {
+        btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
+        btAssert(otherObject);
+        ///if this linearSearch becomes too slow (too many overlapping objects) we should add a more appropriate data structure
+        int index = m_overlappingObjects.findLinearSearch(otherObject);
+        if (index == m_overlappingObjects.size())
+        {
+            //not found
+            m_overlappingObjects.push_back(otherObject);
+            if (_collider->onTriggerEnter != nullptr && _collider->isTrigger())
+                _collider->onTriggerEnter(getPhysicsObject(otherObject));
+        }
+    }
+
+    ///this method is mainly for expert/internal use only.
+    virtual void	removeOverlappingObjectInternal(btBroadphaseProxy* otherProxy, btDispatcher* dispatcher, btBroadphaseProxy* thisProxy = 0) override
+    {
+        btCollisionObject* otherObject = (btCollisionObject*)otherProxy->m_clientObject;
+        btAssert(otherObject);
+        int index = m_overlappingObjects.findLinearSearch(otherObject);
+        if (index < m_overlappingObjects.size())
+        {
+            m_overlappingObjects[index] = m_overlappingObjects[m_overlappingObjects.size() - 1];
+            m_overlappingObjects.pop_back();
+
+            if (_collider->onTriggerExit != nullptr && _collider->isTrigger())
+                _collider->onTriggerExit(getPhysicsObject(otherObject));
+        }
+    }
+
+    Physics3DObject* getPhysicsObject(const btCollisionObject* btObj)
+    {
+        for (auto it : _collider->getPhysicsWorld()->getPhysicsObjects())
+        {
+            if (it->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+            {
+                if (static_cast<Physics3DRigidBody*>(it)->getRigidBody() == btObj)
+                    return it;
+            }
+            else if (it->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+            {
+                if (static_cast<Physics3DCollider*>(it)->getGhostObject() == btObj)
+                    return it;
+            }
+        }
+        return nullptr;
+    }
+
+private:
+    Physics3DCollider *_collider;
+};
+
+Physics3DCollider::Physics3DCollider()
+: _btGhostObject(nullptr)
+, _physics3DShape(nullptr)
+{
+
+}
+
+Physics3DCollider::~Physics3DCollider()
+{
+    CC_SAFE_DELETE(_btGhostObject);
+    CC_SAFE_RELEASE(_physics3DShape);
+}
+
+Physics3DCollider* Physics3DCollider::create(Physics3DColliderDes *info)
+{
+    auto ret = new (std::nothrow) Physics3DCollider();
+    if (ret->init(info))
+    {
+        ret->autorelease();
+        return ret;
+    }
+
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+float Physics3DCollider::getCcdSweptSphereRadius() const
+{
+    return _btGhostObject->getCcdSweptSphereRadius();
+}
+
+void Physics3DCollider::setCcdSweptSphereRadius(float radius)
+{
+    _btGhostObject->setCcdSweptSphereRadius(radius);
+}
+
+float Physics3DCollider::getCcdMotionThreshold() const
+{
+    return _btGhostObject->getCcdMotionThreshold();
+}
+
+void Physics3DCollider::setCcdMotionThreshold(float ccdMotionThreshold)
+{
+    _btGhostObject->setCcdMotionThreshold(ccdMotionThreshold);
+}
+
+float Physics3DCollider::getHitFraction() const
+{
+    return _btGhostObject->getHitFraction();
+}
+
+void Physics3DCollider::setHitFraction(float hitFraction)
+{
+    _btGhostObject->setHitFraction(hitFraction);
+}
+
+float Physics3DCollider::getRollingFriction() const
+{
+    return _btGhostObject->getRollingFriction();
+}
+
+void Physics3DCollider::setRollingFriction(float frict)
+{
+    _btGhostObject->setRollingFriction(frict);
+}
+
+float Physics3DCollider::getFriction() const
+{
+    return _btGhostObject->getFriction();
+}
+
+void Physics3DCollider::setFriction(float frict)
+{
+    _btGhostObject->setFriction(frict);
+}
+
+float Physics3DCollider::getRestitution() const
+{
+    return _btGhostObject->getRestitution();
+}
+
+void Physics3DCollider::setRestitution(float rest)
+{
+    _btGhostObject->setRestitution(rest);
+}
+
+bool Physics3DCollider::isTrigger() const
+{
+    return (_btGhostObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) != 0;
+}
+
+void Physics3DCollider::setTrigger(bool isTrigger)
+{
+    _btGhostObject->setCollisionFlags(isTrigger == true ?
+        _btGhostObject->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE : 
+        _btGhostObject->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+}
+
+bool Physics3DCollider::init(Physics3DColliderDes *info)
+{
+    _physics3DShape = info->shape;
+    _physics3DShape->retain();
+    _btGhostObject = new btCollider(this);
+    _btGhostObject->setCollisionShape(_physics3DShape->getbtShape());
+    
+    setTrigger(info->isTrigger);
+    setFriction(info->friction);
+    setRollingFriction(info->rollingFriction);
+    setRestitution(info->restitution);
+    setHitFraction(info->hitFraction);
+    setCcdSweptSphereRadius(info->ccdSweptSphereRadius);
+    setCcdMotionThreshold(info->ccdMotionThreshold);
+    
+    _type = Physics3DObject::PhysicsObjType::COLLIDER;
+    return true;
+}
+
+cocos2d::Mat4 Physics3DCollider::getWorldTransform() const
+{
+    return convertbtTransformToMat4(_btGhostObject->getWorldTransform());
+}
+
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

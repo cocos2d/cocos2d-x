@@ -251,6 +251,15 @@ public:
      Set Viewport for camera.
      */
     void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
+    
+    /**
+     * Whether or not the viewprojection matrix was updated since the last frame.
+     * @return True if the viewprojection matrix was updated since the last frame.
+     */
+    bool isViewProjectionUpdated() const {return _viewProjectionUpdated;}
+    
+    virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -284,6 +293,7 @@ protected:
     float _nearPlane;
     float _farPlane;
     mutable bool  _viewProjectionDirty;
+    bool _viewProjectionUpdated; //Whether or not the viewprojection matrix was updated since the last frame.
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
