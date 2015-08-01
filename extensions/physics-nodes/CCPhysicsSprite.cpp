@@ -21,6 +21,8 @@
  */
 
 #include "CCPhysicsSprite.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
@@ -41,6 +43,7 @@ PhysicsSprite::PhysicsSprite()
 , _CPBody(nullptr)
 , _pB2Body(nullptr)
 , _PTMRatio(0.0f)
+, _syncTransform(nullptr)
 {}
 
 PhysicsSprite* PhysicsSprite::create()
@@ -396,12 +399,22 @@ void PhysicsSprite::syncPhysicsTransform() const
 void PhysicsSprite::onEnter()
 {
     Node::onEnter();
-    scheduleUpdate();
+    _syncTransform = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_UPDATE, std::bind(&PhysicsSprite::afterUpdate, this, std::placeholders::_1));
+    _syncTransform->retain();
 }
 
-void PhysicsSprite::update(float delta)
+void PhysicsSprite::onExit()
 {
-    Node::update(delta);
+    if (_syncTransform != nullptr)
+    {
+        Director::getInstance()->getEventDispatcher()->removeEventListener(_syncTransform);
+        _syncTransform->release();
+    }
+    Node::onExit();
+}
+
+void PhysicsSprite::afterUpdate(EventCustom *event)
+{
     syncPhysicsTransform();
     
     _transformDirty = false;

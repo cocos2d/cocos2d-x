@@ -26,6 +26,7 @@
 #include "2d/CCSprite.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "base/CCEventListenerCustom.h"
 
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
@@ -120,10 +121,11 @@ public:
     virtual void setRotation(float fRotation) override;
     
     virtual void onEnter() override;
-    virtual void update(float delta) override;
+    virtual void onExit() override;
 
 protected:
     const Vec2& getPosFromPhysics() const;
+    void afterUpdate(EventCustom *event);
 
 protected:
     bool    _ignoreBodyRotation;
@@ -134,6 +136,9 @@ protected:
     // box2d specific
     b2Body  *_pB2Body;
     float   _PTMRatio;
+    
+    // Event for update synchronise physic transform
+    cocos2d::EventListenerCustom* _syncTransform;
 };
 
 NS_CC_EXT_END
