@@ -28,6 +28,7 @@
 #include <curl/easy.h>
 #include <cstdio>
 #include <cerrno>
+#include <exception> 
 
 NS_CC_EXT_BEGIN
 
