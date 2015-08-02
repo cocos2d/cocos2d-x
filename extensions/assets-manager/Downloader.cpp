@@ -290,27 +290,30 @@ Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void
     curl_easy_setopt(header, CURLOPT_HEADER, 1);
     curl_easy_setopt(header, CURLOPT_NOBODY, 1);
     curl_easy_setopt(header, CURLOPT_NOSIGNAL, 1);
-    if (curl_easy_perform(header) == CURLE_OK)
-    {
-        char *url;
-        char *contentType;
-        curl_easy_getinfo(header, CURLINFO_EFFECTIVE_URL, &url);
-        curl_easy_getinfo(header, CURLINFO_CONTENT_TYPE, &contentType);
-        curl_easy_getinfo(header, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &info.contentSize);
-        curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &info.responseCode);
-        
-        if (contentType == nullptr || info.contentSize == -1 || info.responseCode >= 400)
+    try{
+        if (curl_easy_perform(header) == CURLE_OK)
         {
-            info.valid = false;
+            char *url;
+            char *contentType;
+            curl_easy_getinfo(header, CURLINFO_EFFECTIVE_URL, &url);
+            curl_easy_getinfo(header, CURLINFO_CONTENT_TYPE, &contentType);
+            curl_easy_getinfo(header, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &info.contentSize);
+            curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &info.responseCode);
+            
+            if (contentType == nullptr || info.contentSize == -1 || info.responseCode >= 400)
+            {
+                info.valid = false;
+            }
+            else
+            {
+                info.url = url;
+                info.contentType = contentType;
+                info.valid = true;
+            }
         }
-        else
-        {
-            info.url = url;
-            info.contentType = contentType;
-            info.valid = true;
-        }
+    } catch (std::exception& e) {
+        CCLOG("current downloader has alredy release,exception:%s", e.what());
     }
-    
     if (info.valid && _onHeader)
     {
         _onHeader(srcUrl, info);
@@ -413,29 +416,33 @@ void Downloader::downloadToBuffer(const std::string &srcUrl, const std::string &
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
     
-    CURLcode res = curl_easy_perform(curl);
-    if (res != CURLE_OK)
-    {
-        std::string msg = StringUtils::format("Unable to download file to buffer: [curl error]%s", curl_easy_strerror(res));
-        this->notifyError(msg, customId, res);
-    }
-    else
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-            if (!ptr.expired())
-            {
-                std::shared_ptr<Downloader> downloader = ptr.lock();
-                
-                auto successCB = downloader->getSuccessCallback();
-                if (successCB != nullptr)
+    try {
+        CURLcode res = curl_easy_perform(curl);
+        if (res != CURLE_OK)
+        {
+            std::string msg = StringUtils::format("Unable to download file to buffer: [curl error]%s", curl_easy_strerror(res));
+            this->notifyError(msg, customId, res);
+        }
+        else
+        {
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+                if (!ptr.expired())
                 {
-                    successCB(data.url, "", data.customId);
+                    std::shared_ptr<Downloader> downloader = ptr.lock();
+                    
+                    auto successCB = downloader->getSuccessCallback();
+                    if (successCB != nullptr)
+                    {
+                        successCB(data.url, "", data.customId);
+                    }
                 }
-            }
-        });
+            });
+        }
+        
+        curl_easy_cleanup(curl);
+    } catch (std::exception& e) {
+        CCLOG("current downloader has alredy release,exception:%s", e.what());
     }
-    
-    curl_easy_cleanup(curl);
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
@@ -483,14 +490,19 @@ void Downloader::download(const std::string &srcUrl, const std::string &customId
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
-    
-    CURLcode res = curl_easy_perform(curl);
-    if (res != CURLE_OK)
-    {
-        _fileUtils->removeFile(data.path + data.name + TEMP_EXT);
-        std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
-        this->notifyError(msg, customId, res);
+    CURLcode res;
+    try {
+        res = curl_easy_perform(curl);
+        if (res != CURLE_OK)
+        {
+            _fileUtils->removeFile(data.path + data.name + TEMP_EXT);
+            std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
+            this->notifyError(msg, customId, res);
+        }
+    } catch (std::exception& e) {
+        CCLOG("current downloader has alredy release,exception:%s", e.what());
     }
+    
     
     fclose(fDesc.fp);
     curl_easy_cleanup(curl);
