@@ -39,7 +39,7 @@ _touchScaleChangeEnabled(false),
 _normalScaleValueX(1.0f),
 _normalScaleValueY(1.0f),
 _fontName("Thonburi"),
-_fontSize(10),
+_fontSize(10.f),
 _onSelectedScaleOffset(0.5),
 _labelRenderer(nullptr),
 _labelRendererAdaptDirty(true),
@@ -73,7 +73,7 @@ bool Text::init()
     return false;
 }
 
-Text* Text::create(const std::string &textContent, const std::string &fontName, int fontSize)
+Text* Text::create(const std::string &textContent, const std::string &fontName, float fontSize)
 {
     Text *text = new (std::nothrow) Text;
     if (text && text->init(textContent, fontName, fontSize))
@@ -85,7 +85,7 @@ Text* Text::create(const std::string &textContent, const std::string &fontName, 
     return nullptr;
 }
 
-bool Text::init(const std::string &textContent, const std::string &fontName, int fontSize)
+bool Text::init(const std::string &textContent, const std::string &fontName, float fontSize)
 {
     bool ret = true;
     do
@@ -130,7 +130,7 @@ ssize_t Text::getStringLength()const
     return _labelRenderer->getStringLength();
 }
 
-void Text::setFontSize(int size)
+void Text::setFontSize(float size)
 {
     if (_type == Type::SYSTEM)
     {
@@ -147,7 +147,7 @@ void Text::setFontSize(int size)
     _labelRendererAdaptDirty = true;
 }
 
-int Text::getFontSize()const
+float Text::getFontSize()const
 {
     return _fontSize;
 }

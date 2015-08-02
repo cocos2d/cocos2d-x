@@ -439,6 +439,14 @@ void EditBox::updatePosition(float dt)
 
 void EditBox::onExit(void)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Widget::onExit();
     if (_editBoxImpl != nullptr)
     {

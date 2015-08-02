@@ -30,6 +30,7 @@
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
@@ -40,8 +41,6 @@
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
-
-const int Label::DistanceFieldFontSize = 50;
 
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
@@ -281,22 +280,49 @@ Label* Label::createWithCharMap(const std::string& charMapFile, int itemWidth, i
 bool Label::setCharMap(const std::string& plistFile)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(plistFile);
-    
-    return setAtlasByType(newAtlas, LabelType::CHARMAP);
+
+    if (!newAtlas)
+    {
+        reset();
+        return false;
+    }
+
+    _currentLabelType = LabelType::CHARMAP;
+    setFontAtlas(newAtlas);
+
+    return true;
 }
 
 bool Label::setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(texture,itemWidth,itemHeight,startCharMap);
-    
-    return setAtlasByType(newAtlas, LabelType::CHARMAP);
+
+    if (!newAtlas)
+    {
+        reset();
+        return false;
+    }
+
+    _currentLabelType = LabelType::CHARMAP;
+    setFontAtlas(newAtlas);
+
+    return true;
 }
 
 bool Label::setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     auto newAtlas = FontAtlasCache::getFontAtlasCharMap(charMapFile,itemWidth,itemHeight,startCharMap);
 
-    return setAtlasByType(newAtlas, LabelType::CHARMAP);
+    if (!newAtlas)
+    {
+        reset();
+        return false;
+    }
+
+    _currentLabelType = LabelType::CHARMAP;
+    setFontAtlas(newAtlas);
+
+    return true;
 }
 
 Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */, 
@@ -422,7 +448,6 @@ void Label::reset()
     _shadowEnabled = false;
     _shadowBlurRadius = 0.f;
 
-    _correctionScale = 1.f;
     _useDistanceField = false;
     _useA8Shader = false;
     _clipEnabled = false;
@@ -502,8 +527,21 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     }
 }
 
-void Label::enableTTFConfigEffect()
+bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(&ttfConfig);
+
+    if (!newAtlas)
+    {
+        reset();
+        return false;
+    }
+    _systemFontDirty = false;
+
+    _currentLabelType = LabelType::TTF;
+    setFontAtlas(newAtlas,ttfConfig.distanceFieldEnabled,true);
+
+    _fontConfig = ttfConfig;
     if (_fontConfig.outlineSize > 0)
     {
         _fontConfig.distanceFieldEnabled = false;
@@ -512,69 +550,12 @@ void Label::enableTTFConfigEffect()
         _currLabelEffect = LabelEffect::OUTLINE;
         updateShaderProgram();
     }
-    else
+    else 
     {
         _currLabelEffect = LabelEffect::NORMAL;
         updateShaderProgram();
-        if(_fontConfig.distanceFieldEnabled)
-        {
-            this->setCorrectionScale(1.0f * _fontConfig.fontSize / DistanceFieldFontSize);
-        }
     }
 
-}
-
-bool Label::setTTFConfig(const TTFConfig& ttfConfig)
-{
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
-    
-    _fontConfig = ttfConfig;
-    bool ret = setAtlasByType(newAtlas, LabelType::TTF);
-    if (ret)
-    {
-        enableTTFConfigEffect();
-    }
-    else
-    {
-        TTFConfig tmp;
-        _fontConfig = tmp;
-    }
-    
-    return ret;
-}
-
-
-bool Label::setAtlasByType(FontAtlas* newAtlas, LabelType labelType)
-{
-    if (!newAtlas)
-    {
-        reset();
-        return false;
-    }
-    
-    bool distanceEnable = false;
-    bool useA8Shader = false;
-    
-    _currentLabelType = labelType;
-    
-    switch (labelType)
-    {
-        case LabelType::TTF:
-            _systemFontDirty = false;
-            distanceEnable = _fontConfig.distanceFieldEnabled;
-            useA8Shader = true;
-            break;
-        case LabelType::BMFONT:
-            break;
-        case LabelType::CHARMAP:
-            break;
-        case LabelType::STRING_TEXTURE:
-            break;
-        default:
-            break;
-    }
-    
-    setFontAtlas(newAtlas, distanceEnable, useA8Shader);
     return true;
 }
 
@@ -582,12 +563,16 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
 
-    bool ret = setAtlasByType(newAtlas, LabelType::BMFONT);
-    if(ret)
+    if (!newAtlas)
     {
-        _bmFontPath = bmfontFilePath;
+        reset();
+        return false;
     }
-    return ret;
+    _bmFontPath = bmfontFilePath;
+    _currentLabelType = LabelType::BMFONT;
+    setFontAtlas(newAtlas);
+
+    return true;
 }
 
 void Label::setString(const std::string& text)
@@ -645,57 +630,6 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
     {
         _lineBreakWithoutSpaces = breakWithoutSpace;
         _contentDirty = true;     
-    }
-}
-
-void Label::setScale(float scale)
-{
-    if (_useDistanceField)
-    {
-        scale *= _correctionScale;
-    } 
-    Node::setScale(scale);
-}
-
-void Label::setScaleX(float scaleX)
-{
-    if (_useDistanceField)
-    {
-        scaleX *= _correctionScale;
-    } 
-    Node::setScaleX(scaleX);
-}
-
-void Label::setScaleY(float scaleY)
-{
-    if (_useDistanceField)
-    {
-        scaleY *= _correctionScale;
-    } 
-    Node::setScaleY(scaleY);
-}
-
-float Label::getScaleY() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleY / _correctionScale;
-    }
-    else
-    {
-        return _scaleY;
-    }
-}
-
-float Label::getScaleX() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleX / _correctionScale;
-    }
-    else
-    {
-        return _scaleX;
     }
 }
 
@@ -992,12 +926,6 @@ void Label::disableEffect(LabelEffect effect)
     }
 }
 
-void Label::setCorrectionScale(float correctionScale)
-{
-    _correctionScale = correctionScale * CC_CONTENT_SCALE_FACTOR();
-    Node::setScale(_correctionScale);
-}
-
 void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
@@ -1267,7 +1195,15 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     // Don't do calculate the culling if the transform was not updated
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
 #if CC_USE_CULLING
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        _insideBounds = (transformUpdated || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    }
+    else
+    {
+        _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
 
     if (_insideBounds)
 #endif
@@ -1725,29 +1661,6 @@ FontDefinition Label::_getFontDefinition() const
 #endif
 
     return systemFontDef;
-}
-
-void Label::getFontConfigInfo(Label* copyToLabel) const
-{
-    switch (_currentLabelType)
-    {
-        case LabelType::TTF :
-        {
-            TTFConfig tmp = getTTFConfig();
-            copyToLabel->setTTFConfig(tmp);
-        }
-            break;
-        default:
-        {
-            FontDefinition tmp = _getFontDefinition();
-            tmp._shadow._shadowEnabled = _shadowEnabled;
-            tmp._shadow._shadowOffset = _shadowOffset;
-            tmp._shadow._shadowBlur = _shadowBlurRadius;
-            tmp._shadow._shadowOpacity = _shadowOpacity;
-            copyToLabel->setFontDefinition(tmp);
-        }
-            break;
-    }
 }
 
 NS_CC_END

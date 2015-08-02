@@ -122,13 +122,14 @@
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
--- Preload audio file.<br>
--- param filePath The file path of an audio.
--- @function [parent=#AudioEngine] preload 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#AudioEngine] preload
 -- @param self
 -- @param #string filePath
+-- @param #function callback
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
-        
+
 --------------------------------
 -- Play 2d sound.<br>
 -- param filePath The path of an audio file.<br>

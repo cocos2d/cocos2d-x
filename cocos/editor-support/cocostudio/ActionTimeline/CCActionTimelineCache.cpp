@@ -427,12 +427,38 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
     CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
     
     Data buf = FileUtils::getInstance()->getDataFromFile(fullPath);
-    
-    auto csparsebinary = GetCSParseBinary(buf.getBytes());
-    
-    auto nodeAction = csparsebinary->action();    
-    action = ActionTimeline::create();
-    
+    action = createActionWithDataBuffer(buf);
+    _animationActions.insert(fileName, action);
+
+    return action;
+}
+
+ActionTimeline* ActionTimelineCache::loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName)
+{
+    // if already exists an action with filename, then return this action
+    ActionTimeline* action = _animationActions.at(fileName);
+    if (action)
+        return action;
+
+    std::string path = fileName;
+
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName.c_str());
+
+    CC_ASSERT(FileUtils::getInstance()->isFileExist(fullPath));
+
+    action = createActionWithDataBuffer(data);
+    _animationActions.insert(fileName, action);
+
+    return action;
+}
+
+inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const cocos2d::Data data)
+{
+    auto csparsebinary = GetCSParseBinary(data.getBytes());
+
+    auto nodeAction = csparsebinary->action();
+    auto action = ActionTimeline::create();
+
     int duration = nodeAction->duration();
     action->setDuration(duration);
     float speed = nodeAction->speed();
@@ -460,9 +486,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithFlatBuffersFile(cons
         if (timeline)
             action->addTimeline(timeline);
     }
-    
-    _animationActions.insert(fileName, action);
-    
+
     return action;
 }
 

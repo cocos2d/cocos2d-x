@@ -101,9 +101,11 @@ if (jsb.Physics3DObject) {
     require("script/physics3d/jsb_physics3d.js");
 }
 
-if(jsb.NavMeshAgent) {
+if (jsb.NavMeshAgent) {
     require("script/navmesh/jsb_navmesh.js");
 }
+
+require("script/jsb_audioengine.js");
 
 require('script/jsb_loaders.js');
 require('script/jsb_pool.js');

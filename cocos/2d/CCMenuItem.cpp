@@ -90,11 +90,6 @@ MenuItem::~MenuItem()
 {
 }
 
-void MenuItem::onExit()
-{
-    Node::onExit();
-}
-
 void MenuItem::selected()
 {
     _selected = true;

@@ -195,6 +195,8 @@
         "src/VibrateTest/VibrateTest.js",
 
         "src/NativeTest/NativeTest.js",
-        "src/NativeTest/FileUtils/FileUtilsTest.js"
+        "src/NativeTest/FileUtils/FileUtilsTest.js",
+        "src/NativeTest/JSBExtendTest.js",
+        "src/NativeTest/AudioEngineTest.js"
     ]
 }

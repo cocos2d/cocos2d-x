@@ -15,6 +15,10 @@ cocos2d-x
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
 It works on iOS, Android, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.
 
+**Cocos2d-x Framework Architecture**:
+
+![](docs/framework_architecture.jpg "")
+
 cocos2d-x is:
 
   * Fast

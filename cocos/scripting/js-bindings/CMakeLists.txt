@@ -35,6 +35,7 @@ endif()
 
 set(JSBINDING_SRC
   auto/jsb_cocos2dx_auto.cpp
+  auto/jsb_cocos2dx_audioengine_auto.cpp
   auto/jsb_cocos2dx_builder_auto.cpp
   auto/jsb_cocos2dx_extension_auto.cpp
   auto/jsb_cocos2dx_spine_auto.cpp

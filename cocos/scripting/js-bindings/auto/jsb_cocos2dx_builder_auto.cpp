@@ -934,12 +934,9 @@ bool js_cocos2dx_builder_CCBAnimationManager_constructor(JSContext *cx, uint32_t
     return true;
 }
 
-
-
 void js_cocosbuilder_CCBAnimationManager_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (CCBAnimationManager)", obj);
 }
-
 void js_register_cocos2dx_builder_CCBAnimationManager(JSContext *cx, JS::HandleObject global) {
     jsb_cocosbuilder_CCBAnimationManager_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocosbuilder_CCBAnimationManager_class->name = "BuilderAnimationManager";
@@ -1715,11 +1712,9 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 
-
 void js_cocosbuilder_CCBReader_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (CCBReader)", obj);
 }
-
 void js_register_cocos2dx_builder_CCBReader(JSContext *cx, JS::HandleObject global) {
     jsb_cocosbuilder_CCBReader_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocosbuilder_CCBReader_class->name = "_Reader";

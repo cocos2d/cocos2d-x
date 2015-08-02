@@ -412,35 +412,25 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] setScaleY 
--- @param self
--- @param #float scaleY
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] setScaleX 
--- @param self
--- @param #float scaleX
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
 -- @function [parent=#Label] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
--- @function [parent=#Label] getScaleY 
+-- @function [parent=#Label] setCameraMask 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- 
--- @function [parent=#Label] getScaleX 
+-- @function [parent=#Label] removeChild 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #cc.Node child
+-- @param #bool cleanup
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- 
@@ -466,24 +456,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] setScale 
--- @param self
--- @param #float scale
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
 -- @function [parent=#Label] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] removeChild 
--- @param self
--- @param #cc.Node child
--- @param #bool cleanup
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
@@ -503,14 +478,6 @@
 -- @function [parent=#Label] updateDisplayedColor 
 -- @param self
 -- @param #color3b_table parentColor
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] setCameraMask 
--- @param self
--- @param #unsigned short mask
--- @param #bool applyChildren
 -- @return Label#Label self (return value: cc.Label)
         
 return nil

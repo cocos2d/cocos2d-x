@@ -168,6 +168,33 @@ std::vector<Vec3> jsval_to_std_vector_vec3(JSContext* cx, JS::HandleValue v)
     return ret;
 }
 
+bool js_cocos2dx_physics3d_Physics3dShape_initMesh(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 2)
+    {
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+        js_proxy_t *proxy = jsb_get_js_proxy(obj);
+        cocos2d::Physics3DShape* cobj = (cocos2d::Physics3DShape *)(proxy ? proxy->ptr : NULL);
+        JSB_PRECONDITION2(cobj, cx, false, "js_cocos2dx_physics3d_Physics3DShape_initMesh : Invalid Native Object");
+
+        std::vector<Vec3> arg0 = jsval_to_std_vector_vec3(cx, args.get(0));
+        int arg1;
+
+        bool ok = jsval_to_int(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_initMesh : Error processing arguments");
+
+        bool ret = cobj->initMesh(&arg0[0], arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_initMesh : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_physics3d_Physics3dShape_createMesh(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if(argc == 2)
@@ -257,6 +284,54 @@ bool jsb_cocos2d_Physics3DObject_setCollisionCallback(JSContext *cx, uint32_t ar
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3dShape_createMesh : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_physics3d_Physics3dShape_initHeightfield(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if (argc == 8 || argc == 9)
+    {
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+        js_proxy_t *proxy = jsb_get_js_proxy(obj);
+        cocos2d::Physics3DShape* cobj = (cocos2d::Physics3DShape *)(proxy ? proxy->ptr : NULL);
+        JSB_PRECONDITION2(cobj, cx, false, "js_cocos2dx_physics3d_Physics3DShape_initHeightfield : Invalid Native Object");
+
+        bool ok = true;
+        int arg0;
+        int arg1;
+        std::vector<float> arg2;
+        double arg3;
+        double arg4;
+        double arg5;
+        bool arg6;
+        bool arg7;
+        bool arg8;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_std_vector_float(cx, args.get(2), &arg2);
+        ok &= JS::ToNumber(cx, args.get(3), &arg3) && !isnan(arg3);
+        ok &= JS::ToNumber(cx, args.get(4), &arg4) && !isnan(arg4);
+        ok &= JS::ToNumber(cx, args.get(5), &arg5) && !isnan(arg5);
+        arg6 = JS::ToBoolean(args.get(6));
+        arg7 = JS::ToBoolean(args.get(7));
+        if (argc == 9)
+            arg8 = JS::ToBoolean(args.get(8));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3DShape_initHeightfield : Error processing arguments");
+
+        bool ret = false;
+        if (argc == 8)
+            ret = cobj->initHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7, false);
+        else if (argc == 9)
+            ret = cobj->initHeightfield(arg0, arg1, &arg2[0], arg3, arg4, arg5, arg6, arg7, arg8);
+
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DShape_initHeightfield : wrong number of arguments");
     return false;
 }
 
@@ -405,6 +480,9 @@ void register_all_cocos2dx_physics3d_manual(JSContext *cx, JS::HandleObject glob
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "createMesh", js_cocos2dx_physics3d_Physics3dShape_createMesh, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "createHeightfield", js_cocos2dx_physics3d_Physics3dShape_createHeightfield, 8, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Physics3DShape_prototype), "initMesh", js_cocos2dx_physics3d_Physics3dShape_initMesh, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Physics3DShape_prototype), "initHeightfield", js_cocos2dx_physics3d_Physics3dShape_initHeightfield, 8, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Physics3DObject_prototype), "setCollisionCallback", jsb_cocos2d_Physics3DObject_setCollisionCallback, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     

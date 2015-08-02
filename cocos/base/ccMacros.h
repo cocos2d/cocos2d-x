@@ -293,6 +293,14 @@ CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
  */
 #define AnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
 
+/*******************/
+/** Notifications **/
+/*******************/
+/** @def Animate3DDisplayedNotification
+ Notification name when a frame in Animate3D is played
+ */
+#define Animate3DDisplayedNotification "CCAnimate3DDisplayedNotification"
+
 // new callbacks based on C++11
 #define CC_CALLBACK_0(__selector__,__target__, ...) std::bind(&__selector__,__target__, ##__VA_ARGS__)
 #define CC_CALLBACK_1(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, ##__VA_ARGS__)
