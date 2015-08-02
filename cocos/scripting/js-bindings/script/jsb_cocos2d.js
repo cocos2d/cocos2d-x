@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.7";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.7.1";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -2480,6 +2480,26 @@ cc.affineTransformConcat = function (t1, t2) {
         d: t1.c * t2.b + t1.d * t2.d,                               //d
         tx: t1.tx * t2.a + t1.ty * t2.c + t2.tx,                    //tx
         ty: t1.tx * t2.b + t1.ty * t2.d + t2.ty};                   //ty
+};
+
+/**
+ * Concatenate a transform matrix to another<br/>
+ * The results are reflected in the first matrix.<br/>
+ * t' = t1 * t2
+ * @function
+ * @param {cc.AffineTransform} t1 The first transform object
+ * @param {cc.AffineTransform} t2 The transform object to concatenate
+ * @return {cc.AffineTransform} The result of concatenation
+ */
+cc.affineTransformConcatIn = function (t1, t2) {
+    var a = t1.a, b = t1.b, c = t1.c, d = t1.d, tx = t1.tx, ty = t1.ty;
+    t1.a = a * t2.a + b * t2.c;
+    t1.b = a * t2.b + b * t2.d;
+    t1.c = c * t2.a + d * t2.c;
+    t1.d = c * t2.b + d * t2.d;
+    t1.tx = tx * t2.a + ty * t2.c + t2.tx;
+    t1.ty = tx * t2.b + ty * t2.d + t2.ty;
+    return t1;
 };
 
 /**

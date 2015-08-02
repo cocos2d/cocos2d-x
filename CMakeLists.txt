@@ -38,7 +38,7 @@ endif()
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.7)
+set(COCOS2D_X_VERSION 3.7.1)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 include(CocosBuildHelpers)

@@ -57,9 +57,9 @@ THE SOFTWARE.
 
  * It is recommended to enable whenever possible to improve speed.
  * If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- 
+
  * Default value: Enabled by default
- 
+
  * @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
@@ -81,9 +81,9 @@ THE SOFTWARE.
  * - LabelAtlas.
  * - QuadParticleSystem.
  * - TileMap.
- 
+
  * To enabled set it to 1. Disabled by default.
- 
+
  * @since v0.99.5
  */
 #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
@@ -94,7 +94,7 @@ THE SOFTWARE.
  * Seconds between FPS updates.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
- 
+
  * Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
@@ -115,9 +115,9 @@ THE SOFTWARE.
  * dispatch all the events, even if there are not events to dispatch.
  * If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  * Otherwise, it is safe to leave it disabled.
- 
+
  * To enable set it to 1. Disabled by default.
- 
+
  * @warning This feature is experimental.
  */
 #ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
@@ -165,7 +165,7 @@ THE SOFTWARE.
     #else
         /* Some Windows display adapter driver cannot support VAO.
          * Some android devices cannot support VAO very well, so we disable it by default for android platform.
-         * Blackberry also doesn't support this feature. 
+         * Blackberry also doesn't support this feature.
          */
 		#define CC_TEXTURE_ATLAS_USE_VAO 0
     #endif
