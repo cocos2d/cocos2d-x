@@ -304,8 +304,13 @@ private:
     friend QuadTree;
     friend Chunk;
 public:
+    /** set light map texture */
     void setLightMap(const std::string& fileName);
 
+    /**
+     set directional light for the terrain
+     @param lightDir The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
+     */
     void setLightDir(const Vec3& lightDir);
     /*init function*/
     /**initialize all Properties which terrain need */
