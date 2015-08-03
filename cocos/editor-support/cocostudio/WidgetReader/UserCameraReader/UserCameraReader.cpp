@@ -107,7 +107,8 @@ namespace cocostudio
         
         float fov = 60.f;
         unsigned int cameraFlag = 0;
-        
+        bool skyBoxEnabled = false;
+
         std::string attriname;
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while(attribute)
@@ -121,17 +122,52 @@ namespace cocostudio
             }
             else if(attriname == "UserCameraFlagMode")
             {
-                if(value == "DEFAULT")  cameraFlag = 1;
-                else if(value == "USER1") cameraFlag = 1 << 1;
-                else if(value == "USER2") cameraFlag = 1 << 2;
-                else if(value == "USER3") cameraFlag = 1 << 3;
-                else if(value == "USER4") cameraFlag = 1 << 4;
+                if (cameraFlag == 0)
+                {
+                    if (value == "DEFAULT")  cameraFlag = 1;
+                    else if (value == "USER1") cameraFlag = 1 << 1;
+                    else if (value == "USER2") cameraFlag = 1 << 2;
+                    else if (value == "USER3") cameraFlag = 1 << 3;
+                    else if (value == "USER4") cameraFlag = 1 << 4;
+                }
+            }
+            else if (attriname == "CameraFlagData")
+            {
+                cameraFlag = atoi(value.c_str());
+            }
+            else if (attriname == "SkyBoxEnabled")
+            {
+                skyBoxEnabled = (value == "True") ? true : false;
             }
             
             attribute = attribute->Next();
         }
 
         Vec2 clipPlane(1, 1000);
+
+        std::string leftPath = "";
+        std::string leftPlistFile = "";
+        int leftResourceType = 0;
+
+        std::string rightPath = "";
+        std::string rightPlistFile = "";
+        int rightResourceType = 0;
+
+        std::string upPath = "";
+        std::string upPlistFile = "";
+        int upResourceType = 0;
+
+        std::string downPath = "";
+        std::string downPlistFile = "";
+        int downResourceType = 0;
+
+        std::string forwardPath = "";
+        std::string forwardPlistFile = "";
+        int forwardResourceType = 0;
+
+        std::string backPath = "";
+        std::string backPlistFile = "";
+        int backResourceType = 0;
         
         // FileData
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
@@ -143,7 +179,192 @@ namespace cocostudio
             {
                 attribute = child->FirstAttribute();
                 clipPlane = getVec2Attribute(attribute);
-                break;
+            }
+            else if (name == "LeftImage")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (name == "Path")
+                    {
+                        leftPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        leftResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        leftPlistFile = value;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
+                if (leftResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(leftPlistFile));
+                }
+            }
+            else if (name == "RightImage")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (name == "Path")
+                    {
+                        rightPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        rightResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        rightPlistFile = value;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
+                if (rightResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(rightPlistFile));
+                }
+            }
+            else if (name == "UpImage")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (name == "Path")
+                    {
+                        upPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        upResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        upPlistFile = value;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
+                if (upResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(upPlistFile));
+                }
+            }
+            else if (name == "DownImage")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (name == "Path")
+                    {
+                        downPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        downResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        downPlistFile = value;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
+                if (downResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(downPlistFile));
+                }
+            }
+            else if (name == "ForwardImage")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (name == "Path")
+                    {
+                        forwardPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        forwardResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        forwardPlistFile = value;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
+                if (forwardResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(forwardPlistFile));
+                }
+            }
+            else if (name == "BackImage")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (name == "Path")
+                    {
+                        backPath = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        backResourceType = getResourceType(value);;
+                    }
+                    else if (name == "Plist")
+                    {
+                        backPlistFile = value;
+                    }
+
+                    attribute = attribute->Next();
+                }
+
+                if (backResourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(backPlistFile));
+                }
             }
             
             child = child->NextSiblingElement();
@@ -154,7 +375,32 @@ namespace cocostudio
                                              fov,
                                              clipPlane.x,
                                              clipPlane.y,
-                                             cameraFlag
+                                             cameraFlag,
+                                             skyBoxEnabled,
+                                             CreateResourceData(*builder,
+                                                         builder->CreateString(leftPath),
+                                                         builder->CreateString(leftPlistFile),
+                                                         leftResourceType),
+                                             CreateResourceData(*builder,
+                                                         builder->CreateString(rightPath),
+                                                         builder->CreateString(rightPlistFile),
+                                                         rightResourceType),
+                                             CreateResourceData(*builder,
+                                                         builder->CreateString(upPath),
+                                                         builder->CreateString(upPlistFile),
+                                                         upResourceType),
+                                             CreateResourceData(*builder,
+                                                         builder->CreateString(downPath),
+                                                         builder->CreateString(downPlistFile),
+                                                         downResourceType),
+                                             CreateResourceData(*builder,
+                                                         builder->CreateString(forwardPath),
+                                                         builder->CreateString(forwardPlistFile),
+                                                         forwardResourceType),
+                                             CreateResourceData(*builder,
+                                                         builder->CreateString(backPath),
+                                                         builder->CreateString(backPlistFile),
+                                                         backResourceType)
                                              );
         
         return *(Offset<Table>*)(&options);
@@ -168,6 +414,21 @@ namespace cocostudio
         Camera* camera = static_cast<Camera*>(node);
         int cameraFlag = options->cameraFlag();
         camera->setCameraFlag((CameraFlag)cameraFlag);
+
+        bool skyBoxEnabled = options->skyBoxEnabled() != 0;
+        if (skyBoxEnabled)
+        {
+            auto leftFileData = options->leftFileData()->path()->c_str();
+            auto rightFileData = options->rightFileData()->path()->c_str();
+            auto upFileData = options->upFileData()->path()->c_str();
+            auto downFileData = options->downFileData()->path()->c_str();
+            auto forwardFileData = options->forwardFileData()->path()->c_str();
+            auto backFileData = options->backFileData()->path()->c_str();
+
+            Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
+            childBox->setCameraMask(cameraFlag);
+            node->addChild(childBox,0,"_innerSkyBox");
+        }
 
         auto node3DReader = Node3DReader::getInstance();
         node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
@@ -187,5 +448,23 @@ namespace cocostudio
         setPropsWithFlatBuffers(camera, userCameraDOptions);
         
         return camera;
+    }
+
+    int UserCameraReader::getResourceType(std::string key)
+    {
+        if (key == "Normal" || key == "Default")
+        {
+            return 	0;
+        }
+
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if (fbs->_isSimulator)
+        {
+            if (key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
     }
 }

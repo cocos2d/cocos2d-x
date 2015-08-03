@@ -4413,9 +4413,303 @@ ActionTimeline : function (
 };
 
 /**
- * @class ObjectExtensionData
+ * @class BoneNode
  */
-ccs.ObjectExtensionData = {
+ccs.BoneNode = {
+
+/**
+ * @method getDebugDrawWidth
+ * @return {float}
+ */
+getDebugDrawWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getChildBones
+* @return {Array|Array}
+*/
+getChildBones : function(
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method getAllSubBones
+ * @return {Array}
+ */
+getAllSubBones : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method setDebugDrawEnabled
+ * @param {bool} arg0
+ */
+setDebugDrawEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getVisibleSkinsRect
+ * @return {rect_object}
+ */
+getVisibleSkinsRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method getAllSubSkins
+ * @return {Array}
+ */
+getAllSubSkins : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method displaySkin
+* @param {String|cc.Node} str
+* @param {bool|bool} bool
+*/
+displaySkin : function(
+node,
+bool 
+)
+{
+},
+
+/**
+ * @method isDebugDrawEnabled
+ * @return {bool}
+ */
+isDebugDrawEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method addSkin
+* @param {cc.Node|cc.Node} node
+* @param {bool|bool} bool
+* @param {bool} bool
+*/
+addSkin : function(
+node,
+bool,
+bool 
+)
+{
+},
+
+/**
+ * @method getRootSkeletonNode
+ * @return {ccs.timeline::SkeletonNode}
+ */
+getRootSkeletonNode : function (
+)
+{
+    return ccs.timeline::SkeletonNode;
+},
+
+/**
+ * @method setDebugDrawLength
+ * @param {float} arg0
+ */
+setDebugDrawLength : function (
+float 
+)
+{
+},
+
+/**
+ * @method getSkins
+* @return {Array|Array}
+*/
+getSkins : function(
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getVisibleSkins
+ * @return {Array}
+ */
+getVisibleSkins : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setDebugDrawWidth
+ * @param {float} arg0
+ */
+setDebugDrawWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method getDebugDrawLength
+ * @return {float}
+ */
+getDebugDrawLength : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDebugDrawColor
+ * @param {color4f_object} arg0
+ */
+setDebugDrawColor : function (
+color4f 
+)
+{
+},
+
+/**
+ * @method getDebugDrawColor
+ * @return {color4f_object}
+ */
+getDebugDrawColor : function (
+)
+{
+    return cc.Color4F;
+},
+
+/**
+ * @method create
+* @param {int} int
+* @return {ccs.timeline::BoneNode|ccs.timeline::BoneNode}
+*/
+create : function(
+int 
+)
+{
+    return ccs.timeline::BoneNode;
+},
+
+/**
+ * @method BoneNode
+ * @constructor
+ */
+BoneNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class SkeletonNode
+ */
+ccs.SkeletonNode = {
+
+/**
+ * @method getBoneNode
+ * @param {String} arg0
+ * @return {ccs.timeline::BoneNode}
+ */
+getBoneNode : function (
+str 
+)
+{
+    return ccs.timeline::BoneNode;
+},
+
+/**
+ * @method changeSkins
+* @param {String|map_object} str
+*/
+changeSkins : function(
+map 
+)
+{
+},
+
+/**
+ * @method addSkinGroup
+ * @param {String} arg0
+ * @param {map_object} arg1
+ */
+addSkinGroup : function (
+str, 
+map 
+)
+{
+},
+
+/**
+ * @method getAllSubBonesMap
+ * @return {map_object}
+ */
+getAllSubBonesMap : function (
+)
+{
+    return map_object;
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::SkeletonNode}
+ */
+create : function (
+)
+{
+    return ccs.timeline::SkeletonNode;
+},
+
+/**
+ * @method SkeletonNode
+ * @constructor
+ */
+SkeletonNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ComExtensionData
+ */
+ccs.ComExtensionData = {
 
 /**
  * @method setActionTag
@@ -4425,26 +4719,6 @@ setActionTag : function (
 int 
 )
 {
-},
-
-/**
- * @method setCustomProperty
- * @param {String} arg0
- */
-setCustomProperty : function (
-str 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
 },
 
 /**
@@ -4468,20 +4742,30 @@ getActionTag : function (
 },
 
 /**
+ * @method setCustomProperty
+ * @param {String} arg0
+ */
+setCustomProperty : function (
+str 
+)
+{
+},
+
+/**
  * @method create
- * @return {ccs.ObjectExtensionData}
+ * @return {ccs.ComExtensionData}
  */
 create : function (
 )
 {
-    return ccs.ObjectExtensionData;
+    return ccs.ComExtensionData;
 },
 
 /**
- * @method ObjectExtensionData
+ * @method ComExtensionData
  * @constructor
  */
-ObjectExtensionData : function (
+ComExtensionData : function (
 )
 {
 },

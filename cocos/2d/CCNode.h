@@ -1496,6 +1496,29 @@ public:
     virtual const Mat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
+    /**
+     * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * The matrix is in Pixels.
+     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
+     *
+     * @param ancestor The parent's node pointer.
+     * @since v3.7
+     * @return The transformation matrix.
+     */
+    virtual Mat4 getNodeToParentTransform(Node* ancestor) const;
+
+    /**
+     * Returns the affline transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * The matrix is in Pixels.
+     *
+     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
+     *
+     * @param ancestor The parent's node pointer.
+     * @since v3.7
+     * @return The affline transformation matrix.
+     */
+    virtual AffineTransform getNodeToParentAffineTransform(Node* ancestor) const;
+
     /** 
      * Sets the transformation matrix manually.
      *
