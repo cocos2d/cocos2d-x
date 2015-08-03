@@ -83,10 +83,7 @@ bool Terrain::initWithTerrainData(TerrainData &parameter, CrackFixedType fixedTy
 
 void cocos2d::Terrain::setLightMap(const std::string& fileName)
 {
-    if (_lightMap)
-    {
-        _lightMap->release();
-    }
+    CC_SAFE_RELEASE(_lightMap);
     auto image = new (std::nothrow)Image();
     image->initWithImageFile(fileName);
     _lightMap = new (std::nothrow)Texture2D();
@@ -480,9 +477,9 @@ void Terrain::setIsEnableFrustumCull(bool bool_value)
 Terrain::~Terrain()
 {
     CC_SAFE_RELEASE(_stateBlock);
-    if (_alphaMap) _alphaMap->release();
-    if (_lightMap) _lightMap->release();
-    _heightMapImage->release();
+    CC_SAFE_RELEASE(_alphaMap);
+    CC_SAFE_RELEASE(_lightMap);
+    CC_SAFE_RELEASE(_heightMapImage);
     delete _quadRoot;
     for(int i=0;i<4;i++)
     {
@@ -502,12 +499,12 @@ Terrain::~Terrain()
         }
     }
 
-    for(int i =0;i<_chunkLodIndicesSet.size();i++)
+    for(size_t i =0;i<_chunkLodIndicesSet.size();i++)
     {
         glDeleteBuffers(1,&(_chunkLodIndicesSet[i]._chunkIndices._indices));
     }
 
-    for(int i =0;i<_chunkLodIndicesSkirtSet.size();i++)
+    for(size_t i =0;i<_chunkLodIndicesSkirtSet.size();i++)
     {
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
@@ -690,10 +687,8 @@ Terrain::Chunk * cocos2d::Terrain::getChunkByIndex(int x, int y) const
 
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
 {
-    if (_alphaMap)
-    {
-        _alphaMap->release();
-    }
+    CC_SAFE_RETAIN(newAlphaMapTexture);
+    CC_SAFE_RELEASE(_alphaMap);
     _alphaMap = newAlphaMapTexture;
 }
 
@@ -731,7 +726,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLOD(int neighborLod[4], int selfLod
         int test[5];
         memcpy(test,neighborLod,sizeof(int [4]));
         test[4] = selfLod;
-        for(int i =0;i<_chunkLodIndicesSet.size();i++)
+        for(size_t i =0;i<_chunkLodIndicesSet.size();i++)
         {
             if(memcmp(test,_chunkLodIndicesSet[i]._relativeLod,sizeof(test))==0)
             {
@@ -768,7 +763,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLODSkrit(int selfLod, bool * result
     return badResult;
     }
 
-    for(int i =0;i<_chunkLodIndicesSkirtSet.size();i++)
+    for(size_t i =0;i<_chunkLodIndicesSkirtSet.size();i++)
     {
         if(_chunkLodIndicesSkirtSet[i]._selfLod == selfLod)
         {
@@ -1305,7 +1300,7 @@ void Terrain::Chunk::calculateSlope()
 {
     //find max slope
     auto lowest = _originalVertices[0]._position;
-    for(int i = 0;i<_originalVertices.size();i++)
+    for(size_t i = 0;i<_originalVertices.size();i++)
     {
         if(_originalVertices[i]._position.y< lowest.y)
         {
@@ -1313,7 +1308,7 @@ void Terrain::Chunk::calculateSlope()
         }
     }
     auto highest = _originalVertices[0]._position;
-    for(int i = 0;i<_originalVertices.size();i++)
+    for(size_t i = 0;i<_originalVertices.size();i++)
     {
         if(_originalVertices[i]._position.y> highest.y)
         {
