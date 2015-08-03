@@ -52,7 +52,20 @@ var ReflectionTestLayer = BaseTestLayer.extend({
             }
         }, this);
 
-        var menu = new cc.Menu(menuItem, menuItem2);
+        var label3 = new cc.LabelTTF("CallReflectionWithUTF8Str", "Arial", 35);
+        var menuItem3 = new cc.MenuItemLabel(label3, function(){
+            if(cc.sys.os == cc.sys.OS_ANDROID){
+                var ret = jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "getUtfStr", "()Ljava/lang/String;");
+                jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog",
+                    "(Ljava/lang/String;Ljava/lang/String;)V", "Show Emotion", ret);
+                cc.log("result:" + ret);
+            }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){
+                var ret = "you will see emotion:💝";
+                jsb.reflection.callStaticMethod("NativeOcClass","callNativeUIWithTitle:andContent:","Show Emotion", ret);
+                cc.log("result:" + ret);
+            }
+        }, this);
+        var menu = new cc.Menu(menuItem, menuItem2, menuItem3);
         menu.alignItemsVerticallyWithPadding(4);
         
         this.addChild(menu);

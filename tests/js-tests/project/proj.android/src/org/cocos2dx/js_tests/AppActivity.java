@@ -106,4 +106,9 @@ public class AppActivity extends Cocos2dxActivity {
         });
     }
 
+    public static String getUtfStr() {
+        final String utf8Str = "you will see emotion:💝";
+        return utf8Str;
+    }
+
 }
