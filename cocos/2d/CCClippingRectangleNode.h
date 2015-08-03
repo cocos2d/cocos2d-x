@@ -67,7 +67,7 @@ public:
         return _clippingRegion;
     }
     /**
-    @brief Set the clipping rectangle.
+    @brief Set the clipping rectangle. The rectangle is base on screen coordinate, so ClippingRectangleNode's region doesn't support any transforms, such as setScale, setRotate and so on.
     @param clippingRegion Specify the clipping rectangle.
     */
     void setClippingRegion(const Rect& clippingRegion);
