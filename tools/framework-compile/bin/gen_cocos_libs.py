@@ -43,6 +43,7 @@ class CocosLibsCompiler(object):
 
         # arguments check and set
         self.clean = args.clean
+        self.mode = args.compile_mode
         self.build_win = args.win
         self.build_mac = args.mac
         self.build_ios = args.ios
@@ -96,12 +97,12 @@ class CocosLibsCompiler(object):
             # generate prebuilt mk files
             self.modify_binary_mk()
 
-    def build_win32_proj(self, cmd_path, sln_path, proj_name):
+    def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
         build_cmd = " ".join([
             "\"%s\"" % cmd_path,
             "\"%s\"" % sln_path,
             "/t:%s" % proj_name,
-            "/property:Configuration=Release",
+            "/property:Configuration=%s" % mode,
             "/m"
         ])
         utils_cocos.execute_command(build_cmd)
@@ -110,6 +111,11 @@ class CocosLibsCompiler(object):
         if not utils_cocos.os_is_win32():
             print("this is not win platform, needn't compile")
             return
+
+        if self.mode == 'debug':
+            mode_str = 'Debug'
+        else:
+            mode_str = 'Release'
 
         # get the VS versions will be used for compiling
         support_vs_versions = self.cfg_info[CocosLibsCompiler.KEY_SUPPORT_VS_VERSIONS]
@@ -158,7 +164,7 @@ class CocosLibsCompiler(object):
                     clean_cmd = " ".join([
                         "\"%s\"" % vs_command,
                         "\"%s\"" % proj_path,
-                        "/t:Clean /p:Configuration=Release"
+                        "/t:Clean /p:Configuration=%s" % mode_str
                     ])
                     utils_cocos.execute_command(clean_cmd)
 
@@ -167,7 +173,7 @@ class CocosLibsCompiler(object):
                     proj_path = os.path.join(self.repo_x, key)
 
                     # get the build folder & win32 output folder
-                    build_folder_path = os.path.join(os.path.dirname(proj_path), "Release.win32")
+                    build_folder_path = os.path.join(os.path.dirname(proj_path), "%s.win32" % mode_str)
                     win32_output_dir = os.path.join(self.repo_x, output_dir)
                     if not os.path.exists(win32_output_dir):
                         os.makedirs(win32_output_dir)
@@ -179,13 +185,13 @@ class CocosLibsCompiler(object):
                             "BuildConsole",
                             "%s" % proj_path,
                             "/build",
-                            "/cfg=\"Release|Win32\""
+                            "/cfg=\"%s|Win32\"" % mode_str
                         ])
                         utils_cocos.execute_command(build_cmd)
                     else:
                         for proj_name in win32_proj_info[key][CocosLibsCompiler.KEY_VS_BUILD_TARGETS]:
                             # build the projects
-                            self.build_win32_proj(vs_command, proj_path, proj_name)
+                            self.build_win32_proj(vs_command, proj_path, proj_name, mode_str)
 
                     # copy the libs into prebuilt dir
                     for file_name in os.listdir(build_folder_path):
@@ -224,8 +230,12 @@ class CocosLibsCompiler(object):
         print("to compile mac")
 
         xcode_proj_info = self.cfg_info[CocosLibsCompiler.KEY_XCODE_PROJS_INFO]
+        if self.mode == 'debug':
+            mode_str = 'Debug'
+        else:
+            mode_str = 'Release'
 
-        XCODE_CMD_FMT = "xcodebuild -project \"%s\" -configuration Release -target \"%s\" %s CONFIGURATION_BUILD_DIR=%s"
+        XCODE_CMD_FMT = "xcodebuild -project \"%s\" -configuration %s -target \"%s\" %s CONFIGURATION_BUILD_DIR=%s"
         ios_out_dir = os.path.join(self.lib_dir, "ios")
         mac_out_dir = os.path.join(self.lib_dir, "mac")
         ios_sim_libs_dir = os.path.join(ios_out_dir, "simulator")
@@ -236,7 +246,7 @@ class CocosLibsCompiler(object):
 
             if self.build_mac:
                 # compile mac
-                build_cmd = XCODE_CMD_FMT % (proj_path, "%s Mac" % target, "", mac_out_dir)
+                build_cmd = XCODE_CMD_FMT % (proj_path, mode_str, "%s Mac" % target, "", mac_out_dir)
                 retVal = utils_cocos.execute_command(build_cmd)
                 if 0 != retVal:
                     print("[ERROR] compile mac fail")
@@ -244,14 +254,14 @@ class CocosLibsCompiler(object):
 
             if self.build_ios:
                 # compile ios simulator
-                build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphonesimulator ARCHS=\"i386 x86_64\" VALID_ARCHS=\"i386 x86_64\"", ios_sim_libs_dir)
+                build_cmd = XCODE_CMD_FMT % (proj_path, mode_str, "%s iOS" % target, "-sdk iphonesimulator ARCHS=\"i386 x86_64\" VALID_ARCHS=\"i386 x86_64\"", ios_sim_libs_dir)
                 retVal = utils_cocos.execute_command(build_cmd)
                 if 0 != retVal:
                     print("[ERROR] compile ios simulator fail")
                     return retVal
 
                 # compile ios device
-                build_cmd = XCODE_CMD_FMT % (proj_path, "%s iOS" % target, "-sdk iphoneos", ios_dev_libs_dir)
+                build_cmd = XCODE_CMD_FMT % (proj_path, mode_str, "%s iOS" % target, "-sdk iphoneos", ios_dev_libs_dir)
                 retVal = utils_cocos.execute_command(build_cmd)
                 if 0 != retVal:
                     print("[ERROR] compile ios device fail")
@@ -296,7 +306,7 @@ class CocosLibsCompiler(object):
 
         # build the simulator project
         proj_path = os.path.join(engine_dir, 'tools/simulator')
-        build_cmd = "%s compile -s %s -p android --ndk-mode release --app-abi %s" % (cmd_path, proj_path, self.app_abi)
+        build_cmd = "%s compile -s %s -p android --ndk-mode %s --app-abi %s" % (cmd_path, proj_path, self.mode, self.app_abi)
         utils_cocos.execute_command(build_cmd)
 
         # copy .a to prebuilt dir
@@ -315,13 +325,20 @@ class CocosLibsCompiler(object):
             ndk_root = os.environ["NDK_ROOT"]
             if utils_cocos.os_is_win32():
                 if utils_cocos.is_32bit_windows():
-                    bit_str = ""
+                    check_bits = [ "", "-x86_64" ]
                 else:
-                    bit_str = "-x86_64"
-                sys_folder_name = "windows%s" % bit_str
+                    check_bits = [ "-x86_64", "" ]
+
+                sys_folder_name = "windows"
+                for bit_str in check_bits:
+                    check_folder_name = "windows%s" % bit_str
+                    check_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s" % check_folder_name)
+                    if os.path.isdir(check_path):
+                        sys_folder_name = check_folder_name
+                        break
             elif utils_cocos.os_is_mac():
                 sys_folder_name = "darwin-x86_64"
-            elif utils_cocos.os_is_linux:
+            else:
                 sys_folder_name = "linux-x86_64"
 
             # set strip execute file name
@@ -333,9 +350,6 @@ class CocosLibsCompiler(object):
             # strip arm libs
             strip_cmd_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s/arm-linux-androideabi/bin/%s"
                 % (sys_folder_name, strip_execute_name))
-            if not os.path.exists(strip_cmd_path):
-                strip_cmd_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s/arm-linux-androideabi/bin/%s"
-                    % (sys_folder_name.replace(bit_str, ""), strip_execute_name))
             if os.path.exists(strip_cmd_path):
                 armlibs = ["armeabi", "armeabi-v7a"]
                 for fold in armlibs:
@@ -388,6 +402,8 @@ if __name__ == "__main__":
     parser.add_argument('--vs', dest='vs_version', type=int, help='visual studio version, such as 2013.', default=None)
     parser.add_argument("--app-abi", dest="app_abi",
                         help="Set the APP_ABI of ndk-build.Can be multi value separated with ':'. Sample : --app-aib armeabi:x86:mips. Default value is 'armeabi'.")
+    parser.add_argument('-m', "--mode", dest='compile_mode', default='release', choices=['debug', 'release'],
+                        help='Generate cocos libs for debug or release. Default is release.')
 
     (args, unknown) = parser.parse_known_args()
 

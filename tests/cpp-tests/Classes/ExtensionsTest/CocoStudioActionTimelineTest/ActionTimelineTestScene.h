@@ -117,4 +117,29 @@ public:
     virtual std::string title() const override;
 };
 
+class TestActionTimelineSkeleton : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestActionTimelineSkeleton);
+
+    virtual void onEnter() override;
+    
+    virtual std::string title() const override;
+
+private:
+    void setAllSubBonesDebugDraw(cocostudio::timeline::SkeletonNode* rootSkeleton, bool isShow);
+
+    bool _changedDisplay;
+    bool _changedDisplays;
+    bool _isAllBonesDraw;
+};
+
+class TestTimelineExtensionData : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestTimelineExtensionData);
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
+
 #endif  // __ANIMATION_SCENE_H__

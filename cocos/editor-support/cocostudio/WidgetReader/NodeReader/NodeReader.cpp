@@ -26,7 +26,7 @@
 
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
-#include "cocostudio/CCObjectExtensionData.h"
+#include "cocostudio/CCComExtensionData.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -470,7 +470,7 @@ namespace cocostudio
         float rotationSkewY      = options->rotationSkew()->rotationSkewY();
         float anchorx       = options->anchorPoint()->scaleX();
         float anchory       = options->anchorPoint()->scaleY();
-        int zorder		    = options->zOrder();
+        int zorder            = options->zOrder();
         int tag             = options->tag();
         int actionTag       = options->actionTag();
         bool visible        = options->visible() != 0;
@@ -509,10 +509,14 @@ namespace cocostudio
         
         node->setTag(tag);
         
-        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        ComExtensionData* extensionData = ComExtensionData::create();
         extensionData->setCustomProperty(customProperty);
         extensionData->setActionTag(actionTag);
-        node->setUserObject(extensionData);
+        if (node->getComponent("ComExtensionData"))
+        {
+            node->removeComponent("ComExtensionData");
+        }
+        node->addComponent(extensionData);
         
         
         node->setCascadeColorEnabled(true);

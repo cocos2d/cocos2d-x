@@ -480,10 +480,15 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
 BugAutoCulling::BugAutoCulling()
 {
     Size s = Director::getInstance()->getWinSize();
-    for (int i=0; i<100; i++) {
+    auto fastmap = cocos2d::experimental::TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
+    this->addChild(fastmap);
+    for (int i = 0; i < 30; i++) {
         auto sprite = Sprite::create("Images/grossini.png");
         sprite->setPosition(s.width/2 + s.width/10 * i, s.height/2);
         this->addChild(sprite);
+        auto label = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Label");
+        label->setPosition(s.width/2 + s.width/10 * i, s.height/2);
+        this->addChild(label);
     }
     this->scheduleOnce([=](float){
         auto camera = Director::getInstance()->getRunningScene()->getCameras().front();

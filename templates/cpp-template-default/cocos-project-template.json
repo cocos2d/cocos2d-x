@@ -29,6 +29,7 @@
          "project_replace_project_name":{
             "src_project_name":"HelloCpp",
             "files":[
+               "Classes/AppDelegate.cpp",
                "proj.win32/PROJECT_NAME.vcxproj",
                "proj.win32/PROJECT_NAME.vcxproj.filters",
                "proj.win32/PROJECT_NAME.vcxproj.user",
@@ -77,6 +78,50 @@
                "proj.ios_mac/ios/Info.plist"
             ]
          }
+      },
+      "change_orientation": {
+         "modify_files": [
+            {
+               "file_path": "Classes/AppDelegate.cpp",
+               "pattern": "static\\s+cocos2d\\:\\:Size\\s+([a-zA-Z_\\d]+)\\s*=\\s*cocos2d\\:\\:Size\\(\\s*(\\d+),\\s*(\\d+)\\)",
+               "replace_string": "static cocos2d::Size \\1 = cocos2d::Size(\\3, \\2)"
+            },
+            {
+               "file_path": "proj.ios_mac/ios/Info.plist",
+               "pattern": "UIInterfaceOrientationLandscapeRight",
+               "replace_string": "UIInterfaceOrientationPortrait"
+            },
+            {
+               "file_path": "proj.ios_mac/ios/Info.plist",
+               "pattern": "UIInterfaceOrientationLandscapeLeft",
+               "replace_string": "UIInterfaceOrientationPortraitUpsideDown"
+            },
+            {
+               "file_path": "proj.android/AndroidManifest.xml",
+               "pattern": "android:screenOrientation=\\\".*\\\"",
+               "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+               "file_path": "proj.android-studio/app/AndroidManifest.xml",
+               "pattern": "android:screenOrientation=\\\".*\\\"",
+               "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+               "file_path": "proj.win10/App/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            },
+            {
+               "file_path": "proj.win8.1-universal/App.Windows/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            },
+            {
+               "file_path": "proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            }
+         ]
       }
 }
 

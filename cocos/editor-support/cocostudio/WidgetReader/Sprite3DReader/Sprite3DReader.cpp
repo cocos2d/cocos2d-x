@@ -225,16 +225,12 @@ namespace cocostudio
         auto fileData = options->fileData();
         std::string path = fileData->path()->c_str();
         
-        Sprite3D* ret = NULL;
-        if(!FileUtils::getInstance()->isFileExist(path))
+        Sprite3D* ret = Sprite3D::create();
+        if(FileUtils::getInstance()->isFileExist(path))
         {
-            ret = Sprite3D::create();
+            ret->initWithFile(path);
         }
-        else
-        {
-            ret = Sprite3D::create(path);
-        }
-        
+
         setPropsWithFlatBuffers(ret, sprite3DOptions);
         
         return ret;

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -98,20 +98,9 @@ FontCharMap::~FontCharMap()
 
 }
 
-int * FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
+int* FontCharMap::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
 {
-    outNumLetters = static_cast<int>(text.length());
-    
-    if (outNumLetters <= 0)
-        return nullptr;
-    
-    auto kernings = new int[outNumLetters];
-    if (!kernings)
-        return nullptr;
-    
-    memset(kernings, 0, outNumLetters * sizeof(int));
-    
-    return kernings;
+    return nullptr;
 }
 
 FontAtlas * FontCharMap::createFontAtlas()
@@ -124,7 +113,7 @@ FontAtlas * FontCharMap::createFontAtlas()
     int itemsPerColumn = (int)(s.height / _itemHeight);
     int itemsPerRow = (int)(s.width / _itemWidth);
 
-    tempAtlas->setCommonLineHeight(_itemHeight);
+    tempAtlas->setLineHeight(_itemHeight);
 
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
 
@@ -142,12 +131,10 @@ FontAtlas * FontCharMap::createFontAtlas()
     {
         for (int col = 0; col < itemsPerRow; ++col)
         {
-            tempDefinition.letteCharUTF16 = charId;
-
             tempDefinition.U = _itemWidth * col / contentScaleFactor;
             tempDefinition.V = _itemHeight * row / contentScaleFactor;
 
-            tempAtlas->addLetterDefinition(tempDefinition);
+            tempAtlas->addLetterDefinition(charId, tempDefinition);
             charId++;
         }
     }

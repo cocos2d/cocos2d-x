@@ -89,6 +89,14 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#Terrain] initWithTerrainData 
+-- @param self
+-- @param #cc.Terrain::TerrainData parameter
+-- @param #int fixedType
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Set threshold distance of each LOD level,must equal or gereater than the chunk size<br>
 -- Note when invoke initHeightMap, the LOD distance will be automatic calculated.
 -- @function [parent=#Terrain] setLODDistance 
@@ -147,6 +155,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- 
+-- @function [parent=#Terrain] Terrain 
+-- @param self
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 return nil

@@ -28,6 +28,18 @@
 
 var ccui = ccui || {};
 
+cc.EditBox = ccui.EditBox;
+delete ccui.EditBox;
+
+cc.Scale9Sprite = ccui.Scale9Sprite;
+
+// GUI
+/**
+ * @type {Object}
+ * UI Helper
+ */
+ccui.helper = ccui.Helper;
+
 // =====================Constants=====================
 
 /*
@@ -296,6 +308,9 @@ ccui.LoadingBar.RENDERER_ZORDER = -1;
  */
 //Slider event type
 ccui.Slider.EVENT_PERCENT_CHANGED = 0;
+ccui.Slider.EVENT_SLIDEBALL_DOWN = 1;
+ccui.Slider.EVENT_SLIDEBALL_UP = 2;
+ccui.Slider.EVENT_SLIDEBALL_CANCEL = 3;
 
 //Render zorder
 ccui.Slider.BASEBAR_RENDERER_ZORDER = -3;
@@ -328,6 +343,12 @@ ccui.TextField.EVENT_DELETE_BACKWARD = 3;
 
 ccui.TextField.RENDERER_ZORDER = -1;
 
+/*
+ * UIRadioButton
+ */
+ccui.RadioButton.EVENT_SELECTED = 0;
+ccui.RadioButton.EVENT_UNSELECTED = 1;
+ccui.RadioButtonGroup.EVENT_SELECT_CHANGED = 0;
 
 /*
  * UIMargin

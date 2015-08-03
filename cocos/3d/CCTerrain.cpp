@@ -54,26 +54,31 @@ static bool isPOT(int number)
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
 {
     Terrain * terrain = new (std::nothrow)Terrain();
-    terrain->setSkirtHeightRatio(parameter._skirtHeightRatio);
-    terrain->_terrainData = parameter;
-    terrain->_crackFixedType = fixedType;
-    terrain->_isCameraViewChanged = true;
-    terrain->_lightDir = Vec3(-1.0,-1.0,0.0);
+    if (terrain->initWithTerrainData(parameter, fixedType))
+    {
+        terrain->autorelease();
+        return terrain;
+    }
+    CC_SAFE_DELETE(terrain);
+    return terrain;
+}
+bool Terrain::initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType)
+{
+    this->setSkirtHeightRatio(parameter._skirtHeightRatio);
+    this->_terrainData = parameter;
+    this->_crackFixedType = fixedType;
+    this->_isCameraViewChanged = true;
     //chunksize
-    terrain->_chunkSize = parameter._chunkSize;
-    bool initResult =true;
+    this->_chunkSize = parameter._chunkSize;
+    bool initResult = true;
 
     //init heightmap
-    initResult &= terrain->initHeightMap(parameter._heightMapSrc.c_str());
+    initResult &= this->initHeightMap(parameter._heightMapSrc.c_str());
     //init textures alpha map,detail Maps
-    initResult &= terrain->initTextures();
-    initResult &= terrain->initProperties();
-    terrain->autorelease();
-    if(!initResult)
-    {
-        CC_SAFE_DELETE(terrain);
-    }    
-    return terrain;
+    initResult &= this->initTextures();
+    initResult &= this->initProperties();
+    
+    return initResult;
 }
 
 void cocos2d::Terrain::setLightMap(const std::string& fileName)
@@ -793,6 +798,14 @@ void Terrain::setSkirtHeightRatio(float ratio)
 
 void Terrain::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     _terrainModelMatrix = getNodeToWorldTransform();
     _quadRoot->preCalculateAABB(_terrainModelMatrix);

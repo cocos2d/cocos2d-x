@@ -45,7 +45,7 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
-AudioCache* AudioEngineImpl::preload(const std::string& filePath)
+AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
 {
     AudioCache* audioCache = nullptr;
     do 
@@ -83,12 +83,24 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath)
         }
     } while (false);
 
+    if (callback)
+    {
+        if (audioCache)
+        {
+            audioCache->addLoadCallback(callback);
+        } 
+        else
+        {
+            callback(false);
+        }
+    }
+
     return audioCache;
 }
 
 int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume)
 {
-    auto audioCache = preload(filePath);
+    auto audioCache = preload(filePath, nullptr);
     if (audioCache == nullptr)
     {
         return AudioEngine::INVALID_AUDIO_ID;
@@ -97,7 +109,7 @@ int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume
     auto player = &_audioPlayers[_currentAudioID];
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
 
     if (_lazyInitLoop) {
         _lazyInitLoop = false;

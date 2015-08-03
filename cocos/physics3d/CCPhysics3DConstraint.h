@@ -177,8 +177,6 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Physics3DPointToPointConstraint();
     virtual ~Physics3DPointToPointConstraint();
-    
-protected:
     bool init(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotPointInA);
     bool init(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB);
     

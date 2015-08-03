@@ -79,11 +79,6 @@ public:
     /** Returns whether or not the item is selected. */
     virtual bool isSelected() const;
 
-    /**
-     * @js NA
-     */
-    virtual void onExit() override;
-
     /** Set the callback to the menu item.
     * @code
     * In js,can contain two params,the second param is jsptr.

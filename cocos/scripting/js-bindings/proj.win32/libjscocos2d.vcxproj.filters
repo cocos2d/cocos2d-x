@@ -50,6 +50,9 @@
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_audioengine_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
     <ClCompile Include="..\manual\js_manual_conversions.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -164,6 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_audioengine_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\js_bindings_opengl.h">

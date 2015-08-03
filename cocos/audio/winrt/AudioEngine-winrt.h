@@ -55,7 +55,7 @@ NS_CC_BEGIN
      void setFinishCallback(int audioID, const std::function<void(int, const std::string &)> &callback);
      void uncache(const std::string& filePath);
      void uncacheAll();
-     AudioCache* preload(const std::string& filePath);
+     AudioCache* preload(const std::string& filePath, std::function<void(bool)> callback);
      void update(float dt);
 
  private:

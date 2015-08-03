@@ -38,19 +38,6 @@ NS_CC_BEGIN
  * @{
  */
 
-/**
- * @brief Possible GlyphCollection used by Label.
- *
- * Specify a collections of characters to be load when Label created.
- * Consider using DYNAMIC.
- */
-enum class GlyphCollection {
-    DYNAMIC,
-    NEHE,
-    ASCII,
-    CUSTOM
-};
-
 
 /**
  * @struct TTFConfig
@@ -85,6 +72,8 @@ typedef struct _ttfConfig
 
 class Sprite;
 class SpriteBatchNode;
+class DrawNode;
+class EventListenerCustom;
 
 /**
  * @brief Label is a subclass of Node that knows how to render text labels.
@@ -105,8 +94,6 @@ class SpriteBatchNode;
 class CC_DLL Label : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
-    static const int DistanceFieldFontSize;
-
     /// @name Creators
     /// @{
 
@@ -288,11 +275,17 @@ public:
     virtual void setString(const std::string& text) override;
 
     /** Return the text the Label is displaying.*/
-    virtual const std::string& getString() const override {  return _originalUTF8String; }
+    virtual const std::string& getString() const override {  return _utf8Text; }
 
-    int getStringNumLines() const;
+    /**
+     * Return the number of lines of text.
+     */
+    int getStringNumLines();
 
-    int getStringLength() const;
+    /**
+     * Return length of string.
+     */
+    int getStringLength();
 
     /**
      * Sets the text color of Label.
@@ -447,12 +440,6 @@ public:
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
-    virtual void setScale(float scale) override;
-    virtual void setScaleX(float scaleX) override;
-    virtual void setScaleY(float scaleY) override;
-    virtual float getScaleX() const override;
-    virtual float getScaleY() const override;
-
     virtual std::string getDescription() const override;
 
     virtual const Size& getContentSize() const override;
@@ -491,10 +478,12 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     struct LetterInfo
     {
-        FontLetterDefinition def;
-        Vec2 position;
-        Size  contentSize;
-        int   atlasIndex;
+        char16_t utf16Char;
+        bool valid;
+        float positionX;
+        float positionY;
+        int atlasIndex;
+        int lineIndex;
     };
 
     enum class LabelType {
@@ -506,18 +495,21 @@ protected:
 
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
 
-    void setCorrectionScale(float fontScale);
-
     void computeStringNumLines();
 
     void onDraw(const Mat4& transform, bool transformUpdated);
     void onDrawShadow(GLProgram* glProgram);
-    void drawSelf(Renderer* renderer, uint32_t flags);
+    void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
+
+    bool multilineTextWrapByChar();
+    bool multilineTextWrapByWord();
 
     virtual void alignText();
+    void computeAlignmentOffset();
     bool computeHorizontalKernings(const std::u16string& stringToRender);
-    bool recordLetterInfo(const cocos2d::Vec2& point,const FontLetterDefinition& letterDef, int spriteIndex);
-    bool recordPlaceholderInfo(int spriteIndex);
+
+    void recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int letterIndex, int lineIndex);
+    void recordPlaceholderInfo(int letterIndex, char16_t utf16Char);
     
     void updateQuads();
 
@@ -534,9 +526,9 @@ protected:
 
     LabelType _currentLabelType;
     bool _contentDirty;
-    std::u16string _currentUTF16String;
-    std::string _originalUTF8String;
-    int _currNumLines;
+    std::u16string _utf16Text;
+    std::string _utf8Text;
+    int _numberOfLines;
 
     std::string _bmFontPath;
     TTFConfig _fontConfig;
@@ -555,11 +547,11 @@ protected:
     //! used for optimization
     Sprite *_reusedLetter;
     Rect _reusedRect;
-    int _limitShowCount;
+    int _lengthOfString;
 
     //layout relevant properties.
-    float _commonLineHeight;
-    float _additionalKerning;   
+    float _lineHeight;
+    float _additionalKerning;
     int* _horizontalKernings;
     bool _lineBreakWithoutSpaces;
     float _maxLineWidth;
@@ -569,8 +561,12 @@ protected:
     TextHAlignment _hAlignment;
     TextVAlignment _vAlignment;
 
-    //the correction scale for distance field.
-    float _correctionScale;
+    float _textDesiredHeight;
+    std::vector<float> _linesWidth;
+    std::vector<float> _linesOffsetX;
+    float _letterOffsetY;
+    float _tailoredTopY;
+    float _tailoredBottomY;
 
     LabelEffect _currLabelEffect;
     Color4F _effectColorF;
@@ -607,10 +603,11 @@ protected:
     EventListenerCustom* _purgeTextureListener;
     EventListenerCustom* _resetTextureListener;
 
+#if CC_LABEL_DEBUG_DRAW
+    DrawNode* _debugDrawNode;
+#endif
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
-
-    friend class LabelTextFormatter;
 };
 
 // end group
