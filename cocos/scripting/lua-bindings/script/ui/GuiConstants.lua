@@ -169,6 +169,8 @@ ccui.PageViewDirection = {
 ccui.PVTouchDir = {
     touchLeft = 0,
     touchRight = 1,
+    touchUp = 2,
+    touchDown = 3
 }
 
 ccui.ListViewGravity = {

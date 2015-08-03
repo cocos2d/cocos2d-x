@@ -291,7 +291,7 @@ void PageView::updateAllPagesPosition()
         else if(_direction == Direction::VERTICAL)
         {
             float pageHeight = getContentSize().height;
-            newPosition = Vec2(0,(i-_curPageIdx) * pageHeight);
+            newPosition = Vec2(0,(i-_curPageIdx) * pageHeight * -1);
 
         }
         page->setPosition(newPosition);
@@ -330,14 +330,14 @@ void PageView::scrollToPage(ssize_t idx)
     }
     else if(_direction == Direction::VERTICAL)
     {
-        _autoScrollDistance = -(curPage->getPosition().y);
+        _autoScrollDistance = -curPage->getPosition().y;
         if (_autoScrollDistance > 0)
         {
-            _autoScrollDirection = AutoScrollDirection::UP;
+            _autoScrollDirection = AutoScrollDirection::DOWN;
         }
         else
         {
-            _autoScrollDirection = AutoScrollDirection::DOWN;
+            _autoScrollDirection = AutoScrollDirection::UP;
         }
     }
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
@@ -369,7 +369,7 @@ void PageView::autoScroll(float dt)
         switch (_autoScrollDirection)
         {
             case AutoScrollDirection::LEFT:
-            case AutoScrollDirection::DOWN:
+            case AutoScrollDirection::UP:
             {
                 if (_autoScrollDistance + step >= 0.0f)
                 {
@@ -386,7 +386,7 @@ void PageView::autoScroll(float dt)
             }
                 break;
             case AutoScrollDirection::RIGHT:
-            case AutoScrollDirection::UP:
+            case AutoScrollDirection::DOWN:
             {
                 if (_autoScrollDistance - step <= 0.0f)
                 {
@@ -515,19 +515,20 @@ bool PageView::scrollPages(Vec2 touchOffset)
             break;
         case TouchDirection::UP:
         {
-            if (_leftBoundaryChild->getBottomBoundary() + touchOffset.y >= _leftBoundary)
+            if (_rightBoundaryChild->getBottomBoundary() + touchOffset.y >= _leftBoundary)
             {
-                realOffset.y = _leftBoundary - _leftBoundaryChild->getBottomBoundary();
+                realOffset.y = _leftBoundary - _rightBoundaryChild->getBottomBoundary();
                 realOffset.x = 0;
                 movePages(realOffset);
                 return false;
             }
+           
         }break;
         case TouchDirection::DOWN:
         {
-            if (_rightBoundaryChild->getTopBoundary() + touchOffset.y <= _rightBoundary)
+            if (_leftBoundaryChild->getTopBoundary() + touchOffset.y <= _rightBoundary)
             {
-                realOffset.y = _rightBoundary - _rightBoundaryChild->getTopBoundary();
+                realOffset.y = _rightBoundary - _leftBoundaryChild->getTopBoundary();
                 realOffset.x = 0;
                 movePages(realOffset);
                 return false;
@@ -564,13 +565,13 @@ void PageView::handleMoveLogic(Touch *touch)
     else
     {
         offset.x = 0;
-        if(offset.y < 0)
-        {
-            _touchMoveDirection = TouchDirection::DOWN;
-        }
-        else if(offset.y > 0)
+        if(offset.y > 0)
         {
             _touchMoveDirection = TouchDirection::UP;
+        }
+        else if(offset.y < 0)
+        {
+            _touchMoveDirection = TouchDirection::DOWN;
         }
     }
    
@@ -634,31 +635,63 @@ void PageView::handleReleaseLogic(Touch *touch)
         }
         float boundary = _customScrollThreshold;
         
-        if (moveBoundray <= -boundary)
+        if (_direction == Direction::HORIZONTAL)
         {
-            if (_curPageIdx >= pageCount-1)
+            if (moveBoundray <= -boundary)
             {
-                scrollPages(curPagePos);
+                if (_curPageIdx >= pageCount-1)
+                {
+                    scrollPages(curPagePos);
+                }
+                else
+                {
+                    scrollToPage(_curPageIdx+1);
+                }
+            }
+            else if (moveBoundray >= boundary)
+            {
+                if (_curPageIdx <= 0)
+                {
+                    scrollPages(curPagePos);
+                }
+                else
+                {
+                    scrollToPage(_curPageIdx-1);
+                }
             }
             else
             {
-                scrollToPage(_curPageIdx+1);
+                scrollToPage(_curPageIdx);
             }
         }
-        else if (moveBoundray >= boundary)
+        else if(_direction == Direction::VERTICAL)
         {
-            if (_curPageIdx <= 0)
+            if (moveBoundray >= boundary)
             {
-                scrollPages(curPagePos);
+                if (_curPageIdx >= pageCount-1)
+                {
+                    scrollPages(curPagePos);
+                }
+                else
+                {
+                    scrollToPage(_curPageIdx+1);
+                }
+            }
+            else if (moveBoundray <= -boundary)
+            {
+                if (_curPageIdx <= 0)
+                {
+                    scrollPages(curPagePos);
+                }
+                else
+                {
+                    scrollToPage(_curPageIdx-1);
+                }
             }
             else
             {
-                scrollToPage(_curPageIdx-1);
+                scrollToPage(_curPageIdx);
             }
-        }
-        else
-        {
-            scrollToPage(_curPageIdx);
         }
     }
 }
