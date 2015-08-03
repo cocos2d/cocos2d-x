@@ -111,24 +111,24 @@ void BoneNode::removeChild(Node* child, bool cleanup /* = true */)
 
 void BoneNode::removeFromBoneList(BoneNode* bone)
 {
-    _childBones.eraseObject(bone);
     auto skeletonNode = dynamic_cast<SkeletonNode*>(bone);
-    if (skeletonNode != nullptr) // nested skeleton
-        return;
-
-    bone->_rootSkeleton = nullptr;
-    auto subBones = bone->getAllSubBones();
-    subBones.pushBack(bone);
-    for (auto &subBone : subBones)
+    if (skeletonNode == nullptr) //not a nested skeleton
     {
-        subBone->_rootSkeleton = nullptr;
-        _rootSkeleton->_subBonesMap.erase(subBone->getName());
-        if (bone->_isRackShow && bone->_visible)
+        bone->_rootSkeleton = nullptr;
+        auto subBones = bone->getAllSubBones();
+        subBones.pushBack(bone);
+        for (auto &subBone : subBones)
         {
-            _rootSkeleton->_subDrawBonesDirty = true;
-            _rootSkeleton->_subDrawBonesOrderDirty = true;
+            subBone->_rootSkeleton = nullptr;
+            _rootSkeleton->_subBonesMap.erase(subBone->getName());
+            if (bone->_isRackShow && bone->_visible)
+            {
+                _rootSkeleton->_subDrawBonesDirty = true;
+                _rootSkeleton->_subDrawBonesOrderDirty = true;
+            }
         }
     }
+    _childBones.eraseObject(bone);
 }
 
 void BoneNode::addToBoneList(BoneNode* bone)
@@ -375,8 +375,8 @@ void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
 #ifdef CC_STUDIO_ENABLED_VIEW
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
+    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
     
     glEnable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);

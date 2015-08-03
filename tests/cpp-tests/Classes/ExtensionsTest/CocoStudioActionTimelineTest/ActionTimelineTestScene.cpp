@@ -545,7 +545,6 @@ void TestActionTimelineSkeleton::onEnter()
         {
             nestSkeleton->removeFromParentAndCleanup(false);
         }
-        // bug fixed while leftleg's child hide with leftleg's visible
     });
 }
 
