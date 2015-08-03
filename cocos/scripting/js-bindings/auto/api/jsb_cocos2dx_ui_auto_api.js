@@ -4496,6 +4496,16 @@ getCurPageIndex : function (
 },
 
 /**
+ * @method setDirection
+ * @param {ccui.PageView::Direction} arg0
+ */
+setDirection : function (
+direction 
+)
+{
+},
+
+/**
  * @method addWidgetToPage
  * @param {ccui.Widget} arg0
  * @param {long} arg1
@@ -4569,6 +4579,16 @@ layout,
 int 
 )
 {
+},
+
+/**
+ * @method getDirection
+ * @return {ccui.PageView::Direction}
+ */
+getDirection : function (
+)
+{
+    return 0;
 },
 
 /**

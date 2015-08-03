@@ -19,6 +19,16 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
+-- Changes scroll direction of PageView<br>
+-- see `Direction`<br>
+-- param direction Scroll direction enum.<br>
+-- since v3.8
+-- @function [parent=#PageView] setDirection 
+-- @param self
+-- @param #int direction
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
 -- Add a widget as a page of PageView in a given index.<br>
 -- param widget    Widget to be added to pageview.<br>
 -- param pageIdx   A given index.<br>
@@ -88,6 +98,15 @@
 -- @param #ccui.Layout page
 -- @param #int idx
 -- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- Query scroll direction of PageView.<br>
+-- see `Direction`<br>
+-- since v3.8<br>
+-- return PageView scroll direction.
+-- @function [parent=#PageView] getDirection 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Scroll to a page with a given index.<br>
