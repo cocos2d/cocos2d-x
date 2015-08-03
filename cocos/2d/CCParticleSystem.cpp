@@ -508,7 +508,7 @@ void ParticleSystem::initParticle(tParticle* particle)
 
     particle->pos.y = _sourcePosition.y + _posVar.y * CCRANDOM_MINUS1_1();
 
-
+    particle->affineTransform = getNodeToWorldAffineTransform();
     // Color
     Color4F start;
     start.r = clampf(_startColor.r + _startColorVar.r * CCRANDOM_MINUS1_1(), 0, 1);
@@ -774,15 +774,7 @@ void ParticleSystem::update(float dt)
 
                 Vec2    newPos;
 
-                if (_positionType == PositionType::FREE)
-                {
-                    Vec3 p1(currentPosition.x,currentPosition.y,0),p2(p->startPos.x,p->startPos.y,0);
-                    worldToNodeTM.transformPoint(&p1);
-                    worldToNodeTM.transformPoint(&p2);
-                    p1 = p1 - p2;
-                    newPos = p->pos - Vec2(p1.x,p1.y);
-                }
-                else if(_positionType == PositionType::RELATIVE)
+                if(_positionType == PositionType::RELATIVE)
                 {
                     Vec2 diff = currentPosition - p->startPos;
                     newPos = p->pos - diff;
@@ -794,7 +786,7 @@ void ParticleSystem::update(float dt)
 
                 // translate newPos to correct position, since matrix transform isn't performed in batchnode
                 // don't update the particle with the new position information, it will interfere with the radius and tangential calculations
-                if (_batchNode)
+                if (_batchNode && PositionType::FREE != _positionType)
                 {
                     newPos.x+=_position.x;
                     newPos.y+=_position.y;

@@ -1009,6 +1009,8 @@ ParticleTests::ParticleTests()
     ADD_TEST_CASE(ParticleResetTotalParticles);
 
     ADD_TEST_CASE(ParticleIssue12310);
+    
+    ADD_TEST_CASE(DemoFlowerWithRotationInFreeMode);
 }
 
 ParticleDemo::~ParticleDemo(void)
@@ -2010,4 +2012,20 @@ void ParticleIssue12310::onEnter()
 std::string ParticleIssue12310::subtitle() const
 {
     return "You should see two Particle Emitters using different texture.";
+}
+
+//------------------------------------------------------------------
+//
+// DemoFlowerWithRotationInFreeMode
+//
+//------------------------------------------------------------------
+void DemoFlowerWithRotationInFreeMode::onEnter()
+{
+    DemoFlower::onEnter();
+    _emitter->runAction(RepeatForever::create(RotateBy::create(2, 360)));
+}
+
+std::string DemoFlowerWithRotationInFreeMode::subtitle() const
+{
+    return "ParticleFlower with rotation in FREE mode";
 }
