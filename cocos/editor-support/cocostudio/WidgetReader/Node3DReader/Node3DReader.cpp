@@ -401,7 +401,7 @@ namespace cocostudio
             node->setScaleZ(scale->z());
         }
         
-        node->setCameraMask(cameraMask, false);
+        node->setCameraMask(cameraMask, true);
         
         auto nodeReader = NodeReader::getInstance();
         nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
