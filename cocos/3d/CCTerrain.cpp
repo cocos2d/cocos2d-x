@@ -279,6 +279,7 @@ Terrain::Terrain()
 : _alphaMap(nullptr)
 , _stateBlock(nullptr)
 , _lightMap(nullptr)
+, _lightDir(-1.f, -1.f, 0.f)
 {
     _stateBlock = RenderState::StateBlock::create();
     CC_SAFE_RETAIN(_stateBlock);
