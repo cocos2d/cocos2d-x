@@ -268,9 +268,9 @@ namespace cocos2d {
             return "";
         }
 
-        jclass clsString = env->FindClass("java/lang/String");
+        jclass classID = env->FindClass("java/lang/String");
         jstring strEncode = env->NewStringUTF("utf-8");
-        jmethodID methodID = env->GetMethodID(clsString, "getBytes", "(Ljava/lang/String;)[B");
+        jmethodID methodID = env->GetMethodID(classID, "getBytes", "(Ljava/lang/String;)[B");
         jbyteArray bArr= (jbyteArray)env->CallObjectMethod(jstr, methodID, strEncode);
         jsize arrLen = env->GetArrayLength(bArr);
 
@@ -279,8 +279,14 @@ namespace cocos2d {
             jbyte* arrBuf = env->GetByteArrayElements(bArr, NULL);
             std::string ret((const char*)arrBuf, (size_t)arrLen);
             env->ReleaseByteArrayElements(bArr, arrBuf, 0);
+
+            env->DeleteLocalRef(classID);
+            env->DeleteLocalRef(strEncode);
             return ret;
         }
+
+        env->DeleteLocalRef(classID);
+        env->DeleteLocalRef(strEncode);
 
         return "";
     }
