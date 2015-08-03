@@ -95,9 +95,26 @@ var runActionTimeLineTest;
                     callback: function(){
                         action.play("stand", true);
                     }
+                },{
+                    title: "change skin",
+                    callback: function(){
+                        if (weapSkinToAdd.isVisible())
+                            weaponHandeBone.displaySkin("3", true);
+                        else
+                            weaponHandeBone.displaySkin(weapSkinToAdd, true);
+                    }
                 }
 
             ];
+
+            var weaponHandeBone = node.getBoneNode("Layer20");
+            var weapSkinToAdd = new cc.Sprite("ActionTimeline/testAnimationResource/girl_arms.png");
+            weapSkinToAdd.setName("Knife");
+            weapSkinToAdd.setPosition(cc.p(135, 23));
+            weapSkinToAdd.setScale(3.0);
+            weapSkinToAdd.setRotation(86);
+            weaponHandeBone.addSkin(weapSkinToAdd, false);
+
 
             items.forEach(function(item, index){
                 var menuItem = new cc.MenuItemFont(item.title, item.callback, this);
