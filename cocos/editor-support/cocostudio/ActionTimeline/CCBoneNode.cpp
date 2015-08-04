@@ -144,23 +144,32 @@ void BoneNode::removeFromBoneList(BoneNode* bone)
 void BoneNode::addToBoneList(BoneNode* bone)
 {
     _childBones.pushBack(bone);
-    if (bone->_rootSkeleton == nullptr && _rootSkeleton != nullptr)
+    if (_rootSkeleton != nullptr)
     {
-        auto subBones = bone->getAllSubBones();
-        subBones.pushBack(bone);
-        for (auto &subBone : subBones)
+        auto skeletonNode = dynamic_cast<SkeletonNode*>(bone);
+        if (skeletonNode == nullptr && bone->_rootSkeleton == nullptr) // not nest skeleton
         {
-            subBone->_rootSkeleton = _rootSkeleton;
-            auto bonename = subBone->getName();
-            if (_rootSkeleton->_subBonesMap.find(bonename) == _rootSkeleton->_subBonesMap.end())
+            auto subBones = bone->getAllSubBones();
+            subBones.pushBack(bone);
+            for (auto &subBone : subBones)
             {
-                _rootSkeleton->_subBonesMap.insert(subBone->getName(), subBone);
+                subBone->_rootSkeleton = _rootSkeleton;
+                auto bonename = subBone->getName();
+                if (_rootSkeleton->_subBonesMap.find(bonename) == _rootSkeleton->_subBonesMap.end())
+                {
+                    _rootSkeleton->_subBonesMap.insert(subBone->getName(), subBone);
 
-                _rootSkeleton->_subBonesDirty = true;
-                _rootSkeleton->_subBonesOrderDirty = true;
+                    _rootSkeleton->_subBonesDirty = true;
+                    _rootSkeleton->_subBonesOrderDirty = true;
+                }
+                else
+                    CCLOG("already has a bone named %s in skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
             }
-            else
-                CCLOG("already has a bone named %s in skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
+        }
+        else
+        {
+            _rootSkeleton->_subBonesDirty = true;
+            _rootSkeleton->_subBonesOrderDirty = true;
         }
     }
 }
