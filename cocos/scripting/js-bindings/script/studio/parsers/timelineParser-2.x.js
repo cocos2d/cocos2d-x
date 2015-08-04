@@ -104,7 +104,9 @@
         var visible = getParam(json["VisibleForFrame"], true);
         node.setVisible(visible);
 
-        setContentSize(node, json["Size"]);
+        var size = json["Size"];
+        if(size)
+            setContentSize(node, size);
 
         if (json["Alpha"] != null)
             node.setOpacity(json["Alpha"]);
@@ -118,9 +120,7 @@
             extensionData.setCustomProperty(customProperty);
         extensionData.setActionTag(actionTag);
         if (node.getComponent("ComExtensionData"))
-        {
             node.removeComponent("ComExtensionData");
-        }
         node.addComponent(extensionData);
 
         node.setCascadeColorEnabled(true);
@@ -294,9 +294,7 @@
             extensionData.setCustomProperty(customProperty);
         extensionData.setActionTag(actionTag);
         if (widget.getComponent("ComExtensionData"))
-        {
             widget.removeComponent("ComExtensionData");
-        }
         widget.addComponent(extensionData);
 
         var rotationSkewX = json["RotationSkewX"];
