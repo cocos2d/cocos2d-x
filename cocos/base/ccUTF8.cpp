@@ -183,8 +183,6 @@ long getCharacterCountInUTF8String(const std::string& utf8)
     return getUTF8StringLength((const UTF8*)utf8.c_str());
 }
 
-
-
 } //namespace StringUtils {
 
 

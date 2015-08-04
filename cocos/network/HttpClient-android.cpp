@@ -585,9 +585,9 @@ private:
         std::string strValue = "";
         if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, jstr, strValue))
         {
-            ret = strdup(strValue.c_str());
+            strValue = "";
         }
-
+        ret = strdup(strValue.c_str());
         return ret;
     }
 
