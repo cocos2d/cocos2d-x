@@ -120,7 +120,9 @@ void BoneNode::removeFromBoneList(BoneNode* bone)
         for (auto &subBone : subBones)
         {
             subBone->_rootSkeleton = nullptr;
-            _rootSkeleton->_subBonesMap.erase(subBone->getName());
+            auto toremoveIter = _rootSkeleton->_subBonesMap.find(subBone->getName());
+            if (toremoveIter != _rootSkeleton->_subBonesMap.end())
+                _rootSkeleton->_subBonesMap.erase(toremoveIter);
             if (bone->_isRackShow && bone->_visible)
             {
                 _rootSkeleton->_subDrawBonesDirty = true;
