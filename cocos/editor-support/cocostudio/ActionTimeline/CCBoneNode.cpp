@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2015 Chukong Technologies Inc.
- 
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -126,13 +126,17 @@ void BoneNode::removeFromBoneList(BoneNode* bone)
             subBone->_rootSkeleton = nullptr;
             auto toremoveIter = _rootSkeleton->_subBonesMap.find(subBone->getName());
             if (toremoveIter != _rootSkeleton->_subBonesMap.end())
-                _rootSkeleton->_subBonesMap.erase(toremoveIter);
-            if (bone->_isRackShow && bone->_visible)
             {
-                _rootSkeleton->_subDrawBonesDirty = true;
-                _rootSkeleton->_subDrawBonesOrderDirty = true;
+                _rootSkeleton->_subBonesMap.erase(toremoveIter);
+                _rootSkeleton->_subBonesDirty = true;
+                _rootSkeleton->_subBonesOrderDirty = true;
             }
         }
+    }
+    else
+    {
+        _rootSkeleton->_subBonesDirty = true;
+        _rootSkeleton->_subBonesOrderDirty = true;
     }
     _childBones.eraseObject(bone);
 }
@@ -151,20 +155,12 @@ void BoneNode::addToBoneList(BoneNode* bone)
             if (_rootSkeleton->_subBonesMap.find(bonename) == _rootSkeleton->_subBonesMap.end())
             {
                 _rootSkeleton->_subBonesMap.insert(subBone->getName(), subBone);
-                if (bone->_isRackShow && bone->_visible)
-                {
-                    _rootSkeleton->_subDrawBonesDirty = true;
-                    _rootSkeleton->_subDrawBonesOrderDirty = true;
-                }
+
+                _rootSkeleton->_subBonesDirty = true;
+                _rootSkeleton->_subBonesOrderDirty = true;
             }
             else
                 CCLOG("already has a bone named %s in skeleton %s", bonename.c_str(), _rootSkeleton->getName().c_str());
-        }
-
-        if (bone->_isRackShow && bone->_visible)
-        {
-            _rootSkeleton->_subDrawBonesDirty = true;
-            _rootSkeleton->_subDrawBonesOrderDirty = true;
         }
     }
 }
@@ -293,8 +289,8 @@ void BoneNode::setDebugDrawEnabled(bool isDebugDraw)
     _isRackShow = isDebugDraw;
     if (_visible && nullptr != _rootSkeleton)
     {
-        _rootSkeleton->_subDrawBonesDirty = true;
-        _rootSkeleton->_subDrawBonesOrderDirty = true;
+        _rootSkeleton->_subBonesDirty = true;
+        _rootSkeleton->_subBonesOrderDirty = true;
     }
 }
 
@@ -304,6 +300,57 @@ void BoneNode::setDebugDrawColor(const cocos2d::Color4F &color)
     updateColor();
 }
 
+void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags)
+{
+    // quick return if not visible. children won't be drawn.
+    if (!_visible)
+    {
+        return;
+    }
+
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the Mat4 stack,
+    // but it is deprecated and your code should not rely on it
+    _director->pushMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+
+    bool visibleByCamera = isVisitableByVisitingCamera();
+
+    int i = 0;
+
+    if (!_childBones.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for (; i < _childBones.size(); i++)
+        {
+            auto bone = _childBones.at(i);
+            if (bone && bone->getZOrder() < 0)
+                bone->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        // self draw
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
+
+        for (auto it = _childBones.cbegin() + i; it != _childBones.cend(); ++it)
+            (*it)->visit(renderer, _modelViewTransform, flags);
+    }
+    else if (visibleByCamera)
+    {
+        this->draw(renderer, _modelViewTransform, flags);
+    }
+
+    _director->popMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // reset for next frame
+    // _orderOfArrival = 0;
+}
 
 void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
@@ -365,59 +412,6 @@ void BoneNode::updateColor()
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
-
-void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags)
-{
-    // quick return if not visible. children won't be drawn.
-    if (!_visible)
-    {
-        return;
-    }
-
-    uint32_t flags = processParentFlags(parentTransform, parentFlags);
-
-    // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Mat4 stack,
-    // but it is deprecated and your code should not rely on it
-    _director->pushMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-
-    bool visibleByCamera = isVisitableByVisitingCamera();
-
-    int i = 0;
-
-    if (!_children.empty())
-    {
-        sortAllChildren();
-        // draw children zOrder < 0
-        for (; i < _childBones.size(); i++)
-        {
-            auto bone = _childBones.at(i);
-            if (bone && bone->getZOrder() < 0)
-                bone->visit(renderer, _modelViewTransform, flags);
-            else
-                break;
-        }
-        // self draw
-        if (visibleByCamera)
-            this->draw(renderer, _modelViewTransform, flags);
-
-        for (auto it = _childBones.cbegin() + i; it != _childBones.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, flags);
-    }
-    else if (visibleByCamera)
-    {
-        this->draw(renderer, _modelViewTransform, flags);
-    }
-
-    _director->popMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    // FIX ME: Why need to set _orderOfArrival to 0??
-    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
-    // reset for next frame
-    // _orderOfArrival = 0;
-}
-
 void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
@@ -436,7 +430,7 @@ void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 #ifdef CC_STUDIO_ENABLED_VIEW
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-    
+
     glEnable(GL_LINE_SMOOTH);
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
     glDrawArrays(GL_LINE_LOOP, 0, 4);
@@ -510,7 +504,7 @@ bool BoneNode::isPointOnRack(const cocos2d::Vec2& bonePoint)
     {
         if (_rackLength != 0.0f && _rackWidth != 0.0f)
         {
-            float a1 = (_squareVertices[2].y - _squareVertices[3].y ) / (_squareVertices[3].x - _squareVertices[0].x);
+            float a1 = (_squareVertices[2].y - _squareVertices[3].y) / (_squareVertices[3].x - _squareVertices[0].x);
             float a2 = (_squareVertices[2].y - _squareVertices[3].y) / (_squareVertices[0].x - _squareVertices[1].x);;
             float b1 = a1 * _squareVertices[3].x;
             float y1 = bonePoint.y - _squareVertices[1].y;
@@ -538,7 +532,7 @@ void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
     }
 
     int count = bone->_rootSkeleton->_batchedVeticesCount;
-    if (count + 8 >(int)(bone->_rootSkeleton->_batchedBoneVetices.capacity()))
+    if (count + 8 >(int)(bone->_rootSkeleton->_batchedBoneVetices.size()))
     {
         bone->_rootSkeleton->_batchedBoneVetices.resize(count + 100);
         bone->_rootSkeleton->_batchedBoneColors.resize(count + 100);
@@ -559,6 +553,7 @@ void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
     bone->_rootSkeleton->_batchedVeticesCount += 4;
 #endif //CC_STUDIO_ENABLED_VIEW
 }
+
 
 // call after self visit
 void BoneNode::visitSkins(cocos2d::Renderer* renderer, BoneNode* bone)
@@ -596,8 +591,8 @@ void BoneNode::visitSkins(cocos2d::Renderer* renderer, BoneNode* bone)
 void BoneNode::setLocalZOrder(int localZOrder)
 {
     Node::setLocalZOrder(localZOrder);
-    if (_rootSkeleton != nullptr && this->_visible && this->_isRackShow)
-        _rootSkeleton->_subDrawBonesOrderDirty = true;
+    if (_rootSkeleton != nullptr)
+        _rootSkeleton->_subBonesOrderDirty = true;
 }
 
 void BoneNode::setName(const std::string& name)
@@ -660,8 +655,8 @@ void BoneNode::setVisible(bool visible)
     Node::setVisible(visible);
     if (_isRackShow && _rootSkeleton != nullptr)
     {
-        _rootSkeleton->_subDrawBonesDirty = true;
-        _rootSkeleton->_subDrawBonesOrderDirty = true;
+        _rootSkeleton->_subBonesDirty = true;
+        _rootSkeleton->_subBonesOrderDirty = true;
     }
 }
 
