@@ -41,12 +41,12 @@ bool LuaJavaBridge::CallInfo::execute(void)
 
         case TypeString:
             m_retjs = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            const unsigned short * stringBuff = (const unsigned short *)m_env->GetStringChars(m_retjs, nullptr);
-            std::u16string unicodeStr((char16_t *)stringBuff);
-            std::string strValue;
-            cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+            std::string strValue = "";
+            if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(m_env, m_retjs, strValue))
+            {
+                strValue = "";
+            }
             m_ret.stringValue = new string(strValue);
-            m_env->ReleaseStringChars(m_retjs, stringBuff);
            break;
     }
 
@@ -84,12 +84,12 @@ bool LuaJavaBridge::CallInfo::executeWithArgs(jvalue *args)
 
          case TypeString:
         	 m_retjs = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-            const unsigned short * unicodeChar = (const unsigned short *)m_env->GetStringChars(m_retjs, nullptr);
-            std::u16string unicodeStr((char16_t *)unicodeChar);
-            std::string strValue;
-            cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+            std::string strValue = "";
+            if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(m_env, m_retjs, strValue))
+            {
+                strValue = "";
+            }
             m_ret.stringValue = new string(strValue);
-            m_env->ReleaseStringChars(m_retjs, unicodeChar);
             break;
      }
 

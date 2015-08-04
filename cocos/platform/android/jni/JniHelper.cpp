@@ -267,16 +267,16 @@ namespace cocos2d {
         
         JNIEnv *env = JniHelper::getEnv();
         if (!env) {
-            return nullptr;
+            return "";
         }
 
-        const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(jstr, nullptr);
-        std::u16string unicodeStr((char16_t *)unicodeChar);
-        std::string ret;
-        cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, ret);
-        env->ReleaseStringChars(jstr, unicodeChar);
+        std::string strValue = "";
+        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, jstr, strValue))
+        {
+            strValue = "";
+        }
 
-        return ret;
+        return strValue;
     }
 
 } //namespace cocos2d

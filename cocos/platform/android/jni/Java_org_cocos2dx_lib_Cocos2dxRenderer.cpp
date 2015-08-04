@@ -35,13 +35,13 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
-        const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(text, nullptr);
-        std::u16string unicodeStr((char16_t *)unicodeChar);
-        std::string strValue;
-        cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+       std::string strValue = "";
+        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, text, strValue))
+        {
+            strValue = "";
+        }
         const char* pszText = strValue.c_str();
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
-        env->ReleaseStringChars(text, unicodeChar);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {

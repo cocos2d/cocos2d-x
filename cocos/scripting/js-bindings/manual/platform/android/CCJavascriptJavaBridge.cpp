@@ -40,13 +40,13 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalSt
   (JNIEnv *env, jclass cls, jstring value)
 {
 
-    const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(value, nullptr);
-    std::u16string unicodeStr((char16_t *)unicodeChar);
-    std::string strValue;
-    cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+    std::string strValue = "";
+    if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, value, strValue))
+    {
+        CCLOG("Cocos2dxJavascriptJavaBridge_evalString error, invalid string code");
+        return 0;
+    }
     ScriptingCore::getInstance()->evalString(strValue.c_str(), nullptr);
-    env->ReleaseStringChars(value, unicodeChar);
-    
     return 1;
 }
 
@@ -84,13 +84,13 @@ bool JavascriptJavaBridge::CallInfo::execute(void)
 
         case TypeString:
             m_retjstring = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            const unsigned short * unicodeChar = (const unsigned short *)m_env->GetStringChars(m_retjstring, nullptr);
-            std::u16string unicodeStr((char16_t *)unicodeChar);
-            std::string strValue;
-            cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+            std::string strValue = "";
+            if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(m_env, m_retjstring, strValue))
+            {
+                strValue = "";
+            }
             
             m_ret.stringValue = new string(strValue);
-            m_env->ReleaseStringChars(m_retjstring, unicodeChar);
            break;
     }
 
@@ -128,13 +128,13 @@ bool JavascriptJavaBridge::CallInfo::executeWithArgs(jvalue *args)
 
          case TypeString:
              m_retjstring = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-             const unsigned short * unicodeChar = (const unsigned short *)m_env->GetStringChars(m_retjstring, nullptr);
-             std::u16string unicodeStr((char16_t *)unicodeChar);
-             std::string strValue;
-             cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+             std::string strValue = "";
+             if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(m_env, m_retjstring, strValue))
+             {
+                 strValue = "";
+             }
              m_ret.stringValue = new string(strValue);
-             m_env->ReleaseStringChars(m_retjstring, unicodeChar);
-            break;
+             break;
      }
 
     if (m_env->ExceptionCheck() == JNI_TRUE)

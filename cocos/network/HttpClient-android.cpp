@@ -581,19 +581,12 @@ private:
         {
             return nullptr;
         }
-
-        const char* str = nullptr;
-        char* ret = nullptr;
-        const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(jstr, nullptr);
-        std::u16string unicodeStr((char16_t *)unicodeChar);
-        std::string strValue;
-        cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
-        if (strValue.length() > 0)
+        char *ret = nullptr;
+        std::string strValue = "";
+        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, jstr, strValue))
         {
             ret = strdup(strValue.c_str());
         }
-
-        env->ReleaseStringChars(jstr, unicodeChar);
 
         return ret;
     }
@@ -720,7 +713,10 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
     }
     free(contentInfo);
     
-    strcpy(responseMessage, urlConnection.getResponseMessage());
+    char *messageInfo = urlConnection.getResponseMessage();
+    strcpy(responseMessage, messageInfo);
+    free(messageInfo);
+
     urlConnection.disconnect();
 
     // write data to HttpResponse

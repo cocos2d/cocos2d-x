@@ -30,6 +30,10 @@
 #include <vector>
 #include <string>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
+#include "platform/android/jni/JniHelper.h"
+#endif
+
 NS_CC_BEGIN
 
 namespace StringUtils {
@@ -67,6 +71,10 @@ CC_DLL bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16);
  *  @endcode
  */
 CC_DLL bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
+CC_DLL bool getUTFCharsFromJavaEnv(JNIEnv* env, jstring srcjStr, std::string& outUtf8);
+#endif
 
 /**
  *  @brief Trims the unicode spaces at the end of char16_t vector.
