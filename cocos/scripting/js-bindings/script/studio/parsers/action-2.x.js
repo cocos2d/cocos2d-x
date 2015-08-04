@@ -113,7 +113,7 @@
             name: "Rotation",
             handle: function(options){
                 var frame = new ccs.RotationFrame();
-                var rotation = options["Rotation"];
+                var rotation = options["Rotation"] || options["Value"] || 0;
                 frame.setRotation(rotation);
                 return frame;
             }
