@@ -653,7 +653,7 @@ void BoneNode::setVisible(bool visible)
         return;
 
     Node::setVisible(visible);
-    if (_isRackShow && _rootSkeleton != nullptr)
+    if (_rootSkeleton != nullptr)
     {
         _rootSkeleton->_subBonesDirty = true;
         _rootSkeleton->_subBonesOrderDirty = true;
