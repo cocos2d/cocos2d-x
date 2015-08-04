@@ -27,6 +27,7 @@
 #include "spidermonkey_specifics.h"
 #include "ScriptingCore.h"
 #include "js_manual_conversions.h"
+#include "base/ccUTF8.h"
 
 #define  LOG_TAG    "CCJavascriptJavaBridge"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -38,9 +39,13 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxJavascriptJavaBridge_evalString
   (JNIEnv *env, jclass cls, jstring value)
 {
-    const char *_value = env->GetStringUTFChars(value, NULL);
-    ScriptingCore::getInstance()->evalString(_value,NULL);
-    env->ReleaseStringUTFChars(value, _value);
+
+    const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(value, nullptr);
+    std::u16string unicodeStr((char16_t *)unicodeChar);
+    std::string strValue;
+    cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+    ScriptingCore::getInstance()->evalString(strValue.c_str(), nullptr);
+    env->ReleaseStringChars(value, unicodeChar);
     
     return 1;
 }
@@ -79,9 +84,13 @@ bool JavascriptJavaBridge::CallInfo::execute(void)
 
         case TypeString:
             m_retjstring = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            const char *stringBuff = m_env->GetStringUTFChars(m_retjstring, 0);
-            m_ret.stringValue = new string(stringBuff);
-            m_env->ReleaseStringUTFChars(m_retjstring, stringBuff);
+            const unsigned short * unicodeChar = (const unsigned short *)m_env->GetStringChars(m_retjstring, nullptr);
+            std::u16string unicodeStr((char16_t *)unicodeChar);
+            std::string strValue;
+            cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+            
+            m_ret.stringValue = new string(strValue);
+            m_env->ReleaseStringChars(m_retjstring, unicodeChar);
            break;
     }
 
@@ -119,9 +128,12 @@ bool JavascriptJavaBridge::CallInfo::executeWithArgs(jvalue *args)
 
          case TypeString:
              m_retjstring = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-             const char *stringBuff = m_env->GetStringUTFChars(m_retjstring, 0);
-             m_ret.stringValue = new string(stringBuff);
-             m_env->ReleaseStringUTFChars(m_retjstring, stringBuff);
+             const unsigned short * unicodeChar = (const unsigned short *)m_env->GetStringChars(m_retjstring, nullptr);
+             std::u16string unicodeStr((char16_t *)unicodeChar);
+             std::string strValue;
+             cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+             m_ret.stringValue = new string(strValue);
+             m_env->ReleaseStringChars(m_retjstring, unicodeChar);
             break;
      }
 

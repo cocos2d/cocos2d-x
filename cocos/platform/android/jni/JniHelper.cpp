@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include <string.h>
 #include <pthread.h>
 
+#include "base/ccUTF8.h"
+
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -268,9 +270,11 @@ namespace cocos2d {
             return nullptr;
         }
 
-        const char* chars = env->GetStringUTFChars(jstr, nullptr);
-        std::string ret(chars);
-        env->ReleaseStringUTFChars(jstr, chars);
+        const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(jstr, nullptr);
+        std::u16string unicodeStr((char16_t *)unicodeChar);
+        std::string ret;
+        cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, ret);
+        env->ReleaseStringChars(jstr, unicodeChar);
 
         return ret;
     }

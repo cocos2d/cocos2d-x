@@ -35,6 +35,8 @@
 #include "platform/CCFileUtils.h"
 #include "platform/android/jni/JniHelper.h"
 
+#include "base/ccUTF8.h"
+ 
 NS_CC_BEGIN
 
 namespace network {
@@ -582,13 +584,16 @@ private:
 
         const char* str = nullptr;
         char* ret = nullptr;
-        str = env->GetStringUTFChars(jstr, nullptr);
-        if (nullptr != str)
+        const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(jstr, nullptr);
+        std::u16string unicodeStr((char16_t *)unicodeChar);
+        std::string strValue;
+        cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+        if (strValue.length() > 0)
         {
-            ret = strdup(str);
+            ret = strdup(strValue.c_str());
         }
 
-        env->ReleaseStringUTFChars(jstr, str);
+        env->ReleaseStringChars(jstr, unicodeChar);
 
         return ret;
     }

@@ -5,6 +5,8 @@
 
 #include "CCLuaJavaBridge.h"
 
+#include "base/ccUTF8.h"
+
 #define  LOG_TAG    "Cocos2dxLuaJavaBridge_java"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
@@ -13,9 +15,12 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge_callLuaFunctionWithString
   (JNIEnv *env, jclass cls, jint functionId, jstring value)
 {
-    const char *value_ = env->GetStringUTFChars(value, 0);
-    int ret = LuaJavaBridge::callLuaFunctionById(functionId, value_);
-    env->ReleaseStringUTFChars(value, value_);
+    const unsigned short * unicodeChar = (const unsigned short *)env->GetStringChars(value, nullptr);
+    std::u16string unicodeStr((char16_t *)unicodeChar);
+    std::string strValue;
+    cocos2d::StringUtils::UTF16ToUTF8(unicodeStr, strValue);
+    int ret = LuaJavaBridge::callLuaFunctionById(functionId, strValue.c_str());
+    env->ReleaseStringChars(value, unicodeChar);
     return ret;
 }
 
