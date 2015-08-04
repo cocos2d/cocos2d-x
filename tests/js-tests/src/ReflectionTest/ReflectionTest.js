@@ -29,7 +29,7 @@ var ReflectionTestLayer = BaseTestLayer.extend({
     _title:"jsb.reflection",
     _subtitle:"call java/objective-c methods in js",
     onRestartCallback:function (sender) {
-        ReflectionTestScene.runThisTest();
+        new ReflectionTestScene().runThisTest();
     },
     ctor:function() {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
