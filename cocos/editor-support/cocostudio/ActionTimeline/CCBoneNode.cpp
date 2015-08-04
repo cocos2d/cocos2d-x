@@ -365,6 +365,59 @@ void BoneNode::updateColor()
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
+
+void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags)
+{
+    // quick return if not visible. children won't be drawn.
+    if (!_visible)
+    {
+        return;
+    }
+
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the Mat4 stack,
+    // but it is deprecated and your code should not rely on it
+    _director->pushMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+
+    bool visibleByCamera = isVisitableByVisitingCamera();
+
+    int i = 0;
+
+    if (!_children.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for (; i < _childBones.size(); i++)
+        {
+            auto bone = _childBones.at(i);
+            if (bone && bone->getZOrder() < 0)
+                bone->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        // self draw
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
+
+        for (auto it = _childBones.cbegin() + i; it != _childBones.cend(); ++it)
+            (*it)->visit(renderer, _modelViewTransform, flags);
+    }
+    else if (visibleByCamera)
+    {
+        this->draw(renderer, _modelViewTransform, flags);
+    }
+
+    _director->popMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // reset for next frame
+    // _orderOfArrival = 0;
+}
+
 void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
@@ -505,6 +558,39 @@ void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
     }
     bone->_rootSkeleton->_batchedVeticesCount += 4;
 #endif //CC_STUDIO_ENABLED_VIEW
+}
+
+// call after self visit
+void BoneNode::visitSkins(cocos2d::Renderer* renderer, BoneNode* bone)
+{
+    // quick return if not visible. children won't be drawn.
+    if (!bone->_visible)
+    {
+        return;
+    }
+
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the Mat4 stack,
+    // but it is deprecated and your code should not rely on it
+    _director->pushMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, bone->_modelViewTransform);
+
+    bool visibleByCamera = bone->isVisitableByVisitingCamera();
+
+    int i = 0;
+    if (!bone->_boneSkins.empty())
+    {
+        bone->sortAllChildren();
+        for (auto it = bone->_boneSkins.cbegin(); it != bone->_boneSkins.cend(); ++it)
+            (*it)->visit(renderer, bone->_modelViewTransform, true);
+    }
+
+    _director->popMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // reset for next frame
+    // _orderOfArrival = 0;
 }
 
 void BoneNode::setLocalZOrder(int localZOrder)

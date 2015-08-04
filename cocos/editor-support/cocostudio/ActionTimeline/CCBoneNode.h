@@ -184,11 +184,22 @@ protected:
     virtual void updateVertices();
     virtual void updateColor() override;
 
+    // just visit bones in children
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags);
+
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
     // a help function for SkeletonNode
     // for batch bone's draw to _rootSkeleton
     virtual void batchBoneDrawToSkeleton(BoneNode* bone) const; 
+
+    // a help funciton for SkeletonNode
+    // for draw skin
+    virtual void visitSkins();
+
+private:
+    virtual void visitChildrenHelper(cocos2d::Vector<Node*> nodeVector, cocos2d::Renderer *renderer,
+        const cocos2d::Mat4& parentTransform, uint32_t parentFlags);
 
 protected:
     cocos2d::CustomCommand _customCommand;
