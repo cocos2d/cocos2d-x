@@ -1,7 +1,7 @@
 #include "jsb_cocos2dx_studio_auto.hpp"
 #include "cocos2d_specifics.hpp"
 #include "CocoStudio.h"
-#include "CCObjectExtensionData.h"
+#include "CCComExtensionData.h"
 #include "jsb_cocos2dx_studio_conversions.h"
 
 template<class T>
@@ -12629,134 +12629,524 @@ void js_register_cocos2dx_studio_ActionTimeline(JSContext *cx, JS::HandleObject 
     }
 }
 
-JSClass  *jsb_cocostudio_ObjectExtensionData_class;
-JSObject *jsb_cocostudio_ObjectExtensionData_prototype;
+JSClass  *jsb_cocostudio_timeline_BoneNode_class;
+JSObject *jsb_cocostudio_timeline_BoneNode_prototype;
 
-bool js_cocos2dx_studio_ObjectExtensionData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::ObjectExtensionData* cobj = (cocostudio::ObjectExtensionData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ObjectExtensionData_setActionTag : Invalid Native Object");
-    if (argc == 1) {
-        int arg0;
-        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ObjectExtensionData_setActionTag : Error processing arguments");
-        cobj->setActionTag(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ObjectExtensionData_setActionTag : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_studio_ObjectExtensionData_setCustomProperty(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::ObjectExtensionData* cobj = (cocostudio::ObjectExtensionData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ObjectExtensionData_setCustomProperty : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ObjectExtensionData_setCustomProperty : Error processing arguments");
-        cobj->setCustomProperty(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ObjectExtensionData_setCustomProperty : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_studio_ObjectExtensionData_init(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_studio_BoneNode_getDebugDrawWidth(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::ObjectExtensionData* cobj = (cocostudio::ObjectExtensionData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ObjectExtensionData_init : Invalid Native Object");
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getDebugDrawWidth : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->init();
+        double ret = cobj->getDebugDrawWidth();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getDebugDrawWidth : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getChildBones(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocostudio::timeline::BoneNode* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getChildBones : Invalid Native Object");
+    do {
+        if (argc == 0) {
+            cocos2d::Vector<cocostudio::timeline::BoneNode *>& ret = cobj->getChildBones();
+            jsval jsret = JSVAL_NULL;
+            jsret = ccvector_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            const cocos2d::Vector<cocostudio::timeline::BoneNode *>& ret = cobj->getChildBones();
+            jsval jsret = JSVAL_NULL;
+            jsret = ccvector_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getChildBones : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getBlendFunc : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        jsval jsret = JSVAL_NULL;
+        jsret = blendfunc_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getAllSubBones(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getAllSubBones : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Vector<cocostudio::timeline::BoneNode *> ret = cobj->getAllSubBones();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccvector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getAllSubBones : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setBlendFunc : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::BlendFunc arg0;
+        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setBlendFunc : Error processing arguments");
+        cobj->setBlendFunc(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_setDebugDrawEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawEnabled : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawEnabled : Error processing arguments");
+        cobj->setDebugDrawEnabled(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_setDebugDrawEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getVisibleSkinsRect(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getVisibleSkinsRect : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Rect ret = cobj->getVisibleSkinsRect();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccrect_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getVisibleSkinsRect : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getAllSubSkins(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getAllSubSkins : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Vector<cocos2d::Node *> ret = cobj->getAllSubSkins();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccvector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getAllSubSkins : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_displaySkin(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocostudio::timeline::BoneNode* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_displaySkin : Invalid Native Object");
+    do {
+        if (argc == 2) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            bool arg1;
+            arg1 = JS::ToBoolean(args.get(1));
+            cobj->displaySkin(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            cocos2d::Node* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocostudio::timeline::SkinNode*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            bool arg1;
+            arg1 = JS::ToBoolean(args.get(1));
+            cobj->displaySkin(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_displaySkin : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_isDebugDrawEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_isDebugDrawEnabled : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isDebugDrawEnabled();
         jsval jsret = JSVAL_NULL;
         jsret = BOOLEAN_TO_JSVAL(ret);
         args.rval().set(jsret);
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_studio_ObjectExtensionData_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_isDebugDrawEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_studio_ObjectExtensionData_getCustomProperty(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::ObjectExtensionData* cobj = (cocostudio::ObjectExtensionData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ObjectExtensionData_getCustomProperty : Invalid Native Object");
-    if (argc == 0) {
-        std::string ret = cobj->getCustomProperty();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ObjectExtensionData_getCustomProperty : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_studio_ObjectExtensionData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::ObjectExtensionData* cobj = (cocostudio::ObjectExtensionData *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ObjectExtensionData_getActionTag : Invalid Native Object");
-    if (argc == 0) {
-        const int ret = cobj->getActionTag();
-        jsval jsret = JSVAL_NULL;
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ObjectExtensionData_getActionTag : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_studio_ObjectExtensionData_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        cocostudio::ObjectExtensionData* ret = cocostudio::ObjectExtensionData::create();
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ObjectExtensionData>(cx, (cocostudio::ObjectExtensionData*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_studio_ObjectExtensionData_create : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_studio_ObjectExtensionData_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_studio_BoneNode_addSkin(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cocostudio::ObjectExtensionData* cobj = new (std::nothrow) cocostudio::ObjectExtensionData();
+
+    JS::RootedObject obj(cx);
+    cocostudio::timeline::BoneNode* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_addSkin : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            cocos2d::Node* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocostudio::timeline::SkinNode*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            bool arg1;
+            arg1 = JS::ToBoolean(args.get(1));
+            bool arg2;
+            arg2 = JS::ToBoolean(args.get(2));
+            cobj->addSkin(arg0, arg1, arg2);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 2) {
+            cocos2d::Node* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocostudio::timeline::SkinNode*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            bool arg1;
+            arg1 = JS::ToBoolean(args.get(1));
+            cobj->addSkin(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_addSkin : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getRootSkeletonNode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getRootSkeletonNode : Invalid Native Object");
+    if (argc == 0) {
+        cocostudio::timeline::SkeletonNode* ret = cobj->getRootSkeletonNode();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::SkeletonNode>(cx, (cocostudio::timeline::SkeletonNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getRootSkeletonNode : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_setDebugDrawLength(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawLength : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawLength : Error processing arguments");
+        cobj->setDebugDrawLength(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_setDebugDrawLength : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getSkins(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocostudio::timeline::BoneNode* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getSkins : Invalid Native Object");
+    do {
+        if (argc == 0) {
+            cocos2d::Vector<cocos2d::Node *>& ret = cobj->getSkins();
+            jsval jsret = JSVAL_NULL;
+            jsret = ccvector_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 0) {
+            const cocos2d::Vector<cocos2d::Node *>& ret = cobj->getSkins();
+            jsval jsret = JSVAL_NULL;
+            jsret = ccvector_to_jsval(cx, ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getSkins : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getVisibleSkins(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getVisibleSkins : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Vector<cocos2d::Node *> ret = cobj->getVisibleSkins();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccvector_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getVisibleSkins : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_setDebugDrawWidth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawWidth : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawWidth : Error processing arguments");
+        cobj->setDebugDrawWidth(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_setDebugDrawWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getDebugDrawLength(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getDebugDrawLength : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getDebugDrawLength();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getDebugDrawLength : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_setDebugDrawColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawColor : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Color4F arg0;
+        ok &= jsval_to_cccolor4f(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BoneNode_setDebugDrawColor : Error processing arguments");
+        cobj->setDebugDrawColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_setDebugDrawColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_getDebugDrawColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BoneNode* cobj = (cocostudio::timeline::BoneNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BoneNode_getDebugDrawColor : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Color4F ret = cobj->getDebugDrawColor();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor4f_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_getDebugDrawColor : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 1) {
+            int arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            cocostudio::timeline::BoneNode* ret = cocostudio::timeline::BoneNode::create(arg0);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 0) {
+            cocostudio::timeline::BoneNode* ret = cocostudio::timeline::BoneNode::create();
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_cocos2dx_studio_BoneNode_create : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_studio_BoneNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocostudio::timeline::BoneNode* cobj = new (std::nothrow) cocostudio::timeline::BoneNode();
     cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
     if (_ccobj) {
         _ccobj->autorelease();
     }
-    TypeTest<cocostudio::ObjectExtensionData> t;
+    TypeTest<cocostudio::timeline::BoneNode> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
     auto typeMapIter = _js_global_type_map.find(typeName);
@@ -12770,27 +13160,45 @@ bool js_cocos2dx_studio_ObjectExtensionData_constructor(JSContext *cx, uint32_t 
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocostudio::ObjectExtensionData");
+    AddNamedObjectRoot(cx, &p->obj, "cocostudio::timeline::BoneNode");
     if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
+}static bool js_cocos2dx_studio_BoneNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    cocostudio::timeline::BoneNode *nobj = new (std::nothrow) cocostudio::timeline::BoneNode();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocostudio::timeline::BoneNode");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
 }
 
-void js_cocostudio_ObjectExtensionData_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (ObjectExtensionData)", obj);
+extern JSObject *jsb_cocos2d_Node_prototype;
+
+void js_cocostudio_timeline_BoneNode_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (BoneNode)", obj);
 }
-void js_register_cocos2dx_studio_ObjectExtensionData(JSContext *cx, JS::HandleObject global) {
-    jsb_cocostudio_ObjectExtensionData_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocostudio_ObjectExtensionData_class->name = "ObjectExtensionData";
-    jsb_cocostudio_ObjectExtensionData_class->addProperty = JS_PropertyStub;
-    jsb_cocostudio_ObjectExtensionData_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocostudio_ObjectExtensionData_class->getProperty = JS_PropertyStub;
-    jsb_cocostudio_ObjectExtensionData_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocostudio_ObjectExtensionData_class->enumerate = JS_EnumerateStub;
-    jsb_cocostudio_ObjectExtensionData_class->resolve = JS_ResolveStub;
-    jsb_cocostudio_ObjectExtensionData_class->convert = JS_ConvertStub;
-    jsb_cocostudio_ObjectExtensionData_class->finalize = js_cocostudio_ObjectExtensionData_finalize;
-    jsb_cocostudio_ObjectExtensionData_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    
+void js_register_cocos2dx_studio_BoneNode(JSContext *cx, JS::HandleObject global) {
+    jsb_cocostudio_timeline_BoneNode_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocostudio_timeline_BoneNode_class->name = "BoneNode";
+    jsb_cocostudio_timeline_BoneNode_class->addProperty = JS_PropertyStub;
+    jsb_cocostudio_timeline_BoneNode_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocostudio_timeline_BoneNode_class->getProperty = JS_PropertyStub;
+    jsb_cocostudio_timeline_BoneNode_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocostudio_timeline_BoneNode_class->enumerate = JS_EnumerateStub;
+    jsb_cocostudio_timeline_BoneNode_class->resolve = JS_ResolveStub;
+    jsb_cocostudio_timeline_BoneNode_class->convert = JS_ConvertStub;
+    jsb_cocostudio_timeline_BoneNode_class->finalize = js_cocostudio_timeline_BoneNode_finalize;
+    jsb_cocostudio_timeline_BoneNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
         JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -12798,24 +13206,39 @@ void js_register_cocos2dx_studio_ObjectExtensionData(JSContext *cx, JS::HandleOb
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("setActionTag", js_cocos2dx_studio_ObjectExtensionData_setActionTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setCustomProperty", js_cocos2dx_studio_ObjectExtensionData_setCustomProperty, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_cocos2dx_studio_ObjectExtensionData_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getCustomProperty", js_cocos2dx_studio_ObjectExtensionData_getCustomProperty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getActionTag", js_cocos2dx_studio_ObjectExtensionData_getActionTag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDebugDrawWidth", js_cocos2dx_studio_BoneNode_getDebugDrawWidth, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getChildBones", js_cocos2dx_studio_BoneNode_getChildBones, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBlendFunc", js_cocos2dx_studio_BoneNode_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAllSubBones", js_cocos2dx_studio_BoneNode_getAllSubBones, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBlendFunc", js_cocos2dx_studio_BoneNode_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDebugDrawEnabled", js_cocos2dx_studio_BoneNode_setDebugDrawEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getVisibleSkinsRect", js_cocos2dx_studio_BoneNode_getVisibleSkinsRect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAllSubSkins", js_cocos2dx_studio_BoneNode_getAllSubSkins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("displaySkin", js_cocos2dx_studio_BoneNode_displaySkin, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isDebugDrawEnabled", js_cocos2dx_studio_BoneNode_isDebugDrawEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addSkin", js_cocos2dx_studio_BoneNode_addSkin, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRootSkeletonNode", js_cocos2dx_studio_BoneNode_getRootSkeletonNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDebugDrawLength", js_cocos2dx_studio_BoneNode_setDebugDrawLength, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getSkins", js_cocos2dx_studio_BoneNode_getSkins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getVisibleSkins", js_cocos2dx_studio_BoneNode_getVisibleSkins, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDebugDrawWidth", js_cocos2dx_studio_BoneNode_setDebugDrawWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDebugDrawLength", js_cocos2dx_studio_BoneNode_getDebugDrawLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDebugDrawColor", js_cocos2dx_studio_BoneNode_setDebugDrawColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDebugDrawColor", js_cocos2dx_studio_BoneNode_getDebugDrawColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2dx_studio_BoneNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_studio_ObjectExtensionData_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_cocos2dx_studio_BoneNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
-    jsb_cocostudio_ObjectExtensionData_prototype = JS_InitClass(
+    jsb_cocostudio_timeline_BoneNode_prototype = JS_InitClass(
         cx, global,
-        JS::NullPtr(), // parent proto
-        jsb_cocostudio_ObjectExtensionData_class,
-        js_cocos2dx_studio_ObjectExtensionData_constructor, 0, // constructor
+        JS::RootedObject(cx, jsb_cocos2d_Node_prototype),
+        jsb_cocostudio_timeline_BoneNode_class,
+        js_cocos2dx_studio_BoneNode_constructor, 0, // constructor
         properties,
         funcs,
         NULL, // no static properties
@@ -12823,18 +13246,452 @@ void js_register_cocos2dx_studio_ObjectExtensionData(JSContext *cx, JS::HandleOb
     // make the class enumerable in the registered namespace
 //  bool found;
 //FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "ObjectExtensionData", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+//  JS_SetPropertyAttributes(cx, global, "BoneNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocostudio::ObjectExtensionData> t;
+    TypeTest<cocostudio::timeline::BoneNode> t;
     js_type_class_t *p;
     std::string typeName = t.s_name();
     if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocostudio_ObjectExtensionData_class;
-        p->proto = jsb_cocostudio_ObjectExtensionData_prototype;
-        p->parentProto = NULL;
+        p->jsclass = jsb_cocostudio_timeline_BoneNode_class;
+        p->proto = jsb_cocostudio_timeline_BoneNode_prototype;
+        p->parentProto = jsb_cocos2d_Node_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ccs.BoneNode.extend = cc.Class.extend; })()");
+}
+
+JSClass  *jsb_cocostudio_timeline_SkeletonNode_class;
+JSObject *jsb_cocostudio_timeline_SkeletonNode_prototype;
+
+bool js_cocos2dx_studio_SkeletonNode_getBoneNode(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::SkeletonNode* cobj = (cocostudio::timeline::SkeletonNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_getBoneNode : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkeletonNode_getBoneNode : Error processing arguments");
+        cocostudio::timeline::BoneNode* ret = cobj->getBoneNode(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BoneNode>(cx, (cocostudio::timeline::BoneNode*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_SkeletonNode_getBoneNode : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_SkeletonNode_changeSkins(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocostudio::timeline::SkeletonNode* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocostudio::timeline::SkeletonNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_changeSkins : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->changeSkins(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            std::map<std::string, std::string> arg0;
+            ok &= jsval_to_std_map_string_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->changeSkins(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_studio_SkeletonNode_changeSkins : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_studio_SkeletonNode_addSkinGroup(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::SkeletonNode* cobj = (cocostudio::timeline::SkeletonNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        std::map<std::string, std::string> arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_map_string_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : Error processing arguments");
+        cobj->addSkinGroup(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::SkeletonNode* cobj = (cocostudio::timeline::SkeletonNode *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Map<std::string, cocostudio::timeline::BoneNode *>& ret = cobj->getAllSubBonesMap();
+        jsval jsret = JSVAL_NULL;
+        jsret = ccmap_string_key_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_SkeletonNode_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        cocostudio::timeline::SkeletonNode* ret = cocostudio::timeline::SkeletonNode::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::SkeletonNode>(cx, (cocostudio::timeline::SkeletonNode*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_SkeletonNode_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_SkeletonNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocostudio::timeline::SkeletonNode* cobj = new (std::nothrow) cocostudio::timeline::SkeletonNode();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocostudio::timeline::SkeletonNode> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocostudio::timeline::SkeletonNode");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_cocos2dx_studio_SkeletonNode_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    cocostudio::timeline::SkeletonNode *nobj = new (std::nothrow) cocostudio::timeline::SkeletonNode();
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocostudio::timeline::SkeletonNode");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+extern JSObject *jsb_cocostudio_timeline_BoneNode_prototype;
+
+void js_cocostudio_timeline_SkeletonNode_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (SkeletonNode)", obj);
+}
+    
+void js_register_cocos2dx_studio_SkeletonNode(JSContext *cx, JS::HandleObject global) {
+    jsb_cocostudio_timeline_SkeletonNode_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocostudio_timeline_SkeletonNode_class->name = "SkeletonNode";
+    jsb_cocostudio_timeline_SkeletonNode_class->addProperty = JS_PropertyStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->getProperty = JS_PropertyStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->enumerate = JS_EnumerateStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->resolve = JS_ResolveStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->convert = JS_ConvertStub;
+    jsb_cocostudio_timeline_SkeletonNode_class->finalize = js_cocostudio_timeline_SkeletonNode_finalize;
+    jsb_cocostudio_timeline_SkeletonNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getBoneNode", js_cocos2dx_studio_SkeletonNode_getBoneNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("changeSkins", js_cocos2dx_studio_SkeletonNode_changeSkins, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addSkinGroup", js_cocos2dx_studio_SkeletonNode_addSkinGroup, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getAllSubBonesMap", js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("ctor", js_cocos2dx_studio_SkeletonNode_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_studio_SkeletonNode_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocostudio_timeline_SkeletonNode_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocostudio_timeline_BoneNode_prototype),
+        jsb_cocostudio_timeline_SkeletonNode_class,
+        js_cocos2dx_studio_SkeletonNode_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "SkeletonNode", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocostudio::timeline::SkeletonNode> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocostudio_timeline_SkeletonNode_class;
+        p->proto = jsb_cocostudio_timeline_SkeletonNode_prototype;
+        p->parentProto = jsb_cocostudio_timeline_BoneNode_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { ccs.SkeletonNode.extend = cc.Class.extend; })()");
+}
+
+JSClass  *jsb_cocostudio_ComExtensionData_class;
+JSObject *jsb_cocostudio_ComExtensionData_prototype;
+
+bool js_cocos2dx_studio_ComExtensionData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ComExtensionData* cobj = (cocostudio::ComExtensionData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComExtensionData_setActionTag : Invalid Native Object");
+    if (argc == 1) {
+        int arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComExtensionData_setActionTag : Error processing arguments");
+        cobj->setActionTag(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ComExtensionData_setActionTag : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_ComExtensionData_getCustomProperty(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ComExtensionData* cobj = (cocostudio::ComExtensionData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComExtensionData_getCustomProperty : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getCustomProperty();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ComExtensionData_getCustomProperty : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_ComExtensionData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ComExtensionData* cobj = (cocostudio::ComExtensionData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComExtensionData_getActionTag : Invalid Native Object");
+    if (argc == 0) {
+        const int ret = cobj->getActionTag();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ComExtensionData_getActionTag : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_ComExtensionData_setCustomProperty(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::ComExtensionData* cobj = (cocostudio::ComExtensionData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ComExtensionData_setCustomProperty : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ComExtensionData_setCustomProperty : Error processing arguments");
+        cobj->setCustomProperty(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ComExtensionData_setCustomProperty : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_ComExtensionData_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        cocostudio::ComExtensionData* ret = cocostudio::ComExtensionData::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::ComExtensionData>(cx, (cocostudio::ComExtensionData*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_ComExtensionData_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_ComExtensionData_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocostudio::ComExtensionData* cobj = new (std::nothrow) cocostudio::ComExtensionData();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocostudio::ComExtensionData> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocostudio::ComExtensionData");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_cocos2d_Component_prototype;
+
+void js_cocostudio_ComExtensionData_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ComExtensionData)", obj);
+}
+void js_register_cocos2dx_studio_ComExtensionData(JSContext *cx, JS::HandleObject global) {
+    jsb_cocostudio_ComExtensionData_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocostudio_ComExtensionData_class->name = "ComExtensionData";
+    jsb_cocostudio_ComExtensionData_class->addProperty = JS_PropertyStub;
+    jsb_cocostudio_ComExtensionData_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocostudio_ComExtensionData_class->getProperty = JS_PropertyStub;
+    jsb_cocostudio_ComExtensionData_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocostudio_ComExtensionData_class->enumerate = JS_EnumerateStub;
+    jsb_cocostudio_ComExtensionData_class->resolve = JS_ResolveStub;
+    jsb_cocostudio_ComExtensionData_class->convert = JS_ConvertStub;
+    jsb_cocostudio_ComExtensionData_class->finalize = js_cocostudio_ComExtensionData_finalize;
+    jsb_cocostudio_ComExtensionData_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setActionTag", js_cocos2dx_studio_ComExtensionData_setActionTag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getCustomProperty", js_cocos2dx_studio_ComExtensionData_getCustomProperty, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getActionTag", js_cocos2dx_studio_ComExtensionData_getActionTag, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setCustomProperty", js_cocos2dx_studio_ComExtensionData_setCustomProperty, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_studio_ComExtensionData_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocostudio_ComExtensionData_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_Component_prototype),
+        jsb_cocostudio_ComExtensionData_class,
+        js_cocos2dx_studio_ComExtensionData_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "ComExtensionData", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocostudio::ComExtensionData> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocostudio_ComExtensionData_class;
+        p->proto = jsb_cocostudio_ComExtensionData_prototype;
+        p->parentProto = jsb_cocos2d_Component_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
@@ -12844,7 +13701,8 @@ void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj) {
     JS::RootedObject ns(cx);
     get_or_create_js_obj(cx, obj, "ccs", &ns);
 
-    js_register_cocos2dx_studio_ObjectExtensionData(cx, ns);
+    js_register_cocos2dx_studio_BoneNode(cx, ns);
+    js_register_cocos2dx_studio_SkeletonNode(cx, ns);
     js_register_cocos2dx_studio_Frame(cx, ns);
     js_register_cocos2dx_studio_ScaleFrame(cx, ns);
     js_register_cocos2dx_studio_ProcessBase(cx, ns);
@@ -12883,6 +13741,7 @@ void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_studio_ComAttribute(cx, ns);
     js_register_cocos2dx_studio_TextureData(cx, ns);
     js_register_cocos2dx_studio_AlphaFrame(cx, ns);
+    js_register_cocos2dx_studio_ComExtensionData(cx, ns);
     js_register_cocos2dx_studio_AnimationData(cx, ns);
     js_register_cocos2dx_studio_AnchorPointFrame(cx, ns);
     js_register_cocos2dx_studio_TextureFrame(cx, ns);

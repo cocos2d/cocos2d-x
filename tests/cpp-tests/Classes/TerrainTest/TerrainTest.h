@@ -72,4 +72,18 @@ protected:
     Player * _player;
 };
 
+class TerrainWithLightMap : public TerrainTestDemo
+{
+public:
+    CREATE_FUNC(TerrainWithLightMap);
+    TerrainWithLightMap();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+protected:
+    cocos2d::Terrain* _terrain;
+    cocos2d::Camera* _camera;
+};
+
 #endif // !TERRAIN_TESH_H

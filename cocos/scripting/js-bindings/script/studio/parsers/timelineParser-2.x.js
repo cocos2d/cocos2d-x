@@ -112,12 +112,16 @@
         node.setTag(json["Tag"] || 0);
 
         var actionTag = json["ActionTag"] || 0;
-        var extensionData = new ccs.ObjectExtensionData();
+        var extensionData = new ccs.ComExtensionData();
         var customProperty = json["UserData"];
         if(customProperty !== undefined)
             extensionData.setCustomProperty(customProperty);
         extensionData.setActionTag(actionTag);
-        node.setUserObject(extensionData);
+        if (node.getComponent("ComExtensionData"))
+        {
+            node.removeComponent("ComExtensionData");
+        }
+        node.addComponent(extensionData);
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
@@ -152,6 +156,13 @@
         }
     };
 
+    var getSkyboxRes = function(json, key) {
+        if(json.hasOwnProperty(key) && json[key].hasOwnProperty("Path")) {
+            return json[key]["Path"];
+        }
+        return "";
+    }
+
     /**
      * SingleNode
      * @param json
@@ -164,6 +175,25 @@
         var color = json["CColor"];
         if(color != null)
             node.setColor(getColor(color));
+
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+        {
+            var leftFileData = getSkyboxRes(json, "LeftImage");
+            var rightFileData = getSkyboxRes(json, "RightImage");
+            var upFileData = getSkyboxRes(json, "UpImage");
+            var downFileData = getSkyboxRes(json, "DownImage");
+            var forwardFileData = getSkyboxRes(json, "ForwardImage");
+            var backFileData = getSkyboxRes(json, "BackImage");
+            var cameraFlag = json["SkyBoxMask"];
+            if(undefined === cameraFlag || isNaN(cameraFlag)) {
+                cameraFlag = 1024;
+            }
+
+            var skyBox = new jsb.Skybox();
+            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+            skyBox.setCameraMask(cameraFlag, false);
+            node.addChild(skyBox);
+        }
 
         return node;
     };
@@ -258,12 +288,16 @@
 
         var actionTag = json["ActionTag"] || 0;
         widget.setActionTag(actionTag);
-        var extensionData = new ccs.ObjectExtensionData();
+        var extensionData = new ccs.ComExtensionData();
         var customProperty = json["UserData"];
         if(customProperty !== undefined)
             extensionData.setCustomProperty(customProperty);
         extensionData.setActionTag(actionTag);
-        widget.setUserObject(extensionData);
+        if (widget.getComponent("ComExtensionData"))
+        {
+            widget.removeComponent("ComExtensionData");
+        }
+        widget.addComponent(extensionData);
 
         var rotationSkewX = json["RotationSkewX"];
         if (rotationSkewX)
@@ -1151,15 +1185,13 @@
      */
     parser.initSimpleAudio = function(json, resourcePath){
 
+        var node = new ccs.ComAudio();
         var loop = json["Loop"] || false;
-        var volume = json["Volume"] || 0;
-        cc.audioEngine.setMusicVolume(volume);
-        //var name = json["Name"];
-
+        //var volume = json["Volume"] || 0;
+        //cc.audioEngine.setMusicVolume(volume);
+        node.setLoop(loop);
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            cc.loader.load(path, function(){
-                cc.audioEngine.playMusic(path, loop);
-            });
+            node.setFile(path);
         });
 
     };
@@ -1262,6 +1294,28 @@
         parser.generalAttributes(node, json);
 
         node.setColor(getColor(json["CColor"]));
+        return node;
+    };
+
+    parser.initBoneNode = function(json, resourcePath){
+
+        var node = new ccs.BoneNode();
+
+        var length = json["Length"];
+        if(length !== undefined)
+            node.setDebugDrawLength(length);
+
+        var blendFunc = json["BlendFunc"];
+        if(blendFunc)
+            node.setBlendFunc(new cc.BlendFunc(blendFunc["Src"] || 0, blendFunc["Dst"] || 0));
+
+        parser.generalAttributes(node, json);
+        return node;
+    };
+
+    parser.initSkeletonNode = function(json){
+        var node = new ccs.SkeletonNode();
+        parser.generalAttributes(node, json);
         return node;
     };
 
@@ -1408,28 +1462,49 @@
             this.general3DAttributes(node, json);
 
             var camMode = json["UserCameraFlagMode"];
-            switch(camMode){
-                case "USER1":
-                    node.setCameraFlag(cc.CameraFlag.USER1); break;
-                case "USER2":
-                    node.setCameraFlag(cc.CameraFlag.USER2); break;
-                case "USER3":
-                    node.setCameraFlag(cc.CameraFlag.USER3); break;
-                case "USER4":
-                    node.setCameraFlag(cc.CameraFlag.USER4); break;
-                case "USER5":
-                    node.setCameraFlag(cc.CameraFlag.USER5); break;
-                case "USER6":
-                    node.setCameraFlag(cc.CameraFlag.USER6); break;
-                case "USER7":
-                    node.setCameraFlag(cc.CameraFlag.USER7); break;
-                case "USER8":
-                    node.setCameraFlag(cc.CameraFlag.USER8); break;
-                case "DEFAULT":
-                    node.setCameraFlag(cc.CameraFlag.DEFAULT); break;
-                default:
-                    node.setCameraFlag(cc.CameraFlag.USER1);
+            var cameraFlagData = json["CameraFlagData"];
+            var cameraFlag = cc.CameraFlag.USER1;
+            if(undefined === cameraFlagData || isNaN(cameraFlagData) || 0 === cameraFlagData)
+            {
+                switch(camMode){
+                    case "USER1":
+                        cameraFlag = cc.CameraFlag.USER1; break;
+                    case "USER2":
+                        cameraFlag = cc.CameraFlag.USER2; break;
+                    case "USER3":
+                        cameraFlag = cc.CameraFlag.USER3; break;
+                    case "USER4":
+                        cameraFlag = cc.CameraFlag.USER4; break;
+                    case "USER5":
+                        cameraFlag = cc.CameraFlag.USER5; break;
+                    case "USER6":
+                        cameraFlag = cc.CameraFlag.USER6; break;
+                    case "USER7":
+                        cameraFlag = cc.CameraFlag.USER7; break;
+                    case "USER8":
+                        cameraFlag = cc.CameraFlag.USER8; break;
+                    case "DEFAULT":
+                        cameraFlag = cc.CameraFlag.DEFAULT; break;
+                }
+            } else {
+                cameraFlag = cameraFlagData;
             }
+            node.setCameraFlag(cameraFlag);
+        }
+
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+        {
+            var leftFileData = getSkyboxRes(json, "LeftImage");
+            var rightFileData = getSkyboxRes(json, "RightImage");
+            var upFileData = getSkyboxRes(json, "UpImage");
+            var downFileData = getSkyboxRes(json, "DownImage");
+            var forwardFileData = getSkyboxRes(json, "ForwardImage");
+            var backFileData = getSkyboxRes(json, "BackImage");
+
+            var skyBox = new jsb.Skybox();
+            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+            skyBox.setCameraMask(cameraFlag);
+            node.addChild(skyBox);
         }
 
         return node;
@@ -1526,6 +1601,8 @@
         {name: "GameMapObjectData", handle: parser.initGameMap},
         {name: "ProjectNodeObjectData", handle: parser.initProjectNode},
         {name: "ArmatureNodeObjectData", handle: parser.initArmature},
+        {name: "BoneNodeObjectData", handle: parser.initBoneNode},
+        {name: "SkeletonNodeObjectData", handle: parser.initSkeletonNode},
 
         {name: "Sprite3DObjectData", handle: parser.initSprite3D},
         {name: "Particle3DObjectData", handle: parser.initParticle3D},

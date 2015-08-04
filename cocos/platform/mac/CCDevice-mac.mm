@@ -36,8 +36,13 @@ NS_CC_BEGIN
 
 int Device::getDPI()
 {
-    //TODO: return correct DPI
-    return 160;
+    NSScreen *screen = [NSScreen mainScreen];
+    NSDictionary *description = [screen deviceDescription];
+    NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
+    CGSize displayPhysicalSize = CGDisplayScreenSize(
+                                                     [[description objectForKey:@"NSScreenNumber"] unsignedIntValue]);
+       
+    return ((displayPixelSize.width / displayPhysicalSize.width) * 25.4f);
 }
 
 void Device::setAccelerometerEnabled(bool isEnabled)
@@ -158,20 +163,18 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 		CC_BREAK_IF(realDimensions.width <= 0 || realDimensions.height <= 0);
         
 		CGSize dimensions = CGSizeMake(info->width, info->height);
+        if(dimensions.width <= 0.f) {
+            dimensions.width = realDimensions.width;
+        }
+        if (dimensions.height <= 0.f) {
+            dimensions.height = realDimensions.height;
+        }
+        
+        NSInteger POTWide = dimensions.width;
+        NSInteger POTHigh = dimensions.height;
+        unsigned char* data = nullptr;
 		
-        
-		if(dimensions.width <= 0 && dimensions.height <= 0) {
-			dimensions.width = realDimensions.width;
-			dimensions.height = realDimensions.height;
-		} else if (dimensions.height <= 0) {
-			dimensions.height = realDimensions.height;
-		}
-        
-		NSInteger POTWide = dimensions.width;
-		NSInteger POTHigh = MAX(dimensions.height, realDimensions.height);
-		unsigned char*			data;
 		//Alignment
-        
 		CGFloat xPadding = 0;
 		switch (textAlign) {
 			case NSLeftTextAlignment: xPadding = 0; break;
@@ -180,13 +183,16 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 			default: break;
 		}
         
-		// 1: TOP
-		// 2: BOTTOM
-		// 3: CENTER
-		CGFloat yPadding = (1 == vertFlag || realDimensions.height >= dimensions.height) ? (dimensions.height - realDimensions.height)	// align to top
-		: (2 == vertFlag) ? 0																	// align to bottom
-		: (dimensions.height - realDimensions.height) / 2.0f;									// align to center
-		
+        CGFloat yPadding = 0.f;
+        switch (vertFlag) {
+            // align to top
+            case 1: yPadding = dimensions.height - realDimensions.height; break;
+            // align to bottom
+            case 2: yPadding = 0.f; break;
+            // align to center
+            case 3: yPadding = (dimensions.height - realDimensions.height) / 2.0f; break;
+            default: break;
+        }
 		
 		NSRect textRect = NSMakeRect(xPadding, POTHigh - dimensions.height + yPadding, realDimensions.width, realDimensions.height);
 		//Disable antialias
