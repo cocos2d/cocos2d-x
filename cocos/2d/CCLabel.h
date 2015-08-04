@@ -452,7 +452,9 @@ public:
 
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleanup = true) override;
-
+    
+    void getFontConfigInfo(Label* copyToLabel) const;
+    
     CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
@@ -492,7 +494,13 @@ protected:
         CHARMAP,
         STRING_TEXTURE
     };
-
+    
+    void enableTTFConfigEffect();
+    
+    FontDefinition _getFontDefinition() const;
+    
+    bool setAtlasByType(FontAtlas* newAtlas, LabelType labelType);
+    
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     void computeStringNumLines();
@@ -519,8 +527,6 @@ protected:
     virtual void updateShaderProgram();
 
     void reset();
-
-    FontDefinition _getFontDefinition() const;
 
     virtual void updateColor() override;
 
