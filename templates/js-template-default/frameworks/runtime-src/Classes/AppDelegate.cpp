@@ -152,6 +152,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     sc->start();    
     sc->runScript("script/jsb_boot.js");
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript("main.js");
