@@ -497,8 +497,6 @@ protected:
     
     void enableTTFConfigEffect();
     
-    FontDefinition _getFontDefinition() const;
-    
     bool setAtlasByType(FontAtlas* newAtlas, LabelType labelType);
     
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
@@ -527,6 +525,8 @@ protected:
     virtual void updateShaderProgram();
 
     void reset();
+ 
+    FontDefinition _getFontDefinition() const;
 
     virtual void updateColor() override;
 
