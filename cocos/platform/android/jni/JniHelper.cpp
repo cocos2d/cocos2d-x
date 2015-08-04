@@ -262,17 +262,32 @@ namespace cocos2d {
         if (jstr == nullptr) {
             return "";
         }
-        
+
         JNIEnv *env = JniHelper::getEnv();
         if (!env) {
-            return nullptr;
+            return "";
         }
 
-        const char* chars = env->GetStringUTFChars(jstr, nullptr);
-        std::string ret(chars);
-        env->ReleaseStringUTFChars(jstr, chars);
+        jclass classID = env->FindClass("java/lang/String");
+        jstring strEncode = env->NewStringUTF("utf-8");
+        jmethodID methodID = env->GetMethodID(classID, "getBytes", "(Ljava/lang/String;)[B");
+        jbyteArray bArr= (jbyteArray)env->CallObjectMethod(jstr, methodID, strEncode);
+        jsize arrLen = env->GetArrayLength(bArr);
 
-        return ret;
+        if (arrLen > 0)
+        {
+            jbyte* arrBuf = env->GetByteArrayElements(bArr, NULL);
+            std::string ret((const char*)arrBuf, (size_t)arrLen);
+            env->ReleaseByteArrayElements(bArr, arrBuf, 0);
+
+            env->DeleteLocalRef(classID);
+            env->DeleteLocalRef(strEncode);
+            return ret;
+        }
+
+        env->DeleteLocalRef(classID);
+        env->DeleteLocalRef(strEncode);
+
+        return "";
     }
-
 } //namespace cocos2d
