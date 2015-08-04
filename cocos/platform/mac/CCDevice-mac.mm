@@ -39,8 +39,7 @@ int Device::getDPI()
     NSScreen *screen = [NSScreen mainScreen];
     NSDictionary *description = [screen deviceDescription];
     NSSize displayPixelSize = [[description objectForKey:NSDeviceSize] sizeValue];
-    CGSize displayPhysicalSize = CGDisplayScreenSize(
-                                                     [[description objectForKey:@"NSScreenNumber"] unsignedIntValue]);
+    CGSize displayPhysicalSize = CGDisplayScreenSize([[description objectForKey:@"NSScreenNumber"] unsignedIntValue]);
        
     return ((displayPixelSize.width / displayPhysicalSize.width) * 25.4f);
 }
