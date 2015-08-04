@@ -431,7 +431,7 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
 void Sprite::debugDraw(bool on)
 {
     if (_batchNode) {
-        log("Sprite doesn't support denbug draw when using SpriteBatchNode");
+        log("Sprite doesn't support debug draw when using SpriteBatchNode");
         return ;
     }
     DrawNode* draw = getChildByName<DrawNode*>("debugDraw");
