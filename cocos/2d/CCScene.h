@@ -135,10 +135,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual void setScale(float scaleX,float scaleY) override;
     virtual void setScale(float scale) override;
     
-    void setRotation(float rotation) override;
-    void setRotation3D(const Vec3& rotation) override;
-    void setRotationSkewX(float rotationX) override;
-    void setRotationSkewY(float rotationY) override;
+    virtual void setRotation(float rotation) override;
+    virtual void setRotation3D(const Vec3& rotation) override;
+    virtual void setRotationSkewX(float rotationX) override;
+    virtual void setRotationSkewY(float rotationY) override;
 protected:
     friend class Node;
     friend class ProtectedNode;
