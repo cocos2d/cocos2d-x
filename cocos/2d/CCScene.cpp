@@ -288,8 +288,6 @@ void Scene::setRotationSkewX(float rotationX)
     if (_projectRotateZ_X == rotationX)
         return;
     
-    _projectRotateZ_X = rotationX;
-    
     updateProjectionQuad(_projectRotationX, _projectRotationX, rotationX, _projectRotateZ_Y);
 }
 
@@ -301,8 +299,6 @@ void Scene::setRotationSkewY(float rotationY)
     
     updateProjectionQuad(_projectRotationX, _projectRotationX, _projectRotateZ_X, rotationY);
 }
-
-
 
 
 static bool camera_cmp(const Camera* a, const Camera* b)
