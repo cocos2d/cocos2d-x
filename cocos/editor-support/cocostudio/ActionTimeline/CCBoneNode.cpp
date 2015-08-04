@@ -111,8 +111,8 @@ void BoneNode::removeChild(Node* child, bool cleanup /* = true */)
 
 void BoneNode::removeFromBoneList(BoneNode* bone)
 {
-    auto skeletonNode = dynamic_cast<SkeletonNode*>(bone);
-    if (skeletonNode == nullptr) //not a nested skeleton
+    auto skeletonNode = dynamic_cast<SkeletonNode*>(bone); // is a nested skeleton 
+    if (skeletonNode == nullptr && bone->_rootSkeleton != nullptr)
     {
         bone->_rootSkeleton = nullptr;
         auto subBones = bone->getAllSubBones();
@@ -549,11 +549,6 @@ void BoneNode::removeFromChildrenListHelper(Node * child)
     if (nullptr != bone)
     {
         removeFromBoneList(bone);
-        if (bone->_isRackShow)
-        {
-            _rootSkeleton->_subDrawBonesDirty = true;
-            _rootSkeleton->_subDrawBonesOrderDirty = true;
-        }
     }
     else
     {
