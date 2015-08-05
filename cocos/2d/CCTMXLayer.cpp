@@ -78,6 +78,8 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         // mapInfo
         _mapTileSize = mapInfo->getTileSize();
         _layerOrientation = mapInfo->getOrientation();
+        _staggerAxis = mapInfo->getStaggerAxis();
+        _hexSideLength = mapInfo->getHexSideLength();
 
         // offset (after layer orientation is set);
         Vec2 offset = this->calculateLayerOffset(layerInfo->_offset);
@@ -108,6 +110,8 @@ TMXLayer::TMXLayer()
 ,_tiles(nullptr)
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
+,_staggerAxis(staggerAxis_Y)
+,_hexSideLength(0)
 {}
 
 TMXLayer::~TMXLayer()
@@ -616,7 +620,14 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCASSERT(pos.isZero(), "offset for hexagonal map not implemented yet");
+            if(_staggerAxis==staggerAxis_Y)
+            {
+                ret.set( pos.x * _mapTileSize.width, -pos.y *(_mapTileSize.height-(_mapTileSize.width-_hexSideLength)/2));
+            }
+            else if(_staggerAxis==staggerAxis_X)
+            {
+                ret.set( pos.x * (_mapTileSize.width-(_mapTileSize.width-_hexSideLength)/2), -pos.y *_mapTileSize.height);
+            }
         break;
     case TMXOrientationStaggered:
         {
@@ -669,15 +680,35 @@ Vec2 TMXLayer::getPositionForIsoAt(const Vec2& pos)
 
 Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
 {
-    float diffY = 0;
-    if ((int)pos.x % 2 == 1)
+    Vec2 xy;
+    Vec2 offset = _tileSet->_tileOffset;
+    switch (_staggerAxis)
     {
-        diffY = -_mapTileSize.height/2 ;
+        case staggerAxis_Y:
+        {
+            float diffX = 0;
+            if ((int)pos.y % 2 == 1)
+            {
+                diffX = _mapTileSize.width/2;
+            }
+            xy = Vec2(pos.x * _mapTileSize.width+diffX+offset.x,
+                      (_layerSize.height - pos.y - 1) * (_mapTileSize.height-(_mapTileSize.height-_hexSideLength)/2)-offset.y);
+            break;
+        }
+            
+        case staggerAxis_X:
+        {
+            float diffY = 0;
+            if ((int)pos.x % 2 == 1)
+            {
+                diffY = _mapTileSize.height/2;
+            }
+            
+            xy = Vec2(pos.x * (_mapTileSize.width-(_mapTileSize.width-_hexSideLength)/2)+offset.x,
+                      (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY-offset.y);
+            break;
+        }
     }
-
-    Vec2 xy(
-        pos.x * _mapTileSize.width*3/4,
-                            (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
     return xy;
 }
 
@@ -711,7 +742,7 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
             ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         case TMXOrientationHex:
-            CCASSERT(0, "TMX Hexa zOrder not supported");
+            ret = static_cast<int>(-(_layerSize.height-pos.y));
             break;
         default:
             CCASSERT(0, "TMX invalid value");

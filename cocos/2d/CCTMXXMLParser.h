@@ -135,6 +135,7 @@ public:
     Size            _tileSize;
     int             _spacing;
     int             _margin;
+    Vec2            _tileOffset;
     //! filename containing the tiles (should be spritesheet / texture atlas)
     std::string     _sourceImage;
     //! size in pixels of the image
@@ -204,6 +205,14 @@ public:
     /// map orientation
     inline int getOrientation() const { return _orientation; };
     inline void setOrientation(int orientation) { _orientation = orientation; };
+    
+    /// map staggeraxis
+    inline int getStaggerAxis() const { return _staggeraxis; };
+    inline void setStaggerAxis(int staggeraxis) { _staggeraxis = staggeraxis; };
+    
+    /// map hexsidelength
+    inline int getHexSideLength() const { return _hexSideLength; };
+    inline void setHexSideLength(int hexSideLength) { _hexSideLength = hexSideLength; };
 
     /// map width & height
     inline const Size& getMapSize() const { return _mapSize; };
@@ -285,6 +294,10 @@ protected:
 
     /// map orientation
     int    _orientation;
+    ///map staggeraxis
+    int    _staggeraxis;
+    ///map hexsidelength
+    int    _hexSideLength;
     /// map width & height
     Size _mapSize;
     /// tiles width & height

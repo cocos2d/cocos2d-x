@@ -247,6 +247,17 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         else {
             CCLOG("cocos2d: TMXFomat: Unsupported orientation: %d", tmxMapInfo->getOrientation());
         }
+        
+        std::string staggerAxisStr = attributeDict["staggeraxis"].asString();
+        if (staggerAxisStr == "x") {
+            tmxMapInfo->setStaggerAxis(staggerAxis_X);
+        }
+        else if (staggerAxisStr  == "y") {
+            tmxMapInfo->setStaggerAxis(staggerAxis_Y);
+        }
+        
+        float hexSideLength = attributeDict["hexsidelength"].asFloat();
+        tmxMapInfo->setHexSideLength(hexSideLength);
 
         Size s;
         s.width = attributeDict["width"].asFloat();
@@ -381,6 +392,17 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         // The parent element is now "objectgroup"
         tmxMapInfo->setParentElement(TMXPropertyObjectGroup);
+    }
+    else if (elementName == "tileoffset")
+    {
+        TMXTilesetInfo* tileset = tmxMapInfo->getTilesets().back();
+        
+        double tileOffsetX = attributeDict["x"].asDouble();
+        
+        double tileOffsetY = attributeDict["y"].asDouble();
+        
+        tileset->_tileOffset = Vec2(tileOffsetX, tileOffsetY);
+        
     }
     else if (elementName == "image")
     {
