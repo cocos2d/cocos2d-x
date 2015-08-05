@@ -161,11 +161,7 @@ void SkeletonNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& paren
     _director->pushMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
-    bool visibleByCamera = isVisitableByVisitingCamera();
-
     int i = 0;
-
-
     if (!_children.empty())
     {
         sortAllChildren();
