@@ -858,8 +858,8 @@ bool Terrain::initTextures()
         auto textImage = new (std::nothrow)Image();
         textImage->initWithImageFile(_terrainData._detailMaps[0]._detailMapSrc);
         auto texture = new (std::nothrow)Texture2D();
+        texture->setAutoGenerateMipmap(true);
         texture->initWithImage(textImage);
-        texture->generateMipmap();
         _detailMapTextures[0] = texture;
         texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
         texParam.magFilter = GL_LINEAR;
@@ -884,9 +884,9 @@ bool Terrain::initTextures()
             auto textImage = new (std::nothrow)Image();
             textImage->initWithImageFile(_terrainData._detailMaps[i]._detailMapSrc);
             auto texture = new (std::nothrow)Texture2D();
+            texture->setAutoGenerateMipmap(true);
             texture->initWithImage(textImage);
             delete textImage;
-            texture->generateMipmap();
             _detailMapTextures[i] = texture;
 
             texParam.wrapS = GL_REPEAT;

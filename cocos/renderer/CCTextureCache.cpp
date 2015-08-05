@@ -93,10 +93,11 @@ std::string TextureCache::getDescription() const
 struct TextureCache::AsyncStruct
 {
 public:
-    AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f) : filename(fn), callback(f), loadSuccess(false) {}
+    AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f, bool mipMap) : filename(fn), callback(f), generateMipMap(mipMap), loadSuccess(false) {}
     
     std::string filename;
     std::function<void(Texture2D*)> callback;
+    bool generateMipMap;
     Image image;
     bool loadSuccess;
 };
@@ -127,7 +128,7 @@ public:
  Does process all response in addImageAsyncCallback consume more time?
  - Convert image to texture faster than load image from disk, so this isn't a problem.
  */
-void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback)
+void TextureCache::addImageAsync(const std::string &path, const std::function<void(Texture2D*)>& callback, bool generateMipMap)
 {
     Texture2D *texture = nullptr;
 
@@ -165,7 +166,7 @@ void TextureCache::addImageAsync(const std::string &path, const std::function<vo
     ++_asyncRefCount;
 
     // generate async struct
-    AsyncStruct *data = new (std::nothrow) AsyncStruct(fullpath, callback);
+    AsyncStruct *data = new (std::nothrow) AsyncStruct(fullpath, callback, generateMipMap);
     
     // add async struct into queue
     _asyncStructQueue.push_back(data);
@@ -250,7 +251,8 @@ void TextureCache::addImageAsyncCallBack(float dt)
         if(_responseQueue.empty())
         {
             asyncStruct = nullptr;
-        }else
+        }
+        else
         {
             asyncStruct = _responseQueue.front();
             _responseQueue.pop_front();
@@ -261,7 +263,8 @@ void TextureCache::addImageAsyncCallBack(float dt)
         }
         _responseMutex.unlock();
         
-        if (nullptr == asyncStruct) {
+        if (nullptr == asyncStruct) 
+        {
             break;
         }
         
@@ -279,20 +282,25 @@ void TextureCache::addImageAsyncCallBack(float dt)
                 Image* image = &(asyncStruct->image);
                 // generate texture in render thread
                 texture = new (std::nothrow) Texture2D();
+                if (texture)
+                {             
+                    texture->setAutoGenerateMipmap(asyncStruct->generateMipMap);
+                    texture->initWithImage(image);
+                    //parse 9-patch info
+                    this->parseNinePatchImage(image, texture, asyncStruct->filename);
+    #if CC_ENABLE_CACHE_TEXTURE_DATA
+                    // cache the texture file name
+                    VolatileTextureMgr::addImageTexture(texture, asyncStruct->filename);
+    #endif
+                    // cache the texture. retain it, since it is added in the map
+                    _textures.insert( std::make_pair(asyncStruct->filename, texture) );
+                    texture->retain();
                 
-                texture->initWithImage(image);
-                //parse 9-patch info
-                this->parseNinePatchImage(image, texture, asyncStruct->filename);
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-                // cache the texture file name
-                VolatileTextureMgr::addImageTexture(texture, asyncStruct->filename);
-#endif
-                // cache the texture. retain it, since it is added in the map
-                _textures.insert( std::make_pair(asyncStruct->filename, texture) );
-                texture->retain();
-                
-                texture->autorelease();
-            } else {
+                    texture->autorelease();
+                }
+            } 
+            else 
+            {
                 texture = nullptr;
                 CCLOG("cocos2d: failed to call TextureCache::addImageAsync(%s)", asyncStruct->filename.c_str());
             }
@@ -315,7 +323,7 @@ void TextureCache::addImageAsyncCallBack(float dt)
     }
 }
 
-Texture2D * TextureCache::addImage(const std::string &path)
+Texture2D * TextureCache::addImage(const std::string &path, bool generateMipMap)
 {
     Texture2D * texture = nullptr;
     Image* image = nullptr;
@@ -344,6 +352,11 @@ Texture2D * TextureCache::addImage(const std::string &path)
             CC_BREAK_IF(!bRet);
 
             texture = new (std::nothrow) Texture2D();
+
+            if (texture)
+            {
+                texture->setAutoGenerateMipmap(generateMipMap);
+            }
 
             if( texture && texture->initWithImage(image) )
             {
@@ -380,7 +393,7 @@ void TextureCache::parseNinePatchImage(cocos2d::Image *image, cocos2d::Texture2D
 
 }
 
-Texture2D* TextureCache::addImage(Image *image, const std::string &key)
+Texture2D* TextureCache::addImage(Image *image, const std::string &key, bool generateMipMap)
 {
     CCASSERT(image != nullptr, "TextureCache: image MUST not be nil");
 
@@ -396,10 +409,11 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 
         // prevents overloading the autorelease pool
         texture = new (std::nothrow) Texture2D();
-        texture->initWithImage(image);
 
         if(texture)
         {
+            texture->setAutoGenerateMipmap(generateMipMap);
+            texture->initWithImage(image);
             _textures.insert( std::make_pair(key, texture) );
             texture->retain();
 
@@ -751,6 +765,7 @@ void VolatileTextureMgr::reloadAllTextures()
     {
         VolatileTexture *vt = *iter++;
 
+        vt->_texture->setAutoGenerateMipmap(vt->_hasMipmaps);
         switch (vt->_cashedImageType)
         {
         case VolatileTexture::kImageFile:
@@ -792,9 +807,6 @@ void VolatileTextureMgr::reloadAllTextures()
             break;
         default:
             break;
-        }
-        if (vt->_hasMipmaps) {
-            vt->_texture->generateMipmap();
         }
         vt->_texture->setTexParameters(vt->_texParams);
     }

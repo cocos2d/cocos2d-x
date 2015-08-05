@@ -144,7 +144,14 @@ public:
      * @return Is true if supports shareable VAOs.
      * @since v2.0.0
      */
-	bool supportsShareableVAO() const;
+    bool supportsShareableVAO() const;
+
+    /** Whether or not glGenerateMipmap are supported.
+    *
+    * @return Is true if glGenerateMipmap.
+    * @since v3.8.0
+    */
+    bool supportsGenerateMipmap() const;
     
     /** Max support directional light in shader, for Sprite3D.
      *
@@ -232,6 +239,7 @@ protected:
     bool            _supportsBGRA8888;
     bool            _supportsDiscardFramebuffer;
     bool            _supportsShareableVAO;
+    bool            _supportsGenerateMipmap;
     GLint           _maxSamplesAllowed;
     GLint           _maxTextureUnits;
     char *          _glExtensions;

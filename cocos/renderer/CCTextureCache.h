@@ -107,9 +107,10 @@ public:
     * Object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr.
-     @param filepath A null terminated string.
+    @param filepath A null terminated string.
+    @param generateMipMap need generate mipmap levels(if image does not contain).
     */
-    Texture2D* addImage(const std::string &filepath);
+    Texture2D* addImage(const std::string &filepath, bool generateMipMap = false);
 
     /** Returns a Texture2D object given a file image.
     * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -118,9 +119,10 @@ public:
     * Supported image extensions: .png, .jpg
      @param filepath A null terminated string.
      @param callback A callback function would be inovked after the image is loaded.
+     @param generateMipMap need generate mipmap levels(if image does not contain).
      @since v0.8
     */
-    virtual void addImageAsync(const std::string &filepath, const std::function<void(Texture2D*)>& callback);
+    virtual void addImageAsync(const std::string &filepath, const std::function<void(Texture2D*)>& callback, bool generateMipMap = false);
     
     /** Unbind a specified bound image asynchronous callback.
      * In the case an object who was bound to an image asynchronous callback was destroyed before the callback is invoked,
@@ -139,9 +141,10 @@ public:
     * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
     * Otherwise it will return a reference of a previously loaded image.
     * @param key The "key" parameter will be used as the "key" for the cache.
+    @param generateMipMap need generate mipmap levels(if image does not contain).
     * If "key" is nil, then a new texture will be created each time.
     */
-    Texture2D* addImage(Image *image, const std::string &key);
+    Texture2D* addImage(Image *image, const std::string &key, bool generateMipMap = false);
     CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
