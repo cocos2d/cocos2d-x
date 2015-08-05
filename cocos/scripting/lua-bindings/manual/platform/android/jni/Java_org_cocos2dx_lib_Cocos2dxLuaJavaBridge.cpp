@@ -15,7 +15,7 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge_callLuaFunctionWithString
   (JNIEnv *env, jclass cls, jint functionId, jstring value)
 {
-    std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, value, strValue);
+    std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, value);
     int ret = LuaJavaBridge::callLuaFunctionById(functionId, strValue.c_str());
     return ret;
 }
