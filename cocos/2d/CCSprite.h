@@ -362,7 +362,7 @@ public:
      *
      * @param flippedX true if the sprite should be flipped horizontally, false otherwise.
      */
-    void setFlippedX(bool flippedX);
+    virtual void setFlippedX(bool flippedX);
 
     /** @deprecated Use isFlippedX() instead.
     * @js NA
@@ -390,7 +390,7 @@ public:
      *
      * @param flippedY true if the sprite should be flipped vertically, false otherwise.
      */
-    void setFlippedY(bool flippedY);
+    virtual void setFlippedY(bool flippedY);
 
     /// @} End of Sprite properties getter/setters
 
