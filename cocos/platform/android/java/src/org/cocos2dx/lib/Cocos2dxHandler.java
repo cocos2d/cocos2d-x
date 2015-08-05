@@ -24,20 +24,19 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
-import java.lang.ref.WeakReference;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
+
+import java.lang.ref.WeakReference;
 
 public class Cocos2dxHandler extends Handler {
     // ===========================================================
     // Constants
     // ===========================================================
     public final static int HANDLER_SHOW_DIALOG = 1;
-    public final static int HANDLER_SHOW_EDITBOX_DIALOG = 2;
-    
+
     // ===========================================================
     // Fields
     // ===========================================================
@@ -64,12 +63,9 @@ public class Cocos2dxHandler extends Handler {
 
     public void handleMessage(Message msg) {
         switch (msg.what) {
-        case Cocos2dxHandler.HANDLER_SHOW_DIALOG:
-            showDialog(msg);
-            break;
-        case Cocos2dxHandler.HANDLER_SHOW_EDITBOX_DIALOG:
-            showEditBoxDialog(msg);
-            break;
+            case Cocos2dxHandler.HANDLER_SHOW_DIALOG:
+                showDialog(msg);
+                break;
         }
     }
     
@@ -89,17 +85,7 @@ public class Cocos2dxHandler extends Handler {
                     }
                 }).create().show();
     }
-    
-    private void showEditBoxDialog(Message msg) {
-        EditBoxMessage editBoxMessage = (EditBoxMessage)msg.obj;
-        new Cocos2dxEditBoxDialog(this.mActivity.get(),
-                editBoxMessage.title,
-                editBoxMessage.content,
-                editBoxMessage.inputMode,
-                editBoxMessage.inputFlag,
-                editBoxMessage.returnType,
-                editBoxMessage.maxLength).show();
-    }
+
     
     // ===========================================================
     // Inner and Anonymous Classes
@@ -112,24 +98,6 @@ public class Cocos2dxHandler extends Handler {
         public DialogMessage(String title, String message) {
             this.titile = title;
             this.message = message;
-        }
-    }
-    
-    public static class EditBoxMessage {
-        public String title;
-        public String content;
-        public int inputMode;
-        public int inputFlag;
-        public int returnType;
-        public int maxLength;
-        
-        public EditBoxMessage(String title, String content, int inputMode, int inputFlag, int returnType, int maxLength){
-            this.content = content;
-            this.title = title;
-            this.inputMode = inputMode;
-            this.inputFlag = inputFlag;
-            this.returnType = returnType;
-            this.maxLength = maxLength;
         }
     }
 }
