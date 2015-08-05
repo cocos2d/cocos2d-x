@@ -282,6 +282,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 
 Sprite::Sprite(void)
 : _batchNode(nullptr)
+, _textureAtlas(nullptr)
 , _shouldBeHidden(false)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
@@ -607,6 +608,16 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
+            
+            if (_flippedX)
+            {
+                std::swap(x1, x2);
+            }
+            if (_flippedY)
+            {
+                std::swap(y1, y2);
+            }
+            
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
 
@@ -922,6 +933,9 @@ void Sprite::setFlippedX(bool flippedX)
             auto& v = _polyInfo.triangles.verts[i].vertices;
             v.x = _contentSize.width -v.x;
         }
+        if (_textureAtlas) {
+            setDirty(true);
+        }
     }
 }
 
@@ -938,6 +952,9 @@ void Sprite::setFlippedY(bool flippedY)
         for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
             auto& v = _polyInfo.triangles.verts[i].vertices;
             v.y = _contentSize.height -v.y;
+        }
+        if (_textureAtlas) {
+            setDirty(true);
         }
     }
 }
