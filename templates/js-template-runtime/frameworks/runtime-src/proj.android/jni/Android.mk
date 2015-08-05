@@ -14,11 +14,7 @@ LOCAL_SRC_FILES := \
 ../../Classes/ide-support/RuntimeJsImpl.cpp \
 hellojavascript/main.cpp
 
-LOCAL_C_INCLUDES := \
-$(LOCAL_PATH)/../../Classes \
-$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib \
-$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib/protobuf-lite
-                    
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes 
 
 LOCAL_STATIC_LIBRARIES := cocos2d_js_static
 LOCAL_STATIC_LIBRARIES += cocos2d_simulator_static

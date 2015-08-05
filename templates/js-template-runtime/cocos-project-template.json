@@ -82,7 +82,6 @@
                 "from": "tools/simulator/frameworks/runtime-src/proj.win32/",
                 "to": "frameworks/runtime-src/proj.win32/",
                 "include": [
-                    "build-cfg.json",
                     "game.rc",
                     "main.cpp",
                     "main.h",
