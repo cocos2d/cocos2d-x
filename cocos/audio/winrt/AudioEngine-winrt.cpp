@@ -54,20 +54,23 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
         if (it == _audioCaches.end()) {
             FileFormat fileFormat = FileFormat::UNKNOWN;
 
-            auto ext = filePath.substr(filePath.rfind('.'));
-            transform(ext.begin(), ext.end(), ext.begin(), tolower);
+            std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
 
-            if (ext.compare(".wav") == 0){
+            if (fileExtension == ".wav")
+            {
                 fileFormat = FileFormat::WAV;
             }
-            else if (ext.compare(".ogg") == 0){
+            else if (fileExtension == ".ogg")
+            {
                 fileFormat = FileFormat::OGG;
             }
-            else if (ext.compare(".mp3") == 0){
+            else if (fileExtension == ".mp3")
+            {
                 fileFormat = FileFormat::MP3;
             }
-            else{
-                log("unsupported media type:%s\n", ext.c_str());
+            else
+            {
+                log("Unsupported media type file: %s\n", filePath.c_str());
                 break;
             }
 
@@ -78,7 +81,8 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
             audioCache->_fileFullPath = fullPath;
             AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
         }
-        else {
+        else 
+        {
             audioCache = &it->second;
         }
     } while (false);

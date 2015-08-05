@@ -182,8 +182,7 @@ bool Bundle3D::load(const std::string& path)
     getModelRelativePath(path);
 
     bool ret = false;
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     if (ext == ".c3t")
     {
         _isBinary = false;
@@ -2151,8 +2150,7 @@ std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
         return trianglesList;
     
     auto bundle = Bundle3D::createBundle();
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     MeshDatas meshs;
     if (ext == ".obj")
     {
