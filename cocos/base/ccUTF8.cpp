@@ -155,6 +155,17 @@ bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8)
     return llvm::convertUTF16ToUTF8String(utf16, outUtf8);
 }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
+CC_DLL bool getUTFCharsFromJavaEnv(JNIEnv* env, jstring srcjStr, std::string& outUtf8)
+{
+    const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
+    const std::u16string unicodeStr((const char16_t *)unicodeChar);
+    bool flag = UTF16ToUTF8(unicodeStr, outUtf8);
+    env->ReleaseStringChars(srcjStr, unicodeChar);
+    return flag;
+}
+#endif
+
 std::vector<char16_t> getChar16VectorFromUTF16String(const std::u16string& utf16)
 {
     std::vector<char16_t> ret;

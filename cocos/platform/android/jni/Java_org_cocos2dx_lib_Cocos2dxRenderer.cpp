@@ -8,6 +8,8 @@
 #include "JniHelper.h"
 #include <jni.h>
 
+#include "base/ccUTF8.h"
+
 using namespace cocos2d;
 
 extern "C" {
@@ -33,9 +35,13 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
-        const char* pszText = env->GetStringUTFChars(text, NULL);
+       std::string strValue = "";
+        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, text, strValue))
+        {
+            strValue = "";
+        }
+        const char* pszText = strValue.c_str();
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
-        env->ReleaseStringUTFChars(text, pszText);
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward(JNIEnv* env, jobject thiz) {
