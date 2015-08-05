@@ -124,7 +124,21 @@ CC_CONSTRUCTOR_ACCESS:
     void setCameraOrderDirty() { _cameraOrderDirty = true; }
     
     void onProjectionChanged(EventCustom* event);
-
+    
+    void setScreenProjection(Mat4& projection);
+    void setPojectScale(float scaleX, float scaleY, float scaleZ);
+    void updateProjectionQuad(float rotationX, float rotationY, float rotationZ_X, float rotationZ_Y);
+    
+    virtual void setScaleX(float scaleX) override;
+    virtual void setScaleY(float scaleY) override;
+    virtual void setScaleZ(float scaleZ) override;
+    virtual void setScale(float scaleX,float scaleY) override;
+    virtual void setScale(float scale) override;
+    
+    virtual void setRotation(float rotation) override;
+    virtual void setRotation3D(const Vec3& rotation) override;
+    virtual void setRotationSkewX(float rotationX) override;
+    virtual void setRotationSkewY(float rotationY) override;
 protected:
     friend class Node;
     friend class ProtectedNode;
@@ -205,11 +219,28 @@ public:
 protected:
     NavMesh*       _navMesh;
     Camera *       _navMeshDebugCamera;
+  
+    /**
+     * Screen effect properties
+     */
+    float       _projectScaleX;
+    float       _projectScaleY;
+    float       _projectScaleZ;
+    
+    float       _projectRotationX;
+    float       _projectRotationY;
+    float       _projectRotateZ_X;
+    float       _projectRotateZ_Y;
+    
+    Quaternion  _projectRotatQuat;
+    
+    bool        _enbleNodeEffect;
 #endif
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
 public:
     void stepPhysicsAndNavigation(float deltaTime);
+    void enableNodeEffects(bool asNode);
 #endif
 };
 

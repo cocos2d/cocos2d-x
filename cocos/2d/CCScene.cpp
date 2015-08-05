@@ -52,6 +52,14 @@ NS_CC_BEGIN
 Scene::Scene()
 #if CC_USE_PHYSICS
 : _physicsWorld(nullptr)
+,_projectScaleX(1)
+,_projectScaleY(1)
+,_projectScaleZ(1)
+,_projectRotationX(0.0f)
+,_projectRotationY(0.0f)
+,_projectRotateZ_X(0.0f)
+,_projectRotateZ_Y(0.0f)
+,_enbleNodeEffect(false)
 #endif
 {
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -155,6 +163,184 @@ void Scene::onProjectionChanged(EventCustom* event)
     if (_defaultCamera)
     {
         _defaultCamera->initDefault();
+    }
+}
+
+void Scene::setScreenProjection(Mat4& projection)
+{
+    for (const auto& camera : getCameras())
+    {
+        if (!camera->isVisible())
+            continue;
+        
+        camera->_viewProjectionDirty = true;
+        camera->setAdditionalProjection(projection);
+    }
+}
+
+void Scene::setPojectScale(float scaleX, float scaleY, float scaleZ)
+{
+    if (_projectScaleX == scaleX && _projectScaleY == scaleY && _projectScaleZ == scaleZ)
+        return;
+    
+    float originScaleX = _projectScaleX;
+    float originScaleY = _projectScaleY;
+    float originScaleZ = _projectScaleZ;
+    
+    Mat4 scalProject;
+    Mat4::createScale(Vec3(scaleX/originScaleX,scaleY/originScaleY,scaleZ/originScaleZ), &scalProject);
+    
+    setScreenProjection(scalProject);
+    
+    _projectScaleX = scaleX;
+    _projectScaleY = scaleY;
+    _projectScaleZ = scaleZ;
+}
+
+
+//override setScale functions to play screen effects
+
+void Scene::setScaleX(float scaleX)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setScaleX(scaleX);
+    }
+    else
+    {
+        setPojectScale(scaleX,_projectScaleY,_projectScaleZ);
+    }
+}
+
+void Scene::setScale(float scale)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setScale(scale);
+    }
+    else
+    {
+        setPojectScale(scale,scale,scale);
+    }
+}
+
+void Scene::setScaleY(float scaleY)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setScaleY(scaleY);
+    }
+    else
+    {
+        setPojectScale(_projectScaleX,scaleY,_projectScaleZ);
+    }
+}
+
+void Scene::setScale(float scaleX,float scaleY)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setScale(scaleX, scaleY);
+    }
+    else
+    {
+        setPojectScale(scaleX, scaleY, _projectScaleZ);
+    }
+}
+
+void Scene::setScaleZ(float scaleZ)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setScaleZ(scaleZ);
+    }
+    else
+    {
+        setPojectScale(_projectScaleX,_projectScaleY,scaleZ);
+    }
+}
+
+void Scene::updateProjectionQuad(float rotationX, float rotationY, float rotationZ_X, float rotationZ_Y)
+{
+    if (_projectRotationX == rotationX && _projectRotationY == rotationY && _projectRotateZ_X == rotationZ_X && _projectRotateZ_Y == rotationZ_Y)
+        return;
+    
+    float deltaX = rotationX - _projectRotationX;
+    float deltaY = rotationY - _projectRotationY;
+    float deltaZ_X = rotationZ_X - _projectRotateZ_X;
+    float deltaZ_Y = rotationZ_Y - _projectRotateZ_Y;
+    
+    _projectRotationX = rotationX;
+    _projectRotationY = rotationY;
+    _projectRotateZ_X = rotationZ_X;
+    _projectRotateZ_Y = rotationZ_Y;
+    
+    
+    float halfRadx = CC_DEGREES_TO_RADIANS(deltaX / 2.f), halfRady = CC_DEGREES_TO_RADIANS(deltaY / 2.f), halfRadz = deltaZ_X == deltaZ_Y ? -CC_DEGREES_TO_RADIANS(deltaZ_X / 2.f) : 0;
+    float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRadx), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
+    _projectRotatQuat.x = sinhalfRadx * coshalfRady * coshalfRadz - coshalfRadx * sinhalfRady * sinhalfRadz;
+    _projectRotatQuat.y = coshalfRadx * sinhalfRady * coshalfRadz + sinhalfRadx * coshalfRady * sinhalfRadz;
+    _projectRotatQuat.z = coshalfRadx * coshalfRady * sinhalfRadz - sinhalfRadx * sinhalfRady * coshalfRadz;
+    _projectRotatQuat.w = coshalfRadx * coshalfRady * coshalfRadz + sinhalfRadx * sinhalfRady * sinhalfRadz;
+    
+    Mat4 rotateMatrix;
+    Mat4::createRotation(_projectRotatQuat, &rotateMatrix);
+    
+    setScreenProjection(rotateMatrix);
+}
+
+// screen rotate functions
+
+void Scene::setRotation(float rotation)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setRotation(rotation);
+    }
+    else
+    {
+        updateProjectionQuad(_projectRotationX, _projectRotationX, rotation, rotation);
+    }
+}
+
+void Scene::setRotation3D(const Vec3& rotation)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setRotation3D(rotation);
+    }
+    else
+    {
+        if (_projectRotationX == rotation.x &&
+            _projectRotationY == rotation.y &&
+            _projectRotateZ_X == rotation.z)
+            return;
+    
+        updateProjectionQuad(rotation.x, rotation.y, rotation.z, rotation.z);
+    }
+}
+
+void Scene::setRotationSkewX(float rotationX)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setRotationSkewX(rotationX);
+    }
+    else
+    {
+        updateProjectionQuad(_projectRotationX, _projectRotationX, rotationX, _projectRotateZ_Y);
+    }
+}
+
+void Scene::setRotationSkewY(float rotationY)
+{
+    if (_enbleNodeEffect)
+    {
+        Node::setRotationSkewY(rotationY);
+    }
+    else
+    {
+        updateProjectionQuad(_projectRotationX, _projectRotationX, _projectRotateZ_X, rotationY);
     }
 }
 
@@ -365,5 +551,10 @@ void Scene::stepPhysicsAndNavigation(float deltaTime)
 #endif
 }
 #endif
+
+void Scene::enableNodeEffects(bool asNode)
+{
+    _enbleNodeEffect = asNode;
+}
 
 NS_CC_END

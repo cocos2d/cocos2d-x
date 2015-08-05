@@ -1651,6 +1651,29 @@ void Label::removeChild(Node* child, bool cleanup /* = true */)
     }
 }
 
+void Label::getFontConfigInfo(Label* copyToLabel) const
+{
+    switch (_currentLabelType)
+    {
+        case LabelType::TTF :
+        {
+            TTFConfig tmp = getTTFConfig();
+            copyToLabel->setTTFConfig(tmp);
+        }
+            break;
+        default:
+        {
+            FontDefinition tmp = _getFontDefinition();
+            tmp._shadow._shadowEnabled = _shadowEnabled;
+            tmp._shadow._shadowOffset = _shadowOffset;
+            tmp._shadow._shadowBlur = _shadowBlurRadius;
+            tmp._shadow._shadowOpacity = _shadowOpacity;
+            copyToLabel->setFontDefinition(tmp);
+        }
+            break;
+    }
+}
+
 FontDefinition Label::_getFontDefinition() const
 {
     FontDefinition systemFontDef;

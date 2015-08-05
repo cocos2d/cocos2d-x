@@ -37,6 +37,7 @@ void PhysicsDemo::toggleDebug()
 #if CC_USE_PHYSICS
     _debugDraw = !_debugDraw;
     getPhysicsWorld()->setDebugDrawMask(_debugDraw ? PhysicsWorld::DEBUGDRAW_ALL : PhysicsWorld::DEBUGDRAW_NONE);
+    runAction( ScaleTo::create(5, 0.5, 0.5));
 #endif
 }
 
