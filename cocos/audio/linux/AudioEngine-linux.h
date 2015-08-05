@@ -75,11 +75,14 @@ public:
     
 private:
   
-    int find(const std::string &path);
+    /**
+    * returns null if a sound with the given path is not found
+    */
+    FMOD::Sound * findSound(const std::string &path);
   
     FMOD::Channel * getChannel(FMOD::Sound *);
   
-    struct AudioInfo{
+    struct ChannelInfo{
         size_t id; 
         std::string path; 
         FMOD::Sound * sound;
@@ -89,7 +92,9 @@ private:
         std::function<void (int, const std::string &)> callback;
     };
     
-    std::map<int, AudioInfo> mapEffectSound;
+    std::map<int, ChannelInfo> mapChannelInfo;
+    
+    std::map<std::string, FMOD::Sound *> mapSound;  
     
     FMOD::System* pSystem;
     
