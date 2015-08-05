@@ -40,6 +40,8 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 
+class EventCustom;
+
 /** @class Configuration
  * @brief Configuration contains some openGL variables
  * @since v0.99.0
@@ -211,6 +213,8 @@ public:
      * @param filename Config file name.
      */
 	void loadConfigFile(const std::string& filename);
+    
+    static const char* CONFIG_FILE_LOADED;
 
 private:
     Configuration(void);
@@ -237,6 +241,8 @@ protected:
     Animate3DQuality  _animate3DQuality; // animate 3d quality
 	
 	ValueMap        _valueDict;
+    
+    EventCustom*    _loadedEvent;
 };
 
 

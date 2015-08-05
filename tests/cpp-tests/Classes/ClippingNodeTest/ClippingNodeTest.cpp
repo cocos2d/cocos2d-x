@@ -1059,6 +1059,7 @@ std::string ClippingRectangleNodeTest::subtitle() const
 
 void ClippingRectangleNodeTest::setup()
 {
+    //Notice: The rectangle is base on screen coordinate, so ClippingRectangleNode's region doesn't support any transforms, such as setScale, setRotate and so on.
     auto clipper = ClippingRectangleNode::create();
     clipper->setClippingRegion(Rect(this->getContentSize().width / 2 - 100, this->getContentSize().height / 2 - 100, 200, 200));
     clipper->setTag( kTagClipperNode );
@@ -1067,6 +1068,6 @@ void ClippingRectangleNodeTest::setup()
     auto content = Sprite::create(s_back2);
     content->setTag( kTagContentNode );
     content->setAnchorPoint(  Vec2(0.5, 0.5) );
-    content->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
+    clipper->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
     clipper->addChild(content);
 }

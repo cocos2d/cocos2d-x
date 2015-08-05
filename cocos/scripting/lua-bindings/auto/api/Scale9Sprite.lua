@@ -79,6 +79,14 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
+-- Query the current bright state.<br>
+-- return @see `State`<br>
+-- since v3.7
+-- @function [parent=#Scale9Sprite] getState 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- Change the state of 9-slice sprite.<br>
 -- see `State`<br>
 -- param state A enum value in State.<br>

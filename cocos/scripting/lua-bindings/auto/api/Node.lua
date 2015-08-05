@@ -353,11 +353,13 @@
 -- @return Node#Node self (return value: cc.Node)
 
 --------------------------------
--- 
--- @function [parent=#Node] getNodeToParentAffineTransform 
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#Node] getNodeToParentAffineTransform
 -- @param self
+-- @param #cc.Node ancestor
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#Node] isCascadeOpacityEnabled 
@@ -396,13 +398,13 @@
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
--- Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.<br>
--- The matrix is in Pixels.<br>
--- return The transformation matrix.
--- @function [parent=#Node] getNodeToParentTransform 
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#Node] getNodeToParentTransform
 -- @param self
+-- @param #cc.Node ancestor
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
-        
+
 --------------------------------
 -- converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).<br>
 -- param touch A given touch.<br>

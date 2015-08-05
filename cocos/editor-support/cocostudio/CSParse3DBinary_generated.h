@@ -93,6 +93,92 @@ MANUALLY_ALIGNED_STRUCT(4) Vector3 {
 };
 STRUCT_END(Vector3, 12);
 
+struct GameNode3DOption : private flatbuffers::Table {
+    const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(4); }
+    int32_t skyBoxMask() const { return GetField<int32_t>(6, 0); }
+    uint8_t skyBoxEnabled() const { return GetField<uint8_t>(8, 0); }
+    const ResourceData *leftFileData() const { return GetPointer<const ResourceData *>(10); }
+    const ResourceData *rightFileData() const { return GetPointer<const ResourceData *>(12); }
+    const ResourceData *upFileData() const { return GetPointer<const ResourceData *>(14); }
+    const ResourceData *downFileData() const { return GetPointer<const ResourceData *>(16); }
+    const ResourceData *forwardFileData() const { return GetPointer<const ResourceData *>(18); }
+    const ResourceData *backFileData() const { return GetPointer<const ResourceData *>(20); }
+    const flatbuffers::String *frameEvent() const { return GetPointer<const flatbuffers::String *>(22); }
+    const flatbuffers::String *customProperty() const { return GetPointer<const flatbuffers::String *>(24); }
+    bool Verify(flatbuffers::Verifier &verifier) const {
+        return VerifyTableStart(verifier) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
+            verifier.Verify(name()) &&
+            VerifyField<int32_t>(verifier, 6 /* skyBoxMask */) &&
+            VerifyField<uint8_t>(verifier, 8 /* skyBoxEnabled */) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* leftFileData */) &&
+            verifier.VerifyTable(leftFileData()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 12 /* rightFileData */) &&
+            verifier.VerifyTable(rightFileData()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* upFileData */) &&
+            verifier.VerifyTable(upFileData()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* downFileData */) &&
+            verifier.VerifyTable(downFileData()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 18 /* forwardFileData */) &&
+            verifier.VerifyTable(forwardFileData()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 20 /* backFileData */) &&
+            verifier.VerifyTable(backFileData()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 22 /* frameEvent */) &&
+            verifier.Verify(frameEvent()) &&
+            VerifyField<flatbuffers::uoffset_t>(verifier, 24 /* customProperty */) &&
+            verifier.Verify(customProperty()) &&
+            verifier.EndTable();
+    }
+};
+
+struct GameNode3DOptionBuilder {
+    flatbuffers::FlatBufferBuilder &fbb_;
+    flatbuffers::uoffset_t start_;
+    void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(4, name); }
+    void add_skyBoxMask(int32_t skyBoxMask) { fbb_.AddElement<int32_t>(6, skyBoxMask, 0); }
+    void add_skyboxEnabled(uint8_t skyBoxEnabled) { fbb_.AddElement<uint8_t>(8, skyBoxEnabled, 0); }
+    void add_leftFileData(flatbuffers::Offset<ResourceData> leftFileData) { fbb_.AddOffset(10, leftFileData); }
+    void add_rightFileData(flatbuffers::Offset<ResourceData> rightFileData) { fbb_.AddOffset(12, rightFileData); }
+    void add_upFileData(flatbuffers::Offset<ResourceData> upFileData) { fbb_.AddOffset(14, upFileData); }
+    void add_downFileData(flatbuffers::Offset<ResourceData> downFileData) { fbb_.AddOffset(16, downFileData); }
+    void add_forwardFileData(flatbuffers::Offset<ResourceData> forwardFileData) { fbb_.AddOffset(18, forwardFileData); }
+    void add_backFileData(flatbuffers::Offset<ResourceData> backFileData) { fbb_.AddOffset(20, backFileData); }
+    void add_frameEvent(flatbuffers::Offset<flatbuffers::String> frameEvent) { fbb_.AddOffset(22, frameEvent); }
+    void add_customProperty(flatbuffers::Offset<flatbuffers::String> customProperty) { fbb_.AddOffset(24, customProperty); }
+    GameNode3DOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+    flatbuffers::Offset<GameNode3DOption> Finish() {
+        auto o = flatbuffers::Offset<GameNode3DOption>(fbb_.EndTable(start_, 11));
+        return o;
+    }
+};
+
+inline flatbuffers::Offset<GameNode3DOption> CreateGameNode3DOption(flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::String> name = 0,
+    int32_t skyBoxMask = 0,
+    uint8_t skyBoxEnabled = 0,
+    flatbuffers::Offset<ResourceData> leftFileData = 0,
+    flatbuffers::Offset<ResourceData> rightFileData = 0,
+    flatbuffers::Offset<ResourceData> upFileData = 0,
+    flatbuffers::Offset<ResourceData> downFileData = 0,
+    flatbuffers::Offset<ResourceData> forwardFileData = 0,
+    flatbuffers::Offset<ResourceData> backFileData = 0,
+    flatbuffers::Offset<flatbuffers::String> frameEvent = 0,
+    flatbuffers::Offset<flatbuffers::String> customProperty = 0) {
+    GameNode3DOptionBuilder builder_(_fbb);
+    builder_.add_customProperty(customProperty);
+    builder_.add_frameEvent(frameEvent);
+    builder_.add_backFileData(backFileData);
+    builder_.add_forwardFileData(forwardFileData);
+    builder_.add_downFileData(downFileData);
+    builder_.add_upFileData(upFileData);
+    builder_.add_rightFileData(rightFileData);
+    builder_.add_leftFileData(leftFileData);
+    builder_.add_skyboxEnabled(skyBoxEnabled);
+    builder_.add_skyBoxMask(skyBoxMask);
+    builder_.add_name(name);
+    return builder_.Finish();
+}
+
 struct Node3DOption : private flatbuffers::Table {
   const flatbuffers::WidgetOptions *nodeOptions() const { return GetPointer<const flatbuffers::WidgetOptions *>(4); }
   const Vector3 *position3D() const { return GetStruct<const Vector3 *>(6); }
@@ -223,6 +309,13 @@ struct UserCameraOptions : private flatbuffers::Table {
   float nearClip() const { return GetField<float>(8, 1); }
   float farClip() const { return GetField<float>(10, 1000); }
   int32_t cameraFlag() const { return GetField<int32_t>(12, 0); }
+  uint8_t skyBoxEnabled() const { return GetField<uint8_t>(14, 0); }
+  const ResourceData *leftFileData() const { return GetPointer<const ResourceData *>(16); }
+  const ResourceData *rightFileData() const { return GetPointer<const ResourceData *>(18); }
+  const ResourceData *upFileData() const { return GetPointer<const ResourceData *>(20); }
+  const ResourceData *downFileData() const { return GetPointer<const ResourceData *>(22); }
+  const ResourceData *forwardFileData() const { return GetPointer<const ResourceData *>(24); }
+  const ResourceData *backFileData() const { return GetPointer<const ResourceData *>(26); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
@@ -231,6 +324,19 @@ struct UserCameraOptions : private flatbuffers::Table {
            VerifyField<float>(verifier, 8 /* nearClip */) &&
            VerifyField<float>(verifier, 10 /* farClip */) &&
            VerifyField<int32_t>(verifier, 12 /* cameraFlag */) &&
+           VerifyField<uint8_t>(verifier, 14 /* skyBoxEnabled */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 16 /* leftFileData */) &&
+           verifier.VerifyTable(leftFileData()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 18 /* rightFileData */) &&
+           verifier.VerifyTable(rightFileData()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 20 /* upFileData */) &&
+           verifier.VerifyTable(upFileData()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 22 /* downFileData */) &&
+           verifier.VerifyTable(downFileData()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 24 /* forwardFileData */) &&
+           verifier.VerifyTable(forwardFileData()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 26 /* backFileData */) &&
+           verifier.VerifyTable(backFileData()) &&
            verifier.EndTable();
   }
 };
@@ -243,10 +349,17 @@ struct UserCameraOptionsBuilder {
   void add_nearClip(float nearClip) { fbb_.AddElement<float>(8, nearClip, 1); }
   void add_farClip(float farClip) { fbb_.AddElement<float>(10, farClip, 1000); }
   void add_cameraFlag(int32_t cameraFlag) { fbb_.AddElement<int32_t>(12, cameraFlag, 0); }
+  void add_skyboxEnabled(uint8_t skyBoxEnabled) { fbb_.AddElement<uint8_t>(14, skyBoxEnabled, 0); }
+  void add_leftFileData(flatbuffers::Offset<ResourceData> leftFileData) { fbb_.AddOffset(16, leftFileData); }
+  void add_rightFileData(flatbuffers::Offset<ResourceData> rightFileData) { fbb_.AddOffset(18, rightFileData); }
+  void add_upFileData(flatbuffers::Offset<ResourceData> upFileData) { fbb_.AddOffset(20, upFileData); }
+  void add_downFileData(flatbuffers::Offset<ResourceData> downFileData) { fbb_.AddOffset(22, downFileData); }
+  void add_forwardFileData(flatbuffers::Offset<ResourceData> forwardFileData) { fbb_.AddOffset(24, forwardFileData); }
+  void add_backFileData(flatbuffers::Offset<ResourceData> backFileData) { fbb_.AddOffset(26, backFileData); }
   UserCameraOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   UserCameraOptionsBuilder &operator=(const UserCameraOptionsBuilder &);
   flatbuffers::Offset<UserCameraOptions> Finish() {
-    auto o = flatbuffers::Offset<UserCameraOptions>(fbb_.EndTable(start_, 5));
+    auto o = flatbuffers::Offset<UserCameraOptions>(fbb_.EndTable(start_, 12));
     return o;
   }
 };
@@ -256,8 +369,22 @@ inline flatbuffers::Offset<UserCameraOptions> CreateUserCameraOptions(flatbuffer
    float fov = 60,
    float nearClip = 1,
    float farClip = 1000,
-   int32_t cameraFlag = 0) {
+   int32_t cameraFlag = 0,
+   uint8_t skyBoxEnabled = 0,
+   flatbuffers::Offset<ResourceData> leftFileData = 0,
+   flatbuffers::Offset<ResourceData> rightFileData = 0,
+   flatbuffers::Offset<ResourceData> upFileData = 0,
+   flatbuffers::Offset<ResourceData> downFileData = 0,
+   flatbuffers::Offset<ResourceData> forwardFileData = 0,
+   flatbuffers::Offset<ResourceData> backFileData = 0) {
   UserCameraOptionsBuilder builder_(_fbb);
+  builder_.add_backFileData(backFileData);
+  builder_.add_forwardFileData(forwardFileData);
+  builder_.add_downFileData(downFileData);
+  builder_.add_upFileData(upFileData);
+  builder_.add_rightFileData(rightFileData);
+  builder_.add_leftFileData(leftFileData);
+  builder_.add_skyboxEnabled(skyBoxEnabled);
   builder_.add_cameraFlag(cameraFlag);
   builder_.add_farClip(farClip);
   builder_.add_nearClip(nearClip);

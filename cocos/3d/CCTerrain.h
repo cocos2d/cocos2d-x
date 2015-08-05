@@ -304,6 +304,14 @@ private:
     friend QuadTree;
     friend Chunk;
 public:
+    /** set light map texture */
+    void setLightMap(const std::string& fileName);
+
+    /**
+     set directional light for the terrain
+     @param lightDir The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
+     */
+    void setLightDir(const Vec3& lightDir);
     /*init function*/
     /**initialize all Properties which terrain need */
     bool initProperties();
@@ -422,11 +430,12 @@ public:
      * get the terrain's height data
      */
     std::vector<float> getHeightData() const;
-    
-protected:
-    
+
+CC_CONSTRUCTOR_ACCESS:
     Terrain();
     virtual ~Terrain();
+    bool initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType);
+protected:
     void onDraw(const Mat4 &transform, uint32_t flags);
 
     /**
@@ -475,11 +484,13 @@ protected:
     float _lodDistance[3];
     Texture2D * _detailMapTextures[4];
     Texture2D * _alphaMap;
+    Texture2D * _lightMap;
+    Vec3 _lightDir;
     CustomCommand _customCommand;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> _vertices;
-    std::vector<GLushort> _indices;
+    std::vector<unsigned int> _indices;
     int _imageWidth;
     int _imageHeight;
     Size _chunkSize;
@@ -499,8 +510,10 @@ protected:
     GLint _detailMapLocation[4];
     GLint _alphaMapLocation;
     GLint _alphaIsHasAlphaMapLocation;
+    GLint _lightMapCheckLocation;
+    GLint _lightMapLocation;
     GLint _detailMapSizeLocation[4];
-
+    GLint _lightDirLocation;
     RenderState::StateBlock* _stateBlock;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

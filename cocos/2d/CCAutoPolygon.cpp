@@ -641,8 +641,7 @@ Rect AutoPolygon::getRealRect(const Rect& rect)
     }
     else{
         //rect is specified, so convert to real rect
-        auto scale = Director::getInstance()->getContentScaleFactor();
-        realRect = Rect(rect.origin*scale, rect.size*scale);
+        realRect = CC_RECT_POINTS_TO_PIXELS(rect);
     }
     return realRect;
 }

@@ -31,6 +31,12 @@
 -- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
         
 --------------------------------
+-- 
+-- @function [parent=#Physics3DWorld] setGhostPairCallback 
+-- @param self
+-- @return Physics3DWorld#Physics3DWorld self (return value: cc.Physics3DWorld)
+        
+--------------------------------
 --  Remove all Physics3DObjects. 
 -- @function [parent=#Physics3DWorld] removeAllPhysics3DObjects 
 -- @param self

@@ -4,6 +4,41 @@ cocos2d-x-3.8 ??
     [FIX]           renderer: UI component can't click correctly by moving UI and camera far away of origin.
     [FIX]           JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
 
+cocos2d-x-3.7.1    ??
+    [HIGHLIGHT]     studio: Added new skeleton animation support and csb parser for cocos v2.3.2 beta
+    [HIGHLIGHT]     studio: Added new skeleton animation support and JSON parser in the web engine
+    [HIGHLIGHT]     studio: Added Skybox csb/JSON parser for cocos v2.3.2 beta
+
+    [NEW]           Node: Added getNodeToParentTransform with selected ancestor
+    [NEW]           studio: Parsed Touch/Click/Event callback in JSON parser
+    [NEW]           web: Added cc.director.setClearColor and support transparent background
+    [NEW]           web: Added Animate's getCurrentFrameIndex function
+
+    [REFINE]        studio: Optimized JSON parser's performance by removing audio play
+    [REFINE]        studio: Optimized editor related extension data to a component instead of hosting in _userObject
+    [REFINE]        studio: Updated Game3DNodeReader & UserCameraReader
+    [REFINE]        web: Improved color/opacity manipulations in MenuItems
+
+    [FIX]           Scene: Fixed Scene can't be inherited with std::vector members
+    [FIX]           Label: Fixed creation fail if the font(TTF) contains a non-unicode charmap
+    [FIX]           platform: Fixed building with system prebuilt libs on Linux
+    [FIX]           studio: Fixed ccs.Skin construction issue in JSON parser
+    [FIX]           web: Fixed an issue that loading process won't trigger callback problem
+    [FIX]           web: Fixed a bug where not resetting cc.Audio._ignoreEnded when replaying a sound caused it to stay in a "playing" state
+    [FIX]           web: cc.ScrollView and cc.TableView: added check for parent visibility in onTouchBegan method
+    [FIX]           web: Fixed TurnPageDown effect
+
+cocos2d-x-3.7final July.21 2015
+    [REFINE]        JS: Improve manual binding code for `retain`, `release`, `onEnter`, `onExit`, `onEnterTransitionDidFinish` and `onExitTransitionDidStart`
+    [REFINE]        web: Add compatible Uint16Array defintion
+
+    [FIX]           Scale9Sprite: Fixed Scale9Sprite gray state issue while `setCapInsets` called
+    [FIX]           studio: Fixed parser issue by checking texture existance
+    [FIX]           studio: Fixed Armature parser issue
+    [FIX]           JS: Fixed cleanup overriding issue in JS that it will cause `too much recursion` error
+    [FIX]           web: Fixed url check regular expression not supporting localhost issue
+    [FIX]           web: Fixed issue that sprite doesn't update texture rect correctly in some condition
+
 cocos2d-x-3.7rc1  July.14 2015
     [REFINE]        framework: Used msbuild to generating engine prebuilt libs on win32.
     [REFINE]        3d: Used shader with normal while creating mesh with normals

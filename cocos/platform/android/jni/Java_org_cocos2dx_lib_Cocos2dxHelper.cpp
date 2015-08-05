@@ -413,3 +413,25 @@ void deleteValueForKeyJNI(const char* key)
         t.env->DeleteLocalRef(stringArg1);
     }
 }
+
+void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset)
+{
+    JniMethodInfo methodInfo;
+
+    if (JniHelper::getStaticMethodInfo(methodInfo, CLASS_NAME, "conversionEncoding", "([BLjava/lang/String;Ljava/lang/String;)[B")) {
+        jbyteArray strArray = methodInfo.env->NewByteArray(byteSize);
+        methodInfo.env->SetByteArrayRegion(strArray, 0, byteSize, reinterpret_cast<const jbyte*>(src));
+
+        jstring stringArg1 = methodInfo.env->NewStringUTF(fromCharset);
+        jstring stringArg2 = methodInfo.env->NewStringUTF(newCharset);
+
+        jbyteArray newArray = (jbyteArray)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID, strArray, stringArg1, stringArg2);
+        jsize theArrayLen = methodInfo.env->GetArrayLength(newArray);
+        methodInfo.env->GetByteArrayRegion(newArray, 0, theArrayLen, (jbyte*)dst);
+
+        methodInfo.env->DeleteLocalRef(strArray);
+        methodInfo.env->DeleteLocalRef(stringArg1);
+        methodInfo.env->DeleteLocalRef(stringArg2);
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+    }
+}

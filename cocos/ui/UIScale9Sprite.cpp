@@ -58,6 +58,7 @@ namespace ui {
         ,_flippedX(false)
         ,_flippedY(false)
         ,_isPatch9(false)
+        ,_brightState(State::NORMAL)
 
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
@@ -556,6 +557,7 @@ namespace ui {
         }
 
         applyBlendFunc();
+        this->setState(_brightState);
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
@@ -1051,7 +1053,11 @@ namespace ui {
         CC_SAFE_DELETE(pReturn);
         return NULL;
     }
-
+    
+    Scale9Sprite::State Scale9Sprite::getState()const
+    {
+        return _brightState;
+    }
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
     {
@@ -1070,7 +1076,7 @@ namespace ui {
         default:
             break;
         }
-
+        
         if (nullptr != _scale9Image)
         {
             _scale9Image->setGLProgramState(glState);
@@ -1083,6 +1089,7 @@ namespace ui {
                 sp->setGLProgramState(glState);
             }
         }
+        _brightState = state;
     }
 
 /** sets the opacity.
@@ -1385,6 +1392,14 @@ namespace ui {
 
     void Scale9Sprite::cleanup()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
+                return;
+        }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+        
         Node::cleanup();
         // timers
         for( const auto &child: _protectedChildren)
@@ -1407,6 +1422,14 @@ namespace ui {
 
     void Scale9Sprite::onExit()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+                return;
+        }
+#endif
+        
         Node::onExit();
         for( const auto &child: _protectedChildren)
             child->onExit();
@@ -1414,6 +1437,14 @@ namespace ui {
 
     void Scale9Sprite::onEnterTransitionDidFinish()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+                return;
+        }
+#endif
+        
         Node::onEnterTransitionDidFinish();
         for( const auto &child: _protectedChildren)
             child->onEnterTransitionDidFinish();
@@ -1421,6 +1452,14 @@ namespace ui {
 
     void Scale9Sprite::onExitTransitionDidStart()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+                return;
+        }
+#endif
+        
         Node::onExitTransitionDidStart();
         for( const auto &child: _protectedChildren)
             child->onExitTransitionDidStart();

@@ -38,6 +38,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTPadding);
     ADD_TEST_CASE(LabelFNTOffset);
     ADD_TEST_CASE(LabelFNTColor);
+    ADD_TEST_CASE(LabelFNTOpacity);
     ADD_TEST_CASE(LabelFNTHundredLabels);
     ADD_TEST_CASE(LabelFNTMultiLine);
     ADD_TEST_CASE(LabelFNTandTTFEmpty);
@@ -82,6 +83,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelAddChildTest);
     ADD_TEST_CASE(LabelIssue12775Test);
     ADD_TEST_CASE(LabelIssue11585Test);
+    ADD_TEST_CASE(LabelFullTypeFontTest);
+    ADD_TEST_CASE(LabelIssue10688Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -329,6 +332,31 @@ std::string LabelFNTColor::title() const
 std::string LabelFNTColor::subtitle() const
 {
     return "Testing color";
+}
+
+LabelFNTOpacity::LabelFNTOpacity()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 100");
+    label->setOpacity(100);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 2));
+
+    label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 200");
+    label->setOpacity(200);
+    addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height / 3));
+}
+
+std::string LabelFNTOpacity::title() const
+{
+    return "New Label + .FNT file";
+}
+
+std::string LabelFNTOpacity::subtitle() const
+{
+    return "Testing opacity";
 }
 
 LabelFNTHundredLabels::LabelFNTHundredLabels()
@@ -1493,96 +1521,42 @@ LabelAlignmentTest::LabelAlignmentTest()
     menu->setPosition(Vec2(s.width - 50, s.height / 2 - 20));
     this->addChild(menu);
 
-    _horizAlign = TextHAlignment::LEFT;
-    _vertAlign = TextVAlignment::TOP;
-
-    TTFConfig ttfConfig("fonts/arial.ttf", 32);
-    _label = Label::create();
-    _label->setDimensions(200,160);
-    _label->setAlignment(_horizAlign,_vertAlign);
-    _label->setTTFConfig(ttfConfig);
-    _label->setString(getCurrentAlignment());
+    TTFConfig ttfConfig("fonts/arial.ttf", 50);
+    _label = Label::createWithTTF(ttfConfig, "abc efg hijk lmn opq rst uvw xyz");
+    _label->setDimensions(200, 160);
     _label->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     _label->setPosition(pos);
     addChild(_label);
-
-}
-
-LabelAlignmentTest::~LabelAlignmentTest()
-{
-    
 }
 
 void LabelAlignmentTest::setAlignmentLeft(Ref* sender)
 {
-    _horizAlign = TextHAlignment::LEFT;
-    _label->setHorizontalAlignment(_horizAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setHorizontalAlignment(TextHAlignment::LEFT);
 }
 
 void LabelAlignmentTest::setAlignmentCenter(Ref* sender)
 {
-    _horizAlign = TextHAlignment::CENTER;
-    _label->setHorizontalAlignment(_horizAlign);
-    _label->setString(getCurrentAlignment()); 
+    _label->setHorizontalAlignment(TextHAlignment::CENTER);
 }
 
 void LabelAlignmentTest::setAlignmentRight(Ref* sender)
 {
-    _horizAlign = TextHAlignment::RIGHT;
-    _label->setHorizontalAlignment(_horizAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setHorizontalAlignment(TextHAlignment::RIGHT);
 }
 
 void LabelAlignmentTest::setAlignmentTop(Ref* sender)
 {
-    _vertAlign = TextVAlignment::TOP;
-    _label->setVerticalAlignment(_vertAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setVerticalAlignment(TextVAlignment::TOP);
 }
 
 void LabelAlignmentTest::setAlignmentMiddle(Ref* sender)
 {
-    _vertAlign = TextVAlignment::CENTER;
-    _label->setVerticalAlignment(_vertAlign);
-    _label->setString(getCurrentAlignment());
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
 }
 
 void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
 {
-    _vertAlign = TextVAlignment::BOTTOM;
-    _label->setVerticalAlignment(_vertAlign);
-    _label->setString(getCurrentAlignment());
-}
-
-std::string LabelAlignmentTest::getCurrentAlignment()
-{
-    const char* vertical = nullptr;
-    const char* horizontal = nullptr;
-    switch (_vertAlign) {
-    case TextVAlignment::TOP:
-        vertical = "Top";
-        break;
-    case TextVAlignment::CENTER:
-        vertical = "Middle";
-        break;
-    case TextVAlignment::BOTTOM:
-        vertical = "Bottom";
-        break;
-    }
-    switch (_horizAlign) {
-    case TextHAlignment::LEFT:
-        horizontal = "Left";
-        break;
-    case TextHAlignment::CENTER:
-        horizontal = "Center";
-        break;
-    case TextHAlignment::RIGHT:
-        horizontal = "Right";
-        break;
-    }
-
-    return StringUtils::format("Alignment %s %s", vertical, horizontal);
+    _label->setVerticalAlignment(TextVAlignment::BOTTOM);
 }
 
 std::string LabelAlignmentTest::title() const
@@ -1592,7 +1566,7 @@ std::string LabelAlignmentTest::title() const
 
 std::string LabelAlignmentTest::subtitle() const
 {
-    return "Select the buttons on the sides to change alignment";
+    return "Test text alignment";
 }
 
 LabelIssue4428Test::LabelIssue4428Test()
@@ -2043,4 +2017,44 @@ std::string LabelIssue11585Test::title() const
 std::string LabelIssue11585Test::subtitle() const
 {
     return "The color of letter should not be overridden by fade action.";
+}
+
+LabelFullTypeFontTest::LabelFullTypeFontTest()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Hello 中国", "XueJ2312F.ttf", 30);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelFullTypeFontTest::title() const
+{
+    return "Test font supported by FullType";
+}
+
+LabelIssue10688Test::LabelIssue10688Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Glow MenuItemLabel", "fonts/arial.ttf", 30);
+    label->setTextColor(Color4B::RED);
+    label->enableGlow(Color4B::YELLOW);
+    auto menuItem1 = MenuItemLabel::create(label, [](Ref*){});
+    menuItem1->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    menuItem1->setPosition(center.x - label->getContentSize().width/2, center.y);
+
+    auto menu = Menu::create(menuItem1, NULL);
+    menu->setPosition(Vec2::ZERO);
+    this->addChild(menu);
+}
+
+std::string LabelIssue10688Test::title() const
+{
+    return "Test for Issue #10688";
+}
+
+std::string LabelIssue10688Test::subtitle() const
+{
+    return "The MenuItemLabel should be displayed in the middle of the screen.";
 }

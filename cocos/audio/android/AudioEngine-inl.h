@@ -88,7 +88,7 @@ public:
 
     void uncache(const std::string& filePath){}
     void uncacheAll(){}
-    void preload(const std::string& filePath);
+    void preload(const std::string& filePath, std::function<void(bool)> callback);
     
     void update(float dt);
 private:

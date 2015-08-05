@@ -87,6 +87,18 @@ Animation3D : function (
 jsb.Animate3D = {
 
 /**
+ * @method setKeyFrameUserInfo
+ * @param {int} arg0
+ * @param {map_object} arg1
+ */
+setKeyFrameUserInfo : function (
+int, 
+map 
+)
+{
+},
+
+/**
  * @method getSpeed
  * @return {float}
  */
@@ -1300,16 +1312,6 @@ bool
 },
 
 /**
- * @method setIsEnableFrustumCull
- * @param {bool} arg0
- */
-setIsEnableFrustumCull : function (
-bool 
-)
-{
-},
-
-/**
  * @method setDetailMap
  * @param {unsigned int} arg0
  * @param {cc.Terrain::DetailMap} arg1
@@ -1327,6 +1329,16 @@ map
  */
 resetHeightMap : function (
 char 
+)
+{
+},
+
+/**
+ * @method setLightDir
+ * @param {vec3_object} arg0
+ */
+setLightDir : function (
+vec3 
 )
 {
 },
@@ -1397,6 +1409,20 @@ vec3
 )
 {
     return 0;
+},
+
+/**
+ * @method initWithTerrainData
+ * @param {cc.Terrain::TerrainData} arg0
+ * @param {cc.Terrain::CrackFixedType} arg1
+ * @return {bool}
+ */
+initWithTerrainData : function (
+terraindata, 
+crackfixedtype 
+)
+{
+    return false;
 },
 
 /**
@@ -1474,13 +1500,23 @@ int
 },
 
 /**
- * @method getMaxHeight
- * @return {float}
+ * @method setLightMap
+ * @param {String} arg0
  */
-getMaxHeight : function (
+setLightMap : function (
+str 
 )
 {
-    return 0;
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
+)
+{
 },
 
 /**
@@ -1491,6 +1527,25 @@ getMinHeight : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getMaxHeight
+ * @return {float}
+ */
+getMaxHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method Terrain
+ * @constructor
+ */
+Terrain : function (
+)
+{
 },
 
 };

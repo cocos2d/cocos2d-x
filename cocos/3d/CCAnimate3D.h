@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 class Bone3D;
 class Sprite3D;
-
+class EventCustom;
 
 enum class Animate3DQuality
 {
@@ -118,6 +118,19 @@ public:
     
     /**get animate quality*/
     Animate3DQuality getQuality() const;
+
+
+    struct Animate3DDisplayedEventInfo
+    {
+        int frame;
+        Node* target;
+        const ValueMap* userInfo;
+    };
+    void setKeyFrameUserInfo(int keyFrame, const ValueMap &userInfo);
+    const ValueMap* getKeyFrameUserInfo(int keyFrame) const;
+    ValueMap* getKeyFrameUserInfo(int keyFrame);
+    
+
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -151,6 +164,7 @@ protected:
     float      _accTransTime; // acculate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
+    float      _frameRate;
     
     // animation quality
     EvaluateType _translateEvaluate;
@@ -160,6 +174,10 @@ protected:
     
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
+    
+    std::unordered_map<int, ValueMap> _keyFrameUserInfos;
+    std::unordered_map<int, EventCustom*> _keyFrameEvent;
+    std::unordered_map<int, Animate3DDisplayedEventInfo> _displayedEventInfo;
 
     //sprite animates
     static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;
