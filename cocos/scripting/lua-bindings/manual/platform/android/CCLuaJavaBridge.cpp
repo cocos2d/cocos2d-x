@@ -41,11 +41,7 @@ bool LuaJavaBridge::CallInfo::execute(void)
 
         case TypeString:
             m_retjs = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            std::string strValue = "";
-            if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(m_env, m_retjs, strValue))
-            {
-                strValue = "";
-            }
+            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs);
             m_ret.stringValue = new string(strValue);
            break;
     }
@@ -84,11 +80,7 @@ bool LuaJavaBridge::CallInfo::executeWithArgs(jvalue *args)
 
          case TypeString:
         	 m_retjs = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-            std::string strValue = "";
-            if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(m_env, m_retjs, strValue))
-            {
-                strValue = "";
-            }
+            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs);
             m_ret.stringValue = new string(strValue);
             break;
      }

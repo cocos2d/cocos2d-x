@@ -582,11 +582,7 @@ private:
             return nullptr;
         }
         char *ret = nullptr;
-        std::string strValue = "";
-        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, jstr, strValue))
-        {
-            strValue = "";
-        }
+        std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
         ret = strdup(strValue.c_str());
         return ret;
     }

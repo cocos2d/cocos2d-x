@@ -156,13 +156,43 @@ bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8)
 }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
-CC_DLL bool getUTFCharsFromJavaEnv(JNIEnv* env, jstring srcjStr, std::string& outUtf8)
+std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
+    std::string utf8Str;
     const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
-    const std::u16string unicodeStr((const char16_t *)unicodeChar);
-    bool flag = UTF16ToUTF8(unicodeStr, outUtf8);
+    size_t unicodeCharLength = env->GetStringLength(srcjStr);
+    const std::u16string unicodeStr((const char16_t *)unicodeChar, unicodeCharLength);
+    bool flag = UTF16ToUTF8(unicodeStr, utf8Str);
+
+    if (ret)
+    {
+        *ret = flag;
+    }
+
+    if (!flag)
+    {
+        utf8Str = "";
+    }
     env->ReleaseStringChars(srcjStr, unicodeChar);
-    return flag;
+    return utf8Str;
+}
+
+jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret)
+{
+    std::u16string utf16Str;
+    bool flag = cocos2d::StringUtils::UTF8ToUTF16(utf8Str, utf16Str);
+
+    if (ret)
+    {
+        *ret = flag;
+    }
+
+    if(!flag)
+    {
+        utf16Str.clear();
+    }
+    jstring stringText = env->NewString((const jchar*)utf16Str.data(), utf16Str.length());
+    return stringText;
 }
 #endif
 
