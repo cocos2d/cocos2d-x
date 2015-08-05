@@ -351,7 +351,7 @@ INT_PTR CWin32InputBox::InputBox(
 
 void CWin32InputBox::InitDialog()
 {
-	// Set the button captions
+	// Set the button captions, associated with ReturnType
 	switch (_param->eReturnType)
 	{
 	case cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT:
@@ -435,16 +435,20 @@ void CWin32InputBox::InitDialog()
 		::ShowWindow(hwndEdit2, SW_HIDE);
 	}
 
-	// LengthFilter
+	// Sets the text limit of the edit control.
+	// wParam is the maximum number of WCHARs the user can enter. For Unicode text, wParam is the number of characters.
+	// Please refer to https://msdn.microsoft.com/en-us/library/bb761607%28v=vs.85%29.aspx
 	if ((int)_param->nMaxLength > 0)
 	{
-		::SendMessageW(hwndEdit1, EM_SETLIMITTEXT, (WPARAM)_param->nMaxLength, 0);
-		::SendMessageW(hwndEdit2, EM_SETLIMITTEXT, (WPARAM)_param->nMaxLength, 0);
+		::SendMessageW(hwndEdit1, EM_LIMITTEXT, (WPARAM)_param->nMaxLength, 0);
+		::SendMessageW(hwndEdit2, EM_LIMITTEXT, (WPARAM)_param->nMaxLength, 0);
 	}
 
 	switch (_param->eInputFlag)
 	{
 	case cocos2d::ui::EditBox::InputFlag::PASSWORD:
+		// Sets a password character displayed in a edit control when the user types text.
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb761653%28v=vs.85%29.aspx
 		::SendMessageW(hwndEdit1, EM_SETPASSWORDCHAR, (WPARAM)L'*', 0);
 		::SendMessageW(hwndEdit2, EM_SETPASSWORDCHAR, (WPARAM)L'*', 0);
 		break;
@@ -455,6 +459,8 @@ void CWin32InputBox::InitDialog()
 	case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
 		break;
 	case cocos2d::ui::EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
+		// Converts all characters to lowercase as they are typed into the edit control.
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb775464%28v=vs.85%29.aspx
 		::SetWindowLongW(hwndEdit1, GWL_STYLE, ::GetWindowLongW(hwndEdit1, GWL_STYLE) | ES_UPPERCASE);
 		::SetWindowLongW(hwndEdit2, GWL_STYLE, ::GetWindowLongW(hwndEdit2, GWL_STYLE) | ES_UPPERCASE);
 		break;
@@ -469,6 +475,9 @@ void CWin32InputBox::InitDialog()
 	case cocos2d::ui::EditBox::InputMode::EMAIL_ADDRESS:
 		break;
 	case cocos2d::ui::EditBox::InputMode::NUMERIC:
+		// Allows only digits to be entered into the edit control.
+		// Note that, even with this set, it is still possible to paste non-digits into the edit control.
+		// Please refer to https://msdn.microsoft.com/en-us/library/bb775464%28v=vs.85%29.aspx
 		::SetWindowLongW(hwndEdit1, GWL_STYLE, ::GetWindowLongW(hwndEdit1, GWL_STYLE) | ES_NUMBER);
 		::SetWindowLongW(hwndEdit2, GWL_STYLE, ::GetWindowLongW(hwndEdit2, GWL_STYLE) | ES_NUMBER);
 		break;
@@ -525,11 +534,14 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 					   INT_PTR buttonId = LOWORD(wParam);
 					   if (buttonId == IDOK || buttonId == IDCANCEL)
 					   {
+							// Yes! Just close the dialog box simply,
+							// because the text of EditBox has been already synced at the moment of text altered in the edit control
 							::EndDialog(hDlg, buttonId);
 							return TRUE;
 					   }
 
 					   // text altered in the edit control
+					   // Please refer to https://msdn.microsoft.com/en-us/library/bb761676%28v=vs.85%29.aspx
 					   if (HIWORD(wParam) == EN_CHANGE && _this->_recursionDepth == 0 && _this->_param->lpfnOnTextChange != nullptr)
 					   {
 							   std::u16string wstrResult;
@@ -550,8 +562,9 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 							   {
 								   *(_this->_param->pstrResult) = std::move(utf8Result);
 							   }
+							   // Invoke editBoxTextChanged indirectly
 							   _this->_param->lpfnOnTextChange(_this->_param->pstrResult->c_str(), _this->_param->lpCtx);
-							   --_this->_recursionDepth;  // Prevent recursive calls
+							   --_this->_recursionDepth;
 							   return TRUE;
 					   }
 	}
@@ -568,11 +581,14 @@ void CWin32InputBox::SetText(const char* pText)
 		cocos2d::StringUtils::UTF8ToUTF16(pText, utf16Text);
 
 		// Keep the cursor position
+		// Please refer to :
+		// https://msdn.microsoft.com/en-us/library/bb761598%28v=vs.85%29.aspx
+		// https://msdn.microsoft.com/en-us/library/bb761661%28v=vs.85%29.aspx
 		size_t len = utf16Text.length();
 		DWORD beginPos, endPos;
 		::SendMessageW(_hwndEditCtrl, EM_GETSEL, (WPARAM)&beginPos, (LPARAM)&endPos);
 		::SendMessageW(_hwndEditCtrl, WM_SETTEXT, 0, (LPARAM)utf16Text.c_str());
-		::SendMessageW(_hwndEditCtrl, EM_SETSEL, std::min<WPARAM>(beginPos, len), std::min<LPARAM>(endPos, len));
+		::SendMessageW(_hwndEditCtrl, EM_SETSEL, (WPARAM)std::min<long>(beginPos, len), (LPARAM)std::min<long>(endPos, len));
 	}
 }
 
@@ -861,8 +877,7 @@ void EditBoxImplWin::openKeyboard()
 
 void EditBoxImplWin::onWin32InputBoxTextChange(const char *pText, EditBoxImplWin* thiz)
 {
-    // Prevent recursive calls
-    thiz->_isEditing = false;
+    thiz->_isEditing = false;  // Prevent recursive calls
     thiz->setText(pText);
     thiz->_isEditing = true;
 
