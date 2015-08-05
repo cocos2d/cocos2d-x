@@ -29,11 +29,11 @@ var UITextFieldTest = UIScene.extend({
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
-            this._topDisplayLabel.setAnchorPoint(cc.vertex2(0.5, -1));
-            this._topDisplayLabel.setPosition(cc.vertex2(widgetSize.width / 2.0, widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
+            this._topDisplayLabel.setAnchorPoint(cc.p(0.5, -1));
+            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
 
             this._bottomDisplayLabel.setString("TextField");
-            this._bottomDisplayLabel.setPosition(cc.vertex2(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.getContentSize().height * 3.4));
+            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.getContentSize().height * 3.4));
             this._bottomDisplayLabel.setColor(cc.color(255, 255, 255, 255));
 
             // Create the textfield
