@@ -80,7 +80,7 @@ CC_DLL bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8);
 *         because getStringUTFChars can not pass special emoticon
 *  @param env   The JNI Env
 *  @param srcjStr The jstring which want to convert
-*  @param ret   True if convert success, if ret not null
+*  @param ret   True if the conversion succeeds and the ret pointer isn't null
 *  @returns the result of utf8 string
 */
 CC_DLL std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret = nullptr);
@@ -90,7 +90,7 @@ CC_DLL std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret 
 *         because newStringUTF can not convert special emoticon
 *  @param env   The JNI Env
 *  @param srcjStr The std::string which want to convert
-*  @param ret     True if convert success, if ret not null
+*  @param ret     True if the conversion succeeds and the ret pointer isn't null
 *  @returns the result of jstring,the jstring need to DeleteLocalRef(jstring);
 */
 CC_DLL jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret = nullptr);
