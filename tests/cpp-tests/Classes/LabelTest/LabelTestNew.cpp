@@ -1,6 +1,7 @@
 #include "LabelTestNew.h"
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
+#include "2d/CCFontAtlasCache.h"
 
 USING_NS_CC;
 using namespace ui;
@@ -85,6 +86,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue11585Test);
     ADD_TEST_CASE(LabelFullTypeFontTest);
     ADD_TEST_CASE(LabelIssue10688Test);
+    ADD_TEST_CASE(LabelIssue13202Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -2057,4 +2059,29 @@ std::string LabelIssue10688Test::title() const
 std::string LabelIssue10688Test::subtitle() const
 {
     return "The MenuItemLabel should be displayed in the middle of the screen.";
+}
+
+LabelIssue13202Test::LabelIssue13202Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("asdfghjklzxcvbnmqwertyuiop", "fonts/arial.ttf", 150);
+    label->setPosition(center);
+    addChild(label);
+
+    label->getContentSize();
+    label->setString("A");
+    this->scheduleOnce([](float dt){
+        FontAtlasCache::purgeCachedData();
+    }, 0.15f, "FontAtlasCache::purgeCachedData");
+}
+
+std::string LabelIssue13202Test::title() const
+{
+    return "Test for Issue #13202";
+}
+
+std::string LabelIssue13202Test::subtitle() const
+{
+    return "FontAtlasCache::purgeCachedData should not cause crash.";
 }

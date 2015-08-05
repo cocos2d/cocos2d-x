@@ -39,7 +39,8 @@ std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
 
 void FontAtlasCache::purgeCachedData()
 {
-    for (auto & atlas:_atlasMap)
+    auto atlasMapCopy = _atlasMap;
+    for (auto&& atlas : atlasMapCopy)
     {
         atlas.second->purgeTexturesAtlas();
     }
