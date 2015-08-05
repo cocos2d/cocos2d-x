@@ -218,7 +218,7 @@ public:
     SpriteFrame* getSpriteFrameByName(const std::string& name);
 
     /** @deprecated use getSpriteFrameByName() instead */
-    CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
+	CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
@@ -238,20 +238,6 @@ protected:
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
-
-    struct AsyncLoadParam
-    {
-        std::function<void(void*, bool)> afterLoadCallback; // callback after load
-        void*                           callbackParam;
-        bool                            resultTexture; // texture load result
-        bool                            resultPList; // plist load result
-        std::string                     plist;
-        std::string                     textureFileName;
-
-        cocos2d::ValueMap               dictionary;
-        cocos2d::Texture2D*             texture;
-        Image*                          image;
-    };
 };
 
 // end of _2d group

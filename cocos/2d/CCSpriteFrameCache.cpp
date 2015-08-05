@@ -188,7 +188,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
             }
-
+            
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
@@ -339,14 +339,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
-            spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
+           spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
             removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
-
+    
     // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {
@@ -460,6 +460,19 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
     return frame;
 }
 
+struct AsyncLoadParam
+{
+    std::function<void(void*, bool)> afterLoadCallback; // callback after load
+    void*                           callbackParam;
+    bool                            resultTexture; // texture load result
+    bool                            resultPList; // plist load result
+    std::string                     plist;
+    std::string                     textureFileName;
+
+    cocos2d::ValueMap               dictionary;
+    cocos2d::Texture2D*             texture;
+    Image*                          image;
+};
 void SpriteFrameCache::addSpriteFramesWithFileAsync(const std::string& plist, const std::string& textureFileName, const std::function<void(void*, bool)>& callback, void* callbackparam)
 {
     if (_loadedFileNames->find(plist) != _loadedFileNames->end())
