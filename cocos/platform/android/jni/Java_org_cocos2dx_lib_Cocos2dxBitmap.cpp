@@ -60,10 +60,7 @@ std::string getStringWithEllipsisJni(const char* text, float width, float fontSi
         }
 
         jstring retFromJava = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, width, fontSize);
-        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(t.env, retFromJava, ret))
-        {
-            ret = "";
-        }
+        ret = cocos2d::StringUtils::getStringUTFCharsJNI(t.env, retFromJava);
         
         t.env->DeleteLocalRef(stringArg1);
         t.env->DeleteLocalRef(t.classID);

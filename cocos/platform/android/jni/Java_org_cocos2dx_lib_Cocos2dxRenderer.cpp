@@ -35,11 +35,7 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText(JNIEnv* env, jobject thiz, jstring text) {
-       std::string strValue = "";
-        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, text, strValue))
-        {
-            strValue = "";
-        }
+        std::string  strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, text);
         const char* pszText = strValue.c_str();
         cocos2d::IMEDispatcher::sharedDispatcher()->dispatchInsertText(pszText, strlen(pszText));
     }

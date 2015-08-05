@@ -15,11 +15,7 @@ extern "C" {
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge_callLuaFunctionWithString
   (JNIEnv *env, jclass cls, jint functionId, jstring value)
 {
-    std::string strValue = "";
-    if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, value, strValue))
-    {
-        strValue = "";
-     }
+    std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, value, strValue);
     int ret = LuaJavaBridge::callLuaFunctionById(functionId, strValue.c_str());
     return ret;
 }
@@ -27,10 +23,9 @@ JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge_callLuaFuncti
 JNIEXPORT jint JNICALL Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge_callLuaGlobalFunctionWithString
   (JNIEnv *env, jclass cls, jstring luaFunctionName, jstring value)
 {
-    std::string functionNameStr = "";
-    std::string valueStr = "";
-    cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, luaFunctionName, functionNameStr);
-    cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, value, valueStr);
+    std::string functionNameStr = cocos2d::StringUtils::getStringUTFCharsJNI(env, luaFunctionName);
+    std::string valueStr = cocos2d::StringUtils::getStringUTFCharsJNI(env, value);
+    
     int ret = LuaJavaBridge::callLuaGlobalFunction(functionNameStr.c_str(), valueStr.c_str());
     return ret;
 }

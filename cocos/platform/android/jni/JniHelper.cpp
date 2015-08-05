@@ -270,11 +270,7 @@ namespace cocos2d {
             return "";
         }
 
-        std::string strValue = "";
-        if (!cocos2d::StringUtils::getUTFCharsFromJavaEnv(env, jstr, strValue))
-        {
-            strValue = "";
-        }
+        std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
 
         return strValue;
     }
