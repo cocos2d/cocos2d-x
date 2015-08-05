@@ -86,6 +86,10 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
             _outScene = Scene::create();
         }
         _outScene->retain();
+        
+        enableNodeEffects(true);
+        _inScene->enableNodeEffects(true);
+        _outScene->enableNodeEffects(true);
 
         CCASSERT( _inScene != _outScene, "Incoming scene must be different from the outgoing scene" );
         

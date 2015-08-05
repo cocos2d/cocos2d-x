@@ -234,11 +234,13 @@ protected:
     
     Quaternion  _projectRotatQuat;
     
+    bool        _enbleNodeEffect;
 #endif
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
 public:
     void stepPhysicsAndNavigation(float deltaTime);
+    void enableNodeEffects(bool asNode);
 #endif
 };
 

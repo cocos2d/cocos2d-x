@@ -59,6 +59,7 @@ Scene::Scene()
 ,_projectRotationY(0.0f)
 ,_projectRotateZ_X(0.0f)
 ,_projectRotateZ_Y(0.0f)
+,_enbleNodeEffect(false)
 #endif
 {
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -179,6 +180,9 @@ void Scene::setScreenProjection(Mat4& projection)
 
 void Scene::setPojectScale(float scaleX, float scaleY, float scaleZ)
 {
+    if (_projectScaleX == scaleX && _projectScaleY == scaleY && _projectScaleZ == scaleZ)
+        return;
+    
     float originScaleX = _projectScaleX;
     float originScaleY = _projectScaleY;
     float originScaleZ = _projectScaleZ;
@@ -198,46 +202,69 @@ void Scene::setPojectScale(float scaleX, float scaleY, float scaleZ)
 
 void Scene::setScaleX(float scaleX)
 {
-    if (_projectScaleX == scaleX)
-        return;
-    
-    setPojectScale(scaleX,_projectScaleY,_projectScaleZ);
+    if (_enbleNodeEffect)
+    {
+        Node::setScaleX(scaleX);
+    }
+    else
+    {
+        setPojectScale(scaleX,_projectScaleY,_projectScaleZ);
+    }
 }
 
 void Scene::setScale(float scale)
 {
-    if (_projectScaleX == scale && _projectScaleY == scale && _projectScaleZ == scale)
-        return;
-    
-    setPojectScale(scale,scale,scale);
+    if (_enbleNodeEffect)
+    {
+        Node::setScale(scale);
+    }
+    else
+    {
+        setPojectScale(scale,scale,scale);
+    }
 }
 
 void Scene::setScaleY(float scaleY)
 {
-    if (_projectScaleY == scaleY)
-        return;
-    
-    setPojectScale(_projectScaleX,scaleY,_projectScaleZ);
+    if (_enbleNodeEffect)
+    {
+        Node::setScaleY(scaleY);
+    }
+    else
+    {
+        setPojectScale(_projectScaleX,scaleY,_projectScaleZ);
+    }
 }
 
 void Scene::setScale(float scaleX,float scaleY)
 {
-    if (_projectScaleX == scaleX && _projectScaleY == scaleY)
-        return;
-    
-    setPojectScale(scaleX,scaleY,_projectScaleZ);
+    if (_enbleNodeEffect)
+    {
+        Node::setScale(scaleX, scaleY);
+    }
+    else
+    {
+        setPojectScale(scaleX, scaleY, _projectScaleZ);
+    }
 }
 
 void Scene::setScaleZ(float scaleZ)
 {
-    if (_scaleZ == scaleZ)
-        return;
-    
-    setPojectScale(_projectScaleX,_projectScaleY,scaleZ);
+    if (_enbleNodeEffect)
+    {
+        Node::setScaleZ(scaleZ);
+    }
+    else
+    {
+        setPojectScale(_projectScaleX,_projectScaleY,scaleZ);
+    }
 }
 
 void Scene::updateProjectionQuad(float rotationX, float rotationY, float rotationZ_X, float rotationZ_Y)
 {
+    if (_projectRotationX == rotationX && _projectRotationY == rotationY && _projectRotateZ_X == rotationZ_X && _projectRotateZ_Y == rotationZ_Y)
+        return;
+    
     float deltaX = rotationX - _projectRotationX;
     float deltaY = rotationY - _projectRotationY;
     float deltaZ_X = rotationZ_X - _projectRotateZ_X;
@@ -266,36 +293,55 @@ void Scene::updateProjectionQuad(float rotationX, float rotationY, float rotatio
 
 void Scene::setRotation(float rotation)
 {
-    if (_projectRotateZ_X == rotation)
-        return;
-    
-    updateProjectionQuad(_projectRotationX, _projectRotationX, rotation, rotation);
+    if (_enbleNodeEffect)
+    {
+        Node::setRotation(rotation);
+    }
+    else
+    {
+        updateProjectionQuad(_projectRotationX, _projectRotationX, rotation, rotation);
+    }
 }
 
 void Scene::setRotation3D(const Vec3& rotation)
 {
-    if (_projectRotationX == rotation.x &&
-        _projectRotationY == rotation.y &&
-        _projectRotateZ_X == rotation.z)
-        return;
+    if (_enbleNodeEffect)
+    {
+        Node::setRotation3D(rotation);
+    }
+    else
+    {
+        if (_projectRotationX == rotation.x &&
+            _projectRotationY == rotation.y &&
+            _projectRotateZ_X == rotation.z)
+            return;
     
-    updateProjectionQuad(rotation.x, rotation.y, rotation.z, rotation.z);
+        updateProjectionQuad(rotation.x, rotation.y, rotation.z, rotation.z);
+    }
 }
 
 void Scene::setRotationSkewX(float rotationX)
 {
-    if (_projectRotateZ_X == rotationX)
-        return;
-    
-    updateProjectionQuad(_projectRotationX, _projectRotationX, rotationX, _projectRotateZ_Y);
+    if (_enbleNodeEffect)
+    {
+        Node::setRotationSkewX(rotationX);
+    }
+    else
+    {
+        updateProjectionQuad(_projectRotationX, _projectRotationX, rotationX, _projectRotateZ_Y);
+    }
 }
 
 void Scene::setRotationSkewY(float rotationY)
 {
-    if (_projectRotateZ_Y == rotationY)
-        return;
-    
-    updateProjectionQuad(_projectRotationX, _projectRotationX, _projectRotateZ_X, rotationY);
+    if (_enbleNodeEffect)
+    {
+        Node::setRotationSkewY(rotationY);
+    }
+    else
+    {
+        updateProjectionQuad(_projectRotationX, _projectRotationX, _projectRotateZ_X, rotationY);
+    }
 }
 
 static bool camera_cmp(const Camera* a, const Camera* b)
@@ -505,5 +551,10 @@ void Scene::stepPhysicsAndNavigation(float deltaTime)
 #endif
 }
 #endif
+
+void Scene::enableNodeEffects(bool asNode)
+{
+    _enbleNodeEffect = asNode;
+}
 
 NS_CC_END
