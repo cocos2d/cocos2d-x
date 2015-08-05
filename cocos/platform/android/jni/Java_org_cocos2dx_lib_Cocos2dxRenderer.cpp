@@ -51,6 +51,6 @@ extern "C" {
             return 0;
         }
         std::string pszText = cocos2d::IMEDispatcher::sharedDispatcher()->getContentText();
-        return env->NewStringUTF(pszText.c_str());
+        return cocos2d::StringUtils::newStringUTFJNI(env, pszText);
     }
 }

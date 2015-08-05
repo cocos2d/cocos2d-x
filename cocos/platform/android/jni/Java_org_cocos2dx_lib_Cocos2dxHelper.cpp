@@ -32,6 +32,8 @@ THE SOFTWARE.
 #include "deprecated/CCString.h"
 #include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 
+#include "base/ccUTF8.h"
+
 #define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
@@ -117,12 +119,13 @@ void showEditTextDialogJNI(const char* title, const char* message, int inputMode
         jstring stringArg1;
 
         if (!title) {
+
             stringArg1 = t.env->NewStringUTF("");
         } else {
-            stringArg1 = t.env->NewStringUTF(title);
+            stringArg1 = cocos2d::StringUtils::newStringUTFJNI(t.env, title);
         }
 
-        jstring stringArg2 = t.env->NewStringUTF(message);
+        jstring stringArg2 = cocos2d::StringUtils::newStringUTFJNI(t.env, message);
 
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2,inputMode, inputFlag, returnType, maxLength);
 
