@@ -2143,7 +2143,7 @@ enableShadow : function (
 
 /**
  * @method getFontSize
- * @return {int}
+ * @return {float}
  */
 getFontSize : function (
 )
@@ -2225,13 +2225,13 @@ str
  * @method init
  * @param {String} arg0
  * @param {String} arg1
- * @param {int} arg2
+ * @param {float} arg2
  * @return {bool}
  */
 init : function (
 str, 
 str, 
-int 
+float 
 )
 {
     return false;
@@ -2321,10 +2321,10 @@ getTextHorizontalAlignment : function (
 
 /**
  * @method setFontSize
- * @param {int} arg0
+ * @param {float} arg0
  */
 setFontSize : function (
-int 
+float 
 )
 {
 },
@@ -2383,13 +2383,13 @@ texthalignment
  * @method create
 * @param {String} str
 * @param {String} str
-* @param {int} int
+* @param {float} float
 * @return {ccui.Text|ccui.Text}
 */
 create : function(
 str,
 str,
-int 
+float 
 )
 {
     return ccui.Text;
@@ -4496,6 +4496,16 @@ getCurPageIndex : function (
 },
 
 /**
+ * @method setDirection
+ * @param {ccui.PageView::Direction} arg0
+ */
+setDirection : function (
+direction 
+)
+{
+},
+
+/**
  * @method addWidgetToPage
  * @param {ccui.Widget} arg0
  * @param {long} arg1
@@ -4569,6 +4579,16 @@ layout,
 int 
 )
 {
+},
+
+/**
+ * @method getDirection
+ * @return {ccui.PageView::Direction}
+ */
+getDirection : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -6325,6 +6345,130 @@ node
  * @constructor
  */
 LayoutComponent : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ScrollViewBar
+ */
+ccui.ScrollViewBar = {
+
+/**
+ * @method setAutoHideEnabled
+ * @param {bool} arg0
+ */
+setAutoHideEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method onScrolled
+ * @param {vec2_object} arg0
+ */
+onScrolled : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method isAutoHideEnabled
+ * @return {bool}
+ */
+isAutoHideEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setAutoHideTime
+ * @param {float} arg0
+ */
+setAutoHideTime : function (
+float 
+)
+{
+},
+
+/**
+ * @method getWidth
+ * @return {float}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getPositionFromCorner
+ * @return {vec2_object}
+ */
+getPositionFromCorner : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setPositionFromCorner
+ * @param {vec2_object} arg0
+ */
+setPositionFromCorner : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getAutoHideTime
+ * @return {float}
+ */
+getAutoHideTime : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setWidth
+ * @param {float} arg0
+ */
+setWidth : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ccui.ScrollView} arg0
+ * @param {ccui.ScrollView::Direction} arg1
+ * @return {ccui.ScrollViewBar}
+ */
+create : function (
+scrollview, 
+direction 
+)
+{
+    return ccui.ScrollViewBar;
+},
+
+/**
+ * @method ScrollViewBar
+ * @constructor
+ * @param {ccui.ScrollView} arg0
+ * @param {ccui.ScrollView::Direction} arg1
+ */
+ScrollViewBar : function (
+scrollview, 
+direction 
 )
 {
 },

@@ -232,7 +232,7 @@ cocos2d::ActionInterval* FadeOutDownTilesDemo::createEffect(float t)
 
 FadeOutDownTilesDemo::FadeOutDownTilesDemo()
 {
-    _title = "Waves3D";
+    _title = "FadeOutDownTiles";
     _subtitle = "";
 }
 

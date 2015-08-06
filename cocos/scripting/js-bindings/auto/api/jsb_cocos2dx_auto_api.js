@@ -1020,9 +1020,11 @@ getRotation3D : function (
 
 /**
  * @method getNodeToParentAffineTransform
- * @return {cc.AffineTransform}
- */
-getNodeToParentAffineTransform : function (
+* @param {cc.Node} node
+* @return {cc.AffineTransform|cc.AffineTransform}
+*/
+getNodeToParentAffineTransform : function(
+node 
 )
 {
     return cc.AffineTransform;
@@ -1182,9 +1184,11 @@ getChildrenCount : function (
 
 /**
  * @method getNodeToParentTransform
- * @return {mat4_object}
- */
-getNodeToParentTransform : function (
+* @param {cc.Node} node
+* @return {mat4_object|mat4_object}
+*/
+getNodeToParentTransform : function(
+node 
 )
 {
     return cc.Mat4;
@@ -8703,6 +8707,16 @@ size
  */
 cc.Grid3DAction = {
 
+/**
+ * @method getGridRect
+ * @return {rect_object}
+ */
+getGridRect : function (
+)
+{
+    return cc.Rect;
+},
+
 };
 
 /**
@@ -13891,10 +13905,22 @@ getGrid : function(
 },
 
 /**
- * @method create
- * @return {cc.NodeGrid}
+ * @method getGridRect
+ * @return {rect_object}
  */
-create : function (
+getGridRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method create
+* @param {rect_object} rect
+* @return {cc.NodeGrid|cc.NodeGrid}
+*/
+create : function(
+rect 
 )
 {
     return cc.NodeGrid;
@@ -18574,6 +18600,16 @@ framebuffer
 },
 
 /**
+ * @method isViewProjectionUpdated
+ * @return {bool}
+ */
+isViewProjectionUpdated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method initPerspective
  * @param {float} arg0
  * @param {float} arg1
@@ -18704,11 +18740,31 @@ size
 },
 
 /**
+ * @method setGridRect
+ * @param {rect_object} arg0
+ */
+setGridRect : function (
+rect 
+)
+{
+},
+
+/**
  * @method afterBlit
  */
 afterBlit : function (
 )
 {
+},
+
+/**
+ * @method getGridRect
+ * @return {rect_object}
+ */
+getGridRect : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -18825,15 +18881,17 @@ getReuseGrid : function (
 
 /**
  * @method initWithSize
-* @param {size_object|size_object} size
-* @param {cc.Texture2D} texture2d
-* @param {bool} bool
-* @return {bool|bool}
+* @param {size_object|size_object|size_object|size_object} size
+* @param {rect_object|cc.Texture2D|cc.Texture2D} rect
+* @param {bool|bool} bool
+* @param {rect_object} rect
+* @return {bool|bool|bool|bool}
 */
 initWithSize : function(
 size,
 texture2d,
-bool 
+bool,
+rect 
 )
 {
     return false;
@@ -18920,15 +18978,17 @@ bool
 
 /**
  * @method create
-* @param {size_object|size_object} size
-* @param {cc.Texture2D} texture2d
-* @param {bool} bool
-* @return {cc.Grid3D|cc.Grid3D}
+* @param {size_object|size_object|size_object|size_object} size
+* @param {rect_object|cc.Texture2D|cc.Texture2D} rect
+* @param {bool|bool} bool
+* @param {rect_object} rect
+* @return {cc.Grid3D|cc.Grid3D|cc.Grid3D|cc.Grid3D}
 */
 create : function(
 size,
 texture2d,
-bool 
+bool,
+rect 
 )
 {
     return cc.Grid3D;
@@ -18952,15 +19012,17 @@ cc.TiledGrid3D = {
 
 /**
  * @method create
-* @param {size_object|size_object} size
-* @param {cc.Texture2D} texture2d
-* @param {bool} bool
-* @return {cc.TiledGrid3D|cc.TiledGrid3D}
+* @param {size_object|size_object|size_object|size_object} size
+* @param {rect_object|cc.Texture2D|cc.Texture2D} rect
+* @param {bool|bool} bool
+* @param {rect_object} rect
+* @return {cc.TiledGrid3D|cc.TiledGrid3D|cc.TiledGrid3D|cc.TiledGrid3D}
 */
 create : function(
 size,
 texture2d,
-bool 
+bool,
+rect 
 )
 {
     return cc.TiledGrid3D;
@@ -19684,9 +19746,17 @@ GLProgram : function (
 cc.ShaderCache = {
 
 /**
- * @method reloadDefaultGLPrograms
+ * @method loadDefaultGLPrograms
  */
-reloadDefaultGLPrograms : function (
+loadDefaultGLPrograms : function (
+)
+{
+},
+
+/**
+ * @method reloadDefaultGLProgramsRelativeToLights
+ */
+reloadDefaultGLProgramsRelativeToLights : function (
 )
 {
 },
@@ -19704,6 +19774,14 @@ str
 },
 
 /**
+ * @method reloadDefaultGLPrograms
+ */
+reloadDefaultGLPrograms : function (
+)
+{
+},
+
+/**
  * @method getGLProgram
  * @param {String} arg0
  * @return {cc.GLProgram}
@@ -19713,14 +19791,6 @@ str
 )
 {
     return cc.GLProgram;
-},
-
-/**
- * @method loadDefaultGLPrograms
- */
-loadDefaultGLPrograms : function (
-)
-{
 },
 
 /**

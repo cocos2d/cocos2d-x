@@ -1,8 +1,7 @@
 /****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
 
+ http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -48,17 +47,17 @@ var fileUtilsBase = BaseTestLayer.extend({
         new NativeTestScene().runThisTest();
     },
     onRestartCallback:function (sender) {
-        var s = new FileUtilsScene();
+        var s = new cc.Scene();
         s.addChild(restartfileUtils());
         director.runScene(s);
     },
     onNextCallback:function (sender) {
-        var s = new FileUtilsScene();
+        var s = new cc.Scene();
         s.addChild(nextfileUtils());
         director.runScene(s);
     },
     onBackCallback:function (sender) {
-        var s = new FileUtilsScene();
+        var s = new cc.Scene();
         s.addChild(previousfileUtils());
         director.runScene(s);
     },
@@ -324,16 +323,10 @@ var restartfileUtils = function () {
     return new arrayOffileUtils[fileUtilsSceneIdx]();
 };
 
-var FileUtilsScene = cc.Scene.extend({
-    ctor:function() {
-        this._super();
-    }
-});
-
 var startFileUtilsTest = function()
 {
     fileUtilsSceneIdx = 0;
-    var s = new FileUtilsScene();
+    var s = new cc.Scene();
     s.addChild(restartfileUtils());
     director.runScene(s);
 }

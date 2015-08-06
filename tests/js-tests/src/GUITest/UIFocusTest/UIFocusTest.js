@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIFocusTestBase = UIScene.extend({
+var UIFocusTestBase = UIMainLayer.extend({
     _dpadMenu: null,
     _firstFocusedWidget: null,
     _eventListener:null,

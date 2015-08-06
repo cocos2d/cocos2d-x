@@ -103,7 +103,7 @@ bool AudioEngineImpl::init()
     return ret;
 }
 
-AudioCache* AudioEngineImpl::preload(const std::string& filePath)
+AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
 {
     AudioCache* audioCache = nullptr;
 
@@ -113,6 +113,10 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath)
         if (it != _audioCaches.end())
         {
             audioCache = &it->second;
+            if (callback && audioCache->_alBufferReady)
+            {
+                callback(true);
+            }
             break;
         }
 
@@ -148,6 +152,18 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath)
         AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
     } while (false);
 
+    if (callback)
+    {
+        if (audioCache)
+        {
+            audioCache->addLoadCallback(callback);
+        } 
+        else
+        {
+            callback(false);
+        }
+    }
+
     return audioCache;
 }
 
@@ -166,7 +182,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = preload(filePath);
+    AudioCache* audioCache = preload(filePath, nullptr);
     if (audioCache == nullptr)
     {
         return AudioEngine::INVALID_AUDIO_ID;
@@ -176,7 +192,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     player->_alSource = alSource;
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addCallbacks(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
     
     _alSourceUsed[alSource] = true;
     

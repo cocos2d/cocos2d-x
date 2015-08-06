@@ -24,10 +24,10 @@
  ****************************************************************************/
 
 
-var UIWebViewTest = UIScene.extend({
+var UIWebViewTest = UIMainLayer.extend({
 
     onEnter: function(){
-        UIScene.prototype.onEnter.call(this);
+        UIMainLayer.prototype.onEnter.call(this);
 
         var webView = new ccui.WebView("http://www.baidu.com");
         webView.setContentSize(320, 240);

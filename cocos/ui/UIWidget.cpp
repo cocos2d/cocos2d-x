@@ -223,6 +223,14 @@ bool Widget::init()
 
 void Widget::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     if (!_usingLayoutComponent)
         updateSizeAndPosition();
     ProtectedNode::onEnter();
@@ -230,6 +238,14 @@ void Widget::onEnter()
 
 void Widget::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     unscheduleUpdate();
     ProtectedNode::onExit();
 }
@@ -587,10 +603,6 @@ bool Widget::isHighlighted() const
 
 void Widget::setHighlighted(bool hilight)
 {
-    if (hilight == _highlight)
-    {
-        return;
-    }
     _highlight = hilight;
     if (_bright)
     {

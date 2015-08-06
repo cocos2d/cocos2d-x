@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIPageViewTest = UIScene.extend({
+var UIPageViewTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -89,7 +89,7 @@ var UIPageViewTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewButtonTest = UIScene.extend({
+var UIPageViewButtonTest = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -165,7 +165,7 @@ var UIPageViewButtonTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewCustomScrollThreshold = UIScene.extend({
+var UIPageViewCustomScrollThreshold = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -240,7 +240,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewTouchPropagationTest = UIScene.extend({
+var UIPageViewTouchPropagationTest = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -396,7 +396,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
+var UIPageViewDynamicAddAndRemoveTest = UIMainLayer.extend({
     init: function(){
         var self = this;
         if (this._super()){

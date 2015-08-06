@@ -353,11 +353,32 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
 
-    _mainWindow = glfwCreateWindow(rect.size.width * _frameZoomFactor,
-                                   rect.size.height * _frameZoomFactor,
-                                   _viewName.c_str(),
-                                   _monitor,
-                                   nullptr);
+    int needWidth = rect.size.width * _frameZoomFactor;
+    int neeHeight = rect.size.height * _frameZoomFactor;
+
+    _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
+
+    /*
+    *  Note that the created window and context may differ from what you requested,
+    *  as not all parameters and hints are
+    *  [hard constraints](@ref window_hints_hard).  This includes the size of the
+    *  window, especially for full screen windows.  To retrieve the actual
+    *  attributes of the created window and context, use queries like @ref
+    *  glfwGetWindowAttrib and @ref glfwGetWindowSize.
+    *
+    *  see declaration glfwCreateWindow
+    */
+    int realW = 0, realH = 0;
+    glfwGetWindowSize(_mainWindow, &realW, &realH);
+    if (realW != needWidth)
+    {
+        rect.size.width = realW / _frameZoomFactor;
+    }
+    if (realH != neeHeight)
+    {
+        rect.size.height = realH / _frameZoomFactor;
+    }
+
     glfwMakeContextCurrent(_mainWindow);
 
     glfwSetMouseButtonCallback(_mainWindow, GLFWEventHandler::onGLFWMouseCallBack);
@@ -564,6 +585,17 @@ void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
                (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
                (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor),
                (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
+}
+
+Rect GLViewImpl::getScissorRect() const
+{
+    GLfloat params[4];
+    glGetFloatv(GL_SCISSOR_BOX, params);
+    float x = (params[0] - _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor) / (_scaleX * _retinaFactor * _frameZoomFactor);
+    float y = (params[1] - _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor) / (_scaleY * _retinaFactor  * _frameZoomFactor);
+    float w = params[2] / (_scaleX * _retinaFactor * _frameZoomFactor);
+    float h = params[3] / (_scaleY * _retinaFactor  * _frameZoomFactor);
+    return Rect(x, y, w, h);
 }
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)

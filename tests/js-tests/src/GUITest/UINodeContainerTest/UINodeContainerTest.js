@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIWidgetAddNodeTest = UIScene.extend({
+var UIWidgetAddNodeTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();

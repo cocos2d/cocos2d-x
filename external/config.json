@@ -1,10 +1,9 @@
 {
-    "version":"v3-deps-70",
-    "zip_file_size":"130531291",
+    "version":"v3-deps-71",
+    "zip_file_size":"119277304",
     "repo_name":"cocos2d-x-3rd-party-libs-bin",
     "repo_parent":"https://github.com/cocos2d/",
     "move_dirs":{
-        "fbx-conv":"tools",
-        "plutil-win32":"tools/framework-compile/bin/proj_modifier"
+        "fbx-conv":"tools"
     }
 }

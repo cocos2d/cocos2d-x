@@ -30,6 +30,7 @@
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCDrawNode.h"
+#include "2d/CCCamera.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
@@ -40,8 +41,6 @@
 #include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
-
-const int Label::DistanceFieldFontSize = 50;
 
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
@@ -449,7 +448,6 @@ void Label::reset()
     _shadowEnabled = false;
     _shadowBlurRadius = 0.f;
 
-    _correctionScale = 1.f;
     _useDistanceField = false;
     _useA8Shader = false;
     _clipEnabled = false;
@@ -468,8 +466,10 @@ void Label::updateShaderProgram()
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
-        else
+        else if (_shadowEnabled)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        else
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
         break;
     case cocos2d::LabelEffect::OUTLINE: 
@@ -531,7 +531,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
 
 bool Label::setTTFConfig(const TTFConfig& ttfConfig)
 {
-    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(ttfConfig);
+    FontAtlas *newAtlas = FontAtlasCache::getFontAtlasTTF(&ttfConfig);
 
     if (!newAtlas)
     {
@@ -556,10 +556,6 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     {
         _currLabelEffect = LabelEffect::NORMAL;
         updateShaderProgram();
-        if(ttfConfig.distanceFieldEnabled)
-        {
-            this->setCorrectionScale(1.0f * ttfConfig.fontSize / DistanceFieldFontSize);
-        }
     }
 
     return true;
@@ -636,57 +632,6 @@ void Label::setLineBreakWithoutSpace(bool breakWithoutSpace)
     {
         _lineBreakWithoutSpaces = breakWithoutSpace;
         _contentDirty = true;     
-    }
-}
-
-void Label::setScale(float scale)
-{
-    if (_useDistanceField)
-    {
-        scale *= _correctionScale;
-    } 
-    Node::setScale(scale);
-}
-
-void Label::setScaleX(float scaleX)
-{
-    if (_useDistanceField)
-    {
-        scaleX *= _correctionScale;
-    } 
-    Node::setScaleX(scaleX);
-}
-
-void Label::setScaleY(float scaleY)
-{
-    if (_useDistanceField)
-    {
-        scaleY *= _correctionScale;
-    } 
-    Node::setScaleY(scaleY);
-}
-
-float Label::getScaleY() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleY / _correctionScale;
-    }
-    else
-    {
-        return _scaleY;
-    }
-}
-
-float Label::getScaleX() const
-{
-    if (_useDistanceField)
-    {
-        return _scaleX / _correctionScale;
-    }
-    else
-    {
-        return _scaleX;
     }
 }
 
@@ -929,6 +874,18 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     _shadowColor4F.g = shadowColor.g / 255.0f;
     _shadowColor4F.b = shadowColor.b / 255.0f;
     _shadowColor4F.a = shadowColor.a / 255.0f;
+
+    if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
+    {
+        if (_shadowEnabled)
+        {
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        } 
+        else
+        {
+            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+        }
+    }
 }
 
 void Label::disableEffect()
@@ -981,12 +938,6 @@ void Label::disableEffect(LabelEffect effect)
     default:
         break;
     }
-}
-
-void Label::setCorrectionScale(float correctionScale)
-{
-    _correctionScale = correctionScale * CC_CONTENT_SCALE_FACTOR();
-    Node::setScale(_correctionScale);
 }
 
 void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
@@ -1258,15 +1209,37 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     // Don't do calculate the culling if the transform was not updated
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
 #if CC_USE_CULLING
-    _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        _insideBounds = (transformUpdated || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    }
+    else
+    {
+        _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
 
     if (_insideBounds)
 #endif
     {
-        _customCommand.init(_globalZOrder, transform, flags);
-        _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+        if (!_shadowEnabled && (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP))
+        {
+            for (auto&& it : _letters)
+            {
+                it.second->updateTransform();
+            }
+            auto textureAtlas = _batchNodes.at(0)->getTextureAtlas();
+            _quadCommand.init(_globalZOrder, textureAtlas->getTexture()->getName(), getGLProgramState(), 
+                _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
+            renderer->addCommand(&_quadCommand);
+        }
+        else
+        {
+            _customCommand.init(_globalZOrder, transform, flags);
+            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
 
-        renderer->addCommand(&_customCommand);
+            renderer->addCommand(&_customCommand);
+        }
     }
 }
 

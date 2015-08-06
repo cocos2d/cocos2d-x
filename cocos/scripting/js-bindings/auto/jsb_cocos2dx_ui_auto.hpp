@@ -588,6 +588,7 @@ void js_register_cocos2dx_ui_PageView(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_ui_PageView_getCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_getCurPageIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_PageView_setDirection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_addWidgetToPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_isUsingCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_setCurPageIndex(JSContext *cx, uint32_t argc, jsval *vp);
@@ -595,6 +596,7 @@ bool js_cocos2dx_ui_PageView_removePage(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ui_PageView_setUsingCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_setCustomScrollThreshold(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_insertPage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_PageView_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_scrollToPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_getPage(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_PageView_removePageAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
@@ -843,5 +845,24 @@ bool js_cocos2dx_ui_LayoutComponent_setSize(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_ui_LayoutComponent_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_LayoutComponent_bindLayoutComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_LayoutComponent_LayoutComponent(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_ui_ScrollViewBar_class;
+extern JSObject *jsb_cocos2d_ui_ScrollViewBar_prototype;
+
+bool js_cocos2dx_ui_ScrollViewBar_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ui_ScrollViewBar_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ui_ScrollViewBar(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_ui(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ui_ScrollViewBar_setAutoHideEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_onScrolled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_isAutoHideEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_setAutoHideTime(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_getPositionFromCorner(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_setPositionFromCorner(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_getAutoHideTime(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_setWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_ScrollViewBar_ScrollViewBar(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_ui_h__

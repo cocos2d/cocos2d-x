@@ -43,7 +43,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/TriggerMng.cpp
   editor-support/cocostudio/TriggerObj.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
-  editor-support/cocostudio/CCObjectExtensionData.cpp
+  editor-support/cocostudio/CCComExtensionData.cpp
   editor-support/cocostudio/CocoStudio.cpp
   editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.cpp
   editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.cpp
@@ -65,6 +65,8 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.cpp
   editor-support/cocostudio/WidgetReader/Particle3DReader/Particle3DReader.cpp    
   editor-support/cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.cpp
+  editor-support/cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.cpp
+  editor-support/cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.cpp
   editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.cpp
   editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.cpp
   editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.cpp
@@ -77,6 +79,9 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/ActionTimeline/CCFrame.cpp
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
   editor-support/cocostudio/ActionTimeline/CSLoader.cpp
+  editor-support/cocostudio/ActionTimeline/CCBoneNode.cpp
+  editor-support/cocostudio/ActionTimeline/CCSkeletonNode.cpp
+  editor-support/cocostudio/ActionTimeline/CCSkinNode.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
   editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
 )

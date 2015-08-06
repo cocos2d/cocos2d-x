@@ -531,6 +531,18 @@ public class Cocos2dxHelper {
         editor.remove(key);
         editor.commit();
     }
+
+    public static byte[] conversionEncoding(byte[] text, String fromCharset,String newCharset)
+    {
+        try {
+            String str = new String(text,fromCharset);
+            return str.getBytes(newCharset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     
     // ===========================================================
     // Inner and Anonymous Classes

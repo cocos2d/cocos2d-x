@@ -93,6 +93,9 @@ bool UIRichTextTest::init()
         
         _widget->addChild(_richText);
         
+        // test remove all children, this call won't effect the test
+        _richText->removeAllChildren();
+        
         return true;
     }
     return false;

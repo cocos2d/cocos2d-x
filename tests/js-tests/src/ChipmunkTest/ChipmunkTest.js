@@ -132,6 +132,15 @@ var ChipmunkSprite = ChipmunkBaseLayer.extend( {
 
         this.addSprite = function( pos ) {
             var sprite =  this.createPhysicsSprite( pos );
+            var child = new cc.Sprite(s_pathSister1);
+            child.attr({
+                scale: 0.4,
+                anchorX: 0,
+                anchorY: 0,
+                x: sprite.width/2,
+                y: sprite.height/2
+            });
+            sprite.addChild(child);
             this.addChild( sprite );
         };
 
@@ -231,6 +240,15 @@ var ChipmunkSpriteBatchTest = ChipmunkSprite.extend( {
 
         this.addSprite = function( pos ) {
             var sprite =  this.createPhysicsSprite( pos );
+            var child = new cc.Sprite(s_pathGrossini);
+            child.attr({
+                scale: 0.4,
+                anchorX: 0,
+                anchorY: 0,
+                x: sprite.width/2,
+                y: sprite.height/2
+            });
+            sprite.addChild(child);
             this.batch.addChild( sprite );
         };
 

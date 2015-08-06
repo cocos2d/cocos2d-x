@@ -174,7 +174,7 @@ jsval spslotdata_to_jsval(JSContext* cx, spSlotData& v)
         JS_DefineProperty(cx, tmp, "g", v.g, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "b", v.b, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "a", v.a, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
-        JS_DefineProperty(cx, tmp, "additiveBlending", v.additiveBlending, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+        JS_DefineProperty(cx, tmp, "blendMode", v.blendMode, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
         JS_DefineProperty(cx, tmp, "boneData", JS::RootedValue(cx, spbonedata_to_jsval(cx, v.boneData)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     if (ok)

@@ -28,31 +28,48 @@
 var ReflectionTestLayer = BaseTestLayer.extend({
     _title:"jsb.reflection",
     _subtitle:"call java/objective-c methods in js",
-
+    onRestartCallback:function (sender) {
+        new ReflectionTestScene().runThisTest();
+    },
     ctor:function() {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
 
-        var label = new cc.LabelTTF("Show Alert Dialog", "Arial", 35);
+        var resultLabel = new cc.LabelTTF("Show emotion result", "Arial", 20);
+        resultLabel.setPosition(cc.p(cc.winSize.width / 2, cc.winSize.height - 130));
+        this.addChild(resultLabel);
+
+        var label = new cc.LabelTTF("Show Alert Dialog", "Arial", 30);
         var menuItem = new cc.MenuItemLabel(label, function(){
             if(cc.sys.os == cc.sys.OS_ANDROID){
                 jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;)V", "How are you ?", "I'm great !");
             }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){
                 var ret = jsb.reflection.callStaticMethod("NativeOcClass","callNativeUIWithTitle:andContent:","cocos2d-js","Yes! you call a Native UI from Reflection");
-                cc.log("ret val is "+ret);
+                resultLabel.setString("ret val is "+ret);
             }
         }, this);
 
-        var label2 = new cc.LabelTTF("CallReflectionWithBool", "Arial", 35);
+        var label2 = new cc.LabelTTF("CallReflectionWithBool", "Arial", 30);
         var menuItem2 = new cc.MenuItemLabel(label2, function(){
             if(cc.sys.os == cc.sys.OS_ANDROID){
                 jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "showAlertDialog", "(Ljava/lang/String;Ljava/lang/String;Z)V", "How are you ?", "I'm great !", true);
             }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){
                 var ret = jsb.reflection.callStaticMethod("NativeOcClass","callNativeUIWithTitle:andContent:addBool:","cocos2d-js","Yes! you call a Native UI from Reflection", true);
-                cc.log("ret val is "+ret);
+                resultLabel.setString("ret val is "+ret);
             }
         }, this);
 
-        var menu = new cc.Menu(menuItem, menuItem2);
+        var label3 = new cc.LabelTTF("CallReflectionWithUTF8Str", "Arial", 30);
+        var menuItem3 = new cc.MenuItemLabel(label3, function(){
+            if(cc.sys.os == cc.sys.OS_ANDROID){
+                var ret = jsb.reflection.callStaticMethod("org/cocos2dx/js_tests/AppActivity", "getUtfStr", "()Ljava/lang/String;");
+                resultLabel.setString("result:" + ret);
+            }else if(cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_OSX){
+                var ret = "you will see emotion:💝";
+                jsb.reflection.callStaticMethod("NativeOcClass","callNativeUIWithTitle:andContent:","Show Emotion", ret);
+                resultLabel.setString("result:" + ret);
+            }
+        }, this);
+        var menu = new cc.Menu(menuItem, menuItem2, menuItem3);
         menu.alignItemsVerticallyWithPadding(4);
         
         this.addChild(menu);
