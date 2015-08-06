@@ -71,7 +71,7 @@ bool AudioEngineImpl::init(){
 };
 
 int AudioEngineImpl::play2d(const std::string &fileFullPath ,bool loop ,float volume){
-  int id = preload(fileFullPath); 
+  int id = preload(fileFullPath, nullptr); 
   if(id >= 0){
     mapChannelInfo[id].loop=loop;  
     mapChannelInfo[id].channel->setPaused(true); 
@@ -244,20 +244,20 @@ for (auto it = mapSound.cbegin(); it != mapSound.cend(); ++it) {
 };
 
     
-/**
-* other implementations return AudioCache, but that value is unused in main AudioEngine.cpp
-*/ 
-int AudioEngineImpl::preload(const std::string& filePath){
+int AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback){
   FMOD::Sound * sound = findSound(filePath); 
   if(!sound){
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
     FMOD_RESULT result = pSystem->createSound(fullPath.c_str(), FMOD_LOOP_OFF, 0, &sound);
     if (ERRCHECK(result)){
       printf("sound effect in %s could not be preload\n", filePath.c_str());
+      if(callback){
+       callback(false);
+      }
       return -1;
     }
     mapSound[fullPath] = sound; 
-  }  
+  }
   
   int id = mapChannelInfo.size() + 1;
   auto& chanelInfo = mapChannelInfo[id];
@@ -269,6 +269,9 @@ int AudioEngineImpl::preload(const std::string& filePath){
   //we are going to use UserData to store pointer to Channel when playing
   chanelInfo.sound->setUserData((void *)id);
   
+  if(callback){
+   callback(true); 
+  }
   return id; 
 };
 
