@@ -53,6 +53,7 @@ NS_CC_END
 
 #include "bullet/btBulletCollisionCommon.h"
 #include "bullet/btBulletDynamicsCommon.h"
+#include "bullet/BulletCollision/CollisionDispatch/btGhostObject.h"
 
 //convert between cocos and bullet
 cocos2d::Vec3 convertbtVector3ToVec3(const btVector3 &btVec3);

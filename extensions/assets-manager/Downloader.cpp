@@ -392,6 +392,7 @@ void Downloader::downloadToBufferSync(const std::string &srcUrl, unsigned char *
 void Downloader::downloadToBuffer(const std::string &srcUrl, const std::string &customId, const StreamData &buffer, const ProgressData &data)
 {
     std::weak_ptr<Downloader> ptr = shared_from_this();
+    std::shared_ptr<Downloader> shared = ptr.lock();
     CURL *curl = curl_easy_init();
     if (!curl)
     {
@@ -463,6 +464,7 @@ void Downloader::downloadSync(const std::string &srcUrl, const std::string &stor
 void Downloader::download(const std::string &srcUrl, const std::string &customId, const FileDescriptor &fDesc, const ProgressData &data)
 {
     std::weak_ptr<Downloader> ptr = shared_from_this();
+    std::shared_ptr<Downloader> shared = ptr.lock();
     CURL *curl = curl_easy_init();
     if (!curl)
     {
@@ -524,6 +526,7 @@ void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string
 {
     // Make sure downloader won't be released
     std::weak_ptr<Downloader> ptr = shared_from_this();
+    std::shared_ptr<Downloader> shared = ptr.lock();
     
     if (units.size() != 0)
     {

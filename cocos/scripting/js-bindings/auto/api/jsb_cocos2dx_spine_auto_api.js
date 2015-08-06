@@ -51,6 +51,16 @@ setBonesToSetupPose : function (
 },
 
 /**
+ * @method isOpacityModifyRGB
+ * @return {bool}
+ */
+isOpacityModifyRGB : function (
+)
+{
+    return false;
+},
+
+/**
  * @method initWithData
  * @param {spSkeletonData} arg0
  * @param {bool} arg1
@@ -76,6 +86,16 @@ bool
  * @method setSlotsToSetupPose
  */
 setSlotsToSetupPose : function (
+)
+{
+},
+
+/**
+ * @method setOpacityModifyRGB
+ * @param {bool} arg0
+ */
+setOpacityModifyRGB : function (
+bool 
 )
 {
 },
@@ -438,7 +458,7 @@ float
  * @method SkeletonAnimation
  * @constructor
 * @param {spSkeletonData|String|String} spskeletondata
-* @param {spAtlas|String} spatlas
+* @param {bool|spAtlas|String} bool
 * @param {float|float} float
 */
 SkeletonAnimation : function(

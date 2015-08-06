@@ -246,4 +246,18 @@ public:
 protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
+
+class Issue12249 : public UIScene
+{
+public:
+    CREATE_FUNC(Issue12249);
+    
+    Issue12249();
+    
+    virtual bool init() override;
+    
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */

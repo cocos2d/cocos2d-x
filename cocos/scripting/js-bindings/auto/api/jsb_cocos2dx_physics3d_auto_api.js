@@ -9,6 +9,20 @@ var jsb = jsb || {};
 jsb.Physics3DShape = {
 
 /**
+ * @method initConvexHull
+ * @param {vec3_object} arg0
+ * @param {int} arg1
+ * @return {bool}
+ */
+initConvexHull : function (
+vec3, 
+int 
+)
+{
+    return false;
+},
+
+/**
  * @method getbtShape
  * @return {btCollisionShape}
  */
@@ -16,6 +30,58 @@ getbtShape : function (
 )
 {
     return btCollisionShape;
+},
+
+/**
+ * @method initSphere
+ * @param {float} arg0
+ * @return {bool}
+ */
+initSphere : function (
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initBox
+ * @param {vec3_object} arg0
+ * @return {bool}
+ */
+initBox : function (
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method initCapsule
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initCapsule : function (
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method initCylinder
+ * @param {float} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initCylinder : function (
+float, 
+float 
+)
+{
+    return false;
 },
 
 /**
@@ -92,6 +158,15 @@ float
 )
 {
     return cc.Physics3DShape;
+},
+
+/**
+ * @method Physics3DShape
+ * @constructor
+ */
+Physics3DShape : function (
+)
+{
 },
 
 };
@@ -927,6 +1002,14 @@ collisionChecking : function (
 },
 
 /**
+ * @method setGhostPairCallback
+ */
+setGhostPairCallback : function (
+)
+{
+},
+
+/**
  * @method init
  * @param {cc.Physics3DWorldDes} arg0
  * @return {bool}
@@ -1239,6 +1322,24 @@ getPivotPointInB : function (
 )
 {
     return cc.Vec3;
+},
+
+/**
+ * @method init
+* @param {cc.Physics3DRigidBody|cc.Physics3DRigidBody} physics3drigidbody
+* @param {cc.Physics3DRigidBody|vec3_object} physics3drigidbody
+* @param {vec3_object} vec3
+* @param {vec3_object} vec3
+* @return {bool|bool}
+*/
+init : function(
+physics3drigidbody,
+physics3drigidbody,
+vec3,
+vec3 
+)
+{
+    return false;
 },
 
 /**

@@ -54,25 +54,52 @@ static bool isPOT(int number)
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
 {
     Terrain * terrain = new (std::nothrow)Terrain();
-    terrain->setSkirtHeightRatio(parameter._skirtHeightRatio);
-    terrain->_terrainData = parameter;
-    terrain->_crackFixedType = fixedType;
-    terrain->_isCameraViewChanged = true;
+    if (terrain->initWithTerrainData(parameter, fixedType))
+    {
+        terrain->autorelease();
+        return terrain;
+    }
+    CC_SAFE_DELETE(terrain);
+    return terrain;
+}
+bool Terrain::initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType)
+{
+    this->setSkirtHeightRatio(parameter._skirtHeightRatio);
+    this->_terrainData = parameter;
+    this->_crackFixedType = fixedType;
+    this->_isCameraViewChanged = true;
     //chunksize
-    terrain->_chunkSize = parameter._chunkSize;
-    bool initResult =true;
+    this->_chunkSize = parameter._chunkSize;
+    bool initResult = true;
 
     //init heightmap
-    initResult &= terrain->initHeightMap(parameter._heightMapSrc.c_str());
+    initResult &= this->initHeightMap(parameter._heightMapSrc.c_str());
     //init textures alpha map,detail Maps
-    initResult &= terrain->initTextures();
-    initResult &= terrain->initProperties();
-    terrain->autorelease();
-    if(!initResult)
-    {
-        CC_SAFE_DELETE(terrain);
-    }    
-    return terrain;
+    initResult &= this->initTextures();
+    initResult &= this->initProperties();
+    
+    return initResult;
+}
+
+void cocos2d::Terrain::setLightMap(const std::string& fileName)
+{
+    CC_SAFE_RELEASE(_lightMap);
+    auto image = new (std::nothrow)Image();
+    image->initWithImageFile(fileName);
+    _lightMap = new (std::nothrow)Texture2D();
+    _lightMap->initWithImage(image);
+
+    Texture2D::TexParams tRepeatParams;//set texture parameters
+    tRepeatParams.magFilter = tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_REPEAT;
+    tRepeatParams.wrapT = GL_REPEAT;
+    _lightMap->setTexParameters(tRepeatParams);
+
+}
+
+void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
+{
+    _lightDir = lightDir;
 }
 
 bool Terrain::initProperties()
@@ -124,31 +151,38 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 
     GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
-
+    _glProgramState->applyUniforms();
+    glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
     if(!_alphaMap)
     {
-        glActiveTexture(GL_TEXTURE0);
         GL::bindTexture2D(_detailMapTextures[0]->getName());
+        //getGLProgramState()->setUniformTexture("")
         glUniform1i(_detailMapLocation[0],0);
         glUniform1i(_alphaIsHasAlphaMapLocation,0);
     }else
     {
         for(int i =0;i<_maxDetailMapValue;i++)
         {
-            glActiveTexture(GL_TEXTURE0+i);
-            GL::bindTexture2D(_detailMapTextures[i]->getName());
+            GL::bindTexture2DN(i,_detailMapTextures[i]->getName());
             glUniform1i(_detailMapLocation[i],i);
 
             glUniform1f(_detailMapSizeLocation[i],_terrainData._detailMaps[i]._detailMapSize);
         }
 
         glUniform1i(_alphaIsHasAlphaMapLocation,1);
-
-        glActiveTexture(GL_TEXTURE4);
-        GL::bindTexture2D(_alphaMap->getName());
+        
+        GL::bindTexture2DN(4, _alphaMap->getName());
         glUniform1i(_alphaMapLocation,4);
     }
-
+    if (_lightMap)
+    {
+        glUniform1i(_lightMapCheckLocation, 1);
+        GL::bindTexture2DN(5, _lightMap->getName());
+        glUniform1i(_lightMapLocation, 5);
+    }else
+    {
+        glUniform1i(_lightMapCheckLocation, 0);
+    }
     auto camera = Camera::getVisitingCamera();
 
     if(memcmp(&_CameraMatrix,&camera->getViewMatrix(),sizeof(Mat4))!=0)
@@ -169,7 +203,10 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     {
         _quadRoot->resetNeedDraw(true);//reset it 
         //camera frustum culling
-        _quadRoot->cullByCamera(camera,_terrainModelMatrix);
+        if (_isEnableFrustumCull)
+        {
+            _quadRoot->cullByCamera(camera, _terrainModelMatrix);
+        }
     }
     _quadRoot->draw();
     if(_isCameraViewChanged)
@@ -238,6 +275,8 @@ bool Terrain::initHeightMap(const char * heightMap)
 Terrain::Terrain()
 : _alphaMap(nullptr)
 , _stateBlock(nullptr)
+, _lightMap(nullptr)
+, _lightDir(-1.f, -1.f, 0.f)
 {
     _stateBlock = RenderState::StateBlock::create();
     CC_SAFE_RETAIN(_stateBlock);
@@ -438,9 +477,9 @@ void Terrain::setIsEnableFrustumCull(bool bool_value)
 Terrain::~Terrain()
 {
     CC_SAFE_RELEASE(_stateBlock);
-
-    _alphaMap->release();
-    _heightMapImage->release();
+    CC_SAFE_RELEASE(_alphaMap);
+    CC_SAFE_RELEASE(_lightMap);
+    CC_SAFE_RELEASE(_heightMapImage);
     delete _quadRoot;
     for(int i=0;i<4;i++)
     {
@@ -648,7 +687,8 @@ Terrain::Chunk * cocos2d::Terrain::getChunkByIndex(int x, int y) const
 
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
 {
-    _alphaMap->release();
+    CC_SAFE_RETAIN(newAlphaMapTexture);
+    CC_SAFE_RELEASE(_alphaMap);
     _alphaMap = newAlphaMapTexture;
 }
 
@@ -754,6 +794,14 @@ void Terrain::setSkirtHeightRatio(float ratio)
 
 void Terrain::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif
+    
     Node::onEnter();
     _terrainModelMatrix = getNodeToWorldTransform();
     _quadRoot->preCalculateAABB(_terrainModelMatrix);
@@ -774,10 +822,10 @@ void Terrain::cacheUniformAttribLocation()
     }
     auto glProgram = getGLProgram();
     _alphaIsHasAlphaMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_has_alpha");
+    _lightMapCheckLocation = glGetUniformLocation(glProgram->getProgram(), "u_has_light_map");
     if(!_alphaMap)
     {
         _detailMapLocation[0] = glGetUniformLocation(glProgram->getProgram(),"u_texture0");
-        
     }else
     {
         for(int i =0;i<_maxDetailMapValue;i++)
@@ -791,10 +839,17 @@ void Terrain::cacheUniformAttribLocation()
         }
         _alphaMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_alphaMap");
     }
+    _lightMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_lightMap");
+    _lightDirLocation = glGetUniformLocation(glProgram->getProgram(),"u_lightDir");
 }
 
 bool Terrain::initTextures()
 {
+    for (int i = 0; i < 4; i++)
+    {
+        _detailMapTextures[i] = nullptr;
+    }
+
     Texture2D::TexParams texParam;
     texParam.wrapS = GL_REPEAT;
     texParam.wrapT = GL_REPEAT;

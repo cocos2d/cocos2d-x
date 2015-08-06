@@ -337,13 +337,11 @@ bool js_cocos2dx_experimental_video_VideoPlayer_constructor(JSContext *cx, uint3
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_ui_Widget_prototype;
 
 void js_cocos2d_experimental_ui_VideoPlayer_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (VideoPlayer)", obj);
 }
-
 void js_register_cocos2dx_experimental_video_VideoPlayer(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_experimental_ui_VideoPlayer_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_experimental_ui_VideoPlayer_class->name = "VideoPlayer";

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCActionTimeline.h"
 
-#include "cocostudio/CCObjectExtensionData.h"
+#include "cocostudio/CCComExtensionData.h"
 
 USING_NS_CC;
 
@@ -247,7 +247,7 @@ void ActionTimeline::startWithTarget(Node *target)
     foreachNodeDescendant(target, 
         [this, target](Node* child)
     {
-        ObjectExtensionData* data = dynamic_cast<ObjectExtensionData*>(child->getUserObject());
+        ComExtensionData* data = dynamic_cast<ComExtensionData*>(child->getComponent("ComExtensionData"));
 
         if(data)
         {

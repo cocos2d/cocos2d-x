@@ -23,15 +23,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UITextFieldTest = UIScene.extend({
+var UITextFieldTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
             //init text
             this._topDisplayLabel.setString("No Event");
+            this._topDisplayLabel.setAnchorPoint(cc.p(0.5, -1));
+            this._topDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 + this._topDisplayLabel.getContentSize().height * 1.5));
+
             this._bottomDisplayLabel.setString("TextField");
+            this._bottomDisplayLabel.setPosition(cc.p(widgetSize.width / 2.0, widgetSize.height / 2.0 - this._bottomDisplayLabel.getContentSize().height * 3.4));
+            this._bottomDisplayLabel.setColor(cc.color(255, 255, 255, 255));
 
             // Create the textfield
+            cc.director.getOpenGLView().setIMEKeyboardState(true);
             var textField = new ccui.TextField("PlaceHolder", "Marker Felt", 30);
             textField.x = widgetSize.width / 2.0;
             textField.y = widgetSize.height / 2.0;
@@ -48,7 +54,7 @@ var UITextFieldTest = UIScene.extend({
             case ccui.TextField.EVENT_ATTACH_WITH_IME:
                 var widgetSize = this._widget.getContentSize();
                 textField.runAction(cc.moveTo(0.225,
-                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + textField.height / 2)));
+                    cc.p(widgetSize.width / 2, widgetSize.height / 2 + 30)));
                 this._topDisplayLabel.setString("attach with IME");
                 break;
             case ccui.TextField.EVENT_DETACH_WITH_IME:
@@ -65,11 +71,10 @@ var UITextFieldTest = UIScene.extend({
             default:
                 break;
         }
-        this._bottomDisplayLabel.setString(textField.getString());
     }
 });
 
-var UITextFieldTest_MaxLength = UIScene.extend({
+var UITextFieldTest_MaxLength = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -121,7 +126,7 @@ var UITextFieldTest_MaxLength = UIScene.extend({
     }
 });
 
-var UITextFieldTest_Password = UIScene.extend({
+var UITextFieldTest_Password = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -173,7 +178,7 @@ var UITextFieldTest_Password = UIScene.extend({
 });
 
 //2015-01-14
-var UITextFieldTest_LineWrap = UIScene.extend({
+var UITextFieldTest_LineWrap = UIMainLayer.extend({
 
     init: function(){
         if (this._super()) {
@@ -234,7 +239,7 @@ var UITextFieldTest_LineWrap = UIScene.extend({
 });
 
 //2015-01-14
-var UITextFieldTest_TrueTypeFont = UIScene.extend({
+var UITextFieldTest_TrueTypeFont = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -285,7 +290,7 @@ var UITextFieldTest_TrueTypeFont = UIScene.extend({
 });
 
 //2015-01-14
-var UITextFieldTest_PlaceHolderColor = UIScene.extend({
+var UITextFieldTest_PlaceHolderColor = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();

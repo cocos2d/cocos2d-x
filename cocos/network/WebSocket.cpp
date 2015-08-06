@@ -185,8 +185,6 @@ void WsThreadHelper::joinSubThread()
 
 void WsThreadHelper::update(float dt)
 {
-    WsMessage *msg = nullptr;
-
     /* Avoid locking if, in most cases, the queue is empty. This could be a little faster.
     size() is not thread-safe, it might return a strange value, but it should be OK in our scenario.
     */
@@ -203,17 +201,22 @@ void WsThreadHelper::update(float dt)
     }
     
     // Gets message
-    msg = *(_UIWsMessageQueue->begin());
-    _UIWsMessageQueue->pop_front();
+    // Process all messages in the queue, in case it's piling up faster than being processed
+    std::list<WsMessage*> messages;
+    while (!_UIWsMessageQueue->empty()) {
+        messages.push_back(_UIWsMessageQueue->front());
+        _UIWsMessageQueue->pop_front();
+    }
 
     _UIWsMessageQueueMutex.unlock();
     
-    if (_ws)
-    {
-        _ws->onUIThreadReceiveMessage(msg);
+    for (auto msg : messages) {
+        if (_ws)
+        {
+            _ws->onUIThreadReceiveMessage(msg);
+        }
+        CC_SAFE_DELETE(msg);
     }
-    
-    CC_SAFE_DELETE(msg);
 }
 
 enum WS_MSG {

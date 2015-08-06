@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIScrollViewTest_Vertical = UIScene.extend({
+var UIScrollViewTest_Vertical = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -90,7 +90,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
     }
 });
 
-var UIScrollViewTest_Horizontal = UIScene.extend({
+var UIScrollViewTest_Horizontal = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -159,7 +159,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
     }
 });
 
-var UIScrollViewTest_Both = UIScene.extend({
+var UIScrollViewTest_Both = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -201,7 +201,7 @@ var UIScrollViewTest_Both = UIScene.extend({
     }
 });
 
-var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
+var UIScrollViewTest_ScrollToPercentBothDirection = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -241,7 +241,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
     }
 });
 
-var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
+var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -283,7 +283,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
 });
 
 //2015-01-14
-var UIScrollViewNestTest = UIScene.extend({
+var UIScrollViewNestTest = UIMainLayer.extend({
     init: function(){
         if(this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -358,7 +358,7 @@ var UIScrollViewNestTest = UIScene.extend({
 });
 
 //2015-01-14
-var UIScrollViewRotated = UIScene.extend({
+var UIScrollViewRotated = UIMainLayer.extend({
     init: function(){
         if(this._super()){
             var widgetSize = this._widget.getContentSize();

@@ -11,6 +11,9 @@ USING_NS_CC;
 #define LOG_INDENTATION "  "
 #define LOG_TAG "[TestController]"
 
+static void initCrashCatch();
+static void disableCrashCatch();
+
 class RootTests : public TestList
 {
 public:
@@ -372,16 +375,14 @@ bool TestController::checkTest(TestCase* testCase)
 
 void TestController::handleCrash()
 {
+    disableCrashCatch();
+
     logEx("%sCatch an crash event", LOG_TAG);
 
     if (!_stopAutoTest)
     {
         stopAutoTest();
     }
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-    exit(1);
-#endif
 }
 
 void TestController::onEnterBackground()
@@ -421,8 +422,6 @@ void TestController::logEx(const char * format, ...)
 
 static TestController* s_testController = nullptr;
 
-static void initCrashCatch();
-
 TestController* TestController::getInstance()
 {
     if (s_testController == nullptr)
@@ -443,6 +442,8 @@ void TestController::destroyInstance()
         delete s_testController;
         s_testController = nullptr;
     }
+
+    disableCrashCatch();
 }
 
 bool TestController::blockTouchBegan(Touch* touch, Event* event)
@@ -467,6 +468,10 @@ static long __stdcall windowExceptionFilter(_EXCEPTION_POINTERS* excp)
 static void initCrashCatch()
 {
     SetUnhandledExceptionFilter(windowExceptionFilter);
+}
+static void disableCrashCatch()
+{
+    SetUnhandledExceptionFilter(UnhandledExceptionFilter);
 }
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -504,8 +509,17 @@ static void signalHandler(int sig)
 
 static void initCrashCatch()
 {
-    for (auto sig : s_fatal_signals) {
+    for (auto sig : s_fatal_signals)
+    {
         signal(sig, signalHandler);
+    }
+}
+
+static void disableCrashCatch()
+{
+    for (auto sig : s_fatal_signals)
+    {
+        signal(sig, SIG_DFL);
     }
 }
 
@@ -513,7 +527,10 @@ static void initCrashCatch()
 
 static void initCrashCatch()
 {
+}
 
+static void disableCrashCatch()
+{
 }
 
 #endif

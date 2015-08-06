@@ -9,6 +9,7 @@ UIListViewTests::UIListViewTests()
 {
     ADD_TEST_CASE(UIListViewTest_Vertical);
     ADD_TEST_CASE(UIListViewTest_Horizontal);
+    ADD_TEST_CASE(Issue12692);
 }
 
 // UIListViewTest_Vertical
@@ -379,4 +380,97 @@ void UIListViewTest_Horizontal::selectedItemEvent(Ref *pSender, ListView::EventT
         default:
             break;
     }
+}
+
+bool Issue12692::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        auto label = Text::create("Issue 12692", "fonts/Marker Felt.ttf", 32);
+        label->setAnchorPoint(Vec2(0.5f, -1.0f));
+        label->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f + label->getContentSize().height * 1.5f));
+        _uiLayer->addChild(label);
+        
+        
+        Text* alert = Text::create("ListView in ListView enable Scissor Clipping", "fonts/Marker Felt.ttf", 20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+        Size backgroundSize = background->getContentSize();
+        
+        // Create the list view ex
+        ListView* listView = ListView::create();
+        // set list view ex direction
+        listView->setDirection(ui::ScrollView::Direction::VERTICAL);
+        listView->setBounceEnabled(true);
+        listView->setBackGroundImage("cocosui/green_edit.png");
+        listView->setBackGroundImageScale9Enabled(true);
+        listView->setContentSize(Size(240, 130));
+        listView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                   (backgroundSize.width - listView->getContentSize().width) / 2.0f,
+                                   (widgetSize.height - backgroundSize.height) / 2.0f +
+                                   (backgroundSize.height - listView->getContentSize().height) / 2.0f));
+        listView->setScrollBarPositionFromCorner(Vec2(7, 7));
+        listView->setClippingEnabled(true);
+        listView->setClippingType(ui::Layout::ClippingType::SCISSOR);
+        listView->setName("listview1");
+        _uiLayer->addChild(listView);
+        
+        auto list2 = ListView::create();
+        list2->setDirection(ui::ScrollView::Direction::VERTICAL);
+        list2->setBounceEnabled(true);
+        list2->setBackGroundImage("cocosui/green_edit.png");
+        list2->setBackGroundImageScale9Enabled(true);
+        list2->setContentSize(Size(240, 65));
+        list2->setClippingEnabled(true);
+        list2->setClippingType(ui::Layout::ClippingType::SCISSOR);
+        list2->setName("listview2");
+        listView->insertCustomItem(list2, 0);
+        
+        {
+            Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+            default_button->setName("Title Button");
+            
+            Layout* default_item = Layout::create();
+            default_item->setTouchEnabled(true);
+            default_item->setContentSize(default_button->getContentSize());
+            default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f,
+                                             default_item->getContentSize().height / 2.0f));
+            default_item->addChild(default_button);
+            
+            // set model
+            listView->setItemModel(default_item);
+            listView->pushBackDefaultItem();
+            listView->pushBackDefaultItem();
+            listView->pushBackDefaultItem();
+        }
+        {
+            Button* default_button = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+            default_button->setName("Title Button");
+            
+            Layout* default_item = Layout::create();
+            default_item->setTouchEnabled(true);
+            default_item->setContentSize(default_button->getContentSize());
+            default_button->setPosition(Vec2(default_item->getContentSize().width / 2.0f,
+                                             default_item->getContentSize().height / 2.0f));
+            default_item->addChild(default_button);
+            
+            // set model
+            list2->setItemModel(default_item);
+            list2->pushBackDefaultItem();
+            list2->pushBackDefaultItem();
+            list2->pushBackDefaultItem();
+        }
+        return true;
+    }
+    
+    return false;
 }

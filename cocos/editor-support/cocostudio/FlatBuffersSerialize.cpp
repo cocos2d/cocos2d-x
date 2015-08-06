@@ -257,6 +257,21 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
             else if (name == "ObjectData") // nodeTree
             {
                 const tinyxml2::XMLElement* objectData = child;
+
+                auto nameElem = objectData->FirstAttribute();
+                while (nameElem)
+                {
+                    if (0 == strcmp("ctype", nameElem->Name()))
+                    {
+                        rootType = nameElem->Value();
+                        break;
+                    }
+                    else
+                        nameElem = nameElem->Next();
+                }
+                if (rootType == "GameNodeObjectData" || rootType == "GameLayerObjectData")  // for adaptate old version
+                    rootType = "NodeObjectData";
+
                 nodeTree = createNodeTree(objectData, rootType);
             }
             else if (name == "AnimationList") // animation list
@@ -1292,6 +1307,19 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
             else if (name == "ObjectData") // nodeTree
             {
                 const tinyxml2::XMLElement* objectData = child;
+                auto nameElem = objectData->FirstAttribute();
+                while (nameElem)
+                {
+                    if (0 == strcmp("ctype", nameElem->Name()))
+                    {
+                        rootType = nameElem->Value();
+                        break;
+                    }
+                    else
+                        nameElem = nameElem->Next();
+                }
+                if (rootType == "GameNodeObjectData" || rootType == "GameLayerObjectData")  // for adaptate old version
+                    rootType = "NodeObjectData";
                 nodeTree = createNodeTreeForSimulator(objectData, rootType);
             }
             else if (name == "AnimationList") // animation list

@@ -71,6 +71,8 @@
 		C07828FA18B4D72E00BD2287 /* SimulatorApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = C07828F718B4D72E00BD2287 /* SimulatorApp.mm */; };
 		D6B061351803AC000077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B061341803AC000077942B /* CoreMotion.framework */; };
 		DA96489E1A70F925001F41E8 /* ConsoleWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA9648A01A70F925001F41E8 /* ConsoleWindow.xib */; };
+		ED545A981B68A2D300C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A971B68A2D300C3958E /* libiconv.dylib */; };
+		ED545A9A1B68A2DA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A991B68A2DA00C3958E /* libiconv.dylib */; };
 		F293B3CD15EB7BE500256477 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3CC15EB7BE500256477 /* QuartzCore.framework */; };
 		F293B3D115EB7BE500256477 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D015EB7BE500256477 /* OpenAL.framework */; };
 		F293B3D315EB7BE500256477 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F293B3D215EB7BE500256477 /* AudioToolbox.framework */; };
@@ -266,6 +268,8 @@
 		D6B061341803AC000077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		DA96489F1A70F925001F41E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ConsoleWindow.xib; sourceTree = "<group>"; };
 		DA9648A31A70F93D001F41E8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ConsoleWindow.strings"; sourceTree = "<group>"; };
+		ED545A971B68A2D300C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
+		ED545A991B68A2DA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		F293B3C815EB7BE500256477 /* Simulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F293B3CC15EB7BE500256477 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F293B3CE15EB7BE500256477 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -284,6 +288,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED545A9A1B68A2DA00C3958E /* libiconv.dylib in Frameworks */,
 				87A2EC1E1AB34BEE00513747 /* Security.framework in Frameworks */,
 				9FB5D60E1A691A02002361CA /* libjscocos2d Mac.a in Frameworks */,
 				9FB5D5F91A691342002361CA /* libsqlite3.dylib in Frameworks */,
@@ -307,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED545A981B68A2D300C3958E /* libiconv.dylib in Frameworks */,
 				9FB5D60A1A6917D8002361CA /* libsqlite3.dylib in Frameworks */,
 				9FB5D6081A691774002361CA /* libjscocos2d iOS.a in Frameworks */,
 				9FD6FC0C1A5D278E0028EDC6 /* libsimulator iOS.a in Frameworks */,
@@ -467,6 +473,8 @@
 		F293B3CB15EB7BE500256477 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ED545A991B68A2DA00C3958E /* libiconv.dylib */,
+				ED545A971B68A2D300C3958E /* libiconv.dylib */,
 				87A2EC1D1AB34BEE00513747 /* Security.framework */,
 				9FB5D60C1A69184C002361CA /* libjs_static.a */,
 				9FB5D6091A6917D8002361CA /* libsqlite3.dylib */,
@@ -896,7 +904,6 @@
 					"CC_LUA_ENGINE_ENABLED=1",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					COCOS2D_JAVASCRIPT,
-					"CC_ENABLE_BULLET_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -925,7 +932,6 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					COCOS2D_JAVASCRIPT,
 					NDEBUG,
-					"CC_ENABLE_BULLET_INTEGRATION=1",
 				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
