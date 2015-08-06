@@ -383,7 +383,7 @@ JS_BINDED_FUNC_IMPL(JavascriptJavaBridge, callStaticMethod)
                     case TypeString:
                     default:
                         JSStringWrapper arg(argv.get(index));
-                        args[i].l = call.getEnv()->NewStringUTF(arg.get());
+                        args[i].l = cocos2d::StringUtils::newStringUTFJNI(call.getEnv(), arg.get());
                         break;
                 }
             }

@@ -94,10 +94,10 @@ void showDialogJNI(const char * message, const char * title) {
         if (!title) {
             stringArg1 = t.env->NewStringUTF("");
         } else {
-            stringArg1 = t.env->NewStringUTF(title);
+            stringArg1 = cocos2d::StringUtils::newStringUTFJNI(t.env, title);
         }
 
-        jstring stringArg2 = t.env->NewStringUTF(message);
+        jstring stringArg2 = cocos2d::StringUtils::newStringUTFJNI(t.env, message);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
 
         t.env->DeleteLocalRef(stringArg1);
