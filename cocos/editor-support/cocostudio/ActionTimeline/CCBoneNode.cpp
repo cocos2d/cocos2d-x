@@ -579,9 +579,6 @@ void BoneNode::visitSkins(cocos2d::Renderer* renderer, BoneNode* bone)
     _director->pushMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, bone->_modelViewTransform);
 
-    bool visibleByCamera = bone->isVisitableByVisitingCamera();
-
-    int i = 0;
     if (!bone->_boneSkins.empty())
     {
         bone->sortAllChildren();
