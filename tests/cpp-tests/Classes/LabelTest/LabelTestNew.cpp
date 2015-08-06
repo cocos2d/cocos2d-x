@@ -87,6 +87,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFullTypeFontTest);
     ADD_TEST_CASE(LabelIssue10688Test);
     ADD_TEST_CASE(LabelIssue13202Test);
+    ADD_TEST_CASE(LabelIssue9500Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -2084,4 +2085,23 @@ std::string LabelIssue13202Test::title() const
 std::string LabelIssue13202Test::subtitle() const
 {
     return "FontAtlasCache::purgeCachedData should not cause crash.";
+}
+
+LabelIssue9500Test::LabelIssue9500Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("Spaces should not be lost", "fonts/Fingerpop.ttf", 20);
+    label->setPosition(center);
+    addChild(label);
+}
+
+std::string LabelIssue9500Test::title() const
+{
+    return "Test for Issue #9500";
+}
+
+std::string LabelIssue9500Test::subtitle() const
+{
+    return "Spaces should not be lost if label created with Fingerpop.ttf";
 }

@@ -274,25 +274,21 @@ int FontFreeType::getFontAscender() const
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
-    unsigned char * ret = nullptr;
+    unsigned char* ret = nullptr;
 
-    do 
+    do
     {
-        if (!_fontRef)
-            break;
-
-        auto glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-        if(!glyphIndex)
+        if (_fontRef == nullptr)
             break;
 
         if (_distanceFieldEnabled)
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
                 break;
         }
         else
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
@@ -400,9 +396,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
 unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
-
-    FT_UInt gindex = FT_Get_Char_Index(_fontRef, theChar);
-    if (FT_Load_Glyph(_fontRef, gindex, FT_LOAD_NO_BITMAP) == 0)
+    if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)
     {
         if (_fontRef->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
         {
