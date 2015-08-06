@@ -19,6 +19,8 @@ elseif(LINUX)
         audio/linux/FmodAudioPlayer.cpp
         audio/linux/FmodAudioPlayer.h
         audio/linux/AudioPlayer.h
+        audio/linux/AudioEngine-linux.h
+        audio/linux/AudioEngine-linux.cpp
     )
 
 elseif(MACOSX)
