@@ -507,6 +507,10 @@ void ListView::selectedItemEvent(TouchEventType event)
 void ListView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch* touch)
 {
     ScrollView::interceptTouchEvent(event, sender, touch);
+    if (!_touchEnabled)
+    {
+        return;
+    }
     if (event != TouchEventType::MOVED)
     {
         Widget* parent = sender;
