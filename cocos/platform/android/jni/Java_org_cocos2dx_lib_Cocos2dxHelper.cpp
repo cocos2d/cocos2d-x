@@ -252,7 +252,7 @@ bool getBoolForKeyJNI(const char* key, bool defaultValue)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getBoolForKey", "(Ljava/lang/String;Z)Z")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         jboolean ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -269,7 +269,7 @@ int getIntegerForKeyJNI(const char* key, int defaultValue)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getIntegerForKey", "(Ljava/lang/String;I)I")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         jint ret = t.env->CallStaticIntMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -286,7 +286,7 @@ float getFloatForKeyJNI(const char* key, float defaultValue)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getFloatForKey", "(Ljava/lang/String;F)F")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         jfloat ret = t.env->CallStaticFloatMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -303,7 +303,7 @@ double getDoubleForKeyJNI(const char* key, double defaultValue)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getDoubleForKey", "(Ljava/lang/String;D)D")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         jdouble ret = t.env->CallStaticDoubleMethod(t.classID, t.methodID, stringArg, defaultValue);
         
         t.env->DeleteLocalRef(t.classID);
@@ -321,8 +321,8 @@ std::string getStringForKeyJNI(const char* key, const char* defaultValue)
     std::string ret("");
 
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "getStringForKey", "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;")) {
-        jstring stringArg1 = t.env->NewStringUTF(key);
-        jstring stringArg2 = t.env->NewStringUTF(defaultValue);
+        jstring stringArg1 = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
+        jstring stringArg2 = cocos2d::StringUtils::newStringUTFJNI(t.env, defaultValue);
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, stringArg2);
         ret = JniHelper::jstring2string(str);
         
@@ -342,7 +342,7 @@ void setBoolForKeyJNI(const char* key, bool value)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setBoolForKey", "(Ljava/lang/String;Z)V")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -355,7 +355,7 @@ void setIntegerForKeyJNI(const char* key, int value)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setIntegerForKey", "(Ljava/lang/String;I)V")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -368,7 +368,7 @@ void setFloatForKeyJNI(const char* key, float value)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setFloatForKey", "(Ljava/lang/String;F)V")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -381,7 +381,7 @@ void setDoubleForKeyJNI(const char* key, double value)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setDoubleForKey", "(Ljava/lang/String;D)V")) {
-        jstring stringArg = t.env->NewStringUTF(key);
+        jstring stringArg = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg, value);
         
         t.env->DeleteLocalRef(t.classID);
@@ -394,8 +394,8 @@ void setStringForKeyJNI(const char* key, const char* value)
     JniMethodInfo t;
     
     if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setStringForKey", "(Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring stringArg1 = t.env->NewStringUTF(key);
-        jstring stringArg2 = t.env->NewStringUTF(value);
+        jstring stringArg1 = cocos2d::StringUtils::newStringUTFJNI(t.env, key);
+        jstring stringArg2 = cocos2d::StringUtils::newStringUTFJNI(t.env, value);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, stringArg1, stringArg2);
         
         t.env->DeleteLocalRef(t.classID);
@@ -425,8 +425,8 @@ void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharse
         jbyteArray strArray = methodInfo.env->NewByteArray(byteSize);
         methodInfo.env->SetByteArrayRegion(strArray, 0, byteSize, reinterpret_cast<const jbyte*>(src));
 
-        jstring stringArg1 = methodInfo.env->NewStringUTF(fromCharset);
-        jstring stringArg2 = methodInfo.env->NewStringUTF(newCharset);
+        jstring stringArg1 = cocos2d::StringUtils::newStringUTFJNI(methodInfo.env, fromCharset);
+        jstring stringArg2 = cocos2d::StringUtils::newStringUTFJNI(methodInfo.env, newCharset);
 
         jbyteArray newArray = (jbyteArray)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID, strArray, stringArg1, stringArg2);
         jsize theArrayLen = methodInfo.env->GetArrayLength(newArray);

@@ -176,7 +176,7 @@ void loadDataJNI(const int index, const std::string &data, const std::string &MI
     // LOGD("error: %s,%d",__func__,__LINE__);
     cocos2d::JniMethodInfo t;
     if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadData", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring jData = t.env->NewStringUTF(data.c_str());
+        jstring jData = cocos2d::StringUtils::newStringUTFJNI(t.env, data.c_str());
         jstring jMIMEType = t.env->NewStringUTF(MIMEType.c_str());
         jstring jEncoding = t.env->NewStringUTF(encoding.c_str());
         jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());

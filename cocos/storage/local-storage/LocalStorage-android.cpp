@@ -120,7 +120,7 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
     {
-        jstring jkey = t.env->NewStringUTF(key.c_str());
+        jstring jkey = cocos2d::StringUtils::newStringUTFJNI(t.env, key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
         outItem->assign(JniHelper::jstring2string(jret));
         t.env->DeleteLocalRef(jret);

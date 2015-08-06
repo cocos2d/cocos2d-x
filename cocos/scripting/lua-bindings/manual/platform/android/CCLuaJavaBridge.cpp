@@ -321,7 +321,7 @@ int LuaJavaBridge::callJavaStaticMethod(lua_State *L)
 
 	            case TypeString:
 	            default:
-	                args[i].l = call.getEnv()->NewStringUTF(lua_tostring(L, index));
+	                args[i].l = cocos2d::StringUtils::newStringUTFJNI(call.getEnv(), lua_tostring(L, index));
 	                break;
 	        }
 	    }
