@@ -921,6 +921,12 @@ void ScrollView::update(float dt)
 
 void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender,Touch* touch)
 {
+    if(!_touchEnabled)
+    {
+        Layout::interceptTouchEvent(event, sender, touch);
+        return;
+    }
+
     Vec2 touchPoint = touch->getLocation();
     switch (event)
     {

@@ -597,10 +597,11 @@ var ShaderNode = cc.GLNode.extend({
         var frameSize = cc.view.getFrameSize();
         var visibleSize = cc.view.getVisibleSize();
         var retinaFactor = cc.view.getDevicePixelRatio();
-        var positionx = frameSize.width/2,
-            positiony = frameSize.height/2;
+        var position = this.getPosition();
 
-        this.shader.setUniformLocationF32( this.uniformCenter, positionx*frameSize.width/visibleSize.width * retinaFactor, positiony*frameSize.height/visibleSize.height * retinaFactor);
+        var centerx = position.x * frameSize.width/visibleSize.width * retinaFactor;
+        var centery = position.y * frameSize.height/visibleSize.height * retinaFactor;
+        this.shader.setUniformLocationF32( this.uniformCenter, centerx, centery);
         this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
 
         cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_POSITION );

@@ -674,10 +674,12 @@
 
         currentUIScene: function () {
             var test = currentTestingArray[this._currentUISceneId];
-            var sence = test.func();
-            sence.init();
-            sence.setSceneTitle(test.title);
-            return sence;
+            var layer = test.func();
+            layer.init();
+            layer.setSceneTitle(test.title);
+            var scene = new UIScene();
+            scene.addChild(layer);
+            return scene;
         }
     };
 

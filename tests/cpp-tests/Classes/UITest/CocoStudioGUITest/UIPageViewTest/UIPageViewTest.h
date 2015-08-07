@@ -142,4 +142,18 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIPageViewDisableTouchTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewDisableTouchTest);
+    
+    UIPageViewDisableTouchTest();
+    ~UIPageViewDisableTouchTest();
+    virtual bool init() override;
+        
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */
