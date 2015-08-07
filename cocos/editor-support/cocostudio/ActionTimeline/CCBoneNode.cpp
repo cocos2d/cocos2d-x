@@ -390,6 +390,9 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
 
 BoneNode::~BoneNode()
 {
+    _boneSkins.clear();
+    _childBones.clear();
+    _rootSkeleton = nullptr;
 }
 
 bool BoneNode::init()
@@ -458,7 +461,7 @@ void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 
 }
 
-cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
+const cocos2d::Vector<BoneNode*>& BoneNode::getAllSubBones() const
 {
     cocos2d::Vector<BoneNode*> allBones;
     std::stack<BoneNode*> boneStack; // for avoid recursive
@@ -481,7 +484,7 @@ cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
     return allBones;
 }
 
-cocos2d::Vector<SkinNode*> BoneNode::getAllSubSkins() const
+const cocos2d::Vector<SkinNode*>& BoneNode::getAllSubSkins() const
 {
     auto allbones = getAllSubBones();
     cocos2d::Vector<SkinNode*> allskins;

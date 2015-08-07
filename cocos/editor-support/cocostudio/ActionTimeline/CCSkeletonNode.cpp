@@ -109,6 +109,8 @@ SkeletonNode::SkeletonNode()
 
 SkeletonNode::~SkeletonNode()
 {
+    _subOrderedAllBones.clear();
+    _subBonesMap.clear();
 }
 
 void SkeletonNode::updateVertices()
