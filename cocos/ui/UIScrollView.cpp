@@ -223,6 +223,10 @@ const Size& ScrollView::getInnerContainerSize() const
 
 void ScrollView::setInnerContainerPosition(const Vec2 &position)
 {
+    if(position == _innerContainer->getPosition())
+    {
+        return;
+    }
     _innerContainer->setPosition(position);
     
     this->retain();
