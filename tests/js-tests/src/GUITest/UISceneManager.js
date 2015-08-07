@@ -465,6 +465,12 @@
                 func: function () {
                     return new UIScrollViewRotated();
                 }
+            },
+            {
+                title: "UIScrollViewDisableTest",
+                func: function () {
+                    return new UIScrollViewDisableTest();
+                }
             }
         ],
         "UIPageView": [
@@ -497,6 +503,12 @@
                 func: function () {
                     return new UIPageViewDynamicAddAndRemoveTest();
                 }
+            },
+            {
+                title: "UIPageViewDisableTouchTest",
+                func: function () {
+                    return new UIPageViewDisableTouchTest();
+                }
             }
         ],
         "UIListView": [
@@ -510,6 +522,12 @@
                 title: "UIListViewTest_Horizontal",
                 func: function () {
                     return new UIListViewTest_Horizontal();
+                }
+            },
+            {
+                title:"UIListViewTest_TouchIntercept ",
+                func: function() {
+                    return new UIListViewTest_TouchIntercept();
                 }
             }
         ],
