@@ -26,6 +26,9 @@
 #define __HTTPASYNCONNECTION_H__
 /// @cond DO_NOT_SHOW
 
+#include "platform/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 /// @cond
@@ -60,6 +63,8 @@
 -(void) startRequest:(NSURLRequest*)request;
 
 @end
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 /// @endcond
 #endif //__HTTPASYNCONNECTION_H__

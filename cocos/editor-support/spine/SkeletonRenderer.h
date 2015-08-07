@@ -92,7 +92,7 @@ public:
 	bool setAttachment (const std::string& slotName, const char* attachmentName);
 
 	// --- BlendProtocol
-    virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc) override;
+	virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc) override;
 	virtual const cocos2d::BlendFunc& getBlendFunc () const override;
 	virtual void setOpacityModifyRGB (bool value) override;
 	virtual bool isOpacityModifyRGB () const override;
