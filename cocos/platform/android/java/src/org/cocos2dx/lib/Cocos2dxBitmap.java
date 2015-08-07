@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,9 +24,6 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -37,6 +34,9 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public final class Cocos2dxBitmap {
     // ===========================================================
@@ -211,7 +211,7 @@ public final class Cocos2dxBitmap {
         return null;
     }
 
-    private static int getFontSizeAccordingHeight(int height) {
+    public static int getFontSizeAccordingHeight(int height) {
         TextPaint paint = new TextPaint();
         Rect bounds = new Rect();
 

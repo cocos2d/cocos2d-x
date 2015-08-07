@@ -34,10 +34,10 @@ import android.view.SurfaceView;
 import android.widget.FrameLayout;
 import android.widget.MediaController.MediaPlayerControl;
 
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 import java.io.IOException;
 import java.util.Map;
-
-import com.chukong.cocosplay.client.CocosPlayClient;
 
 public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl {
     private String TAG = "Cocos2dxVideoView";
