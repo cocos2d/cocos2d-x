@@ -759,7 +759,6 @@ var TMXOrthoObjectsTest = TileDemo.extend({
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
         drawNode.setDrawColor(cc.color(255,255,255,255));
-        this.addChild(drawNode);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
@@ -784,7 +783,7 @@ var TMXOrthoObjectsTest = TileDemo.extend({
             drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
             drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
         }
-
+        map.addChild(drawNode);
         //Automation parameters
         this.testObjects = array;
     },
