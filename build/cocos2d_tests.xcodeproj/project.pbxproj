@@ -2358,6 +2358,7 @@
 		185663411B41553A009EF2AE /* js-tests */ = {
 			isa = PBXGroup;
 			children = (
+				185664541B42364E009EF2AE /* script */,
 				185664001B422F45009EF2AE /* project */,
 				185663FD1B422EF0009EF2AE /* src */,
 				185663FA1B422EE0009EF2AE /* project.json */,
@@ -3826,7 +3827,6 @@
 		1AC35E0318CEE78300F37B72 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				185664541B42364E009EF2AE /* script */,
 				185663411B41553A009EF2AE /* js-tests */,
 				15CBA087196EE66D005877BB /* lua-game-controller-test */,
 				3E6176B51960FA6300DE83F5 /* game-controller-test */,
