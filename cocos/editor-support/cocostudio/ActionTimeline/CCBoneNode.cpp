@@ -608,7 +608,7 @@ void BoneNode::visitSkins(cocos2d::Renderer* renderer, BoneNode* bone) const
 
 void BoneNode::setRootSkeleton(BoneNode* bone, SkeletonNode* skeleton) const
 {
-    bone->_rootSkeleton = nullptr;
+    bone->_rootSkeleton = skeleton;
 }
 
 void BoneNode::setLocalZOrder(int localZOrder)

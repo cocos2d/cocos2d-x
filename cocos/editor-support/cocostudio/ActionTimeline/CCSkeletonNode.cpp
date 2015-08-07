@@ -109,8 +109,10 @@ SkeletonNode::SkeletonNode()
 
 SkeletonNode::~SkeletonNode()
 {
-    _subOrderedAllBones.clear();
-    _subBonesMap.clear();
+    for (auto &bonepair : _subBonesMap)
+    {
+        setRootSkeleton(bonepair.second, nullptr);
+    }
 }
 
 void SkeletonNode::updateVertices()
