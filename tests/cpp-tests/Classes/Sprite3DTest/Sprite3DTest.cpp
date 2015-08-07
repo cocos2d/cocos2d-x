@@ -2657,6 +2657,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
         
         auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
         {
+            auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
             auto node = getChildByTag(100);
             if (node)
             {
