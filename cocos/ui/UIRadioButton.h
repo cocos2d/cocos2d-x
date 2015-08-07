@@ -205,6 +205,20 @@ public:
     virtual void setSelectedButton(RadioButton* radioButton);
     
     /**
+     * Select a radio button by index without event dispatch.
+     *
+     * @param index of the radio button
+     */
+    virtual void setSelectedButtonWithoutEvent(int index);
+    
+    /**
+     * Select a radio button by instance without event dispatch.
+     *
+     * @param radio button instance
+     */
+    virtual void setSelectedButtonWithoutEvent(RadioButton* radioButton);
+    
+    /**
      * Add a radio button into this group.
      *
      * @param radio button instance
@@ -263,7 +277,6 @@ protected:
     
     void onChangedRadioButtonSelect(RadioButton* radioButton);
     void deselect();
-    void setSelectedButtonWithoutEventCallback(RadioButton* radioButton);
     
     Vector<RadioButton*> _radioButtons;
     ccRadioButtonGroupCallback _radioButtonGroupEventCallback;

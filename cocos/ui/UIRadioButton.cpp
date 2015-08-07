@@ -194,7 +194,7 @@ void RadioButtonGroup::addRadioButton(RadioButton* radioButton)
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr)
         {
-            setSelectedButtonWithoutEventCallback(radioButton);
+            setSelectedButtonWithoutEvent(radioButton);
         }
     }
 }
@@ -219,7 +219,7 @@ void RadioButtonGroup::removeRadioButton(RadioButton* radioButton)
         
         if(!_allowedNoSelection && _selectedRadioButton == nullptr && !_radioButtons.empty())
         {
-            setSelectedButtonWithoutEventCallback(0);
+            setSelectedButtonWithoutEvent(0);
         }
     }
 }
@@ -270,11 +270,16 @@ void RadioButtonGroup::setSelectedButton(int index)
 
 void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
 {
-    setSelectedButtonWithoutEventCallback(radioButton);
+    setSelectedButtonWithoutEvent(radioButton);
     onChangedRadioButtonSelect(_selectedRadioButton);
 }
 
-void RadioButtonGroup::setSelectedButtonWithoutEventCallback(RadioButton* radioButton)
+void RadioButtonGroup::setSelectedButtonWithoutEvent(int index)
+{
+    setSelectedButtonWithoutEvent(_radioButtons.at(index));
+}
+
+void RadioButtonGroup::setSelectedButtonWithoutEvent(RadioButton* radioButton)
 {
     if(!_allowedNoSelection && radioButton == nullptr)
     {
