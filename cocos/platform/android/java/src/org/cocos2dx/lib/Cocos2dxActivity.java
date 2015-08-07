@@ -169,8 +169,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             };
             EGLConfig[] configs = new EGLConfig[1];
             int[] numConfigs = new int[1];
-
-            if (egl.eglChooseConfig(display, EGLattribs, configs, 1, numConfigs)) {
+            boolean eglChooseResult = egl.eglChooseConfig(display, EGLattribs, configs, 1, numConfigs);
+            if (eglChooseResult && numConfigs[0] > 0)
+            {
                 return configs[0];
             }
 
@@ -179,8 +180,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                     EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
                     EGL10.EGL_NONE
             };
-
-            if(egl.eglChooseConfig(display, EGLV2attribs, null, 0, numConfigs)) {
+            eglChooseResult = egl.eglChooseConfig(display, EGLV2attribs, null, 0, numConfigs);
+            if(eglChooseResult && numConfigs[0] > 0) {
                 int num = numConfigs[0];
                 ConfigValue[] cfgVals = new ConfigValue[num];
 
