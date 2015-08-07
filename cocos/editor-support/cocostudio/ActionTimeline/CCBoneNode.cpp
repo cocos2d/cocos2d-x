@@ -301,11 +301,6 @@ void BoneNode::setDebugDrawEnabled(bool isDebugDraw)
     if (_isRackShow == isDebugDraw)
         return;
     _isRackShow = isDebugDraw;
-    if (_visible && nullptr != _rootSkeleton)
-    {
-        _rootSkeleton->_subBonesDirty = true;
-        _rootSkeleton->_subBonesOrderDirty = true;
-    }
 }
 
 void BoneNode::setDebugDrawColor(const cocos2d::Color4F &color)
@@ -331,7 +326,7 @@ void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTra
     _director->loadMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     bool visibleByCamera = isVisitableByVisitingCamera();
-
+    bool isdebugdraw = visibleByCamera && _isRackShow && nullptr == _rootSkeleton;
     int i = 0;
 
     if (!_children.empty())
@@ -349,7 +344,7 @@ void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTra
                 break;
         }
         // self draw
-        if (visibleByCamera)
+        if (isdebugdraw)
             this->draw(renderer, _modelViewTransform, flags);
 
         for (auto it = _children.cbegin() + i; it != _children.cend(); ++it)
@@ -360,7 +355,7 @@ void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTra
             node->visit(renderer, _modelViewTransform, flags);
         }
     }
-    else if (visibleByCamera)
+    else if (isdebugdraw)
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
@@ -375,9 +370,6 @@ void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTra
 
 void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    if (!_isRackShow || nullptr != _rootSkeleton)
-        return;
-
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(BoneNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
@@ -608,7 +600,7 @@ void BoneNode::visitSkins(cocos2d::Renderer* renderer, BoneNode* bone) const
 
 void BoneNode::setRootSkeleton(BoneNode* bone, SkeletonNode* skeleton) const
 {
-    bone->_rootSkeleton = nullptr;
+    bone->_rootSkeleton = skeleton;
 }
 
 void BoneNode::setLocalZOrder(int localZOrder)

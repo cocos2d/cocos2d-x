@@ -109,8 +109,10 @@ SkeletonNode::SkeletonNode()
 
 SkeletonNode::~SkeletonNode()
 {
-    _subOrderedAllBones.clear();
-    _subBonesMap.clear();
+    for (auto &bonepair : _subBonesMap)
+    {
+        setRootSkeleton(bonepair.second, nullptr);
+    }
 }
 
 void SkeletonNode::updateVertices()
@@ -188,12 +190,14 @@ void SkeletonNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& paren
         visitSkins(renderer, bone);
     }
 
-    this->draw(renderer, _modelViewTransform, flags);
-    // batch draw all sub bones
-    _batchBoneCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
-    _batchBoneCommand.func = CC_CALLBACK_0(SkeletonNode::batchDrawAllSubBones, this, _modelViewTransform);
-    renderer->addCommand(&_batchBoneCommand);
-
+    if (_isRackShow)
+    {
+        this->draw(renderer, _modelViewTransform, flags);
+        // batch draw all sub bones
+        _batchBoneCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
+        _batchBoneCommand.func = CC_CALLBACK_0(SkeletonNode::batchDrawAllSubBones, this, _modelViewTransform);
+        renderer->addCommand(&_batchBoneCommand);
+    }
     _director->popMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
@@ -203,9 +207,6 @@ void SkeletonNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& paren
 
 void SkeletonNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    if (!_isRackShow)
-        return;
-
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(SkeletonNode::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
@@ -226,9 +227,9 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
     _batchedVeticesCount = 0;
     for (const auto& bone : _subOrderedAllBones)
     {
-        if (bone->isDebugDrawEnabled())
-            batchBoneDrawToSkeleton(bone);
+        batchBoneDrawToSkeleton(bone);
     }
+
     cocos2d::Vec3* vetices = _batchedBoneVetices.data();
     cocos2d::Color4F* veticesColor = _batchedBoneColors.data();
     getGLProgram()->use();

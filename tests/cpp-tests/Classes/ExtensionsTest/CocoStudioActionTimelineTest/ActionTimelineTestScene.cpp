@@ -343,14 +343,10 @@ void TestActionTimelineSkeleton::onEnter()
     boneDrawsBtn->setPosition(Vec2(VisibleRect::right().x - 30, VisibleRect::top().y - 30));
     boneDrawsBtn->setTitleText("Draw bone");
 
-    _isAllBonesDraw = true;
-    skeletonNode->setDebugDrawEnabled(_isAllBonesDraw);
-    setAllSubBonesDebugDraw(skeletonNode, _isAllBonesDraw);
+    skeletonNode->setDebugDrawEnabled(true);
     boneDrawsBtn->addClickEventListener([skeletonNode, this](Ref* sender)
     {
-        _isAllBonesDraw = !_isAllBonesDraw;
-        skeletonNode->setDebugDrawEnabled(_isAllBonesDraw);
-        setAllSubBonesDebugDraw(skeletonNode, _isAllBonesDraw);
+        skeletonNode->setDebugDrawEnabled(!skeletonNode->isDebugDrawEnabled());
     });
 
 
@@ -552,16 +548,6 @@ std::string TestActionTimelineSkeleton::title() const
 {
     return "Test ActionTimeline Skeleton";
 }
-
-void TestActionTimelineSkeleton::setAllSubBonesDebugDraw(SkeletonNode* rootSkeleton, bool isShow)
-{
-    auto boneMap = rootSkeleton->getAllSubBonesMap();
-    for (auto& bonePair : boneMap)
-    {
-        bonePair.second->setDebugDrawEnabled(isShow);
-    }
-}
-
 
 // TestTimelineExtensionData
 void TestTimelineExtensionData::onEnter()
