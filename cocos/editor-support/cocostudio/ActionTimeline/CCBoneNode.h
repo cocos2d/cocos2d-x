@@ -109,7 +109,8 @@ public:
     virtual void setBlendFunc(const cocos2d::BlendFunc &blendFunc) override;
     virtual const cocos2d::BlendFunc & getBlendFunc() const override { return _blendFunc; }
 
-    // debug draw show, bone's debugdraw can be draw when bone is visible && enable debug draw
+    // debug draw show, bone's debugdraw can be draw when bone is visible
+    // when bone's added to skeleton, DebugDrawEnabled controled by skeleton's DebugDrawEnabled
     virtual void setDebugDrawEnabled(bool isDebugDraw);
     virtual bool isDebugDrawEnabled() const { return _isRackShow; }
 
