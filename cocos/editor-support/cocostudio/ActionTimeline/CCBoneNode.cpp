@@ -330,15 +330,17 @@ void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTra
 
     int i = 0;
 
-    if (!_childBones.empty())
+    if (!_children.empty())
     {
         sortAllChildren();
         // draw children zOrder < 0
-        for (; i < _childBones.size(); i++)
+        for (; i < _children.size(); i++)
         {
-            auto bone = _childBones.at(i);
-            if (bone && bone->getZOrder() < 0)
-                bone->visit(renderer, _modelViewTransform, flags);
+            auto node = _children.at(i);
+            if (_rootSkeleton != nullptr && _boneSkins.contains(node)) // skip skin when bone is in a skeleton
+                continue;
+            if (node && node->getLocalZOrder() < 0)
+                node->visit(renderer, _modelViewTransform, flags);
             else
                 break;
         }
@@ -346,8 +348,13 @@ void BoneNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTra
         if (visibleByCamera)
             this->draw(renderer, _modelViewTransform, flags);
 
-        for (auto it = _childBones.cbegin() + i; it != _childBones.cend(); ++it)
-            (*it)->visit(renderer, _modelViewTransform, flags);
+        for (auto it = _children.cbegin() + i; it != _children.cend(); ++it)
+        {
+            auto node = (*it);
+            if (_rootSkeleton != nullptr && _boneSkins.contains(node)) // skip skin when bone is in a skeleton
+                continue;
+            node->visit(renderer, _modelViewTransform, flags);
+        }
     }
     else if (visibleByCamera)
     {
