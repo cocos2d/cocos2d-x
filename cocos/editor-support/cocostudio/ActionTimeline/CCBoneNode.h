@@ -195,7 +195,11 @@ protected:
 
     // a help funciton for SkeletonNode
     // @param bone, visit bone's skins
-    virtual void visitSkins(cocos2d::Renderer* renderer, BoneNode* bone);
+    virtual void visitSkins(cocos2d::Renderer* renderer, BoneNode* bone) const;
+
+    // a help function for SkeletonNode
+    // set bone's rootSkeleton = skeleton
+    void setRootSkeleton(BoneNode* bone, SkeletonNode* skeleton) const;
 protected:
     cocos2d::CustomCommand _customCommand;
     cocos2d::BlendFunc     _blendFunc;
