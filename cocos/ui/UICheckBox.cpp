@@ -391,13 +391,6 @@ void CheckBox::onPressStateChangedToNormal()
     
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
     _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-
-    
-    if (_isSelected)
-    {
-        _frontCrossRenderer->setVisible(true);
-        _frontCrossRendererAdaptDirty = true;
-    }
 }
 
 void CheckBox::onPressStateChangedToPressed()
@@ -440,12 +433,6 @@ void CheckBox::onPressStateChangedToDisabled()
     _frontCrossRenderer->setVisible(false);
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
     _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-    
-    if (_isSelected)
-    {
-        _frontCrossDisabledRenderer->setVisible(true);
-        _frontCrossDisabledRendererAdaptDirty = true;
-    }
 }
     
 void CheckBox::setZoomScale(float scale)
@@ -466,6 +453,18 @@ void CheckBox::setSelected(bool selected)
     }
     _isSelected = selected;
     _frontCrossRenderer->setVisible(_isSelected);
+    
+    if (_isSelected)
+    {
+        if (_bright) {
+            _frontCrossRenderer->setVisible(true);
+            _frontCrossRendererAdaptDirty = true;
+        }
+        else {
+            _frontCrossDisabledRenderer->setVisible(true);
+            _frontCrossDisabledRendererAdaptDirty = true;
+        }
+    }
 }
     
 bool CheckBox::isSelected()const
