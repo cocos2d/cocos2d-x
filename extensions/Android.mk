@@ -11,7 +11,6 @@ endif
 
 LOCAL_SRC_FILES := \
 assets-manager/AssetsManager.cpp \
-assets-manager/Downloader.cpp \
 assets-manager/Manifest.cpp \
 assets-manager/AssetsManagerEx.cpp \
 assets-manager/CCEventAssetsManagerEx.cpp \
