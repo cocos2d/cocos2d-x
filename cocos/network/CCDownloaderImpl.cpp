@@ -44,7 +44,7 @@ static const char* TEMP_EXT = ".temp";
 static size_t _fileWriteFunc(void *ptr, size_t size, size_t nmemb, void* userdata)
 {
     DownloadUnit *unit = (DownloadUnit*)userdata;
-    DownloaderImpl* this_ = (DownloaderImpl*)unit->__reserved;
+    DownloaderImpl* this_ = (DownloaderImpl*)unit->_reserved;
     int ret = this_->getWriterCallback()(ptr, size, nmemb, unit);
     return ret;
 }
@@ -52,7 +52,7 @@ static size_t _fileWriteFunc(void *ptr, size_t size, size_t nmemb, void* userdat
 static int _downloadProgressFunc(void* userdata, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     DownloadUnit *downloadUnit = (DownloadUnit*)userdata;
-    DownloaderImpl* this_ = (DownloaderImpl*)downloadUnit->__reserved;
+    DownloaderImpl* this_ = (DownloaderImpl*)downloadUnit->_reserved;
 
     this_->getProgressCallback()(downloadUnit, totalToDownload, nowDownloaded);
 
@@ -97,7 +97,7 @@ int DownloaderImpl::performDownload(DownloadUnit* unit,
     CC_ASSERT(_initialized && "must be initialized");
 
     // for callbacks
-    unit->__reserved = this;
+    unit->_reserved = this;
 
     curl_easy_setopt(_curlHandle, CURLOPT_URL, unit->srcUrl.c_str());
 

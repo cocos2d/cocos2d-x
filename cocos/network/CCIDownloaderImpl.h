@@ -60,7 +60,7 @@ namespace network
         mutable bool resumeDownload;
         mutable double downloaded;
         mutable double totalToDownload;
-        mutable void *__reserved;
+        mutable void *_reserved;
     };
 
     class Downloader;
