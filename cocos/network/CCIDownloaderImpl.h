@@ -76,7 +76,7 @@ namespace network
 
         IDownloaderImpl(){}
         virtual ~IDownloaderImpl(){}
-        virtual bool init(const std::string& url) = 0;
+        virtual bool init() = 0;
 
         enum class Options {
             RESUME
@@ -94,7 +94,7 @@ namespace network
                                          const ErrorCallback& errorCallback
                                          ) = 0;
 
-        virtual int getHeader(HeaderInfo* headerInfo) = 0;
+        virtual int getHeader(const std::string& url, HeaderInfo* headerInfo) = 0;
         virtual std::string getStrError() const = 0;
         virtual void setConnectionTimeout(int timeout) = 0;
     };

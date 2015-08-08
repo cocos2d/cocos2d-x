@@ -58,6 +58,7 @@ Downloader::Downloader()
 {
     _fileUtils = FileUtils::getInstance();
     _downloaderImpl = new DownloaderImpl();
+    _downloaderImpl->init();
 }
 
 Downloader::~Downloader()
@@ -208,7 +209,6 @@ void Downloader::downloadToBuffer(const std::string& srcUrl, const std::string& 
     streamBuffer.total = size;
     streamBuffer.offset = 0;
 
-    _downloaderImpl->init(srcUrl);
     int res = _downloaderImpl->performDownload(&unit,
                                                std::bind(&Downloader::bufferWriteFunc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
                                                std::bind(&Downloader::downloadProgressFunc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
@@ -264,7 +264,6 @@ void Downloader::downloadToFP(const std::string& srcUrl, const std::string& cust
 
     prepareDownload(unit);
 
-    _downloaderImpl->init(srcUrl);
     int res = _downloaderImpl->performDownload(&unit,
                                                std::bind(&Downloader::fileWriteFunc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
                                                std::bind(&Downloader::downloadProgressFunc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
@@ -321,9 +320,7 @@ void Downloader::batchDownloadSync(const DownloadUnits& units, const std::string
     
     if (units.size() != 0)
     {
-        _downloaderImpl->init(units.begin()->second.srcUrl);
-
-        _supportResuming = _downloaderImpl->supportsResume();
+        _supportResuming = _downloaderImpl->supportsResume(units.cbegin()->second.srcUrl);
 
         // split units in multiple parts if the size is bigger
         // than FOPEN_MAX
@@ -401,6 +398,13 @@ void Downloader::groupBatchDownload(const DownloadUnits& units)
         if (unit.fp)
             fclose((FILE*)unit.fp);
     }
+}
+
+HeaderInfo Downloader::getHeader(const std::string &srcUrl)
+{
+    HeaderInfo info;
+    _downloaderImpl->getHeader(srcUrl, &info);
+    return info;
 }
 
 // callbacks

@@ -4724,7 +4724,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = U7E7529TA5;
@@ -6124,6 +6124,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "lua-game-controller-test iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6157,6 +6158,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "lua-game-controller-test iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6192,6 +6194,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
@@ -6224,6 +6227,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
@@ -6258,6 +6262,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "js-tests iOS";
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -6296,6 +6301,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "js-tests iOS";
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -6317,6 +6323,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
@@ -6331,6 +6338,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6351,6 +6359,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
 			};
 			name = Debug;
@@ -6370,6 +6379,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6386,6 +6396,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -6404,6 +6415,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
@@ -6433,6 +6445,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -6461,6 +6474,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -6484,6 +6498,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
 			};
 			name = Debug;
@@ -6503,6 +6518,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6529,6 +6545,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -6557,6 +6574,7 @@
 					"-image_base",
 					100000000,
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2dx.${PRODUCT_NAME:rfc1034identifier}";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto";
@@ -6577,6 +6595,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 			};
 			name = Debug;
@@ -6593,6 +6612,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6610,6 +6630,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/game-controller-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "game-controller-test IOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6630,6 +6651,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = "";
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/game-controller-test/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "game-controller-test IOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6692,6 +6714,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6719,6 +6742,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../external/curl/prebuilt/ios",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6737,6 +6761,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (

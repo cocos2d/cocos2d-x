@@ -108,6 +108,9 @@ public:
     void batchDownloadAsync(const DownloadUnits &units, const std::string& batchId = "");
     void batchDownloadSync(const DownloadUnits &units, const std::string& batchId = "");
 
+
+    HeaderInfo getHeader(const std::string &srcUrl);
+
     /**
      *  The default constructor.
      */

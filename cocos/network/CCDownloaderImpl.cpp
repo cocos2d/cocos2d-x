@@ -74,17 +74,13 @@ DownloaderImpl::~DownloaderImpl()
         curl_easy_cleanup(_curlHandle);
 }
 
-bool DownloaderImpl::init(const std::string& url)
+bool DownloaderImpl::init()
 {
     if (!_initialized) {
         _curlHandle = curl_easy_init();
         _initialized = true;
     }
 
-    if (_curlHandle)
-    {
-        curl_easy_setopt(_curlHandle, CURLOPT_URL, _url.c_str());
-    }
     return _initialized;
 }
 
@@ -103,7 +99,6 @@ int DownloaderImpl::performDownload(DownloadUnit* unit,
     // for callbacks
     unit->__reserved = this;
 
-    // re-init ?
     curl_easy_setopt(_curlHandle, CURLOPT_URL, unit->srcUrl.c_str());
 
     // Download pacakge
@@ -134,10 +129,13 @@ int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
 {
     CC_ASSERT(_initialized && "must be initialized");
 
+    if (units.size() == 0)
+        return -1;
+
     CURLM* multi_handle = curl_multi_init();
     int still_running = 0;
 
-    bool supportResume = supportsResume();
+    bool supportResume = supportsResume(units.cbegin()->second.srcUrl);
     auto fileUtils = FileUtils::getInstance();
 
     _writerCallback = batchWriterCallback;
@@ -276,23 +274,25 @@ int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
 }
 
 
-int DownloaderImpl::getHeader(HeaderInfo* headerInfo)
+int DownloaderImpl::getHeader(const std::string& url, HeaderInfo* headerInfo)
 {
-    CC_ASSERT(_initialized && "must be initialized");
+
+    void *curlHandle = curl_easy_init();
     CC_ASSERT(headerInfo && "headerInfo must not be null");
 
-    curl_easy_setopt(_curlHandle, CURLOPT_URL, _url.c_str());
-    curl_easy_setopt(_curlHandle, CURLOPT_HEADER, 1);
-    curl_easy_setopt(_curlHandle, CURLOPT_NOBODY, 1);
-    curl_easy_setopt(_curlHandle, CURLOPT_NOSIGNAL, 1);
-    if ((_lastErrCode=curl_easy_perform(_curlHandle)) == CURLE_OK)
+    curl_easy_setopt(curlHandle, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curlHandle, CURLOPT_HEADER, 1);
+    curl_easy_setopt(curlHandle, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(curlHandle, CURLOPT_NOSIGNAL, 1);
+
+    if ((_lastErrCode=curl_easy_perform(curlHandle)) == CURLE_OK)
     {
         char *effectiveUrl;
         char *contentType;
-        curl_easy_getinfo(_curlHandle, CURLINFO_EFFECTIVE_URL, &effectiveUrl);
-        curl_easy_getinfo(_curlHandle, CURLINFO_CONTENT_TYPE, &contentType);
-        curl_easy_getinfo(_curlHandle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &headerInfo->contentSize);
-        curl_easy_getinfo(_curlHandle, CURLINFO_RESPONSE_CODE, &headerInfo->responseCode);
+        curl_easy_getinfo(curlHandle, CURLINFO_EFFECTIVE_URL, &effectiveUrl);
+        curl_easy_getinfo(curlHandle, CURLINFO_CONTENT_TYPE, &contentType);
+        curl_easy_getinfo(curlHandle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &headerInfo->contentSize);
+        curl_easy_getinfo(curlHandle, CURLINFO_RESPONSE_CODE, &headerInfo->responseCode);
 
         if (contentType == nullptr || headerInfo->contentSize == -1 || headerInfo->responseCode >= 400)
         {
@@ -305,13 +305,15 @@ int DownloaderImpl::getHeader(HeaderInfo* headerInfo)
             headerInfo->valid = true;
         }
 
+        curl_easy_cleanup(curlHandle);
         return 0;
     }
 
+    curl_easy_cleanup(curlHandle);
     return -1;
 }
 
-bool DownloaderImpl::supportsResume()
+bool DownloaderImpl::supportsResume(const std::string& url)
 {
     CC_ASSERT(_initialized && "must be initialized");
 
@@ -319,7 +321,7 @@ bool DownloaderImpl::supportsResume()
     // Make a resume request
 
     curl_easy_setopt(_curlHandle, CURLOPT_RESUME_FROM_LARGE, 0);
-    if (getHeader(&headerInfo) == 0 && headerInfo.valid)
+    if (getHeader(url, &headerInfo) == 0 && headerInfo.valid)
     {
         return (headerInfo.responseCode == HTTP_CODE_SUPPORT_RESUME);
     }
