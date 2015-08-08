@@ -373,6 +373,9 @@
     <Filter Include="Classes\Scene3DTest">
       <UniqueIdentifier>{f7e74952-eece-467a-b27a-2e92db013997}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\DownloaderTest">
+      <UniqueIdentifier>{3442fab7-30f3-4bbc-8b7c-5821011d4935}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -975,6 +978,9 @@
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp">
       <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp">
+      <Filter>Classes\DownloaderTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1775,6 +1781,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\BugsTest\Bug-12847.h">
       <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h">
+      <Filter>Classes\DownloaderTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

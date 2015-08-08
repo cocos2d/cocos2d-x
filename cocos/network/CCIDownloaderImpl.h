@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <unordered_map>
 
 #include "platform/CCPlatformMacros.h"
+#include "platform/CCStdC.h"
 
 /**
  * @addtogroup network
@@ -63,7 +64,6 @@ namespace network
         mutable void *_reserved;
     };
 
-    class Downloader;
     typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
 
     class IDownloaderImpl
@@ -72,7 +72,6 @@ namespace network
         typedef std::function<int(void* ptr, ssize_t, ssize_t, void* userdata)> WriterCallback;
         typedef std::function<int(void* userdata, double, double)> ProgressCallback;
         typedef std::function<void(const std::string&, int, const std::string&)> ErrorCallback;
-
 
         IDownloaderImpl(){}
         virtual ~IDownloaderImpl(){}
