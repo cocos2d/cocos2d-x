@@ -387,6 +387,10 @@ void Downloader::groupBatchDownload(const DownloadUnits& units)
     {
         const auto& unit = entry.second;
 
+        // first close, then rename. Otherwise sharing_violation_error on windows
+        if (unit.fp)
+            fclose((FILE*)unit.fp);
+
         if (unit.downloaded < unit.totalToDownload || unit.totalToDownload == 0)
         {
             this->notifyError(ErrorCode::NETWORK, "Unable to download file", unit.customId);
@@ -395,8 +399,6 @@ void Downloader::groupBatchDownload(const DownloadUnits& units)
         {
             _fileUtils->renameFile(unit.storagePath + TEMP_EXT, unit.storagePath);
         }
-        if (unit.fp)
-            fclose((FILE*)unit.fp);
     }
 }
 

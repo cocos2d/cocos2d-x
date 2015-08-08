@@ -1084,6 +1084,12 @@ bool FileUtils::removeFile(const std::string &path)
     return false;
 }
 
+bool FileUtils::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+{
+    CCASSERT(false, "FileUtils not support renameFile");
+    return false;
+}
+
 bool FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
     CCASSERT(false, "FileUtils not support renameFile");

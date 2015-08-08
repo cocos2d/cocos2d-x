@@ -38,8 +38,7 @@
 namespace cocos2d {
 namespace network {
 
-
-class CC_EX_DLL Downloader : public std::enable_shared_from_this<Downloader>
+class CC_DLL Downloader : public std::enable_shared_from_this<Downloader>
 {
 public:
 

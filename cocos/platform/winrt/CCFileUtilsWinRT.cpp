@@ -324,6 +324,23 @@ bool CCFileUtilsWinRT::removeFile(const std::string &path)
     return false;
 }
 
+bool CCFileUtilsWinRT::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+{
+    CCASSERT(!oldfullpath.empty(), "Invalid path");
+    CCASSERT(!newfullpath.empty(), "Invalid path");
+
+    std::wstring oldfile(oldfullpath.begin(), oldfullpath.end());
+    std::wstring newfile(newfullpath.begin(), newfullpath.end());
+
+    if (MoveFileEx(oldfile.c_str(), newfile.c_str(),
+        MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
+    {
+        return true;
+    }
+    CCLOG("Rename failed with error: %d", GetLastError());
+    return false;
+}
+
 bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
     CCASSERT(!path.empty(), "Invalid path");
@@ -333,13 +350,7 @@ bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &ol
     std::regex pat("\\/");
     std::string _old = std::regex_replace(oldPath, pat, "\\");
     std::string _new = std::regex_replace(newPath, pat, "\\");
-    if (MoveFileEx(std::wstring(_old.begin(), _old.end()).c_str(),
-        std::wstring(_new.begin(), _new.end()).c_str(),
-        MOVEFILE_REPLACE_EXISTING & MOVEFILE_WRITE_THROUGH))
-    {
-        return true;
-    }
-    return false;
+    return renameFile(_old, _new);
 }
 
 static Data getData(const std::string& filename, bool forString)

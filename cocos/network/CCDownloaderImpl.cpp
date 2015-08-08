@@ -149,7 +149,7 @@ int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
         const auto& unit = unitEntry.second;
 
         // HACK: Needed for callbacks. "this" + "unit" are needed
-        unit.__reserved = this;
+        unit._reserved = this;
 
         if (unit.fp != NULL)
         {
