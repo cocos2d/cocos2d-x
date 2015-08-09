@@ -699,7 +699,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1 || _generateMipmaps;
 
-    if (_generateMipmaps)
+    if (mipmapsNum == 1 && _generateMipmaps && Configuration::getInstance()->supportsGenerateMipmap())
     {
         generateMipmapInternal();
     }
