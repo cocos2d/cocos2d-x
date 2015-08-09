@@ -4704,6 +4704,18 @@ long
 },
 
 /**
+ * @method convertBoundingBoxToScreen
+ * @param {cc.Node} arg0
+ * @return {rect_object}
+ */
+convertBoundingBoxToScreen : function (
+node 
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method changeLayoutSystemActiveState
  * @param {bool} arg0
  */
