@@ -2,9 +2,18 @@
 var s_resprefix = "";
 
 var ccbjs = "";
+// js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
+// so the respath will modify to res,
 if (!cc.sys.isNative)
 {
-    ccbjs = "../../js-tests/resjs/";
+    if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+        ccbjs = "../../js-tests/resjs/";
+    }
+    else
+    {
+        ccbjs = "";
+    }
+
 }
 
 var s_pathGrossini = "Images/grossini.png";
