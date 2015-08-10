@@ -367,7 +367,7 @@ void Material_parsePerformance::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
     
-    _maxParsingCoumt = 1e4;
+    _maxParsingCoumt = 5e3;
     
     auto screenSize = Director::getInstance()->getWinSize();
     
