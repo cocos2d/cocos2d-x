@@ -551,7 +551,7 @@ bool ShaderRetroEffect::init()
         auto fragStr = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"));
         GLchar * fragSource = (GLchar*)fragStr.c_str();
 
-        auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
+        auto p = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
         auto director = Director::getInstance();
         auto s = director->getWinSize();
