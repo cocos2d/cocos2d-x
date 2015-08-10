@@ -360,19 +360,18 @@ void CheckBox::setupFrontCrossDisableTexture()
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
-
-void CheckBox::releaseUpEvent()
+void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    Widget::releaseUpEvent();
-    
     if (_isSelected)
     {
         setSelected(false);
+        Widget::onTouchEnded(touch, unusedEvent);
         unSelectedEvent();
     }
     else
     {
         setSelected(true);
+        Widget::onTouchEnded(touch, unusedEvent);
         selectedEvent();
     }
 }
@@ -391,6 +390,12 @@ void CheckBox::onPressStateChangedToNormal()
     
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
     _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
+    
+    if (_isSelected)
+    {
+        _frontCrossRenderer->setVisible(true);
+        _frontCrossRendererAdaptDirty = true;
+    }
 }
 
 void CheckBox::onPressStateChangedToPressed()
@@ -433,6 +438,12 @@ void CheckBox::onPressStateChangedToDisabled()
     _frontCrossRenderer->setVisible(false);
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
     _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
+    
+    if (_isSelected)
+    {
+        _frontCrossDisabledRenderer->setVisible(true);
+        _frontCrossDisabledRendererAdaptDirty = true;
+    }
 }
     
 void CheckBox::setZoomScale(float scale)
@@ -453,18 +464,6 @@ void CheckBox::setSelected(bool selected)
     }
     _isSelected = selected;
     _frontCrossRenderer->setVisible(_isSelected);
-    
-    if (_isSelected)
-    {
-        if (_bright) {
-            _frontCrossRenderer->setVisible(true);
-            _frontCrossRendererAdaptDirty = true;
-        }
-        else {
-            _frontCrossDisabledRenderer->setVisible(true);
-            _frontCrossDisabledRendererAdaptDirty = true;
-        }
-    }
 }
     
 bool CheckBox::isSelected()const
