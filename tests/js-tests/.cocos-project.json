@@ -25,7 +25,17 @@
     "web_cfg": {
         "project_path": "",
         "run_root_dir": "../../",
-        "sub_url": "/tests/js-tests/"
+        "sub_url": "/tests/js-tests/",
+        "copy_resources": [
+            {
+                "from": "../cpp-tests/Resources/", 
+                "to": "res/"
+            },
+            {
+                "from": "resjs", 
+                "to": "res/"
+            }
+        ]
     },
     "linux_cfg": {
         "project_path": "project/proj.linux",
