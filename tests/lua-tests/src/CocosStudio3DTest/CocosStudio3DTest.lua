@@ -11,6 +11,13 @@ function CSNode3DTest.create()
     Helper.titleLabel:setString("Node3DReader Test")
 
     local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Node3D.csb");
+
+    local size = cc.Director:getInstance():getWinSize()
+    local label = cc.LabelTTF:create("Function demo, no content to show", "Arial", 24)
+    label:setPosition( cc.p(size.width / 2, size.height / 2) )
+    label:setColor(cc.c3b(255, 127, 0))
+    node:addChild(label);
+
     layer:addChild(node);
 
     return layer;
@@ -86,6 +93,7 @@ function CSParticle3DTest.create()
 end
 
 function CocosStudio3DTest()
+    cc.FileUtils:getInstance():addSearchPath("ccs-res/CocosStudio3DTest")
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = 

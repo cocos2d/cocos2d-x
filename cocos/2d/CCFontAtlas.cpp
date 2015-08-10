@@ -164,7 +164,7 @@ bool FontAtlas::getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinit
     if (outIterator != _letterDefinitions.end())
     {
         letterDefinition = (*outIterator).second;
-        return true;
+        return letterDefinition.validDefinition;
     }
     else
     {

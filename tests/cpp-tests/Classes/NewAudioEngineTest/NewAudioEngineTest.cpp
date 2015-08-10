@@ -34,7 +34,9 @@ using namespace cocos2d::experimental;
 
 AudioEngineTests::AudioEngineTests()
 {
+    ADD_TEST_CASE(AudioIssue11143Test);
     ADD_TEST_CASE(AudioControlTest);
+    ADD_TEST_CASE(AudioLoadTest);
     ADD_TEST_CASE(PlaySimultaneouslyTest);
     ADD_TEST_CASE(AudioProfileTest);
     ADD_TEST_CASE(InvalidAudioFileTest);
@@ -266,21 +268,6 @@ bool AudioControlTest::init()
     loopItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
     addChild(loopItem);
     
-    auto preloadItem = TextButton::create("preload", [&](TextButton* button){
-        AudioEngine::preload("background.mp3");
-    });
-    preloadItem->setPosition(layerSize.width * 0.3f, layerSize.height * 0.6f);
-    addChild(preloadItem);
-
-    auto uncacheItem = TextButton::create("uncache", [&](TextButton* button){
-        AudioEngine::uncache("background.mp3");
-        
-        _audioID = AudioEngine::INVALID_AUDIO_ID;
-        ((TextButton*)_playItem)->setEnabled(true);
-    });
-    uncacheItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.6f);
-    addChild(uncacheItem);
-    
     auto volumeSlider = SliderEx::create();
     volumeSlider->setPercent(100);
     volumeSlider->addEventListener([&](Ref* sender, Slider::EventType event){
@@ -356,8 +343,53 @@ AudioControlTest::~AudioControlTest()
 
 std::string AudioControlTest::title() const
 {
-    return "audio control test";
+    return "Audio control test";
 }
+
+bool AudioLoadTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        auto& layerSize = this->getContentSize();
+
+        auto stateLabel = Label::createWithTTF("status:", "fonts/arial.ttf", 30);
+        stateLabel->setPosition(layerSize.width / 2, layerSize.height * 0.7f);
+        addChild(stateLabel);
+
+        auto preloadItem = TextButton::create("preload", [&, stateLabel](TextButton* button){
+            stateLabel->setString("status:loading...");
+            AudioEngine::preload("audio/SoundEffectsFX009/FX082.mp3", [stateLabel](bool isSuccess){
+                if (isSuccess)
+                {
+                    stateLabel->setString("status:load success");
+                }
+                else
+                {
+                    stateLabel->setString("status:load fail");
+                }
+            });
+        });
+        preloadItem->setPosition(layerSize.width * 0.35f, layerSize.height * 0.5f);
+        addChild(preloadItem);
+
+        auto uncacheItem = TextButton::create("uncache", [&, stateLabel](TextButton* button){
+            stateLabel->setString("status:uncache");
+            AudioEngine::uncache("audio/SoundEffectsFX009/FX082.mp3");
+        });
+        uncacheItem->setPosition(layerSize.width * 0.65f, layerSize.height * 0.5f);
+        addChild(uncacheItem);
+        
+        return true;
+    }
+
+    return false;
+}
+
+std::string AudioLoadTest::title() const
+{
+    return "Audio preload/uncache test";
+}
+
 
 // PlaySimultaneouslyTest
 bool PlaySimultaneouslyTest::init()
@@ -569,6 +601,38 @@ LargeAudioFileTest::~LargeAudioFileTest()
 std::string LargeAudioFileTest::title() const
 {
     return "Test large audio file";
+}
+
+bool AudioIssue11143Test::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        auto& layerSize = this->getContentSize();
+
+        auto playItem = TextButton::create("play", [](TextButton* button){
+            auto audioId = AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
+            button->scheduleOnce([audioId](float dt){
+                AudioEngine::stop(audioId);
+                AudioEngine::play2d("audio/SoundEffectsFX009/FX083.mp3");
+            }, 2.f, "play another sound");
+        });
+        playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
+        addChild(playItem);
+
+        return true;
+    }
+
+    return false;
+}
+
+std::string AudioIssue11143Test::title() const
+{
+    return "Test for issue 11143";
+}
+
+std::string AudioIssue11143Test::subtitle() const
+{
+    return "2 seconds after first sound play,you should hear another sound.";
 }
 
 #endif

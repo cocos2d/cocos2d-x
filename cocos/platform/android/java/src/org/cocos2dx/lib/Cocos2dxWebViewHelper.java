@@ -6,11 +6,11 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-
-import com.chukong.cocosplay.client.CocosPlayClient;
 
 
 public class Cocos2dxWebViewHelper {
