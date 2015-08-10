@@ -65,6 +65,8 @@ public:
         CC_SAFE_DELETE(letter);
         return nullptr;
     }
+    
+    CREATE_FUNC(LabelLetter);
 
     virtual void updateTransform() override
     {
@@ -746,26 +748,28 @@ void Label::updateQuads()
     
     for (int ctr = 0; ctr < _lengthOfString; ++ctr)
     {
-        auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
-
-        if (letterDef.validDefinition)
+        if (_lettersInfo[ctr].valid)
         {
+            auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf16Char];
+            
             _reusedRect.size.height = letterDef.height;
             _reusedRect.size.width  = letterDef.width;
             _reusedRect.origin.x    = letterDef.U;
             _reusedRect.origin.y    = letterDef.V;
 
             auto py = _lettersInfo[ctr].positionY + _letterOffsetY;
-            if (py > _tailoredTopY)
-            {
-                auto clipTop = py - _tailoredTopY;
-                _reusedRect.origin.y += clipTop;
-                _reusedRect.size.height -= clipTop;
-                py -= clipTop;
-            }
-            if (py - letterDef.height < _tailoredBottomY)
-            {
-                _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
+            if (_labelHeight > 0.f) {
+                if (py > _tailoredTopY)
+                {
+                    auto clipTop = py - _tailoredTopY;
+                    _reusedRect.origin.y += clipTop;
+                    _reusedRect.size.height -= clipTop;
+                    py -= clipTop;
+                }
+                if (py - letterDef.height < _tailoredBottomY)
+                {
+                    _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
+                }
             }
 
             if (_reusedRect.size.height > 0.f && _reusedRect.size.width > 0.f)
@@ -1351,10 +1355,10 @@ void Label::setSystemFontSize(float fontSize)
 }
 
 ///// PROTOCOL STUFF
-Sprite * Label::getLetter(int letterIndex)
+Sprite* Label::getLetter(int letterIndex)
 {
     Sprite* letter = nullptr;
-    do 
+    do
     {
         if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
         {
@@ -1390,23 +1394,36 @@ Sprite * Label::getLetter(int letterIndex)
 
             if (letter == nullptr)
             {
-                letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
-                letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
-                letter->setAtlasIndex(letterInfo.atlasIndex);
-
-                auto px = letterInfo.positionX + uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
-                auto py = letterInfo.positionY - uvRect.size.height / 2 + _letterOffsetY;
-                letter->setPosition(px,py);
-                letter->setOpacity(_realOpacity);
+                if (letterDef.width <= 0.f || letterDef.height <= 0.f)
+                {
+                    letter = LabelLetter::create();
+                }
+                else
+                {
+                    letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
+                    letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
+                    letter->setAtlasIndex(letterInfo.atlasIndex);
+                    auto px = letterInfo.positionX + uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
+                    auto py = letterInfo.positionY - uvRect.size.height / 2 + _letterOffsetY;
+                    letter->setPosition(px,py);
+                    letter->setOpacity(_realOpacity);
+                }
+                
                 addChild(letter);
-
                 _letters[letterIndex] = letter;
             }
             else if (contentDirty)
             {
-                letter->setTexture(_fontAtlas->getTexture(textureID));
-                letter->setTextureRect(uvRect, false, uvRect.size);
-                letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
+                if (letterDef.width <= 0.f || letterDef.height <= 0.f)
+                {
+                    letter->setTextureAtlas(nullptr);
+                }
+                else
+                {
+                    letter->setTexture(_fontAtlas->getTexture(textureID));
+                    letter->setTextureRect(uvRect, false, uvRect.size);
+                    letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
+                }
             }
         }
     } while (false);
