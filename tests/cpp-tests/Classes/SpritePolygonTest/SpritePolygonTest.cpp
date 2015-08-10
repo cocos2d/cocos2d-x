@@ -3,20 +3,24 @@
 #include "ui/CocosGUI.h"
 
 USING_NS_CC;
+
 SpritePolygonTest::SpritePolygonTest()
 {
     ADD_TEST_CASE(SpritePolygonTest1);
     ADD_TEST_CASE(SpritePolygonTest2);
-        ADD_TEST_CASE(SpritePolygonTest3);
-        ADD_TEST_CASE(SpritePolygonTest4);
+    ADD_TEST_CASE(SpritePolygonTest3);
+    ADD_TEST_CASE(SpritePolygonTest4);
+    ADD_TEST_CASE(SpritePolygonTest5);
     ADD_TEST_CASE(SpritePolygonPerformanceTestDynamic);
     ADD_TEST_CASE(SpritePerformanceTestDynamic);
 }
+
 void SpritePolygonTestCase::onBackCallback(cocos2d::Ref *sender)
 {
     TestCase::onBackCallback(sender);
     Director::getInstance()->setClearColor(Color4F::BLACK);
 }
+
 void SpritePolygonTestDemo::initTouchDebugDraw()
 {
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -36,10 +40,8 @@ void SpritePolygonTestDemo::initTouchDebugDraw()
         sp->debugDraw(false);
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-    
-
-
 }
+
 void SpritePolygonTest1::make2Sprites()
 {
     Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
@@ -50,7 +52,6 @@ void SpritePolygonTest1::make2Sprites()
     auto s = Director::getInstance()->getWinSize();
     auto offset = Vec2(0.15*s.width,0);
     spp->setPosition(Vec2(s)/2 + offset);
-
 
     sp = Sprite::create(filename);
     addChild(sp);
@@ -71,18 +72,21 @@ void SpritePolygonTest1::make2Sprites()
     
     initTouchDebugDraw();
 }
+
 SpritePolygonTest1::SpritePolygonTest1()
 {
     _title = "SpritePolygon Creation";
     _subtitle = "Sprite::create(AutoPolygon::generatePolygon(filename))";
     make2Sprites();
 }
+
 SpritePolygonTest2::SpritePolygonTest2()
 {
     _title = "SpritePolygon Creation with a rect";
     _subtitle = "Sprite::create(AutoPolygon::generatePolygon(filename, rect))";
     make2Sprites();
 }
+
 void SpritePolygonTest2::make2Sprites()
 {
     Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
@@ -94,7 +98,6 @@ void SpritePolygonTest2::make2Sprites()
     auto s = Director::getInstance()->getWinSize();
     auto offset = Vec2(0.15*s.width,0);
     spp->setPosition(Vec2(s)/2 + offset);
-    
     
     sp = Sprite::create(filename,head);
     addChild(sp);
@@ -116,7 +119,110 @@ void SpritePolygonTest2::make2Sprites()
     initTouchDebugDraw();
 }
 
+SpritePolygonTest3::SpritePolygonTest3()
+{
+    _ttfConfig = TTFConfig("fonts/arial.ttf", 8);
+    _title = "Optimization Value (default:2.0)";
+    _subtitle = "";
+    auto vsize =Director::getInstance()->getVisibleSize();
+    std::string list[] = {
+        "Images/arrows.png",
+        "Images/CyanTriangle.png",
+        s_pathB2,
+        "Images/elephant1_Diffuse.png"
+    };
+    int count = 4;
+    makeSprites(list, count, vsize.height/2);
+}
 
+SpritePolygonTest4::SpritePolygonTest4()
+{
+    _ttfConfig = TTFConfig("fonts/arial.ttf", 8);
+    _title = "Optimization Value (default:2.0)";
+    _subtitle = "";
+    auto vsize =Director::getInstance()->getVisibleSize();
+    
+    int count = 3;
+    std::string list[] = {
+        s_pathGrossini,
+        "Images/grossinis_sister1.png",
+        "Images/grossinis_sister2.png"
+    };
+    
+    makeSprites(list, count, vsize.height/5*2);
+}
+
+SpritePolygonTest5::SpritePolygonTest5()
+{
+    _title = "SpritePolygon Actions";
+    _subtitle = "Touch screen to add sprite with random action.";
+    Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
+    auto filename = s_pathGrossini;
+    _polygonInfo = AutoPolygon::generatePolygon(filename);
+    initTouch();
+    loadDefaultSprites();
+}
+
+void SpritePolygonTest5::initTouch()
+{
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [&](Touch* touch, Event* event){
+        return true;
+    };
+    touchListener->onTouchEnded = [&](Touch* touch, Event* event){
+        auto pos = touch->getLocation();
+        addSpritePolygon(pos);
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+}
+
+void SpritePolygonTest5::loadDefaultSprites()
+{
+    auto s = Director::getInstance()->getVisibleSize();
+    
+    const int DEFAULT_SPRITEPOLYGON_COUNT = 8;
+    Sprite* sprites[DEFAULT_SPRITEPOLYGON_COUNT];
+
+    for (int i = 0; i < DEFAULT_SPRITEPOLYGON_COUNT; i++) {
+        sprites[i] = Sprite::create(_polygonInfo);
+        sprites[i]->setPosition(s.width * CCRANDOM_0_1(), s.height * CCRANDOM_0_1());
+        this->addChild(sprites[i]);
+    }
+    sprites[0]->setColor(Color3B::RED);
+    sprites[1]->setOpacity(100);
+    sprites[2]->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister1.png"));
+    sprites[3]->setTextureRect(Rect(0,0,100,30));
+    sprites[4]->setScale(0.5f, 2.0f);
+    sprites[5]->setFlippedY(true);
+    sprites[6]->setSkewX(60);
+    sprites[7]->setRotation(90);
+    for (int i = 0; i < DEFAULT_SPRITEPOLYGON_COUNT; i++) {
+        sprites[i]->debugDraw(true);
+    }
+}
+
+void SpritePolygonTest5::addSpritePolygon(const Vec2& pos)
+{
+    auto sprite = Sprite::create(_polygonInfo);
+    sprite->setPosition(pos);
+    this->addChild(sprite);
+    ActionInterval* action;
+    float random = CCRANDOM_0_1();
+    if( random < 0.20 )
+        action = ScaleBy::create(3, 2);
+    else if(random < 0.40)
+        action = RotateBy::create(3, 360);
+    else if( random < 0.60)
+        action = Blink::create(1, 3);
+    else if( random < 0.8 )
+        action = TintBy::create(2, 0, -255, -255);
+    else
+        action = FadeOut::create(2);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create( action, action_back, nullptr );
+    sprite->runAction(seq);
+    sprite->debugDraw(true);
+}
 
 SpritePolygonPerformance::SpritePolygonPerformance()
 {
@@ -139,16 +245,19 @@ SpritePolygonPerformance::SpritePolygonPerformance()
     continuousHighDtTime = 0.0;
     waitingTime = 0.0;
 }
+
 void SpritePolygonPerformance::updateLabel()
 {
     std::string temp = "Nodes: " + Value(spriteCount).asString() + " Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + " Vertices: " + Value(vertCount).asString();
     if(!ended)
     perfLabel->setString("Nodes: " + Value(spriteCount).asString() + "   Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + "   Vertices: " + Value(vertCount).asString());
 }
+
 Node *SpritePolygonPerformance::makeSprite()
 {
     return Node::create();
 }
+
 void SpritePolygonPerformance::update(float dt)
 {
     dt = dt*0.3 + prevDt*0.7;
@@ -202,6 +311,7 @@ void SpritePolygonPerformance::update(float dt)
         waitingTime += dt;
     }
 }
+
 void SpritePolygonPerformance::incrementStats()
 {
     spriteCount ++;
@@ -209,6 +319,7 @@ void SpritePolygonPerformance::incrementStats()
     triCount += _incTri;
     pixelCount += _incPix;
 }
+
 void SpritePolygonPerformanceTestDynamic::initIncrementStats()
 {
     _incVert = _pinfo.getVertCount();
@@ -223,6 +334,7 @@ SpritePolygonPerformanceTestDynamic::SpritePolygonPerformanceTestDynamic()
     _subtitle = "Test running, please wait until it ends";
     initIncrementStats();
 }
+
 Sprite* SpritePolygonPerformanceTestDynamic::makeSprite()
 {
     auto ret = Sprite::create(_pinfo);
@@ -230,13 +342,13 @@ Sprite* SpritePolygonPerformanceTestDynamic::makeSprite()
     return ret;
 }
 
-
 SpritePerformanceTestDynamic::SpritePerformanceTestDynamic()
 {
     _title = "Dynamic Sprite Performance";
     _subtitle = "Test running, please wait until it ends";
     initIncrementStats();
 }
+
 void SpritePerformanceTestDynamic::initIncrementStats()
 {
     auto t = Sprite::create(s_pathGrossini);
@@ -244,13 +356,13 @@ void SpritePerformanceTestDynamic::initIncrementStats()
     _incTri = 2;
     _incPix = t->getContentSize().width * t->getContentSize().height;
 }
+
 Sprite* SpritePerformanceTestDynamic::makeSprite()
 {
     auto ret =  Sprite::create(s_pathGrossini);
     ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
     return ret;
 }
-
 
 SpritePolygonTestSlider::SpritePolygonTestSlider()
 {
@@ -273,6 +385,7 @@ SpritePolygonTestSlider::SpritePolygonTestSlider()
     _epsilonLabel->setPosition(Vec2(vsize.width/2, vsize.height/4 + 15));
     addChild(slider);
 }
+
 void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
 {
     auto vsize =Director::getInstance()->getVisibleSize();
@@ -284,6 +397,7 @@ void SpritePolygonTestSlider::makeSprites(const std::string* list, const int cou
         sp->debugDraw(true);
     }
 }
+
 void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::Slider::EventType type)
 {
     if (type == cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
@@ -329,35 +443,3 @@ Sprite* SpritePolygonTestSlider::makeSprite(const std::string &filename, const V
     ret->setAnchorPoint(Vec2(0.5, 0));
     return ret;
 }
-SpritePolygonTest3::SpritePolygonTest3()
-{
-    _ttfConfig = TTFConfig("fonts/arial.ttf", 8);
-    _title = "Optimization Value (default:2.0)";
-    _subtitle = "";
-    auto vsize =Director::getInstance()->getVisibleSize();
-    std::string list[] = {
-        "Images/arrows.png",
-        "Images/CyanTriangle.png",
-        s_pathB2,
-        "Images/elephant1_Diffuse.png"
-    };
-    int count = 4;
-    makeSprites(list, count, vsize.height/2);
-}
-SpritePolygonTest4::SpritePolygonTest4()
-{
-    _ttfConfig = TTFConfig("fonts/arial.ttf", 8);
-    _title = "Optimization Value (default:2.0)";
-    _subtitle = "";
-    auto vsize =Director::getInstance()->getVisibleSize();
-    
-    int count = 3;
-    std::string list[] = {
-        s_pathGrossini,
-        "Images/grossinis_sister1.png",
-        "Images/grossinis_sister2.png"
-    };
-    
-    makeSprites(list, count, vsize.height/5*2);
-}
-

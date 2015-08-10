@@ -90,6 +90,9 @@ public:
     /** adds a GLProgram to the cache for a given name */
     void addGLProgram(GLProgram* program, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
+    
+    /** reload default programs these are relative to light */
+    void reloadDefaultGLProgramsRelativeToLights();
 
 private:
     /**

@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIListViewTest_Vertical = UIScene.extend({
+var UIListViewTest_Vertical = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -156,7 +156,7 @@ var UIListViewTest_Vertical = UIScene.extend({
     }
 });
 
-var UIListViewTest_Horizontal = UIScene.extend({
+var UIListViewTest_Horizontal = UIMainLayer.extend({
     _array: null,
     init: function () {
         if (this._super()) {

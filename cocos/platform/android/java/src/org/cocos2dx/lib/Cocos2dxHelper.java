@@ -91,10 +91,10 @@ public class Cocos2dxHelper {
 
     private static boolean sInited = false;
     public static void init(final Activity activity) {
+        sActivity = activity;
+        Cocos2dxHelper.sCocos2dxHelperListener = (Cocos2dxHelperListener)activity;
         if (!sInited) {
             final ApplicationInfo applicationInfo = activity.getApplicationInfo();
-            
-            Cocos2dxHelper.sCocos2dxHelperListener = (Cocos2dxHelperListener)activity;
                     
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
             if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
@@ -113,7 +113,6 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
     
             Cocos2dxBitmap.setContext(activity);
-            sActivity = activity;
 
             Cocos2dxHelper.sVibrateService = (Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -531,6 +530,18 @@ public class Cocos2dxHelper {
         SharedPreferences.Editor editor = settings.edit();
         editor.remove(key);
         editor.commit();
+    }
+
+    public static byte[] conversionEncoding(byte[] text, String fromCharset,String newCharset)
+    {
+        try {
+            String str = new String(text,fromCharset);
+            return str.getBytes(newCharset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
     
     // ===========================================================

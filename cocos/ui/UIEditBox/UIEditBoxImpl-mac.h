@@ -30,38 +30,9 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
-
 #include "UIEditBoxImpl.h"
 
-
-@interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
-{
-    NSTextField* textField_;
-    NSSecureTextField* secureTextField_;
-    void* editBox_;
-    BOOL editState_;
-    NSMutableDictionary* placeholderAttributes_;
-}
-
-@property(nonatomic, retain) NSTextField* textField;
-@property(nonatomic, retain) NSSecureTextField* secureTextField;
-@property(nonatomic, retain) NSMutableDictionary* placeholderAttributes;
-@property(nonatomic, readonly, getter = isEditState) BOOL editState;
-@property(nonatomic, assign) void* editBox;
-@property(nonatomic, assign, getter = isSecure) BOOL secure;
-
--(id) initWithFrame: (NSRect) frameRect editBox: (void*) editBox;
--(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
--(void) setPosition:(NSPoint) pos;
--(void) setContentSize:(NSSize) size;
--(void) visit;
--(void) openKeyboard;
--(void) closeKeyboard;
-
-@end
-
+@class UIEditBoxImplMac;
 
 NS_CC_BEGIN
 

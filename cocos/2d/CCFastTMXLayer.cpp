@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
@@ -138,11 +139,21 @@ TMXLayer::~TMXLayer()
 void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
     updateTotalQuads();
+
+    bool isViewProjectionUpdated = true;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        isViewProjectionUpdated = visitingCamera->isViewProjectionUpdated();
+    }
     
-    if( flags != 0 || _dirty || _quadsDirty )
+    if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
-        Size s = Director::getInstance()->getWinSize();
-        auto rect = Rect(0, 0, s.width, s.height);
+        Size s = Director::getInstance()->getVisibleSize();
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5,
+                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5,
+                     s.width,
+                     s.height);
         
         Mat4 inv = transform;
         inv.inverse();

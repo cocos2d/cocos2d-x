@@ -63,7 +63,8 @@
 #include "cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.h"
 #include "cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h"
 #include "cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h"
-
+#include "cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
+#include "cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 
@@ -212,6 +213,8 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(Sprite3DReader);
     CREATE_CLASS_NODE_READER_INFO(UserCameraReader);
     CREATE_CLASS_NODE_READER_INFO(Particle3DReader);
+    CREATE_CLASS_NODE_READER_INFO(BoneNodeReader);
+    CREATE_CLASS_NODE_READER_INFO(SkeletonNodeReader);
 }
 
 void CSLoader::purge()
@@ -288,11 +291,20 @@ Node* CSLoader::createNode(const std::string &filename, const ccNodeLoadCallback
     return nullptr;
 }
 
+std::string CSLoader::getExtentionName(const std::string& name)
+{
+    std::string result = "";
+
+    std::string path = name;
+    size_t pos = path.find_last_of('.');
+    result = path.substr(pos + 1, path.length());
+
+    return result;
+}
+
 ActionTimeline* CSLoader::createTimeline(const std::string &filename)
 {
-    std::string path = filename;
-    size_t pos = path.find_last_of('.');
-    std::string suffix = path.substr(pos + 1, path.length());
+    std::string suffix = getExtentionName(filename);
     CCLOG("suffix = %s", suffix.c_str());
     
     ActionTimelineCache* cache = ActionTimelineCache::getInstance();
@@ -308,6 +320,27 @@ ActionTimeline* CSLoader::createTimeline(const std::string &filename)
     
     return nullptr;
 }
+
+ActionTimeline* CSLoader::createTimeline(const Data data, const std::string& filename)
+{
+    std::string suffix = getExtentionName(filename);
+    CCLOG("suffix = %s", suffix.c_str());
+
+    ActionTimelineCache* cache = ActionTimelineCache::getInstance();
+
+    if (suffix == "csb")
+    {
+        return cache->loadAnimationWithDataBuffer(data, filename);
+    }
+    else if (suffix == "json" || suffix == "ExportJson")
+    {
+        std::string content((char *)data.getBytes(), data.getSize());
+        return cache->loadAnimationActionWithContent(filename, content);
+    }
+
+    return nullptr;
+}
+
 
 /*
 ActionTimelineNode* CSLoader::createActionTimelineNode(const std::string& filename)
@@ -794,6 +827,54 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
+cocos2d::Node* CSLoader::createNode(const Data data)
+{
+    return createNode(data, nullptr);
+}
+
+Node * CSLoader::createNode(const Data data, const ccNodeLoadCallback &callback)
+{
+    CSLoader * loader = CSLoader::getInstance();
+    Node * node = nullptr;
+    do 
+    {
+        CC_BREAK_IF(data.isNull() || data.getSize() <= 0);
+        auto csparsebinary = GetCSParseBinary(data.getBytes());
+        CC_BREAK_IF(nullptr == csparsebinary);
+        auto csBuildId = csparsebinary->version();
+        if (csBuildId)
+        {
+            CCASSERT(strcmp(loader->_csBuildID.c_str(), csBuildId->c_str()) == 0,
+                StringUtils::format("%s%s%s%s%s%s%s%s%s%s",
+                "The reader build id of your Cocos exported file(",
+                csBuildId->c_str(),
+                ") and the reader build id in your Cocos2d-x(",
+                loader->_csBuildID.c_str(),
+                ") are not match.\n",
+                "Please get the correct reader(build id ",
+                csBuildId->c_str(),
+                ")from ",
+                "http://www.cocos2d-x.org/filedown/cocos-reader",
+                " and replace it in your Cocos2d-x").c_str());
+        }
+
+        // decode plist
+        auto textures = csparsebinary->textures();
+        int textureSize = csparsebinary->textures()->size();
+        CCLOG("textureSize = %d", textureSize);
+        for (int i = 0; i < textureSize; ++i)
+        {
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());
+        }
+
+        node = loader->nodeWithFlatBuffers(csparsebinary->nodeTree(), callback);
+    } while (0);
+
+    loader->reconstructNestNode(node);
+
+    return node;
+}
+
 Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename)
 {
     return createNodeWithFlatBuffersFile(filename, nullptr);
@@ -802,7 +883,14 @@ Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename)
 Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename, const ccNodeLoadCallback &callback)
 {
     Node* node = nodeWithFlatBuffersFile(filename, callback);
-    
+
+    reconstructNestNode(node);
+
+    return node;
+}
+
+inline void CSLoader::reconstructNestNode(cocos2d::Node * node)
+{
     /* To reconstruct nest node as WidgetCallBackHandlerProtocol. */
     auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(node);
     if (callbackHandler)
@@ -819,9 +907,6 @@ Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename, const
             CCLOG("after pop back _rootNode name = %s", _rootNode->getName().c_str());
         }
     }
-    /**/
-    
-    return node;
 }
 
 Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
@@ -896,8 +981,9 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, const
             cocostudio::timeline::ActionTimeline* action = nullptr;
             if (filePath != "" && FileUtils::getInstance()->isFileExist(filePath))
             {
-                node = createNodeWithFlatBuffersFile(filePath, callback);
-                action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersFile(filePath);
+                Data buf = FileUtils::getInstance()->getDataFromFile(filePath);
+                node = createNode(buf, callback);
+                action = timeline::ActionTimelineCache::getInstance()->loadAnimationWithDataBuffer(buf, filePath);
             }
             else
             {

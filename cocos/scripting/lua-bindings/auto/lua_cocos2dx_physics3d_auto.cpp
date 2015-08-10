@@ -52,6 +52,212 @@ int lua_cocos2dx_physics3d_Physics3DShape_getbtShape(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics3d_Physics3DShape_initSphere(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Physics3DShape*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DShape_initSphere'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Physics3DShape:initSphere");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_initSphere'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initSphere(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DShape:initSphere",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DShape_initSphere'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics3d_Physics3DShape_initBox(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Physics3DShape*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DShape_initBox'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Vec3 arg0;
+
+        ok &= luaval_to_vec3(tolua_S, 2, &arg0, "cc.Physics3DShape:initBox");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_initBox'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initBox(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DShape:initBox",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DShape_initBox'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics3d_Physics3DShape_initCapsule(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Physics3DShape*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DShape_initCapsule'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        double arg0;
+        double arg1;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Physics3DShape:initCapsule");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Physics3DShape:initCapsule");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_initCapsule'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initCapsule(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DShape:initCapsule",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DShape_initCapsule'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics3d_Physics3DShape_initCylinder(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Physics3DShape*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DShape_initCylinder'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        double arg0;
+        double arg1;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Physics3DShape:initCylinder");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Physics3DShape:initCylinder");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_initCylinder'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initCylinder(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DShape:initCylinder",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DShape_initCylinder'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics3d_Physics3DShape_getShapeType(lua_State* tolua_S)
 {
     int argc = 0;
@@ -285,6 +491,43 @@ int lua_cocos2dx_physics3d_Physics3DShape_createSphere(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_physics3d_Physics3DShape_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DShape_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::Physics3DShape();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Physics3DShape");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DShape:Physics3DShape",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DShape_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
 static int lua_cocos2dx_physics3d_Physics3DShape_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Physics3DShape)");
@@ -297,7 +540,12 @@ int lua_register_cocos2dx_physics3d_Physics3DShape(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Physics3DShape","cc.Physics3DShape","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"Physics3DShape");
+        tolua_function(tolua_S,"new",lua_cocos2dx_physics3d_Physics3DShape_constructor);
         tolua_function(tolua_S,"getbtShape",lua_cocos2dx_physics3d_Physics3DShape_getbtShape);
+        tolua_function(tolua_S,"initSphere",lua_cocos2dx_physics3d_Physics3DShape_initSphere);
+        tolua_function(tolua_S,"initBox",lua_cocos2dx_physics3d_Physics3DShape_initBox);
+        tolua_function(tolua_S,"initCapsule",lua_cocos2dx_physics3d_Physics3DShape_initCapsule);
+        tolua_function(tolua_S,"initCylinder",lua_cocos2dx_physics3d_Physics3DShape_initCylinder);
         tolua_function(tolua_S,"getShapeType",lua_cocos2dx_physics3d_Physics3DShape_getShapeType);
         tolua_function(tolua_S,"createBox", lua_cocos2dx_physics3d_Physics3DShape_createBox);
         tolua_function(tolua_S,"createCylinder", lua_cocos2dx_physics3d_Physics3DShape_createCylinder);
@@ -4171,6 +4419,53 @@ int lua_cocos2dx_physics3d_Physics3DWorld_collisionChecking(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DWorld* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DWorld",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Physics3DWorld*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback'", nullptr);
+            return 0;
+        }
+        cobj->setGhostPairCallback();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DWorld:setGhostPairCallback",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4730,6 +5025,7 @@ int lua_register_cocos2dx_physics3d_Physics3DWorld(lua_State* tolua_S)
         tolua_function(tolua_S,"stepSimulate",lua_cocos2dx_physics3d_Physics3DWorld_stepSimulate);
         tolua_function(tolua_S,"needCollisionChecking",lua_cocos2dx_physics3d_Physics3DWorld_needCollisionChecking);
         tolua_function(tolua_S,"collisionChecking",lua_cocos2dx_physics3d_Physics3DWorld_collisionChecking);
+        tolua_function(tolua_S,"setGhostPairCallback",lua_cocos2dx_physics3d_Physics3DWorld_setGhostPairCallback);
         tolua_function(tolua_S,"removeAllPhysics3DObjects",lua_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DObjects);
         tolua_function(tolua_S,"isDebugDrawEnabled",lua_cocos2dx_physics3d_Physics3DWorld_isDebugDrawEnabled);
         tolua_function(tolua_S,"removeAllPhysics3DConstraints",lua_cocos2dx_physics3d_Physics3DWorld_removeAllPhysics3DConstraints);
@@ -5449,6 +5745,77 @@ int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB(lua_
 
     return 0;
 }
+int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Physics3DPointToPointConstraint* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Physics3DPointToPointConstraint",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::Physics3DPointToPointConstraint*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 4) {
+            cocos2d::Physics3DRigidBody* arg0;
+            ok &= luaval_to_object<cocos2d::Physics3DRigidBody>(tolua_S, 2, "cc.Physics3DRigidBody",&arg0, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Physics3DRigidBody* arg1;
+            ok &= luaval_to_object<cocos2d::Physics3DRigidBody>(tolua_S, 3, "cc.Physics3DRigidBody",&arg1, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg2;
+            ok &= luaval_to_vec3(tolua_S, 4, &arg2, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg3;
+            ok &= luaval_to_vec3(tolua_S, 5, &arg3, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            bool ret = cobj->init(arg0, arg1, arg2, arg3);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            cocos2d::Physics3DRigidBody* arg0;
+            ok &= luaval_to_object<cocos2d::Physics3DRigidBody>(tolua_S, 2, "cc.Physics3DRigidBody",&arg0, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            cocos2d::Vec3 arg1;
+            ok &= luaval_to_vec3(tolua_S, 3, &arg1, "cc.Physics3DPointToPointConstraint:init");
+
+            if (!ok) { break; }
+            bool ret = cobj->init(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Physics3DPointToPointConstraint:init",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA(lua_State* tolua_S)
 {
     int argc = 0;
@@ -5661,6 +6028,7 @@ int lua_register_cocos2dx_physics3d_Physics3DPointToPointConstraint(lua_State* t
         tolua_function(tolua_S,"new",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_constructor);
         tolua_function(tolua_S,"getPivotPointInA",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInA);
         tolua_function(tolua_S,"getPivotPointInB",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB);
+        tolua_function(tolua_S,"init",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_init);
         tolua_function(tolua_S,"setPivotPointInA",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInA);
         tolua_function(tolua_S,"setPivotPointInB",lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB);
         tolua_function(tolua_S,"create", lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_create);

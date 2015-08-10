@@ -221,19 +221,21 @@ bool Node::init()
 
 void Node::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+    else if (_scriptType == kScriptTypeLua)
+    {
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnCleanup);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     // actions
     this->stopAllActions();
     this->unscheduleAllCallbacks();
-
-#if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
-    {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-#endif // #if CC_ENABLE_SCRIPT_BINDING
 
     // timers
     for( const auto &child: _children)
@@ -400,7 +402,9 @@ void Node::updateRotation3D()
     //convert quaternion to Euler angle
     float x = _rotationQuat.x, y = _rotationQuat.y, z = _rotationQuat.z, w = _rotationQuat.w;
     _rotationX = atan2f(2.f * (w * x + y * z), 1.f - 2.f * (x * x + y * y));
-    _rotationY = asinf(2.f * (w * y - z * x));
+    float sy = 2.f * (w * y - z * x);
+    sy = clampf(sy, -1, 1);
+    _rotationY = asinf(sy);
     _rotationZ_X = atan2f(2.f * (w * z + x * y), 1.f - 2.f * (y * y + z * z));
     
     _rotationX = CC_RADIANS_TO_DEGREES(_rotationX);
@@ -1408,14 +1412,6 @@ Mat4 Node::transform(const Mat4& parentTransform)
 
 void Node::onEnter()
 {
-    if (_onEnterCallback)
-        _onEnterCallback();
-
-    if (_componentContainer && !_componentContainer->isEmpty())
-    {
-        _componentContainer->onEnter();
-    }
-
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1423,6 +1419,14 @@ void Node::onEnter()
             return;
     }
 #endif
+    
+    if (_onEnterCallback)
+        _onEnterCallback();
+
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onEnter();
+    }
     
     _isTransitionFinished = false;
     
@@ -1443,9 +1447,6 @@ void Node::onEnter()
 
 void Node::onEnterTransitionDidFinish()
 {
-    if (_onEnterTransitionDidFinishCallback)
-        _onEnterTransitionDidFinishCallback();
-        
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1453,6 +1454,9 @@ void Node::onEnterTransitionDidFinish()
             return;
     }
 #endif
+    
+    if (_onEnterTransitionDidFinishCallback)
+        _onEnterTransitionDidFinishCallback();
 
     _isTransitionFinished = true;
     for( const auto &child: _children)
@@ -1468,9 +1472,6 @@ void Node::onEnterTransitionDidFinish()
 
 void Node::onExitTransitionDidStart()
 {
-    if (_onExitTransitionDidStartCallback)
-        _onExitTransitionDidStartCallback();
-    
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1478,6 +1479,9 @@ void Node::onExitTransitionDidStart()
             return;
     }
 #endif
+    
+    if (_onExitTransitionDidStartCallback)
+        _onExitTransitionDidStartCallback();
     
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
@@ -1492,14 +1496,6 @@ void Node::onExitTransitionDidStart()
 
 void Node::onExit()
 {
-    if (_onExitCallback)
-        _onExitCallback();
-    
-    if (_componentContainer && !_componentContainer->isEmpty())
-    {
-        _componentContainer->onExit();
-    }
-
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1507,6 +1503,14 @@ void Node::onExit()
             return;
     }
 #endif
+    
+    if (_onExitCallback)
+        _onExitCallback();
+    
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onExit();
+    }
     
     this->pause();
     
@@ -1767,6 +1771,28 @@ AffineTransform Node::getNodeToParentAffineTransform() const
     return ret;
 }
 
+
+Mat4 Node::getNodeToParentTransform(Node* ancestor) const
+{
+    Mat4 t(this->getNodeToParentTransform());
+
+    for (Node *p = _parent;  p != nullptr && p != ancestor ; p = p->getParent())
+    {
+        t = p->getNodeToParentTransform() * t;
+    }
+
+    return t;
+}
+
+AffineTransform Node::getNodeToParentAffineTransform(Node* ancestor) const
+{
+    AffineTransform t(this->getNodeToParentAffineTransform());
+
+    for (Node *p = _parent; p != nullptr && p != ancestor; p = p->getParent())
+        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
+
+    return t;
+}
 const Mat4& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
@@ -1922,24 +1948,12 @@ const Mat4& Node::getParentToNodeTransform() const
 
 AffineTransform Node::getNodeToWorldAffineTransform() const
 {
-    AffineTransform t(this->getNodeToParentAffineTransform());
-
-    for (Node *p = _parent; p != nullptr; p = p->getParent())
-        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
-
-    return t;
+    return this->getNodeToParentAffineTransform(nullptr);
 }
 
 Mat4 Node::getNodeToWorldTransform() const
 {
-    Mat4 t(this->getNodeToParentTransform());
-
-    for (Node *p = _parent; p != nullptr; p = p->getParent())
-    {
-        t = p->getNodeToParentTransform() * t;
-    }
-
-    return t;
+    return this->getNodeToParentTransform(nullptr);
 }
 
 AffineTransform Node::getWorldToNodeAffineTransform() const
@@ -2342,8 +2356,8 @@ bool isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, 
     // second, get three points which define content plane
     //  these points define a plane P(u, w) = A + uB + wC
     Vec3 A = Vec3(rect.origin.x, rect.origin.y, 0);
-    Vec3 B(rect.size.width, 0, 0);
-    Vec3 C(0, rect.size.height, 0);
+    Vec3 B(rect.origin.x + rect.size.width, rect.origin.y, 0);
+    Vec3 C(rect.origin.x, rect.origin.y + rect.size.height, 0);
     B = B - A;
     C = C - A;
     

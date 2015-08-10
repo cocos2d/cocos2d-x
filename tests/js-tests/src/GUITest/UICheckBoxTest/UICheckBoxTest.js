@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UICheckBoxTest = UIScene.extend({
+var UICheckBoxTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text
@@ -65,7 +65,7 @@ var UICheckBoxTest = UIScene.extend({
 });
 
 //2015-01-14
-var UICheckBoxDefaultBehaviorTest = UIScene.extend({
+var UICheckBoxDefaultBehaviorTest = UIMainLayer.extend({
 
     init: function(){
         if(this._super()){

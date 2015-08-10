@@ -161,9 +161,16 @@ ccui.PageViewEventType = {
    turning = 0,
 }
 
+ccui.PageViewDirection = {
+  HORIZONTAL = 0,
+  VERTICAL = 1
+}
+
 ccui.PVTouchDir = {
     touchLeft = 0,
     touchRight = 1,
+    touchUp = 2,
+    touchDown = 3
 }
 
 ccui.ListViewGravity = {

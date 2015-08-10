@@ -268,6 +268,59 @@ int lua_register_cocos2dx_3d_Animation3D(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        int arg0;
+        cocos2d::ValueMap arg1;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Animate3D:setKeyFrameUserInfo");
+
+        ok &= luaval_to_ccvaluemap(tolua_S, 3, &arg1, "cc.Animate3D:setKeyFrameUserInfo");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo'", nullptr);
+            return 0;
+        }
+        cobj->setKeyFrameUserInfo(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate3D:setKeyFrameUserInfo",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Animate3D_getSpeed(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1058,6 +1111,7 @@ int lua_register_cocos2dx_3d_Animate3D(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Animate3D");
         tolua_function(tolua_S,"new",lua_cocos2dx_3d_Animate3D_constructor);
+        tolua_function(tolua_S,"setKeyFrameUserInfo",lua_cocos2dx_3d_Animate3D_setKeyFrameUserInfo);
         tolua_function(tolua_S,"getSpeed",lua_cocos2dx_3d_Animate3D_getSpeed);
         tolua_function(tolua_S,"setQuality",lua_cocos2dx_3d_Animate3D_setQuality);
         tolua_function(tolua_S,"setWeight",lua_cocos2dx_3d_Animate3D_setWeight);
@@ -4772,56 +4826,6 @@ int lua_cocos2dx_3d_Terrain_setDrawWire(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Terrain* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Terrain",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Terrain:setIsEnableFrustumCull");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull'", nullptr);
-            return 0;
-        }
-        cobj->setIsEnableFrustumCull(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:setIsEnableFrustumCull",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_3d_Terrain_getHeightData(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4969,6 +4973,56 @@ int lua_cocos2dx_3d_Terrain_resetHeightMap(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_resetHeightMap'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_Terrain_setLightDir(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Terrain",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_setLightDir'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Vec3 arg0;
+
+        ok &= luaval_to_vec3(tolua_S, 2, &arg0, "cc.Terrain:setLightDir");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_setLightDir'", nullptr);
+            return 0;
+        }
+        cobj->setLightDir(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:setLightDir",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_setLightDir'.",&tolua_err);
 #endif
 
     return 0;
@@ -5213,6 +5267,60 @@ int lua_cocos2dx_3d_Terrain_initProperties(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_initProperties'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_Terrain_initWithTerrainData(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Terrain",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_initWithTerrainData'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Terrain::TerrainData arg0;
+        cocos2d::Terrain::CrackFixedType arg1;
+
+        #pragma warning NO CONVERSION TO NATIVE FOR TerrainData
+		ok = false;
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Terrain:initWithTerrainData");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_initWithTerrainData'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithTerrainData(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:initWithTerrainData",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_initWithTerrainData'.",&tolua_err);
 #endif
 
     return 0;
@@ -5473,7 +5581,7 @@ int lua_cocos2dx_3d_Terrain_getImageHeight(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_Terrain_getMaxHeight(lua_State* tolua_S)
+int lua_cocos2dx_3d_Terrain_setLightMap(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Terrain* cobj = nullptr;
@@ -5493,29 +5601,82 @@ int lua_cocos2dx_3d_Terrain_getMaxHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_getMaxHeight'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_setLightMap'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.Terrain:setLightMap");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_getMaxHeight'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_setLightMap'", nullptr);
             return 0;
         }
-        double ret = cobj->getMaxHeight();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        cobj->setLightMap(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:getMaxHeight",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:setLightMap",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_getMaxHeight'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_setLightMap'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Terrain",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Terrain:setIsEnableFrustumCull");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull'", nullptr);
+            return 0;
+        }
+        cobj->setIsEnableFrustumCull(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:setIsEnableFrustumCull",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull'.",&tolua_err);
 #endif
 
     return 0;
@@ -5567,6 +5728,90 @@ int lua_cocos2dx_3d_Terrain_getMinHeight(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Terrain_getMaxHeight(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Terrain",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Terrain*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Terrain_getMaxHeight'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_getMaxHeight'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getMaxHeight();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:getMaxHeight",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_getMaxHeight'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_Terrain_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Terrain* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::Terrain();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.Terrain");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Terrain:Terrain",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Terrain_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
 static int lua_cocos2dx_3d_Terrain_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (Terrain)");
@@ -5579,25 +5824,29 @@ int lua_register_cocos2dx_3d_Terrain(lua_State* tolua_S)
     tolua_cclass(tolua_S,"Terrain","cc.Terrain","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"Terrain");
+        tolua_function(tolua_S,"new",lua_cocos2dx_3d_Terrain_constructor);
         tolua_function(tolua_S,"initHeightMap",lua_cocos2dx_3d_Terrain_initHeightMap);
         tolua_function(tolua_S,"setMaxDetailMapAmount",lua_cocos2dx_3d_Terrain_setMaxDetailMapAmount);
         tolua_function(tolua_S,"setDrawWire",lua_cocos2dx_3d_Terrain_setDrawWire);
-        tolua_function(tolua_S,"setIsEnableFrustumCull",lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull);
         tolua_function(tolua_S,"getHeightData",lua_cocos2dx_3d_Terrain_getHeightData);
         tolua_function(tolua_S,"setDetailMap",lua_cocos2dx_3d_Terrain_setDetailMap);
         tolua_function(tolua_S,"resetHeightMap",lua_cocos2dx_3d_Terrain_resetHeightMap);
+        tolua_function(tolua_S,"setLightDir",lua_cocos2dx_3d_Terrain_setLightDir);
         tolua_function(tolua_S,"setAlphaMap",lua_cocos2dx_3d_Terrain_setAlphaMap);
         tolua_function(tolua_S,"setSkirtHeightRatio",lua_cocos2dx_3d_Terrain_setSkirtHeightRatio);
         tolua_function(tolua_S,"convertToTerrainSpace",lua_cocos2dx_3d_Terrain_convertToTerrainSpace);
         tolua_function(tolua_S,"initTextures",lua_cocos2dx_3d_Terrain_initTextures);
         tolua_function(tolua_S,"initProperties",lua_cocos2dx_3d_Terrain_initProperties);
+        tolua_function(tolua_S,"initWithTerrainData",lua_cocos2dx_3d_Terrain_initWithTerrainData);
         tolua_function(tolua_S,"setLODDistance",lua_cocos2dx_3d_Terrain_setLODDistance);
         tolua_function(tolua_S,"getTerrainSize",lua_cocos2dx_3d_Terrain_getTerrainSize);
         tolua_function(tolua_S,"getNormal",lua_cocos2dx_3d_Terrain_getNormal);
         tolua_function(tolua_S,"reload",lua_cocos2dx_3d_Terrain_reload);
         tolua_function(tolua_S,"getImageHeight",lua_cocos2dx_3d_Terrain_getImageHeight);
-        tolua_function(tolua_S,"getMaxHeight",lua_cocos2dx_3d_Terrain_getMaxHeight);
+        tolua_function(tolua_S,"setLightMap",lua_cocos2dx_3d_Terrain_setLightMap);
+        tolua_function(tolua_S,"setIsEnableFrustumCull",lua_cocos2dx_3d_Terrain_setIsEnableFrustumCull);
         tolua_function(tolua_S,"getMinHeight",lua_cocos2dx_3d_Terrain_getMinHeight);
+        tolua_function(tolua_S,"getMaxHeight",lua_cocos2dx_3d_Terrain_getMaxHeight);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::Terrain).name();
     g_luaType[typeName] = "cc.Terrain";

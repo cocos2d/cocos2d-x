@@ -62,6 +62,8 @@ THE SOFTWARE.
 #include "cocostudio/ActionTimeline/CCTimeLine.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
 #include "cocostudio/ActionTimeline/CCActionTimelineNode.h"
+#include "cocostudio/ActionTimeline/CCBoneNode.h"
+#include "cocostudio/ActionTimeline/CCSkeletonNode.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
 

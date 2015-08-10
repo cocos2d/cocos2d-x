@@ -292,3 +292,37 @@ var BaseTestLayerProps = {
 };
 
 var BaseTestLayer = cc.LayerGradient.extend(BaseTestLayerProps);
+
+var FlowControl = function (testArray) {
+
+    var sceneIdx = 0;
+
+    return {
+        length: testArray.length,
+        getId: function () {
+            return sceneIdx;
+        },
+        next: function () {
+            sceneIdx++;
+            sceneIdx = sceneIdx % testArray.length;
+
+            return new testArray[sceneIdx]();
+        },
+        previous: function () {
+            sceneIdx--;
+            if (sceneIdx < 0)
+                sceneIdx += testArray.length;
+
+            return new testArray[sceneIdx]();
+        },
+        current: function () {
+            return new testArray[sceneIdx]();
+        },
+        start: function() {
+            sceneIdx = 0;
+            var s = new cc.Scene();
+            s.addChild(this.current());
+            cc.director.runScene(s);
+        }
+    }
+};

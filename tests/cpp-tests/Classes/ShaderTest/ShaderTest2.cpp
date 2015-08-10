@@ -196,13 +196,19 @@ void EffectBlur::setTarget(EffectSprite *sprite)
 {
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
     _glprogramstate->setUniformFloat("sampleNum", _blurSampleNum);
+#endif
 }
 
 bool EffectBlur::init(float blurRadius, float sampleNum)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     initGLProgramState("Shaders/example_Blur.fsh");
+#else
+    initGLProgramState("Shaders/example_Blur_winrt.fsh");
+#endif
     _blurRadius = blurRadius;
     _blurSampleNum = sampleNum;
     

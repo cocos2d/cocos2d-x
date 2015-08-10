@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIRichTextTest = UIScene.extend({
+var UIRichTextTest = UIMainLayer.extend({
     _richText:null,
     init: function () {
         if (this._super()) {

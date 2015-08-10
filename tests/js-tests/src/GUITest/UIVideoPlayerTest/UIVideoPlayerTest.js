@@ -1,7 +1,7 @@
-var UIVideoPlayerTest = UIScene.extend({
+var UIVideoPlayerTest = UIMainLayer.extend({
 
     onEnter: function(){
-        UIScene.prototype.onEnter.call(this);
+        UIMainLayer.prototype.onEnter.call(this);
 
         var video = new ccui.VideoPlayer("cocosvideo.mp4");
         video.setContentSize(320, 240);

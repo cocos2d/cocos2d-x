@@ -106,4 +106,16 @@ public class AppActivity extends Cocos2dxActivity {
         });
     }
 
+    public static String getUtfStr() {
+        final String utf8Str = "you will see emotion:💝";
+        app.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"" + utf8Str + "\")");
+            }
+        });
+        return utf8Str;
+    }
+
 }

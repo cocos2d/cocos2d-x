@@ -3330,3 +3330,59 @@ void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& i
         ++index;
     }
 }
+
+void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, std::string>& inValue)
+{
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);
+    
+    for (auto iter = inValue.begin(); iter != inValue.end(); ++iter)
+    {
+        lua_pushstring(L, iter->first.c_str());
+        lua_pushstring(L, iter->second.c_str());
+        lua_rawset(L, -3);
+    }
+}
+
+bool luaval_to_std_map_string_string(lua_State* L, int lo, std::map<std::string, std::string>* ret, const char* funcName)
+{
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (!ok)
+        return ok;
+    
+    lua_pushnil(L);
+    std::string key;
+    std::string value;
+    while (lua_next(L, lo) != 0)
+    {
+        if (lua_isstring(L, -2) && lua_isstring(L, -1))
+        {
+            if (luaval_to_std_string(L, -2, &key) && luaval_to_std_string(L, -1, &value))
+            {
+                (*ret)[key] = value;
+            }
+        }
+        else
+        {
+            CCASSERT(false, "string type is needed");
+        }
+        
+        lua_pop(L, 1);
+    }
+    
+    return ok;
+}
