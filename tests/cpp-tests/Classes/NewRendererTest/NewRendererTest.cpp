@@ -343,8 +343,7 @@ NewCullingTest::NewCullingTest()
 
 bool NewCullingTest::onTouchBegan(Touch* touch, Event  *event)
 {
-    auto pos = touch->getLocation();
-    _lastPos = pos;
+    _lastPos = touch->getLocation();
     return true;
 }
 
@@ -354,10 +353,11 @@ void NewCullingTest::onTouchMoved(Touch* touch, Event  *event)
     
     auto offset = pos - _lastPos;
     
-    auto layerPos = getPosition();
-    auto newPos = layerPos + offset;
-    
-    setPosition(newPos);
+    auto camera = getDefaultCamera();
+    auto cameraPos = camera->getPosition();
+    auto newPos = cameraPos - offset;
+
+    camera->setPosition(newPos);
     _lastPos = pos;
 }
 
