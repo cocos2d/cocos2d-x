@@ -147,6 +147,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#CheckBox] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
 -- @function [parent=#CheckBox] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
@@ -156,12 +162,6 @@
 -- @function [parent=#CheckBox] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#CheckBox] getDescription 
--- @param self
--- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
