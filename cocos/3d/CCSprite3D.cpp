@@ -231,8 +231,7 @@ bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshD
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     if (ext == ".obj")
     {
         return Bundle3D::loadObj(*meshdatas, *materialdatas, *nodedatas, fullPath);

@@ -120,28 +120,34 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
             break;
         }
 
-        auto ext = strchr(filePath.c_str(), '.');
         AudioCache::FileFormat fileFormat = AudioCache::FileFormat::UNKNOWN;
 
-        if (_stricmp(ext, ".ogg") == 0){
+        std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
+        if (fileExtension == ".ogg")
+        {
             fileFormat = AudioCache::FileFormat::OGG;
         }
-        else if (_stricmp(ext, ".mp3") == 0){
+        else if (fileExtension == ".mp3")
+        {
             fileFormat = AudioCache::FileFormat::MP3;
 
-            if (MPG123_LAZYINIT){
+            if (MPG123_LAZYINIT)
+            {
                 auto error = mpg123_init();
-                if (error == MPG123_OK){
+                if (error == MPG123_OK)
+                {
                     MPG123_LAZYINIT = false;
                 }
-                else{
+                else
+                {
                     log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
                     break;
                 }
             }
         }
-        else{
-            log("unsupported media type:%s\n", ext);
+        else
+        {
+            log("Unsupported media type file: %s\n", filePath.c_str());
             break;
         }
 
