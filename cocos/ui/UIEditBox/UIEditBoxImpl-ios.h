@@ -79,7 +79,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)override;
     /**
      * @js NA
      * @lua NA
@@ -95,6 +95,7 @@ private:
 	void			setInactiveText(const char* pText);
 	void			adjustTextFieldPosition();
     void            placeInactiveLabels();
+    UIFont*         constructFont(const char* fontName, int fontSize);
 	
     Label*     _label;
     Label*     _labelPlaceHolder;

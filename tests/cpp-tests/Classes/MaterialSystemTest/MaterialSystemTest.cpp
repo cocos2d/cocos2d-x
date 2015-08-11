@@ -30,7 +30,7 @@
 
 #include "../testResource.h"
 #include "cocos2d.h"
-
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -361,22 +361,83 @@ std::string Material_clone::subtitle() const
 //
 //
 //
+const int SHOW_LEBAL_TAG = 114;
+
 void Material_parsePerformance::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
+    
+    _maxParsingCoumt = 5e3;
+    
+    auto screenSize = Director::getInstance()->getWinSize();
+    
+    ui::Slider* slider = ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPercent(50);
+    
+    slider->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 3.0f));
+    slider->addEventListener([&](Ref* sender, ui::Slider::EventType type) {
+        
+        if (type == ui::Slider::EventType::ON_SLIDEBALL_UP)
+        {
+            ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
+            float p = slider->getPercent() / 100.0f;
+            slider->setTouchEnabled(false);
+            CCLOG("Will parsing material %d times", (int)(p * _maxParsingCoumt));
+            Label* label = dynamic_cast<Label*>(this->getChildByTag(SHOW_LEBAL_TAG));
+            if(label)
+            {
+                label->setString("Testing start!");
+            }
+            this->scheduleOnce(
+                               [this, p, slider](float)
+                               {
+                                   this->parsingTesting(p * _maxParsingCoumt);
+                                   slider->setTouchEnabled(true);
+                               },
+                               1.0, "schedule test parsing");
+            
+        }
+    });
+    
+    addChild(slider);
+    
+    auto label = Label::createWithSystemFont("Max parsing count is 10000, which may crash because of high memory comsumption.", "Helvetica", 10);
+    label->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f - 20));
+    addChild(label);
+    label = Label::createWithSystemFont("Slide to test parsing performance", "Helvetica", 10);
+    label->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f));
+    addChild(label);
+    
+    label = Label::createWithSystemFont("", "Helvetica", 10);
+    label->setPosition(Vec2(screenSize.width / 2.0f, screenSize.height / 2.0f + 20));
+    label->setTag(SHOW_LEBAL_TAG);
+    addChild(label);
 
+}
+
+void Material_parsePerformance::parsingTesting(unsigned int count)
+{
     std::clock_t begin = std::clock();
-
-    for(int i=0;i<5000;i++)
+    
+    for(int i=0;i<count;i++)
     {
         Material::createWithFilename("Materials/2d_effects.material");
         Material::createWithFilename("Materials/3d_effects.material");
     }
-
+    
     std::clock_t end = std::clock();
     double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-
-    log("Parsing took: %f", elapsed_secs);
+    Label* label = dynamic_cast<Label*>(this->getChildByTag(SHOW_LEBAL_TAG));
+    if(label)
+    {
+        std::string str = StringUtils::format("Testing completed! Took: %.3f seconds for parsing material %d times.", elapsed_secs, count);
+        label->setString(str);
+        
+        CCLOG("Took: %.3f seconds for parsing material %d times.", elapsed_secs, count);
+    }
 }
 
 std::string Material_parsePerformance::subtitle() const

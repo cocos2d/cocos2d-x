@@ -1211,7 +1211,12 @@ function UILabelAtlasTest:initExtend()
         
 
     local labelAtlas = ccui.TextAtlas:create()
-    labelAtlas:setProperty("1234567890", "cocosui/labelatlas.png", 17, 22, "0")
+    if cc.Director:getInstance():getWinSizeInPixels().height > 320 then
+        labelAtlas:setProperty("1234567890", "cocosui/labelatlas.png", 34, 44, "0")
+    else
+        labelAtlas:setProperty("1234567890", "cocosui/labelatlas.png", 17, 22, "0")
+    end
+    
     labelAtlas:setPosition(cc.p((widgetSize.width) / 2, widgetSize.height / 2.0))        
         
     self._uiLayer:addChild(labelAtlas) 
@@ -1390,12 +1395,12 @@ function UITextFieldTest:initExtend()
         if eventType == ccui.TextFiledEventType.attach_with_ime then
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
-            textField:runAction(cc.MoveTo:create(0.225,cc.p(screenSize.width / 2.0, screenSize.height / 2.0 + textField:getContentSize().height / 2.0)))
+            textField:runAction(cc.MoveBy:create(0.225,cc.p(0, textField:getContentSize().height / 2.0)))
             self._displayValueLabel:setString("attach with IME")
         elseif eventType == ccui.TextFiledEventType.detach_with_ime then
             local textField = sender
             local screenSize = cc.Director:getInstance():getWinSize()
-            textField:runAction(cc.MoveTo:create(0.175, cc.p(screenSize.width / 2.0, screenSize.height / 2.0)))
+            textField:runAction(cc.MoveBy:create(0.175, cc.p(0, textField:getContentSize().height / -2.0)))
             self._displayValueLabel:setString("detach with IME")
         elseif eventType == ccui.TextFiledEventType.insert_text then
             self._displayValueLabel:setString("insert words")

@@ -406,36 +406,53 @@ void EditBoxImplIOS::setInactiveText(const char* pText)
         _label->setDimensions(fMaxWidth,labelSize.height);
     }
 }
+    
+UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
+{
+    CCASSERT(fontName != nullptr, "fontName can't be nullptr");
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
+    float retinaFactor = eaglview.contentScaleFactor;
+    NSString * fntName = [NSString stringWithUTF8String:fontName];
+    
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+
+    if (fontSize == -1)
+    {
+        fontSize = [_systemControl.textField frame].size.height*2/3;
+    }
+    else
+    {
+        fontSize = fontSize * scaleFactor / retinaFactor;
+    }
+    
+    UIFont *textFont = nil;
+    if (strlen(fontName) > 0)
+    {
+        textFont = [UIFont fontWithName:fntName size:fontSize];
+    }
+    else
+    {
+        textFont = [UIFont systemFontOfSize:fontSize];
+    }
+    return textFont;
+}
 
 void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 {
-    bool isValidFontName = true;
-    if(pFontName == NULL || strlen(pFontName) == 0) {
-        isValidFontName = false;
-    }
-
-    CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
-    float retinaFactor = eaglview.contentScaleFactor;
-    NSString * fntName = [NSString stringWithUTF8String:pFontName];
-
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-
-    float scaleFactor = glview->getScaleX();
-    UIFont *textFont = nil;
-    if (isValidFontName) {
-        textFont = [UIFont fontWithName:fntName size:fontSize * scaleFactor / retinaFactor];
-    }
-    
-    if (!isValidFontName || textFont == nil){
-        textFont = [UIFont systemFontOfSize:fontSize * scaleFactor / retinaFactor];
-    }
-
+    UIFont* textFont = constructFont(pFontName, fontSize);
     if(textFont != nil) {
         [_systemControl.textField setFont:textFont];
     }
 
-    _label->setSystemFontName(pFontName);
-    _label->setSystemFontSize(fontSize);
+    if(strlen(pFontName) > 0)
+    {
+        _label->setSystemFontName(pFontName);
+    }
+    if(fontSize > 0)
+    {
+        _label->setSystemFontSize(fontSize);
+    }
 }
 
 void EditBoxImplIOS::setFontColor(const Color4B& color)
@@ -446,8 +463,14 @@ void EditBoxImplIOS::setFontColor(const Color4B& color)
 
 void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-    _labelPlaceHolder->setSystemFontName(pFontName);
-    _labelPlaceHolder->setSystemFontSize(fontSize);
+    if( strlen(pFontName) > 0)
+    {
+        _labelPlaceHolder->setSystemFontName(pFontName);
+    }
+    if(fontSize > 0)
+    {
+        _labelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
     
 void EditBoxImplIOS::setPlaceholderFontColor(const Color4B &color)
@@ -647,7 +670,7 @@ void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
     setPosition(_position);
 }
 
-void EditBoxImplIOS::visit(void)
+void EditBoxImplIOS::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
 }
 
