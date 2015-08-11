@@ -131,7 +131,7 @@ void Timer::update(float dt)
                 {
                     trigger();
                     
-                    _elapsed = 0;
+                    _elapsed -= _interval;
                     _timesExecuted += 1;
 
                 }
