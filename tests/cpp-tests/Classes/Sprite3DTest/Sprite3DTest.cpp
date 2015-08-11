@@ -2660,7 +2660,6 @@ Animate3DCallbackTest::Animate3DCallbackTest()
         
         auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
         {
-            auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
             auto node = getChildByTag(100);
             if (node)
             {
@@ -2668,9 +2667,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
                 node->setPosition3D(Vec3(mat.m[12] + 100, mat.m[13], mat.m[14]));
                 ((PUParticleSystem3D*)node)->startParticleSystem();
             }
-                
             
-            CCLOG("frame %d", info->frame);
         });
         Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     }
