@@ -277,7 +277,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
                                                                 auto glProgram = _state->getGLProgram();
@@ -413,7 +413,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
                                                                 auto glProgram = _state->getGLProgram();
@@ -642,7 +642,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     setCameraMask(2);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
                                                                 auto glProgram = _state->getGLProgram();
@@ -945,12 +945,15 @@ Effect3DOutline::Effect3DOutline()
 , _sprite(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                           [this](EventCustom*)
                                                           {
                                                               auto glProgram = _glProgramState->getGLProgram();
                                                               glProgram->reset();
+                                                              if(!_sprite->getMesh()->getSkin())
                                                               glProgram->initWithFilenames(_vertShaderFile, _fragShaderFile);
+                                                              else
+                                                              glProgram->initWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
                                                               glProgram->link();
                                                               glProgram->updateUniforms();
                                                           }
@@ -2489,7 +2492,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     setCameraMask(2);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                 [this](EventCustom*)
     {
         auto state = _teapot->getGLProgramState();

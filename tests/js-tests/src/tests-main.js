@@ -721,7 +721,7 @@ var testNames = [
     },
     {
         title:"Vibrate Test",
-        platforms: PLATFORM_ALL,
+        platforms: PLATFORM_JSB,
         linksrc:"src/VibrateTest/VibrateTest.js",
         testScene:function () {
             return new VibrateTestScene();

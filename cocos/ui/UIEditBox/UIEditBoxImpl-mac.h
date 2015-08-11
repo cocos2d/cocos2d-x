@@ -76,7 +76,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)override;
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
@@ -89,12 +89,13 @@ public:
 private:
     NSPoint    convertDesignCoordToScreenCoord(const Vec2& designCoord, bool bInRetinaMode);
     void       adjustTextFieldPosition();
-    Size     _contentSize;
-    Vec2    _position;
-    Vec2    _anchorPoint;
-    int        _maxTextLength;
-    bool       _inRetinaMode;
-    UIEditBoxImplMac*  _sysEdit;
+    NSFont*    constructFont(const char* fontName, int fontSize);
+    Size              _contentSize;
+    Vec2              _position;
+    Vec2              _anchorPoint;
+    int               _maxTextLength;
+    bool              _inRetinaMode;
+    UIEditBoxImplMac* _sysEdit;
 };
 
 
