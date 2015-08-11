@@ -79,6 +79,15 @@ public:
             float y1 = _offsetPosition.y;
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
+            if (_flippedX)
+            {
+                std::swap(x1, x2);
+            }
+            if (_flippedY)
+            {
+                std::swap(y1, y2);
+            }
+
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
 
