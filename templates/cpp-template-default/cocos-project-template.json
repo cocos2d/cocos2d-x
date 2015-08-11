@@ -53,6 +53,14 @@
                "proj.win10/PROJECT_NAME.sln",
                "proj.win10/App/PROJECT_NAME.vcxproj",
                "proj.win10/App/PROJECT_NAME.vcxproj.filters",
+               "proj.win10/App/App.xaml",
+               "proj.win10/App/App.xaml.cpp",
+               "proj.win10/App/App.xaml.h",
+               "proj.win10/App/Cocos2dEngine/Cocos2dRenderer.h",
+               "proj.win10/App/Cocos2dEngine/Cocos2dRenderer.cpp",
+               "proj.win10/App/Cocos2dEngine/OpenGLESPage.xaml",
+               "proj.win10/App/Cocos2dEngine/OpenGLESPage.xaml.cpp",
+               "proj.win10/App/Cocos2dEngine/OpenGLESPage.xaml.h",
                "proj.win10/App/Package.appxmanifest",
                "CMakeLists.txt"
             ]
