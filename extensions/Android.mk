@@ -187,6 +187,7 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_STATIC_LIBRARIES += box2d_static
 LOCAL_STATIC_LIBRARIES += bullet_static
+LOCAL_STATIC_LIBRARIES += cocos_network_static
 
 LOCAL_CXXFLAGS += -fexceptions
 
