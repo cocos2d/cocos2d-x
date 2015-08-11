@@ -12140,6 +12140,32 @@ bool js_cocos2dx_ui_Helper_getSubStringOfUTF8String(JSContext *cx, uint32_t argc
     return false;
 }
 
+bool js_cocos2dx_ui_Helper_convertBoundingBoxToScreen(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        cocos2d::Node* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Helper_convertBoundingBoxToScreen : Error processing arguments");
+        cocos2d::Rect ret = cocos2d::ui::Helper::convertBoundingBoxToScreen(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = ccrect_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_ui_Helper_convertBoundingBoxToScreen : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_ui_Helper_changeLayoutSystemActiveState(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12333,6 +12359,7 @@ void js_register_cocos2dx_ui_Helper(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec st_funcs[] = {
         JS_FN("getSubStringOfUTF8String", js_cocos2dx_ui_Helper_getSubStringOfUTF8String, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("convertBoundingBoxToScreen", js_cocos2dx_ui_Helper_convertBoundingBoxToScreen, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("changeLayoutSystemActiveState", js_cocos2dx_ui_Helper_changeLayoutSystemActiveState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("seekActionWidgetByActionTag", js_cocos2dx_ui_Helper_seekActionWidgetByActionTag, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("seekWidgetByName", js_cocos2dx_ui_Helper_seekWidgetByName, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),

@@ -6292,6 +6292,18 @@ str
 },
 
 /**
+ * @method getFileExtension
+ * @param {String} arg0
+ * @return {String}
+ */
+getFileExtension : function (
+str 
+)
+{
+    return ;
+},
+
+/**
  * @method setWritablePath
  * @param {String} arg0
  */

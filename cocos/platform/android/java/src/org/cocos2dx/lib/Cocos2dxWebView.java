@@ -1,8 +1,5 @@
 package org.cocos2dx.lib;
 
-import java.lang.reflect.Method;
-import java.net.URI;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +8,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+
+import java.lang.reflect.Method;
+import java.net.URI;
 
 public class Cocos2dxWebView extends WebView {
     private static final String TAG = Cocos2dxWebViewHelper.class.getSimpleName();

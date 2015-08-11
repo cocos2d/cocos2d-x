@@ -58,9 +58,9 @@ var VibrateTest = BaseTestLayer.extend({
         var durationSlider = new ccui.Slider();
         durationSlider.setPercent(0);
         durationSlider.setTouchEnabled(true);
-        durationSlider.loadBarTexture("res/ccs-res/cocosui/sliderTrack.png");
-        durationSlider.loadSlidBallTextures("res/ccs-res/cocosui/sliderThumb.png", "res/ccs-res/cocosui/sliderThumb.png", "");
-        durationSlider.loadProgressBarTexture("res/ccs-res/cocosui/sliderProgress.png");
+        durationSlider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+        durationSlider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+        durationSlider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
         durationSlider.x = s.width * 0.5;
         durationSlider.y = s.height * 0.35;
         durationSlider.addEventListener(this.durationSliderEvent, this);

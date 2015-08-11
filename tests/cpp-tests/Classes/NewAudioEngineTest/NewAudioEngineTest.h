@@ -143,5 +143,26 @@ private:
     
 };
 
+class AudioLoadTest : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioLoadTest);
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+};
+
+class AudioIssue11143Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioIssue11143Test);
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */
 #endif

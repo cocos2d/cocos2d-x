@@ -37,6 +37,7 @@ enum
 
 CocosStudio3DTests::CocosStudio3DTests()
 {
+    FileUtils::getInstance()->addSearchPath("ccs-res/CocosStudio3DTest");
     ADD_TEST_CASE(CSNode3DTest);
     ADD_TEST_CASE(CSSprite3DTest);
     ADD_TEST_CASE(CSUserCameraTest);

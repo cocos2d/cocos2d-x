@@ -80,7 +80,6 @@ std::string SchedulerAutoremove::subtitle() const
 void SchedulerPauseResume::onEnter()
 {
     SchedulerTestLayer::onEnter();
-
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResume::tick1), 0.5f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResume::tick2), 0.5f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResume::pause), 3.0f);
@@ -98,6 +97,7 @@ void SchedulerPauseResume::tick2(float dt)
 
 void SchedulerPauseResume::pause(float dt)
 {
+    CCLOG("pause, tick1 and tick2 should called six times");
     Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
