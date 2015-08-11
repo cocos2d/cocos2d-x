@@ -502,6 +502,7 @@ var NodeToWorld = TestNodeDemo.extend({
 });
 
 var CameraOrbitTest = TestNodeDemo.extend({
+    _preProjection : null,
     ctor:function () {
         //----start11----ctor
         this._super();
@@ -513,7 +514,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         p.opacity = 128;
 
         // LEFT
-        var sw = p.width, sh = p.height;
+        var sw = p.getContentSize().width, sh = p.getContentSize().height;
         var sprite = new cc.Sprite(s_pathGrossini);
         sprite.scale = 0.5;
         p.addChild(sprite, 0);
@@ -550,12 +551,15 @@ var CameraOrbitTest = TestNodeDemo.extend({
     onEnter:function () {
         //----start11----onEnter
         this._super();
+        this._preProjection = director.getProjection();
+        director.setDepthTest(true);
         director.setProjection(cc.Director.PROJECTION_3D);
         //----end11----
     },
     onExit:function () {
         //----start11----onExit
-        director.setProjection(cc.Director.PROJECTION_2D);
+        director.setDepthTest(false);
+        director.setProjection(this._preProjection);
         this._super();
         //----end11----
     },
