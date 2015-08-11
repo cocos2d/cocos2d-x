@@ -232,6 +232,7 @@ public:
 
 
     //override functions
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     virtual std::string getDescription() const override;
@@ -276,8 +277,6 @@ protected:
     
     void selectedEvent();
     void unSelectedEvent();
-    
-    virtual void releaseUpEvent() override;
     
     virtual void onSizeChanged() override;
     
