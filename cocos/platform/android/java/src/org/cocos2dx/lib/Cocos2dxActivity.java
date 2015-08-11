@@ -348,7 +348,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         if (hasFocus) {
             Cocos2dxHelper.onResume();
             mGLSurfaceView.onResume();
-            mGLSurfaceView.requestFocus();
         }
     }
 
@@ -357,7 +356,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         super.onPause();
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
-        mGLSurfaceView.setSoftKeyboardShown(false);
     }
     
     @Override

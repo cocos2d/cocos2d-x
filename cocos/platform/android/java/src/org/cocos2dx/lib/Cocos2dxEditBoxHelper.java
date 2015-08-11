@@ -101,7 +101,9 @@ public class Cocos2dxEditBoxHelper {
 
                     @Override
                     public void onTextChanged(final CharSequence s, int start, int before, int count) {
-                        mFrameLayout.setEnableForceDoLayout(false);
+                        //The optimization can't be turn on due to unknown keyboard hide in some custom keyboard
+//                        mFrameLayout.setEnableForceDoLayout(false);
+
                         mCocos2dxActivity.runOnGLThread(new Runnable() {
                             @Override
                             public void run() {
