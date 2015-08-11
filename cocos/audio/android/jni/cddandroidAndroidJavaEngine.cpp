@@ -72,7 +72,12 @@ AndroidJavaEngine::AndroidJavaEngine()
     }
 }
 
-AndroidJavaEngine::~AndroidJavaEngine() {
+AndroidJavaEngine::~AndroidJavaEngine()
+{
+    if (_implementBaseOnAudioEngine)
+    {
+        stopAllEffects();
+    }
     cocos2d::JniMethodInfo methodInfo;
 
     if (!getJNIStaticMethodInfo(methodInfo, "end", "()V")) {
