@@ -162,8 +162,8 @@ public:
     //override functions
     virtual std::string getDescription() const override;
     
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
 protected:
-    virtual void releaseUpEvent() override;
     
     virtual void dispatchSelectChangedEvent(bool selected) override;
     
