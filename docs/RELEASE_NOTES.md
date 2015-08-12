@@ -14,21 +14,18 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.7](#v37)
-  - [Highlights of v3.7](#highlights-of-v37)
+- [v3.7.1](#v371)
+  - [Highlights of v3.7.1](#highlights-of-v371)
   - [Download](#download)
   - [The main features in detail:](#the-main-features-in-detail)
-    - [3D Physics](#3d-physics)
-    - [3D Navigation mesh](#3d-navigation-mesh)
-    - [Material system](#material-system)
-    - [All in one Cocos2d-x](#all-in-one-cocos2d-x)
-    - [Enhanced Polygon Sprite](#enhanced-polygon-sprite)
-    - [WebView and VideoPlayer in JS (native and web)](#webview-and-videoplayer-in-js-native-and-web)
-    - [Nine Patch format support](#nine-patch-format-support)
-    - [Android Studio support](#android-studio-support)
-    - [Samsung Enhanced API support](#samsung-enhanced-api-support)
-    - [SDKBOX](#sdkbox)
-  - [The Next Step](#the-next-step)
+    - [Skeleton Animation](#skeleton-animation)
+    - [Get Node's transform to its ancestor](#get-nodes-transform-to-its-ancestor)
+    - [Set background color for web engine](#set-background-color-for-web-engine)
+    - [Widget's enable state and bright state](#widgets-enable-state-and-bright-state)
+    - [Firefox remote debugger support](#firefox-remote-debugger-support)
+- [v3.7](#v37)
+  - [Highlights of v3.7](#highlights-of-v37)
+- [The Next Step](#the-next-step)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -56,7 +53,8 @@
 * gcc 4.9 or newer for Linux
 * ndk-r10c for Android
 * Visual Studio 2013 or newer for Windows (win32)
-* Visual Studio 2013 update4 or newer for Windows Phone 8
+* Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
+* Visual Studio 2015 RC or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
 
 ## How to run tests
 
@@ -121,6 +119,7 @@ Then
 
 * For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln` or `cocos2d-js-win32.sln`
 * For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln` or `cocos2d-js-win8.1-universal.sln`
+* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
 * Select running target
 * Click run button
 
@@ -150,6 +149,102 @@ Use Cocos Console to create a new game:
 cocos new -l cpp|js|lua MyGame
 ```
 
+# v3.7.1
+
+## Highlights of v3.7.1
+
+Cocos2d-x v3.7.1 is a stable version based on v3.7. The most important update is that we added skeleton animation support for Cocos 2.3.2Beta.
+
+* [NEW]     studio: Added new skeleton animation support and csb parser for cocos v2.3.2 beta
+* [NEW]     studio: Added new skeleton animation support and JSON parser in the web engine
+* [NEW]     studio: Added Skybox csb/JSON parser for cocos v2.3.2 beta
+* [NEW]     studio: Parsed Touch/Click/Event callback in JSON parser
+* [NEW]     Node: Added getNodeToParentTransform with selected ancestor
+* [NEW]     web: Added cc.director.setClearColor and support transparent background
+* [REFINE]  Widget: Synchronize enable state and bright state for Widget
+* [REFINE]  studio: Optimized JSON parser's performance by removing audio play
+* [REFINE]  JSB: Add Firefox remote debugger support in JS templates
+
+## Download
+
+[Cocos2d-x v3.7.1](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7.1.zip) including : C++, Lua & JS
+
+## The main features in detail:
+
+### Skeleton Animation
+
+In v3.7.1 and Cocos 2.3.2, we are providing a new skeleton animation system which is different from Armature. The reason is that we abstract ActionTimeline system to support all sort of animations but Armature doesn't support it. To benefit the timeline system and to make skeleton animation system much more compact, we have implemented the new skeleton animation system. From this version, you will be able to edit skeleton animations in Cocos v2.
+
+New skeleton animation system contains `BoneNode`, `SkeletonNode`, `SkinNode`. SkeletonNode is a subclass of BoneNode and extended container functionalities, so it can contain BoneNode and nested SkeletonNode to construct a skeleton. 
+
+Features provided: 
+
+1. Playable skeleton animation
+2. Nested skeleton
+3. Skin replacement
+4. Time scale control
+5. Debug draw
+6. Frame event callback
+
+New skeleton animation is also supported by the web engine. We will keep enhancing it in the future versions.
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/action-timeline.gif)
+
+### Get Node's transform to its ancestor
+
+We have added a new functionality in `getNodeToParentTransform` API of Node, in v3.7.1, you can pass a ancestor as a parameter to get the node's transform related to this specific ancestor. Here is an example:
+
+```
+auto parent2 = Node::create();
+auto parent1 = Node::create();
+auto node = Node::create();
+parent2->addChild(parent1);
+parent1->addChild(node);
+// This will give you the transform of node in parent2's coordinate system
+auto transform = node->getNodeToParentTransform(parent2);
+```
+
+This API is also usable in the web engine.
+
+### Set background color for web engine
+
+From v3.7.1, you can control the background of your game in the web engine easily. We have provided a new API: `cc.director.setClearColor()`. The color you passed can be non-transparent or with transparency. Note that if the clear color you want is not transparent, it's more efficient than creating a background layer. Take a look at the example:
+
+```
+// Solution1: Using colored background layer
+var background = cc.LayerColor(cc.color(255, 0, 0));
+background.width = cc.winSize.width;
+background.height = cc.winSize.height;
+// This will give you a red background
+scene.addChild(background, 0);
+
+// Solution2: Using setClearColor
+// This will give you a red background and much more efficient than solution1
+cc.director.setClearColor(cc.color(255, 0, 0));
+```
+
+Besides, you can make your background totally tranparent too.
+
+### Widget's enable state and bright state
+
+In the old Widget API design, `setEnabled` only controls whether the widget should respond to user input events, while `setBright` only controls whether the widget's display should be in gray state (which indicates disable) or bright state (which indicates enable). This is very frustrating for our developers. So from v3.7.1, we decided to synchronise bright state with enable state. That means, once your widghet is disabled via `setEnabled(false)`, its display will also change to gray state.
+
+```
+// In old version, you will do
+widget->setEnabled(false);
+widget->setBright(false);
+
+// In v3.7.1, you only need to do
+widget->setEnabled(false);
+```
+
+### Firefox remote debugger support
+
+In v3.7.1, we have enabled Firefox remote debugger support for JSB projects. You only need to follow [this documentation](http://www.cocos2d-x.org/docs/manual/framework/native/v3/js-remote-debugger/en), and you can debug your JSB projects with your Firefox browser. Note that it permits you to debug JavaScript code in your JSB project, for native code debugging you should still use Xcode or Visual Studio.
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/js-remote-debug.png)
+
+
 # v3.7
 
 ## Highlights of v3.7
@@ -171,92 +266,7 @@ cocos new -l cpp|js|lua MyGame
 * console: Supported build & run Android Studio project with cocos console
 * SDKBOX: super EASY way to integrate 3rd party SDKs into cocos2d-x
 
-## Download
-
-[Cocos2d-x v3.7](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7.zip) including : C++, Lua & JS
-
-## The main features in detail:
-
-### 3D Physics
-
-It's the physics engine we provided for providing 3D physics game capability, it works great with our current 3D modules, like 3D sprites, 3D Terrain, etc. We used [bullet](http://bulletphysics.org/wordpress/) library as base of 3D physics, encapsulate it into our Cocos 3D physics APIs. You can refer to Physics3DTest test case for its API and usage, we will add documentation into [programmers guide](http://cocos2d-x.org/programmersguide) lately.
-
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_348f31ee628da2b.png)
-
-### 3D Navigation mesh
-
-The navigation mesh system provides simple to use API to find path in a complexe 3D world, you can add mesh with a triangles list, add obstacles. Then you will add agents which can perform a path finding task and move your 3D sprites to a certain place following the path. You can refer to NavmeshTest test case for its API and usage, we will add documentation into [programmers guide](http://cocos2d-x.org/programmersguide) lately.
-
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_6589cbf376a639b.png)
-
-### Material system
-
-Material system is an advanced system which defines all visual informations (it may contain aural or physical informations in the future) of an object. Instead of just plain an simple texture, you can have more than one texture, and much more features like multi-pass rendering. Refer to [the documentation](https://github.com/chukong/programmers-guide/blob/v3.7/chapters/14.md#shaders-and-materials) for more details.
-
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_a94a91aeeaf401d.png)
-
-### All in one Cocos2d-x
-
-After merged Cocos2d-JS into Cocos2d-x, nothing have changed for C++ and Lua developers, but the engine structure may look very strange to JS developers. Don't worry, the upgrade is still very simple, because the project structure remains the same as before. Refer to [this discussion](http://discuss.cocos2d-x.org/t/cocos2d-js-v3-6-1-hot-fix-for-remote-debugger/21524/2) for more informations.
-
-### Enhanced Polygon Sprite
-
-As it's not very easy to used in the previous version, we have refactored the API for Polygon Sprite. It's now becoming a internal feature of 2d Sprite, you can use AutoPolygon to generate polygons for a sprite, then use it to create the sprite directly, very simple to use.
-
-```
-auto pinfo = AutoPolygon::generatePolygon("filename.png");
-auto spp = Sprite::create(pinfo);
-```
-
-Although it do takes time to generate the polygons information, you can cache and reuse it, we also plan to support the polygons information generation in the editor in the future.
-
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_7b5ef9b52f054f3.png)
-
-### WebView and VideoPlayer in JS (native and web)
-
-The WebView and VideoPlayer have finally been ported to JS, and it supports iOS, Android and Web browsers. You can refer to its usage in the test case: [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/GUITest/UIWebViewTest/UIWebViewTest.js) and [VideoPlayerTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/GUITest/UIVideoPlayerTest/UIVideoPlayerTest.js).
-
-### Nine Patch format support
-
-The Nine Patch image is a stretchable bitmap image which can be used as the texture of Scale9Sprite. Now Cocos2d-x support creating the Scale9Sprite node directly with a Nine Patch file. More informations about the [Nine Patch format](http://developer.android.com/guide/topics/graphics/2d-graphics.html#nine-patch) and [its tool](http://developer.android.com/tools/help/draw9patch.html). You can also refer to our test case for its usage: [C++](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp#L857), [Lua](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/lua-tests/src/CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest.lua#L4020), [JS](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/GUITest/UIS9NinePatchTest/UIS9NinePatchTest.js)
-
-### Android Studio support
-
-Cocos console now supports compilation and package with Android Studio 1.2, use it with a `--android-studio` flag
-
-```
-cocos run/compile -p android --android-studio
-```
-
-### Samsung Enhanced API support
-
-Samsung have provided a series of Enhanced API to optimize Cocos2d-x games for Samsung products with Android 5.0+ system. It include some very cool features like: Boost Up API, Power Saving Mode API, Dynamic FPS API, etc. The current API can be found in [this header file](https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/platform/android/CCEnhanceAPI-android.h), we will provide a detailed documentation later.
-
-### Win32 platform resource name become case sensitive
-
-In the previous versions, the resources file name's case is ignored on win32 platform, but not ignored in other platforms. This will lead to some unexpected issues, especially when user develop with win32 platform and pulish to other platforms like Android. In win32, the file name may be found without matching the case, but on other platforms it won't be found. So we decided to make win32 platform's resources case sensitive. Please make sure you are using the correct file name for your resources.
-
-### SDKBOX
-
-SDKBOX is a project that's built by part of the cocos2d-x team, in order to makes integrating 3rd party SDKs super EASY.
-With SDKBOX you can integrate services like In App Purchase with one command
-
-```
-sdkbox import -b iap
-```
-
-Currently supported service including
-
-* [Tune](http://cocos2d-x.org/sdkbox/tune)
-* [In App Purchase](http://cocos2d-x.org/sdkbox/iap)
-* [AdColony](http://cocos2d-x.org/sdkbox/adcolony)
-* [Vungle](http://cocos2d-x.org/sdkbox/vungle)
-* [Chartboost](http://cocos2d-x.org/sdkbox/chartboost)
-* [Kochava](http://cocos2d-x.org/sdkbox/kochava)
-* [Google Analytics](http://cocos2d-x.org/sdkbox/googleanalytics)
-* [Flurry Analytics](http://cocos2d-x.org/sdkbox/flurryanalytics)
-
-## The Next Step
+# The Next Step
 
 As you can see, in v3.7, we have enhanced our 2d rendering with material system and integrated polygon sprite. More importantly, our 3d features become more and more complete, 3d Physics and Navigation Mesh with the previous Camera, 3d Sprite, 3d Particle System, 3d Light, 3d Terrain, Skybox, now you can really start to use Cocos to make a 3d game.
 

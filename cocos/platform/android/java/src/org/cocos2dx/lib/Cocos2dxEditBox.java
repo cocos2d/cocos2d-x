@@ -108,18 +108,6 @@ public class Cocos2dxEditBox extends EditText {
 
     public  Cocos2dxEditBox(Context context){
         super(context);
-
-        this.setFocusable(true);
-        this.setFocusableInTouchMode(true);
-
-        this.setInputFlag(kEditBoxInputFlagInitialCapsAllCharacters);
-        this.setInputMode(kEditBoxInputModeSingleLine);
-        this.setReturnType(kKeyboardReturnTypeDefault);
-        this.setHintTextColor(Color.GRAY);
-        this.setVisibility(View.INVISIBLE);
-        this.setBackgroundColor(Color.TRANSPARENT);
-        this.setTextColor(Color.WHITE);
-        this.setSingleLine();
     }
 
     public void setEditBoxViewRect(int left, int top, int maxWidth, int maxHeight) {
