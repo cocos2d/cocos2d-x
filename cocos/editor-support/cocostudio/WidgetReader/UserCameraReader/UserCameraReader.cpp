@@ -415,6 +415,9 @@ namespace cocostudio
         int cameraFlag = options->cameraFlag();
         camera->setCameraFlag((CameraFlag)cameraFlag);
 
+        auto node3DReader = Node3DReader::getInstance();
+        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
+
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
         {
@@ -427,11 +430,8 @@ namespace cocostudio
 
             Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
             childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox,0,"_innerSkyBox");
+            node->addChild(childBox, 0, "_innerSkyBox");
         }
-
-        auto node3DReader = Node3DReader::getInstance();
-        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
     }
     
     Node* UserCameraReader::createNodeWithFlatBuffers(const flatbuffers::Table *userCameraDOptions)
