@@ -84,7 +84,7 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         //}
         int textLength = this.mText.length() - 1;
         int nModified = s.length() - this.mText.length();
-        if (nModified > 0) {
+        if (nModified >= 0) {
     		if (textLength >= 0) {
     			if (this.mText.charAt(textLength) != s.charAt(textLength)) {
     				mCocos2dxGLSurfaceView.deleteBackward();
