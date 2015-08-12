@@ -603,7 +603,16 @@ void TextField::update(float dt)
         attachWithIMEEvent();
         setAttachWithIME(false);
     }
-    
+
+    if (getDeleteBackward())
+    {
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+
+        deleteBackwardEvent();
+        setDeleteBackward(false);
+    }
+
     if (getInsertText())
     {
         //we update the content size first such that when user call getContentSize() in event callback won't be wrong
@@ -612,15 +621,6 @@ void TextField::update(float dt)
         
         insertTextEvent();
         setInsertText(false);
-    }
-    
-    if (getDeleteBackward())
-    {
-        _textFieldRendererAdaptDirty = true;
-        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
-        
-        deleteBackwardEvent();
-        setDeleteBackward(false);
     }
 }
 

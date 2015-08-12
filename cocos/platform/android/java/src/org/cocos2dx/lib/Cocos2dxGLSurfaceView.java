@@ -56,7 +56,7 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
     private static Cocos2dxTextInputWraper sCocos2dxTextInputWraper;
 
     private Cocos2dxRenderer mCocos2dxRenderer;
-    private Cocos2dxEditText mCocos2dxEditText;
+    private Cocos2dxEditBox mCocos2dxEditText;
 
     public boolean isSoftKeyboardShown() {
         return mSoftKeyboardShown;
@@ -151,15 +151,14 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
         return this.mCocos2dxRenderer.getContentText();
     }
 
-    public Cocos2dxEditText getCocos2dxEditText() {
+    public Cocos2dxEditBox getCocos2dxEditText() {
         return this.mCocos2dxEditText;
     }
 
-    public void setCocos2dxEditText(final Cocos2dxEditText pCocos2dxEditText) {
+    public void setCocos2dxEditText(final Cocos2dxEditBox pCocos2dxEditText) {
         this.mCocos2dxEditText = pCocos2dxEditText;
         if (null != this.mCocos2dxEditText && null != Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper) {
             this.mCocos2dxEditText.setOnEditorActionListener(Cocos2dxGLSurfaceView.sCocos2dxTextInputWraper);
-            this.mCocos2dxEditText.setCocos2dxGLSurfaceView(this);
             this.requestFocus();
         }
     }
