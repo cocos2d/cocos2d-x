@@ -741,6 +741,7 @@ Developers:
         
     dmurtagh
         Fixed a bug that UserDefault::getDoubleForKey() doesn't pass default value to Java.
+        Fixed a compile error when CC_SPRITE_DEBUG_DRAW is on
         
     seobyeongky
         Updates spine runtime.
