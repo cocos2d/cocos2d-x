@@ -62,11 +62,6 @@ SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonD
 }
 
 void SkeletonRenderer::initialize () {
-	_atlas = 0;
-	_debugSlots = false;
-	_debugBones = false;
-	_timeScale = 1;
-
 	_worldVertices = MALLOC(float, 1000); // Max number of vertices per mesh.
 
 	_batch = PolygonBatch::createWithCapacity(2000); // Max number of vertices and triangles per batch.
@@ -83,18 +78,22 @@ void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsS
 	_ownsSkeletonData = ownsSkeletonData;
 }
 
-SkeletonRenderer::SkeletonRenderer () {
+SkeletonRenderer::SkeletonRenderer ()
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
 }
 
-SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkeletonData) {
+SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkeletonData)
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
 	initWithData(skeletonData, ownsSkeletonData);
 }
 
-SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale) {
+SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
 	initWithFile(skeletonDataFile, atlas, scale);
 }
 
-SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
+	: _atlas(0), _debugSlots(false), _debugBones(false), _timeScale(1) {
 	initWithFile(skeletonDataFile, atlasFile, scale);
 }
 
@@ -401,11 +400,17 @@ bool SkeletonRenderer::getDebugBonesEnabled () const {
 }
 
 void SkeletonRenderer::onEnter () {
+#if CC_ENABLE_SCRIPT_BINDING
+	if (_scriptType == kScriptTypeJavascript && ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter)) return;
+#endif
 	Node::onEnter();
 	scheduleUpdate();
 }
 
 void SkeletonRenderer::onExit () {
+#if CC_ENABLE_SCRIPT_BINDING
+	if (_scriptType == kScriptTypeJavascript && ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit)) return;
+#endif
 	Node::onExit();
 	unscheduleUpdate();
 }
