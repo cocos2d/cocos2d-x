@@ -97,7 +97,7 @@ void SchedulerPauseResume::tick2(float dt)
 
 void SchedulerPauseResume::pause(float dt)
 {
-    CCLOG("pause, tick1 and tick2 should called six times");
+    CCLOG("paused, tick1 and tick2 should called six times");
     Director::getInstance()->getScheduler()->pauseTarget(this);
 }
 
@@ -168,16 +168,17 @@ void SchedulerPauseResumeAll::tick2(float dt)
 
 void SchedulerPauseResumeAll::pause(float dt)
 {
-    log("Pausing");
-    auto director = Director::getInstance();
-    _pausedTargets = director->getScheduler()->pauseAllTargets();
+    log("Pausing, tick1 should be called six times and tick2 three times");
+    auto scheduler = Director::getInstance()->getScheduler();
+    _pausedTargets = scheduler->pauseAllTargets();
 
     // should have only 2 items: ActionManager, self
     CCASSERT(_pausedTargets.size() == 2, "Error: pausedTargets should have only 2 items");
     
     unschedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick1));
     unschedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick2));
-    resume();
+    // because pauseAllTargets above, should resumeTarget before add new scheduler
+    scheduler->resumeTarget(this);
     scheduleOnce(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::resume), 2.0f);
 }
 
@@ -195,7 +196,7 @@ void SchedulerPauseResumeAll::resume(float dt)
 
 std::string SchedulerPauseResumeAll::title() const
 {
-    return "Pause / Resume";
+    return "Pause / Resume All";
 }
 
 std::string SchedulerPauseResumeAll::subtitle() const
@@ -230,10 +231,9 @@ void SchedulerPauseResumeAllUser::onEnter()
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
-    schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick1), 0.5f);
+    schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick1), 1.0f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick2), 1.0f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::pause), 3.0f, false, 0);
-    //TODO: [self performSelector:@selector(resume) withObject:nil afterDelay:5];
 }
 
 void SchedulerPauseResumeAllUser::onExit()
@@ -257,27 +257,28 @@ void SchedulerPauseResumeAllUser::tick2(float dt)
 
 void SchedulerPauseResumeAllUser::pause(float dt)
 {
-    log("Pausing");
+    log("Pausing, tick1 and tick2 should be called three times");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
+    getScheduler()->resumeTarget(this);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::resume), 2.0f);
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
     log("Resuming");
-    auto director = Director::getInstance();
-    director->getScheduler()->resumeTargets(_pausedTargets);
+    getScheduler()->resumeTargets(_pausedTargets);
     _pausedTargets.clear();
 }
 
 std::string SchedulerPauseResumeAllUser::title() const
 {
-    return "Pause / Resume";
+    return "Pause / Resume All User scheduler";
 }
 
 std::string SchedulerPauseResumeAllUser::subtitle() const
 {
-    return "Everything will pause after 3s, then resume at 5s. See console";
+    return "ticks will pause after 3s, then resume at 5s. See console";
 }
 
 
