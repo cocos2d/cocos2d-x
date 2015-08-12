@@ -921,7 +921,6 @@
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxBitmap.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxEditBox.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxEditBoxHelper.java", 
-        "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxEditText.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxGLSurfaceView.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxHandler.java", 
         "cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxHelper.java", 
