@@ -53,4 +53,6 @@ extern void setFloatForKeyJNI(const char* key, float value);
 extern void setDoubleForKeyJNI(const char* key, double value);
 extern void setStringForKeyJNI(const char* key, const char* value);
 
+extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

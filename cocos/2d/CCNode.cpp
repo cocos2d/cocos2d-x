@@ -221,19 +221,21 @@ bool Node::init()
 
 void Node::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            return;
+    }
+    else if (_scriptType == kScriptTypeLua)
+    {
+        ScriptEngineManager::sendNodeEventToLua(this, kNodeOnCleanup);
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     // actions
     this->stopAllActions();
     this->unscheduleAllCallbacks();
-
-#if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
-    {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-#endif // #if CC_ENABLE_SCRIPT_BINDING
 
     // timers
     for( const auto &child: _children)
@@ -1759,6 +1761,28 @@ AffineTransform Node::getNodeToParentAffineTransform() const
     return ret;
 }
 
+
+Mat4 Node::getNodeToParentTransform(Node* ancestor) const
+{
+    Mat4 t(this->getNodeToParentTransform());
+
+    for (Node *p = _parent;  p != nullptr && p != ancestor ; p = p->getParent())
+    {
+        t = p->getNodeToParentTransform() * t;
+    }
+
+    return t;
+}
+
+AffineTransform Node::getNodeToParentAffineTransform(Node* ancestor) const
+{
+    AffineTransform t(this->getNodeToParentAffineTransform());
+
+    for (Node *p = _parent; p != nullptr && p != ancestor; p = p->getParent())
+        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
+
+    return t;
+}
 const Mat4& Node::getNodeToParentTransform() const
 {
     if (_transformDirty)
@@ -1914,24 +1938,12 @@ const Mat4& Node::getParentToNodeTransform() const
 
 AffineTransform Node::getNodeToWorldAffineTransform() const
 {
-    AffineTransform t(this->getNodeToParentAffineTransform());
-
-    for (Node *p = _parent; p != nullptr; p = p->getParent())
-        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
-
-    return t;
+    return this->getNodeToParentAffineTransform(nullptr);
 }
 
 Mat4 Node::getNodeToWorldTransform() const
 {
-    Mat4 t(this->getNodeToParentTransform());
-
-    for (Node *p = _parent; p != nullptr; p = p->getParent())
-    {
-        t = p->getNodeToParentTransform() * t;
-    }
-
-    return t;
+    return this->getNodeToParentTransform(nullptr);
 }
 
 AffineTransform Node::getWorldToNodeAffineTransform() const

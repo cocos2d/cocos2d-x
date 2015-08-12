@@ -26,9 +26,8 @@
 #define __cocos2d_libs__CCObjectExtensionData__
 
 #include <string>
-
-#include "base/CCRef.h"
-
+#include "CCComBase.h"
+#include "2d/CCComponent.h"
 #include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
@@ -41,24 +40,33 @@ namespace cocostudio
 
 namespace cocostudio
 {
-    class CC_STUDIO_DLL ObjectExtensionData : public cocos2d::Ref
+    class CC_STUDIO_DLL ComExtensionData : public cocos2d::Component
     {
-
+        DECLARE_CLASS_COMPONENT_INFO
     public:
         /**
-        * @~english Allocates and initializes a ObjectExtensionData.
-        * @~chinese 分配并且初始化一个ObjectExtensionData.
-        * @return @~english A initialized ObjectExtensionData which is marked as "autorelease".
-        * @~chinese 一个初始化的ObjectExtensionData，该节点会自动被标记为“autorelease”(自动释放).
+        * @js NA
+        * @lua NA
         */
-        static ObjectExtensionData* create();
-
+        virtual void onEnter() override;
         /**
-        * @~english Set custom property.
-        * @~chinese 设定用户自定义属性.
-        *
-        * @param customProperty    @~english custom property @~chinese 用户自定义属性
+        * @js NA
+        * @lua NA
         */
+        virtual void onExit() override;
+        /**
+        * @js NA
+        * @lua NA
+        */
+        virtual void onAdd() override;
+        /**
+        * @js NA
+        * @lua NA
+        */
+        virtual void onRemove() override;
+        static ComExtensionData* create();
+        virtual bool init() override;
+
         virtual void setCustomProperty(const std::string& customProperty) { _customProperty = customProperty; }
         /**
         * @~english Get custom property.
@@ -84,10 +92,9 @@ namespace cocostudio
         virtual const int getActionTag() const;
 
     CC_CONSTRUCTOR_ACCESS:
-        ObjectExtensionData();
-        ~ObjectExtensionData();
-        virtual bool init();
-
+        ComExtensionData();
+        ~ComExtensionData();
+        
     protected:
         std::string _customProperty;
         cocostudio::timeline::ActionTimelineData* _timelineData;

@@ -1,8 +1,83 @@
 cocos2d-x-3.8 ??
     [NEW]           ui: Enhance ScrollView with easing out scrolling
+    [NEW]           Animate: Added Animate's getCurrentFrameIndex function
 
     [FIX]           renderer: UI component can't click correctly by moving UI and camera far away of origin.
     [FIX]           JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
+
+cocos2d-x-3.7.1    August.12 2015
+    [HIGHLIGHT]     studio: Added new skeleton animation support and csb parser for cocos v2.3.2 beta
+    [HIGHLIGHT]     studio: Added new skeleton animation support and JSON parser in the web engine
+    [HIGHLIGHT]     studio: Added Skybox csb/JSON parser for cocos v2.3.2 beta
+
+    [NEW]           Node: Added getNodeToParentTransform with selected ancestor
+    [NEW]           studio: Parsed Touch/Click/Event callback in JSON parser
+    [NEW]           web: Added cc.director.setClearColor and support transparent background
+
+    [REFINE]        Widget: Synchronize enable state and bright state for Widget
+    [REFINE]        studio: Optimized JSON parser's performance by removing audio play
+    [REFINE]        studio: Optimized editor related extension data to a component instead of hosting in _userObject
+    [REFINE]        studio: Updated Game3DNodeReader & UserCameraReader
+    [REFINE]        Label: Remove file error notice label from TextBMFontReader
+    [REFINE]        JSB: Add firefox remote debugger support in JS templates
+    [REFINE]        web: Improved color/opacity manipulations in MenuItems
+
+    [FIX]           Scene: Fixed Scene can't be inherited with std::vector members
+    [FIX]           Sprite: Fixed a compile error when CC_SPRITE_DEBUG_DRAW is on
+    [FIX]           Label: Fixed creation fail if the font(TTF) contains a non-unicode charmap
+    [FIX]           Label: Fixed LabelAtlas rendering error for invalid characters and characters out of boundaries
+    [FIX]           Label: Fixed Mac system font crash issue
+    [FIX]           platform: Fixed building with system prebuilt libs on Linux
+    [FIX]           studio: Fixed ccs.Skin construction issue in JSON parser
+    [FIX]           studio: Fixed Particle3d crash while reading file with error
+    [FIX]           studio: Fixed parser crash when sprite 3d resource isn't correct
+    [FIX]           UI: Fixed CheckBox issue that _isSelected state is updated after event processing callbacks
+    [FIX]           JSB: Fixed JSON parser issue that 3d particle can not be displayed
+    [FIX]           web: Fixed an issue that loading process won't trigger callback problem
+    [FIX]           web: Fixed a bug where not resetting cc.Audio._ignoreEnded when replaying a sound caused it to stay in a "playing" state
+    [FIX]           web: cc.ScrollView and cc.TableView: added check for parent visibility in onTouchBegan method
+    [FIX]           web: Fixed TurnPageDown effect
+    [FIX]           web: Fixed Cocos Studio parser issue that all elements are missing while the timeline action contains rotation
+
+cocos2d-x-3.7final July.21 2015
+    [REFINE]        JS: Improve manual binding code for `retain`, `release`, `onEnter`, `onExit`, `onEnterTransitionDidFinish` and `onExitTransitionDidStart`
+    [REFINE]        web: Add compatible Uint16Array defintion
+
+    [FIX]           Scale9Sprite: Fixed Scale9Sprite gray state issue while `setCapInsets` called
+    [FIX]           studio: Fixed parser issue by checking texture existance
+    [FIX]           studio: Fixed Armature parser issue
+    [FIX]           JS: Fixed cleanup overriding issue in JS that it will cause `too much recursion` error
+    [FIX]           web: Fixed url check regular expression not supporting localhost issue
+    [FIX]           web: Fixed issue that sprite doesn't update texture rect correctly in some condition
+
+cocos2d-x-3.7rc1  July.14 2015
+    [REFINE]        framework: Used msbuild to generating engine prebuilt libs on win32.
+    [REFINE]        3d: Used shader with normal while creating mesh with normals
+    [REFINE]        3d: Set default 3d animation quality to low
+    [REFINE]        web: Improved localStorage warning when disabled
+
+    [FIX]           studio: Fixed percentage setting won't take effect when UISlider's background resource set to null
+    [FIX]           studio: Fixed a bug that SingleNode's color isn't set
+    [FIX]           studio: Fixed child nodes can't be rendered when particle and TiledMap as parent and their resource have been removed from disk
+    [FIX]           studio: Fixed a bug of JSON parser that texture address is wrong
+    [FIX]           studio: Fixed a bug that drawLine & drawPoints don't apply blend function in parser
+    [FIX]           studio: Fixed a bug that check box front cross texture will expand to normal size when change status between normal and disable frequently
+    [FIX]           studio: Fixed a bug that normal texture won't show when slider set to disable mode then clean slider ball disable texture
+    [FIX]           3d: Fixed obj loading failed on windows
+    [FIX]           3d: Fixed clipping node does not work for Sprite3D
+    [FIX]           platform: Fixed js template run error on linux
+    [FIX]           Tilemap: Fixed CCTMXXMLParser code negligence
+    [FIX]           JS: Fixed constant value error for ccui.Layout.BACKGROUND_IMAGE_ZORDER
+    [FIX]           JS: Fixed XMLHttpRequest can't be retain in JSB
+    [FIX]           JS: Added cc.path.mainFileName
+    [FIX]           JS: Fixed issue that override cleanup function in JS can't get invoked during node detaching
+    [FIX]           JS: Fixed cc.loader notification issue with image asynchonous loading
+    [FIX]           web: Fixed MenuItems' color/opacity setter issue with child nodes
+    [FIX]           web: Fixed page view's layout issue for JSON parser
+    [FIX]           web: Add ttc loader and prevent the pure digital fonts is invalid
+    [FIX]           web: Fixed Float32Array initialization
+    [FIX]           web: Fixed a bug that layout background is missing
+    [FIX]           web: Fixed a bug that ObjectExtensionData miss setCustomProperty and getCustomProperty function
 
 cocos2d-x-3.7rc0  July.1 2015
     [HIGHLIGHT]     core: Added Material system (JS/Lua ready)

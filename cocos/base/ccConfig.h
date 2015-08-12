@@ -68,9 +68,9 @@ THE SOFTWARE.
 
  * It is recommended to enable whenever possible to improve speed.
  * If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- 
+
  * Default value: Enabled by default
- 
+
  * @~chinese 
  * 如果启用,cocos2d将维护一个OpenGL内部缓存,以避免不必要的切换。
  * 为了使用它们,你必须使用以下函数,而不是GL的函数:
@@ -107,9 +107,9 @@ THE SOFTWARE.
  * - LabelAtlas.
  * - QuadParticleSystem.
  * - TileMap.
- 
+
  * To enabled set it to 1. Disabled by default.
- 
+
  * @~chinese 
  * 如果启用,纹理坐标计算通过使用这个公式:
  * - texCoord.left = (rect.origin.x*2+1) / (texture.wide*2);
@@ -139,7 +139,7 @@ THE SOFTWARE.
  * @~english Seconds between FPS updates.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
- 
+
  * Default value: 0.1f
  * @~chinese 
  * FPS更新秒间隔。
@@ -172,10 +172,9 @@ THE SOFTWARE.
  * dispatch all the events, even if there are not events to dispatch.
  * If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  * Otherwise, it is safe to leave it disabled.
- 
+
  * To enable set it to 1. Disabled by default.
- 
- * @~chinese 
+ * @~chinese
  * 如果启用, 只有此功能被FastDirector使用时, 主循环才会等待 0.04 秒去分发所有的活动(Event), 即使此时没有
  * 任何活动需要分发。
  * 如果你的游戏使用很多的事件(如:触摸事件)，这可能是一个好主意来启用这个特性。
@@ -185,6 +184,7 @@ THE SOFTWARE.
  * 
  * @warning @~english This feature is experimental.
  * @~chinese 这个特性目前是试验性的。
+ * @warning This feature is experimental.
  */
 #ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
  #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
@@ -255,10 +255,11 @@ THE SOFTWARE.
 
         /* @~english Some Windows display adapter driver cannot support VAO.
          * Some android devices cannot support VAO very well, so we disable it by default for android platform.
-         * Blackberry also doesn't support this feature. 
+         * Blackberry also doesn't support this feature.
          * @~chinese 一些Windows显示适配器驱动程序不支持VAO。
          * 一些安卓设备不能很好的支持VAO，所以我们在安卓平台默认是禁用它的。
          * 黑莓手机也不支持这个特性。
+         * Blackberry also doesn't support this feature.
          */
 		#define CC_TEXTURE_ATLAS_USE_VAO 0
     #endif
@@ -392,7 +393,13 @@ THE SOFTWARE.
 #ifndef CC_USE_3D_PHYSICS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define CC_USE_3D_PHYSICS 1
-#define CC_USE_3D_PHYSICS 1
+#endif
+#endif
+
+#if (CC_USE_3D_PHYSICS)
+/** Use bullet physics engine. */
+#ifndef CC_ENABLE_BULLET_INTEGRATION
+#define CC_ENABLE_BULLET_INTEGRATION 1
 #endif
 #endif
 

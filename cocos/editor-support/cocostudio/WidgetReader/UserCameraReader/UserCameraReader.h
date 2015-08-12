@@ -56,7 +56,7 @@ namespace cocostudio
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* userCameraOptions);
         
     protected:
-        
+        int getResourceType(std::string key);
         cocos2d::Vec2 getVec2Attribute(const tinyxml2::XMLAttribute* attribute) const;
     };
 }

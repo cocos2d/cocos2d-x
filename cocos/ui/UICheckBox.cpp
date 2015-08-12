@@ -360,19 +360,18 @@ void CheckBox::setupFrontCrossDisableTexture()
     _frontCrossDisabledRendererAdaptDirty = true;
 }
 
-
-void CheckBox::releaseUpEvent()
+void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    Widget::releaseUpEvent();
-    
     if (_isSelected)
     {
         setSelected(false);
+        Widget::onTouchEnded(touch, unusedEvent);
         unSelectedEvent();
     }
     else
     {
         setSelected(true);
+        Widget::onTouchEnded(touch, unusedEvent);
         selectedEvent();
     }
 }
@@ -391,7 +390,6 @@ void CheckBox::onPressStateChangedToNormal()
     
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
     _frontCrossRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
-
     
     if (_isSelected)
     {
