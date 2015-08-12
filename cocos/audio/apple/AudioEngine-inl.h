@@ -35,7 +35,9 @@
 #include "AudioPlayer.h"
 
 NS_CC_BEGIN
-    namespace experimental{
+class Scheduler;
+
+namespace experimental{
 #define MAX_AUDIOINSTANCES 24
 
 class AudioEngineImpl : public cocos2d::Ref
@@ -50,7 +52,7 @@ public:
     void setLoop(int audioID, bool loop);
     bool pause(int audioID);
     bool resume(int audioID);
-    bool stop(int audioID);
+    void stop(int audioID);
     void stopAll();
     float getDuration(int audioID);
     float getCurrentTime(int audioID);
@@ -74,17 +76,13 @@ private:
     std::unordered_map<std::string, AudioCache> _audioCaches;
     
     //audioID,AudioInfo
-    std::unordered_map<int, AudioPlayer>  _audioPlayers;
-    
+    std::unordered_map<int, AudioPlayer*>  _audioPlayers;
     std::mutex _threadMutex;
-    
-    std::vector<AudioCache*> _toRemoveCaches;
-    std::vector<int> _toRemoveAudioIDs;
     
     bool _lazyInitLoop;
     
     int _currentAudioID;
-    
+    Scheduler* _scheduler;
 };
 }
 NS_CC_END
