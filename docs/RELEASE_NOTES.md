@@ -188,6 +188,8 @@ Features provided:
 
 New skeleton animation is also supported by the web engine. We will keep enhancing it in the future versions.
 
+![](https://raw.githubusercontent.com/minggo/Pictures/master/action-timeline.gif)
+
 ### Get Node's transform to its ancestor
 
 We have added a new functionality in `getNodeToParentTransform` API of Node, in v3.7.1, you can pass a ancestor as a parameter to get the node's transform related to this specific ancestor. Here is an example:
@@ -239,6 +241,8 @@ widget->setEnabled(false);
 ### Firefox remote debugger support
 
 In v3.7.1, we have enabled Firefox remote debugger support for JSB projects. You only need to follow [this documentation](http://www.cocos2d-x.org/docs/manual/framework/native/v3/js-remote-debugger/en), and you can debug your JSB projects with your Firefox browser. Note that it permits you to debug JavaScript code in your JSB project, for native code debugging you should still use Xcode or Visual Studio.
+
+![](https://raw.githubusercontent.com/minggo/Pictures/master/js-remote-debug.png)
 
 
 # v3.7
