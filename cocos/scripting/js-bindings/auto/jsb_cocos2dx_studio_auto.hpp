@@ -740,19 +740,61 @@ bool js_cocos2dx_studio_ActionTimeline_setCurrentFrame(JSContext *cx, uint32_t a
 bool js_cocos2dx_studio_ActionTimeline_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ActionTimeline_ActionTimeline(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocostudio_ObjectExtensionData_class;
-extern JSObject *jsb_cocostudio_ObjectExtensionData_prototype;
+extern JSClass  *jsb_cocostudio_timeline_BoneNode_class;
+extern JSObject *jsb_cocostudio_timeline_BoneNode_prototype;
 
-bool js_cocos2dx_studio_ObjectExtensionData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_studio_ObjectExtensionData_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_studio_ObjectExtensionData(JSContext *cx, JS::HandleObject global);
+bool js_cocos2dx_studio_BoneNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_BoneNode_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_BoneNode(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_studio_ObjectExtensionData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ObjectExtensionData_setCustomProperty(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ObjectExtensionData_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ObjectExtensionData_getCustomProperty(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ObjectExtensionData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ObjectExtensionData_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_studio_ObjectExtensionData_ObjectExtensionData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getDebugDrawWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getChildBones(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getAllSubBones(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_setDebugDrawEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getVisibleSkinsRect(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getAllSubSkins(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_displaySkin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_isDebugDrawEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_addSkin(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getRootSkeletonNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_setDebugDrawLength(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getSkins(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getVisibleSkins(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_setDebugDrawWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getDebugDrawLength(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_setDebugDrawColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_getDebugDrawColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_BoneNode_BoneNode(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_timeline_SkeletonNode_class;
+extern JSObject *jsb_cocostudio_timeline_SkeletonNode_prototype;
+
+bool js_cocos2dx_studio_SkeletonNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_SkeletonNode_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_SkeletonNode(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_studio_SkeletonNode_getBoneNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkeletonNode_changeSkins(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkeletonNode_addSkinGroup(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkeletonNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_SkeletonNode_SkeletonNode(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocostudio_ComExtensionData_class;
+extern JSObject *jsb_cocostudio_ComExtensionData_prototype;
+
+bool js_cocos2dx_studio_ComExtensionData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_studio_ComExtensionData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_studio_ComExtensionData(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_studio_ComExtensionData_setActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComExtensionData_getCustomProperty(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComExtensionData_getActionTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComExtensionData_setCustomProperty(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComExtensionData_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComExtensionData_ComExtensionData(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_studio_h__

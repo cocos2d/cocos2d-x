@@ -46,6 +46,7 @@
 #undef internal
 #endif
 
+
 NS_CC_BEGIN
 
 class CC_DLL FontFreeType : public Font
@@ -53,35 +54,41 @@ class CC_DLL FontFreeType : public Font
 public:
     static const int DistanceMapSpread;
 
-    static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
+    static FontFreeType * create(const std::string &fontName, int fontSize, GlyphCollection glyphs, 
+        const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
 
     static void shutdownFreeType();
 
-    bool     isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
-    float    getOutlineSize() const { return _outlineSize; }
-    void     renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
+    bool isDistanceFieldEnabled() const { return _distanceFieldEnabled;}
 
-    virtual FontAtlas   * createFontAtlas() override;
-    virtual int         * getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
-    
-    unsigned char       * getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
-    
-    virtual int           getFontMaxHeight() const override { return _lineHeight; }
-    virtual int           getFontAscender() const;
+    float getOutlineSize() const { return _outlineSize; }
 
-protected:
+    void renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight);
+
+    unsigned char* getGlyphBitmap(unsigned short charCode, long &outWidth, long &outHeight, Rect &outRect, int &xAdvance);
+
+    int getFontAscender() const;
+
+    FT_Encoding getEncoding() const { return _encoding; }
+
+    virtual FontAtlas* createFontAtlas() override;
+
+    virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     
-    FontFreeType(bool distanceFieldEnabled = false,int outline = 0);
-    virtual ~FontFreeType();
-    bool   createFontObject(const std::string &fontName, int fontSize);
-    
+    virtual int getFontMaxHeight() const override { return _lineHeight; }
+
 private:
+    FontFreeType(bool distanceFieldEnabled = false, int outline = 0);
+    virtual ~FontFreeType();
+
+    bool   createFontObject(const std::string &fontName, int fontSize);
 
     bool initFreeType();
+
     FT_Library getFTLibrary();
     
-    int  getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
-    unsigned char       * getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox);
+    int getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
+    unsigned char* getGlyphBitmapWithOutline(unsigned short u16Code, FT_BBox &bbox);
     
     static FT_Library _FTlibrary;
     static bool       _FTInitialized;
@@ -92,6 +99,8 @@ private:
     float             _outlineSize;
     int _lineHeight;
     FontAtlas* _fontAtlas;
+    
+    FT_Encoding _encoding;
 };
 
 /// @endcond

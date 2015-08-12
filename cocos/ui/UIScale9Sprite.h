@@ -583,7 +583,14 @@ namespace ui {
         void setState(State state);
         
         /**
-         * @brief @~english Query the sprite's original size.
+         * @brief @~english Query the current bright state.
+         * @~chinese 查询当前的高亮状态
+         * @return @see `State`
+         * @since v3.7
+         */
+        State getState()const;
+
+        /* @brief @~english Query the sprite's original size.
          * @~chinese 获取精灵的原始尺寸
          * @return @~english Sprite size.
          * @~chinese 精灵的尺寸
@@ -883,6 +890,7 @@ namespace ui {
         bool _flippedX;
         bool _flippedY;
         bool _isPatch9;
+        State _brightState;
     };
     
 }}  //end of namespace

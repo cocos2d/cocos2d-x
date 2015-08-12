@@ -205,7 +205,6 @@ bool js_cocos2dx_Node_getScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCascadeColorEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setOpacity(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getContentSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);

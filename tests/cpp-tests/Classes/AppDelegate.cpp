@@ -122,6 +122,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/hd/cocosui/CustomTest/CustomWidgetCallbackBindTest");
         searchPaths.push_back("hd/ActionTimeline");
         searchPaths.push_back("ccs-res/hd/armature");
+
+        searchPaths.push_back("ccs-res/hd/scene3DTest");
     }
     else
     {
@@ -161,6 +163,8 @@ bool AppDelegate::applicationDidFinishLaunching()
         searchPaths.push_back("ccs-res/cocosui/CustomTest/CustomWidgetCallbackBindTest");
         searchPaths.push_back("ActionTimeline");
         searchPaths.push_back("ccs-res/armature");
+
+        searchPaths.push_back("ccs-res/scene3DTest");
     }
     
     fileUtils->setSearchPaths(searchPaths);

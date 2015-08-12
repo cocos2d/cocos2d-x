@@ -41,19 +41,15 @@ public:
     virtual  FontAtlas *createFontAtlas() = 0;
 
     virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const = 0;
+
     virtual const char* getCurrentGlyphCollection() const;
-    
     
     virtual int getFontMaxHeight() const { return 0; }
     
-protected:
-    
+protected: 
     Font();
-    /**
-     * @js NA
-     * @lua NA
-     */
     virtual ~Font() {}
+
     void setCurrentGlyphCollection(GlyphCollection glyphs, const char *customGlyphs = 0);
     const char * getGlyphCollection(GlyphCollection glyphs) const;
     
@@ -62,7 +58,6 @@ protected:
     char              * _customGlyphs;
     static const char * _glyphASCII;
     static const char * _glyphNEHE;
-
 };
 
 NS_CC_END

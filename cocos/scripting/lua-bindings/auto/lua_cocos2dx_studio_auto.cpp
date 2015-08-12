@@ -1,5 +1,6 @@
 #include "lua_cocos2dx_studio_auto.hpp"
 #include "CocoStudio.h"
+#include "CCComExtensionData.h"
 #include "lua-cocos-studio-conversions.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
@@ -22699,6 +22700,1698 @@ int lua_register_cocos2dx_studio_ActionTimelineNode(lua_State* tolua_S)
     g_typeCast["ActionTimelineNode"] = "ccs.ActionTimelineNode";
     return 1;
 }
+
+int lua_cocos2dx_studio_BoneNode_getDebugDrawWidth(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawWidth'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawWidth'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getDebugDrawWidth();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getDebugDrawWidth",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawWidth'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getChildBones(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getChildBones'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 0) {
+            cocos2d::Vector<cocostudio::timeline::BoneNode *>& ret = cobj->getChildBones();
+            ccvector_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 0) {
+            const cocos2d::Vector<cocostudio::timeline::BoneNode *>& ret = cobj->getChildBones();
+            ccvector_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccs.BoneNode:getChildBones",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getChildBones'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getBlendFunc'", nullptr);
+            return 0;
+        }
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getAllSubBones(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getAllSubBones'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getAllSubBones'", nullptr);
+            return 0;
+        }
+        cocos2d::Vector<cocostudio::timeline::BoneNode *> ret = cobj->getAllSubBones();
+        ccvector_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getAllSubBones",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getAllSubBones'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "ccs.BoneNode:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_setBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_setDebugDrawEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawEnabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "ccs.BoneNode:setDebugDrawEnabled");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawEnabled'", nullptr);
+            return 0;
+        }
+        cobj->setDebugDrawEnabled(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:setDebugDrawEnabled",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawEnabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getVisibleSkinsRect(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getVisibleSkinsRect'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getVisibleSkinsRect'", nullptr);
+            return 0;
+        }
+        cocos2d::Rect ret = cobj->getVisibleSkinsRect();
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getVisibleSkinsRect",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getVisibleSkinsRect'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getAllSubSkins(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getAllSubSkins'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getAllSubSkins'", nullptr);
+            return 0;
+        }
+        cocos2d::Vector<cocos2d::Node *> ret = cobj->getAllSubSkins();
+        ccvector_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getAllSubSkins",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getAllSubSkins'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_displaySkin(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_displaySkin'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.BoneNode:displaySkin");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccs.BoneNode:displaySkin");
+
+            if (!ok) { break; }
+            cobj->displaySkin(arg0, arg1);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "ccs.BoneNode:displaySkin");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccs.BoneNode:displaySkin");
+
+            if (!ok) { break; }
+            cobj->displaySkin(arg0, arg1);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccs.BoneNode:displaySkin",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_displaySkin'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_isDebugDrawEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_isDebugDrawEnabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_isDebugDrawEnabled'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isDebugDrawEnabled();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:isDebugDrawEnabled",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_isDebugDrawEnabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_addSkin(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_addSkin'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 3) {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "ccs.BoneNode:addSkin");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccs.BoneNode:addSkin");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "ccs.BoneNode:addSkin");
+
+            if (!ok) { break; }
+            cobj->addSkin(arg0, arg1, arg2);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            cocos2d::Node* arg0;
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "ccs.BoneNode:addSkin");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccs.BoneNode:addSkin");
+
+            if (!ok) { break; }
+            cobj->addSkin(arg0, arg1);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccs.BoneNode:addSkin",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_addSkin'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getRootSkeletonNode(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getRootSkeletonNode'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getRootSkeletonNode'", nullptr);
+            return 0;
+        }
+        cocostudio::timeline::SkeletonNode* ret = cobj->getRootSkeletonNode();
+        object_to_luaval<cocostudio::timeline::SkeletonNode>(tolua_S, "ccs.SkeletonNode",(cocostudio::timeline::SkeletonNode*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getRootSkeletonNode",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getRootSkeletonNode'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_setDebugDrawLength(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawLength'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccs.BoneNode:setDebugDrawLength");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawLength'", nullptr);
+            return 0;
+        }
+        cobj->setDebugDrawLength(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:setDebugDrawLength",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawLength'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getSkins(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getSkins'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 0) {
+            cocos2d::Vector<cocos2d::Node *>& ret = cobj->getSkins();
+            ccvector_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 0) {
+            const cocos2d::Vector<cocos2d::Node *>& ret = cobj->getSkins();
+            ccvector_to_luaval(tolua_S, ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccs.BoneNode:getSkins",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getSkins'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getVisibleSkins(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getVisibleSkins'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getVisibleSkins'", nullptr);
+            return 0;
+        }
+        cocos2d::Vector<cocos2d::Node *> ret = cobj->getVisibleSkins();
+        ccvector_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getVisibleSkins",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getVisibleSkins'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_setDebugDrawWidth(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawWidth'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccs.BoneNode:setDebugDrawWidth");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawWidth'", nullptr);
+            return 0;
+        }
+        cobj->setDebugDrawWidth(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:setDebugDrawWidth",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawWidth'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getDebugDrawLength(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawLength'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawLength'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getDebugDrawLength();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getDebugDrawLength",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawLength'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_setDebugDrawColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color4F arg0;
+
+        ok &=luaval_to_color4f(tolua_S, 2, &arg0, "ccs.BoneNode:setDebugDrawColor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawColor'", nullptr);
+            return 0;
+        }
+        cobj->setDebugDrawColor(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:setDebugDrawColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_setDebugDrawColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_getDebugDrawColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BoneNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawColor'", nullptr);
+            return 0;
+        }
+        cocos2d::Color4F ret = cobj->getDebugDrawColor();
+        color4f_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:getDebugDrawColor",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_getDebugDrawColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.BoneNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 1)
+        {
+            int arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.BoneNode:create");
+            if (!ok) { break; }
+            cocostudio::timeline::BoneNode* ret = cocostudio::timeline::BoneNode::create(arg0);
+            object_to_luaval<cocostudio::timeline::BoneNode>(tolua_S, "ccs.BoneNode",(cocostudio::timeline::BoneNode*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 0)
+        {
+            cocostudio::timeline::BoneNode* ret = cocostudio::timeline::BoneNode::create();
+            object_to_luaval<cocostudio::timeline::BoneNode>(tolua_S, "ccs.BoneNode",(cocostudio::timeline::BoneNode*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "ccs.BoneNode:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_BoneNode_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BoneNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BoneNode_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocostudio::timeline::BoneNode();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.BoneNode");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BoneNode:BoneNode",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BoneNode_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_studio_BoneNode_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (BoneNode)");
+    return 0;
+}
+
+int lua_register_cocos2dx_studio_BoneNode(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccs.BoneNode");
+    tolua_cclass(tolua_S,"BoneNode","ccs.BoneNode","cc.Node",nullptr);
+
+    tolua_beginmodule(tolua_S,"BoneNode");
+        tolua_function(tolua_S,"new",lua_cocos2dx_studio_BoneNode_constructor);
+        tolua_function(tolua_S,"getDebugDrawWidth",lua_cocos2dx_studio_BoneNode_getDebugDrawWidth);
+        tolua_function(tolua_S,"getChildBones",lua_cocos2dx_studio_BoneNode_getChildBones);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_studio_BoneNode_getBlendFunc);
+        tolua_function(tolua_S,"getAllSubBones",lua_cocos2dx_studio_BoneNode_getAllSubBones);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_studio_BoneNode_setBlendFunc);
+        tolua_function(tolua_S,"setDebugDrawEnabled",lua_cocos2dx_studio_BoneNode_setDebugDrawEnabled);
+        tolua_function(tolua_S,"getVisibleSkinsRect",lua_cocos2dx_studio_BoneNode_getVisibleSkinsRect);
+        tolua_function(tolua_S,"getAllSubSkins",lua_cocos2dx_studio_BoneNode_getAllSubSkins);
+        tolua_function(tolua_S,"displaySkin",lua_cocos2dx_studio_BoneNode_displaySkin);
+        tolua_function(tolua_S,"isDebugDrawEnabled",lua_cocos2dx_studio_BoneNode_isDebugDrawEnabled);
+        tolua_function(tolua_S,"addSkin",lua_cocos2dx_studio_BoneNode_addSkin);
+        tolua_function(tolua_S,"getRootSkeletonNode",lua_cocos2dx_studio_BoneNode_getRootSkeletonNode);
+        tolua_function(tolua_S,"setDebugDrawLength",lua_cocos2dx_studio_BoneNode_setDebugDrawLength);
+        tolua_function(tolua_S,"getSkins",lua_cocos2dx_studio_BoneNode_getSkins);
+        tolua_function(tolua_S,"getVisibleSkins",lua_cocos2dx_studio_BoneNode_getVisibleSkins);
+        tolua_function(tolua_S,"setDebugDrawWidth",lua_cocos2dx_studio_BoneNode_setDebugDrawWidth);
+        tolua_function(tolua_S,"getDebugDrawLength",lua_cocos2dx_studio_BoneNode_getDebugDrawLength);
+        tolua_function(tolua_S,"setDebugDrawColor",lua_cocos2dx_studio_BoneNode_setDebugDrawColor);
+        tolua_function(tolua_S,"getDebugDrawColor",lua_cocos2dx_studio_BoneNode_getDebugDrawColor);
+        tolua_function(tolua_S,"create", lua_cocos2dx_studio_BoneNode_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocostudio::timeline::BoneNode).name();
+    g_luaType[typeName] = "ccs.BoneNode";
+    g_typeCast["BoneNode"] = "ccs.BoneNode";
+    return 1;
+}
+
+int lua_cocos2dx_studio_SkeletonNode_getBoneNode(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::SkeletonNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.SkeletonNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::SkeletonNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_SkeletonNode_getBoneNode'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.SkeletonNode:getBoneNode");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_SkeletonNode_getBoneNode'", nullptr);
+            return 0;
+        }
+        cocostudio::timeline::BoneNode* ret = cobj->getBoneNode(arg0);
+        object_to_luaval<cocostudio::timeline::BoneNode>(tolua_S, "ccs.BoneNode",(cocostudio::timeline::BoneNode*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.SkeletonNode:getBoneNode",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SkeletonNode_getBoneNode'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_SkeletonNode_changeSkins(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::SkeletonNode* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.SkeletonNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocostudio::timeline::SkeletonNode*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_SkeletonNode_changeSkins'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.SkeletonNode:changeSkins");
+
+            if (!ok) { break; }
+            cobj->changeSkins(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::map<std::string, std::string> arg0;
+            ok &= luaval_to_std_map_string_string(tolua_S, 2, &arg0, "ccs.SkeletonNode:changeSkins");
+
+            if (!ok) { break; }
+            cobj->changeSkins(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccs.SkeletonNode:changeSkins",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SkeletonNode_changeSkins'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_SkeletonNode_addSkinGroup(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::SkeletonNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.SkeletonNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::SkeletonNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_SkeletonNode_addSkinGroup'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        std::string arg0;
+        std::map<std::string, std::string> arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.SkeletonNode:addSkinGroup");
+
+        ok &= luaval_to_std_map_string_string(tolua_S, 3, &arg1, "ccs.SkeletonNode:addSkinGroup");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_SkeletonNode_addSkinGroup'", nullptr);
+            return 0;
+        }
+        cobj->addSkinGroup(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.SkeletonNode:addSkinGroup",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SkeletonNode_addSkinGroup'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_SkeletonNode_getAllSubBonesMap(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::SkeletonNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.SkeletonNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::SkeletonNode*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_SkeletonNode_getAllSubBonesMap'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_SkeletonNode_getAllSubBonesMap'", nullptr);
+            return 0;
+        }
+        const cocos2d::Map<std::string, cocostudio::timeline::BoneNode *>& ret = cobj->getAllSubBonesMap();
+        ccmap_string_key_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.SkeletonNode:getAllSubBonesMap",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SkeletonNode_getAllSubBonesMap'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_SkeletonNode_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.SkeletonNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_SkeletonNode_create'", nullptr);
+            return 0;
+        }
+        cocostudio::timeline::SkeletonNode* ret = cocostudio::timeline::SkeletonNode::create();
+        object_to_luaval<cocostudio::timeline::SkeletonNode>(tolua_S, "ccs.SkeletonNode",(cocostudio::timeline::SkeletonNode*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.SkeletonNode:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SkeletonNode_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_SkeletonNode_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::SkeletonNode* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_SkeletonNode_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocostudio::timeline::SkeletonNode();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.SkeletonNode");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.SkeletonNode:SkeletonNode",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_SkeletonNode_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_studio_SkeletonNode_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (SkeletonNode)");
+    return 0;
+}
+
+int lua_register_cocos2dx_studio_SkeletonNode(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccs.SkeletonNode");
+    tolua_cclass(tolua_S,"SkeletonNode","ccs.SkeletonNode","ccs.BoneNode",nullptr);
+
+    tolua_beginmodule(tolua_S,"SkeletonNode");
+        tolua_function(tolua_S,"new",lua_cocos2dx_studio_SkeletonNode_constructor);
+        tolua_function(tolua_S,"getBoneNode",lua_cocos2dx_studio_SkeletonNode_getBoneNode);
+        tolua_function(tolua_S,"changeSkins",lua_cocos2dx_studio_SkeletonNode_changeSkins);
+        tolua_function(tolua_S,"addSkinGroup",lua_cocos2dx_studio_SkeletonNode_addSkinGroup);
+        tolua_function(tolua_S,"getAllSubBonesMap",lua_cocos2dx_studio_SkeletonNode_getAllSubBonesMap);
+        tolua_function(tolua_S,"create", lua_cocos2dx_studio_SkeletonNode_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocostudio::timeline::SkeletonNode).name();
+    g_luaType[typeName] = "ccs.SkeletonNode";
+    g_typeCast["SkeletonNode"] = "ccs.SkeletonNode";
+    return 1;
+}
+
+int lua_cocos2dx_studio_ComExtensionData_setActionTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_setActionTag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccs.ComExtensionData:setActionTag");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_setActionTag'", nullptr);
+            return 0;
+        }
+        cobj->setActionTag(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:setActionTag",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_setActionTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_getCustomProperty(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_getCustomProperty'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_getCustomProperty'", nullptr);
+            return 0;
+        }
+        std::string ret = cobj->getCustomProperty();
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:getCustomProperty",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_getCustomProperty'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_getActionTag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'", nullptr);
+            return 0;
+        }
+        const int ret = cobj->getActionTag();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:getActionTag",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_getActionTag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_setCustomProperty(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::ComExtensionData*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_ComExtensionData_setCustomProperty'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccs.ComExtensionData:setCustomProperty");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_setCustomProperty'", nullptr);
+            return 0;
+        }
+        cobj->setCustomProperty(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:setCustomProperty",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_setCustomProperty'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_create'", nullptr);
+            return 0;
+        }
+        cocostudio::ComExtensionData* ret = cocostudio::ComExtensionData::create();
+        object_to_luaval<cocostudio::ComExtensionData>(tolua_S, "ccs.ComExtensionData",(cocostudio::ComExtensionData*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ComExtensionData:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_createInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.ComExtensionData",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_createInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::Ref* ret = cocostudio::ComExtensionData::createInstance();
+        object_to_luaval<cocos2d::Ref>(tolua_S, "cc.Ref",(cocos2d::Ref*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.ComExtensionData:createInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_createInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_ComExtensionData_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::ComExtensionData* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ComExtensionData_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocostudio::ComExtensionData();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.ComExtensionData");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ComExtensionData:ComExtensionData",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_ComExtensionData_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_studio_ComExtensionData_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (ComExtensionData)");
+    return 0;
+}
+
+int lua_register_cocos2dx_studio_ComExtensionData(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccs.ComExtensionData");
+    tolua_cclass(tolua_S,"ComExtensionData","ccs.ComExtensionData","cc.Component",nullptr);
+
+    tolua_beginmodule(tolua_S,"ComExtensionData");
+        tolua_function(tolua_S,"new",lua_cocos2dx_studio_ComExtensionData_constructor);
+        tolua_function(tolua_S,"setActionTag",lua_cocos2dx_studio_ComExtensionData_setActionTag);
+        tolua_function(tolua_S,"getCustomProperty",lua_cocos2dx_studio_ComExtensionData_getCustomProperty);
+        tolua_function(tolua_S,"getActionTag",lua_cocos2dx_studio_ComExtensionData_getActionTag);
+        tolua_function(tolua_S,"setCustomProperty",lua_cocos2dx_studio_ComExtensionData_setCustomProperty);
+        tolua_function(tolua_S,"create", lua_cocos2dx_studio_ComExtensionData_create);
+        tolua_function(tolua_S,"createInstance", lua_cocos2dx_studio_ComExtensionData_createInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocostudio::ComExtensionData).name();
+    g_luaType[typeName] = "ccs.ComExtensionData";
+    g_typeCast["ComExtensionData"] = "ccs.ComExtensionData";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx_studio(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -22711,6 +24404,8 @@ TOLUA_API int register_all_cocos2dx_studio(lua_State* tolua_S)
 	lua_register_cocos2dx_studio_ActionRotationFrame(tolua_S);
 	lua_register_cocos2dx_studio_Frame(tolua_S);
 	lua_register_cocos2dx_studio_BlendFuncFrame(tolua_S);
+	lua_register_cocos2dx_studio_BoneNode(tolua_S);
+	lua_register_cocos2dx_studio_SkeletonNode(tolua_S);
 	lua_register_cocos2dx_studio_ScaleFrame(tolua_S);
 	lua_register_cocos2dx_studio_Tween(tolua_S);
 	lua_register_cocos2dx_studio_ContourData(tolua_S);
@@ -22756,6 +24451,7 @@ TOLUA_API int register_all_cocos2dx_studio(lua_State* tolua_S)
 	lua_register_cocos2dx_studio_SceneReader(tolua_S);
 	lua_register_cocos2dx_studio_ActionTimelineCache(tolua_S);
 	lua_register_cocos2dx_studio_AlphaFrame(tolua_S);
+	lua_register_cocos2dx_studio_ComExtensionData(tolua_S);
 	lua_register_cocos2dx_studio_AnimationData(tolua_S);
 	lua_register_cocos2dx_studio_AnchorPointFrame(tolua_S);
 	lua_register_cocos2dx_studio_ActionScaleFrame(tolua_S);

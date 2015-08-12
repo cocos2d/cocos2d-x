@@ -3,29 +3,30 @@ require "CocoStudioTest/CocoStudioSceneTest/CocoStudioSceneTest"
 require "CocoStudioTest/CocoStudioArmatureTest/CocoStudioArmatureTest"
 require "CocoStudioTest/CocoStudioUIEditorTest/CocoStudioUIEditorTest"
 require "CocoStudioTest/CocoStudioActionTimelineTest/CocoStudioActionTimelineTest"
+require "CocoStudioTest/CocoStudioActionTimelineTest2/CocoStudioActionTimelineTest2"
 
 local LINE_SPACE = 40
 local ITEM_TAG_BASIC = 1000
 
-local cocoStudioTestItemNames = 
+local cocoStudioTestItemNames =
 {
     {
         itemTitle = "CocoStudioArmatureTest",
-        testScene = function () 
+        testScene = function ()
             runArmatureTestScene()
         end
     },
 
     {
         itemTitle = "CocoStudioGUITest",
-        testScene =  function () 
+        testScene =  function ()
             runCocosGUITestScene()
         end
     },
 
     {
         itemTitle = "CocoStudioSceneTest",
-        testScene = function () 
+        testScene = function ()
             runCocosSceneTestScene()
         end
     },
@@ -43,7 +44,14 @@ local cocoStudioTestItemNames =
             runCocoStudioActionTimelineTestScene()
         end
     },
-} 
+
+    {
+        itemTitle = "CocoStudioActionTimelineTest2",
+        testScene = function()
+            runCocoStudioActionTimelineTest2Scene()
+        end
+    },
+}
 
 local CocoStudioTestScene = class("CocoStudioTestScene")
 CocoStudioTestScene.__index = CocoStudioTestScene
@@ -66,7 +74,7 @@ end
 
 function CocoStudioTestScene.create()
     local scene = CocoStudioTestScene.extend(cc.Scene:create())
-    return scene   
+    return scene
 end
 
 local CocoStudioTestLayer = class("CocoStudioTestLayer")
@@ -111,7 +119,7 @@ function CocoStudioTestLayer.create()
 
     if nil ~= layer then
         layer:createMenu()
-    end 
+    end
     return layer
 end
 
