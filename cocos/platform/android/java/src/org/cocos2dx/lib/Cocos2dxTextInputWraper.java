@@ -82,10 +82,19 @@ public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListe
         //if (BuildConfig.DEBUG) {
             //Log.d(TAG, "afterTextChanged: " + s);
         //}
+        int textLength = this.mText.length() - 1;
         int nModified = s.length() - this.mText.length();
         if (nModified > 0) {
-            final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-            this.mCocos2dxGLSurfaceView.insertText(insertText);
+    		if (textLength >= 0) {
+    			if (this.mText.charAt(textLength) != s.charAt(textLength)) {
+    				mCocos2dxGLSurfaceView.deleteBackward();
+    			} else textLength++;
+    		} else textLength++;
+
+    		if(textLength>=0) {
+    			final String insertText = s.subSequence(textLength, s.length()).toString();
+    			this.mCocos2dxGLSurfaceView.insertText(insertText);
+    		}
             /*
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "insertText(" + insertText + ")");
