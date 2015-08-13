@@ -6388,6 +6388,7 @@
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/CMakeLists.txt", 
+        "cocos/scripting/lua-bindings/auto/api/AbstractCheckButton.lua", 
         "cocos/scripting/lua-bindings/auto/api/Action.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionCamera.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionEase.lua", 
