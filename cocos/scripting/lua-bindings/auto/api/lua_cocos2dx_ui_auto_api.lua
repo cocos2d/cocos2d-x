@@ -32,6 +32,11 @@
 
 
 --------------------------------------------------------
+-- the ccui AbstractCheckButton
+-- @field [parent=#ccui] AbstractCheckButton#AbstractCheckButton AbstractCheckButton preloaded module
+
+
+--------------------------------------------------------
 -- the ccui CheckBox
 -- @field [parent=#ccui] CheckBox#CheckBox CheckBox preloaded module
 
