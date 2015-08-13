@@ -109,7 +109,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         textField.hidden = true;
         textField.returnKeyType = UIReturnKeyDefault;
         
-        [textField addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+        [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
+
         
         self.textField = textField;
         self.editBox = editBox;
@@ -189,8 +190,13 @@ static const int CC_EDIT_BOX_PADDING = 5;
 /**
  * Called each time when the text field's text has changed.
  */
-- (void)textChanged
+- (void)textChanged:(UITextField*)textField
 {
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (textField.text.length > maxLength) {
+        textField.text = [textField.text substringToIndex:maxLength];
+    }
+    
     cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
@@ -287,9 +293,16 @@ static const int CC_EDIT_BOX_PADDING = 5;
  */
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (getEditBoxImplIOS()->getMaxLength() < 0)
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (maxLength < 0)
     {
         return YES;
+    }
+    
+    // Prevent crashing undo bug http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
+    if(range.length + range.location > textField.text.length)
+    {
+        return NO;
     }
     
     NSUInteger oldLength = textField.text.length;
@@ -298,7 +311,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     
     NSUInteger newLength = oldLength - rangeLength + replacementLength;
     
-    return newLength <= getEditBoxImplIOS()->getMaxLength();
+    return newLength <= maxLength;
 }
 
 @end
