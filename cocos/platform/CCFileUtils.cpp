@@ -1084,6 +1084,12 @@ bool FileUtils::removeFile(const std::string &path)
     return false;
 }
 
+bool FileUtils::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+{
+    CCASSERT(false, "FileUtils not support renameFile");
+    return false;
+}
+
 bool FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
     CCASSERT(false, "FileUtils not support renameFile");
@@ -1201,20 +1207,28 @@ bool FileUtils::removeFile(const std::string &path)
     }
 }
 
+bool FileUtils::renameFile(const std::string &oldfullpath, const std::string &newfullpath)
+{
+    CCASSERT(!oldfullpath.empty(), "Invalid path");
+    CCASSERT(!newfullpath.empty(), "Invalid path");
+
+    int errorCode = rename(oldfullpath.c_str(), newfullpath.c_str());
+
+    if (0 != errorCode)
+    {
+        CCLOGERROR("Fail to rename file %s to %s !Error code is %d", oldfullpath.c_str(), newfullpath.c_str(), errorCode);
+        return false;
+    }
+    return true;
+}
+
 bool FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
     CCASSERT(!path.empty(), "Invalid path");
     std::string oldPath = path + oldname;
     std::string newPath = path + name;
 
-    int errorCode = rename(oldPath.c_str(), newPath.c_str());
-
-    if (0 != errorCode)
-    {
-        CCLOGERROR("Fail to rename file %s to %s !Error code is %d", oldPath.c_str(), newPath.c_str(), errorCode);
-        return false;
-    }
-    return true;
+    return this->renameFile(oldPath, newPath);
 }
 
 std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const

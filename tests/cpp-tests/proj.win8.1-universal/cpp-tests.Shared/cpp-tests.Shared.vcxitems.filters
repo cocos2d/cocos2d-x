@@ -809,6 +809,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-12847.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DownloaderTest\DownloaderTest.cpp">
+      <Filter>Classes\DownloaderTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1735,6 +1738,9 @@
     <Filter Include="Classes\NavMeshTest">
       <UniqueIdentifier>{63894b40-d29e-4744-8cac-bd3d12916fe3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\DownloaderTest">
+      <UniqueIdentifier>{3f798ee7-4d68-4949-8f23-072dd022efd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
@@ -1794,6 +1800,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-12847.h">
       <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DownloaderTest\DownloaderTest.h">
+      <Filter>Classes\DownloaderTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

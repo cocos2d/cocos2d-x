@@ -64,6 +64,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DownloaderTest\DownloaderTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsTest\EffectsTest.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DownloaderTest\DownloaderTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsTest\EffectsTest.h" />
