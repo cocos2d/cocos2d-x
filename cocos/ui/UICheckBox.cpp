@@ -94,21 +94,22 @@ CheckBox* CheckBox::create(const std::string& backGround,
     return nullptr;
 }
     
-void CheckBox::releaseUpEvent()
+void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    Widget::releaseUpEvent();
-    
     if (_isSelected)
     {
         setSelected(false);
+        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
         dispatchSelectChangedEvent(false);
     }
     else
     {
         setSelected(true);
+        AbstractCheckButton::onTouchEnded(touch, unusedEvent);
         dispatchSelectChangedEvent(true);
     }
 }
+    
 
 void CheckBox::dispatchSelectChangedEvent(bool selected)
 {

@@ -82,6 +82,18 @@ public class Cocos2dxEditBoxHelper {
             @Override
             public void run() {
                 final Cocos2dxEditBox editBox = new Cocos2dxEditBox(mCocos2dxActivity);
+                editBox.setFocusable(true);
+                editBox.setFocusableInTouchMode(true);
+                editBox.setInputFlag(4); //kEditBoxInputFlagInitialCapsAllCharacters
+                editBox.setInputMode(6); //kEditBoxInputModeSingleLine
+                editBox.setReturnType(0);  //kKeyboardReturnTypeDefault
+                editBox.setHintTextColor(Color.GRAY);
+                editBox.setVisibility(View.INVISIBLE);
+                editBox.setBackgroundColor(Color.TRANSPARENT);
+                editBox.setTextColor(Color.WHITE);
+                editBox.setSingleLine();
+
+
                 FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.WRAP_CONTENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -101,7 +113,9 @@ public class Cocos2dxEditBoxHelper {
 
                     @Override
                     public void onTextChanged(final CharSequence s, int start, int before, int count) {
-                        mFrameLayout.setEnableForceDoLayout(false);
+                        //The optimization can't be turn on due to unknown keyboard hide in some custom keyboard
+//                        mFrameLayout.setEnableForceDoLayout(false);
+
                         mCocos2dxActivity.runOnGLThread(new Runnable() {
                             @Override
                             public void run() {

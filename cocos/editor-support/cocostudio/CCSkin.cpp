@@ -170,6 +170,15 @@ void Skin::updateTransform()
         float x2 = x1 + size.width;
         float y2 = y1 + size.height;
 
+        if (_flippedX)
+        {
+            std::swap(x1, x2);
+        }
+        if (_flippedY)
+        {
+            std::swap(y1, y2);
+        }
+        
         float x = transform.m[12];
         float y = transform.m[13];
 

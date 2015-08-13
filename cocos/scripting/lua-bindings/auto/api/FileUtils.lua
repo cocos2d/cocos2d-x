@@ -322,6 +322,16 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.<br>
+-- Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.<br>
+-- param filePath The path of the file, it could be a relative or absolute path.<br>
+-- return suffix for filename in lower case or empty if a dot not found.
+-- @function [parent=#FileUtils] getFileExtension 
+-- @param self
+-- @param #string filePath
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- Sets writable path.
 -- @function [parent=#FileUtils] setWritablePath 
 -- @param self

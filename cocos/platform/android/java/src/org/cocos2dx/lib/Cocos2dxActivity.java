@@ -348,7 +348,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         if (hasFocus) {
             Cocos2dxHelper.onResume();
             mGLSurfaceView.onResume();
-            mGLSurfaceView.requestFocus();
         }
     }
 
@@ -357,7 +356,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         super.onPause();
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
-        mGLSurfaceView.setSoftKeyboardShown(false);
     }
     
     @Override
@@ -408,7 +406,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         ViewGroup.LayoutParams edittext_layout_params =
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                        ViewGroup.LayoutParams.WRAP_CONTENT);
-        Cocos2dxEditText edittext = new Cocos2dxEditText(this);
+        Cocos2dxEditBox edittext = new Cocos2dxEditBox(this);
         edittext.setLayoutParams(edittext_layout_params);
 
 

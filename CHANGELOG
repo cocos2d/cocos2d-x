@@ -1,10 +1,11 @@
 cocos2d-x-3.8 ??
     [NEW]           ui: Enhance ScrollView with easing out scrolling
+    [NEW]           Animate: Added Animate's getCurrentFrameIndex function
 
     [FIX]           renderer: UI component can't click correctly by moving UI and camera far away of origin.
     [FIX]           JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
 
-cocos2d-x-3.7.1    ??
+cocos2d-x-3.7.1    August.12 2015
     [HIGHLIGHT]     studio: Added new skeleton animation support and csb parser for cocos v2.3.2 beta
     [HIGHLIGHT]     studio: Added new skeleton animation support and JSON parser in the web engine
     [HIGHLIGHT]     studio: Added Skybox csb/JSON parser for cocos v2.3.2 beta
@@ -12,21 +13,31 @@ cocos2d-x-3.7.1    ??
     [NEW]           Node: Added getNodeToParentTransform with selected ancestor
     [NEW]           studio: Parsed Touch/Click/Event callback in JSON parser
     [NEW]           web: Added cc.director.setClearColor and support transparent background
-    [NEW]           web: Added Animate's getCurrentFrameIndex function
 
+    [REFINE]        Widget: Synchronize enable state and bright state for Widget
     [REFINE]        studio: Optimized JSON parser's performance by removing audio play
     [REFINE]        studio: Optimized editor related extension data to a component instead of hosting in _userObject
     [REFINE]        studio: Updated Game3DNodeReader & UserCameraReader
+    [REFINE]        Label: Remove file error notice label from TextBMFontReader
+    [REFINE]        JSB: Add firefox remote debugger support in JS templates
     [REFINE]        web: Improved color/opacity manipulations in MenuItems
 
     [FIX]           Scene: Fixed Scene can't be inherited with std::vector members
+    [FIX]           Sprite: Fixed a compile error when CC_SPRITE_DEBUG_DRAW is on
     [FIX]           Label: Fixed creation fail if the font(TTF) contains a non-unicode charmap
+    [FIX]           Label: Fixed LabelAtlas rendering error for invalid characters and characters out of boundaries
+    [FIX]           Label: Fixed Mac system font crash issue
     [FIX]           platform: Fixed building with system prebuilt libs on Linux
     [FIX]           studio: Fixed ccs.Skin construction issue in JSON parser
+    [FIX]           studio: Fixed Particle3d crash while reading file with error
+    [FIX]           studio: Fixed parser crash when sprite 3d resource isn't correct
+    [FIX]           UI: Fixed CheckBox issue that _isSelected state is updated after event processing callbacks
+    [FIX]           JSB: Fixed JSON parser issue that 3d particle can not be displayed
     [FIX]           web: Fixed an issue that loading process won't trigger callback problem
     [FIX]           web: Fixed a bug where not resetting cc.Audio._ignoreEnded when replaying a sound caused it to stay in a "playing" state
     [FIX]           web: cc.ScrollView and cc.TableView: added check for parent visibility in onTouchBegan method
     [FIX]           web: Fixed TurnPageDown effect
+    [FIX]           web: Fixed Cocos Studio parser issue that all elements are missing while the timeline action contains rotation
 
 cocos2d-x-3.7final July.21 2015
     [REFINE]        JS: Improve manual binding code for `retain`, `release`, `onEnter`, `onExit`, `onEnterTransitionDidFinish` and `onExitTransitionDidStart`

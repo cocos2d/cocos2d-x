@@ -1817,17 +1817,9 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
     
     if (ret)
     {
-        if (_filePath.length() > 0)
+        if (FileUtils::getInstance()->getFileExtension(_filePath) != ".tga")
         {
-            const unsigned char tgaSuffix [] = ".tga";
-            for (int i = 0; i < 4; ++i)
-            {
-                if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
-                {
                     CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
-                    break;
-                };
-            }
         }
     }
     else
@@ -2197,36 +2189,21 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
         return false;
     }
 
-    bool ret = false;
+    std::string fileExtension = FileUtils::getInstance()->getFileExtension(filename);
 
-    do 
+    if (fileExtension == ".png")
     {
-
-        CC_BREAK_IF(filename.size() <= 4);
-
-        std::string strLowerCasePath(filename);
-        for (unsigned int i = 0; i < strLowerCasePath.length(); ++i)
-        {
-            strLowerCasePath[i] = tolower(filename[i]);
-        }
-
-        if (std::string::npos != strLowerCasePath.find(".png"))
-        {
-            CC_BREAK_IF(!saveImageToPNG(filename, isToRGB));
-        }
-        else if (std::string::npos != strLowerCasePath.find(".jpg"))
-        {
-            CC_BREAK_IF(!saveImageToJPG(filename));
-        }
-        else
-        {
-            break;
-        }
-
-        ret = true;
-    } while (0);
-
-    return ret;
+        return saveImageToPNG(filename, isToRGB);
+    }
+    else if (fileExtension == ".jpg")
+    {
+        return saveImageToJPG(filename);
+    }
+    else
+    {
+        CCLOG("cocos2d: Image: saveToFile no support file extension(only .png or .jpg) for file: %s", filename.c_str());
+        return false;
+    }
 }
 #endif
 
