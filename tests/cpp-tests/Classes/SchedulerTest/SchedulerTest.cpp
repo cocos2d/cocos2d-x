@@ -135,7 +135,7 @@ void SchedulerPauseResumeAll::onEnter()
     sprite->setPosition(VisibleRect::center());
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
-
+    sprite->setTag(123);
     scheduleUpdate();
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick1), 0.5f);
     schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick2), 1.0f);
@@ -175,20 +175,16 @@ void SchedulerPauseResumeAll::pause(float dt)
     // should have only 2 items: ActionManager, self
     CCASSERT(_pausedTargets.size() == 2, "Error: pausedTargets should have only 2 items");
     
-    unschedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick1));
-    unschedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick2));
-    // because pauseAllTargets above, should resumeTarget before add new scheduler
-    scheduler->resumeTarget(this);
-    scheduleOnce(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::resume), 2.0f);
+    // because target 'this' has been paused above, so use another node(tag:123) as target
+    getChildByTag(123)->scheduleOnce([this](float dt)
+                                     {
+                                         this->resume(dt);
+                                     }, 2.0f, "test resume");
 }
 
 void SchedulerPauseResumeAll::resume(float dt)
 {
     log("Resuming");
-    
-    schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick1), 0.5f);
-    schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAll::tick2), 1.0f);
-    
     auto director = Director::getInstance();
     director->getScheduler()->resumeTargets(_pausedTargets);
     _pausedTargets.clear();
@@ -228,6 +224,7 @@ void SchedulerPauseResumeAllUser::onEnter()
 
     auto sprite = Sprite::create("Images/grossinis_sister1.png");
     sprite->setPosition(Vec2(s.width/2, s.height/2));
+    sprite->setTag(123);
     this->addChild(sprite);
     sprite->runAction(RepeatForever::create(RotateBy::create(3.0, 360)));
 
@@ -260,8 +257,11 @@ void SchedulerPauseResumeAllUser::pause(float dt)
     log("Pausing, tick1 and tick2 should be called three times");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
-    getScheduler()->resumeTarget(this);
-    scheduleOnce(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::resume), 2.0f);
+    // because target 'this' has been paused above, so use another node(tag:123) as target
+    getChildByTag(123)->scheduleOnce([this](float dt)
+                                     {
+                                         this->resume(dt);
+                                     }, 2.0f, "test resume");
 }
 
 void SchedulerPauseResumeAllUser::resume(float dt)
