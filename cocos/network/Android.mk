@@ -7,7 +7,9 @@ LOCAL_MODULE_FILENAME := libnetwork
 
 LOCAL_SRC_FILES := HttpClient-android.cpp \
 SocketIO.cpp \
-WebSocket.cpp
+WebSocket.cpp \
+CCDownloader.cpp \
+CCDownloaderImpl.cpp
 
 LOCAL_EXPORT_C_INCLUDES :=
 

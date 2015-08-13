@@ -22,7 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "HttpAsynConnection.h"
+#include "platform/CCPlatformConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
+#import "HttpAsynConnection-apple.h"
 
 @interface HttpAsynConnection ()
 
@@ -217,3 +220,5 @@
 }
 
 @end
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
