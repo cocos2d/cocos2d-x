@@ -260,6 +260,8 @@ void SchedulerPauseResumeAllUser::pause(float dt)
     log("Pausing, tick1 and tick2 should be called three times");
     auto director = Director::getInstance();
     _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
+    unschedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick1));
+    unschedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick2));
     getScheduler()->resumeTarget(this);
     scheduleOnce(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::resume), 2.0f);
 }
@@ -267,6 +269,10 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 void SchedulerPauseResumeAllUser::resume(float dt)
 {
     log("Resuming");
+    
+    schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick1), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(SchedulerPauseResumeAllUser::tick2), 1.0f);
+    
     getScheduler()->resumeTargets(_pausedTargets);
     _pausedTargets.clear();
 }
