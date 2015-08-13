@@ -136,7 +136,7 @@ void MciPlayer::Close()
 void MciPlayer::Pause()
 {
     _SendGenericCommand(MCI_PAUSE);
-	_playing = false;
+    _playing = false;
 }
 
 void MciPlayer::Resume()
@@ -154,7 +154,7 @@ void MciPlayer::Resume()
     else
     {
         _SendGenericCommand(MCI_RESUME);
-		_playing = true;
+        _playing = true;
     }   
 }
 
