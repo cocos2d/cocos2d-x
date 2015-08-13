@@ -505,6 +505,7 @@ protected:
     bool multilineTextWrapByChar();
     bool multilineTextWrapByWord();
 
+    void updateLabelLetters();
     virtual void alignText();
     void computeAlignmentOffset();
     bool computeHorizontalKernings(const std::u16string& stringToRender);
