@@ -596,7 +596,7 @@ var ShaderNode = cc.GLNode.extend({
         //
         var frameSize = cc.view.getFrameSize();
         var visibleSize = cc.view.getVisibleSize();
-        var retinaFactor = cc.view.getDevicePixelRatio();
+        var retinaFactor = cc.view.getRetinaFactor();
         var position = this.getPosition();
 
         var centerx = position.x * frameSize.width/visibleSize.width * retinaFactor;
