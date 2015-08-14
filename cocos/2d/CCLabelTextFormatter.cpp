@@ -133,6 +133,11 @@ bool Label::multilineTextWrapByWord()
         {
             int letterIndex = index + tmp;
             character = _utf16Text[letterIndex];
+            if (character == '\r')
+            {
+                recordPlaceholderInfo(letterIndex, character);
+                continue;
+            }
             if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
             {
                 recordPlaceholderInfo(letterIndex, character);
@@ -226,6 +231,11 @@ bool Label::multilineTextWrapByChar()
     for (int index = 0; index < textLen; index++)
     {
         auto character = _utf16Text[index];
+        if (character == '\r')
+        {
+            recordPlaceholderInfo(index, character);
+            continue;
+        }
         if (character == '\n')
         {
             _linesWidth.push_back(letterRight);
