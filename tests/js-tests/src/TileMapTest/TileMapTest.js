@@ -1117,11 +1117,13 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
     onEnter:function () {
         this._super();
         // TIP: 2d projection should be used
+        director.setDepthTest(true);
         director.setProjection(cc.Director.PROJECTION_2D);
     },
     onExit:function () {
         // At exit use any other projection.
         director.setProjection(cc.Director.PROJECTION_DEFAULT);
+        director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
@@ -1191,11 +1193,13 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
         this._super();
 
         // TIP: 2d projection should be used
+        director.setDepthTest(true);
         director.setProjection(cc.Director.PROJECTION_2D);
     },
     onExit:function () {
         // At exit use any other projection.
         director.setProjection(cc.Director.PROJECTION_DEFAULT);
+        director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
