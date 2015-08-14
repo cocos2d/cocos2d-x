@@ -27,7 +27,7 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "mozilla/Maybe.h"
-#include "extensions/assets-manager/Downloader.h"
+#include "cocos/network/CCDownloader.h"
 
 class __JSDownloaderDelegator : cocos2d::Ref
 {
@@ -45,10 +45,10 @@ protected:
     
 private:
     void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
-    void onError(const cocos2d::extension::Downloader::Error &error);
+    void onError(const cocos2d::network::Downloader::Error &error);
     unsigned char *_buffer;
     long _size;
-    std::shared_ptr<cocos2d::extension::Downloader> _downloader;
+    std::shared_ptr<cocos2d::network::Downloader> _downloader;
     std::string _url;
     JSContext *_cx;
     mozilla::Maybe<JS::PersistentRootedObject> _jsCallback;

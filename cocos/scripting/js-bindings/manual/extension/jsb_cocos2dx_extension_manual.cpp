@@ -900,12 +900,12 @@ void __JSDownloaderDelegator::startDownload()
     }
     else
     {
-        _downloader = std::make_shared<cocos2d::extension::Downloader>();
+        _downloader = std::make_shared<cocos2d::network::Downloader>();
         _downloader->setConnectionTimeout(8);
         _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
         _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
         
-        cocos2d::extension::Downloader::HeaderInfo info = _downloader->getHeader(_url);
+        auto info = _downloader->getHeader(_url);
         long contentSize = info.contentSize;
         if (contentSize > 0 && info.responseCode < 400) {
             _size = contentSize / sizeof(unsigned char);
@@ -928,7 +928,7 @@ void __JSDownloaderDelegator::downloadAsync()
     t.detach();
 }
 
-void __JSDownloaderDelegator::onError(const cocos2d::extension::Downloader::Error &error)
+void __JSDownloaderDelegator::onError(const cocos2d::network::Downloader::Error &error)
 {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
     {

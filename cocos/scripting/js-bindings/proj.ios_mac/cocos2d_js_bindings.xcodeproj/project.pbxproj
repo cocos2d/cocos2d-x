@@ -895,7 +895,6 @@
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -929,7 +928,6 @@
 				GCC_WARN_SHADOW = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -950,12 +948,12 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../../external/spidermonkey/prebuilt/mac",
+					"$(SRCROOT)/../../../../external/curl/include/mac",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/mac $(SRCROOT)/../../../../cocos/platform/mac $(SRCROOT)/../../../../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/mac $(SRCROOT)/../../../../cocos/platform/mac $(SRCROOT)/../../../../external/glfw3/include/mac $(SRCROOT)/../../../../external/curl/include/mac";
 			};
 			name = Debug;
 		};
@@ -971,12 +969,12 @@
 					CC_TARGET_OS_MAC,
 					CC_KEYBOARD_SUPPORT,
 				);
-				HEADER_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../../external/spidermonkey/prebuilt/mac",
+					"$(SRCROOT)/../../../../external/curl/include/mac",
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/mac $(SRCROOT)/../../../../cocos/platform/mac $(SRCROOT)/../../../../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/mac $(SRCROOT)/../../../../cocos/platform/mac $(SRCROOT)/../../../../external/glfw3/include/mac $(SRCROOT)/../../../../external/curl/include/mac";
 			};
 			name = Release;
 		};
@@ -990,7 +988,6 @@
 					COCOS2D_JAVASCRIPT,
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -998,7 +995,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/ios $(SRCROOT)/../../../../cocos/platform/ios $(SRCROOT)/../../../../plugin/protocols/include";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/ios $(SRCROOT)/../../../../cocos/platform/ios $(SRCROOT)/../../../../plugin/protocols/include $(SRCROOT)/../../../../external/curl/include/ios";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -1014,7 +1011,6 @@
 					COCOS2D_JAVASCRIPT,
 					CC_TARGET_OS_IPHONE,
 				);
-				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1022,7 +1018,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/ios $(SRCROOT)/../../../../cocos/platform/ios $(SRCROOT)/../../../../plugin/protocols/include";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../../../../external/spidermonkey/include/ios $(SRCROOT)/../../../../cocos/platform/ios $(SRCROOT)/../../../../plugin/protocols/include $(SRCROOT)/../../../../external/curl/include/ios";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;

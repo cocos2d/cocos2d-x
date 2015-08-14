@@ -1303,6 +1303,8 @@ void DisplayLinkDirector::startAnimation()
 
     _invalid = false;
 
+    _cocos2d_thread_id = std::this_thread::get_id();
+
 #ifndef WP8_SHADER_COMPILER
     Application::getInstance()->setAnimationInterval(_animationInterval);
 #endif
