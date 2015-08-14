@@ -293,6 +293,13 @@ std::string RadioButtonGroup::getDescription() const
 void RadioButtonGroup::setAllowedNoSelection(bool allowedNoSelection)
 {
     _allowedNoSelection = allowedNoSelection;
+    if(!_allowedNoSelection && _selectedRadioButton == nullptr)
+    {
+        if (_radioButtons.size() > 0)
+        {
+            setSelectedButton(_radioButtons.at(0));
+        }
+    }
 }
 
 bool RadioButtonGroup::isAllowedNoSelection() const
