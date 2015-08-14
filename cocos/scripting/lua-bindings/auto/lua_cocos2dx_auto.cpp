@@ -15149,18 +15149,21 @@ int lua_cocos2dx_Timer_trigger(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Timer:trigger");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Timer_trigger'", nullptr);
             return 0;
         }
-        cobj->trigger();
+        cobj->trigger(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Timer:trigger",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Timer:trigger",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
