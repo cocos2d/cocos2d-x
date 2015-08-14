@@ -129,12 +129,17 @@ void Timer::update(float dt)
     {
         trigger(interval);
         _elapsed -= interval;
+        _timesExecuted += 1;
+        if (_elapsed <= 0.f)
+        {
+            break;
+        }
 
         if (_runForever)
         {
             continue;
         }
-        _timesExecuted += 1;
+        
         if (_timesExecuted > _repeat)
         {    //unschedule timer
             cancel();
