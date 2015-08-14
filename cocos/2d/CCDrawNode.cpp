@@ -104,6 +104,8 @@ static inline Tex2F __t(const Vec2 &v)
 
 // implementation of DrawNode
 
+static const int DEFAULT_LINE_WIDTH = 2;
+
 DrawNode::DrawNode()
 : _vao(0)
 , _vbo(0)
@@ -123,6 +125,7 @@ DrawNode::DrawNode()
 , _dirty(false)
 , _dirtyGLPoint(false)
 , _dirtyGLLine(false)
+, _lineWidth(DEFAULT_LINE_WIDTH)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
@@ -395,7 +398,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t flags)
         // texcood
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
     }
-    glLineWidth(2);
+    glLineWidth(_lineWidth);
     glDrawArrays(GL_LINES, 0, _bufferCountGLLine);
     
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -925,6 +928,7 @@ void DrawNode::clear()
     _dirtyGLLine = true;
     _bufferCountGLPoint = 0;
     _dirtyGLPoint = true;
+    _lineWidth = DEFAULT_LINE_WIDTH;
 }
 
 const BlendFunc& DrawNode::getBlendFunc() const
@@ -935,6 +939,11 @@ const BlendFunc& DrawNode::getBlendFunc() const
 void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
 {
     _blendFunc = blendFunc;
+}
+
+void DrawNode::setLineWidth(int lineWidth)
+{
+    _lineWidth = lineWidth;
 }
 
 NS_CC_END

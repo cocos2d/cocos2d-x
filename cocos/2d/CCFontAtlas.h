@@ -45,7 +45,6 @@ class FontFreeType;
 
 struct FontLetterDefinition
 {
-    unsigned short  letteCharUTF16;
     float U;
     float V;
     float width;
@@ -55,8 +54,6 @@ struct FontLetterDefinition
     int textureID;
     bool validDefinition;
     int xAdvance;
-
-    int clipBottom;
 };
 
 class CC_DLL FontAtlas : public Ref
@@ -76,16 +73,15 @@ public:
      */
     virtual ~FontAtlas();
     
-    void addLetterDefinition(const FontLetterDefinition &letterDefinition);
-    bool getLetterDefinitionForChar(char16_t letteCharUTF16, FontLetterDefinition &outDefinition);
+    void addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition);
+    bool getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinition &letterDefinition);
     
     bool prepareLetterDefinitions(const std::u16string& utf16String);
 
     inline const std::unordered_map<ssize_t, Texture2D*>& getTextures() const{ return _atlasTextures;}
     void  addTexture(Texture2D *texture, int slot);
-
-    float getCommonLineHeight() const { return _commonLineHeight; }
-    void  setCommonLineHeight(float newHeight);
+    float getLineHeight() const { return _lineHeight; }
+    void  setLineHeight(float newHeight);
     
     Texture2D* getTexture(int slot);
     const Font* getFont() const { return _font; }
@@ -115,15 +111,16 @@ public:
 protected:
     void relaseTextures();
 
-    void findNewCharacters(const std::u16string& u16SrcString, std::unordered_map<unsigned short, unsigned short>& newCharsMap);
+    void findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
 
-    void conversionU16TOGB2312(const std::u16string& newChars, std::unordered_map<unsigned short, unsigned short>& newCharsMap);
+    void conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap);
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
-    std::unordered_map<unsigned short, FontLetterDefinition> _fontLetterDefinitions;
-    float _commonLineHeight;
-    Font * _font;
+    std::unordered_map<char16_t, FontLetterDefinition> _letterDefinitions;
+    float _lineHeight;
+    Font* _font;
     FontFreeType* _fontFreeType;
+    void* _iconv;
 
     // Dynamic GlyphCollection related stuff
     int _currentPage;
@@ -131,13 +128,15 @@ protected:
     int _currentPageDataSize;
     float _currentPageOrigX;
     float _currentPageOrigY;
-    float _letterPadding;
+    int _letterPadding;
+    int _letterEdgeExtend;
 
     int _fontAscender;
     EventListenerCustom* _rendererRecreatedListener;
     bool _antialiasEnabled;
+    int _currLineHeight;
 
-    void* _iconv;
+    friend class Label;
 };
 
 NS_CC_END

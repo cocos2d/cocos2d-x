@@ -66,7 +66,7 @@ void ProtectedNode::cleanup()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
             return;
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
@@ -279,7 +279,7 @@ void ProtectedNode::reorderProtectedChild(cocos2d::Node *child, int localZOrder)
 void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
-    if (!_visible || !isVisitableByVisitingCamera())
+    if (!_visible)
     {
         return;
     }
@@ -362,6 +362,14 @@ void ProtectedNode::onEnter()
 
 void ProtectedNode::onEnterTransitionDidFinish()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+            return;
+    }
+#endif
+    
     Node::onEnterTransitionDidFinish();
     for( const auto &child: _protectedChildren)
         child->onEnterTransitionDidFinish();
@@ -369,6 +377,14 @@ void ProtectedNode::onEnterTransitionDidFinish()
 
 void ProtectedNode::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+            return;
+    }
+#endif
+    
     Node::onExitTransitionDidStart();
     for( const auto &child: _protectedChildren)
         child->onExitTransitionDidStart();
@@ -376,6 +392,14 @@ void ProtectedNode::onExitTransitionDidStart()
 
 void ProtectedNode::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Node::onExit();
     for( const auto &child: _protectedChildren)
         child->onExit();

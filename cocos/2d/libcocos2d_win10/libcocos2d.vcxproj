@@ -627,7 +627,9 @@
     <ClCompile Include="..\..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\..\ui\CocosGUI.cpp" />
     <ClCompile Include="..\..\ui\UIButton.cpp" />
+    <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\..\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\..\ui\UIRadioButton.cpp" />
     <ClCompile Include="..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBox.cpp" />
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-winrt.cpp" />
@@ -645,6 +647,7 @@
     <ClCompile Include="..\..\ui\UIRichText.cpp" />
     <ClCompile Include="..\..\ui\UIScale9Sprite.cpp" />
     <ClCompile Include="..\..\ui\UIScrollView.cpp" />
+    <ClCompile Include="..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\..\ui\UISlider.cpp" />
     <ClCompile Include="..\..\ui\UIText.cpp" />
     <ClCompile Include="..\..\ui\UITextAtlas.cpp" />
@@ -1499,34 +1502,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7.1_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7.1_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.7.1_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.7.1_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7.1_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7.1_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

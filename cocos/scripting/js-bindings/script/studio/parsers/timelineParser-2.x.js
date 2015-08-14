@@ -1519,10 +1519,12 @@
         if(json["FileData"] && json["FileData"]["Path"])
             resFile = resourcePath + json["FileData"]["Path"];
 
-        var node;
-        if(resFile)
-            node = jsb.Sprite3D.create(resFile);
-        else
+        var node = null;
+        if(resFile) {
+            if(jsb.fileUtils.isFileExist(resFile))
+                node = jsb.Sprite3D.create(resFile);
+        }
+        if(null === node)
             node = jsb.Sprite3D.create();
 
         if(node) {
@@ -1561,9 +1563,12 @@
         if(json["FileData"] && json["FileData"]["Path"])
             resFile = resourcePath+json["FileData"]["Path"];
 
-        if(resFile)
-            node = jsb.PUParticleSystem3D.create(resFile);
-        else
+        if(resFile){
+            if(jsb.fileUtils.isFileExist(resFile))
+                node = jsb.PUParticleSystem3D.create(resFile);
+        }
+
+        if(null === node)
             node = jsb.PUParticleSystem3D.create();
 
         if(node){
@@ -1578,6 +1583,8 @@
         {name: "SingleNodeObjectData", handle: parser.initSingleNode},
         {name: "NodeObjectData", handle: parser.initSingleNode},
         {name: "LayerObjectData", handle: parser.initSingleNode},
+        {name: "GameNodeObjectData", handle: parser.initSingleNode},
+        {name: "GameLayerObjectData", handle: parser.initSingleNode},
         {name: "SpriteObjectData", handle: parser.initSprite},
         {name: "ParticleObjectData", handle: parser.initParticle},
         {name: "PanelObjectData", handle: parser.initPanel},

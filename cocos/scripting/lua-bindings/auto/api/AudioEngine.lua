@@ -122,6 +122,15 @@
 -- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
         
 --------------------------------
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#AudioEngine] preload
+-- @param self
+-- @param #string filePath
+-- @param #function callback
+-- @return experimental::AudioEngine#experimental::AudioEngine self (return value: cc.experimental::AudioEngine)
+
+--------------------------------
 -- Play 2d sound.<br>
 -- param filePath The path of an audio file.<br>
 -- param loop Whether audio instance loop or not.<br>

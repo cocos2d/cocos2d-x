@@ -175,6 +175,20 @@ void Sprite3D::afterAsyncLoad(void* param)
     }
 }
 
+AABB Sprite3D::getAABBRecursivelyImp(Node *node)
+{
+    AABB aabb;
+    for (auto iter : node->getChildren()){
+        aabb.merge(getAABBRecursivelyImp(iter));
+    }
+    
+    Sprite3D *sprite3d = dynamic_cast<Sprite3D*>(node);
+    if (sprite3d)
+        aabb.merge(sprite3d->getAABB());
+
+    return aabb;
+}
+
 bool Sprite3D::loadFromCache(const std::string& path)
 {
     auto spritedata = Sprite3DCache::getInstance()->getSpriteData(path);
@@ -217,8 +231,7 @@ bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshD
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
     
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     if (ext == ".obj")
     {
         return Bundle3D::loadObj(*meshdatas, *materialdatas, *nodedatas, fullPath);
@@ -772,18 +785,7 @@ const BlendFunc& Sprite3D::getBlendFunc() const
 
 AABB Sprite3D::getAABBRecursively()
 {
-    AABB aabb;
-    const auto children = getChildren();
-    for (const auto iter: children)
-    {
-        Sprite3D* child = dynamic_cast<Sprite3D*>(iter);
-        if(child)
-        {
-            aabb.merge(child->getAABBRecursively());
-        }
-    }
-    aabb.merge(getAABB());
-    return aabb;
+    return getAABBRecursivelyImp(this);
 }
 
 const AABB& Sprite3D::getAABB() const

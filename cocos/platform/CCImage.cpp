@@ -486,33 +486,12 @@ bool Image::initWithImageFile(const std::string& path)
     bool ret = false;
     _filePath = FileUtils::getInstance()->fullPathForFilename(path);
 
-#ifdef EMSCRIPTEN
-    // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
-    // operations underneath. Consequently, loading images via IMG_Load (an SDL
-    // API) will be a lot faster than running libpng et al as compiled with
-    // Emscripten.
-    SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
-
-    int size = 4 * (iSurf->w * iSurf->h);
-    ret = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
-
-    unsigned int *tmp = (unsigned int *)_data;
-    int nrPixels = iSurf->w * iSurf->h;
-    for(int i = 0; i < nrPixels; i++)
-    {
-        unsigned char *p = _data + i * 4;
-        tmp[i] = CC_RGB_PREMULTIPLY_ALPHA( p[0], p[1], p[2], p[3] );
-    }
-
-    SDL_FreeSurface(iSurf);
-#else
     Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
 
     if (!data.isNull())
     {
         ret = initWithImageData(data.getBytes(), data.getSize());
     }
-#endif // EMSCRIPTEN
 
     return ret;
 }
@@ -1838,17 +1817,9 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
     
     if (ret)
     {
-        if (_filePath.length() > 0)
+        if (FileUtils::getInstance()->getFileExtension(_filePath) != ".tga")
         {
-            const unsigned char tgaSuffix [] = ".tga";
-            for (int i = 0; i < 4; ++i)
-            {
-                if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
-                {
                     CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
-                    break;
-                };
-            }
         }
     }
     else
@@ -2218,36 +2189,21 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
         return false;
     }
 
-    bool ret = false;
+    std::string fileExtension = FileUtils::getInstance()->getFileExtension(filename);
 
-    do 
+    if (fileExtension == ".png")
     {
-
-        CC_BREAK_IF(filename.size() <= 4);
-
-        std::string strLowerCasePath(filename);
-        for (unsigned int i = 0; i < strLowerCasePath.length(); ++i)
-        {
-            strLowerCasePath[i] = tolower(filename[i]);
-        }
-
-        if (std::string::npos != strLowerCasePath.find(".png"))
-        {
-            CC_BREAK_IF(!saveImageToPNG(filename, isToRGB));
-        }
-        else if (std::string::npos != strLowerCasePath.find(".jpg"))
-        {
-            CC_BREAK_IF(!saveImageToJPG(filename));
-        }
-        else
-        {
-            break;
-        }
-
-        ret = true;
-    } while (0);
-
-    return ret;
+        return saveImageToPNG(filename, isToRGB);
+    }
+    else if (fileExtension == ".jpg")
+    {
+        return saveImageToJPG(filename);
+    }
+    else
+    {
+        CCLOG("cocos2d: Image: saveToFile no support file extension(only .png or .jpg) for file: %s", filename.c_str());
+        return false;
+    }
 }
 #endif
 

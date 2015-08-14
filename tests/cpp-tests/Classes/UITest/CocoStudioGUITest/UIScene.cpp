@@ -29,7 +29,7 @@ bool UIScene::init()
         _widget = dynamic_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _uiLayer->addChild(_widget);
         
-        Size screenSize = CCDirector::getInstance()->getWinSize();
+        Size screenSize = Director::getInstance()->getWinSize();
         Size rootSize = _widget->getContentSize();
         _uiLayer->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                     (screenSize.height - rootSize.height) / 2));

@@ -115,8 +115,7 @@ bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity,
 RichText::RichText():
 _formatTextDirty(true),
 _leftSpaceWidth(0.0f),
-_verticalSpace(0.0f),
-_elementRenderersContainer(nullptr)
+_verticalSpace(0.0f)
 {
     
 }
@@ -149,9 +148,6 @@ bool RichText::init()
     
 void RichText::initRenderer()
 {
-    _elementRenderersContainer = Node::create();
-    _elementRenderersContainer->setAnchorPoint(Vec2(0.5f, 0.5f));
-    addProtectedChild(_elementRenderersContainer, 0, -1);
 }
 
 void RichText::insertElement(RichElement *element, int index)
@@ -182,7 +178,7 @@ void RichText::formatText()
 {
     if (_formatTextDirty)
     {
-        _elementRenderersContainer->removeAllChildren();
+        this->removeAllProtectedChildren();
         _elementRenders.clear();
         if (_ignoreSize)
         {
@@ -283,6 +279,8 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
         std::string curText = text;
         size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
+        //The minimum cut length is 1, otherwise will cause the infinite loop.
+        if (0 == leftLength) leftLength = 1;
         std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
         std::string cutWords = Helper::getSubStringOfUTF8String(curText, leftLength, stringLength - leftLength);
         if (leftLength > 0)
@@ -357,13 +355,13 @@ void RichText::formarRenderers()
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
             l->setPosition(nextPosX, 0.0f);
-            _elementRenderersContainer->addChild(l, 1);
+            this->addProtectedChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
             nextPosX += iSize.width;
         }
-        _elementRenderersContainer->setContentSize(Size(newContentSizeWidth, newContentSizeHeight));
+        this->setContentSize(Size(newContentSizeWidth, newContentSizeHeight));
     }
     else
     {
@@ -383,7 +381,6 @@ void RichText::formarRenderers()
             newContentSizeHeight += maxHeights[i];
         }
         
-        
         float nextPosY = _customSize.height;
         for (size_t i=0; i<_elementRenders.size(); i++)
         {
@@ -396,11 +393,10 @@ void RichText::formarRenderers()
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
                 l->setPosition(nextPosX, nextPosY);
-                _elementRenderersContainer->addChild(l, 1);
+                this->addProtectedChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }
         }
-        _elementRenderersContainer->setContentSize(_contentSize);
         delete [] maxHeights;
     }
     
@@ -423,7 +419,6 @@ void RichText::formarRenderers()
         this->setContentSize(_customSize);
     }
     updateContentSizeWithTextureSize(_contentSize);
-    _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
     
 void RichText::adaptRenderers()
@@ -444,18 +439,7 @@ void RichText::setVerticalSpace(float space)
 {
     _verticalSpace = space;
 }
-    
-void RichText::setAnchorPoint(const Vec2 &pt)
-{
-    Widget::setAnchorPoint(pt);
-    _elementRenderersContainer->setAnchorPoint(pt);
-}
-    
-Size RichText::getVirtualRendererSize() const
-{
-    return _elementRenderersContainer->getContentSize();
-}
-    
+
 void RichText::ignoreContentAdaptWithSize(bool ignore)
 {
     if (_ignoreSize != ignore)

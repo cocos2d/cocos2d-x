@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module Label
--- @extend SpriteBatchNode,LabelProtocol
+-- @extend Node,LabelProtocol,BlendProtocol
 -- @parent_module cc
 
 --------------------------------
@@ -58,6 +58,12 @@
 -- @function [parent=#Label] getTextColor 
 -- @param self
 -- @return color4b_table#color4b_table ret (return value: color4b_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Label] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- Makes the Label exactly this untransformed width.<br>
@@ -139,7 +145,7 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- 
+-- Return length of string.
 -- @function [parent=#Label] getStringLength 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -153,7 +159,7 @@
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
--- 
+-- Return the number of lines of text.
 -- @function [parent=#Label] getStringNumLines 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -174,6 +180,13 @@
 -- @function [parent=#Label] getAdditionalKerning 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Label] removeAllChildrenWithCleanup 
+-- @param self
+-- @param #bool cleanup
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- @overload self, cc.Texture2D, int, int, int         
@@ -291,6 +304,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#Label] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
 --  Returns the Label's text horizontal alignment.
 -- @function [parent=#Label] getTextAlignment 
 -- @param self
@@ -392,44 +412,24 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] addChild 
--- @param self
--- @param #cc.Node child
--- @param #int zOrder
--- @param #int tag
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] setScaleY 
--- @param self
--- @param #float scaleY
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] setScaleX 
--- @param self
--- @param #float scaleX
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
 -- @function [parent=#Label] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
--- @function [parent=#Label] getScaleY 
+-- @function [parent=#Label] setCameraMask 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
 -- 
--- @function [parent=#Label] setBlendFunc 
+-- @function [parent=#Label] removeChild 
 -- @param self
--- @param #cc.BlendFunc blendFunc
+-- @param #cc.Node child
+-- @param #bool cleanup
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
@@ -443,12 +443,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#Label] getScaleX 
--- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
--- 
 -- @function [parent=#Label] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -458,19 +452,6 @@
 -- @function [parent=#Label] setOpacityModifyRGB 
 -- @param self
 -- @param #bool isOpacityModifyRGB
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] setScale 
--- @param self
--- @param #float scale
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] sortAllChildren 
--- @param self
 -- @return Label#Label self (return value: cc.Label)
         
 --------------------------------
@@ -497,14 +478,6 @@
 -- @function [parent=#Label] updateDisplayedColor 
 -- @param self
 -- @param #color3b_table parentColor
--- @return Label#Label self (return value: cc.Label)
-        
---------------------------------
--- 
--- @function [parent=#Label] setCameraMask 
--- @param self
--- @param #unsigned short mask
--- @param #bool applyChildren
 -- @return Label#Label self (return value: cc.Label)
         
 return nil

@@ -37,7 +37,7 @@
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
-
+#include "2d/CCCamera.h"
 
 #define DUMP_LISTENER_ITEM_PRIORITY_INFO 0
 
@@ -221,7 +221,9 @@ EventDispatcher::~EventDispatcher()
 }
 
 void EventDispatcher::visitTarget(Node* node, bool isRootNode)
-{    
+{
+    node->sortAllChildren();
+    
     int i = 0;
     auto& children = node->getChildren();
     
@@ -762,7 +764,100 @@ void EventDispatcher::dispatchEventToListeners(EventListenerVector* listeners, c
             }
         }
     }
+    
+    if (fixedPriorityListeners)
+    {
+        if (!shouldStopPropagation)
+        {
+            // priority > 0
+            ssize_t size = fixedPriorityListeners->size();
+            for (; i < size; ++i)
+            {
+                auto l = fixedPriorityListeners->at(i);
+                
+                if (l->isEnabled() && !l->isPaused() && l->isRegistered() && onEvent(l))
+                {
+                    shouldStopPropagation = true;
+                    break;
+                }
+            }
+        }
+    }
+}
 
+void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent)
+{
+    bool shouldStopPropagation = false;
+    auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
+    auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
+    
+    ssize_t i = 0;
+    // priority < 0
+    if (fixedPriorityListeners)
+    {
+        CCASSERT(listeners->getGt0Index() <= static_cast<ssize_t>(fixedPriorityListeners->size()), "Out of range exception!");
+        
+        if (!fixedPriorityListeners->empty())
+        {
+            for (; i < listeners->getGt0Index(); ++i)
+            {
+                auto l = fixedPriorityListeners->at(i);
+                if (l->isEnabled() && !l->isPaused() && l->isRegistered() && onEvent(l))
+                {
+                    shouldStopPropagation = true;
+                    break;
+                }
+            }
+        }
+    }
+    
+    auto scene = Director::getInstance()->getRunningScene();
+    if (scene && sceneGraphPriorityListeners)
+    {
+        if (!shouldStopPropagation)
+        {
+            // priority == 0, scene graph priority
+            
+            // first, get all enabled, unPaused and registered listeners
+            std::vector<EventListener*> sceneListeners;
+            for (auto& l : *sceneGraphPriorityListeners)
+            {
+                if (l->isEnabled() && !l->isPaused() && l->isRegistered())
+                {
+                    sceneListeners.push_back(l);
+                }
+            }
+            // second, for all camera call all listeners
+            // get a copy of cameras, prevent it's been modified in linstener callback
+            // if camera's depth is greater, process it earler
+            auto cameras = scene->getCameras();
+            Camera* camera;
+            for (int j = int(cameras.size()) - 1; j >= 0; --j)
+            {
+                camera = cameras[j];
+                if (camera->isVisible() == false)
+                {
+                    continue;
+                }
+                
+                Camera::_visitingCamera = camera;
+                for (auto& l : sceneListeners)
+                {
+                    if (onEvent(l))
+                    {
+                        shouldStopPropagation = true;
+                        break;
+                    }
+                }
+                if (shouldStopPropagation)
+                {
+                    break;
+                }
+            }
+            Camera::_visitingCamera = nullptr;
+        }
+    }
+    
     if (fixedPriorityListeners)
     {
         if (!shouldStopPropagation)
@@ -803,6 +898,10 @@ void EventDispatcher::dispatchEvent(Event* event)
     
     sortEventListeners(listenerID);
     
+    auto pfnDispatchEventToListeners = &EventDispatcher::dispatchEventToListeners;
+    if (event->getType() == Event::Type::MOUSE) {
+        pfnDispatchEventToListeners = &EventDispatcher::dispatchTouchEventToListeners;
+    }
     auto iter = _listenerMap.find(listenerID);
     if (iter != _listenerMap.end())
     {
@@ -814,7 +913,7 @@ void EventDispatcher::dispatchEvent(Event* event)
             return event->isStopped();
         };
         
-        dispatchEventToListeners(listeners, onEvent);
+        (this->*pfnDispatchEventToListeners)(listeners, onEvent);
     }
     
     updateListeners(event);
@@ -929,7 +1028,8 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                     return true;
                 }
                 
-                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(), "");
+                CCASSERT((*touchesIter)->getID() == (*mutableTouchesIter)->getID(),
+                         "touchesIter ID should be equal to mutableTouchesIter's ID.");
                 
                 if (isClaimed && listener->_isRegistered && listener->_needSwallow)
                 {
@@ -945,7 +1045,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             };
             
             //
-            dispatchEventToListeners(oneByOneListeners, onTouchEvent);
+            dispatchTouchEventToListeners(oneByOneListeners, onTouchEvent);
             if (event->isStopped())
             {
                 return;
@@ -1011,7 +1111,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
             return false;
         };
         
-        dispatchEventToListeners(allAtOnceListeners, onTouchesEvent);
+        dispatchTouchEventToListeners(allAtOnceListeners, onTouchesEvent);
         if (event->isStopped())
         {
             return;

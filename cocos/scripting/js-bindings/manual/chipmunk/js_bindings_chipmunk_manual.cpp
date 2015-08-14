@@ -578,6 +578,8 @@ void JSPROXY_CCPhysicsSprite_createClass(JSContext *cx, JS::HandleObject globalO
         p->parentProto = typeClass->proto;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
+    
+    anonEvaluate(cx, globalObj, "(function () { cc.PhysicsSprite.extend = cc.Class.extend; })()");
 }
 
 

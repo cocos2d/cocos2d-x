@@ -15,7 +15,7 @@ public:
 class ActionTimelineBaseTest : public TestCase
 {
 public:
-    virtual std::string title() const;
+    virtual std::string title() const override;
 
     virtual bool init() override;
 
@@ -127,11 +127,8 @@ public:
     virtual std::string title() const override;
 
 private:
-    void setAllSubBonesDebugDraw(cocostudio::timeline::SkeletonNode* rootSkeleton, bool isShow);
-
     bool _changedDisplay;
     bool _changedDisplays;
-    bool _isAllBonesDraw;
 };
 
 class TestTimelineExtensionData : public ActionTimelineBaseTest

@@ -410,11 +410,7 @@ TextureCache* Director::getTextureCache() const
 
 void Director::initTextureCache()
 {
-#ifdef EMSCRIPTEN
-    _textureCache = new (std::nothrow) TextureCacheEmscripten();
-#else
     _textureCache = new (std::nothrow) TextureCache();
-#endif // EMSCRIPTEN
 }
 
 void Director::destroyTextureCache()
@@ -1341,7 +1337,7 @@ void DisplayLinkDirector::stopAnimation()
     _invalid = true;
 }
 
-void DisplayLinkDirector::setAnimationInterval(double interval)
+void DisplayLinkDirector::setAnimationInterval(float interval)
 {
     _animationInterval = interval;
     if (! _invalid)

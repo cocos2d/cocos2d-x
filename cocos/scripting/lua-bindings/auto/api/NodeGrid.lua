@@ -5,11 +5,27 @@
 -- @parent_module cc
 
 --------------------------------
+-- brief Set the effect grid rect.<br>
+-- param gridRect The effect grid rect.
+-- @function [parent=#NodeGrid] setGridRect 
+-- @param self
+-- @param #rect_table gridRect
+-- @return NodeGrid#NodeGrid self (return value: cc.NodeGrid)
+        
+--------------------------------
 --  Set the Grid Target. <br>
 -- param target A Node is used to set the Grid Target.
 -- @function [parent=#NodeGrid] setTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return NodeGrid#NodeGrid self (return value: cc.NodeGrid)
+        
+--------------------------------
+-- Changes a grid object that is used when applying effects.<br>
+-- param grid  A Grid object that is used when applying effects.
+-- @function [parent=#NodeGrid] setGrid 
+-- @param self
+-- @param #cc.GridBase grid
 -- @return NodeGrid#NodeGrid self (return value: cc.NodeGrid)
         
 --------------------------------
@@ -20,20 +36,20 @@
 -- @return GridBase#GridBase ret (return value: cc.GridBase)
 
 --------------------------------
--- Changes a grid object that is used when applying effects.<br>
--- param grid  A Grid object that is used when applying effects.
--- @function [parent=#NodeGrid] setGrid 
+-- brief Get the effect grid rect.<br>
+-- return Return the effect grid rect.
+-- @function [parent=#NodeGrid] getGridRect 
 -- @param self
--- @param #cc.GridBase grid
--- @return NodeGrid#NodeGrid self (return value: cc.NodeGrid)
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
---  Create a Grid Node.<br>
--- return An autorelease Grid Node.
--- @function [parent=#NodeGrid] create 
+-- @overload self, rect_table         
+-- @overload self         
+-- @function [parent=#NodeGrid] create
 -- @param self
+-- @param #rect_table rect
 -- @return NodeGrid#NodeGrid ret (return value: cc.NodeGrid)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#NodeGrid] visit 

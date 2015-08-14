@@ -192,6 +192,12 @@
         "src/MaterialSystemTest/MaterialSystemTest.js",
         "src/TerrainTest/TerrainTest.js",
         "src/Physics3DTest/Physics3DTest.js",
-        "src/NavMeshTest/NavMeshTest.js"
+        "src/NavMeshTest/NavMeshTest.js",
+        "src/VibrateTest/VibrateTest.js",
+
+        "src/NativeTest/NativeTest.js",
+        "src/NativeTest/FileUtils/FileUtilsTest.js",
+        "src/NativeTest/JSBExtendTest.js",
+        "src/NativeTest/AudioEngineTest.js"
     ]
 }

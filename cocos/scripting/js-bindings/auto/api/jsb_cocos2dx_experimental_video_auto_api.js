@@ -37,27 +37,11 @@ play : function (
 },
 
 /**
- * @method pause
- */
-pause : function (
-)
-{
-},
-
-/**
  * @method setKeepAspectRatioEnabled
  * @param {bool} arg0
  */
 setKeepAspectRatioEnabled : function (
 bool 
-)
-{
-},
-
-/**
- * @method resume
- */
-resume : function (
 )
 {
 },

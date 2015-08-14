@@ -441,7 +441,7 @@
 --  Gets the FPS value. 
 -- @function [parent=#Director] getAnimationInterval 
 -- @param self
--- @return double#double ret (return value: double)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  Whether or not the Director is paused. 
@@ -477,7 +477,7 @@
 --  Sets the FPS value. FPS = 1/internal. 
 -- @function [parent=#Director] setAnimationInterval 
 -- @param self
--- @param #double interval
+-- @param #float interval
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------

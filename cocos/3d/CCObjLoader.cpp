@@ -414,7 +414,7 @@ namespace tinyobj {
     
     static std::string& replacePathSeperator(std::string& path)
     {
-        for (int i = 0; i < path.size(); i++) {
+        for (std::string::size_type i = 0; i < path.size(); i++) {
             if (path[i] == '\\')
                 path[i] = '/';
         }

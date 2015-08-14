@@ -183,6 +183,13 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
+-- Whether or not the viewprojection matrix was updated since the last frame.<br>
+-- return True if the viewprojection matrix was updated since the last frame.
+-- @function [parent=#Camera] isViewProjectionUpdated 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Camera] initPerspective 
 -- @param self
@@ -250,6 +257,15 @@
 -- @function [parent=#Camera] getDefaultCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- 

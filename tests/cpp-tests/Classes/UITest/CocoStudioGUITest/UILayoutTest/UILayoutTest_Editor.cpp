@@ -457,7 +457,7 @@ void UILayoutComponentTest_Editor::onChangeLayoutComponent(Ref* sender)
         }
     }
 
-    statusPin = String::createWithFormat("Pin:%s%s", hPinStatus.c_str(), vPinStatus.c_str())->getCString();
+    statusPin = StringUtils::format("Pin:%s%s", hPinStatus.c_str(), vPinStatus.c_str());
     _textPin->setString(statusPin);
 
     auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(_widget);

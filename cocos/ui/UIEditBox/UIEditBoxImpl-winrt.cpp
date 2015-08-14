@@ -392,14 +392,27 @@ bool UIEditBoxImplWinrt::initWithSize( const Size& size )
 
 void UIEditBoxImplWinrt::setFont( const char* pFontName, int fontSize )
 {
-    if(m_pLabel != NULL) {
-        m_pLabel->setSystemFontName(pFontName);
-        m_pLabel->setSystemFontSize(fontSize);
+    if(m_pLabel != NULL)
+    {
+        if(strlen(pFontName) > 0)
+        {
+            m_pLabel->setSystemFontName(pFontName);
+        }
+        if(fontSize > 0)
+        {
+            m_pLabel->setSystemFontSize(fontSize);
+        }
     }
 
     if(m_pLabelPlaceHolder != NULL) {
-        m_pLabelPlaceHolder->setSystemFontName(pFontName);
-        m_pLabelPlaceHolder->setSystemFontSize(fontSize);
+        if(strlen(pFontName) > 0)
+        {
+            m_pLabelPlaceHolder->setSystemFontName(pFontName);
+        }
+        if(fontSize > 0)
+        {
+            m_pLabelPlaceHolder->setSystemFontSize(fontSize);
+        }
     }
 }
 
@@ -411,9 +424,16 @@ void UIEditBoxImplWinrt::setFontColor( const Color4B& color )
 
 void UIEditBoxImplWinrt::setPlaceholderFont( const char* pFontName, int fontSize )
 {
-    if(m_pLabelPlaceHolder != NULL) {
-        m_pLabelPlaceHolder->setSystemFontName(pFontName);
-        m_pLabelPlaceHolder->setSystemFontSize(fontSize);
+    if(m_pLabelPlaceHolder != NULL)
+    {
+        if(strlen(pFontName) > 0)
+        {
+            m_pLabelPlaceHolder->setSystemFontName(pFontName);
+        }
+        if(fontSize > 0)
+        {
+            m_pLabelPlaceHolder->setSystemFontSize(fontSize);
+        }
     }
 }
 
@@ -530,7 +550,7 @@ void UIEditBoxImplWinrt::setAnchorPoint( const Vec2& anchorPoint )
 
 }
 
-void UIEditBoxImplWinrt::visit( void )
+void UIEditBoxImplWinrt::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags)
 {
 
 }

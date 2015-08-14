@@ -97,22 +97,6 @@ bool js_cocos2dx_experimental_video_VideoPlayer_play(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_cocos2dx_experimental_video_VideoPlayer_play : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_experimental_video_VideoPlayer_pause(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::experimental::ui::VideoPlayer* cobj = (cocos2d::experimental::ui::VideoPlayer *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_video_VideoPlayer_pause : Invalid Native Object");
-    if (argc == 0) {
-        cobj->pause();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_experimental_video_VideoPlayer_pause : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -131,22 +115,6 @@ bool js_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled(JSCont
     }
 
     JS_ReportError(cx, "js_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_experimental_video_VideoPlayer_resume(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::experimental::ui::VideoPlayer* cobj = (cocos2d::experimental::ui::VideoPlayer *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_video_VideoPlayer_resume : Invalid Native Object");
-    if (argc == 0) {
-        cobj->resume();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_experimental_video_VideoPlayer_resume : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_experimental_video_VideoPlayer_stop(JSContext *cx, uint32_t argc, jsval *vp)
@@ -369,13 +337,11 @@ bool js_cocos2dx_experimental_video_VideoPlayer_constructor(JSContext *cx, uint3
     return true;
 }
 
-
 extern JSObject *jsb_cocos2d_ui_Widget_prototype;
 
 void js_cocos2d_experimental_ui_VideoPlayer_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (VideoPlayer)", obj);
 }
-
 void js_register_cocos2dx_experimental_video_VideoPlayer(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_experimental_ui_VideoPlayer_class = (JSClass *)calloc(1, sizeof(JSClass));
     jsb_cocos2d_experimental_ui_VideoPlayer_class->name = "VideoPlayer";
@@ -398,9 +364,7 @@ void js_register_cocos2dx_experimental_video_VideoPlayer(JSContext *cx, JS::Hand
         JS_FN("getFileName", js_cocos2dx_experimental_video_VideoPlayer_getFileName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getURL", js_cocos2dx_experimental_video_VideoPlayer_getURL, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("play", js_cocos2dx_experimental_video_VideoPlayer_play, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("pause", js_cocos2dx_experimental_video_VideoPlayer_pause, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setKeepAspectRatioEnabled", js_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("resume", js_cocos2dx_experimental_video_VideoPlayer_resume, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stop", js_cocos2dx_experimental_video_VideoPlayer_stop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFullScreenEnabled", js_cocos2dx_experimental_video_VideoPlayer_setFullScreenEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFileName", js_cocos2dx_experimental_video_VideoPlayer_setFileName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

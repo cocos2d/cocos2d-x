@@ -50,7 +50,8 @@ JSTouchDelegate::~JSTouchDelegate()
 
 void JSTouchDelegate::setDelegateForJSObject(JSObject* pJSObj, JSTouchDelegate* pDelegate)
 {
-    CCASSERT(sTouchDelegateMap.find(pJSObj) == sTouchDelegateMap.end(), "");
+    CCASSERT(sTouchDelegateMap.find(pJSObj) == sTouchDelegateMap.end(),
+             "pJSObj can't be found in sTouchDelegateMap.");
     sTouchDelegateMap.insert(TouchDelegatePair(pJSObj, pDelegate));
 }
 
@@ -68,7 +69,7 @@ JSTouchDelegate* JSTouchDelegate::getDelegateForJSObject(JSObject* pJSObj)
 void JSTouchDelegate::removeDelegateForJSObject(JSObject* pJSObj)
 {
     TouchDelegateMap::iterator iter = sTouchDelegateMap.find(pJSObj);
-    CCASSERT(iter != sTouchDelegateMap.end(), "");
+    CCASSERT(iter != sTouchDelegateMap.end(), "pJSObj can't be found in sTouchDelegateMap!");
     sTouchDelegateMap.erase(pJSObj);
 }
 
@@ -1386,7 +1387,7 @@ void JSScheduleWrapper::dump()
             jsfuncTargetCount++;
         }
     }
-    CCASSERT(nativeTargetsCount == jsfuncTargetCount, "");
+    CCASSERT(nativeTargetsCount == jsfuncTargetCount, "nativeTargetsCount should be equal to jsfuncTargetCount.");
     CCLOG("\n---------JSScheduleWrapper dump end--------------\n");
 #endif
 }

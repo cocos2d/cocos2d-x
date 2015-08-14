@@ -40,6 +40,7 @@ Action::Action()
 :_originalTarget(nullptr)
 ,_target(nullptr)
 ,_tag(Action::INVALID_TAG)
+,_flags(0)
 {
 }
 
