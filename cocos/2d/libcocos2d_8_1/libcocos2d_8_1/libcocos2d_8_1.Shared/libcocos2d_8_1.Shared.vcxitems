@@ -408,6 +408,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
@@ -1014,6 +1015,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
