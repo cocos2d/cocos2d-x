@@ -60,11 +60,12 @@ bool UIEditBoxTest::init()
         _editName = ui::EditBox::create(editBoxSize, ui::Scale9Sprite::create(pNormalSprite));
         _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
         _editName->setFontName("Paint Boy");
-        _editName->setFontSize(25);
         _editName->setFontColor(Color3B::RED);
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
         _editName->setMaxLength(8);
+        _editName->setFontSize(editBoxSize.height/2);
+        _editName->setText("v👐👊💝");
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
         addChild(_editName);
@@ -77,15 +78,18 @@ bool UIEditBoxTest::init()
         _editPassword->setMaxLength(6);
         _editPassword->setInputFlag(ui::EditBox::InputFlag::PASSWORD);
         _editPassword->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
+        _editPassword->setFontSize(editBoxSize.height/2);
         _editPassword->setDelegate(this);
         addChild(_editPassword);
         
         // bottom
-        _editEmail = ui::EditBox::create(Size(editBoxSize.width, editBoxSize.height), "extensions/yellow_edit.png");
+        auto bottomButtonSize = Size(editBoxSize.width, editBoxSize.height + 10);
+        _editEmail = ui::EditBox::create(bottomButtonSize, "extensions/yellow_edit.png");
         _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
         _editEmail->setPlaceHolder("Email:");
         _editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
         _editEmail->setDelegate(this);
+        _editEmail->setFontSize(bottomButtonSize.height/2);
         addChild(_editEmail);
         
         return true;

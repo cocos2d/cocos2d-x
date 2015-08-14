@@ -113,9 +113,7 @@ public:
             if (fontName.c_str())
             {
                 // create font from ttf file
-                int nFindttf = fontName.find(".ttf");
-                int nFindTTF = fontName.find(".TTF");
-                if (nFindttf >= 0 || nFindTTF >= 0)
+                if (FileUtils::getInstance()->getFileExtension(fontName) == ".ttf")
                 {
                     fontPath = FileUtils::getInstance()->fullPathForFilename(fontName.c_str());
                     int nFindPos = fontName.rfind("/");

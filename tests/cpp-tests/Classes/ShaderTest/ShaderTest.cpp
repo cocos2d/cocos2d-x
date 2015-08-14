@@ -53,6 +53,8 @@ ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std:
 
 bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag)
 {
+    _vertFileName = vert;
+    _fragFileName = frag;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
             this->setGLProgramState(nullptr);
@@ -62,14 +64,10 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
 
-    _vertFileName = vert;
-    _fragFileName = frag;
-
     loadShaderVertex(vert, frag);
 
     _time = 0;
     _resolution = Vec2(SIZE_X, SIZE_Y);
-    getGLProgramState()->setUniformVec2("resolution", _resolution);
 
     scheduleUpdate();
 
@@ -115,7 +113,6 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto retinaFactor = Director::getInstance()->getOpenGLView()->getRetinaFactor();
     _center = Vec2(position.x * frameSize.width / visibleSize.width * retinaFactor, position.y * frameSize.height / visibleSize.height * retinaFactor);
-    getGLProgramState()->setUniformVec2("center", _center);
 }
 
 void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -131,6 +128,8 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
     auto glProgramState = getGLProgramState();
+    glProgramState->setUniformVec2("resolution", _resolution);
+    glProgramState->setUniformVec2("center", _center);
     glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glProgramState->apply(transform);
@@ -551,7 +550,7 @@ bool ShaderRetroEffect::init()
         auto fragStr = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"));
         GLchar * fragSource = (GLchar*)fragStr.c_str();
 
-        auto p = GLProgram::createWithByteArrays(ccPositionTexture_vert, fragSource);
+        auto p = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
 
         auto director = Director::getInstance();
         auto s = director->getWinSize();

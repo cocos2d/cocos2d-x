@@ -74,7 +74,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)override;
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();

@@ -37,7 +37,6 @@ var UITextFieldTest = UIMainLayer.extend({
             this._bottomDisplayLabel.setColor(cc.color(255, 255, 255, 255));
 
             // Create the textfield
-            cc.director.getOpenGLView().setIMEKeyboardState(true);
             var textField = new ccui.TextField("PlaceHolder", "Marker Felt", 30);
             textField.x = widgetSize.width / 2.0;
             textField.y = widgetSize.height / 2.0;

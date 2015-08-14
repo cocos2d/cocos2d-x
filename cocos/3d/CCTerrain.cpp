@@ -541,8 +541,12 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray) const
     }
 }
 
-bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const
+bool Terrain::getIntersectionPoint(const Ray & ray_, Vec3 & intersectionPoint) const
 {
+	// convert ray from world space to local space
+    Ray ray(ray_);
+    getWorldToNodeTransform().transformPoint(&(ray._origin));
+
     std::set<Chunk *> closeList;
     Vec2 start = Vec2(ray._origin.x,ray._origin.z);
     Vec2 dir = Vec2(ray._direction.x,ray._direction.z);

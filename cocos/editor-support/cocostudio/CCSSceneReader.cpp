@@ -56,15 +56,8 @@ const char* SceneReader::sceneReaderVersion()
 
 cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName, AttachComponentType attachComponent /*= AttachComponentType::EMPTY_NODE*/)
 {
-    std::string reDir = fileName;
-    std::string file_extension = "";
-    size_t pos = reDir.find_last_of('.');
-    if (pos != std::string::npos)
-    {
-        file_extension = reDir.substr(pos, reDir.length());
-        std::transform(file_extension.begin(),file_extension.end(), file_extension.begin(), (int(*)(int))toupper);
-    }
-    if (file_extension == ".JSON")
+    std::string fileExtension = cocos2d::FileUtils::getInstance()->getFileExtension(fileName);
+    if (fileExtension == ".json")
     {
         _node = nullptr;
         rapidjson::Document jsonDict;
@@ -76,7 +69,7 @@ cocos2d::Node* SceneReader::createNodeWithSceneFile(const std::string &fileName,
         
         return _node;
     }
-    else if(file_extension == ".CSB")
+    else if(fileExtension == ".csb")
     {
         do {
             std::string binaryFilePath = FileUtils::getInstance()->fullPathForFilename(fileName);

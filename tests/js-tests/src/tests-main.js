@@ -114,6 +114,15 @@ var TestController = cc.LayerGradient.extend({
         menu.x = 0;
 	    menu.y = 0;
 
+        // sort the test title
+        testNames.sort(function(first, second){
+            if (first.title > second.title)
+            {
+                return 1;
+            }
+            return -1;
+        });
+
         // add menu items for tests
         this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
 
@@ -721,7 +730,7 @@ var testNames = [
     },
     {
         title:"Vibrate Test",
-        platforms: PLATFORM_ALL,
+        platforms: PLATFORM_JSB,
         linksrc:"src/VibrateTest/VibrateTest.js",
         testScene:function () {
             return new VibrateTestScene();

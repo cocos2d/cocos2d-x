@@ -413,3 +413,69 @@ var UIScrollViewRotated = UIMainLayer.extend({
         }
     }
 });
+
+var UIScrollViewDisableTest = UIMainLayer.extend({
+    init: function () {
+        if (this._super()){
+            var widgetSize = this._widget.getContentSize();
+
+            this._topDisplayLabel.setString("ScrollView Disable Test");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+
+            this._bottomDisplayLabel.setString("ScrollView vertical");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            var scrollView = new ccui.ScrollView();
+            scrollView.setContentSize(cc.size(280, 150));
+            scrollView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - scrollView.width) / 2;
+            scrollView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - scrollView.height) / 2;
+            scrollView.setTouchEnabled(false);
+
+            this._mainNode.addChild(scrollView);
+
+            var imageView = new ccui.ImageView();
+            imageView.loadTexture("ccs-res/cocosui/ccicon.png");
+
+            var innerWidth = scrollView.width;
+            var innerHeight = scrollView.height + imageView.height;
+
+            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+
+            var button = new ccui.Button();
+            button.setTouchEnabled(true);
+            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
+            button.x = innerWidth / 2;
+            button.y = scrollView.getInnerContainerSize().height - button.height / 2;
+            scrollView.addChild(button);
+
+            var textButton = new ccui.Button();
+            textButton.setTouchEnabled(true);
+            textButton.loadTextures("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png", "");
+            textButton.setTitleText("Text Button");
+            textButton.x = innerWidth / 2;
+            textButton.y = button.getBottomBoundary() - button.height;
+            scrollView.addChild(textButton);
+
+            var button_scale9 = new ccui.Button();
+            button_scale9.setTouchEnabled(true);
+            button_scale9.setScale9Enabled(true);
+            button_scale9.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
+            button_scale9.width = 100;
+            button_scale9.height = 32;
+            button_scale9.x = innerWidth / 2;
+            button_scale9.y = textButton.getBottomBoundary() - textButton.height;
+            scrollView.addChild(button_scale9);
+
+            imageView.setPosition(cc.p(innerWidth/2, imageView.getContentSize().height/2));
+            scrollView.addChild(imageView);
+
+            return true;
+        }
+        return false;
+    }
+});

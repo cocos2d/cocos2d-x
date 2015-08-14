@@ -36,6 +36,7 @@
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
+#include "ui/UIHelper.h"
 
 #define CLASS_NAME "org/cocos2dx/lib/Cocos2dxWebViewHelper"
 
@@ -443,21 +444,10 @@ namespace cocos2d {
 
             void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
                 if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
-                    auto directorInstance = cocos2d::Director::getInstance();
-                    auto glView = directorInstance->getOpenGLView();
-                    auto frameSize = glView->getFrameSize();
+                    auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(_webView);
 
-                    auto winSize = directorInstance->getWinSize();
-
-                    auto leftBottom = this->_webView->convertToWorldSpace(cocos2d::Point::ZERO);
-                    auto rightTop = this->_webView->convertToWorldSpace(cocos2d::Point(this->_webView->getContentSize().width,this->_webView->getContentSize().height));
-
-                    auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
-                    auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
-
-                    setWebViewRectJNI(_viewTag,uiLeft,uiTop,
-                                      (rightTop.x - leftBottom.x) * glView->getScaleX(),
-                                      (rightTop.y - leftBottom.y) * glView->getScaleY());
+                    setWebViewRectJNI(_viewTag, uiRect.origin.x, uiRect.origin.y,
+                                      uiRect.size.width, uiRect.size.height);
                 }
             }
 

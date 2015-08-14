@@ -91,11 +91,11 @@ public:
 	/* @param attachmentName May be 0 for no attachment. */
 	bool setAttachment (const std::string& slotName, const char* attachmentName);
 
-	// --- BlendProtocol
-	virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc);
-	virtual const cocos2d::BlendFunc& getBlendFunc () const;
-	virtual void setOpacityModifyRGB (bool value);
-	virtual bool isOpacityModifyRGB () const;
+    // --- BlendProtocol
+    virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc)override;
+    virtual const cocos2d::BlendFunc& getBlendFunc () const override;
+    virtual void setOpacityModifyRGB (bool value) override;
+    virtual bool isOpacityModifyRGB () const override;
 
 CC_CONSTRUCTOR_ACCESS:
 	SkeletonRenderer ();

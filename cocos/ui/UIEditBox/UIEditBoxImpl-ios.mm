@@ -109,7 +109,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         textField.hidden = true;
         textField.returnKeyType = UIReturnKeyDefault;
         
-        [textField addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+        [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
+
         
         self.textField = textField;
         self.editBox = editBox;
@@ -189,8 +190,13 @@ static const int CC_EDIT_BOX_PADDING = 5;
 /**
  * Called each time when the text field's text has changed.
  */
-- (void)textChanged
+- (void)textChanged:(UITextField*)textField
 {
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (textField.text.length > maxLength) {
+        textField.text = [textField.text substringToIndex:maxLength];
+    }
+    
     cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
     if (pDelegate != NULL)
     {
@@ -287,9 +293,16 @@ static const int CC_EDIT_BOX_PADDING = 5;
  */
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (getEditBoxImplIOS()->getMaxLength() < 0)
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (maxLength < 0)
     {
         return YES;
+    }
+    
+    // Prevent crashing undo bug http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
+    if(range.length + range.location > textField.text.length)
+    {
+        return NO;
     }
     
     NSUInteger oldLength = textField.text.length;
@@ -298,7 +311,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
     
     NSUInteger newLength = oldLength - rangeLength + replacementLength;
     
-    return newLength <= getEditBoxImplIOS()->getMaxLength();
+    return newLength <= maxLength;
 }
 
 @end
@@ -406,36 +419,53 @@ void EditBoxImplIOS::setInactiveText(const char* pText)
         _label->setDimensions(fMaxWidth,labelSize.height);
     }
 }
+    
+UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
+{
+    CCASSERT(fontName != nullptr, "fontName can't be nullptr");
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
+    float retinaFactor = eaglview.contentScaleFactor;
+    NSString * fntName = [NSString stringWithUTF8String:fontName];
+    
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+
+    if (fontSize == -1)
+    {
+        fontSize = [_systemControl.textField frame].size.height*2/3;
+    }
+    else
+    {
+        fontSize = fontSize * scaleFactor / retinaFactor;
+    }
+    
+    UIFont *textFont = nil;
+    if (strlen(fontName) > 0)
+    {
+        textFont = [UIFont fontWithName:fntName size:fontSize];
+    }
+    else
+    {
+        textFont = [UIFont systemFontOfSize:fontSize];
+    }
+    return textFont;
+}
 
 void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
 {
-    bool isValidFontName = true;
-    if(pFontName == NULL || strlen(pFontName) == 0) {
-        isValidFontName = false;
-    }
-
-    CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
-    float retinaFactor = eaglview.contentScaleFactor;
-    NSString * fntName = [NSString stringWithUTF8String:pFontName];
-
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-
-    float scaleFactor = glview->getScaleX();
-    UIFont *textFont = nil;
-    if (isValidFontName) {
-        textFont = [UIFont fontWithName:fntName size:fontSize * scaleFactor / retinaFactor];
-    }
-    
-    if (!isValidFontName || textFont == nil){
-        textFont = [UIFont systemFontOfSize:fontSize * scaleFactor / retinaFactor];
-    }
-
+    UIFont* textFont = constructFont(pFontName, fontSize);
     if(textFont != nil) {
         [_systemControl.textField setFont:textFont];
     }
 
-    _label->setSystemFontName(pFontName);
-    _label->setSystemFontSize(fontSize);
+    if(strlen(pFontName) > 0)
+    {
+        _label->setSystemFontName(pFontName);
+    }
+    if(fontSize > 0)
+    {
+        _label->setSystemFontSize(fontSize);
+    }
 }
 
 void EditBoxImplIOS::setFontColor(const Color4B& color)
@@ -446,8 +476,14 @@ void EditBoxImplIOS::setFontColor(const Color4B& color)
 
 void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-    _labelPlaceHolder->setSystemFontName(pFontName);
-    _labelPlaceHolder->setSystemFontSize(fontSize);
+    if( strlen(pFontName) > 0)
+    {
+        _labelPlaceHolder->setSystemFontName(pFontName);
+    }
+    if(fontSize > 0)
+    {
+        _labelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
     
 void EditBoxImplIOS::setPlaceholderFontColor(const Color4B &color)
@@ -647,7 +683,7 @@ void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
     setPosition(_position);
 }
 
-void EditBoxImplIOS::visit(void)
+void EditBoxImplIOS::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
 }
 

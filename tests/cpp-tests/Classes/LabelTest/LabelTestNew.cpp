@@ -446,7 +446,7 @@ LabelFNTandTTFEmpty::LabelFNTandTTFEmpty()
     auto label2 = Label::createWithTTF(ttfConfig,"", TextHAlignment::CENTER,s.width);
     addChild(label2, 0, kTagBitmapAtlas2);
     label2->setPosition(Vec2(s.width/2, s.height / 2));
-
+    
     auto label3 = Label::createWithCharMap("fonts/tuffy_bold_italic-charmap.plist");
     addChild(label3, 0, kTagBitmapAtlas3);
     label3->setPosition(Vec2(s.width/2, 100));
@@ -814,7 +814,7 @@ std::string LabelFNTUNICODELanguages::title() const
 
 std::string LabelFNTUNICODELanguages::subtitle() const
 {
-    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Korean";
+    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Japanese";
 }
 
 LabelFNTBounds::LabelFNTBounds()
