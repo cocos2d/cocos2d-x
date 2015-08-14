@@ -67,6 +67,7 @@ WidgetReader/UserCameraReader/UserCameraReader.cpp \
 WidgetReader/Particle3DReader/Particle3DReader.cpp \
 WidgetReader/SkeletonReader/BoneNodeReader.cpp \
 WidgetReader/SkeletonReader/SkeletonNodeReader.cpp \
+WidgetReader/GameNode3DReader/GameNode3DReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
