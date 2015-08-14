@@ -27,8 +27,6 @@
 #include <string>
 #include <vector>
 
-#include <curl/curl.h>
-
 #include "network/CCIDownloaderImpl.h"
 #include "platform/CCPlatformMacros.h"
 
@@ -75,7 +73,7 @@ namespace network
         ProgressCallback _progressCallback;
 
         void* _curlHandle;
-        CURLcode _lastErrCode;
+        int _lastErrCode;
         bool _initialized;
     };
 

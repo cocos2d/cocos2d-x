@@ -86,7 +86,7 @@ bool DownloaderImpl::init()
 
 std::string DownloaderImpl::getStrError() const
 {
-    return curl_easy_strerror(_lastErrCode);
+    return curl_easy_strerror((CURLcode)_lastErrCode);
 }
 
 int DownloaderImpl::performDownload(DownloadUnit* unit,
