@@ -467,6 +467,33 @@ string FileUtilsWin32::getWritablePath() const
     return convertPathFormatToUnixStyle(StringWideCharToUtf8(retPath));
 }
 
+bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+{
+    CCASSERT(!oldfullpath.empty(), "Invalid path");
+    CCASSERT(!newfullpath.empty(), "Invalid path");
+
+    std::wstring _wNew = StringUtf8ToWideChar(newfullpath);
+    std::wstring _wOld = StringUtf8ToWideChar(oldfullpath);
+
+    if (FileUtils::getInstance()->isFileExist(newfullpath))
+    {
+        if (!DeleteFile(_wNew.c_str()))
+        {
+            CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newfullpath.c_str(), GetLastError());
+        }
+    }
+
+    if (MoveFile(_wOld.c_str(), _wNew.c_str()))
+    {
+        return true;
+    }
+    else
+    {
+        CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldfullpath.c_str(), newfullpath.c_str(), GetLastError());
+        return false;
+    }
+}
+
 bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
 {
     CCASSERT(!path.empty(), "Invalid path");
@@ -477,25 +504,7 @@ bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldn
     std::string _old = std::regex_replace(oldPath, pat, "\\");
     std::string _new = std::regex_replace(newPath, pat, "\\");
 
-    std::wstring _wNew = StringUtf8ToWideChar(_new);
-
-    if (FileUtils::getInstance()->isFileExist(_new))
-    {
-        if (!DeleteFile(_wNew.c_str()))
-        {
-            CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newPath.c_str(), GetLastError());
-        }
-    }
-
-    if (MoveFile(StringUtf8ToWideChar(_old).c_str(), _wNew.c_str()))
-    {
-        return true;
-    }
-    else
-    {
-        CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldPath.c_str(), newPath.c_str(), GetLastError());
-        return false;
-    }
+    return renameFile(_old, _new);
 }
 
 bool FileUtilsWin32::createDirectory(const std::string& dirPath)

@@ -457,6 +457,15 @@ public:
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
 
     /**
+     *  Renames a file under the given directory.
+     *
+     *  @param oldfullpath  The current fullpath of the file. Includes path and name.
+     *  @param newfullpath  The new fullpath of the file. Includes path and name.
+     *  @return True if the file have been renamed successfully, false if not.
+     */
+    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath);
+
+    /**
      *  Retrieve the file size.
      *
      *  @note If a relative path was passed in, it will be inserted a default root path at the beginning.

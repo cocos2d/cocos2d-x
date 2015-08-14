@@ -56,6 +56,7 @@ set(TESTS_SRC
   Classes/CurlTest/CurlTest.cpp
   Classes/CurrentLanguageTest/CurrentLanguageTest.cpp
   Classes/DataVisitorTest/DataVisitorTest.cpp
+  Classes/DownloaderTest/DownloaderTest.cpp
   Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp

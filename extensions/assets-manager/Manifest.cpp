@@ -209,7 +209,7 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
     return diff_map;
 }
 
-void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
+void Manifest::genResumeAssetsList(network::DownloadUnits *units) const
 {
     for (auto it = _assets.begin(); it != _assets.end(); ++it)
     {
@@ -217,7 +217,7 @@ void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
         
         if (asset.downloadState != DownloadState::SUCCESSED)
         {
-            Downloader::DownloadUnit unit;
+            network::DownloadUnit unit;
             unit.customId = it->first;
             unit.srcUrl = _packageUrl + asset.path;
             unit.storagePath = _manifestRoot + asset.path;

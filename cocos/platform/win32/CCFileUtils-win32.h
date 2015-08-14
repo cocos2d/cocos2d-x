@@ -67,6 +67,15 @@ protected:
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name) override;
 
     /**
+    *  Renames a file under the given directory.
+    *
+    *  @param oldfullpath  The current path + name of the file.
+    *  @param newfullpath  The new path + name of the file.
+    *  @return True if the file have been renamed successfully, false if not.
+    */
+    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath) override;
+
+    /**
     *  Checks whether a directory exists without considering search paths and resolution orders.
     *  @param dirPath The directory (with absolute path) to look up for
     *  @return Returns true if the directory found at the given absolute path, otherwise returns false
