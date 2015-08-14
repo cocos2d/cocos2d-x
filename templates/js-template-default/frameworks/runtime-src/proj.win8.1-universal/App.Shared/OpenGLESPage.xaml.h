@@ -26,7 +26,7 @@
 
 #include "Cocos2dRenderer.h"
 
-namespace cocos2d
+namespace HelloCpp
 {
     public ref class OpenGLESPage sealed
     {
@@ -53,7 +53,7 @@ namespace cocos2d
         void StopRenderLoop();
 
         OpenGLES* mOpenGLES;
-        std::shared_ptr<cocos2d::Cocos2dRenderer> mRenderer;
+        std::shared_ptr<HelloCpp::Cocos2dRenderer> mRenderer;
 
         Windows::Foundation::Size mSwapChainPanelSize;
         Concurrency::critical_section mSwapChainPanelSizeCriticalSection;
