@@ -424,7 +424,6 @@ var RenderTextureZbuffer = RenderTextureBaseLayer.extend({
 var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
     _spriteDraw : null,
     _rend : null,
-    _listener : null,
 
     ctor:function () {
         this._super();
@@ -447,26 +446,6 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
         menu.x = winSize.width - 90;
         menu.y = winSize.height - 100;
 
-        var sprite = this._spriteDraw;
-        var layer = this;
-
-        this._listener = cc.EventListener.create({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches: true,
-            onTouchBegan: function (touch, event) {
-                var locationInNode = sprite.convertToNodeSpace(touch.getLocation());
-                var s = sprite.getContentSize();
-                var rect = cc.rect(0, 0, winSize.width, winSize.height);
-
-                if (cc.rectContainsPoint(rect, locationInNode)) {
-                    layer.releaseMask();
-                    return true;
-                }
-                return false;
-            }
-        });
-        this.setUserObject(this._listener);
-
         this.addChild(menu);
         this.addChild(this._spriteDraw);
     },
@@ -476,7 +455,7 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
         gl.stencilFunc(gl.NOTEQUAL, 1, 0xFF);
         gl.stencilOp(gl.KEEP, gl.KEEP, gl.KEEP);
         gl.disable(gl.STENCIL_TEST);
-        cc.eventManager.removeListener(this._listener);
+        this.onRestartCallback();
     },
 
     maskTest: function (sender) {
@@ -484,22 +463,22 @@ var RenderTextureTestDepthStencil = RenderTextureBaseLayer.extend({
 
         gl.clear(gl.STENCIL_BUFFER_BIT);
         this._rend.beginWithClear(0, 0, 0, 0, 0, 0);
-        gl.stencilMask(0xFF);
 
+        gl.stencilMask(0xFF);
+        cc.eventManager.removeListeners(cc.EventListener.TOUCH_ONE_BY_ONE);
         gl.stencilFunc(gl.NEVER, 1, 0xFF);
         gl.stencilOp(gl.REPLACE, gl.REPLACE, gl.REPLACE);
         gl.enable(gl.STENCIL_TEST);
 
         this._rend.end();
-
-        cc.eventManager.addListener(this._listener, this._spriteDraw);
+        this.schedule(this.releaseMask, 0.5);
     },
 
     title:function () {
         return "Testing depthStencil attachment";
     },
     subtitle:function () {
-        return "Click to be masked and Touch anywhere to back";
+        return "Click to be masked and turn black\n Come back after 0.5s";
     }
 });
 
