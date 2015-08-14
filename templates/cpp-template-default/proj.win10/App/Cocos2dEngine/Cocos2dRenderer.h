@@ -24,7 +24,7 @@
 
 class AppDelegate;
 
-namespace cocos2d
+namespace HelloCpp
 {
     class Cocos2dRenderer
     {
@@ -34,8 +34,8 @@ namespace cocos2d
             Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
         ~Cocos2dRenderer();
         void Draw(GLsizei width, GLsizei height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
-		void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-		void QueueKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+		void QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
+		void QueueKeyboardEvent(cocos2d::WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
 		void QueueBackButtonEvent();
         void Pause();
         void Resume();
