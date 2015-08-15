@@ -2696,7 +2696,7 @@ _p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
 cc._NodeGrid = cc.NodeGrid;
 cc.NodeGrid = function(rect){
     if (!(this instanceof cc.NodeGrid)){
-        cc.error("NodeGrid Constructor can not called as a function, Please use new");
+        cc.error("NodeGrid's constructor can not be called as a function, please use 'new cc.NodeGrid()'");
         return;
     }
 
