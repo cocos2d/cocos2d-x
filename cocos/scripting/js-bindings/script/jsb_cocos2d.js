@@ -2693,6 +2693,30 @@ _p.unscheduleUpdateForTarget = _p.unscheduleUpdate;
 _p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
 
 
+cc._NodeGrid = cc.NodeGrid;
+cc.NodeGrid = function(rect){
+    if (!(this instanceof cc.NodeGrid)){
+        cc.error("NodeGrid's constructor can not be called as a function, please use 'new cc.NodeGrid()'");
+        return;
+    }
+
+    if (rect) {
+        return cc._NodeGrid.create(rect);
+    }
+    else {
+        return cc._NodeGrid.create();
+    }
+}
+
+cc.NodeGrid.create = function(rect){
+    if (rect) {
+        return cc._NodeGrid.create(rect);
+    }
+    else {
+        return cc._NodeGrid.create();
+    }
+}
+
 //
 // cc.BlendFunc
 //
