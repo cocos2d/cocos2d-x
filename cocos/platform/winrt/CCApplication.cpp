@@ -116,7 +116,7 @@ const char * Application::getCurrentLanguageCode()
         result = GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &numLanguages, pwszLanguagesBuffer, &cchLanguagesBuffer);
         if (result) {
 
-            code = CCUnicodeToUtf8(pwszLanguagesBuffer);
+            code = StringWideCharToUtf8(pwszLanguagesBuffer);
         }
 
         if (pwszLanguagesBuffer)

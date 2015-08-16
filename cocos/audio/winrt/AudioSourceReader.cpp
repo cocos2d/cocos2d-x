@@ -97,7 +97,8 @@ bool WAVReader::initialize(const std::string& filePath)
         flushChunks();
 
         _streamer = ref new MediaStreamer;
-        _streamer->Initialize(std::wstring(_filePath.begin(), _filePath.end()).c_str(), true);
+
+        _streamer->Initialize(StringUtf8ToWideChar(_filePath).c_str(), true);
         _wfx = _streamer->GetOutputWaveFormatEx();
         UINT32 dataSize = _streamer->GetMaxStreamLengthInBytes();
 
@@ -204,7 +205,7 @@ bool MP3Reader::initialize(const std::string& filePath)
         ComPtr<IMFSourceReader> pReader;
         ComPtr<IMFMediaType> ppDecomprsdAudioType;
 
-        if (FAILED(hr = MFCreateSourceReaderFromURL(std::wstring(_filePath.begin(), _filePath.end()).c_str(), NULL, &pReader))) {
+        if (FAILED(hr = MFCreateSourceReaderFromURL(StringUtf8ToWideChar(_filePath).c_str(), NULL, &pReader))) {
             break;
         }
         
@@ -483,7 +484,7 @@ void MP3Reader::readFromMappedWavFile(BYTE *data, size_t offset, int size, UINT 
     } while (false);
 }
 
-Wrappers::FileHandle MP3Reader::openFile(const std::string& path, bool append)
+Wrappers::FileHandle MP3Reader::openFile(const std::string& filePath, bool append)
 {
     CREATEFILE2_EXTENDED_PARAMETERS extParams = { 0 };
     extParams.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
@@ -495,7 +496,7 @@ Wrappers::FileHandle MP3Reader::openFile(const std::string& path, bool append)
 
     DWORD access = append ? GENERIC_WRITE : GENERIC_READ;
     DWORD creation = append ? OPEN_ALWAYS : OPEN_EXISTING;
-    return Microsoft::WRL::Wrappers::FileHandle(CreateFile2(std::wstring(path.begin(), path.end()).c_str(), access, FILE_SHARE_READ, creation, &extParams));
+    return Microsoft::WRL::Wrappers::FileHandle(CreateFile2(StringUtf8ToWideChar(filePath).c_str(), access, FILE_SHARE_READ, creation, &extParams));
 }
 
 
