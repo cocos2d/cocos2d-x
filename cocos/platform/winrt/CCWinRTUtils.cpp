@@ -47,6 +47,42 @@ using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Networking::Connectivity;
 
+
+CC_DEPRECATED_ATTRIBUTE std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len /*= -1*/)
+{
+    if (len == -1)
+    {
+        return StringUtf8ToWideChar(pszUtf8Str);
+    }
+    else
+    {
+        std::wstring ret;
+        do
+        {
+            if (!pszUtf8Str || !len) break;
+
+            // get UTF16 string length
+            int wLen = MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, 0, 0);
+            if (0 == wLen || 0xFFFD == wLen) break;
+
+            // convert string  
+            wchar_t * pwszStr = new wchar_t[wLen + 1];
+            if (!pwszStr) break;
+            pwszStr[wLen] = 0;
+            MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, wLen + 1);
+            ret = pwszStr;
+            CC_SAFE_DELETE_ARRAY(pwszStr);
+        } while (0);
+        return ret;
+    }
+}
+
+CC_DEPRECATED_ATTRIBUTE std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr)
+{
+    return StringWideCharToUtf8(pwszStr);
+}
+
+
 std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
 {
     std::wstring ret;
