@@ -135,7 +135,7 @@ namespace cocostudio
             {
                 int flag = atoi(value.c_str());
                 if (flag != 0)
-                    cameraFlag = atoi(value.c_str());
+                    cameraFlag = flag;
             }
             else if (attriname == "SkyBoxEnabled")
             {
