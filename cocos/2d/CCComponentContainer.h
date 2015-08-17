@@ -49,6 +49,22 @@ public:
      * @lua NA
      */
     virtual ~ComponentContainer(void);
+    
+    template<typename T>
+    T* getComponent() const
+    {
+        if (_components)
+        {
+            for (const auto &iter : *_components)
+            {
+                if (dynamic_cast<T*>(iter.second) != nullptr)
+                    return static_cast<T*>(iter.second);
+            }
+        }
+        
+        return nullptr;
+    }
+    
 	/**
      * @js getComponent
      */

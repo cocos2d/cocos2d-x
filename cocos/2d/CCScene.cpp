@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
-#include "physics/CCPhysicsWorld.h"
+#include "physics/CCPhysicsManager.h"
 #endif
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -50,9 +50,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 Scene::Scene()
-#if CC_USE_PHYSICS
-: _physicsWorld(nullptr)
-#endif
 {
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     _physics3DWorld = nullptr;
@@ -73,13 +70,15 @@ Scene::Scene()
     
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
+    
+#if CC_USE_PHYSICS
+    _physicsManager = new (std::nothrow) PhysicsManager(this);
+    _physicsWorld = _physicsManager->getPhysicsWorld();
+#endif
 }
 
 Scene::~Scene()
 {
-#if CC_USE_PHYSICS
-    CC_SAFE_DELETE(_physicsWorld);
-#endif
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     CC_SAFE_RELEASE(_physics3DWorld);
     CC_SAFE_RELEASE(_physics3dDebugCamera);
@@ -89,6 +88,10 @@ Scene::~Scene()
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
+    
+#if CC_USE_PHYSICS
+    delete _physicsManager;
+#endif
 }
 
 #if CC_USE_NAVMESH
@@ -258,21 +261,6 @@ void Scene::setNavMeshDebugCamera(Camera *camera)
 #endif
 
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
-void Scene::addChild(Node* child, int zOrder, int tag)
-{
-    Node::addChild(child, zOrder, tag);
-#if CC_USE_PHYSICS
-    addChildToPhysicsWorld(child);
-#endif
-}
-
-void Scene::addChild(Node* child, int zOrder, const std::string &name)
-{
-    Node::addChild(child, zOrder, name);
-#if CC_USE_PHYSICS
-    addChildToPhysicsWorld(child);
-#endif
-}
 
 Scene* Scene::createWithPhysics()
 {
@@ -298,9 +286,6 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF( ! (director = Director::getInstance()) );
         
         this->setContentSize(director->getWinSize());
-#if CC_USE_PHYSICS
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
-#endif
         
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         Physics3DWorldDes info;
@@ -314,43 +299,15 @@ bool Scene::initWithPhysics()
     return ret;
 }
 
-void Scene::addChildToPhysicsWorld(Node* child)
-{
-#if CC_USE_PHYSICS
-    if (_physicsWorld)
-    {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            node->_physicsWorld = _physicsWorld;
-
-            if (node->getPhysicsBody())
-            {
-                _physicsWorld->addBody(node->getPhysicsBody());
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
-    }
-#endif
-}
-
 #endif
 
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
 void Scene::stepPhysicsAndNavigation(float deltaTime)
 {
 #if CC_USE_PHYSICS
-    if (_physicsWorld && _physicsWorld->isAutoStep())
-    {
-        _physicsWorld->update(deltaTime, false);
-    }
+    _physicsManager->update(deltaTime);
 #endif
+    
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld)
     {
