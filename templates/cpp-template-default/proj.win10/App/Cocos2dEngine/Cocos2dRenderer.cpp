@@ -33,8 +33,8 @@ using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Graphics::Display;
 
-USING_NS_CC;
-
+using namespace HelloCpp;
+using namespace cocos2d;
 
 Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, DisplayOrientations orientation, CoreDispatcher^ dispatcher, Panel^ panel)
     : m_app(nullptr)

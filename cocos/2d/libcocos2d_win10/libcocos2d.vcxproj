@@ -1399,9 +1399,6 @@
     <None Include="..\cocos2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
       <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
     </ProjectReference>
@@ -1427,6 +1424,8 @@
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
     <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

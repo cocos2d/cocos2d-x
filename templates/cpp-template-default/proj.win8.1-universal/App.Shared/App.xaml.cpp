@@ -16,6 +16,7 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace cocos2d;
+using namespace HelloCpp;
 
 App::App()
 {

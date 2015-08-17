@@ -4,7 +4,7 @@
 #include "OpenGLES.h"
 #include "openglespage.xaml.h"
 
-namespace cocos2d
+namespace HelloCpp
 {
     ref class App sealed
     {
