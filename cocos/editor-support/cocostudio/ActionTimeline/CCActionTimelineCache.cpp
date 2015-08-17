@@ -58,6 +58,8 @@ static const char* Property_Alpha           = "Alpha";
 static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
+static const char* Property_BlendValue      = "BlendFunc";
+
 
 static const char* ACTION           = "action";
 static const char* DURATION         = "duration";
@@ -571,7 +573,12 @@ Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::Ti
                 auto innerActionFrame = frameFlatbuf->innerActionFrame();
                 frame = loadInnerActionFrameWithFlatBuffers(innerActionFrame);
             }
-            
+            else if (property == Property_BlendValue)
+            {
+                auto blendFrame = frameFlatbuf->blendFrame();
+                frame = loadBlendFrameWithFlatBuffers(blendFrame);
+            }
+
             if (!frame)
             {
                 CCLOG("frame is invalid.");
@@ -882,6 +889,35 @@ Frame* ActionTimelineCache::loadInnerActionFrameWithFlatBuffers(const flatbuffer
     return frame;
 }
     
+Frame* ActionTimelineCache::loadBlendFrameWithFlatBuffers(const flatbuffers::BlendFrame* flatbuffers)
+{
+    BlendFuncFrame* frame = BlendFuncFrame::create();
+    cocos2d::BlendFunc blend;
+    blend.src = GL_ONE;
+    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
+    if (nullptr != flatbuffers->blendFunc())
+    {
+        blend.src = flatbuffers->blendFunc()->src();
+        blend.dst = flatbuffers->blendFunc()->dst();
+    }
+    frame->setBlendFunc(blend);
+
+    int frameIndex = flatbuffers->frameIndex();
+    frame->setFrameIndex(frameIndex);
+
+    bool tween = flatbuffers->tween() != 0;
+    frame->setTween(tween);
+
+    // easing data won't use in blend frame
+    //auto easingData = flatbuffers->easingData();
+    //if (easingData)
+    //{
+    //    loadEasingDataWithFlatBuffers(frame, easingData);
+    //}
+
+    return frame;
+}
+
 void ActionTimelineCache::loadEasingDataWithFlatBuffers(cocostudio::timeline::Frame *frame,
                                                         const flatbuffers::EasingData *flatbuffers)
 {
