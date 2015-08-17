@@ -415,23 +415,25 @@ namespace cocostudio
         int cameraFlag = options->cameraFlag();
         camera->setCameraFlag((CameraFlag)cameraFlag);
 
+        auto node3DReader = Node3DReader::getInstance();
+        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
+
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
         {
-            auto leftFileData = options->leftFileData()->path()->c_str();
-            auto rightFileData = options->rightFileData()->path()->c_str();
-            auto upFileData = options->upFileData()->path()->c_str();
-            auto downFileData = options->downFileData()->path()->c_str();
-            auto forwardFileData = options->forwardFileData()->path()->c_str();
-            auto backFileData = options->backFileData()->path()->c_str();
+            std::string leftFileData = options->leftFileData()->path()->c_str();
+            std::string rightFileData = options->rightFileData()->path()->c_str();
+            std::string upFileData = options->upFileData()->path()->c_str();
+            std::string downFileData = options->downFileData()->path()->c_str();
+            std::string forwardFileData = options->forwardFileData()->path()->c_str();
+            std::string backFileData = options->backFileData()->path()->c_str();
 
+            if (leftFileData.empty() || rightFileData.empty() || upFileData.empty() || downFileData.empty() || forwardFileData.empty() || backFileData.empty())
+                return;
             Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
             childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox,0,"_innerSkyBox");
+            node->addChild(childBox, 0, "_innerSkyBox");
         }
-
-        auto node3DReader = Node3DReader::getInstance();
-        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
     }
     
     Node* UserCameraReader::createNodeWithFlatBuffers(const flatbuffers::Table *userCameraDOptions)
