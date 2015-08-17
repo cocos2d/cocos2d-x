@@ -319,7 +319,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
 }
 
 // Process Response
-static void processResponse(HttpResponse* response, char* errorBuffer)
+void HttpClient::processResponse(HttpResponse* response, char* errorBuffer)
 {
     auto request = response->getHttpRequest();
     long responseCode = -1;
@@ -373,6 +373,18 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
         response->setSucceed(false);
         response->setErrorBuffer(errorBuffer);
     }
+}
+
+void HttpClient::setTimeoutForConnect(int value)
+{
+    std::lock_guard<std::mutex> lock(_timeoutForConnectMutex);
+    _timeoutForConnect = value;
+}
+
+int HttpClient::getTimeoutForConnect()
+{
+    std::lock_guard<std::mutex> lock(_timeoutForConnectMutex);
+    return _timeoutForConnect;
 }
 
 // HttpClient implementation
