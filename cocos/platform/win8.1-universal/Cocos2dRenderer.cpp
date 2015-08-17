@@ -151,8 +151,5 @@ void Cocos2dRenderer::QueueBackButtonEvent()
 
 void Cocos2dRenderer::QueueKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args)
 {
-	GLViewImpl::sharedOpenGLView()->QueueWinRTKeyboardEvent(type, args);
+    GLViewImpl::sharedOpenGLView()->QueueWinRTKeyboardEvent(type, args);
 }
-
-
-

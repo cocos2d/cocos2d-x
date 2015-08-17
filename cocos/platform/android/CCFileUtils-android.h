@@ -56,7 +56,7 @@ public:
     virtual ~FileUtilsAndroid();
 
     static void setassetmanager(AAssetManager* a);
-	static AAssetManager* getAssetManager() { return assetmanager; }
+    static AAssetManager* getAssetManager() { return assetmanager; }
 
     /* override funtions */
     bool init();

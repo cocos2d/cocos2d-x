@@ -131,7 +131,7 @@ THE SOFTWARE.
 // WinRT (Windows 8.1 Store/Phone App)
 #if defined(WINRT)
     #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM			CC_PLATFORM_WINRT
+    #define CC_TARGET_PLATFORM          CC_PLATFORM_WINRT
 #endif
 
 //////////////////////////////////////////////////////////////////////////
