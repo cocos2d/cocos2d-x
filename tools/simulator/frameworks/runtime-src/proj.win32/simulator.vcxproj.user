@@ -8,8 +8,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
-    <LocalDebuggerCommand>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>-entry "C:\\Users\\Liam\\Documents\\Cocos\\CocosProjects\\CocosProject3\\cocosstudio\\Scene3D.csd" -workdir "C:\\Users\\Liam\\Documents\\Cocos\\CocosProjects\\CocosProject3\\cocosstudio" -resolution 960x640 m-position 480,211 -search-path "E:\\GitHub\\cocostudio\\CocoStudioMono\\Debug.Win32\\EditorDefaultRes" -scale 1 -console disable</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>
+    </LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
