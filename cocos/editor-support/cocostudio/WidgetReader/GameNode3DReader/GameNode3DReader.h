@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__Node3DReader__
-#define __cocos2d_libs__Node3DReader__
+#ifndef __cocos2d_libs__GameNode3DReader__
+#define __cocos2d_libs__GameNode3DReader__
 
 #include "cocos2d.h"
 #include "cocostudio/CocosStudioExport.h"
