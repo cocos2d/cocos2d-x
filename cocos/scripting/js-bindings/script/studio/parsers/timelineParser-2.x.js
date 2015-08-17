@@ -41,10 +41,11 @@
         },
 
         getNodeJson: function(json){
-            var result = json["Content"]["Content"]["ObjectData"];
-            if(undefined === result)
-                result = json["Content"]["ObjectData"];
-            return result;
+            var content = json["Content"];
+            if(content["ObjectData"])
+                return content["ObjectData"];
+
+            return content["Content"]["ObjectData"];
         },
 
         getClass: function(json){

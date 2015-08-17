@@ -260,6 +260,15 @@
 
                 return frame;
             }
+        },
+        {
+            name: "BlendFunc",
+            handle: function(options){
+                var frame = new ccs.BlendFuncFrame();
+                var blendFunc = options["BlendFunc"];
+                if(blendFunc)
+                    frame.setBlendFunc(new cc.BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
+            }
         }
     ];
 
