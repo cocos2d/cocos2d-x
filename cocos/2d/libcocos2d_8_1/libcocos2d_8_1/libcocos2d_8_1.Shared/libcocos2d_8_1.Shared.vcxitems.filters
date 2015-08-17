@@ -1864,6 +1864,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCIDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.h">
+      <Filter>physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp">
@@ -3557,6 +3563,12 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.cpp">
       <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.cpp">
+      <Filter>physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
