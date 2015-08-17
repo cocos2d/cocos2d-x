@@ -455,6 +455,8 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
                 continue;
             }
             sprite->setTexture(_texFile);
+            sprite->setBlendFunc(particleSystem->getBlendFunc());
+            sprite->setCullFaceEnabled(false);
             sprite->retain();
             _spriteList.push_back(sprite);
         }
@@ -489,9 +491,11 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
         mat.m[12] = particle->position.x;
         mat.m[13] = particle->position.y;
         mat.m[14] = particle->position.z;
+        if (_spriteList[index]->getCameraMask() != particleSystem->getCameraMask())
+            _spriteList[index]->setCameraMask(particleSystem->getCameraMask());
         _spriteList[index]->setColor(Color3B(particle->color.x * 255, particle->color.y * 255, particle->color.z * 255));
         _spriteList[index]->setOpacity(particle->color.w * 255);
-        _spriteList[index]->draw(renderer, mat, 0);
+        _spriteList[index]->visit(renderer, mat, Node::FLAGS_DIRTY_MASK);
         ++index;
     }
 }
