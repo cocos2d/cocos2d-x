@@ -908,11 +908,12 @@ Frame* ActionTimelineCache::loadBlendFrameWithFlatBuffers(const flatbuffers::Ble
     bool tween = flatbuffers->tween() != 0;
     frame->setTween(tween);
 
-    auto easingData = flatbuffers->easingData();
-    if (easingData)
-    {
-        loadEasingDataWithFlatBuffers(frame, easingData);
-    }
+    // easing data won't use in blend frame
+    //auto easingData = flatbuffers->easingData();
+    //if (easingData)
+    //{
+    //    loadEasingDataWithFlatBuffers(frame, easingData);
+    //}
 
     return frame;
 }
