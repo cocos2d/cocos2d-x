@@ -144,6 +144,11 @@ public:
 
         _textureAtlas->updateQuad(&_quad, _atlasIndex);
     }
+
+    //LabelLetter doesn't need to draw directly.
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    {
+    }
 };
 
 Label* Label::create()
