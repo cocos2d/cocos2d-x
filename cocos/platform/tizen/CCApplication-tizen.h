@@ -32,7 +32,13 @@
 #include "platform/CCApplicationProtocol.h"
 #include <string>
 
-struct _Evas_Object;
+#include <Elementary.h>
+#include <Elementary_GL_Helpers.h>
+#include <efl_extension.h>
+#include <Evas_GL.h>
+
+#include <app.h>
+
 struct _Evas_GL;
 struct _Evas_GL_Context;
 struct _Evas_GL_Surface;
@@ -107,17 +113,19 @@ public:
   virtual Platform getTargetPlatform();
   
   void setDeviceOrientation(int orientation);
+  void setMainArgs(int argc, char **argv);
 
 public:
-    _Evas_Object * _win;
-    _Evas_Object * _conform;
+    Evas_Object * _win;
+    Evas_Object * _conform;
 
     _Evas_GL * _evasGL;
     _Evas_GL_Context * _ctx;
     _Evas_GL_Surface * _sfc;
 
     int _orientation;
-
+    int _argc;
+    char **_argv;
 protected:
     long _animationInterval;  //micro second
     std::string _resourceRootPath;

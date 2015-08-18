@@ -381,7 +381,10 @@ void Director::setOpenGLView(GLView *openGLView)
         if(_openGLView)
             _openGLView->release();
         _openGLView = openGLView;
-        _openGLView->retain();
+        if (_openGLView)
+        {
+        	_openGLView->retain();
+        }
 
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();

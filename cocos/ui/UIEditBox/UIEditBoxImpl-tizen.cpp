@@ -359,8 +359,9 @@ void EditBoxImplTizen::openKeyboard()
 	sprintf(richText,"<color=#ffffff>%s</>", text);
 	elm_entry_entry_set(title, richText);
 	elm_entry_editable_set(title, EINA_FALSE);
-	elm_entry_drag_disabled_set(title, EINA_TRUE);
-	elm_entry_drop_disabled_set(title, EINA_TRUE);
+	//tizen 2.4 has deprecated these two apis.
+	//elm_entry_drag_disabled_set(title, EINA_TRUE);
+	//elm_entry_drop_disabled_set(title, EINA_TRUE);
 	evas_object_show(title);
 	free(richText);
 

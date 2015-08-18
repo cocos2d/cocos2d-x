@@ -1,0 +1,32 @@
+system example_004
+{
+    category                                    Examples_1_10
+    technique 
+    {
+        visual_particle_quota                   100
+        material                                ParticleUniverse/Star
+        default_particle_width                  0.6
+        default_particle_height                 0.6
+        renderer                                Billboard
+        {
+        }
+        emitter                                 SphereSurface 
+        {
+            emission_rate                       60
+            time_to_live                        1.8
+            velocity                            0
+            direction                           0 0 0
+            radius                              3
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 0 1
+            time_colour                         1    1 0 0 0
+        }
+        affector                                Gravity 
+        {
+            mass_affector                       0.03
+            gravity                             150
+        }
+    }
+}
