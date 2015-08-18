@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{15247c71-5289-4913-b88f-e253cc353720}</ProjectGuid>
-    <RootNamespace>cocos2d</RootNamespace>
+    <RootNamespace>CocosAppWinRT</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
