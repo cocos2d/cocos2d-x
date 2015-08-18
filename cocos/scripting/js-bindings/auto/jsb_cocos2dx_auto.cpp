@@ -66358,8 +66358,7 @@ bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp)
         cocos2d::Vec2 arg0;
         cocos2d::TMXTileFlags_* arg1;
         ok &= jsval_to_vector2(cx, args.get(0), &arg0);
-        #pragma warning NO CONVERSION TO NATIVE FOR TMXTileFlags_*
-		ok = false;
+        uint32_t tempData;arg1=(cocos2d::TMXTileFlags_*)&tempData;ok &= jsval_to_uint32(cx, args.get(1), (uint32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TMXLayer_getTileGIDAt : Error processing arguments");
         unsigned int ret = cobj->getTileGIDAt(arg0, arg1);
         jsval jsret = JSVAL_NULL;
@@ -66652,7 +66651,7 @@ bool js_cocos2dx_TMXLayer_setTileGID(JSContext *cx, uint32_t argc, jsval *vp)
             ok &= jsval_to_vector2(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
             cocos2d::TMXTileFlags_ arg2;
-            ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+            ok &= jsval_to_uint32(cx, args.get(2), (uint32_t *)&arg2);
             if (!ok) { ok = true; break; }
             cobj->setTileGID(arg0, arg1, arg2);
             args.rval().setUndefined();
