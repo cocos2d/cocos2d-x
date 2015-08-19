@@ -32,9 +32,7 @@ using namespace Platform;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::Graphics::Display;
-
-USING_NS_CC;
-
+using namespace cocos2d;
 
 Cocos2dRenderer::Cocos2dRenderer(int width, int height, float dpi, DisplayOrientations orientation, CoreDispatcher^ dispatcher, Panel^ panel)
     : m_app(nullptr)
@@ -151,5 +149,8 @@ void Cocos2dRenderer::QueueBackButtonEvent()
 
 void Cocos2dRenderer::QueueKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args)
 {
-    GLViewImpl::sharedOpenGLView()->QueueWinRTKeyboardEvent(type, args);
+	GLViewImpl::sharedOpenGLView()->QueueWinRTKeyboardEvent(type, args);
 }
+
+
+

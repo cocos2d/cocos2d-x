@@ -16,11 +16,13 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 using namespace cocos2d;
+using namespace CocosAppWinRT;
 
 App::App()
 {
     InitializeComponent();
     Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
+    Resuming += ref new EventHandler<Object^>(this, &App::OnResuming);
 }
 
 /// <summary>
@@ -124,5 +126,18 @@ void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
     (void) sender;	// Unused parameter
     (void) e;		// Unused parameter
 
-    // TODO: Save application state and stop any background activity
+     mPage->SetVisibility(false);
+}
+
+/// <summary>
+/// Invoked when application execution is being resumed.
+/// </summary>
+/// <param name="sender">The source of the resume request.</param>
+/// <param name="args">Details about the resume request.</param>
+void App::OnResuming(Object ^sender, Object ^args)
+{
+    (void)sender; // Unused parameter
+    (void)args; // Unused parameter
+
+    mPage->SetVisibility(true);
 }

@@ -19,6 +19,7 @@
 #include "App.xaml.h"
 #include "OpenGLESPage.xaml.h"
 
+using namespace CocosAppWinRT;
 using namespace cocos2d;
 using namespace Platform;
 using namespace Concurrency;
@@ -207,9 +208,9 @@ void OpenGLESPage::OnOrientationChanged(DisplayInformation^ sender, Object^ args
     mOrientation = sender->CurrentOrientation;
 }
 
-void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
+void OpenGLESPage::SetVisibility(bool isVisible)
 {
-    if (args->Visible && mRenderSurface != EGL_NO_SURFACE)
+    if (isVisible && mRenderSurface != EGL_NO_SURFACE)
     {
         std::unique_lock<std::mutex> locker(mSleepMutex);
         mVisible = true;
@@ -218,6 +219,18 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
     else
     {
         mVisible = false;
+    }
+}
+
+void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
+{
+    if (args->Visible && mRenderSurface != EGL_NO_SURFACE)
+    {
+        SetVisibility(true);
+    }
+    else
+    {
+        SetVisibility(false);
     }
 }
 
