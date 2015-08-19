@@ -187,8 +187,13 @@ bool jsval_to_int( JSContext *cx, JS::HandleValue vp, int *ret )
     // Since this is called to cast uint64 to uint32,
     // it is needed to initialize the value to 0 first
 #ifdef __LP64__
-    long *tmp = (long*)ret;
-    *tmp = 0;
+    // only unsigned int size is 8Bit, same with the long, it's need to reset the data.
+    // the ret will convert to int32_t
+    if (sizeof(int) == 8)
+    {
+        long *tmp = (long*)ret;
+        *tmp = 0;
+    }
 #endif
     return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
@@ -243,8 +248,13 @@ bool jsval_to_uint( JSContext *cx, JS::HandleValue vp, unsigned int *ret )
     // Since this is called to cast uint64 to uint32,
     // it is needed to initialize the value to 0 first
 #ifdef __LP64__
-    long *tmp = (long*)ret;
-    *tmp = 0;
+    // only unsigned int size is 8Bit, same with the long, it's need to reset the data.
+    // the ret will convert to int32_t
+    if (sizeof(unsigned int)==8)
+    {
+        long *tmp = (long*)ret;
+        *tmp = 0;
+    }
 #endif
     return jsval_to_int32(cx, vp, (int32_t*)ret);
 }
