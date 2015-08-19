@@ -512,6 +512,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
@@ -1118,6 +1119,7 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
@@ -1399,9 +1401,6 @@
     <None Include="..\cocos2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
       <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
     </ProjectReference>
@@ -1425,8 +1424,8 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
-    <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

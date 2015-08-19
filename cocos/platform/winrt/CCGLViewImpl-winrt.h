@@ -161,10 +161,6 @@ private:
 	bool m_initialized;
     bool m_appShouldExit;
 
-    Cocos2dEventDelegate^ m_delegate;
-    Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;
-    Cocos2dEditBoxDelegate^ m_editBoxDelegate;
-
     Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;

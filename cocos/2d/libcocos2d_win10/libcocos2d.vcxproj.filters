@@ -260,6 +260,9 @@
     <Filter Include="cocostudio\TimelineAction\Skeleton">
       <UniqueIdentifier>{438e0063-bdbc-4252-a0f5-f55f7d54ed6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
+      <UniqueIdentifier>{0760e708-a93e-41f5-abaf-a7e422882920}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cocos2d.cpp" />
@@ -1932,6 +1935,9 @@
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.cpp">
       <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3779,6 +3785,9 @@
     <ClInclude Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.h">
       <Filter>cocostudio\TimelineAction\Skeleton</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\base\CCController-iOS.mm">
@@ -3935,10 +3944,5 @@
     <None Include="..\..\renderer\ccShader_UI_Gray.frag">
       <Filter>renderer</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt">
-      <Filter>renderer</Filter>
-    </Text>
   </ItemGroup>
 </Project>
