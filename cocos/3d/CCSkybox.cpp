@@ -148,6 +148,8 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skybox::onDraw, this, transform, flags);
+    _customCommand.setTransparent(false);
+    _customCommand.set3D(true);
     renderer->addCommand(&_customCommand);
 }
 
