@@ -76,7 +76,7 @@ public:
      * @param depth Depth used to clear depth buffer
      * @return Created brush
      */
-    static CameraBackGroundDepthBrush* createDepthBrush(float depth);
+    static CameraBackGroundDepthBrush* createDepthBrush(float depth = 1.f);
     
     /**
      * Creates a color brush
@@ -153,6 +153,8 @@ protected:
     
     float _depth;
     
+    GLboolean _clearColor;
+    
     V3F_C4B_T2F_Quad _quad;
 };
 
@@ -193,6 +195,7 @@ protected:
 
 class TextureCube;
 class GLProgramState;
+class EventListenerCustom;
 
 /**
  * Skybox brush clear buffer with a skybox
@@ -219,6 +222,9 @@ public:
                                         const std::string& positive_y, const std::string& negative_y,
                                         const std::string& positive_z, const std::string& negative_z);
     
+    /** Creates a Skybox brush with 6 textures.
+     */
+    static CameraBackGroundSkyBoxBrush* create();
     /**
      * Set skybox texutre 
      * @param texture Skybox texture
@@ -239,11 +245,17 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool init() override;
     
+    void initBuffer();
+    
     GLuint      _vao;
     GLuint      _vertexBuffer;
     GLuint      _indexBuffer;
     
     TextureCube*  _texture;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 NS_CC_END

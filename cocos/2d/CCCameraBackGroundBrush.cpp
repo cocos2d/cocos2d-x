@@ -76,6 +76,7 @@ CameraBackGroundSkyBoxBrush* CameraBackGroundBrush::createSkyboxBrush(const std:
 
 CameraBackGroundDepthBrush::CameraBackGroundDepthBrush()
 : _depth(0.f)
+, _clearColor(GL_FALSE)
 {
     
 }
@@ -119,7 +120,7 @@ void CameraBackGroundDepthBrush::drawBackGround(Camera* camera)
     GLint oldDepthFunc;
     GLboolean oldDepthMask;
     {
-        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glColorMask(_clearColor, _clearColor, _clearColor, _clearColor);
         glStencilMask(0);
         
         oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
@@ -204,6 +205,7 @@ CameraBackGroundColorBrush* CameraBackGroundColorBrush::create(const Color4F& co
 {
     auto ret = new (std::nothrow) CameraBackGroundColorBrush();
     ret->init();
+    ret->_clearColor = GL_TRUE;
     ret->setColor(color);
     ret->setDepth(depth);
     
@@ -218,13 +220,20 @@ CameraBackGroundSkyBoxBrush::CameraBackGroundSkyBoxBrush()
 , _indexBuffer(0)
 , _texture(nullptr)
 {
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                initBuffer();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 CameraBackGroundSkyBoxBrush::~CameraBackGroundSkyBoxBrush()
 {
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_glProgramState);
     
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_indexBuffer);
@@ -240,18 +249,33 @@ CameraBackGroundSkyBoxBrush::~CameraBackGroundSkyBoxBrush()
     }
 }
 
-CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create(const std::string& positive_x, const std::string& negative_x,
-                                    const std::string& positive_y, const std::string& negative_y,
-                                    const std::string& positive_z, const std::string& negative_z)
+CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create(const std::string& positive_x, const std::string& negative_x, const std::string& positive_y, const std::string& negative_y, const std::string& positive_z, const std::string& negative_z)
 {
     auto texture = TextureCube::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
     if (texture == nullptr)
         return nullptr;
     
+    Texture2D::TexParams tRepeatParams;
+    tRepeatParams.magFilter = GL_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+    texture->setTexParameters(tRepeatParams);
+    
     auto ret = new(std::nothrow)CameraBackGroundSkyBoxBrush();
     
     ret->init();
     ret->setTexture(texture);
+    
+    ret->autorelease();
+    return ret;
+}
+
+CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create()
+{
+    auto ret = new(std::nothrow)CameraBackGroundSkyBoxBrush();
+    
+    ret->init();
     
     ret->autorelease();
     return ret;
@@ -316,6 +340,26 @@ bool CameraBackGroundSkyBoxBrush::init()
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
     _glProgramState = GLProgramState::create(shader);
     _glProgramState->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+    _glProgramState->retain();
+    
+    initBuffer();
+    
+    return true;
+}
+
+void CameraBackGroundSkyBoxBrush::initBuffer()
+{
+    if (_vertexBuffer)
+        glDeleteBuffers(1, &_vertexBuffer);
+    if (_indexBuffer)
+        glDeleteBuffers(1, &_indexBuffer);
+    
+    if (Configuration::getInstance()->supportsShareableVAO() && _vao)
+    {
+        glDeleteVertexArrays(1, &_vao);
+        GL::bindVAO(0);
+        _vao = 0;
+    }
     
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -354,8 +398,6 @@ bool CameraBackGroundSkyBoxBrush::init()
         
         GL::bindVAO(0);
     }
-    
-    return true;
 }
 
 void CameraBackGroundSkyBoxBrush::setTexture(TextureCube*  texture)
@@ -363,6 +405,7 @@ void CameraBackGroundSkyBoxBrush::setTexture(TextureCube*  texture)
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
     _texture = texture;
+    _glProgramState->setUniformTexture("u_Env", _texture);
 }
 
 NS_CC_END
