@@ -24,13 +24,15 @@
 
 #include "network/CCDownloader.h"
 
-#include <curl/curl.h>
-#include <curl/easy.h>
 #include <cstdio>
 #include <cerrno>
 #include <thread>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#include "network/CCDownloader-apple.h"
+#else
 #include "network/CCDownloaderImpl.h"
+#endif
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "deprecated/CCString.h"
@@ -100,7 +102,7 @@ void Downloader::notifyError(ErrorCode code, const std::string& msg/* ="" */, co
 
 void Downloader::notifyError(const std::string& msg, int curlm_code, const std::string& customId/* = ""*/)
 {
-    notifyError(ErrorCode::CURL_MULTI_ERROR, msg, customId, CURLE_OK, curlm_code);
+    notifyError(ErrorCode::CURL_MULTI_ERROR, msg, customId, 0, curlm_code);
 }
 
 void Downloader::notifyError(const std::string& msg, const std::string& customId, int curle_code)

@@ -96,6 +96,7 @@ namespace network
         virtual int getHeader(const std::string& url, HeaderInfo* headerInfo) = 0;
         virtual std::string getStrError() const = 0;
         virtual void setConnectionTimeout(int timeout) = 0;
+        virtual bool supportsResume(const std::string& url) = 0;
     };
 }
 

@@ -30,7 +30,7 @@
 #include <functional>
 #include <memory>
 
-#include "network/CCDownloaderImpl.h"
+#include "network/CCIDownloaderImpl.h"
 #include "platform/CCFileUtils.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
@@ -151,7 +151,7 @@ private:
     int _connectionTimeout;
     FileUtils* _fileUtils;
     bool _supportResuming;
-    DownloaderImpl* _downloaderImpl;
+    IDownloaderImpl* _downloaderImpl;
 };
 
 } // namespace cocos2d
