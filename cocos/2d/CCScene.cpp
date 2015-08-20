@@ -194,7 +194,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         camera->apply();
         //clear background with max depth
-        camera->clearBackground(1.0);
+        camera->clearBackground();
         //visit the scene
         visit(renderer, transform, 0);
 #if CC_USE_NAVMESH

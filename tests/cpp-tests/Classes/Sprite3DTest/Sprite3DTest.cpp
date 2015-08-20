@@ -25,6 +25,7 @@
 
 #include "Sprite3DTest.h"
 #include "DrawNode3D.h"
+#include "2d/CCCameraBackGroundBrush.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
@@ -61,6 +62,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DClippingTest);
     ADD_TEST_CASE(Sprite3DTestMeshLight);
     ADD_TEST_CASE(Animate3DCallbackTest);
+    ADD_TEST_CASE(CameraBackGroundClearTest);
 };
 
 //------------------------------------------------------------------
@@ -2717,6 +2719,69 @@ std::string Sprite3DTestMeshLight::title() const
 }
 
 std::string Sprite3DTestMeshLight::subtitle() const
+{
+    return "";
+}
+
+CameraBackGroundClearTest::CameraBackGroundClearTest()
+{
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"Clear Mode");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(CameraBackGroundClearTest::switch_CameraClearMode,this) );
+    
+    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+    
+    auto pMenu1 = Menu::create(item1, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+    //setup camera
+    auto s = Director::getInstance()->getWinSize();
+    _camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+    _camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(_camera);
+    
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    addChild(sprite);
+    sprite->setCameraMask(2);
+    
+    _label = Label::createWithTTF(ttfConfig, "Depth Clear Brush");
+    addChild(_label);
+    _label->setPosition(s.width / 2.f , VisibleRect::top().y * 0.8f);
+}
+
+void CameraBackGroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
+{
+    auto type = _camera->getBackGroundBrush()->getBrushType();
+    if (type == CameraBackGroundBrush::BrushType::NONE)
+    {
+        _camera->setBackGroundBrush(CameraBackGroundBrush::createDepthBrush(1.f));
+        _label->setString("Depth Clear Brush");
+    }
+    else if (type == CameraBackGroundBrush::BrushType::DEPTH)
+    {
+        _camera->setBackGroundBrush(CameraBackGroundBrush::createColorBrush(Color4F(1.f, 0.f, 0.f, 1.f), 1.f));
+        _label->setString("Color Clear Brush");
+    }
+    else if (type == CameraBackGroundBrush::BrushType::COLOR)
+    {
+        _camera->setBackGroundBrush(CameraBackGroundBrush::createSkyboxBrush("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg","Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg","Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg"));
+        _label->setString("Skybox Clear Brush");
+    }
+    else if (type == CameraBackGroundBrush::BrushType::SKYBOX)
+    {
+        _camera->setBackGroundBrush(CameraBackGroundBrush::createNoneBrush());
+        _label->setString("None Clear Brush");
+    }
+}
+
+std::string CameraBackGroundClearTest::title() const
+{
+    return "Camera Background Clear Brush";
+}
+std::string CameraBackGroundClearTest::subtitle() const
 {
     return "";
 }
