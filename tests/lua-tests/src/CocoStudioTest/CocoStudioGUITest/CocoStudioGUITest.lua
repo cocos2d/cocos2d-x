@@ -390,6 +390,9 @@ add_new_testcase(function()
             self._uiLayer:addChild(alert)
 
             local radioButtonGroup = ccui.RadioButtonGroup:create()
+            radioButtonGroup:addEventListener(function(radioButton, index, type)
+                    print("RadioButton" .. index .. "Clicked")
+            end)
             self._uiLayer:addChild(radioButtonGroup)
 
             local NUMBER_OF_BUTTONS = 5
@@ -399,7 +402,15 @@ add_new_testcase(function()
                 local radioButton = ccui.RadioButton:create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png")
                 local posX = startPosX + BUTTON_WIDTH * i
                 radioButton:setPosition(cc.p(posX, widgetSize.height / 2.0 + 10))
+                radioButton:setName("button"..i)
                 radioButtonGroup:addRadioButton(radioButton)
+                radioButton:addEventListener(function(radioButton, type)
+                        if type == ccui.RadioButtonEventType.selected then
+                            print("name: = " .. radioButton:getName() .. " selected")
+                        elseif type == ccui.RadioButtonEventType.unselected then
+                            print("name: = " .. radioButton:getName() .. " unselected")
+                        end
+                end)
                 self._uiLayer:addChild(radioButton)
             end
 
