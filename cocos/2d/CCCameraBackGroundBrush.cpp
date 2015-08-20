@@ -35,6 +35,13 @@
 #include "renderer/CCRenderState.h"
 #include "3d/CCTextureCube.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "base/CCEventCustom.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventType.h"
+#include "base/CCEventDispatcher.h"
+#endif
+
 NS_CC_BEGIN
 
 CameraBackGroundBrush::CameraBackGroundBrush()
