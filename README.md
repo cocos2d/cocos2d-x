@@ -104,10 +104,10 @@ Run
 
 * Visual Studio 2013 Update 4 or later is required for Windows 8.1 Universal Apps
 
-* Visual Studio 2015 RC and Windows 10.0 (build 10074 or higher) is required for Windows 10.0 UWP Apps
+* Visual Studio 2015 (Release version) and Windows 10.0 (Release version) are required for Windows 10.0 Universal Windows Platform (UWP) Apps. RC versions of Visual Studio and Window 10 are no longer supported.
 
 Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1).
-Starting with Cocos2d-x v3.6 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
+Starting with Cocos2d-x v3.8 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
 Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0.
 
 See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
@@ -176,14 +176,15 @@ Build Requirements
 * or Windows 7+, VS 2013+
 * Python 2.7.5
 * NDK r10c+ is required to build Android games
-* Windows Phone/Store 8.1 VS 2013 Update 4+
+* Windows Phone/Store 8.1 VS 2013 Update 4+ or VS 2015
+* Windows Phone/Store 10.0 VS 2015
 * JRE or JDK 1.6+ is required for web publishing
 
 Runtime Requirements
 --------------------
   * iOS 5.0+ for iPhone / iPad games
   * Android 2.3+ for Android games
-  * Windows 8.1 for Windows Phone/Store 8.1 games
+  * Windows 8.1 or Windows 10.0 for Windows Phone/Store 8.1 games
   * Windows 10.0 for Windows Phone/Store 10.0  games
   * OS X v10.6+ for Mac games
   * Windows 7+ for Win games
