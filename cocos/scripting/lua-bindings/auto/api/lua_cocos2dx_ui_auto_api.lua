@@ -42,6 +42,16 @@
 
 
 --------------------------------------------------------
+-- the ccui RadioButton
+-- @field [parent=#ccui] RadioButton#RadioButton RadioButton preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RadioButtonGroup
+-- @field [parent=#ccui] RadioButtonGroup#RadioButtonGroup RadioButtonGroup preloaded module
+
+
+--------------------------------------------------------
 -- the ccui ImageView
 -- @field [parent=#ccui] ImageView#ImageView ImageView preloaded module
 
