@@ -97,7 +97,8 @@
     responseHeader = [[httpResponse allHeaderFields] copy];
     downloadSize = [response expectedContentLength];
     responseCode = httpResponse.statusCode;
-    self.statusString = [NSHTTPURLResponse localizedStringForStatusCode:responseCode];
+//    self.statusString = [NSHTTPURLResponse localizedStringForStatusCode:responseCode];
+    self.statusString = @"Unknown";
     if(responseCode == 200)
     {
         statusString = @"OK";
