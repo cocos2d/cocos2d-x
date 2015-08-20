@@ -1931,6 +1931,9 @@
     <ClCompile Include="..\network\CCDownloaderImpl.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CCCameraBackGroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3764,6 +3767,9 @@
     </ClInclude>
     <ClInclude Include="..\network\CCIDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCameraBackGroundBrush.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
