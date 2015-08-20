@@ -433,6 +433,7 @@ void OpenGLESPage::StartRenderLoop()
 
                     if (!mDeviceLost)
                     {
+                        mOpenGLES->MakeCurrent(mRenderSurface);
                         // restart cocos2d-x 
                         mRenderer->DeviceLost();
                     }
