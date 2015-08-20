@@ -235,7 +235,7 @@ namespace cocostudio
             tmx = TMXTiledMap::create(path);
             if (tmx)
             {
-                //先保存资源的尺寸，等编辑器的数据设置完成后，再刷回资源尺寸，防止数据中尺寸和资源部匹配
+                //prevent that editor's data does not match in size and resources
                 Size fileSize = tmx->getContentSize();
                 setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
                 tmx->setContentSize(fileSize);
