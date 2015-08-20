@@ -197,17 +197,17 @@ void Downloader::downloadToBuffer(const std::string& srcUrl, const std::string& 
 
     CC_ASSERT(_downloaderImpl && "Cannot instanciate more than one instance of DownloaderImpl");
 
-    DownloadUnit unit;
-    unit.srcUrl = srcUrl;
-    unit.customId = customId;
-    unit.fp = buffer;
-    unit.downloaded = 0;
-    unit.totalToDownload = 0;
-
     StreamData streamBuffer;
     streamBuffer.buffer = buffer;
     streamBuffer.total = size;
     streamBuffer.offset = 0;
+
+    DownloadUnit unit;
+    unit.srcUrl = srcUrl;
+    unit.customId = customId;
+    unit.fp = &streamBuffer;
+    unit.downloaded = 0;
+    unit.totalToDownload = 0;
 
     int res = _downloaderImpl->performDownload(&unit,
                                                std::bind(&Downloader::bufferWriteFunc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4),
