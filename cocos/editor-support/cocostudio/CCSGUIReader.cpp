@@ -764,7 +764,11 @@ void WidgetPropertiesReader0250::setPropsForButtonFromJsonDictionary(Widget*widg
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        const char * szTemp = DICTOOL->getStringValue_json(options, "fontName");
+        if (szTemp && *szTemp)
+            button->setTitleFontName(szTemp);
+        else
+            button->setTitleFontName(std::string(""));
     }
     setColorPropsForWidgetFromJsonDictionary(widget,options);
 }
@@ -882,7 +886,11 @@ void WidgetPropertiesReader0250::setPropsForLabelFromJsonDictionary(Widget*widge
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        label->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        const char * szTemp = DICTOOL->getStringValue_json(options, "fontName");
+        if (szTemp && *szTemp)
+            label->setFontName(szTemp);
+        else
+            label->setFontName(std::string(""));
     }
     bool aw = DICTOOL->checkObjectExist_json(options, "areaWidth");
     bool ah = DICTOOL->checkObjectExist_json(options, "areaHeight");
@@ -1105,7 +1113,11 @@ void WidgetPropertiesReader0250::setPropsForTextFieldFromJsonDictionary(Widget*w
     bool fn = DICTOOL->checkObjectExist_json(options, "fontName");
     if (fn)
     {
-        textField->setFontName(DICTOOL->getStringValue_json(options, "fontName"));
+        const char * szTemp = DICTOOL->getStringValue_json(options, "fontName");
+        if (szTemp && *szTemp)
+            textField->setFontName(szTemp);
+        else
+            textField->setFontName(std::string(""));
     }
     bool tsw = DICTOOL->checkObjectExist_json(options, "touchSizeWidth");
     bool tsh = DICTOOL->checkObjectExist_json(options, "touchSizeHeight");
