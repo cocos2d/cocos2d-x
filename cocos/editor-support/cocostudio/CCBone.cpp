@@ -257,13 +257,15 @@ void Bone::setBlendFunc(const BlendFunc& blendFunc)
 
 void Bone::updateDisplayedColor(const Color3B &parentColor)
 {
-    _realColor = Color3B(255, 255, 255);
+    // remove comment mark for next line when use in studio
+//    _realColor = Color3B(255, 255, 255);
     Node::updateDisplayedColor(parentColor);
 }
 
 void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
 {
-    _realOpacity = 255;
+    // remove comment mark for next line when use in studio
+//    _realOpacity = 255;
     Node::updateDisplayedOpacity(parentOpacity);
 }
 
