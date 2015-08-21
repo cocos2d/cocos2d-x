@@ -102,7 +102,7 @@ public:
     /**
      * draw the background
      */
-    virtual void drawBackGround(Camera* camera) {}
+    virtual void drawBackground(Camera* camera) {}
     
 CC_CONSTRUCTOR_ACCESS:
     CameraBackGroundBrush();
@@ -136,7 +136,7 @@ public:
     /**
      * Draw background
      */
-    virtual void drawBackGround(Camera* camera) override;
+    virtual void drawBackground(Camera* camera) override;
     
     /**
      * Set depth
@@ -234,7 +234,7 @@ public:
     /**
      * Draw background
      */
-    virtual void drawBackGround(Camera* camera) override;
+    virtual void drawBackground(Camera* camera) override;
     
 CC_CONSTRUCTOR_ACCESS:
     CameraBackGroundSkyBoxBrush();

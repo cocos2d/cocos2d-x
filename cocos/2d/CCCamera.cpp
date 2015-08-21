@@ -406,7 +406,7 @@ void Camera::clearBackground()
 {
     if (_clearBrush)
     {
-        _clearBrush->drawBackGround(this);
+        _clearBrush->drawBackground(this);
     }
 }
 

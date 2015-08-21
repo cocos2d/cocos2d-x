@@ -121,7 +121,7 @@ bool CameraBackGroundDepthBrush::init()
     return true;
 }
 
-void CameraBackGroundDepthBrush::drawBackGround(Camera* camera)
+void CameraBackGroundDepthBrush::drawBackground(Camera* camera)
 {
     GLboolean oldDepthTest;
     GLint oldDepthFunc;
@@ -288,7 +288,7 @@ CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create()
     return ret;
 }
 
-void CameraBackGroundSkyBoxBrush::drawBackGround(Camera* camera)
+void CameraBackGroundSkyBoxBrush::drawBackground(Camera* camera)
 {
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
