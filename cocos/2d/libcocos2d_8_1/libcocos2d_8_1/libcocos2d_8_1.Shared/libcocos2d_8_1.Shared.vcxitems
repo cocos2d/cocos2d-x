@@ -584,6 +584,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackGroundBrush.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCComponent.h" />
@@ -1178,6 +1179,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAtlasNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCAutoPolygon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackGroundBrush.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCClippingRectangleNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCComponent.cpp" />
