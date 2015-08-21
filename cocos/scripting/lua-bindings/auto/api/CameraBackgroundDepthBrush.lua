@@ -37,6 +37,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#CameraBackgroundDepthBrush] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#CameraBackgroundDepthBrush] CameraBackgroundDepthBrush 
 -- @param self
 -- @return CameraBackgroundDepthBrush#CameraBackgroundDepthBrush self (return value: cc.CameraBackgroundDepthBrush)

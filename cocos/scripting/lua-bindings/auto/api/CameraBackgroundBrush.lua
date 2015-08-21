@@ -19,6 +19,12 @@
 -- @return CameraBackgroundBrush#CameraBackgroundBrush self (return value: cc.CameraBackgroundBrush)
         
 --------------------------------
+-- 
+-- @function [parent=#CameraBackgroundBrush] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Creates a Skybox brush with 6 textures.<br>
 -- param positive_x texture for the right side of the texture cube face.<br>
 -- param negative_x texture for the up side of the texture cube face.<br>

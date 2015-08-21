@@ -107,10 +107,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     CameraBackgroundBrush();
     virtual ~CameraBackgroundBrush();
-    
-protected:
+
     virtual bool init() { return true; }
     
+protected:
     GLProgramState* _glProgramState;
 };
 
@@ -147,10 +147,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     CameraBackgroundDepthBrush();
     virtual ~CameraBackgroundDepthBrush();
-    
-protected:
+
     virtual bool init() override;
     
+protected:
     float _depth;
     
     GLboolean _clearColor;
@@ -187,9 +187,10 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     CameraBackgroundColorBrush();
     virtual ~CameraBackgroundColorBrush();
+
+    virtual bool init() override;
     
 protected:
-    
     Color4F _color;
 };
 
@@ -245,6 +246,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool init() override;
     
+protected:
     void initBuffer();
     
     GLuint      _vao;
