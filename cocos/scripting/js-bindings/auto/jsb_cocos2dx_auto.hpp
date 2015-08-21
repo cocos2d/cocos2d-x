@@ -3386,6 +3386,7 @@ void js_register_cocos2dx_CameraBackgroundBrush(JSContext *cx, JS::HandleObject 
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_CameraBackgroundBrush_getBrushType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundBrush_drawBackground(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundBrush_createColorBrush(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundBrush_createNoneBrush(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3421,9 +3422,7 @@ bool js_cocos2dx_CameraBackgroundSkyBoxBrush_constructor(JSContext *cx, uint32_t
 void js_cocos2dx_CameraBackgroundSkyBoxBrush_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_CameraBackgroundSkyBoxBrush(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_CameraBackgroundSkyBoxBrush_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_CameraBackgroundSkyBoxBrush_initBuffer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundSkyBoxBrush_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_CameraBackgroundSkyBoxBrush_CameraBackgroundSkyBoxBrush(JSContext *cx, uint32_t argc, jsval *vp);
 

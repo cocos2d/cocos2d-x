@@ -32,6 +32,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#CameraBackgroundColorBrush] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#CameraBackgroundColorBrush] CameraBackgroundColorBrush 
 -- @param self
 -- @return CameraBackgroundColorBrush#CameraBackgroundColorBrush self (return value: cc.CameraBackgroundColorBrush)

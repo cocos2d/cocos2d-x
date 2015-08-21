@@ -18780,6 +18780,16 @@ camera
 },
 
 /**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
  * @method createSkyboxBrush
  * @param {String} arg0
  * @param {String} arg1
@@ -18930,29 +18940,11 @@ CameraBackgroundColorBrush : function (
 cc.CameraBackgroundSkyBoxBrush = {
 
 /**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
  * @method setTexture
  * @param {cc.TextureCube} arg0
  */
 setTexture : function (
 texturecube 
-)
-{
-},
-
-/**
- * @method initBuffer
- */
-initBuffer : function (
 )
 {
 },
