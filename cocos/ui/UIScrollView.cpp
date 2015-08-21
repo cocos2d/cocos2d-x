@@ -176,6 +176,21 @@ void ScrollView::setInnerContainerSize(const Size &size)
     }
     _innerContainer->setContentSize(Size(innerSizeWidth, innerSizeHeight));
 
+    // move children appropriately
+    {
+        float offsetY = originalInnerSize.height - innerSizeHeight;
+        float offsetX = 0;
+        if (_innerContainer->getRightBoundary() <= _contentSize.width)
+        {
+            offsetX = originalInnerSize.width - innerSizeWidth;
+        }
+        if(offsetX != 0 || offsetY != 0)
+        {
+            setInnerContainerPosition(Vec2(offsetX, offsetY));
+        }
+    }
+    
+    
     // Calculate and set the position of the inner container.
     Vec2 pos = _innerContainer->getPosition();
     if (_innerContainer->getLeftBoundary() > 0.0f)
