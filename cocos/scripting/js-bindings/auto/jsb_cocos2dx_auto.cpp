@@ -57613,6 +57613,24 @@ bool js_cocos2dx_CameraBackgroundBrush_drawBackground(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_drawBackground : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_CameraBackgroundBrush_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundBrush* cobj = (cocos2d::CameraBackgroundBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundBrush_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -57788,6 +57806,7 @@ void js_register_cocos2dx_CameraBackgroundBrush(JSContext *cx, JS::HandleObject 
     static JSFunctionSpec funcs[] = {
         JS_FN("getBrushType", js_cocos2dx_CameraBackgroundBrush_getBrushType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("drawBackground", js_cocos2dx_CameraBackgroundBrush_drawBackground, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_CameraBackgroundBrush_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -58108,24 +58127,6 @@ void js_register_cocos2dx_CameraBackgroundColorBrush(JSContext *cx, JS::HandleOb
 JSClass  *jsb_cocos2d_CameraBackgroundSkyBoxBrush_class;
 JSObject *jsb_cocos2d_CameraBackgroundSkyBoxBrush_prototype;
 
-bool js_cocos2dx_CameraBackgroundSkyBoxBrush_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::CameraBackgroundSkyBoxBrush* cobj = (cocos2d::CameraBackgroundSkyBoxBrush *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundSkyBoxBrush_init : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->init();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundSkyBoxBrush_init : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -58152,22 +58153,6 @@ bool js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture(JSContext *cx, uint32_t 
     }
 
     JS_ReportError(cx, "js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_CameraBackgroundSkyBoxBrush_initBuffer(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::CameraBackgroundSkyBoxBrush* cobj = (cocos2d::CameraBackgroundSkyBoxBrush *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundSkyBoxBrush_initBuffer : Invalid Native Object");
-    if (argc == 0) {
-        cobj->initBuffer();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundSkyBoxBrush_initBuffer : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_CameraBackgroundSkyBoxBrush_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -58282,9 +58267,7 @@ void js_register_cocos2dx_CameraBackgroundSkyBoxBrush(JSContext *cx, JS::HandleO
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("init", js_cocos2dx_CameraBackgroundSkyBoxBrush_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTexture", js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initBuffer", js_cocos2dx_CameraBackgroundSkyBoxBrush_initBuffer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
