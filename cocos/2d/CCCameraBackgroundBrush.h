@@ -34,9 +34,9 @@
 
 NS_CC_BEGIN
 
-class CameraBackGroundColorBrush;
-class CameraBackGroundDepthBrush;
-class CameraBackGroundSkyBoxBrush;
+class CameraBackgroundColorBrush;
+class CameraBackgroundDepthBrush;
+class CameraBackgroundSkyBoxBrush;
 
 class GLProgramState;
 class Camera;
@@ -45,18 +45,18 @@ class Camera;
  * Defines a brush to clear the background of camera.
  * There are 4 types of brush. None brush do nothing, Depth brush clear background with given depth, Color brush clear background with given color and depth, Skybox brush clear the background with a skybox. Camera uses depth brush by default.
  */
-class CC_DLL CameraBackGroundBrush : public Ref
+class CC_DLL CameraBackgroundBrush : public Ref
 {
 public:
     /**
-     * Brush types. There are 4 types of brush. See CameraBackGroundDepthBrush, CameraBackGroundColorBrush, CameraBackGroundSkyBoxBrush for more information.
+     * Brush types. There are 4 types of brush. See CameraBackgroundDepthBrush, CameraBackgroundColorBrush, CameraBackgroundSkyBoxBrush for more information.
      */
     enum class BrushType
     {
         NONE, //none brush
-        DEPTH, // depth brush. See CameraBackGroundDepthBrush
-        COLOR, // color brush. See CameraBackGroundColorBrush
-        SKYBOX, // skybox brush. See CameraBackGroundSkyBoxBrush
+        DEPTH, // depth brush. See CameraBackgroundDepthBrush
+        COLOR, // color brush. See CameraBackgroundColorBrush
+        SKYBOX, // skybox brush. See CameraBackgroundSkyBoxBrush
     };
     
     /**
@@ -69,14 +69,14 @@ public:
      * Creates a none brush, it does nothing when clear the background
      * @return Created brush.
      */
-    static CameraBackGroundBrush* createNoneBrush();
+    static CameraBackgroundBrush* createNoneBrush();
     
     /**
      * Creates a depth brush, which clears depth buffer with a given depth.
      * @param depth Depth used to clear depth buffer
      * @return Created brush
      */
-    static CameraBackGroundDepthBrush* createDepthBrush(float depth = 1.f);
+    static CameraBackgroundDepthBrush* createDepthBrush(float depth = 1.f);
     
     /**
      * Creates a color brush
@@ -84,7 +84,7 @@ public:
      * @param depth Depth used to clear depth buffer
      * @return Created brush
      */
-    static CameraBackGroundColorBrush* createColorBrush(const Color4F& color, float depth);
+    static CameraBackgroundColorBrush* createColorBrush(const Color4F& color, float depth);
     
     
     /** Creates a Skybox brush with 6 textures.
@@ -96,17 +96,17 @@ public:
      @param negative_z texture for the rear side of the texture cube face.
      @return  A new brush inited with given parameters.
      */
-    static CameraBackGroundSkyBoxBrush* createSkyboxBrush(const std::string& positive_x, const std::string& negative_x,
+    static CameraBackgroundSkyBoxBrush* createSkyboxBrush(const std::string& positive_x, const std::string& negative_x,
                                                           const std::string& positive_y, const std::string& negative_y,
                                                           const std::string& positive_z, const std::string& negative_z);
     /**
      * draw the background
      */
-    virtual void drawBackGround(Camera* camera) {}
+    virtual void drawBackground(Camera* camera) {}
     
 CC_CONSTRUCTOR_ACCESS:
-    CameraBackGroundBrush();
-    virtual ~CameraBackGroundBrush();
+    CameraBackgroundBrush();
+    virtual ~CameraBackgroundBrush();
     
 protected:
     virtual bool init() { return true; }
@@ -117,7 +117,7 @@ protected:
 /**
  * Depth brush clear depth buffer with given depth
  */
-class CC_DLL CameraBackGroundDepthBrush : public CameraBackGroundBrush
+class CC_DLL CameraBackgroundDepthBrush : public CameraBackgroundBrush
 {
 public:
     /**
@@ -125,7 +125,7 @@ public:
      * @param depth Depth used to clear the depth buffer
      * @return Created brush
      */
-    static CameraBackGroundDepthBrush* create(float depth);
+    static CameraBackgroundDepthBrush* create(float depth);
     
     /**
      * Get brush type. Should be BrushType::DEPTH
@@ -136,7 +136,7 @@ public:
     /**
      * Draw background
      */
-    virtual void drawBackGround(Camera* camera) override;
+    virtual void drawBackground(Camera* camera) override;
     
     /**
      * Set depth
@@ -145,8 +145,8 @@ public:
     void setDepth(float depth) { _depth = depth; }
     
 CC_CONSTRUCTOR_ACCESS:
-    CameraBackGroundDepthBrush();
-    virtual ~CameraBackGroundDepthBrush();
+    CameraBackgroundDepthBrush();
+    virtual ~CameraBackgroundDepthBrush();
     
 protected:
     virtual bool init() override;
@@ -161,7 +161,7 @@ protected:
 /**
  * Color brush clear buffer with given depth and color
  */
-class CC_DLL CameraBackGroundColorBrush : public CameraBackGroundDepthBrush
+class CC_DLL CameraBackgroundColorBrush : public CameraBackgroundDepthBrush
 {
 public:
     /**
@@ -176,7 +176,7 @@ public:
      * @param depth Depth used to clear the depth buffer
      * @return Created brush
      */
-    static CameraBackGroundColorBrush* create(const Color4F& color, float depth);
+    static CameraBackgroundColorBrush* create(const Color4F& color, float depth);
     
     /**
      * Set clear color
@@ -185,8 +185,8 @@ public:
     void setColor(const Color4F& color);
     
 CC_CONSTRUCTOR_ACCESS:
-    CameraBackGroundColorBrush();
-    virtual ~CameraBackGroundColorBrush();
+    CameraBackgroundColorBrush();
+    virtual ~CameraBackgroundColorBrush();
     
 protected:
     
@@ -200,7 +200,7 @@ class EventListenerCustom;
 /**
  * Skybox brush clear buffer with a skybox
  */
-class CC_DLL CameraBackGroundSkyBoxBrush : public CameraBackGroundBrush
+class CC_DLL CameraBackgroundSkyBoxBrush : public CameraBackgroundBrush
 {
 public:
     /**
@@ -218,13 +218,13 @@ public:
      @param negative_z texture for the rear side of the texture cube face.
      @return  A new brush inited with given parameters.
      */
-    static CameraBackGroundSkyBoxBrush* create(const std::string& positive_x, const std::string& negative_x,
+    static CameraBackgroundSkyBoxBrush* create(const std::string& positive_x, const std::string& negative_x,
                                         const std::string& positive_y, const std::string& negative_y,
                                         const std::string& positive_z, const std::string& negative_z);
     
     /** Creates a Skybox brush with 6 textures.
      */
-    static CameraBackGroundSkyBoxBrush* create();
+    static CameraBackgroundSkyBoxBrush* create();
     /**
      * Set skybox texutre 
      * @param texture Skybox texture
@@ -234,11 +234,11 @@ public:
     /**
      * Draw background
      */
-    virtual void drawBackGround(Camera* camera) override;
+    virtual void drawBackground(Camera* camera) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    CameraBackGroundSkyBoxBrush();
-    virtual ~CameraBackGroundSkyBoxBrush();
+    CameraBackgroundSkyBoxBrush();
+    virtual ~CameraBackgroundSkyBoxBrush();
     
     /**
      * init Skybox.

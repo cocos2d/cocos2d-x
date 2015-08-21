@@ -22,7 +22,7 @@
  THE SOFTWARE.
 
  ****************************************************************************/
-#include "2d/CCCameraBackGroundBrush.h"
+#include "2d/CCCameraBackgroundBrush.h"
 #include "2d/CCCamera.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
@@ -44,64 +44,64 @@
 
 NS_CC_BEGIN
 
-CameraBackGroundBrush::CameraBackGroundBrush()
+CameraBackgroundBrush::CameraBackgroundBrush()
 : _glProgramState(nullptr)
 {
     
 }
 
-CameraBackGroundBrush::~CameraBackGroundBrush()
+CameraBackgroundBrush::~CameraBackgroundBrush()
 {
     CC_SAFE_RELEASE(_glProgramState);
 }
 
-CameraBackGroundBrush* CameraBackGroundBrush::createNoneBrush()
+CameraBackgroundBrush* CameraBackgroundBrush::createNoneBrush()
 {
-    auto ret = new (std::nothrow) CameraBackGroundBrush();
+    auto ret = new (std::nothrow) CameraBackgroundBrush();
     ret->init();
     
     ret->autorelease();
     return ret;
 }
 
-CameraBackGroundColorBrush* CameraBackGroundBrush::createColorBrush(const Color4F& color, float depth)
+CameraBackgroundColorBrush* CameraBackgroundBrush::createColorBrush(const Color4F& color, float depth)
 {
-    return CameraBackGroundColorBrush::create(color, depth);
+    return CameraBackgroundColorBrush::create(color, depth);
 }
 
-CameraBackGroundDepthBrush* CameraBackGroundBrush::createDepthBrush(float depth)
+CameraBackgroundDepthBrush* CameraBackgroundBrush::createDepthBrush(float depth)
 {
-    return CameraBackGroundDepthBrush::create(depth);
+    return CameraBackgroundDepthBrush::create(depth);
 }
 
-CameraBackGroundSkyBoxBrush* CameraBackGroundBrush::createSkyboxBrush(const std::string& positive_x, const std::string& negative_x, const std::string& positive_y, const std::string& negative_y, const std::string& positive_z, const std::string& negative_z)
+CameraBackgroundSkyBoxBrush* CameraBackgroundBrush::createSkyboxBrush(const std::string& positive_x, const std::string& negative_x, const std::string& positive_y, const std::string& negative_y, const std::string& positive_z, const std::string& negative_z)
 {
-    return CameraBackGroundSkyBoxBrush::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
+    return CameraBackgroundSkyBoxBrush::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-CameraBackGroundDepthBrush::CameraBackGroundDepthBrush()
+CameraBackgroundDepthBrush::CameraBackgroundDepthBrush()
 : _depth(0.f)
 , _clearColor(GL_FALSE)
 {
     
 }
-CameraBackGroundDepthBrush::~CameraBackGroundDepthBrush()
+CameraBackgroundDepthBrush::~CameraBackgroundDepthBrush()
 {
     
 }
 
-CameraBackGroundDepthBrush* CameraBackGroundDepthBrush::create(float depth)
+CameraBackgroundDepthBrush* CameraBackgroundDepthBrush::create(float depth)
 {
-    auto ret = new (std::nothrow) CameraBackGroundDepthBrush();
+    auto ret = new (std::nothrow) CameraBackgroundDepthBrush();
     ret->_depth = depth;
     ret->init();
     ret->autorelease();
     return ret;
 }
 
-bool CameraBackGroundDepthBrush::init()
+bool CameraBackgroundDepthBrush::init()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
     _glProgramState = GLProgramState::getOrCreateWithGLProgram(shader);
@@ -121,7 +121,7 @@ bool CameraBackGroundDepthBrush::init()
     return true;
 }
 
-void CameraBackGroundDepthBrush::drawBackGround(Camera* camera)
+void CameraBackgroundDepthBrush::drawBackground(Camera* camera)
 {
     GLboolean oldDepthTest;
     GLint oldDepthFunc;
@@ -192,25 +192,25 @@ void CameraBackGroundDepthBrush::drawBackGround(Camera* camera)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-CameraBackGroundColorBrush::CameraBackGroundColorBrush()
+CameraBackgroundColorBrush::CameraBackgroundColorBrush()
 : _color(0.f, 0.f, 0.f, 0.f)
 {
     
 }
 
-CameraBackGroundColorBrush::~CameraBackGroundColorBrush()
+CameraBackgroundColorBrush::~CameraBackgroundColorBrush()
 {
     
 }
 
-void CameraBackGroundColorBrush::setColor(const Color4F& color)
+void CameraBackgroundColorBrush::setColor(const Color4F& color)
 {
     _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(color);
 }
 
-CameraBackGroundColorBrush* CameraBackGroundColorBrush::create(const Color4F& color, float depth)
+CameraBackgroundColorBrush* CameraBackgroundColorBrush::create(const Color4F& color, float depth)
 {
-    auto ret = new (std::nothrow) CameraBackGroundColorBrush();
+    auto ret = new (std::nothrow) CameraBackgroundColorBrush();
     ret->init();
     ret->_clearColor = GL_TRUE;
     ret->setColor(color);
@@ -221,7 +221,7 @@ CameraBackGroundColorBrush* CameraBackGroundColorBrush::create(const Color4F& co
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-CameraBackGroundSkyBoxBrush::CameraBackGroundSkyBoxBrush()
+CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
 : _vao(0)
 , _vertexBuffer(0)
 , _indexBuffer(0)
@@ -238,7 +238,7 @@ CameraBackGroundSkyBoxBrush::CameraBackGroundSkyBoxBrush()
 #endif
 }
 
-CameraBackGroundSkyBoxBrush::~CameraBackGroundSkyBoxBrush()
+CameraBackgroundSkyBoxBrush::~CameraBackgroundSkyBoxBrush()
 {
     CC_SAFE_RELEASE(_texture);
     
@@ -256,7 +256,7 @@ CameraBackGroundSkyBoxBrush::~CameraBackGroundSkyBoxBrush()
     }
 }
 
-CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create(const std::string& positive_x, const std::string& negative_x, const std::string& positive_y, const std::string& negative_y, const std::string& positive_z, const std::string& negative_z)
+CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(const std::string& positive_x, const std::string& negative_x, const std::string& positive_y, const std::string& negative_y, const std::string& positive_z, const std::string& negative_z)
 {
     auto texture = TextureCube::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
     if (texture == nullptr)
@@ -269,7 +269,7 @@ CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create(const std::stri
     tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     texture->setTexParameters(tRepeatParams);
     
-    auto ret = new(std::nothrow)CameraBackGroundSkyBoxBrush();
+    auto ret = new(std::nothrow)CameraBackgroundSkyBoxBrush();
     
     ret->init();
     ret->setTexture(texture);
@@ -278,9 +278,9 @@ CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create(const std::stri
     return ret;
 }
 
-CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create()
+CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 {
-    auto ret = new(std::nothrow)CameraBackGroundSkyBoxBrush();
+    auto ret = new(std::nothrow)CameraBackgroundSkyBoxBrush();
     
     ret->init();
     
@@ -288,7 +288,7 @@ CameraBackGroundSkyBoxBrush* CameraBackGroundSkyBoxBrush::create()
     return ret;
 }
 
-void CameraBackGroundSkyBoxBrush::drawBackGround(Camera* camera)
+void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
@@ -342,7 +342,7 @@ void CameraBackGroundSkyBoxBrush::drawBackGround(Camera* camera)
     CHECK_GL_ERROR_DEBUG();
 }
 
-bool CameraBackGroundSkyBoxBrush::init()
+bool CameraBackgroundSkyBoxBrush::init()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
     _glProgramState = GLProgramState::create(shader);
@@ -354,7 +354,7 @@ bool CameraBackGroundSkyBoxBrush::init()
     return true;
 }
 
-void CameraBackGroundSkyBoxBrush::initBuffer()
+void CameraBackgroundSkyBoxBrush::initBuffer()
 {
     if (_vertexBuffer)
         glDeleteBuffers(1, &_vertexBuffer);
@@ -407,7 +407,7 @@ void CameraBackGroundSkyBoxBrush::initBuffer()
     }
 }
 
-void CameraBackGroundSkyBoxBrush::setTexture(TextureCube*  texture)
+void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
 {
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);

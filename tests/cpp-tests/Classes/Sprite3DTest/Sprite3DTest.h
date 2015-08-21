@@ -592,11 +592,11 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
-class CameraBackGroundClearTest : public Sprite3DTestDemo
+class CameraBackgroundClearTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(CameraBackGroundClearTest);
-    CameraBackGroundClearTest();
+    CREATE_FUNC(CameraBackgroundClearTest);
+    CameraBackgroundClearTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     

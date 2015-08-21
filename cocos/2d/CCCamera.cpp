@@ -25,7 +25,7 @@
 
  ****************************************************************************/
 #include "2d/CCCamera.h"
-#include "2d/CCCameraBackGroundBrush.h"
+#include "2d/CCCameraBackgroundBrush.h"
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
@@ -97,7 +97,7 @@ Camera::Camera()
 , _fbo(nullptr)
 {
     _frustum.setClipZ(true);
-    _clearBrush = CameraBackGroundBrush::createDepthBrush(1.f);
+    _clearBrush = CameraBackgroundBrush::createDepthBrush(1.f);
     _clearBrush->retain();
 }
 
@@ -406,7 +406,7 @@ void Camera::clearBackground()
 {
     if (_clearBrush)
     {
-        _clearBrush->drawBackGround(this);
+        _clearBrush->drawBackground(this);
     }
 }
 
@@ -474,7 +474,7 @@ void Camera::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t par
     return Node::visit(renderer, parentTransform, parentFlags);
 }
 
-void Camera::setBackGroundBrush(CameraBackGroundBrush* clearBrush)
+void Camera::setBackgroundBrush(CameraBackgroundBrush* clearBrush)
 {
     CC_SAFE_RETAIN(clearBrush);
     CC_SAFE_RELEASE(_clearBrush);
