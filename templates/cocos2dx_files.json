@@ -78,6 +78,8 @@
         "cocos/2d/CCAutoPolygon.h", 
         "cocos/2d/CCCamera.cpp", 
         "cocos/2d/CCCamera.h", 
+        "cocos/2d/CCCameraBackgroundBrush.cpp", 
+        "cocos/2d/CCCameraBackgroundBrush.h", 
         "cocos/2d/CCClippingNode.cpp", 
         "cocos/2d/CCClippingNode.h", 
         "cocos/2d/CCClippingRectangleNode.cpp", 
