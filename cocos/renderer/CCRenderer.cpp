@@ -1029,8 +1029,10 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     auto scene = Director::getInstance()->getRunningScene();
     // only cull the default camera. The culling algorithm is valid for default camera.
-    if (scene && scene->_defaultCamera != Camera::getVisitingCamera())
+    if ((scene && scene->_defaultCamera != Camera::getVisitingCamera()) || Camera::getVisitingCamera() == nullptr)
+    {
         return true;
+    }
 
     auto director = Director::getInstance();
     Rect visiableRect(director->getVisibleOrigin(), director->getVisibleSize());
