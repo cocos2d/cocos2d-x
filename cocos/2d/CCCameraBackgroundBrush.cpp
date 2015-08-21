@@ -203,6 +203,12 @@ CameraBackgroundColorBrush::~CameraBackgroundColorBrush()
     
 }
 
+bool CameraBackgroundColorBrush::init()
+{
+    this->_clearColor = GL_TRUE;
+    return true;
+}
+
 void CameraBackgroundColorBrush::setColor(const Color4F& color)
 {
     _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(color);
@@ -212,7 +218,6 @@ CameraBackgroundColorBrush* CameraBackgroundColorBrush::create(const Color4F& co
 {
     auto ret = new (std::nothrow) CameraBackgroundColorBrush();
     ret->init();
-    ret->_clearColor = GL_TRUE;
     ret->setColor(color);
     ret->setDepth(depth);
     
