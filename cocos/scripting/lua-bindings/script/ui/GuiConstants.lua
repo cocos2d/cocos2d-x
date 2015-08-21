@@ -40,6 +40,17 @@ ccui.CheckBoxEventType =
     unselected = 1,
 }
 
+ccui.RadioButtonEventType=
+{
+        selected = 0,
+        unselected = 1
+}
+
+ccui.RadioButtonGroupEventType=
+{
+    select_changed = 0
+}
+
 ccui.TextFiledEventType =
 {
     attach_with_ime = 0,
