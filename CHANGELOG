@@ -37,7 +37,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [REFINE]        3D: Made SkyBox not transparent 
     [REFINE]        Director: Made types to handle time consistent by modifing setAnimationInterval argument from double to float
     [REFINE]        Sprite: Made Sprite::setTexture accept nullptr as parameter
-    [REFINE]        TextureCache: Made addImageAsync function thread unsafe
+    [REFINE]        TextureCache: Made addImageAsync function thread safe
     [REFINE]        Label: Improved code readability
     [REFINE]        Label: Supported adding child nodes in Label
     [REFINE]        Label: Refine the implementation about text layout and support debug draw
@@ -66,6 +66,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [REFINE]        JS: Refine performance for Cocos Studio JSON parser for 2.x
     [REFINE]        JS: Made binding functions accept null in JS and convert to nullptr
     [REFINE]        web: Avoid re-bake the content when the parent node's position get changed
+    [REFINE]        web: Solved repeat loading same resource issue when parsing cocos studio project
     [REFINE]        web: Added GameNodeObjectData and GameLayerObjectData in JSON parser
     [REFINE]        web: Updated skeleton animation to the latest version
     [REFINE]        web: Optimized resources automatic loading in JSON parser
@@ -185,6 +186,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [FIX]           web: Fixed effect issue in ActionGrid and NodeGrid
     [FIX]           web: Fixed logic issue in Menu's _onTouchCancelled function
     [FIX]           web: Fixed MenuItem crash when normal image is null
+    [FIX]           web: Fixed CCTouch's startPoint unset issue
 
     [TEST]          3D: Avoid to trigger touch event multiple times in Physics3D Test and Physics3D Constraint Test
     [TEST]          3D: Fixed Sprite3D test background to foreground bug
