@@ -62,6 +62,11 @@ namespace cocostudio
         
         return _instanceNode3DReader;
     }
+    static CameraBackgroundSkyBoxBrush* _sceneBrushInstance = nullptr;
+    CameraBackgroundSkyBoxBrush* GameNode3DReader::getSceneBrushInstance()
+    {
+        return _sceneBrushInstance;
+    }
     
     void GameNode3DReader::purge()
     {
@@ -376,6 +381,7 @@ namespace cocostudio
         std::string name = options->name()->c_str();
         node->setName(name);
 
+        _sceneBrushInstance = nullptr;
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
         {
@@ -386,17 +392,15 @@ namespace cocostudio
             std::string forwardFileData = options->forwardFileData()->path()->c_str();
             std::string backFileData = options->backFileData()->path()->c_str();
 
-            if (!FileUtils::getInstance()->isFileExist(leftFileData)
-                || !FileUtils::getInstance()->isFileExist(rightFileData)
-                || !FileUtils::getInstance()->isFileExist(upFileData)
-                || !FileUtils::getInstance()->isFileExist(downFileData)
-                || !FileUtils::getInstance()->isFileExist(forwardFileData)
-                || !FileUtils::getInstance()->isFileExist(backFileData))
-                return;
-            Skybox* childBox = Skybox::create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            unsigned short cameraFlag = 1 << 10;
-            childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox,0,"_innerSkyBox");
+            if (FileUtils::getInstance()->isFileExist(leftFileData)
+                && FileUtils::getInstance()->isFileExist(rightFileData)
+                && FileUtils::getInstance()->isFileExist(upFileData)
+                && FileUtils::getInstance()->isFileExist(downFileData)
+                && FileUtils::getInstance()->isFileExist(forwardFileData)
+                && FileUtils::getInstance()->isFileExist(backFileData))
+            {
+                _sceneBrushInstance = CameraBackgroundSkyBoxBrush::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
+            }
         }
 
         std::string customProperty = options->customProperty()->c_str();

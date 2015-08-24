@@ -28,6 +28,7 @@
 #include "cocostudio/CSParse3DBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -430,16 +431,26 @@ namespace cocostudio
             std::string forwardFileData = options->forwardFileData()->path()->c_str();
             std::string backFileData = options->backFileData()->path()->c_str();
 
-            if (!FileUtils::getInstance()->isFileExist(leftFileData)
-                || !FileUtils::getInstance()->isFileExist(rightFileData)
-                || !FileUtils::getInstance()->isFileExist(upFileData)
-                || !FileUtils::getInstance()->isFileExist(downFileData)
-                || !FileUtils::getInstance()->isFileExist(forwardFileData)
-                || !FileUtils::getInstance()->isFileExist(backFileData))
-                return;
-            Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
-            childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox, 0, "_innerSkyBox");
+            if (FileUtils::getInstance()->isFileExist(leftFileData)
+                && FileUtils::getInstance()->isFileExist(rightFileData)
+                && FileUtils::getInstance()->isFileExist(upFileData)
+                && FileUtils::getInstance()->isFileExist(downFileData)
+                && FileUtils::getInstance()->isFileExist(forwardFileData)
+                && FileUtils::getInstance()->isFileExist(backFileData))
+            {
+                CameraBackgroundSkyBoxBrush* brush = CameraBackgroundSkyBoxBrush::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
+                camera->setBackgroundBrush(brush);
+            }
+            else
+            {
+                if (GameNode3DReader::getSceneBrushInstance() != nullptr)
+                    camera->setBackgroundBrush(GameNode3DReader::getSceneBrushInstance());
+            }
+        }
+        else
+        {
+            if (GameNode3DReader::getSceneBrushInstance() != nullptr)
+                camera->setBackgroundBrush(GameNode3DReader::getSceneBrushInstance());
         }
     }
     
