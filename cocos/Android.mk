@@ -89,8 +89,6 @@ cocos2d.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
 2d/CCAutoPolygon.cpp \
-3d/CCFrustum.cpp \
-3d/CCPlane.cpp \
 platform/CCFileUtils.cpp \
 platform/CCGLView.cpp \
 platform/CCImage.cpp \
@@ -181,6 +179,7 @@ renderer/CCTechnique.cpp \
 renderer/CCTexture2D.cpp \
 renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
+renderer/CCTextureCube.cpp \
 renderer/CCTrianglesCommand.cpp \
 renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
