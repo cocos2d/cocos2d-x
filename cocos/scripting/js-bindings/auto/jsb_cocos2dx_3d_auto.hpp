@@ -44,6 +44,17 @@ bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_3d_Animate3D_setTransitionTime(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Animate3D_Animate3D(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_TextureCube_class;
+extern JSObject *jsb_cocos2d_TextureCube_prototype;
+
+bool js_cocos2dx_3d_TextureCube_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_3d_TextureCube_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_3d_TextureCube(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_3d_TextureCube_reloadTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_TextureCube_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_TextureCube_TextureCube(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_AttachNode_class;
 extern JSObject *jsb_cocos2d_AttachNode_prototype;
 
@@ -218,17 +229,6 @@ bool js_cocos2dx_3d_Terrain_setIsEnableFrustumCull(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_3d_Terrain_getMinHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_getMaxHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Terrain_Terrain(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_TextureCube_class;
-extern JSObject *jsb_cocos2d_TextureCube_prototype;
-
-bool js_cocos2dx_3d_TextureCube_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_3d_TextureCube_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_3d_TextureCube(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_3d_TextureCube_reloadTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_TextureCube_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_TextureCube_TextureCube(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Bundle3D_class;
 extern JSObject *jsb_cocos2d_Bundle3D_prototype;
