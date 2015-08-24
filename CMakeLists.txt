@@ -186,6 +186,10 @@ endif()
 if(LINUX OR MACOSX OR WINDOWS)
   cocos_find_package(OpenGL OPENGL REQUIRED)
 
+  if(LINUX OR MACOSX)
+    cocos_find_package(X11 X11 REQUIRED)
+  endif()
+
   if(LINUX OR WINDOWS)
     cocos_find_package(GLEW GLEW REQUIRED)
     #TODO: implement correct schema for pass cocos2d specific requirements to projects
