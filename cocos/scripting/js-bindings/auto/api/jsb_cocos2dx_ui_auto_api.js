@@ -1699,6 +1699,26 @@ bool
 },
 
 /**
+ * @method getRendererFrontCrossDisabled
+ * @return {cc.Sprite}
+ */
+getRendererFrontCrossDisabled : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method getRendererBackground
+ * @return {cc.Sprite}
+ */
+getRendererBackground : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
  * @method loadTextureFrontCross
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -1708,6 +1728,16 @@ str,
 texturerestype 
 )
 {
+},
+
+/**
+ * @method getRendererBackgroundDisabled
+ * @return {cc.Sprite}
+ */
+getRendererBackgroundDisabled : function (
+)
+{
+    return cc.Sprite;
 },
 
 /**
@@ -1770,6 +1800,26 @@ getZoomScale : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getRendererFrontCross
+ * @return {cc.Sprite}
+ */
+getRendererFrontCross : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method getRendererBackgroundSelected
+ * @return {cc.Sprite}
+ */
+getRendererBackgroundSelected : function (
+)
+{
+    return cc.Sprite;
 },
 
 /**
@@ -1945,6 +1995,24 @@ getSelectedButtonIndex : function (
  */
 setAllowedNoSelection : function (
 bool 
+)
+{
+},
+
+/**
+ * @method setSelectedButtonWithoutEvent
+* @param {ccui.RadioButton|int} radiobutton
+*/
+setSelectedButtonWithoutEvent : function(
+int 
+)
+{
+},
+
+/**
+ * @method removeAllRadioButtons
+ */
+removeAllRadioButtons : function (
 )
 {
 },
