@@ -430,8 +430,7 @@ namespace cocostudio
             std::string forwardFileData = options->forwardFileData()->path()->c_str();
             std::string backFileData = options->backFileData()->path()->c_str();
 
-            if (leftFileData.empty() || rightFileData.empty() || upFileData.empty() || downFileData.empty() || forwardFileData.empty() || backFileData.empty()
-                || !FileUtils::getInstance()->isFileExist(leftFileData)
+            if (!FileUtils::getInstance()->isFileExist(leftFileData)
                 || !FileUtils::getInstance()->isFileExist(rightFileData)
                 || !FileUtils::getInstance()->isFileExist(upFileData)
                 || !FileUtils::getInstance()->isFileExist(downFileData)
