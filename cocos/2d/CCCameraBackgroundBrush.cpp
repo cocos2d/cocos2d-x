@@ -205,6 +205,7 @@ CameraBackgroundColorBrush::~CameraBackgroundColorBrush()
 
 bool CameraBackgroundColorBrush::init()
 {
+    CameraBackgroundDepthBrush::init();
     this->_clearColor = GL_TRUE;
     return true;
 }
