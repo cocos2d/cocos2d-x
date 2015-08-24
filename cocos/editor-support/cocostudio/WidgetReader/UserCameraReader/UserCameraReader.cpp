@@ -430,7 +430,12 @@ namespace cocostudio
             std::string forwardFileData = options->forwardFileData()->path()->c_str();
             std::string backFileData = options->backFileData()->path()->c_str();
 
-            if (leftFileData.empty() || rightFileData.empty() || upFileData.empty() || downFileData.empty() || forwardFileData.empty() || backFileData.empty())
+            if (!FileUtils::getInstance()->isFileExist(leftFileData)
+                || !FileUtils::getInstance()->isFileExist(rightFileData)
+                || !FileUtils::getInstance()->isFileExist(upFileData)
+                || !FileUtils::getInstance()->isFileExist(downFileData)
+                || !FileUtils::getInstance()->isFileExist(forwardFileData)
+                || !FileUtils::getInstance()->isFileExist(backFileData))
                 return;
             Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
             childBox->setCameraMask(cameraFlag);
