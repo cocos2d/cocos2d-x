@@ -34,6 +34,20 @@
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
         
 --------------------------------
+-- brief Return the sprite instance of front cross when disabled<br>
+-- return the sprite instance of front cross when disabled
+-- @function [parent=#AbstractCheckButton] getRendererFrontCrossDisabled 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- brief Return the sprite instance of background<br>
+-- return the sprite instance of background.
+-- @function [parent=#AbstractCheckButton] getRendererBackground 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
 -- Load cross texture for check button.<br>
 -- param crossTextureName    The cross texture name.<br>
 -- param texType    @see `Widget::TextureResType`
@@ -42,6 +56,13 @@
 -- @param #string crossTextureName
 -- @param #int texType
 -- @return AbstractCheckButton#AbstractCheckButton self (return value: ccui.AbstractCheckButton)
+        
+--------------------------------
+-- brief Return the sprite instance of background when disabled<br>
+-- return the sprite instance of background when disabled
+-- @function [parent=#AbstractCheckButton] getRendererBackgroundDisabled 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
 -- Query whether CheckBox is selected or not.<br>
@@ -87,6 +108,20 @@
 -- @function [parent=#AbstractCheckButton] getZoomScale 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- brief Return the sprite instance of front cross<br>
+-- return the sprite instance of front cross
+-- @function [parent=#AbstractCheckButton] getRendererFrontCross 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
+        
+--------------------------------
+-- brief Return the sprite instance of background when selected<br>
+-- return the sprite instance of background when selected
+-- @function [parent=#AbstractCheckButton] getRendererBackgroundSelected 
+-- @param self
+-- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
 -- Load background texture for check button.<br>

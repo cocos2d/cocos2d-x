@@ -245,6 +245,10 @@ Open the `cocos2d-x/build/cocos2d-win32.sln`
 
 Open the `cocos2d-x/build/cocos2d-win8.1-universal.sln`
 
+* For Windows 10.0 Universal Windows Platform (UWP) Apps (Phone and Store)
+
+Open the `cocos2d-x/build/cocos2d-win10.sln`
+
 * For Android
 
 ```

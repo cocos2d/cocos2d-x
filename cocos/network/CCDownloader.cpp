@@ -197,6 +197,9 @@ void Downloader::downloadToBuffer(const std::string& srcUrl, const std::string& 
 
     CC_ASSERT(_downloaderImpl && "Cannot instanciate more than one instance of DownloaderImpl");
 
+    std::weak_ptr<Downloader> ptr = shared_from_this();
+    std::shared_ptr<Downloader> shared = ptr.lock();
+
     StreamData streamBuffer;
     streamBuffer.buffer = buffer;
     streamBuffer.total = size;
@@ -255,6 +258,9 @@ void Downloader::downloadSync(const std::string& srcUrl, const std::string& stor
 void Downloader::downloadToFP(const std::string& srcUrl, const std::string& customId, const std::string& storagePath)
 {
     CC_ASSERT(_downloaderImpl && "Cannot instanciate more than one instance of DownloaderImpl");
+
+    std::weak_ptr<Downloader> ptr = shared_from_this();
+    std::shared_ptr<Downloader> shared = ptr.lock();
 
     DownloadUnit unit;
     unit.srcUrl = srcUrl;
@@ -366,6 +372,9 @@ void Downloader::batchDownloadSync(const DownloadUnits& units, const std::string
 
 void Downloader::groupBatchDownload(const DownloadUnits& units)
 {
+    std::weak_ptr<Downloader> ptr = shared_from_this();
+    std::shared_ptr<Downloader> shared = ptr.lock();
+    
     // static_cast needed since notifyError is overloaded
     auto errorCallback = std::bind( static_cast<void(Downloader::*)(const std::string&, int, const std::string&)>
                           (&Downloader::notifyError), this,

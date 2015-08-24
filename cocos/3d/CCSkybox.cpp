@@ -31,9 +31,8 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/CCTextureCube.h"
 #include "3d/CCSkybox.h"
-#include "3d/CCTextureCube.h"
-
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN

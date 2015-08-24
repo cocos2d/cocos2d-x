@@ -33,7 +33,7 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
-#include "3d/CCTextureCube.h"
+#include "renderer/CCTextureCube.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "base/CCEventCustom.h"
@@ -205,6 +205,7 @@ CameraBackgroundColorBrush::~CameraBackgroundColorBrush()
 
 bool CameraBackgroundColorBrush::init()
 {
+    CameraBackgroundDepthBrush::init();
     this->_clearColor = GL_TRUE;
     return true;
 }

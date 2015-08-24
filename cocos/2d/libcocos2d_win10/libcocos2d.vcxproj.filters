@@ -1939,6 +1939,9 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -3787,6 +3790,9 @@
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

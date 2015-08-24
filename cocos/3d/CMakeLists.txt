@@ -25,6 +25,5 @@ set(COCOS_3D_SRC
   3d/CCSprite3D.cpp
   3d/CCSprite3DMaterial.cpp
   3d/CCTerrain.cpp
-  3d/CCTextureCube.cpp
 
 )

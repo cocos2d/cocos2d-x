@@ -38,11 +38,25 @@
 -- @return RadioButtonGroup#RadioButtonGroup self (return value: ccui.RadioButtonGroup)
         
 --------------------------------
+-- @overload self, ccui.RadioButton         
+-- @overload self, int         
+-- @function [parent=#RadioButtonGroup] setSelectedButtonWithoutEvent
+-- @param self
+-- @param #int index
+-- @return RadioButtonGroup#RadioButtonGroup self (return value: ccui.RadioButtonGroup)
+
+--------------------------------
 -- Add a callback function which would be called when radio button is selected or unselected.<br>
 -- param callback A std::function with type @see `ccRadioButtonGroupCallback`
 -- @function [parent=#RadioButtonGroup] addEventListener 
 -- @param self
 -- @param #function callback
+-- @return RadioButtonGroup#RadioButtonGroup self (return value: ccui.RadioButtonGroup)
+        
+--------------------------------
+-- Remove all radio button from this group.
+-- @function [parent=#RadioButtonGroup] removeAllRadioButtons 
+-- @param self
 -- @return RadioButtonGroup#RadioButtonGroup self (return value: ccui.RadioButtonGroup)
         
 --------------------------------
