@@ -1728,9 +1728,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -1869,6 +1866,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.h">
       <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3431,9 +3431,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -3569,6 +3566,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
