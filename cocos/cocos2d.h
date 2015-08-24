@@ -163,6 +163,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/CCTextureCube.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCVertexAttribBinding.h"
@@ -298,7 +299,7 @@ THE SOFTWARE.
 #include "3d/CCSprite3D.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCTerrain.h"
-#include "3d/CCTextureCube.h"
+
 
 // Deprecated include
 #include "deprecated/CCArray.h"
