@@ -8005,6 +8005,100 @@ int lua_cocos2dx_ui_AbstractCheckButton_setSelected(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled'", nullptr);
+            return 0;
+        }
+        cocos2d::Sprite* ret = cobj->getRendererFrontCrossDisabled();
+        object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getRendererFrontCrossDisabled",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_AbstractCheckButton_getRendererBackground(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackground'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackground'", nullptr);
+            return 0;
+        }
+        cocos2d::Sprite* ret = cobj->getRendererBackground();
+        object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getRendererBackground",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackground'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8068,6 +8162,53 @@ int lua_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross(lua_State* tolua_S
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled'", nullptr);
+            return 0;
+        }
+        cocos2d::Sprite* ret = cobj->getRendererBackgroundDisabled();
+        object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getRendererBackgroundDisabled",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled'.",&tolua_err);
 #endif
 
     return 0;
@@ -8348,6 +8489,100 @@ int lua_cocos2dx_ui_AbstractCheckButton_getZoomScale(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross'", nullptr);
+            return 0;
+        }
+        cocos2d::Sprite* ret = cobj->getRendererFrontCross();
+        object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getRendererFrontCross",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::AbstractCheckButton* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.AbstractCheckButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::AbstractCheckButton*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected'", nullptr);
+            return 0;
+        }
+        cocos2d::Sprite* ret = cobj->getRendererBackgroundSelected();
+        object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.AbstractCheckButton:getRendererBackgroundSelected",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_AbstractCheckButton_loadTextureBackGround(lua_State* tolua_S)
 {
     int argc = 0;
@@ -8547,11 +8782,16 @@ int lua_register_cocos2dx_ui_AbstractCheckButton(lua_State* tolua_S)
         tolua_function(tolua_S,"loadTextureBackGroundSelected",lua_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundSelected);
         tolua_function(tolua_S,"loadTextureBackGroundDisabled",lua_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundDisabled);
         tolua_function(tolua_S,"setSelected",lua_cocos2dx_ui_AbstractCheckButton_setSelected);
+        tolua_function(tolua_S,"getRendererFrontCrossDisabled",lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled);
+        tolua_function(tolua_S,"getRendererBackground",lua_cocos2dx_ui_AbstractCheckButton_getRendererBackground);
         tolua_function(tolua_S,"loadTextureFrontCross",lua_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross);
+        tolua_function(tolua_S,"getRendererBackgroundDisabled",lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled);
         tolua_function(tolua_S,"isSelected",lua_cocos2dx_ui_AbstractCheckButton_isSelected);
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_AbstractCheckButton_init);
         tolua_function(tolua_S,"loadTextures",lua_cocos2dx_ui_AbstractCheckButton_loadTextures);
         tolua_function(tolua_S,"getZoomScale",lua_cocos2dx_ui_AbstractCheckButton_getZoomScale);
+        tolua_function(tolua_S,"getRendererFrontCross",lua_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross);
+        tolua_function(tolua_S,"getRendererBackgroundSelected",lua_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected);
         tolua_function(tolua_S,"loadTextureBackGround",lua_cocos2dx_ui_AbstractCheckButton_loadTextureBackGround);
         tolua_function(tolua_S,"setZoomScale",lua_cocos2dx_ui_AbstractCheckButton_setZoomScale);
         tolua_function(tolua_S,"loadTextureFrontCrossDisabled",lua_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCrossDisabled);
@@ -9292,6 +9532,61 @@ int lua_cocos2dx_ui_RadioButtonGroup_setAllowedNoSelection(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RadioButtonGroup* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.RadioButtonGroup",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::ui::RadioButtonGroup*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 1) {
+            cocos2d::ui::RadioButton* arg0;
+            ok &= luaval_to_object<cocos2d::ui::RadioButton>(tolua_S, 2, "ccui.RadioButton",&arg0, "ccui.RadioButtonGroup:setSelectedButtonWithoutEvent");
+
+            if (!ok) { break; }
+            cobj->setSelectedButtonWithoutEvent(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            int arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.RadioButtonGroup:setSelectedButtonWithoutEvent");
+
+            if (!ok) { break; }
+            cobj->setSelectedButtonWithoutEvent(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.RadioButtonGroup:setSelectedButtonWithoutEvent",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_RadioButtonGroup_addEventListener(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9342,6 +9637,53 @@ int lua_cocos2dx_ui_RadioButtonGroup_addEventListener(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RadioButtonGroup_addEventListener'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RadioButtonGroup* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.RadioButtonGroup",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::RadioButtonGroup*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons'", nullptr);
+            return 0;
+        }
+        cobj->removeAllRadioButtons();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RadioButtonGroup:removeAllRadioButtons",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons'.",&tolua_err);
 #endif
 
     return 0;
@@ -9636,7 +9978,9 @@ int lua_register_cocos2dx_ui_RadioButtonGroup(lua_State* tolua_S)
         tolua_function(tolua_S,"isAllowedNoSelection",lua_cocos2dx_ui_RadioButtonGroup_isAllowedNoSelection);
         tolua_function(tolua_S,"getSelectedButtonIndex",lua_cocos2dx_ui_RadioButtonGroup_getSelectedButtonIndex);
         tolua_function(tolua_S,"setAllowedNoSelection",lua_cocos2dx_ui_RadioButtonGroup_setAllowedNoSelection);
+        tolua_function(tolua_S,"setSelectedButtonWithoutEvent",lua_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent);
         tolua_function(tolua_S,"addEventListener",lua_cocos2dx_ui_RadioButtonGroup_addEventListener);
+        tolua_function(tolua_S,"removeAllRadioButtons",lua_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons);
         tolua_function(tolua_S,"getRadioButtonByIndex",lua_cocos2dx_ui_RadioButtonGroup_getRadioButtonByIndex);
         tolua_function(tolua_S,"getNumberOfRadioButtons",lua_cocos2dx_ui_RadioButtonGroup_getNumberOfRadioButtons);
         tolua_function(tolua_S,"addRadioButton",lua_cocos2dx_ui_RadioButtonGroup_addRadioButton);
