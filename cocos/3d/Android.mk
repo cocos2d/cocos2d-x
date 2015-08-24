@@ -15,13 +15,11 @@ CCAttachNode.cpp \
 CCBillBoard.cpp \
 CCBundle3D.cpp \
 CCBundleReader.cpp \
-CCFrustum.cpp \
 CCMesh.cpp \
 CCMeshSkin.cpp \
 CCMeshVertexIndexData.cpp \
 CCSprite3DMaterial.cpp \
 CCObjLoader.cpp \
-CCPlane.cpp \
 CCSkeleton3D.cpp \
 CCSprite3D.cpp \
 CCTerrain.cpp \
