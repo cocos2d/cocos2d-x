@@ -445,6 +445,10 @@ void EffectNormalMapped::setLightColor(const Color4F& color)
 
 EffectSpriteTest::EffectSpriteTest()
 {
+}
+
+bool EffectSpriteTest::init()
+{
     if (ShaderTestDemo2::init()) {
 
         auto layer = LayerColor::create(Color4B::BLUE);
@@ -503,11 +507,17 @@ EffectSpriteTest::EffectSpriteTest()
 
 //        _sprite->addEffect( _effects.at(8), -10 );
 //        _sprite->addEffect( _effects.at(1), 1 );
-
+        
+        return true;
     }
+    return false;
 }
 
 EffectSpriteLamp::EffectSpriteLamp()
+{
+}
+
+bool EffectSpriteLamp::init()
 {
     if (ShaderTestDemo2::init()) {
         
@@ -535,7 +545,9 @@ EffectSpriteLamp::EffectSpriteLamp()
         listerner->onTouchesMoved = CC_CALLBACK_2(EffectSpriteLamp::onTouchesMoved, this);
         listerner->onTouchesEnded = CC_CALLBACK_2(EffectSpriteLamp::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listerner, this);
+        return true;
     }
+    return false;
 }
 
 
