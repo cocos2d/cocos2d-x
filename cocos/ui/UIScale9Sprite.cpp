@@ -150,6 +150,8 @@ namespace ui {
         {
             auto texture = sprite->getTexture();
             auto spriteFrame = sprite->getSpriteFrame();
+            Rect actualCapInsets = capInsets;
+
             if (texture->isContain9PatchInfo())
             {
                 auto& parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
@@ -158,7 +160,7 @@ namespace ui {
                     this->_isPatch9 = true;
                     if(capInsets.equals(Rect::ZERO))
                     {
-                        this->_capInsetsInternal = this->_capInsets = parsedCapInset;
+                        actualCapInsets = parsedCapInset;
                     }
 
                 }
@@ -169,7 +171,7 @@ namespace ui {
                                    rotated,
                                    offset,
                                    originalSize,
-                                   capInsets);
+                                   actualCapInsets);
         }
 
         return true;
@@ -522,9 +524,8 @@ namespace ui {
 
         Rect rect(textureRect);
         Size size(originalSize);
-
-        if(_capInsets.equals(Rect::ZERO))
-            _capInsets = capInsets;
+        
+        _capInsets = capInsets;
 
         // If there is no given rect
         if ( rect.equals(Rect::ZERO) )
@@ -546,10 +547,8 @@ namespace ui {
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
-        if(!capInsets.equals(Rect::ZERO))
-        {
-            _capInsetsInternal = capInsets;
-        }
+
+        _capInsetsInternal = capInsets;
 
         if (_scale9Enabled)
         {
