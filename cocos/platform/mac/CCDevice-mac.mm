@@ -369,6 +369,16 @@ void Device::vibrate(float duration)
     CC_UNUSED_PARAM(duration);
 }
 
+std::string Device::getDeviceUID()
+{
+    io_registry_entry_t ioRegistryRoot = IORegistryEntryFromPath(kIOMasterPortDefault, "IOService:/");
+    CFStringRef uuidCf = (CFStringRef) IORegistryEntryCreateCFProperty(ioRegistryRoot, CFSTR(kIOPlatformUUIDKey), kCFAllocatorDefault, 0);
+    IOObjectRelease(ioRegistryRoot);
+    std::string ret = CFStringGetCStringPtr(uuidCf, kCFStringEncodingUTF8);
+    CFRelease(uuidCf);
+    return ret;
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

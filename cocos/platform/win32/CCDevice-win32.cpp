@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCStdC.h"
 
+#include <iphlpapi.h>
+
 NS_CC_BEGIN
 
 int Device::getDPI()
@@ -499,6 +501,33 @@ void Device::setKeepScreenOn(bool value)
 void Device::vibrate(float duration)
 {
     CC_UNUSED_PARAM(duration);
+}
+
+static std::string mac_address_string(BYTE mac[MAX_ADAPTER_ADDRESS_LENGTH], DWORD length)
+{
+	std::string s;
+	for (DWORD i = 0; i < length; i++) {
+		char b[3];
+		snprintf(b, 3, "%02x", mac[i]);
+		s.append(b);
+	}
+	return s;
+}
+
+std::string Device::getDeviceUID()
+{
+	DWORD size;
+	if (GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, nullptr,
+		nullptr, &size) == ERROR_BUFFER_OVERFLOW) {
+		std::vector<IP_ADAPTER_ADDRESSES> addresses(size);
+		if (GetAdaptersAddresses(AF_UNSPEC, GAA_FLAG_INCLUDE_PREFIX, nullptr,
+			&addresses[0], &size) == ERROR_SUCCESS) {
+			PIP_ADAPTER_ADDRESSES aa = &addresses[0];
+			return mac_address_string(aa->PhysicalAddress,
+				aa->PhysicalAddressLength);
+		}
+	}
+	return "";
 }
 
 NS_CC_END

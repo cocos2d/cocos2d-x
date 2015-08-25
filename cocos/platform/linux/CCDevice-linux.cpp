@@ -510,6 +510,12 @@ void Device::vibrate(float duration)
     CC_UNUSED_PARAM(duration);
 }
 
+std::string Device::getDeviceUID()
+{
+	std::string ret;
+    return ret;
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
