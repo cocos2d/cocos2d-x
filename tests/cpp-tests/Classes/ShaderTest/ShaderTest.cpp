@@ -601,7 +601,7 @@ std::string ShaderLensFlare::title() const
 
 std::string ShaderLensFlare::subtitle() const
 {
-    return "Lens Flare	";
+    return "Lens Flare";
 }
 
 bool ShaderLensFlare::init()
