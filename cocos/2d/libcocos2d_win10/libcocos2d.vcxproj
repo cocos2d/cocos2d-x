@@ -285,7 +285,6 @@
     <ClCompile Include="..\..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\..\3d\CCTerrain.cpp" />
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\..\audio\winrt\Audio.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -621,6 +620,7 @@
     <ClCompile Include="..\..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="..\..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexIndexBuffer.cpp" />
@@ -942,7 +942,6 @@
     <ClInclude Include="..\..\3d\CCSprite3D.h" />
     <ClInclude Include="..\..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\..\3d\CCTerrain.h" />
-    <ClInclude Include="..\..\3d\CCTextureCube.h" />
     <ClInclude Include="..\..\3d\cocos3d.h" />
     <ClInclude Include="..\..\audio\include\AudioEngine.h" />
     <ClInclude Include="..\..\audio\include\Export.h" />
@@ -1220,6 +1219,7 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h" />
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\..\renderer\CCTextureCube.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
