@@ -274,6 +274,27 @@ public:
      * @since v3.3
      */
     float getZoomScale()const;
+    
+    /**
+     * @brief Return the nine-patch sprite of normal state
+     * @return the nine-patch sprite of normal state
+     * @since v3.8
+     */
+    Scale9Sprite* getRendererNormal() const { return _buttonNormalRenderer; }
+    
+    /**
+     * @brief Return the nine-patch sprite of clicked state
+     * @return the nine-patch sprite of clicked state
+     * @since v3.8
+     */
+    Scale9Sprite* getRendererClicked() const { return _buttonClickedRenderer; }
+    
+    /**
+     * @brief Return the nine-patch sprite of disabled state
+     * @return the nine-patch sprite of disabled state
+     * @since v3.8
+     */
+    Scale9Sprite* getRendererDisable() const { return _buttonDisableRenderer; }
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
