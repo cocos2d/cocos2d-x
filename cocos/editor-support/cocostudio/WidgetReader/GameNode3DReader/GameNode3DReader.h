@@ -47,7 +47,7 @@ namespace cocostudio
         ~GameNode3DReader();
         
         static GameNode3DReader* getInstance();
-        static cocos2d::CameraBackgroundSkyBoxBrush* getSceneBrushInstance();
+        static cocos2d::CameraBackgroundBrush* getSceneBrushInstance();
         /** @deprecated Use method destroyInstance() instead */
         CC_DEPRECATED_ATTRIBUTE static void purge();
         static void destroyInstance();

@@ -62,8 +62,8 @@ namespace cocostudio
         
         return _instanceNode3DReader;
     }
-    static CameraBackgroundSkyBoxBrush* _sceneBrushInstance = nullptr;
-    CameraBackgroundSkyBoxBrush* GameNode3DReader::getSceneBrushInstance()
+    static CameraBackgroundBrush* _sceneBrushInstance = nullptr;
+    CameraBackgroundBrush* GameNode3DReader::getSceneBrushInstance()
     {
         return _sceneBrushInstance;
     }
