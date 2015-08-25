@@ -116,9 +116,6 @@ namespace ui {
         virtual void closeKeyboard();
         virtual void onEnter(void);
     private:
-        Platform::String^ stringToPlatformString(std::string strSrc);
-        std::string PlatformStringTostring(Platform::String^ strSrc);
-    private:
         
         EditBoxWinRT^ m_editBoxWinrt;
 
