@@ -401,6 +401,7 @@ bool TestCase::init()
         
         ttfConfig.fontSize = 16;
         _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
+        _subtitleLabel->setMaxLineWidth(VisibleRect::getVisibleRect().size.width);
         addChild(_subtitleLabel, 9999);
         _subtitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
         
