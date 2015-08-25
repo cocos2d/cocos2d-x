@@ -380,7 +380,6 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-                setGLProgram(nullptr);
                 initGLProgram();
             });
 
