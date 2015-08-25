@@ -62,6 +62,11 @@ namespace cocostudio
         
         return _instanceNode3DReader;
     }
+    static CameraBackgroundBrush* _sceneBrushInstance = nullptr;
+    CameraBackgroundBrush* GameNode3DReader::getSceneBrushInstance()
+    {
+        return _sceneBrushInstance;
+    }
     
     void GameNode3DReader::purge()
     {
@@ -376,6 +381,7 @@ namespace cocostudio
         std::string name = options->name()->c_str();
         node->setName(name);
 
+        _sceneBrushInstance = nullptr;
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
         {
@@ -387,19 +393,15 @@ namespace cocostudio
             std::string backFileData = options->backFileData()->path()->c_str();
             FileUtils *fileUtils = FileUtils::getInstance();
 
-            if (!fileUtils->isFileExist(leftFileData)
-                || !fileUtils->isFileExist(rightFileData)
-                || !fileUtils->isFileExist(upFileData)
-                || !fileUtils->isFileExist(downFileData)
-                || !fileUtils->isFileExist(forwardFileData)
-                || !fileUtils->isFileExist(backFileData))
+            if (fileUtils->isFileExist(leftFileData)
+                && fileUtils->isFileExist(rightFileData)
+                && fileUtils->isFileExist(upFileData)
+                && fileUtils->isFileExist(downFileData)
+                && fileUtils->isFileExist(forwardFileData)
+                && fileUtils->isFileExist(backFileData))
             {
-                return;
+                _sceneBrushInstance = CameraBackgroundSkyBoxBrush::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
             }
-            Skybox* childBox = Skybox::create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            unsigned short cameraFlag = 1 << 10;
-            childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox,0,"_innerSkyBox");
         }
 
         std::string customProperty = options->customProperty()->c_str();

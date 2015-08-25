@@ -317,6 +317,9 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
     glCullFace(GL_BACK);
     RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
     
+    glDisable(GL_BLEND);
+    RenderState::StateBlock::_defaultState->setBlend(false);
+    
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         GL::bindVAO(_vao);
