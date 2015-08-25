@@ -177,6 +177,9 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 
     glCullFace(GL_BACK);
     RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    
+    glDisable(GL_BLEND);
+    RenderState::StateBlock::_defaultState->setBlend(false);
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
