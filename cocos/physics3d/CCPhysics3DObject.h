@@ -462,91 +462,177 @@ protected:
 };
 
 /**
- * @brief The description of Physics3DCollider.
+ * @brief @~english The description of Physics3DCollider.
+   @~chinese Physics3DCollider的描述信息
  */
 struct CC_DLL Physics3DColliderDes
 {
+    /** @~english shape pointer
+    *   @~chinese shape的指针
+    */
     Physics3DShape* shape;
+    /** @~english original world Transform
+    *   @~chinese 初始的世界变换矩阵
+    */
     cocos2d::Mat4 originalTransform;
-    bool          isTrigger; //is it a trigger?
+    /** @~english Is collider a trigger?
+    *   @~chinese 是否是一个trigger
+    */
+    bool          isTrigger;
+    /** @~english the friction
+    *   @~chinese 摩擦力
+    */
     float friction;
+    /** @~english the rolling friction
+    *   @~chinese 滚动摩擦力
+    */
     float rollingFriction;
+    /** @~english the restitution
+    *   @~chinese 恢复
+    */
     float restitution;
+    /** @~english the hit fraction
+    *   @~chinese 碰撞摩擦力
+    */
     float hitFraction;
+    /** @~english the swep sphere radius
+    *   @~chinese 扫球半径值
+    */
     float ccdSweptSphereRadius;
+    /** @~english the motion threshold
+    *   @~chinese 运动阀值
+    */
     float ccdMotionThreshold;
-    
+
     Physics3DColliderDes()
-    : shape(nullptr)
-    , isTrigger(false)
-    , friction(0.5f)
-    , rollingFriction(0.0f)
-    , restitution(0.0f)
-    , hitFraction(1.0f)
-    , ccdSweptSphereRadius(0.0f)
-    , ccdMotionThreshold(0.0f)
+        : shape(nullptr)
+        , isTrigger(false)
+        , friction(0.5f)
+        , rollingFriction(0.0f)
+        , restitution(0.0f)
+        , hitFraction(1.0f)
+        , ccdSweptSphereRadius(0.0f)
+        , ccdMotionThreshold(0.0f)
     {
-        
+
     }
 };
 
 /**
-* @brief Inherit from Physics3DObject, the main class for Colliders
+* @brief @~english Inherit from Physics3DObject, the main class for Colliders.
+  @~chinese 继承自Physics3DObject，用来处理Colliders的类
 */
 class CC_DLL Physics3DCollider : public Physics3DObject
 {
 public:
 
+    /** @~english Creates a Physics3DCollider with Physics3DColliderDes.
+    *  @~chinese 用Physics3DColliderDes来创建一个Physics3DCollider。
+    *  @return @~english An autoreleased Physics3DCollider object. @~chinese 一个自动释放的Physics3DCollider对象。
+    */
     static Physics3DCollider* create(Physics3DColliderDes *info);
 
+    /** @~english Get the pointer of btGhostObject.
+    *  @~chinese 获取btGhostObject的指针。
+    *  @return The pointer of btGhostObject.
+    */
     btGhostObject* getGhostObject() const { return _btGhostObject; }
 
-    /** Set trigger. */
+    /** @~english Set trigger.
+    *  @~chinese 设置是否是trigger。
+    *  @param isTrigger @~english Is a trigger. @~chinese 是否是trigger
+    */
     void setTrigger(bool isTrigger);
 
-    /** Check is a trigger. */
+    /** @~english Check is a trigger.
+    *  @~chinese 是否是trigger。
+    *  @return @~english Is a trigger. @~chinese 是否是trigger。
+    */
     bool isTrigger() const;
 
-    /** Set restitution. */
+    /** @~english Set restitution.
+    *  @~chinese 设置恢复。
+    *  @param rest @~english The restitution. @~chinese 恢复值。
+    */
     void setRestitution(float rest);
 
-    /** Get restitution. */
+    /** @~english Get restitution.
+    *  @~chinese 获取恢复。
+    *  @return @~english The restitution. @~chinese 恢复值。
+    */
     float getRestitution() const;
 
-    /** Set friction. */
+    /** @~english Set friction.
+    *  @~chinese 设置摩擦。
+    *  @param rest @~english The friction. @~chinese 摩擦值。
+    */
     void setFriction(float frict);
 
-    /** Get friction. */
+    /** @~english Get friction.
+    *  @~chinese 获取摩擦。
+    *  @return @~english The friction. @~chinese 摩擦值。
+    */
     float getFriction() const;
 
-    /** Set rolling friction. */
+    /** @~english Set rolling friction.
+    *  @~chinese 设置滚动摩擦。
+    *  @param frict @~english The rolling friction. @~chinese 滚动摩擦值。
+    */
     void setRollingFriction(float frict);
 
-    /** Get rolling friction. */
+    /** @~english Get rolling friction.
+    *  @~chinese 获取滚动摩擦。
+    *  @return @~english The rolling friction.  @~chinese 滚动摩擦值。
+    */
     float getRollingFriction() const;
 
-    /** Set hit friction. */
+    /** @~english Set hit friction.
+    *  @~chinese 设置碰撞摩擦。
+    *  @param hitFraction @~english The hit friction.  @~chinese 碰撞摩擦值。
+    */
     void setHitFraction(float hitFraction);
 
-    /** Get hit friction. */
+    /** @~english Get hit friction.
+    *  @~chinese 获取碰撞摩擦。
+    *  @return @~english The hit friction.  @~chinese 碰撞摩擦值。
+    */
     float getHitFraction() const;
 
-    /** Set motion threshold, don't do continuous collision detection if the motion (in one step) is less then ccdMotionThreshold */
+    /** @~english Set motion threshold, don't do continuous collision detection if the motion (in one step) is less then ccdMotionThreshold.
+    *  @~chinese 设置运动阈值，不要连续碰撞检测，如果运动（一步）小于ccdmotionthreshold。
+    *  @param ccdMotionThreshold @~english The motion threshold.  @~chinese 运动阈值。
+    */
     void setCcdMotionThreshold(float ccdMotionThreshold);
 
-    /** Get motion threshold. */
+    /** @~english Get motion threshold.
+    *  @~chinese 获取运动阈值。
+    *  @return @~english The motion threshold. @~chinese 运动阈值。
+    */
     float getCcdMotionThreshold() const;
 
-    /** Set swept sphere radius. */
+    /** @~english Set swept sphere radius.
+    *  @~chinese 设置扫球半径。
+    *  @param radius @~english The swept sphere radius. @~chinese 扫球半径值。
+    */
     void setCcdSweptSphereRadius(float radius);
 
-    /** Get swept sphere radius. */
+    /** @~english Get swept sphere radius.
+    *  @~chinese 获取扫球半径。
+    *  @return @~english The swept sphere radius. @~chinese 扫球半径值。
+    */
     float getCcdSweptSphereRadius() const;
 
-    /** Get the world matrix of Physics3DObject. */
+    /** override. */
     virtual cocos2d::Mat4 getWorldTransform() const;
 
+    /** @~english Set a callback when trigger enter.
+        @~chinese 设置一个回调函数在trigger进入时响应。
+    */
     std::function<void(Physics3DObject *otherObject)> onTriggerEnter;
+
+    /** @~english Set a callback when trigger exit.
+        @~chinese 设置一个回调函数在trigger离开时响应。
+    */
     std::function<void(Physics3DObject *otherObject)> onTriggerExit;
 
 CC_CONSTRUCTOR_ACCESS :
