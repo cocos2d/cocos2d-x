@@ -246,7 +246,7 @@ void DisplayManager::changeDisplayWithIndex(int index, bool force)
     setCurrentDecorativeDisplay(decoDisplay);
 }
 
-void CCDisplayManager::changeDisplayWithName(const std::string& name, bool force)
+void DisplayManager::changeDisplayWithName(const std::string& name, bool force)
 {
     for (int i = 0; i<_decoDisplayList.size(); i++)
     {

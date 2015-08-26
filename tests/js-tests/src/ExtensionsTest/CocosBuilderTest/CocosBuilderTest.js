@@ -42,5 +42,9 @@ var CocosBuilderTestScene = TestScene.extend({
          }
 
          cc.director.runScene(this);
-     }
+     },
+    onMainMenuCallback: function(){
+        var scene = new ExtensionsTestScene();
+        scene.runThisTest();
+    }
 });

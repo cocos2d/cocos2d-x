@@ -244,6 +244,9 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 void Button::setupNormalTexture()
 {
     _normalTextureSize = _buttonNormalRenderer->getContentSize();
+    // force update _customSize, fixed issue:
+    // https://github.com/cocos2d/cocos2d-x/issues/12249
+    _customSize = _normalTextureSize;
 
     this->updateChildrenDisplayedRGBA();
 
@@ -767,6 +770,7 @@ void Button::setTitleText(const std::string& text)
         this->createTitleRenderer();
     }
     _titleRenderer->setString(text);
+    this->setTitleFontSize(_fontSize);
     updateContentSize();
 }
 

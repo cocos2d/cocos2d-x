@@ -171,6 +171,15 @@ public:
      * @~chinese 限制后的capInset.
      */
     static Rect restrictCapInsetRect(const Rect& capInsets, const Size& textureSize);
+
+    /**
+     *@brief Convert a node's boundingBox rect into screen coordinates.
+     *
+     * @param node Any node pointer.
+     *
+     * @return A Rect in screen coordinates.
+     */
+    static Rect convertBoundingBoxToScreen(Node* node);
 };
 }
 

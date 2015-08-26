@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "cocostudio/DictionaryHelper.h"
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
+#include "cocos2d.h"
 
 namespace flatbuffers
 {
@@ -47,6 +48,7 @@ namespace flatbuffers
     struct BoolFrame;
     struct InnerActionFrame;
     struct EasingData;
+    struct BlendFrame;
 }
 
 NS_TIMELINE_BEGIN
@@ -138,6 +140,7 @@ public:
     * @~chinese 时间轴动画。
     */
     ActionTimeline* loadAnimationActionWithFlatBuffersFile(const std::string& fileName);
+    ActionTimeline* loadAnimationWithDataBuffer(const cocos2d::Data data, const std::string fileName);
     
     /** @~english Create an action time line from flatbuffer file for simulator.
     *   @~chinese 从flatbuffer二进制文件中创建时间轴动画(用于模拟器)。
@@ -179,9 +182,10 @@ protected:
     Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::ScaleFrame* flatbuffers);
     Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::IntFrame* flatbuffers);
     Frame* loadInnerActionFrameWithFlatBuffers  (const flatbuffers::InnerActionFrame* flatbuffers);
-    
+    Frame* loadBlendFrameWithFlatBuffers        (const flatbuffers::BlendFrame* flatbuffers);
     void loadEasingDataWithFlatBuffers(Frame* frame, const flatbuffers::EasingData* flatbuffers);
 
+    inline ActionTimeline* createActionWithDataBuffer(const cocos2d::Data data);
 protected:
 
     typedef std::function<Frame*(const rapidjson::Value& json)> FrameCreateFunc;

@@ -90,10 +90,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Skybox();
 
     /** @~english init Skybox.
-        @~chinese init Skybox。
+        @~chinese 初始化Skybox。
     */
-    virtual bool init();
-
+    virtual bool init() override;
+    
     /** @~english initialize with texture path
         @~chinese 纹理路径初始化
     */

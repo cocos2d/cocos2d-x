@@ -3,6 +3,7 @@
 #include "ConfigParser.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/UIHelper.h"
+#include "tinyxml2/tinyxml2.h"
 
 ////////////////////////////////////////
 
@@ -57,6 +58,34 @@ void RuntimeCCSImpl::loadCSDProject(const std::string& file)
         Size frameSize = Director::getInstance()->getVisibleSize();
         node->setContentSize(frameSize);
         ui::Helper::doLayout(node);
+
+        std::string inFullpath = FileUtils::getInstance()->fullPathForFilename(file).c_str();
+        std::string content = FileUtils::getInstance()->getStringFromFile(file);
+        tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
+        document->Parse(content.c_str());
+        const tinyxml2::XMLElement* rootElement = document->RootElement();
+        const tinyxml2::XMLElement* element = rootElement->FirstChildElement();
+
+        if(element)
+        {
+            if (strcmp("PropertyGroup", element->Name()) == 0)
+            {
+                const tinyxml2::XMLAttribute* attribute = element->FirstAttribute();
+                if (attribute)
+                {
+                    std::string csdType = attribute->Name();
+                    if (csdType.compare("Type") == 0)
+                    {
+                        std::string csdValue = attribute->Value();
+                        if (csdValue.compare("Skeleton") == 0 || csdValue.compare("Node") == 0)
+                        {
+                            node->setPosition(cocos2d::Vec2(frameSize.width / 2.0f, frameSize.height / 2.0f));
+                        }
+                    }
+                }
+            }
+
+        }
 
         if (Director::getInstance()->getRunningScene())
         {

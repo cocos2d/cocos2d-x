@@ -114,6 +114,15 @@ var TestController = cc.LayerGradient.extend({
         menu.x = 0;
 	    menu.y = 0;
 
+        // sort the test title
+        testNames.sort(function(first, second){
+            if (first.title > second.title)
+            {
+                return 1;
+            }
+            return -1;
+        });
+
         // add menu items for tests
         this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
 
@@ -200,7 +209,13 @@ var TestController = cc.LayerGradient.extend({
         }, this);
     },
     onCloseCallback:function () {
-        window.history && window.history.go(-1);
+        if (cc.sys.isNative)
+        {
+            cc.director.end();
+        }
+        else {
+            window.history && window.history.go(-1);
+        }
     },
     onToggleAutoTest:function() {
         autoTestEnabled = !autoTestEnabled;
@@ -376,6 +391,14 @@ var testNames = [
         linksrc:"src/EffectsAdvancedTest/EffectsAdvancedTest.js",
         testScene:function () {
             return new EffectAdvanceScene();
+        }
+    },
+    {
+        title:"Native Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/NativeTest/NativeTest.js",
+        testScene:function () {
+            return new NativeTestScene();
         }
     },
     //{
@@ -703,6 +726,14 @@ var testNames = [
         linksrc:"src/SysTest/SysTest.js",
         testScene:function () {
             return new SysTestScene();
+        }
+    },
+    {
+        title:"Vibrate Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/VibrateTest/VibrateTest.js",
+        testScene:function () {
+            return new VibrateTestScene();
         }
     },
     {

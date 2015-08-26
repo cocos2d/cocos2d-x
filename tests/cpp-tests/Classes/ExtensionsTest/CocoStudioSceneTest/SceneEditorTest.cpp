@@ -32,8 +32,8 @@ bool SceneEditorTestBase::init()
         _isCsbLoad = false;
         _loadtypelb = cocos2d::Label::createWithSystemFont(_loadtypeStr[0], "Arial", 12);
         // #endif        
-        MenuItemLabel* itemlb = CCMenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestBase::changeLoadTypeCallback, this));
-        Menu* loadtypemenu = CCMenu::create(itemlb, nullptr);
+        MenuItemLabel* itemlb = MenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestBase::changeLoadTypeCallback, this));
+        Menu* loadtypemenu = Menu::create(itemlb, nullptr);
         loadtypemenu->setPosition(Point(VisibleRect::rightTop().x - 50, VisibleRect::rightTop().y - 20));
         addChild(loadtypemenu, 100);
 
@@ -188,8 +188,8 @@ cocos2d::Node* SpriteComponentTest::createGameScene()
 
 void SpriteComponentTest::defaultPlay()
 {
-	ActionInterval*  action1 = CCBlink::create(2, 10);
-	ActionInterval*  action2 = CCBlink::create(2, 5);
+	ActionInterval*  action1 = Blink::create(2, 10);
+	ActionInterval*  action2 = Blink::create(2, 5);
 
 	ComRender *pSister1 = static_cast<ComRender*>(_rootNode->getChildByTag(10003)->getComponent("CCSprite"));
 	pSister1->getNode()->runAction(action1);
@@ -309,10 +309,10 @@ void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
         case ui::Widget::TouchEventType::BEGAN:
 		{
 			ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10010)->getComponent("CCArmature"));
-			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Vec2(-1000.0f, 0)));
+			pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 
 			ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10011)->getComponent("CCArmature"));
-			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Vec2(-1000.0f, 0)));
+			pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 		}
 		break;
 	default:
@@ -379,17 +379,17 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 void TmxMapComponentTest::defaultPlay()
 {
 	ComRender *tmxMap = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
-	ActionInterval *actionTo = CCSkewTo::create(2, 0.f, 2.f);
-	ActionInterval *rotateTo = CCRotateTo::create(2, 61.0f);
-	ActionInterval *actionScaleTo = CCScaleTo::create(2, -0.44f, 0.47f);
+	ActionInterval *actionTo = SkewTo::create(2, 0.f, 2.f);
+	ActionInterval *rotateTo = RotateTo::create(2, 61.0f);
+	ActionInterval *actionScaleTo = ScaleTo::create(2, -0.44f, 0.47f);
 
-	ActionInterval *actionScaleToBack = CCScaleTo::create(2, 1.0f, 1.0f);
-	ActionInterval *rotateToBack = CCRotateTo::create(2, 0);
-	ActionInterval *actionToBack = CCSkewTo::create(2, 0, 0);
+	ActionInterval *actionScaleToBack = ScaleTo::create(2, 1.0f, 1.0f);
+	ActionInterval *rotateToBack = RotateTo::create(2, 0);
+	ActionInterval *actionToBack = SkewTo::create(2, 0, 0);
 
-	tmxMap->getNode()->runAction(CCSequence::create(actionTo, actionToBack, nullptr));
-	tmxMap->getNode()->runAction(CCSequence::create(rotateTo, rotateToBack, nullptr));
-	tmxMap->getNode()->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
 }
 
 ParticleComponentTest::ParticleComponentTest()
@@ -441,8 +441,8 @@ cocos2d::Node* ParticleComponentTest::createGameScene()
 void ParticleComponentTest::defaultPlay()
 {
 	ComRender* Particle = static_cast<ComRender*>(_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
-	ActionInterval*  jump = CCJumpBy::create(5, Point(-500,0), 50, 4);
-	FiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), nullptr);
+	ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
+	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
 	Particle->getNode()->runAction(action);
 }
 

@@ -11,6 +11,36 @@
 -- @return btCollisionShape#btCollisionShape ret (return value: btCollisionShape)
         
 --------------------------------
+-- 
+-- @function [parent=#Physics3DShape] initSphere 
+-- @param self
+-- @param #float radius
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Physics3DShape] initBox 
+-- @param self
+-- @param #vec3_table ext
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Physics3DShape] initCapsule 
+-- @param self
+-- @param #float radius
+-- @param #float height
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Physics3DShape] initCylinder 
+-- @param self
+-- @param #float radius
+-- @param #float height
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- get shape type
 -- @function [parent=#Physics3DShape] getShapeType 
 -- @param self
@@ -61,5 +91,11 @@
 -- @param self
 -- @param #float radius
 -- @return Physics3DShape#Physics3DShape ret (return value: cc.Physics3DShape)
+        
+--------------------------------
+-- 
+-- @function [parent=#Physics3DShape] Physics3DShape 
+-- @param self
+-- @return Physics3DShape#Physics3DShape self (return value: cc.Physics3DShape)
         
 return nil

@@ -75,19 +75,19 @@ public:
     static int setResolutionPercent(int percent);
 
 	/**
-   *@brief  @~english The function is used to set FPS level.
-  * @~chinese 该函数用于设置FPS的级别。
-   *@Warn @~english The input fps level(0-99) corresponds to game fps value(0-60).
-   * FPS level 99 means game FPS value 60.
-   * The purpose of the API is reducing power consumption when we set dynamic fps in some situations.
-   * @~chinese 输入帧级别(0 - 99)对应于游戏的fps值(0-60) 。
-   * FPS 99级意味着游戏的帧速为60 FPS。
-   * 这个API的目的是通过动态调整FPS级别来减少电量消耗。
-   *@param  fps @~english the fps value.
-   * @~chinese fps的值。
-   *@return  @~english success: 0, fail: -1.
-   * @~chinese 成功:0,失败: -1。
-   */
+     *@brief  @~english The function is used to set FPS level.
+     * @~chinese 该函数用于设置FPS的级别。
+     *@Warn @~english The input fps level(0-99) corresponds to game fps value(0-60).
+     * FPS level 99 means game FPS value 60.
+     * The purpose of the API is reducing power consumption when we set dynamic fps in some situations.
+     * @~chinese 输入帧级别(0 - 99)对应于游戏的fps值(0-60) 。
+     * FPS 99级意味着游戏的帧速为60 FPS。
+     * 这个API的目的是通过动态调整FPS级别来减少电量消耗。
+     *@param  fps @~english the fps value.
+     * @~chinese fps的值。
+     *@return  @~english success: 0, fail: -1.
+     * @~chinese 成功:0,失败: -1。
+     */
     static int setFPS(int fps);
 
     /**

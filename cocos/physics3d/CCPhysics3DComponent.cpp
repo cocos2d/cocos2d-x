@@ -176,7 +176,8 @@ void Physics3DComponent::setSyncFlag(PhysicsSyncFlag syncFlag)
 
 void Physics3DComponent::syncPhysicsToNode()
 {
-    if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+    if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY
+     || _physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
     {
         Mat4 parentMat;
         if (_owner->getParent())
@@ -209,7 +210,8 @@ void Physics3DComponent::syncPhysicsToNode()
 
 void Physics3DComponent::syncNodeToPhysics()
 {
-    if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+    if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY
+     || _physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
     {
         auto mat = _owner->getNodeToWorldTransform();
         //remove scale, no scale support for physics
@@ -233,6 +235,11 @@ void Physics3DComponent::syncNodeToPhysics()
             auto motionState = body->getMotionState();
             motionState->setWorldTransform(convertMat4TobtTransform(mat));
             body->setMotionState(motionState);
+        }
+        else if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+        {
+            auto object = static_cast<Physics3DCollider*>(_physics3DObj)->getGhostObject();
+            object->setWorldTransform(convertMat4TobtTransform(mat));
         }
     }
 }

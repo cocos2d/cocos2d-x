@@ -174,7 +174,7 @@ function cc.pIsSegmentIntersect(pt1,pt2,pt3,pt4)
     local s,t,ret = 0,0,false
     ret,s,t =cc.pIsLineIntersect(pt1, pt2, pt3, pt4,s,t)
 
-    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 0.0 then
+    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 1.0 then
         return true
     end
 

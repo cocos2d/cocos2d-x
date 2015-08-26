@@ -384,7 +384,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 else if( dictionary.find("textureImageData") != dictionary.end() )
                 {                        
                     std::string textureData = dictionary.at("textureImageData").asString();
-                    CCASSERT(!textureData.empty(), "");
+                    CCASSERT(!textureData.empty(), "textureData can't be empty!");
                     
                     auto dataLen = textureData.size();
                     if (dataLen != 0)
@@ -626,6 +626,14 @@ void ParticleSystem::onEnter()
 
 void ParticleSystem::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     this->unscheduleUpdate();
     Node::onExit();
 }

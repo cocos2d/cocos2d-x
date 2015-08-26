@@ -51,14 +51,16 @@ public:
     ~AudioCache();
 
     void readDataTask();
-    void addCallback(const std::function<void()> &callback);
+    void addPlayCallback(const std::function<void()> &callback);
+    void addLoadCallback(const std::function<void(bool)> &callback);
     bool getChunk(AudioDataChunk& chunk);
     void doBuffering();
     bool isStreamingSource();
     void seek(const float ratio);
 
 protected:
-    void invokeCallbacks();
+    void invokePlayCallbacks();
+    void invokeLoadCallbacks();
     
 private:
     AudioCache(const AudioCache&);
@@ -73,7 +75,7 @@ private:
     std::string _fileFullPath;
     AudioSourceReader *_srcReader;
     std::vector<std::function<void()>> _callbacks;
-
+    std::vector<std::function<void(bool)>> _loadCallbacks;
 
     friend class AudioPlayer;
     friend class AudioEngineImpl;

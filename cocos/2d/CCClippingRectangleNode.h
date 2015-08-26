@@ -75,8 +75,8 @@ public:
         return _clippingRegion;
     }
     /**
-    @brief @~english Set the clipping rectangle.
-     * @~chinese 设置裁剪矩形。
+    @brief @~english Set the clipping rectangle. The rectangle is base on screen coordinate, so ClippingRectangleNode's region doesn't support any transforms, such as setScale, setRotate and so on.
+     * @~chinese 设置裁剪矩形。裁剪矩形是基于屏幕坐标系的，所以它不支持任何仿射变换，比如缩放或旋转。
     @param clippingRegion @~english Specify the clipping rectangle.
      * @~chinese 指定的裁剪矩形。
     */

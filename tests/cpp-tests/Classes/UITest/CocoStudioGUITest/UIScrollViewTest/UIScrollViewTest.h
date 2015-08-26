@@ -127,4 +127,17 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIScrollViewDisableTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIScrollViewDisableTest);
+
+    UIScrollViewDisableTest();
+    ~UIScrollViewDisableTest();
+    virtual bool init() override;
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

@@ -57,7 +57,7 @@ public:
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
     
-    virtual void trigger() = 0;
+    virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
     
     /** @~english triggers the timer  @~chinese 触发计时器*/
@@ -88,7 +88,7 @@ public:
     
     inline SEL_SCHEDULE getSelector() const { return _selector; };
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 protected:
@@ -108,7 +108,7 @@ public:
     inline const ccSchedulerFunc& getCallback() const { return _callback; };
     inline const std::string& getKey() const { return _key; };
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 protected:
@@ -125,7 +125,7 @@ public:
     bool initWithScriptHandler(int handler, float seconds);
     inline int getScriptHandler() const { return _scriptHandler; };
     
-    virtual void trigger() override;
+    virtual void trigger(float dt) override;
     virtual void cancel() override;
     
 private:

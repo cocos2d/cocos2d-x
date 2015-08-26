@@ -162,6 +162,14 @@ void TransitionScene::hideOutShowIn()
 // custom onEnter
 void TransitionScene::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::onEnter();
     
     // disable events while transitions
@@ -177,6 +185,14 @@ void TransitionScene::onEnter()
 // custom onExit
 void TransitionScene::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::onExit();
     
     // enable events while transitions
@@ -194,7 +210,7 @@ void TransitionScene::cleanup()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
             return;
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING

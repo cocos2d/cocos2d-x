@@ -196,13 +196,19 @@ void EffectBlur::setTarget(EffectSprite *sprite)
 {
     Size size = sprite->getTexture()->getContentSizeInPixels();
     _glprogramstate->setUniformVec2("resolution", size);
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     _glprogramstate->setUniformFloat("blurRadius", _blurRadius);
     _glprogramstate->setUniformFloat("sampleNum", _blurSampleNum);
+#endif
 }
 
 bool EffectBlur::init(float blurRadius, float sampleNum)
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     initGLProgramState("Shaders/example_Blur.fsh");
+#else
+    initGLProgramState("Shaders/example_Blur_winrt.fsh");
+#endif
     _blurRadius = blurRadius;
     _blurSampleNum = sampleNum;
     
@@ -439,6 +445,10 @@ void EffectNormalMapped::setLightColor(const Color4F& color)
 
 EffectSpriteTest::EffectSpriteTest()
 {
+}
+
+bool EffectSpriteTest::init()
+{
     if (ShaderTestDemo2::init()) {
 
         auto layer = LayerColor::create(Color4B::BLUE);
@@ -497,11 +507,17 @@ EffectSpriteTest::EffectSpriteTest()
 
 //        _sprite->addEffect( _effects.at(8), -10 );
 //        _sprite->addEffect( _effects.at(1), 1 );
-
+        
+        return true;
     }
+    return false;
 }
 
 EffectSpriteLamp::EffectSpriteLamp()
+{
+}
+
+bool EffectSpriteLamp::init()
 {
     if (ShaderTestDemo2::init()) {
         
@@ -529,7 +545,9 @@ EffectSpriteLamp::EffectSpriteLamp()
         listerner->onTouchesMoved = CC_CALLBACK_2(EffectSpriteLamp::onTouchesMoved, this);
         listerner->onTouchesEnded = CC_CALLBACK_2(EffectSpriteLamp::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listerner, this);
+        return true;
     }
+    return false;
 }
 
 

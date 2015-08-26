@@ -51,7 +51,7 @@ public:
     @brief    Callback by Director to limit FPS.
     @param interval The time, expressed in seconds, between current frame and next.
     */
-    void setAnimationInterval(double interval);
+    void setAnimationInterval(float interval);
 
     /**
     @brief    Run the message loop.
@@ -91,12 +91,12 @@ public:
      */
     virtual bool openURL(const std::string &url);
 
-	/**
-	@brief  This function will be called when the application screen size is changed.
-	@param new width
-	@param new height
-	*/
-	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+    /**
+    @brief  This function will be called when the application screen size is changed.
+    @param new width
+    @param new height
+    */
+    virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
 
 protected:
     static Application * sm_pSharedApplication;

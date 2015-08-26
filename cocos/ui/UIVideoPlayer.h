@@ -120,13 +120,13 @@ namespace experimental{
              * @~english Pauses playback.
              * @~chinese 暂停播放。
              */
-            virtual void pause();
+            virtual void pause()override;
 
             /**
              * @~english Resumes playback.
              * @~chinese 恢复播放。
              */
-            virtual void resume();
+            virtual void resume()override;
 
             /**
              * @~english Stops playback.

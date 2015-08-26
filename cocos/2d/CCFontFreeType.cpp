@@ -24,10 +24,9 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCFontFreeType.h"
-
 #include FT_BBOX_H
 #include "edtaa3func.h"
-
+#include "CCFontAtlas.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
@@ -38,6 +37,9 @@ NS_CC_BEGIN
 FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
+
+const char* FontFreeType::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
+const char* FontFreeType::_glyphNEHE = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
 typedef struct _DataRef
 {
@@ -54,7 +56,7 @@ FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, G
     if (!tempFont)
         return nullptr;
     
-    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
+    tempFont->setGlyphCollection(glyphs, customGlyphs);
     
     if (!tempFont->createFontObject(fontName, fontSize))
     {
@@ -101,6 +103,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _lineHeight(0)
 , _fontAtlas(nullptr)
 , _encoding(FT_ENCODING_UNICODE)
+, _usedGlyphs(GlyphCollection::ASCII)
 {
     if (outline > 0)
     {
@@ -150,20 +153,16 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
                 break;
             }
         }
-        
+
         if (foundIndex == -1)
         {
             return false;
         }
-        
+
         _encoding = face->charmaps[foundIndex]->encoding;
         if (FT_Select_Charmap(face, _encoding))
         {
             return false;
-        }
-        
-        if (_encoding != FT_ENCODING_GB2312) {
-            CCLOG("Unsupported encoding:%d", _encoding);
         }
     }
 
@@ -207,7 +206,7 @@ FontAtlas * FontFreeType::createFontAtlas()
         if (_fontAtlas && _usedGlyphs != GlyphCollection::DYNAMIC)
         {
             std::u16string utf16;
-            if (StringUtils::UTF8ToUTF16(getCurrentGlyphCollection(), utf16))
+            if (StringUtils::UTF8ToUTF16(getGlyphCollection(), utf16))
             {
                 _fontAtlas->prepareLetterDefinitions(utf16);
             }
@@ -272,28 +271,24 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
-unsigned char* FontFreeType::getGlyphBitmap(unsigned short u16Code, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
+unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
-    unsigned char * ret = nullptr;
+    unsigned char* ret = nullptr;
 
-    do 
+    do
     {
-        if (!_fontRef)
-            break;
-
-        auto glyphIndex = FT_Get_Char_Index(_fontRef, u16Code);
-        if(glyphIndex == 0)
+        if (_fontRef == nullptr)
             break;
 
         if (_distanceFieldEnabled)
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
                 break;
         }
         else
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
@@ -315,7 +310,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short u16Code, long &outWid
             memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));
 
             FT_BBox bbox;
-            auto outlineBitmap = getGlyphBitmapWithOutline(u16Code,bbox);
+            auto outlineBitmap = getGlyphBitmapWithOutline(theChar,bbox);
             if(outlineBitmap == nullptr)
             {
                 ret = nullptr;
@@ -398,12 +393,10 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short u16Code, long &outWid
     }
 }
 
-unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short u16Code, FT_BBox &bbox)
+unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
-
-    FT_UInt gindex = FT_Get_Char_Index(_fontRef, u16Code);
-    if (FT_Load_Glyph(_fontRef, gindex, FT_LOAD_NO_BITMAP) == 0)
+    if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)
     {
         if (_fontRef->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
         {
@@ -604,6 +597,38 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
             iY += 1;
         }
     } 
+}
+
+void FontFreeType::setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs /* = nullptr */)
+{
+    _usedGlyphs = glyphs;
+    if (glyphs == GlyphCollection::CUSTOM)
+    {
+        _customGlyphs = customGlyphs;
+    }
+}
+
+const char* FontFreeType::getGlyphCollection() const
+{
+    const char* glyphCollection = nullptr;
+    switch (_usedGlyphs)
+    {
+    case cocos2d::GlyphCollection::DYNAMIC:
+        break;
+    case cocos2d::GlyphCollection::NEHE:
+        glyphCollection = _glyphNEHE;
+        break;
+    case cocos2d::GlyphCollection::ASCII:
+        glyphCollection = _glyphASCII;
+        break;
+    case cocos2d::GlyphCollection::CUSTOM:
+        glyphCollection = _customGlyphs.c_str();
+        break;
+    default:
+        break;
+    }
+
+    return glyphCollection;
 }
 
 NS_CC_END

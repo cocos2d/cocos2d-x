@@ -150,6 +150,8 @@ namespace ui {
         {
             auto texture = sprite->getTexture();
             auto spriteFrame = sprite->getSpriteFrame();
+            Rect actualCapInsets = capInsets;
+
             if (texture->isContain9PatchInfo())
             {
                 auto& parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
@@ -158,7 +160,7 @@ namespace ui {
                     this->_isPatch9 = true;
                     if(capInsets.equals(Rect::ZERO))
                     {
-                        this->_capInsetsInternal = this->_capInsets = parsedCapInset;
+                        actualCapInsets = parsedCapInset;
                     }
 
                 }
@@ -169,7 +171,7 @@ namespace ui {
                                    rotated,
                                    offset,
                                    originalSize,
-                                   capInsets);
+                                   actualCapInsets);
         }
 
         return true;
@@ -522,9 +524,8 @@ namespace ui {
 
         Rect rect(textureRect);
         Size size(originalSize);
-
-        if(_capInsets.equals(Rect::ZERO))
-            _capInsets = capInsets;
+        
+        _capInsets = capInsets;
 
         // If there is no given rect
         if ( rect.equals(Rect::ZERO) )
@@ -546,10 +547,8 @@ namespace ui {
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
-        if(!capInsets.equals(Rect::ZERO))
-        {
-            _capInsetsInternal = capInsets;
-        }
+
+        _capInsetsInternal = capInsets;
 
         if (_scale9Enabled)
         {
@@ -1395,7 +1394,7 @@ namespace ui {
 #if CC_ENABLE_SCRIPT_BINDING
         if (_scriptType == kScriptTypeJavascript)
         {
-            if (ScriptEngineManager::sendNodeEventToJS(this, kNodeOnCleanup))
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
                 return;
         }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
@@ -1422,6 +1421,14 @@ namespace ui {
 
     void Scale9Sprite::onExit()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+                return;
+        }
+#endif
+        
         Node::onExit();
         for( const auto &child: _protectedChildren)
             child->onExit();
@@ -1429,6 +1436,14 @@ namespace ui {
 
     void Scale9Sprite::onEnterTransitionDidFinish()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+                return;
+        }
+#endif
+        
         Node::onEnterTransitionDidFinish();
         for( const auto &child: _protectedChildren)
             child->onEnterTransitionDidFinish();
@@ -1436,6 +1451,14 @@ namespace ui {
 
     void Scale9Sprite::onExitTransitionDidStart()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+                return;
+        }
+#endif
+        
         Node::onExitTransitionDidStart();
         for( const auto &child: _protectedChildren)
             child->onExitTransitionDidStart();

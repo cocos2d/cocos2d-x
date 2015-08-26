@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __CCDIRECTOR_H__
 
 #include <stack>
+#include <thread>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
@@ -166,9 +167,9 @@ public:
     inline Scene* getRunningScene() { return _runningScene; }
 
     /** @~english Gets the FPS value.  @~chinese 得到了FPS的值。*/
-    inline double getAnimationInterval() { return _animationInterval; }
+    inline float getAnimationInterval() { return _animationInterval; }
     /** @~english Sets the FPS value. FPS = 1 @~chinese 设置FPS的值。FPS = 1 */
-    virtual void setAnimationInterval(double interval) = 0;
+    virtual void setAnimationInterval(float interval) = 0;
 
     /** @~english Whether or not to display the FPS on the bottom-left corner.  @~chinese 左下角是否有显示FPS。*/
     inline bool isDisplayStats() { return _displayStats; }
@@ -611,6 +612,12 @@ public:
      */
     void resetMatrixStack();
 
+    /**
+     * returns the cocos2d thread id.
+     Useful to know if certain code is already running on the cocos2d thread
+     */
+    const std::thread::id& getCocos2dThreadId() const { return _cocos2d_thread_id; }
+
 protected:
     void reset();
     
@@ -670,8 +677,8 @@ protected:
     //texture cache belongs to this director
     TextureCache *_textureCache;
 
-    double _animationInterval;
-    double _oldAnimationInterval;
+    float _animationInterval;
+    float _oldAnimationInterval;
 
     /* @~english landscape mode ?  @~chinese 景观模式?*/
     bool _landscape;
@@ -734,6 +741,9 @@ protected:
 
     bool _isStatusLabelUpdated;
 
+    /* cocos2d thread id */
+    std::thread::id _cocos2d_thread_id;
+
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
 };
@@ -768,7 +778,7 @@ public:
     // Overrides
     //
     virtual void mainLoop() override;
-    virtual void setAnimationInterval(double value) override;
+    virtual void setAnimationInterval(float value) override;
     virtual void startAnimation() override;
     virtual void stopAnimation() override;
 

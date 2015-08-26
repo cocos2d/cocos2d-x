@@ -350,6 +350,16 @@ protected:
     /** @~english Dispatches event to listeners with a specified listener type  @~chinese 分发事件给带有指定监听器类型的监听器*/
     void dispatchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
+    /** Special version dispatchEventToListeners for touch/mouse event.
+     *
+     *  Touch/mouse event process flow different with common event,
+     *      for scene graph node listeners, touch event process flow should
+     *      order by viewport/camera first, because the touch location convert
+     *      to 3D world space is different by different camera.
+     *  When listener process touch event, can get current camera by Camera::getVisitingCamera().
+     */
+    void dispatchTouchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
+    
     /** @~english Priority dirty flag @~chinese 带优先级的'脏标记'(dirty flag)*/
     enum class DirtyFlag
     {

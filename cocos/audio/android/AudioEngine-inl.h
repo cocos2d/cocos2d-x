@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -88,6 +88,7 @@ public:
 
     void uncache(const std::string& filePath){}
     void uncacheAll(){}
+    void preload(const std::string& filePath, std::function<void(bool)> callback);
     
     void update(float dt);
 private:

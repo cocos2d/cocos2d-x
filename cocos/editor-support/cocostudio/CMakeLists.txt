@@ -3,7 +3,7 @@ if(WINDOWS AND BUILD_SHARED_LIBS)
   ADD_DEFINITIONS (-D_USRSTUDIODLL)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexceptions")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
 
 set(COCOS_CS_SRC
 
@@ -73,6 +73,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.cpp
   editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.cpp
   editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.cpp
+  editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimeline.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.cpp

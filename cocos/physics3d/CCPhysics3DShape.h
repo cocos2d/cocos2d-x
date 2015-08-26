@@ -140,8 +140,8 @@ public:
         return _btShape;
     }
 #endif
-
-protected:
+    
+CC_CONSTRUCTOR_ACCESS:
     Physics3DShape();
     ~Physics3DShape();
 
@@ -152,13 +152,13 @@ protected:
     bool initConvexHull(const cocos2d::Vec3* points, int numPoints);
     bool initMesh(const cocos2d::Vec3* triangles, int numTriangles);
     bool initHeightfield(int heightStickWidth,int heightStickLength
-                         , const void* heightfieldData, float heightScale
-                         , float minHeight, float maxHeight
-                         , bool useFloatDatam, bool flipQuadEdges
-                         , bool useDiamondSubdivision);
-    bool initCompoundShape(const std::vector<std::pair<Physics3DShape*, Mat4>>& shapes);
-
-
+        , const void* heightfieldData, float heightScale
+        , float minHeight, float maxHeight
+        , bool useFloatDatam, bool flipQuadEdges
+        , bool useDiamondSubdivision);
+    bool initCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
+    
+protected:
     ShapeType _shapeType; //shape type
 
 #if (CC_ENABLE_BULLET_INTEGRATION)

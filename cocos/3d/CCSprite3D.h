@@ -329,6 +329,8 @@ CC_CONSTRUCTOR_ACCESS:
 
     void afterAsyncLoad(void* param);
 
+    static AABB getAABBRecursivelyImp(Node *node);
+    
 protected:
 
     Skeleton3D*                  _skeleton; //skeleton

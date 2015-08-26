@@ -295,14 +295,11 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
         basefilePath = "";
     }
 
-
-    std::string filePathStr =  filePath;
-    size_t startPos = filePathStr.find_last_of(".");
-    std::string str = &filePathStr[startPos];
+    std::string fileExtension = cocos2d::FileUtils::getInstance()->getFileExtension(filePath);
 
     // Read content from file
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-    bool isbinaryfilesrc = str==".csb";
+    bool isbinaryfilesrc = fileExtension == ".csb";
     std::string filemode("r");
     if(isbinaryfilesrc)
         filemode += "b";
@@ -314,14 +311,14 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     _dataReaderHelper->_getFileMutex.unlock();
     
     DataInfo dataInfo;
-    dataInfo.filename = filePathStr;
+    dataInfo.filename = filePath;
     dataInfo.asyncStruct = nullptr;
     dataInfo.baseFilePath = basefilePath;
-    if (str == ".xml")
+    if (fileExtension == ".xml")
     {
         DataReaderHelper::addDataFromCache(contentStr, &dataInfo);
     }
-    else if(str == ".json" || str == ".ExportJson")
+    else if(fileExtension == ".json" || fileExtension == ".exportjson")
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
@@ -408,13 +405,10 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     data->imagePath = imagePath;
     data->plistPath = plistPath;
 
-    std::string filePathStr =  filePath;
-    size_t startPos = filePathStr.find_last_of(".");
-    std::string str = &filePathStr[startPos];
-
+    std::string fileExtension = cocos2d::FileUtils::getInstance()->getFileExtension(filePath);
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
 
-    bool isbinaryfilesrc = str==".csb";
+    bool isbinaryfilesrc = fileExtension == ".csb";
     std::string filereadmode("r");
     if (isbinaryfilesrc) {
         filereadmode += "b";
@@ -435,11 +429,11 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     // fix memory leak for v3.3
     free(pBytes);
     
-    if (str == ".xml")
+    if (fileExtension == ".xml")
     {
         data->configType = DragonBone_XML;
     }
-    else if(str == ".json" || str == ".ExportJson")
+    else if(fileExtension == ".json" || fileExtension == ".exportjson")
     {
         data->configType = CocoStudio_JSON;
     }

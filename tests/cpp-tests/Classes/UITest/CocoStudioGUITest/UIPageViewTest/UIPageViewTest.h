@@ -112,4 +112,48 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UIPageViewJumpToPageTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewJumpToPageTest);
+
+    UIPageViewJumpToPageTest();
+    ~UIPageViewJumpToPageTest();
+    virtual bool init() override;
+
+protected:
+
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewVerticalTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewVerticalTest);
+    
+    UIPageViewVerticalTest();
+    ~UIPageViewVerticalTest();
+    virtual bool init() override;
+    
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIPageViewDisableTouchTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIPageViewDisableTouchTest);
+    
+    UIPageViewDisableTouchTest();
+    ~UIPageViewDisableTouchTest();
+    virtual bool init() override;
+        
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UIPageViewTest__) */

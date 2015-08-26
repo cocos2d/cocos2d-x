@@ -32,8 +32,23 @@
 
 
 --------------------------------------------------------
+-- the ccui AbstractCheckButton
+-- @field [parent=#ccui] AbstractCheckButton#AbstractCheckButton AbstractCheckButton preloaded module
+
+
+--------------------------------------------------------
 -- the ccui CheckBox
 -- @field [parent=#ccui] CheckBox#CheckBox CheckBox preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RadioButton
+-- @field [parent=#ccui] RadioButton#RadioButton RadioButton preloaded module
+
+
+--------------------------------------------------------
+-- the ccui RadioButtonGroup
+-- @field [parent=#ccui] RadioButtonGroup#RadioButtonGroup RadioButtonGroup preloaded module
 
 
 --------------------------------------------------------

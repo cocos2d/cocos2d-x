@@ -27,14 +27,6 @@
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------
--- Switch frustum Culling Flag<br>
--- Note frustum culling will remarkable improve your terrain rendering performance. 
--- @function [parent=#Terrain] setIsEnableFrustumCull 
--- @param self
--- @param #bool boolValue
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
 -- get the terrain's height data
 -- @function [parent=#Terrain] getHeightData 
 -- @param self
@@ -53,6 +45,14 @@
 -- @function [parent=#Terrain] resetHeightMap 
 -- @param self
 -- @param #char heightMap
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- set directional light for the terrain<br>
+-- param lightDir The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
+-- @function [parent=#Terrain] setLightDir 
+-- @param self
+-- @param #vec3_table lightDir
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------
@@ -86,6 +86,14 @@
 -- initialize all Properties which terrain need 
 -- @function [parent=#Terrain] initProperties 
 -- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Terrain] initWithTerrainData 
+-- @param self
+-- @param #cc.Terrain::TerrainData parameter
+-- @param #int fixedType
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -129,14 +137,29 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- get the terrain's maximum height.
--- @function [parent=#Terrain] getMaxHeight 
+--  set light map texture 
+-- @function [parent=#Terrain] setLightMap 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #string fileName
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- Switch frustum Culling Flag<br>
+-- Note frustum culling will remarkable improve your terrain rendering performance. 
+-- @function [parent=#Terrain] setIsEnableFrustumCull 
+-- @param self
+-- @param #bool boolValue
+-- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------
 -- get the terrain's mininal height.
 -- @function [parent=#Terrain] getMinHeight 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- get the terrain's maximum height.
+-- @function [parent=#Terrain] getMaxHeight 
 -- @param self
 -- @return float#float ret (return value: float)
         
@@ -147,6 +170,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- 
+-- @function [parent=#Terrain] Terrain 
+-- @param self
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 return nil

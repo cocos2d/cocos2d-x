@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include <stdlib.h>
 
 #include "base/CCDirector.h"
+#include "base/CCAsyncTaskPool.h"
+#include "base/CCEventDispatcher.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "platform/CCImage.h"
@@ -49,22 +51,39 @@ int ccNextPOT(int x)
 namespace utils
 {
 /**
- * Capture screen implementation, don't use it directly.
- */
+* Capture screen implementation, don't use it directly.
+*/
 void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
+    static bool startedCapture = false;
+
+    if (startedCapture)
+    {
+        CCLOG("Screen capture is already working");
+        if (afterCaptured)
+        {
+            afterCaptured(false, filename);
+        }
+        return;
+    }
+    else
+    {
+        startedCapture = true;
+    }
+
+
     auto glView = Director::getInstance()->getOpenGLView();
     auto frameSize = glView->getFrameSize();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
 #endif
-    
+
     int width = static_cast<int>(frameSize.width);
     int height = static_cast<int>(frameSize.height);
-    
+
     bool succeed = false;
     std::string outputFile = "";
-    
+
     do
     {
         std::shared_ptr<GLubyte> buffer(new GLubyte[width * height * 4], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
@@ -72,10 +91,10 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         {
             break;
         }
-        
+
         glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
-        
+
         std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
         if (!flippedBuffer)
         {
@@ -87,7 +106,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
             memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
         }
 
-        std::shared_ptr<Image> image(new Image);
+        Image* image = new (std::nothrow) Image;
         if (image)
         {
             image->initWithRawData(flippedBuffer.get(), width * height * 4, width, height, 8);
@@ -100,26 +119,59 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 CCASSERT(filename.find("/") == std::string::npos, "The existence of a relative path is not guaranteed!");
                 outputFile = FileUtils::getInstance()->getWritablePath() + filename;
             }
-            succeed = image->saveToFile(outputFile);
+
+            // Save image in AsyncTaskPool::TaskType::TASK_IO thread, and call afterCaptured in mainThread
+            static bool succeedSaveToFile = false;
+            std::function<void(void*)> mainThread = [afterCaptured, outputFile](void* param)
+            {
+                if (afterCaptured)
+                {
+                    afterCaptured(succeedSaveToFile, outputFile);
+                }
+                startedCapture = false;
+            };
+
+            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, (void*)NULL, [image, outputFile]()
+            {
+                succeedSaveToFile = image->saveToFile(outputFile);
+                delete image;
+            });
         }
-    }while(0);
-    
-    if (afterCaptured)
-    {
-        afterCaptured(succeed, outputFile);
-    }
+        else
+        {
+            CCLOG("Malloc Image memory failed!");
+            if (afterCaptured)
+            {
+                afterCaptured(succeed, outputFile);
+            }
+            startedCapture = false;
+        }
+    } while (0);
 }
+
 /*
  * Capture screen interface
  */
+static EventListenerCustom* s_captureScreenListener;
+static CustomCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
-    static CustomCommand captureScreenCommand;
-    captureScreenCommand.init(std::numeric_limits<float>::max());
-    captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    Director::getInstance()->getRenderer()->addCommand(&captureScreenCommand);
+    if (s_captureScreenListener)
+    {
+        CCLOG("Warning: CaptureScreen has been caled yet, don't call more than once in one frame.");
+        return;
+    }
+    s_captureScreenCommand.init(std::numeric_limits<float>::max());
+    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
+    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
+        auto director = Director::getInstance();
+        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+        s_captureScreenListener = nullptr;
+        director->getRenderer()->addCommand(&s_captureScreenCommand);
+        director->getRenderer()->render();
+    });
 }
-    
+
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
 {
     std::vector<Node*> vec;
@@ -159,6 +211,13 @@ double gettime()
     gettimeofday(&tv, nullptr);
 
     return (double)tv.tv_sec + (double)tv.tv_usec/1000000;
+}
+
+long long getTimeInMilliseconds()
+{
+    struct timeval tv;
+    gettimeofday (&tv, nullptr);
+    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
 Rect getCascadeBoundingBox(Node *node)

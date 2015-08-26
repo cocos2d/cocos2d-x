@@ -34,8 +34,6 @@ THE SOFTWARE.
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
 
-using namespace cocos2d;
-
 NS_TIMELINE_BEGIN
 
 class Timeline;
@@ -110,14 +108,14 @@ public:
     * @param tweenType @~english Tween type.
     * @~chinese 补间种类。
     */
-    virtual void setTweenType(const tweenfunc::TweenType& tweenType) { _tweenType = tweenType; }
+    virtual void setTweenType(const cocos2d::tweenfunc::TweenType& tweenType) { _tweenType = tweenType; }
     /**
     * @~english Get tween type.
     * @~chinese 获取补间种类。
     * @return @~english Tween type.
     * @~chinese 补间种类。
     */
-    virtual tweenfunc::TweenType getTweenType() const { return _tweenType; }
+    virtual cocos2d::tweenfunc::TweenType getTweenType() const { return _tweenType; }
     
     /**
     * @~english Set tween params, to make easing with params, need `setTweenType(TweenType::CUSTOM_EASING)`.
@@ -171,7 +169,7 @@ protected:
     bool            _tween;
     bool            _enterWhenPassed;
     
-    tweenfunc::TweenType _tweenType;
+    cocos2d::tweenfunc::TweenType _tweenType;
     std::vector<float>   _easingParam;
     Timeline* _timeline;
     cocos2d::Node*  _node;
@@ -737,17 +735,17 @@ public:
     * @return @~english Blend function.
     * @~chinese 混合函数。
     */
-    inline BlendFunc getBlendFunc() const { return _blendFunc; }
+    inline cocos2d::BlendFunc getBlendFunc() const { return _blendFunc; }
     /**
     * @~english Set blend function.
     * @~chinese 设置混合函数。
     * @param zorder @~english Blend function.
     * @~chinese 混合函数。
     */
-    inline void setBlendFunc(BlendFunc blendFunc) { _blendFunc = blendFunc; }
+    inline void setBlendFunc(cocos2d::BlendFunc blendFunc) { _blendFunc = blendFunc; }
     
 protected:
-    BlendFunc  _blendFunc;
+    cocos2d::BlendFunc  _blendFunc;
 };
 NS_TIMELINE_END
 

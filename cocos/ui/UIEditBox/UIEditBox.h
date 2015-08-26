@@ -418,9 +418,9 @@ namespace ui {
         const char* getText(void);
             
         /**@~english
-         * Set the font for EditBox.
+         * Set the font for EditBox. Only system font is allowed.
          * @~chinese 
-         * 设置编辑框的字体。
+         * 设置编辑框的字体。仅支持系统字体
          * @param pFontName @~english The font name.
          * @~chinese 字体名称。
          * @param fontSize @~english The font size.
@@ -429,9 +429,9 @@ namespace ui {
         void setFont(const char* pFontName, int fontSize);
             
         /**@~english
-         * Set the font name.
+         * Set the font name. Only system font is allowed.
          * @~chinese 
-         * 设置字体的名字。
+         * 设置字体的名字。仅支持系统字体
          * @param pFontName @~english The font name.
          * @~chinese 字体名称。
          */
@@ -452,12 +452,11 @@ namespace ui {
          * 设置编辑框的文本字体颜色。
          */
         void setFontColor(const Color3B& color);
-        void setFontColor(const Color4B& color);
             
         /**@~english
-         * Set the placeholder's font.
+         * Set the placeholder's font. Only system font is allowed.
          * @~chinese 
-         * 设置占位符的字体。
+         * 设置占位符的字体。仅支持系统字体
          * @param pFontName @~english The font name.
          * @~chinese 字体名称。
          * @param fontSize @~english The font size.
@@ -466,9 +465,9 @@ namespace ui {
         void setPlaceholderFont(const char* pFontName, int fontSize);
             
         /**@~english
-         * Set the placeholder's font name.
+         * Set the placeholder's font name. Only system font is allowed.
          * @~chinese 
-         * 设置占位符的字体名称。
+         * 设置占位符的字体名称。仅支持系统字体
          * @param pFontName @~english The font name.
          * @~chinese 字体名称。
          */
@@ -588,7 +587,7 @@ namespace ui {
          * @js NA
          * @lua NA
          */
-        virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+        virtual void draw(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
         /**
          * @js NA
          * @lua NA

@@ -21,101 +21,13 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #include "AudioEngine-winrt.h"
-#include <condition_variable>
-
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-
-namespace cocos2d {
-    namespace experimental {
-        class AudioEngineThreadPool
-        {
-        public:
-            AudioEngineThreadPool()
-                : _running(true)
-                , _numThread(6)
-            {
-                _threads.reserve(_numThread);
-                _tasks.reserve(_numThread);
-
-                for (int index = 0; index < _numThread; ++index) {
-                    _tasks.push_back(nullptr);
-                    _threads.push_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, index)));
-                }
-            }
-
-            void addTask(const std::function<void()> &task){
-                _taskMutex.lock();
-                int targetIndex = -1;
-                for (int index = 0; index < _numThread; ++index) {
-                    if (_tasks[index] == nullptr) {
-                        targetIndex = index;
-                        _tasks[index] = task;
-                        break;
-                    }
-                }
-                if (targetIndex == -1) {
-                    _tasks.push_back(task);
-                    _threads.push_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, _numThread)));
-
-                    _numThread++;
-                }
-                _taskMutex.unlock();
-                _sleepCondition.notify_all();
-            }
-
-            void destroy()
-            {
-                _running = false;
-                _sleepCondition.notify_all();
-
-                for (int index = 0; index < _numThread; ++index) {
-                    _threads[index].join();
-                }
-            }
-        private:
-            bool _running;
-            std::vector<std::thread>  _threads;
-            std::vector< std::function<void()> > _tasks;
-
-            void threadFunc(int index)
-            {
-                while (_running) {
-                    std::function<void()> task = nullptr;
-                    _taskMutex.lock();
-                    task = _tasks[index];
-                    _taskMutex.unlock();
-
-                    if (nullptr == task)
-                    {
-                        std::unique_lock<std::mutex> lk(_sleepMutex);
-                        _sleepCondition.wait(lk);
-                        continue;
-                    }
-
-                    task();
-
-                    _taskMutex.lock();
-                    _tasks[index] = nullptr;
-                    _taskMutex.unlock();
-                }
-            }
-
-            int _numThread;
-
-            std::mutex _taskMutex;
-            std::mutex _sleepMutex;
-            std::condition_variable _sleepCondition;
-        };
-    }
-}
-
 AudioEngineImpl::AudioEngineImpl()
     : _lazyInitLoop(true)
     , _currentAudioID(0)
-    , _threadPool(nullptr)
 {
 
 }
@@ -123,70 +35,85 @@ AudioEngineImpl::AudioEngineImpl()
 AudioEngineImpl::~AudioEngineImpl()
 {
     _audioCaches.clear();
-
-    if (_threadPool) {
-        _threadPool->destroy();
-        delete _threadPool;
-    }
 }
 
 bool AudioEngineImpl::init()
 {
     bool ret = false;
 
-    if (nullptr == _threadPool) {
-        _threadPool = new (std::nothrow) AudioEngineThreadPool();
-    }
-
     ret = true;
     return ret;
 }
 
-int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume)
+AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
 {
     AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
+    do 
+    {
+        auto it = _audioCaches.find(filePath);
+        if (it == _audioCaches.end()) {
+            FileFormat fileFormat = FileFormat::UNKNOWN;
 
-        auto ext = filePath.substr(filePath.rfind('.'));
-        transform(ext.begin(), ext.end(), ext.begin(), tolower);
+            std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
 
-        bool eraseCache = true;
+            if (fileExtension == ".wav")
+            {
+                fileFormat = FileFormat::WAV;
+            }
+            else if (fileExtension == ".ogg")
+            {
+                fileFormat = FileFormat::OGG;
+            }
+            else if (fileExtension == ".mp3")
+            {
+                fileFormat = FileFormat::MP3;
+            }
+            else
+            {
+                log("Unsupported media type file: %s\n", filePath.c_str());
+                break;
+            }
 
-        if (ext.compare(".wav") == 0){
-            audioCache->_fileFormat = FileFormat::WAV;
-            eraseCache = false;
-        }
-        else if (ext.compare(".ogg") == 0){
-            audioCache->_fileFormat = FileFormat::OGG;
-            eraseCache = false;
-        }
-        else if (ext.compare(".mp3") == 0){
-            audioCache->_fileFormat = FileFormat::MP3;
-            eraseCache = false;
-        }
-        else{
-            log("unsupported media type:%s\n", ext.c_str());
-        }
+            audioCache = &_audioCaches[filePath];
+            audioCache->_fileFormat = fileFormat;
 
-        if (eraseCache){
-            _audioCaches.erase(filePath);
-            return AudioEngine::INVALID_AUDIO_ID;
+            std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+            audioCache->_fileFullPath = fullPath;
+            AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
         }
+        else 
+        {
+            audioCache = &it->second;
+        }
+    } while (false);
 
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        audioCache->_fileFullPath = fullPath;
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    if (callback)
+    {
+        if (audioCache)
+        {
+            audioCache->addLoadCallback(callback);
+        } 
+        else
+        {
+            callback(false);
+        }
     }
-    else {
-        audioCache = &it->second;
+
+    return audioCache;
+}
+
+int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume)
+{
+    auto audioCache = preload(filePath, nullptr);
+    if (audioCache == nullptr)
+    {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
 
     auto player = &_audioPlayers[_currentAudioID];
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
 
     if (_lazyInitLoop) {
         _lazyInitLoop = false;

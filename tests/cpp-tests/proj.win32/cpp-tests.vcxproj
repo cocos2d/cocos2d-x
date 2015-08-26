@@ -151,6 +151,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp" />
     <ClCompile Include="..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-CCDrawNode.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-PageViewLayout.cpp" />
@@ -160,6 +161,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
+    <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
@@ -232,6 +234,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
@@ -306,6 +309,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
     <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp" />
+    <ClCompile Include="..\Classes\VibrateTest\VibrateTest.cpp" />
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\Classes\TextInputTest\TextInputTest.cpp" />
@@ -356,6 +360,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-12847.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-CCDrawNode.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-Child.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-PageViewLayout.h" />
@@ -365,6 +370,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
+    <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
@@ -516,6 +522,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
     <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h" />
+    <ClInclude Include="..\Classes\VibrateTest\VibrateTest.h" />
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\Classes\TextInputTest\TextInputTest.h" />

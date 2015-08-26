@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIListViewTest_Vertical = UIScene.extend({
+var UIListViewTest_Vertical = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -156,7 +156,7 @@ var UIListViewTest_Vertical = UIScene.extend({
     }
 });
 
-var UIListViewTest_Horizontal = UIScene.extend({
+var UIListViewTest_Horizontal = UIMainLayer.extend({
     _array: null,
     init: function () {
         if (this._super()) {
@@ -281,5 +281,57 @@ var UIListViewTest_Horizontal = UIScene.extend({
             default:
                 break;
         }
+    }
+});
+
+var UIListViewTest_TouchIntercept = UIMainLayer.extend({
+    init: function () {
+        if(this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            var background = this._widget.getChildByName("background_Panel");
+            var backgroundSize = background.getContentSize();
+
+            this._topDisplayLabel.setString("TouchIntercept");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+            this._bottomDisplayLabel.setString("ListView Disable Touch");
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 3;
+
+            // Create the list view
+            var listView = new ccui.ListView();
+            // set list view ex direction
+            listView.setDirection(ccui.ScrollView.DIR_NONE);
+            listView.setBounceEnabled(true);
+            listView.setTouchEnabled(false);
+            listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
+            listView.setBackGroundImageScale9Enabled(true);
+            listView.setContentSize(cc.size(240, 130));
+            listView.x = (widgetSize.width - backgroundSize.width) / 2 + (backgroundSize.width - listView.width) / 2;
+            listView.y = (widgetSize.height - backgroundSize.height) / 2 + (backgroundSize.height - listView.height) / 2;
+            this._mainNode.addChild(listView);
+
+            // create model
+            var default_button = new ccui.Button();
+            default_button.setName("Title Button");
+            default_button.loadTextures("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png", "");
+
+            var default_item = new ccui.Layout();
+            default_item.setTouchEnabled(true);
+            default_item.setContentSize(default_button.getContentSize());
+            default_item.width = listView.width;
+            default_button.x = default_item.width / 2;
+            default_button.y = default_item.height / 2;
+            default_item.addChild(default_button);
+
+            // set model
+            listView.setItemModel(default_item);
+            listView.pushBackDefaultItem();
+            listView.pushBackDefaultItem();
+            listView.pushBackDefaultItem();
+
+            return true;
+        }
+        return false;
     }
 });

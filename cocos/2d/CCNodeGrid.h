@@ -53,8 +53,17 @@ public:
      * @~chinese 一个autorelease网格节点。
      */
     static NodeGrid* create();
+
+    /** @~english Create a grid node with rect.
+     *
+     * @~chinese 用网格矩形创建一个网格节点。
+     * 
+     * @return @~english An autorelease Grid Node.
+     * @~chinese 一个autorelease网格节点。
+     */
+    static NodeGrid* create(const Rect& rect);
     
-    /** @~english Gets the grid action of NodeGrid. 
+    /** @~english Gets the grid action of NodeGrid.
      *
      * @~chinese 获取网格节点的网格动作。
      * 
@@ -87,6 +96,17 @@ public:
      * @~chinese 目标节点。
      */
     void setTarget(Node *target);
+    
+    /**
+     * @brief Set the effect grid rect.
+     * @param gridRect The effect grid rect.
+     */
+    inline void setGridRect(const Rect& gridRect){_gridRect = gridRect;}
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
+    inline const Rect& getGridRect() const { return _gridRect;}
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
@@ -103,6 +123,8 @@ protected:
     GroupCommand _groupCommand;
     CustomCommand _gridBeginCommand;
     CustomCommand _gridEndCommand;
+    
+    Rect _gridRect;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);

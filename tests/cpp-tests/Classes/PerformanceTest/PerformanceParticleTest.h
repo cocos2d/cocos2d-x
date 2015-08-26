@@ -29,7 +29,7 @@ public:
     CREATE_FUNC(ParticlePerformTest1);
 
     virtual std::string title() const override;
-    virtual void doTest();
+    virtual void doTest()override;
 };
 
 class ParticlePerformTest2 : public ParticleMainScene
@@ -38,7 +38,7 @@ public:
     CREATE_FUNC(ParticlePerformTest2);
 
     virtual std::string title() const override;
-    virtual void doTest();
+    virtual void doTest()override;
 };
 
 class ParticlePerformTest3 : public ParticleMainScene
@@ -47,7 +47,7 @@ public:
     CREATE_FUNC(ParticlePerformTest3);
 
     virtual std::string title() const override;
-    virtual void doTest();
+    virtual void doTest()override;
 };
 
 class ParticlePerformTest4 : public ParticleMainScene
@@ -56,7 +56,7 @@ public:
     CREATE_FUNC(ParticlePerformTest4);
 
     virtual std::string title() const override;
-    virtual void doTest();
+    virtual void doTest()override;
 };
 
 #endif

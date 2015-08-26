@@ -73,6 +73,8 @@ Scene::Scene()
     
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
+    
+    Camera::_visitingCamera = nullptr;
 }
 
 Scene::~Scene()
@@ -163,18 +165,23 @@ static bool camera_cmp(const Camera* a, const Camera* b)
     return a->getRenderOrder() < b->getRenderOrder();
 }
 
-void Scene::render(Renderer* renderer)
+const std::vector<Camera*>& Scene::getCameras()
 {
-    auto director = Director::getInstance();
-    Camera* defaultCamera = nullptr;
-    const auto& transform = getNodeToParentTransform();
     if (_cameraOrderDirty)
     {
         stable_sort(_cameras.begin(), _cameras.end(), camera_cmp);
         _cameraOrderDirty = false;
     }
-    
-    for (const auto& camera : _cameras)
+    return _cameras;
+}
+
+void Scene::render(Renderer* renderer)
+{
+    auto director = Director::getInstance();
+    Camera* defaultCamera = nullptr;
+    const auto& transform = getNodeToParentTransform();
+
+    for (const auto& camera : getCameras())
     {
         if (!camera->isVisible())
             continue;
@@ -189,7 +196,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         camera->apply();
         //clear background with max depth
-        camera->clearBackground(1.0);
+        camera->clearBackground();
         //visit the scene
         visit(renderer, transform, 0);
 #if CC_USE_NAVMESH

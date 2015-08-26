@@ -29,6 +29,11 @@ Ray::Ray()
 {
 }
 
+Ray::Ray(const Ray& ray)
+{
+    set(ray._origin, ray._direction);
+}
+
 Ray::Ray(const Vec3& origin, const Vec3& direction)
 {
     set(origin, direction);

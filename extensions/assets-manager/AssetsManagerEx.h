@@ -25,18 +25,21 @@
 #ifndef __AssetsManagerEx__
 #define __AssetsManagerEx__
 
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include "base/CCEventDispatcher.h"
 #include "platform/CCFileUtils.h"
+#include "network/CCDownloader.h"
+
 #include "CCEventAssetsManagerEx.h"
-#include "Downloader.h"
+
 #include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 #include "json/document.h"
 
-#include <string>
-#include <unordered_map>
-#include <vector>
 
 NS_CC_EXT_BEGIN
 
@@ -74,9 +77,6 @@ NS_CC_EXT_BEGIN
 class CC_EX_DLL AssetsManagerEx : public Ref
 {
 public:
-    
-    friend class Downloader;
-    friend int downloadProgressFunc(Downloader::ProgressData *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded);
     
     /** @~english Update states
      * @~chinese 热更新状态列表
@@ -228,12 +228,12 @@ protected:
     /** @brief @~english Update a list of assets under the current AssetsManagerEx context
      * @~chinese 更新一个下载列表中的资源
      */
-    void updateAssets(const Downloader::DownloadUnits& assets);
+    void updateAssets(const network::DownloadUnits& assets);
     
     /** @brief @~english Retrieve all failed assets during the last update
      * @~chinese 获取上次更新失败时的失败资源列表
      */
-    const Downloader::DownloadUnits& getFailedAssets() const;
+    const network::DownloadUnits& getFailedAssets() const;
     
     /** @brief @~english Function for destorying the downloaded version file and manifest file
      * @~chinese 清除本地已下载版本
@@ -251,7 +251,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void onError(const Downloader::Error &error);
+    virtual void onError(const network::Downloader::Error &error);
     
     /** @brief @~english  Call back function for recording downloading percent of the current asset,
      the progression will then be reported to user's listener registed in addUpdateProgressEventListener
@@ -301,7 +301,7 @@ private:
     State _updateState;
     
     //! Downloader
-    std::shared_ptr<Downloader> _downloader;
+    std::shared_ptr<network::Downloader> _downloader;
     
     //! The reference to the local assets
     const std::unordered_map<std::string, Manifest::Asset> *_assets;
@@ -334,10 +334,10 @@ private:
     bool _waitToUpdate;
     
     //! All assets unit to download
-    Downloader::DownloadUnits _downloadUnits;
+    network::DownloadUnits _downloadUnits;
     
     //! All failed units
-    Downloader::DownloadUnits _failedUnits;
+    network::DownloadUnits _failedUnits;
     
     //! All files to be decompressed
     std::vector<std::string> _compressedFiles;

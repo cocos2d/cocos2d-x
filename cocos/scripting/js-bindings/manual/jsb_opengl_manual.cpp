@@ -431,13 +431,30 @@ bool JSB_glGetUniformfv(JSContext *cx, uint32_t argc, jsval *vp)
 
     JSB_PRECONDITION2(ok, cx, false, "JSB_glGetUniformfv: Error processing arguments");
 
+    GLint activeUniforms;
+    glGetProgramiv(arg0, GL_ACTIVE_UNIFORMS, &activeUniforms);
+    
     GLsizei length;
     glGetProgramiv(arg0, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
     GLchar* namebuffer = new GLchar[length+1];
     GLint size = -1;
     GLenum type = -1;
 
-    glGetActiveUniform(arg0, arg1, length, NULL, &size, &type, namebuffer);
+    bool isLocationFound = false;
+    for(int i = 0; i  <  activeUniforms; ++i)
+    {
+        glGetActiveUniform(arg0, i, length, NULL, &size, &type, namebuffer);
+        if(arg1 == glGetUniformLocation(arg0, namebuffer))
+        {
+            isLocationFound = true;
+            break;
+        }
+    }
+    if(!isLocationFound)
+    {
+        size = -1;
+        type = -1;
+    }
     CC_SAFE_DELETE_ARRAY(namebuffer);
 
     int usize = 0;
