@@ -394,13 +394,16 @@ private:
     friend QuadTree;
     friend Chunk;
 public:
-    /** set light map texture */
+    /** @~english set light map texture
+        @~chinese 设置光照贴图
+    */
     void setLightMap(const std::string& fileName);
 
-    /**
-     set directional light for the terrain
-     @param lightDir The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
-     */
+    /** @~english set directional light for the terrain
+        @~chinese 设置地形光照的方向
+        @param lightDir @~english The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
+                        @~chinese 方向光源的朝向，注意该方向定义在地形的局部空间，但由于地形大部分时候都是定义在世界坐标系原点，并且没有旋转，所以可以把该光源当做定义在世界坐标系中。
+    */
     void setLightDir(const Vec3& lightDir);
 
     /*init function*/
