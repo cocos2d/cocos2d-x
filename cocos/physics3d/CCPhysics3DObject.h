@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -365,14 +365,23 @@ protected:
  */
 struct CC_DLL Physics3DColliderDes
 {
-    Physics3DShape* shape; // shape pointer
+    /**shape pointer*/
+    Physics3DShape* shape;
+    /**original world Transform*/
     cocos2d::Mat4 originalTransform;
-    bool          isTrigger; //is it a trigger?
+    /**Is collider a trigger?*/
+    bool          isTrigger;
+    /**the friction*/
     float friction;
+    /**the rolling friction*/
     float rollingFriction;
+    /**the restitution*/
     float restitution;
+    /**the hit fraction*/
     float hitFraction;
+    /**the swep sphere radius*/
     float ccdSweptSphereRadius;
+    /**the motion threshold*/
     float ccdMotionThreshold;
     
     Physics3DColliderDes()
@@ -403,52 +412,82 @@ public:
     */
     static Physics3DCollider* create(Physics3DColliderDes *info);
 
-    /** Get the pointer of btGhostObject. */
+    /** Get the pointer of btGhostObject. 
+     *  @return The pointer of btGhostObject.
+    */
     btGhostObject* getGhostObject() const { return _btGhostObject; }
 
-    /** Set trigger. */
+    /** Set trigger. 
+     *  @param isTrigger Is a trigger.
+    */
     void setTrigger(bool isTrigger);
 
-    /** Check is a trigger. */
+    /** Check is a trigger. 
+     *  @return Is a trigger.
+    */
     bool isTrigger() const;
 
-    /** Set restitution. */
+    /** Set restitution. 
+     *  @param rest The restitution.
+    */
     void setRestitution(float rest);
 
-    /** Get restitution. */
+    /** Get restitution. 
+     *  @return The restitution.
+    */
     float getRestitution() const;
 
-    /** Set friction. */
+    /** Set friction. 
+     *  @param rest The friction.
+    */
     void setFriction(float frict);
 
-    /** Get friction. */
+    /** Get friction. 
+     *  @return The friction.
+    */
     float getFriction() const;
 
-    /** Set rolling friction. */
+    /** Set rolling friction. 
+     *  @param frict The rolling friction.
+    */
     void setRollingFriction(float frict);
 
-    /** Get rolling friction. */
+    /** Get rolling friction. 
+     *  @return The rolling friction.
+    */
     float getRollingFriction() const;
 
-    /** Set hit friction. */
+    /** Set hit friction. 
+     *  @param hitFraction The hit friction.
+    */
     void setHitFraction(float hitFraction);
 
-    /** Get hit friction. */
+    /** Get hit friction. 
+     *  @return The hit friction.
+    */
     float getHitFraction() const;
 
-    /** Set motion threshold, don't do continuous collision detection if the motion (in one step) is less then ccdMotionThreshold */
+    /** Set motion threshold, don't do continuous collision detection if the motion (in one step) is less then ccdMotionThreshold.
+     *  @param ccdMotionThreshold The motion threshold.
+    */
     void setCcdMotionThreshold(float ccdMotionThreshold);
 
-    /** Get motion threshold. */
+    /** Get motion threshold. 
+     *  @return The motion threshold.
+    */
     float getCcdMotionThreshold() const;
 
-    /** Set swept sphere radius. */
+    /** Set swept sphere radius. 
+     *  @param radius The swept sphere radius.
+    */
     void setCcdSweptSphereRadius(float radius);
 
-    /** Get swept sphere radius. */
+    /** Get swept sphere radius. 
+     *  @return The swept sphere radius.
+    */
     float getCcdSweptSphereRadius() const;
 
-    /** Get the world matrix of Physics3DObject. */
+    /** override. */
     virtual cocos2d::Mat4 getWorldTransform() const;
 
     /** Set a callback when trigger enter. */
