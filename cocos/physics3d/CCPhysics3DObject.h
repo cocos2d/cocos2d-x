@@ -365,7 +365,7 @@ protected:
  */
 struct CC_DLL Physics3DColliderDes
 {
-    Physics3DShape* shape;
+    Physics3DShape* shape; // shape pointer
     cocos2d::Mat4 originalTransform;
     bool          isTrigger; //is it a trigger?
     float friction;
@@ -390,14 +390,20 @@ struct CC_DLL Physics3DColliderDes
 };
 
 /**
-* @brief Inherit from Physics3DObject, the main class for Colliders
+* @brief Inherit from Physics3DObject, the main class for Colliders.
 */
 class CC_DLL Physics3DCollider : public Physics3DObject
 {
 public:
 
+    /**
+    * Creates a Physics3DCollider with Physics3DColliderDes.
+    *
+    * @return An autoreleased Physics3DCollider object.
+    */
     static Physics3DCollider* create(Physics3DColliderDes *info);
 
+    /** Get the pointer of btGhostObject. */
     btGhostObject* getGhostObject() const { return _btGhostObject; }
 
     /** Set trigger. */
@@ -445,7 +451,10 @@ public:
     /** Get the world matrix of Physics3DObject. */
     virtual cocos2d::Mat4 getWorldTransform() const;
 
+    /** Set a callback when trigger enter. */
     std::function<void(Physics3DObject *otherObject)> onTriggerEnter;
+
+    /** Set a callback when trigger exit. */
     std::function<void(Physics3DObject *otherObject)> onTriggerExit;
 
 CC_CONSTRUCTOR_ACCESS :
