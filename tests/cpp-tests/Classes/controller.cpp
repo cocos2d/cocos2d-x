@@ -26,9 +26,7 @@ public:
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
         addTest("Allocator - Basic", [](){return new (std::nothrow) AllocatorTests(); });
         addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
-#endif
 #if CC_ENABLE_BOX2D_INTEGRATION
         addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
         addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
