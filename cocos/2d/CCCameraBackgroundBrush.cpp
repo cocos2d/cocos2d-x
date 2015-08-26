@@ -308,8 +308,8 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
     glEnable(GL_DEPTH_TEST);
     RenderState::StateBlock::_defaultState->setDepthTest(true);
     
-    glDepthFunc(GL_LEQUAL);
-    RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
+    glDepthFunc(GL_ALWAYS);
+    RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_ALWAYS);
     
     glEnable(GL_CULL_FACE);
     RenderState::StateBlock::_defaultState->setCullFace(true);
