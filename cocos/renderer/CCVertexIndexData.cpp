@@ -141,7 +141,7 @@ void VertexData::use()
                               vertexStreamAttrib._type,
                               vertexStreamAttrib._normalize,
                               vertexBuffer->getSizePerVertex(),
-                              (GLvoid*)((ssize_t)vertexStreamAttrib._offset));
+                              (GLvoid*)((long)vertexStreamAttrib._offset));
     }
 }
 
