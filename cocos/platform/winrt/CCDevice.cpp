@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "platform/CCDevice.h"
 #include "platform/CCFileUtils.h"
 #include "platform/winrt/CCFreeTypeFont.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCStdC.h"
 
 using namespace Windows::Graphics::Display;
@@ -97,64 +98,68 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 
             auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
-            switch (orientation)
+            if (isWindowsPhone())
             {
-            case DisplayOrientations::Portrait:
-                acc.x = reading->AccelerationX;
-                acc.y = reading->AccelerationY;
-                break;
-
-            case DisplayOrientations::Landscape:
-                acc.x = -reading->AccelerationY;
-                acc.y = reading->AccelerationX;
-                break;
-
-            case DisplayOrientations::PortraitFlipped:
-                acc.x = -reading->AccelerationX;
-                acc.y = reading->AccelerationY;
-                break;
-
-            case DisplayOrientations::LandscapeFlipped:
-                acc.x = reading->AccelerationY;
-                acc.y = -reading->AccelerationX;
+                switch (orientation)
+                {
+                case DisplayOrientations::Portrait:
+                    acc.x = reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
                     break;
 
-            default:
-                acc.x = reading->AccelerationX;
-                acc.y = reading->AccelerationY;
-                break;
+                case DisplayOrientations::Landscape:
+                    acc.x = -reading->AccelerationY;
+                    acc.y = reading->AccelerationX;
+                    break;
+
+                case DisplayOrientations::PortraitFlipped:
+                    acc.x = -reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
+                    break;
+
+                case DisplayOrientations::LandscapeFlipped:
+                    acc.x = reading->AccelerationY;
+                    acc.y = -reading->AccelerationX;
+                    break;
+
+                default:
+                    acc.x = reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
+                    break;
+                }
             }
-#else // Windows Store App
-            // from http://msdn.microsoft.com/en-us/library/windows/apps/dn440593
-            switch (orientation)
+            else // Windows Store App
             {
-            case DisplayOrientations::Portrait:
-                acc.x = reading->AccelerationY;
-                acc.y = -reading->AccelerationX;
-                break;
+                // from http://msdn.microsoft.com/en-us/library/windows/apps/dn440593
+                switch (orientation)
+                {
+                case DisplayOrientations::Portrait:
+                    acc.x = reading->AccelerationY;
+                    acc.y = -reading->AccelerationX;
+                    break;
 
-            case DisplayOrientations::Landscape:
-                acc.x = reading->AccelerationX;
-                acc.y = reading->AccelerationY;
-                break;
+                case DisplayOrientations::Landscape:
+                    acc.x = reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
+                    break;
 
-            case DisplayOrientations::PortraitFlipped:
-                acc.x = -reading->AccelerationY;
-                acc.y = reading->AccelerationX;
-                break;
+                case DisplayOrientations::PortraitFlipped:
+                    acc.x = -reading->AccelerationY;
+                    acc.y = reading->AccelerationX;
+                    break;
 
-            case DisplayOrientations::LandscapeFlipped:
-                acc.x = -reading->AccelerationX;
-                acc.y = -reading->AccelerationY;
-                break;
+                case DisplayOrientations::LandscapeFlipped:
+                    acc.x = -reading->AccelerationX;
+                    acc.y = -reading->AccelerationY;
+                    break;
 
-            default:
-                acc.x = reading->AccelerationY;
-                acc.y = -reading->AccelerationX;
-                break;
+                default:
+                    acc.x = reading->AccelerationY;
+                    acc.y = -reading->AccelerationX;
+                    break;
+                }
             }
-#endif
+
             std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
         });
