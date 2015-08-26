@@ -121,7 +121,6 @@ float getScaledDPIValue(float v) {
 
 void CC_DLL CCLogIPAddresses()
 {
-#ifndef WP8_SHADER_COMPILER
     auto hostnames = NetworkInformation::GetHostNames();
     int length = hostnames->Size;
 
@@ -134,7 +133,6 @@ void CC_DLL CCLogIPAddresses()
             log("IP Address: %s:", s.c_str());
         }
     }
-#endif
 }
 
 std::string CC_DLL getDeviceIPAddresses()
