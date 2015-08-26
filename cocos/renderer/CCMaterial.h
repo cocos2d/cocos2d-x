@@ -62,6 +62,15 @@ class CC_DLL Material : public RenderState
     friend class Mesh;
 
 public:
+    
+    enum class MaterialType
+    {
+        DIFFUSE,
+        NORMAL,
+        LIGHTMAP,
+        CUSTOM,
+    };
+    
     /**
      * Creates a Material using the data from the Properties object defined at the specified URL,
      * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
@@ -120,6 +129,11 @@ public:
 
     /** returns a clone (deep-copy) of the material */
     Material* clone() const;
+    
+    /** create default diffuse material */
+    static Material* createDiffuseMaterial(bool skinned);
+    
+    MaterialType getMaterialType() const { return _materialType; }
 
 protected:
     Material();
@@ -138,7 +152,8 @@ protected:
     bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
     bool parseRenderState(RenderState* renderState, Properties* properties);
 
-
+    static void loadDefaultMaterial(MaterialType type);
+    
     // material name
     std::string _name;
 
@@ -150,6 +165,11 @@ protected:
 
     // weak reference
     Node* _target;
+    
+    MaterialType _materialType;
+    static Material* _diffuseSkinnedMaterial;
+    static Material* _diffuseMaterial;
+//    static Material* 
 };
 
 NS_CC_END
