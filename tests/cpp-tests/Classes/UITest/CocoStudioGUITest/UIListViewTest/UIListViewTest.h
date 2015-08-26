@@ -68,4 +68,20 @@ protected:
     std::vector<std::string> _array;
 };
 
+class Issue12692 : public UIScene
+{
+public:
+    CREATE_FUNC(Issue12692);
+    
+    virtual bool init() override;
+};
+
+class Issue8316 : public UIScene
+{
+public:
+    CREATE_FUNC(Issue8316);
+    
+    virtual bool init() override;
+};
+
 #endif /* defined(__TestCpp__UIListViewTest__) */

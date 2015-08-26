@@ -23,6 +23,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestActionTimelineEase);
     ADD_TEST_CASE(TestActionTimelineSkeleton);
     ADD_TEST_CASE(TestTimelineExtensionData);
+    ADD_TEST_CASE(TestActionTimelineBlendFuncFrame);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -45,7 +46,7 @@ bool ActionTimelineBaseTest::init()
 
         addChild(bg);
 
-        setGLProgram(ShaderCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+        setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
 
         return true;
     }
@@ -69,11 +70,11 @@ void TestActionTimeline::onEnter()
 {
     ActionTimelineBaseTest::onEnter();
 
-    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
-    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
+    Data data = FileUtils::getInstance()->getDataFromFile("ActionTimeline/DemoPlayer.csb");
+    Node* node = CSLoader::createNode(data);
+    ActionTimeline* action = CSLoader::createTimeline(data, "ActionTimeline/DemoPlayer.csb");
     node->runAction(action);
     action->gotoFrameAndPlay(0);
-//    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
 
     node->setScale(0.2f);
     node->setPosition(VisibleRect::center());
@@ -577,4 +578,22 @@ void TestTimelineExtensionData::onEnter()
 std::string TestTimelineExtensionData::title() const
 {
     return "Test Timeline extension data";
+}
+
+// TestActionTimelineBlendFuncFrame
+void TestActionTimelineBlendFuncFrame::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/skeletonBlendFuncFrame.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/skeletonBlendFuncFrame.csb");
+    node->runAction(action);
+    node->setScale(0.2f);
+    node->setPosition(VisibleRect::center());
+    this->addChild(node);
+    action->gotoFrameAndPlay(0);
+}
+
+std::string TestActionTimelineBlendFuncFrame::title() const
+{
+    return "Test ActionTimeline BlendFunc Frame";
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -59,10 +59,10 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 #ifndef __CC_SOCKETIO_H__
 #define __CC_SOCKETIO_H__
 
+#include <string>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
-#include <string>
 
 /**
  * @addtogroup network
@@ -115,27 +115,28 @@ public:
         virtual ~SIODelegate() {}
 
         /**@~english
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
          * 
          * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
          *
          * @~chinese 
-         * 纯虚回调函数,这个函数应该被子类覆盖。
+         * 这个函数是为了向前兼容性而保留的，connect在socket.io新版本中会以"connect"事件触发
          * 
          * 这个函数将在相关的SIOClient对象连接成功时被调用。
          * 
          * @param client @~english the connected SIOClient object.
          * @~chinese 连接的SIOClient对象。
          */
-        virtual void onConnect(SIOClient* client) = 0;
+        virtual void onConnect(SIOClient* client) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate onConnect fired"); };
 
         /**@~english
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * 
+         * This is kept for backwards compatibility, message is now fired as a socket.io event "message"
          *
          * This function would be called wwhen the related SIOClient object recevie message or json message.
          *
          * @~chinese 
-         * 纯虚回调函数,这个函数应该被子类覆盖。
+         * 这个函数是为了向前兼容性而保留的，message在socket.io新版本中会以"message"事件触发
          * 
          * 这个函数将在相关的SIOClient对象接收到消息时被调用。
          * 
@@ -144,15 +145,15 @@ public:
          * @param data @~english the message,it could be json message
          * @~chinese 接收到的消息,它可以是json格式的。
          */
-        virtual void onMessage(SIOClient* client, const std::string& data) = 0;
+        virtual void onMessage(SIOClient* client, const std::string& data) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
 
         /**@~english
-         * Pure virtual callback function, this function should be overrided by the subclass.
+         * This is kept for backwards compatibility, close is now fired as a socket.io event "close"
          *
          * This function would be called when the related SIOClient object disconnect or recevie disconnect signal.
          *
          * @~chinese 
-         * 纯虚回调函数,这个函数应该被子类覆盖。
+         * 这个函数是为了向前兼容性而保留的，close在socket.io新版本中会以"close"事件触发
          * 
          * 这个函数将在相关的SIOClient对象断开连接时被调用。
          * 
@@ -191,7 +192,7 @@ public:
          * @param data @~english the event's data information.
          * @~chinese 事件的数据信息。
          */
-        virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
+        virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CC_UNUSED_PARAM(client); CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
 
     /**
@@ -268,7 +269,7 @@ private:
 
     void onOpen();
     void onConnect();
-    void receivedDisconnect();
+    void socketClosed();
 
     friend class SIOClientImpl;
 
@@ -318,8 +319,7 @@ public:
      * @param s @~english message.
      * @~chinese 消息。
      */
-    void send(std::string s);
-
+    void send(const std::string& s);
     /**
      * @~english Emit the eventname and the args to the endpoint that _path point to.
      * @~chinese 给_path指向的终端发送给定的事件及参数。
@@ -327,7 +327,7 @@ public:
      * @param eventname @~english the name of event. @~chinese 事件名称。
      * @param args @~english the argument of event. @~chinese 事件参数。
      */
-    void emit(std::string eventname, std::string args);
+    void emit(const std::string& eventname, const std::string& args);
 
     /**@~english
      * Used to register a socket.io event callback.

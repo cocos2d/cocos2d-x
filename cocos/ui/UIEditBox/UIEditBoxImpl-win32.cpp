@@ -530,16 +530,28 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
 	if (_label != nullptr)
-	{
-		_label->setSystemFontName(pFontName);
-		_label->setSystemFontSize(fontSize);
-	}
+  {
+      if(strlen(pFontName) > 0)
+      {
+          _label->setSystemFontName(pFontName);
+      }
+      if(fontSize > 0)
+      {
+          _label->setSystemFontSize(fontSize);
+      }
+  }
 	
 	if (_labelPlaceHolder != nullptr)
-	{
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+  {
+      if(strlen(pFontName) > 0)
+      {
+          _labelPlaceHolder->setSystemFontName(pFontName);
+      }
+      if(fontSize > 0)
+      {
+          _labelPlaceHolder->setSystemFontSize(fontSize);
+      }
+  }
 }
 
 void EditBoxImplWin::setFontColor(const Color4B& color)
@@ -551,10 +563,16 @@ void EditBoxImplWin::setFontColor(const Color4B& color)
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
 	if (_labelPlaceHolder != nullptr)
-	{
-		_labelPlaceHolder->setSystemFontName(pFontName);
-		_labelPlaceHolder->setSystemFontSize(fontSize);
-	}
+  {
+      if(strlen(pFontName) > 0)
+      {
+          _labelPlaceHolder->setSystemFontName(pFontName);
+      }
+      if(fontSize > 0)
+      {
+          _labelPlaceHolder->setSystemFontSize(fontSize);
+      }
+  }
 }
 
 void EditBoxImplWin::setPlaceholderFontColor(const Color4B& color)
@@ -676,7 +694,7 @@ void EditBoxImplWin::setAnchorPoint(const Vec2& anchorPoint)
 	
 }
 
-void EditBoxImplWin::visit(void)
+void EditBoxImplWin::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {   
 }
 

@@ -40,7 +40,7 @@ int Device::getDPI()
         HDC hScreenDC = GetDC( nullptr );
         int PixelsX = GetDeviceCaps( hScreenDC, HORZRES );
         int MMX = GetDeviceCaps( hScreenDC, HORZSIZE );
-        ReleaseDC( nullptr, hScreenDC );   
+        ReleaseDC( nullptr, hScreenDC );
         dpi = 254.0f*PixelsX/MMX/10;
     }
     return dpi;
@@ -80,7 +80,7 @@ public:
     wchar_t * utf8ToUtf16(const std::string& str)
     {
         wchar_t * pwszBuffer = nullptr;
-        do 
+        do
         {
             if (str.empty())
             {
@@ -88,13 +88,13 @@ public:
             }
             // utf-8 to utf-16
             int nLen = str.size();
-            int nBufLen  = nLen + 1;			
+            int nBufLen  = nLen + 1;
             pwszBuffer = new wchar_t[nBufLen];
             CC_BREAK_IF(! pwszBuffer);
             memset(pwszBuffer,0,nBufLen);
-            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);		
+            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);
             pwszBuffer[nLen] = '\0';
-        } while (0);	
+        } while (0);
         return pwszBuffer;
 
     }
@@ -102,7 +102,7 @@ public:
     bool setFont(const char * pFontName = nullptr, int nSize = 0)
     {
         bool bRet = false;
-        do 
+        do
         {
             std::string fontName = pFontName;
             std::string fontPath;
@@ -111,17 +111,15 @@ public:
             LOGFONTA    tOldFont = {0};
             GetObjectA(hDefFont, sizeof(tNewFont), &tNewFont);
             if (fontName.c_str())
-            {    
+            {
                 // create font from ttf file
-                int nFindttf = fontName.find(".ttf");
-                int nFindTTF = fontName.find(".TTF");
-                if (nFindttf >= 0 || nFindTTF >= 0)
+                if (FileUtils::getInstance()->getFileExtension(fontName) == ".ttf")
                 {
                     fontPath = FileUtils::getInstance()->fullPathForFilename(fontName.c_str());
                     int nFindPos = fontName.rfind("/");
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");
-                    fontName = fontName.substr(0,nFindPos);                
+                    fontName = fontName.substr(0,nFindPos);
                 }
                 else
                 {
@@ -131,7 +129,7 @@ public:
                         if (fontName.length() == nFindPos + 1)
                         {
                             fontName = "";
-                        } 
+                        }
                         else
                         {
                             fontName = &fontName[nFindPos+1];
@@ -150,7 +148,7 @@ public:
             if (tOldFont.lfHeight == tNewFont.lfHeight
                 && 0 == strcmp(tOldFont.lfFaceName, tNewFont.lfFaceName))
             {
-                // already has the font 
+                // already has the font
                 bRet = true;
                 break;
             }
@@ -167,7 +165,7 @@ public:
                     if(AddFontResource(pwszBuffer))
                     {
                         SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-                    }						
+                    }
                     delete [] pwszBuffer;
                     pwszBuffer = nullptr;
                 }
@@ -195,7 +193,7 @@ public:
     SIZE sizeWithText(const wchar_t * pszText, int nLen, DWORD dwFmt, LONG nWidthLimit)
     {
         SIZE tRet = {0};
-        do 
+        do
         {
             CC_BREAK_IF(! pszText || nLen <= 0);
 
@@ -247,7 +245,7 @@ public:
         int nRet = 0;
         wchar_t * pwszBuffer = 0;
         wchar_t* fixedText = nullptr;
-        do 
+        do
         {
             CC_BREAK_IF(! pszText);
 
@@ -298,12 +296,12 @@ public:
                 fixedText[fixedIndex] = '\0';
                 nLen = fixedIndex;
             }
-            
+
             SIZE newSize;
             if (fixedText)
             {
                 newSize = sizeWithText(fixedText, nLen, dwFmt, tSize.cx);
-            } 
+            }
             else
             {
                 newSize = sizeWithText(pwszBuffer, nLen, dwFmt, tSize.cx);
@@ -377,12 +375,12 @@ public:
             if (fixedText)
             {
                 nRet = DrawTextW(_DC, fixedText, nLen, &rcText, dwFmt);
-            } 
+            }
             else
             {
                 nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
             }
-            
+
             //DrawTextA(_DC, pszText, nLen, &rcText, dwFmt);
 
             SelectObject(_DC, hOldBmp);
@@ -403,7 +401,7 @@ private:
     HWND    _wnd;
     std::string _curFontPath;
 
-    void removeCustomFont() 
+    void removeCustomFont()
     {
         HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
         if (hDefFont != _font)
@@ -411,7 +409,7 @@ private:
             DeleteObject(_font);
             _font = hDefFont;
         }
-        // release temp font resource	
+        // release temp font resource
         if (_curFontPath.size() > 0)
         {
             wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
@@ -423,7 +421,7 @@ private:
                 pwszBuffer = nullptr;
             }
             _curFontPath.clear();
-        }	
+        }
     }
 };
 
@@ -436,7 +434,7 @@ static BitmapDC& sharedBitmapDC()
 Data Device::getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha)
 {
     Data ret;
-    do 
+    do
     {
         BitmapDC& dc = sharedBitmapDC();
 
@@ -460,7 +458,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
             int mask[4];
         } bi = {0};
         bi.bmiHeader.biSize = sizeof(bi.bmiHeader);
-        CC_BREAK_IF(! GetDIBits(dc.getDC(), dc.getBitmap(), 0, 0, 
+        CC_BREAK_IF(! GetDIBits(dc.getDC(), dc.getBitmap(), 0, 0,
             nullptr, (LPBITMAPINFO)&bi, DIB_RGB_COLORS));
 
         width    = (short)size.cx;
@@ -469,7 +467,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         // copy pixed data
         bi.bmiHeader.biHeight = (bi.bmiHeader.biHeight > 0)
             ? - bi.bmiHeader.biHeight : bi.bmiHeader.biHeight;
-        GetDIBits(dc.getDC(), dc.getBitmap(), 0, height, dataBuf, 
+        GetDIBits(dc.getDC(), dc.getBitmap(), 0, height, dataBuf,
             (LPBITMAPINFO)&bi, DIB_RGB_COLORS);
 
         COLORREF textColor = (textDefinition._fontFillColor.b << 16 | textDefinition._fontFillColor.g << 8 | textDefinition._fontFillColor.r) & 0x00ffffff;
@@ -495,6 +493,12 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
+    CC_UNUSED_PARAM(value);
+}
+
+void Device::vibrate(float duration)
+{
+    CC_UNUSED_PARAM(duration);
 }
 
 NS_CC_END

@@ -162,7 +162,8 @@ bool AssetsManager::checkUpdate()
     curl_easy_setopt(_curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(_curl, CURLOPT_WRITEFUNCTION, getVersionCode);
     curl_easy_setopt(_curl, CURLOPT_WRITEDATA, &_version);
-    if (_connectionTimeout) curl_easy_setopt(_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
+    if (_connectionTimeout)
+        curl_easy_setopt(_curl, CURLOPT_CONNECTTIMEOUT, _connectionTimeout);
     curl_easy_setopt(_curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
     curl_easy_setopt(_curl, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
@@ -259,9 +260,10 @@ void AssetsManager::update()
     
     // 1. Urls of package and version should be valid;
     // 2. Package should be a zip file.
-    if (_versionFileUrl.size() == 0 ||
-        _packageUrl.size() == 0 ||
-        std::string::npos == _packageUrl.find(".zip"))
+    if (_versionFileUrl.empty()
+        || _packageUrl.empty()
+        || FileUtils::getInstance()->getFileExtension(_packageUrl) != ".zip"
+        )
     {
         CCLOG("no version file url, or no package url, or the package is not a zip file");
         _isDownloading = false;

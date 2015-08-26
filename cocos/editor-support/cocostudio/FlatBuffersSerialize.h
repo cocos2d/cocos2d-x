@@ -78,6 +78,7 @@ namespace flatbuffers
     struct BoolFrame;
     struct InnerActionFrame;
     struct EasingData;
+    struct BlendFrame;
 }
 
 namespace tinyxml2
@@ -232,6 +233,7 @@ public:
     * @return @~english flatbuffer object @~chinese flat buffer对象
     */
     flatbuffers::Offset<flatbuffers::InnerActionFrame> createInnerActionFrame(const tinyxml2::XMLElement* objectData);
+    flatbuffers::Offset<flatbuffers::BlendFrame> createBlendFrame(const tinyxml2::XMLElement* objectData);
     
     /**
     * @~english Create easing data flatbuffer from xml object

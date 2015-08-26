@@ -26,6 +26,17 @@
 -- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
+--  Removes all actions matching at least one bit in flags and the target.<br>
+-- param flags     The flag field to match the actions' flags based on bitwise AND.<br>
+-- param target    A certain target.<br>
+-- js NA
+-- @function [parent=#ActionManager] removeActionsByFlags 
+-- @param self
+-- @param #unsigned int flags
+-- @param #cc.Node target
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
+        
+--------------------------------
 --  Removes all actions from all the targets.
 -- @function [parent=#ActionManager] removeAllActions 
 -- @param self

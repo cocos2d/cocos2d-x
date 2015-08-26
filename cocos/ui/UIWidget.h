@@ -38,7 +38,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class EventListenerTouchOneByOne;
-
+class Camera;
 
 namespace ui {
     class LayoutComponent;
@@ -761,10 +761,14 @@ public:
      * 
      * @param pt @~english The point in `Vec2`.
      * @~chinese Vec2类型的点。
+     * @param camera    @~english The camera look at widget, used to convert GL screen point to near/far plane.
+     * @~chinese 指定观察控件的摄像机Camera，用来转换GL屏幕坐标到3D近平面和远平面
+     * @param p         @~english Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
+     * @~chinese 一个用来保存交汇点的3D坐标点，如果不需要可以设置为nullptr
      * @return @~english true if the point is in widget's content space, flase otherwise.
      * @~chinese 如果点在控件的内容空间内返回true，否则返回false。
      */
-    virtual bool hitTest(const Vec2 &pt);
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const;
 
     /**@~english
      * A callback which will be called when touch began event is issued.
@@ -1305,6 +1309,9 @@ protected:
     Vec2 _positionPercent;
 
     bool _hitted;
+    // weak reference of the camera which made the widget passed the hit test when response touch begin event
+    // it's useful in the next touch move/end events
+    const Camera *_hittedByCamera;
     EventListenerTouchOneByOne* _touchListener;
     Vec2 _touchBeganPosition;
     Vec2 _touchMovePosition;

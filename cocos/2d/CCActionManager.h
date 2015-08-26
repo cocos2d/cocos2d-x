@@ -145,6 +145,14 @@ public:
      */
     void removeAllActionsByTag(int tag, Node *target);
 
+    /** Removes all actions matching at least one bit in flags and the target.
+     *
+     * @param flags     The flag field to match the actions' flags based on bitwise AND.
+     * @param target    A certain target.
+     * @js NA
+     */
+    void removeActionsByFlags(unsigned int flags, Node *target);
+
     /** @~english Gets an action given its tag an a target.
      *
      * @~chinese 通过目标对象和标签获取一个动作。

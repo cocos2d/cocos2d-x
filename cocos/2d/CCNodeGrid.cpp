@@ -42,9 +42,19 @@ NodeGrid* NodeGrid::create()
     return ret;
 }
 
+NodeGrid* NodeGrid::create(const cocos2d::Rect &rect)
+{
+    NodeGrid* ret = NodeGrid::create();
+    if (ret) {
+        ret->setGridRect(rect);
+    }
+    return ret;
+}
+
 NodeGrid::NodeGrid()
 : _gridTarget(nullptr)
 , _nodeGrid(nullptr)
+, _gridRect(Rect::ZERO)
 {
 
 }

@@ -88,23 +88,20 @@ public:
      * @~chinese 是否应该在Y轴方向翻转待抓取的纹理。
      * @return @~english True if initailize success, false otherwise. @~chinese 如果初始化成功，则返回真，否则返回假。
      */
-    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
-
-    /**
-     * @~english Init the Grid base.
-     * @~chinese 初始化网格基类
-     *
-     * @param gridSize @~english the size of grid. @~chinese 网格的大小
-     *
-     * @return @~english True if initailize success, false otherwise. @~chinese 如果初始化成功，则返回真，否则返回假。
-     */
     bool initWithSize(const Size& gridSize);
+    bool initWithSize(const Size& gridSize, const Rect& rect);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
 
+    /**@}*/
+    /** @{
+    Getter and setter of the active state of the grid.
+     */
     /** @~english
      * Get the active state of grid.
      * @~chinese 
      * 获取网格的活动状态。
-    */
+     */
     inline bool isActive(void) const { return _active; }
     /**
      * @~english Set the active state of grid.
@@ -170,6 +167,17 @@ public:
     
     /**@~english Change projection to 2D for grabbing. @~chinese 改变投影为抓住2 d。*/
     void set2DProjection(void);
+    
+    /**
+     * @brief Set the effect grid rect.
+     * @param rect The effect grid rect.
+     */
+    void setGridRect(const Rect& rect);
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
+    inline const Rect& getGridRect() const {return _gridRect;}
 
 protected:
     bool _active;
@@ -181,6 +189,7 @@ protected:
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
     Director::Projection _directorProjection;
+    Rect _gridRect;
 };
 
 /**@~english
@@ -200,15 +209,11 @@ public:
      *
      * @return @~english A Grid3D instance. @~chinese 一个Grid3D实例
      */
-    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /**
-     * @~english create one Grid.  @~chinese 创建一个网格。
-     *
-     * @param gridSize @~english The grid size. @~chinese 网格的大小
-     *
-     * @return @~english A Grid3D instance. @~chinese 一个Grid3D实例
-     */
     static Grid3D* create(const Size& gridSize);
+    static Grid3D* create(const Size& gridSize, const Rect& rect);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
+
     /**@~english
      * Constructor.
      * @~chinese 
@@ -305,15 +310,20 @@ public:
      *
      * @return @~english A TiledGrid3D instance. @~chinese 一个 TiledGrid3D 实例。
      */
-    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /**
-     * @~english Create one Grid.  @~chinese 创建一个网格
-     *
-     * @param gridSize @~english The grid size. @~chinese 网格的大小
-     *
-     * @return @~english A TiledGrid3D instance. @~chinese 一个 TiledGrid3D 实例。
-     */
     static TiledGrid3D* create(const Size& gridSize);
+    static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
+=======
+    /** Create one Grid. */
+    static TiledGrid3D* create(const Size& gridSize);
+    /** Create one Grid. */
+    static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
+    /** Create one Grid. */
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
+    /** Create one Grid. */
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
+
     /**@~english
      * Constructor.
      * @~chinese 

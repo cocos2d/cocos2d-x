@@ -38,6 +38,7 @@ class btDefaultCollisionConfiguration;
 class btCollisionDispatcher;
 class btDbvtBroadphase;
 class btSequentialImpulseConstraintSolver;
+class btGhostPairCallback;
 class btRigidBody;
 class btCollisionObject;
 
@@ -186,18 +187,21 @@ CC_CONSTRUCTOR_ACCESS:
     void collisionChecking();
     bool needCollisionChecking();
 
+    void setGhostPairCallback();
 protected:
     std::vector<Physics3DObject*>      _objects;
     std::vector<Physics3DComponent*>   _physicsComponents; //physics3d components
     bool _needCollisionChecking;
     bool _collisionCheckingFlag;
-
+    bool _needGhostPairCallbackChecking;
+    
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btDynamicsWorld* _btPhyiscsWorld;
     btDefaultCollisionConfiguration* _collisionConfiguration;
     btCollisionDispatcher* _dispatcher;
     btDbvtBroadphase* _broadphase;
     btSequentialImpulseConstraintSolver* _solver;
+    btGhostPairCallback *_ghostCallback;
     Physics3DDebugDrawer*                _debugDrawer;
 #endif // CC_ENABLE_BULLET_INTEGRATION
 };

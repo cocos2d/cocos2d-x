@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 
-var UILabelBMFontTest = UIScene.extend({
+var UILabelBMFontTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text

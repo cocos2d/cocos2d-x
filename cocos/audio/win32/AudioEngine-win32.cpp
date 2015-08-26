@@ -26,7 +26,7 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "AudioEngine-win32.h"
-#include <condition_variable>
+
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"
 #include "alext.h"
@@ -47,95 +47,9 @@ static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
 static bool MPG123_LAZYINIT = true;
 
-namespace cocos2d {
-    namespace experimental {
-        class AudioEngineThreadPool
-        {
-        public:
-            AudioEngineThreadPool()
-            : _running(true)
-            , _numThread(6)
-            {
-                _threads.reserve(_numThread);
-                _tasks.reserve(_numThread);
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _tasks.push_back(nullptr);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
-                    _threads[index].detach();
-                }
-            }
-            
-            void addTask(const std::function<void()> &task){
-                _taskMutex.lock();
-                int targetIndex = -1;
-                for (int index = 0; index < _numThread; ++index) {
-                    if (_tasks[index] == nullptr) {
-                        targetIndex = index;
-                        _tasks[index] = task;
-                        break;
-                    }
-                }
-                if (targetIndex == -1) {
-                    _tasks.push_back(task);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
-                    _threads[_numThread].detach();
-                    _numThread++;
-                }
-                _taskMutex.unlock();
-                _sleepCondition.notify_all();
-            }
-            
-            void destroy()
-            {
-                _running = false;
-                _sleepCondition.notify_all();
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _threads[index].join();
-                }
-            }           
-        private:
-            bool _running;
-            std::vector<std::thread>  _threads;
-            std::vector< std::function<void ()> > _tasks;
-            
-            void threadFunc(int index)
-            {
-                while (_running) {
-                    std::function<void ()> task = nullptr;
-                    _taskMutex.lock();
-                    task = _tasks[index];
-                    _taskMutex.unlock();
-                    
-                    if (nullptr == task)
-                    {
-                        std::unique_lock<std::mutex> lk(_sleepMutex);
-                        _sleepCondition.wait(lk);
-                        continue;
-                    }
-                    
-                    task();
-                    
-                    _taskMutex.lock();
-                    _tasks[index] = nullptr;
-                    _taskMutex.unlock();
-                }
-            }
-            
-            int _numThread;
-            
-            std::mutex _taskMutex;
-            std::mutex _sleepMutex;
-            std::condition_variable _sleepCondition;
-        };
-    }
-}
-
 AudioEngineImpl::AudioEngineImpl()
 : _lazyInitLoop(true)
 , _currentAudioID(0)
-, _threadPool(nullptr)
 {
     
 }
@@ -154,10 +68,6 @@ AudioEngineImpl::~AudioEngineImpl()
     if (s_ALDevice) {
         alcCloseDevice(s_ALDevice);
         s_ALDevice = nullptr;
-    }
-    if (_threadPool) {
-        _threadPool->destroy();
-        delete _threadPool;
     }
 
     mpg123_exit();
@@ -186,12 +96,81 @@ bool AudioEngineImpl::init()
                 _alSourceUsed[_alSources[i]] = false;
             }
             
-            _threadPool = new (std::nothrow) AudioEngineThreadPool();
             ret = true;
         }
     }while (false);
     
     return ret;
+}
+
+AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
+{
+    AudioCache* audioCache = nullptr;
+
+    do 
+    {
+        auto it = _audioCaches.find(filePath);
+        if (it != _audioCaches.end())
+        {
+            audioCache = &it->second;
+            if (callback && audioCache->_alBufferReady)
+            {
+                callback(true);
+            }
+            break;
+        }
+
+        AudioCache::FileFormat fileFormat = AudioCache::FileFormat::UNKNOWN;
+
+        std::string fileExtension = FileUtils::getInstance()->getFileExtension(filePath);
+        if (fileExtension == ".ogg")
+        {
+            fileFormat = AudioCache::FileFormat::OGG;
+        }
+        else if (fileExtension == ".mp3")
+        {
+            fileFormat = AudioCache::FileFormat::MP3;
+
+            if (MPG123_LAZYINIT)
+            {
+                auto error = mpg123_init();
+                if (error == MPG123_OK)
+                {
+                    MPG123_LAZYINIT = false;
+                }
+                else
+                {
+                    log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
+                    break;
+                }
+            }
+        }
+        else
+        {
+            log("Unsupported media type file: %s\n", filePath.c_str());
+            break;
+        }
+
+        audioCache = &_audioCaches[filePath];
+        audioCache->_fileFormat = fileFormat;
+
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    } while (false);
+
+    if (callback)
+    {
+        if (audioCache)
+        {
+            audioCache->addLoadCallback(callback);
+        } 
+        else
+        {
+            callback(false);
+        }
+    }
+
+    return audioCache;
 }
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
@@ -209,55 +188,17 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
-        auto ext = strchr(filePath.c_str(), '.');
-        bool eraseCache = true;
-
-        if (_stricmp(ext, ".ogg") == 0){
-            audioCache->_fileFormat = AudioCache::FileFormat::OGG;
-            eraseCache = false;
-        }
-        else if (_stricmp(ext, ".mp3") == 0){
-            audioCache->_fileFormat = AudioCache::FileFormat::MP3;
-
-            if (MPG123_LAZYINIT){
-                auto error = mpg123_init();
-                if(error == MPG123_OK){
-                    MPG123_LAZYINIT = false;
-                    eraseCache = false;
-                }
-                else{
-                    log("Basic setup goes wrong: %s", mpg123_plain_strerror(error));
-                }
-            }
-            else{
-                eraseCache = false;
-            }
-        }
-        else{
-            log("unsupported media type:%s\n", ext);
-        }
-        
-        if (eraseCache){
-            _audioCaches.erase(filePath);
-            return AudioEngine::INVALID_AUDIO_ID;
-        }
-
-        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
-    }
-    else {
-        audioCache = &it->second;
+    AudioCache* audioCache = preload(filePath, nullptr);
+    if (audioCache == nullptr)
+    {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
     
     auto player = &_audioPlayers[_currentAudioID];
     player->_alSource = alSource;
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addCallbacks(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d, this, audioCache, _currentAudioID));
     
     _alSourceUsed[alSource] = true;
     

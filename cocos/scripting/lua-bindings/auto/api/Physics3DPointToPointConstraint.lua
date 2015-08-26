@@ -17,6 +17,17 @@
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
+-- @overload self, cc.Physics3DRigidBody, cc.Physics3DRigidBody, vec3_table, vec3_table         
+-- @overload self, cc.Physics3DRigidBody, vec3_table         
+-- @function [parent=#Physics3DPointToPointConstraint] init
+-- @param self
+-- @param #cc.Physics3DRigidBody rbA
+-- @param #cc.Physics3DRigidBody rbB
+-- @param #vec3_table pivotPointInA
+-- @param #vec3_table pivotPointInB
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- set pivot point in A's local space
 -- @function [parent=#Physics3DPointToPointConstraint] setPivotPointInA 
 -- @param self

@@ -87,6 +87,18 @@ Animation3D : function (
 jsb.Animate3D = {
 
 /**
+ * @method setKeyFrameUserInfo
+ * @param {int} arg0
+ * @param {map_object} arg1
+ */
+setKeyFrameUserInfo : function (
+int, 
+map 
+)
+{
+},
+
+/**
  * @method getSpeed
  * @return {float}
  */
@@ -267,6 +279,54 @@ float
  * @constructor
  */
 Animate3D : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TextureCube
+ */
+jsb.TextureCube = {
+
+/**
+ * @method reloadTexture
+ * @return {bool}
+ */
+reloadTexture : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.TextureCube}
+ */
+create : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.TextureCube;
+},
+
+/**
+ * @method TextureCube
+ * @constructor
+ */
+TextureCube : function (
 )
 {
 },
@@ -768,20 +828,20 @@ reload : function (
 
 /**
  * @method init
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
-str,
-str,
-str,
-str,
-str,
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {bool}
+ */
+init : function (
+str, 
+str, 
+str, 
+str, 
+str, 
 str 
 )
 {
@@ -1300,16 +1360,6 @@ bool
 },
 
 /**
- * @method setIsEnableFrustumCull
- * @param {bool} arg0
- */
-setIsEnableFrustumCull : function (
-bool 
-)
-{
-},
-
-/**
  * @method setDetailMap
  * @param {unsigned int} arg0
  * @param {cc.Terrain::DetailMap} arg1
@@ -1327,6 +1377,16 @@ map
  */
 resetHeightMap : function (
 char 
+)
+{
+},
+
+/**
+ * @method setLightDir
+ * @param {vec3_object} arg0
+ */
+setLightDir : function (
+vec3 
 )
 {
 },
@@ -1397,6 +1457,20 @@ vec3
 )
 {
     return 0;
+},
+
+/**
+ * @method initWithTerrainData
+ * @param {cc.Terrain::TerrainData} arg0
+ * @param {cc.Terrain::CrackFixedType} arg1
+ * @return {bool}
+ */
+initWithTerrainData : function (
+terraindata, 
+crackfixedtype 
+)
+{
+    return false;
 },
 
 /**
@@ -1474,13 +1548,23 @@ int
 },
 
 /**
- * @method getMaxHeight
- * @return {float}
+ * @method setLightMap
+ * @param {String} arg0
  */
-getMaxHeight : function (
+setLightMap : function (
+str 
 )
 {
-    return 0;
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
+)
+{
 },
 
 /**
@@ -1493,50 +1577,21 @@ getMinHeight : function (
     return 0;
 },
 
-};
-
 /**
- * @class TextureCube
+ * @method getMaxHeight
+ * @return {float}
  */
-jsb.TextureCube = {
-
-/**
- * @method reloadTexture
- * @return {bool}
- */
-reloadTexture : function (
+getMaxHeight : function (
 )
 {
-    return false;
+    return 0;
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @param {String} arg3
- * @param {String} arg4
- * @param {String} arg5
- * @return {cc.TextureCube}
- */
-create : function (
-str, 
-str, 
-str, 
-str, 
-str, 
-str 
-)
-{
-    return cc.TextureCube;
-},
-
-/**
- * @method TextureCube
+ * @method Terrain
  * @constructor
  */
-TextureCube : function (
+Terrain : function (
 )
 {
 },

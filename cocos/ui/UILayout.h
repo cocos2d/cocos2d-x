@@ -649,6 +649,13 @@ public:
      * @~chinese 返回找到的控件
      */
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
+    
+    /** 
+     * Override function. Set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true. 
+     * @param mask Mask being set
+     * @param applyChildren If true call this function recursively from this node to its children.
+     */
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
 CC_CONSTRUCTOR_ACCESS:
     //override "init" method of widget.
@@ -894,7 +901,8 @@ protected:
     Type _layoutType;
     ClippingType _clippingType;
     DrawNode* _clippingStencil;
-    bool _scissorRectDirty;
+    bool _scissorOldState;
+    Rect _clippingOldRect;
     Rect _clippingRect;
     Layout* _clippingParent;
     bool _clippingRectDirty;

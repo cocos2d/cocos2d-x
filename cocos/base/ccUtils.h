@@ -125,6 +125,15 @@ namespace utils
      */
     double CC_DLL gettime();
 
+    /**@~english
+     * Get current time in milliseconds, accurate to nanoseconds
+     * @~chinese 获取毫秒级时间
+     *
+     * @return @~english Returns the time in milliseconds since the Epoch.
+     * @~chinese 返回从公元纪年开始的毫秒时间
+     */
+    long long CC_DLL getTimeInMilliseconds();
+
     /**
      * @~english
      * Calculate union of bounding box of a node and its children.

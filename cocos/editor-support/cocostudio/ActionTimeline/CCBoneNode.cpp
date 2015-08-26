@@ -182,6 +182,11 @@ void BoneNode::addToBoneList(BoneNode* bone)
 void BoneNode::addToSkinList(SkinNode* skin)
 {
     _boneSkins.pushBack(skin);
+    auto blendSkin = dynamic_cast<BlendProtocol*>(skin);
+    if (nullptr != blendSkin && _blendFunc != blendSkin->getBlendFunc())
+    {
+        blendSkin->setBlendFunc(_blendFunc);
+    }
 }
 
 void BoneNode::removeFromSkinList(SkinNode* skin)
@@ -281,7 +286,18 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
 
 void BoneNode::setBlendFunc(const cocos2d::BlendFunc& blendFunc)
 {
-    _blendFunc = blendFunc;
+    if (_blendFunc != blendFunc)
+    {
+        _blendFunc = blendFunc;
+        for (auto & skin : _boneSkins)
+        {
+            auto blendSkin = dynamic_cast<BlendProtocol*>(skin);
+            if (nullptr != blendSkin)
+            {
+                blendSkin->setBlendFunc(_blendFunc);
+            }
+        }
+    }
 }
 
 void BoneNode::setDebugDrawLength(float length)

@@ -53,6 +53,7 @@ NS_CC_END
 
 #include "bullet/btBulletCollisionCommon.h"
 #include "bullet/btBulletDynamicsCommon.h"
+#include "bullet/BulletCollision/CollisionDispatch/btGhostObject.h"
 
 /**
     @~english convert between cocos and bullet

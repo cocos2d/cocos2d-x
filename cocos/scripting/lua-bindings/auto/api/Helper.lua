@@ -19,6 +19,15 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- brief Convert a node's boundingBox rect into screen coordinates.<br>
+-- param node Any node pointer.<br>
+-- return A Rect in screen coordinates.
+-- @function [parent=#Helper] convertBoundingBoxToScreen 
+-- @param self
+-- @param #cc.Node node
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 -- Change the active property of Layout's @see `LayoutComponent`<br>
 -- param active A boolean value.
 -- @function [parent=#Helper] changeLayoutSystemActiveState 

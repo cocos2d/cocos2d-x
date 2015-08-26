@@ -1196,3 +1196,5 @@ cc.Menu.create = function(menuItems) {
     }
     return cc.Menu._create.apply(null, items);
 };
+
+cc.TMXLayer.prototype.tileFlagsAt = cc.TMXLayer.prototype.getTileFlagsAt;

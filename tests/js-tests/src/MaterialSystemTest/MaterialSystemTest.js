@@ -169,10 +169,10 @@ var Material_setTechnique = MaterialSystemTestDemo.extend({
         sprite.setMaterial(mat);
 
         //lights
-        var light1 = jsb.AmbientLight.create(cc.color.RED);
+        var light1 = new jsb.AmbientLight(cc.color.RED);
         this.addChild(light1);
 
-        var light2 = jsb.DirectionLight.create(cc.math.vec3(-1, 1, 0), cc.color.GREEN);
+        var light2 = new jsb.DirectionLight(cc.math.vec3(-1, 1, 0), cc.color.GREEN);
         this.addChild(light2);
 
         sprite.runAction(cc.rotateBy(5, cc.math.vec3(30, 60, 270)).repeatForever());

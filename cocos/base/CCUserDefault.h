@@ -290,6 +290,15 @@ public:
      */
     virtual void flush();
 
+    /**
+     * @~english delete any value by key
+     * @~chinese 删除指定键所对应的值
+     * @param key @~english The key to delete value.
+     * @~chinese 需要删除的键
+     * @js NA
+     */
+    virtual void deleteValueForKey(const char* key);
+    
     /** @~english Returns the singleton.
      * @~chinese 返回 UserDefault 单例对象。
      * @js NA
@@ -335,6 +344,7 @@ public:
      * @js NA
      */
     static const std::string& getXMLFilePath();
+    
     /** @~english All supported platforms except iOS, Android & CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.
      * @~chinese 除了 iOS，Android 和 `CC_PLATFORM_WINRT` 之外的所有支持的平台都使用 xml 文件保存数据。该函数检查 xml 文件是否存在。
      * @return @~english True if the xml file exists, flase if not.

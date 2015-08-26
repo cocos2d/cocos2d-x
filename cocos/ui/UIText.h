@@ -113,7 +113,7 @@ public:
      */
     static Text* create(const std::string& textContent,
                         const std::string& fontName,
-                        int fontSize);
+                        float fontSize);
 
     /**
      * @~english Changes the string value of label.
@@ -170,7 +170,7 @@ public:
      * @param size @~english The font size.
      * @~chinese 字体大小
      */
-    void setFontSize(int size);
+    void setFontSize(float size);
 
     /**
      * @~english Gets the font size of label.
@@ -178,7 +178,7 @@ public:
      * @return @~english The font size.
      * @~chinese 字体大小
      */
-    int getFontSize()const;
+    float getFontSize()const;
 
     /**
      * @~english Sets the font name of label.
@@ -383,7 +383,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& textContent,
                       const std::string& fontName,
-                      int fontSize);
+                      float fontSize);
 
 protected:
     virtual void initRenderer() override;
@@ -401,7 +401,7 @@ protected:
     float _normalScaleValueX;
     float _normalScaleValueY;
     std::string _fontName;
-    int _fontSize;
+    float _fontSize;
     float _onSelectedScaleOffset;
     Label* _labelRenderer;
     bool _labelRendererAdaptDirty;

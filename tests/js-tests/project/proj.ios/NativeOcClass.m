@@ -50,6 +50,19 @@
     [alertView show];
     return true;
 }
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content addBool:(BOOL)logicSwitch{
+    if (logicSwitch)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"it's true", nil];
+        [alertView show];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"it's false", nil];
+        [alertView show];
+    } 
+    return true;
+}
 #elif TARGET_OS_MAC
 
 +(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content{
@@ -63,5 +76,24 @@
     return true;
 }
 
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content addBool:(BOOL)logicSwitch{
+    NSAlert *alert = [[NSAlert alloc] init];
+    if (logicSwitch)
+    {
+        [alert addButtonWithTitle:@"it's true"];
+        [alert addButtonWithTitle:@"Cancel"];
+    }
+    else
+    {
+        [alert addButtonWithTitle:@"it's false"];
+        [alert addButtonWithTitle:@"Cancel"];
+    }
+    
+    [alert setMessageText:title];
+    [alert setInformativeText:content];
+    [alert setAlertStyle:NSWarningAlertStyle];
+    [alert runModal];
+    return true;
+}
 #endif
 @end

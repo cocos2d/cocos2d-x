@@ -227,10 +227,10 @@ Vec2 GLView::getVisibleOrigin() const
 
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    experimental::Viewport vp = {(float)(x * _scaleX + _viewPortRect.origin.x),
+    experimental::Viewport vp((float)(x * _scaleX + _viewPortRect.origin.x),
         (float)(y * _scaleY + _viewPortRect.origin.y),
         (float)(w * _scaleX),
-        (float)(h * _scaleY)};
+        (float)(h * _scaleY));
     Camera::setDefaultViewport(vp);
 }
 
@@ -244,18 +244,18 @@ void GLView::setScissorInPoints(float x , float y , float w , float h)
 
 bool GLView::isScissorEnabled()
 {
-	return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
+    return (GL_FALSE == glIsEnabled(GL_SCISSOR_TEST)) ? false : true;
 }
 
 Rect GLView::getScissorRect() const
 {
-	GLfloat params[4];
-	glGetFloatv(GL_SCISSOR_BOX, params);
-	float x = (params[0] - _viewPortRect.origin.x) / _scaleX;
-	float y = (params[1] - _viewPortRect.origin.y) / _scaleY;
-	float w = params[2] / _scaleX;
-	float h = params[3] / _scaleY;
-	return Rect(x, y, w, h);
+    GLfloat params[4];
+    glGetFloatv(GL_SCISSOR_BOX, params);
+    float x = (params[0] - _viewPortRect.origin.x) / _scaleX;
+    float y = (params[1] - _viewPortRect.origin.y) / _scaleY;
+    float w = params[2] / _scaleX;
+    float h = params[3] / _scaleY;
+    return Rect(x, y, w, h);
 }
 
 void GLView::setViewName(const std::string& viewname )
@@ -296,7 +296,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
             }
 
             Touch* touch = g_touches[unusedIndex] = new (std::nothrow) Touch();
-			touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
+            touch->setTouchInfo(unusedIndex, (x - _viewPortRect.origin.x) / _scaleX,
                                      (y - _viewPortRect.origin.y) / _scaleY);
             
             CCLOGINFO("x = %f y = %f", touch->getLocationInView().x, touch->getLocationInView().y);
@@ -341,8 +341,8 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
         Touch* touch = g_touches[iter->second];
         if (touch)
         {
-			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-								(y - _viewPortRect.origin.y) / _scaleY);
+            touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
+                                (y - _viewPortRect.origin.y) / _scaleY);
             
             touchEvent._touches.push_back(touch);
         }
@@ -390,8 +390,8 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
         if (touch)
         {
             CCLOGINFO("Ending touches with id: %d, x=%f, y=%f", id, x, y);
-			touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
-								(y - _viewPortRect.origin.y) / _scaleY);
+            touch->setTouchInfo(iter->second, (x - _viewPortRect.origin.x) / _scaleX,
+                                (y - _viewPortRect.origin.y) / _scaleY);
 
             touchEvent._touches.push_back(touch);
             

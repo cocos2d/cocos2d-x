@@ -98,11 +98,11 @@ public:
      * 
      * @~chinese 获取所有相机。
      * 
-     * @return @~english The vector of all cameras.
-     * @~chinese 相机对象的数组。
+     * @return @~english The vector of all cameras, ordered by camera depth.
+     * @~chinese 相机对象的数组，以相机深度排序
      * @js NA
      */
-    const std::vector<Camera*>& getCameras() const { return _cameras; }
+    const std::vector<Camera*>& getCameras();
 
     /** @~english Get the default camera.
      * @~chinese 获取默认的相机。

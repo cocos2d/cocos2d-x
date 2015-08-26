@@ -34,9 +34,6 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 #include "base/ccTypes.h"
-#ifdef EMSCRIPTEN
-#include "CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -72,9 +69,6 @@ class GLProgram;
  * 注意：生成的纹理对象内容是上下颠倒的。
  */
 class CC_DLL Texture2D : public Ref
-#ifdef EMSCRIPTEN
-, public GLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
     /** @typedef Texture2D::PixelFormat

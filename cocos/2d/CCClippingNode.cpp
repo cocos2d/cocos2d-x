@@ -170,6 +170,14 @@ void ClippingNode::onEnter()
 
 void ClippingNode::onEnterTransitionDidFinish()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+            return;
+    }
+#endif
+    
     Node::onEnterTransitionDidFinish();
     
     if (_stencil != nullptr)
@@ -180,6 +188,14 @@ void ClippingNode::onEnterTransitionDidFinish()
 
 void ClippingNode::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+            return;
+    }
+#endif
+    
     if (_stencil != nullptr)
     {
         _stencil->onExitTransitionDidStart();
@@ -190,6 +206,14 @@ void ClippingNode::onExitTransitionDidStart()
 
 void ClippingNode::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     if (_stencil != nullptr)
     {
         _stencil->onExit();
@@ -492,7 +516,7 @@ void ClippingNode::onAfterDrawStencil()
 
     // restore the depth test state
     glDepthMask(_currentDepthWriteMask);
-    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask);
+    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask != 0);
 
     //if (currentDepthTestEnabled) {
     //    glEnable(GL_DEPTH_TEST);

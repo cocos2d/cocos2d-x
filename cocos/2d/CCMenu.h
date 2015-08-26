@@ -242,7 +242,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    Menu() : _selectedItem(nullptr) {}
+    Menu() : _selectedItem(nullptr), _selectedWithCamera(nullptr) {}
     virtual ~Menu();
 
     bool init() override;
@@ -253,10 +253,10 @@ protected:
 
     bool _enabled;
 
-    virtual MenuItem* getItemForTouch(Touch * touch);
+    virtual MenuItem* getItemForTouch(Touch * touch, const Camera *camera);
     State _state;
     MenuItem *_selectedItem;
-
+    const Camera *_selectedWithCamera;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Menu);
 };

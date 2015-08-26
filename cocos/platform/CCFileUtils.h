@@ -62,7 +62,7 @@ public:
     /**@~english
      * You can inherit from platform dependent implementation of FileUtils, such as FileUtilsAndroid,
      * and use this function to set delegate, then FileUtils will invoke delegate's implementation.
-     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from 
+     * Fox example, your resources are encrypted, so you need to decrypt it after reading data from
      * resources, then you can implement all getXXX functions, and engine will invoke your own getXX
      * functions when reading data of resources.
      *
@@ -108,16 +108,16 @@ public:
     virtual void purgeCachedEntries();
     
     /**@~english
-     *  read file and change the file content to string.
+     * Gets string from a file.
      * @~chinese 
-     * 读取一个文件,将内容转换为字符串。
+     * 将一个文件内容读取为字符串。
      */
     virtual std::string getStringFromFile(const std::string& filename);
     
     /**@~english
-     *  read file and change the file content to binary data.
+     * Creates binary data from a file.
      * @~chinese 
-     * 读取一个文件,将内容转换为二进制数据。
+     * 将一个文件内容读取为二进制数据。
      *  @return @~english A data object.
      * @~chinese 一个数据对象。
      */
@@ -165,40 +165,40 @@ public:
      If a new filename can't be found on the dictionary, it will use the original filename.
      Then it will try to obtain the full path of the filename using the FileUtils search rules: resolutions, and search paths.
      The file search is based on the array element order of search paths and resolution directories.
-     
+
      For instance:
 
-     	We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
-     	and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
-     	to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
+         We set two elements("/mnt/sdcard/", "internal_dir/") to search paths vector by setSearchPaths,
+         and set three elements("resources-ipadhd/", "resources-ipad/", "resources-iphonehd")
+         to resolutions vector by setSearchResolutionsOrder. The "internal_dir" is relative to "Resources/".
 
-		If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
-     	Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
+        If we have a file named 'sprite.png', the mapping in fileLookup dictionary contains `key: sprite.png -> value: sprite.pvr.gz`.
+         Firstly, it will replace 'sprite.png' with 'sprite.pvr.gz', then searching the file sprite.pvr.gz as follows:
 
-     	    /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
+             /mnt/sdcard/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
+             /mnt/sdcard/resources-ipad/sprite.pvr.gz        (if not found, search next)
+             /mnt/sdcard/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
+             /mnt/sdcard/sprite.pvr.gz                       (if not found, search next)
+             internal_dir/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
+             internal_dir/resources-ipad/sprite.pvr.gz       (if not found, search next)
+             internal_dir/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
+             internal_dir/sprite.pvr.gz                      (if not found, return "sprite.png")
 
         If the filename contains relative path like "gamescene/uilayer/sprite.png",
         and the mapping in fileLookup dictionary contains `key: gamescene/uilayer/sprite.png -> value: gamescene/uilayer/sprite.pvr.gz`.
         The file search order will be:
 
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
-     	    /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
-     	    internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
-     	    internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
+             /mnt/sdcard/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz      (if not found, search next)
+             /mnt/sdcard/gamescene/uilayer/resources-ipad/sprite.pvr.gz        (if not found, search next)
+             /mnt/sdcard/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz    (if not found, search next)
+             /mnt/sdcard/gamescene/uilayer/sprite.pvr.gz                       (if not found, search next)
+             internal_dir/gamescene/uilayer/resources-ipadhd/sprite.pvr.gz     (if not found, search next)
+             internal_dir/gamescene/uilayer/resources-ipad/sprite.pvr.gz       (if not found, search next)
+             internal_dir/gamescene/uilayer/resources-iphonehd/sprite.pvr.gz   (if not found, search next)
+             internal_dir/gamescene/uilayer/sprite.pvr.gz                      (if not found, return "gamescene/uilayer/sprite.png")
 
      If the new file can't be found on the file system, it will return the parameter filename directly.
-     
+
      This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
      you might need to load different resources for a given file in the different platforms.
 
@@ -366,7 +366,7 @@ public:
     
     /** @~english
      *  Sets the array of search paths.
-     * 
+     *
      *  You can use this array to modify the search path of the resources.
      *  If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
      *
@@ -379,9 +379,9 @@ public:
      *  @note @~english This method could access relative path and absolute path.
      *        If the relative path was passed to the vector, FileUtils will add the default resource directory before the relative path.
      *        For instance:
-     *        	On Android, the default resource root path is "assets/".
-     *        	If "/mnt/sdcard/" and "resources-large" were set to the search paths vector,
-     *        	"resources-large" will be converted to "assets/resources-large" since it was a relative path.
+     *            On Android, the default resource root path is "assets/".
+     *            If "/mnt/sdcard/" and "resources-large" were set to the search paths vector,
+     *            "resources-large" will be converted to "assets/resources-large" since it was a relative path.
      *
      * @~chinese 这个方法既可以访问绝对路径又可以访问相对路径。
      * 如果给集合传递的是一个相对路径，文件工具类会在这个相对路径的前面加上默认的资源目录
@@ -480,7 +480,6 @@ public:
     *   @~chinese 该方法在内部使用。
     */
     virtual ValueMap getValueMapFromData(const char* filedata, int filesize);
-    
 
     /** @~english Write a ValueMap to a plist file.
     *   @~chinese 将ValueMap,写入到文件中
@@ -492,7 +491,44 @@ public:
     *   @~chinese 该方法在内部使用。
     */
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
-    
+
+    /**
+     *  write a string into a file
+     *
+     * @param dataStr the string want to save
+     * @param fullPath The full path to the file you want to save a string
+     * @return bool True if write success
+     */
+    virtual bool writeStringToFile(std::string dataStr, const std::string& fullPath);
+
+
+    /**
+     * write Data into a file
+     *
+     *@param retData the data want to save
+     *@param fullPath The full path to the file you want to save a string
+     *@return bool
+     */
+    virtual bool writeDataToFile(Data retData, const std::string& fullPath);
+
+    /**
+    * write ValueMap into a plist file
+    *
+    *@param dict the ValueMap want to save
+    *@param fullPath The full path to the file you want to save a string
+    *@return bool
+    */
+    virtual bool writeValueMapToFile(ValueMap& dict, const std::string& fullPath);
+
+    /**
+    * write ValueVector into a plist file
+    *
+    *@param vecData the ValueVector want to save
+    *@param fullPath The full path to the file you want to save a string
+    *@return bool
+    */
+    virtual bool writeValueVectorToFile(ValueVector vecData, const std::string& fullPath);
+
     /**@~english
     * Windows fopen can't support UTF-8 filename
     * Need convert all parameters fopen and other 3rd-party libs
@@ -529,7 +565,15 @@ public:
      * @~chinese 如果文件存在返回true，否则返回false
      */
     virtual bool isFileExist(const std::string& filename) const;
-    
+
+    /**
+    *  Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.
+    *  Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.
+    *  @param filePath The path of the file, it could be a relative or absolute path.
+    *  @return suffix for filename in lower case or empty if a dot not found.
+    */
+    virtual std::string getFileExtension(const std::string& filePath) const;
+
     /**@~english
      *  Checks whether the path is an absolute path.
      *
@@ -617,7 +661,16 @@ public:
      * @~chinese 如果成功重命名了文件返回true,如果重命名失败返回false
      */
     virtual bool renameFile(const std::string &path, const std::string &oldname, const std::string &name);
-    
+
+    /**
+     *  Renames a file under the given directory.
+     *
+     *  @param oldfullpath  The current fullpath of the file. Includes path and name.
+     *  @param newfullpath  The new fullpath of the file. Includes path and name.
+     *  @return True if the file have been renamed successfully, false if not.
+     */
+    virtual bool renameFile(const std::string &oldfullpath, const std::string &newfullpath);
+
     /**@~english
      *  Retrieve the file size.
      *
@@ -804,7 +857,7 @@ protected:
      * singleton 文件工具类的单例的指针。
      */
     static FileUtils* s_sharedFileUtils;
-    
+
 };
 
 // end of support group

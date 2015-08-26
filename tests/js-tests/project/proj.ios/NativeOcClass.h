@@ -29,5 +29,6 @@
 +(void) callNativeWithParam:(NSString *)str;
 +(NSString *)callNativeWithReturnString;
 +(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content;
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content addBool:(BOOL)logicSwitch;
 +(int)callNativeWithAdd:(NSNumber *)num1 and:(NSNumber *)num2;
 @end

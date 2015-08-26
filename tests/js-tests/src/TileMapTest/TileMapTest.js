@@ -229,7 +229,7 @@ var TMXOrthoTest2 = TileDemo.extend({
     },
     onExit:function () {
         this._super();
-        director.setProjection(cc.Director.PROJECTION_2D);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
     },
 
     // Automation
@@ -759,7 +759,6 @@ var TMXOrthoObjectsTest = TileDemo.extend({
         var drawNode = new cc.DrawNode();
         drawNode.setLineWidth(3);
         drawNode.setDrawColor(cc.color(255,255,255,255));
-        this.addChild(drawNode);
 
         var map = new cc.TMXTiledMap(s_resprefix + "TileMaps/ortho-objects.tmx");
         this.addChild(map, 0, TAG_TILE_MAP);
@@ -784,7 +783,7 @@ var TMXOrthoObjectsTest = TileDemo.extend({
             drawNode.drawSegment(cc.p((x + width), (y + height)), cc.p(x, (y + height)));
             drawNode.drawSegment(cc.p(x, (y + height)), cc.p(x, y));
         }
-
+        map.addChild(drawNode);
         //Automation parameters
         this.testObjects = array;
     },
@@ -1118,11 +1117,13 @@ var TMXIsoVertexZ = TMXFixBugLayer.extend({
     onEnter:function () {
         this._super();
         // TIP: 2d projection should be used
+        director.setDepthTest(true);
         director.setProjection(cc.Director.PROJECTION_2D);
     },
     onExit:function () {
         // At exit use any other projection.
-        //	director.setProjection:cc.Director.PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
+        director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
@@ -1192,11 +1193,13 @@ var TMXOrthoVertexZ = TMXFixBugLayer.extend({
         this._super();
 
         // TIP: 2d projection should be used
+        director.setDepthTest(true);
         director.setProjection(cc.Director.PROJECTION_2D);
     },
     onExit:function () {
         // At exit use any other projection.
-        //	director.setProjection:cc.Director.PROJECTION_3D);
+        director.setProjection(cc.Director.PROJECTION_DEFAULT);
+        director.setDepthTest(false);
         this._super();
     },
     repositionSprite:function (dt) {
@@ -1673,6 +1676,11 @@ var TileMapTestScene = TestScene.extend({
         cc.director.setDepthTest(true);
 
         director.runScene(this);
+    },
+    onExit:function () {
+        cc.log("onExit");
+        cc.director.setDepthTest(false);
+        this._super();
     }
 });
 

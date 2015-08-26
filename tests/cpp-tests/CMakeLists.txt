@@ -41,6 +41,7 @@ set(TESTS_SRC
   Classes/BugsTest/Bug-886.cpp
   Classes/BugsTest/Bug-899.cpp
   Classes/BugsTest/Bug-914.cpp
+  Classes/BugsTest/Bug-12847.cpp
   Classes/BugsTest/Bug-Child.cpp
   Classes/BugsTest/BugsTest.cpp
   Classes/Camera3DTest/Camera3DTest.cpp
@@ -55,6 +56,7 @@ set(TESTS_SRC
   Classes/CurlTest/CurlTest.cpp
   Classes/CurrentLanguageTest/CurrentLanguageTest.cpp
   Classes/DataVisitorTest/DataVisitorTest.cpp
+  Classes/DownloaderTest/DownloaderTest.cpp
   Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp
   Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp
   Classes/EffectsTest/EffectsTest.cpp
@@ -171,6 +173,7 @@ set(TESTS_SRC
   Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
   Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp
+  Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp
   Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
   Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
   Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest_Editor.cpp
@@ -207,6 +210,7 @@ set(TESTS_SRC
   Classes/UnitTest/UnitTest.cpp
   Classes/UserDefaultTest/UserDefaultTest.cpp
   Classes/VisibleRect.cpp
+  Classes/VibrateTest/VibrateTest.cpp
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/controller.cpp
   Classes/testBasic.cpp

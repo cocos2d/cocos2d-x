@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UICHECKBOX_H__
 #define __UICHECKBOX_H__
 
-#include "ui/UIWidget.h"
+#include "ui/UIAbstractCheckButton.h"
 #include "ui/GUIExport.h"
 
 /**
@@ -33,7 +33,6 @@ THE SOFTWARE.
  * @{
  */
 NS_CC_BEGIN
-class Sprite;
 
 namespace ui {
 
@@ -51,7 +50,7 @@ typedef enum
 {
     CHECKBOX_STATE_EVENT_SELECTED,
     CHECKBOX_STATE_EVENT_UNSELECTED
-}CheckBoxEventType;
+} CheckBoxEventType;
 
 /**@~english
  * A callback which will be called after checkbox event happens.
@@ -67,7 +66,7 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
  * @~chinese 
  * 复选框是一种特定类型的“两状态”按钮,可以处于“选中”和“未选中状态”
  */
-class CC_GUI_DLL CheckBox : public Widget
+class CC_GUI_DLL CheckBox : public AbstractCheckButton
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -166,94 +165,7 @@ public:
                             const std::string& cross,
                             TextureResType texType = TextureResType::LOCAL);
 
-    /**@~english
-     * Load all textures for initializing a checkbox.
-     *
-     * @~chinese 
-     * 加载所有纹理并初始化一个复选框。
-     * 
-     * @param background    @~english The background image name.
-     * @~chinese 背景普通状态图片的名字。
-     * @param backgroundSelected    @~english The background selected image name.
-     * @~chinese 背景选择状态图片的名字。
-     * @param cross    @~english The cross image name.
-     * @~chinese 勾选选中状态图片的名字
-     * @param backgroundDisabled    @~english The background disabled state texture.
-     * @~chinese 背景禁用状态图片名字
-     * @param frontCrossDisabled    @~english The front cross disabled state image name.
-     * @~chinese 勾选禁用状态图片名字
-     * @param texType    @see `Widget::TextureResType`
-     */
-    void loadTextures(const std::string& background,
-                      const std::string& backgroundSelected,
-                      const std::string& cross,
-                      const std::string& backgroundDisabled,
-                      const std::string& frontCrossDisabled,
-                      TextureResType texType = TextureResType::LOCAL);
-
-    /**@~english
-     * Load background texture for checkbox.
-     *
-     * @~chinese 
-     * 加载背景普通状态纹理
-     * 
-     * @param backGround   @~english The background image name.
-     * @~chinese 背景普通状态图片的名字。
-     * @param type    @see `Widget::TextureResType`
-     */
-    void loadTextureBackGround(const std::string& backGround,TextureResType type = TextureResType::LOCAL);
-
-    /**@~english
-     * Load background selected state texture for checkbox.
-     *
-     * @~chinese 
-     * 加载背景选中状态纹理的图片
-     * 
-     * @param backGroundSelected    @~english The background selected state image name.
-     * @~chinese 背景选中状态纹理图片的名字
-     * @param texType    @see `Widget::TextureResType`
-     */
-    void loadTextureBackGroundSelected(const std::string& backGroundSelected,TextureResType texType = TextureResType::LOCAL);
-
-    /**@~english
-     * Load cross texture for checkbox.
-     *
-     * @~chinese 
-     * 加载勾选选中状态的纹理图片
-     * 
-     * @param crossTextureName    @~english The cross texture name.
-     * @~chinese 勾选选中状态图片的名字
-     * @param texType    @see `Widget::TextureResType`
-     */
-    void loadTextureFrontCross(const std::string& crossTextureName,TextureResType texType = TextureResType::LOCAL);
-
-    /**@~english
-     * Load background disabled state texture for checkbox.
-     *
-     * @~chinese 
-     * 加载背景禁用状态纹理的图片
-     * 
-     * @param backGroundDisabled    @~english The background disabled state texture name.
-     *
-     * @~chinese 背景禁用状态纹理的图片名称。
-     * 
-     * @param texType    @see `Widget::TextureResType`
-     */
-    void loadTextureBackGroundDisabled(const std::string& backGroundDisabled,TextureResType texType = TextureResType::LOCAL);
-
-    /**@~english
-     * Load frontcross disabled texture for checkbox.
-     *
-     * @~chinese 
-     * 加载勾选禁用状态的纹理图片
-     * 
-     * @param frontCrossDisabled    @~english The front cross disabled state texture name.
-     * @~chinese 勾选禁用状态图片名字
-     * @param texType    @see `Widget::TextureResType`
-     */
-    void loadTextureFrontCrossDisabled(const std::string& frontCrossDisabled,TextureResType texType = TextureResType::LOCAL);
-
-    /**@~english
+    /**
      * Change Checkbox state to selected.
      *
      * @~chinese 
@@ -276,26 +188,6 @@ public:
      * @~chinese 如果复选框被选中了，则返回True,否则返回False.
      */
     CC_DEPRECATED_ATTRIBUTE bool getSelectedState()const{return this->isSelected();}
-    
-    /**@~english
-     * Query whether CheckBox is selected or not.
-     * @~chinese 
-     * 查询是否选中复选框。
-     *@return @~english true means "selected", false otherwise.
-     * @~chinese 如果选中了，则返回True，否则返回False
-     */
-    bool isSelected()const;
-
-    /**@~english
-     * Change CheckBox state.
-     * Set to true will cause the CheckBox's state to "selected", false otherwise.
-     * @~chinese 
-     * 修改复选框的状态
-     * 设置True会使复选框变为“选中状态”，否则传False会使复选框变为“未选中状态”
-     *@param selected @~english Set to true will change CheckBox to selected state, false otherwise.
-     * @~chinese 设置True会使复选框变为“选中状态”，否则传False
-     */
-    void setSelected(bool selected);
 
     /**@~english Add a callback function which would be called when checkbox is selected or unselected.
      * @~chinese 注册一个回调函数，它会在复选框的选择事件发生时被调用。
@@ -318,74 +210,17 @@ public:
 
 
     //override functions
-    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
-    virtual Size getVirtualRendererSize() const override;
-    virtual Node* getVirtualRenderer() override;
     virtual std::string getDescription() const override;
-    
-    /** @~english When user pressed the CheckBox, the button will zoom to a scale.
-     * The final scale of the CheckBox  equals (CheckBox original scale + _zoomScale)
-     * @~chinese 当用户按下复选框时,按钮将会缩放到一个比例
-     * 最后复选框的缩放值等于(复选框原尺寸+ _zoomScale)
-     * @since v3.3
-     */
-    void setZoomScale(float scale);
-    /**
-     * @brief @~english Return a zoom scale
-     * @~chinese 返回一个缩放比例
-     * @return @~english A zoom scale of Checkbox.
-     * @~chinese 复选框的缩放比例。
-     * @since v3.3
-     */
-    float getZoomScale()const;
-    
-CC_CONSTRUCTOR_ACCESS:
-    virtual bool init() override;
-    virtual bool init(const std::string& backGround,
-                      const std::string& backGroundSeleted,
-                      const std::string& cross,
-                      const std::string& backGroundDisabled,
-                      const std::string& frontCrossDisabled,
-                      TextureResType texType = TextureResType::LOCAL);
 
+    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
 protected:
-    virtual void initRenderer() override;
-    virtual void onPressStateChangedToNormal() override;
-    virtual void onPressStateChangedToPressed() override;
-    virtual void onPressStateChangedToDisabled() override;
-
-    void setupBackgroundTexture();
-    void loadTextureBackGround(SpriteFrame* spriteFrame);
-    void setupBackgroundSelectedTexture();
-    void loadTextureBackGroundSelected(SpriteFrame* spriteFrame);
-    void setupFrontCrossTexture();
-    void loadTextureFrontCross(SpriteFrame* spriteframe);
-    void setupBackgroundDisable();
-    void loadTextureBackGroundDisabled(SpriteFrame* spriteframe);
-    void setupFrontCrossDisableTexture();
-    void loadTextureFrontCrossDisabled(SpriteFrame* spriteframe);
     
-    void selectedEvent();
-    void unSelectedEvent();
-    
-    virtual void onSizeChanged() override;
-    
-    void backGroundTextureScaleChangedWithSize();
-    void backGroundSelectedTextureScaleChangedWithSize();
-    void frontCrossTextureScaleChangedWithSize();
-    void backGroundDisabledTextureScaleChangedWithSize();
-    void frontCrossDisabledTextureScaleChangedWithSize();
+    virtual void dispatchSelectChangedEvent(bool selected) override;
     
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-    virtual void adaptRenderers() override;
+    
 protected:
-    Sprite* _backGroundBoxRenderer;
-    Sprite* _backGroundSelectedBoxRenderer;
-    Sprite* _frontCrossRenderer;
-    Sprite* _backGroundBoxDisabledRenderer;
-    Sprite* _frontCrossDisabledRenderer;
-    bool _isSelected;
     //if you use the old event callback, it will retain the _checkBoxEventListener
     Ref*       _checkBoxEventListener;
     
@@ -404,24 +239,6 @@ protected:
     
     ccCheckBoxCallback _checkBoxEventCallback;
 
-    bool _isBackgroundSelectedTextureLoaded;
-    bool _isBackgroundDisabledTextureLoaded;
-    bool _isFrontCrossDisabledTextureLoaded;
-    TextureResType _backGroundTexType;
-    TextureResType _backGroundSelectedTexType;
-    TextureResType _frontCrossTexType;
-    TextureResType _backGroundDisabledTexType;
-    TextureResType _frontCrossDisabledTexType;
-
-    float _zoomScale;
-    float _backgroundTextureScaleX;
-    float _backgroundTextureScaleY;
-
-    bool _backGroundBoxRendererAdaptDirty;
-    bool _backGroundSelectedBoxRendererAdaptDirty;
-    bool _frontCrossRendererAdaptDirty;
-    bool _backGroundBoxDisabledRendererAdaptDirty;
-    bool _frontCrossDisabledRendererAdaptDirty;
 };
 
 }

@@ -117,7 +117,15 @@ cc.game.onStart = function(){
     }
     else
     {
-        cc.loader.resPath = '../cpp-tests/Resources'
+        // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
+        // so the respath will modify to res,
+        if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+            cc.loader.resPath = '../cpp-tests/Resources';
+        }
+        else {
+            cc.loader.resPath = 'res';
+            document.getElementById("cocosbanner").src = "res/Images/cocos2dbanner.png";
+        }
     }
 
     cc.LoaderScene.preload(g_resources, function () {

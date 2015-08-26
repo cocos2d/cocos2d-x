@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
 
@@ -29,7 +29,6 @@
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #endif
-
 #include "2d/CCFontFreeType.h"
 #include "base/ccUTF8.h"
 #include "base/CCDirector.h"
@@ -47,23 +46,25 @@ const char* FontAtlas::CMD_RESET_FONTATLAS = "__cc_RESET_FONTATLAS";
 FontAtlas::FontAtlas(Font &theFont) 
 : _font(&theFont)
 , _fontFreeType(nullptr)
+, _iconv(nullptr)
 , _currentPageData(nullptr)
 , _fontAscender(0)
 , _rendererRecreatedListener(nullptr)
 , _antialiasEnabled(true)
-, _iconv(nullptr)
+, _currLineHeight(0)
 {
     _font->retain();
 
     _fontFreeType = dynamic_cast<FontFreeType*>(_font);
     if (_fontFreeType)
     {
-        _commonLineHeight = _font->getFontMaxHeight();
+        _lineHeight = _font->getFontMaxHeight();
         _fontAscender = _fontFreeType->getFontAscender();
         auto texture = new (std::nothrow) Texture2D;
         _currentPage = 0;
         _currentPageOrigX = 0;
         _currentPageOrigY = 0;
+        _letterEdgeExtend = 2;
         _letterPadding = 0;
 
         if (_fontFreeType->isDistanceFieldEnabled())
@@ -74,9 +75,9 @@ FontAtlas::FontAtlas(Font &theFont)
         auto outlineSize = _fontFreeType->getOutlineSize();
         if(outlineSize > 0)
         {
-            _commonLineHeight += 2 * outlineSize;
+            _lineHeight += 2 * outlineSize;
             _currentPageDataSize *= 2;
-        }    
+        }
 
         _currentPageData = new unsigned char[_currentPageDataSize];
         memset(_currentPageData, 0, _currentPageDataSize);
@@ -151,30 +152,29 @@ void FontAtlas::listenRendererRecreated(EventCustom *event)
     }
 }
 
-void FontAtlas::addLetterDefinition(const FontLetterDefinition &letterDefinition)
+void FontAtlas::addLetterDefinition(char16_t utf16Char, const FontLetterDefinition &letterDefinition)
 {
-    _fontLetterDefinitions[letterDefinition.letteCharUTF16] = letterDefinition;
+    _letterDefinitions[utf16Char] = letterDefinition;
 }
 
-bool FontAtlas::getLetterDefinitionForChar(char16_t letteCharUTF16, FontLetterDefinition &outDefinition)
+bool FontAtlas::getLetterDefinitionForChar(char16_t utf16Char, FontLetterDefinition &letterDefinition)
 {
-    auto outIterator = _fontLetterDefinitions.find(letteCharUTF16);
+    auto outIterator = _letterDefinitions.find(utf16Char);
 
-    if (outIterator != _fontLetterDefinitions.end())
+    if (outIterator != _letterDefinitions.end())
     {
-        outDefinition = (*outIterator).second;
-        return true;
+        letterDefinition = (*outIterator).second;
+        return letterDefinition.validDefinition;
     }
     else
     {
-        outDefinition.validDefinition = false;
         return false;
     }
 }
 
-void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unordered_map<unsigned short, unsigned short>& newCharsMap)
+void FontAtlas::conversionU16TOGB2312(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap)
 {
-    size_t strLen = newChars.length();
+    size_t strLen = u16Text.length();
     auto gb2312StrSize = strLen * 2;
     auto gb2312Text = new (std::nothrow) char[gb2312StrSize];
     memset(gb2312Text, 0, gb2312StrSize);
@@ -184,9 +184,9 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unord
     case FT_ENCODING_GB2312:
     {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-        WideCharToMultiByte(936, NULL, (LPCWCH)newChars.c_str(), strLen, (LPSTR)gb2312Text, gb2312StrSize, NULL, NULL);
+        WideCharToMultiByte(936, NULL, (LPCWCH)u16Text.c_str(), strLen, (LPSTR)gb2312Text, gb2312StrSize, NULL, NULL);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        conversionEncodingJNI((char*)newChars.c_str(), gb2312StrSize, "UTF-16LE", gb2312Text, "GB2312");
+        conversionEncodingJNI((char*)u16Text.c_str(), gb2312StrSize, "UTF-16LE", gb2312Text, "GB2312");
 #else
         if (_iconv == nullptr)
         {
@@ -199,7 +199,7 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unord
         }
         else
         {
-            char* pin = (char*)newChars.c_str();
+            char* pin = (char*)u16Text.c_str();
             char* pout = gb2312Text;
             size_t inLen = strLen * 2;
             size_t outLen = gb2312StrSize;
@@ -208,7 +208,7 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unord
         }
 #endif
     }
-        break;
+    break;
     default:
         CCLOG("Unsupported encoding:%d", _fontFreeType->getEncoding());
         break;
@@ -219,45 +219,45 @@ void FontAtlas::conversionU16TOGB2312(const std::u16string& newChars, std::unord
     unsigned short u16Code;
     for (size_t index = 0, gbIndex = 0; index < strLen; ++index)
     {
-        u16Code = newChars[index];
+        u16Code = u16Text[index];
         if (u16Code < 256)
         {
-            newCharsMap[u16Code] = u16Code;
+            charCodeMap[u16Code] = u16Code;
             gbIndex += 1;
         }
         else
         {
             dst[0] = gb2312Text[gbIndex + 1];
             dst[1] = gb2312Text[gbIndex];
-            newCharsMap[u16Code] = gb2312Code;
+            charCodeMap[u16Code] = gb2312Code;
 
             gbIndex += 2;
         }
     }
 
-    delete [] gb2312Text;
+    delete[] gb2312Text;
 }
 
-void FontAtlas::findNewCharacters(const std::u16string& u16SrcString, std::unordered_map<unsigned short, unsigned short>& newCharsMap)
+void FontAtlas::findNewCharacters(const std::u16string& u16Text, std::unordered_map<unsigned short, unsigned short>& charCodeMap)
 {
     std::u16string newChars;
     FT_Encoding charEncoding = _fontFreeType->getEncoding();
 
     //find new characters
-    if (_fontLetterDefinitions.empty())
+    if (_letterDefinitions.empty())
     {
-        newChars = u16SrcString;
+        newChars = u16Text;
     }
     else
     {
-        auto length = u16SrcString.length();
-        newChars.resize(length);
+        auto length = u16Text.length();
+        newChars.reserve(length);
         for (size_t i = 0; i < length; ++i)
         {
-            auto outIterator = _fontLetterDefinitions.find(u16SrcString[i]);
-            if (outIterator == _fontLetterDefinitions.end())
+            auto outIterator = _letterDefinitions.find(u16Text[i]);
+            if (outIterator == _letterDefinitions.end())
             {
-                newChars.push_back(u16SrcString[i]);
+                newChars.push_back(u16Text[i]);
             }
         }
     }
@@ -270,37 +270,38 @@ void FontAtlas::findNewCharacters(const std::u16string& u16SrcString, std::unord
         {
             for (auto u16Code : newChars)
             {
-                newCharsMap[u16Code] = u16Code;
+                charCodeMap[u16Code] = u16Code;
             }
             break;
         }
         case FT_ENCODING_GB2312:
         {
-            conversionU16TOGB2312(newChars, newCharsMap);
+            conversionU16TOGB2312(newChars, charCodeMap);
             break;
         }
         default:
-            CCLOG("Unsupported encoding:%d", charEncoding);
+            CCLOG("FontAtlas::findNewCharacters: Unsupported encoding:%d", charEncoding);
             break;
         }
     }
 }
 
-bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
+bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
 {
     if (_fontFreeType == nullptr)
     {
         return false;
-    }  
+    } 
     
-    std::unordered_map<unsigned short, unsigned short> newCharsMap;
-    findNewCharacters(utf16String, newCharsMap);
-    if (newCharsMap.empty())
+    std::unordered_map<unsigned short, unsigned short> codeMapOfNewChar;
+    findNewCharacters(utf16Text, codeMapOfNewChar);
+    if (codeMapOfNewChar.empty())
     {
         return false;
     }
 
-    float offsetAdjust = _letterPadding / 2;  
+    int adjustForDistanceMap = _letterPadding / 2;
+    int adjustForExtend = _letterEdgeExtend / 2;
     long bitmapWidth;
     long bitmapHeight;
     Rect tempRect;
@@ -309,28 +310,29 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
     auto scaleFactor = CC_CONTENT_SCALE_FACTOR();
     auto  pixelFormat = _fontFreeType->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
 
-    int bottomHeight = _commonLineHeight - _fontAscender;
     float startY = _currentPageOrigY;
 
-    
-    for (auto&& it : newCharsMap)
+    for (auto&& it : codeMapOfNewChar)
     {
         auto bitmap = _fontFreeType->getGlyphBitmap(it.second, bitmapWidth, bitmapHeight, tempRect, tempDef.xAdvance);
-        if (bitmap)
+        if (bitmap && bitmapWidth > 0 && bitmapHeight > 0)
         {
             tempDef.validDefinition = true;
-            tempDef.letteCharUTF16 = it.first;
-            tempDef.width = tempRect.size.width + _letterPadding;
-            tempDef.height = tempRect.size.height + _letterPadding;
-            tempDef.offsetX = tempRect.origin.x + offsetAdjust;
-            tempDef.offsetY = _fontAscender + tempRect.origin.y - offsetAdjust;
-            tempDef.clipBottom = bottomHeight - (tempDef.height + tempRect.origin.y + offsetAdjust);
+            tempDef.width = tempRect.size.width + _letterPadding + _letterEdgeExtend;
+            tempDef.height = tempRect.size.height + _letterPadding + _letterEdgeExtend;
+            tempDef.offsetX = tempRect.origin.x + adjustForDistanceMap + adjustForExtend;
+            tempDef.offsetY = _fontAscender + tempRect.origin.y - adjustForDistanceMap - adjustForExtend;
 
+            if (bitmapHeight > _currLineHeight)
+            {
+                _currLineHeight = static_cast<int>(bitmapHeight) + _letterPadding + _letterEdgeExtend + 1;
+            }
             if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
             {
-                _currentPageOrigY += _commonLineHeight;
+                _currentPageOrigY += _currLineHeight;
+                _currLineHeight = 0;
                 _currentPageOrigX = 0;
-                if (_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
+                if (_currentPageOrigY + _lineHeight >= CacheTextureHeight)
                 {
                     unsigned char *data = nullptr;
                     if (pixelFormat == Texture2D::PixelFormat::AI88)
@@ -364,7 +366,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
                     tex->release();
                 }
             }
-            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX, _currentPageOrigY, bitmap, bitmapWidth, bitmapHeight);
+            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX + adjustForExtend, _currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight);
 
             tempDef.U = _currentPageOrigX;
             tempDef.V = _currentPageOrigY;
@@ -382,7 +384,6 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
             else
                 tempDef.validDefinition = false;
 
-            tempDef.letteCharUTF16 = it.first;
             tempDef.width = 0;
             tempDef.height = 0;
             tempDef.U = 0;
@@ -390,11 +391,10 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
             tempDef.offsetX = 0;
             tempDef.offsetY = 0;
             tempDef.textureID = 0;
-            tempDef.clipBottom = 0;
             _currentPageOrigX += 1;
         }
 
-        _fontLetterDefinitions[tempDef.letteCharUTF16] = tempDef;
+        _letterDefinitions[it.first] = tempDef;
     }
 
     unsigned char *data = nullptr;
@@ -406,8 +406,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
     {
         data = _currentPageData + CacheTextureWidth * (int)startY;
     }
-    _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, 
-        _currentPageOrigY - startY + _commonLineHeight);
+    _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _lineHeight);
 
     return true;
 }
@@ -420,19 +419,12 @@ void FontAtlas::addTexture(Texture2D *texture, int slot)
 
 Texture2D* FontAtlas::getTexture(int slot)
 {
-    if (_atlasTextures.find(slot) != _atlasTextures.end())
-    {
-        return _atlasTextures[slot];
-    }
-    else
-    {
-        return nullptr;
-    }
+    return _atlasTextures[slot];
 }
 
-void  FontAtlas::setCommonLineHeight(float newHeight)
+void  FontAtlas::setLineHeight(float newHeight)
 {
-    _commonLineHeight = newHeight;
+    _lineHeight = newHeight;
 }
 
 void FontAtlas::setAliasTexParameters()

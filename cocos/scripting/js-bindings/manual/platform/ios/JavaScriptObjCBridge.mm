@@ -111,7 +111,17 @@ bool JavaScriptObjCBridge::CallInfo::execute(JSContext *cx,jsval *argv,unsigned 
         if(m_dic != nil){
             for(int i = 2;i<m_dic.count+2;i++){
                 id obj = [m_dic objectForKey:[NSString stringWithFormat:@"argument%d",i-2] ];
-                [invocation setArgument:&obj atIndex:i];
+
+                if ([obj isKindOfClass:[NSNumber class]] &&
+                    ((strcmp([obj objCType], "c") == 0 || strcmp([obj objCType], "B") == 0))) //BOOL
+                {
+                    bool b = [obj boolValue];
+                    [invocation setArgument:&b atIndex:i];
+                }
+                else
+                {
+                    [invocation setArgument:&obj atIndex:i];
+                }
             }
         }
         NSUInteger returnLength = [methodSig methodReturnLength];

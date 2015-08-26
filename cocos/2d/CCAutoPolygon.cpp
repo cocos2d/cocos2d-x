@@ -44,7 +44,7 @@ isVertsOwner(true),
 rect()
 {
     filename = other.filename;
-    isVertsOwner = other.isVertsOwner;
+    isVertsOwner = true;
     rect = other.rect;
     triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
     triangles.indices = new unsigned short[other.triangles.indexCount];
@@ -60,7 +60,7 @@ PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
     {
         releaseVertsAndIndices();
         filename = other.filename;
-        isVertsOwner = other.isVertsOwner;
+        isVertsOwner = true;
         rect = other.rect;
         triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
         triangles.indices = new unsigned short[other.triangles.indexCount];
@@ -641,8 +641,7 @@ Rect AutoPolygon::getRealRect(const Rect& rect)
     }
     else{
         //rect is specified, so convert to real rect
-        auto scale = Director::getInstance()->getContentScaleFactor();
-        realRect = Rect(rect.origin*scale, rect.size*scale);
+        realRect = CC_RECT_POINTS_TO_PIXELS(rect);
     }
     return realRect;
 }

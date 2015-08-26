@@ -133,7 +133,7 @@ var TerrainSimple = TerrainTestDemo.extend({
         var visibleSize = cc.director.getVisibleSize();
 
         //use custom camera
-        this._camera = cc.Camera.createPerspective(60,visibleSize.width/visibleSize.height,0.1,800);
+        this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60,visibleSize.width/visibleSize.height,0.1,800);
         this._camera.setCameraFlag(cc.CameraFlag.USER1);
         this._camera.setPosition3D(cc.math.vec3(-1, 1.6, 4));
         this.addChild(this._camera);
@@ -151,7 +151,7 @@ var TerrainSimple = TerrainTestDemo.extend({
             0.1
         );
 
-        var terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+        var terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
         terrain.setLODDistance(3.2,6.4,9.6);
         terrain.setMaxDetailMapAmount(4);
         this.addChild(terrain);
@@ -189,7 +189,7 @@ var TerrainSimple = TerrainTestDemo.extend({
 });
 
 var TerrainWalkThru = (function(){
-    const PlayerState = {
+    var PlayerState = {
         LEFT : 0,
         RIGHT : 1,
         IDLE : 2,
@@ -197,8 +197,8 @@ var TerrainWalkThru = (function(){
         BACKWARD : 4
     };
 
-    const PLAYER_HEIGHT = 0;
-    const camera_offset = cc.math.vec3(0, 45, 60);
+    var PLAYER_HEIGHT = 0;
+    var camera_offset = cc.math.vec3(0, 45, 60);
 
     var Player = jsb.Sprite3D.extend({
         _targetPos:null,
@@ -302,7 +302,7 @@ var TerrainWalkThru = (function(){
             }, this);
 
             var visibleSize = cc.director.getVisibleSize();
-            this._camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 200);
+            this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, visibleSize.width/visibleSize.height, 0.1, 200);
             this._camera.setCameraFlag(cc.CameraFlag.USER1);
             this.addChild(this._camera);
 
@@ -319,7 +319,7 @@ var TerrainWalkThru = (function(){
                 2
             );
 
-            this._terrain = jsb.Terrain.create(data, jsb.Terrain.CrackFixedType.SKIRT);
+            this._terrain = new jsb.Terrain(data, jsb.Terrain.CrackFixedType.SKIRT);
             this._terrain.setLODDistance(64, 128, 192);
             this._terrain.setMaxDetailMapAmount(4);
             this._terrain.setCameraMask(2);
@@ -332,9 +332,9 @@ var TerrainWalkThru = (function(){
             this._player.setScale(0.08);
             this._player.y = this._terrain.getHeight(this._player.x, this._player.getVertexZ()) + PLAYER_HEIGHT;
 
-            var animation = jsb.Animation3D.create("Sprite3DTest/girl.c3b", "Take 001");
+            var animation = new jsb.Animation3D("Sprite3DTest/girl.c3b", "Take 001");
             if(animation){
-                var animate = jsb.Animate3D.create(animation);
+                var animate = new jsb.Animate3D(animation);
                 this._player.runAction(cc.repeatForever(animate));
             }
 

@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var UIButtonTest = UIScene.extend({
+var UIButtonTest = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text
@@ -68,7 +68,7 @@ var UIButtonTest = UIScene.extend({
         }
     }
 });
-var UIButtonTest_Scale9 = UIScene.extend({
+var UIButtonTest_Scale9 = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text
@@ -112,7 +112,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
     }
 });
 
-var UIButtonTest_PressedAction = UIScene.extend({
+var UIButtonTest_PressedAction = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text
@@ -154,7 +154,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
     }
 });
 
-var UIButtonTest_Title = UIScene.extend({
+var UIButtonTest_Title = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -197,7 +197,7 @@ var UIButtonTest_Title = UIScene.extend({
     }
 });
 
-var UIButtonTestRemoveSelf = UIScene.extend({
+var UIButtonTestRemoveSelf = UIMainLayer.extend({
     init: function () {
         if (this._super()) {
             //init text
@@ -254,7 +254,7 @@ var UIButtonTestRemoveSelf = UIScene.extend({
     }
 });
 
-var UIButtonTestSwitchScale9 = UIScene.extend({
+var UIButtonTestSwitchScale9 = UIMainLayer.extend({
     init: function(){
         if (this._super()){
             var widgetSize = this._widget.getContentSize();
@@ -303,7 +303,7 @@ var UIButtonTestSwitchScale9 = UIScene.extend({
     }
 });
 
-var UIButtonTestZoomScale = UIScene.extend({
+var UIButtonTestZoomScale = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -347,7 +347,7 @@ var UIButtonTestZoomScale = UIScene.extend({
     }
 });
 
-var UIButtonTextOnly = UIScene.extend({
+var UIButtonTextOnly = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             // Add a label in which the button events will be displayed
@@ -372,7 +372,7 @@ var UIButtonTextOnly = UIScene.extend({
     }
 });
 
-var UIButtonIgnoreContentSizeTest = UIScene.extend({
+var UIButtonIgnoreContentSizeTest = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -415,7 +415,7 @@ var UIButtonIgnoreContentSizeTest = UIScene.extend({
     }
 });
 
-var UIButtonTitleEffectTest = UIScene.extend({
+var UIButtonTitleEffectTest = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -450,7 +450,7 @@ var UIButtonTitleEffectTest = UIScene.extend({
     }
 });
 
-var UIButtonFlipTest = UIScene.extend({
+var UIButtonFlipTest = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
 
@@ -489,7 +489,7 @@ var UIButtonFlipTest = UIScene.extend({
     }
 });
 
-var UIButtonNormalDefaultTest = UIScene.extend({
+var UIButtonNormalDefaultTest = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
@@ -526,7 +526,7 @@ var UIButtonNormalDefaultTest = UIScene.extend({
     }
 });
 
-var UIButtonDisableDefaultTest = UIScene.extend({
+var UIButtonDisableDefaultTest = UIMainLayer.extend({
     init: function(){
         if (this._super()) {
             var widgetSize = this._widget.getContentSize();
