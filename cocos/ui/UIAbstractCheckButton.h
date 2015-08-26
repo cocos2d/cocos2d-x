@@ -38,7 +38,8 @@ class Sprite;
 namespace ui {
     
 /**
- *  AbstractCheckButton is a specific type of two-states button that can be either checked or unchecked.
+ * @~english  AbstractCheckButton is a specific type of two-states button that can be either checked or unchecked.
+ * @~chinese AbstractCheckButton是一种特殊的两状态按钮,它任何时刻只会处于"选中"或者"未选中"的状态之一。
  */
 class CC_GUI_DLL AbstractCheckButton : public Widget
 {
@@ -172,32 +173,42 @@ public:
     float getZoomScale()const;
     
     /**
-     * @brief Return the sprite instance of background
-     * @return the sprite instance of background.
+     * @brief @~english Return the sprite instance of background
+     * @~chinese 返回背景普通状态的渲染节点
+     * @return @~english the sprite instance of background.
+     * @~chinese 背景普通状态对象的指针.
      */
     Sprite* getRendererBackground() const { return _backGroundBoxRenderer; }
     
     /**
-     * @brief Return the sprite instance of background when selected
-     * @return the sprite instance of background when selected
+     * @brief @~english Return the sprite instance of background when selected
+     * @~chinese 返回背景选择状态的渲染节点
+     * @return @~english the sprite instance of background when selected
+     * @~chinese 背景选择状态对象的指针
      */
     Sprite* getRendererBackgroundSelected() const { return _backGroundSelectedBoxRenderer; }
-    
+
     /**
-     * @brief Return the sprite instance of front cross
+     * @brief @~english Return the sprite instance of front cross
+     * @~chinese 返回前景普通状态的渲染节点
      * @return the sprite instance of front cross
+     * @~chinese 前景普通状态对象的指针
      */
     Sprite* getRendererFrontCross() const { return _frontCrossRenderer; }
     
     /**
-     * @brief Return the sprite instance of background when disabled
+     * @brief @~english Return the sprite instance of background when disabled
+     * @~chinese 返回背景禁用状态的渲染节点
      * @return the sprite instance of background when disabled
+     * @~chinese 背景禁用状态对象的指针
      */
     Sprite* getRendererBackgroundDisabled() const { return _backGroundBoxDisabledRenderer; }
     
     /**
-     * @brief Return the sprite instance of front cross when disabled
+     * @brief @~english Return the sprite instance of front cross when disabled
+     * @~chinese 返回前景禁用状态的渲染节点
      * @return the sprite instance of front cross when disabled
+     * @~chinese 前景禁用状态的对象的指针
      */
     Sprite* getRendererFrontCrossDisabled() const { return _frontCrossDisabledRenderer; }
     
