@@ -56,10 +56,19 @@ public:
     Windows::Graphics::Display::DisplayOrientations getDeviceOrientation() {return m_orientation;};
     Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
-    virtual void setIMEKeyboardState(bool bOpen);
+    virtual void setIMEKeyboardState(bool bOpen) override;
     virtual void setIMEKeyboardState(bool bOpen, const std::string& str);
 
     virtual bool Create(float width, float height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
+
+    /**
+    * Hide or Show the mouse cursor if there is one.
+    *
+    * @param isVisible Hide or Show the mouse cursor if there is one.
+    */
+    virtual void setCursorVisible(bool isVisible) override;
+
+    bool isCursorVisible() { return _isCursorVisible; }
 
     void setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher);
     Windows::UI::Core::CoreDispatcher^ getDispatcher() {return m_dispatcher.Get();}
@@ -131,6 +140,7 @@ protected:
     float _frameZoomFactor;
     bool _supportTouch;
     bool _isRetina;
+    bool _isCursorVisible;
 
 
 private:
