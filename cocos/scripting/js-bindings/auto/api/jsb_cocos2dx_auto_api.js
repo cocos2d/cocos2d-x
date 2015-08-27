@@ -18380,6 +18380,16 @@ applyViewport : function (
 },
 
 /**
+ * @method setBackgroundBrush
+ * @param {cc.CameraBackgroundBrush} arg0
+ */
+setBackgroundBrush : function (
+camerabackgroundbrush 
+)
+{
+},
+
+/**
  * @method lookAt
  * @param {vec3_object} arg0
  * @param {vec3_object} arg1
@@ -18397,6 +18407,16 @@ vec3
 apply : function (
 )
 {
+},
+
+/**
+ * @method getBackgroundBrush
+ * @return {cc.CameraBackgroundBrush}
+ */
+getBackgroundBrush : function (
+)
+{
+    return cc.CameraBackgroundBrush;
 },
 
 /**
@@ -18423,10 +18443,8 @@ mat4
 
 /**
  * @method clearBackground
- * @param {float} arg0
  */
 clearBackground : function (
-float 
 )
 {
 },
@@ -18730,6 +18748,234 @@ getDefaultCamera : function (
  * @constructor
  */
 Camera : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundBrush
+ */
+cc.CameraBackgroundBrush = {
+
+/**
+ * @method getBrushType
+ * @return {cc.CameraBackgroundBrush::BrushType}
+ */
+getBrushType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method drawBackground
+ * @param {cc.Camera} arg0
+ */
+drawBackground : function (
+camera 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method createSkyboxBrush
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.CameraBackgroundSkyBoxBrush}
+ */
+createSkyboxBrush : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.CameraBackgroundSkyBoxBrush;
+},
+
+/**
+ * @method createColorBrush
+ * @param {color4f_object} arg0
+ * @param {float} arg1
+ * @return {cc.CameraBackgroundColorBrush}
+ */
+createColorBrush : function (
+color4f, 
+float 
+)
+{
+    return cc.CameraBackgroundColorBrush;
+},
+
+/**
+ * @method createNoneBrush
+ * @return {cc.CameraBackgroundBrush}
+ */
+createNoneBrush : function (
+)
+{
+    return cc.CameraBackgroundBrush;
+},
+
+/**
+ * @method createDepthBrush
+ * @return {cc.CameraBackgroundDepthBrush}
+ */
+createDepthBrush : function (
+)
+{
+    return cc.CameraBackgroundDepthBrush;
+},
+
+/**
+ * @method CameraBackgroundBrush
+ * @constructor
+ */
+CameraBackgroundBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundDepthBrush
+ */
+cc.CameraBackgroundDepthBrush = {
+
+/**
+ * @method setDepth
+ * @param {float} arg0
+ */
+setDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {cc.CameraBackgroundDepthBrush}
+ */
+create : function (
+float 
+)
+{
+    return cc.CameraBackgroundDepthBrush;
+},
+
+/**
+ * @method CameraBackgroundDepthBrush
+ * @constructor
+ */
+CameraBackgroundDepthBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundColorBrush
+ */
+cc.CameraBackgroundColorBrush = {
+
+/**
+ * @method setColor
+ * @param {color4f_object} arg0
+ */
+setColor : function (
+color4f 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {color4f_object} arg0
+ * @param {float} arg1
+ * @return {cc.CameraBackgroundColorBrush}
+ */
+create : function (
+color4f, 
+float 
+)
+{
+    return cc.CameraBackgroundColorBrush;
+},
+
+/**
+ * @method CameraBackgroundColorBrush
+ * @constructor
+ */
+CameraBackgroundColorBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundSkyBoxBrush
+ */
+cc.CameraBackgroundSkyBoxBrush = {
+
+/**
+ * @method setTexture
+ * @param {cc.TextureCube} arg0
+ */
+setTexture : function (
+texturecube 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {cc.CameraBackgroundSkyBoxBrush|cc.CameraBackgroundSkyBoxBrush}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return cc.CameraBackgroundSkyBoxBrush;
+},
+
+/**
+ * @method CameraBackgroundSkyBoxBrush
+ * @constructor
+ */
+CameraBackgroundSkyBoxBrush : function (
 )
 {
 },

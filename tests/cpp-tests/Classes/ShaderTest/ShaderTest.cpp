@@ -143,7 +143,6 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 
 ShaderMonjori::ShaderMonjori()
 {
-    init();
 }
 
 bool ShaderMonjori::init()
@@ -177,7 +176,6 @@ std::string ShaderMonjori::subtitle() const
 /// ShaderMandelbrot
 ShaderMandelbrot::ShaderMandelbrot()
 {
-    init();
 }
 
 bool ShaderMandelbrot::init()
@@ -211,7 +209,6 @@ std::string ShaderMandelbrot::subtitle() const
 /// ShaderJulia
 ShaderJulia::ShaderJulia()
 {
-    init();
 }
 
 bool ShaderJulia::init()
@@ -246,7 +243,6 @@ std::string ShaderJulia::subtitle() const
 /// ShaderHeart
 ShaderHeart::ShaderHeart()
 {
-    init();
 }
 
 bool ShaderHeart::init()
@@ -279,7 +275,6 @@ std::string ShaderHeart::subtitle() const
 /// ShaderFlower
 ShaderFlower::ShaderFlower()
 {
-    init();
 }
 
 bool ShaderFlower::init()
@@ -312,7 +307,6 @@ std::string ShaderFlower::subtitle() const
 /// ShaderPlasma
 ShaderPlasma::ShaderPlasma()
 {
-    init();
 }
 
 bool ShaderPlasma::init()
@@ -386,7 +380,6 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-                setGLProgram(nullptr);
                 initGLProgram();
             });
 
@@ -440,7 +433,6 @@ void SpriteBlur::setBlurSampleNum(float num)
 
 ShaderBlur::ShaderBlur()
 {
-    init();
 }
 
 std::string ShaderBlur::title() const
@@ -540,7 +532,6 @@ ShaderRetroEffect::ShaderRetroEffect()
 : _label(nullptr)
 , _accum(0.0f)
 {
-    init();
 }
 
 bool ShaderRetroEffect::init()
@@ -600,7 +591,6 @@ std::string ShaderRetroEffect::subtitle() const
 
 ShaderLensFlare::ShaderLensFlare()
 {
-    init();
 }
 
 std::string ShaderLensFlare::title() const
@@ -610,7 +600,7 @@ std::string ShaderLensFlare::title() const
 
 std::string ShaderLensFlare::subtitle() const
 {
-    return "Lens Flare	";
+    return "Lens Flare";
 }
 
 bool ShaderLensFlare::init()
@@ -635,7 +625,6 @@ bool ShaderLensFlare::init()
 //
 ShaderGlow::ShaderGlow()
 {
-    init();
 }
 
 std::string ShaderGlow::title() const
@@ -670,7 +659,6 @@ bool ShaderGlow::init()
 //
 ShaderMultiTexture::ShaderMultiTexture():_changedTextureId(0)
 {
-    init();
 }
 
 std::string ShaderMultiTexture::title() const

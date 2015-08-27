@@ -286,6 +286,54 @@ Animate3D : function (
 };
 
 /**
+ * @class TextureCube
+ */
+jsb.TextureCube = {
+
+/**
+ * @method reloadTexture
+ * @return {bool}
+ */
+reloadTexture : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.TextureCube}
+ */
+create : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.TextureCube;
+},
+
+/**
+ * @method TextureCube
+ * @constructor
+ */
+TextureCube : function (
+)
+{
+},
+
+};
+
+/**
  * @class AttachNode
  */
 jsb.AttachNode = {
@@ -1544,54 +1592,6 @@ getMaxHeight : function (
  * @constructor
  */
 Terrain : function (
-)
-{
-},
-
-};
-
-/**
- * @class TextureCube
- */
-jsb.TextureCube = {
-
-/**
- * @method reloadTexture
- * @return {bool}
- */
-reloadTexture : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @param {String} arg3
- * @param {String} arg4
- * @param {String} arg5
- * @return {cc.TextureCube}
- */
-create : function (
-str, 
-str, 
-str, 
-str, 
-str, 
-str 
-)
-{
-    return cc.TextureCube;
-},
-
-/**
- * @method TextureCube
- * @constructor
- */
-TextureCube : function (
 )
 {
 },
