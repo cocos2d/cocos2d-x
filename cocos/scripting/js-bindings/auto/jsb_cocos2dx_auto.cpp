@@ -56732,6 +56732,34 @@ bool js_cocos2dx_Camera_applyViewport(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Camera_applyViewport : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Camera_setBackgroundBrush(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_setBackgroundBrush : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::CameraBackgroundBrush* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::CameraBackgroundBrush*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setBackgroundBrush : Error processing arguments");
+        cobj->setBackgroundBrush(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_setBackgroundBrush : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -56778,6 +56806,31 @@ bool js_cocos2dx_Camera_apply(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Camera_apply : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Camera_getBackgroundBrush(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_getBackgroundBrush : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::CameraBackgroundBrush* ret = cobj->getBackgroundBrush();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundBrush>(cx, (cocos2d::CameraBackgroundBrush*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Camera_getBackgroundBrush : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -56821,21 +56874,17 @@ bool js_cocos2dx_Camera_getDepthInView(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_Camera_clearBackground(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_clearBackground : Invalid Native Object");
-    if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_clearBackground : Error processing arguments");
-        cobj->clearBackground(arg0);
+    if (argc == 0) {
+        cobj->clearBackground();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_Camera_clearBackground : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_Camera_clearBackground : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp)
@@ -57447,11 +57496,13 @@ void js_register_cocos2dx_Camera(JSContext *cx, JS::HandleObject global) {
         JS_FN("getDepth", js_cocos2dx_Camera_getDepth, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewProjectionMatrix", js_cocos2dx_Camera_getViewProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("applyViewport", js_cocos2dx_Camera_applyViewport, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundBrush", js_cocos2dx_Camera_setBackgroundBrush, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("lookAt", js_cocos2dx_Camera_lookAt, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("apply", js_cocos2dx_Camera_apply, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBackgroundBrush", js_cocos2dx_Camera_getBackgroundBrush, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getProjectionMatrix", js_cocos2dx_Camera_getProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDepthInView", js_cocos2dx_Camera_getDepthInView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("clearBackground", js_cocos2dx_Camera_clearBackground, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("clearBackground", js_cocos2dx_Camera_clearBackground, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAdditionalProjection", js_cocos2dx_Camera_setAdditionalProjection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setViewport", js_cocos2dx_Camera_setViewport, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initDefault", js_cocos2dx_Camera_initDefault, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -57509,6 +57560,746 @@ void js_register_cocos2dx_Camera(JSContext *cx, JS::HandleObject global) {
         p->jsclass = jsb_cocos2d_Camera_class;
         p->proto = jsb_cocos2d_Camera_prototype;
         p->parentProto = jsb_cocos2d_Node_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocos2d_CameraBackgroundBrush_class;
+JSObject *jsb_cocos2d_CameraBackgroundBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundBrush_getBrushType(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundBrush* cobj = (cocos2d::CameraBackgroundBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundBrush_getBrushType : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getBrushType();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_getBrushType : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundBrush_drawBackground(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundBrush* cobj = (cocos2d::CameraBackgroundBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundBrush_drawBackground : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Camera* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Camera*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundBrush_drawBackground : Error processing arguments");
+        cobj->drawBackground(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_drawBackground : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundBrush_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundBrush* cobj = (cocos2d::CameraBackgroundBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundBrush_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 6) {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        std::string arg4;
+        std::string arg5;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush : Error processing arguments");
+        cocos2d::CameraBackgroundSkyBoxBrush* ret = cocos2d::CameraBackgroundBrush::createSkyboxBrush(arg0, arg1, arg2, arg3, arg4, arg5);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundSkyBoxBrush>(cx, (cocos2d::CameraBackgroundSkyBoxBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_CameraBackgroundBrush_createColorBrush(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        cocos2d::Color4F arg0;
+        double arg1;
+        ok &= jsval_to_cccolor4f(cx, args.get(0), &arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundBrush_createColorBrush : Error processing arguments");
+        cocos2d::CameraBackgroundColorBrush* ret = cocos2d::CameraBackgroundBrush::createColorBrush(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundColorBrush>(cx, (cocos2d::CameraBackgroundColorBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_createColorBrush : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_CameraBackgroundBrush_createNoneBrush(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        cocos2d::CameraBackgroundBrush* ret = cocos2d::CameraBackgroundBrush::createNoneBrush();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundBrush>(cx, (cocos2d::CameraBackgroundBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_createNoneBrush : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_CameraBackgroundBrush_createDepthBrush(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 0) {
+        cocos2d::CameraBackgroundDepthBrush* ret = cocos2d::CameraBackgroundBrush::createDepthBrush();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundDepthBrush>(cx, (cocos2d::CameraBackgroundDepthBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundBrush_createDepthBrush : Error processing arguments");
+        cocos2d::CameraBackgroundDepthBrush* ret = cocos2d::CameraBackgroundBrush::createDepthBrush(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundDepthBrush>(cx, (cocos2d::CameraBackgroundDepthBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundBrush_createDepthBrush : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_CameraBackgroundBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::CameraBackgroundBrush* cobj = new (std::nothrow) cocos2d::CameraBackgroundBrush();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::CameraBackgroundBrush> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::CameraBackgroundBrush");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+void js_cocos2d_CameraBackgroundBrush_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CameraBackgroundBrush)", obj);
+}
+void js_register_cocos2dx_CameraBackgroundBrush(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_CameraBackgroundBrush_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_CameraBackgroundBrush_class->name = "CameraBackgroundBrush";
+    jsb_cocos2d_CameraBackgroundBrush_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->convert = JS_ConvertStub;
+    jsb_cocos2d_CameraBackgroundBrush_class->finalize = js_cocos2d_CameraBackgroundBrush_finalize;
+    jsb_cocos2d_CameraBackgroundBrush_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getBrushType", js_cocos2dx_CameraBackgroundBrush_getBrushType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("drawBackground", js_cocos2dx_CameraBackgroundBrush_drawBackground, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_CameraBackgroundBrush_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("createSkyboxBrush", js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createColorBrush", js_cocos2dx_CameraBackgroundBrush_createColorBrush, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createNoneBrush", js_cocos2dx_CameraBackgroundBrush_createNoneBrush, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createDepthBrush", js_cocos2dx_CameraBackgroundBrush_createDepthBrush, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_CameraBackgroundBrush_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_cocos2d_CameraBackgroundBrush_class,
+        js_cocos2dx_CameraBackgroundBrush_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "CameraBackgroundBrush", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::CameraBackgroundBrush> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_CameraBackgroundBrush_class;
+        p->proto = jsb_cocos2d_CameraBackgroundBrush_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocos2d_CameraBackgroundDepthBrush_class;
+JSObject *jsb_cocos2d_CameraBackgroundDepthBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundDepthBrush_setDepth(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundDepthBrush* cobj = (cocos2d::CameraBackgroundDepthBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundDepthBrush_setDepth : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundDepthBrush_setDepth : Error processing arguments");
+        cobj->setDepth(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundDepthBrush_setDepth : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundDepthBrush_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundDepthBrush_create : Error processing arguments");
+        cocos2d::CameraBackgroundDepthBrush* ret = cocos2d::CameraBackgroundDepthBrush::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundDepthBrush>(cx, (cocos2d::CameraBackgroundDepthBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundDepthBrush_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_CameraBackgroundDepthBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::CameraBackgroundDepthBrush* cobj = new (std::nothrow) cocos2d::CameraBackgroundDepthBrush();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::CameraBackgroundDepthBrush> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::CameraBackgroundDepthBrush");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_cocos2d_CameraBackgroundBrush_prototype;
+
+void js_cocos2d_CameraBackgroundDepthBrush_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CameraBackgroundDepthBrush)", obj);
+}
+void js_register_cocos2dx_CameraBackgroundDepthBrush(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_CameraBackgroundDepthBrush_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->name = "CameraBackgroundDepthBrush";
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->convert = JS_ConvertStub;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->finalize = js_cocos2d_CameraBackgroundDepthBrush_finalize;
+    jsb_cocos2d_CameraBackgroundDepthBrush_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setDepth", js_cocos2dx_CameraBackgroundDepthBrush_setDepth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_CameraBackgroundDepthBrush_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_CameraBackgroundDepthBrush_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_CameraBackgroundBrush_prototype),
+        jsb_cocos2d_CameraBackgroundDepthBrush_class,
+        js_cocos2dx_CameraBackgroundDepthBrush_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "CameraBackgroundDepthBrush", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::CameraBackgroundDepthBrush> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_CameraBackgroundDepthBrush_class;
+        p->proto = jsb_cocos2d_CameraBackgroundDepthBrush_prototype;
+        p->parentProto = jsb_cocos2d_CameraBackgroundBrush_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocos2d_CameraBackgroundColorBrush_class;
+JSObject *jsb_cocos2d_CameraBackgroundColorBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundColorBrush_setColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundColorBrush* cobj = (cocos2d::CameraBackgroundColorBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundColorBrush_setColor : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Color4F arg0;
+        ok &= jsval_to_cccolor4f(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundColorBrush_setColor : Error processing arguments");
+        cobj->setColor(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundColorBrush_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundColorBrush_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        cocos2d::Color4F arg0;
+        double arg1;
+        ok &= jsval_to_cccolor4f(cx, args.get(0), &arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundColorBrush_create : Error processing arguments");
+        cocos2d::CameraBackgroundColorBrush* ret = cocos2d::CameraBackgroundColorBrush::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundColorBrush>(cx, (cocos2d::CameraBackgroundColorBrush*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundColorBrush_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_CameraBackgroundColorBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::CameraBackgroundColorBrush* cobj = new (std::nothrow) cocos2d::CameraBackgroundColorBrush();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::CameraBackgroundColorBrush> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::CameraBackgroundColorBrush");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_cocos2d_CameraBackgroundDepthBrush_prototype;
+
+void js_cocos2d_CameraBackgroundColorBrush_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CameraBackgroundColorBrush)", obj);
+}
+void js_register_cocos2dx_CameraBackgroundColorBrush(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_CameraBackgroundColorBrush_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_CameraBackgroundColorBrush_class->name = "CameraBackgroundColorBrush";
+    jsb_cocos2d_CameraBackgroundColorBrush_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->convert = JS_ConvertStub;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->finalize = js_cocos2d_CameraBackgroundColorBrush_finalize;
+    jsb_cocos2d_CameraBackgroundColorBrush_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setColor", js_cocos2dx_CameraBackgroundColorBrush_setColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_CameraBackgroundColorBrush_create, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_CameraBackgroundColorBrush_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_CameraBackgroundDepthBrush_prototype),
+        jsb_cocos2d_CameraBackgroundColorBrush_class,
+        js_cocos2dx_CameraBackgroundColorBrush_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "CameraBackgroundColorBrush", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::CameraBackgroundColorBrush> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_CameraBackgroundColorBrush_class;
+        p->proto = jsb_cocos2d_CameraBackgroundColorBrush_prototype;
+        p->parentProto = jsb_cocos2d_CameraBackgroundDepthBrush_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocos2d_CameraBackgroundSkyBoxBrush_class;
+JSObject *jsb_cocos2d_CameraBackgroundSkyBoxBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::CameraBackgroundSkyBoxBrush* cobj = (cocos2d::CameraBackgroundSkyBoxBrush *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::TextureCube* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::TextureCube*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture : Error processing arguments");
+        cobj->setTexture(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 0) {
+            cocos2d::CameraBackgroundSkyBoxBrush* ret = cocos2d::CameraBackgroundSkyBoxBrush::create();
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundSkyBoxBrush>(cx, (cocos2d::CameraBackgroundSkyBoxBrush*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 6) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            std::string arg1;
+            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            std::string arg2;
+            ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+            if (!ok) { ok = true; break; }
+            std::string arg3;
+            ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+            if (!ok) { ok = true; break; }
+            std::string arg4;
+            ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+            if (!ok) { ok = true; break; }
+            std::string arg5;
+            ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+            if (!ok) { ok = true; break; }
+            cocos2d::CameraBackgroundSkyBoxBrush* ret = cocos2d::CameraBackgroundSkyBoxBrush::create(arg0, arg1, arg2, arg3, arg4, arg5);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::CameraBackgroundSkyBoxBrush>(cx, (cocos2d::CameraBackgroundSkyBoxBrush*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_cocos2dx_CameraBackgroundSkyBoxBrush_create : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::CameraBackgroundSkyBoxBrush* cobj = new (std::nothrow) cocos2d::CameraBackgroundSkyBoxBrush();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::CameraBackgroundSkyBoxBrush> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::CameraBackgroundSkyBoxBrush");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_cocos2d_CameraBackgroundBrush_prototype;
+
+void js_cocos2d_CameraBackgroundSkyBoxBrush_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CameraBackgroundSkyBoxBrush)", obj);
+}
+void js_register_cocos2dx_CameraBackgroundSkyBoxBrush(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->name = "CameraBackgroundSkyBoxBrush";
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->convert = JS_ConvertStub;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->finalize = js_cocos2d_CameraBackgroundSkyBoxBrush_finalize;
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("setTexture", js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_CameraBackgroundSkyBoxBrush_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_CameraBackgroundSkyBoxBrush_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_CameraBackgroundBrush_prototype),
+        jsb_cocos2d_CameraBackgroundSkyBoxBrush_class,
+        js_cocos2dx_CameraBackgroundSkyBoxBrush_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "CameraBackgroundSkyBoxBrush", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::CameraBackgroundSkyBoxBrush> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_CameraBackgroundSkyBoxBrush_class;
+        p->proto = jsb_cocos2d_CameraBackgroundSkyBoxBrush_prototype;
+        p->parentProto = jsb_cocos2d_CameraBackgroundBrush_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
@@ -69029,6 +69820,9 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_Texture2D(cx, ns);
     js_register_cocos2dx_TransitionSceneOriented(cx, ns);
     js_register_cocos2dx_TransitionFlipX(cx, ns);
+    js_register_cocos2dx_CameraBackgroundBrush(cx, ns);
+    js_register_cocos2dx_CameraBackgroundDepthBrush(cx, ns);
+    js_register_cocos2dx_CameraBackgroundColorBrush(cx, ns);
     js_register_cocos2dx_GridAction(cx, ns);
     js_register_cocos2dx_TiledGrid3DAction(cx, ns);
     js_register_cocos2dx_FadeOutTRTiles(cx, ns);
@@ -69094,13 +69888,14 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_EaseCubicActionIn(cx, ns);
     js_register_cocos2dx_TextureCache(cx, ns);
     js_register_cocos2dx_SpriteBatchNode(cx, ns);
+    js_register_cocos2dx_TMXLayer(cx, ns);
     js_register_cocos2dx_Configuration(cx, ns);
     js_register_cocos2dx_ActionTween(cx, ns);
     js_register_cocos2dx_TransitionFadeDown(cx, ns);
     js_register_cocos2dx_ParticleSun(cx, ns);
     js_register_cocos2dx_TransitionProgressHorizontal(cx, ns);
     js_register_cocos2dx_TMXObjectGroup(cx, ns);
-    js_register_cocos2dx_TMXLayer(cx, ns);
+    js_register_cocos2dx_CameraBackgroundSkyBoxBrush(cx, ns);
     js_register_cocos2dx_FlipX(cx, ns);
     js_register_cocos2dx_FlipY(cx, ns);
     js_register_cocos2dx_TransitionSplitCols(cx, ns);

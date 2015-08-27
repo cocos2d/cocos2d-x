@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "3d/CCTextureCube.h"
+#include "renderer/CCTextureCube.h"
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 

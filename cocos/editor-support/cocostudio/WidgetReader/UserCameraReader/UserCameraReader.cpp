@@ -28,6 +28,7 @@
 #include "cocostudio/CSParse3DBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -108,6 +109,7 @@ namespace cocostudio
         float fov = 60.f;
         unsigned int cameraFlag = 0;
         bool skyBoxEnabled = false;
+        bool skyBoxValid = true;
 
         std::string attriname;
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -141,9 +143,16 @@ namespace cocostudio
             {
                 skyBoxEnabled = (value == "True") ? true : false;
             }
+            else if (attriname == "SkyBoxValid")
+            {
+                skyBoxValid = (value == "True") ? true : false;
+            }
             
             attribute = attribute->Next();
         }
+
+        if (!skyBoxValid)
+            skyBoxEnabled = false;
 
         Vec2 clipPlane(1, 1000);
 
@@ -429,12 +438,28 @@ namespace cocostudio
             std::string downFileData = options->downFileData()->path()->c_str();
             std::string forwardFileData = options->forwardFileData()->path()->c_str();
             std::string backFileData = options->backFileData()->path()->c_str();
+            FileUtils *fileUtils = FileUtils::getInstance();
 
-            if (leftFileData.empty() || rightFileData.empty() || upFileData.empty() || downFileData.empty() || forwardFileData.empty() || backFileData.empty())
-                return;
-            Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
-            childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox, 0, "_innerSkyBox");
+            if (fileUtils->isFileExist(leftFileData)
+                && fileUtils->isFileExist(rightFileData)
+                && fileUtils->isFileExist(upFileData)
+                && fileUtils->isFileExist(downFileData)
+                && fileUtils->isFileExist(forwardFileData)
+                && fileUtils->isFileExist(backFileData))
+            {
+                CameraBackgroundSkyBoxBrush* brush = CameraBackgroundSkyBoxBrush::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
+                camera->setBackgroundBrush(brush);
+            }
+            else
+            {
+                if (GameNode3DReader::getSceneBrushInstance() != nullptr)
+                    camera->setBackgroundBrush(GameNode3DReader::getSceneBrushInstance());
+            }
+        }
+        else
+        {
+            if (GameNode3DReader::getSceneBrushInstance() != nullptr)
+                camera->setBackgroundBrush(GameNode3DReader::getSceneBrushInstance());
         }
     }
     

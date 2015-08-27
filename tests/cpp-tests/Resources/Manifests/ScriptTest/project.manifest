@@ -1,0 +1,13 @@
+{
+    "packageUrl" : "http://tools.itharbors.com/assets_manager/ScriptTest/",
+    "remoteManifestUrl" : "http://tools.itharbors.com/assets_manager/ScriptTest/project_dev.manifest",
+    "remoteVersionUrl" : "http://tools.itharbors.com/assets_manager/ScriptTest/version_dev.manifest",
+    "version" : "1.0.0",
+    "engineVersion" : "3.0",
+
+    "assets" : {
+    },
+    
+    "searchPaths" : [
+    ]
+}

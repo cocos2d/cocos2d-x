@@ -550,6 +550,14 @@ cc.CameraFlag =
     USER8 = 256,
 }
 
+cc.CameraBackgroundBrush.BrushType = 
+{
+    NONE = 0,
+    DEPTH = 1,
+    COLOR = 2,
+    SKYBOX = 3,
+}
+
 cc.BillBoard_Mode =
 {
     VIEW_POINT_ORIENTED = 0,
@@ -619,3 +627,10 @@ cc.AsyncTaskPool.TaskType =
     TASK_MAX_TYPE = 3,  
 }
 
+
+cc.RED = cc.c3b(255,0,0)
+cc.GREEN = cc.c3b(0,255,0)
+cc.BLUE = cc.c3b(0,0,255)
+cc.BLACK = cc.c3b(0,0,0)
+cc.WHITE = cc.c3b(255,255,255)
+cc.YELLOW = cc.c3b(255,255,0)

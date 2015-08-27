@@ -1362,9 +1362,6 @@
     <ClCompile Include="..\3d\CCSkybox.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\3d\CCTextureCube.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\extensions\Particle3D\PU\CCPUAffector.cpp">
       <Filter>extension\Particle3D\ParticleUniverse</Filter>
     </ClCompile>
@@ -1930,6 +1927,12 @@
     </ClCompile>
     <ClCompile Include="..\network\CCDownloaderImpl.cpp">
       <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3181,9 +3184,6 @@
     <ClInclude Include="..\3d\CCSkybox.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\3d\CCTextureCube.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCPlatformConfig.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -3764,6 +3764,12 @@
     </ClInclude>
     <ClInclude Include="..\network\CCIDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

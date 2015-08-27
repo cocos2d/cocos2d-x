@@ -90,6 +90,7 @@
       <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -103,6 +104,7 @@
       <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;WINRT;_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -113,6 +115,7 @@
       <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -126,6 +129,7 @@
       <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;WINRT;_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

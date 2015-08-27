@@ -23,6 +23,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestActionTimelineEase);
     ADD_TEST_CASE(TestActionTimelineSkeleton);
     ADD_TEST_CASE(TestTimelineExtensionData);
+    ADD_TEST_CASE(TestActionTimelineBlendFuncFrame);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -577,4 +578,22 @@ void TestTimelineExtensionData::onEnter()
 std::string TestTimelineExtensionData::title() const
 {
     return "Test Timeline extension data";
+}
+
+// TestActionTimelineBlendFuncFrame
+void TestActionTimelineBlendFuncFrame::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    Node* node = CSLoader::createNode("ActionTimeline/skeletonBlendFuncFrame.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/skeletonBlendFuncFrame.csb");
+    node->runAction(action);
+    node->setScale(0.2f);
+    node->setPosition(VisibleRect::center());
+    this->addChild(node);
+    action->gotoFrameAndPlay(0);
+}
+
+std::string TestActionTimelineBlendFuncFrame::title() const
+{
+    return "Test ActionTimeline BlendFunc Frame";
 }
