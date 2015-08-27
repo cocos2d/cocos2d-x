@@ -826,6 +826,11 @@ gl.WRITEONLY_RENDERING_QCOM	= 0x8823;
 gl.WRITE_ONLY_OES	= 0x88b9;
 gl.Z400_BINARY_AMD	= 0x8740;
 gl.ZERO	= 0x0;
+gl.FRONT = 0x0404;
+gl.BACK = 0x0405;
+gl.LEFT = 0x0406;
+gl.RIGHT = 0x0407;
+gl.FRONT_AND_BACK = 0x0408;
 
 //------------Shader Name---------------
 /**
