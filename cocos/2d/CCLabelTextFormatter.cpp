@@ -74,7 +74,7 @@ void Label::computeAlignmentOffset()
 static int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen)
 {
     auto character = utf16Text[startIndex];
-    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == '\n')
+    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == (char16_t)TextFormatter::NewLine)
     {
         return 1;
     }
@@ -83,7 +83,7 @@ static int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int 
     for (int index = startIndex + 1; index < textLen; ++index)
     {
         character = utf16Text[index];
-        if (character == '\n' || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
+        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
         {
             break;
         }
@@ -107,11 +107,12 @@ bool Label::multilineTextWrapByWord()
     float lowestY = 0.f;
     FontLetterDefinition letterDef;
     Vec2 letterPosition;
+    bool nextChangeSize = true;
     
     for (int index = 0; index < textLen; )
     {
         auto character = _utf16Text[index];
-        if (character == '\n')
+        if (character == (char16_t)TextFormatter::NewLine)
         {
             _linesWidth.push_back(letterRight);
             letterRight = 0.f;
@@ -133,8 +134,15 @@ bool Label::multilineTextWrapByWord()
         {
             int letterIndex = index + tmp;
             character = _utf16Text[letterIndex];
-            if (character == '\r')
+            if (character == (char16_t)TextFormatter::CarriageReturn)
             {
+                recordPlaceholderInfo(letterIndex, character);
+                continue;
+            }
+            // \b - Next char not change x position
+            if (character == (char16_t)TextFormatter::NextCharNoChangeX)
+            {
+                nextChangeSize = false;
                 recordPlaceholderInfo(letterIndex, character);
                 continue;
             }
@@ -146,7 +154,7 @@ bool Label::multilineTextWrapByWord()
             }
 
             auto letterX = (nextLetterX + letterDef.offsetX) / contentScaleFactor;
-            if (_maxLineWidth > 0.f && nextWordX > 0.f && letterX + letterDef.width > _maxLineWidth)
+            if (_maxLineWidth > 0.f && nextWordX > 0.f && letterX + letterDef.width > _maxLineWidth && nextChangeSize)
             {
                 _linesWidth.push_back(letterRight);
                 letterRight = 0.f;
@@ -163,11 +171,15 @@ bool Label::multilineTextWrapByWord()
             letterPosition.y = (nextWordY - letterDef.offsetY) / contentScaleFactor;
             recordLetterInfo(letterPosition, character, letterIndex, lineIndex);
 
+            if (nextChangeSize)
+            {
             if (_horizontalKernings && letterIndex < textLen - 1)
                 nextLetterX += _horizontalKernings[letterIndex + 1];
             nextLetterX += letterDef.xAdvance + _additionalKerning;
 
             wordRight = letterPosition.x + letterDef.width;
+            }
+            nextChangeSize = true;
 
             if (wordHighestY < letterPosition.y)
                 wordHighestY = letterPosition.y;
@@ -227,22 +239,30 @@ bool Label::multilineTextWrapByChar()
     float lowestY = 0.f;
     FontLetterDefinition letterDef;
     Vec2 letterPosition;
+    bool nextChangeSize = true;
 
     for (int index = 0; index < textLen; index++)
     {
         auto character = _utf16Text[index];
-        if (character == '\r')
+        if (character == (char16_t)TextFormatter::CarriageReturn)
         {
             recordPlaceholderInfo(index, character);
             continue;
         }
-        if (character == '\n')
+        if (character == (char16_t)TextFormatter::NewLine)
         {
             _linesWidth.push_back(letterRight);
             letterRight = 0.f;
             lineIndex++;
             nextLetterX = 0.f;
             nextLetterY -= _lineHeight;
+            recordPlaceholderInfo(index, character);
+            continue;
+        }
+        // \b - Next char not change x position
+        if (character == (char16_t)TextFormatter::NextCharNoChangeX)
+        {
+            nextChangeSize = false;
             recordPlaceholderInfo(index, character);
             continue;
         }
@@ -255,7 +275,7 @@ bool Label::multilineTextWrapByChar()
         }
 
         auto letterX = (nextLetterX + letterDef.offsetX) / contentScaleFactor;
-        if (_maxLineWidth > 0.f && nextLetterX > 0.f && letterX + letterDef.width > _maxLineWidth)
+        if (_maxLineWidth > 0.f && nextLetterX > 0.f && letterX + letterDef.width > _maxLineWidth && nextChangeSize)
         {
             _linesWidth.push_back(letterRight);
             letterRight = 0.f;
@@ -271,11 +291,15 @@ bool Label::multilineTextWrapByChar()
         letterPosition.y = (nextLetterY - letterDef.offsetY) / contentScaleFactor;
         recordLetterInfo(letterPosition, character, index, lineIndex);
 
+        if (nextChangeSize)
+        {
         if (_horizontalKernings && index < textLen - 1)
             nextLetterX += _horizontalKernings[index + 1];
         nextLetterX += letterDef.xAdvance + _additionalKerning;
 
         letterRight = letterPosition.x + letterDef.width;
+        }
+        nextChangeSize = true;
 
         if (highestY < letterPosition.y)
             highestY = letterPosition.y;
