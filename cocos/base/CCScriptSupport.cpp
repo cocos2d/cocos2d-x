@@ -163,6 +163,18 @@ void ScriptEngineManager::destroyInstance()
     }
 }
 
+bool ScriptEngineManager::sendRefEventToJS(Ref* ref, int action, void* param)
+{
+    auto scriptEngine = getInstance()->getScriptEngine();
+    
+    ActionObjectScriptData data(ref,(void*)&action, param);
+    ScriptEvent scriptEvent(kRefEvent,(void*)&data);
+    if (scriptEngine->sendEvent(&scriptEvent))
+        return true;
+    
+    return false;
+}
+
 bool ScriptEngineManager::sendNodeEventToJS(Node* node, int action)
 {
     auto scriptEngine = getInstance()->getScriptEngine();
