@@ -55,6 +55,7 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     mCoreInput(nullptr),
     mDpi(0.0f),
     mDeviceLost(false),
+    mCursorVisible(true),
     mVisible(false),
     mOrientation(DisplayOrientations::Landscape)
 {
@@ -109,6 +110,11 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 #endif
 #endif
 
+    CreateInput();
+}
+
+void OpenGLESPage::CreateInput()
+{
     // Register our SwapChainPanel to get independent input pointer events
     auto workItemHandler = ref new WorkItemHandler([this](IAsyncAction ^)
     {
@@ -123,6 +129,12 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
         mCoreInput->PointerPressed += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &OpenGLESPage::OnPointerPressed);
         mCoreInput->PointerMoved += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &OpenGLESPage::OnPointerMoved);
         mCoreInput->PointerReleased += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &OpenGLESPage::OnPointerReleased);
+        mCoreInput->PointerWheelChanged += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &OpenGLESPage::OnPointerWheelChanged);
+
+        if (GLViewImpl::sharedOpenGLView() && !GLViewImpl::sharedOpenGLView()->isCursorVisible())
+        {
+            mCoreInput->PointerCursor = nullptr;
+        }
 
 		// Begin processing input messages as they're delivered.
         mCoreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
@@ -168,6 +180,10 @@ void OpenGLESPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
     {
         mRenderer->QueuePointerEvent(PointerEventType::PointerReleased, e);
     }
+}
+
+void OpenGLESPage::OnPointerWheelChanged(Object^ sender, PointerEventArgs^ e)
+{
 }
 
 void OpenGLESPage::OnKeyPressed(CoreWindow^ sender, KeyEventArgs^ e)
@@ -389,6 +405,13 @@ void OpenGLESPage::StartRenderLoop()
 
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
             mRenderer.get()->Draw(panelWidth, panelHeight, mDpi, mOrientation);
+
+            // Recreate input dispatch
+            if (GLViewImpl::sharedOpenGLView() && mCursorVisible != GLViewImpl::sharedOpenGLView()->isCursorVisible())
+            {
+                CreateInput();
+                mCursorVisible = GLViewImpl::sharedOpenGLView()->isCursorVisible();
+            }
 
             if (mRenderer->AppShouldExit())
             {

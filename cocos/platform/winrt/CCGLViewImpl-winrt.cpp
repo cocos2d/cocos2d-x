@@ -74,6 +74,7 @@ GLViewImpl::GLViewImpl()
 	: _frameZoomFactor(1.0f)
 	, _supportTouch(true)
     , _isRetina(false)
+    , _isCursorVisible(true)
 	, m_lastPointValid(false)
 	, m_running(false)
 	, m_initialized(false)
@@ -121,6 +122,11 @@ bool GLViewImpl::Create(float width, float height, float dpi, DisplayOrientation
     m_dpi = dpi;
     UpdateForWindowSizeChange(width, height);
     return true;
+}
+
+void cocos2d::GLViewImpl::setCursorVisible(bool isVisible)
+{
+    _isCursorVisible = isVisible;
 }
 
 void GLViewImpl::setDispatcher(Windows::UI::Core::CoreDispatcher^ dispatcher)
