@@ -34,90 +34,61 @@ enum {
 
 NewLabelTests::NewLabelTests()
 {
-    ADD_TEST_CASE(LabelFNTColorAndOpacity);
-    ADD_TEST_CASE(LabelFNTSpriteActions);
-    ADD_TEST_CASE(LabelFNTPadding);
-    ADD_TEST_CASE(LabelFNTOffset);
+    ADD_TEST_CASE(LabelFNTGlyphDesigner);
     ADD_TEST_CASE(LabelFNTColor);
     ADD_TEST_CASE(LabelFNTOpacity);
-    ADD_TEST_CASE(LabelFNTHundredLabels);
+    ADD_TEST_CASE(LabelFNTColorAndOpacity);
+    ADD_TEST_CASE(LabelFNTSpriteActions);
     ADD_TEST_CASE(LabelFNTMultiLine);
-    ADD_TEST_CASE(LabelFNTandTTFEmpty);
     ADD_TEST_CASE(LabelFNTRetina);
-    ADD_TEST_CASE(LabelFNTGlyphDesigner);
-    ADD_TEST_CASE(LabelTTFUnicodeChinese);
-    ADD_TEST_CASE(LabelFNTUnicodeChinese);
     ADD_TEST_CASE(LabelFNTMultiLineAlignment);
     ADD_TEST_CASE(LabelFNTUNICODELanguages);
-    ADD_TEST_CASE(LabelTTFAlignmentNew);
     ADD_TEST_CASE(LabelFNTBounds);
-    ADD_TEST_CASE(LabelTTFLongLineWrapping);
-    ADD_TEST_CASE(LabelTTFColor);
+    ADD_TEST_CASE(LabelFNTandTTFEmpty);
+    ADD_TEST_CASE(LabelFNTHundredLabels);
+    ADD_TEST_CASE(LabelFNTPadding);
+    ADD_TEST_CASE(LabelFNTOffset);
+
     ADD_TEST_CASE(LabelTTFFontsTestNew);
-    ADD_TEST_CASE(LabelTTFDynamicAlignment);
+    ADD_TEST_CASE(LabelTTFLongLineWrapping);
     ADD_TEST_CASE(LabelTTFCJKWrappingTest);
+    ADD_TEST_CASE(LabelTTFColor);
+    ADD_TEST_CASE(LabelTTFDynamicAlignment);
+    ADD_TEST_CASE(LabelAlignmentTest);
     ADD_TEST_CASE(LabelTTFUnicodeNew);
-    ADD_TEST_CASE(LabelBMFontTestNew);
     ADD_TEST_CASE(LabelTTFDistanceField);
     ADD_TEST_CASE(LabelOutlineAndGlowTest);
+    ADD_TEST_CASE(LabelMultilineWithOutline);
     ADD_TEST_CASE(LabelShadowTest);
-    ADD_TEST_CASE(LabelCharMapTest);
-    ADD_TEST_CASE(LabelCharMapColorTest);
-    ADD_TEST_CASE(LabelCrashTest);
-    ADD_TEST_CASE(LabelTTFOldNew);
-    ADD_TEST_CASE(LabelFontNameTest);
-    ADD_TEST_CASE(LabelAlignmentTest);
-    ADD_TEST_CASE(LabelIssue4428Test);
-    ADD_TEST_CASE(LabelIssue4999Test);
     ADD_TEST_CASE(LabelLineHeightTest);
     ADD_TEST_CASE(LabelAdditionalKerningTest);
-    ADD_TEST_CASE(LabelIssue8492Test);
-    ADD_TEST_CASE(LabelMultilineWithOutline);
-    ADD_TEST_CASE(LabelIssue9255Test);
+    ADD_TEST_CASE(LabelAddChildTest);
+    ADD_TEST_CASE(LabelFullTypeFontTest);
     ADD_TEST_CASE(LabelSmallDimensionsTest);
-    ADD_TEST_CASE(LabelIssue10089Test);
+
+    ADD_TEST_CASE(LabelCharMapTest);
+    ADD_TEST_CASE(LabelCharMapColorTest);
+
     ADD_TEST_CASE(LabelSystemFontColor);
+    ADD_TEST_CASE(LabelTTFOldNew);
+    ADD_TEST_CASE(LabelFontNameTest);
+
+    ADD_TEST_CASE(LabelCrashTest);
+    ADD_TEST_CASE(LabelIssue12775Test);
+    ADD_TEST_CASE(LabelIssue11585Test);
     ADD_TEST_CASE(LabelIssue10773Test);
     ADD_TEST_CASE(LabelIssue11576Test);
     ADD_TEST_CASE(LabelIssue11699Test);
     ADD_TEST_CASE(LabelIssue12409Test);
-    ADD_TEST_CASE(LabelAddChildTest);
-    ADD_TEST_CASE(LabelIssue12775Test);
-    ADD_TEST_CASE(LabelIssue11585Test);
-    ADD_TEST_CASE(LabelFullTypeFontTest);
+    ADD_TEST_CASE(LabelIssue10089Test);
+    ADD_TEST_CASE(LabelIssue9255Test);
+    ADD_TEST_CASE(LabelIssue8492Test);
+    ADD_TEST_CASE(LabelIssue4428Test);
+    ADD_TEST_CASE(LabelIssue4999Test);
     ADD_TEST_CASE(LabelIssue10688Test);
     ADD_TEST_CASE(LabelIssue13202Test);
     ADD_TEST_CASE(LabelIssue9500Test);
 };
-
-LabelTTFAlignmentNew::LabelTTFAlignmentNew()
-{
-    auto s = Director::getInstance()->getWinSize();
-
-    TTFConfig config("fonts/tahoma.ttf",16);
-
-    auto ttf0 = Label::createWithTTF(config,"Alignment 0\nnew line",TextHAlignment::LEFT);
-    ttf0->setPosition(Vec2(s.width/2,(s.height/6)*2 - 30));
-    this->addChild(ttf0);
-
-    auto ttf1 = Label::createWithTTF(config,"Alignment 1\nnew line",TextHAlignment::CENTER);
-    ttf1->setPosition(Vec2(s.width/2,(s.height/6)*3 - 30));
-    this->addChild(ttf1);
-
-    auto ttf2 = Label::createWithTTF(config,"Alignment 2\nnew line",TextHAlignment::RIGHT);
-    ttf2->setPosition(Vec2(s.width/2,(s.height/6)*4 - 30));
-    this->addChild(ttf2);
-}
-
-std::string LabelTTFAlignmentNew::title() const
-{
-    return "New Label + TTF";
-}
-
-std::string LabelTTFAlignmentNew::subtitle() const
-{
-    return "Tests alignment values";
-}
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
 {
@@ -174,12 +145,12 @@ void LabelFNTColorAndOpacity::step(float dt)
 
 std::string LabelFNTColorAndOpacity::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTColorAndOpacity::subtitle() const
 {
-    return "Testing opacity + tint";
+    return "Testing fade/tint action";
 }
 
 LabelFNTSpriteActions::LabelFNTSpriteActions()
@@ -249,12 +220,12 @@ void LabelFNTSpriteActions::step(float dt)
 
 std::string LabelFNTSpriteActions::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTSpriteActions::subtitle() const
 {
-    return "Using fonts as Sprite objects. Some characters should rotate.";
+    return "Testing run action on the specified character";
 }
 
 LabelFNTPadding::LabelFNTPadding()
@@ -269,7 +240,7 @@ LabelFNTPadding::LabelFNTPadding()
 
 std::string LabelFNTPadding::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTPadding::subtitle() const
@@ -297,7 +268,7 @@ LabelFNTOffset::LabelFNTOffset()
 
 std::string LabelFNTOffset::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTOffset::subtitle() const
@@ -307,29 +278,28 @@ std::string LabelFNTOffset::subtitle() const
 
 LabelFNTColor::LabelFNTColor()
 {
-    auto s = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
     
-    Label* label = nullptr;
-    label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Blue");
+    auto label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Blue");
     label->setColor( Color3B::BLUE );
     addChild(label);
-    label->setPosition( Vec2(s.width/2, s.height/4) );
+    label->setPosition(winSize.width / 2, winSize.height * 0.7f);
 
     label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Red");
     addChild(label);
-    label->setPosition( Vec2(s.width/2, 2*s.height/4) );
+    label->setPosition(winSize.width / 2, winSize.height * 0.5f);
     label->setColor( Color3B::RED );
 
     label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Green");
     addChild(label);
-    label->setPosition( Vec2(s.width/2, 3*s.height/4) );
+    label->setPosition(winSize.width / 2, winSize.height  * 0.3f);
     label->setColor( Color3B::GREEN );
     label->setString("Green");
 }
 
 std::string LabelFNTColor::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTColor::subtitle() const
@@ -339,22 +309,22 @@ std::string LabelFNTColor::subtitle() const
 
 LabelFNTOpacity::LabelFNTOpacity()
 {
-    auto s = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
 
     auto label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 100");
     label->setOpacity(100);
     addChild(label);
-    label->setPosition(Vec2(s.width / 2, s.height / 2));
+    label->setPosition(winSize.width / 2, winSize.height * 0.6f);
 
     label = Label::createWithBMFont("fonts/bitmapFontTest5.fnt", "Opacity 200");
     label->setOpacity(200);
     addChild(label);
-    label->setPosition(Vec2(s.width / 2, s.height / 3));
+    label->setPosition(winSize.width / 2, winSize.height * 0.4f);
 }
 
 std::string LabelFNTOpacity::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTOpacity::subtitle() const
@@ -381,7 +351,7 @@ LabelFNTHundredLabels::LabelFNTHundredLabels()
 
 std::string LabelFNTHundredLabels::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTHundredLabels::subtitle() const
@@ -424,7 +394,7 @@ LabelFNTMultiLine::LabelFNTMultiLine()
 
 std::string LabelFNTMultiLine::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTMultiLine::subtitle() const
@@ -482,12 +452,12 @@ void LabelFNTandTTFEmpty::updateStrings(float dt)
 
 std::string LabelFNTandTTFEmpty::title() const
 {
-    return "New Label : .FNT file & .TTF file";
+    return "New Label + FNT/TTF/CharMap";
 }
 
 std::string LabelFNTandTTFEmpty::subtitle() const
 {
-    return "3 empty labels: new Label + FNT/TTF/CharMap";
+    return "Testing empty string.";
 }
 
 LabelFNTRetina::LabelFNTRetina()
@@ -502,7 +472,7 @@ LabelFNTRetina::LabelFNTRetina()
 
 std::string LabelFNTRetina::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTRetina::subtitle() const
@@ -512,69 +482,29 @@ std::string LabelFNTRetina::subtitle() const
 
 LabelFNTGlyphDesigner::LabelFNTGlyphDesigner()
 {
-    auto s = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
 
     auto layer = LayerColor::create(Color4B(128,128,128,255));
     addChild(layer, -10);
 
-    // LabelBMFont
     auto label1 = Label::createWithBMFont("fonts/futura-48.fnt", "Testing Glyph Designer");
     addChild(label1);
-    label1->setPosition(Vec2(s.width/2, s.height/2));
+    label1->setPosition(Vec2(winSize.width / 2, winSize.height * 0.4f));
+
+    auto label2 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Hello World");
+    label2->setPosition(Vec2(winSize.width / 2, winSize.height * 0.6f));
+    addChild(label2);
 }
 
 std::string LabelFNTGlyphDesigner::title() const
 {
-    return "New Label + .FNT file";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTGlyphDesigner::subtitle() const
 {
-    return "Testing Glyph Designer: you should see a font with shawdows and outline";
+    return "Testing Glyph Designer";
 }
-
-LabelTTFUnicodeChinese::LabelTTFUnicodeChinese()
-{
-    auto size = Director::getInstance()->getWinSize();
-    // Adding "啊" letter at the end of string to make VS2012 happy, otherwise VS will generate errors  
-    // like "Error 3 error C2146: syntax error : missing ')' before identifier 'label'"; 
-    TTFConfig ttfConfig("fonts/HKYuanMini.ttf",28,GlyphCollection::CUSTOM, "美好的一天啊");
-    auto label = Label::createWithTTF(ttfConfig,"美好的一天啊", TextHAlignment::CENTER, size.width);
-
-    if(label) {
-        label->setPosition(Vec2(size.width / 2, size.height /2));
-        this->addChild(label);
-    }
-}
-
-std::string LabelTTFUnicodeChinese::title() const
-{
-    return "New Label + .TTF file Chinese";
-}
-
-std::string LabelTTFUnicodeChinese::subtitle() const
-{
-    return "Testing new Label + TTF with Chinese character";
-}
-
-LabelFNTUnicodeChinese::LabelFNTUnicodeChinese()
-{
-    auto size = Director::getInstance()->getWinSize();
-    auto label = Label::createWithBMFont("fonts/bitmapFontChinese.fnt", "中国");
-    label->setPosition(Vec2(size.width / 2, size.height /2));
-    this->addChild(label);
-}
-
-std::string LabelFNTUnicodeChinese::title() const
-{
-    return "New Label + .FNT file Chinese";
-}
-
-std::string LabelFNTUnicodeChinese::subtitle() const
-{
-    return "Testing new Label + FNT with Chinese character";
-}
-
 
 /// BitmapFontMultiLineAlignmentNew
 
@@ -809,12 +739,12 @@ LabelFNTUNICODELanguages::LabelFNTUNICODELanguages()
 
 std::string LabelFNTUNICODELanguages::title() const
 {
-    return "New Label + .FNT + UNICODE";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTUNICODELanguages::subtitle() const
 {
-    return "You should see 4 differnt labels:\nIn Spanish, Chinese, Russian and Japanese";
+    return "Testing Unicode.You should see 4 different labels:In Spanish, Chinese, Russian and Japanese";
 }
 
 LabelFNTBounds::LabelFNTBounds()
@@ -849,12 +779,12 @@ LabelFNTBounds::LabelFNTBounds()
 
 std::string LabelFNTBounds::title() const
 {
-    return "New Label + .FNT + Bounds";
+    return "New Label + Bitmap font";
 }
 
 std::string LabelFNTBounds::subtitle() const
 {
-    return "You should see string enclosed by a box";
+    return "Testing bounding-box";
 }
 
 LabelTTFLongLineWrapping::LabelTTFLongLineWrapping()
@@ -876,7 +806,7 @@ std::string LabelTTFLongLineWrapping::title() const
 
 std::string LabelTTFLongLineWrapping::subtitle() const
 {
-    return "Uses the new Label with TTF. Testing auto-wrapping";
+    return "Testing auto-wrapping";
 }
 
 LabelTTFColor::LabelTTFColor()
@@ -886,19 +816,19 @@ LabelTTFColor::LabelTTFColor()
     TTFConfig ttfConfig("fonts/arial.ttf", 18);
     // Green
     auto label1 = Label::createWithTTF(ttfConfig,"Green", TextHAlignment::CENTER, size.width);
-    label1->setPosition( Vec2(size.width/2, size.height * 0.3f) );
+    label1->setPosition(size.width/2, size.height * 0.5f);
     label1->setTextColor( Color4B::GREEN );
     addChild(label1);
 
     // Red
     auto label2 = Label::createWithTTF(ttfConfig,"Red", TextHAlignment::CENTER, size.width);
-    label2->setPosition( Vec2(size.width/2, size.height * 0.4f) );
+    label2->setPosition(size.width/2, size.height * 0.65f);
     label2->setTextColor( Color4B::RED );
     addChild(label2);
 
     // Blue
     auto label3 = Label::createWithTTF(ttfConfig,"Blue", TextHAlignment::CENTER, size.width);
-    label3->setPosition( Vec2(size.width/2, size.height * 0.5f) );
+    label3->setPosition(size.width/2, size.height * 0.35f);
     label3->setTextColor( Color4B::BLUE );
     addChild(label3);
 }
@@ -910,27 +840,27 @@ std::string LabelTTFColor::title() const
 
 std::string LabelTTFColor::subtitle() const
 {
-    return "Uses the new Label with TTF. Testing Color";
+    return "Testing Color";
 }
 
 LabelTTFDynamicAlignment::LabelTTFDynamicAlignment()
 {
-    auto size = Director::getInstance()->getWinSize();
+    auto winSize = Director::getInstance()->getWinSize();
+
     TTFConfig ttfConfig("fonts/arial.ttf", 23);
-    _label = Label::createWithTTF(ttfConfig,LongSentencesExample, TextHAlignment::CENTER, size.width);
-    _label->setPosition( Vec2(size.width/2, size.height/2) ); 
-    
+    _label = Label::createWithTTF(ttfConfig, LongSentencesExample, TextHAlignment::CENTER, winSize.width);
+    _label->setPosition(winSize.width / 2, winSize.height / 2);
+    addChild(_label);
+
     auto menu = Menu::create(
                               MenuItemFont::create("Left", CC_CALLBACK_1(LabelTTFDynamicAlignment::setAlignmentLeft, this)),
                               MenuItemFont::create("Center", CC_CALLBACK_1(LabelTTFDynamicAlignment::setAlignmentCenter, this)),
                               MenuItemFont::create("Right", CC_CALLBACK_1(LabelTTFDynamicAlignment::setAlignmentRight, this)),
                               nullptr);
     
-    menu->alignItemsVerticallyWithPadding(4);
-    menu->setPosition(Vec2(50, size.height / 4 ));
-    
-    addChild(_label);
-    this->addChild(menu);
+    menu->alignItemsHorizontallyWithPadding(20);
+    menu->setPosition(winSize.width / 2, winSize.height * 0.25f);
+    addChild(menu);
 }
 
 void  LabelTTFDynamicAlignment::updateAlignment()
@@ -966,7 +896,7 @@ std::string LabelTTFDynamicAlignment::title() const
 
 std::string LabelTTFDynamicAlignment::subtitle() const
 {
-    return "Uses the new Label with TTF. Testing alignment";
+    return "Testing text alignment";
 }
 
 //
@@ -1033,36 +963,22 @@ LabelTTFUnicodeNew::LabelTTFUnicodeNew()
 {
     auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
     std::string chinese  = strings["chinese1"].asString();
-    
-//    std::string russian  = strings["russian"].asString();
-//    std::string spanish  = strings["spanish"].asString();
-//    std::string japanese = strings["japanese"].asString();
-    
-    auto size = Director::getInstance()->getWinSize();
-    
-    float vStep = size.height/9;
-    float vSize = size.height;
-     
-    TTFConfig ttfConfig("fonts/arial.ttf", 23,GlyphCollection::ASCII);
+    auto winSize = Director::getInstance()->getWinSize();
+
     // Spanish
-    auto label1 = Label::createWithTTF(ttfConfig,"Buen día, ¿cómo te llamas?", TextHAlignment::CENTER, size.width);
-    label1->setPosition( Vec2(size.width/2, vSize - (vStep * 4.5)) );
+    auto label1 = Label::createWithTTF("Buen día, ¿cómo te llamas?", "fonts/arial.ttf", 23);
+    label1->setPosition(winSize.width / 2, winSize.height * 0.65f);
     addChild(label1);
     
     // German
-    auto label2 = Label::createWithTTF(ttfConfig,"In welcher Straße haben Sie gelebt?", TextHAlignment::CENTER,size.width);
-    label2->setPosition( Vec2(size.width/2, vSize - (vStep * 5.5)) );
+    auto label2 = Label::createWithTTF("In welcher Straße haben Sie gelebt?", "fonts/arial.ttf", 23);
+    label2->setPosition(winSize.width / 2, winSize.height * 0.5f);
     addChild(label2);
     
-    // chinese
-    ttfConfig.fontFilePath = "fonts/HKYuanMini.ttf";
-    ttfConfig.glyphs = GlyphCollection::CUSTOM;
-    ttfConfig.customGlyphs = chinese.c_str();
-    auto label3 = Label::createWithTTF(ttfConfig,chinese, TextHAlignment::CENTER,size.width);
-    if(label3) {
-        label3->setPosition( Vec2(size.width/2, vSize - (vStep * 6.5)) );
-        addChild(label3);
-    }
+    // Chinese
+    auto label3 = Label::createWithTTF(chinese, "fonts/HKYuanMini.ttf", 24);
+    label3->setPosition(winSize.width / 2, winSize.height * 0.35f);
+    addChild(label3);
 }
 
 std::string LabelTTFUnicodeNew::title() const
@@ -1086,15 +1002,16 @@ LabelTTFFontsTestNew::LabelTTFFontsTestNew()
         "fonts/Schwarzwald.ttf",
         "fonts/Scissor Cuts.ttf",
     };
-#define arraysize(ar)  (sizeof(ar) / sizeof(ar[0]))
 
+    int fontCount = sizeof(ttfpaths) / sizeof(ttfpaths[0]);
     auto size = Director::getInstance()->getWinSize();
     TTFConfig ttfConfig(ttfpaths[0],20, GlyphCollection::NEHE);
-    for(size_t i=0;i < arraysize(ttfpaths); ++i) {
+
+    for (size_t i = 0; i < fontCount; ++i) {
         ttfConfig.fontFilePath = ttfpaths[i];
         auto label = Label::createWithTTF(ttfConfig, ttfpaths[i], TextHAlignment::CENTER,0);
         if( label ) {            
-            label->setPosition( Vec2(size.width/2, ((size.height * 0.6)/arraysize(ttfpaths) * i) + (size.height/5)));
+            label->setPosition(size.width / 2, ((size.height * 0.6) / fontCount * i) + (size.height / 4));
             addChild(label);
         } else {
             log("ERROR: Cannot load: %s", ttfpaths[i]);
@@ -1110,25 +1027,6 @@ std::string LabelTTFFontsTestNew::title() const
 std::string LabelTTFFontsTestNew::subtitle() const
 {
     return "";
-}
-
-LabelBMFontTestNew::LabelBMFontTestNew()
-{
-    auto size = Director::getInstance()->getWinSize();
-
-    auto label1 = Label::createWithBMFont("fonts/bitmapFontTest2.fnt", "Hello World, this is testing the new Label using fnt file", TextHAlignment::CENTER, size.width);
-    label1->setPosition( Vec2(size.width/2, size.height/2) );
-    addChild(label1);
-}
-
-std::string LabelBMFontTestNew::title() const
-{
-    return "New Label + FNT";
-}
-
-std::string LabelBMFontTestNew::subtitle() const
-{
-    return "Uses the new Label with .FNT file";
 }
 
 LabelTTFDistanceField::LabelTTFDistanceField()
@@ -1203,7 +1101,7 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
 
 std::string LabelOutlineAndGlowTest::title() const
 {
-    return "New Label";
+    return "New Label + .TTF";
 }
 
 std::string LabelOutlineAndGlowTest::subtitle() const
@@ -1407,7 +1305,7 @@ std::string LabelCrashTest::title() const
 
 std::string LabelCrashTest::subtitle() const
 {
-    return "Not crash and show [Test123] when using unknown character.";
+    return "Not crash when use character that is not contained in font.";
 }
 
 LabelTTFOldNew::LabelTTFOldNew()
@@ -1674,7 +1572,7 @@ LabelAdditionalKerningTest::LabelAdditionalKerningTest()
     TTFConfig ttfConfig("fonts/arial.ttf", 40, GlyphCollection::DYNAMIC,nullptr,false);
 
     label = Label::createWithTTF(ttfConfig,"Test additional kerning");
-    label->setPosition( Vec2(size.width/2, size.height*0.65f) );
+    label->setPosition(size.width/2, size.height * 0.5f);
     label->setTextColor( Color4B::RED );
     addChild(label);
 
@@ -1777,12 +1675,12 @@ LabelSmallDimensionsTest::LabelSmallDimensionsTest()
 
 std::string LabelSmallDimensionsTest::title() const
 {
-    return "Test create Label[system font] with small dimensions";
+    return "New Label + System font";
 }
 
 std::string LabelSmallDimensionsTest::subtitle() const
 {
-    return "Program should not dead loop";
+    return "Testing create Label with small dimensions.Program should not dead loop";
 }
 
 LabelIssue10089Test::LabelIssue10089Test()

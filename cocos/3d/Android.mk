@@ -23,8 +23,7 @@ CCObjLoader.cpp \
 CCSkeleton3D.cpp \
 CCSprite3D.cpp \
 CCTerrain.cpp \
-CCSkybox.cpp  \
-CCTextureCube.cpp
+CCSkybox.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 

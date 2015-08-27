@@ -480,4 +480,11 @@
 -- @param #color3b_table parentColor
 -- @return Label#Label self (return value: cc.Label)
         
+--------------------------------
+-- 
+-- @function [parent=#Label] setGlobalZOrder 
+-- @param self
+-- @param #float globalZOrder
+-- @return Label#Label self (return value: cc.Label)
+        
 return nil

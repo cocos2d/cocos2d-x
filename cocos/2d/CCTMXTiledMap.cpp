@@ -107,9 +107,12 @@ TMXLayer * TMXTiledMap::parseLayer(TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
     
     TMXLayer *layer = TMXLayer::create(tileset, layerInfo, mapInfo);
 
-    // tell the layerinfo to release the ownership of the tiles map.
-    layerInfo->_ownTiles = false;
-    layer->setupTiles();
+    if (nullptr != layer)
+    {
+        // tell the layerinfo to release the ownership of the tiles map.
+        layerInfo->_ownTiles = false;
+        layer->setupTiles();
+    }
 
     return layer;
 }

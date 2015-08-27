@@ -268,6 +268,7 @@
                 var blendFunc = options["BlendFunc"];
                 if(blendFunc)
                     frame.setBlendFunc(new cc.BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
+                return frame;
             }
         }
     ];

@@ -39,6 +39,13 @@ cc.Camera.Mode = {
     PERSPECTIVE : 1,
     ORTHOGRAPHIC : 2
 };
+cc.CameraBackgroundBrush.BrushType = {
+    NONE : 0,
+    DEPTH : 1,
+    COLOR : 2,
+    SKYBOX : 3
+};
+
 cc.LightType = {
     DIRECTIONAL : 0,
     POINT : 1,
@@ -462,6 +469,33 @@ cc.Camera.prototype._ctor = function(cameraMode, first, second, third, fourth){
     else {
         cc.error("jsb.Camera constructor: arguments error");
     }
+}
+
+cc.CameraBackgroundBrush.prototype._ctor = function () {
+    this.init();
+}
+cc.CameraBackgroundDepthBrush.prototype._ctor = function (depth) {
+    if (depth !== undefined)
+        this.setDepth(depth);
+    this.init();
+}
+cc.CameraBackgroundColorBrush.prototype._ctor = function (color, depth) {
+    this.init();
+    if (depth !== undefined) {
+        this.setColor(color);
+        this.setDepth(depth);
+    }
+}
+cc.CameraBackgroundSkyBoxBrush.prototype._ctor = function (positive_x, negative_x, positive_y, negative_y, positive_z, negative_z)
+{
+    if (negative_z !== undefined) {
+        var texture = jsb.TextureCube.create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
+        if (texture) {
+            texture.setTexParameters(gl.LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE);
+            this.setTexture(texture);
+        }
+    }
+    this.init();
 }
 
 /**

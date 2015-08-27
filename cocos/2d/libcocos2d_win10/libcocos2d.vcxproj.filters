@@ -534,9 +534,6 @@
     <ClCompile Include="..\..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\base\atitc.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -1939,6 +1936,12 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
     </ClCompile>
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -2214,9 +2217,6 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3d\CCTerrain.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCTextureCube.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3d\cocos3d.h">
@@ -3787,6 +3787,12 @@
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -35,6 +35,7 @@ cocos2d.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \
 2d/CCCamera.cpp \
+2d/CCCameraBackgroundBrush.cpp \
 2d/CCClippingNode.cpp \
 2d/CCClippingRectangleNode.cpp \
 2d/CCComponent.cpp \
@@ -180,6 +181,7 @@ renderer/CCTechnique.cpp \
 renderer/CCTexture2D.cpp \
 renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
+renderer/CCTextureCube.cpp \
 renderer/CCTrianglesCommand.cpp \
 renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
