@@ -26,8 +26,13 @@ THE SOFTWARE.
 #include "2d/CCTextFieldTTF.h"
 
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
+
+#define CURSOR_TIME_SHOW_HIDE 0.3f
+#define CURSOR_DEFAULT_CHAR '|'
 
 static int _calcCharCount(const char * text)
 {
@@ -57,9 +62,20 @@ TextFieldTTF::TextFieldTTF()
 , _placeHolder("")   // prevent Label initWithString assertion
 , _colorText(Color4B::WHITE)
 , _secureTextEntry(false)
+, _cursorUse(false)
+, _cursorPosition(0)
+, _cursorChar(CURSOR_DEFAULT_CHAR)
+, _cursorShowingTime(0.0f)
+, _isAttachWithIME(false)
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
+
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    // On desktop default enable cursor
+    setCursorUse(true);
+#endif
 }
 
 TextFieldTTF::~TextFieldTTF()
@@ -163,6 +179,16 @@ bool TextFieldTTF::detachWithIME()
     return ret;
 }
 
+void cocos2d::TextFieldTTF::didAttachWithIME()
+{
+    setAttachWithIME(true);
+}
+
+void cocos2d::TextFieldTTF::didDetachWithIME()
+{
+    setAttachWithIME(false);
+}
+
 bool TextFieldTTF::canAttachWithIME()
 {
     return (_delegate) ? (! _delegate->onTextFieldAttachWithIME(this)) : true;
@@ -178,7 +204,7 @@ void TextFieldTTF::insertText(const char * text, size_t len)
     std::string insert(text, len);
 
     // insert \n means input end
-    int pos = static_cast<int>(insert.find('\n'));
+    int pos = static_cast<int>(insert.find((char)TextFormatter::NewLine));
     if ((int)insert.npos != pos)
     {
         len = pos;
@@ -193,10 +219,26 @@ void TextFieldTTF::insertText(const char * text, size_t len)
             return;
         }
 
-        _charCount += _calcCharCount(insert.c_str());
-        std::string sText(_inputText);
-        sText.append(insert);
-        setString(sText);
+        int countInsertChar = _calcCharCount(insert.c_str());
+        _charCount += countInsertChar;
+
+        if (_cursorUse)
+        {
+            StringUtils::StringUTF8 stringUTF8;
+
+            stringUTF8.set(_inputText);
+            stringUTF8.insert(_cursorPosition, insert);
+
+            setCursorPosition(_cursorPosition + countInsertChar);            
+
+            setString(stringUTF8.getAsCharSequence());
+        }
+        else
+        {
+            std::string sText(_inputText);
+            sText.append(insert);
+            setString(sText);
+        }
     }
 
     if ((int)insert.npos == pos) {
@@ -241,14 +283,32 @@ void TextFieldTTF::deleteBackward()
     {
         _inputText = "";
         _charCount = 0;
-        Label::setTextColor(_colorSpaceHolder);
-        Label::setString(_placeHolder);
+        setCursorPosition(0);
+        setString(_inputText);
         return;
     }
 
     // set new input text
-    std::string text(_inputText.c_str(), len - deleteLen);
-    setString(text);
+    if (_cursorUse)
+    {
+        if (_cursorPosition)
+        {
+            setCursorPosition(_cursorPosition - 1);
+
+            StringUtils::StringUTF8 stringUTF8;
+
+            stringUTF8.set(_inputText);
+            stringUTF8.deleteChar(_cursorPosition);
+
+            _charCount = stringUTF8.length();
+            setString(stringUTF8.getAsCharSequence());
+        }
+    }
+    else
+    {
+        std::string text(_inputText.c_str(), len - deleteLen);
+        setString(text);
+    }
 }
 
 const std::string& TextFieldTTF::getContentText()
@@ -256,10 +316,73 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
+void cocos2d::TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
+{
+    if (_cursorUse && cursorPosition <= _charCount)
+    {
+        _cursorPosition = cursorPosition;
+        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE;
+    }
+}
+
+void cocos2d::TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
+{
+    if (_cursorUse)
+    {
+        // Reset Label, no cursor
+        bool oldIsAttachWithIME = _isAttachWithIME;
+        _isAttachWithIME = false;
+        updateCursorDisplayText();
+
+        Rect rect;
+        rect.size = getContentSize();
+        if (isScreenPointInRect(point, camera, getWorldToNodeTransform(), rect, nullptr))
+        {
+            std::size_t latterPosition = 0;
+            for (; latterPosition < _lengthOfString; ++latterPosition)
+            {
+                if (_lettersInfo[latterPosition].valid)
+                {
+                    auto sprite = getLetter(latterPosition);
+                    rect.size = sprite->getContentSize();
+                    if (isScreenPointInRect(point, camera, sprite->getWorldToNodeTransform(), rect, nullptr))
+                    {
+                        setCursorPosition(latterPosition);
+                        break;
+                    }
+                }
+            }
+            if (latterPosition == _lengthOfString)
+            {
+                setCursorPosition(latterPosition);
+            }
+        }
+
+        // Set cursor
+        _isAttachWithIME = oldIsAttachWithIME;
+        updateCursorDisplayText();
+    }
+}
+
+void cocos2d::TextFieldTTF::setAttachWithIME(bool isAttachWithIME)
+{
+    if (isAttachWithIME != _isAttachWithIME)
+    {
+        _isAttachWithIME = isAttachWithIME;
+
+        if (_isAttachWithIME)
+        {
+            setCursorPosition(_charCount);
+        }
+        updateCursorDisplayText();
+    }
+}
+
 void TextFieldTTF::setTextColor(const Color4B &color)
 {
     _colorText = color;
-    if (_inputText.length() > 0) {
+    if (_inputText.length() > 0) 
+    {
         Label::setTextColor(_colorText);
     }
 }
@@ -271,6 +394,33 @@ void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
         return;
     }
     Label::visit(renderer,parentTransform,parentFlags);
+}
+
+void cocos2d::TextFieldTTF::update(float delta)
+{
+    if (_cursorUse && _isAttachWithIME)
+    {
+        _cursorShowingTime -= delta;
+        if (_cursorShowingTime < -CURSOR_TIME_SHOW_HIDE)
+        {
+            _cursorShowingTime = CURSOR_TIME_SHOW_HIDE;
+        }
+        // before cursor inserted '\b', need next letter
+        auto sprite = getLetter(_cursorPosition + 1);
+
+        if (sprite)
+        {
+            if (_cursorShowingTime >= 0.0f)
+            {
+                sprite->setOpacity(255);
+            }
+            else
+            {
+                sprite->setOpacity(0);
+            }
+            sprite->setDirty(true);
+        }
+    }
 }
 
 const Color4B& TextFieldTTF::getColorSpaceHolder()
@@ -307,16 +457,17 @@ void TextFieldTTF::setString(const std::string &text)
 {
     static char bulletString[] = {(char)0xe2, (char)0x80, (char)0xa2, (char)0x00};
     std::string displayText;
-    size_t length;
 
-    if (text.length()>0)
+    int charCount = 0;
+    if (!text.empty())
     {
         _inputText = text;
         displayText = _inputText;
+        charCount = _calcCharCount(_inputText.c_str());
         if (_secureTextEntry)
         {
             displayText = "";
-            length = _inputText.length();
+            size_t length = charCount;
             while (length)
             {
                 displayText.append(bulletString);
@@ -329,18 +480,133 @@ void TextFieldTTF::setString(const std::string &text)
         _inputText = "";
     }
 
+    if (_cursorUse && charCount != _charCount)
+    {
+        _cursorPosition = charCount;
+    }
+
+    if (_cursorUse)
+    {
+        // Need for recreate all letters in Label
+        Label::removeAllChildrenWithCleanup(false);
+    }
+
     // if there is no input text, display placeholder instead
-    if (0 == _inputText.length())
+    if (_inputText.empty() && (!_cursorUse || !_isAttachWithIME))
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
     }
     else
     {
+        makeStringSupportCursor(displayText);
+
         Label::setTextColor(_colorText);
         Label::setString(displayText);
     }
-    _charCount = _calcCharCount(_inputText.c_str());
+    _charCount = charCount;
+}
+
+void cocos2d::TextFieldTTF::appendString(const std::string& text)
+{
+    insertText(text.c_str(), text.length());
+}
+
+void cocos2d::TextFieldTTF::makeStringSupportCursor(std::string& displayText)
+{
+    if (_cursorUse && _isAttachWithIME)
+    {
+        if (displayText.empty())
+        {
+            // \b - Next char not change x position
+            displayText.push_back((char)TextFormatter::NextCharNoChangeX);
+            displayText.push_back(_cursorChar);
+        }
+        else
+        {
+            StringUtils::StringUTF8 stringUTF8;
+
+            stringUTF8.set(displayText);
+
+            if (_cursorPosition > stringUTF8.length())
+            {
+                _cursorPosition = stringUTF8.length();
+            }
+            std::string cursorChar;
+            // \b - Next char not change x position
+            cursorChar.push_back((char)TextFormatter::NextCharNoChangeX);
+            cursorChar.push_back(_cursorChar);
+            stringUTF8.insert(_cursorPosition, cursorChar);
+
+            displayText = stringUTF8.getAsCharSequence();
+        }
+    }
+}
+
+void cocos2d::TextFieldTTF::updateCursorDisplayText()
+{
+    // Update Label content
+    setString(_inputText);
+}
+
+void cocos2d::TextFieldTTF::setCursorChar(char cursor)
+{
+    if (_cursorChar != cursor)
+    {
+        _cursorChar = cursor;
+        updateCursorDisplayText();
+    }
+}
+
+void cocos2d::TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
+{
+    if (_cursorUse)
+    {
+        switch (keyCode)
+        {
+        case EventKeyboard::KeyCode::KEY_HOME:
+        case EventKeyboard::KeyCode::KEY_KP_HOME:
+            setCursorPosition(0);
+            updateCursorDisplayText();
+            break;
+        case EventKeyboard::KeyCode::KEY_END:
+            setCursorPosition(_charCount);
+            updateCursorDisplayText();
+            break;
+        case EventKeyboard::KeyCode::KEY_DELETE:
+        case EventKeyboard::KeyCode::KEY_KP_DELETE:
+            if (_cursorPosition < _charCount)
+            {
+                StringUtils::StringUTF8 stringUTF8;
+
+                stringUTF8.set(_inputText);
+                stringUTF8.deleteChar(_cursorPosition);
+                setCursorPosition(_cursorPosition);
+                _charCount = stringUTF8.length();
+                setString(stringUTF8.getAsCharSequence());
+            }
+            break;
+        case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+            if (_cursorPosition)
+            {
+                setCursorPosition(_cursorPosition - 1);
+                updateCursorDisplayText();
+            }
+            break;
+        case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+            if (_cursorPosition < _charCount)
+            {
+                setCursorPosition(_cursorPosition + 1);
+                updateCursorDisplayText();
+            }
+            break;
+        case EventKeyboard::KeyCode::KEY_ESCAPE:
+            detachWithIME();
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 const std::string& TextFieldTTF::getString() const
@@ -362,6 +628,22 @@ void TextFieldTTF::setPlaceHolder(const std::string& text)
 const std::string& TextFieldTTF::getPlaceHolder() const
 {
     return _placeHolder;
+}
+
+void cocos2d::TextFieldTTF::setCursorUse(bool value)
+{
+    if (_cursorUse != value)
+    {
+        _cursorUse = value;
+        if (_cursorUse)
+        {
+            _cursorPosition = _charCount;
+        }
+        else
+        {
+            _cursorPosition = 0;
+        }
+    }
 }
 
 // secureTextEntry
