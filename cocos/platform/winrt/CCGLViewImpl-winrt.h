@@ -79,6 +79,12 @@ public:
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
+
+    void OnMousePressed(Windows::UI::Core::PointerEventArgs^ args);
+    void OnMouseMoved(Windows::UI::Core::PointerEventArgs^ args);
+    void OnMouseReleased(Windows::UI::Core::PointerEventArgs^ args);
+    void OnMouseWheelChanged(Windows::UI::Core::PointerEventArgs^ args);
+
 	void OnWinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
 
 
@@ -151,6 +157,7 @@ private:
  
     cocos2d::Vec2 TransformToOrientation(Windows::Foundation::Point point);
  	cocos2d::Vec2  GetPoint(Windows::UI::Core::PointerEventArgs^ args);
+    cocos2d::Vec2  GetPointMouse(Windows::UI::Core::PointerEventArgs^ args);
        
     Windows::Foundation::Rect m_windowBounds;
 	Windows::Foundation::EventRegistrationToken m_eventToken;
@@ -166,6 +173,8 @@ private:
 	bool m_lastPointValid;
 	bool m_windowClosed;
 	bool m_windowVisible;
+    // PointerReleased for mouse not send button id, need save in PointerPressed last button
+    MouseButton _lastMouseButtonPressed;
 
     bool m_running;
 	bool m_initialized;
@@ -175,6 +184,7 @@ private:
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
+
     KeyBoardWinRT^ m_keyboard;
 
     cocos2d::EventListenerKeyboard* m_backButtonListener;

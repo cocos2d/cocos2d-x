@@ -160,30 +160,39 @@ void OpenGLESPage::OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::Rou
 
 void OpenGLESPage::OnPointerPressed(Object^ sender, PointerEventArgs^ e)
 {
+    bool isMouseEvent = e->CurrentPoint->PointerDevice->PointerDeviceType == Windows::Devices::Input::PointerDeviceType::Mouse;
     if (mRenderer)
     {
-        mRenderer->QueuePointerEvent(PointerEventType::PointerPressed, e);
+        mRenderer->QueuePointerEvent(isMouseEvent ? PointerEventType::MousePressed : PointerEventType::PointerPressed, e);
     }
 }
 
 void OpenGLESPage::OnPointerMoved(Object^ sender, PointerEventArgs^ e)
 {
+    bool isMouseEvent = e->CurrentPoint->PointerDevice->PointerDeviceType == Windows::Devices::Input::PointerDeviceType::Mouse;
     if (mRenderer)
     {
-        mRenderer->QueuePointerEvent(PointerEventType::PointerMoved, e);
+        mRenderer->QueuePointerEvent(isMouseEvent ? PointerEventType::MouseMoved : PointerEventType::PointerMoved, e);
     }
 }
 
 void OpenGLESPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
 {
+    bool isMouseEvent = e->CurrentPoint->PointerDevice->PointerDeviceType == Windows::Devices::Input::PointerDeviceType::Mouse;
+
     if (mRenderer)
     {
-        mRenderer->QueuePointerEvent(PointerEventType::PointerReleased, e);
+        mRenderer->QueuePointerEvent(isMouseEvent ? PointerEventType::MouseReleased : PointerEventType::PointerReleased, e);
     }
 }
 
 void OpenGLESPage::OnPointerWheelChanged(Object^ sender, PointerEventArgs^ e)
 {
+    bool isMouseEvent = e->CurrentPoint->PointerDevice->PointerDeviceType == Windows::Devices::Input::PointerDeviceType::Mouse;
+    if (mRenderer && isMouseEvent)
+    {
+        mRenderer->QueuePointerEvent(PointerEventType::MouseWheelChanged, e);
+    }
 }
 
 void OpenGLESPage::OnKeyPressed(CoreWindow^ sender, KeyEventArgs^ e)

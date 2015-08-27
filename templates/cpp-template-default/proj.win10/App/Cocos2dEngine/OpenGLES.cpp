@@ -207,12 +207,12 @@ EGLSurface OpenGLES::CreateSurface(SwapChainPanel^ panel, const Size* renderSurf
     
     // Create a PropertySet and initialize with the EGLNativeWindowType.
     PropertySet^ surfaceCreationProperties = ref new PropertySet();
-    surfaceCreationProperties->Insert(ref new String(EGLNativeWindowTypeProperty), panel);
+    surfaceCreationProperties->Insert(ref new Platform::String(EGLNativeWindowTypeProperty), panel);
 
     // If a render surface size is specified, add it to the surface creation properties
     if (renderSurfaceSize != nullptr)
     {
-        surfaceCreationProperties->Insert(ref new String(EGLRenderSurfaceSizeProperty), PropertyValue::CreateSize(*renderSurfaceSize));
+        surfaceCreationProperties->Insert(ref new Platform::String(EGLRenderSurfaceSizeProperty), PropertyValue::CreateSize(*renderSurfaceSize));
     }
 
     surface = eglCreateWindowSurface(mEglDisplay, mEglConfig, reinterpret_cast<IInspectable*>(surfaceCreationProperties), surfaceAttributes);
