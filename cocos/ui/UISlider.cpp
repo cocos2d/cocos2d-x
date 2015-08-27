@@ -98,8 +98,8 @@ Slider* Slider::create(const std::string& barTextureName,
     Slider* widget = new (std::nothrow) Slider();
     if (widget && widget->init())
     {
-        widget->loadBarTexture(barTextureName);
-        widget->loadSlidBallTextureNormal(normalBallTextureName);
+        widget->loadBarTexture(barTextureName, resType);
+        widget->loadSlidBallTextureNormal(normalBallTextureName, resType);
         widget->autorelease();
         return widget;
     }
