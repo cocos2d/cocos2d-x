@@ -263,6 +263,7 @@ private:
 
 public:
     int handleNodeEvent(void* data);
+    int handleActionEvent(void* data);
     int handleComponentEvent(void* data);
     
     bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
