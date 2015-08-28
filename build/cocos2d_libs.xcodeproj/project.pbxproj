@@ -2067,6 +2067,10 @@
 		B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */; };
 		B63990CE1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
 		B63990CF1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
+		B64073311B8FFA60005495CE /* CCMotionStreak3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B640732F1B8FFA60005495CE /* CCMotionStreak3D.cpp */; };
+		B64073321B8FFA60005495CE /* CCMotionStreak3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B640732F1B8FFA60005495CE /* CCMotionStreak3D.cpp */; };
+		B64073331B8FFA60005495CE /* CCMotionStreak3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B64073301B8FFA60005495CE /* CCMotionStreak3D.h */; };
+		B64073341B8FFA60005495CE /* CCMotionStreak3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B64073301B8FFA60005495CE /* CCMotionStreak3D.h */; };
 		B665E1F21AA80A6500DDB1C5 /* CCPUAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */; };
 		B665E1F31AA80A6500DDB1C5 /* CCPUAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */; };
 		B665E1F41AA80A6500DDB1C5 /* CCPUAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0CD1AA80A6500DDB1C5 /* CCPUAffector.h */; };
@@ -4775,6 +4779,8 @@
 		B62305631B8ABA6600F0745D /* CCTextureCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCube.h; sourceTree = "<group>"; };
 		B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCAsyncTaskPool.cpp; path = ../base/CCAsyncTaskPool.cpp; sourceTree = "<group>"; };
 		B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAsyncTaskPool.h; path = ../base/CCAsyncTaskPool.h; sourceTree = "<group>"; };
+		B640732F1B8FFA60005495CE /* CCMotionStreak3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMotionStreak3D.cpp; sourceTree = "<group>"; };
+		B64073301B8FFA60005495CE /* CCMotionStreak3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak3D.h; sourceTree = "<group>"; };
 		B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUAffector.cpp; path = Particle3D/PU/CCPUAffector.cpp; sourceTree = "<group>"; };
 		B665E0CD1AA80A6500DDB1C5 /* CCPUAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUAffector.h; path = Particle3D/PU/CCPUAffector.h; sourceTree = "<group>"; };
 		B665E0CE1AA80A6500DDB1C5 /* CCPUAffectorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUAffectorManager.cpp; path = Particle3D/PU/CCPUAffectorManager.cpp; sourceTree = "<group>"; };
@@ -7871,6 +7877,8 @@
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
+				B640732F1B8FFA60005495CE /* CCMotionStreak3D.cpp */,
+				B64073301B8FFA60005495CE /* CCMotionStreak3D.h */,
 				B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */,
 				B603F1A71AC8EA0900A9579C /* CCTerrain.h */,
 				B6D38B861AC3AFAC00043997 /* CCSkybox.cpp */,
@@ -9348,6 +9356,7 @@
 				15AE18E519AAD35000C27E9E /* CCActionFrame.h in Headers */,
 				50ABBEAD1925AB6F00A911A9 /* ccTypes.h in Headers */,
 				1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */,
+				B64073331B8FFA60005495CE /* CCMotionStreak3D.h in Headers */,
 				B6CAB43D1AF9AA1A00B9B856 /* btGpuDefines.h in Headers */,
 				15AE181C19AAD2F700C27E9E /* CCBundle3D.h in Headers */,
 				15AE189919AAD33D00C27E9E /* CCMenuItemLoader.h in Headers */,
@@ -10548,6 +10557,7 @@
 				15AE1B7F19AADA9A00C27E9E /* UIText.h in Headers */,
 				B29A7E3419EE1B7700872B35 /* SlotData.h in Headers */,
 				B6CAAFF91AF9A9E100B9B856 /* CCPhysics3DShape.h in Headers */,
+				B64073341B8FFA60005495CE /* CCMotionStreak3D.h in Headers */,
 				B665E3D51AA80A6600DDB1C5 /* CCPUScriptLexer.h in Headers */,
 				50ABBE701925AB6F00A911A9 /* CCEventListenerKeyboard.h in Headers */,
 				15AE18B619AAD33D00C27E9E /* CCBSequence.h in Headers */,
@@ -11522,6 +11532,7 @@
 				15AE182019AAD2F700C27E9E /* CCBundleReader.cpp in Sources */,
 				B665E2421AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.cpp in Sources */,
 				15AE1AD819AAD41000C27E9E /* b2Rope.cpp in Sources */,
+				B64073311B8FFA60005495CE /* CCMotionStreak3D.cpp in Sources */,
 				B6D38B8A1AC3AFAC00043997 /* CCSkybox.cpp in Sources */,
 				B665E3521AA80A6500DDB1C5 /* CCPUOnQuotaObserver.cpp in Sources */,
 				B29A7DC719EE1B7700872B35 /* SkeletonRenderer.cpp in Sources */,
@@ -12516,6 +12527,7 @@
 				50ABBEB01925AB6F00A911A9 /* CCUserDefault.cpp in Sources */,
 				B6CAB3E21AF9AA1A00B9B856 /* btUniversalConstraint.cpp in Sources */,
 				50ABBE521925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
+				B64073321B8FFA60005495CE /* CCMotionStreak3D.cpp in Sources */,
 				B6CAB3821AF9AA1A00B9B856 /* btMinkowskiPenetrationDepthSolver.cpp in Sources */,
 				B6CAB3641AF9AA1A00B9B856 /* btContinuousConvexCollision.cpp in Sources */,
 				52B47A2F1A5349A3004E4C60 /* HttpAsynConnection-apple.m in Sources */,
