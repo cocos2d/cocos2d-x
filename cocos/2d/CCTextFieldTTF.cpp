@@ -28,10 +28,11 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "2d/CCSprite.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
-#define CURSOR_TIME_SHOW_HIDE 0.3f
+#define CURSOR_TIME_SHOW_HIDE 0.5f
 #define CURSOR_DEFAULT_CHAR '|'
 
 static int _calcCharCount(const char * text)
@@ -70,12 +71,6 @@ TextFieldTTF::TextFieldTTF()
 {
     _colorSpaceHolder.r = _colorSpaceHolder.g = _colorSpaceHolder.b = 127;
     _colorSpaceHolder.a = 255;
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    // On desktop default enable cursor
-    setCursorUse(true);
-#endif
 }
 
 TextFieldTTF::~TextFieldTTF()
@@ -124,23 +119,45 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
 
 bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize)
 {
-    _placeHolder = placeholder;
-    setDimensions(dimensions.width,dimensions.height);
-    setSystemFontName(fontName);
-    setSystemFontSize(fontSize);
-    setAlignment(alignment,TextVAlignment::CENTER);
-    Label::setTextColor(_colorSpaceHolder);
-    Label::setString(_placeHolder);
+    setDimensions(dimensions.width, dimensions.height);
+    setAlignment(alignment, TextVAlignment::CENTER);
+
+    return initWithPlaceHolder(placeholder, fontName, fontSize);
 
     return true;
 }
 bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    _placeHolder = std::string(placeholder);
-    setSystemFontName(fontName);
-    setSystemFontSize(fontSize);
+    _placeHolder = placeholder;
+
+    do 
+    {
+        // If fontName is ttf file and it corrected, use TTFConfig
+        if (FileUtils::getInstance()->isFileExist(fontName))
+        {
+            TTFConfig ttfConfig(fontName.c_str(), fontSize, GlyphCollection::DYNAMIC);
+            if (setTTFConfig(ttfConfig))
+            {
+                break;
+            }
+        }
+
+        setSystemFontName(fontName);
+        setSystemFontSize(fontSize);
+
+    } while (false);
+
+
     Label::setTextColor(_colorSpaceHolder);
     Label::setString(_placeHolder);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    // On desktop default enable cursor
+    if (_currentLabelType == LabelType::TTF)
+    {
+        setCursorUse(true);
+    }
+#endif
 
     return true;
 }
@@ -179,12 +196,12 @@ bool TextFieldTTF::detachWithIME()
     return ret;
 }
 
-void cocos2d::TextFieldTTF::didAttachWithIME()
+void TextFieldTTF::didAttachWithIME()
 {
     setAttachWithIME(true);
 }
 
-void cocos2d::TextFieldTTF::didDetachWithIME()
+void TextFieldTTF::didDetachWithIME()
 {
     setAttachWithIME(false);
 }
@@ -316,16 +333,16 @@ const std::string& TextFieldTTF::getContentText()
     return _inputText;
 }
 
-void cocos2d::TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
+void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
 {
     if (_cursorUse && cursorPosition <= _charCount)
     {
         _cursorPosition = cursorPosition;
-        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE;
+        _cursorShowingTime = CURSOR_TIME_SHOW_HIDE*2.0;
     }
 }
 
-void cocos2d::TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
+void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
 {
     if (_cursorUse)
     {
@@ -364,7 +381,7 @@ void cocos2d::TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* 
     }
 }
 
-void cocos2d::TextFieldTTF::setAttachWithIME(bool isAttachWithIME)
+void TextFieldTTF::setAttachWithIME(bool isAttachWithIME)
 {
     if (isAttachWithIME != _isAttachWithIME)
     {
@@ -396,7 +413,7 @@ void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     Label::visit(renderer,parentTransform,parentFlags);
 }
 
-void cocos2d::TextFieldTTF::update(float delta)
+void TextFieldTTF::update(float delta)
 {
     if (_cursorUse && _isAttachWithIME)
     {
@@ -507,12 +524,12 @@ void TextFieldTTF::setString(const std::string &text)
     _charCount = charCount;
 }
 
-void cocos2d::TextFieldTTF::appendString(const std::string& text)
+void TextFieldTTF::appendString(const std::string& text)
 {
     insertText(text.c_str(), text.length());
 }
 
-void cocos2d::TextFieldTTF::makeStringSupportCursor(std::string& displayText)
+void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
 {
     if (_cursorUse && _isAttachWithIME)
     {
@@ -543,13 +560,13 @@ void cocos2d::TextFieldTTF::makeStringSupportCursor(std::string& displayText)
     }
 }
 
-void cocos2d::TextFieldTTF::updateCursorDisplayText()
+void TextFieldTTF::updateCursorDisplayText()
 {
     // Update Label content
     setString(_inputText);
 }
 
-void cocos2d::TextFieldTTF::setCursorChar(char cursor)
+void TextFieldTTF::setCursorChar(char cursor)
 {
     if (_cursorChar != cursor)
     {
@@ -558,7 +575,7 @@ void cocos2d::TextFieldTTF::setCursorChar(char cursor)
     }
 }
 
-void cocos2d::TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
+void TextFieldTTF::controlKey(EventKeyboard::KeyCode keyCode)
 {
     if (_cursorUse)
     {
@@ -630,19 +647,30 @@ const std::string& TextFieldTTF::getPlaceHolder() const
     return _placeHolder;
 }
 
-void cocos2d::TextFieldTTF::setCursorUse(bool value)
+void TextFieldTTF::setCursorUse(bool value)
 {
-    if (_cursorUse != value)
+    if (_currentLabelType == LabelType::TTF)
     {
-        _cursorUse = value;
-        if (_cursorUse)
+        if (_cursorUse != value)
         {
-            _cursorPosition = _charCount;
+            _cursorUse = value;
+            if (_cursorUse)
+            {
+                _cursorPosition = _charCount;
+
+                scheduleUpdate();
+            }
+            else
+            {
+                _cursorPosition = 0;
+
+                unscheduleUpdate();
+            }
         }
-        else
-        {
-            _cursorPosition = 0;
-        }
+    }
+    else
+    {
+        CCLOG("TextFieldTTF cursor worked only LabelType::TTF");
     }
 }
 
