@@ -24,60 +24,20 @@
 
 #pragma once
 
-#include <string>
-#include <vector>
-
 #include "network/CCIDownloaderImpl.h"
-#include "platform/CCPlatformMacros.h"
 
-/**
- * @addtogroup network
- * @{
- */
-
-NS_CC_BEGIN
-
-namespace network
+namespace cocos2d { namespace network
 {
-    class DownloaderImpl : public IDownloaderImpl
+    class DownloaderApple : public IDownloaderImpl
     {
     public:
-        DownloaderImpl();
-        virtual ~DownloaderImpl();
+        DownloaderApple();
+        virtual ~DownloaderApple();
         
-        bool init() override;
-        
-        // Overrides
-        int performDownload(DownloadUnit* unit,
-                            const WriterCallback& writerCallback,
-                            const ProgressCallback& progressCallback
-                            ) override;
-        int performBatchDownload(const DownloadUnits& units,
-                                 const WriterCallback& writerCallback,
-                                 const ProgressCallback& progressCallback,
-                                 const ErrorCallback& errorCallback
-                                 ) override;
-        int getHeader(const std::string& url, HeaderInfo* headerInfo) override;
-        std::string getStrError() const override;
-        void setConnectionTimeout(int timeout) override;
-        bool supportsResume(const std::string& url) override;
-        
-        //
-        const WriterCallback& getWriterCallback() const { return _writerCallback; }
-        const ProgressCallback& getProgressCallback() const { return _progressCallback; }
+        virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask> task) override;
         
     private:
-        
-        WriterCallback _writerCallback;
-        ProgressCallback _progressCallback;
-        
-        int _lastErrCode;
-        std::string _lastErrStr;
+        void* _impl;
     };
-    
-} // namespace network
+}}  // namespace cocos2d::network
 
-NS_CC_END
-
-// end group
-/// @}

@@ -22,170 +22,404 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "network/CCDownloader-apple.h"
 
-#import <Foundation/Foundation.h>
+#include "network/CCDownloader.h"
+#include "network/CCIDownloaderImpl.h"
+
+////////////////////////////////////////////////////////////////////////////////
+//  OC Classes Declaration
 #import <Foundation/NSData.h>
 
-@interface Conn : NSObject
+// this wrapper used to wrap C++ class DownloadTask into NSMutableDictionary
+@interface DownloadTaskWrapper : NSObject
 {
-    std::string name;
+    std::shared_ptr<const cocos2d::network::DownloadTask> task;
 }
-@property (retain) NSURLConnection *connection;
+@property (nonatomic) int64_t totalBytesReceived;    // temp var for dataTask: didReceivedData callback
+
+-(id)init:(std::shared_ptr<const cocos2d::network::DownloadTask>&)t;
+-(const cocos2d::network::DownloadTask *)get;
 
 @end
 
-@implementation Conn
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+@interface DownloaderAppleImpl : NSObject <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate>
 {
-    NSLog(@"didReceiveResponse");
+    const cocos2d::network::DownloaderApple *outer;
 }
+@property (nonatomic, strong) NSURLSession *downloadSession;
+@property (nonatomic, strong) NSMutableDictionary *taskDict;
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    NSLog(@"didReceiveData");
-}
+-(id)init:(const cocos2d::network::DownloaderApple *)o;
+-(NSURLSessionDataTask *)createDataTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task;
+-(NSURLSessionDownloadTask *)createFileTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task;
+-(void)detatchOuter;
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
+@end
+
+////////////////////////////////////////////////////////////////////////////////
+//  C++ Classes Implementation
+
+namespace cocos2d { namespace network {
+
+    struct DownloadTaskApple : public IDownloadTask
+    {
+        DownloadTaskApple()
+        : dataTask(nil)
+        , downloadTask(nil)
+        {
+            DLLOG("Construct DownloadTaskApple %p", this);
+        }
+        
+        virtual ~DownloadTaskApple()
+        {
+            DLLOG("Destruct DownloadTaskApple %p", this);
+        }
+        
+        NSURLSessionDataTask *dataTask;
+        NSURLSessionDownloadTask *downloadTask;
+    };
+#define DeclareDownloaderImplVar DownloaderAppleImpl *impl = (__bridge DownloaderAppleImpl *)_impl
+    // the _impl's type is id, we should convert it to subclass before call it's methods
+    DownloaderApple::DownloaderApple()
+    : _impl(nil)
+    {
+        DLLOG("Construct DownloaderApple %p", this);
+        _impl = (__bridge void*)[[DownloaderAppleImpl alloc] init: this];
+    }
     
-    NSLog(@"didFailWithError");
+    DownloaderApple::~DownloaderApple()
+    {
+        DeclareDownloaderImplVar;
+        [impl.downloadSession invalidateAndCancel];
+        [impl detatchOuter];
+        [impl release];
+        DLLOG("Destruct DownloaderApple %p", this);
+    }
+    IDownloadTask *DownloaderApple::createCoTask(std::shared_ptr<const DownloadTask> task)
+    {
+        DownloadTaskApple* coTask = new DownloadTaskApple();
+        DeclareDownloaderImplVar;
+        if (task->storagePath.length())
+        {
+            coTask->downloadTask = [impl createFileTask:task];
+        }
+        else
+        {
+            coTask->dataTask = [impl createDataTask:task];
+        }
+        return coTask;
+    }
+}}  // namespace cocos2d::network
+
+////////////////////////////////////////////////////////////////////////////////
+//  OC Classes Implementation
+@implementation DownloadTaskWrapper
+
+- (id)init: (std::shared_ptr<const cocos2d::network::DownloadTask>&)t
+{
+    DLLOG("Construct DonloadTaskWrapper %p", self);
+    task = t;
+    return self;
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+-(const cocos2d::network::DownloadTask *)get
 {
-    NSLog(@"Succeeded! Receive  bytes of data(unsigned long)");
+    return task.get();
+}
 
+-(void)dealloc
+{
+    DLLOG("Destruct DownloadTaskWrapper %p", self);
+    [super dealloc];
 }
 
 @end
-NS_CC_BEGIN
 
-using namespace network;
+@implementation DownloaderAppleImpl
 
-DownloaderImpl::DownloaderImpl()
-: IDownloaderImpl()
+- (id)init: (const cocos2d::network::DownloaderApple*)o
 {
-}
-
-DownloaderImpl::~DownloaderImpl()
-{
-
-}
-
-bool DownloaderImpl::init()
-{
-    return true;
-}
-
-int DownloaderImpl::performDownload(DownloadUnit* unit,
-                    const WriterCallback& writerCallback,
-                    const ProgressCallback& progressCallback
-                    )
-{
-    _lastErrCode = 0;
-    _lastErrStr = "";
+    DLLOG("Construct DownloaderAppleImpl %p", self);
+    // save outer task ref
+    outer = o;
     
-    NSString *urlStr = [NSString stringWithCString: unit->srcUrl.c_str() encoding:NSUTF8StringEncoding];
-    NSURL *url = [NSURL URLWithString: urlStr];
-    NSURLRequest *request = [NSURLRequest requestWithURL: url];
+    // create task dictionary
+    self.taskDict = [NSMutableDictionary dictionary];
+    
+    // create download session
+    NSURLSessionConfiguration *defaultConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+    self.downloadSession = [NSURLSession sessionWithConfiguration:defaultConfig delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+//    self.downloadSession.sessionDescription = kCurrentSession;
+    return self;
+}
 
-    // due to this function is sync implement, so send a sync request by NSURLConnection
-    NSURLResponse *response = nil;
-    NSError *err = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    if (err)
+-(NSURLSessionDataTask *)createDataTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task
+{
+    const char *urlStr = task->requestURL.c_str();
+    DLLOG("DownloaderAppleImpl createDataTask: %s", urlStr);
+    NSURL *url = [NSURL URLWithString:[NSString stringWithUTF8String:urlStr]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSessionDataTask *ocTask = [self.downloadSession dataTaskWithRequest:request];
+    [self.taskDict setObject:[[DownloadTaskWrapper alloc] init:task] forKey:ocTask];
+    [ocTask resume];
+    return ocTask;
+};
+
+-(NSURLSessionDownloadTask *)createFileTask:(std::shared_ptr<const cocos2d::network::DownloadTask>&) task
+{
+    const char *urlStr = task->requestURL.c_str();
+    DLLOG("DownloaderAppleImpl createDataTask: %s", urlStr);
+    NSURL *url = [NSURL URLWithString:[NSString stringWithUTF8String:urlStr]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    //            NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:<#(NSTimeInterval)#>]
+    NSURLSessionDownloadTask *ocTask = [self.downloadSession downloadTaskWithRequest:request];
+    [self.taskDict setObject:[[DownloadTaskWrapper alloc] init:task] forKey:ocTask];
+    [ocTask resume];
+    return ocTask;
+};
+
+-(void)detatchOuter
+{
+    outer = nullptr;
+}
+
+-(void)dealloc
+{
+    DLLOG("Destruct DownloaderAppleImpl %p", self);
+    [super dealloc];
+}
+#pragma mark - NSURLSessionTaskDelegate methods
+
+//@optional
+
+/* An HTTP request is attempting to perform a redirection to a different
+ * URL. You must invoke the completion routine to allow the
+ * redirection, allow the redirection with a modified request, or
+ * pass nil to the completionHandler to cause the body of the redirection
+ * response to be delivered as the payload of this request. The default
+ * is to follow redirections.
+ *
+ * For tasks in background sessions, redirections will always be followed and this method will not be called.
+ */
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+//willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+//        newRequest:(NSURLRequest *)request
+// completionHandler:(void (^)(NSURLRequest *))completionHandler;
+
+/* The task has received a request specific authentication challenge.
+ * If this delegate is not implemented, the session specific authentication challenge
+ * will *NOT* be called and the behavior will be the same as using the default handling
+ * disposition.
+ */
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+//didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+// completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler;
+
+/* Sent if a task requires a new, unopened body stream.  This may be
+ * necessary when authentication has failed for any request that
+ * involves a body stream.
+ */
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+// needNewBodyStream:(void (^)(NSInputStream *bodyStream))completionHandler;
+
+/* Sent periodically to notify the delegate of upload progress.  This
+ * information is also available as properties of the task.
+ */
+//- (void)URLSession:(NSURLSession *)session task :(NSURLSessionTask *)task
+//                                 didSendBodyData:(int64_t)bytesSent
+//                                  totalBytesSent:(int64_t)totalBytesSent
+//                        totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend;
+
+/* Sent as the last message related to a specific task.  Error may be
+ * nil, which implies that no error occurred and this task is complete.
+ */
+- (void)URLSession:(NSURLSession *)session task :(NSURLSessionTask *)task
+                            didCompleteWithError:(NSError *)error
+{
+    DLLOG("DownloaderAppleImpl task: \"%s\" didCompleteWithError: %d",
+          [task.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding],
+          (error ? (int)error.code: 0));
+
+    // clean wrapper C++ object
+    DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:task];
+    
+    // if no error, callback has been called in finish task
+    if (outer && error)
     {
-        _lastErrCode = (int)err.code;
-        NSString *errStr = [err localizedDescription];
-        if (errStr)
+        outer->onTaskFinish(*[wrapper get],
+                            cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL,
+                            (int)error.code,
+                            [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding]);
+    }
+    [self.taskDict removeObjectForKey:task];
+    [wrapper release];
+}
+
+#pragma mark - NSURLSessionDataDelegate methods
+//@optional
+/* The task has received a response and no further messages will be
+ * received until the completion block is called. The disposition
+ * allows you to cancel a request or to turn a data task into a
+ * download task. This delegate message is optional - if you do not
+ * implement it, you can get the response as a property of the task.
+ *
+ * This method will not be called for background upload tasks (which cannot be converted to download tasks).
+ */
+//- (void)URLSession:(NSURLSession *)session dataTask :(NSURLSessionDataTask *)dataTask
+//                                  didReceiveResponse:(NSURLResponse *)response
+//                                   completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+//{
+//    DLLOG("DownloaderAppleImpl dataTask: response:%s", [response.description cStringUsingEncoding:NSUTF8StringEncoding]);
+//    completionHandler(NSURLSessionResponseAllow);
+//}
+
+/* Notification that a data task has become a download task.  No
+ * future messages will be sent to the data task.
+ */
+//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+//didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask;
+
+/* Sent when data is available for the delegate to consume.  It is
+ * assumed that the delegate will retain and not copy the data.  As
+ * the data may be discontiguous, you should use
+ * [NSData enumerateByteRangesUsingBlock:] to access it.
+ */
+- (void)URLSession:(NSURLSession *)session dataTask :(NSURLSessionDataTask *)dataTask
+                                      didReceiveData:(NSData *)data
+{
+    DLLOG("DownloaderAppleImpl dataTask: \"%s\" didReceiveDataLen %d",
+          [dataTask.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding],
+          (int)data.length);
+    if (nullptr == outer)
+    {
+        return;
+    }
+    DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:dataTask];
+    [data enumerateByteRangesUsingBlock:^(const void *bytes,
+                                          NSRange byteRange,
+                                          BOOL *stop)
+    {
+        int64_t bytesWritten = (int64_t)byteRange.length;
+        wrapper.totalBytesReceived += bytesWritten;
+        outer->onTaskProgress(*[wrapper get],
+                              (const char *)bytes,
+                              bytesWritten,
+                              wrapper.totalBytesReceived,
+                              dataTask.countOfBytesExpectedToReceive);
+        *stop = NO;
+    }];
+}
+
+/* Invoke the completion routine with a valid NSCachedURLResponse to
+ * allow the resulting data to be cached, or pass nil to prevent
+ * caching. Note that there is no guarantee that caching will be
+ * attempted for a given resource, and you should not rely on this
+ * message to receive the resource data.
+ */
+//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+// willCacheResponse:(NSCachedURLResponse *)proposedResponse
+// completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler;
+
+#pragma mark - NSURLSessionDownloadDelegate methods
+
+/* Sent when a download task that has completed a download.  The delegate should
+ * copy or move the file at the given location to a new location as it will be
+ * removed when the delegate message returns. URLSession:task:didCompleteWithError: will
+ * still be called.
+ */
+- (void)URLSession:(NSURLSession *)session downloadTask :(NSURLSessionDownloadTask *)downloadTask
+                               didFinishDownloadingToURL:(NSURL *)location
+{
+    DLLOG("DownloaderAppleImpl downloadTask: \"%s\" didFinishDownloadingToURL %s",
+          [downloadTask.originalRequest.URL.absoluteString cStringUsingEncoding:NSUTF8StringEncoding],
+          [location.absoluteString cStringUsingEncoding:NSUTF8StringEncoding]);
+    if (nullptr == outer)
+    {
+        return;
+    }
+    
+    DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:downloadTask];
+    const char * storagePath = [wrapper get]->storagePath.c_str();
+    NSString *destPath = [NSString stringWithUTF8String:storagePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *destURL = nil;
+    
+    do
+    {
+        if ([destPath hasPrefix:@"file://"])
         {
-            _lastErrStr = [errStr UTF8String];
+            break;
+        }
+        
+        if ('/' == [destPath characterAtIndex:0])
+        {
+            // absolute path, need add prefix
+            NSString *prefix = @"file://";
+            destURL = [NSURL URLWithString:[prefix stringByAppendingString: destPath]];
+            break;
+        }
+        
+        // relative path, store to user domain default
+        NSArray *URLs = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+        NSURL *documentsDirectory = URLs[0];
+        destURL = [documentsDirectory URLByAppendingPathComponent:destPath];
+    } while (0);
+    
+    // Make sure we overwrite anything that's already there
+    [fileManager removeItemAtURL:destURL error:NULL];
+    
+    // copy file to dest location
+    int errorCode = cocos2d::network::DownloadTask::ERROR_NO_ERROR;
+    int errorCodeInternal = 0;
+    std::string errorString;
+    
+    NSError *error = nil;
+    if (! [fileManager copyItemAtURL:location toURL:destURL error:&error])
+    {
+        errorCode = cocos2d::network::DownloadTask::ERROR_FILE_OP_FAILED;
+        if (error)
+        {
+            errorCodeInternal = (int)error.code;
+            errorString = [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding];
         }
     }
-    else
-    {
-        int dataLen = 0;
-        if (data)
-        {
-            dataLen = (int)[data length];
-            writerCallback((void*)[data bytes], 1, dataLen, unit);
-        }
-        progressCallback(unit, dataLen, dataLen);
-    }
-    return _lastErrCode;
+    outer->onTaskFinish(*[wrapper get], errorCode, errorCodeInternal, errorString);
 }
 
-int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
-                         const WriterCallback& writerCallback,
-                         const ProgressCallback& progressCallback,
-                         const ErrorCallback& errorCallback
-                         )
+// @optional
+/* Sent periodically to notify the delegate of download progress. */
+- (void)URLSession:(NSURLSession *)session downloadTask :(NSURLSessionDownloadTask *)downloadTask
+                                            didWriteData:(int64_t)bytesWritten
+                                       totalBytesWritten:(int64_t)totalBytesWritten
+                               totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    queue.maxConcurrentOperationCount = 4;
-    
-    NSMutableArray *operations = [NSMutableArray arrayWithCapacity: units.size()];
-    
-    for (auto it = units.begin(), end = units.end(); it != end; it++)
+    NSLog(@"DownloaderAppleImpl downloadTask: \"%@\" received: %lld total: %lld", downloadTask.originalRequest.URL, totalBytesWritten, totalBytesExpectedToWrite);
+
+    if (nullptr == outer)
     {
-        DownloadUnit *unit = (DownloadUnit *)&(it->second);
-        NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-            NSString *urlStr = [NSString stringWithCString: unit->srcUrl.c_str() encoding:NSUTF8StringEncoding];
-            NSURL *url = [NSURL URLWithString: urlStr];
-            NSError *err = nil;
-            NSData *data = [NSData dataWithContentsOfURL: url  options: NSDataReadingUncached  error: &err];
-            if (err)
-            {
-                NSString *errStr = [err localizedDescription];
-                if (errStr)
-                {
-                    const char * c_errStr = [errStr UTF8String];
-                    errorCallback(c_errStr, (int)err.code, c_errStr);
-                }
-            }
-            else
-            {
-                int dataLen = 0;
-                if (data)
-                {
-                    dataLen = (int)[data length];
-                    writerCallback((void*)[data bytes], 1, dataLen, unit);
-                }
-                progressCallback(unit, dataLen, dataLen);
-            }
-        }];
-        [operations addObject:operation];
+        return;
     }
     
-    [queue addOperations:operations waitUntilFinished:YES];
-    NSLog(@"performBatchDownload end");
-    return 0;
+    DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:downloadTask];
+    outer->onTaskProgress(*[wrapper get], nullptr, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
 }
 
-int DownloaderImpl::getHeader(const std::string& url, HeaderInfo* headerInfo)
+/* Sent when a download has been resumed. If a download failed with an
+ * error, the -userInfo dictionary of the error will contain an
+ * NSURLSessionDownloadTaskResumeData key, whose value is the resume
+ * data.
+ */
+- (void)URLSession:(NSURLSession *)session downloadTask :(NSURLSessionDownloadTask *)downloadTask
+                                       didResumeAtOffset:(int64_t)fileOffset
+                                      expectedTotalBytes:(int64_t)expectedTotalBytes
 {
-    return 0;
+    NSLog(@"[TODO]DownloaderAppleImpl downloadTask: \"%@\" didResumeAtOffset: %lld", downloadTask.originalRequest.URL, fileOffset);
+    // 下载失败
+//    self.downloadFail([self getDownloadRespose:XZDownloadFail identifier:self.identifier progress:0.00 downloadUrl:nil downloadSaveFileUrl:nil downloadData:nil downloadResult:@"下载失败"]);
 }
 
-std::string DownloaderImpl::getStrError() const
-{
-    return _lastErrStr;
-}
-
-void DownloaderImpl::setConnectionTimeout(int timeout)
-{
-
-}
-
-bool DownloaderImpl::supportsResume(const std::string& url)
-{
-    return false;
-}
-
-NS_CC_END
+@end
 
 #endif  //  (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

@@ -160,7 +160,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    virtual void onError(const network::Downloader::Error &error);
+//    virtual void onError(const network::Downloader::Error &error);
     
     /** @brief  Call back function for recording downloading percent of the current asset,
      the progression will then be reported to user's listener registed in addUpdateProgressEventListener

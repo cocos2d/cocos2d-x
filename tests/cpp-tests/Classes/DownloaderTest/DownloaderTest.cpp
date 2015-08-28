@@ -33,8 +33,8 @@ USING_NS_CC;
 
 DownloaderTests::DownloaderTests()
 {
+    ADD_TEST_CASE(DownloaderAsyncTest);
     ADD_TEST_CASE(DownloaderSyncTest);
-	ADD_TEST_CASE(DownloaderAsyncTest);
     ADD_TEST_CASE(DownloaderBatchSyncTest);
     ADD_TEST_CASE(DownloaderBatchAsyncTest);
 };
@@ -45,9 +45,17 @@ DownloaderTests::DownloaderTests()
 DownloaderBaseTest::DownloaderBaseTest()
 {
     _downloader = std::shared_ptr<network::Downloader>(new network::Downloader);
-    _downloader->setErrorCallback(std::bind(&DownloaderBaseTest::errorCallback, this, std::placeholders::_1));
-    _downloader->setProgressCallback(std::bind(&DownloaderBaseTest::progressCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
-    _downloader->setSuccessCallback(std::bind(&DownloaderBaseTest::successCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    _downloader->onFileTaskProgress =
+        std::bind(&DownloaderBaseTest::progressCallback,
+                  this,
+                  std::placeholders::_1,
+                  std::placeholders::_2,
+                  std::placeholders::_3,
+                  std::placeholders::_4);
+    
+//    _downloader->setErrorCallback(std::bind(&DownloaderBaseTest::errorCallback, this, std::placeholders::_1));
+//    _downloader->setProgressCallback(std::bind(&DownloaderBaseTest::progressCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+    _downloader->onFileTaskSuccess = std::bind(&DownloaderBaseTest::successCallback, this, std::placeholders::_1);
 }
 
 std::string DownloaderBaseTest::title() const
@@ -55,19 +63,22 @@ std::string DownloaderBaseTest::title() const
     return "Downloader Test";
 }
 
-void DownloaderBaseTest::errorCallback(const cocos2d::network::Downloader::Error& error)
+//void DownloaderBaseTest::errorCallback(const cocos2d::network::Downloader::Error& error)
+//{
+//    cocos2d::log("error downloading: %s - %s", error.url.c_str(), error.message.c_str());
+//}
+
+void DownloaderBaseTest::progressCallback(const network::DownloadTask& task,
+                                          int64_t bytesWritten,
+                                          int64_t totalBytesWritten,
+                                          int64_t totalBytesExpectedToWrite)
 {
-    cocos2d::log("error downloading: %s - %s", error.url.c_str(), error.message.c_str());
+    cocos2d::log("download progress: %d%% - %s", (int)((totalBytesWritten/totalBytesExpectedToWrite)*100), task.requestURL.c_str());
 }
 
-void DownloaderBaseTest::progressCallback(double totalToDownload, double nowDownloaded, const std::string& url, const std::string& customId)
+void DownloaderBaseTest::successCallback(const network::DownloadTask& task)
 {
-    cocos2d::log("download progress: %d%% - %s", (int)((nowDownloaded/totalToDownload)*100), url.c_str());
-}
-
-void DownloaderBaseTest::successCallback(const std::string& url, const std::string& path, const std::string& customId)
-{
-    cocos2d::log("download finished: %s", path.c_str());
+    cocos2d::log("download finished: %s", task.storagePath.c_str());
 }
 
 //------------------------------------------------------------------
@@ -88,7 +99,7 @@ void DownloaderSyncTest::onEnter()
             std::string remote = "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png";
             cocos2d::log("Downloading '%s' into '%s'", remote.c_str(), path.c_str());
 
-            _downloader->downloadSync(remote, path, "download_async_test");
+            _downloader->createDownloadFileTask(remote, path, "download_sync_test");
         }
     });
     auto menu = Menu::create(menuItem, nullptr);
@@ -116,13 +127,27 @@ void DownloaderAsyncTest::onEnter()
 {
     DownloaderBaseTest::onEnter();
 
+    _downloader->onDataTaskProgress = [this](const network::DownloadTask& task,
+                                             std::vector<char>& data,
+                                             int64_t totalBytesReceived,
+                                             int64_t totalBytesExpected){
+        CCLOG("DownloaderAsyncTest onDataTaskProgress(%ld, totalBytesReceived:%lld, totalBytesExpected:%lld)"
+              , data.size()
+              , totalBytesReceived
+              , totalBytesExpected);
+    };
+    _downloader->onDataTaskSuccess = [this](const network::DownloadTask& task,
+                                            std::vector<char>& data){
+        CCLOG("DownloaderAsyncTest onDataTaskSuccess(%ld)", data.size());
+    };
     auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
 
         if (_downloader)
         {
-            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_async.jpg";
+            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_sync.jpg";
             std::string remote = "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png";
-            _downloader->downloadAsync(remote, path, "download_async_test");
+            
+            _downloader->createDownloadDataTask(remote, "download_async_test");
 
             cocos2d::log("Downloading '%s' into '%s'", remote.c_str(), path.c_str());
         }
@@ -180,7 +205,7 @@ void DownloaderBatchSyncTest::onEnter()
                 units[image] = unit;
             }
 
-            _downloader->batchDownloadSync(units, "sync_download");
+//            _downloader->batchDownloadSync(units, "sync_download");
             cocos2d::log("Downloading...");
         }
     });
@@ -238,7 +263,7 @@ void DownloaderBatchAsyncTest::onEnter()
                 units[image] = unit;
             }
 
-            _downloader->batchDownloadAsync(units, "sync_download");
+//            _downloader->batchDownloadAsync(units, "sync_download");
             cocos2d::log("Downloading...");
         }
     });

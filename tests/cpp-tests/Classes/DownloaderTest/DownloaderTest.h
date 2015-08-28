@@ -38,9 +38,12 @@ public:
     DownloaderBaseTest();
     virtual std::string title() const override;
 
-    void errorCallback(const cocos2d::network::Downloader::Error& error);
-    void progressCallback(double totalToDownload, double nowDownloaded, const std::string& url, const std::string& customId);
-    void successCallback(const std::string& url, const std::string& path, const std::string& customId);
+//    void errorCallback(const cocos2d::network::Downloader::Error& error);
+    void progressCallback(const cocos2d::network::DownloadTask& task,
+                          int64_t bytesWritten,
+                          int64_t totalBytesWritten,
+                          int64_t totalBytesExpectedToWrite);
+    void successCallback(const cocos2d::network::DownloadTask& task);
 
 protected:
     std::shared_ptr<cocos2d::network::Downloader> _downloader;

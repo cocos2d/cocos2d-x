@@ -211,27 +211,27 @@ std::unordered_map<std::string, Manifest::AssetDiff> Manifest::genDiff(const Man
 
 void Manifest::genResumeAssetsList(network::DownloadUnits *units) const
 {
-    for (auto it = _assets.begin(); it != _assets.end(); ++it)
-    {
-        Asset asset = it->second;
-        
-        if (asset.downloadState != DownloadState::SUCCESSED)
-        {
-            network::DownloadUnit unit;
-            unit.customId = it->first;
-            unit.srcUrl = _packageUrl + asset.path;
-            unit.storagePath = _manifestRoot + asset.path;
-            if (asset.downloadState == DownloadState::DOWNLOADING)
-            {
-                unit.resumeDownload = true;
-            }
-            else
-            {
-                unit.resumeDownload = false;
-            }
-            units->emplace(unit.customId, unit);
-        }
-    }
+//    for (auto it = _assets.begin(); it != _assets.end(); ++it)
+//    {
+//        Asset asset = it->second;
+//        
+//        if (asset.downloadState != DownloadState::SUCCESSED)
+//        {
+//            network::DownloadUnit unit;
+//            unit.customId = it->first;
+//            unit.srcUrl = _packageUrl + asset.path;
+//            unit.storagePath = _manifestRoot + asset.path;
+//            if (asset.downloadState == DownloadState::DOWNLOADING)
+//            {
+//                unit.resumeDownload = true;
+//            }
+//            else
+//            {
+//                unit.resumeDownload = false;
+//            }
+//            units->emplace(unit.customId, unit);
+//        }
+//    }
 }
 
 std::vector<std::string> Manifest::getSearchPaths() const

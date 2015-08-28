@@ -32,7 +32,8 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 #include "network/CCDownloader.h"
-
+#include "network/CCIDownloaderImpl.h"
+#include "platform/CCFileUtils.h"
 
 #include "json/document.h"
 

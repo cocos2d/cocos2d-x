@@ -80,16 +80,16 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
     _updateState = State::UNCHECKED;
 
     _downloader = std::shared_ptr<network::Downloader>(new network::Downloader);
-    _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
-    _downloader->setErrorCallback(std::bind(&AssetsManagerEx::onError, this, std::placeholders::_1));
-    _downloader->setProgressCallback(std::bind(&AssetsManagerEx::onProgress,
-                                         this,
-                                         std::placeholders::_1,
-                                         std::placeholders::_2,
-                                         std::placeholders::_3,
-                                         std::placeholders::_4)
-                                     );
-    _downloader->setSuccessCallback(std::bind(&AssetsManagerEx::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+//    _downloader->setConnectionTimeout(DEFAULT_CONNECTION_TIMEOUT);
+//    _downloader->setErrorCallback(std::bind(&AssetsManagerEx::onError, this, std::placeholders::_1));
+//    _downloader->setProgressCallback(std::bind(&AssetsManagerEx::onProgress,
+//                                         this,
+//                                         std::placeholders::_1,
+//                                         std::placeholders::_2,
+//                                         std::placeholders::_3,
+//                                         std::placeholders::_4)
+//                                     );
+//    _downloader->setSuccessCallback(std::bind(&AssetsManagerEx::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     setStoragePath(storagePath);
     _cacheVersionPath = _storagePath + VERSION_FILENAME;
     _cacheManifestPath = _storagePath + MANIFEST_FILENAME;
@@ -100,9 +100,9 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 
 AssetsManagerEx::~AssetsManagerEx()
 {
-    _downloader->setErrorCallback(nullptr);
-    _downloader->setSuccessCallback(nullptr);
-    _downloader->setProgressCallback(nullptr);
+//    _downloader->setErrorCallback(nullptr);
+//    _downloader->setSuccessCallback(nullptr);
+//    _downloader->setProgressCallback(nullptr);
     CC_SAFE_RELEASE(_localManifest);
     // _tempManifest could share a ptr with _remoteManifest or _localManifest
     if (_tempManifest != _localManifest && _tempManifest != _remoteManifest)
@@ -440,7 +440,7 @@ void AssetsManagerEx::downloadVersion()
     {
         _updateState = State::DOWNLOADING_VERSION;
         // Download version file asynchronously
-        _downloader->downloadAsync(versionUrl, _cacheVersionPath, VERSION_ID);
+//        _downloader->downloadAsync(versionUrl, _cacheVersionPath, VERSION_ID);
     }
     // No version file found
     else
@@ -496,7 +496,7 @@ void AssetsManagerEx::downloadManifest()
     {
         _updateState = State::DOWNLOADING_MANIFEST;
         // Download version file asynchronously
-        _downloader->downloadAsync(manifestUrl, _tempManifestPath, MANIFEST_ID);
+//        _downloader->downloadAsync(manifestUrl, _tempManifestPath, MANIFEST_ID);
     }
     // No manifest file found
     else
@@ -561,7 +561,7 @@ void AssetsManagerEx::startUpdate()
         _tempManifest->genResumeAssetsList(&_downloadUnits);
         
         _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-        _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+//        _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
         
         std::string msg = StringUtils::format("Resuming from previous unfinished update, %d files remains to be finished.", _totalToDownload);
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
@@ -619,7 +619,7 @@ void AssetsManagerEx::startUpdate()
             }
             
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
-            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+//            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
             
             std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
@@ -768,7 +768,7 @@ void AssetsManagerEx::updateAssets(const network::DownloadUnits& assets)
             _updateState = State::UPDATING;
             _downloadUnits.clear();
             _downloadUnits = assets;
-            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
+//            _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
         }
         else if (size == 0 && _totalWaitToDownload == 0)
         {
@@ -789,31 +789,31 @@ void AssetsManagerEx::downloadFailedAssets()
 }
 
 
-void AssetsManagerEx::onError(const network::Downloader::Error &error)
-{
-    // Skip version error occured
-    if (error.customId == VERSION_ID)
-    {
-        CCLOG("AssetsManagerEx : Fail to download version file, step skipped\n");
-        _updateState = State::PREDOWNLOAD_MANIFEST;
-        downloadManifest();
-    }
-    else if (error.customId == MANIFEST_ID)
-    {
-        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
-    }
-    else
-    {
-        auto unitIt = _downloadUnits.find(error.customId);
-        // Found unit and add it to failed units
-        if (unitIt != _downloadUnits.end())
-        {
-            network::DownloadUnit unit = unitIt->second;
-            _failedUnits.emplace(unit.customId, unit);
-        }
-        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
-    }
-}
+//void AssetsManagerEx::onError(const network::Downloader::Error &error)
+//{
+//    // Skip version error occured
+//    if (error.customId == VERSION_ID)
+//    {
+//        CCLOG("AssetsManagerEx : Fail to download version file, step skipped\n");
+//        _updateState = State::PREDOWNLOAD_MANIFEST;
+//        downloadManifest();
+//    }
+//    else if (error.customId == MANIFEST_ID)
+//    {
+//        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DOWNLOAD_MANIFEST, error.customId, error.message, error.curle_code, error.curlm_code);
+//    }
+//    else
+//    {
+//        auto unitIt = _downloadUnits.find(error.customId);
+//        // Found unit and add it to failed units
+//        if (unitIt != _downloadUnits.end())
+//        {
+//            network::DownloadUnit unit = unitIt->second;
+//            _failedUnits.emplace(unit.customId, unit);
+//        }
+//        dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_UPDATING, error.customId, error.message, error.curle_code, error.curlm_code);
+//    }
+//}
 
 void AssetsManagerEx::onProgress(double total, double downloaded, const std::string &url, const std::string &customId)
 {

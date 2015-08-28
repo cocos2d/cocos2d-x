@@ -25,29 +25,58 @@ THE SOFTWARE.
 #pragma once
 
 #include <string>
-#include <functional>
-#include <unordered_map>
+#include <map>
+#include <memory>
 
-#include "platform/CCPlatformMacros.h"
-#include "platform/CCStdC.h"
+#include "base/CCConsole.h"
+
+#define CC_DOWNLOADER_DEBUG
+#ifdef  CC_DOWNLOADER_DEBUG
+#define DLLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
+#else
+#define DLLOG(...)       do {} while (0)
+#endif
 
 /**
  * @addtogroup network
  * @{
  */
 
-NS_CC_BEGIN
-
-namespace network
+namespace cocos2d { namespace network
 {
-    struct HeaderInfo
+    class DownloadTask;
+    
+    struct CC_DLL IDownloadTask
     {
-        bool valid;
-        std::string url;
-        std::string contentType;
-        double contentSize;
-        long responseCode;
+        virtual ~IDownloadTask(){}
     };
+
+    struct IDownloaderImpl
+    {
+        virtual ~IDownloaderImpl(){}
+        
+        std::function<void(const DownloadTask& task,
+                           const char *data,
+                           int64_t bytesReceived,
+                           int64_t totalBytesReceived,
+                           int64_t totalBytesExpected)> onTaskProgress;
+        
+        std::function<void(const DownloadTask& task,
+                           int errorCode,
+                           int errorCodeInternal,
+                           const std::string& errorStr)> onTaskFinish;
+        
+        virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask> task) = 0;
+    };
+    
+//    struct HeaderInfo
+//    {
+//        bool valid;
+//        std::string url;
+//        std::string contentType;
+//        double contentSize;
+//        long responseCode;
+//    };
 
     struct DownloadUnit
     {
@@ -66,38 +95,4 @@ namespace network
 
     typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
 
-    class IDownloaderImpl
-    {
-    public:
-        typedef std::function<int(void* ptr, ssize_t, ssize_t, void* userdata)> WriterCallback;
-        typedef std::function<int(void* userdata, double, double)> ProgressCallback;
-        typedef std::function<void(const std::string&, int, const std::string&)> ErrorCallback;
-
-        IDownloaderImpl(){}
-        virtual ~IDownloaderImpl(){}
-        virtual bool init() = 0;
-
-        enum class Options {
-            RESUME
-        };
-
-        // methods that must be overriden
-        virtual int performDownload(DownloadUnit* unit,
-                                    const WriterCallback& writerCallback,
-                                    const ProgressCallback& progressCallback
-                                    ) = 0;
-
-        virtual int performBatchDownload(const DownloadUnits& units,
-                                         const WriterCallback& writerCallback,
-                                         const ProgressCallback& progressCallback,
-                                         const ErrorCallback& errorCallback
-                                         ) = 0;
-
-        virtual int getHeader(const std::string& url, HeaderInfo* headerInfo) = 0;
-        virtual std::string getStrError() const = 0;
-        virtual void setConnectionTimeout(int timeout) = 0;
-        virtual bool supportsResume(const std::string& url) = 0;
-    };
-}
-
-NS_CC_END
+}}  // namespace cocos2d::network
