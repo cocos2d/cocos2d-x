@@ -55,11 +55,7 @@ bool UIPageViewTest::init()
         PageView* pageView = PageView::create();
         pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
-        pageView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                  (backgroundSize.width - pageView->getContentSize().width) / 2.0f,
-                                  (widgetSize.height - backgroundSize.height) / 2.0f +
-                                  (backgroundSize.height - pageView->getContentSize().height) / 2.0f));
-        
+        pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
         pageView->removeAllPages();
         
         int pageCount = 4;
