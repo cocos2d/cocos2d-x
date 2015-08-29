@@ -59,6 +59,15 @@ public:
     };
     
     /**
+     * Event type
+     */
+    enum class EventType
+    {
+        TOUCH_UP,
+        TOUCH_DOWN
+    };
+    
+    /**
      *@brief Creates an empty Menu.
      */
     static Menu* create();
@@ -155,6 +164,20 @@ public:
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 
+    /**
+     * Determines how to activate callback
+     * @return Event Type to activate callback
+     */
+    virtual EventType getEventType() const { return _eventType; }
+    
+    /**
+     * Set event type to activate callback.
+     * The default value is TOUCH_UP, a callback function will be activated
+     * when menu items are released.
+     *@param event type what activates callback.
+     */
+    virtual void setEventType(EventType value) { _eventType = value; }; 
+    
     virtual bool onTouchBegan(Touch* touch, Event* event) override;
     virtual void onTouchEnded(Touch* touch, Event* event) override;
     virtual void onTouchCancelled(Touch* touch, Event* event) override;
@@ -194,6 +217,9 @@ protected:
 
     /** whether or not the menu will receive events */
     bool _enabled;
+    
+    /** event type to activate callback **/
+    EventType _eventType;
 
     virtual MenuItem* getItemForTouch(Touch * touch, const Camera *camera);
     State _state;

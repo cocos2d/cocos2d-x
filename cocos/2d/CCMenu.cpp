@@ -134,6 +134,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
     if (Layer::init())
     {
         _enabled = true;
+        _eventType = EventType::TOUCH_UP;
         // menu in the center of the screen
         Size s = Director::getInstance()->getWinSize();
 
@@ -273,7 +274,11 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
         _state = Menu::State::TRACKING_TOUCH;
         _selectedWithCamera = camera;
         _selectedItem->selected();
-        
+        if (_eventType == EventType::TOUCH_DOWN) 
+        {
+            _selectedItem->activate();
+        }
+
         return true;
     }
     
@@ -287,7 +292,10 @@ void Menu::onTouchEnded(Touch* touch, Event* event)
     if (_selectedItem)
     {
         _selectedItem->unselected();
-        _selectedItem->activate();
+        if (_eventType == EventType::TOUCH_UP) 
+        {
+            _selectedItem->activate();
+        }
     }
     _state = Menu::State::WAITING;
     _selectedWithCamera = nullptr;
