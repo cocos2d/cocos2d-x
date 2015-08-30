@@ -455,6 +455,30 @@ void HttpClient::send(HttpRequest* request)
 	_sleepCondition.notify_one();
 }
 
+//Cancel latest request from queue
+void HttpClient::cancelSend(){
+	_requestQueueMutex.lock();
+	if (!_requestQueue.empty()){
+		_requestQueue.popBack();
+	}
+	_requestQueueMutex.unlock();
+}
+
+//Cancel the request based on tag
+void HttpClient::cancelSend(const char* tag){
+	if (_requestQueue.empty()){
+		return;
+	}
+
+	_requestQueueMutex.lock();
+	for (int i = 0; i < _requestQueue.size(); i++){
+		if (_requestQueue.at[i]->getTag() == tag){
+			_requestQueue.erase(i);
+		}
+	}
+	_requestQueueMutex.unlock();
+}
+
 void HttpClient::sendImmediate(HttpRequest* request)
 {
     if(!request)
