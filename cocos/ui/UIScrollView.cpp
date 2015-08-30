@@ -59,7 +59,7 @@ _bePressed(false),
 _childFocusCancelOffsetInInch(MOVE_INCH),
 _inertiaScrollEnabled(true),
 _inertiaScrolling(false),
-_inertiaPrevTouchTimestamp(0),
+_touchMovePreviousTimestamp(0),
 _inertiaScrollExpectedTime(0),
 _inertiaScrollElapsedTime(0),
 _autoScrolling(false),
@@ -466,30 +466,35 @@ void ScrollView::jumpToDestination(const Vec2 &des)
     moveChildrenToPosition(Vec2(finalOffsetX, finalOffsetY));
 }
 
-void ScrollView::startInertiaScroll()
+Vec2 ScrollView::calculateTouchMoveSpeed() const
 {
     float totalDuration = 0;
-	for(auto &timeDelta : _inertiaTouchTimeDeltas)
-	{
-		totalDuration += timeDelta;
-	}
+    for(auto &timeDelta : _touchMoveTimeDeltas)
+    {
+        totalDuration += timeDelta;
+    }
     if(totalDuration == 0 || totalDuration >= 0.5f)
     {
-        return;
+        return Vec2::ZERO;
     }
     
+    Vec2 totalMovement;
+    for(auto &displacement : _touchMoveDisplacements)
+    {
+        totalMovement += displacement;
+    }
+    return totalMovement / totalDuration;
+}
+
+void ScrollView::startInertiaScroll(const Vec2& touchMoveSpeed)
+{
     _inertiaScrolling = true;
     
     // Calcualte the initial velocity
-    Vec2 totalMovement;
-	for(auto &displacement : _inertiaTouchDisplacements)
-	{
-		totalMovement += displacement;
-	}
-    totalMovement.x = (_direction == Direction::VERTICAL ? 0 : totalMovement.x);
-    totalMovement.y = (_direction == Direction::HORIZONTAL ? 0 : totalMovement.y);
+    _inertiaInitiVelocity = touchMoveSpeed;
+    _inertiaInitiVelocity.x = (_direction == Direction::VERTICAL ? 0 : _inertiaInitiVelocity.x);
+    _inertiaInitiVelocity.y = (_direction == Direction::HORIZONTAL ? 0 : _inertiaInitiVelocity.y);
     
-    _inertiaInitiVelocity = totalMovement / totalDuration;
     _inertiaInitiVelocity.x = MIN(_inertiaInitiVelocity.x, INERTIA_VELOCITY_MAX);
     _inertiaInitiVelocity.y = MIN(_inertiaInitiVelocity.y, INERTIA_VELOCITY_MAX);
     _inertiaInitiVelocity.x = MAX(_inertiaInitiVelocity.x, -INERTIA_VELOCITY_MAX);
@@ -806,15 +811,19 @@ void ScrollView::handlePressLogic(Touch *touch)
 {
     _bePressed = true;
     
+    // Initialize touch move information
+    {
+        _touchMovePreviousTimestamp = utils::getTimeInMilliseconds();
+        _touchMoveDisplacements.clear();
+        _touchMoveTimeDeltas.clear();
+    }
+    
     if(_inertiaScrollEnabled)
     {
         if (_inertiaScrolling)
         {
             _inertiaScrolling = false;
         }
-        _inertiaPrevTouchTimestamp = utils::getTimeInMilliseconds();
-        _inertiaTouchDisplacements.clear();
-        _inertiaTouchTimeDeltas.clear();
     }
     
     if(_autoScrolling)
@@ -846,18 +855,18 @@ void ScrollView::handleMoveLogic(Touch *touch)
     Vec2 delta(delta3.x, delta3.y);
     scrollChildren(delta.x, delta.y);
     
-    if(_inertiaScrollEnabled)
+    // Gather touch move information for speed calculation
     {
-        while(_inertiaTouchDisplacements.size() > 5)
+        while(_touchMoveDisplacements.size() > 5)
         {
-            _inertiaTouchDisplacements.pop_front();
-            _inertiaTouchTimeDeltas.pop_front();
+            _touchMoveDisplacements.pop_front();
+            _touchMoveTimeDeltas.pop_front();
         }
-        _inertiaTouchDisplacements.push_back(delta);
+        _touchMoveDisplacements.push_back(delta);
         
         long long timestamp = utils::getTimeInMilliseconds();
-        _inertiaTouchTimeDeltas.push_back((timestamp - _inertiaPrevTouchTimestamp) / 1000.0f);
-        _inertiaPrevTouchTimestamp = timestamp;
+        _touchMoveTimeDeltas.push_back((timestamp - _touchMovePreviousTimestamp) / 1000.0f);
+        _touchMovePreviousTimestamp = timestamp;
     }
 }
 
@@ -868,7 +877,11 @@ void ScrollView::handleReleaseLogic(Touch *touch)
     bool bounceBackStarted = startBounceBackIfNeeded();
     if(!bounceBackStarted && _inertiaScrollEnabled)
     {
-        startInertiaScroll();
+        Vec2 touchMoveSpeed = calculateTouchMoveSpeed();
+        if(touchMoveSpeed != Vec2::ZERO)
+        {
+            startInertiaScroll(touchMoveSpeed);
+        }
     }
     
     if(_verticalScrollBar != nullptr)
@@ -1351,9 +1364,9 @@ void ScrollView::copySpecialProperties(Widget *widget)
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
         _inertiaScrolling = scrollView->_inertiaScrolling;
         _inertiaInitiVelocity = scrollView->_inertiaInitiVelocity;
-        _inertiaTouchDisplacements = scrollView->_inertiaTouchDisplacements;
-        _inertiaTouchTimeDeltas = scrollView->_inertiaTouchTimeDeltas;
-        _inertiaPrevTouchTimestamp = scrollView->_inertiaPrevTouchTimestamp;
+        _touchMoveDisplacements = scrollView->_touchMoveDisplacements;
+        _touchMoveTimeDeltas = scrollView->_touchMoveTimeDeltas;
+        _touchMovePreviousTimestamp = scrollView->_touchMovePreviousTimestamp;
         _inertiaScrollExpectedTime = scrollView->_inertiaScrollExpectedTime;
         _inertiaScrollElapsedTime = scrollView->_inertiaScrollElapsedTime;
         _autoScrolling = scrollView->_autoScrolling;

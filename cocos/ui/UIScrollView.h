@@ -572,7 +572,9 @@ protected:
     void moveChildren(float offsetX, float offsetY);
     void moveChildrenToPosition(const Vec2& position);
     
-    void startInertiaScroll();
+    Vec2 calculateTouchMoveSpeed() const;
+    
+    void startInertiaScroll(const Vec2& touchMoveSpeed);
     void processInertiaScrolling(float dt);
     
     void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated);
@@ -612,13 +614,16 @@ protected:
     bool _bePressed;
 
     float _childFocusCancelOffsetInInch;
-
+    
+    // Touch move speed
+    std::list<Vec2> _touchMoveDisplacements;
+    std::list<float> _touchMoveTimeDeltas;
+    long long _touchMovePreviousTimestamp;
+    
+    // Inertia scroll
     bool _inertiaScrollEnabled;
     bool _inertiaScrolling;
     Vec2 _inertiaInitiVelocity;
-    std::list<Vec2> _inertiaTouchDisplacements;
-    std::list<float> _inertiaTouchTimeDeltas;
-    long long _inertiaPrevTouchTimestamp;
     float _inertiaScrollExpectedTime;
     float _inertiaScrollElapsedTime;
 
