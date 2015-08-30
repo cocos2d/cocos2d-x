@@ -472,7 +472,7 @@ void HttpClient::cancelSend(const char* tag){
 
 	_requestQueueMutex.lock();
 	for (int i = 0; i < _requestQueue.size(); i++){
-		if (_requestQueue.at[i]->getTag() == tag){
+		if (_requestQueue.at(i)->getTag() == tag){
 			_requestQueue.erase(i);
 		}
 	}
