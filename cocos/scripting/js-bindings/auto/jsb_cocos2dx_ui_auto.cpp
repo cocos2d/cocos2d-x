@@ -4244,6 +4244,56 @@ bool js_cocos2dx_ui_AbstractCheckButton_setSelected(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_setSelected : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Sprite* ret = cobj->getRendererFrontCrossDisabled();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_AbstractCheckButton_getRendererBackground(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackground : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Sprite* ret = cobj->getRendererBackground();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackground : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4272,6 +4322,31 @@ bool js_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross(JSContext *cx, uin
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Sprite* ret = cobj->getRendererBackgroundDisabled();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_AbstractCheckButton_isSelected(JSContext *cx, uint32_t argc, jsval *vp)
@@ -4406,6 +4481,56 @@ bool js_cocos2dx_ui_AbstractCheckButton_getZoomScale(JSContext *cx, uint32_t arg
     JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getZoomScale : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Sprite* ret = cobj->getRendererFrontCross();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::AbstractCheckButton* cobj = (cocos2d::ui::AbstractCheckButton *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Sprite* ret = cobj->getRendererBackgroundSelected();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGround(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4514,11 +4639,16 @@ void js_register_cocos2dx_ui_AbstractCheckButton(JSContext *cx, JS::HandleObject
         JS_FN("loadTextureBackGroundSelected", js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureBackGroundDisabled", js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGroundDisabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSelected", js_cocos2dx_ui_AbstractCheckButton_setSelected, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererFrontCrossDisabled", js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCrossDisabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererBackground", js_cocos2dx_ui_AbstractCheckButton_getRendererBackground, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureFrontCross", js_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCross, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererBackgroundDisabled", js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundDisabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isSelected", js_cocos2dx_ui_AbstractCheckButton_isSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_ui_AbstractCheckButton_init, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextures", js_cocos2dx_ui_AbstractCheckButton_loadTextures, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getZoomScale", js_cocos2dx_ui_AbstractCheckButton_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererFrontCross", js_cocos2dx_ui_AbstractCheckButton_getRendererFrontCross, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererBackgroundSelected", js_cocos2dx_ui_AbstractCheckButton_getRendererBackgroundSelected, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureBackGround", js_cocos2dx_ui_AbstractCheckButton_loadTextureBackGround, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setZoomScale", js_cocos2dx_ui_AbstractCheckButton_setZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureFrontCrossDisabled", js_cocos2dx_ui_AbstractCheckButton_loadTextureFrontCrossDisabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -5182,6 +5312,66 @@ bool js_cocos2dx_ui_RadioButtonGroup_setAllowedNoSelection(JSContext *cx, uint32
     JS_ReportError(cx, "js_cocos2dx_ui_RadioButtonGroup_setAllowedNoSelection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::ui::RadioButtonGroup* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::ui::RadioButtonGroup *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            cocos2d::ui::RadioButton* arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::ui::RadioButton*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cobj->setSelectedButtonWithoutEvent(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            int arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setSelectedButtonWithoutEvent(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RadioButtonGroup* cobj = (cocos2d::ui::RadioButtonGroup *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeAllRadioButtons();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_RadioButtonGroup_getRadioButtonByIndex(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5395,6 +5585,8 @@ void js_register_cocos2dx_ui_RadioButtonGroup(JSContext *cx, JS::HandleObject gl
         JS_FN("isAllowedNoSelection", js_cocos2dx_ui_RadioButtonGroup_isAllowedNoSelection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSelectedButtonIndex", js_cocos2dx_ui_RadioButtonGroup_getSelectedButtonIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAllowedNoSelection", js_cocos2dx_ui_RadioButtonGroup_setAllowedNoSelection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSelectedButtonWithoutEvent", js_cocos2dx_ui_RadioButtonGroup_setSelectedButtonWithoutEvent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllRadioButtons", js_cocos2dx_ui_RadioButtonGroup_removeAllRadioButtons, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRadioButtonByIndex", js_cocos2dx_ui_RadioButtonGroup_getRadioButtonByIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getNumberOfRadioButtons", js_cocos2dx_ui_RadioButtonGroup_getNumberOfRadioButtons, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addRadioButton", js_cocos2dx_ui_RadioButtonGroup_addRadioButton, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

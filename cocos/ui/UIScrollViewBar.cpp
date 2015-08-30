@@ -37,6 +37,7 @@ static const char* BODY_IMAGE_1_PIXEL_HEIGHT = "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAB
 static const Color3B DEFAULT_COLOR(52, 65, 87);
 static const float DEFAULT_MARGIN = 20;
 static const float DEFAULT_AUTO_HIDE_TIME = 0.2f;
+static const float DEFAULT_SCROLLBAR_OPACITY = 0.4f;
 
 static Sprite* createSpriteFromBase64(const char* base64String)
 {
@@ -65,7 +66,7 @@ _direction(direction),
 _upperHalfCircle(nullptr),
 _lowerHalfCircle(nullptr),
 _body(nullptr),
-_opacity(100),
+_opacity(255 * DEFAULT_SCROLLBAR_OPACITY),
 _marginFromBoundary(DEFAULT_MARGIN),
 _marginForLength(DEFAULT_MARGIN),
 _touching(false),
@@ -197,7 +198,12 @@ void ScrollViewBar::onEnter()
 
 void ScrollViewBar::update(float deltaTime)
 {
-    if(!_autoHideEnabled || _autoHideRemainingTime <= 0)
+    processAutoHide(deltaTime);
+}
+    
+void ScrollViewBar::processAutoHide(float deltaTime)
+{
+   if(!_autoHideEnabled || _autoHideRemainingTime <= 0)
     {
         return;
     }

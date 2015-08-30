@@ -135,8 +135,8 @@ void TestList::addTest(const std::string& testName, std::function<TestBase*()> c
 {
     if (!testName.empty())
     {
-        _childTestNames.push_back(testName);
-        _testCallbacks.push_back(callback);
+        _childTestNames.emplace_back(StringUtils::format("%d", static_cast<int>(_childTestNames.size() + 1)) + ":" + testName);
+        _testCallbacks.emplace_back(callback);
     }
 }
 
@@ -193,7 +193,7 @@ void TestList::runThisTest()
         auto autoTestItem = MenuItemLabel::create(autoTestLabel, [&](Ref* sender){
             TestController::getInstance()->startAutoTest();
         });
-        autoTestItem->setPosition(Vec2(VisibleRect::right().x - 70, VisibleRect::bottom().y + 25));
+        autoTestItem->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + 50));
 
         auto menu = Menu::create(closeItem, autoTestItem, nullptr);
         menu->setPosition(Vec2::ZERO);
@@ -262,8 +262,8 @@ void TestSuite::addTestCase(const std::string& testName, std::function<Scene*()>
 {
     if (!testName.empty() && callback)
     {
-        _childTestNames.push_back(testName);
-        _testCallbacks.push_back(callback);
+        _childTestNames.emplace_back(testName);
+        _testCallbacks.emplace_back(callback);
     }
 }
 
@@ -401,6 +401,7 @@ bool TestCase::init()
         
         ttfConfig.fontSize = 16;
         _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
+        _subtitleLabel->setMaxLineWidth(VisibleRect::getVisibleRect().size.width);
         addChild(_subtitleLabel, 9999);
         _subtitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
         
@@ -432,13 +433,20 @@ void TestCase::onEnter()
 {
     Scene::onEnter();
 
-    _titleLabel->setString(title());
-    _subtitleLabel->setString(subtitle());
-
     if (_testSuite == nullptr)
     {
         setTestSuite(TestController::getInstance()->getCurrTestSuite());
     }
+
+    if (_testSuite)
+    {
+        _titleLabel->setString(StringUtils::format("%d", static_cast<int>(_testSuite->getCurrTestIndex() + 1)) + ":" + title());
+    }
+    else
+    {
+        _titleLabel->setString(title());
+    }
+    _subtitleLabel->setString(subtitle());
 
     if (_testSuite && _testSuite->getChildTestCount() < 2)
     {

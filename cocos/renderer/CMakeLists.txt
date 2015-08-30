@@ -20,6 +20,7 @@ set(COCOS_RENDERER_SRC
   renderer/CCTexture2D.cpp
   renderer/CCTextureAtlas.cpp
   renderer/CCTextureCache.cpp
+  renderer/CCTextureCube.cpp
   renderer/CCTrianglesCommand.cpp
   renderer/CCVertexAttribBinding.cpp
   renderer/CCVertexIndexBuffer.cpp

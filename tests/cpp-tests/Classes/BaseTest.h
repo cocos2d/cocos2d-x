@@ -162,6 +162,7 @@ public:
     virtual void enterNextTest();
     virtual void enterPreviousTest();
 
+    int getCurrTestIndex() { return _currTestIndex; }
     virtual void runThisTest() override;
 
 private:

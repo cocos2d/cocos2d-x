@@ -40,4 +40,24 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class PrimitivesCommandTest : public DrawPrimitivesBaseTest
+{
+public:
+    CREATE_FUNC(PrimitivesCommandTest);
+
+    PrimitivesCommandTest();
+    virtual ~PrimitivesCommandTest();
+
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    cocos2d::Texture2D* _texture;
+    cocos2d::GLProgramState* _programState;
+    cocos2d::Primitive* _primitive;
+
+    cocos2d::PrimitiveCommand _primitiveCommand;
+};
+
 #endif

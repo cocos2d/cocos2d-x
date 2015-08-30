@@ -11265,6 +11265,159 @@ void js_register_cocos2dx_studio_ZOrderFrame(JSContext *cx, JS::HandleObject glo
     }
 }
 
+JSClass  *jsb_cocostudio_timeline_BlendFuncFrame_class;
+JSObject *jsb_cocostudio_timeline_BlendFuncFrame_prototype;
+
+bool js_cocos2dx_studio_BlendFuncFrame_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BlendFuncFrame* cobj = (cocostudio::timeline::BlendFuncFrame *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BlendFuncFrame_getBlendFunc : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::BlendFunc ret = cobj->getBlendFunc();
+        jsval jsret = JSVAL_NULL;
+        jsret = blendfunc_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BlendFuncFrame_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_studio_BlendFuncFrame_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::BlendFuncFrame* cobj = (cocostudio::timeline::BlendFuncFrame *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_BlendFuncFrame_setBlendFunc : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::BlendFunc arg0;
+        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_BlendFuncFrame_setBlendFunc : Error processing arguments");
+        cobj->setBlendFunc(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_BlendFuncFrame_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_BlendFuncFrame_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        cocostudio::timeline::BlendFuncFrame* ret = cocostudio::timeline::BlendFuncFrame::create();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocostudio::timeline::BlendFuncFrame>(cx, (cocostudio::timeline::BlendFuncFrame*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_studio_BlendFuncFrame_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_studio_BlendFuncFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocostudio::timeline::BlendFuncFrame* cobj = new (std::nothrow) cocostudio::timeline::BlendFuncFrame();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocostudio::timeline::BlendFuncFrame> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocostudio::timeline::BlendFuncFrame");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_cocostudio_timeline_Frame_prototype;
+
+void js_cocostudio_timeline_BlendFuncFrame_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (BlendFuncFrame)", obj);
+}
+void js_register_cocos2dx_studio_BlendFuncFrame(JSContext *cx, JS::HandleObject global) {
+    jsb_cocostudio_timeline_BlendFuncFrame_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocostudio_timeline_BlendFuncFrame_class->name = "BlendFuncFrame";
+    jsb_cocostudio_timeline_BlendFuncFrame_class->addProperty = JS_PropertyStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->getProperty = JS_PropertyStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->enumerate = JS_EnumerateStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->resolve = JS_ResolveStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->convert = JS_ConvertStub;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->finalize = js_cocostudio_timeline_BlendFuncFrame_finalize;
+    jsb_cocostudio_timeline_BlendFuncFrame_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getBlendFunc", js_cocos2dx_studio_BlendFuncFrame_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBlendFunc", js_cocos2dx_studio_BlendFuncFrame_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_studio_BlendFuncFrame_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocostudio_timeline_BlendFuncFrame_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocostudio_timeline_Frame_prototype),
+        jsb_cocostudio_timeline_BlendFuncFrame_class,
+        js_cocos2dx_studio_BlendFuncFrame_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "BlendFuncFrame", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocostudio::timeline::BlendFuncFrame> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocostudio_timeline_BlendFuncFrame_class;
+        p->proto = jsb_cocostudio_timeline_BlendFuncFrame_prototype;
+        p->parentProto = jsb_cocostudio_timeline_Frame_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 JSClass  *jsb_cocostudio_timeline_Timeline_class;
 JSObject *jsb_cocostudio_timeline_Timeline_prototype;
 
@@ -13740,6 +13893,7 @@ void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_studio_Bone(cx, ns);
     js_register_cocos2dx_studio_ComAttribute(cx, ns);
     js_register_cocos2dx_studio_TextureData(cx, ns);
+    js_register_cocos2dx_studio_BlendFuncFrame(cx, ns);
     js_register_cocos2dx_studio_AlphaFrame(cx, ns);
     js_register_cocos2dx_studio_ComExtensionData(cx, ns);
     js_register_cocos2dx_studio_AnimationData(cx, ns);

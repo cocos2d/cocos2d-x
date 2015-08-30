@@ -65,9 +65,9 @@ public:
     /**Get the number of vertices or indices used for drawing.*/
     int getCount() const { return _count; }
     /**Setter for the start index.*/
-    void setStart(int start) { _start = start; }
+    void setStart(int start);
     /**Setter for the count. */
-    void setCount(int count) { _count = count; }
+    void setCount(int count);
     
 protected:
     Primitive();

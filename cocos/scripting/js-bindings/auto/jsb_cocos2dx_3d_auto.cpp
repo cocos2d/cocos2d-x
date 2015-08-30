@@ -837,6 +837,152 @@ void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global) {
     }
 }
 
+JSClass  *jsb_cocos2d_TextureCube_class;
+JSObject *jsb_cocos2d_TextureCube_prototype;
+
+bool js_cocos2dx_3d_TextureCube_reloadTexture(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TextureCube* cobj = (cocos2d::TextureCube *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_TextureCube_reloadTexture : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->reloadTexture();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_TextureCube_reloadTexture : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_TextureCube_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 6) {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        std::string arg4;
+        std::string arg5;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
+        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
+        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
+        ok &= jsval_to_std_string(cx, args.get(5), &arg5);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_TextureCube_create : Error processing arguments");
+        cocos2d::TextureCube* ret = cocos2d::TextureCube::create(arg0, arg1, arg2, arg3, arg4, arg5);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TextureCube>(cx, (cocos2d::TextureCube*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_TextureCube_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_3d_TextureCube_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::TextureCube* cobj = new (std::nothrow) cocos2d::TextureCube();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::TextureCube> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::TextureCube");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_cocos2d_Texture2D_prototype;
+
+void js_cocos2d_TextureCube_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (TextureCube)", obj);
+}
+void js_register_cocos2dx_3d_TextureCube(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_TextureCube_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_TextureCube_class->name = "TextureCube";
+    jsb_cocos2d_TextureCube_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_TextureCube_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_TextureCube_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_TextureCube_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_TextureCube_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_TextureCube_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_TextureCube_class->convert = JS_ConvertStub;
+    jsb_cocos2d_TextureCube_class->finalize = js_cocos2d_TextureCube_finalize;
+    jsb_cocos2d_TextureCube_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("reloadTexture", js_cocos2dx_3d_TextureCube_reloadTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_3d_TextureCube_create, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_TextureCube_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_Texture2D_prototype),
+        jsb_cocos2d_TextureCube_class,
+        js_cocos2dx_3d_TextureCube_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "TextureCube", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::TextureCube> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_TextureCube_class;
+        p->proto = jsb_cocos2d_TextureCube_prototype;
+        p->parentProto = jsb_cocos2d_Texture2D_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 JSClass  *jsb_cocos2d_AttachNode_class;
 JSObject *jsb_cocos2d_AttachNode_prototype;
 
@@ -4356,152 +4502,6 @@ void js_register_cocos2dx_3d_Terrain(JSContext *cx, JS::HandleObject global) {
         p->jsclass = jsb_cocos2d_Terrain_class;
         p->proto = jsb_cocos2d_Terrain_prototype;
         p->parentProto = jsb_cocos2d_Node_prototype;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-}
-
-JSClass  *jsb_cocos2d_TextureCube_class;
-JSObject *jsb_cocos2d_TextureCube_prototype;
-
-bool js_cocos2dx_3d_TextureCube_reloadTexture(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::TextureCube* cobj = (cocos2d::TextureCube *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_TextureCube_reloadTexture : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->reloadTexture();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_TextureCube_reloadTexture : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_TextureCube_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 6) {
-        std::string arg0;
-        std::string arg1;
-        std::string arg2;
-        std::string arg3;
-        std::string arg4;
-        std::string arg5;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        ok &= jsval_to_std_string(cx, args.get(2), &arg2);
-        ok &= jsval_to_std_string(cx, args.get(3), &arg3);
-        ok &= jsval_to_std_string(cx, args.get(4), &arg4);
-        ok &= jsval_to_std_string(cx, args.get(5), &arg5);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_TextureCube_create : Error processing arguments");
-        cocos2d::TextureCube* ret = cocos2d::TextureCube::create(arg0, arg1, arg2, arg3, arg4, arg5);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::TextureCube>(cx, (cocos2d::TextureCube*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_3d_TextureCube_create : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_3d_TextureCube_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    cocos2d::TextureCube* cobj = new (std::nothrow) cocos2d::TextureCube();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::TextureCube> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::TextureCube");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    return true;
-}
-
-extern JSObject *jsb_cocos2d_Texture2D_prototype;
-
-void js_cocos2d_TextureCube_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (TextureCube)", obj);
-}
-void js_register_cocos2dx_3d_TextureCube(JSContext *cx, JS::HandleObject global) {
-    jsb_cocos2d_TextureCube_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocos2d_TextureCube_class->name = "TextureCube";
-    jsb_cocos2d_TextureCube_class->addProperty = JS_PropertyStub;
-    jsb_cocos2d_TextureCube_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocos2d_TextureCube_class->getProperty = JS_PropertyStub;
-    jsb_cocos2d_TextureCube_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocos2d_TextureCube_class->enumerate = JS_EnumerateStub;
-    jsb_cocos2d_TextureCube_class->resolve = JS_ResolveStub;
-    jsb_cocos2d_TextureCube_class->convert = JS_ConvertStub;
-    jsb_cocos2d_TextureCube_class->finalize = js_cocos2d_TextureCube_finalize;
-    jsb_cocos2d_TextureCube_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_PS_END
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("reloadTexture", js_cocos2dx_3d_TextureCube_reloadTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_3d_TextureCube_create, 6, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_cocos2d_TextureCube_prototype = JS_InitClass(
-        cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_Texture2D_prototype),
-        jsb_cocos2d_TextureCube_class,
-        js_cocos2dx_3d_TextureCube_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "TextureCube", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::TextureCube> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_TextureCube_class;
-        p->proto = jsb_cocos2d_TextureCube_prototype;
-        p->parentProto = jsb_cocos2d_Texture2D_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }

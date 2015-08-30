@@ -592,4 +592,18 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
+class CameraBackgroundClearTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(CameraBackgroundClearTest);
+    CameraBackgroundClearTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void switch_CameraClearMode(cocos2d::Ref* sender);
+protected:
+    cocos2d::Camera* _camera;
+    cocos2d::Label* _label;
+};
+
 #endif
