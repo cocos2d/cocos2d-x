@@ -419,11 +419,12 @@ bool ScrollView::isOutOfBoundary(MoveDirection dir) const
 {
     switch(dir)
     {
-    case MoveDirection::TOP: return _innerContainer->getTopBoundary() < _topBoundary;
-    case MoveDirection::BOTTOM: return _innerContainer->getBottomBoundary() > _bottomBoundary;
-    case MoveDirection::LEFT: return _innerContainer->getLeftBoundary() > _leftBoundary;
-    case MoveDirection::RIGHT: return _innerContainer->getRightBoundary() < _rightBoundary;
+        case MoveDirection::TOP: return _innerContainer->getTopBoundary() < _topBoundary;
+        case MoveDirection::BOTTOM: return _innerContainer->getBottomBoundary() > _bottomBoundary;
+        case MoveDirection::LEFT: return _innerContainer->getLeftBoundary() > _leftBoundary;
+        case MoveDirection::RIGHT: return _innerContainer->getRightBoundary() < _rightBoundary;
     }
+    return false;
 }
 
 bool ScrollView::isOutOfBoundaryTopOrBottom() const
@@ -1012,29 +1013,29 @@ void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
     ScrollviewEventType scrollEventType;
     EventType eventType;
     switch(dir) {
-    case MoveDirection::TOP:
-    {
-        scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_TOP : SCROLLVIEW_EVENT_SCROLL_TO_TOP);
-        eventType = (bounce ? EventType::BOUNCE_TOP : EventType::SCROLL_TO_TOP);
-        break;
-    }
-    case MoveDirection::BOTTOM:
-    {
-        scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_BOTTOM : SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
-        eventType = (bounce ? EventType::BOUNCE_BOTTOM : EventType::SCROLL_TO_BOTTOM);
-        break;
-    }
-    case MoveDirection::LEFT:
-    {
-        scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_LEFT : SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
-        eventType = (bounce ? EventType::BOUNCE_LEFT : EventType::SCROLL_TO_LEFT);
-        break;
-    }
-    case MoveDirection::RIGHT:
-    {
-        scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_RIGHT : SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
-        eventType = (bounce ? EventType::BOUNCE_RIGHT : EventType::SCROLL_TO_RIGHT);
-        break;
+        case MoveDirection::TOP:
+        {
+            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_TOP : SCROLLVIEW_EVENT_SCROLL_TO_TOP);
+            eventType = (bounce ? EventType::BOUNCE_TOP : EventType::SCROLL_TO_TOP);
+            break;
+        }
+        case MoveDirection::BOTTOM:
+        {
+            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_BOTTOM : SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
+            eventType = (bounce ? EventType::BOUNCE_BOTTOM : EventType::SCROLL_TO_BOTTOM);
+            break;
+        }
+        case MoveDirection::LEFT:
+        {
+            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_LEFT : SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
+            eventType = (bounce ? EventType::BOUNCE_LEFT : EventType::SCROLL_TO_LEFT);
+            break;
+        }
+        case MoveDirection::RIGHT:
+        {
+            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_RIGHT : SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
+            eventType = (bounce ? EventType::BOUNCE_RIGHT : EventType::SCROLL_TO_RIGHT);
+            break;
         }
     }
     dispatchEvent(scrollEventType, eventType);
