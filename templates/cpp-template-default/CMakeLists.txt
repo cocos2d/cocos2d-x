@@ -80,10 +80,10 @@ else()
 endif(MSVC)
 
 
-
+set(PLATFORM_SPECIFIC_LINKS)
 set(PLATFORM_SPECIFIC_SRC)
 set(PLATFORM_SPECIFIC_HEADERS)
-if(MACOSX OR APPLE)
+if(APPLE AND IOS)
 set(PLATFORM_SPECIFIC_SRC
   proj.ios_mac/ios/main.m
   proj.ios_mac/ios/RootViewController.mm
@@ -93,6 +93,15 @@ set(PLATFORM_SPECIFIC_HEADERS
   proj.ios_mac/ios/RootViewController.h
   proj.ios_mac/ios/AppController.h
 )
+elseif(APPLE OR MACOSX)
+set(PLATFORM_SPECIFIC_SRC 
+  proj.ios_mac/ios/main.cpp
+  )
+
+set(PLATFORM_SPECIFIC_LINKS 
+	-liconv
+	)
+endif()
 elseif(LINUX) #assume linux
 set(PLATFORM_SPECIFIC_SRC
   proj.linux/main.cpp
@@ -148,7 +157,7 @@ else()
   endif ( WIN32 )
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME} cocos2d ${PLATFORM_SPECIFIC_LINKS})
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
