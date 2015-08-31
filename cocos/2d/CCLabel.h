@@ -28,6 +28,7 @@
 
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCQuadCommand.h"
 #include "2d/CCFontAtlas.h"
 #include "base/ccTypes.h"
 
@@ -573,6 +574,7 @@ protected:
     Color4B _textColor;
     Color4F _textColorF;
 
+    QuadCommand _quadCommand;
     CustomCommand _customCommand;
     Mat4  _shadowTransform;
     GLuint _uniformEffectColor;
