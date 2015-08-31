@@ -207,10 +207,10 @@ Rect Helper::restrictCapInsetRect(const cocos2d::Rect &capInsets, const Size& te
 
         auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
         auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
-
-        return Rect(uiLeft,uiTop,
-                    (rightTop.x - leftBottom.x) * glView->getScaleX(),
-                    (rightTop.y - leftBottom.y) * glView->getScaleY());
+        auto uiWidth = (rightTop.x - leftBottom.x) * glView->getScaleX();
+        auto uiHeight = (rightTop.y - leftBottom.y) * glView->getScaleY();
+        
+        return Rect(uiLeft, uiTop, uiWidth, uiHeight);
     }
 }
 
