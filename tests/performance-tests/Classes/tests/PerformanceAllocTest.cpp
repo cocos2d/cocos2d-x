@@ -190,7 +190,7 @@ void PerformceAllocScene::onEnterTransitionDidFinish()
         updateProfilerName();
         
         Profile::getInstance()->testCaseBegin(getTestCaseName(),
-                                              genStrVector("Node Count", nullptr),
+                                              genStrVector("NodeCount", nullptr),
                                               genStrVector("Avg", "Min", "Max", nullptr));
     }
     

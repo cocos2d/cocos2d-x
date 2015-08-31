@@ -1,6 +1,10 @@
 #include "Profile.h"
+#include "json/document.h"
+#include "json/prettywriter.h"
+#include "json/stringbuffer.h"
 
-#define LOG_FILE_NAME       "PerformanceLog.plist"
+#define LOG_FILE_NAME       "PerformanceLog.json"
+#define PLIST_FILE_NAME     "PerformanceLog.plist"
 
 static Profile* s_profile = nullptr;
 
@@ -33,6 +37,71 @@ std::vector<std::string> genStrVector(const char* str1, ...)
         str = va_arg(arg_ptr, const char*);
     }
     va_end(arg_ptr);
+    
+    return ret;
+}
+
+// declare the methods
+rapidjson::Value valueVectorToJson(cocos2d::ValueVector & theVector, rapidjson::Document::AllocatorType& allocator);
+rapidjson::Value valueMapToJson(cocos2d::ValueMap & theMap, rapidjson::Document::AllocatorType& allocator);
+
+rapidjson::Value convertToJsonValue(cocos2d::Value & value, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value theJsonValue;
+    auto type = value.getType();
+    switch (type) {
+        case cocos2d::Value::Type::STRING:
+            theJsonValue.SetString(value.asString().c_str(), allocator);
+            break;
+        case cocos2d::Value::Type::MAP:
+            theJsonValue = valueMapToJson(value.asValueMap(), allocator);
+            break;
+        case cocos2d::Value::Type::VECTOR:
+            theJsonValue = valueVectorToJson(value.asValueVector(), allocator);
+            break;
+        case cocos2d::Value::Type::INTEGER:
+            theJsonValue.SetInt(value.asInt());
+            break;
+        case cocos2d::Value::Type::BOOLEAN:
+            theJsonValue.SetBool(value.asBool());
+            break;
+        case cocos2d::Value::Type::FLOAT:
+        case cocos2d::Value::Type::DOUBLE:
+            theJsonValue.SetDouble(value.asDouble());
+            break;
+        default:
+            break;
+    }
+    
+    return theJsonValue;
+}
+
+rapidjson::Value valueMapToJson(cocos2d::ValueMap & theMap, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value ret(rapidjson::kObjectType);
+    
+    for (ValueMap::iterator iter = theMap.begin(); iter != theMap.end(); ++iter) {
+        auto key = iter->first;
+        rapidjson::Value theJsonKey(rapidjson::kStringType);
+        theJsonKey.SetString(key.c_str(), allocator);
+        
+        cocos2d::Value value = iter->second;
+        rapidjson::Value theJsonValue = convertToJsonValue(value, allocator);
+        ret.AddMember(theJsonKey, theJsonValue, allocator);
+    }
+    return ret;
+}
+
+rapidjson::Value valueVectorToJson(cocos2d::ValueVector & theVector, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value ret(rapidjson::kArrayType);
+    
+    auto vectorSize = theVector.size();
+    for (int i = 0; i < vectorSize; i++) {
+        cocos2d::Value value = theVector[i];
+        rapidjson::Value theJsonValue = convertToJsonValue(value, allocator);
+        ret.PushBack(theJsonValue, allocator);
+    }
     
     return ret;
 }
@@ -133,5 +202,20 @@ void Profile::flush()
     auto writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
     std::string fullPath = genStr("%s/%s", writablePath.c_str(), LOG_FILE_NAME);
     
-    cocos2d::FileUtils::getInstance()->writeValueMapToFile(testData, fullPath);
+    rapidjson::Document document;
+    rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+    rapidjson::Value theData = valueMapToJson(testData, allocator);
+    
+    rapidjson::StringBuffer buffer;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+    theData.Accept(writer);
+    auto out = buffer.GetString();
+    
+    FILE *fp = fopen(fullPath.c_str(), "w");
+    fputs(out, fp);
+    fclose(fp);
+
+//  // Write the test data into plist file.
+//    std::string plistFullPath = genStr("%s/%s", writablePath.c_str(), PLIST_FILE_NAME);
+//    cocos2d::FileUtils::getInstance()->writeValueMapToFile(testData, plistFullPath);
 }
