@@ -3,5 +3,6 @@
 
 // sort them alphabetically. thanks
 #include "PerformanceAllocTest.h"
+#include "PerformanceNodeChildrenTest.h"
 
 #endif

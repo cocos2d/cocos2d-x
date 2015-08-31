@@ -21,6 +21,7 @@ public:
     RootTests()
     {
         addTest("Alloc Tests", []() { return new PerformceAllocTests(); });
+        addTest("Node Children Tests", []() { return new PerformceNodeChildrenTests(); });
     }
 };
 
