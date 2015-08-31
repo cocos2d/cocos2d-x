@@ -1157,7 +1157,10 @@ Developers:
     perminovVS
         Optimize Vec3 and Vec2
         Added `UserDefault::setDelegate()`
+        FileUtils: Added FileUtils::getSuitableFOpen() for convert utf8 to locale, for specific platform
         platform: Correct all usage of unicode version winapi in FileUtils for win32
+        FileUtils: Added FileUtils::getFileExtension for getting file's extension name
+        utils: Made utils::captureScreen saving file in another thread to improve the performance
         
     qiutaoleo
         Added a feature to check case characters for filename on windows
