@@ -1,7 +1,7 @@
-set(APP_NAME cpp-empty-test)
+set(APP_NAME cpp_empty_test)
 
 if(ANDROID)
-  set(PLATFORM_SRC proj.android/jni/hellocpp/main.cpp)
+  set(PLATFORM_SRC proj.android/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
   set(PLATFORM_SRC proj.win32/main.cpp)
@@ -28,18 +28,24 @@ else()
 
 endif()
 
+include_directories(Classes)
+
 set(SAMPLE_SRC
   ${PLATFORM_SRC}
   Classes/AppDelegate.cpp
   Classes/HelloWorldScene.cpp
 )
 
-# add the executable
-add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
-)
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    target_link_libraries(${APP_NAME} cocos2d)
+    target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${SAMPLE_SRC})
+    target_link_libraries(${APP_NAME} cocos2d)
+endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
 
 if(MSVC)
 

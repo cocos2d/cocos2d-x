@@ -25,7 +25,7 @@
 
 # this CMakeLists is to generate libcocos2d.a
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
@@ -86,7 +86,6 @@ set(COCOS_SRC cocos2d.cpp
   include_directories(../external/xxtea)
   include_directories(../external/clipper)
 
-
 add_library(cocos2d ${COCOS_SRC})
 
 set(PLATFORM_SPECIFIC_LIBS)
@@ -125,7 +124,9 @@ elseif(MACOSX OR APPLE)
   )
 
 elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv2 log android)
+  set(PLATFORM_SPECIFIC_LIBS GLESv1_CM GLESv2 EGL log android)
+  include(../AndroidNdkModules)
+  android_ndk_import_module_cpufeatures()
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -161,6 +162,12 @@ endif()
 
 if(USE_RECAST)
   cocos_use_pkg(cocos2d RECAST)
+endif()
+
+if(ANDROID)
+  target_link_libraries(cocos2dxandroid_static cocos2d)
+  # target_link_libraries(cocos2d -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
+  target_link_libraries(cocos2d cpufeatures)
 endif()
 
 set_target_properties(cocos2d

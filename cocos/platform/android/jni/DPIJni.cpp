@@ -1,5 +1,5 @@
 #include "DPIJni.h"
-#include "jni/JniHelper.h"
+#include "JniHelper.h"
 
 USING_NS_CC;
 
