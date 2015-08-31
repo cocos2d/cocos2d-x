@@ -400,9 +400,6 @@ namespace cocostudio
         bool touchScaleEnabled = options->touchScaleEnable() != 0;
         label->setTouchScaleChangeEnabled(touchScaleEnabled);
         
-        std::string text = options->text()->c_str();
-        label->setString(text);
-        
         int fontSize = options->fontSize();
         label->setFontSize(fontSize);
         
@@ -469,6 +466,11 @@ namespace cocostudio
                 label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
             }
         }
+        
+        //Set the text content last to minimise overhead of recalculating/rerendering text.
+        //Also helps to avoid max texture size issue caused by large text rendered with system font before fontResource is set.
+        std::string text = options->text()->c_str();
+        label->setString(text);
 
         // Save node color before set widget properties
         auto oldColor = node->getColor();
