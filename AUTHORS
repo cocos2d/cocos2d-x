@@ -1204,6 +1204,9 @@ Developers:
     MAUSMAUSgames
         Action: Permitted setting bitwise flags to action
 
+    RUKD
+        ParticleSystem: performance improvement
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
