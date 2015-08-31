@@ -39,6 +39,8 @@ set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua related targets")
 set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
 
+
+
 # Some macro definitions
 if(WINDOWS)
   if(BUILD_SHARED_LIBS)
@@ -72,35 +74,38 @@ if(MSVC)
 else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
   if(CLANG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
 endif(MSVC)
 
 
-set(PLATFORM_SPECIFIC_LINKS)
+set(PLATFORM_SPECIFIC_LINK_LIBRARIES)
 set(PLATFORM_SPECIFIC_SRC)
 set(PLATFORM_SPECIFIC_HEADERS)
-if(APPLE AND IOS)
+if(MACOSX OR APPLE)
+
+if(IOS)
 set(PLATFORM_SPECIFIC_SRC
   proj.ios_mac/ios/main.m
   proj.ios_mac/ios/RootViewController.mm
   proj.ios_mac/ios/AppController.mm
-)
+  )
 set(PLATFORM_SPECIFIC_HEADERS
   proj.ios_mac/ios/RootViewController.h
   proj.ios_mac/ios/AppController.h
 )
-elseif(APPLE OR MACOSX)
-set(PLATFORM_SPECIFIC_SRC 
-  proj.ios_mac/ios/main.cpp
-  )
+else()
 
-set(PLATFORM_SPECIFIC_LINKS 
-	-liconv
-	)
+set(PLATFORM_SPECIFIC_SRC
+  proj.ios_mac/mac/main.cpp
+)
+
+set(PLATFORM_SPECIFIC_LINK_LIBRARIES 
+  -liconv
+)
 endif()
 elseif(LINUX) #assume linux
 set(PLATFORM_SPECIFIC_SRC
@@ -123,6 +128,7 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/platform
   ${COCOS2D_ROOT}/cocos/audio/include/
   Classes
+  /usr/local/include/entityx
 )
 if ( WIN32 )
   include_directories(
@@ -143,21 +149,50 @@ set(GAME_HEADERS
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
+file(GLOB GAME_RESSOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Resources/*.png")
+file(GLOB GAME_RESSOURCES_FONTS "${CMAKE_CURRENT_SOURCE_DIR}/Resources/fonts/*.ttf")
+
+
 if(GAME_HEADERS)
   if ( WIN32 )
     add_executable(${APP_NAME} WIN32 ${GAME_SRC} ${GAME_HEADERS})
+  elseif(MACOSX AND NOT IOS)
+    add_executable(${APP_NAME} MACOSX_BUNDLE ${GAME_SRC} ${GAME_HEADERS} ${GAME_RESSOURCES} ${GAME_RESSOURCES_FONTS})
+    set_source_files_properties(
+      ${GAME_RESSOURCES}
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION Resources
+      )
+    set_source_files_properties(
+      ${GAME_RESSOURCES_FONTS}
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION Resources/fonts
+      )
+
   else()
     add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
   endif ( WIN32 )
 else()
   if ( WIN32 )
     add_executable(${APP_NAME} WIN32 ${GAME_SRC})
+  elseif(MACOSX AND NOT IOS)
+    add_executable(${APP_NAME} MACOSX_BUNDLE ${GAME_SRC} ${GAME_RESSOURCES} ${GAME_RESSOURCES_FONTS})
+    set_source_files_properties(
+      ${GAME_RESSOURCES}
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION Resources
+      )
+    set_source_files_properties(
+      ${GAME_RESSOURCES_FONTS}
+      PROPERTIES
+      MACOSX_PACKAGE_LOCATION Resources/fonts
+      )
   else()
     add_executable(${APP_NAME} ${GAME_SRC})
   endif ( WIN32 )
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d ${PLATFORM_SPECIFIC_LINKS})
+target_link_libraries(${APP_NAME} cocos2d ${PLATFORM_SPECIFIC_LINK_LIBRARIES})
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
@@ -170,8 +205,8 @@ if ( WIN32 )
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/gles/prebuilt/glew32.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
-	COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/zlib/prebuilt/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
-	)
+  COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/zlib/prebuilt/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
+  )
 else()
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
