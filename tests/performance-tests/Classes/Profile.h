@@ -14,7 +14,7 @@ class Profile
 {
 public:
     static Profile* getInstance();
-    static void releaseInstance();
+    static void destroyInstance();
     
     Profile();
     virtual ~Profile();
@@ -27,6 +27,9 @@ public:
     void testCaseBegin(std::string testName, std::vector<std::string> condHeaders, std::vector<std::string> retHeaders);
     void addTestResult(std::vector<std::string> conditions, std::vector<std::string> results);
     void testCaseEnd();
+    
+    // write the test result to file
+    void flush();
 
 protected:
     cocos2d::ValueMap testData;

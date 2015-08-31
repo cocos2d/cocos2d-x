@@ -11,10 +11,14 @@ std::string genStr(const char* format, ...)
 {
     va_list arg_ptr;
     va_start(arg_ptr, format);
-    char temp[256];
-    sprintf(temp, format, arg_ptr);
+    
+    int bufferSize = MAX_LOG_LENGTH;
+    char buf[bufferSize];
+    vsnprintf(buf, bufferSize - 3, format, arg_ptr);
+
     va_end(arg_ptr);
-    return temp;
+
+    return buf;
 }
 
 std::vector<std::string> genStrVector(const char* str1, ...)
@@ -43,7 +47,7 @@ Profile* Profile::getInstance()
     return s_profile;
 }
 
-void Profile::releaseInstance()
+void Profile::destroyInstance()
 {
     if (nullptr != s_profile)
     {
@@ -122,11 +126,12 @@ void Profile::testCaseEnd()
 {
     // add the result of current test case into the testData.
     testData[curTestName] = Value(curTestResults);
+}
 
-    // write the testData to log file.
+void Profile::flush()
+{
     auto writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
-    char fullPath[256];
-    sprintf(fullPath, "%s/%s", writablePath.c_str(), LOG_FILE_NAME);
+    std::string fullPath = genStr("%s/%s", writablePath.c_str(), LOG_FILE_NAME);
     
     cocos2d::FileUtils::getInstance()->writeValueMapToFile(testData, fullPath);
 }

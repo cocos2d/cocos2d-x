@@ -979,8 +979,6 @@
 		FA94B1C31B8EF76D0074B261 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		FA94B1CE1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */; };
 		FA94B1CF1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */; };
-		FA94B1D01B8EF7BB0074B261 /* StartScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1CC1B8EF7BB0074B261 /* StartScene.cpp */; };
-		FA94B1D11B8EF7BB0074B261 /* StartScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1CC1B8EF7BB0074B261 /* StartScene.cpp */; };
 		FA94B1ED1B8EF8250074B261 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA94B1D51B8EF8250074B261 /* AppController.mm */; };
 		FA94B1EE1B8EF8250074B261 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1D61B8EF8250074B261 /* Default-568h@2x.png */; };
 		FA94B1EF1B8EF8250074B261 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B1D71B8EF8250074B261 /* Default-667h@2x.png */; };
@@ -1012,6 +1010,16 @@
 		FA94B2291B8EF9C50074B261 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = FA94B2221B8EF9C50074B261 /* CloseSelected.png */; };
 		FA94B2351B8F02880074B261 /* Profile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2331B8F02880074B261 /* Profile.cpp */; };
 		FA94B2361B8F02880074B261 /* Profile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2331B8F02880074B261 /* Profile.cpp */; };
+		FA94B23A1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */; };
+		FA94B23B1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */; };
+		FA94B2421B90497E0074B261 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23C1B90497E0074B261 /* BaseTest.cpp */; };
+		FA94B2431B90497E0074B261 /* BaseTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23C1B90497E0074B261 /* BaseTest.cpp */; };
+		FA94B2441B90497E0074B261 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23E1B90497E0074B261 /* controller.cpp */; };
+		FA94B2451B90497E0074B261 /* controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B23E1B90497E0074B261 /* controller.cpp */; };
+		FA94B24B1B9059540074B261 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2491B9059540074B261 /* VisibleRect.cpp */; };
+		FA94B24C1B9059540074B261 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2491B9059540074B261 /* VisibleRect.cpp */; };
+		FA94B24E1B93EF7B0074B261 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = FA94B24D1B93EF7B0074B261 /* Images */; };
+		FA94B24F1B93EF7B0074B261 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = FA94B24D1B93EF7B0074B261 /* Images */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2091,8 +2099,6 @@
 		FA94B1C71B8EF76D0074B261 /* performance-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "performance-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		FA94B1CB1B8EF7BB0074B261 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		FA94B1CC1B8EF7BB0074B261 /* StartScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartScene.cpp; sourceTree = "<group>"; };
-		FA94B1CD1B8EF7BB0074B261 /* StartScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartScene.h; sourceTree = "<group>"; };
 		FA94B1D41B8EF8250074B261 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		FA94B1D51B8EF8250074B261 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		FA94B1D61B8EF8250074B261 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -2126,6 +2132,17 @@
 		FA94B2221B8EF9C50074B261 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseSelected.png; path = "../tests/performance-tests/Resources/CloseSelected.png"; sourceTree = "<group>"; };
 		FA94B2331B8F02880074B261 /* Profile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Profile.cpp; sourceTree = "<group>"; };
 		FA94B2341B8F02880074B261 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
+		FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceAllocTest.cpp; sourceTree = "<group>"; };
+		FA94B2391B9045160074B261 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceAllocTest.h; sourceTree = "<group>"; };
+		FA94B23C1B90497E0074B261 /* BaseTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseTest.cpp; sourceTree = "<group>"; };
+		FA94B23D1B90497E0074B261 /* BaseTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTest.h; sourceTree = "<group>"; };
+		FA94B23E1B90497E0074B261 /* controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = controller.cpp; sourceTree = "<group>"; };
+		FA94B23F1B90497E0074B261 /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
+		FA94B2411B90497E0074B261 /* testBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testBasic.h; sourceTree = "<group>"; };
+		FA94B2481B904E290074B261 /* tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tests.h; sourceTree = "<group>"; };
+		FA94B2491B9059540074B261 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
+		FA94B24A1B9059540074B261 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
+		FA94B24D1B93EF7B0074B261 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = "../tests/performance-tests/Resources/Images"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4654,12 +4671,11 @@
 		FA94B1C91B8EF7BB0074B261 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FA94B2371B9045160074B261 /* tests */,
 				FA94B2331B8F02880074B261 /* Profile.cpp */,
 				FA94B2341B8F02880074B261 /* Profile.h */,
 				FA94B1CA1B8EF7BB0074B261 /* AppDelegate.cpp */,
 				FA94B1CB1B8EF7BB0074B261 /* AppDelegate.h */,
-				FA94B1CC1B8EF7BB0074B261 /* StartScene.cpp */,
-				FA94B1CD1B8EF7BB0074B261 /* StartScene.h */,
 			);
 			name = Classes;
 			path = "../tests/performance-tests/Classes";
@@ -4713,10 +4729,28 @@
 		FA94B2201B8EF9A90074B261 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA94B24D1B93EF7B0074B261 /* Images */,
 				FA94B2211B8EF9C50074B261 /* CloseNormal.png */,
 				FA94B2221B8EF9C50074B261 /* CloseSelected.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		FA94B2371B9045160074B261 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				FA94B2491B9059540074B261 /* VisibleRect.cpp */,
+				FA94B24A1B9059540074B261 /* VisibleRect.h */,
+				FA94B2481B904E290074B261 /* tests.h */,
+				FA94B23C1B90497E0074B261 /* BaseTest.cpp */,
+				FA94B23D1B90497E0074B261 /* BaseTest.h */,
+				FA94B23E1B90497E0074B261 /* controller.cpp */,
+				FA94B23F1B90497E0074B261 /* controller.h */,
+				FA94B2411B90497E0074B261 /* testBasic.h */,
+				FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */,
+				FA94B2391B9045160074B261 /* PerformanceAllocTest.h */,
+			);
+			path = tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -5478,6 +5512,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA94B24F1B93EF7B0074B261 /* Images in Resources */,
 				FA94B1F51B8EF8250074B261 /* Icon-120.png in Resources */,
 				FA94B1FA1B8EF8250074B261 /* Icon-50.png in Resources */,
 				FA94B1FF1B8EF8250074B261 /* Icon-80.png in Resources */,
@@ -5506,6 +5541,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA94B24E1B93EF7B0074B261 /* Images in Resources */,
 				FA94B2091B8EF8430074B261 /* Info.plist in Resources */,
 				FA94B2261B8EF9C50074B261 /* CloseNormal.png in Resources */,
 				FA94B2081B8EF8430074B261 /* Icon.icns in Resources */,
@@ -6182,10 +6218,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA94B2451B90497E0074B261 /* controller.cpp in Sources */,
+				FA94B2431B90497E0074B261 /* BaseTest.cpp in Sources */,
+				FA94B23B1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */,
 				FA94B1ED1B8EF8250074B261 /* AppController.mm in Sources */,
+				FA94B24C1B9059540074B261 /* VisibleRect.cpp in Sources */,
 				FA94B2361B8F02880074B261 /* Profile.cpp in Sources */,
 				FA94B2021B8EF8250074B261 /* RootViewController.mm in Sources */,
-				FA94B1D11B8EF7BB0074B261 /* StartScene.cpp in Sources */,
 				FA94B2011B8EF8250074B261 /* main.m in Sources */,
 				FA94B1CF1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */,
 			);
@@ -6195,10 +6234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA94B1D01B8EF7BB0074B261 /* StartScene.cpp in Sources */,
+				FA94B2421B90497E0074B261 /* BaseTest.cpp in Sources */,
 				FA94B2351B8F02880074B261 /* Profile.cpp in Sources */,
 				FA94B1CE1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */,
+				FA94B24B1B9059540074B261 /* VisibleRect.cpp in Sources */,
 				FA94B20A1B8EF8430074B261 /* main.cpp in Sources */,
+				FA94B23A1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */,
+				FA94B2441B90497E0074B261 /* controller.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "StartScene.h"
+#include "Profile.h"
+#include "controller.h"
 
 USING_NS_CC;
 
@@ -73,12 +74,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     register_all_packages();
-
-    // create a scene. it's an autorelease object
-    auto scene = StartScene::createScene();
-
-    // run
-    director->runWithScene(scene);
+    
+    Profile::getInstance()->setDeviceName("device name");
+    Profile::getInstance()->setEngineVersion(cocos2dVersion());
+    TestController::getInstance()->startAutoTest();
 
     return true;
 }
