@@ -568,14 +568,14 @@ protected:
     bool isOutOfBoundary(MoveDirection dir) const;
     bool isOutOfBoundaryTopOrBottom() const;
     bool isOutOfBoundaryLeftOrRight() const;
+    bool isOutOfBoundary() const;
     
     void moveChildren(float offsetX, float offsetY);
     void moveChildrenToPosition(const Vec2& position);
     
-    Vec2 calculateTouchMoveSpeed() const;
+    Vec2 calculateTouchMoveVelocity() const;
     
-    void startInertiaScroll(const Vec2& touchMoveSpeed);
-    void processInertiaScrolling(float dt);
+    void startInertiaScroll(const Vec2& touchMoveVelocity);
     
     void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback = nullptr, std::function<void(const Vec2&)> moveCallback = nullptr);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
@@ -620,24 +620,22 @@ protected:
     std::list<float> _touchMoveTimeDeltas;
     long long _touchMovePreviousTimestamp;
     
-    // Inertia scroll
-    bool _inertiaScrollEnabled;
-    bool _inertiaScrolling;
-    Vec2 _inertiaInitiVelocity;
-    float _inertiaScrollExpectedTime;
-    float _inertiaScrollElapsedTime;
-
     bool _autoScrolling;
     bool _autoScrollAttenuate;
     Vec2 _autoScrollStartPosition;
     Vec2 _autoScrollTargetDelta;
     float _autoScrollDuration;
     float _autoScrollAccumulatedTime;
+    bool _outOfBoundaryDuringInertiaScroll;
+    Vec2 _outOfBoundaryPositionDuringInertiaScroll;
     std::function<void()> _autoScrollCompleteCallback;
     std::function<void(const Vec2& moveDelta)> _autoScrollMoveCallback;
     
+    // Inertia scroll
+    bool _inertiaScrollEnabled;
+    bool _inertiaScrolling;
+
     bool _bounceEnabled;
-    bool _bouncingBack;
     
     bool _scrollBarEnabled;
     ScrollViewBar* _verticalScrollBar;
