@@ -577,7 +577,7 @@ protected:
     void startInertiaScroll(const Vec2& touchMoveSpeed);
     void processInertiaScrolling(float dt);
     
-    void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated);
+    void startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback = nullptr, std::function<void(const Vec2&)> moveCallback = nullptr);
     void startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated);
     void processAutoScrolling(float deltaTime);
 
@@ -633,6 +633,8 @@ protected:
     Vec2 _autoScrollTargetDelta;
     float _autoScrollDuration;
     float _autoScrollAccumulatedTime;
+    std::function<void()> _autoScrollCompleteCallback;
+    std::function<void(const Vec2& moveDelta)> _autoScrollMoveCallback;
     
     bool _bounceEnabled;
     bool _bouncingBack;

@@ -66,6 +66,8 @@ _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollDuration(0),
 _autoScrollAccumulatedTime(0),
+_autoScrollCompleteCallback(nullptr),
+_autoScrollMoveCallback(nullptr),
 _bounceEnabled(false),
 _bouncingBack(false),
 _scrollBarEnabled(true),
@@ -345,7 +347,29 @@ bool ScrollView::startBounceBackIfNeeded()
     }
 
     _bouncingBack = true;
-    startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true);
+    startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true,
+        [this](){
+            _bouncingBack = false;
+        },
+        [this](const Vec2& moveDelta) {
+            if(moveDelta.x > 0)
+            {
+                processScrollEvent(MoveDirection::RIGHT, true);
+            }
+            else if(moveDelta.x < 0)
+            {
+                processScrollEvent(MoveDirection::LEFT, true);
+            }
+            if(moveDelta.y > 0)
+            {
+                processScrollEvent(MoveDirection::TOP, true);
+            }
+            else if(moveDelta.y < 0)
+            {
+                processScrollEvent(MoveDirection::BOTTOM, true);
+            }
+        }
+    );
     return true;
 }
 
@@ -373,48 +397,6 @@ Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition) const
     return result;
 }
 
-void ScrollView::processAutoScrolling(float deltaTime)
-{
-    _autoScrollAccumulatedTime += deltaTime;
-    float percentage = _autoScrollAccumulatedTime / _autoScrollDuration;
-    if(percentage >= 1)
-    {
-        moveChildrenToPosition(_autoScrollStartPosition + _autoScrollTargetDelta);
-        _autoScrolling = false;
-        _bouncingBack = false;
-    }
-    else
-    {
-        if(_autoScrollAttenuate)
-        {
-            percentage = tweenfunc::quintEaseOut(percentage);
-        }
-        Vec2 moveDelta = _autoScrollTargetDelta * percentage;
-        moveChildrenToPosition(_autoScrollStartPosition + moveDelta);
-        
-        // Dispatch related events if bouncing
-        if(_bouncingBack)
-        {
-            if(moveDelta.x > 0)
-            {
-                processScrollEvent(MoveDirection::RIGHT, true);
-            }
-            else if(moveDelta.x < 0)
-            {
-                processScrollEvent(MoveDirection::LEFT, true);
-            }
-            if(moveDelta.y > 0)
-            {
-                processScrollEvent(MoveDirection::TOP, true);
-            }
-            else if(moveDelta.y < 0)
-            {
-                processScrollEvent(MoveDirection::BOTTOM, true);
-            }
-        }
-    }
-}
-
 bool ScrollView::isOutOfBoundary(MoveDirection dir) const
 {
     switch(dir)
@@ -437,7 +419,12 @@ bool ScrollView::isOutOfBoundaryLeftOrRight() const
     return isOutOfBoundary(MoveDirection::LEFT) || isOutOfBoundary(MoveDirection::RIGHT);
 }
 
-void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated)
+void ScrollView::startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated)
+{
+    startAutoScroll(des - _innerContainer->getPosition(), second, attenuated);
+}
+
+void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback, std::function<void(const Vec2&)> moveCallback)
 {
     _autoScrolling = true;
     _autoScrollTargetDelta = deltaMove;
@@ -445,11 +432,39 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool att
     _autoScrollStartPosition = _innerContainer->getPosition();
     _autoScrollDuration = duration;
     _autoScrollAccumulatedTime = 0;
+    _autoScrollCompleteCallback = completeCallback;
+    _autoScrollMoveCallback = moveCallback;
 }
 
-void ScrollView::startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated)
+void ScrollView::processAutoScrolling(float deltaTime)
 {
-    startAutoScroll(des - _innerContainer->getPosition(), second, attenuated);
+    _autoScrollAccumulatedTime += deltaTime;
+    
+    float percentage = _autoScrollAccumulatedTime / _autoScrollDuration;
+    if(percentage >= 1)
+    {
+        moveChildrenToPosition(_autoScrollStartPosition + _autoScrollTargetDelta);
+        _autoScrolling = false;
+        if(_autoScrollCompleteCallback)
+        {
+            _autoScrollCompleteCallback();
+        }
+        return;
+    }
+    
+    if(_autoScrollAttenuate)
+    {
+        // Use quintic(5th degree) polynomial
+        percentage = tweenfunc::quintEaseOut(percentage);
+    }
+    
+    Vec2 moveDelta = _autoScrollTargetDelta * percentage;
+    moveChildrenToPosition(_autoScrollStartPosition + moveDelta);
+    
+    if(_autoScrollMoveCallback)
+    {
+        _autoScrollMoveCallback(moveDelta);
+    }
 }
 
 void ScrollView::jumpToDestination(const Vec2 &des)
