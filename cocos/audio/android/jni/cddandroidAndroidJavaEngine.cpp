@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <jni.h>
 #include <sys/system_properties.h>
 #include "platform/android/jni/JniHelper.h"
-#include "ccdandroidUtils.h"
+#include "audio/android/ccdandroidUtils.h"
 #include "audio/include/AudioEngine.h"
 
 // logging
