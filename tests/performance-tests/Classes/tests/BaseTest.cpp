@@ -189,11 +189,11 @@ void TestList::runThisTest()
         });
         closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
 
-        auto autoTestLabel = Label::createWithTTF("Start AutoTest","fonts/arial.ttf",16);
+        auto autoTestLabel = Label::createWithTTF("Start AutoTest","fonts/arial.ttf",25);
         auto autoTestItem = MenuItemLabel::create(autoTestLabel, [&](Ref* sender){
             TestController::getInstance()->startAutoTest();
         });
-        autoTestItem->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + 50));
+        autoTestItem->setPosition(Vec2(VisibleRect::left().x + 80, VisibleRect::bottom().y + 100));
 
         auto menu = Menu::create(closeItem, autoTestItem, nullptr);
         menu->setPosition(Vec2::ZERO);

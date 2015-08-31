@@ -1020,6 +1020,8 @@
 		FA94B24C1B9059540074B261 /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA94B2491B9059540074B261 /* VisibleRect.cpp */; };
 		FA94B24E1B93EF7B0074B261 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = FA94B24D1B93EF7B0074B261 /* Images */; };
 		FA94B24F1B93EF7B0074B261 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = FA94B24D1B93EF7B0074B261 /* Images */; };
+		FADE786B1B942DE30061590D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = FADE786A1B942DE30061590D /* fonts */; };
+		FADE786C1B942DE30061590D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = FADE786A1B942DE30061590D /* fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2143,6 +2145,7 @@
 		FA94B2491B9059540074B261 /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
 		FA94B24A1B9059540074B261 /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
 		FA94B24D1B93EF7B0074B261 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Images; path = "../tests/performance-tests/Resources/Images"; sourceTree = "<group>"; };
+		FADE786A1B942DE30061590D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = "../tests/performance-tests/Resources/fonts"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4729,6 +4732,7 @@
 		FA94B2201B8EF9A90074B261 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FADE786A1B942DE30061590D /* fonts */,
 				FA94B24D1B93EF7B0074B261 /* Images */,
 				FA94B2211B8EF9C50074B261 /* CloseNormal.png */,
 				FA94B2221B8EF9C50074B261 /* CloseSelected.png */,
@@ -5522,6 +5526,7 @@
 				FA94B1F71B8EF8250074B261 /* Icon-152.png in Resources */,
 				FA94B1F21B8EF8250074B261 /* Default@2x.png in Resources */,
 				FA94B1F01B8EF8250074B261 /* Default-736h@3x.png in Resources */,
+				FADE786C1B942DE30061590D /* fonts in Resources */,
 				FA94B2001B8EF8250074B261 /* Info.plist in Resources */,
 				FA94B1F41B8EF8250074B261 /* Icon-114.png in Resources */,
 				FA94B1F81B8EF8250074B261 /* Icon-29.png in Resources */,
@@ -5544,6 +5549,7 @@
 				FA94B24E1B93EF7B0074B261 /* Images in Resources */,
 				FA94B2091B8EF8430074B261 /* Info.plist in Resources */,
 				FA94B2261B8EF9C50074B261 /* CloseNormal.png in Resources */,
+				FADE786B1B942DE30061590D /* fonts in Resources */,
 				FA94B2081B8EF8430074B261 /* Icon.icns in Resources */,
 				FA94B2281B8EF9C50074B261 /* CloseSelected.png in Resources */,
 			);

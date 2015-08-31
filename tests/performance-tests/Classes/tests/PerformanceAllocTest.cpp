@@ -212,7 +212,8 @@ void PerformceAllocScene::dumpProfilerInfo(float dt)
         Profile::getInstance()->addTestResult(genStrVector(numStr.c_str(), nullptr),
                                               genStrVector(avgStr.c_str(), minStr.c_str(), maxStr.c_str(), nullptr));
         
-        if (autoTestIndex >= (sizeof(autoTestNodesNums)/sizeof(int))) {
+        auto testsSize = sizeof(autoTestNodesNums)/sizeof(int);
+        if (autoTestIndex >= (testsSize - 1)) {
             // if it's the last one of auto test. End the auto test.
             this->setAutoTesting(false);
             Profile::getInstance()->testCaseEnd();
@@ -225,6 +226,7 @@ void PerformceAllocScene::dumpProfilerInfo(float dt)
             updateQuantityLabel();
             updateQuantityOfNodes();
             updateProfilerName();
+            CC_PROFILER_PURGE_ALL();
         }
     }
 }

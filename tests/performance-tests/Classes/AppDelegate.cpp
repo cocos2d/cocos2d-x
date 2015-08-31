@@ -77,7 +77,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     Profile::getInstance()->setDeviceName("device name");
     Profile::getInstance()->setEngineVersion(cocos2dVersion());
-    TestController::getInstance()->startAutoTest();
+    TestController::getInstance();
 
     return true;
 }
