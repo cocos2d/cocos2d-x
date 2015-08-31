@@ -836,6 +836,7 @@ void EditBoxImplWin::openKeyboard()
 		placeHolder = "Enter value";
 
 	std::string text = getText();
+    std::string originalText = text;
 	auto glView = Director::getInstance()->getOpenGLView();
 	HWND hwnd = glView->getWin32Window();
 	bool didChange = CWin32InputBox::InputBox("Input", placeHolder.c_str(), &text, _maxLength, false, hwnd,
@@ -843,13 +844,11 @@ void EditBoxImplWin::openKeyboard()
         &EditBoxImplWin::onWin32InputBoxTextChange, this) == IDOK;
     _isEditing = false;
 	
-	if (didChange) 	
-		setText(text.c_str());
+	setText(didChange ? text.c_str() : originalText.c_str());
 
 	if (_delegate != nullptr)
 	{
-		if (didChange)
-			_delegate->editBoxTextChanged(_editBox, getText());
+		_delegate->editBoxTextChanged(_editBox, getText());
 		_delegate->editBoxEditingDidEnd(_editBox);
 		_delegate->editBoxReturn(_editBox);
 	}
@@ -859,10 +858,7 @@ void EditBoxImplWin::openKeyboard()
     {
         CommonScriptData data(_editBox->getScriptEditBoxHandler(), "changed",_editBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
-        if (didChange)
-        {
-            ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-        }
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
         memset(data.eventName,0,sizeof(data.eventName));
         strncpy(data.eventName,"ended",sizeof(data.eventName));
         event.data = (void*)&data;
