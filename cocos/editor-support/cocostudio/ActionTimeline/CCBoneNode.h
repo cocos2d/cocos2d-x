@@ -185,6 +185,12 @@ protected:
     virtual void updateVertices();
     virtual void updateColor() override;
 
+    // bone's color and opacity cannot cascade to bone
+    virtual void updateDisplayedColor(const cocos2d::Color3B& parentColor) override;
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void disableCascadeOpacity() override;
+    virtual void disableCascadeColor() override;
+
     virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
 
     // override Node::visit, just visit bones in children

@@ -37,7 +37,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 
-
+bool isWindowsPhone();
 std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
 std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
 Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name);

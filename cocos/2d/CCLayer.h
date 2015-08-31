@@ -297,8 +297,8 @@ public:
     //
     virtual GLubyte getOpacity() const override { return Layer::getOpacity(); }
     virtual GLubyte getDisplayedOpacity() const override { return Layer::getDisplayedOpacity(); }
-    virtual void setOpacity(GLubyte opacity) override { return Layer::setOpacity(opacity); }
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Layer::updateDisplayedOpacity(parentOpacity); }
+    virtual void setOpacity(GLubyte opacity) override { Layer::setOpacity(opacity); }
+    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { Layer::updateDisplayedOpacity(parentOpacity); }
     virtual bool isCascadeOpacityEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
     virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
 
