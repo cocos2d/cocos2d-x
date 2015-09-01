@@ -193,7 +193,7 @@ var SocketIOTestLayer = cc.Layer.extend({
     onMenuSIOEndpointClicked: function(sender) {
 
         //repeat the same connection steps for the namespace "testpoint"
-        var sioendpoint = SocketIO.connect("ws://tools.itharbors.com:4000/testpoint");
+        var sioendpoint = SocketIO.connect("ws://tools.itharbors.com:4000/testpoint", {"force new connection" : true});
 
         //a tag to differentiate in shared callbacks
         sioendpoint.tag = "Test Endpoint";
