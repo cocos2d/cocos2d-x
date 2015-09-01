@@ -128,7 +128,6 @@ include_directories(
   ${COCOS2D_ROOT}/cocos/platform
   ${COCOS2D_ROOT}/cocos/audio/include/
   Classes
-  /usr/local/include/entityx
 )
 if ( WIN32 )
   include_directories(
