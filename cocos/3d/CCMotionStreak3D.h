@@ -38,7 +38,7 @@ class Texture2D;
  */
 
 /** @class MotionStreak3D.
- * @brief Creates a trailing path.
+ * @brief Creates a trailing path. It is created from a line segment sweeping along the path.
  */
 class MotionStreak3D : public Node, public TextureProtocol
 {
@@ -139,8 +139,15 @@ public:
     virtual void setOpacityModifyRGB(bool value) override;
     virtual bool isOpacityModifyRGB() const override;
     
+    /**
+     * Set the direction of sweeping line segment.
+     * @param sweepAxis Direction of sweeping line segment
+     */
     void setSweepAxis(const Vec3& sweepAxis) { _sweepAxis = sweepAxis.getNormalized(); }
     
+    /**
+     * Get the direction of sweeping line segment
+     */
     const Vec3& getSweepAxis() const { return _sweepAxis; }
     
 CC_CONSTRUCTOR_ACCESS:
