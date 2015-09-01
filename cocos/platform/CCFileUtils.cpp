@@ -827,7 +827,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
         {
             fullpath = this->getPathForFilename(newFilename, resolutionIt, searchIt);
 
-            if (fullpath.length() > 0)
+            if (!fullpath.empty())
             {
                 // Using the filename passed in as key.
                 _fullPathCache.insert(std::make_pair(filename, fullpath));
@@ -926,7 +926,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
             prefix = _defaultResRootPath;
         }
         path = prefix + (iter);
-        if (path.length() > 0 && path[path.length()-1] != '/')
+        if (!path.empty() && path[path.length()-1] != '/')
         {
             path += "/";
         }
@@ -951,7 +951,7 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
         prefix = _defaultResRootPath;
 
     std::string path = prefix + searchpath;
-    if (path.length() > 0 && path[path.length()-1] != '/')
+    if (!path.empty() && path[path.length()-1] != '/')
     {
         path += "/";
     }
@@ -971,7 +971,7 @@ void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)
 {
     const std::string fullPath = fullPathForFilename(filename);
-    if (fullPath.length() > 0)
+    if (!fullPath.empty())
     {
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
         if (!dict.empty())

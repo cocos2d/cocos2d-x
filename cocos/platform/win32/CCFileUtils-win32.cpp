@@ -134,7 +134,7 @@ static std::string UTF8StringToMultiByte(const std::string& strUtf8)
 
 static void _checkPath()
 {
-    if (0 == s_resourcePath.length())
+    if (s_resourcePath.empty())
     {
         WCHAR *pUtf16ExePath = nullptr;
         _get_wpgmptr(&pUtf16ExePath);
@@ -193,7 +193,7 @@ std::string FileUtilsWin32::getSuitableFOpen(const std::string& filenameUtf8) co
 
 bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
-    if (0 == strFilePath.length())
+    if (strFilePath.empty())
     {
         return false;
     }
