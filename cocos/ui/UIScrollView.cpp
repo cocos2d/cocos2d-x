@@ -472,21 +472,19 @@ void ScrollView::processAutoScrolling(float deltaTime)
     Vec2 newPosition = _autoScrollStartPosition + deltaFromInitialPosition;
     bool reachedEnd = false;
     
-    // Adjust the new position according to the bounce opiton
+    // Adjust the new position according to the bounce option
+    if(_bounceEnabled)
     {
-        if(_bounceEnabled)
+        newPosition = _outOfBoundaryPositionDuringInertiaScroll + (newPosition - _outOfBoundaryPositionDuringInertiaScroll) * distanceRescale;
+    }
+    else
+    {
+        Vec2 moveDelta = newPosition - getInnerContainerPosition();
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
+        if(outOfBoundary != Vec2::ZERO)
         {
-            newPosition = _outOfBoundaryPositionDuringInertiaScroll + (newPosition - _outOfBoundaryPositionDuringInertiaScroll) * distanceRescale;
-        }
-        else
-        {
-            Vec2 moveDelta = newPosition - getInnerContainerPosition();
-            Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
-            if(outOfBoundary != Vec2::ZERO)
-            {
-                newPosition += outOfBoundary;
-                reachedEnd = true;
-            }
+            newPosition += outOfBoundary;
+            reachedEnd = true;
         }
     }
     
