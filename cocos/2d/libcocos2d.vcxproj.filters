@@ -832,6 +832,9 @@
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp">
+        <Filter>3d</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
     </ClCompile>
@@ -2560,6 +2563,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMotionStreak3D.h">
+        <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\cocos3d.h">
       <Filter>3d</Filter>

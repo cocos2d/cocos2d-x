@@ -39,6 +39,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.h">
       <Filter>3d</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.h">
+        <Filter>3d</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -1909,6 +1912,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMeshVertexIndexData.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCMotionStreak3D.cpp">
+        <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCOBB.cpp">
       <Filter>3d</Filter>
