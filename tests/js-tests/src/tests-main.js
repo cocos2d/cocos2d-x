@@ -291,15 +291,6 @@ var testNames = [
             return new ChipmunkTestScene();
         }
     },
-    //"BugsTest",
-    {
-        title:"Click and Move Test",
-        platforms: PLATFORM_ALL,
-        linksrc:"src/ClickAndMoveTest/ClickAndMoveTest.js",
-        testScene:function () {
-            return new ClickAndMoveTestScene();
-        }
-    },
     {
         title:"ClippingNode Test",
         platforms: PLATFORM_ALL,
