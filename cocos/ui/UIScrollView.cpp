@@ -441,10 +441,9 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool att
 
 void ScrollView::processAutoScrolling(float deltaTime)
 {
+    // Shorten the auto scroll distance and time if it is out of boundary during inertia scroll.
     float timeRescale = 1;
     float distanceRescale = 1;
-    
-    // Shorten the auto scroll distance and time if it is out of boundary during inertia scroll.
     {
         bool currentlyOutOfBoundDuringInertiaScroll = (_inertiaScrolling && isOutOfBoundary());
         if(!_outOfBoundaryDuringInertiaScroll && currentlyOutOfBoundDuringInertiaScroll)
@@ -456,26 +455,50 @@ void ScrollView::processAutoScrolling(float deltaTime)
         distanceRescale = (_outOfBoundaryDuringInertiaScroll ? OUT_OF_BOUND_DISTANCE_RESCALE : 1);
     }
     
-    _autoScrollAccumulatedTime += deltaTime * (1 / timeRescale);
-    
-    float percentage = MIN(1, _autoScrollAccumulatedTime / _autoScrollDuration);
-    if(_autoScrollAttenuate)
+    // Calculate the percentage
+    float percentage = 0;
     {
-        // Use quintic(5th degree) polynomial
-        percentage = tweenfunc::quintEaseOut(percentage);
+        _autoScrollAccumulatedTime += deltaTime * (1 / timeRescale);
+        percentage = MIN(1, _autoScrollAccumulatedTime / _autoScrollDuration);
+        if(_autoScrollAttenuate)
+        {
+            // Use quintic(5th degree) polynomial
+            percentage = tweenfunc::quintEaseOut(percentage);
+        }
     }
     
-    Vec2 moveDelta = _autoScrollTargetDelta * percentage;
-    Vec2 newPosition = _autoScrollStartPosition + moveDelta;
-    newPosition = _outOfBoundaryPositionDuringInertiaScroll + (newPosition - _outOfBoundaryPositionDuringInertiaScroll) * distanceRescale;
+    // Calculate the new position
+    Vec2 deltaFromInitialPosition = _autoScrollTargetDelta * percentage;
+    Vec2 newPosition = _autoScrollStartPosition + deltaFromInitialPosition;
+    bool reachedEnd = false;
+    
+    // Adjust the new position according to the bounce opiton
+    {
+        if(_bounceEnabled)
+        {
+            newPosition = _outOfBoundaryPositionDuringInertiaScroll + (newPosition - _outOfBoundaryPositionDuringInertiaScroll) * distanceRescale;
+        }
+        else
+        {
+            Vec2 moveDelta = newPosition - getInnerContainerPosition();
+            Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
+            if(outOfBoundary != Vec2::ZERO)
+            {
+                newPosition += outOfBoundary;
+                reachedEnd = true;
+            }
+        }
+    }
     
     moveChildrenToPosition(newPosition);
+    
     if(_autoScrollMoveCallback)
     {
-        _autoScrollMoveCallback(moveDelta);
+        _autoScrollMoveCallback(getInnerContainerPosition() - newPosition);
     }
     
-    if(percentage == 1)
+    // Finish auto scroll if it ended
+    if(percentage == 1 || reachedEnd)
     {
         _autoScrolling = false;
         if(_autoScrollCompleteCallback)
