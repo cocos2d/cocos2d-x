@@ -783,5 +783,64 @@ FontAtlas * FontFNT::createFontAtlas()
     return tempAtlas;
 }
 
+// For cocostudio
+#ifdef CC_STUDIO_ENABLED_VIEW
+bool FontFNT::checkBMFontResource(const std::string& fntFilePath)
+{
+    BMFontConfiguration *newConf = BMFontConfiguration::create(fntFilePath);
+    if (!newConf)
+        return false;
+
+    std::string atlasName = newConf->getAtlasName();
+    if (atlasName.empty())
+    {
+        return false;
+    }
+
+    if (FileUtils::getInstance()->isAbsolutePath(atlasName))
+    {
+        if (!FileUtils::getInstance()->isFileExist(atlasName))
+        {
+            return false;
+        }
+    }
+    else
+    {
+        std::string dirpath = fntFilePath.substr(0, fntFilePath.find_last_of("/"));
+        if (dirpath == fntFilePath)
+        {
+            dirpath = fntFilePath.substr(0, fntFilePath.find_last_of("\\"));
+        }
+        dirpath += "/";
+        atlasName = dirpath + atlasName;
+        if (!FileUtils::getInstance()->isFileExist(atlasName))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void FontFNT::reloadBMFontResource(const std::string& fntFilePath)
+{
+    if (s_configurations == nullptr)
+    {
+        s_configurations = new (std::nothrow) Map<std::string, BMFontConfiguration*>();
+    }
+
+    BMFontConfiguration *ret = s_configurations->at(fntFilePath);
+    if (ret != nullptr)
+    {
+        s_configurations->erase(fntFilePath);
+    }
+    ret = BMFontConfiguration::create(fntFilePath.c_str());
+    if (ret)
+    {
+        s_configurations->insert(fntFilePath, ret);
+        TextureCache::getInstance()->reloadTexture(ret->getAtlasName());
+
+    }
+}
+#endif
 
 NS_CC_END

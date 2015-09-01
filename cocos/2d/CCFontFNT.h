@@ -46,7 +46,13 @@ public:
     static void purgeCachedData();
     virtual int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     virtual FontAtlas *createFontAtlas() override;
-    
+
+    // For cocostudio
+#ifdef CC_STUDIO_ENABLED_VIEW
+    static bool checkBMFontResource(const std::string& fntFilePath);
+    static void reloadBMFontResource(const std::string& fntFilePath);
+#endif
+
 protected:
     
     FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);

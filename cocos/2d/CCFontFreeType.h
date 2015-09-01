@@ -74,6 +74,12 @@ public:
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
+
+    // For cocostudio
+#ifdef CC_STUDIO_ENABLED_VIEW
+    static void releaseFont(const std::string &fontName);
+#endif
+
 private:
     static const char* _glyphASCII;
     static const char* _glyphNEHE;
