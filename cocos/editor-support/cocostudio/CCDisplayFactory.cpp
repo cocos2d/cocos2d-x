@@ -151,7 +151,7 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
     }
 
     //! create display
-    if(textureName.length() == 0)
+    if(textureName.empty())
     {
         skin = Skin::create();
     }

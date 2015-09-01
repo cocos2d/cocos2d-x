@@ -893,7 +893,7 @@ Node* Node::getChildByTag(int tag) const
 
 Node* Node::getChildByName(const std::string& name) const
 {
-    CCASSERT(name.length() != 0, "Invalid name");
+    CCASSERT(!name.empty(), "Invalid name");
     
     std::hash<std::string> h;
     size_t hash = h(name);
@@ -909,7 +909,7 @@ Node* Node::getChildByName(const std::string& name) const
 
 void Node::enumerateChildren(const std::string &name, std::function<bool (Node *)> callback) const
 {
-    CCASSERT(name.length() != 0, "Invalid name");
+    CCASSERT(!name.empty(), "Invalid name");
     CCASSERT(callback != nullptr, "Invalid callback function");
     
     size_t length = name.length();
@@ -1158,7 +1158,7 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 
 void Node::removeChildByName(const std::string &name, bool cleanup)
 {
-    CCASSERT(name.length() != 0, "Invalid name");
+    CCASSERT(!name.empty(), "Invalid name");
     
     Node *child = this->getChildByName(name);
     
