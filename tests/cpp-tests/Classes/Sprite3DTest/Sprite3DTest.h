@@ -35,7 +35,6 @@ namespace cocos2d {
     class Ray;
     class DrawNode3D;
     class GLProgramState;
-    class MotionStreak3D;
 }
 
 DEFINE_TEST_SUITE(Sprite3DTests);
@@ -593,31 +592,16 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
-class CameraBackgroundClearTest : public Sprite3DTestDemo
+class Sprite3DVertexColorTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(CameraBackgroundClearTest);
-    CameraBackgroundClearTest();
+    CREATE_FUNC(Sprite3DVertexColorTest);
+    Sprite3DVertexColorTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    
-    void switch_CameraClearMode(cocos2d::Ref* sender);
-protected:
-    cocos2d::Camera* _camera;
-    cocos2d::Label* _label;
-};
 
-class MotionStreak3DTest : public Sprite3DTestDemo
-{
-public:
-    CREATE_FUNC(MotionStreak3DTest);
-    MotionStreak3DTest();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void update(float delta) override;
-    
 protected:
     cocos2d::Sprite3D* _sprite;
-    cocos2d::MotionStreak3D* _streak;
 };
+
 #endif

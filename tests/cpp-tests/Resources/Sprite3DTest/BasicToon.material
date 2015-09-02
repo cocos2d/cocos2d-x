@@ -1,0 +1,20 @@
+// A "Material" file can contain one or more materials
+material BasicToon
+{
+    technique normal
+    {
+        pass 0
+        {
+            shader
+            {
+                vertexShader = Sprite3DTest/toon.vert
+                fragmentShader = Sprite3DTest/toon.frag
+
+                sampler u_sampler0
+                {
+                    path = Sprite3DTest/teapot.png
+                }
+            }
+        }
+    }
+}
