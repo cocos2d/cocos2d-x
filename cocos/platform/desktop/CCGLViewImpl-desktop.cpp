@@ -119,8 +119,6 @@ private:
 
 GLViewImpl* GLFWEventHandler::_view = nullptr;
 
-std::string GLViewImpl::_glfwError;
-
 ////////////////////////////////////////////////////
 
 struct keyCodeItem
