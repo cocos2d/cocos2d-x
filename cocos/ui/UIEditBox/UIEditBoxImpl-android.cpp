@@ -29,13 +29,12 @@
 
 #include "UIEditBox.h"
 #include <jni.h>
-#include "jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h"
 #include "jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "2d/CCLabel.h"
 #include "base/ccUTF8.h"
 #include "math/Vec2.h"
 #include "ui/UIHelper.h"
-#include "base/ccUTF8.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -85,14 +84,30 @@ EditBoxImplAndroid::~EditBoxImplAndroid()
 
 void EditBoxImplAndroid::createNativeControl(const Rect& frame)
 {
-    _editBoxIndex = addEditBoxJNI(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+    auto director = cocos2d::Director::getInstance();
+    auto glView = director->getOpenGLView();
+    auto frameSize = glView->getFrameSize();
+    
+    auto winSize = director->getWinSize();
+    auto leftBottom = _editBox->convertToWorldSpace(Point::ZERO);
+    
+    auto contentSize = frame.size;
+    auto rightTop = _editBox->convertToWorldSpace(Point(contentSize.width, contentSize.height));
+    
+    auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
+    auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
+    auto uiWidth = (rightTop.x - leftBottom.x) * glView->getScaleX();
+    auto uiHeight = (rightTop.y - leftBottom.y) * glView->getScaleY();
+    LOGD("scaleX = %f", glView->getScaleX());
+    _editBoxIndex = addEditBoxJNI(uiLeft, uiTop, uiWidth, uiHeight, glView->getScaleX());
     s_allEditBoxes[_editBoxIndex] = this;
 }
 
 void EditBoxImplAndroid::setNativeFont(const char* pFontName, int fontSize)
 {
-
-    setFontEditBoxJNI(_editBoxIndex, pFontName, fontSize);
+    auto director = cocos2d::Director::getInstance();
+    auto glView = director->getOpenGLView();
+    setFontEditBoxJNI(_editBoxIndex, pFontName, fontSize * glView->getScaleX());
 }
 
 void EditBoxImplAndroid::setNativeFontColor(const Color4B& color)

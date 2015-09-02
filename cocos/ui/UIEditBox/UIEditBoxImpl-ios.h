@@ -30,7 +30,10 @@
 
 #include "UIEditBoxImpl-common.h"
 
+
+
 @class UIEditBoxImplIOS_objc;
+@class UIFont;
 
 NS_CC_BEGIN
 

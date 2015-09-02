@@ -53,18 +53,17 @@ bool UIEditBoxTest::init()
         addChild(_TTFShowEditReturn);
         
         
-        auto editBoxSize = Size(visibleSize.width - 100, 60);
+        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
         
         // top
         std::string pNormalSprite = "extensions/green_edit.png";
         _editName = ui::EditBox::create(editBoxSize, ui::Scale9Sprite::create(pNormalSprite));
         _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
-        _editName->setFontName("Paint Boy");
         _editName->setFontColor(Color3B::RED);
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
         _editName->setMaxLength(8);
-        _editName->setFontSize(editBoxSize.height/2);
+       _editName->setFontSize(editBoxSize.height/2);
         _editName->setText("v👐👊💝");
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
@@ -78,7 +77,7 @@ bool UIEditBoxTest::init()
         _editPassword->setMaxLength(6);
         _editPassword->setInputFlag(ui::EditBox::InputFlag::PASSWORD);
         _editPassword->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
-        _editPassword->setFontSize(editBoxSize.height/2);
+       _editPassword->setFontSize(editBoxSize.height/2);
         _editPassword->setDelegate(this);
         addChild(_editPassword);
         
@@ -89,7 +88,6 @@ bool UIEditBoxTest::init()
         _editEmail->setPlaceHolder("Email:");
         _editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
         _editEmail->setDelegate(this);
-        _editEmail->setFontSize(bottomButtonSize.height/2);
         addChild(_editEmail);
         
         return true;

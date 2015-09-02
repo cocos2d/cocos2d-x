@@ -59,14 +59,8 @@ bool EditBoxImplCommon::initWithSize(const Size& size)
 {
     do 
     {
-        auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-
-        Rect rect = Rect(0, 0, size.width * glview->getScaleX(),size.height * glview->getScaleY());
-
-        float factor = cocos2d::Director::getInstance()->getContentScaleFactor();
         
-        rect.size.width /= factor;
-        rect.size.height /= factor;
+        Rect rect = Rect(0, 0, size.width, size.height);
         
         this->createNativeControl(rect);
         
@@ -90,7 +84,6 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     _editBox->addChild(_label, kLabelZOrder);
     
     _labelPlaceHolder = Label::create();
-    // align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
     _labelPlaceHolder->setColor(Color3B::GRAY);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
@@ -256,11 +249,8 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     auto director = cocos2d::Director::getInstance();
     auto glview = director->getOpenGLView();
     Size  controlSize = Size(size.width * glview->getScaleX(),size.height * glview->getScaleY());
-    float factor = director->getContentScaleFactor();
-    controlSize.width /= factor;
-    controlSize.height /= factor;
-    
-    this->setNativeContentSize(size);
+       
+    this->setNativeContentSize(controlSize);
 
 }
 

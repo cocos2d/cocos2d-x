@@ -276,6 +276,7 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
 : EditBoxImplCommon(pEditText)
 ,_systemControl(nullptr)
+, _anchorPoint(Vec2(0.5f, 0.5f))
 {
     
 }
@@ -288,10 +289,19 @@ EditBoxImplIOS::~EditBoxImplIOS()
     
 void EditBoxImplIOS::createNativeControl(const Rect& frame)
 {
-    _systemControl = [[UIEditBoxImplIOS_objc alloc] initWithFrame:CGRectMake(frame.origin.x,
-                                                                             frame.origin.y,
-                                                                             frame.size.width,
-                                                                         frame.size.height)
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+
+    Rect rect(0, 0, frame.size.width * glview->getScaleX(), frame.size.height * glview->getScaleY());
+
+    float factor = cocos2d::Director::getInstance()->getContentScaleFactor();
+
+    rect.size.width /= factor;
+    rect.size.height /= factor;
+    
+    _systemControl = [[UIEditBoxImplIOS_objc alloc] initWithFrame:CGRectMake(rect.origin.x,
+                                                                             rect.origin.y,
+                                                                             rect.size.width,
+                                                                         rect.size.height)
                                                           editBox:this];
 
 }
@@ -450,7 +460,12 @@ void EditBoxImplIOS::updateNativeFrame(const Rect& rect)
 
 void EditBoxImplIOS::setNativeContentSize(const Size& size)
 {
-    [_systemControl setContentSize:CGSizeMake(size.width, size.height)];
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
+    float factor = eaglview.contentScaleFactor;
+    
+    [_systemControl setContentSize:CGSizeMake(size.width / factor, size.height / factor)];
 }
 
 const char* EditBoxImplIOS::getNativeDefaultFontName()
