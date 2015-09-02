@@ -5,5 +5,6 @@
 #include "PerformanceAllocTest.h"
 #include "PerformanceNodeChildrenTest.h"
 #include "PerformanceParticleTest.h"
+#include "PerformanceParticle3DTest.h"
 
 #endif
