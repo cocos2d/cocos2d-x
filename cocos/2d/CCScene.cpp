@@ -71,10 +71,7 @@ Scene::Scene()
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
     
-#if CC_USE_PHYSICS
-    _physicsManager = new (std::nothrow) PhysicsManager(this);
-    _physicsWorld = _physicsManager->getPhysicsWorld();
-#endif
+    Camera::_visitingCamera = nullptr;
 }
 
 Scene::~Scene()
@@ -197,7 +194,7 @@ void Scene::render(Renderer* renderer)
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         camera->apply();
         //clear background with max depth
-        camera->clearBackground(1.0);
+        camera->clearBackground();
         //visit the scene
         visit(renderer, transform, 0);
 #if CC_USE_NAVMESH

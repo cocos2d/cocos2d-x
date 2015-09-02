@@ -26,13 +26,14 @@
 
 #include "Cocos2dRenderer.h"
 
-namespace cocos2d
+namespace CocosAppWinRT
 {
     public ref class OpenGLESPage sealed
     {
     public:
         OpenGLESPage();
         virtual ~OpenGLESPage();
+        void SetVisibility(bool isVisible);
 
     internal:
         OpenGLESPage(OpenGLES* openGLES);
@@ -53,7 +54,7 @@ namespace cocos2d
         void StopRenderLoop();
 
         OpenGLES* mOpenGLES;
-        std::shared_ptr<cocos2d::Cocos2dRenderer> mRenderer;
+        std::shared_ptr<Cocos2dRenderer> mRenderer;
 
         Windows::Foundation::Size mSwapChainPanelSize;
         Concurrency::critical_section mSwapChainPanelSizeCriticalSection;

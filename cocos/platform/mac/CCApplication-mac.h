@@ -47,26 +47,26 @@ public:
      * @lua NA
      */
     virtual ~Application();
-        
+    
     /**
-    @brief	Callback by Director for limit FPS.
+    @brief  Callback by Director for limit FPS.
     @param interval The time, which expressed in second in second, between current frame and next.
     */
     virtual void setAnimationInterval(float interval);
-        
+    
     /**
-    @brief	Get status bar rectangle in GLView window.
+    @brief  Get status bar rectangle in GLView window.
     */
-        
+    
     /**
-    @brief	Run the message loop.
+    @brief  Run the message loop.
     * @js NA
     * @lua NA
     */
     int run();
-        
+    
     /**
-    @brief	Get current applicaiton instance.
+    @brief  Get current applicaiton instance.
     @return Current application instance pointer.
     */
     static Application* getInstance();
@@ -79,13 +79,13 @@ public:
     @return Current language config
     */
     virtual LanguageType getCurrentLanguage();
-		
+    
     /**
     @brief Get current language iso 639-1 code
     @return Current language iso 639-1 code
     */
     virtual const char * getCurrentLanguageCode();
-			
+    
     /**
      @brief Get target platform
      */
@@ -126,4 +126,4 @@ NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#endif	// end of __CC_APPLICATION_MAC_H__;
+#endif  // end of __CC_APPLICATION_MAC_H__;

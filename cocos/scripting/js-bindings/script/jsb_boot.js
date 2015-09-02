@@ -765,10 +765,7 @@ cc.winSize = cc.director.getWinSize();
  * cc.view is the shared view object.
  */
 cc.view = cc.director.getOpenGLView();
-cc.view.getDevicePixelRatio = function () {
-    var sys = cc.sys;
-    return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? 2 : 1;
-};
+cc.view.getDevicePixelRatio = cc.view.getRetinaFactor;
 cc.view.convertToLocationInView = function (tx, ty, relatedPos) {
     var _devicePixelRatio = cc.view.getDevicePixelRatio();
     return {x: _devicePixelRatio * (tx - relatedPos.left), y: _devicePixelRatio * (relatedPos.top + relatedPos.height - ty)};

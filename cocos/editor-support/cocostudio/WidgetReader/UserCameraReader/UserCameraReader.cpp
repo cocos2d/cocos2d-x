@@ -28,6 +28,7 @@
 #include "cocostudio/CSParse3DBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -108,6 +109,7 @@ namespace cocostudio
         float fov = 60.f;
         unsigned int cameraFlag = 0;
         bool skyBoxEnabled = false;
+        bool skyBoxValid = true;
 
         std::string attriname;
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -133,15 +135,24 @@ namespace cocostudio
             }
             else if (attriname == "CameraFlagData")
             {
-                cameraFlag = atoi(value.c_str());
+                int flag = atoi(value.c_str());
+                if (flag != 0)
+                    cameraFlag = flag;
             }
             else if (attriname == "SkyBoxEnabled")
             {
                 skyBoxEnabled = (value == "True") ? true : false;
             }
+            else if (attriname == "SkyBoxValid")
+            {
+                skyBoxValid = (value == "True") ? true : false;
+            }
             
             attribute = attribute->Next();
         }
+
+        if (!skyBoxValid)
+            skyBoxEnabled = false;
 
         Vec2 clipPlane(1, 1000);
 
@@ -415,23 +426,41 @@ namespace cocostudio
         int cameraFlag = options->cameraFlag();
         camera->setCameraFlag((CameraFlag)cameraFlag);
 
+        auto node3DReader = Node3DReader::getInstance();
+        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
+
         bool skyBoxEnabled = options->skyBoxEnabled() != 0;
         if (skyBoxEnabled)
         {
-            auto leftFileData = options->leftFileData()->path()->c_str();
-            auto rightFileData = options->rightFileData()->path()->c_str();
-            auto upFileData = options->upFileData()->path()->c_str();
-            auto downFileData = options->downFileData()->path()->c_str();
-            auto forwardFileData = options->forwardFileData()->path()->c_str();
-            auto backFileData = options->backFileData()->path()->c_str();
+            std::string leftFileData = options->leftFileData()->path()->c_str();
+            std::string rightFileData = options->rightFileData()->path()->c_str();
+            std::string upFileData = options->upFileData()->path()->c_str();
+            std::string downFileData = options->downFileData()->path()->c_str();
+            std::string forwardFileData = options->forwardFileData()->path()->c_str();
+            std::string backFileData = options->backFileData()->path()->c_str();
+            FileUtils *fileUtils = FileUtils::getInstance();
 
-            Skybox* childBox = Skybox::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
-            childBox->setCameraMask(cameraFlag);
-            node->addChild(childBox,0,"_innerSkyBox");
+            if (fileUtils->isFileExist(leftFileData)
+                && fileUtils->isFileExist(rightFileData)
+                && fileUtils->isFileExist(upFileData)
+                && fileUtils->isFileExist(downFileData)
+                && fileUtils->isFileExist(forwardFileData)
+                && fileUtils->isFileExist(backFileData))
+            {
+                CameraBackgroundSkyBoxBrush* brush = CameraBackgroundSkyBoxBrush::create(leftFileData, rightFileData, upFileData, downFileData, forwardFileData, backFileData);
+                camera->setBackgroundBrush(brush);
+            }
+            else
+            {
+                if (GameNode3DReader::getSceneBrushInstance() != nullptr)
+                    camera->setBackgroundBrush(GameNode3DReader::getSceneBrushInstance());
+            }
         }
-
-        auto node3DReader = Node3DReader::getInstance();
-        node3DReader->setPropsWithFlatBuffers(node, (Table*)(options->node3DOption()));
+        else
+        {
+            if (GameNode3DReader::getSceneBrushInstance() != nullptr)
+                camera->setBackgroundBrush(GameNode3DReader::getSceneBrushInstance());
+        }
     }
     
     Node* UserCameraReader::createNodeWithFlatBuffers(const flatbuffers::Table *userCameraDOptions)

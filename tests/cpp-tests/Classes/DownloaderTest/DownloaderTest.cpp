@@ -117,7 +117,8 @@ void DownloaderAsyncTest::onEnter()
     DownloaderBaseTest::onEnter();
 
     auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
-
+        MenuItemFont* item = (MenuItemFont*)sender;
+        item->setEnabled(false);
         if (_downloader)
         {
             std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_async.jpg";

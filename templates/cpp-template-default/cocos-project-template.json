@@ -41,6 +41,7 @@
                "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
                "proj.win8.1-universal/App.Windows/Package.appxmanifest",
                "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
                "proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
                "proj.android/.project",
                "proj.android/.cproject",

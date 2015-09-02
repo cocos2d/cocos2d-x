@@ -354,7 +354,7 @@ void UIEditBoxImplWinrt::openKeyboard()
         Windows::Foundation::EventHandler<Platform::String^>^ receiveHandler = ref new Windows::Foundation::EventHandler<Platform::String^>(
             [this](Platform::Object^ sender, Platform::String^ arg)
         {
-            setText(PlatformStringTostring(arg).c_str());
+            setText(PlatformStringToString(arg).c_str());
             if (_delegate != NULL) {
                 _delegate->editBoxTextChanged(_editBox, getText());
                 _delegate->editBoxEditingDidEnd(_editBox);
@@ -362,10 +362,10 @@ void UIEditBoxImplWinrt::openKeyboard()
             }
         });
 
-        m_editBoxWinrt = ref new EditBoxWinRT(stringToPlatformString(placeHolder), stringToPlatformString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
+        m_editBoxWinrt = ref new EditBoxWinRT(PlatformStringFromString(placeHolder), PlatformStringFromString(getText()), m_nMaxLength, m_eEditBoxInputMode, m_eEditBoxInputFlag, receiveHandler);
     }
 
-    m_editBoxWinrt->OpenXamlEditBox(stringToPlatformString(getText()));
+    m_editBoxWinrt->OpenXamlEditBox(PlatformStringFromString(getText()));
 }
 
 bool UIEditBoxImplWinrt::initWithSize( const Size& size )
@@ -568,32 +568,6 @@ void UIEditBoxImplWinrt::closeKeyboard()
 void UIEditBoxImplWinrt::onEnter( void )
 {
 
-}
-
-Platform::String^ UIEditBoxImplWinrt::stringToPlatformString( std::string strSrc )
-{
-    // to wide char
-    int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);  
-    wchar_t* pWStr = new wchar_t[nStrLen + 1];  
-    memset(pWStr, 0, nStrLen + 1);  
-    MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, pWStr, nStrLen);  
-    Platform::String^ strDst = ref new Platform::String(pWStr);
-    delete[] pWStr;
-    return strDst;
-}
-
-std::string UIEditBoxImplWinrt::PlatformStringTostring( Platform::String^ strSrc )
-{
-    const wchar_t* pWStr = strSrc->Data();
-    int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);  
-    char* pStr = new char[nStrLen + 1];  
-    memset(pStr, 0, nStrLen + 1);  
-    WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, pStr, nStrLen, NULL, NULL);  ;  
-
-    std::string strDst = std::string(pStr);
-
-    delete[] pStr;
-    return strDst;
 }
 
 }

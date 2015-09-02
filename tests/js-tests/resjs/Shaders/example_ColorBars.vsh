@@ -14,4 +14,3 @@ void main()
     gl_Position = CC_PMatrix * a_position;
 	v_texCoord = a_texCoord;
 }
-

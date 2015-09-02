@@ -74,14 +74,14 @@ BoneNode* BoneNode::create(int length)
 
 void BoneNode::addChild(cocos2d::Node* child, int localZOrder, int tag)
 {
-    Node::addChild(child, localZOrder, tag);
     addToChildrenListHelper(child);
+    Node::addChild(child, localZOrder, tag);
 }
 
 void BoneNode::addChild(Node* child, int localZOrder, const std::string &name)
 {
-    Node::addChild(child, localZOrder, name);
     addToChildrenListHelper(child);
+    Node::addChild(child, localZOrder, name);
 }
 
 void BoneNode::addSkin(SkinNode* skin, bool isDisplay, bool hideOthers)
@@ -182,6 +182,11 @@ void BoneNode::addToBoneList(BoneNode* bone)
 void BoneNode::addToSkinList(SkinNode* skin)
 {
     _boneSkins.pushBack(skin);
+    auto blendSkin = dynamic_cast<BlendProtocol*>(skin);
+    if (nullptr != blendSkin && _blendFunc != blendSkin->getBlendFunc())
+    {
+        blendSkin->setBlendFunc(_blendFunc);
+    }
 }
 
 void BoneNode::removeFromSkinList(SkinNode* skin)
@@ -281,7 +286,18 @@ cocos2d::Rect BoneNode::getVisibleSkinsRect() const
 
 void BoneNode::setBlendFunc(const cocos2d::BlendFunc& blendFunc)
 {
-    _blendFunc = blendFunc;
+    if (_blendFunc != blendFunc)
+    {
+        _blendFunc = blendFunc;
+        for (auto & skin : _boneSkins)
+        {
+            auto blendSkin = dynamic_cast<BlendProtocol*>(skin);
+            if (nullptr != blendSkin)
+            {
+                blendSkin->setBlendFunc(_blendFunc);
+            }
+        }
+    }
 }
 
 void BoneNode::setDebugDrawLength(float length)
@@ -425,6 +441,44 @@ void BoneNode::updateColor()
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
 
+void BoneNode::updateDisplayedColor(const cocos2d::Color3B& parentColor)
+{
+    if (_cascadeColorEnabled)
+    {
+        for (const auto &child : _boneSkins)
+        {
+            child->updateDisplayedColor(_displayedColor);
+        }
+    }
+}
+
+void BoneNode::updateDisplayedOpacity(GLubyte parentOpacity)
+{
+    if (_cascadeOpacityEnabled)
+    {
+        for (const auto& child : _boneSkins)
+        {
+            child->updateDisplayedOpacity(_displayedOpacity);
+        }
+    }
+}
+
+void BoneNode::disableCascadeOpacity()
+{
+    for (const auto& child : _boneSkins)
+    {
+        child->updateDisplayedOpacity(255);
+    }
+}
+
+void BoneNode::disableCascadeColor()
+{
+    for (const auto& child : _boneSkins)
+    {
+        child->updateDisplayedColor(cocos2d::Color3B::WHITE);
+    }
+}
+
 void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
     getGLProgram()->use();
@@ -534,6 +588,12 @@ bool BoneNode::isPointOnRack(const cocos2d::Vec2& bonePoint)
 
 void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
 {
+    bool visibleByCamera = bone->isVisitableByVisitingCamera();
+    if (!visibleByCamera)
+    {
+        return;
+    }
+
     cocos2d::Vec3 vpos[4];
     for (int i = 0; i < 4; i++)
     {

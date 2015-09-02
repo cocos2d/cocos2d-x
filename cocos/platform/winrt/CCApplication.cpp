@@ -116,7 +116,7 @@ const char * Application::getCurrentLanguageCode()
         result = GetUserPreferredUILanguages(MUI_LANGUAGE_NAME, &numLanguages, pwszLanguagesBuffer, &cchLanguagesBuffer);
         if (result) {
 
-            code = CCUnicodeToUtf8(pwszLanguagesBuffer);
+            code = StringWideCharToUtf8(pwszLanguagesBuffer);
         }
 
         if (pwszLanguagesBuffer)
@@ -214,11 +214,14 @@ LanguageType Application::getCurrentLanguage()
 
 Application::Platform  Application::getTargetPlatform()
 {
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
-    return Platform::OS_WP8;
-#else
-    return Platform::OS_WINRT;
-#endif
+    if (isWindowsPhone())
+    {
+        return Platform::OS_WP8;
+    }
+    else
+    {
+        return Platform::OS_WINRT;
+    }
 }
 
 bool Application::openURL(const std::string &url)
