@@ -40,7 +40,7 @@ class Texture2D;
 /** @class MotionStreak3D.
  * @brief Creates a trailing path. It is created from a line segment sweeping along the path.
  */
-class MotionStreak3D : public Node, public TextureProtocol
+class CC_DLL MotionStreak3D : public Node, public TextureProtocol
 {
 public:
     /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename.
