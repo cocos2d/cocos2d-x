@@ -53,19 +53,28 @@ namespace cocos2d { namespace network {
         std::unique_ptr<IDownloadTask> _coTask;
     };
     
+    struct CC_DLL DownloaderHints
+    {
+        uint32_t countOfMaxProcessingTasks;
+        uint32_t timeoutInSeconds;
+        std::string tempFileNameSuffix;
+    };
+    
     class CC_DLL Downloader final
     {
     public:
         Downloader();
+        Downloader(const DownloaderHints& hints);
         ~Downloader();
         
         std::function<void(const DownloadTask& task,
-                           std::vector<char>& data)> onDataTaskSuccess;
+                           std::vector<unsigned char>& data)> onDataTaskSuccess;
         
         std::function<void(const DownloadTask& task,
-                           std::vector<char>& data,
+                           int64_t bytesReceived,
                            int64_t totalBytesReceived,
-                           int64_t totalBytesExpected)> onDataTaskProgress;
+                           int64_t totalBytesExpected,
+                           std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)> onDataTaskProgress;
         
         std::function<void(const DownloadTask& task)> onFileTaskSuccess;
         
@@ -84,8 +93,6 @@ namespace cocos2d { namespace network {
         std::shared_ptr<const DownloadTask> createDownloadFileTask(const std::string& srcUrl, const std::string& storagePath, const std::string& identifier = "");
         
     private:
-        class TaskMeta;
-        std::unordered_map<const DownloadTask*, TaskMeta> taskMetaMap;
         std::unique_ptr<IDownloaderImpl> _impl;
     };
 

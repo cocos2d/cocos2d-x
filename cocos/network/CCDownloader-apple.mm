@@ -22,11 +22,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "network/CCDownloader-apple.h"
 
 #include "network/CCDownloader.h"
-#include "network/CCIDownloaderImpl.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //  OC Classes Declaration
@@ -36,11 +34,16 @@
 @interface DownloadTaskWrapper : NSObject
 {
     std::shared_ptr<const cocos2d::network::DownloadTask> task;
+    NSMutableArray *dataArray;
 }
-@property (nonatomic) int64_t totalBytesReceived;    // temp var for dataTask: didReceivedData callback
+// temp vars for dataTask: didReceivedData callback
+@property (nonatomic) int64_t bytesReceived;
+@property (nonatomic) int64_t totalBytesReceived;
 
 -(id)init:(std::shared_ptr<const cocos2d::network::DownloadTask>&)t;
 -(const cocos2d::network::DownloadTask *)get;
+-(void) addData:(NSData*) data;
+-(int64_t) transferDataToBuffer:(void*)buffer lengthOfBuffer:(int64_t)len;
 
 @end
 
@@ -120,6 +123,7 @@ namespace cocos2d { namespace network {
 - (id)init: (std::shared_ptr<const cocos2d::network::DownloadTask>&)t
 {
     DLLOG("Construct DonloadTaskWrapper %p", self);
+    dataArray = [NSMutableArray arrayWithCapacity:8];
     task = t;
     return self;
 }
@@ -127,6 +131,47 @@ namespace cocos2d { namespace network {
 -(const cocos2d::network::DownloadTask *)get
 {
     return task.get();
+}
+
+-(void) addData:(NSData*) data
+{
+    [dataArray addObject:data];
+    self.bytesReceived += data.length;
+    self.totalBytesReceived += data.length;
+}
+
+-(int64_t) transferDataToBuffer:(void*)buffer lengthOfBuffer:(int64_t)len
+{
+    int64_t bytesReceived = 0;
+    int receivedDataObject = 0;
+    
+    __block char *p = (char *)buffer;
+    for (NSData* data in dataArray)
+    {
+        // check
+        if (bytesReceived + data.length > len)
+        {
+            break;
+        }
+        
+        // copy data
+        [data enumerateByteRangesUsingBlock:^(const void *bytes,
+                                              NSRange byteRange,
+                                              BOOL *stop)
+         {
+             memcpy(p, bytes, byteRange.length);
+             p += byteRange.length;
+             *stop = NO;
+         }];
+        
+        // accumulate
+        bytesReceived += data.length;
+        ++receivedDataObject;
+    }
+    
+    // remove receivedNSDataObject from dataArray
+    [dataArray removeObjectsInRange:NSMakeRange(0, receivedDataObject)];
+    return bytesReceived;
 }
 
 -(void)dealloc
@@ -248,10 +293,10 @@ namespace cocos2d { namespace network {
     // if no error, callback has been called in finish task
     if (outer && error)
     {
-        outer->onTaskFinish(*[wrapper get],
-                            cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL,
-                            (int)error.code,
-                            [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding]);
+//        outer->onTaskFinish(*[wrapper get],
+//                            cocos2d::network::DownloadTask::ERROR_IMPL_INTERNAL,
+//                            (int)error.code,
+//                            [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding]);
     }
     [self.taskDict removeObjectForKey:task];
     [wrapper release];
@@ -297,19 +342,19 @@ namespace cocos2d { namespace network {
         return;
     }
     DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:dataTask];
-    [data enumerateByteRangesUsingBlock:^(const void *bytes,
-                                          NSRange byteRange,
-                                          BOOL *stop)
+    [wrapper addData:data];
+    
+    std::function<int64_t(void *, int64_t)> transferDataToBuffer =
+    [wrapper](void *buffer, int64_t bufLen)->int64_t
     {
-        int64_t bytesWritten = (int64_t)byteRange.length;
-        wrapper.totalBytesReceived += bytesWritten;
-        outer->onTaskProgress(*[wrapper get],
-                              (const char *)bytes,
-                              bytesWritten,
-                              wrapper.totalBytesReceived,
-                              dataTask.countOfBytesExpectedToReceive);
-        *stop = NO;
-    }];
+        return [wrapper transferDataToBuffer:buffer lengthOfBuffer: bufLen];
+    };
+    
+    outer->onTaskProgress(*[wrapper get],
+                          wrapper.bytesReceived,
+                          wrapper.totalBytesReceived,
+                          dataTask.countOfBytesExpectedToReceive,
+                          transferDataToBuffer);
 }
 
 /* Invoke the completion routine with a valid NSCachedURLResponse to
@@ -385,7 +430,7 @@ namespace cocos2d { namespace network {
             errorString = [error.localizedDescription cStringUsingEncoding:NSUTF8StringEncoding];
         }
     }
-    outer->onTaskFinish(*[wrapper get], errorCode, errorCodeInternal, errorString);
+//    outer->onTaskFinish(*[wrapper get], errorCode, errorCodeInternal, errorString);
 }
 
 // @optional
@@ -403,7 +448,7 @@ namespace cocos2d { namespace network {
     }
     
     DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:downloadTask];
-    outer->onTaskProgress(*[wrapper get], nullptr, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
+//    outer->onTaskProgress(*[wrapper get], nullptr, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
 }
 
 /* Sent when a download has been resumed. If a download failed with an
@@ -421,5 +466,3 @@ namespace cocos2d { namespace network {
 }
 
 @end
-
-#endif  //  (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

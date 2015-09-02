@@ -27,6 +27,7 @@
 // include platform specific implement class
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "network/CCDownloader-apple.h"
+#include "network/CCDownloader-curl.h"
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "network/CCDownloader-apple.h"
 #else
@@ -44,30 +45,34 @@ namespace cocos2d { namespace network {
     {
         DLLOG("Destruct DownloadTask %p", this);
     }
-    
-////////////////////////////////////////////////////////////////////////////////
-//  Downloader Task Meta Data
-    struct Downloader::TaskMeta
-    {
-        std::vector<char> buf; // use to store data from DataTask
-    };
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Implement Downloader
-
     Downloader::Downloader()
+    {
+        DownloaderHints hints =
+        {
+            .countOfMaxProcessingTasks = 6,
+            .timeoutInSeconds = 45,
+            .tempFileNameSuffix = ".tmp"
+        };
+        new(this)Downloader(hints);
+    }
+    
+    Downloader::Downloader(const DownloaderHints& hints)
     {
         DLLOG("Construct Downloader %p", this);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        _impl.reset(new DownloaderApple());
+//        _impl.reset(new DownloaderApple());
+        _impl.reset(new DownloaderCURL(hints));
 #else
         _impl.reset(new DownloaderApple());
 #endif
         _impl->onTaskProgress = [this](const DownloadTask& task,
-                                       const char *data,
                                        int64_t bytesReceived,
                                        int64_t totalBytesReceived,
-                                       int64_t totalBytesExpected)
+                                       int64_t totalBytesExpected,
+                                       std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)
         {
             if (task.storagePath.length())
             {
@@ -81,14 +86,7 @@ namespace cocos2d { namespace network {
                 if (onDataTaskProgress)
                 {
                     // data task
-                    auto& buf = taskMetaMap[&task].buf;
-                    size_t newSize = buf.size() + bytesReceived;
-                    if (newSize > buf.capacity())
-                    {
-                        buf.reserve(newSize);
-                    }
-                    buf.insert(buf.end(), data, data + bytesReceived);
-                    onDataTaskProgress(task, buf, totalBytesReceived, totalBytesExpected);
+                    onDataTaskProgress(task, bytesReceived, totalBytesReceived, totalBytesExpected, transferDataToBuffer);
                 }
             }
         };
@@ -96,7 +94,8 @@ namespace cocos2d { namespace network {
         _impl->onTaskFinish = [this](const DownloadTask& task,
                                      int errorCode,
                                      int errorCodeInternal,
-                                     const std::string& errorStr)
+                                     const std::string& errorStr,
+                                     std::vector<unsigned char>& data)
         {
             if (DownloadTask::ERROR_NO_ERROR != errorCode)
 
@@ -119,8 +118,7 @@ namespace cocos2d { namespace network {
                 // data task
                 if (onDataTaskSuccess)
                 {
-                    auto& buf = taskMetaMap[&task].buf;
-                    onDataTaskSuccess(task, buf);
+                    onDataTaskSuccess(task, data);
                 }
             }
         };

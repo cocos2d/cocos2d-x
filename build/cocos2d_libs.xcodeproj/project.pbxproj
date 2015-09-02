@@ -1871,6 +1871,8 @@
 		A0534A681B872FFD006B03E5 /* CCDownloader-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0534A641B872FFD006B03E5 /* CCDownloader-apple.mm */; };
 		A0534A6A1B87306E006B03E5 /* CCIDownloaderImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */; };
 		A0534A6B1B87306E006B03E5 /* CCIDownloaderImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */; };
+		A05DCF9D1B90584E00EE040B /* CCDownloader-curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */; };
+		A05DCF9E1B90584E00EE040B /* CCDownloader-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -4652,6 +4654,8 @@
 		A0534A631B872FFD006B03E5 /* CCDownloader-apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDownloader-apple.h"; sourceTree = "<group>"; };
 		A0534A641B872FFD006B03E5 /* CCDownloader-apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCDownloader-apple.mm"; sourceTree = "<group>"; };
 		A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCIDownloaderImpl.h; sourceTree = "<group>"; };
+		A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCDownloader-curl.cpp"; sourceTree = "<group>"; };
+		A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCDownloader-curl.h"; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -7549,6 +7553,8 @@
 		50693C621B6BF2BC005C5820 /* Downloader */ = {
 			isa = PBXGroup;
 			children = (
+				A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */,
+				A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */,
 				A0534A691B87306E006B03E5 /* CCIDownloaderImpl.h */,
 				A0534A631B872FFD006B03E5 /* CCDownloader-apple.h */,
 				A0534A641B872FFD006B03E5 /* CCDownloader-apple.mm */,
@@ -9776,6 +9782,7 @@
 				15AE1B9C19AADFDF00C27E9E /* UIRelativeBox.h in Headers */,
 				B665E3341AA80A6500DDB1C5 /* CCPUOnEmissionObserver.h in Headers */,
 				15AE1A7519AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
+				A05DCF9E1B90584E00EE040B /* CCDownloader-curl.h in Headers */,
 				B665E2881AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandlerTranslator.h in Headers */,
 				B665E2441AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.h in Headers */,
 				B665E2281AA80A6500DDB1C5 /* CCPUBillboardChain.h in Headers */,
@@ -11468,6 +11475,7 @@
 				B6CAB3731AF9AA1A00B9B856 /* btGjkEpa2.cpp in Sources */,
 				50ABBE791925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
 				15AE1A2E19AAD3D500C27E9E /* b2TimeOfImpact.cpp in Sources */,
+				A05DCF9D1B90584E00EE040B /* CCDownloader-curl.cpp in Sources */,
 				B6CAB2FD1AF9AA1A00B9B856 /* btTriangleIndexVertexArray.cpp in Sources */,
 				50ABC0111926664800A911A9 /* CCGLView.cpp in Sources */,
 				50ABBE3D1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,

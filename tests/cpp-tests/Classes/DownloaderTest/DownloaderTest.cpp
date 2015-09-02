@@ -128,18 +128,26 @@ void DownloaderAsyncTest::onEnter()
     DownloaderBaseTest::onEnter();
 
     _downloader->onDataTaskProgress = [this](const network::DownloadTask& task,
-                                             std::vector<char>& data,
+                                             int64_t bytesReceived,
                                              int64_t totalBytesReceived,
-                                             int64_t totalBytesExpected){
-        CCLOG("DownloaderAsyncTest onDataTaskProgress(%ld, totalBytesReceived:%lld, totalBytesExpected:%lld)"
-              , data.size()
+                                             int64_t totalBytesExpected,
+                                             std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer){
+        CCLOG("DownloaderAsyncTest onDataTaskProgress(bytesReceived: %lld, totalBytesReceived:%lld, totalBytesExpected:%lld)"
+              , bytesReceived
               , totalBytesReceived
               , totalBytesExpected);
+        
+        std::vector<unsigned char> buf;
+        buf.reserve(bytesReceived);
+        int64_t transfered = transferDataToBuffer(buf.data(), buf.capacity());
+        assert(transfered == bytesReceived);
     };
+    
     _downloader->onDataTaskSuccess = [this](const network::DownloadTask& task,
-                                            std::vector<char>& data){
+                                            std::vector<unsigned char>& data){
         CCLOG("DownloaderAsyncTest onDataTaskSuccess(%ld)", data.size());
     };
+    
     auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
 
         if (_downloader)
