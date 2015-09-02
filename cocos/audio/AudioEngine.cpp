@@ -237,6 +237,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             auto& audioRef = _audioIDInfoMap[ret];
             audioRef.volume = volume;
             audioRef.loop = loop;
+            audioRef.pitch = 1.f;
             audioRef.filePath = &it->first;
 
             if (profileHelper) {

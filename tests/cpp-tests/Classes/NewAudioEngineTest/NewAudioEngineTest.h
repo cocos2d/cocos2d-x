@@ -164,5 +164,21 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class AudioPitchTest : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPitchTest);
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+
+private:
+    int _audioID;
+    float _audioPitch;
+
+    cocos2d::Label* _pitchLabel;
+};
+
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */
 #endif
