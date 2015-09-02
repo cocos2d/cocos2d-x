@@ -149,7 +149,16 @@ void Profile::testCaseBegin(std::string testName, std::vector<std::string> condH
     curTestName = testName;
     curCondHeaders = condHeaders;
     curRetHeaders = retHeaders;
-    curTestResults.clear();
+    
+    auto findValue = testData.find(curTestName);
+    if (findValue != testData.end())
+    {
+        curTestResults = findValue->second.asValueVector();
+    }
+    else
+    {
+        curTestResults.clear();
+    }
 }
 
 void Profile::addTestResult(std::vector<std::string> conditions, std::vector<std::string> results)
@@ -207,7 +216,13 @@ void Profile::flush()
     rapidjson::Value theData = valueMapToJson(testData, allocator);
     
     rapidjson::StringBuffer buffer;
+
+    // write pretty format json
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+
+    // write json in one line
+//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
     theData.Accept(writer);
     auto out = buffer.GetString();
     

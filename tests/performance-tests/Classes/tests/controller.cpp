@@ -7,7 +7,7 @@
 
 USING_NS_CC;
 
-#define TEST_TIME_OUT 50
+#define TEST_TIME_OUT 600
 #define CREATE_TIME_OUT 25
 #define LOG_INDENTATION "  "
 #define LOG_TAG "[TestController]"
@@ -22,6 +22,7 @@ public:
     {
         addTest("Alloc Tests", []() { return new PerformceAllocTests(); });
         addTest("Node Children Tests", []() { return new PerformceNodeChildrenTests(); });
+        addTest("Particle Tests", []() { return new PerformceParticleTests(); });
     }
 };
 
