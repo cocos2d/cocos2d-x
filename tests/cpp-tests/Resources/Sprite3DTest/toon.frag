@@ -4,6 +4,7 @@ varying mediump vec2 v_texture_coord;
 varying vec2 v_texture_coord;
 #endif
 uniform vec4 u_color;
+uniform sampler2D u_sampler0; 
 varying vec3 v_normal;
 void main(void)
 {
@@ -12,7 +13,7 @@ void main(void)
 	vec3 light_color = vec3(1,1,1);
 	vec3 normal  = normalize(v_normal);
 	float diffuse_factor = dot(normal,-light_direction);
-	vec4 diffuse_color = texture2D(CC_Texture0,v_texture_coord);
+	vec4 diffuse_color = texture2D(u_sampler0,v_texture_coord);
 
     if (diffuse_factor > 0.95)      diffuse_factor=1.0;
     else if (diffuse_factor > 0.75) diffuse_factor = 0.8;

@@ -61,6 +61,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DClippingTest);
     ADD_TEST_CASE(Sprite3DTestMeshLight);
     ADD_TEST_CASE(Animate3DCallbackTest);
+    ADD_TEST_CASE(Sprite3DVertexColorTest);
 };
 
 //------------------------------------------------------------------
@@ -231,38 +232,9 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //create cylinder
     auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
-
-    //create and set our custom shader
-    auto shader =GLProgram::createWithFilenames("Sprite3DTest/cylinder.vert","Sprite3DTest/cylinder.frag");
-    _state = GLProgramState::create(shader);
-    cylinder->setGLProgramState(_state);
-
-    _state->setUniformFloat("offset",_cylinder_texture_offset);
-    _state->setUniformFloat("duration",_shining_duraion);
-    //pass mesh's attribute to shader
-    long offset = 0;
-    auto attributeCount = cylinder->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = cylinder->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size,
-            meshattribute.type,
-            GL_FALSE,
-            cylinder->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    }
-
-    //create the second texture for cylinder
-    auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
-    Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = GL_NEAREST;
-    tRepeatParams.minFilter = GL_NEAREST;
-    tRepeatParams.wrapS = GL_REPEAT;
-    tRepeatParams.wrapT = GL_REPEAT;
-    shining_texture->setTexParameters(tRepeatParams); 
-    //pass the texture sampler to our custom shader
-    _state->setUniformTexture("caustics",shining_texture);
+    auto mat = Material::createWithFilename("Sprite3DTest/UVAnimation.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    cylinder->setMaterial(mat);
 
 
     this->addChild(cylinder);
@@ -275,31 +247,6 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //the callback function update cylinder's texcoord
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                                            [this](EventCustom*)
-                                                            {
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/cylinder.vert", "Sprite3DTest/cylinder.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                                auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
-                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
-                                                                tRepeatParams.magFilter = GL_NEAREST;
-                                                                tRepeatParams.minFilter = GL_NEAREST;
-                                                                tRepeatParams.wrapS = GL_REPEAT;
-                                                                tRepeatParams.wrapT = GL_REPEAT;
-                                                                shining_texture->setTexParameters(tRepeatParams); 
-                                                                //pass the texture sampler to our custom shader
-                                                                _state->setUniformTexture("caustics",shining_texture);
-                                                                _state->setUniformFloat("offset",_cylinder_texture_offset);
-                                                                _state->setUniformFloat("duration",_shining_duraion);
-                                                            }
-                                                            );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-#endif
 }
 
 Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
@@ -368,35 +315,11 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
     _plane->setRotation3D(Vec3(90,0,0));
 
-    // use custom shader
-    auto shader =GLProgram::createWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
-    _state = GLProgramState::create(shader);
-    _plane->setGLProgramState(_state);
-
-    //pass mesh's attribute to shader
-    long offset = 0; 
-    auto attributeCount = _plane->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = _plane->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size, 
-            meshattribute.type,
-            GL_FALSE,
-            _plane->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    } 
+    auto mat = Material::createWithFilename("Sprite3DTest/FakeShadow.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    _plane->setMaterial(mat);
     _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
 
-    //create shadow texture
-    auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
-    Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = GL_LINEAR;
-    tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-    shadowTexture->setTexParameters(tRepeatParams); 
-    _state->setUniformTexture("u_shadowTexture",shadowTexture);
     layer->addChild(_plane); 
 
     //create the orc
@@ -405,38 +328,12 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _orc->setRotation3D(Vec3(0,180,0));
     _orc->setPosition3D(Vec3(0,0,10));
     _targetPos = _orc->getPosition3D();
-    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+    _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
     layer->addChild(_orc);
     layer->addChild(_camera);
     layer->setCameraMask(2);
 
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                                            [this](EventCustom*)
-                                                            {
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/simple_shadow.vert","Sprite3DTest/simple_shadow.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                                
-                                                                _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
-                                                                
-                                                                //create shadow texture
-                                                                auto shadowTexture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/shadowCircle.png");
-                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
-                                                                tRepeatParams.magFilter = GL_LINEAR;
-                                                                tRepeatParams.minFilter = GL_LINEAR;
-                                                                tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-                                                                tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-                                                                shadowTexture->setTexParameters(tRepeatParams); 
-                                                                _state->setUniformTexture("u_shadowTexture",shadowTexture);
-                                                            }
-                                                            );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-#endif
 }
 
 Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
@@ -520,7 +417,7 @@ void Sprite3DFakeShadowTest::move3D(float elapsedTime)
     offset.x=offset.x;
     offset.z=offset.z;
     //pass the newest orc position
-    _plane->getGLProgramState()->setUniformVec3("u_target_pos",_orc->getPosition3D());
+    _state->setUniformVec3("u_target_pos",_orc->getPosition3D());
 }
 
 void Sprite3DFakeShadowTest::updateState(float elapsedTime)
@@ -616,44 +513,17 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     _camera->setCameraFlag(CameraFlag::USER1);
     // create a teapot
     auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
-    //create and set our custom shader 
-    auto shader =GLProgram::createWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
-    _state = GLProgramState::create(shader);
-    teapot->setGLProgramState(_state);
+    auto mat = Material::createWithFilename("Sprite3DTest/BasicToon.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    teapot->setMaterial(mat);
+
     teapot->setPosition3D(Vec3(0,-5,-20));
     teapot->setRotation3D(Vec3(-90,180,0)); 
     auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
     teapot->runAction(RepeatForever::create(rotate_action)); 
-    //pass mesh's attribute to shader
-    long offset = 0;
-    auto attributeCount = teapot->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++) {
-        auto meshattribute = teapot->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size,
-            meshattribute.type,
-            GL_FALSE,
-            teapot->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
-    }
     addChild(teapot);
     addChild(_camera);
     setCameraMask(2);
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                                            [this](EventCustom*)
-                                                            {
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/toon.vert","Sprite3DTest/toon.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
-                                                            }
-                                                            );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-#endif
 }
 
 Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
@@ -2433,10 +2303,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     _teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
     _teapot->retain();
 
-    //create and set our custom shader
-    auto shader = GLProgram::createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
-    auto state = GLProgramState::create(shader);
-
     // create the second texture for cylinder
     _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
         "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
@@ -2452,31 +2318,18 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     _textureCube->setTexParameters(tRepeatParams);
 
+    auto mat = Material::createWithFilename("Sprite3DTest/CubeMap.material");
+    auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+    _teapot->setMaterial(mat);
     // pass the texture sampler to our custom shader
     state->setUniformTexture("u_cubeTex", _textureCube);
 
-    _teapot->setGLProgramState(state);
     _teapot->setPosition3D(Vec3(0, -5, 0));
     _teapot->setRotation3D(Vec3(-90, 180, 0));
 
     auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
     _teapot->runAction(RepeatForever::create(rotate_action));
 
-    //pass mesh's attribute to shader
-    long offset = 0;
-    auto attributeCount = _teapot->getMesh()->getMeshVertexAttribCount();
-    for (auto i = 0; i < attributeCount; i++)
-    {
-        auto meshattribute = _teapot->getMesh()->getMeshVertexAttribute(i);
-        state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size,
-            meshattribute.type,
-            GL_FALSE,
-            _teapot->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-
-        offset += meshattribute.attribSizeBytes;
-    }
     addChild(_teapot);
 
     {
@@ -2490,33 +2343,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
     addChild(_camera);
     setCameraMask(2);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-                                [this](EventCustom*)
-    {
-        auto state = _teapot->getGLProgramState();
-        auto glProgram = state->getGLProgram();
-        glProgram->reset();
-        glProgram->initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
-        glProgram->link();
-        glProgram->updateUniforms();
-
-        _textureCube->reloadTexture();
-
-        Texture2D::TexParams tRepeatParams;
-        tRepeatParams.magFilter = GL_NEAREST;
-        tRepeatParams.minFilter = GL_NEAREST;
-        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-        _textureCube->setTexParameters(tRepeatParams);
-        state->setUniformTexture("u_cubeTex", _textureCube);
-
-        _skyBox->reload();
-        _skyBox->setTexture(_textureCube);
-    });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-#endif
 }
 
 void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
@@ -2668,6 +2494,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
                 node->setPosition3D(Vec3(mat.m[12] + 100, mat.m[13], mat.m[14]));
                 ((PUParticleSystem3D*)node)->startParticleSystem();
             }
+                
             
             cocos2d::log("frame %d", info->frame);
         });
@@ -2717,6 +2544,38 @@ std::string Sprite3DTestMeshLight::title() const
 }
 
 std::string Sprite3DTestMeshLight::subtitle() const
+{
+    return "";
+}
+
+Sprite3DVertexColorTest::Sprite3DVertexColorTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto sprite = Sprite3D::create("Sprite3DTest/box_VertexCol.c3t");
+    sprite->setPosition(Vec2(0, 0));
+    sprite->setScale(1.0f);
+    sprite->setCameraMask(2);
+    auto mat = Material::createWithFilename("Sprite3DTest/VertexColor.material");
+    sprite->setMaterial(mat);
+    sprite->runAction(RepeatForever::create(RotateBy::create(1.0f, Vec3(10.0f, 50.0f, 10.0f))));
+
+    this->addChild(sprite);
+
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.0f, 0.0f, 10.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+}
+
+std::string Sprite3DVertexColorTest::title() const
+{
+    return "Testing Vertex Color";
+}
+
+std::string Sprite3DVertexColorTest::subtitle() const
 {
     return "";
 }
