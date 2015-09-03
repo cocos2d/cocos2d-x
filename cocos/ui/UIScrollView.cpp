@@ -64,7 +64,6 @@ _autoScrollAttenuate(true),
 _autoScrollDuration(0),
 _autoScrollAccumulatedTime(0),
 _autoScrollCompleteCallback(nullptr),
-_autoScrollMoveCallback(nullptr),
 _outOfBoundaryDuringInertiaScroll(false),
 _inertiaScrollEnabled(true),
 _inertiaScrolling(false),
@@ -230,6 +229,18 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
     }
     _innerContainer->setPosition(position);
     
+    // Process bouncing events
+    if(_bounceEnabled)
+    {
+        for(int direction = (int) MoveDirection::TOP; direction < (int) MoveDirection::RIGHT; ++direction)
+        {
+            if(isOutOfBoundary((MoveDirection) direction))
+            {
+                processScrollEvent((MoveDirection) direction, true);
+            }
+        }
+    }
+    
     this->retain();
     if (_eventCallback)
     {
@@ -345,27 +356,7 @@ bool ScrollView::startBounceBackIfNeeded()
         return false;
     }
 
-    startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true,
-        nullptr,
-        [this](const Vec2& moveDelta) {
-            if(moveDelta.x > 0)
-            {
-                processScrollEvent(MoveDirection::RIGHT, true);
-            }
-            else if(moveDelta.x < 0)
-            {
-                processScrollEvent(MoveDirection::LEFT, true);
-            }
-            if(moveDelta.y > 0)
-            {
-                processScrollEvent(MoveDirection::TOP, true);
-            }
-            else if(moveDelta.y < 0)
-            {
-                processScrollEvent(MoveDirection::BOTTOM, true);
-            }
-        }
-    );
+    startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true);
     return true;
 }
 
@@ -425,7 +416,7 @@ void ScrollView::startAutoScrollChildrenWithDestination(const Vec2& des, float s
     startAutoScroll(des - _innerContainer->getPosition(), second, attenuated);
 }
 
-void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback, std::function<void(const Vec2&)> moveCallback)
+void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback)
 {
     _autoScrolling = true;
     _autoScrollTargetDelta = deltaMove;
@@ -434,7 +425,6 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool att
     _autoScrollDuration = duration;
     _autoScrollAccumulatedTime = 0;
     _autoScrollCompleteCallback = completeCallback;
-    _autoScrollMoveCallback = moveCallback;
     _outOfBoundaryDuringInertiaScroll = false;
     _outOfBoundaryPositionDuringInertiaScroll = Vec2::ZERO;
 }
@@ -489,11 +479,6 @@ void ScrollView::processAutoScrolling(float deltaTime)
     }
     
     moveChildrenToPosition(newPosition);
-    
-    if(_autoScrollMoveCallback)
-    {
-        _autoScrollMoveCallback(getInnerContainerPosition() - newPosition);
-    }
     
     // Finish auto scroll if it ended
     if(percentage == 1 || reachedEnd)
@@ -1380,7 +1365,6 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _outOfBoundaryDuringInertiaScroll = scrollView->_outOfBoundaryDuringInertiaScroll;
         _outOfBoundaryPositionDuringInertiaScroll = scrollView->_outOfBoundaryPositionDuringInertiaScroll;
         _autoScrollCompleteCallback = scrollView->_autoScrollCompleteCallback;
-        _autoScrollMoveCallback = scrollView->_autoScrollMoveCallback;
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
         _inertiaScrolling = scrollView->_inertiaScrolling;
         setBounceEnabled(scrollView->_bounceEnabled);
