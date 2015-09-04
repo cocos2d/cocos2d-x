@@ -394,6 +394,24 @@ bool FileUtilsApple::isFileExistInternal(const std::string& filePath) const
     return ret;
 }
 
+bool FileUtilsApple::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    std::string fullPath = dirPath;
+
+    if (fullPath[0] != '/') {
+        NSString* fp = [[getBundle() resourcePath] stringByAppendingPathComponent:[NSString stringWithUTF8String:dirPath.c_str()]];
+
+        fullPath = [fp UTF8String];
+    }
+
+    struct stat st;
+    if (stat(fullPath.c_str(), &st) == 0)
+    {
+        return S_ISDIR(st.st_mode);
+    }
+    return false;
+}
+
 static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
 {
     auto ret = remove(fpath);
