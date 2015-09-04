@@ -365,14 +365,9 @@ Vec2 ScrollView::calculateTouchMoveVelocity() const
 
 void ScrollView::startInertiaScroll(const Vec2& touchMoveVelocity)
 {
-    Vec2 initialVelocity = touchMoveVelocity;
-    initialVelocity.x = (_direction == Direction::VERTICAL ? 0 : initialVelocity.x);
-    initialVelocity.y = (_direction == Direction::HORIZONTAL ? 0 : initialVelocity.y);
-    
     const float MOVEMENT_FACTOR = 0.7f;
-    Vec2 inertiaTotalMovement = initialVelocity * MOVEMENT_FACTOR;
-    
-    startAttenuatingAutoScroll(inertiaTotalMovement, initialVelocity);
+    Vec2 inertiaTotalMovement = touchMoveVelocity * MOVEMENT_FACTOR;
+    startAttenuatingAutoScroll(inertiaTotalMovement, touchMoveVelocity);
 }
 
 bool ScrollView::startBounceBackIfNeeded()
@@ -463,8 +458,12 @@ void ScrollView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& i
 
 void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated)
 {
+    Vec2 adjustedDeltaMove = deltaMove;
+    adjustedDeltaMove.x = (_direction == Direction::VERTICAL ? 0 : adjustedDeltaMove.x);
+    adjustedDeltaMove.y = (_direction == Direction::HORIZONTAL ? 0 : adjustedDeltaMove.y);
+    
     _autoScrolling = true;
-    _autoScrollTargetDelta = deltaMove;
+    _autoScrollTargetDelta = adjustedDeltaMove;
     _autoScrollAttenuate = attenuated;
     _autoScrollStartPosition = _innerContainer->getPosition();
     _autoScrollDuration = duration;
