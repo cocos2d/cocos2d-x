@@ -232,11 +232,13 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     if (FileUtilsAndroid::assetmanager)
     {
         AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
-        if (aa && AAssetDir_getNextFileName(aa))
+        bool found = false;
+        if (aa)
         {
+            found = (AAssetDir_getNextFileName(aa) != NULL);
             AAssetDir_close(aa);
-            return true;
         }
+        return found;
     }
     return false;
 }
