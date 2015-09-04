@@ -32,7 +32,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 static const int NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED = 5;
-static const float OUT_OF_BOUNDARY_AUTO_SCROLL_FACTOR = 0.05f;
+static const float OUT_OF_BOUNDARY_BREAKING_FACTOR = 0.05f;
 static const float BOUNCE_BACK_DURATION = 1.0f;
 
 #define MOVE_INCH            7.0f/160.0f
@@ -63,10 +63,10 @@ _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollTotalTime(0),
 _autoScrollAccumulatedTime(0),
-_autoScrollOutOfBoundaryAttenuating(false),
+_autoScrollCurrentlyOutOfBoundary(false),
+_autoScrollBraking(false),
 _inertiaScrollEnabled(true),
 _bounceEnabled(false),
-_bouncingBack(false),
 _scrollBarEnabled(true),
 _verticalScrollBar(nullptr),
 _horizontalScrollBar(nullptr),
@@ -382,7 +382,6 @@ bool ScrollView::startBounceBackIfNeeded()
         return false;
     }
     
-    _bouncingBack = true;
     startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true);
     return true;
 }
@@ -468,26 +467,54 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float time, bool attenua
     _autoScrollStartPosition = _innerContainer->getPosition();
     _autoScrollTotalTime = time;
     _autoScrollAccumulatedTime = 0;
-    _autoScrollOutOfBoundaryAttenuating = false;
-    _autoScrollOutOfBoundaryPosAttenuating = Vec2::ZERO;
+    _autoScrollCurrentlyOutOfBoundary = isOutOfBoundary();
+    _autoScrollBraking = false;
+    _autoScrollBrakingStartPosition = Vec2::ZERO;
+    
+    // If the destination is also out of boundary of same side, start brake from beggining.
+    if(_autoScrollCurrentlyOutOfBoundary)
+    {
+        Vec2 currentOutOfBoundary = getHowMuchOutOfBoundary();
+        Vec2 afterOutOfBoundary = getHowMuchOutOfBoundary(adjustedDeltaMove);
+        if(currentOutOfBoundary.x * afterOutOfBoundary.x > 0 || currentOutOfBoundary.y * afterOutOfBoundary.y > 0)
+        {
+            _autoScrollBraking = true;
+        }
+    }
 }
 
-void ScrollView::processAutoScrolling(float deltaTime)
+bool ScrollView::isNecessaryAutoScrollBrake()
 {
-    // Make auto scroll shorter if it is out of boundary and not bouncing back.
-    float shortenFactor = 1;
-    if(isOutOfBoundary() && !_bouncingBack)
+    if(_autoScrollBraking)
     {
-        if(!_autoScrollOutOfBoundaryAttenuating)
-        {
-            _autoScrollOutOfBoundaryAttenuating = true;
-            _autoScrollOutOfBoundaryPosAttenuating = getInnerContainerPosition();
-        }
-        shortenFactor *= OUT_OF_BOUNDARY_AUTO_SCROLL_FACTOR;
+        return true;
     }
     
+    if(isOutOfBoundary())
+    {
+        // It just went out of boundary.
+        if(!_autoScrollCurrentlyOutOfBoundary)
+        {
+            _autoScrollCurrentlyOutOfBoundary = true;
+            _autoScrollBraking = true;
+            _autoScrollBrakingStartPosition = getInnerContainerPosition();
+            return true;
+        }
+    }
+    else
+    {
+        _autoScrollCurrentlyOutOfBoundary = false;
+    }
+    return false;
+}
+    
+void ScrollView::processAutoScrolling(float deltaTime)
+{
+    // Make auto scroll shorter if it needs to deaccelerate.
+    float brakingFactor = (isNecessaryAutoScrollBrake() ? OUT_OF_BOUNDARY_BREAKING_FACTOR : 1);
+    
     // Elapsed time
-    _autoScrollAccumulatedTime += deltaTime * (1 / shortenFactor);
+    _autoScrollAccumulatedTime += deltaTime * (1 / brakingFactor);
     
     // Calculate the progress percentage
     float percentage = MIN(1, _autoScrollAccumulatedTime / _autoScrollTotalTime);
@@ -504,7 +531,7 @@ void ScrollView::processAutoScrolling(float deltaTime)
     if(_bounceEnabled)
     {
         // The new position is adjusted if out of boundary
-        newPosition = _autoScrollOutOfBoundaryPosAttenuating + (newPosition - _autoScrollOutOfBoundaryPosAttenuating) * shortenFactor;
+        newPosition = _autoScrollBrakingStartPosition + (newPosition - _autoScrollBrakingStartPosition) * brakingFactor;
     }
     else
     {
@@ -524,14 +551,7 @@ void ScrollView::processAutoScrolling(float deltaTime)
     if(reachedEnd)
     {
         _autoScrolling = false;
-        if(_bouncingBack)
-        {
-            _bouncingBack = false;
-        }
-        else
-        {
-            startBounceBackIfNeeded();
-        }
+        startBounceBackIfNeeded();
     }
 }
 
@@ -849,7 +869,6 @@ void ScrollView::handlePressLogic(Touch *touch)
 {
     _bePressed = true;
     _autoScrolling = false;
-    _bouncingBack = false;
     
     // Clear gathered touch move information
     {
@@ -1390,10 +1409,10 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _autoScrollTargetDelta = scrollView->_autoScrollTargetDelta;
         _autoScrollTotalTime = scrollView->_autoScrollTotalTime;
         _autoScrollAccumulatedTime = scrollView->_autoScrollAccumulatedTime;
-        _autoScrollOutOfBoundaryAttenuating = scrollView->_autoScrollOutOfBoundaryAttenuating;
-        _autoScrollOutOfBoundaryPosAttenuating = scrollView->_autoScrollOutOfBoundaryPosAttenuating;
+        _autoScrollCurrentlyOutOfBoundary = scrollView->_autoScrollCurrentlyOutOfBoundary;
+        _autoScrollBraking = scrollView->_autoScrollBraking;
+        _autoScrollBrakingStartPosition = scrollView->_autoScrollBrakingStartPosition;
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
-        _bouncingBack = scrollView->_bouncingBack;
         setBounceEnabled(scrollView->_bounceEnabled);
         _scrollViewEventListener = scrollView->_scrollViewEventListener;
         _scrollViewEventSelector = scrollView->_scrollViewEventSelector;

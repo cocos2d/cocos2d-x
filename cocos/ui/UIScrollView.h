@@ -580,6 +580,7 @@ protected:
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity);
     void startAutoScroll(const Vec2& deltaMove, float time, bool attenuated);
     void startAutoScrollToDestination(const Vec2& des, float time, bool attenuated);
+    bool isNecessaryAutoScrollBrake();
     void processAutoScrolling(float deltaTime);
 
     void startInertiaScroll(const Vec2& touchMoveVelocity);
@@ -600,7 +601,7 @@ protected:
     void processScrollingEvent();
     void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
     
-    Vec2 getHowMuchOutOfBoundary(const Vec2& addition) const;
+    Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) const;
     
     void updateScrollBar(const Vec2& outOfBoundary);
 
@@ -629,14 +630,13 @@ protected:
     Vec2 _autoScrollTargetDelta;
     float _autoScrollTotalTime;
     float _autoScrollAccumulatedTime;
-    bool _autoScrollOutOfBoundaryAttenuating;
-    Vec2 _autoScrollOutOfBoundaryPosAttenuating;
+    bool _autoScrollCurrentlyOutOfBoundary;
+    bool _autoScrollBraking;
+    Vec2 _autoScrollBrakingStartPosition;
     
-    // Inertia scroll
     bool _inertiaScrollEnabled;
 
     bool _bounceEnabled;
-    bool _bouncingBack;
     
     bool _scrollBarEnabled;
     ScrollViewBar* _verticalScrollBar;
