@@ -572,7 +572,9 @@ protected:
     
     void moveChildren(float offsetX, float offsetY);
     void moveChildrenToPosition(const Vec2& position);
-    
+	
+	bool calculateCurrPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
+	void gatherTouchMove(const Vec2& delta);
     Vec2 calculateTouchMoveVelocity() const;
     
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity);

@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 NS_CC_BEGIN
 
+static const int NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED = 5;
 static const float OUT_OF_BOUNDARY_AUTO_SCROLL_FACTOR = 0.05f;
 static const float BOUNCE_BACK_DURATION = 1.0f;
 
@@ -342,6 +343,26 @@ void ScrollView::updateScrollBar(const Vec2& outOfBoundary)
     }
 }
 
+Vec2 ScrollView::calculateTouchMoveVelocity() const
+{
+    float totalDuration = 0;
+    for(auto &timeDelta : _touchMoveTimeDeltas)
+    {
+        totalDuration += timeDelta;
+    }
+    if(totalDuration == 0 || totalDuration >= 0.1f)
+    {
+        return Vec2::ZERO;
+    }
+    
+    Vec2 totalMovement;
+    for(auto &displacement : _touchMoveDisplacements)
+    {
+        totalMovement += displacement;
+    }
+    return totalMovement / totalDuration;
+}
+
 void ScrollView::startInertiaScroll(const Vec2& touchMoveVelocity)
 {
     Vec2 initialVelocity = touchMoveVelocity;
@@ -528,26 +549,6 @@ void ScrollView::jumpToDestination(const Vec2 &des)
         finalOffsetX = MAX(des.x, _contentSize.width - _innerContainer->getContentSize().width);
     }
     moveChildrenToPosition(Vec2(finalOffsetX, finalOffsetY));
-}
-
-Vec2 ScrollView::calculateTouchMoveVelocity() const
-{
-    float totalDuration = 0;
-    for(auto &timeDelta : _touchMoveTimeDeltas)
-    {
-        totalDuration += timeDelta;
-    }
-    if(totalDuration == 0 || totalDuration >= 0.5f)
-    {
-        return Vec2::ZERO;
-    }
-    
-    Vec2 totalMovement;
-    for(auto &displacement : _touchMoveDisplacements)
-    {
-        totalMovement += displacement;
-    }
-    return totalMovement / totalDuration;
 }
 
 bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
@@ -820,13 +821,38 @@ void ScrollView::jumpToPercentBothDirection(const Vec2& percent)
     jumpToDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
 }
 
+bool ScrollView::calculateCurrPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt)
+{
+    if (nullptr == _hittedByCamera ||
+        false == hitTest(touch->getLocation(), _hittedByCamera, currPt) ||
+        false == hitTest(touch->getPreviousLocation(), _hittedByCamera, prevPt))
+    {
+        return false;
+    }
+    return true;
+}
+
+void ScrollView::gatherTouchMove(const Vec2& delta)
+{
+    while(_touchMoveDisplacements.size() >= NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED)
+    {
+        _touchMoveDisplacements.pop_front();
+        _touchMoveTimeDeltas.pop_front();
+    }
+    _touchMoveDisplacements.push_back(delta);
+    
+    long long timestamp = utils::getTimeInMilliseconds();
+    _touchMoveTimeDeltas.push_back((timestamp - _touchMovePreviousTimestamp) / 1000.0f);
+    _touchMovePreviousTimestamp = timestamp;
+}
+
 void ScrollView::handlePressLogic(Touch *touch)
 {
     _bePressed = true;
     _autoScrolling = false;
     _bouncingBack = false;
     
-    // Initialize touch move information
+    // Clear gathered touch move information
     {
         _touchMovePreviousTimestamp = utils::getTimeInMilliseconds();
         _touchMoveDisplacements.clear();
@@ -846,9 +872,7 @@ void ScrollView::handlePressLogic(Touch *touch)
 void ScrollView::handleMoveLogic(Touch *touch)
 {
     Vec3 currPt, prevPt;
-    if (nullptr == _hittedByCamera ||
-        false == hitTest(touch->getLocation(), _hittedByCamera, &currPt) ||
-        false == hitTest(touch->getPreviousLocation(), _hittedByCamera, &prevPt))
+    if(!calculateCurrPrevTouchPoints(touch, &currPt, &prevPt))
     {
         return;
     }
@@ -857,22 +881,22 @@ void ScrollView::handleMoveLogic(Touch *touch)
     scrollChildren(delta.x, delta.y);
     
     // Gather touch move information for speed calculation
-    {
-        while(_touchMoveDisplacements.size() > 5)
-        {
-            _touchMoveDisplacements.pop_front();
-            _touchMoveTimeDeltas.pop_front();
-        }
-        _touchMoveDisplacements.push_back(delta);
-        
-        long long timestamp = utils::getTimeInMilliseconds();
-        _touchMoveTimeDeltas.push_back((timestamp - _touchMovePreviousTimestamp) / 1000.0f);
-        _touchMovePreviousTimestamp = timestamp;
-    }
+    gatherTouchMove(delta);
 }
 
 void ScrollView::handleReleaseLogic(Touch *touch)
 {
+    // Gather the last touch information when released
+    {
+        Vec3 currPt, prevPt;
+        if(calculateCurrPrevTouchPoints(touch, &currPt, &prevPt))
+        {
+            Vec3 delta3 = currPt - prevPt;
+            Vec2 delta(delta3.x, delta3.y);
+            gatherTouchMove(delta);
+        }
+    }
+
     _bePressed = false;
     
     bool bounceBackStarted = startBounceBackIfNeeded();
