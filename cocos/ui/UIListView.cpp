@@ -641,6 +641,25 @@ Widget* ListView::getBottommostItemInCurrentView() const
     return nullptr;
 }
 
+void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float duration)
+{
+    Widget* item = getItem(itemIndex);
+    if (item == nullptr)
+    {
+        return;
+    }
+    
+    Size contentSize = getContentSize();
+    Vec2 positionInView;
+    positionInView.x += contentSize.width * positionRatioInView.x;
+    positionInView.y += contentSize.height * positionRatioInView.y;
+    
+    Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
+    Vec2 destination = -(itemPosition - positionInView);
+    
+    startAutoScrollToDestination(destination, duration, true);
+}
+
 ssize_t ListView::getCurSelectedIndex() const
 {
     return _curSelectedIndex;

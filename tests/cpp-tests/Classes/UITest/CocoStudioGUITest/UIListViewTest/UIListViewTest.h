@@ -84,4 +84,35 @@ public:
     virtual bool init() override;
 };
 
+class UIListViewTest_ScrollToItem : public UIScene
+{
+protected:
+    virtual bool init() override;
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const = 0;
+    
+    cocos2d::ui::ListView* _listView;
+    cocos2d::ui::Text* _titleLabel;
+    int _nextIndex;
+};
+
+class UIListViewTest_ScrollToItemVertical : public UIListViewTest_ScrollToItem
+{
+public:
+    CREATE_FUNC(UIListViewTest_ScrollToItemVertical);
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
+    {
+        return cocos2d::ui::ScrollView::Direction::VERTICAL;
+    }
+};
+
+class UIListViewTest_ScrollToItemHorizontal : public UIListViewTest_ScrollToItem
+{
+public:
+    CREATE_FUNC(UIListViewTest_ScrollToItemHorizontal);
+    virtual cocos2d::ui::ScrollView::Direction getListViewDirection() const
+    {
+        return cocos2d::ui::ScrollView::Direction::HORIZONTAL;
+    }
+};
+
 #endif /* defined(__TestCpp__UIListViewTest__) */

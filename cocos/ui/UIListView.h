@@ -267,7 +267,15 @@ public:
      * @return A item instance.
      */
     Widget* getBottommostItemInCurrentView() const;
-    
+	
+	/**
+	 * @brief Scroll to specific item
+	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
+	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+	 * @param duration Scroll time
+	 */
+	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float duration = 1.0f);
+	
     /**
      * @brief Query current selected widget's idnex.
      *

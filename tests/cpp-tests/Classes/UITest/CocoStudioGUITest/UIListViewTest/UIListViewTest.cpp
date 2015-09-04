@@ -7,6 +7,8 @@ const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 UIListViewTests::UIListViewTests()
 {
+    ADD_TEST_CASE(UIListViewTest_ScrollToItemVertical);
+    ADD_TEST_CASE(UIListViewTest_ScrollToItemHorizontal);
     ADD_TEST_CASE(UIListViewTest_Vertical);
     ADD_TEST_CASE(UIListViewTest_Horizontal);
     ADD_TEST_CASE(Issue12692);
@@ -575,4 +577,79 @@ bool Issue8316::init()
     }
     
     return false;
+}
+
+
+// UIListViewTest_ScrollToItem
+bool UIListViewTest_ScrollToItem::init()
+{
+    if(!UIScene::init())
+    {
+        return false;
+    }
+    
+    Size layerSize = _uiLayer->getContentSize();
+    
+    static int NUMBER_OF_ITEMS = 31;
+    _nextIndex = 0;
+    _titleLabel = Text::create("Scroll to item", "fonts/Marker Felt.ttf", 32);
+    _titleLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _titleLabel->setPosition(Vec2(layerSize / 2) + Vec2(0, _titleLabel->getContentSize().height * 3.15f));
+    _uiLayer->addChild(_titleLabel, 3);
+    
+    // Create the list view
+    _listView = ListView::create();
+    _listView->setDirection(getListViewDirection());
+    _listView->setBounceEnabled(true);
+    _listView->setBackGroundImage("cocosui/green_edit.png");
+    _listView->setBackGroundImageScale9Enabled(true);
+    _listView->setContentSize(layerSize / 2);
+    _listView->setScrollBarPositionFromCorner(Vec2(7, 7));
+    _listView->setItemsMargin(2.0f);
+    _listView->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _listView->setPosition(layerSize / 2);
+    _uiLayer->addChild(_listView);
+    
+    // Guide line for center align
+    {
+        DrawNode* pNode = DrawNode::create();
+        Vec2 center = layerSize / 2;
+        if(getListViewDirection() == ScrollView::Direction::HORIZONTAL)
+        {
+            float halfY = 110;
+            pNode->drawLine(Vec2(center.x, center.y - halfY), Vec2(center.x, center.y + halfY), Color4F(0, 0, 0, 1));
+        }
+        else
+        {
+            float halfX = 150;
+            pNode->drawLine(Vec2(center.x - halfX, center.y), Vec2(center.x + halfX, center.y), Color4F(0, 0, 0, 1));
+        }
+        pNode->setLineWidth(2);
+        _uiLayer->addChild(pNode);
+    }
+    
+    // Button
+    auto pButton = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
+    pButton->setAnchorPoint(Vec2::ANCHOR_MIDDLE_LEFT);
+    pButton->setScale(0.8f);
+    pButton->setPosition(Vec2(layerSize / 2) + Vec2(120, -60));
+    pButton->setTitleText(StringUtils::format("Go to '%d'", _nextIndex));
+    pButton->addClickEventListener([this, pButton](Ref*) {
+        _listView->scrollToItem(_nextIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+        _nextIndex = (_nextIndex + (NUMBER_OF_ITEMS / 2)) % NUMBER_OF_ITEMS;
+        pButton->setTitleText(StringUtils::format("Go to '%d'", _nextIndex));
+    });
+    _uiLayer->addChild(pButton);
+    
+    // Add list items
+    static const Size BUTTON_SIZE(50, 40);
+    for (int i = 0; i < NUMBER_OF_ITEMS; ++i)
+    {
+        auto pButton = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        pButton->setContentSize(BUTTON_SIZE);
+        pButton->setScale9Enabled(true);
+        pButton->setTitleText(StringUtils::format("Button-%d", i));
+        _listView->pushBackCustomItem(pButton);
+    }
+    return true;
 }
