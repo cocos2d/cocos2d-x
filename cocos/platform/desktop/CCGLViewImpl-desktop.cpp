@@ -186,7 +186,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 
     /* Function keys */
     { GLFW_KEY_ESCAPE          , EventKeyboard::KeyCode::KEY_ESCAPE        },
-    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_KP_ENTER      },
+    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_ENTER      },
     { GLFW_KEY_TAB             , EventKeyboard::KeyCode::KEY_TAB           },
     { GLFW_KEY_BACKSPACE       , EventKeyboard::KeyCode::KEY_BACKSPACE     },
     { GLFW_KEY_INSERT          , EventKeyboard::KeyCode::KEY_INSERT        },
@@ -195,9 +195,9 @@ static keyCodeItem g_keyCodeStructArray[] = {
     { GLFW_KEY_LEFT            , EventKeyboard::KeyCode::KEY_LEFT_ARROW    },
     { GLFW_KEY_DOWN            , EventKeyboard::KeyCode::KEY_DOWN_ARROW    },
     { GLFW_KEY_UP              , EventKeyboard::KeyCode::KEY_UP_ARROW      },
-    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_KP_PG_UP      },
-    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_KP_PG_DOWN    },
-    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_KP_HOME       },
+    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_PG_UP      },
+    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_PG_DOWN    },
+    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_HOME       },
     { GLFW_KEY_END             , EventKeyboard::KeyCode::KEY_END           },
     { GLFW_KEY_CAPS_LOCK       , EventKeyboard::KeyCode::KEY_CAPS_LOCK     },
     { GLFW_KEY_SCROLL_LOCK     , EventKeyboard::KeyCode::KEY_SCROLL_LOCK   },
