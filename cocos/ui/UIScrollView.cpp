@@ -64,7 +64,7 @@ _autoScrollAttenuate(true),
 _autoScrollDuration(0),
 _autoScrollAccumulatedTime(0),
 _autoScrollCompleteCallback(nullptr),
-_outOfBoundaryDuringInertiaScroll(false),
+_autoScrollOutOfBoundaryAttenuating(false),
 _inertiaScrollEnabled(true),
 _inertiaScrolling(false),
 _bounceEnabled(false),
@@ -344,6 +344,23 @@ void ScrollView::updateScrollBar(const Vec2& outOfBoundary)
     }
 }
 
+void ScrollView::startInertiaScroll(const Vec2& touchMoveVelocity)
+{
+    _inertiaScrolling = true;
+    
+    Vec2 initialVelocity = touchMoveVelocity;
+    initialVelocity.x = (_direction == Direction::VERTICAL ? 0 : initialVelocity.x);
+    initialVelocity.y = (_direction == Direction::HORIZONTAL ? 0 : initialVelocity.y);
+    
+    const float MOVEMENT_FACTOR = 0.7f;
+    Vec2 inertiaTotalMovement = initialVelocity * MOVEMENT_FACTOR;
+    
+    startAttenuatingAutoScroll(inertiaTotalMovement, initialVelocity, [this]() {
+        _inertiaScrolling = false;
+        startBounceBackIfNeeded();
+    });
+}
+
 bool ScrollView::startBounceBackIfNeeded()
 {
     if (!_bounceEnabled)
@@ -416,6 +433,19 @@ void ScrollView::startAutoScrollChildrenWithDestination(const Vec2& des, float s
     startAutoScroll(des - _innerContainer->getPosition(), second, attenuated);
 }
 
+static float calculateAutoScrollDurationByInitialSpeed(float initialSpeed)
+{
+    // Calculate the duration from the initial speed according to quintic polynomial.
+    float duration = sqrtf(sqrtf(initialSpeed / 5));
+    return duration;
+}
+
+void ScrollView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity, std::function<void()> completeCallback)
+{
+    float duration = calculateAutoScrollDurationByInitialSpeed(initialVelocity.length());
+    startAutoScroll(deltaMove, duration, true, completeCallback);
+}
+
 void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback)
 {
     _autoScrolling = true;
@@ -425,8 +455,8 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool att
     _autoScrollDuration = duration;
     _autoScrollAccumulatedTime = 0;
     _autoScrollCompleteCallback = completeCallback;
-    _outOfBoundaryDuringInertiaScroll = false;
-    _outOfBoundaryPositionDuringInertiaScroll = Vec2::ZERO;
+    _autoScrollOutOfBoundaryAttenuating = false;
+    _autoScrollOutOfBoundaryPosAttenuating = Vec2::ZERO;
 }
 
 void ScrollView::processAutoScrolling(float deltaTime)
@@ -436,13 +466,13 @@ void ScrollView::processAutoScrolling(float deltaTime)
     float distanceRescale = 1;
     {
         bool currentlyOutOfBoundDuringInertiaScroll = (_inertiaScrolling && isOutOfBoundary());
-        if(!_outOfBoundaryDuringInertiaScroll && currentlyOutOfBoundDuringInertiaScroll)
+        if(!_autoScrollOutOfBoundaryAttenuating && currentlyOutOfBoundDuringInertiaScroll)
         {
-            _outOfBoundaryDuringInertiaScroll = true;
-            _outOfBoundaryPositionDuringInertiaScroll = getInnerContainerPosition();
+            _autoScrollOutOfBoundaryAttenuating = true;
+            _autoScrollOutOfBoundaryPosAttenuating = getInnerContainerPosition();
         }
-        timeRescale = (_outOfBoundaryDuringInertiaScroll ? OUT_OF_BOUND_TIME_RESCALE : 1);
-        distanceRescale = (_outOfBoundaryDuringInertiaScroll ? OUT_OF_BOUND_DISTANCE_RESCALE : 1);
+        timeRescale = (_autoScrollOutOfBoundaryAttenuating ? OUT_OF_BOUND_TIME_RESCALE : 1);
+        distanceRescale = (_autoScrollOutOfBoundaryAttenuating ? OUT_OF_BOUND_DISTANCE_RESCALE : 1);
     }
     
     // Calculate the percentage
@@ -465,7 +495,7 @@ void ScrollView::processAutoScrolling(float deltaTime)
     // Adjust the new position according to the bounce option
     if(_bounceEnabled)
     {
-        newPosition = _outOfBoundaryPositionDuringInertiaScroll + (newPosition - _outOfBoundaryPositionDuringInertiaScroll) * distanceRescale;
+        newPosition = _autoScrollOutOfBoundaryPosAttenuating + (newPosition - _autoScrollOutOfBoundaryPosAttenuating) * distanceRescale;
     }
     else
     {
@@ -524,25 +554,6 @@ Vec2 ScrollView::calculateTouchMoveVelocity() const
         totalMovement += displacement;
     }
     return totalMovement / totalDuration;
-}
-
-void ScrollView::startInertiaScroll(const Vec2& touchMoveVelocity)
-{
-    Vec2 initialVelocity = touchMoveVelocity;
-    initialVelocity.x = (_direction == Direction::VERTICAL ? 0 : initialVelocity.x);
-    initialVelocity.y = (_direction == Direction::HORIZONTAL ? 0 : initialVelocity.y);
-    
-    const float MOVEMENT_FACTOR = 0.7f;
-    Vec2 inertiaTotalDisplacement = initialVelocity * MOVEMENT_FACTOR;
-    
-    // Calculate the duration from the initial velocity according to quintic polynomial.
-    float duration = sqrtf(sqrtf(initialVelocity.length() / 5));
-    
-    _inertiaScrolling = true;
-    startAutoScroll(inertiaTotalDisplacement, duration, true, [this]() {
-        _inertiaScrolling = false;
-        startBounceBackIfNeeded();
-    });
 }
 
 bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
@@ -1362,8 +1373,8 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _autoScrollTargetDelta = scrollView->_autoScrollTargetDelta;
         _autoScrollDuration = scrollView->_autoScrollDuration;
         _autoScrollAccumulatedTime = scrollView->_autoScrollAccumulatedTime;
-        _outOfBoundaryDuringInertiaScroll = scrollView->_outOfBoundaryDuringInertiaScroll;
-        _outOfBoundaryPositionDuringInertiaScroll = scrollView->_outOfBoundaryPositionDuringInertiaScroll;
+        _autoScrollOutOfBoundaryAttenuating = scrollView->_autoScrollOutOfBoundaryAttenuating;
+        _autoScrollOutOfBoundaryPosAttenuating = scrollView->_autoScrollOutOfBoundaryPosAttenuating;
         _autoScrollCompleteCallback = scrollView->_autoScrollCompleteCallback;
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
         _inertiaScrolling = scrollView->_inertiaScrolling;
