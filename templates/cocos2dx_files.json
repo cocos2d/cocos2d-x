@@ -1195,6 +1195,8 @@
         "cocos/ui/UIEditBox/UIEditBox.h", 
         "cocos/ui/UIEditBox/UIEditBoxImpl-android.cpp", 
         "cocos/ui/UIEditBox/UIEditBoxImpl-android.h", 
+        "cocos/ui/UIEditBox/UIEditBoxImpl-common.cpp", 
+        "cocos/ui/UIEditBox/UIEditBoxImpl-common.h", 
         "cocos/ui/UIEditBox/UIEditBoxImpl-ios.h", 
         "cocos/ui/UIEditBox/UIEditBoxImpl-ios.mm", 
         "cocos/ui/UIEditBox/UIEditBoxImpl-mac.h", 
