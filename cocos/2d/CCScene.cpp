@@ -59,6 +59,9 @@ Scene::Scene()
     _navMesh = nullptr;
     _navMeshDebugCamera = nullptr;
 #endif
+#if CC_USE_PHYSICS
+    _physicsManager = nullptr;
+#endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
@@ -72,11 +75,6 @@ Scene::Scene()
     _event->retain();
     
     Camera::_visitingCamera = nullptr;
-    
-#if CC_USE_PHYSICS
-    _physicsManager = new (std::nothrow) PhysicsManager(this);
-    _physicsWorld = _physicsManager->getPhysicsWorld();
-#endif
 }
 
 Scene::~Scene()
@@ -281,6 +279,9 @@ Scene* Scene::createWithPhysics()
 
 bool Scene::initWithPhysics()
 {
+    _physicsManager = new (std::nothrow) PhysicsManager(this);
+    _physicsWorld = _physicsManager->getPhysicsWorld();
+    
     bool ret = false;
     do
     {
@@ -307,7 +308,8 @@ bool Scene::initWithPhysics()
 void Scene::stepPhysicsAndNavigation(float deltaTime)
 {
 #if CC_USE_PHYSICS
-    _physicsManager->update(deltaTime);
+    if (_physicsManager)
+        _physicsManager->update(deltaTime);
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION

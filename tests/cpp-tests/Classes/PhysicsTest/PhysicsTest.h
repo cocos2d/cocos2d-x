@@ -1,5 +1,7 @@
 #pragma once
 
+#if CC_USE_PHYSICS
+
 #include <map>
 
 #include "../BaseTest.h"
@@ -13,6 +15,7 @@ public:
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
+    virtual bool init() override;
     virtual void onEnter() override;
     virtual std::string title() const override;
     
@@ -264,3 +267,5 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
+
+#endif // #if CC_USE_PHYSICS

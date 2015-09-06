@@ -1,5 +1,7 @@
 #include "PhysicsTest.h"
 
+#if CC_USE_PHYSICS
+
 #include <cmath>
 #include "ui/CocosGUI.h"
 #include "physics/CCComponentPhysics2d.h"
@@ -48,6 +50,12 @@ PhysicsDemo::PhysicsDemo()
 , _ball(nullptr)
 , _debugDraw(false)
 {
+}
+
+bool PhysicsDemo::init()
+{
+    TestCase::init();
+    return initWithPhysics();
 }
 
 PhysicsDemo::~PhysicsDemo()
@@ -1844,3 +1852,5 @@ std::string PhysicsIssue9959::subtitle() const
 {
     return "Test Scale9Sprite run scale/move/rotation action in physics scene";
 }
+
+#endif
