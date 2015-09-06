@@ -24,6 +24,8 @@ public:
         addTest("Node Children Tests", []() { return new PerformceNodeChildrenTests(); });
         addTest("Particle Tests", []() { return new PerformceParticleTests(); });
         addTest("Particle3D Tests", []() { return new PerformceParticle3DTests(); });
+        addTest("Sprite Tests", []() { return new PerformceParticle3DTests(); });
+        addTest("Sprite Tests", []() { return new PerformceSpriteTests(); });
     }
 };
 

@@ -101,7 +101,7 @@ void Particle3DMainScene::onEnterTransitionDidFinish()
     Scene::onEnterTransitionDidFinish();
     
     if (this->isAutoTesting()) {
-        Profile::getInstance()->testCaseBegin("ParticleTest",
+        Profile::getInstance()->testCaseBegin("Particle3DTest",
                                               genStrVector("ParticleSystemCount", nullptr),
                                               genStrVector("Avg", "Min", "Max", nullptr));
         autoTestIndex = 0;

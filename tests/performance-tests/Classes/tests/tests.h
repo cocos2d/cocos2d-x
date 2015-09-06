@@ -6,5 +6,6 @@
 #include "PerformanceNodeChildrenTest.h"
 #include "PerformanceParticleTest.h"
 #include "PerformanceParticle3DTest.h"
+#include "PerformanceSpriteTest.h"
 
 #endif
