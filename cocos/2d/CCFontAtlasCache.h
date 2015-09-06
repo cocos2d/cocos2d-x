@@ -53,7 +53,13 @@ public:
      It will purge the textures atlas and if multiple texture exist in one FontAtlas.
      */
     static void purgeCachedData();
-    
+
+    // For cocostudio
+#ifdef CC_STUDIO_ENABLED_VIEW
+    static void reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset = Vec2::ZERO);
+    static void unloadFontAtlasTTF(const std::string& fontFileName);
+#endif
+
 private:
     static std::string generateFontName(const std::string& fontFileName, int size, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;

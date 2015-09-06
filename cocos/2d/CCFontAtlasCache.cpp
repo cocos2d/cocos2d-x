@@ -237,4 +237,46 @@ bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
     return false;
 }
 
+// For cocostudio
+#ifdef CC_STUDIO_ENABLED_VIEW
+void FontAtlasCache::reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset/* = Vec2::ZERO*/)
+{
+    std::string atlasName = generateFontName(fontFileName, 0, false);
+    auto it = _atlasMap.find(atlasName);
+
+    if (it != _atlasMap.end())
+    {
+        CC_SAFE_RELEASE_NULL(it->second);
+        _atlasMap.erase(it);
+    }
+    FontFNT::reloadBMFontResource(fontFileName);
+    auto font = FontFNT::create(fontFileName, imageOffset);
+    if (font)
+    {
+        auto tempAtlas = font->createFontAtlas();
+        if (tempAtlas)
+        {
+            _atlasMap[atlasName] = tempAtlas;
+        }
+    }
+
+}
+
+void FontAtlasCache::unloadFontAtlasTTF(const std::string& fontFileName)
+{
+    auto item = _atlasMap.begin();
+    while (item != _atlasMap.end())
+    {
+        if (item->first.find(fontFileName) >= 0)
+        {
+            CC_SAFE_RELEASE_NULL(item->second);
+            item = _atlasMap.erase(item);
+        }
+        else
+            item++;
+    }
+    FontFreeType::releaseFont(fontFileName);
+}
+#endif
+
 NS_CC_END
