@@ -43,10 +43,7 @@ namespace cocos2d { namespace network {
     
 ////////////////////////////////////////////////////////////////////////////////
 //  Implementation DownloadTaskCURL
-//    bool    _receivingData; // curl write data and update progress seperately, use this flag keep data and len sync
-//    int64_t _bytesReceived;
-//    int64_t _totalBytesReceived;
-//    int64_t _totalBytesExpected;
+
     class DownloadTaskCURL : public IDownloadTask
     {
         static int _sSerialId;
@@ -59,19 +56,25 @@ namespace cocos2d { namespace network {
         
         DownloadTaskCURL()
         : serialId(_sSerialId++)
-        , _receivingData(false)
-        , _bytesReceived(0)
-        , _totalBytesReceived(0)
-        , _totalBytesExpected(0)
-        , _errCode(DownloadTask::ERROR_NO_ERROR)
-        , _errCodeInternal(CURLE_OK)
         , _fp(nullptr)
         {
+            _initInternal();
             DLLOG("Construct DownloadTaskCURL %p", this);
         }
         
         virtual ~DownloadTaskCURL()
         {
+            // if task destoried unnormally, we should release WritenFileName stored in set.
+            // Normally, this action should done when task finished.
+            if (_tempFileName.length() && _sStoragePathSet.end() != _sStoragePathSet.find(_tempFileName))
+            {
+                DownloadTaskCURL::_sStoragePathSet.erase(_tempFileName);
+            }
+            if (_fp)
+            {
+                fclose(_fp);
+                _fp = nullptr;
+            }
             DLLOG("Destruct DownloadTaskCURL %p", this);
         }
         
@@ -144,6 +147,12 @@ namespace cocos2d { namespace network {
             return ret;
         }
 
+        void initProc()
+        {
+            lock_guard<mutex> lock(_mutex);
+            _initInternal();
+        }
+        
         void setErrorProc(int code, int codeInternal, const char *desc)
         {
             lock_guard<mutex> lock(_mutex);
@@ -173,19 +182,10 @@ namespace cocos2d { namespace network {
             }
             if (ret)
             {
-                _receivingData = true;
                 _bytesReceived += ret;
                 _totalBytesReceived += ret;
             }
             return ret;
-        }
-        
-        void updateProgress(int64_t dlnow, int64_t dlTotal)
-        {
-            lock_guard<mutex> lock(_mutex);
-            _receivingData = false;
-            _totalBytesReceived = dlnow;
-            _totalBytesExpected = dlTotal;
         }
         
     private:
@@ -194,11 +194,16 @@ namespace cocos2d { namespace network {
         // for lock object instance
         mutex _mutex;
         
+        // header info
+        bool    _acceptRanges;
+        bool    _headerAchieved;
+        int64_t _totalBytesExpected;
+        
+        string  _header;        // temp buffer for receive header string, only used in thread proc
+        
         // progress
-        bool    _receivingData; // curl write data and update progress seperately, use this flag keep data and len sync
         int64_t _bytesReceived;
         int64_t _totalBytesReceived;
-        int64_t _totalBytesExpected;
         
         // error
         int     _errCode;
@@ -210,6 +215,19 @@ namespace cocos2d { namespace network {
         string _tempFileName;
         vector<unsigned char> _buf;
         FILE*  _fp;
+        
+        void _initInternal()
+        {
+            _acceptRanges = (false);
+            _headerAchieved = (false);
+            _bytesReceived = (0);
+            _totalBytesReceived = (0);
+            _totalBytesExpected = (0);
+            _errCode = (DownloadTask::ERROR_NO_ERROR);
+            _errCodeInternal = (CURLE_OK);
+            _header.resize(0);
+            _header.reserve(384);   // pre alloc header string buffer
+        }
     };
     int DownloadTaskCURL::_sSerialId;
     set<string> DownloadTaskCURL::_sStoragePathSet;
@@ -290,6 +308,15 @@ namespace cocos2d { namespace network {
         }
 
     private:
+        static size_t _outputHeaderCallbackProc(void *buffer, size_t size, size_t count, void *userdata)
+        {
+            int strLen = int(size * count);
+            DLLOG("    _outputHeaderCallbackProc: %.*s", strLen, buffer);
+            DownloadTaskCURL& coTask = *((DownloadTaskCURL*)(userdata));
+            coTask._header.append((const char *)buffer, strLen);
+            return strLen;
+        }
+        
         static size_t _outputDataCallbackProc(void *buffer, size_t size, size_t count, void *userdata)
         {
 //            DLLOG("    _outputDataCallbackProc: size(%ld), count(%ld)", size, count);
@@ -298,44 +325,51 @@ namespace cocos2d { namespace network {
             // If your callback function returns CURL_WRITEFUNC_PAUSE it will cause this transfer to become paused.
             return coTask->writeDataProc((unsigned char *)buffer, size, count);
         }
-        
-        static int _progressCallbackProc(void *clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
-        {
-//            DLLOG("    _progressCallbackProc: dltotal(%ld), dlnow(%ld)", dltotal, dlnow);
-            DownloadTaskCURL *coTask = (DownloadTaskCURL*)clientp;
-            coTask->updateProgress(dlnow, dltotal);
-            
-            // must return 0, otherwise download will get cancelled
-            return CURLE_OK;
-        }
 
         // this function designed call in work thread
         // the curl handle destroyed in _threadProc
-        CURL *_initCurlHandleProc(TaskWrapper& wrapper)
+        // handle inited for get header
+        void _initCurlHandleProc(CURL *handle, TaskWrapper& wrapper, bool forContent = false)
         {
             const DownloadTask& task = *wrapper.first;
             const DownloadTaskCURL* coTask = wrapper.second;
-            
-            CURL *handle = curl_easy_init();
-            if (nullptr == handle)
-            {
-                return nullptr;
-            }
             
             // set url
             curl_easy_setopt(handle, CURLOPT_URL, task.requestURL.c_str());
             
             // set write func
-            curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, DownloaderCURL::Impl::_outputDataCallbackProc);
+            if (forContent)
+            {
+                curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, DownloaderCURL::Impl::_outputDataCallbackProc);
+            }
+            else
+            {
+                curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, DownloaderCURL::Impl::_outputHeaderCallbackProc);
+            }
             curl_easy_setopt(handle, CURLOPT_WRITEDATA, coTask);
             
-            curl_easy_setopt(handle, CURLOPT_NOPROGRESS, false);
-            curl_easy_setopt(handle, CURLOPT_XFERINFOFUNCTION, DownloaderCURL::Impl::_progressCallbackProc);
-            curl_easy_setopt(handle, CURLOPT_XFERINFODATA, coTask);
+            curl_easy_setopt(handle, CURLOPT_NOPROGRESS, true);
+//            curl_easy_setopt(handle, CURLOPT_XFERINFOFUNCTION, DownloaderCURL::Impl::_progressCallbackProc);
+//            curl_easy_setopt(handle, CURLOPT_XFERINFODATA, coTask);
 
             curl_easy_setopt(handle, CURLOPT_FAILONERROR, true);
             curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
             
+            if (forContent)
+            {
+                /** if server acceptRanges and local has part of file, we continue to download **/
+                if (coTask->_acceptRanges && coTask->_totalBytesReceived > 0)
+                {
+                    curl_easy_setopt(handle, CURLOPT_RESUME_FROM_LARGE,(curl_off_t)coTask->_totalBytesReceived);
+                }
+            }
+            else
+            {
+                // get header options
+                curl_easy_setopt(handle, CURLOPT_HEADER, 1);
+                curl_easy_setopt(handle, CURLOPT_NOBODY, 1);
+            }
+
 //            if (!sProxy.empty())
 //            {
 //                curl_easy_setopt(curl, CURLOPT_PROXY, sProxy.c_str());
@@ -356,8 +390,65 @@ namespace cocos2d { namespace network {
                 curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, true);
                 curl_easy_setopt(handle, CURLOPT_MAXREDIRS, MAX_REDIRS);
             }
+        }
+        
+        // get header info, if success set handle to content download state
+        bool _getHeaderInfoProc(CURL *handle, TaskWrapper& wrapper)
+        {
+            DownloadTaskCURL& coTask = *wrapper.second;
+            CURLcode rc = CURLE_OK;
+            do
+            {
+                long httpResponseCode = 0;
+                rc = curl_easy_getinfo(handle, CURLINFO_RESPONSE_CODE, &httpResponseCode);
+                if (CURLE_OK != rc)
+                {
+                    break;
+                }
+                if (200 != httpResponseCode)
+                {
+                    char buf[256] = {0};
+                    sprintf(buf
+                            , "When crequest url(%s) header info, return unexcept http response code(%ld)"
+                            , wrapper.first->requestURL.c_str()
+                            , httpResponseCode);
+                    coTask.setErrorProc(DownloadTask::ERROR_IMPL_INTERNAL, CURLE_OK, buf);
+                }
+                
+//                curl_easy_getinfo(handle, CURLINFO_EFFECTIVE_URL, &effectiveUrl);
+//                curl_easy_getinfo(handle, CURLINFO_CONTENT_TYPE, &contentType);
+                double contentLen = 0;
+                rc = curl_easy_getinfo(handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &contentLen);
+                if (CURLE_OK != rc)
+                {
+                    break;
+                }
+                
+                bool acceptRanges = (string::npos != coTask._header.find("Accept-Ranges")) ? true : false;
+                
+                // get current file size
+                int64_t fileSize = 0;
+                if (acceptRanges && coTask._tempFileName.length())
+                {
+                    fileSize = FileUtils::getInstance()->getFileSize(coTask._tempFileName);
+                }
+
+                // set header info to coTask
+                lock_guard<mutex> lock(coTask._mutex);
+                coTask._totalBytesExpected = (int64_t)contentLen;
+                coTask._acceptRanges = acceptRanges;
+                if (acceptRanges && fileSize > 0)
+                {
+                    coTask._totalBytesReceived = fileSize;
+                }
+                coTask._headerAchieved = true;
+            } while (0);
             
-            return handle;
+            if (CURLE_OK != rc)
+            {
+                coTask.setErrorProc(DownloadTask::ERROR_IMPL_INTERNAL, rc, curl_easy_strerror(rc));
+            }
+            return coTask._headerAchieved;
         }
         
         void _threadProc()
@@ -455,25 +546,72 @@ namespace cocos2d { namespace network {
                         {
                             CURL *curlHandle = m->easy_handle;
                             CURLcode errCode = m->data.result;
+
+                            TaskWrapper wrapper = coTaskMap[curlHandle];
                             
                             // remove from multi-handle
                             curl_multi_remove_handle(curlmHandle, curlHandle);
+                            bool reinited = false;
+                            do
+                            {
+                                if (CURLE_OK != errCode)
+                                {
+                                    wrapper.second->setErrorProc(DownloadTask::ERROR_IMPL_INTERNAL, errCode, curl_easy_strerror(errCode));
+                                    break;
+                                }
+                                
+                                // if the task is content download task, cleanup the handle
+                                if (wrapper.second->_headerAchieved)
+                                {
+                                    break;
+                                }
+                                
+                                // the task is get header task
+                                // first, we get info from response
+                                if (false == _getHeaderInfoProc(curlHandle, wrapper))
+                                {
+                                    // the error info has been set in _getHeaderInfoProc
+                                    break;
+                                }
+                                
+                                // after get header info success
+                                // wrapper.second->_totalBytesReceived inited by local file size
+                                // if the local file size equal with the content size from header, the file has downloaded finish
+                                if (wrapper.second->_totalBytesReceived &&
+                                    wrapper.second->_totalBytesReceived == wrapper.second->_totalBytesExpected)
+                                {
+                                    // the file has download complete
+                                    // break to move this task to finish queue
+                                    break;
+                                }
+                                // reinit curl handle for download content
+                                curl_easy_reset(curlHandle);
+                                _initCurlHandleProc(curlHandle, wrapper, true);
+                                mcode = curl_multi_add_handle(curlmHandle, curlHandle);
+                                if (CURLM_OK != mcode)
+                                {
+                                    wrapper.second->setErrorProc(DownloadTask::ERROR_IMPL_INTERNAL, mcode, curl_multi_strerror(mcode));
+                                    break;
+                                }
+                                reinited = true;
+                            } while (0);
+                          
+                            if (reinited)
+                            {
+                                continue;
+                            }
                             curl_easy_cleanup(curlHandle);
                             DLLOG("    _threadProc task clean cur handle :%p with errCode:%d",  curlHandle, errCode);
                             
                            // remove from coTaskMap
-                            TaskWrapper wrapper = coTaskMap[curlHandle];
                             coTaskMap.erase(curlHandle);
                             
                             // remove from _processSet
                             {
                                 lock_guard<mutex> lock(_processMutex);
-                                _processSet.erase(wrapper);
-                            }
-                            
-                            if (CURLE_OK != errCode)
-                            {
-                                wrapper.second->setErrorProc(DownloadTask::ERROR_IMPL_INTERNAL, errCode, curl_easy_strerror(errCode));
+                                if (_processSet.end() != _processSet.find(wrapper)) {
+                                    _processSet.erase(wrapper);
+                                }
                             }
                             
                             // add to finishedQueue
@@ -505,8 +643,10 @@ namespace cocos2d { namespace network {
                         break;
                     }
                     
+                    wrapper.second->initProc();
+                    
                     // create curl handle from task and add into curl multi handle
-                    CURL* curlHandle = _initCurlHandleProc(wrapper);
+                    CURL* curlHandle = curl_easy_init();
                     
                     if (nullptr == curlHandle)
                     {
@@ -515,6 +655,9 @@ namespace cocos2d { namespace network {
                         _finishedQueue.push_back(wrapper);
                         continue;
                     }
+                    
+                    // init curl handle for get header info
+                    _initCurlHandleProc(curlHandle, wrapper);
                     
                     // add curl handle to process list
                     mcode = curl_multi_add_handle(curlmHandle, curlHandle);
@@ -527,7 +670,6 @@ namespace cocos2d { namespace network {
                     }
                     
                     DLLOG("    _threadProc task create curl handle:%p", curlHandle);
-//                    coTask->setCurlHandle(curlHandle);
                     coTaskMap[curlHandle] = wrapper;
                     lock_guard<mutex> lock(_processMutex);
                     _processSet.insert(wrapper);
@@ -573,7 +715,6 @@ namespace cocos2d { namespace network {
             
             memcpy(buf, coTask._buf.data(), dataLen);
             coTask._buf.resize(0);
-            coTask._bytesReceived = 0;
             return dataLen;
         };
         
@@ -622,7 +763,7 @@ namespace cocos2d { namespace network {
             DownloadTaskCURL& coTask = *wrapper.second;
             
             lock_guard<mutex> lock(coTask._mutex);
-            if (false == coTask._receivingData && coTask._bytesReceived)
+            if (coTask._bytesReceived)
             {
                 _currTask = &coTask;
                 onTaskProgress(task,
@@ -631,6 +772,7 @@ namespace cocos2d { namespace network {
                                coTask._totalBytesExpected,
                                _transferDataToBuffer);
                 _currTask = nullptr;
+                coTask._bytesReceived = 0;
             }
         }
         tasks.resize(0);
@@ -651,6 +793,7 @@ namespace cocos2d { namespace network {
                                coTask._totalBytesReceived,
                                coTask._totalBytesExpected,
                                _transferDataToBuffer);
+                coTask._bytesReceived = 0;
                 _currTask = nullptr;
             }
             

@@ -33,8 +33,8 @@ USING_NS_CC;
 
 DownloaderTests::DownloaderTests()
 {
-    ADD_TEST_CASE(DownloaderAsyncTest);
     ADD_TEST_CASE(DownloaderSyncTest);
+    ADD_TEST_CASE(DownloaderAsyncTest);
     ADD_TEST_CASE(DownloaderBatchSyncTest);
     ADD_TEST_CASE(DownloaderBatchAsyncTest);
 };
@@ -73,7 +73,7 @@ void DownloaderBaseTest::progressCallback(const network::DownloadTask& task,
                                           int64_t totalBytesWritten,
                                           int64_t totalBytesExpectedToWrite)
 {
-    cocos2d::log("download progress: %d%% - %s", (int)((totalBytesWritten/totalBytesExpectedToWrite)*100), task.requestURL.c_str());
+    cocos2d::log("test(%s) progress: dl(%lld) td(%lld) total(%lld)", task.identifier.c_str(), bytesWritten, totalBytesWritten, totalBytesExpectedToWrite);
 }
 
 void DownloaderBaseTest::successCallback(const network::DownloadTask& task)
@@ -95,11 +95,13 @@ void DownloaderSyncTest::onEnter()
         if (_downloader)
         {
 
-            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_sync.jpg";
-            std::string remote = "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png";
+//            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_sync.jpg";
+//            std::string remote = "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png";
+            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/sdkbox-iap_v1.2.3.3.tar.gz";
+            std::string remote = "http://download.sdkbox.com/installer/v1/sdkbox-iap_v1.2.3.3.tar.gz";
             cocos2d::log("Downloading '%s' into '%s'", remote.c_str(), path.c_str());
 
-            _downloader->createDownloadFileTask(remote, path, "download_sync_test");
+            _downloader->createDownloadFileTask(remote, path, "Download Resume Tesk(9M)");
         }
     });
     auto menu = Menu::create(menuItem, nullptr);
