@@ -1034,6 +1034,8 @@
 		FADE788A1B96C51C0061590D /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = FADE78881B96C51C0061590D /* Particle3D */; };
 		FADE788D1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */; };
 		FADE788E1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */; };
+		FADE78911B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */; };
+		FADE78921B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2168,6 +2170,8 @@
 		FADE78881B96C51C0061590D /* Particle3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particle3D; path = "../tests/performance-tests/Resources/Particle3D"; sourceTree = "<group>"; };
 		FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceSpriteTest.cpp; sourceTree = "<group>"; };
 		FADE788C1B96D0710061590D /* PerformanceSpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceSpriteTest.h; sourceTree = "<group>"; };
+		FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceTextureTest.cpp; sourceTree = "<group>"; };
+		FADE78901B9C363D0061590D /* PerformanceTextureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceTextureTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4785,6 +4789,8 @@
 				FADE78851B96C4780061590D /* PerformanceParticle3DTest.h */,
 				FADE788B1B96D0710061590D /* PerformanceSpriteTest.cpp */,
 				FADE788C1B96D0710061590D /* PerformanceSpriteTest.h */,
+				FADE788F1B9C363D0061590D /* PerformanceTextureTest.cpp */,
+				FADE78901B9C363D0061590D /* PerformanceTextureTest.h */,
 			);
 			path = tests;
 			sourceTree = "<group>";
@@ -6260,6 +6266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FADE78921B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */,
 				FA94B2451B90497E0074B261 /* controller.cpp in Sources */,
 				FADE788E1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */,
 				FA94B2431B90497E0074B261 /* BaseTest.cpp in Sources */,
@@ -6282,6 +6289,7 @@
 			files = (
 				FA94B2421B90497E0074B261 /* BaseTest.cpp in Sources */,
 				FADE78861B96C4780061590D /* PerformanceParticle3DTest.cpp in Sources */,
+				FADE78911B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */,
 				FADE786F1B9451540061590D /* PerformanceNodeChildrenTest.cpp in Sources */,
 				FA94B2351B8F02880074B261 /* Profile.cpp in Sources */,
 				FADE788D1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */,
