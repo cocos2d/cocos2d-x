@@ -576,7 +576,7 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
                 }
                 else
                 {
-                    CCAssert(false, "unsupport image format!");
+                    CCLOG("cocos2d: unsupported image format!");
                 }
                 
                 free(tgaData);
