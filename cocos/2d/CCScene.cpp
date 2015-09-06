@@ -72,6 +72,11 @@ Scene::Scene()
     _event->retain();
     
     Camera::_visitingCamera = nullptr;
+    
+#if CC_USE_PHYSICS
+    _physicsManager = new (std::nothrow) PhysicsManager(this);
+    _physicsWorld = _physicsManager->getPhysicsWorld();
+#endif
 }
 
 Scene::~Scene()
