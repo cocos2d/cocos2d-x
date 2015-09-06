@@ -1,3 +1,4 @@
+cocos2d-x-3.8 final September.6 2015
 cocos2d-x-3.8 rc0   August.26 2015
 cocos2d-x-3.8 beta0 August.14 2015
     
@@ -7,7 +8,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [HIGHLIGHT]     FileUtils: Added a set of file writing APIs: writeStringToFile, writeDataToFile, writeValueMapToFile, writeValueVectorToFile
     [HIGHLIGHT]     UI: Refined UI system
     [HIGHLIGHT]     UI: Added RadioButton widget (JSB/Lua ready)
-    [HIGHLIGHT]     UI: Reimplemented and enhanced EditBox on Android
+    [HIGHLIGHT]     UI: Reimplemented and enhanced EditBox on Android: display cursor; support copy, cut, paste and select actions; support multi-line input; pretty adjustment when virtual keyboard shown
     [HIGHLIGHT]     JS: Bound new AudioEngine in JSB
     [HIGHLIGHT]     JS: Merged JSB test project into cocos2d test project
     [HIGHLIGHT]     network: Upgrade SocketIO support to v1.x
@@ -27,6 +28,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [NEW]           audio: AudioEngine supported audio preloading
     [NEW]           UserDefault: Supported removing key pairs from UserDefault
     [NEW]           spine: Supported Spine runtime 2.3 (Both native and web engine)
+    [NEW]           JS: Added auto binding for BlendFuncFrame
     [NEW]           console: Supported new portrait projects from templates
     [NEW]           console: Moved the framework-compile tools into cocos2d-console
     [NEW]           framework: Support generate prebuilt libs of engine with debug mode
@@ -35,6 +37,10 @@ cocos2d-x-3.8 beta0 August.14 2015
     [REFINE]        3D: Supported composite 2D/3D scene by moving UI and camera far away
     [REFINE]        3D: Improved Particle3D performance
     [REFINE]        3D: Made SkyBox not transparent 
+    [REFINE]        3D: Enable depth write for SkyBox
+    [REFINE]        3D: Enable depth write for transparent object
+    [REFINE]        3D: Set depth test function of Skybox brush to always
+    [REFINE]        renderer: Enabled blending all the time for 2D render queue
     [REFINE]        Director: Made types to handle time consistent by modifing setAnimationInterval argument from double to float
     [REFINE]        Sprite: Made Sprite::setTexture accept nullptr as parameter
     [REFINE]        TextureCache: Made addImageAsync function thread safe
@@ -52,6 +58,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [REFINE]        studio: Avoid CSLoader from openning csb file multiple times with fopen
     [REFINE]        studio: Added BlendFrame support to Skeleton Animation
     [REFINE]        studio: Enabled blendfunc cascade to the skin of BoneNode 
+    [REFINE]        studio: Update reader with parse logic for valid attribute of SkyBox
     [REFINE]        FileUtils: Remove old path while adding existing search path
     [REFINE]        Device: Implemented Device::getDPI for Mac
     [REFINE]        network: Refine NSLog in HttpAsynConnection in release mode
@@ -92,6 +99,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [FIX]           renderer: Fixed shader issue by reloading shader when light number changed
     [FIX]           Scheduler: Fixed timer's delta time is error when interval equals to zero
     [FIX]           Scheduler: Fixed Pause/Resume act incorrectly
+    [FIX]           Scheduler: Fixed the callback will be executed multiple times if the value of delay parameter equal zero
     [FIX]           Node: Fixed issue that euler angle is NaN when update Euler angle from quaternion and asin value is not between -1 and 1 by accident
     [FIX]           Scene: Fixed bug that can't add custom member to Scene subclass
     [FIX]           Sprite: Fixed some warnings and a related bug in CCSprite
@@ -131,6 +139,9 @@ cocos2d-x-3.8 beta0 August.14 2015
     [FIX]           UI: Fixed EditBox input maxLength for Chinese character issue on iOS
     [FIX]           UI: Fixed EditBox turning black when soft keyboard hiding
     [FIX]           UI: Fixed scrollview innerContainer initial position error
+    [FIX]           UI: Fixed issue that Slider create function is not taking account of res type (TextureResType)
+    [FIX]           Scale9Sprite: Fixed Scale9Sprite default capInset bug
+    [FIX]           Scale9Sprite: Fixed issue that Scale9Sprite draw extra 1 pixel when creating from spritesheet
     [FIX]           studio: Removed "using namespace cocos2d" from CCFrame.h
     [FIX]           studio: Fixed the SkyBox display error while parsed from editor files
     [FIX]           studio: Fixed userCamera flag error while parsing old version exported files
@@ -138,6 +149,8 @@ cocos2d-x-3.8 beta0 August.14 2015
     [FIX]           studio: Fixed crash when loading cocostudio json files with null or empty fontName
     [FIX]           studio: Fixed bug that setColor works on a whole armature, but not on an individual bone
     [FIX]           studio: Fixed object size error while data is error
+    [FIX]           studio: Fixed issue that bone's color and opacity cannot cascade to bone
+    [FIX]           studio: Fixed issue that bone can be see by other cameras
     [FIX]           ClippingNode: Removed CCClippingRectangleNode transform error support
     [FIX]           spine: Fixed the position of debug draw of bones is incorrect
     [FIX]           spine: Fixed memory leak caused by SkeletonRenderer::initialize
@@ -174,6 +187,7 @@ cocos2d-x-3.8 beta0 August.14 2015
     [FIX]           platform: Removed unneeded protocol for AppController on iOS
     [FIX]           platform: Fixed link errors in release mode on win32
     [FIX]           platform: Fixed Windows 10 UWP and WP8.1 app certification issue
+    [FIX]           platform: Fixed Android app occasionally freeze issue caused by Cocos2dxRenderer.nativeOnResume() is not called when the activity is resumed
     [FIX]           web: Fixed a bug that VideoPlayer remove event throw error
     [FIX]           web: Fixed Armature position error in studio JSON parser
     [FIX]           web: Fixed default clearColor error in director
@@ -187,6 +201,9 @@ cocos2d-x-3.8 beta0 August.14 2015
     [FIX]           web: Fixed logic issue in Menu's _onTouchCancelled function
     [FIX]           web: Fixed MenuItem crash when normal image is null
     [FIX]           web: Fixed CCTouch's startPoint unset issue
+    [FIX]           web: Fixed incomplete fadeout effects
+    [FIX]           web: Fixed issue that return value of cc.screen.fullScreen is not boolean
+    [FIX]           web: Fixed a bug that SkeletonNode is not drawing children
 
     [TEST]          3D: Avoid to trigger touch event multiple times in Physics3D Test and Physics3D Constraint Test
     [TEST]          3D: Fixed Sprite3D test background to foreground bug
