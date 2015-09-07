@@ -1,10 +1,10 @@
 #pragma once
 
-#if CC_USE_PHYSICS
-
 #include <map>
 
 #include "../BaseTest.h"
+
+#if CC_USE_PHYSICS
 
 
 DEFINE_TEST_SUITE(PhysicsTests);
