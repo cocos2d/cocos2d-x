@@ -45,9 +45,6 @@
 
 NS_CC_BEGIN
 
-Material* Material::_diffuseSkinnedMaterial = nullptr;
-Material* Material::_diffuseMaterial = nullptr;
-
 // Helpers declaration
 static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue);
 static bool isValidUniform(const char* name);
@@ -428,7 +425,6 @@ Material::Material()
 : _name("")
 , _target(nullptr)
 , _currentTechnique(nullptr)
-, _materialType(Material::MaterialType::CUSTOM)
 {
 }
 
@@ -446,13 +442,16 @@ Material* Material::clone() const
         for (const auto& technique: _techniques)
         {
             auto t = technique->clone();
+            t->setParent(material);
+            for (ssize_t i = 0; i < t->getPassCount(); i++) {
+                t->getPassByIndex(i)->setParent(t);
+            }
             material->_techniques.pushBack(t);
         }
 
         // current technique
         auto name = _currentTechnique->getName();
         material->_currentTechnique = material->getTechniqueByName(name);
-        material->_materialType = _materialType;
 
         material->autorelease();
     }
@@ -500,29 +499,6 @@ void Material::setTechnique(const std::string& techniqueName)
 ssize_t Material::getTechniqueCount() const
 {
     return _techniques.size();
-}
-
-Material* Material::createDiffuseMaterial(bool skinned)
-{
-    if (skinned)
-    {
-        return _diffuseSkinnedMaterial->clone();
-    }
-    
-    return _diffuseMaterial->clone();
-}
-
-void Material::loadDefaultMaterial(Material::MaterialType type)
-{
-    if (_diffuseMaterial == nullptr)
-    {
-        auto glProgramState = GLProgramState::create(<#cocos2d::GLProgram *glprogram#>)
-        _diffuseMaterial = Material::createWithGLStateProgram();
-    }
-    if (_diffuseSkinnedMaterial == nullptr)
-    {
-        _diffuseSkinnedMaterial = Material::createWithGLStateProgram();
-    }
 }
 
 // Helpers implementation
