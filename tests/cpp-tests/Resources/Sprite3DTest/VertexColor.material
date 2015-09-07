@@ -1,0 +1,23 @@
+// A "Material" file can contain one or more materials
+material VertexColor
+{
+    technique normal
+    {
+        pass 0
+        {
+            renderState
+            {
+                depthTest = true
+                depthWrite = true
+            }
+            shader
+            {
+                vertexShader = Sprite3DTest/VertexColor.vert
+                fragmentShader = Sprite3DTest/VertexColor.frag
+                // sampler:
+                //   responsible for setting the texture and its parameters
+                //   the Id of the sampler is the uniform name
+            }
+        }
+    }
+}
