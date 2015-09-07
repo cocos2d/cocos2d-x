@@ -33,8 +33,8 @@ USING_NS_CC;
 
 DownloaderTests::DownloaderTests()
 {
-    ADD_TEST_CASE(DownloaderSyncTest);
     ADD_TEST_CASE(DownloaderAsyncTest);
+    ADD_TEST_CASE(DownloaderSyncTest);
     ADD_TEST_CASE(DownloaderBatchSyncTest);
     ADD_TEST_CASE(DownloaderBatchAsyncTest);
 };

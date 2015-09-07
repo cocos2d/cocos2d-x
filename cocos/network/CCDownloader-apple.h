@@ -28,10 +28,11 @@
 
 namespace cocos2d { namespace network
 {
+    class DownloaderHints;
     class DownloaderApple : public IDownloaderImpl
     {
     public:
-        DownloaderApple();
+        DownloaderApple(const DownloaderHints& hints);
         virtual ~DownloaderApple();
         
         virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask> task) override;

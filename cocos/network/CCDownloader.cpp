@@ -63,8 +63,8 @@ namespace cocos2d { namespace network {
     {
         DLLOG("Construct Downloader %p", this);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-//        _impl.reset(new DownloaderApple());
-        _impl.reset(new DownloaderCURL(hints));
+        _impl.reset(new DownloaderApple(hints));
+//        _impl.reset(new DownloaderCURL(hints));
 #else
         _impl.reset(new DownloaderApple());
 #endif
