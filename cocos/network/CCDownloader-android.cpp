@@ -21,41 +21,30 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include <unordered_map>    // temp
+#include "network/CCDownloader-android.h"
 
-#pragma once
-
-#include "network/CCIDownloaderImpl.h"
+#include "network/CCDownloader.h"
 
 namespace cocos2d {
-    class Scheduler;
-}
+    using namespace std;
 
-namespace cocos2d { namespace network
-{
-    class DownloadTaskCURL;
-    class DownloaderHints;
-    
-    class DownloaderCURL : public IDownloaderImpl
-    {
-    public:
-        DownloaderCURL(const DownloaderHints& hints);
-        virtual ~DownloaderCURL();
+    namespace network {
 
-        virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) override;
+        DownloaderAndroid::DownloaderAndroid(const DownloaderHints& hints)
+        {
 
-    protected:
-        class Impl;
-        std::shared_ptr<Impl>   _impl;
-        
-        // for transfer data on schedule
-        DownloadTaskCURL* _currTask;        // temp ref
-        std::function<int64_t(void*, int64_t)> _transferDataToBuffer;
-        
-        // scheduler for update processing and finished task in main schedule
-        void _onSchedule(float);
-        std::string             _schedulerKey;
-        Scheduler*              _scheduler;
-    };
+        }
 
-}}  // namespace cocos2d::network
+        DownloaderAndroid::~DownloaderAndroid()
+        {
 
+        }
+
+        IDownloadTask *DownloaderAndroid::createCoTask(std::shared_ptr<const DownloadTask>& task)
+        {
+            return nullptr;
+        }
+
+    }
+}  // namespace cocos2d::network

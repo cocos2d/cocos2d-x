@@ -100,7 +100,7 @@ namespace cocos2d { namespace network {
         [impl doDestory];
         DLLOG("Destruct DownloaderApple %p", this);
     }
-    IDownloadTask *DownloaderApple::createCoTask(std::shared_ptr<const DownloadTask> task)
+    IDownloadTask *DownloaderApple::createCoTask(std::shared_ptr<const DownloadTask>& task)
     {
         DownloadTaskApple* coTask = new DownloadTaskApple();
         DeclareDownloaderImplVar;
@@ -267,6 +267,26 @@ namespace cocos2d { namespace network {
     {
         DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:task];
         NSString *tempFilePath = [NSString stringWithFormat:@"%s%s", [wrapper get]->storagePath.c_str(), _hints.tempFileNameSuffix.c_str()];
+        NSString *tempFileDir = [tempFilePath stringByDeletingLastPathComponent];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        BOOL isDir = false;
+        if ([fileManager fileExistsAtPath:tempFileDir isDirectory:&isDir])
+        {
+            if (NO == isDir)
+            {
+                // TODO: the directory is a file, not a directory, how to echo to developer?
+                continue;
+            }
+        }
+        else
+        {
+            NSURL *tempFileURL = [NSURL fileURLWithPath:tempFileDir];
+            if (NO == [fileManager createDirectoryAtURL:tempFileURL withIntermediateDirectories:YES attributes:nil error:nil])
+            {
+                // create directory failed
+                continue;
+            }
+        }
         [task cancelByProducingResumeData:^(NSData *resumeData) {
             if (resumeData)
             {

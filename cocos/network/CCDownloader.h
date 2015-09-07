@@ -26,6 +26,8 @@
 
 #include <string>
 #include <memory>
+#include <vector>
+
 #include "platform/CCPlatformMacros.h"
 
 namespace cocos2d { namespace network {

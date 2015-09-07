@@ -26,12 +26,26 @@
 
 // include platform specific implement class
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+
 #include "network/CCDownloader-apple.h"
 #include "network/CCDownloader-curl.h"
+#define DownloaderImpl  DownloaderCURL
+
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #include "network/CCDownloader-apple.h"
+#define DownloaderImpl  DownloaderApple
+
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include <unordered_map>    // temp
+#include "network/CCDownloader-android.h"
+#define DownloaderImpl  DownloaderAndroid
+
 #else
-//#include "network/CCDownloaderImpl.h"
+
+#include "network/CCDownloader-curl.h"
+#define DownloaderImpl  DownloaderCURL
+
 #endif
 
 namespace cocos2d { namespace network {
@@ -62,12 +76,7 @@ namespace cocos2d { namespace network {
     Downloader::Downloader(const DownloaderHints& hints)
     {
         DLLOG("Construct Downloader %p", this);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        _impl.reset(new DownloaderApple(hints));
-//        _impl.reset(new DownloaderCURL(hints));
-#else
-        _impl.reset(new DownloaderApple());
-#endif
+         _impl.reset(new DownloaderImpl(hints));
         _impl->onTaskProgress = [this](const DownloadTask& task,
                                        int64_t bytesReceived,
                                        int64_t totalBytesReceived,
@@ -131,11 +140,12 @@ namespace cocos2d { namespace network {
     
     std::shared_ptr<const DownloadTask> Downloader::createDownloadDataTask(const std::string& srcUrl, const std::string& identifier/* = ""*/)
     {
-        std::shared_ptr<DownloadTask> task(new DownloadTask());
+        DownloadTask *task_ = new DownloadTask();
+        std::shared_ptr<const DownloadTask> task(task_);
         do
         {
-            task->requestURL    = srcUrl;
-            task->identifier    = identifier;
+            task_->requestURL    = srcUrl;
+            task_->identifier    = identifier;
             if (0 == srcUrl.length())
             {
                 if (onTaskError)
@@ -145,7 +155,7 @@ namespace cocos2d { namespace network {
                 task.reset();
                 break;
             }
-            task->_coTask.reset(_impl->createCoTask(task));
+            task_->_coTask.reset(_impl->createCoTask(task));
         } while (0);
         
         return task;
@@ -155,12 +165,13 @@ namespace cocos2d { namespace network {
                                                                            const std::string& storagePath,
                                                                            const std::string& identifier/* = ""*/)
     {
-        std::shared_ptr<DownloadTask> task(new DownloadTask());
+        DownloadTask *task_ = new DownloadTask();
+        std::shared_ptr<const DownloadTask> task(task_);
         do
         {
-            task->requestURL    = srcUrl;
-            task->storagePath   = storagePath;
-            task->identifier    = identifier;
+            task_->requestURL    = srcUrl;
+            task_->storagePath   = storagePath;
+            task_->identifier    = identifier;
             if (0 == srcUrl.length() || 0 == storagePath.length())
             {
                 if (onTaskError)
@@ -170,7 +181,7 @@ namespace cocos2d { namespace network {
                 task.reset();
                 break;
             }
-            task->_coTask.reset(_impl->createCoTask(task));
+            task_->_coTask.reset(_impl->createCoTask(task));
         } while (0);
 
         return task;

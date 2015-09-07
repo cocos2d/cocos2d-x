@@ -738,7 +738,7 @@ namespace cocos2d { namespace network {
         DLLOG("Destruct DownloaderCURL %p", this);
     }
     
-    IDownloadTask *DownloaderCURL::createCoTask(std::shared_ptr<const DownloadTask> task)
+    IDownloadTask *DownloaderCURL::createCoTask(std::shared_ptr<const DownloadTask>& task)
     {
         DownloadTaskCURL *coTask = new DownloadTaskCURL;
         coTask->init(task->storagePath, _impl->hints.tempFileNameSuffix);
