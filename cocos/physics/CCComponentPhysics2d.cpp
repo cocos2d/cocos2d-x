@@ -206,14 +206,23 @@ void ComponentPhysics2d::removePhysicsBody()
 
 void ComponentPhysics2d::addToPhysicsManager()
 {
-    if (_owner && _owner->getScene())
-        _owner->getScene()->getPhysicsManager()->addPhysicsComponent(this);
+    if (_owner)
+    {
+        auto scene = _owner->getScene();
+        if (scene)
+            scene->getPhysicsManager()->addPhysicsComponent(this);
+    }
+    
 }
 
 void ComponentPhysics2d::removeFromPhysicsManager()
 {
-    if (_owner && _owner->getScene())
-        _owner->getScene()->getPhysicsManager()->removePhysicsComponent(this);
+    if (_owner)
+    {
+        auto scene = _owner->getScene();
+        if (scene)
+            scene->getPhysicsManager()->removePhysicsComponent(this);
+    }
 }
 
 Mat4 ComponentPhysics2d::getParentToWorldTransform() const
