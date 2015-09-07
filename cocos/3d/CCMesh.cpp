@@ -321,6 +321,14 @@ void Mesh::setMaterial(Material* material)
             }
         }
     }
+    // Was the texture set before teh GLProgramState ? Set it
+    if (_texture)
+        setTexture(_texture);
+    
+    if (_blendDirty)
+        setBlendFunc(_blend);
+    
+    bindMeshCommand();
 }
 
 Material* Mesh::getMaterial() const
@@ -407,15 +415,6 @@ void Mesh::setGLProgramState(GLProgramState* glProgramState)
     // XXX create dummy texture
     auto material = Material::createWithGLStateProgram(glProgramState);
     setMaterial(material);
-
-    // Was the texture set before teh GLProgramState ? Set it
-    if (_texture)
-        setTexture(_texture);
-
-    if (_blendDirty)
-        setBlendFunc(_blend);
-
-    bindMeshCommand();
 }
 
 GLProgramState* Mesh::getGLProgramState() const
