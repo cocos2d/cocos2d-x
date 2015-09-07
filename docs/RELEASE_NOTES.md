@@ -181,7 +181,7 @@ Here is some highlighted improvments and API changes:
 
 ## Download
 
-[Cocos2d-x v3.8 rc0](http://www.cocos2d-x.org/filedown/cocos2d-x-3.8-rc0.zip) including : C++, Lua & JS
+[Cocos2d-x v3.8](http://www.cocos2d-x.org/filedown/cocos2d-x-3.8.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
@@ -270,7 +270,7 @@ Here is some highlighted improvments and API changes:
 
 1. Reimplemented EditBox
 
-    The usage of EditBox is the same as before. It is more likely a iOS version EditBox remake plus a few improvements, highlighted improvements are: 
+    The usage of EditBox is the same as before, but we have reimplemented it for Android platform. The use experience is highly improved, important improvements are: 
 
     - Display cursor in EditBox
     - Support copy, cut, paste and select actions in EditBox

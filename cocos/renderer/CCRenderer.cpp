@@ -543,15 +543,19 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         {
             glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
+            glEnable(GL_BLEND);
             RenderState::StateBlock::_defaultState->setDepthTest(true);
             RenderState::StateBlock::_defaultState->setDepthWrite(true);
+            RenderState::StateBlock::_defaultState->setBlend(true);
         }
         else
         {
             glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
+            glEnable(GL_BLEND);
             RenderState::StateBlock::_defaultState->setDepthTest(false);
             RenderState::StateBlock::_defaultState->setDepthWrite(false);
+            RenderState::StateBlock::_defaultState->setBlend(true);
         }
         for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
         {
@@ -569,8 +573,10 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         //Clear depth to achieve layered rendering
         glEnable(GL_DEPTH_TEST);
         glDepthMask(true);
+        glDisable(GL_BLEND);
         RenderState::StateBlock::_defaultState->setDepthTest(true);
         RenderState::StateBlock::_defaultState->setDepthWrite(true);
+        RenderState::StateBlock::_defaultState->setBlend(false);
 
 
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
@@ -588,9 +594,11 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     {
         glEnable(GL_DEPTH_TEST);
         glDepthMask(false);
+        glEnable(GL_BLEND);
 
         RenderState::StateBlock::_defaultState->setDepthTest(true);
         RenderState::StateBlock::_defaultState->setDepthWrite(false);
+        RenderState::StateBlock::_defaultState->setBlend(true);
 
 
         for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
@@ -610,18 +618,22 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         {
             glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
+            glEnable(GL_BLEND);
 
             RenderState::StateBlock::_defaultState->setDepthTest(true);
             RenderState::StateBlock::_defaultState->setDepthWrite(true);
+            RenderState::StateBlock::_defaultState->setBlend(true);
 
         }
         else
         {
             glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
+            glEnable(GL_BLEND);
 
             RenderState::StateBlock::_defaultState->setDepthTest(false);
             RenderState::StateBlock::_defaultState->setDepthWrite(false);
+            RenderState::StateBlock::_defaultState->setBlend(true);
 
         }
         for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
@@ -637,6 +649,29 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     const auto& zPosQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS);
     if (zPosQueue.size() > 0)
     {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+            glEnable(GL_BLEND);
+            
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
+            RenderState::StateBlock::_defaultState->setBlend(true);
+            
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+            glEnable(GL_BLEND);
+            
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
+            RenderState::StateBlock::_defaultState->setBlend(true);
+            
+        }
+        
         for (auto it = zPosQueue.cbegin(); it != zPosQueue.cend(); ++it)
         {
             processRenderCommand(*it);
