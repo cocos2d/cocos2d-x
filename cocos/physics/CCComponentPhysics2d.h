@@ -102,6 +102,9 @@ public:
     virtual void onAdd() override;
     virtual void onRemove() override;
     
+public:
+    const static std::string COMPONENT_NAME;
+    
 CC_CONSTRUCTOR_ACCESS:
     ComponentPhysics2d();
     ComponentPhysics2d(PhysicsBody *phsicsBody);

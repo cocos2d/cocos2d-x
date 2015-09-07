@@ -33,6 +33,8 @@
 
 NS_CC_BEGIN
 
+const std::string ComponentPhysics2d::COMPONENT_NAME = "physics2d";
+
 ComponentPhysics2d* ComponentPhysics2d::create()
 {
     return create(nullptr);
@@ -51,13 +53,16 @@ ComponentPhysics2d::ComponentPhysics2d()
 : _physicsBody(nullptr)
 , _physicsRotation(0.0f)
 , _ownerOriginRotation(0.0f)
-{}
+{
+    _name = COMPONENT_NAME;
+}
 
 ComponentPhysics2d::ComponentPhysics2d(PhysicsBody* physicsBody)
 : _physicsRotation(0.0f)
 , _ownerOriginRotation(0.0f)
 , _physicsBody(nullptr) // should set to null to invoke setPhysicsBody()
 {
+    _name = COMPONENT_NAME;
     setPhysicsBody(physicsBody);
 }
 
