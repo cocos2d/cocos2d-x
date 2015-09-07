@@ -118,10 +118,7 @@ Profile* Profile::getInstance()
 
 void Profile::destroyInstance()
 {
-    if (nullptr != s_profile)
-    {
-        delete s_profile;
-    }
+    CC_SAFE_DELETE(s_profile);
 }
 
 Profile::Profile()
