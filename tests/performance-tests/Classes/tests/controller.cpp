@@ -27,6 +27,7 @@ public:
         addTest("Sprite Tests", []() { return new PerformceParticle3DTests(); });
         addTest("Sprite Tests", []() { return new PerformceSpriteTests(); });
         addTest("Texture Tests", []() { return new PerformceTextureTests(); });
+        addTest("Label Tests", []() { return new PerformceLabelTests(); });
     }
 };
 
