@@ -9,5 +9,6 @@
 #include "PerformanceSpriteTest.h"
 #include "PerformanceTextureTest.h"
 #include "PerformanceLabelTest.h"
+#include "PerformanceEventDispatcherTest.h"
 
 #endif

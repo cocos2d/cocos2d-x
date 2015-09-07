@@ -28,6 +28,7 @@ public:
         addTest("Sprite Tests", []() { return new PerformceSpriteTests(); });
         addTest("Texture Tests", []() { return new PerformceTextureTests(); });
         addTest("Label Tests", []() { return new PerformceLabelTests(); });
+        addTest("EventDispatcher Tests", []() { return new PerformceEventDispatcherTests(); });
     }
 };
 
