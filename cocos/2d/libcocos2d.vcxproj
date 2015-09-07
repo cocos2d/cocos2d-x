@@ -395,7 +395,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\3d\CCTerrain.cpp" />
-    <ClCompile Include="..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\audio\win32\AudioCache.cpp" />
     <ClCompile Include="..\audio\win32\AudioEngine-win32.cpp" />
@@ -627,6 +626,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
@@ -681,6 +681,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCAtlasNode.cpp" />
     <ClCompile Include="CCAutoPolygon.cpp" />
     <ClCompile Include="CCCamera.cpp" />
+    <ClCompile Include="CCCameraBackgroundBrush.cpp" />
     <ClCompile Include="CCClippingNode.cpp" />
     <ClCompile Include="CCClippingRectangleNode.cpp" />
     <ClCompile Include="CCComponent.cpp" />
@@ -961,7 +962,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\3d\CCTerrain.h" />
-    <ClInclude Include="..\3d\CCTextureCube.h" />
     <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\AudioEngine.h" />
     <ClInclude Include="..\audio\include\Export.h" />
@@ -1242,6 +1242,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
+    <ClInclude Include="..\renderer\CCTextureCube.h" />
     <ClInclude Include="..\renderer\CCTrianglesCommand.h" />
     <ClInclude Include="..\renderer\CCVertexAttribBinding.h" />
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
@@ -1296,6 +1297,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCAtlasNode.h" />
     <ClInclude Include="CCAutoPolygon.h" />
     <ClInclude Include="CCCamera.h" />
+    <ClInclude Include="CCCameraBackgroundBrush.h" />
     <ClInclude Include="CCClippingNode.h" />
     <ClInclude Include="CCClippingRectangleNode.h" />
     <ClInclude Include="CCComponent.h" />

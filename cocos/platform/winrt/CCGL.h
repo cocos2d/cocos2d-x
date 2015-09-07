@@ -30,7 +30,7 @@ THE SOFTWARE.
 #define	glClearDepth				glClearDepthf
 #define GL_WRITE_ONLY				GL_WRITE_ONLY_OES
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && !defined(WP8_SHADER_COMPILER)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
 #include "EGL/eglplatform.h"

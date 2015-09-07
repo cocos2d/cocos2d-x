@@ -139,4 +139,11 @@ public:
     virtual std::string title() const override;
 };
 
+class TestActionTimelineBlendFuncFrame : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestActionTimelineBlendFuncFrame);
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
 #endif  // __ANIMATION_SCENE_H__

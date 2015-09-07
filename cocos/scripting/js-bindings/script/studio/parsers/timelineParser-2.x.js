@@ -160,6 +160,7 @@
         }
     };
 
+    var skyBoxBrushInstance = null;
     var getSkyboxRes = function(json, key) {
         if(json.hasOwnProperty(key) && json[key].hasOwnProperty("Path")) {
             return json[key]["Path"];
@@ -172,7 +173,7 @@
      * @param json
      * @returns {cc.Node}
      */
-    parser.initSingleNode = function(json){
+    parser.initSingleNode = function(json, resourcePath){
         var node = new cc.Node();
 
         this.generalAttributes(node, json);
@@ -180,23 +181,25 @@
         if(color != null)
             node.setColor(getColor(color));
 
-        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"]&&
+	json.hasOwnProperty("SkyBoxValid") && true == json["SkyBoxValid"])
         {
-            var leftFileData = getSkyboxRes(json, "LeftImage");
-            var rightFileData = getSkyboxRes(json, "RightImage");
-            var upFileData = getSkyboxRes(json, "UpImage");
-            var downFileData = getSkyboxRes(json, "DownImage");
-            var forwardFileData = getSkyboxRes(json, "ForwardImage");
-            var backFileData = getSkyboxRes(json, "BackImage");
-            var cameraFlag = json["SkyBoxMask"];
-            if(undefined === cameraFlag || isNaN(cameraFlag)) {
-                cameraFlag = 1024;
+            var leftFileData = resourcePath + getSkyboxRes(json, "LeftImage");
+            var rightFileData = resourcePath + getSkyboxRes(json, "RightImage");
+            var upFileData = resourcePath + getSkyboxRes(json, "UpImage");
+            var downFileData = resourcePath + getSkyboxRes(json, "DownImage");
+            var forwardFileData = resourcePath + getSkyboxRes(json, "ForwardImage");
+            var backFileData = resourcePath + getSkyboxRes(json, "BackImage");
+            var fileUtil = jsb.fileUtils;
+	    if(fileUtil.isFileExist(leftFileData)&&
+                fileUtil.isFileExist(rightFileData)&&
+                fileUtil.isFileExist(upFileData)&&
+                fileUtil.isFileExist(downFileData)&&
+                fileUtil.isFileExist(forwardFileData)&&
+                fileUtil.isFileExist(backFileData))
+            {
+                skyBoxBrushInstance = cc.CameraBackgroundSkyBoxBrush.create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
             }
-
-            var skyBox = new jsb.Skybox();
-            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            skyBox.setCameraMask(cameraFlag, false);
-            node.addChild(skyBox);
         }
 
         return node;
@@ -1312,12 +1315,18 @@
             node.setBlendFunc(new cc.BlendFunc(blendFunc["Src"] || 0, blendFunc["Dst"] || 0));
 
         parser.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color && (color["R"] !== undefined || color["G"] !== undefined || color["B"] !== undefined))
+            node.setColor(getColor(color));
         return node;
     };
 
     parser.initSkeletonNode = function(json){
         var node = new ccs.SkeletonNode();
         parser.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color && (color["R"] !== undefined || color["G"] !== undefined || color["B"] !== undefined))
+            node.setColor(getColor(color));
         return node;
     };
 
@@ -1433,7 +1442,7 @@
      * @param json
      * @returns {*}
      */
-    parser.initCamera = function(json){
+    parser.initCamera = function(json,resourcePath){
         var s = cc.winSize;
         var fov = json["Fov"] ? json["Fov"] : 60;
 
@@ -1494,21 +1503,34 @@
             node.setCameraFlag(cameraFlag);
         }
 
-        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"])
+	if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"] &&
+            json.hasOwnProperty("SkyBoxValid") && true == json["SkyBoxValid"])
         {
-            var leftFileData = getSkyboxRes(json, "LeftImage");
-            var rightFileData = getSkyboxRes(json, "RightImage");
-            var upFileData = getSkyboxRes(json, "UpImage");
-            var downFileData = getSkyboxRes(json, "DownImage");
-            var forwardFileData = getSkyboxRes(json, "ForwardImage");
-            var backFileData = getSkyboxRes(json, "BackImage");
+            var leftFileData = resourcePath + getSkyboxRes(json, "LeftImage");
+            var rightFileData = resourcePath + getSkyboxRes(json, "RightImage");
+            var upFileData = resourcePath + getSkyboxRes(json, "UpImage");
+            var downFileData = resourcePath + getSkyboxRes(json, "DownImage");
+            var forwardFileData = resourcePath + getSkyboxRes(json, "ForwardImage");
+            var backFileData = resourcePath + getSkyboxRes(json, "BackImage");
 
-            var skyBox = new jsb.Skybox();
-            skyBox.init(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
-            skyBox.setCameraMask(cameraFlag);
-            node.addChild(skyBox);
+            var fileUtil = jsb.fileUtils;
+            if(fileUtil.isFileExist(leftFileData)&&
+                fileUtil.isFileExist(rightFileData)&&
+                fileUtil.isFileExist(upFileData)&&
+                fileUtil.isFileExist(downFileData)&&
+                fileUtil.isFileExist(forwardFileData)&&
+                fileUtil.isFileExist(backFileData))
+            {
+                var innerBrush = cc.CameraBackgroundSkyBoxBrush.create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+                node.setBackgroundBrush(innerBrush);
+            }
+            else
+                node.setBackgroundBrush(skyBoxBrushInstance);
         }
-
+	else if(skyBoxBrushInstance != null)
+	{
+		node.setBackgroundBrush(skyBoxBrushInstance);
+	}
         return node;
     };
 
@@ -1538,6 +1560,11 @@
                 var col = getColor(json["CColor"]);
                 if(col && col.r !== 255 || col.g !== 255 || col.b !== 255)
                     node.setColor(col);
+            }
+
+            if(json.hasOwnProperty("IsFlipped") && true == json["IsFlipped"]) {
+                node.setCullFaceEnabled(true);
+                node.setCullFace(gl.FRONT);
             }
 
             var autoAction = getParam(json["RunAction3D"], false);

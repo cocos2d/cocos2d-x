@@ -36,7 +36,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-
+bool isWindowsPhone();
 
 CC_DEPRECATED_ATTRIBUTE std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
 CC_DEPRECATED_ATTRIBUTE std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);

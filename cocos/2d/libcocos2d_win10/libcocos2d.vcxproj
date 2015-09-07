@@ -285,7 +285,6 @@
     <ClCompile Include="..\..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\..\3d\CCTerrain.cpp" />
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\..\audio\winrt\Audio.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -621,6 +620,7 @@
     <ClCompile Include="..\..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="..\..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexIndexBuffer.cpp" />
@@ -674,6 +674,7 @@
     <ClCompile Include="..\CCAtlasNode.cpp" />
     <ClCompile Include="..\CCAutoPolygon.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp" />
     <ClCompile Include="..\CCClippingNode.cpp" />
     <ClCompile Include="..\CCClippingRectangleNode.cpp" />
     <ClCompile Include="..\CCComponent.cpp" />
@@ -941,7 +942,6 @@
     <ClInclude Include="..\..\3d\CCSprite3D.h" />
     <ClInclude Include="..\..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\..\3d\CCTerrain.h" />
-    <ClInclude Include="..\..\3d\CCTextureCube.h" />
     <ClInclude Include="..\..\3d\cocos3d.h" />
     <ClInclude Include="..\..\audio\include\AudioEngine.h" />
     <ClInclude Include="..\..\audio\include\Export.h" />
@@ -1219,7 +1219,9 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h" />
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\..\renderer\CCTextureCube.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
+    <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
     <ClInclude Include="..\..\renderer\CCGLProgram.h" />
     <ClInclude Include="..\..\renderer\CCGLProgramCache.h" />
@@ -1501,34 +1503,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -1560,6 +1562,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -1637,6 +1640,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

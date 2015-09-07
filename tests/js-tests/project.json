@@ -31,7 +31,6 @@
         "src/TouchesTest/Paddle.js",
         "src/TouchesTest/TouchesTest.js",
         "src/SchedulerTest/SchedulerTest.js",
-        "src/ClickAndMoveTest/ClickAndMoveTest.js",
         "src/MenuTest/MenuTest.js",
         "src/ActionsTest/ActionsTest.js",
         "src/TileMapTest/TileMapTest.js",

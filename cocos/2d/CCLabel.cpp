@@ -144,6 +144,11 @@ public:
 
         _textureAtlas->updateQuad(&_quad, _atlasIndex);
     }
+
+    //LabelLetter doesn't need to draw directly.
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    {
+    }
 };
 
 Label* Label::create()
@@ -978,6 +983,7 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     _textSprite = Sprite::createWithTexture(texture);
     //set camera mask using label's camera mask, because _textSprite may be null when setting camera mask to label
     _textSprite->setCameraMask(getCameraMask());
+    _textSprite->setGlobalZOrder(getGlobalZOrder());
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
@@ -1022,6 +1028,7 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
             _shadowNode->setBlendFunc(_blendFunc);
         }
         _shadowNode->setCameraMask(getCameraMask());
+        _shadowNode->setGlobalZOrder(getGlobalZOrder());
         _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
 
@@ -1717,6 +1724,19 @@ FontDefinition Label::_getFontDefinition() const
 #endif
 
     return systemFontDef;
+}
+
+void Label::setGlobalZOrder(float globalZOrder)
+{
+    Node::setGlobalZOrder(globalZOrder);
+    if (_textSprite)
+    {
+        _textSprite->setGlobalZOrder(globalZOrder);
+        if (_shadowNode)
+        {
+            _shadowNode->setGlobalZOrder(globalZOrder);
+        }
+    }
 }
 
 NS_CC_END
