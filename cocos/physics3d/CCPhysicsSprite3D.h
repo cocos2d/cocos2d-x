@@ -55,8 +55,8 @@ public:
     */
     static PhysicsSprite3D* create(const std::string& modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
 
-    /** @~english creates a PhysicsSprite3D as a collider
-    @~chinese 创建一个PhysicsSprite3D作为碰撞器
+    /** @~english creates a PhysicsSprite3D as a Collider
+    @~chinese 创建一个Collider类型的PhysicsSprite3D
     */
     static PhysicsSprite3D* createWithCollider(const std::string &modelPath, Physics3DColliderDes* colliderDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
