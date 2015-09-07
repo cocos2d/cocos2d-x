@@ -51,17 +51,17 @@ class CC_DLL PhysicsSprite3D : public cocos2d::Sprite3D
 public:
 
     /** @~english creates a PhysicsSprite3D
-    @~chinese 创建一个physicssprite3d
+    @~chinese 创建一个PhysicsSprite3D
     */
     static PhysicsSprite3D* create(const std::string& modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
 
     /** @~english creates a PhysicsSprite3D as a Collider
-    @~chinese 创建一个Collider类型的physicssprite3d
+    @~chinese 创建一个Collider类型的PhysicsSprite3D
     */
     static PhysicsSprite3D* createWithCollider(const std::string &modelPath, Physics3DColliderDes* colliderDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
     /** @~english Get the Physics3DObject.
-    @~chinese 得到physics3dobject。
+    @~chinese 得到Physics3DObject。
     */
     Physics3DObject* getPhysicsObj() const;
 

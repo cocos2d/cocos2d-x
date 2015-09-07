@@ -390,12 +390,12 @@ void deleteValueForKeyJNI(const char* key)
     }
 }
 
-int addEditBoxJNI(int left, int top, int width, int height){
+int addEditBoxJNI(int left, int top, int width, int height, float scaleX){
     JniMethodInfo t;
 
     int ret = -1;
-    if (JniHelper::getStaticMethodInfo(t, EDITBOX_CLASS_NAME, "createEditBox", "(IIII)I")) {
-        ret = t.env->CallStaticIntMethod(t.classID, t.methodID, left, top, width, height);
+    if (JniHelper::getStaticMethodInfo(t, EDITBOX_CLASS_NAME, "createEditBox", "(IIIIF)I")) {
+        ret = t.env->CallStaticIntMethod(t.classID, t.methodID, left, top, width, height, scaleX);
         t.env->DeleteLocalRef(t.classID);
     }
     return ret;

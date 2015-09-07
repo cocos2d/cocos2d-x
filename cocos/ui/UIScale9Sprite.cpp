@@ -580,8 +580,8 @@ namespace ui {
         float width = _originalSize.width;
         float height = _originalSize.height;
 
-        Vec2 offsetPosition(ceilf(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
-                            ceilf(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
+        Vec2 offsetPosition(floor(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
+                            floor(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
 
         // If there is no specified center region
         if ( _capInsetsInternal.equals(Rect::ZERO) )
@@ -794,7 +794,7 @@ namespace ui {
         //shrink the image size when it is 9-patch
         if(_isPatch9)
         {
-            float offset = 1.4f;
+            float offset = 1.0f;
             //Top left
             if(!_spriteFrameRotated)
             {

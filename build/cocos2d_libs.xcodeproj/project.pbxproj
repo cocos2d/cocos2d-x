@@ -1224,6 +1224,8 @@
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
 		299754F7193EC95400A54AC3 /* ObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 299754F3193EC95400A54AC3 /* ObjectFactory.h */; };
+		299B15AC1B93FC530008E196 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299B15AA1B93FC530008E196 /* UIEditBoxImpl-common.cpp */; };
+		299B15AD1B93FC530008E196 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 299B15AB1B93FC530008E196 /* UIEditBoxImpl-common.h */; };
 		299CF1FB19A434BC00C378C1 /* ccRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299CF1F919A434BC00C378C1 /* ccRandom.cpp */; };
 		299CF1FC19A434BC00C378C1 /* ccRandom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299CF1F919A434BC00C378C1 /* ccRandom.cpp */; };
 		299CF1FD19A434BC00C378C1 /* ccRandom.h in Headers */ = {isa = PBXBuildFile; fileRef = 299CF1FA19A434BC00C378C1 /* ccRandom.h */; };
@@ -4108,6 +4110,8 @@
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
 		299754F3193EC95400A54AC3 /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectFactory.h; path = ../base/ObjectFactory.h; sourceTree = "<group>"; };
+		299B15AA1B93FC530008E196 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
+		299B15AB1B93FC530008E196 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
 		299CF1F919A434BC00C378C1 /* ccRandom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ccRandom.cpp; path = ../base/ccRandom.cpp; sourceTree = "<group>"; };
 		299CF1FA19A434BC00C378C1 /* ccRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccRandom.h; path = ../base/ccRandom.h; sourceTree = "<group>"; };
 		29BDBA52195D597A003225C9 /* UIDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIDeprecated.cpp; sourceTree = "<group>"; };
@@ -6816,6 +6820,8 @@
 		292DB12E19B4574100A80320 /* UIEditBox */ = {
 			isa = PBXGroup;
 			children = (
+				299B15AA1B93FC530008E196 /* UIEditBoxImpl-common.cpp */,
+				299B15AB1B93FC530008E196 /* UIEditBoxImpl-common.h */,
 				50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */,
 				50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */,
 				292DB12F19B4574100A80320 /* UIEditBox.cpp */,
@@ -10540,6 +10546,7 @@
 				15AE1BEB19AAE01E00C27E9E /* CCControlButton.h in Headers */,
 				B6CAB1F81AF9AA1A00B9B856 /* btDbvt.h in Headers */,
 				B665E35D1AA80A6500DDB1C5 /* CCPUOnRandomObserver.h in Headers */,
+				299B15AD1B93FC530008E196 /* UIEditBoxImpl-common.h in Headers */,
 				1A570281180BCC900088DEC7 /* CCSprite.h in Headers */,
 				B6DD2FD21B04825B00E47F5F /* DetourNode.h in Headers */,
 				1A570285180BCC900088DEC7 /* CCSpriteBatchNode.h in Headers */,
@@ -12226,6 +12233,7 @@
 				B6DD2FC41B04825B00E47F5F /* DetourNavMesh.cpp in Sources */,
 				B6CAAFFB1AF9A9E100B9B856 /* CCPhysics3DWorld.cpp in Sources */,
 				B665E3471AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.cpp in Sources */,
+				299B15AC1B93FC530008E196 /* UIEditBoxImpl-common.cpp in Sources */,
 				B6CAB2A41AF9AA1A00B9B856 /* btConvexHullShape.cpp in Sources */,
 				15AE1AA519AAD40300C27E9E /* b2Fixture.cpp in Sources */,
 				B29A7DE219EE1B7700872B35 /* MeshAttachment.c in Sources */,

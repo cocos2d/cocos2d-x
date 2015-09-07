@@ -38,9 +38,7 @@ void MessageBox(const char * pszMsg, const char * pszTitle)
     // Create the message dialog and set its content
     Platform::String^ message = ref new Platform::String(CCUtf8ToUnicode(pszMsg, -1).c_str());
     Platform::String^ title = ref new Platform::String(CCUtf8ToUnicode(pszTitle, -1).c_str());
-#ifndef WP8_SHADER_COMPILER
     GLViewImpl::sharedOpenGLView()->ShowMessageBox(title, message);
-#endif
 }
 
 

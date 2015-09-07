@@ -47,6 +47,20 @@ using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Networking::Connectivity;
 
+bool isWindowsPhone()
+{
+#if _MSC_VER >= 1900
+    if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+    {
+        return true;
+    }
+#elif (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+    return true;
+#else
+    return false;
+#endif
+}
+
 std::wstring CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len/* = -1*/)
 {
     std::wstring ret;
@@ -121,7 +135,6 @@ float getScaledDPIValue(float v) {
 
 void CC_DLL CCLogIPAddresses()
 {
-#ifndef WP8_SHADER_COMPILER
     auto hostnames = NetworkInformation::GetHostNames();
     int length = hostnames->Size;
 
@@ -134,7 +147,6 @@ void CC_DLL CCLogIPAddresses()
             log("IP Address: %s:", s.c_str());
         }
     }
-#endif
 }
 
 std::string CC_DLL getDeviceIPAddresses()

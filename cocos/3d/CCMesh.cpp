@@ -350,15 +350,16 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                       flags);
 
 
-    if (isTransparent && !forceDepthWrite)
-        _material->getStateBlock()->setDepthWrite(false);
-    else
+//    if (isTransparent && !forceDepthWrite)
+//        _material->getStateBlock()->setDepthWrite(false);
+//    else
         _material->getStateBlock()->setDepthWrite(true);
 
 
     _meshCommand.setSkipBatching(isTransparent);
     _meshCommand.setTransparent(isTransparent);
     _meshCommand.set3D(!_force2DQueue);
+    _material->getStateBlock()->setBlend(_force2DQueue || isTransparent);
 
     // set default uniforms for Mesh
     // 'u_color' and others

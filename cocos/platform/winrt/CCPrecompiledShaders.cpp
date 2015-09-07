@@ -185,7 +185,7 @@ bool CCPrecompiledShaders::addProgram(GLuint program, const std::string& id)
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) && defined(WP8_SHADER_COMPILER)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 void CCPrecompiledShaders::savePrecompiledPrograms(Windows::Storage::StorageFolder^ folder)
 {
