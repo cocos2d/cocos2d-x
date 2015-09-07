@@ -28,6 +28,7 @@
 #include <string>
 #include <unordered_map>
 #include "base/ccTypes.h"
+#include "renderer/CCMaterial.h"
 
 NS_CC_BEGIN
 
@@ -37,6 +38,51 @@ NS_CC_BEGIN
  */
 
 class Texture2D;
+
+class CC_DLL Sprite3DMaterial : public Material
+{
+public:
+    enum class MaterialType
+    {
+        UNLIT,
+        UNLIT_NOTEX,
+        VERTEX_LIT,
+        DIFFUSE,
+        DIFFUSE_NOTEX,
+        BUMPED_DIFFUSE,
+        
+        CUSTOM,
+    };
+    
+    MaterialType getMaterialType() const { return _type; }
+    
+    static Sprite3DMaterial* createBuiltInMaterial(MaterialType type, bool skinned);
+    
+    static Sprite3DMaterial* createMaterialWithFilename(const std::string& path);
+    
+    static Sprite3DMaterial* createMaterialWithGLStateProgram(GLProgramState* programState);
+    
+    static void loadBuiltInMaterial();
+    
+    static void clearBuiltInMaterial();
+    
+    virtual Material* clone() const override;
+    
+protected:
+    
+    MaterialType _type;
+    static Sprite3DMaterial* _unLitMaterial;
+    static Sprite3DMaterial* _unLitNoTexMaterial;
+    static Sprite3DMaterial* _vertexLitMaterial;
+    static Sprite3DMaterial* _diffuseMaterial;
+    static Sprite3DMaterial* _diffuseNoTexMaterial;
+    static Sprite3DMaterial* _bumpedDiffuseMaterial;
+    
+    static Sprite3DMaterial* _unLitMaterialSkin;
+    static Sprite3DMaterial* _vertexLitMaterialSkin;
+    static Sprite3DMaterial* _diffuseMaterialSkin;
+    static Sprite3DMaterial* _bumpedDiffuseMaterialSkin;
+};
 
 /**
  * @brief the sprite3D material is only texture for now
