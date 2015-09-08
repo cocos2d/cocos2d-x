@@ -79,6 +79,11 @@ Mat4 AttachNode::getFullAttachTransform() const
   }
 }
 
+void AttachNode::setOffsetTransform(const Mat4& offset)
+{
+  _attachOffset = offset;
+}
+
 Mat4 AttachNode::getNodeToWorldTransform() const
 {
     return Node::getNodeToWorldTransform();
