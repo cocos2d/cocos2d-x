@@ -59,7 +59,7 @@ namespace network
         // additional info created by CCDownloader
         mutable void* fp;
         mutable bool resumeDownload;
-        mutable double resumeDownloaded;
+        mutable double resumeDownloadedSize;
         mutable double downloaded;
         mutable double totalToDownload;
         mutable void *_reserved;

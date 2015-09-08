@@ -603,7 +603,7 @@ void AssetsManagerEx::startUpdate()
                     unit.srcUrl = packageUrl + path;
                     unit.storagePath = _storagePath + path;
                     unit.resumeDownload = false;
-                    unit.resumeDownloaded = 0;
+                    unit.resumeDownloadedSize = 0;
                     _downloadUnits.emplace(unit.customId, unit);
                 }
             }

@@ -61,8 +61,8 @@ static int _downloadProgressFunc(void* userdata, double totalToDownload, double 
     // then it do not need to do callback notification, so the exclusion of this situation, avoid subsequent judgment exception
     if (totalToDownload != 0)
     {
-        totalToDownload += downloadUnit->resumeDownloaded;
-        nowDownloaded += downloadUnit->resumeDownloaded;
+        totalToDownload += downloadUnit->resumeDownloadedSize;
+        nowDownloaded += downloadUnit->resumeDownloadedSize;
     }
     this_->getProgressCallback()(downloadUnit, totalToDownload, nowDownloaded);
 
@@ -187,7 +187,7 @@ int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
                 if (size != -1)
                 {
                     curl_easy_setopt(curl, CURLOPT_RESUME_FROM_LARGE, size);
-                    unit.resumeDownloaded = size;
+                    unit.resumeDownloadedSize = size;
                 }
             }
 
