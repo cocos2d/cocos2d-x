@@ -221,6 +221,7 @@ void Manifest::genResumeAssetsList(network::DownloadUnits *units) const
             unit.customId = it->first;
             unit.srcUrl = _packageUrl + asset.path;
             unit.storagePath = _manifestRoot + asset.path;
+            unit.resumeDownloaded = 0;
             if (asset.downloadState == DownloadState::DOWNLOADING)
             {
                 unit.resumeDownload = true;

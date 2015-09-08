@@ -603,6 +603,7 @@ void AssetsManagerEx::startUpdate()
                     unit.srcUrl = packageUrl + path;
                     unit.storagePath = _storagePath + path;
                     unit.resumeDownload = false;
+                    unit.resumeDownloaded = 0;
                     _downloadUnits.emplace(unit.customId, unit);
                 }
             }
@@ -615,6 +616,7 @@ void AssetsManagerEx::startUpdate()
                 if (diffIt == diff_map.end())
                 {
                     _tempManifest->setAssetDownloadState(key, Manifest::DownloadState::SUCCESSED);
+                    _tempManifest->saveToFile(_tempManifestPath);
                 }
             }
             
@@ -843,6 +845,9 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
         {
             // Set download state to DOWNLOADING, this will run only once in the download process
             _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::DOWNLOADING);
+            
+            _tempManifest->saveToFile(_tempManifestPath);
+            
             // Register the download size information
             _downloadedSize.emplace(customId, downloaded);
             _totalSize += total;
