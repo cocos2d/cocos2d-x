@@ -410,6 +410,14 @@ Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition) const
     return result;
 }
 
+Vec2 ScrollView::flattenVectorByDirection(const Vec2& vector)
+{
+    Vec2 result = vector;
+    result.x = (_direction == Direction::VERTICAL ? 0 : result.x);
+    result.y = (_direction == Direction::HORIZONTAL ? 0 : result.y);
+    return result;
+}
+
 bool ScrollView::isOutOfBoundary(MoveDirection dir) const
 {
     switch(dir)
@@ -457,9 +465,7 @@ void ScrollView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& i
 
 void ScrollView::startAutoScroll(const Vec2& deltaMove, float time, bool attenuated)
 {
-    Vec2 adjustedDeltaMove = deltaMove;
-    adjustedDeltaMove.x = (_direction == Direction::VERTICAL ? 0 : adjustedDeltaMove.x);
-    adjustedDeltaMove.y = (_direction == Direction::HORIZONTAL ? 0 : adjustedDeltaMove.y);
+    Vec2 adjustedDeltaMove = flattenVectorByDirection(deltaMove);
     
     _autoScrolling = true;
     _autoScrollTargetDelta = adjustedDeltaMove;

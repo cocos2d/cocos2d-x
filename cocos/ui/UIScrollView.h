@@ -565,6 +565,8 @@ protected:
     virtual void initScrollBar();
     virtual void removeScrollBar();
     
+    Vec2 flattenVectorByDirection(const Vec2& vector);
+    
     bool isOutOfBoundary(MoveDirection dir) const;
     bool isOutOfBoundaryTopOrBottom() const;
     bool isOutOfBoundaryLeftOrRight() const;
