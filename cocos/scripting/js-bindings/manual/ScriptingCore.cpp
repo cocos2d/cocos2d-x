@@ -995,10 +995,10 @@ int ScriptingCore::handleActionEvent(void* data)
     if (NULL == actionObjectScriptData->nativeObject || NULL == actionObjectScriptData->eventType)
         return 0;
     
-    Ref* ref = static_cast<Ref*>(actionObjectScriptData->nativeObject);
+    Action* actionObject = static_cast<Action*>(actionObjectScriptData->nativeObject);
     int eventType = *((int*)(actionObjectScriptData->eventType));
     
-    js_proxy_t * p = jsb_get_native_proxy(ref);
+    js_proxy_t * p = jsb_get_native_proxy(actionObject);
     if (!p) return 0;
     
     int ret = 0;
