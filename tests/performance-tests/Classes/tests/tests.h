@@ -10,5 +10,6 @@
 #include "PerformanceTextureTest.h"
 #include "PerformanceLabelTest.h"
 #include "PerformanceEventDispatcherTest.h"
+#include "PerformanceScenarioTest.h"
 
 #endif

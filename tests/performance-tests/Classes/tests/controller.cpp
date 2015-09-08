@@ -24,11 +24,11 @@ public:
         addTest("Node Children Tests", []() { return new PerformceNodeChildrenTests(); });
         addTest("Particle Tests", []() { return new PerformceParticleTests(); });
         addTest("Particle3D Tests", []() { return new PerformceParticle3DTests(); });
-        addTest("Sprite Tests", []() { return new PerformceParticle3DTests(); });
         addTest("Sprite Tests", []() { return new PerformceSpriteTests(); });
         addTest("Texture Tests", []() { return new PerformceTextureTests(); });
         addTest("Label Tests", []() { return new PerformceLabelTests(); });
         addTest("EventDispatcher Tests", []() { return new PerformceEventDispatcherTests(); });
+        addTest("Scenario Tests", []() { return new PerformceScenarioTests(); });
     }
 };
 
