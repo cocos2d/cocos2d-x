@@ -42,7 +42,7 @@ void TexturePerformceTest::performTestsPNG(const char* filename, const char* fil
         log("  ms:%f", dt);
         if (isAutoTesting())
             Profile::getInstance()->addTestResult(genStrVector(fileType, resolution, "RGBA8888", remark, nullptr),
-                                                  genStrVector(genStr("%f", dt).c_str(), nullptr));
+                                                  genStrVector(genStr("%fms", dt).c_str(), nullptr));
     }
     else
         log(" ERROR");
@@ -58,7 +58,7 @@ void TexturePerformceTest::performTestsPNG(const char* filename, const char* fil
         log("  ms:%f", dt);
         if (isAutoTesting())
             Profile::getInstance()->addTestResult(genStrVector(fileType, resolution, "RGBA4444", remark, nullptr),
-                                              genStrVector(genStr("%f", dt).c_str(), nullptr));
+                                              genStrVector(genStr("%fms", dt).c_str(), nullptr));
     }
     else
         log(" ERROR");
@@ -74,7 +74,7 @@ void TexturePerformceTest::performTestsPNG(const char* filename, const char* fil
         log("  ms:%f", dt);
         if (isAutoTesting())
             Profile::getInstance()->addTestResult(genStrVector(fileType, resolution, "RGBA5551", remark, nullptr),
-                                              genStrVector(genStr("%f", dt).c_str(), nullptr));
+                                              genStrVector(genStr("%fms", dt).c_str(), nullptr));
     }
     else
         log(" ERROR");
@@ -90,7 +90,7 @@ void TexturePerformceTest::performTestsPNG(const char* filename, const char* fil
         log("  ms:%f", dt);
         if (isAutoTesting())
             Profile::getInstance()->addTestResult(genStrVector(fileType, resolution, "RGB565", remark, nullptr),
-                                              genStrVector(genStr("%f", dt).c_str(), nullptr));
+                                              genStrVector(genStr("%fms", dt).c_str(), nullptr));
     }
     else
         log(" ERROR");

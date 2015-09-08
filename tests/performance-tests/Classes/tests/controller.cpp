@@ -29,6 +29,7 @@ public:
         addTest("Label Tests", []() { return new PerformceLabelTests(); });
         addTest("EventDispatcher Tests", []() { return new PerformceEventDispatcherTests(); });
         addTest("Scenario Tests", []() { return new PerformceScenarioTests(); });
+        addTest("Callback Tests", []() { return new PerformceCallbackTests(); });
     }
 };
 

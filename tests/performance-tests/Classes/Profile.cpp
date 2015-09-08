@@ -12,6 +12,9 @@
 #define KEY_CONDITION_HEADERS   "conditionHeaders"
 #define KEY_RESULT_HEADERS      "resultHeaders"
 
+#define USE_PRETTY_OUTPUT_FORMAT        1
+#define USE_JSON_FORMAT                 1
+
 static Profile* s_profile = nullptr;
 
 USING_NS_CC;
@@ -208,6 +211,8 @@ void Profile::testCaseEnd()
 void Profile::flush()
 {
     auto writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
+
+#if USE_JSON_FORMAT
     std::string fullPath = genStr("%s/%s", writablePath.c_str(), LOG_FILE_NAME);
     
     rapidjson::Document document;
@@ -216,11 +221,13 @@ void Profile::flush()
     
     rapidjson::StringBuffer buffer;
 
+#if USE_PRETTY_OUTPUT_FORMAT
     // write pretty format json
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-
+#else  // #else USE_PRETTY_OUTPUT_FORMAT
     // write json in one line
-//    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+#endif // #endif USE_PRETTY_OUTPUT_FORMAT
 
     theData.Accept(writer);
     auto out = buffer.GetString();
@@ -228,8 +235,9 @@ void Profile::flush()
     FILE *fp = fopen(fullPath.c_str(), "w");
     fputs(out, fp);
     fclose(fp);
-
-//  // Write the test data into plist file.
-//    std::string plistFullPath = genStr("%s/%s", writablePath.c_str(), PLIST_FILE_NAME);
-//    cocos2d::FileUtils::getInstance()->writeValueMapToFile(testData, plistFullPath);
+#else  // #else USE_JSON_FORMAT
+    // Write the test data into plist file.
+    std::string plistFullPath = genStr("%s/%s", writablePath.c_str(), PLIST_FILE_NAME);
+    cocos2d::FileUtils::getInstance()->writeValueMapToFile(testData, plistFullPath);
+#endif // #endif USE_JSON_FORMAT
 }

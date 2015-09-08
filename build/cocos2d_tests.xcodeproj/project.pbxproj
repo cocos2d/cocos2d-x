@@ -1046,6 +1046,8 @@
 		FADE78AE1B9E88420061590D /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AB1B9E88420061590D /* Particles */; };
 		FADE78AF1B9E88420061590D /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AC1B9E88420061590D /* TileMaps */; };
 		FADE78B01B9E88420061590D /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = FADE78AC1B9E88420061590D /* TileMaps */; };
+		FADE78B31B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */; };
+		FADE78B41B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2190,6 +2192,8 @@
 		FADE78A51B9E86100061590D /* PerformanceScenarioTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceScenarioTest.h; sourceTree = "<group>"; };
 		FADE78AB1B9E88420061590D /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = "../tests/performance-tests/Resources/Particles"; sourceTree = "<group>"; };
 		FADE78AC1B9E88420061590D /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = "../tests/performance-tests/Resources/TileMaps"; sourceTree = "<group>"; };
+		FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceCallbackTest.cpp; sourceTree = "<group>"; };
+		FADE78B21B9EC0290061590D /* PerformanceCallbackTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceCallbackTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4801,6 +4805,8 @@
 				FA94B2411B90497E0074B261 /* testBasic.h */,
 				FA94B2381B9045160074B261 /* PerformanceAllocTest.cpp */,
 				FA94B2391B9045160074B261 /* PerformanceAllocTest.h */,
+				FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */,
+				FADE78B21B9EC0290061590D /* PerformanceCallbackTest.h */,
 				FADE78971B9D5C640061590D /* PerformanceEventDispatcherTest.cpp */,
 				FADE78981B9D5C640061590D /* PerformanceEventDispatcherTest.h */,
 				FADE78931B9C42E80061590D /* PerformanceLabelTest.cpp */,
@@ -6297,6 +6303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FADE78921B9C363D0061590D /* PerformanceTextureTest.cpp in Sources */,
+				FADE78B41B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */,
 				FA94B2451B90497E0074B261 /* controller.cpp in Sources */,
 				FADE788E1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */,
 				FA94B2431B90497E0074B261 /* BaseTest.cpp in Sources */,
@@ -6331,6 +6338,7 @@
 				FA94B20A1B8EF8430074B261 /* main.cpp in Sources */,
 				FADE78A61B9E86100061590D /* PerformanceScenarioTest.cpp in Sources */,
 				FA94B23A1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */,
+				FADE78B31B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */,
 				FADE78991B9D5C640061590D /* PerformanceEventDispatcherTest.cpp in Sources */,
 				FADE78731B9572990061590D /* PerformanceParticleTest.cpp in Sources */,
 				FA94B2441B90497E0074B261 /* controller.cpp in Sources */,

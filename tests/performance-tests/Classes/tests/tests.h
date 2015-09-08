@@ -11,5 +11,6 @@
 #include "PerformanceLabelTest.h"
 #include "PerformanceEventDispatcherTest.h"
 #include "PerformanceScenarioTest.h"
+#include "PerformanceCallbackTest.h"
 
 #endif
