@@ -281,7 +281,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     {
         contact.setEventCode(PhysicsContact::EventCode::BEGIN);
         contact.setWorld(this);
-        _scene->getEventDispatcher()->dispatchEvent(&contact);
+        Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
     }
     
     return ret ? contact.resetResult() : false;
@@ -296,7 +296,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -310,7 +310,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -322,7 +322,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPARATE);
     contact.setWorld(this);
-    _scene->getEventDispatcher()->dispatchEvent(&contact);
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
@@ -333,7 +333,6 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RayCastCallbackInfo info = { this, func, point1, point2, data };
@@ -357,7 +356,6 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RectQueryCallbackInfo info = {this, func, data};
@@ -380,7 +378,6 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& po
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         PointQueryCallbackInfo info = {this, func, data};
@@ -422,10 +419,10 @@ PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
     return shape == nullptr ? nullptr : s_physicsShapeMap.find(shape)->second;
 }
 
-PhysicsWorld* PhysicsWorld::construct(Scene& scene)
+PhysicsWorld* PhysicsWorld::construct()
 {
     PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
-    if(world && world->init(scene))
+    if(world && world->init())
     {
         return world;
     }
@@ -434,14 +431,12 @@ PhysicsWorld* PhysicsWorld::construct(Scene& scene)
     return nullptr;
 }
 
-bool PhysicsWorld::init(Scene& scene)
+bool PhysicsWorld::init()
 {
     do
     {
         _cpSpace = cpSpaceNew();
         CC_BREAK_IF(_cpSpace == nullptr);
-        
-        _scene = &scene;
         
         cpSpaceSetGravity(_cpSpace, PhysicsHelper::point2cpv(_gravity));
         
@@ -817,11 +812,9 @@ void PhysicsWorld::step(float delta)
 
 void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
-    if(_updateBodyTransform || !_delayAddBodies.empty())
+    if(!_delayAddBodies.empty())
     {
-        _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
         updateBodies();
-        _updateBodyTransform = false;
     }
     else if (!_delayRemoveBodies.empty())
     {
@@ -904,7 +897,7 @@ PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
 , _world(world)
 {
     _drawNode = DrawNode::create();
-    _world.getScene().addChild(_drawNode);
+    Director::getInstance()->getRunningScene()->addChild(_drawNode);
 }
 
 PhysicsDebugDraw::~PhysicsDebugDraw()

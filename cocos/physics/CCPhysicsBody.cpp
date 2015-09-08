@@ -31,10 +31,11 @@
 #include "chipmunk.h"
 
 #include "2d/CCScene.h"
-#include "CCPhysicsShape.h"
-#include "CCPhysicsJoint.h"
-#include "CCPhysicsWorld.h"
-#include "CCPhysicsHelper.h"
+#include "physics/CCPhysicsShape.h"
+#include "physics/CCPhysicsJoint.h"
+#include "physics/CCPhysicsWorld.h"
+#include "physics/CCPhysicsHelper.h"
+#include "physics/CCComponentPhysics2d.h"
 
 static inline void cpBodyUpdateVelocityWithoutGravity(cpBody *body, cpVect gravity, cpFloat damping, cpFloat dt)
 {
@@ -51,8 +52,7 @@ namespace
 }
 
 PhysicsBody::PhysicsBody()
-: _node(nullptr)
-, _world(nullptr)
+: _world(nullptr)
 , _cpBody(nullptr)
 , _dynamic(true)
 , _enabled(true)
@@ -68,10 +68,12 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
-, _positionInitDirty(true)
 , _rotationOffset(0)
 , _recordedRotation(0.0f)
 , _recordedAngle(0.0)
+, _componentBelongsTo(nullptr)
+, _massSetByUser(false)
+, _momentSetByUser(false)
 {
 }
 
@@ -334,8 +336,6 @@ void PhysicsBody::setGravityEnable(bool enable)
 
 void PhysicsBody::setPosition(const Vec2& position)
 {
-    _positionInitDirty = false;
-    _recordedPosition = position;
     cpBodySetPos(_cpBody, PhysicsHelper::point2cpv(position + _positionOffset));
 }
 
@@ -350,25 +350,25 @@ void PhysicsBody::setScale(float scaleX, float scaleY)
 {
     for (auto shape : _shapes)
     {
+        _area -= shape->getArea();
+        if (!_massSetByUser)
+            addMass(-shape->getMass());
+        if (!_momentSetByUser)
+            addMoment(-shape->getMoment());
+        
         shape->setScale(scaleX, scaleY);
+        
+        _area += shape->getArea();
+        if (!_massSetByUser)
+            addMass(shape->getMass());
+        if (!_momentSetByUser)
+            addMoment(shape->getMoment());
     }
 }
 
-const Vec2& PhysicsBody::getPosition()
+Vec2 PhysicsBody::getPosition() const
 {
-    if (_positionInitDirty) {
-        if (_node) {
-            if (_node->getParent()) {
-                _latestPosition = _node->getParent()->convertToWorldSpace(_node->getPosition());
-            } else {
-                _latestPosition =  _node->getPosition();
-            }
-        }
-    } else {
-        _latestPosition.x = _cpBody->p.x - _positionOffset.x;
-        _latestPosition.y = _cpBody->p.y - _positionOffset.y;
-    }
-    return _latestPosition;
+    return Vec2(_cpBody->p.x - _positionOffset.x, _cpBody->p.y - _positionOffset.y);
 }
 
 float PhysicsBody::getRotation()
@@ -450,6 +450,7 @@ void PhysicsBody::setMass(float mass)
     }
     _mass = mass;
     _massDefault = false;
+    _massSetByUser = true;
     
     // update density
     if (_mass == PHYSICS_INFINITY)
@@ -628,6 +629,7 @@ void PhysicsBody::setMoment(float moment)
 {
     _moment = moment;
     _momentDefault = false;
+    _momentSetByUser = true;
     
     // the static body's mass and moment is always infinity
     if (_rotationEnabled && _dynamic)
@@ -723,6 +725,14 @@ void PhysicsBody::removeFromWorld()
     }
 }
 
+Node* PhysicsBody::getNode() const
+{
+    if (_componentBelongsTo)
+        return _componentBelongsTo->getOwner();
+    else
+        return nullptr;
+}
+
 void PhysicsBody::setEnable(bool enable)
 {
     if (_enabled != enable)
@@ -760,15 +770,12 @@ void PhysicsBody::setResting(bool rest) const
 
 void PhysicsBody::update(float delta)
 {
-    if (_node)
+    // damping compute
+    if (_isDamping && _dynamic && !isResting())
     {
-        // damping compute
-        if (_isDamping && _dynamic && !isResting())
-        {
-            _cpBody->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-            _cpBody->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
-            _cpBody->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
-        }
+        _cpBody->v.x *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _cpBody->v.y *= cpfclamp(1.0f - delta * _linearDamping, 0.0f, 1.0f);
+        _cpBody->w *= cpfclamp(1.0f - delta * _angularDamping, 0.0f, 1.0f);
     }
 }
 

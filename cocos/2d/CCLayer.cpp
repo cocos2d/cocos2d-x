@@ -44,10 +44,6 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
-#if CC_USE_PHYSICS
-#include "physics/CCPhysicsBody.h"
-#endif
-
 NS_CC_BEGIN
 
 // Layer
