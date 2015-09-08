@@ -567,10 +567,9 @@ protected:
     
     Vec2 flattenVectorByDirection(const Vec2& vector);
     
-    bool isOutOfBoundary(MoveDirection dir) const;
-    bool isOutOfBoundaryTopOrBottom() const;
-    bool isOutOfBoundaryLeftOrRight() const;
-    bool isOutOfBoundary() const;
+    virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO);
+    bool isOutOfBoundary(MoveDirection dir);
+    bool isOutOfBoundary();
     
     void moveChildren(float offsetX, float offsetY);
     void moveChildrenToPosition(const Vec2& position);
@@ -602,8 +601,6 @@ protected:
     void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
     void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
-    
-    Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) const;
     
     void updateScrollBar(const Vec2& outOfBoundary);
 
@@ -639,6 +636,9 @@ protected:
     bool _inertiaScrollEnabled;
 
     bool _bounceEnabled;
+    
+    Vec2 _outOfBoundaryAmount;
+    bool _outOfBoundaryAmountDirty;
     
     bool _scrollBarEnabled;
     ScrollViewBar* _verticalScrollBar;

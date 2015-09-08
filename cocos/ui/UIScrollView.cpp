@@ -67,6 +67,7 @@ _autoScrollCurrentlyOutOfBoundary(false),
 _autoScrollBraking(false),
 _inertiaScrollEnabled(true),
 _bounceEnabled(false),
+_outOfBoundaryAmountDirty(true),
 _scrollBarEnabled(true),
 _verticalScrollBar(nullptr),
 _horizontalScrollBar(nullptr),
@@ -227,6 +228,7 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
         return;
     }
     _innerContainer->setPosition(position);
+    _outOfBoundaryAmountDirty = true;
     
     // Process bouncing events
     if(_bounceEnabled)
@@ -376,38 +378,14 @@ bool ScrollView::startBounceBackIfNeeded()
     {
         return false;
     }
-    Vec2 outOfBoundary = getHowMuchOutOfBoundary(Vec2::ZERO);
-    if(outOfBoundary == Vec2::ZERO)
+    Vec2 bounceBackAmount = getHowMuchOutOfBoundary();
+    if(bounceBackAmount == Vec2::ZERO)
     {
         return false;
     }
     
-    startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true);
+    startAutoScroll(bounceBackAmount, BOUNCE_BACK_DURATION, true);
     return true;
-}
-
-Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition) const
-{
-    Vec2 result;
-
-    if(_innerContainer->getLeftBoundary() + addition.x > _leftBoundary)
-    {
-        result.x = _leftBoundary - (_innerContainer->getLeftBoundary() + addition.x);
-    }
-    else if(_innerContainer->getRightBoundary() + addition.x < _rightBoundary)
-    {
-        result.x = _rightBoundary - (_innerContainer->getRightBoundary() + addition.x);
-    }
-
-    if(_innerContainer->getTopBoundary() + addition.y < _topBoundary)
-    {
-        result.y = _topBoundary - (_innerContainer->getTopBoundary() + addition.y);
-    }
-    else if(_innerContainer->getBottomBoundary() + addition.y > _bottomBoundary)
-    {
-        result.y = _bottomBoundary - (_innerContainer->getBottomBoundary() + addition.y);
-    }
-    return result;
 }
 
 Vec2 ScrollView::flattenVectorByDirection(const Vec2& vector)
@@ -418,31 +396,56 @@ Vec2 ScrollView::flattenVectorByDirection(const Vec2& vector)
     return result;
 }
 
-bool ScrollView::isOutOfBoundary(MoveDirection dir) const
+Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition)
 {
+    if(addition == Vec2::ZERO && !_outOfBoundaryAmountDirty)
+    {
+        return _outOfBoundaryAmount;
+    }
+    
+    Vec2 outOfBoundaryAmount;
+    if(_innerContainer->getLeftBoundary() + addition.x > _leftBoundary)
+    {
+        outOfBoundaryAmount.x = _leftBoundary - (_innerContainer->getLeftBoundary() + addition.x);
+    }
+    else if(_innerContainer->getRightBoundary() + addition.x < _rightBoundary)
+    {
+        outOfBoundaryAmount.x = _rightBoundary - (_innerContainer->getRightBoundary() + addition.x);
+    }
+    
+    if(_innerContainer->getTopBoundary() + addition.y < _topBoundary)
+    {
+        outOfBoundaryAmount.y = _topBoundary - (_innerContainer->getTopBoundary() + addition.y);
+    }
+    else if(_innerContainer->getBottomBoundary() + addition.y > _bottomBoundary)
+    {
+        outOfBoundaryAmount.y = _bottomBoundary - (_innerContainer->getBottomBoundary() + addition.y);
+    }
+    
+    if(addition == Vec2::ZERO)
+    {
+        _outOfBoundaryAmount = outOfBoundaryAmount;
+        _outOfBoundaryAmountDirty = false;
+    }
+    return outOfBoundaryAmount;
+}
+
+bool ScrollView::isOutOfBoundary(MoveDirection dir)
+{
+    Vec2 outOfBoundary = getHowMuchOutOfBoundary();
     switch(dir)
     {
-        case MoveDirection::TOP: return _innerContainer->getTopBoundary() < _topBoundary;
-        case MoveDirection::BOTTOM: return _innerContainer->getBottomBoundary() > _bottomBoundary;
-        case MoveDirection::LEFT: return _innerContainer->getLeftBoundary() > _leftBoundary;
-        case MoveDirection::RIGHT: return _innerContainer->getRightBoundary() < _rightBoundary;
+        case MoveDirection::TOP: return outOfBoundary.y > 0;
+        case MoveDirection::BOTTOM: return outOfBoundary.y < 0;
+        case MoveDirection::LEFT: return outOfBoundary.x < 0;
+        case MoveDirection::RIGHT: return outOfBoundary.x > 0;
     }
     return false;
 }
 
-bool ScrollView::isOutOfBoundaryTopOrBottom() const
+bool ScrollView::isOutOfBoundary()
 {
-    return isOutOfBoundary(MoveDirection::TOP) || isOutOfBoundary(MoveDirection::BOTTOM);
-}
-
-bool ScrollView::isOutOfBoundaryLeftOrRight() const
-{
-    return isOutOfBoundary(MoveDirection::LEFT) || isOutOfBoundary(MoveDirection::RIGHT);
-}
-
-bool ScrollView::isOutOfBoundary() const
-{
-    return isOutOfBoundaryTopOrBottom() || isOutOfBoundaryLeftOrRight();
+    return getHowMuchOutOfBoundary() != Vec2::ZERO;
 }
 
 void ScrollView::startAutoScrollToDestination(const Vec2& destination, float time, bool attenuated)
@@ -473,14 +476,14 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float time, bool attenua
     _autoScrollStartPosition = _innerContainer->getPosition();
     _autoScrollTotalTime = time;
     _autoScrollAccumulatedTime = 0;
-    _autoScrollCurrentlyOutOfBoundary = isOutOfBoundary();
     _autoScrollBraking = false;
     _autoScrollBrakingStartPosition = Vec2::ZERO;
     
     // If the destination is also out of boundary of same side, start brake from beggining.
-    if(_autoScrollCurrentlyOutOfBoundary)
+    Vec2 currentOutOfBoundary = getHowMuchOutOfBoundary();
+    if(currentOutOfBoundary != Vec2::ZERO)
     {
-        Vec2 currentOutOfBoundary = getHowMuchOutOfBoundary();
+        _autoScrollCurrentlyOutOfBoundary = true;
         Vec2 afterOutOfBoundary = getHowMuchOutOfBoundary(adjustedDeltaMove);
         if(currentOutOfBoundary.x * afterOutOfBoundary.x > 0 || currentOutOfBoundary.y * afterOutOfBoundary.y > 0)
         {
@@ -583,8 +586,9 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
     if(_bounceEnabled)
     {
         // If the position of the inner container is out of the boundary, the offsets should be divided by two.
-        touchOffsetX *= (isOutOfBoundaryLeftOrRight() ? 0.5f : 1);
-        touchOffsetY *= (isOutOfBoundaryTopOrBottom() ? 0.5f : 1);
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary();
+        touchOffsetX *= (outOfBoundary.x == 0 ? 1 : 0.5f);
+        touchOffsetY *= (outOfBoundary.y == 0 ? 1 : 0.5f);
     }
     
     float realOffsetX = touchOffsetX;
