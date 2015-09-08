@@ -31,6 +31,7 @@ public:
         addTest("Scenario Tests", []() { return new PerformceScenarioTests(); });
         addTest("Callback Tests", []() { return new PerformceCallbackTests(); });
         addTest("Math Tests", []() { return new PerformceMathTests(); });
+        addTest("Container Tests", []() { return new PerformceContainerTests(); });
     }
 };
 

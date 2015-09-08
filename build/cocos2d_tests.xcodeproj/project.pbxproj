@@ -1050,6 +1050,8 @@
 		FADE78B41B9EC0290061590D /* PerformanceCallbackTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */; };
 		FADE78B71B9EC6160061590D /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */; };
 		FADE78B81B9EC6160061590D /* PerformanceMathTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */; };
+		FADE78FD1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */; };
+		FADE78FE1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2198,6 +2200,8 @@
 		FADE78B21B9EC0290061590D /* PerformanceCallbackTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceCallbackTest.h; sourceTree = "<group>"; };
 		FADE78B51B9EC6160061590D /* PerformanceMathTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceMathTest.cpp; sourceTree = "<group>"; };
 		FADE78B61B9EC6160061590D /* PerformanceMathTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceMathTest.h; sourceTree = "<group>"; };
+		FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
+		FADE78FC1B9ECB7F0061590D /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4811,6 +4815,8 @@
 				FA94B2391B9045160074B261 /* PerformanceAllocTest.h */,
 				FADE78B11B9EC0290061590D /* PerformanceCallbackTest.cpp */,
 				FADE78B21B9EC0290061590D /* PerformanceCallbackTest.h */,
+				FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */,
+				FADE78FC1B9ECB7F0061590D /* PerformanceContainerTest.h */,
 				FADE78971B9D5C640061590D /* PerformanceEventDispatcherTest.cpp */,
 				FADE78981B9D5C640061590D /* PerformanceEventDispatcherTest.h */,
 				FADE78931B9C42E80061590D /* PerformanceLabelTest.cpp */,
@@ -6322,6 +6328,7 @@
 				FA94B24C1B9059540074B261 /* VisibleRect.cpp in Sources */,
 				FADE78701B9451540061590D /* PerformanceNodeChildrenTest.cpp in Sources */,
 				FADE78871B96C4780061590D /* PerformanceParticle3DTest.cpp in Sources */,
+				FADE78FE1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */,
 				FA94B2361B8F02880074B261 /* Profile.cpp in Sources */,
 				FADE78961B9C42E80061590D /* PerformanceLabelTest.cpp in Sources */,
 				FA94B2021B8EF8250074B261 /* RootViewController.mm in Sources */,
@@ -6342,6 +6349,7 @@
 				FADE788D1B96D0710061590D /* PerformanceSpriteTest.cpp in Sources */,
 				FA94B1CE1B8EF7BB0074B261 /* AppDelegate.cpp in Sources */,
 				FA94B24B1B9059540074B261 /* VisibleRect.cpp in Sources */,
+				FADE78FD1B9ECB7F0061590D /* PerformanceContainerTest.cpp in Sources */,
 				FA94B20A1B8EF8430074B261 /* main.cpp in Sources */,
 				FADE78A61B9E86100061590D /* PerformanceScenarioTest.cpp in Sources */,
 				FA94B23A1B9045160074B261 /* PerformanceAllocTest.cpp in Sources */,
