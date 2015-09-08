@@ -26,6 +26,7 @@
 #include "Sprite3DTest.h"
 #include "DrawNode3D.h"
 #include "2d/CCCameraBackgroundBrush.h"
+#include "3d/CCSprite3DMaterial.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
@@ -234,7 +235,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //create cylinder
     auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
-    auto mat = Material::createWithFilename("Sprite3DTest/UVAnimation.material");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
     _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
     cylinder->setMaterial(mat);
 
@@ -253,7 +254,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [=](EventCustom*)
                                                             {
-                                                                auto mat = Material::createWithFilename("Sprite3DTest/UVAnimation.material");
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
                                                                 
                                                                 cylinder->setMaterial(mat);
                                                                 _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
@@ -329,7 +330,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
     _plane->setRotation3D(Vec3(90,0,0));
 
-    auto mat = Material::createWithFilename("Sprite3DTest/FakeShadow.material");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
     _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
     _plane->setMaterial(mat);
     _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
@@ -353,7 +354,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
-                                                                auto mat = Material::createWithFilename("Sprite3DTest/FakeShadow.material");
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
                                                                 _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
                                                                 _plane->setMaterial(mat);
                                                                 _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
@@ -541,7 +542,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     _camera->setCameraFlag(CameraFlag::USER1);
     // create a teapot
     auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b"); 
-    auto mat = Material::createWithFilename("Sprite3DTest/BasicToon.material");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
     _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
     teapot->setMaterial(mat);
 
@@ -556,7 +557,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [=](EventCustom*)
                                                             {
-                                                                auto mat = Material::createWithFilename("Sprite3DTest/BasicToon.material");
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
                                                                 _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
                                                                 teapot->setMaterial(mat);
                                                             }
@@ -739,7 +740,7 @@ Sprite3DEffectTest::Sprite3DEffectTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
-                                                                auto material = Material::createWithFilename("Sprite3DTest/outline.material");
+                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
                                                                 material->setTechnique("outline_noneskinned");
                                                                 for(auto& sprite : _sprites)
                                                                 {
@@ -771,7 +772,7 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
 {
     //option 2: load obj and assign the texture
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
-    auto material = Material::createWithFilename("Sprite3DTest/outline.material");
+    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
     material->setTechnique("outline_noneskinned");
     sprite->setMaterial(material);
     sprite->setScale(6.f);
@@ -995,7 +996,7 @@ Sprite3DWithSkinOutlineTest::Sprite3DWithSkinOutlineTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [this](EventCustom*)
                                                             {
-                                                                auto material = Material::createWithFilename("Sprite3DTest/outline.material");
+                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
                                                                 material->setTechnique("outline_skinned");
                                                                 for(auto& sprite : _sprites)
                                                                 {
@@ -1027,7 +1028,7 @@ void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
     std::string fileName = "Sprite3DTest/orc.c3b";
     auto sprite = Sprite3D::create(fileName);
     
-    auto material = Material::createWithFilename("Sprite3DTest/outline.material");
+    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
     material->setTechnique("outline_skinned");
     sprite->setMaterial(material);
     
@@ -2093,7 +2094,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     _textureCube->setTexParameters(tRepeatParams);
 
-    auto mat = Material::createWithFilename("Sprite3DTest/CubeMap.material");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
     auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
     _teapot->setMaterial(mat);
     // pass the texture sampler to our custom shader
@@ -2136,7 +2137,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
                                                                 tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
                                                                 _textureCube->setTexParameters(tRepeatParams);
                                                                 
-                                                                auto mat = Material::createWithFilename("Sprite3DTest/CubeMap.material");
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
                                                                 auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
                                                                 _teapot->setMaterial(mat);
                                                                 // pass the texture sampler to our custom shader
@@ -2358,7 +2359,7 @@ Sprite3DVertexColorTest::Sprite3DVertexColorTest()
     sprite->setPosition(Vec2(0, 0));
     sprite->setScale(1.0f);
     sprite->setCameraMask(2);
-    auto mat = Material::createWithFilename("Sprite3DTest/VertexColor.material");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
     sprite->setMaterial(mat);
     sprite->runAction(RepeatForever::create(RotateBy::create(1.0f, Vec3(10.0f, 50.0f, 10.0f))));
 
@@ -2375,7 +2376,7 @@ Sprite3DVertexColorTest::Sprite3DVertexColorTest()
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
                                                             [=](EventCustom*)
                                                             {
-                                                                auto mat = Material::createWithFilename("Sprite3DTest/VertexColor.material");
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
                                                                 sprite->setMaterial(mat);
                                                             }
                                                             );

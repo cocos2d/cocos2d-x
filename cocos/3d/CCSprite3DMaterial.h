@@ -58,19 +58,22 @@ public:
     
     static Sprite3DMaterial* createBuiltInMaterial(MaterialType type, bool skinned);
     
-    static Sprite3DMaterial* createMaterialWithFilename(const std::string& path);
+    static Sprite3DMaterial* createWithFilename(const std::string& path);
     
-    static Sprite3DMaterial* createMaterialWithGLStateProgram(GLProgramState* programState);
+    static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
     
-    static void loadBuiltInMaterial();
+    static void createBuiltInMaterial();
     
-    static void clearBuiltInMaterial();
+    static void releaseBuiltInMaterial();
+    
+    static void releaseCachedMaterial();
     
     virtual Material* clone() const override;
     
 protected:
     
     MaterialType _type;
+    static std::unordered_map<std::string, Sprite3DMaterial*> _materials; //cached material
     static Sprite3DMaterial* _unLitMaterial;
     static Sprite3DMaterial* _unLitNoTexMaterial;
     static Sprite3DMaterial* _vertexLitMaterial;
