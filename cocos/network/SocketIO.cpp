@@ -1096,6 +1096,11 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
 
     CCLOGINFO("SIOClient::fireEvent no native event with name %s found", eventName.c_str());
 }
+    
+void SIOClient::setTag(const char* tag)
+{
+    _tag = tag;
+}
 
 //begin SocketIO methods
 SocketIO *SocketIO::_inst = nullptr;
