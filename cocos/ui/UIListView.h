@@ -221,12 +221,21 @@ public:
     MagneticType getMagneticType() const;
     
     /**
+     * Set magnetic allowed out of boundary.
+     */
+    void setMagneticAllowedOutOfBoundary(bool magneticAllowedOutOfBoundary);
+    
+    /**
+     * Query whether the magnetic out of boundary is allowed.
+     */
+    bool getMagneticAllowedOutOfBoundary() const;
+    
+    /**
      * Set the margin between each item in ListView.
      *
      * @param margin
      */
     void setItemsMargin(float margin);
-    
     
     /**
      * @brief Query margin between each item in ListView.

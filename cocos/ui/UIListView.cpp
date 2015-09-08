@@ -409,6 +409,16 @@ ListView::MagneticType ListView::getMagneticType() const
     return _magneticType;
 }
 
+void ListView::setMagneticAllowedOutOfBoundary(bool magneticAllowedOutOfBoundary)
+{
+    _magneticAllowedOutOfBoundary = magneticAllowedOutOfBoundary;
+}
+
+bool ListView::getMagneticAllowedOutOfBoundary() const
+{
+    return _magneticAllowedOutOfBoundary;
+}
+
 void ListView::setItemsMargin(float margin)
 {
     if (_itemsMargin == margin)
@@ -737,27 +747,49 @@ void ListView::copySpecialProperties(Widget *widget)
 
 Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
 {
-    if(_magneticType == MagneticType::NONE || !_magneticAllowedOutOfBoundary || _items.empty())
+    if(!_magneticAllowedOutOfBoundary || _items.empty())
     {
         return ScrollView::getHowMuchOutOfBoundary(addition);
     }
-    
-    if(addition == Vec2::ZERO && !_outOfBoundaryAmountDirty)
+    else if(_magneticType == MagneticType::NONE || _magneticType == MagneticType::BOTH_END)
+    {
+        return ScrollView::getHowMuchOutOfBoundary(addition);
+    }
+    else if(addition == Vec2::ZERO && !_outOfBoundaryAmountDirty)
     {
         return _outOfBoundaryAmount;
     }
     
+    // If it is allowed to be out of boundary by magnetic, adjust the boundaries according to the magnetic type.
     float leftBoundary = _leftBoundary;
     float rightBoundary = _rightBoundary;
     float topBoundary = _topBoundary;
     float bottomBoundary = _bottomBoundary;
-    
-    Size contentSize = getContentSize();
-    if(_magneticType == MagneticType::CENTER)
     {
-        Vec2 firstItemAdjustment = (contentSize - _items.at(0)->getContentSize()) / 2;
-        Vec2 lastItemAdjustment = (contentSize - _items.at(_items.size() - 1)->getContentSize()) / 2;
-        
+        int lastItemIndex = _items.size() - 1;
+        Size contentSize = getContentSize();
+        Vec2 firstItemAdjustment, lastItemAdjustment;
+        if(_magneticType == MagneticType::CENTER)
+        {
+            firstItemAdjustment = (contentSize - _items.at(0)->getContentSize()) / 2;
+            lastItemAdjustment = (contentSize - _items.at(lastItemIndex)->getContentSize()) / 2;
+        }
+        else if(_magneticType == MagneticType::LEFT)
+        {
+            lastItemAdjustment = contentSize - _items.at(lastItemIndex)->getContentSize();
+        }
+        else if(_magneticType == MagneticType::RIGHT)
+        {
+            firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
+        }
+        else if(_magneticType == MagneticType::TOP)
+        {
+            lastItemAdjustment = contentSize - _items.at(lastItemIndex)->getContentSize();
+        }
+        else if(_magneticType == MagneticType::BOTTOM)
+        {
+            firstItemAdjustment = contentSize - _items.at(0)->getContentSize();
+        }
         leftBoundary += firstItemAdjustment.x;
         rightBoundary -= lastItemAdjustment.x;
         topBoundary -= firstItemAdjustment.y;
@@ -792,7 +824,7 @@ Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
     return outOfBoundaryAmount;
 }
 
-Vec2 getAnchorPointByMagneticType(ListView::MagneticType magneticType)
+static Vec2 getAnchorPointByMagneticType(ListView::MagneticType magneticType)
 {
     switch(magneticType)
     {
@@ -821,11 +853,11 @@ void ListView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& ini
             MagneticType magType = _magneticType;
             if(magType == MagneticType::BOTH_END)
             {
-                if(_direction == ScrollView::Direction::HORIZONTAL)
+                if(_direction == Direction::HORIZONTAL)
                 {
                     magType = (adjustedDeltaMove.x > 0 ? MagneticType::LEFT : MagneticType::RIGHT);
                 }
-                else if(_direction == ScrollView::Direction::VERTICAL)
+                else if(_direction == Direction::VERTICAL)
                 {
                     magType = (adjustedDeltaMove.y > 0 ? MagneticType::BOTTOM : MagneticType::TOP);
                 }
