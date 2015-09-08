@@ -87,6 +87,16 @@ void ListView::setItemModel(Widget *model)
     CC_SAFE_RETAIN(_model);
 }
 
+void ListView::handleReleaseLogic(Touch *touch)
+{
+    ScrollView::handleReleaseLogic(touch);
+    
+    if(!_autoScrolling)
+    {
+        startMagneticScroll();
+    }
+}
+
 void ListView::updateInnerContainerSize()
 {
     switch (_direction)
@@ -383,6 +393,7 @@ void ListView::setGravity(Gravity gravity)
 void ListView::setMagneticType(MagneticType magneticType)
 {
     _magneticType = magneticType;
+    startMagneticScroll();
 }
 
 ListView::MagneticType ListView::getMagneticType() const
@@ -768,6 +779,23 @@ void ListView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& ini
     }
     ScrollView::startAttenuatingAutoScroll(adjustedDeltaMove, initialVelocity);
 }
-   
+    
+void ListView::startMagneticScroll()
+{
+    if(_items.empty() || _magneticType == MagneticType::NONE)
+    {
+        return;
+    }
+    
+    // Find the closest item
+    Vec2 magneticAnchorPoint = getAnchorPointByMagneticType(_magneticType);
+    Vec2 magneticPosition = -_innerContainer->getPosition();
+    magneticPosition.x += getContentSize().width * magneticAnchorPoint.x;
+    magneticPosition.y += getContentSize().height * magneticAnchorPoint.y;
+    
+    Widget* pTargetItem = getClosestItemToPosition(magneticPosition, magneticAnchorPoint);
+    scrollToItem(getIndex(pTargetItem), magneticAnchorPoint, magneticAnchorPoint);
+}
+
 }
 NS_CC_END

@@ -352,6 +352,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
+    virtual void handleReleaseLogic(Touch *touch) override;
     
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
@@ -366,7 +367,9 @@ protected:
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
     
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
-
+    
+    void startMagneticScroll();
+    
 protected:
     Widget* _model;
     
