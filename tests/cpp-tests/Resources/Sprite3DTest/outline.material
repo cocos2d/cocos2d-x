@@ -1,0 +1,121 @@
+// A "Material" file can contain one or more materials
+material
+{
+
+	// This is another technique. It "outlines" the model without skin
+	technique outline_noneskinned
+	{
+		// 1st pass:
+		// creates a yellow outline of only the hull 
+		pass outline
+		{
+			renderState
+			{
+				cullFace = true
+				cullFaceSide = FRONT
+				depthTest = true
+			}
+			shader
+			{
+				vertexShader = Shaders3D/OutLine.vert
+				fragmentShader = Shaders3D/OutLine.frag
+				// Uniforms
+				OutLineColor = 1,1,0
+				OutlineWidth = 0.02
+			}
+		}
+
+		// 2nd pass:
+		// creates a blue outline of the borders
+		pass outline thick
+		{
+			renderState
+			{
+				cullFace = true
+				cullFaceSide = FRONT
+				depthTest = true
+			}
+			shader
+			{
+				vertexShader = Shaders3D/OutLine.vert
+				fragmentShader = Shaders3D/OutLine.frag
+				// Uniforms
+				OutLineColor = 1,0,0
+				OutlineWidth = 0.01
+			}
+		}
+		// 3rd pass
+		// Renders the model "normally"
+		// When a 'renderState' is not present it will use the default renderState
+		pass normal
+		{
+			shader
+			{
+				vertexShader = Shaders3D/3d_position_tex.vert
+				fragmentShader = Shaders3D/3d_color_tex.frag
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
+			}
+		}
+	}
+	// This is another technique. It "outlines" the model with skin
+	technique outline_skinned
+	{
+		// 1st pass:
+		// creates a yellow outline of only the hull 
+		pass outline
+		{
+			renderState
+			{
+				cullFace = true
+				cullFaceSide = FRONT
+				depthTest = true
+			}
+			shader
+			{
+				vertexShader = Shaders3D/SkinnedOutline.vert
+				fragmentShader = Shaders3D/OutLine.frag
+				// Uniforms
+				OutLineColor = 1,1,0
+				OutlineWidth = 0.02
+			}
+		}
+
+		// 2nd pass:
+		// creates a blue outline of the borders
+		pass outline thick
+		{
+			renderState
+			{
+				cullFace = true
+				cullFaceSide = FRONT
+				depthTest = true
+			}
+			shader
+			{
+				vertexShader = Shaders3D/SkinnedOutline.vert
+				fragmentShader = Shaders3D/OutLine.frag
+				// Uniforms
+				OutLineColor = 1,0,0
+				OutlineWidth = 0.01
+			}
+		}
+		// 3rd pass
+		// Renders the model "normally"
+		// When a 'renderState' is not present it will use the default renderState
+		pass normal
+		{
+			shader
+			{
+				vertexShader = Shaders3D/3d_position_skin_tex.vert
+				fragmentShader = Shaders3D/3d_color_tex.frag
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/monguger.tga
+				}
+			}
+		}
+	}
+}
