@@ -366,6 +366,8 @@ protected:
     void selectedItemEvent(TouchEventType event);
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
     
+    virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO) override;
+    
     virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
     
     void startMagneticScroll();
@@ -378,6 +380,7 @@ protected:
     Gravity _gravity;
     
     MagneticType _magneticType;
+    bool _magneticAllowedOutOfBoundary;
     
     float _itemsMargin;
     

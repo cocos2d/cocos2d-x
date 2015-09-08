@@ -35,6 +35,7 @@ ListView::ListView():
 _model(nullptr),
 _gravity(Gravity::CENTER_VERTICAL),
 _magneticType(MagneticType::NONE),
+_magneticAllowedOutOfBoundary(true),
 _itemsMargin(0.0f),
 _curSelectedIndex(-1),
 _refreshViewDirty(true),
@@ -260,6 +261,7 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     if (nullptr != widget)
     {
         _items.pushBack(widget);
+        _outOfBoundaryAmountDirty = true;
     }
 }
     
@@ -281,6 +283,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     if (nullptr != widget)
     {
         _items.pushBack(widget);
+        _outOfBoundaryAmountDirty = true;
     }
 }
     
@@ -302,6 +305,7 @@ void ListView::removeChild(cocos2d::Node *child, bool cleaup)
             }
         }
         _items.eraseObject(widget);
+        _outOfBoundaryAmountDirty = true;
     }
    
     ScrollView::removeChild(child, cleaup);
@@ -317,6 +321,7 @@ void ListView::removeAllChildrenWithCleanup(bool cleanup)
     ScrollView::removeAllChildrenWithCleanup(cleanup);
     _items.clear();
     _curSelectedIndex = -1;
+    _outOfBoundaryAmountDirty = true;
 }
 
 void ListView::insertCustomItem(Widget* item, ssize_t index)
@@ -329,6 +334,8 @@ void ListView::insertCustomItem(Widget* item, ssize_t index)
         }
     }
     _items.insert(index, item);
+    _outOfBoundaryAmountDirty = true;
+    
     ScrollView::addChild(item);
 
     remedyLayoutParameter(item);
@@ -393,6 +400,7 @@ void ListView::setGravity(Gravity gravity)
 void ListView::setMagneticType(MagneticType magneticType)
 {
     _magneticType = magneticType;
+    _outOfBoundaryAmountDirty = true;
     startMagneticScroll();
 }
 
@@ -727,6 +735,63 @@ void ListView::copySpecialProperties(Widget *widget)
     }
 }
 
+Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
+{
+    if(_magneticType == MagneticType::NONE || !_magneticAllowedOutOfBoundary || _items.empty())
+    {
+        return ScrollView::getHowMuchOutOfBoundary(addition);
+    }
+    
+    if(addition == Vec2::ZERO && !_outOfBoundaryAmountDirty)
+    {
+        return _outOfBoundaryAmount;
+    }
+    
+    float leftBoundary = _leftBoundary;
+    float rightBoundary = _rightBoundary;
+    float topBoundary = _topBoundary;
+    float bottomBoundary = _bottomBoundary;
+    
+    Size contentSize = getContentSize();
+    if(_magneticType == MagneticType::CENTER)
+    {
+        Vec2 firstItemAdjustment = (contentSize - _items.at(0)->getContentSize()) / 2;
+        Vec2 lastItemAdjustment = (contentSize - _items.at(_items.size() - 1)->getContentSize()) / 2;
+        
+        leftBoundary += firstItemAdjustment.x;
+        rightBoundary -= lastItemAdjustment.x;
+        topBoundary -= firstItemAdjustment.y;
+        bottomBoundary += lastItemAdjustment.y;
+    }
+    
+    // Calculate the actual amount
+    Vec2 outOfBoundaryAmount;
+    if(_innerContainer->getLeftBoundary() + addition.x > leftBoundary)
+    {
+        outOfBoundaryAmount.x = leftBoundary - (_innerContainer->getLeftBoundary() + addition.x);
+    }
+    else if(_innerContainer->getRightBoundary() + addition.x < rightBoundary)
+    {
+        outOfBoundaryAmount.x = rightBoundary - (_innerContainer->getRightBoundary() + addition.x);
+    }
+    
+    if(_innerContainer->getTopBoundary() + addition.y < topBoundary)
+    {
+        outOfBoundaryAmount.y = topBoundary - (_innerContainer->getTopBoundary() + addition.y);
+    }
+    else if(_innerContainer->getBottomBoundary() + addition.y > bottomBoundary)
+    {
+        outOfBoundaryAmount.y = bottomBoundary - (_innerContainer->getBottomBoundary() + addition.y);
+    }
+    
+    if(addition == Vec2::ZERO)
+    {
+        _outOfBoundaryAmount = outOfBoundaryAmount;
+        _outOfBoundaryAmountDirty = false;
+    }
+    return outOfBoundaryAmount;
+}
+
 Vec2 getAnchorPointByMagneticType(ListView::MagneticType magneticType)
 {
     switch(magneticType)
@@ -741,7 +806,7 @@ Vec2 getAnchorPointByMagneticType(ListView::MagneticType magneticType)
     }
     return Vec2::ZERO;
 }
-    
+
 void ListView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity)
 {
     Vec2 adjustedDeltaMove = deltaMove;
@@ -779,7 +844,7 @@ void ListView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& ini
     }
     ScrollView::startAttenuatingAutoScroll(adjustedDeltaMove, initialVelocity);
 }
-    
+
 void ListView::startMagneticScroll()
 {
     if(_items.empty() || _magneticType == MagneticType::NONE)
