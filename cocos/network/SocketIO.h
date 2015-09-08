@@ -262,10 +262,8 @@ public:
      * The tag is used to distinguish the various SIOClient objects.
      * @param tag string object.
      */
-    inline void setTag(const char* tag)
-    {
-        _tag = tag;
-    };
+    void setTag(const char* tag);
+    
     /**
      * Get tag of SIOClient.
      * @return const char* the pointer point to the _tag.
