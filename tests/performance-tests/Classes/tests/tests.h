@@ -12,5 +12,6 @@
 #include "PerformanceEventDispatcherTest.h"
 #include "PerformanceScenarioTest.h"
 #include "PerformanceCallbackTest.h"
+#include "PerformanceMathTest.h"
 
 #endif

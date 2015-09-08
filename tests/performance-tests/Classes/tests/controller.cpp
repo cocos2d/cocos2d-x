@@ -30,6 +30,7 @@ public:
         addTest("EventDispatcher Tests", []() { return new PerformceEventDispatcherTests(); });
         addTest("Scenario Tests", []() { return new PerformceScenarioTests(); });
         addTest("Callback Tests", []() { return new PerformceCallbackTests(); });
+        addTest("Math Tests", []() { return new PerformceMathTests(); });
     }
 };
 
