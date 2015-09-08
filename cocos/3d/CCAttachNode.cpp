@@ -29,17 +29,26 @@ NS_CC_BEGIN
 
 AttachNode* AttachNode::create(Bone3D* attachBone)
 {
-    auto attachnode = new (std::nothrow) AttachNode();
-    attachnode->_attachBone = attachBone;
-    attachnode->autorelease();
-    
-    return attachnode;
+  return AttachNode::create(attachBone, Mat4::IDENTITY);
+}
+
+AttachNode* AttachNode::create(const Mat4& offset) {
+  return AttachNode::create(nullptr, offset);
+}
+
+AttachNode* AttachNode::create(Bone3D* attachBone, const Mat4& offset)
+{
+  auto attachnode = new (std::nothrow) AttachNode();
+  attachnode->_attachBone = attachBone;
+  attachnode->autorelease();
+  attachnode->_attachOffset = offset;
+  return attachnode;
 }
 
 AttachNode::AttachNode()
 : _attachBone(nullptr)
 {
-    
+  _attachOffset = Mat4::IDENTITY;
 }
 AttachNode::~AttachNode()
 {
@@ -53,13 +62,21 @@ Mat4 AttachNode::getWorldToNodeTransform() const
     auto parent = getParent();
     if (parent)
     {
-        mat = parent->getWorldToNodeTransform() * _attachBone->getWorldMat() * Node::getNodeToParentTransform();
+        mat = parent->getWorldToNodeTransform();
     }
-    else
-    {
-        mat = _attachBone->getWorldMat() * Node::getNodeToParentTransform();
-    }
+  
+    mat = mat *  _attachBone->getWorldMat() * Node::getNodeToParentTransform();
+  
     return mat;
+}
+
+Mat4 AttachNode::getFullAttachTransform() const
+{
+  if (_attachBone) {
+    return _attachBone->getWorldMat() * _attachOffset;
+  } else {
+    return _attachOffset;
+  }
 }
 
 Mat4 AttachNode::getNodeToWorldTransform() const
@@ -70,7 +87,7 @@ Mat4 AttachNode::getNodeToWorldTransform() const
 const Mat4& AttachNode::getNodeToParentTransform() const
 {
     Node::getNodeToParentTransform();
-    _transformToParent = _attachBone->getWorldMat() * _transform;
+    _transformToParent = getFullAttachTransform() * _transform;
     return _transformToParent;
 }
 
