@@ -614,8 +614,12 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
+    virtual ~Sprite3DVertexColorTest();
 protected:
     cocos2d::Sprite3D* _sprite;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 #endif

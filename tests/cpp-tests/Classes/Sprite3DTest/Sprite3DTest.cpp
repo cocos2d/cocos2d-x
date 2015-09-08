@@ -238,9 +238,8 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
     cylinder->setMaterial(mat);
 
-
     this->addChild(cylinder);
-    this->setCameraMask(2); 
+    this->setCameraMask(2);
     this->addChild(camera);
 
     //adjust cylinder's position & rotation
@@ -249,6 +248,19 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
     //the callback function update cylinder's texcoord
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Material::createWithFilename("Sprite3DTest/UVAnimation.material");
+                                                                
+                                                                cylinder->setMaterial(mat);
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
@@ -336,6 +348,20 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     layer->setCameraMask(2);
 
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto mat = Material::createWithFilename("Sprite3DTest/FakeShadow.material");
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                _plane->setMaterial(mat);
+                                                                _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+                                                                _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
@@ -526,6 +552,17 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     addChild(teapot);
     addChild(_camera);
     setCameraMask(2);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Material::createWithFilename("Sprite3DTest/BasicToon.material");
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                teapot->setMaterial(mat);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
@@ -765,30 +802,30 @@ const std::string Effect3DOutline::_keyInGLProgramCache = "Effect3DLibrary_Outli
 const std::string Effect3DOutline::_vertSkinnedShaderFile = "Shaders3D/SkinnedOutline.vert";
 const std::string Effect3DOutline::_fragSkinnedShaderFile = "Shaders3D/OutLine.frag";
 const std::string Effect3DOutline::_keySkinnedInGLProgramCache = "Effect3DLibrary_Outline";
-GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
-{
-    if(isSkinned)
-    {
-        auto program = GLProgramCache::getInstance()->getGLProgram(_keySkinnedInGLProgramCache);
-        if(program == nullptr)
-        {
-            program = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
-            GLProgramCache::getInstance()->addGLProgram(program, _keySkinnedInGLProgramCache);
-        }
-        return program;
-    }
-    else
-    {
-        auto program = GLProgramCache::getInstance()->getGLProgram(_keyInGLProgramCache);
-        if(program == nullptr)
-        {
-            program = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
-            GLProgramCache::getInstance()->addGLProgram(program, _keyInGLProgramCache);
-        }
-        return program;
-    }
-
-}
+//GLProgram* Effect3DOutline::getOrCreateProgram(bool isSkinned /* = false */ )
+//{
+//    if(isSkinned)
+//    {
+//        auto program = GLProgramCache::getInstance()->getGLProgram(_keySkinnedInGLProgramCache);
+//        if(program == nullptr)
+//        {
+//            program = GLProgram::createWithFilenames(_vertSkinnedShaderFile, _fragSkinnedShaderFile);
+//            GLProgramCache::getInstance()->addGLProgram(program, _keySkinnedInGLProgramCache);
+//        }
+//        return program;
+//    }
+//    else
+//    {
+//        auto program = GLProgramCache::getInstance()->getGLProgram(_keyInGLProgramCache);
+//        if(program == nullptr)
+//        {
+//            program = GLProgram::createWithFilenames(_vertShaderFile, _fragShaderFile);
+//            GLProgramCache::getInstance()->addGLProgram(program, _keyInGLProgramCache);
+//        }
+//        return program;
+//    }
+//
+//}
 
 Effect3DOutline* Effect3DOutline::create()
 {
@@ -2345,6 +2382,33 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
     addChild(_camera);
     setCameraMask(2);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                CC_SAFE_RELEASE(_textureCube);
+                                                                _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+                                                                                                   "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+                                                                                                   "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+                                                                
+                                                                _textureCube->retain();
+                                                                //set texture parameters
+                                                                Texture2D::TexParams tRepeatParams;
+                                                                tRepeatParams.magFilter = GL_LINEAR;
+                                                                tRepeatParams.minFilter = GL_LINEAR;
+                                                                tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+                                                                tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+                                                                _textureCube->setTexParameters(tRepeatParams);
+                                                                
+                                                                auto mat = Material::createWithFilename("Sprite3DTest/CubeMap.material");
+                                                                auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                _teapot->setMaterial(mat);
+                                                                // pass the texture sampler to our custom shader
+                                                                state->setUniformTexture("u_cubeTex", _textureCube);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
 }
 
 void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
@@ -2570,6 +2634,24 @@ Sprite3DVertexColorTest::Sprite3DVertexColorTest()
     camera->setPosition3D(Vec3(0.0f, 0.0f, 10.f));
     camera->lookAt(Vec3(0.f, 0.f, 0.f));
     addChild(camera);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Material::createWithFilename("Sprite3DTest/VertexColor.material");
+                                                                sprite->setMaterial(mat);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+
+Sprite3DVertexColorTest::~Sprite3DVertexColorTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 std::string Sprite3DVertexColorTest::title() const
