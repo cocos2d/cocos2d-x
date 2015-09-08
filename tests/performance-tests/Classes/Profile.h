@@ -35,8 +35,6 @@ protected:
     cocos2d::ValueMap testData;
     
     std::string curTestName;
-    std::vector<std::string> curCondHeaders;
-    std::vector<std::string> curRetHeaders;
     cocos2d::ValueVector curTestResults;
 };
 

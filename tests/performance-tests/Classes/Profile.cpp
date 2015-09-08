@@ -6,6 +6,12 @@
 #define LOG_FILE_NAME       "PerformanceLog.json"
 #define PLIST_FILE_NAME     "PerformanceLog.plist"
 
+#define KEY_DEVICE              "device"
+#define KEY_ENGINE_VERSION      "engineVersion"
+#define KEY_RESULTS             "results"
+#define KEY_CONDITION_HEADERS   "conditionHeaders"
+#define KEY_RESULT_HEADERS      "resultHeaders"
+
 static Profile* s_profile = nullptr;
 
 USING_NS_CC;
@@ -133,74 +139,70 @@ Profile::~Profile()
 
 void Profile::setDeviceName(std::string name)
 {
-    testData["device"] = Value(name);
+    testData[KEY_DEVICE] = Value(name);
 }
 
 void Profile::setEngineVersion(std::string version)
 {
-    testData["engineVersion"] = Value(version);
+    testData[KEY_ENGINE_VERSION] = Value(version);
 }
 
 void Profile::testCaseBegin(std::string testName, std::vector<std::string> condHeaders, std::vector<std::string> retHeaders)
 {
     curTestName = testName;
-    curCondHeaders = condHeaders;
-    curRetHeaders = retHeaders;
+
+    ValueVector conds;
+    for (int i = 0; i < condHeaders.size(); i++) {
+        conds.push_back(Value(condHeaders[i]));
+    }
+    
+    ValueVector rets;
+    for (int j = 0; j < retHeaders.size(); j++) {
+        rets.push_back(Value(retHeaders[j]));
+    }
     
     auto findValue = testData.find(curTestName);
     if (findValue != testData.end())
     {
-        curTestResults = findValue->second.asValueVector();
+        auto curMap = findValue->second.asValueMap();
+        curMap[KEY_CONDITION_HEADERS] = Value(conds);
+        curMap[KEY_RESULT_HEADERS] = Value(rets);
+
+        if (curMap.find(KEY_RESULTS) != curMap.end())
+            curTestResults = curMap[KEY_RESULTS].asValueVector();
+        else
+            curTestResults.clear();
     }
     else
     {
+        ValueMap theData;
+        theData[KEY_CONDITION_HEADERS] = conds;
+        theData[KEY_RESULT_HEADERS] = rets;
+        testData[curTestName] = Value(theData);
         curTestResults.clear();
     }
 }
 
 void Profile::addTestResult(std::vector<std::string> conditions, std::vector<std::string> results)
 {
-    ValueMap curInfo;
+    ValueVector curRet;
 
-    ValueMap condInfo;
-    auto conditionSize = conditions.size();
-    auto conHeaderSize = curCondHeaders.size();
-    for (int i = 0; i < conditionSize; i++) {
-        if (i >= conHeaderSize)
-        {
-            // the number of conditions is larger than the number of condition headers
-            break;
-        }
-        
-        std::string header = curCondHeaders.at(i);
-        Value condValue = Value(conditions.at(i));
-        condInfo[header] = condValue;
-    }
-
-    ValueMap retInfo;
-    auto retSize = results.size();
-    auto retHeaderSize = curRetHeaders.size();
-    for (int i = 0; i < retSize; i++) {
-        if (i >= retHeaderSize)
-        {
-            // the number of results is larger than the number of result headers
-            break;
-        }
-        
-        std::string header = curRetHeaders.at(i);
-        Value retValue = Value(results.at(i));
-        retInfo[header] = retValue;
+    for (int i = 0; i < conditions.size(); i++) {
+        curRet.push_back(Value(conditions[i]));
     }
     
-    curInfo["conditions"] = condInfo;
-    curInfo["results"] = retInfo;
-    curTestResults.push_back(Value(curInfo));
+    for (int j = 0; j < results.size(); j++) {
+        curRet.push_back(Value(results[j]));
+    }
+    curTestResults.push_back(Value(curRet));
 }
 
 void Profile::testCaseEnd()
 {
     // add the result of current test case into the testData.
-    testData[curTestName] = Value(curTestResults);
+    ValueMap theData = testData[curTestName].asValueMap();
+    theData[KEY_RESULTS] = curTestResults;
+    testData[curTestName] = Value(theData);
 }
 
 void Profile::flush()
