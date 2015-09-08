@@ -364,6 +364,9 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model) override;
     void selectedItemEvent(TouchEventType event);
     virtual void interceptTouchEvent(Widget::TouchEventType event,Widget* sender,Touch* touch) override;
+    
+    virtual void startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity) override;
+
 protected:
     Widget* _model;
     

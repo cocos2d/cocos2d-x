@@ -742,8 +742,8 @@ bool UIListViewTest_Magnetic::init()
     }
     
     // Initial magnetic type
-    _listView->setMagneticType(ListView::MagneticType::CENTER);
-    _titleLabel->setString("MagneticType - CENTER");
+    _listView->setMagneticType(ListView::MagneticType::NONE);
+    _titleLabel->setString("MagneticType - NONE");
     
     // Magnetic change button
     auto pButton = Button::create("cocosui/backtotoppressed.png", "cocosui/backtotopnormal.png");
@@ -757,15 +757,43 @@ bool UIListViewTest_Magnetic::init()
         std::string sString;
         if(eCurrentType == ListView::MagneticType::NONE)
         {
+            eNextType = ListView::MagneticType::CENTER;
+            sString = "CENTER";
+        }
+        else if(eCurrentType == ListView::MagneticType::CENTER)
+        {
             eNextType = ListView::MagneticType::BOTH_END;
             sString = "BOTH_END";
         }
         else if(eCurrentType == ListView::MagneticType::BOTH_END)
         {
-            eNextType = ListView::MagneticType::CENTER;
-            sString = "CENTER";
+            if(getListViewDirection() == ScrollView::Direction::HORIZONTAL)
+            {
+                eNextType = ListView::MagneticType::LEFT;
+                sString = "LEFT";
+            }
+            else
+            {
+                eNextType = ListView::MagneticType::TOP;
+                sString = "TOP";
+            }
         }
-        else if(eCurrentType == ListView::MagneticType::CENTER)
+        else if(eCurrentType == ListView::MagneticType::LEFT)
+        {
+            eNextType = ListView::MagneticType::RIGHT;
+            sString = "RIGHT";
+        }
+        else if(eCurrentType == ListView::MagneticType::RIGHT)
+        {
+            eNextType = ListView::MagneticType::NONE;
+            sString = "NONE";
+        }
+        else if(eCurrentType == ListView::MagneticType::TOP)
+        {
+            eNextType = ListView::MagneticType::BOTTOM;
+            sString = "BOTTOM";
+        }
+        else if(eCurrentType == ListView::MagneticType::BOTTOM)
         {
             eNextType = ListView::MagneticType::NONE;
             sString = "NONE";
@@ -776,8 +804,8 @@ bool UIListViewTest_Magnetic::init()
     _uiLayer->addChild(pButton);
     
     // Add list items
-    static const Size BUTTON_SIZE(50, 40);
-    for (int i = 0; i < 20; ++i)
+    static const Size BUTTON_SIZE(100, 70);
+    for (int i = 0; i < 40; ++i)
     {
         auto pButton = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
         pButton->setContentSize(BUTTON_SIZE);

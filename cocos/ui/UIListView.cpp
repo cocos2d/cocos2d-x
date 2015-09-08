@@ -716,5 +716,58 @@ void ListView::copySpecialProperties(Widget *widget)
     }
 }
 
+Vec2 getAnchorPointByMagneticType(ListView::MagneticType magneticType)
+{
+    switch(magneticType)
+    {
+        case ListView::MagneticType::NONE: return Vec2::ZERO;
+        case ListView::MagneticType::BOTH_END: return Vec2::ANCHOR_TOP_LEFT;
+        case ListView::MagneticType::CENTER: return Vec2::ANCHOR_MIDDLE;
+        case ListView::MagneticType::LEFT: return Vec2::ANCHOR_MIDDLE_LEFT;
+        case ListView::MagneticType::RIGHT: return Vec2::ANCHOR_MIDDLE_RIGHT;
+        case ListView::MagneticType::TOP: return Vec2::ANCHOR_MIDDLE_TOP;
+        case ListView::MagneticType::BOTTOM: return Vec2::ANCHOR_MIDDLE_BOTTOM;
+    }
+    return Vec2::ZERO;
+}
+    
+void ListView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity)
+{
+    Vec2 adjustedDeltaMove = deltaMove;
+    
+    if(!_items.empty() && _magneticType != MagneticType::NONE)
+    {
+        adjustedDeltaMove = flattenVectorByDirection(adjustedDeltaMove);
+
+        // If the destination is out of boundary, do nothing here. Because it will be handled by bouncing back.
+        if(getHowMuchOutOfBoundary(adjustedDeltaMove) == Vec2::ZERO)
+        {
+            MagneticType magType = _magneticType;
+            if(magType == MagneticType::BOTH_END)
+            {
+                if(_direction == ScrollView::Direction::HORIZONTAL)
+                {
+                    magType = (adjustedDeltaMove.x > 0 ? MagneticType::LEFT : MagneticType::RIGHT);
+                }
+                else if(_direction == ScrollView::Direction::VERTICAL)
+                {
+                    magType = (adjustedDeltaMove.y > 0 ? MagneticType::BOTTOM : MagneticType::TOP);
+                }
+            }
+            
+            // Adjust the delta move amount according to the magnetic type
+            Vec2 magneticAnchorPoint = getAnchorPointByMagneticType(magType);
+            Vec2 magneticPosition = -_innerContainer->getPosition();
+            magneticPosition.x += getContentSize().width * magneticAnchorPoint.x;
+            magneticPosition.y += getContentSize().height * magneticAnchorPoint.y;
+            
+            Widget* pTargetItem = getClosestItemToPosition(magneticPosition - adjustedDeltaMove, magneticAnchorPoint);
+            Vec2 itemPosition = calculateItemPositionWithAnchor(pTargetItem, magneticAnchorPoint);
+            adjustedDeltaMove = magneticPosition - itemPosition;
+        }
+    }
+    ScrollView::startAttenuatingAutoScroll(adjustedDeltaMove, initialVelocity);
+}
+   
 }
 NS_CC_END
