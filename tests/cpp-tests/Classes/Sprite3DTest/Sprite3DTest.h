@@ -592,6 +592,20 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
+class CameraBackgroundClearTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(CameraBackgroundClearTest);
+    CameraBackgroundClearTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void switch_CameraClearMode(cocos2d::Ref* sender);
+protected:
+    cocos2d::Camera* _camera;
+    cocos2d::Label* _label;
+};
+
 class Sprite3DVertexColorTest : public Sprite3DTestDemo
 {
 public:
@@ -599,9 +613,13 @@ public:
     Sprite3DVertexColorTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
+    
+    virtual ~Sprite3DVertexColorTest();
 protected:
     cocos2d::Sprite3D* _sprite;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 #endif
