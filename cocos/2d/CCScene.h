@@ -40,6 +40,7 @@ class EventListenerCustom;
 class EventCustom;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
+class PhysicsManager;
 #endif
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 class Physics3DWorld;
@@ -145,15 +146,21 @@ private:
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 public:
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
 #if CC_USE_PHYSICS
     /** Get the physics world of the scene.
      * @return The physics world of the scene.
      * @js NA
      */
-    inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    inline PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
+    
+    /**
+     * Get the `PhysicsManager` belongs to this `Scene`.
+     * 
+     * @return PhysicsManager of the scene.
+     * @js NA
+     */
+    PhysicsManager* getPhysicsManager() const { return _physicsManager; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -183,6 +190,7 @@ protected:
 
 #if CC_USE_PHYSICS
     PhysicsWorld* _physicsWorld;
+    PhysicsManager* _physicsManager;
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -203,8 +211,8 @@ public:
     void setNavMeshDebugCamera(Camera *camera);
 
 protected:
-    NavMesh*       _navMesh;
-    Camera *       _navMeshDebugCamera;
+    NavMesh*        _navMesh;
+    Camera *        _navMeshDebugCamera;
 #endif
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)

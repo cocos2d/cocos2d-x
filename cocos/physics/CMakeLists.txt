@@ -6,5 +6,6 @@ set(COCOS_PHYSICS_SRC
   physics/CCPhysicsJoint.cpp
   physics/CCPhysicsShape.cpp
   physics/CCPhysicsWorld.cpp
-
+  physics/CCComponentPhysics2d.cpp
+  physics/CCPhysicsManager.cpp
 )

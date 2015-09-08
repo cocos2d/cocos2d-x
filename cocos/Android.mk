@@ -200,6 +200,8 @@ physics/CCPhysicsContact.cpp \
 physics/CCPhysicsJoint.cpp \
 physics/CCPhysicsShape.cpp \
 physics/CCPhysicsWorld.cpp \
+physics/CCComponentPhysics2d.cpp \
+physics/CCPhysicsManager.cpp \
 physics3d/CCPhysics3D.cpp \
 physics3d/CCPhysics3DWorld.cpp \
 physics3d/CCPhysics3DComponent.cpp \
