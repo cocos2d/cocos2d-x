@@ -986,17 +986,17 @@ bool ScriptingCore::isFunctionOverridedInJS(JS::HandleObject obj, const std::str
     return false;
 }
 
-int ScriptingCore::handleRefEvent(void* data)
+int ScriptingCore::handleActionEvent(void* data)
 {
     if (NULL == data)
         return 0;
     
     ActionObjectScriptData* actionObjectScriptData = static_cast<ActionObjectScriptData*>(data);
-    if (NULL == actionObjectScriptData->nativeObject || NULL == actionObjectScriptData->action)
+    if (NULL == actionObjectScriptData->nativeObject || NULL == actionObjectScriptData->eventType)
         return 0;
     
     Ref* ref = static_cast<Ref*>(actionObjectScriptData->nativeObject);
-    int action = *((int*)(actionObjectScriptData->action));
+    int eventType = *((int*)(actionObjectScriptData->eventType));
     
     js_proxy_t * p = jsb_get_native_proxy(ref);
     if (!p) return 0;
@@ -1004,7 +1004,7 @@ int ScriptingCore::handleRefEvent(void* data)
     int ret = 0;
     JS::RootedValue retval(_cx);
     
-    if (action == kRefUpdate)
+    if (eventType == kActionUpdate)
     {
         if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "update", js_cocos2dx_Action_update))
         {
@@ -1486,9 +1486,9 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
                 return handleNodeEvent(evt->data);
             }
             break;
-        case kRefEvent:
+        case kScriptActionEvent:
             {
-                return handleRefEvent(evt->data);
+                return handleActionEvent(evt->data);
             }
             break;
         case kMenuClickedEvent:

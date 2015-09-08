@@ -37,7 +37,7 @@ NS_CC_BEGIN
 class Node;
 
 enum {
-    kRefUpdate
+    kActionUpdate
 };
 
 /**

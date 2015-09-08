@@ -114,7 +114,7 @@ protected:
     bool   _firstTick;
 
 protected:
-    bool sendUpdateEventToScript(float dt, Ref *ref);
+    bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
 
 /** @class Sequence

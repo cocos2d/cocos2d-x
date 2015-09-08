@@ -51,7 +51,7 @@ void ActionInstant::step(float dt) {
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendRefEventToJS(this, kRefUpdate, (void *)&updateDt))
+        if (ScriptEngineManager::sendActionEventToJS(this, kActionUpdate, (void *)&updateDt))
             return;
     }
 #endif

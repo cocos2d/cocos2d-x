@@ -2736,7 +2736,7 @@ var ActionCustomTest = ActionsDemo.extend({
         spriteTemp.runAction(hide);
 
         spriteTemp = this.addandCreateSpriteTemp("cc.FlipX");
-        var flipX = new (createCustomAction(cc.FlipX))();
+        var flipX = new (createCustomAction(cc.FlipX))(true);
         spriteTemp.runAction(flipX);
 
         /**
@@ -2744,7 +2744,7 @@ var ActionCustomTest = ActionsDemo.extend({
          */
 
         spriteTemp = this.addandCreateSpriteTemp("cc.FlipY");
-        var flipY = new (createCustomAction(cc.FlipY))();
+        var flipY = new (createCustomAction(cc.FlipY))(true);
         spriteTemp.runAction(flipY);
 
         // RemoveSelf action don't need test

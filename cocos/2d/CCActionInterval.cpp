@@ -106,12 +106,12 @@ bool ActionInterval::initWithDuration(float d)
     return true;
 }
 
-bool ActionInterval::sendUpdateEventToScript(float dt, Ref *ref)
+bool ActionInterval::sendUpdateEventToScript(float dt, Action *actionObject)
 {
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (ScriptEngineManager::sendRefEventToJS(ref, kRefUpdate, (void *)&dt))
+        if (ScriptEngineManager::sendActionEventToJS(actionObject, kActionUpdate, (void *)&dt))
             return true;
     }
 #endif

@@ -51,6 +51,7 @@ class Layer;
 class MenuItem;
 class CallFunc;
 class Acceleration;
+class Action;
 
 enum ccScriptType {
     kScriptTypeNone = 0,
@@ -260,7 +261,7 @@ enum ScriptEventType
     kCommonEvent,
     kComponentEvent,
     kRestartGame,
-    kRefEvent
+    kScriptActionEvent
 };
 
 /**
@@ -317,7 +318,7 @@ struct ActionObjectScriptData
      * @js NA
      * @lua NA
      */
-    void* action;
+    int* eventType;
     
     /**
      * A pointer point to the value data which would be converted by different events.
@@ -333,8 +334,8 @@ struct ActionObjectScriptData
      * @js NA
      * @lua NA
      */
-    ActionObjectScriptData(void* inObject,void* inValue = nullptr, void* inParam = nullptr)
-    : nativeObject(inObject),action(inValue), param(inParam)
+    ActionObjectScriptData(void* inObject,int* inValue = nullptr, void* inParam = nullptr)
+    : nativeObject(inObject),eventType(inValue), param(inParam)
     {
     }
 };
@@ -819,7 +820,7 @@ public:
      * @lua NA
      * @js NA
      */
-    static bool sendRefEventToJS(Ref* ref, int action, void* param);
+    static bool sendActionEventToJS(Action* actionObject, int eventType, void* param);
     /**
      *
      *
