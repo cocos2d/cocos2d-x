@@ -70,13 +70,7 @@ private:
 public:
     ~ScriptingCore();
 
-    static ScriptingCore *getInstance() {
-        static ScriptingCore* pInstance = NULL;
-        if (pInstance == NULL) {
-            pInstance = new ScriptingCore();
-        }
-        return pInstance;
-    };
+    static ScriptingCore *getInstance();
 
     virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
 

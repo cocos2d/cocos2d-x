@@ -452,6 +452,14 @@ static const JSClass global_class = {
     JS_GlobalObjectTraceHook
 };
 
+ScriptingCore* ScriptingCore::getInstance()
+{
+    static ScriptingCore* instance = nullptr;
+    if (instance == nullptr)
+        instance = new ScriptingCore();
+
+    return instance;
+}
 
 ScriptingCore::ScriptingCore()
 : _rt(nullptr)
