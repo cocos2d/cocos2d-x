@@ -36,6 +36,7 @@ NS_CC_BEGIN
 
 Sprite3DMaterialCache* Sprite3DMaterialCache::_cacheInstance = nullptr;
 
+std::unordered_map<std::string, Sprite3DMaterial*> Sprite3DMaterial::_materials;
 Sprite3DMaterial* Sprite3DMaterial::_unLitMaterial = nullptr;
 Sprite3DMaterial* Sprite3DMaterial::_unLitNoTexMaterial = nullptr;
 Sprite3DMaterial* Sprite3DMaterial::_vertexLitMaterial = nullptr;
@@ -48,9 +49,9 @@ Sprite3DMaterial* Sprite3DMaterial::_vertexLitMaterialSkin = nullptr;
 Sprite3DMaterial* Sprite3DMaterial::_diffuseMaterialSkin = nullptr;
 Sprite3DMaterial* Sprite3DMaterial::_bumpedDiffuseMaterialSkin = nullptr;
 
-void Sprite3DMaterial::loadBuiltInMaterial()
+void Sprite3DMaterial::createBuiltInMaterial()
 {
-    clearBuiltInMaterial();
+    releaseBuiltInMaterial();
     
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
     auto glprogramstate = GLProgramState::create(glProgram);
@@ -101,7 +102,7 @@ void Sprite3DMaterial::loadBuiltInMaterial()
     }
 }
 
-void Sprite3DMaterial::clearBuiltInMaterial()
+void Sprite3DMaterial::releaseBuiltInMaterial()
 {
     CC_SAFE_RELEASE_NULL(_unLitMaterial);
     CC_SAFE_RELEASE_NULL(_unLitMaterialSkin);
@@ -115,6 +116,15 @@ void Sprite3DMaterial::clearBuiltInMaterial()
     CC_SAFE_RELEASE_NULL(_vertexLitMaterialSkin);
     CC_SAFE_RELEASE_NULL(_diffuseMaterialSkin);
     CC_SAFE_RELEASE_NULL(_bumpedDiffuseMaterialSkin);
+}
+
+void Sprite3DMaterial::releaseCachedMaterial()
+{
+    for (auto& it : _materials) {
+        if (it.second)
+            it.second->release();
+    }
+    _materials.clear();
 }
 
 Material* Sprite3DMaterial::clone() const
@@ -147,7 +157,7 @@ Sprite3DMaterial* Sprite3DMaterial::createBuiltInMaterial(MaterialType type, boo
 {
     /////
     if (_diffuseMaterial == nullptr)
-        loadBuiltInMaterial();
+        createBuiltInMaterial();
     
     Sprite3DMaterial* material = nullptr;
     switch (type) {
@@ -184,23 +194,28 @@ Sprite3DMaterial* Sprite3DMaterial::createBuiltInMaterial(MaterialType type, boo
     return nullptr;
 }
 
-Sprite3DMaterial* Sprite3DMaterial::createMaterialWithFilename(const std::string& path)
+Sprite3DMaterial* Sprite3DMaterial::createWithFilename(const std::string& path)
 {
     auto validfilename = FileUtils::getInstance()->fullPathForFilename(path);
     if (validfilename.size() > 0) {
+        auto it = _materials.find(validfilename);
+        if (it != _materials.end())
+            return (Sprite3DMaterial*)it->second->clone();
+        
         auto material = new (std::nothrow) Sprite3DMaterial();
         if (material->initWithFile(path))
         {
             material->_type = Sprite3DMaterial::MaterialType::CUSTOM;
-            material->autorelease();
-            return material;
+            _materials[validfilename] = material;
+            
+            return (Sprite3DMaterial*)material->clone();
         }
         CC_SAFE_DELETE(material);
     }
     return nullptr;
 }
 
-Sprite3DMaterial* Sprite3DMaterial::createMaterialWithGLStateProgram(GLProgramState* programState)
+Sprite3DMaterial* Sprite3DMaterial::createWithGLStateProgram(GLProgramState* programState)
 {
     CCASSERT(programState, "Invalid GL Program State");
     
