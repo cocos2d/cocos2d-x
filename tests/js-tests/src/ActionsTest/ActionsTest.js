@@ -2924,6 +2924,34 @@ var ActionCustomTest = ActionsDemo.extend({
     }
 });
 
+var ActionIssue13605 = ActionsDemo.extend({
+    onEnter:function () {
+        //----start47----onEnter
+        this._super();
+        this.centerSprites(2);
+
+        var move = new customMoveBy(2, cc.p(50, 0));
+        var move_back = move.reverse();
+        var move_seq = cc.sequence(move, cc.delayTime(1), move_back, cc.delayTime(1));
+        this._kathia.runAction(move_seq.repeat(2));
+
+        var moveClone = move.clone();
+        var moveCloneBack = moveClone.reverse();
+        var moveCloneSeq = cc.sequence(moveClone, cc.delayTime(1), moveCloneBack, cc.delayTime(1));
+        this._tamara.runAction(moveCloneSeq.repeat(2));
+        //----end47----
+    },
+
+    title:function () {
+        return "action reverse and clone issue";
+    },
+
+    subtitle:function () {
+        return "action move and back will change rand color";
+    }
+});
+
+
 //-
 //
 // Flow control
@@ -2980,7 +3008,8 @@ var arrayOfActionsTest = [
     Issue1438,
     Issue1446,
     SequenceRepeatTest,
-    ActionCustomTest
+    ActionCustomTest,
+    ActionIssue13605
 ];
 
 if("opengl" in cc.sys.capabilities){
