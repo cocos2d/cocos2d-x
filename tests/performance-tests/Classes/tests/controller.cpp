@@ -59,9 +59,6 @@ void TestController::startAutoTest()
         _logIndentation = "";
         _autoTestThread = std::thread(&TestController::traverseThreadFunc, this);
         _autoTestThread.detach();
-
-        Profile::getInstance()->setDeviceName("device name");
-        Profile::getInstance()->setEngineVersion(cocos2dVersion());
     }
 }
 

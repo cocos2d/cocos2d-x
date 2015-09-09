@@ -18,10 +18,6 @@ public:
     
     Profile();
     virtual ~Profile();
-
-    // Set the basic attribute of the profile.
-    void setDeviceName(std::string name);
-    void setEngineVersion(std::string version);
     
     // methods for test cases
     void testCaseBegin(std::string testName, std::vector<std::string> condHeaders, std::vector<std::string> retHeaders);

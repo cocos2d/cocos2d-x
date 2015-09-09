@@ -3,6 +3,8 @@
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
 #include "platform/CCFileUtils.h"
+#include "cocos2d.h"
+#include <time.h>
 
 #define LOG_FILE_NAME       "PerformanceLog.json"
 #define PLIST_FILE_NAME     "PerformanceLog.plist"
@@ -12,9 +14,20 @@
 #define KEY_RESULTS             "results"
 #define KEY_CONDITION_HEADERS   "conditionHeaders"
 #define KEY_RESULT_HEADERS      "resultHeaders"
+#define KEY_FILE_VERSION        "fileVersion"
+#define KEY_OS_VERSION          "osVersion"
+#define KEY_TIMESTAMP           "timeStamp"
+
+#define FILE_VERSION          1
 
 #define USE_PRETTY_OUTPUT_FORMAT        1
 #define USE_JSON_FORMAT                 1
+
+
+// For different device & os, change these values
+// TODO : get device info automatically
+#define DEVICE_NAME         "iphone 5s"
+#define OS_VERSION          "iOS 8.4"
 
 static Profile* s_profile = nullptr;
 
@@ -141,16 +154,6 @@ Profile::~Profile()
     
 }
 
-void Profile::setDeviceName(std::string name)
-{
-    testData[KEY_DEVICE] = Value(name);
-}
-
-void Profile::setEngineVersion(std::string version)
-{
-    testData[KEY_ENGINE_VERSION] = Value(version);
-}
-
 void Profile::testCaseBegin(std::string testName, std::vector<std::string> condHeaders, std::vector<std::string> retHeaders)
 {
     curTestName = testName;
@@ -211,6 +214,15 @@ void Profile::testCaseEnd()
 
 void Profile::flush()
 {
+    // record the format version
+    testData[KEY_FILE_VERSION] = Value(FILE_VERSION);
+    testData[KEY_DEVICE] = Value(DEVICE_NAME);
+    testData[KEY_OS_VERSION] = Value(OS_VERSION);
+    testData[KEY_ENGINE_VERSION] = Value(cocos2d::cocos2dVersion());
+    time_t t = time(0);
+    localtime(&t);
+    testData[KEY_TIMESTAMP] = Value(genStr("%ld", t));
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     std::string checkPath = "/mnt/sdcard";
     auto writablePath = checkPath;

@@ -106,8 +106,8 @@ void NodeChildrenMainScene::onEnterTransitionDidFinish()
         updateQuantityOfNodes();
         updateProfilerName();
         
-        Profile::getInstance()->testCaseBegin(getTestCaseName(),
-                                              genStrVector("NodeCount", nullptr),
+        Profile::getInstance()->testCaseBegin("NodeChildrenTest",
+                                              genStrVector("Type", "NodeCount", nullptr),
                                               genStrVector("Avg", "Min", "Max", nullptr));
     }
     
@@ -126,7 +126,7 @@ void NodeChildrenMainScene::dumpProfilerInfo(float dt)
         auto avgStr = genStr("%ldµ", timer->_averageTime2);
         auto minStr = genStr("%ldµ", timer->minTime);
         auto maxStr = genStr("%ldµ", timer->maxTime);
-        Profile::getInstance()->addTestResult(genStrVector(numStr.c_str(), nullptr),
+        Profile::getInstance()->addTestResult(genStrVector(getTestCaseName().c_str(), numStr.c_str(), nullptr),
                                               genStrVector(avgStr.c_str(), minStr.c_str(), maxStr.c_str(), nullptr));
         
         auto testsSize = sizeof(autoTestNodesNums)/sizeof(int);
