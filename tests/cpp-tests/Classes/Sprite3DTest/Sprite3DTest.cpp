@@ -78,6 +78,11 @@ std::string Sprite3DTestDemo::title() const
     return "No title";
 }
 
+Sprite3DTestDemo::~Sprite3DTestDemo()
+{
+    Sprite3DMaterial::releaseCachedMaterial();
+}
+
 //------------------------------------------------------------------
 //
 // Sprite3DForceDepthTest
@@ -2140,6 +2145,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
                                                                 auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
                                                                 auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
                                                                 _teapot->setMaterial(mat);
+                                                                _skyBox->setTexture(_textureCube);
                                                                 // pass the texture sampler to our custom shader
                                                                 state->setUniformTexture("u_cubeTex", _textureCube);
                                                             }

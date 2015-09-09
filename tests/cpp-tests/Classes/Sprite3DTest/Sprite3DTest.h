@@ -44,6 +44,8 @@ class Sprite3DTestDemo : public TestCase
 public:
     // overrides
     virtual std::string title() const override;
+    
+    virtual ~Sprite3DTestDemo();
 };
 
 class Sprite3DForceDepthTest : public Sprite3DTestDemo
