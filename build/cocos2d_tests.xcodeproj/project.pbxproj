@@ -2202,6 +2202,7 @@
 		FADE78B61B9EC6160061590D /* PerformanceMathTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceMathTest.h; sourceTree = "<group>"; };
 		FADE78FB1B9ECB7F0061590D /* PerformanceContainerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceContainerTest.cpp; sourceTree = "<group>"; };
 		FADE78FC1B9ECB7F0061590D /* PerformanceContainerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceContainerTest.h; sourceTree = "<group>"; };
+		FADE79081B9FCD400061590D /* testResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testResource.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4803,6 +4804,7 @@
 		FA94B2371B9045160074B261 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				FADE79081B9FCD400061590D /* testResource.h */,
 				FA94B2491B9059540074B261 /* VisibleRect.cpp */,
 				FA94B24A1B9059540074B261 /* VisibleRect.h */,
 				FA94B2481B904E290074B261 /* tests.h */,

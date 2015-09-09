@@ -165,7 +165,7 @@ void TestList::runThisTest()
     if (_parentTest)
     {
         //Add back button.
-        TTFConfig ttfConfig("fonts/arial.ttf", 20);
+        TTFConfig ttfConfig("fonts/arial.ttf", 25);
         auto label = Label::createWithTTF(ttfConfig, "Back");
 
         auto menuItem = MenuItemLabel::create(label, std::bind(&TestBase::backsUpOneLevel, this));
@@ -233,7 +233,7 @@ TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
     if (!cell)
     {
         cell = TableViewCell::create();
-        auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 20.0f);
+        auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 25.0f);
         label->setTag(TABEL_LABEL_TAG);
         label->setPosition(200, 15);
         cell->addChild(label);
@@ -249,7 +249,7 @@ TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
 
 Size TestList::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    return Size(400, 30);
+    return Size(400, 40);
 }
 
 ssize_t TestList::numberOfCellsInTableView(TableView *table)

@@ -2,6 +2,7 @@
 #include "json/document.h"
 #include "json/prettywriter.h"
 #include "json/stringbuffer.h"
+#include "platform/CCFileUtils.h"
 
 #define LOG_FILE_NAME       "PerformanceLog.json"
 #define PLIST_FILE_NAME     "PerformanceLog.plist"
