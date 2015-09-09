@@ -47,6 +47,8 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
     
     std::vector<std::string> _array;
+    cocos2d::ui::Text* _indexLabels[3];
+
 };
 
 class UIListViewTest_Horizontal : public UIScene
@@ -127,6 +129,8 @@ protected:
     
     cocos2d::ui::ListView* _listView;
     cocos2d::ui::Text* _titleLabel;
+    cocos2d::ui::Text* _indexLabels[5];
+    
 };
 
 class UIListViewTest_MagneticVertical : public UIListViewTest_Magnetic

@@ -7,12 +7,12 @@ const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 UIListViewTests::UIListViewTests()
 {
-    ADD_TEST_CASE(UIListViewTest_MagneticVertical);
-    ADD_TEST_CASE(UIListViewTest_MagneticHorizontal);
+    ADD_TEST_CASE(UIListViewTest_Horizontal);
+    ADD_TEST_CASE(UIListViewTest_Vertical);
     ADD_TEST_CASE(UIListViewTest_ScrollToItemVertical);
     ADD_TEST_CASE(UIListViewTest_ScrollToItemHorizontal);
-    ADD_TEST_CASE(UIListViewTest_Vertical);
-    ADD_TEST_CASE(UIListViewTest_Horizontal);
+    ADD_TEST_CASE(UIListViewTest_MagneticVertical);
+    ADD_TEST_CASE(UIListViewTest_MagneticHorizontal);
     ADD_TEST_CASE(Issue12692);
     ADD_TEST_CASE(Issue8316);
 }
@@ -165,27 +165,26 @@ bool UIListViewTest_Vertical::init()
         
         // set items margin
         listView->setItemsMargin(2.0f);
-        
+
         // Show the indexes of items on each boundary.
         {
             float position = 75;
             // Labels
-            Text* labels[3];
-            labels[0] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
-            labels[0]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-            labels[0]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, position));
-            _uiLayer->addChild(labels[0]);
-            labels[1] = Text::create("  ", "fonts/Marker Felt.ttf", 12);
-            labels[1]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-            labels[1]->setPosition(_uiLayer->getContentSize() / 2 + Size(140, 0));
-            _uiLayer->addChild(labels[1]);
-            labels[2] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
-            labels[2]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-            labels[2]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, -position));
-            _uiLayer->addChild(labels[2]);
+            _indexLabels[0] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
+            _indexLabels[0]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _indexLabels[0]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, position));
+            _uiLayer->addChild(_indexLabels[0]);
+            _indexLabels[1] = Text::create("  ", "fonts/Marker Felt.ttf", 12);
+            _indexLabels[1]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _indexLabels[1]->setPosition(_uiLayer->getContentSize() / 2 + Size(140, 0));
+            _uiLayer->addChild(_indexLabels[1]);
+            _indexLabels[2] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
+            _indexLabels[2]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _indexLabels[2]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, -position));
+            _uiLayer->addChild(_indexLabels[2]);
             
             // Callback
-            listView->ScrollView::addEventListener([labels](Ref* ref, ScrollView::EventType eventType) {
+            listView->ScrollView::addEventListener([this](Ref* ref, ScrollView::EventType eventType) {
                 ListView* listView = dynamic_cast<ListView*>(ref);
                 if(listView == nullptr || eventType != ScrollView::EventType::CONTAINER_MOVED)
                 {
@@ -195,9 +194,9 @@ bool UIListViewTest_Vertical::init()
                 auto center = listView->getCenterItemInCurrentView();
                 auto top = listView->getTopmostItemInCurrentView();
                 
-                labels[0]->setString(StringUtils::format("Top index=%zd", listView->getIndex(top)));
-                labels[1]->setString(StringUtils::format("Center\nindex=%zd", listView->getIndex(center)));
-                labels[2]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
+                _indexLabels[0]->setString(StringUtils::format("Top index=%zd", listView->getIndex(top)));
+                _indexLabels[1]->setString(StringUtils::format("Center\nindex=%zd", listView->getIndex(center)));
+                _indexLabels[2]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
             });
         }
         
@@ -706,22 +705,21 @@ bool UIListViewTest_Magnetic::init()
     
     // Show the indexes of items on each boundary.
     {
-        Text* labels[5];
         for(int i = 0; i < 5; ++i)
         {
-            labels[i] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
-            labels[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-            _uiLayer->addChild(labels[i]);
+            _indexLabels[i] = Text::create(" ", "fonts/Marker Felt.ttf", 12);
+            _indexLabels[i]->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+            _uiLayer->addChild(_indexLabels[i]);
         }
         float deltaX = 145, deltaY = 90;
-        labels[0]->setPosition(_uiLayer->getContentSize() / 2 + Size(-deltaX, 0));   // left
-        labels[1]->setPosition(_uiLayer->getContentSize() / 2 + Size(deltaX, 0));   // right
-        labels[2]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, deltaY));   // top
-        labels[3]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, -deltaY));   // bottom
-        labels[4]->setPosition(_uiLayer->getContentSize() / 2 + Size(deltaX, deltaY));  // center
+        _indexLabels[0]->setPosition(_uiLayer->getContentSize() / 2 + Size(-deltaX, 0));   // left
+        _indexLabels[1]->setPosition(_uiLayer->getContentSize() / 2 + Size(deltaX, 0));   // right
+        _indexLabels[2]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, deltaY));   // top
+        _indexLabels[3]->setPosition(_uiLayer->getContentSize() / 2 + Size(0, -deltaY));   // bottom
+        _indexLabels[4]->setPosition(_uiLayer->getContentSize() / 2 + Size(deltaX, deltaY));  // center
         
         // Callback
-        _listView->ScrollView::addEventListener([labels](Ref* ref, ScrollView::EventType eventType) {
+        _listView->ScrollView::addEventListener([this](Ref* ref, ScrollView::EventType eventType) {
             ListView* listView = dynamic_cast<ListView*>(ref);
             if(listView == nullptr || eventType != ScrollView::EventType::CONTAINER_MOVED)
             {
@@ -733,11 +731,11 @@ bool UIListViewTest_Magnetic::init()
             auto bottom = listView->getBottommostItemInCurrentView();
             auto center = listView->getCenterItemInCurrentView();
             
-            labels[0]->setString(StringUtils::format("Left\nindex=%zd", listView->getIndex(left)));
-            labels[1]->setString(StringUtils::format("RIght\nindex=%zd", listView->getIndex(right)));
-            labels[2]->setString(StringUtils::format("Top index=%zd", listView->getIndex(top)));
-            labels[3]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
-            labels[4]->setString(StringUtils::format("Center\nindex=%zd", listView->getIndex(center)));
+            _indexLabels[0]->setString(StringUtils::format("Left\nindex=%zd", listView->getIndex(left)));
+            _indexLabels[1]->setString(StringUtils::format("RIght\nindex=%zd", listView->getIndex(right)));
+            _indexLabels[2]->setString(StringUtils::format("Top index=%zd", listView->getIndex(top)));
+            _indexLabels[3]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
+            _indexLabels[4]->setString(StringUtils::format("Center\nindex=%zd", listView->getIndex(center)));
         });
     }
     
