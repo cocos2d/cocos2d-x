@@ -1261,7 +1261,7 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
         skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);
     }
 
-    // set root bone infomation
+    // set root bone information
     const rapidjson::Value& skin_data_1 = skin_data_array[1];
 
     // parent and child relationship map
@@ -1815,7 +1815,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
     bool skeleton_;
     if (_binaryReader.read(&skeleton_, 1, 1) != 1)
     {
-        CCLOG("warning: Failed to read is sleleton");
+        CCLOG("warning: Failed to read is skeleton");
         return nullptr;
     }
     if (skeleton_)
