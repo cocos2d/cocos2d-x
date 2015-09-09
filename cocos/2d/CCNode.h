@@ -36,6 +36,7 @@
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
 #include "2d/CCComponentContainer.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
