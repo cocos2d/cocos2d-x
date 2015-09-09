@@ -1237,6 +1237,11 @@
 
 
 --------------------------------------------------------
+-- the cc Component
+-- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
 -- the cc Device
 -- @field [parent=#cc] Device#Device Device preloaded module
 
@@ -1304,11 +1309,6 @@
 --------------------------------------------------------
 -- the cc TileMapAtlas
 -- @field [parent=#cc] TileMapAtlas#TileMapAtlas TileMapAtlas preloaded module
-
-
---------------------------------------------------------
--- the cc Component
--- @field [parent=#cc] Component#Component Component preloaded module
 
 
 return nil
