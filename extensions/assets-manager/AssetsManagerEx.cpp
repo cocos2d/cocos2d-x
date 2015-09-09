@@ -132,7 +132,7 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
     if (_localManifest)
     {
         loadLocalManifest(manifestUrl);
-        
+
         // Init and load temporary manifest
         _tempManifest = new (std::nothrow) Manifest();
         if (_tempManifest)
@@ -145,7 +145,7 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         {
             _inited = false;
         }
-        
+
         // Init remote manifest for future usage
         _remoteManifest = new (std::nothrow) Manifest();
         if (!_remoteManifest)
@@ -157,7 +157,7 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
     {
         _inited = false;
     }
-    
+
     if (!_inited)
     {
         CC_SAFE_DELETE(_localManifest);
@@ -192,7 +192,7 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
             }
         }
     }
-    
+
     // Load local manifest in app package
     _localManifest->parse(_manifestUrl);
     if (_localManifest->isLoaded())
@@ -226,7 +226,7 @@ void AssetsManagerEx::loadLocalManifest(const std::string& manifestUrl)
 std::string AssetsManagerEx::basename(const std::string& path) const
 {
     size_t found = path.find_last_of("/\\");
-    
+
     if (std::string::npos != found)
     {
         return path.substr(0, found);
@@ -286,7 +286,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
         return false;
     }
     const std::string rootPath = zip.substr(0, pos+1);
-    
+
     // Open the zip file
     unzFile zipfile = unzOpen(zip.c_str());
     if (! zipfile)
@@ -294,7 +294,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
         CCLOG("AssetsManagerEx : can not open downloaded zip file %s\n", zip.c_str());
         return false;
     }
-    
+
     // Get info about the zip file
     unz_global_info global_info;
     if (unzGetGlobalInfo(zipfile, &global_info) != UNZ_OK)
@@ -303,7 +303,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
         unzClose(zipfile);
         return false;
     }
-    
+
     // Buffer to hold data read from the zip file
     char readBuffer[BUFFER_SIZE];
     // Loop to extract all files.
@@ -327,7 +327,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
             return false;
         }
         const std::string fullPath = rootPath + fileName;
-        
+
         // Check if this entry is a directory or a file.
         const size_t filenameLength = strlen(fileName);
         if (fileName[filenameLength-1] == '/')
@@ -352,7 +352,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
                 unzClose(zipfile);
                 return false;
             }
-            
+
             // Create a file to store current file.
             FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), "wb");
             if (!out)
@@ -362,7 +362,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
                 unzClose(zipfile);
                 return false;
             }
-            
+
             // Write current file content to destinate file.
             int error = UNZ_OK;
             do
@@ -376,18 +376,18 @@ bool AssetsManagerEx::decompress(const std::string &zip)
                     unzClose(zipfile);
                     return false;
                 }
-                
+
                 if (error > 0)
                 {
                     fwrite(readBuffer, error, 1, out);
                 }
             } while(error > 0);
-            
+
             fclose(out);
         }
-        
+
         unzCloseCurrentFile(zipfile);
-        
+
         // Goto next entry listed in the zip file.
         if ((i+1) < global_info.number_entry)
         {
@@ -399,7 +399,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
             }
         }
     }
-    
+
     unzClose(zipfile);
     return true;
 }
@@ -554,15 +554,15 @@ void AssetsManagerEx::startUpdate()
     _percent = _percentByFile = _sizeCollected = _totalSize = 0;
     _downloadedSize.clear();
     _totalEnabled = false;
-    
+
     // Temporary manifest exists, resuming previous download
     if (_tempManifest->isLoaded() && _tempManifest->versionEquals(_remoteManifest))
     {
         _tempManifest->genResumeAssetsList(&_downloadUnits);
-        
+
         _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
         _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
-        
+
         std::string msg = StringUtils::format("Resuming from previous unfinished update, %d files remains to be finished.", _totalToDownload);
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
     }
@@ -574,7 +574,7 @@ void AssetsManagerEx::startUpdate()
         // in this case, it equals remote manifest.
         _tempManifest->release();
         _tempManifest = _remoteManifest;
-        
+
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
         if (diff_map.size() == 0)
         {
@@ -614,13 +614,16 @@ void AssetsManagerEx::startUpdate()
                 auto diffIt = diff_map.find(key);
                 if (diffIt == diff_map.end())
                 {
+					_tempManifestMutex.lock();
                     _tempManifest->setAssetDownloadState(key, Manifest::DownloadState::SUCCESSED);
+					_tempManifest->saveToFile(_tempManifestPath);
+					_tempManifestMutex.unlock();
                 }
             }
-            
+
             _totalWaitToDownload = _totalToDownload = (int)_downloadUnits.size();
             _downloader->batchDownloadAsync(_downloadUnits, BATCH_UPDATE_ID);
-            
+
             std::string msg = StringUtils::format("Start to update %d files from remote package.", _totalToDownload);
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "", msg);
         }
@@ -759,7 +762,7 @@ void AssetsManagerEx::updateAssets(const network::DownloadUnits& assets)
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_NO_LOCAL_MANIFEST);
         return;
     }
-    
+
     if (_updateState != State::UPDATING && _localManifest->isLoaded() && _remoteManifest->isLoaded())
     {
         int size = (int)(assets.size());
@@ -842,7 +845,10 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
         if (!found)
         {
             // Set download state to DOWNLOADING, this will run only once in the download process
+			_tempManifestMutex.lock();
             _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::DOWNLOADING);
+			_tempManifest->saveToFile(_tempManifestPath);
+			_tempManifestMutex.unlock();
             // Register the download size information
             _downloadedSize.emplace(customId, downloaded);
             _totalSize += total;
@@ -853,7 +859,7 @@ void AssetsManagerEx::onProgress(double total, double downloaded, const std::str
                 _totalEnabled = true;
             }
         }
-        
+
         if (_totalEnabled && _updateState == State::UPDATING)
         {
             float currentPercent = 100 * totalDownloaded / _totalSize;
@@ -885,10 +891,12 @@ void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &st
         if (_failedUnits.size() > 0 || _totalWaitToDownload > 0)
         {
             // Save current download manifest information for resuming
+			_tempManifestMutex.lock();
             _tempManifest->saveToFile(_tempManifestPath);
-            
+			_tempManifestMutex.unlock();
+
             decompressDownloadedZip();
-            
+
             _updateState = State::FAIL_TO_UPDATE;
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FAILED);
         }
@@ -904,27 +912,30 @@ void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &st
         if (assetIt != assets.end())
         {
             // Set download state to SUCCESSED
+			_tempManifestMutex.lock();
             _tempManifest->setAssetDownloadState(customId, Manifest::DownloadState::SUCCESSED);
-            
+			_tempManifest->saveToFile(_tempManifestPath);
+			_tempManifestMutex.unlock();
+
             // Add file to need decompress list
             if (assetIt->second.compressed) {
                 _compressedFiles.push_back(storagePath);
             }
         }
-        
+
         auto unitIt = _downloadUnits.find(customId);
         if (unitIt != _downloadUnits.end())
         {
             // Reduce count only when unit found in _downloadUnits
             _totalWaitToDownload--;
-            
+
             _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
             // Notify progression event
             dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
         }
         // Notify asset updated event
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ASSET_UPDATED, customId);
-        
+
         unitIt = _failedUnits.find(customId);
         // Found unit and delete it
         if (unitIt != _failedUnits.end())
