@@ -211,7 +211,16 @@ void Profile::testCaseEnd()
 
 void Profile::flush()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    std::string checkPath = "/mnt/sdcard";
+    auto writablePath = checkPath;
+    if (! cocos2d::FileUtils::getInstance()->isDirectoryExist(checkPath)) {
+        writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
+    }
+    cocos2d::log("write path : %s", writablePath.c_str());
+#else
     auto writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
+#endif
 
 #if USE_JSON_FORMAT
     std::string fullPath = genStr("%s/%s", writablePath.c_str(), LOG_FILE_NAME);
