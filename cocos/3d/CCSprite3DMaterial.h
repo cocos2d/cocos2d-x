@@ -39,35 +39,75 @@ NS_CC_BEGIN
 
 class Texture2D;
 
+/**
+ * @brief Sprite3DMaterial: Material for Sprite3D.
+ */
 class CC_DLL Sprite3DMaterial : public Material
 {
 public:
+    /**
+     * Material type, there are mainly two types of materials. Built in materials and Custom material
+     */
     enum class MaterialType
     {
-        UNLIT,
-        UNLIT_NOTEX,
-        VERTEX_LIT,
-        DIFFUSE,
-        DIFFUSE_NOTEX,
-        BUMPED_DIFFUSE,
+        //Built in material
+        UNLIT, //unlit material
+        UNLIT_NOTEX, //unlit material without texture
+        VERTEX_LIT, // vertex lit
+        DIFFUSE, // diffuse (pixel lighting)
+        DIFFUSE_NOTEX, //diffuse (without texture)
+        BUMPED_DIFFUSE, //bumped diffuse
         
-        CUSTOM,
+        //Custom material
+        CUSTOM, //Create from material file
     };
     
+    /**
+     * Get material type
+     * @return Material type
+     */
     MaterialType getMaterialType() const { return _type; }
     
+    /**
+     * Create built in material from material type
+     * @param type Material type
+     * @param skinned Has skin?
+     * @return Created material
+     */
     static Sprite3DMaterial* createBuiltInMaterial(MaterialType type, bool skinned);
     
+    /**
+     * Create material with file name, it creates material from cache if it is previously loaded
+     * @param path Path of material file
+     * @return Created material
+     */
     static Sprite3DMaterial* createWithFilename(const std::string& path);
     
+    /**
+     * Create material with GLProgramState
+     * @param programState GLProgramState instance
+     * @return Created material
+     */
     static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
     
+    /**
+     * Create all build in materials
+     */
     static void createBuiltInMaterial();
     
+    /**
+     * Release all built in materials
+     */
     static void releaseBuiltInMaterial();
     
+    /**
+     * Release all cached materials
+     */
     static void releaseCachedMaterial();
     
+    /**
+     * Clone material
+     */
     virtual Material* clone() const override;
     
 protected:
