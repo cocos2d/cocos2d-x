@@ -469,6 +469,7 @@ void ListView::refreshView()
         item->setLocalZOrder(i);
         remedyLayoutParameter(item);
     }
+    _innerContainer->forceDoLayout();
     updateInnerContainerSize();
     _refreshViewDirty = false;
 }
@@ -747,6 +748,33 @@ void ListView::jumpToPercentBothDirection(const Vec2& percent)
     ScrollView::jumpToPercentBothDirection(percent);
 }
 
+static Vec2 calculateItemDestination(const Size& contentSize, Widget* item, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
+    Vec2 positionInView;
+    positionInView.x += contentSize.width * positionRatioInView.x;
+    positionInView.y += contentSize.height * positionRatioInView.y;
+
+    Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
+    return -(itemPosition - positionInView);
+}
+
+void ListView::jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
+    Widget* item = getItem(itemIndex);
+    if (item == nullptr)
+    {
+        return;
+    }
+    refreshViewIfNecessary();
+
+    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
+    destination = flattenVectorByDirection(destination);
+    Vec2 delta = destination - getInnerContainerPosition();
+    Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
+    destination += outOfBoundary;
+    moveChildrenToPosition(destination);
+}
+
 void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
     scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
@@ -759,15 +787,7 @@ void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, cons
     {
         return;
     }
-    
-    Size contentSize = getContentSize();
-    Vec2 positionInView;
-    positionInView.x += contentSize.width * positionRatioInView.x;
-    positionInView.y += contentSize.height * positionRatioInView.y;
-    
-    Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
-    Vec2 destination = -(itemPosition - positionInView);
-    
+    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
     startAutoScrollToDestination(destination, timeInSec, true);
 }
 

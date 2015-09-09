@@ -320,6 +320,13 @@ public:
     virtual void jumpToPercentHorizontal(float percent) override;
     virtual void jumpToPercentBothDirection(const Vec2& percent) override;
 
+    /**
+     * @brief Jump to specific item
+     * @param positionRatioInView Specifies the position with ratio in list view's content size.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     */
+    void jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    
 	/**
 	 * @brief Scroll to specific item
 	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
