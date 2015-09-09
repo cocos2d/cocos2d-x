@@ -111,7 +111,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     /**
-     * calculate a model matrix which keep orignal translate & scaling but always face to the camera
+     * calculate a model matrix which keep original translate & scaling but always face to the camera
      */
     bool calculateBillbaordTransform();
     

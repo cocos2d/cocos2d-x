@@ -1652,7 +1652,7 @@ const Mat4& Node::getNodeToParentTransform() const
         
         Vec2 anchorPoint(_anchorPointInPoints.x * _scaleX, _anchorPointInPoints.y * _scaleY);
         
-        // caculate real position
+        // calculate real position
         if (! needsSkewMatrix && !_anchorPointInPoints.isZero())
         {
             x += -anchorPoint.x;

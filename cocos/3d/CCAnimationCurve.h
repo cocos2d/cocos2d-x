@@ -66,7 +66,7 @@ public:
     static AnimationCurve* create(float* keytime, float* value, int count);
     
     /**
-     * evalute value of time
+     * evaluate value of time
      * @param time Time to be estimated
      * @param dst Estimated value of that time
      * @param type EvaluateType

@@ -84,7 +84,7 @@ public:
     */
     /** Callback function for touch began.
      *
-     * @param touch Touch infomation.
+     * @param touch Touch information.
      * @param unused_event Event information.
      * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
      * @js NA
@@ -92,21 +92,21 @@ public:
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     /** Callback function for touch moved.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     /** Callback function for touch ended.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     /** Callback function for touch cancelled.
     *
-    * @param touch Touch infomation.
+    * @param touch Touch information.
     * @param unused_event Event information.
     * @js NA
     */
@@ -149,7 +149,7 @@ public:
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-    /** Callback funtion for acceleration.
+    /** Callback function for acceleration.
      * @param acc Acceleration information.
      * @param unused_event Event information.
      * @js NA

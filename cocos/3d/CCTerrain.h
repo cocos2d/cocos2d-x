@@ -44,7 +44,7 @@ NS_CC_BEGIN
  */
 
  /**
- * the maximum amount of the chunkes
+ * the maximum amount of the chunks
  **/
 #define MAX_CHUNKES 256
 
@@ -70,12 +70,12 @@ NS_CC_BEGIN
     * via the chunkSize property in TerrainData.
     * 
     * Chunks are managed under the QuadTree.As DE FACTO terminal Node of the QuadTree;
-    * let us cull chunks efficientlly to reduce drawCall amount And reduce the VBOs'Size that pass to the GPU.
+    * let us cull chunks efficiently to reduce drawCall amount And reduce the VBOs'Size that pass to the GPU.
     * 
     * Level of detail (LOD) is supported using a technique that is similar to texture mipmapping -- called GeoMapping.
     * A distance-to-camera based test used to decide
     * the appropriate LOD for a terrain chunk. The number of LOD levels is 0 by default (which
-    * means only the base level is used),the maxium number of LOD levels is 4. Of course ,you can hack the value individually.
+    * means only the base level is used),the maximum number of LOD levels is 4. Of course ,you can hack the value individually.
     * 
     * Finally, when LOD is enabled, cracks can begin to appear between terrain Chunks of
     * different LOD levels. An acceptable solution might be to simply reduce the lower LOD(high detail,smooth) chunks border,
@@ -136,7 +136,7 @@ public:
         /**constructor, this constructor construct a terrain which have 3 detailmaps, 1 alpha map*/
         TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1,const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize = Size(32,32), float mapHeight = 2, float mapScale = 0.1);
         /**
-        *deterimine the chunk size,chunk is the minimal subdivision of the Terrain
+        *determine the chunk size,chunk is the minimal subdivision of the Terrain
         */
         Size _chunkSize;
         /**height Map source path*/
@@ -285,7 +285,7 @@ private:
         QuadTree * _tr;
         QuadTree * _bl;
         QuadTree * _br;
-        /**A flag present current quadTree node whether a terminal node,the terminal node is de facto the chunck*/
+        /**A flag present current quadTree node whether a terminal node,the terminal node is de facto the chunk*/
         bool _isTerminal;
         Chunk * _chunk;
         int _posX;
@@ -336,7 +336,7 @@ public:
      **/
     float getHeight(Vec2 pos, Vec3*Normal = nullptr) const;
 
-    /**get the normal of the specified pistion in terrain
+    /**get the normal of the specified position in terrain
      * @return the normal vector of the specified position of the terrain.
      * @note the fast normal calculation may not get precise normal vector.
      **/
@@ -348,7 +348,7 @@ public:
      **/
     void setDrawWire(bool boolValue);
     /**
-     * Set threshold distance of each LOD level,must equal or gereater than the chunk size
+     * Set threshold distance of each LOD level,must equal or greater than the chunk size
      * @Note when invoke initHeightMap, the LOD distance will be automatic calculated.
      */
     void setLODDistance(float lod1, float lod2, float lod3);
@@ -374,7 +374,7 @@ public:
    /**
     * Ray-Terrain intersection.
     * @param ray to hit the terrain
-    * @param intersectionPoint hit point if hitted
+    * @param intersectionPoint hit point if hit
     * @return true if hit, false otherwise
     */
     bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
@@ -395,12 +395,12 @@ public:
     void resetHeightMap(const char * heightMap);
 
     /**
-     * get the terrain's mininal height.
+     * get the terrain's minimal height.
      */
     float getMinHeight();
 
     /**
-     * get the terrain's maximum height.
+     * get the terrain's maximal height.
      */
     float getMaxHeight();
 
@@ -440,7 +440,7 @@ protected:
 
     /**
      * recursively set each chunk's LOD
-     * @param cameraPos the camera postion in world space
+     * @param cameraPos the camera position in world space
      **/
     void setChunksLOD(Vec3 cameraPos);
 
@@ -458,7 +458,7 @@ protected:
     virtual void onEnter() override;
 
     /**
-     * cache all unifrom loactions in GLSL.
+     * cache all uniform locations in GLSL.
      **/
     void cacheUniformAttribLocation();
 
