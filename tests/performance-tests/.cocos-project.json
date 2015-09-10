@@ -1,4 +1,10 @@
-{ 
+{
+    "win32_cfg": {
+        "project_path": "../../build",
+        "sln_file": "cocos2d-win32.sln",
+        "project_name": "performance-tests",
+        "build_cfg_path": "proj.win32"
+    },
     "ios_cfg": {
         "project_path": "../../build",
         "project_file": "cocos2d_tests.xcodeproj",

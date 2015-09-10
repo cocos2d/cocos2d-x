@@ -38,10 +38,9 @@ std::string genStr(const char* format, ...)
 {
     va_list arg_ptr;
     va_start(arg_ptr, format);
-    
-    int bufferSize = MAX_LOG_LENGTH;
-    char buf[bufferSize];
-    vsnprintf(buf, bufferSize - 3, format, arg_ptr);
+
+    char buf[MAX_LOG_LENGTH];
+    vsnprintf(buf, MAX_LOG_LENGTH - 3, format, arg_ptr);
 
     va_end(arg_ptr);
 
