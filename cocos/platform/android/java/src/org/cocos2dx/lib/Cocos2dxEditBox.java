@@ -26,8 +26,11 @@ package org.cocos2dx.lib;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -106,6 +109,12 @@ public class Cocos2dxEditBox extends EditText {
     private int mInputModeContraints;
     private  int mMaxLength;
 
+    //OpenGL view scaleX
+    private  float mScaleX;
+
+
+
+
     public  Cocos2dxEditBox(Context context){
         super(context);
     }
@@ -120,6 +129,15 @@ public class Cocos2dxEditBox extends EditText {
         layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
         this.setLayoutParams(layoutParams);
     }
+
+    public float getOpenGLViewScaleX() {
+        return mScaleX;
+    }
+
+    public void setOpenGLViewScaleX(float mScaleX) {
+        this.mScaleX = mScaleX;
+    }
+
 
     public  void setMaxLength(int maxLength){
         this.mMaxLength = maxLength;
@@ -210,6 +228,8 @@ public class Cocos2dxEditBox extends EditText {
         switch (inputFlag) {
             case kEditBoxInputFlagPassword:
                 this.mInputFlagConstraints = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                this.setTypeface(Typeface.DEFAULT);
+                this.setTransformationMethod(new PasswordTransformationMethod());
                 break;
             case kEditBoxInputFlagSensitive:
                 this.mInputFlagConstraints = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;

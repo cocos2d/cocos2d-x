@@ -62,7 +62,6 @@ class CC_DLL Material : public RenderState
     friend class Mesh;
 
 public:
-    
     /**
      * Creates a Material using the data from the Properties object defined at the specified URL,
      * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
@@ -139,6 +138,7 @@ protected:
     bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
     bool parseRenderState(RenderState* renderState, Properties* properties);
     
+    
     // material name
     std::string _name;
 
@@ -150,7 +150,6 @@ protected:
 
     // weak reference
     Node* _target;
-    
 };
 
 NS_CC_END

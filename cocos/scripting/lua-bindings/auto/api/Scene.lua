@@ -59,16 +59,6 @@
 -- @return Scene#Scene ret (return value: cc.Scene)
         
 --------------------------------
--- @overload self, cc.Node, int, string         
--- @overload self, cc.Node, int, int         
--- @function [parent=#Scene] addChild
--- @param self
--- @param #cc.Node child
--- @param #int zOrder
--- @param #int tag
--- @return Scene#Scene self (return value: cc.Scene)
-
---------------------------------
 -- 
 -- @function [parent=#Scene] init 
 -- @param self

@@ -154,12 +154,12 @@ public:
 
     /** Gets the FPS value. */
     inline float getAnimationInterval() { return _animationInterval; }
-    /** Sets the FPS value. FPS = 1/internal. */
+    /** Sets the FPS value. FPS = 1/interval. */
     virtual void setAnimationInterval(float interval) = 0;
 
-    /** Whether or not to display the FPS on the bottom-left corner. */
+    /** Whether or not displaying the FPS on the bottom-left corner of the screen. */
     inline bool isDisplayStats() { return _displayStats; }
-    /** Display the FPS on the bottom-left corner. */
+    /** Display the FPS on the bottom-left corner of the screen. */
     inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
     /** Get seconds per frame. */
@@ -260,8 +260,8 @@ public:
     Vec2 convertToUI(const Vec2& point);
 
     /** 
-     * Gets the distance between camera and near clipping frane.
-     * It is correct for default camera that near clipping frane is the same as screen.
+     * Gets the distance between camera and near clipping frame.
+     * It is correct for default camera that near clipping frame is same as the screen.
      */
     float getZEye() const;
 

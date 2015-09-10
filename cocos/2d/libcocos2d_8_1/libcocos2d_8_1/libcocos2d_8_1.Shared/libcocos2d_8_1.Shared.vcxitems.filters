@@ -210,6 +210,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.h">
+      <Filter>physics</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocosStudioExport.h">
       <Filter>cocostudio</Filter>
     </ClInclude>
@@ -2052,6 +2058,12 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCActionFrame.cpp">

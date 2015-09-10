@@ -924,7 +924,7 @@ void Terrain::reload()
 
 void Terrain::Chunk::finish()
 {
-    //genearate two VBO ,the first for vertices, we just setup datas once ,won't changed at all
+    //generate two VBO ,the first for vertices, we just setup datas once ,won't changed at all
     //the second vbo for the indices, because we use level of detail technique to each chunk, so we will modified frequently 
     glGenBuffers(1,&_vbo);
 
@@ -939,7 +939,7 @@ void Terrain::Chunk::finish()
     for(int i =0;i<4;i++)
     {
         int step = 1<<_currentLod;
-        //reserve the indices size, the first part is the core part of the chunk, the second part & thid part is for fix crack 
+        //reserve the indices size, the first part is the core part of the chunk, the second part & third part is for fix crack 
         int indicesAmount =(_terrain->_chunkSize.width/step+1)*(_terrain->_chunkSize.height/step+1)*6+(_terrain->_chunkSize.height/step)*6
             +(_terrain->_chunkSize.width/step)*6;
         _lod[i]._indices.reserve(indicesAmount);

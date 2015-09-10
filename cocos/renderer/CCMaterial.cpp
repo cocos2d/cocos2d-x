@@ -501,6 +501,7 @@ ssize_t Material::getTechniqueCount() const
     return _techniques.size();
 }
 
+
 // Helpers implementation
 static bool isValidUniform(const char* name)
 {
