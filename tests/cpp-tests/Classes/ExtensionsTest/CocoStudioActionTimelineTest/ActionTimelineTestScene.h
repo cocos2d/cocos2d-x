@@ -146,4 +146,13 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 };
+
+class TestAnimationClipEndCallBack : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestAnimationClipEndCallBack);
+
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
 #endif  // __ANIMATION_SCENE_H__
