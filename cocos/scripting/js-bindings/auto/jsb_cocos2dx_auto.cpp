@@ -34169,14 +34169,7 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
 			                largv[0] = JSVAL_NULL;
 			            }
 			        } while (0);
-			            do {
-			            if (larg1) {
-			                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Uniform>(cx, (cocos2d::Uniform*)larg1);
-			                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-			            } else {
-			                largv[1] = JSVAL_NULL;
-			            }
-			        } while (0);
+			            largv[1] = uniform_to_jsval(cx, larg1);
 			            JS::RootedValue rval(cx);
 			            bool succeed = func->invoke(2, &largv[0], &rval);
 			            if (!succeed && JS_IsExceptionPending(cx)) {
@@ -34219,14 +34212,7 @@ bool js_cocos2dx_GLProgramState_setUniformCallback(JSContext *cx, uint32_t argc,
 			                largv[0] = JSVAL_NULL;
 			            }
 			        } while (0);
-			            do {
-			            if (larg1) {
-			                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Uniform>(cx, (cocos2d::Uniform*)larg1);
-			                largv[1] = OBJECT_TO_JSVAL(jsProxy->obj);
-			            } else {
-			                largv[1] = JSVAL_NULL;
-			            }
-			        } while (0);
+			            largv[1] = uniform_to_jsval(cx, larg1);
 			            JS::RootedValue rval(cx);
 			            bool succeed = func->invoke(2, &largv[0], &rval);
 			            if (!succeed && JS_IsExceptionPending(cx)) {
@@ -62424,7 +62410,7 @@ bool js_cocos2dx_GLProgram_getUniform(JSContext *cx, uint32_t argc, jsval *vp)
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgram_getUniform : Error processing arguments");
         cocos2d::Uniform* ret = cobj->getUniform(arg0);
         jsval jsret = JSVAL_NULL;
-        #pragma warning NO CONVERSION FROM NATIVE FOR Uniform*;
+        jsret = uniform_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
