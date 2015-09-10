@@ -37,6 +37,11 @@
 
 
 --------------------------------------------------------
+-- the cc Component
+-- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
 
@@ -1234,11 +1239,6 @@
 --------------------------------------------------------
 -- the cc TextureCache
 -- @field [parent=#cc] TextureCache#TextureCache TextureCache preloaded module
-
-
---------------------------------------------------------
--- the cc Component
--- @field [parent=#cc] Component#Component Component preloaded module
 
 
 --------------------------------------------------------
