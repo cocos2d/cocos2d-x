@@ -84,12 +84,6 @@ public:
      * Returns the topmost RenderState in the hierarchy below the given RenderState.
      */
     RenderState* getTopmost(RenderState* below);
-    
-    /**
-     * Set parent RenderState
-     * @param parent Parent RenderState
-     */
-    void setParent(RenderState* parent) { _parent = parent; }
 
     enum Blend
     {
