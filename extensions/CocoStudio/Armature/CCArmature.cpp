@@ -141,23 +141,21 @@ bool CCArmature::init(const char *name)
 
         m_strName = name == NULL ? "" : name;
 
-        CCArmatureDataManager *armatureDataManager = CCArmatureDataManager::getInstance();
+        CCArmatureDataManager *armatureDataManager = CCArmatureDataManager::sharedArmatureDataManager();
 
         if(m_strName.length() != 0)
         {
             m_strName = name;
-
             CCAnimationData *animationData = armatureDataManager->getAnimationData(name);
-            CCAssert(animationData, "CCAnimationData not exist! ");
+			CCArmatureData *armatureData = armatureDataManager->getArmatureData(name);
+			if (!animationData || !armatureData)
+			{
+				CCLOG("CCAnimation Data: %s not exist", name);
+				return false;
+			}
 
             m_pAnimation->setAnimationData(animationData);
-
-
-            CCArmatureData *armatureData = armatureDataManager->getArmatureData(name);
-            CCAssert(armatureData, "");
-
             m_pArmatureData = armatureData;
-
 
             CCDictElement *_element = NULL;
             CCDictionary *boneDataDic = &armatureData->boneDataDic;
@@ -337,7 +335,7 @@ CCDictionary *CCArmature::getBoneDic()
     return m_pBoneDic;
 }
 
-const CCAffineTransform& CCArmature::nodeToParentTransform()
+CCAffineTransform CCArmature::nodeToParentTransform()
 {
     if (m_bTransformDirty)
     {
