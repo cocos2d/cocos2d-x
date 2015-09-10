@@ -30,11 +30,6 @@ ButtonReader* ButtonReader::getInstance()
 
 void ButtonReader::purge()
 {
-    ButtonReader::destroyInstance();
-}
-
-void ButtonReader::destroyInstance()
-{
     CC_SAFE_DELETE(instanceButtonReader);
 }
 
@@ -43,7 +38,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::getInstance()->getFilePath();
+    std::string jsonPath = GUIReader::shareReader()->getFilePath();
     
     ui::Button* button = (ui::Button*)widget;
     bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");
@@ -129,15 +124,6 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
             button->setSize(CCSizeMake(swf, shf));
         }
     }
-    bool tt = DICTOOL->checkObjectExist_json(options, "text");
-    if (tt)
-    {
-        const char* text = DICTOOL->getStringValue_json(options, "text");
-        if (text)
-        {
-            button->setTitleText(text);
-        }
-    }
     
    
     int cri = DICTOOL->getIntValue_json(options, "textColorR",255);
@@ -148,9 +134,17 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
    
     button->setTitleFontSize(DICTOOL->getFloatValue_json(options, "fontSize", 14));
     
-   
     button->setTitleFontName(DICTOOL->getStringValue_json(options, "fontName","微软雅黑"));
-    
+
+	bool tt = DICTOOL->checkObjectExist_json(options, "text");
+	if (tt)
+	{
+		const char* text = DICTOOL->getStringValue_json(options, "text");
+		if (text)
+		{
+			button->setTitleText(text);
+		}
+	}
     
     
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
