@@ -46,9 +46,8 @@ THE SOFTWARE.
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CCShaderCache.h"
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    #include "CCTextureCache.h"
-#endif
+#include "CCTextureCache.h"
+
 
 NS_CC_BEGIN
 
@@ -66,6 +65,8 @@ CCTexture2D::CCTexture2D()
 , m_uPixelsWide(0)
 , m_uPixelsHigh(0)
 , m_uName(0)
+, m_uNameIndex(0)
+, m_nPaletteNum(0)
 , m_fMaxS(0.0)
 , m_fMaxT(0.0)
 , m_bHasPremultipliedAlpha(false)
@@ -87,11 +88,40 @@ CCTexture2D::~CCTexture2D()
     {
         ccGLDeleteTexture(m_uName);
     }
+
+	if (m_uNameIndex)
+	{
+		ccGLDeleteTexture(m_uNameIndex);
+	}
 }
 
 CCTexture2DPixelFormat CCTexture2D::getPixelFormat()
 {
     return m_ePixelFormat;
+}
+
+CCTexture2DPixelFormat CCTexture2D::getPixelFormatByStr(const std::string& type)
+{
+	if (type == "RGBA4444")
+	{
+		return kCCTexture2DPixelFormat_RGBA4444;
+	}
+	else if (type == "RGB5A1")
+	{
+		return kCCTexture2DPixelFormat_RGB5A1;
+	}
+	else if (type == "RGB565")
+	{
+		return kCCTexture2DPixelFormat_RGB565;
+	}
+	else if (type == "A8")
+	{
+		return kCCTexture2DPixelFormat_A8;
+	}
+	else
+	{
+		return kCCTexture2DPixelFormat_RGBA8888;
+	}
 }
 
 unsigned int CCTexture2D::getPixelsWide()
@@ -107,6 +137,16 @@ unsigned int CCTexture2D::getPixelsHigh()
 GLuint CCTexture2D::getName()
 {
     return m_uName;
+}
+
+GLuint CCTexture2D::getNameIndex()
+{
+	return m_uNameIndex;
+}
+
+int CCTexture2D::getPaletteNum()
+{
+	return m_nPaletteNum;
 }
 
 CCSize CCTexture2D::getContentSize()
@@ -209,8 +249,8 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     glGenTextures(1, &m_uName);
     ccGLBindTexture2D(m_uName);
 
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
@@ -262,6 +302,83 @@ bool CCTexture2D::initWithData(const void *data, CCTexture2DPixelFormat pixelFor
     return true;
 }
 
+bool CCTexture2D::initPaletteWithData(const void *data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh)
+{
+	unsigned int bitsPerPixel;
+	//Hack: bitsPerPixelForFormat returns wrong number for RGB_888 textures. See function.
+	if (pixelFormat == kCCTexture2DPixelFormat_RGB888)
+	{
+		bitsPerPixel = 24;
+	}
+	else
+	{
+		bitsPerPixel = bitsPerPixelForFormat(pixelFormat);
+	}
+
+	unsigned int bytesPerRow = pixelsWide * bitsPerPixel / 8;
+
+	if (bytesPerRow % 8 == 0)
+	{
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+	}
+	else if (bytesPerRow % 4 == 0)
+	{
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	}
+	else if (bytesPerRow % 2 == 0)
+	{
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+	}
+	else
+	{
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	}
+
+
+	glGenTextures(1, &m_uNameIndex);
+	ccGLBindTexture2D(m_uNameIndex);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	// Specify OpenGL texture image
+
+	switch (pixelFormat)
+	{
+	case kCCTexture2DPixelFormat_RGBA8888:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		break;
+	case kCCTexture2DPixelFormat_RGB888:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		break;
+	case kCCTexture2DPixelFormat_RGBA4444:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+		break;
+	case kCCTexture2DPixelFormat_RGB5A1:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+		break;
+	case kCCTexture2DPixelFormat_RGB565:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+		break;
+	case kCCTexture2DPixelFormat_AI88:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
+		break;
+	case kCCTexture2DPixelFormat_A8:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+		break;
+	case kCCTexture2DPixelFormat_I8:
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, (GLsizei)pixelsWide, (GLsizei)pixelsHigh, 0, GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
+		break;
+	default:
+		CCAssert(0, "NSInternalInconsistencyException");
+
+	}
+
+	return true;
+}
+
 
 const char* CCTexture2D::description(void)
 {
@@ -289,9 +406,21 @@ bool CCTexture2D::initWithImage(CCImage *uiImage)
         CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
         return false;
     }
-    
-    // always load premultiplied images
-    return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
+
+	// spark
+	if (uiImage->getPalette()) {
+		CCSize imageSize = CCSizeMake((float)(uiImage->getWidth()), (float)(uiImage->getHeight()));
+		m_nPaletteNum = uiImage->getPaletteNum();
+		initWithData(uiImage->getData(), kCCTexture2DPixelFormat_A8, uiImage->getWidth(), uiImage->getHeight(), imageSize);
+		setAliasTexParameters();
+		initPaletteWithData(uiImage->getPalette(), kCCTexture2DPixelFormat_RGBA8888, uiImage->getPaletteNum(), 1);
+		return true;
+	}
+	else {
+		// always load premultiplied images
+		m_nPaletteNum = 0;
+		return initPremultipliedATextureWithImage(uiImage, imageWidth, imageHeight);
+	}
 }
 
 bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned int width, unsigned int height)
@@ -302,26 +431,17 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
     unsigned short*           outPixel16 = NULL;
     bool                      hasAlpha = image->hasAlpha();
     CCSize                    imageSize = CCSizeMake((float)(image->getWidth()), (float)(image->getHeight()));
-    CCTexture2DPixelFormat    pixelFormat;
+	CCTexture2DPixelFormat    pixelFormat = getPixelFormatByStr(image->getPixelFormatToUse());
     size_t                    bpp = image->getBitsPerComponent();
 
     // compute pixel format
-    if (hasAlpha)
-    {
-    	pixelFormat = g_defaultAlphaPixelFormat;
-    }
-    else
-    {
-        if (bpp >= 8)
-        {
-            pixelFormat = kCCTexture2DPixelFormat_RGB888;
-        }
-        else 
-        {
-            pixelFormat = kCCTexture2DPixelFormat_RGB565;
-        }
-        
-    }
+	if (!hasAlpha)
+	{
+		if (pixelFormat == kCCTexture2DPixelFormat_RGBA8888)
+		{
+			pixelFormat = kCCTexture2DPixelFormat_RGB565;
+		}
+	}
     
     // Repack the pixel data into the right format
     unsigned int length = width * height;
@@ -354,10 +474,10 @@ bool CCTexture2D::initPremultipliedATextureWithImage(CCImage *image, unsigned in
             
             for(unsigned int i = 0; i < length; ++i)
             {
-                *outPixel16++ = 
-                (((*inPixel8++ & 0xFF) >> 3) << 11) |  // R
-                (((*inPixel8++ & 0xFF) >> 2) << 5)  |  // G
-                (((*inPixel8++ & 0xFF) >> 3) << 0);    // B
+				unsigned short r = (unsigned short)((*inPixel8++) >> 3) << 11;
+				unsigned short g = (unsigned short)((*inPixel8++) >> 2) << 5;
+				unsigned short b = (unsigned short)((*inPixel8++) >> 3) << 0;
+                *outPixel16++ = r | g | b;
             }
         }    
     }
@@ -756,6 +876,11 @@ void CCTexture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
     PVRHaveAlphaPremultiplied_ = haveAlphaPremultiplied;
 }
 
+void CCTexture2D::enablePng8Render(bool value)
+{
+	CCImage::s_enablePng8Render = value;
+}
+
     
 //
 // Use to apply MIN/MAG filter
@@ -768,6 +893,10 @@ void CCTexture2D::generateMipmap()
     ccGLBindTexture2D( m_uName );
     glGenerateMipmap(GL_TEXTURE_2D);
     m_bHasMipmaps = true;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+	VolatileTexture::generateMipmap(this);
+#endif
 }
 
 bool CCTexture2D::hasMipmaps()

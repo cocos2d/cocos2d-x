@@ -85,6 +85,8 @@ static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t leng
     }
 }
 
+bool CCImage::s_enablePng8Render = false;
+
 //////////////////////////////////////////////////////////////////////////
 // Implement CCImage
 //////////////////////////////////////////////////////////////////////////
@@ -94,6 +96,7 @@ CCImage::CCImage()
 , m_nHeight(0)
 , m_nBitsPerComponent(0)
 , m_pData(0)
+, m_pPlt(0)
 , m_bHasAlpha(false)
 , m_bPreMulti(false)
 {
@@ -105,12 +108,13 @@ CCImage::CCImage()
 CCImage::~CCImage()
 {
     CC_SAFE_DELETE_ARRAY(m_pData);
+	CC_SAFE_DELETE_ARRAY(m_pPlt);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     CC_SAFE_DELETE(m_ft);
 #endif
 }
 
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/, const char* strPixelFormatToUse/* = NULL*/)
 {
     bool bRet = false;
 
@@ -139,6 +143,10 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
+		if (strPixelFormatToUse != NULL) 
+		{
+			m_strPixelFormatToUse = strPixelFormatToUse;
+		}
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
@@ -147,7 +155,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return bRet;
 }
 
-bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType, const char* strPixelFormatToUse/* = NULL*/)
 {
     bool bRet = false;
     unsigned long nSize = 0;
@@ -159,6 +167,10 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
 #endif
     if (pBuffer != NULL && nSize > 0)
     {
+		if (strPixelFormatToUse != NULL)
+		{
+			m_strPixelFormatToUse = strPixelFormatToUse;
+		}
         bRet = initWithImageData(pBuffer, nSize, imageType);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
@@ -450,30 +462,68 @@ bool CCImage::_initWithPngData(void * pData, int nDatalen)
         
         // force palette images to be expanded to 24-bit RGB
         // it may include alpha channel
-        if (color_type == PNG_COLOR_TYPE_PALETTE)
+		if (color_type == PNG_COLOR_TYPE_PALETTE && s_enablePng8Render)
         {
-            png_set_palette_to_rgb(png_ptr);
-        }
-        // low-bit-depth grayscale images are to be expanded to 8 bits
-        if (color_type == PNG_COLOR_TYPE_GRAY && m_nBitsPerComponent < 8)
-        {
-            png_set_expand_gray_1_2_4_to_8(png_ptr);
-        }
-        // expand any tRNS chunk data into a full alpha channel
-        if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
-        {
-            png_set_tRNS_to_alpha(png_ptr);
-        }  
-        // reduce images with 16-bit samples to 8 bits
-        if (m_nBitsPerComponent == 16)
-        {
-            png_set_strip_16(png_ptr);            
-        } 
-        // expand grayscale images to RGB
-        if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
-        {
-            png_set_gray_to_rgb(png_ptr);
-        }
+			//spark
+            //png_set_palette_to_rgb(png_ptr);
+			/* read palette beg*/
+			png_colorp pcolor = NULL;
+			png_get_PLTE(png_ptr, info_ptr, &pcolor, &m_nPaletteNum);
+
+			png_bytep ptrans = NULL;
+			int num_trans;
+			/* read alpha of palette */
+			if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)){
+				png_get_tRNS(png_ptr, info_ptr, (png_bytep*)&ptrans, &num_trans, NULL);
+			}
+
+			m_pPlt = new unsigned char[4 * m_nPaletteNum];
+			for (int i = 0; i < m_nPaletteNum; i++){
+				m_pPlt[i * 4 + 0] = pcolor[i].red;
+				m_pPlt[i * 4 + 1] = pcolor[i].green;
+				m_pPlt[i * 4 + 2] = pcolor[i].blue;
+				m_pPlt[i * 4 + 3] = ptrans && i < num_trans ? ptrans[i] : 0xff;
+			}
+			/* read palette end*/
+
+			m_bHasAlpha = true;
+
+			//unsigned int *tmp = (unsigned int *)m_pPlt;
+			//for (unsigned int i = 0; i < m_nPaletteNum; i += 4)
+			//{
+			//	*tmp++ = CC_RGB_PREMULTIPLY_ALPHA(m_pPlt[i], m_pPlt[i + 1], m_pPlt[i + 2], m_pPlt[i + 3]);
+			//}
+
+			m_bPreMulti = false;
+		}
+		else 
+		{
+			if (color_type == PNG_COLOR_TYPE_PALETTE)
+			{
+				png_set_palette_to_rgb(png_ptr);
+			}
+
+			// low-bit-depth grayscale images are to be expanded to 8 bits
+			if (color_type == PNG_COLOR_TYPE_GRAY && m_nBitsPerComponent < 8)
+			{
+				png_set_expand_gray_1_2_4_to_8(png_ptr);
+			}
+			// expand any tRNS chunk data into a full alpha channel
+			if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+			{
+				png_set_tRNS_to_alpha(png_ptr);
+			}
+			// reduce images with 16-bit samples to 8 bits
+			if (m_nBitsPerComponent == 16)
+			{
+				png_set_strip_16(png_ptr);
+			}
+			// expand grayscale images to RGB
+			if (color_type == PNG_COLOR_TYPE_GRAY || color_type == PNG_COLOR_TYPE_GRAY_ALPHA)
+			{
+				png_set_gray_to_rgb(png_ptr);
+			}
+		}
 
         // read png data
         // m_nBitsPerComponent will always be 8
