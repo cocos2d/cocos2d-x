@@ -151,4 +151,14 @@
 -- @field [parent=#cc] PhysicsDebugDraw#PhysicsDebugDraw PhysicsDebugDraw preloaded module
 
 
+--------------------------------------------------------
+-- the cc ComponentPhysics2d
+-- @field [parent=#cc] ComponentPhysics2d#ComponentPhysics2d ComponentPhysics2d preloaded module
+
+
+--------------------------------------------------------
+-- the cc PhysicsManager
+-- @field [parent=#cc] PhysicsManager#PhysicsManager PhysicsManager preloaded module
+
+
 return nil

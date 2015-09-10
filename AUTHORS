@@ -412,6 +412,7 @@ Developers:
         UI: Added ScrollViewBar for displaying a scroll bar at the side of ScrollView
         UI: Added RadioButton widget
         UI: Refined scroll event dispatching for ScrollView
+        platform: Fixed Android app occasionally freeze issue caused by Cocos2dxRenderer.nativeOnResume() is not called when the activity is resumed
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -1157,7 +1158,10 @@ Developers:
     perminovVS
         Optimize Vec3 and Vec2
         Added `UserDefault::setDelegate()`
+        FileUtils: Added FileUtils::getSuitableFOpen() for convert utf8 to locale, for specific platform
         platform: Correct all usage of unicode version winapi in FileUtils for win32
+        FileUtils: Added FileUtils::getFileExtension for getting file's extension name
+        utils: Made utils::captureScreen saving file in another thread to improve the performance
         
     qiutaoleo
         Added a feature to check case characters for filename on windows

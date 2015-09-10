@@ -61,7 +61,6 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
-//#include "platform/CCGLViewImpl.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -1252,8 +1251,18 @@ void Director::setContentScaleFactor(float scaleFactor)
 
 void Director::setNotificationNode(Node *node)
 {
-    CC_SAFE_RELEASE(_notificationNode);
-    _notificationNode = node;
+	if (_notificationNode != nullptr){
+		_notificationNode->onExitTransitionDidStart();
+		_notificationNode->onExit();
+		_notificationNode->cleanup();
+	}
+	CC_SAFE_RELEASE(_notificationNode);
+
+	_notificationNode = node;
+	if (node == nullptr)
+		return;
+	_notificationNode->onEnter();
+	_notificationNode->onEnterTransitionDidFinish();
     CC_SAFE_RETAIN(_notificationNode);
 }
 

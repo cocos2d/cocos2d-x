@@ -285,6 +285,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -292,6 +295,9 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsShape.cpp">
@@ -1936,6 +1942,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -1943,6 +1952,9 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsJoint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\physics\CCPhysicsManager.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsShape.h">
