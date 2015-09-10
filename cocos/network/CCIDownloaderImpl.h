@@ -25,7 +25,7 @@ THE SOFTWARE.
 #pragma once
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <memory>
 
 #include "base/CCConsole.h"

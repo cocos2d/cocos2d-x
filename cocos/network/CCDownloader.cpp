@@ -37,7 +37,7 @@
 #define DownloaderImpl  DownloaderApple
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#include <unordered_map>    // temp
+
 #include "network/CCDownloader-android.h"
 #define DownloaderImpl  DownloaderAndroid
 
@@ -107,14 +107,15 @@ namespace cocos2d { namespace network {
                                      std::vector<unsigned char>& data)
         {
             if (DownloadTask::ERROR_NO_ERROR != errorCode)
-
             {
                 if (onTaskError)
                 {
                     onTaskError(task, errorCode, errorCodeInternal, errorStr);
                 }
+                return;
             }
 
+            // success callback
             if (task.storagePath.length())
             {
                 if (onFileTaskSuccess)

@@ -26,6 +26,8 @@
 
 #include "network/CCIDownloaderImpl.h"
 
+class _jobject;
+
 namespace cocos2d { namespace network
     {
         class DownloadTaskAndroid;
@@ -39,9 +41,13 @@ namespace cocos2d { namespace network
 
             virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) override;
 
+            // designed called by internal
+            void _onProcess(int taskId, int64_t dl, int64_t dlNow, int64_t dlTotal);
+            void _onFinish(int taskId, int errCode, const char *errStr);
         protected:
-            class Impl;
-            std::shared_ptr<Impl>   _impl;
+            int _id;
+            _jobject* _impl;
+            std::unordered_map<int, DownloadTaskAndroid*> _taskMap;
         };
 
     }}  // namespace cocos2d::network

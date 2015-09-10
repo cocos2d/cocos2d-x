@@ -78,7 +78,7 @@ void DownloaderBaseTest::progressCallback(const network::DownloadTask& task,
 
 void DownloaderBaseTest::successCallback(const network::DownloadTask& task)
 {
-    cocos2d::log("download finished: %s", task.storagePath.c_str());
+    cocos2d::log("download successed: %s", task.storagePath.c_str());
 }
 
 //------------------------------------------------------------------
