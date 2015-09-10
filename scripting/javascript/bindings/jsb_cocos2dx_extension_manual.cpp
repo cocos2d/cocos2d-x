@@ -12,8 +12,67 @@
 #include "js_manual_conversions.h"
 #include "js_bindings_chipmunk_auto_classes.h"
 
+NS_CC_BEGIN
+bool WidgetTouchEventDispatcher(CCObject* object, uint32_t eventType)
+{
+	js_proxy_t * p = jsb_get_native_proxy(object);
+	if (!p) return false;
+
+	jsval retVal;
+	jsval args[2];
+	args[0] = OBJECT_TO_JSVAL(p->obj);
+	args[1] = UINT_TO_JSVAL(eventType);
+	jsval owner = OBJECT_TO_JSVAL(ScriptingCore::getInstance()->getGlobalObject());
+	ScriptingCore::getInstance()->executeFunctionWithOwner(owner, "WidgetTouchEventDispatcher", 2, args, &retVal);
+	return JSVAL_IS_BOOLEAN(retVal) && JSVAL_TO_BOOLEAN(retVal);
+}
+NS_CC_END
+
 USING_NS_CC;
 USING_NS_CC_EXT;
+
+class JSBEventListenerWrapper : public JSCallbackWrapper {
+public:
+	virtual void eventCallbackFunc(CCObject*, int);
+	virtual void eventCallbackFuncO(CCObject*);
+};
+
+void JSBEventListenerWrapper::eventCallbackFunc(CCObject* sender, int eventType)
+{
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JSObject *thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
+	js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
+	jsval retval;
+	if (jsCallback != JSVAL_VOID)
+	{
+		jsval touchVal = INT_TO_JSVAL(eventType);
+
+		jsval valArr[2];
+		valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
+		valArr[1] = touchVal;
+
+		JS_AddValueRoot(cx, valArr);
+		JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET;
+		JS_CallFunctionValue(cx, thisObj, jsCallback, 2, valArr, &retval);
+		JS_RemoveValueRoot(cx, valArr);
+	}
+}
+
+void JSBEventListenerWrapper::eventCallbackFuncO(CCObject* sender)
+{
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JSObject *thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
+	js_proxy_t *proxy = js_get_or_create_proxy(cx, sender);
+	jsval retval;
+	if (jsCallback != JSVAL_VOID)
+	{
+		jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
+		JS_AddValueRoot(cx, &senderVal);
+		JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET;
+		JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &senderVal, &retval);
+		JS_RemoveValueRoot(cx, &senderVal);
+	}
+}
 
 class JSB_ScrollViewDelegate
 : public CCObject
@@ -764,19 +823,82 @@ static JSBool js_cocos2dx_CCControl_removeTargetWithActionForControlEvents(JSCon
     return JS_FALSE;
 }
 
+static JSBool js_cocos2dx_CCShaderCache_addLoadShaderEvent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::CCShaderCache* cobj = (cocos2d::CCShaderCache *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2(cobj, cx, JS_FALSE, "Invalid Native Object");
+
+	if (argc == 2) {
+		jsval *argv = JS_ARGV(cx, vp);
+
+		JSBEventListenerWrapper *tmpObj = new JSBEventListenerWrapper();
+		tmpObj->autorelease();
+
+		CCDictionary* dict = static_cast<CCDictionary*>(cobj->getScriptObjectDict());
+		if (NULL == dict)
+		{
+			dict = CCDictionary::create();
+			cobj->setScriptObjectDict(dict);
+		}
+		dict->setObject(tmpObj, "loadShaderEvent");
+
+		tmpObj->setJSCallbackFunc(argv[0]);
+		tmpObj->setJSCallbackThis(argv[1]);
+
+		cobj->addLoadShaderEvent(tmpObj, LoadShaderEventSelector(JSBEventListenerWrapper::eventCallbackFunc));
+
+		return JS_TRUE;
+	}
+	JS_ReportError(cx, "Invalid number of arguments");
+	return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_CCTextureCache_addImageAsync(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::CCTextureCache* cobj = (cocos2d::CCTextureCache *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2(cobj, cx, JS_FALSE, "Invalid Native Object");
+
+	if (argc == 3) {
+		jsval *argv = JS_ARGV(cx, vp);
+		JSBEventListenerWrapper *tmpObj = new JSBEventListenerWrapper();
+		tmpObj->autorelease();
+
+		tmpObj->setJSCallbackFunc(argv[1]);
+		tmpObj->setJSCallbackThis(argv[2]);
+
+		std::string path;
+		jsval_to_std_string(cx, argv[0], &path);
+
+		cobj->addImageAsync(path.c_str(), tmpObj, callfuncO_selector(JSBEventListenerWrapper::eventCallbackFuncO));
+		return JS_TRUE;
+	}
+	JS_ReportError(cx, "Invalid number of arguments");
+	return JS_FALSE;
+}
+
 extern JSObject* jsb_CCScrollView_prototype;
 extern JSObject* jsb_CCTableView_prototype;
 extern JSObject* jsb_CCEditBox_prototype;
 extern JSObject* jsb_CCControl_prototype;
+extern JSObject* jsb_CCTextureCache_prototype;
+extern JSObject* jsb_CCShaderCache_prototype;
+
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
+	ui::Widget::WidgetTouchEventDispatcher = WidgetTouchEventDispatcher;
     JS_DefineFunction(cx, jsb_CCScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCEditBox_prototype, "setDelegate", js_cocos2dx_CCEditBox_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCControl_prototype, "addTargetWithActionForControlEvents", js_cocos2dx_CCControl_addTargetWithActionForControlEvents, 3, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCControl_prototype, "removeTargetWithActionForControlEvents", js_cocos2dx_CCControl_removeTargetWithActionForControlEvents, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_CCTextureCache_prototype, "addImageAsync", js_cocos2dx_CCTextureCache_addImageAsync, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_CCShaderCache_prototype, "addLoadShaderEvent", js_cocos2dx_CCShaderCache_addLoadShaderEvent, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
     JSObject *tmpObj = JSVAL_TO_OBJECT(anonEvaluate(cx, global, "(function () { return cc.TableView; })()"));
 	JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
