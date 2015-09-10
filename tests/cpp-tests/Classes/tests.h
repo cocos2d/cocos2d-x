@@ -62,7 +62,6 @@
 #include "ParallaxTest/ParallaxTest.h"
 #include "Particle3DTest/Particle3DTest.h"
 #include "ParticleTest/ParticleTest.h"
-#include "PerformanceTest/PerformanceTest.h"
 #include "Physics3DTest/Physics3DTest.h"
 #include "PhysicsTest/PhysicsTest.h"
 #include "ReleasePoolTest/ReleasePoolTest.h"
