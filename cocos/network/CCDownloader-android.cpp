@@ -152,7 +152,7 @@ namespace cocos2d { namespace network {
             onTaskProgress(*coTask->task, dl, dlNow, dlTotal, transferDataToBuffer);
         }
 
-        void DownloaderAndroid::_onFinish(int taskId, int errCode, const char *errStr)
+        void DownloaderAndroid::_onFinish(int taskId, int errCode, const char *errStr, vector<unsigned char>& data)
         {
             DLLOG("DownloaderAndroid::_onFinish(taskId: %d, errCode: %d, errStr: %s)", taskId, errCode, (errStr)?errStr:"null");
             auto iter = _taskMap.find(taskId);
@@ -163,9 +163,8 @@ namespace cocos2d { namespace network {
             }
             DownloadTaskAndroid *coTask = iter->second;
             string str = (errStr ? errStr : "");
-            vector<unsigned char> data;
             onTaskFinish(*coTask->task,
-                         (errCode ? DownloadTask::ERROR_IMPL_INTERNAL : DownloadTask::ERROR_FILE_OP_FAILED),
+                         errStr ? DownloadTask::ERROR_IMPL_INTERNAL : DownloadTask::ERROR_NO_ERROR,
                          errCode,
                          str,
                          data
@@ -189,7 +188,7 @@ static void _nativeOnProgress(JNIEnv *env, jclass clazz, jint id, jint taskId, j
     downloader->_onProcess((int)taskId, (int64_t)dl, (int64_t)dlnow, (int64_t)dltotal);
 }
 
-static void _nativeOnFinish(JNIEnv *env, jclass clazz, jint id, jint taskId, jint errCode, jstring errStr)
+static void _nativeOnFinish(JNIEnv *env, jclass clazz, jint id, jint taskId, jint errCode, jstring errStr, jbyteArray data)
 {
     DLLOG("_nativeOnFinish(id: %d, taskId: %d)", id, taskId);
     auto iter = sDownloaderMap.find(id);
@@ -199,22 +198,33 @@ static void _nativeOnFinish(JNIEnv *env, jclass clazz, jint id, jint taskId, jin
         return;
     }
     cocos2d::network::DownloaderAndroid *downloader = iter->second;
+    vector<unsigned char> buf;
     if (errStr)
     {
-        const char *nativeErrStr = nullptr;
-        env->GetStringUTFChars(errStr, JNI_FALSE);
-        downloader->_onFinish((int)taskId, (int)errCode, nativeErrStr);
+        // failure
+        const char *nativeErrStr = env->GetStringUTFChars(errStr, JNI_FALSE);
+        downloader->_onFinish((int)taskId, (int)errCode, nativeErrStr, buf);
         env->ReleaseStringUTFChars(errStr, nativeErrStr);
+        return;
     }
-    else
+
+    // success
+    if (data)
     {
-        downloader->_onFinish((int)taskId, (int)errCode, nullptr);
+        int len = env->GetArrayLength(data);
+        if (len)
+        {
+            buf.reserve(len);
+            buf.resize(len);
+            env->GetByteArrayRegion(data, 0, len, reinterpret_cast<jbyte*>(buf.data()));
+        }
     }
+    downloader->_onFinish((int)taskId, (int)errCode, nullptr, buf);
 }
 
 static JNINativeMethod sMethodTable[] = {
         { "nativeOnProgress", "(IIJJJ)V", (void*)_nativeOnProgress },
-        { "nativeOnFinish", "(III" JARG_STR ")V", (void*)_nativeOnFinish },
+        { "nativeOnFinish", "(III" JARG_STR "[B)V", (void*)_nativeOnFinish },
 };
 
 static bool _registerNativeMethods(JNIEnv* env)

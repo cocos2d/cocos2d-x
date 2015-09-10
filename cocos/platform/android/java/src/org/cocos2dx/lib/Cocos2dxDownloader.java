@@ -1,6 +1,8 @@
 package org.cocos2dx.lib;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
 
@@ -9,6 +11,54 @@ import org.apache.http.message.BasicHeader;
 
 import java.io.File;
 import java.util.*;
+
+class DataTaskHandler extends BinaryHttpResponseHandler {
+    int _id;
+    private Cocos2dxDownloader _downloader;
+    private long _lastBytesWritten;
+
+    void LogD(String msg) {
+        android.util.Log.d("Cocos2dxDownloader", msg);
+    }
+
+    public DataTaskHandler(Cocos2dxDownloader downloader, int id) {
+        super(new String[]{".*"});
+        _downloader = downloader;
+        _id = id;
+        _lastBytesWritten = 0;
+    }
+
+    @Override
+    public void onProgress(long bytesWritten, long totalSize) {
+        //LogD("onProgress(bytesWritten:" + bytesWritten + " totalSize:" + totalSize);
+        long dlBytes = bytesWritten - _lastBytesWritten;
+        long dlNow = bytesWritten;
+        long dlTotal = totalSize;
+        _downloader.onProgress(_id, dlBytes, dlNow, dlTotal);
+        _lastBytesWritten = bytesWritten;
+    }
+
+    @Override
+    public void onStart() {
+        _downloader.onStart(_id);
+    }
+
+    @Override
+    public void onFailure(int i, Header[] headers, byte[] errorResponse, Throwable throwable) {
+        LogD("onFailure(i:" + i + " headers:" + headers + " throwable:" + throwable);
+        String errStr = "";
+        if (null != throwable) {
+            errStr = throwable.toString();
+        }
+        _downloader.onFinish(_id, i, errStr, null);
+    }
+
+    @Override
+    public void onSuccess(int i, Header[] headers, byte[] binaryData) {
+        LogD("onSuccess(i:" + i + " headers:" + headers);
+        _downloader.onFinish(_id, 0, null, binaryData);
+    }
+}
 
 class FileTaskHandler extends FileAsyncHttpResponseHandler {
     int _id;
@@ -53,13 +103,17 @@ class FileTaskHandler extends FileAsyncHttpResponseHandler {
 
     @Override
     public void onFailure(int i, Header[] headers, Throwable throwable, File file) {
-        LogD("onFailure(i:" + i + " headers:" + headers.toString() + " throwable:" + throwable + " file:" + file);
-        _downloader.onFinish(_id, i, throwable.toString());
+        LogD("onFailure(i:" + i + " headers:" + headers + " throwable:" + throwable + " file:" + file);
+        String errStr = "";
+        if (null != throwable) {
+            errStr = throwable.toString();
+        }
+        _downloader.onFinish(_id, i, errStr, null);
     }
 
     @Override
     public void onSuccess(int i, Header[] headers, File file) {
-        LogD("onSuccess(i:" + i + " headers:" + headers.toString() + " file:" + file);
+        LogD("onSuccess(i:" + i + " headers:" + headers + " file:" + file);
         String errStr = null;
         do {
             // rename temp file to final file
@@ -78,7 +132,7 @@ class FileTaskHandler extends FileAsyncHttpResponseHandler {
             File tempFile = getTargetFile();
             tempFile.renameTo(_finalFile);
         } while (false);
-        _downloader.onFinish(_id, 0, errStr);
+        _downloader.onFinish(_id, 0, errStr, null);
     }
 }
 
@@ -86,12 +140,11 @@ class DownloadTask {
 
     DownloadTask() {
         handle = null;
-        fileHandler = null;
+        handler = null;
         resetStatus();
     }
 
     void resetStatus() {
-        finished = false;
         bytesReceived = 0;
         totalBytesReceived = 0;
         totalBytesExpected = 0;
@@ -99,9 +152,7 @@ class DownloadTask {
     }
 
     RequestHandle handle;
-    FileTaskHandler fileHandler;
-
-    boolean finished;
+    AsyncHttpResponseHandler handler;
 
     // progress
     long bytesReceived;
@@ -139,14 +190,14 @@ public class Cocos2dxDownloader {
         }
     }
 
-    public void onFinish(final int id, final int errCode, final String errStr) {
+    public void onFinish(final int id, final int errCode, final String errStr, final byte[] data) {
         DownloadTask task = (DownloadTask)_taskMap.get(id);
         if (null == task) return;
         _taskMap.remove(id);
         Cocos2dxHelper.runOnGLThread(new Runnable() {
             @Override
             public void run() {
-                nativeOnFinish(_id, id, errCode, errStr);
+                nativeOnFinish(_id, id, errCode, errStr, data);
             }
         });
     }
@@ -175,7 +226,15 @@ public class Cocos2dxDownloader {
             @Override
             public void run() {
                 DownloadTask task = new DownloadTask();
+                if (0 == path.length()) {
+                    // data task
+                    task.handler = new DataTaskHandler(downloader, id);
+                    task.handle = downloader._httpClient.get(Cocos2dxHelper.getActivity(), url, task.handler);
+                }
+
                 do {
+                    if (0 == path.length()) break;
+                    // file task
                     File tempFile = new File(path + downloader._tempFileNameSufix);
                     if (tempFile.isDirectory()) break;
 
@@ -185,7 +244,7 @@ public class Cocos2dxDownloader {
                     File finalFile = new File(path);
                     if (tempFile.isDirectory()) break;
 
-                    task.fileHandler = new FileTaskHandler(downloader, id, tempFile, finalFile);
+                    task.handler = new FileTaskHandler(downloader, id, tempFile, finalFile);
                     Header[] headers = null;
                     long fileLen = tempFile.length();
                     if (fileLen > 0) {
@@ -194,8 +253,8 @@ public class Cocos2dxDownloader {
                         list.add(new BasicHeader("Range", "bytes=" + fileLen + "-"));
                         headers = list.toArray(new Header[list.size()]);
                     }
-                    task.handle = downloader._httpClient.get(Cocos2dxHelper.getActivity(), url, headers, null, task.fileHandler);
-                    //task.handle = downloader._httpClient.get(url, task.fileHandler);
+                    task.handle = downloader._httpClient.get(Cocos2dxHelper.getActivity(), url, headers, null, task.handler);
+                    //task.handle = downloader._httpClient.get(url, task.handler);
                 } while (false);
 
                 if (null == task.handle) {
@@ -203,7 +262,7 @@ public class Cocos2dxDownloader {
                     Cocos2dxHelper.runOnGLThread(new Runnable() {
                         @Override
                         public void run() {
-                            downloader.nativeOnFinish(downloader._id, id, 0, errStr);
+                            downloader.nativeOnFinish(downloader._id, id, 0, errStr, null);
                         }
                     });
                 } else {
@@ -223,7 +282,7 @@ public class Cocos2dxDownloader {
                 while (iter.hasNext()) {
                     Map.Entry entry = (Map.Entry) iter.next();
                     //Object key = entry.getKey();
-                    DownloadTask task = (DownloadTask)entry.getValue();
+                    DownloadTask task = (DownloadTask) entry.getValue();
                     if (null != task.handle) {
                         task.handle.cancel(true);
                     }
@@ -233,5 +292,5 @@ public class Cocos2dxDownloader {
     }
 
     native void nativeOnProgress(int id, int taskId, long dl, long dlnow, long dltotal);
-    native void nativeOnFinish(int id, int taskId, int errCode, String errStr);
+    native void nativeOnFinish(int id, int taskId, int errCode, String errStr, final byte[] data);
 }
