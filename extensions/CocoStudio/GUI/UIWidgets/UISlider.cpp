@@ -233,6 +233,12 @@ bool Slider::isScale9Enabled()
     return _scale9Enabled;
 }
 
+void Slider::setProgressBarTextureSize(float width, float height)
+{
+	_progressBarTextureSize.width = width;
+	_progressBarTextureSize.height = height;
+}
+
 void Slider::ignoreContentAdaptWithSize(bool ignore)
 {
     if (!_scale9Enabled || (_scale9Enabled && !ignore))
