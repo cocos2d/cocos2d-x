@@ -31,19 +31,29 @@ THE SOFTWARE.
 
 NS_TIMELINE_BEGIN
 
-struct AnimationInfo
+typedef struct AnimationInfo
 {
-    AnimationInfo():startIndex(0),endIndex(0){}
-    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
-    :name(otherName),
-    startIndex(otherStartIndex),
-    endIndex(otherEndIndex)
+    AnimationInfo()
+        :startIndex(0)
+        ,endIndex(0)
     {
     }
+
+    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
+    :name(otherName)
+    ,startIndex(otherStartIndex)
+    ,endIndex(otherEndIndex)
+    {
+    }
+
     std::string name;
     int startIndex;
     int endIndex;
-};
+
+    //need set call back before clip added to ActionTimeline
+    // or see @ActionTimeline::setAnimationEndCallBack
+    std::function<void()> clipEndCallBack;
+} AnimationClip;
 
 class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 {
@@ -145,7 +155,9 @@ public:
     virtual void addAnimationInfo(const AnimationInfo& animationInfo);
     virtual void removeAnimationInfo(std::string animationName);
     virtual bool IsAnimationInfoExists(const std::string& animationName);
-    virtual AnimationInfo getAnimationInfo(const std::string& animationName);
+    virtual const AnimationInfo& getAnimationInfo(const std::string& animationName);
+    // add a frame end call back to animation's end frame @addFrameEndCallFunc, make animationName as the key of func
+    virtual void setAnimationEndCallBack(const std::string animationName, std::function<void()> func);
 
     /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
@@ -154,6 +166,15 @@ public:
     /** Last frame callback will call when arriving last frame */
     void setLastFrameCallFunc(std::function<void()> listener);
     void clearLastFrameCallFunc();
+
+    // add a call back after played frameIndex 
+    virtual void addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func);
+    // clear frame call back func after frameIndex
+    virtual void removeFrameEndCall(int frameIndex, const std::string& funcKey);
+    // clear frame call backs after frameIndex
+    virtual void removeFrameEndCall(int frameIndex);
+    // clear all frame call backs in this actiontimeline
+    virtual void clearFrameEndCalls();
 
     /** Inherit from Action. */
 
@@ -171,6 +192,9 @@ public:
 protected:
     virtual void gotoFrame(int frameIndex);
     virtual void stepToFrame(int frameIndex);
+
+    // emit call back after frameIndex played
+    virtual void emitFrameEndCallFuncs(int frameIndex);
 
     /** emit frame event, call it when enter a frame*/
     virtual void emitFrameEvent(Frame* frame);
@@ -190,6 +214,7 @@ protected:
 
     std::function<void(Frame*)> _frameEventListener;
     std::function<void()> _lastFrameListener;
+    std::map<int, std::map<std::string, std::function<void()> > > _frameEndCallFuncs;
     std::map<std::string, AnimationInfo> _animationInfos;
 };
 
