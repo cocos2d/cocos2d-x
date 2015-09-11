@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 NS_CC_BEGIN
 
-static const float OUT_OF_BOUND_TIME_RESCALE = 0.05f;
-static const float OUT_OF_BOUND_DISTANCE_RESCALE = 0.05f;
+static const int NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED = 5;
+static const float OUT_OF_BOUNDARY_BREAKING_FACTOR = 0.05f;
 static const float BOUNCE_BACK_DURATION = 1.0f;
 
 #define MOVE_INCH            7.0f/160.0f
@@ -61,14 +61,13 @@ _childFocusCancelOffsetInInch(MOVE_INCH),
 _touchMovePreviousTimestamp(0),
 _autoScrolling(false),
 _autoScrollAttenuate(true),
-_autoScrollDuration(0),
+_autoScrollTotalTime(0),
 _autoScrollAccumulatedTime(0),
-_autoScrollCompleteCallback(nullptr),
-_autoScrollMoveCallback(nullptr),
-_outOfBoundaryDuringInertiaScroll(false),
+_autoScrollCurrentlyOutOfBoundary(false),
+_autoScrollBraking(false),
 _inertiaScrollEnabled(true),
-_inertiaScrolling(false),
 _bounceEnabled(false),
+_outOfBoundaryAmountDirty(true),
 _scrollBarEnabled(true),
 _verticalScrollBar(nullptr),
 _horizontalScrollBar(nullptr),
@@ -229,6 +228,19 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
         return;
     }
     _innerContainer->setPosition(position);
+    _outOfBoundaryAmountDirty = true;
+    
+    // Process bouncing events
+    if(_bounceEnabled)
+    {
+        for(int direction = (int) MoveDirection::TOP; direction < (int) MoveDirection::RIGHT; ++direction)
+        {
+            if(isOutOfBoundary((MoveDirection) direction))
+            {
+                processScrollEvent((MoveDirection) direction, true);
+            }
+        }
+    }
     
     this->retain();
     if (_eventCallback)
@@ -333,178 +345,222 @@ void ScrollView::updateScrollBar(const Vec2& outOfBoundary)
     }
 }
 
+Vec2 ScrollView::calculateTouchMoveVelocity() const
+{
+    float totalTime = 0;
+    for(auto &timeDelta : _touchMoveTimeDeltas)
+    {
+        totalTime += timeDelta;
+    }
+    if(totalTime == 0 || totalTime >= 0.1f)
+    {
+        return Vec2::ZERO;
+    }
+    
+    Vec2 totalMovement;
+    for(auto &displacement : _touchMoveDisplacements)
+    {
+        totalMovement += displacement;
+    }
+    return totalMovement / totalTime;
+}
+
+void ScrollView::startInertiaScroll(const Vec2& touchMoveVelocity)
+{
+    const float MOVEMENT_FACTOR = 0.7f;
+    Vec2 inertiaTotalMovement = touchMoveVelocity * MOVEMENT_FACTOR;
+    startAttenuatingAutoScroll(inertiaTotalMovement, touchMoveVelocity);
+}
+
 bool ScrollView::startBounceBackIfNeeded()
 {
     if (!_bounceEnabled)
     {
         return false;
     }
-    Vec2 outOfBoundary = getHowMuchOutOfBoundary(Vec2::ZERO);
-    if(outOfBoundary == Vec2::ZERO)
+    Vec2 bounceBackAmount = getHowMuchOutOfBoundary();
+    if(bounceBackAmount == Vec2::ZERO)
     {
         return false;
     }
-
-    startAutoScroll(outOfBoundary, BOUNCE_BACK_DURATION, true,
-        nullptr,
-        [this](const Vec2& moveDelta) {
-            if(moveDelta.x > 0)
-            {
-                processScrollEvent(MoveDirection::RIGHT, true);
-            }
-            else if(moveDelta.x < 0)
-            {
-                processScrollEvent(MoveDirection::LEFT, true);
-            }
-            if(moveDelta.y > 0)
-            {
-                processScrollEvent(MoveDirection::TOP, true);
-            }
-            else if(moveDelta.y < 0)
-            {
-                processScrollEvent(MoveDirection::BOTTOM, true);
-            }
-        }
-    );
+    
+    startAutoScroll(bounceBackAmount, BOUNCE_BACK_DURATION, true);
     return true;
 }
 
-Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition) const
+Vec2 ScrollView::flattenVectorByDirection(const Vec2& vector)
 {
-    Vec2 result;
-
-    if(_innerContainer->getLeftBoundary() + addition.x > _leftBoundary)
-    {
-        result.x = _leftBoundary - (_innerContainer->getLeftBoundary() + addition.x);
-    }
-    else if(_innerContainer->getRightBoundary() + addition.x < _rightBoundary)
-    {
-        result.x = _rightBoundary - (_innerContainer->getRightBoundary() + addition.x);
-    }
-
-    if(_innerContainer->getTopBoundary() + addition.y < _topBoundary)
-    {
-        result.y = _topBoundary - (_innerContainer->getTopBoundary() + addition.y);
-    }
-    else if(_innerContainer->getBottomBoundary() + addition.y > _bottomBoundary)
-    {
-        result.y = _bottomBoundary - (_innerContainer->getBottomBoundary() + addition.y);
-    }
+    Vec2 result = vector;
+    result.x = (_direction == Direction::VERTICAL ? 0 : result.x);
+    result.y = (_direction == Direction::HORIZONTAL ? 0 : result.y);
     return result;
 }
 
-bool ScrollView::isOutOfBoundary(MoveDirection dir) const
+Vec2 ScrollView::getHowMuchOutOfBoundary(const Vec2& addition)
 {
+    if(addition == Vec2::ZERO && !_outOfBoundaryAmountDirty)
+    {
+        return _outOfBoundaryAmount;
+    }
+    
+    Vec2 outOfBoundaryAmount;
+    if(_innerContainer->getLeftBoundary() + addition.x > _leftBoundary)
+    {
+        outOfBoundaryAmount.x = _leftBoundary - (_innerContainer->getLeftBoundary() + addition.x);
+    }
+    else if(_innerContainer->getRightBoundary() + addition.x < _rightBoundary)
+    {
+        outOfBoundaryAmount.x = _rightBoundary - (_innerContainer->getRightBoundary() + addition.x);
+    }
+    
+    if(_innerContainer->getTopBoundary() + addition.y < _topBoundary)
+    {
+        outOfBoundaryAmount.y = _topBoundary - (_innerContainer->getTopBoundary() + addition.y);
+    }
+    else if(_innerContainer->getBottomBoundary() + addition.y > _bottomBoundary)
+    {
+        outOfBoundaryAmount.y = _bottomBoundary - (_innerContainer->getBottomBoundary() + addition.y);
+    }
+    
+    if(addition == Vec2::ZERO)
+    {
+        _outOfBoundaryAmount = outOfBoundaryAmount;
+        _outOfBoundaryAmountDirty = false;
+    }
+    return outOfBoundaryAmount;
+}
+
+bool ScrollView::isOutOfBoundary(MoveDirection dir)
+{
+    Vec2 outOfBoundary = getHowMuchOutOfBoundary();
     switch(dir)
     {
-        case MoveDirection::TOP: return _innerContainer->getTopBoundary() < _topBoundary;
-        case MoveDirection::BOTTOM: return _innerContainer->getBottomBoundary() > _bottomBoundary;
-        case MoveDirection::LEFT: return _innerContainer->getLeftBoundary() > _leftBoundary;
-        case MoveDirection::RIGHT: return _innerContainer->getRightBoundary() < _rightBoundary;
+        case MoveDirection::TOP: return outOfBoundary.y > 0;
+        case MoveDirection::BOTTOM: return outOfBoundary.y < 0;
+        case MoveDirection::LEFT: return outOfBoundary.x < 0;
+        case MoveDirection::RIGHT: return outOfBoundary.x > 0;
     }
     return false;
 }
 
-bool ScrollView::isOutOfBoundaryTopOrBottom() const
+bool ScrollView::isOutOfBoundary()
 {
-    return isOutOfBoundary(MoveDirection::TOP) || isOutOfBoundary(MoveDirection::BOTTOM);
+    return getHowMuchOutOfBoundary() != Vec2::ZERO;
 }
 
-bool ScrollView::isOutOfBoundaryLeftOrRight() const
+void ScrollView::startAutoScrollToDestination(const Vec2& destination, float timeInSec, bool attenuated)
 {
-    return isOutOfBoundary(MoveDirection::LEFT) || isOutOfBoundary(MoveDirection::RIGHT);
+    startAutoScroll(destination - _innerContainer->getPosition(), timeInSec, attenuated);
 }
 
-bool ScrollView::isOutOfBoundary() const
+static float calculateAutoScrollTimeByInitialSpeed(float initialSpeed)
 {
-    return isOutOfBoundaryTopOrBottom() || isOutOfBoundaryLeftOrRight();
+    // Calculate the time from the initial speed according to quintic polynomial.
+    float time = sqrtf(sqrtf(initialSpeed / 5));
+    return time;
 }
 
-void ScrollView::startAutoScrollChildrenWithDestination(const Vec2& des, float second, bool attenuated)
+void ScrollView::startAttenuatingAutoScroll(const Vec2& deltaMove, const Vec2& initialVelocity)
 {
-    startAutoScroll(des - _innerContainer->getPosition(), second, attenuated);
+    float time = calculateAutoScrollTimeByInitialSpeed(initialVelocity.length());
+    startAutoScroll(deltaMove, time, true);
 }
 
-void ScrollView::startAutoScroll(const Vec2& deltaMove, float duration, bool attenuated, std::function<void()> completeCallback, std::function<void(const Vec2&)> moveCallback)
+void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool attenuated)
 {
+    Vec2 adjustedDeltaMove = flattenVectorByDirection(deltaMove);
+    
     _autoScrolling = true;
-    _autoScrollTargetDelta = deltaMove;
+    _autoScrollTargetDelta = adjustedDeltaMove;
     _autoScrollAttenuate = attenuated;
     _autoScrollStartPosition = _innerContainer->getPosition();
-    _autoScrollDuration = duration;
+    _autoScrollTotalTime = timeInSec;
     _autoScrollAccumulatedTime = 0;
-    _autoScrollCompleteCallback = completeCallback;
-    _autoScrollMoveCallback = moveCallback;
-    _outOfBoundaryDuringInertiaScroll = false;
-    _outOfBoundaryPositionDuringInertiaScroll = Vec2::ZERO;
+    _autoScrollBraking = false;
+    _autoScrollBrakingStartPosition = Vec2::ZERO;
+    
+    // If the destination is also out of boundary of same side, start brake from beggining.
+    Vec2 currentOutOfBoundary = getHowMuchOutOfBoundary();
+    if(currentOutOfBoundary != Vec2::ZERO)
+    {
+        _autoScrollCurrentlyOutOfBoundary = true;
+        Vec2 afterOutOfBoundary = getHowMuchOutOfBoundary(adjustedDeltaMove);
+        if(currentOutOfBoundary.x * afterOutOfBoundary.x > 0 || currentOutOfBoundary.y * afterOutOfBoundary.y > 0)
+        {
+            _autoScrollBraking = true;
+        }
+    }
 }
 
-void ScrollView::processAutoScrolling(float deltaTime)
+bool ScrollView::isNecessaryAutoScrollBrake()
 {
-    // Shorten the auto scroll distance and time if it is out of boundary during inertia scroll.
-    float timeRescale = 1;
-    float distanceRescale = 1;
+    if(_autoScrollBraking)
     {
-        bool currentlyOutOfBoundDuringInertiaScroll = (_inertiaScrolling && isOutOfBoundary());
-        if(!_outOfBoundaryDuringInertiaScroll && currentlyOutOfBoundDuringInertiaScroll)
-        {
-            _outOfBoundaryDuringInertiaScroll = true;
-            _outOfBoundaryPositionDuringInertiaScroll = getInnerContainerPosition();
-        }
-        timeRescale = (_outOfBoundaryDuringInertiaScroll ? OUT_OF_BOUND_TIME_RESCALE : 1);
-        distanceRescale = (_outOfBoundaryDuringInertiaScroll ? OUT_OF_BOUND_DISTANCE_RESCALE : 1);
+        return true;
     }
     
-    // Calculate the percentage
-    float percentage = 0;
+    if(isOutOfBoundary())
     {
-        _autoScrollAccumulatedTime += deltaTime * (1 / timeRescale);
-        percentage = MIN(1, _autoScrollAccumulatedTime / _autoScrollDuration);
-        if(_autoScrollAttenuate)
+        // It just went out of boundary.
+        if(!_autoScrollCurrentlyOutOfBoundary)
         {
-            // Use quintic(5th degree) polynomial
-            percentage = tweenfunc::quintEaseOut(percentage);
+            _autoScrollCurrentlyOutOfBoundary = true;
+            _autoScrollBraking = true;
+            _autoScrollBrakingStartPosition = getInnerContainerPosition();
+            return true;
         }
+    }
+    else
+    {
+        _autoScrollCurrentlyOutOfBoundary = false;
+    }
+    return false;
+}
+    
+void ScrollView::processAutoScrolling(float deltaTime)
+{
+    // Make auto scroll shorter if it needs to deaccelerate.
+    float brakingFactor = (isNecessaryAutoScrollBrake() ? OUT_OF_BOUNDARY_BREAKING_FACTOR : 1);
+    
+    // Elapsed time
+    _autoScrollAccumulatedTime += deltaTime * (1 / brakingFactor);
+    
+    // Calculate the progress percentage
+    float percentage = MIN(1, _autoScrollAccumulatedTime / _autoScrollTotalTime);
+    if(_autoScrollAttenuate)
+    {
+        // Use quintic(5th degree) polynomial
+        percentage = tweenfunc::quintEaseOut(percentage);
     }
     
     // Calculate the new position
-    Vec2 deltaFromInitialPosition = _autoScrollTargetDelta * percentage;
-    Vec2 newPosition = _autoScrollStartPosition + deltaFromInitialPosition;
-    bool reachedEnd = false;
+    Vec2 newPosition = _autoScrollStartPosition + (_autoScrollTargetDelta * percentage);
+    bool reachedEnd = (percentage == 1);
     
-    // Adjust the new position according to the bounce opiton
+    if(_bounceEnabled)
     {
-        if(_bounceEnabled)
+        // The new position is adjusted if out of boundary
+        newPosition = _autoScrollBrakingStartPosition + (newPosition - _autoScrollBrakingStartPosition) * brakingFactor;
+    }
+    else
+    {
+        // Don't let go out of boundary
+        Vec2 moveDelta = newPosition - getInnerContainerPosition();
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
+        if(outOfBoundary != Vec2::ZERO)
         {
-            newPosition = _outOfBoundaryPositionDuringInertiaScroll + (newPosition - _outOfBoundaryPositionDuringInertiaScroll) * distanceRescale;
-        }
-        else
-        {
-            Vec2 moveDelta = newPosition - getInnerContainerPosition();
-            Vec2 outOfBoundary = getHowMuchOutOfBoundary(moveDelta);
-            if(outOfBoundary != Vec2::ZERO)
-            {
-                newPosition += outOfBoundary;
-                reachedEnd = true;
-            }
+            newPosition += outOfBoundary;
+            reachedEnd = true;
         }
     }
     
     moveChildrenToPosition(newPosition);
     
-    if(_autoScrollMoveCallback)
-    {
-        _autoScrollMoveCallback(getInnerContainerPosition() - newPosition);
-    }
-    
     // Finish auto scroll if it ended
-    if(percentage == 1 || reachedEnd)
+    if(reachedEnd)
     {
         _autoScrolling = false;
-        if(_autoScrollCompleteCallback)
-        {
-            _autoScrollCompleteCallback();
-        }
+        startBounceBackIfNeeded();
     }
 }
 
@@ -523,45 +579,6 @@ void ScrollView::jumpToDestination(const Vec2 &des)
     moveChildrenToPosition(Vec2(finalOffsetX, finalOffsetY));
 }
 
-Vec2 ScrollView::calculateTouchMoveVelocity() const
-{
-    float totalDuration = 0;
-    for(auto &timeDelta : _touchMoveTimeDeltas)
-    {
-        totalDuration += timeDelta;
-    }
-    if(totalDuration == 0 || totalDuration >= 0.5f)
-    {
-        return Vec2::ZERO;
-    }
-    
-    Vec2 totalMovement;
-    for(auto &displacement : _touchMoveDisplacements)
-    {
-        totalMovement += displacement;
-    }
-    return totalMovement / totalDuration;
-}
-
-void ScrollView::startInertiaScroll(const Vec2& touchMoveVelocity)
-{
-    Vec2 initialVelocity = touchMoveVelocity;
-    initialVelocity.x = (_direction == Direction::VERTICAL ? 0 : initialVelocity.x);
-    initialVelocity.y = (_direction == Direction::HORIZONTAL ? 0 : initialVelocity.y);
-    
-    const float MOVEMENT_FACTOR = 0.7f;
-    Vec2 inertiaTotalDisplacement = initialVelocity * MOVEMENT_FACTOR;
-    
-    // Calculate the duration from the initial velocity according to quintic polynomial.
-    float duration = sqrtf(sqrtf(initialVelocity.length() / 5));
-    
-    _inertiaScrolling = true;
-    startAutoScroll(inertiaTotalDisplacement, duration, true, [this]() {
-        _inertiaScrolling = false;
-        startBounceBackIfNeeded();
-    });
-}
-
 bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
 {
     touchOffsetX = (_direction == Direction::VERTICAL ? 0 : touchOffsetX);
@@ -569,8 +586,9 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
     if(_bounceEnabled)
     {
         // If the position of the inner container is out of the boundary, the offsets should be divided by two.
-        touchOffsetX *= (isOutOfBoundaryLeftOrRight() ? 0.5f : 1);
-        touchOffsetY *= (isOutOfBoundaryTopOrBottom() ? 0.5f : 1);
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary();
+        touchOffsetX *= (outOfBoundary.x == 0 ? 1 : 0.5f);
+        touchOffsetY *= (outOfBoundary.y == 0 ? 1 : 0.5f);
     }
     
     float realOffsetX = touchOffsetX;
@@ -657,83 +675,83 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
     return scrollEnabledUpDown || scrollEnabledLeftRight;
 }
 
-void ScrollView::scrollToBottom(float second, bool attenuated)
+void ScrollView::scrollToBottom(float timeInSec, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(Vec2(_innerContainer->getPosition().x, 0.0f), second, attenuated);
+    startAutoScrollToDestination(Vec2(_innerContainer->getPosition().x, 0.0f), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToTop(float second, bool attenuated)
+void ScrollView::scrollToTop(float timeInSec, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(Vec2(_innerContainer->getPosition().x,
-                                                _contentSize.height - _innerContainer->getContentSize().height), second, attenuated);
+    startAutoScrollToDestination(Vec2(_innerContainer->getPosition().x,
+                                                _contentSize.height - _innerContainer->getContentSize().height), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToLeft(float second, bool attenuated)
+void ScrollView::scrollToLeft(float timeInSec, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(Vec2(0.0f, _innerContainer->getPosition().y), second, attenuated);
+    startAutoScrollToDestination(Vec2(0.0f, _innerContainer->getPosition().y), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToRight(float second, bool attenuated)
+void ScrollView::scrollToRight(float timeInSec, bool attenuated)
 {
-    startAutoScrollChildrenWithDestination(Vec2(_contentSize.width - _innerContainer->getContentSize().width,
-                                                _innerContainer->getPosition().y), second, attenuated);
+    startAutoScrollToDestination(Vec2(_contentSize.width - _innerContainer->getContentSize().width,
+                                                _innerContainer->getPosition().y), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToTopLeft(float second, bool attenuated)
-{
-    if (_direction != Direction::BOTH)
-    {
-        CCLOG("Scroll direction is not both!");
-        return;
-    }
-    startAutoScrollChildrenWithDestination(Vec2(0.0f, _contentSize.height - _innerContainer->getContentSize().height), second, attenuated);
-}
-
-void ScrollView::scrollToTopRight(float second, bool attenuated)
+void ScrollView::scrollToTopLeft(float timeInSec, bool attenuated)
 {
     if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll direction is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(Vec2(_contentSize.width - _innerContainer->getContentSize().width,
-                                                _contentSize.height - _innerContainer->getContentSize().height), second, attenuated);
+    startAutoScrollToDestination(Vec2(0.0f, _contentSize.height - _innerContainer->getContentSize().height), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToBottomLeft(float second, bool attenuated)
+void ScrollView::scrollToTopRight(float timeInSec, bool attenuated)
 {
     if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll direction is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(Vec2::ZERO, second, attenuated);
+    startAutoScrollToDestination(Vec2(_contentSize.width - _innerContainer->getContentSize().width,
+                                                _contentSize.height - _innerContainer->getContentSize().height), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToBottomRight(float second, bool attenuated)
+void ScrollView::scrollToBottomLeft(float timeInSec, bool attenuated)
 {
     if (_direction != Direction::BOTH)
     {
         CCLOG("Scroll direction is not both!");
         return;
     }
-    startAutoScrollChildrenWithDestination(Vec2(_contentSize.width - _innerContainer->getContentSize().width, 0.0f), second, attenuated);
+    startAutoScrollToDestination(Vec2::ZERO, timeInSec, attenuated);
 }
 
-void ScrollView::scrollToPercentVertical(float percent, float second, bool attenuated)
+void ScrollView::scrollToBottomRight(float timeInSec, bool attenuated)
+{
+    if (_direction != Direction::BOTH)
+    {
+        CCLOG("Scroll direction is not both!");
+        return;
+    }
+    startAutoScrollToDestination(Vec2(_contentSize.width - _innerContainer->getContentSize().width, 0.0f), timeInSec, attenuated);
+}
+
+void ScrollView::scrollToPercentVertical(float percent, float timeInSec, bool attenuated)
 {
     float minY = _contentSize.height - _innerContainer->getContentSize().height;
     float h = - minY;
-    startAutoScrollChildrenWithDestination(Vec2(_innerContainer->getPosition().x, minY + percent * h / 100.0f), second, attenuated);
+    startAutoScrollToDestination(Vec2(_innerContainer->getPosition().x, minY + percent * h / 100.0f), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToPercentHorizontal(float percent, float second, bool attenuated)
+void ScrollView::scrollToPercentHorizontal(float percent, float timeInSec, bool attenuated)
 {
     float w = _innerContainer->getContentSize().width - _contentSize.width;
-    startAutoScrollChildrenWithDestination(Vec2(-(percent * w / 100.0f), _innerContainer->getPosition().y), second, attenuated);
+    startAutoScrollToDestination(Vec2(-(percent * w / 100.0f), _innerContainer->getPosition().y), timeInSec, attenuated);
 }
 
-void ScrollView::scrollToPercentBothDirection(const Vec2& percent, float second, bool attenuated)
+void ScrollView::scrollToPercentBothDirection(const Vec2& percent, float timeInSec, bool attenuated)
 {
     if (_direction != Direction::BOTH)
     {
@@ -742,7 +760,7 @@ void ScrollView::scrollToPercentBothDirection(const Vec2& percent, float second,
     float minY = _contentSize.height - _innerContainer->getContentSize().height;
     float h = - minY;
     float w = _innerContainer->getContentSize().width - _contentSize.width;
-    startAutoScrollChildrenWithDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), second, attenuated);
+    startAutoScrollToDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), timeInSec, attenuated);
 }
 
 void ScrollView::jumpToBottom()
@@ -832,13 +850,37 @@ void ScrollView::jumpToPercentBothDirection(const Vec2& percent)
     jumpToDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f));
 }
 
+bool ScrollView::calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt)
+{
+    if (nullptr == _hittedByCamera ||
+        false == hitTest(touch->getLocation(), _hittedByCamera, currPt) ||
+        false == hitTest(touch->getPreviousLocation(), _hittedByCamera, prevPt))
+    {
+        return false;
+    }
+    return true;
+}
+
+void ScrollView::gatherTouchMove(const Vec2& delta)
+{
+    while(_touchMoveDisplacements.size() >= NUMBER_OF_GATHERED_TOUCHES_FOR_MOVE_SPEED)
+    {
+        _touchMoveDisplacements.pop_front();
+        _touchMoveTimeDeltas.pop_front();
+    }
+    _touchMoveDisplacements.push_back(delta);
+    
+    long long timestamp = utils::getTimeInMilliseconds();
+    _touchMoveTimeDeltas.push_back((timestamp - _touchMovePreviousTimestamp) / 1000.0f);
+    _touchMovePreviousTimestamp = timestamp;
+}
+
 void ScrollView::handlePressLogic(Touch *touch)
 {
     _bePressed = true;
     _autoScrolling = false;
-    _inertiaScrolling = false;
     
-    // Initialize touch move information
+    // Clear gathered touch move information
     {
         _touchMovePreviousTimestamp = utils::getTimeInMilliseconds();
         _touchMoveDisplacements.clear();
@@ -858,9 +900,7 @@ void ScrollView::handlePressLogic(Touch *touch)
 void ScrollView::handleMoveLogic(Touch *touch)
 {
     Vec3 currPt, prevPt;
-    if (nullptr == _hittedByCamera ||
-        false == hitTest(touch->getLocation(), _hittedByCamera, &currPt) ||
-        false == hitTest(touch->getPreviousLocation(), _hittedByCamera, &prevPt))
+    if(!calculateCurrAndPrevTouchPoints(touch, &currPt, &prevPt))
     {
         return;
     }
@@ -869,22 +909,22 @@ void ScrollView::handleMoveLogic(Touch *touch)
     scrollChildren(delta.x, delta.y);
     
     // Gather touch move information for speed calculation
-    {
-        while(_touchMoveDisplacements.size() > 5)
-        {
-            _touchMoveDisplacements.pop_front();
-            _touchMoveTimeDeltas.pop_front();
-        }
-        _touchMoveDisplacements.push_back(delta);
-        
-        long long timestamp = utils::getTimeInMilliseconds();
-        _touchMoveTimeDeltas.push_back((timestamp - _touchMovePreviousTimestamp) / 1000.0f);
-        _touchMovePreviousTimestamp = timestamp;
-    }
+    gatherTouchMove(delta);
 }
 
 void ScrollView::handleReleaseLogic(Touch *touch)
 {
+    // Gather the last touch information when released
+    {
+        Vec3 currPt, prevPt;
+        if(calculateCurrAndPrevTouchPoints(touch, &currPt, &prevPt))
+        {
+            Vec3 delta3 = currPt - prevPt;
+            Vec2 delta(delta3.x, delta3.y);
+            gatherTouchMove(delta);
+        }
+    }
+
     _bePressed = false;
     
     bool bounceBackStarted = startBounceBackIfNeeded();
@@ -1377,14 +1417,12 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _autoScrollAttenuate = scrollView->_autoScrollAttenuate;
         _autoScrollStartPosition = scrollView->_autoScrollStartPosition;
         _autoScrollTargetDelta = scrollView->_autoScrollTargetDelta;
-        _autoScrollDuration = scrollView->_autoScrollDuration;
+        _autoScrollTotalTime = scrollView->_autoScrollTotalTime;
         _autoScrollAccumulatedTime = scrollView->_autoScrollAccumulatedTime;
-        _outOfBoundaryDuringInertiaScroll = scrollView->_outOfBoundaryDuringInertiaScroll;
-        _outOfBoundaryPositionDuringInertiaScroll = scrollView->_outOfBoundaryPositionDuringInertiaScroll;
-        _autoScrollCompleteCallback = scrollView->_autoScrollCompleteCallback;
-        _autoScrollMoveCallback = scrollView->_autoScrollMoveCallback;
+        _autoScrollCurrentlyOutOfBoundary = scrollView->_autoScrollCurrentlyOutOfBoundary;
+        _autoScrollBraking = scrollView->_autoScrollBraking;
+        _autoScrollBrakingStartPosition = scrollView->_autoScrollBrakingStartPosition;
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
-        _inertiaScrolling = scrollView->_inertiaScrolling;
         setBounceEnabled(scrollView->_bounceEnabled);
         _scrollViewEventListener = scrollView->_scrollViewEventListener;
         _scrollViewEventSelector = scrollView->_scrollViewEventSelector;
