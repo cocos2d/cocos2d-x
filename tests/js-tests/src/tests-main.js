@@ -536,15 +536,6 @@ var testNames = [
         }
     },
     {
-        title:"Performance Test",
-        platforms: PLATFORM_ALL,
-        linksrc:"",
-        resource:g_performace,
-        testScene:function () {
-            return new PerformanceTestScene();
-        }
-    },
-    {
         title:"Physics3D Test",
         platforms: PLATFORM_JSB,
         linksrc:"src/Physics3DTest/Physics3DTest.js",
