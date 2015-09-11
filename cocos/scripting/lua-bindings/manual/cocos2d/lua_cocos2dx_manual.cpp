@@ -6651,6 +6651,77 @@ static void extendGridAction(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+
+static int lua_cocos2dx_ActionFloat_create(lua_State* tolua_S)
+{
+	int argc = 0;
+	bool ok = true;
+
+#if COCOS2D_DEBUG >= 1
+	tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+	if (!tolua_isusertable(tolua_S, 1, "cc.ActionFloat", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+	argc = lua_gettop(tolua_S) - 1;
+
+	if (argc == 4)
+	{
+		double arg0;
+		double arg1;
+		double arg2;
+		std::function<void(float)> arg3;
+		ok &= luaval_to_number(tolua_S, 2, &arg0, "cc.ActionFloat:create");
+		ok &= luaval_to_number(tolua_S, 3, &arg1, "cc.ActionFloat:create");
+		ok &= luaval_to_number(tolua_S, 4, &arg2, "cc.ActionFloat:create");
+		do {
+
+#if COCOS2D_DEBUG >= 1
+			if (!toluafix_isfunction(tolua_S, 5, "LUA_FUNCTION", 0, &tolua_err)) {
+				goto tolua_lerror;
+			}
+#endif
+
+			LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 5, 0);
+
+			arg3 = [handler, tolua_S](float value)
+			{
+				tolua_pushnumber(tolua_S, value);
+				LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
+			};
+		} while (0)
+			;
+		if (!ok)
+		{
+			tolua_error(tolua_S, "invalid arguments in function 'lua_cocos2dx_ActionFloat_create'", nullptr);
+			return 0;
+		}
+		cocos2d::ActionFloat* ret = cocos2d::ActionFloat::create(arg0, arg1, arg2, arg3);
+		object_to_luaval<cocos2d::ActionFloat>(tolua_S, "cc.ActionFloat", (cocos2d::ActionFloat*)ret);
+		return 1;
+	}
+	luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ActionFloat:create", argc, 4);
+	return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+	tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_ActionFloat_create'.", &tolua_err);
+#endif
+	return 0;
+}
+
+static void extendActionFloatAction(lua_State* tolua_S)
+{
+	lua_pushstring(tolua_S, "cc.ActionFloat");
+	lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+	if (lua_istable(tolua_S, -1))
+	{
+		tolua_function(tolua_S, "create", lua_cocos2dx_ActionFloat_create);
+	}
+	lua_pop(tolua_S, 1);
+}
+
 static int lua_cocos2dx_Label_createWithTTF00(lua_State* L)
 {
     if (nullptr == L)
@@ -8000,6 +8071,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerAcceleration(tolua_S);
     extendActionCamera(tolua_S);
     extendGridAction(tolua_S);
+	extendActionFloatAction(tolua_S);
     
     extendMotionStreak(tolua_S);
     extendAtlasNode(tolua_S);
