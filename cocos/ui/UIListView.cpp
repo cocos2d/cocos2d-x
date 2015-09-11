@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+static const float DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM = 1.0f;
+
 namespace ui {
     
 IMPLEMENT_CLASS_GUI_INFO(ListView)
@@ -642,14 +644,14 @@ Widget* ListView::getClosestItemToPositionInCurrentView(const Vec2& positionRati
 
 Widget* ListView::getCenterItemInCurrentView() const
 {
-    return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE);
+    return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
 Widget* ListView::getLeftmostItemInCurrentView() const
 {
     if (_direction == Direction::HORIZONTAL)
     {
-        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_LEFT);
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_LEFT, Vec2::ANCHOR_MIDDLE);
     }
     return nullptr;
 }
@@ -658,7 +660,7 @@ Widget* ListView::getRightmostItemInCurrentView() const
 {
     if (_direction == Direction::HORIZONTAL)
     {
-        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_RIGHT);
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_RIGHT, Vec2::ANCHOR_MIDDLE);
     }
     return nullptr;
 }
@@ -667,7 +669,7 @@ Widget* ListView::getTopmostItemInCurrentView() const
 {
     if (_direction == Direction::VERTICAL)
     {
-        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_TOP);
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_TOP, Vec2::ANCHOR_MIDDLE);
     }
     return nullptr;
 }
@@ -676,12 +678,17 @@ Widget* ListView::getBottommostItemInCurrentView() const
 {
     if (_direction == Direction::VERTICAL)
     {
-        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_BOTTOM);
+        return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_BOTTOM, Vec2::ANCHOR_MIDDLE);
     }
     return nullptr;
 }
 
-void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float duration)
+void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
+    scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
+}
+
+void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
 {
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
@@ -697,7 +704,7 @@ void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, cons
     Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
     Vec2 destination = -(itemPosition - positionInView);
     
-    startAutoScrollToDestination(destination, duration, true);
+    startAutoScrollToDestination(destination, timeInSec, true);
 }
 
 ssize_t ListView::getCurSelectedIndex() const

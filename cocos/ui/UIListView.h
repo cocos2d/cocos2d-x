@@ -263,16 +263,17 @@ public:
 	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
 	 * @return A item instance if list view is not empty. Otherwise, returns null.
 	 */
-	Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint = Vec2::ANCHOR_MIDDLE) const;
+	Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
 	
 	/**
 	 * @brief Query the closest item to a specific position in current view.
+     * For instance, to find the item in the center of view, call 'getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)'.
 	 *
 	 * @param positionRatioInView Specifies the target position with ratio in list view's content size.
 	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
 	 * @return A item instance if list view is not empty. Otherwise, returns null.
 	 */
-	Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint = Vec2::ANCHOR_MIDDLE) const;
+	Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
 	
     /**
      * @brief Query the center item
@@ -308,9 +309,10 @@ public:
 	 * @brief Scroll to specific item
 	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
 	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-	 * @param duration Scroll time
+	 * @param timeInSec Scroll time
 	 */
-	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float duration = 1.0f);
+    void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
 	
     /**
      * @brief Query current selected widget's idnex.
