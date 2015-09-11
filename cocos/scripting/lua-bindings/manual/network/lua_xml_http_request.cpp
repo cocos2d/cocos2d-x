@@ -1039,8 +1039,9 @@ static int lua_cocos2dx_XMLHttpRequest_getResponseHeader(lua_State* L)
         string value = streamData.str();
         
         
-        auto iter = self->getHttpHeader().find(value);
-        if (iter != self->getHttpHeader().end())
+        map<string, string> httpHeader = self->getHttpHeader();
+        auto iter = httpHeader.find(value);
+        if (iter != httpHeader.end())
         {
             tolua_pushstring(L, (iter->second).c_str());
             return 1;
