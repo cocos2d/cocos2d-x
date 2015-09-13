@@ -352,7 +352,6 @@ void ListView::removeItem(ssize_t index)
         return;
     }
     removeChild(item, true);
-    
     _refreshViewDirty = true;
 }
 
@@ -471,28 +470,27 @@ void ListView::refreshView()
         remedyLayoutParameter(item);
     }
     updateInnerContainerSize();
+    _refreshViewDirty = false;
 }
-    
-void ListView::forceDoLayout()
+
+void ListView::refreshViewIfNecessary()
 {
     if (_refreshViewDirty)
     {
         refreshView();
-        _refreshViewDirty = false;
     }
-
+}
+    
+void ListView::forceDoLayout()
+{
+    refreshViewIfNecessary();
     this->_innerContainer->forceDoLayout();
 }
 
 void ListView::doLayout()
 {
     Layout::doLayout();
-    
-    if (_refreshViewDirty)
-    {
-        refreshView();
-        _refreshViewDirty = false;
-    }
+    refreshViewIfNecessary();
 }
     
 void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
@@ -681,6 +679,72 @@ Widget* ListView::getBottommostItemInCurrentView() const
         return getClosestItemToPositionInCurrentView(Vec2::ANCHOR_MIDDLE_BOTTOM, Vec2::ANCHOR_MIDDLE);
     }
     return nullptr;
+}
+
+void ListView::jumpToBottom()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToBottom();
+}
+
+void ListView::jumpToTop()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToTop();
+}
+
+void ListView::jumpToLeft()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToLeft();
+}
+
+void ListView::jumpToRight()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToRight();
+}
+
+void ListView::jumpToTopLeft()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToTopLeft();
+}
+
+void ListView::jumpToTopRight()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToTopRight();
+}
+
+void ListView::jumpToBottomLeft()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToBottomLeft();
+}
+
+void ListView::jumpToBottomRight()
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToBottomRight();
+}
+
+void ListView::jumpToPercentVertical(float percent)
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToPercentVertical(percent);
+}
+
+void ListView::jumpToPercentHorizontal(float percent)
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToPercentHorizontal(percent);
+}
+
+void ListView::jumpToPercentBothDirection(const Vec2& percent)
+{
+    refreshViewIfNecessary();
+    ScrollView::jumpToPercentBothDirection(percent);
 }
 
 void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)

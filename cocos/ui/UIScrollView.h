@@ -237,60 +237,60 @@ public:
     /**
      * Move inner container to bottom boundary of scrollview.
      */
-    void jumpToBottom();
+    virtual void jumpToBottom();
 
     /**
      * Move inner container to top boundary of scrollview.
      */
-    void jumpToTop();
+    virtual void jumpToTop();
 
     /**
      * Move inner container to left boundary of scrollview.
      */
-    void jumpToLeft();
+    virtual void jumpToLeft();
 
     /**
      * Move inner container to right boundary of scrollview.
      */
-    void jumpToRight();
+    virtual void jumpToRight();
 
     /**
      * Move inner container to top and left boundary of scrollview.
      */
-    void jumpToTopLeft();
+    virtual void jumpToTopLeft();
 
     /**
      * Move inner container to top and right boundary of scrollview.
      */
-    void jumpToTopRight();
+    virtual void jumpToTopRight();
 
     /**
      * Move inner container to bottom and left boundary of scrollview.
      */
-    void jumpToBottomLeft();
+    virtual void jumpToBottomLeft();
 
     /**
      * Move inner container to bottom and right boundary of scrollview.
      */
-    void jumpToBottomRight();
+    virtual void jumpToBottomRight();
 
     /**
      * Move inner container to vertical percent position of scrollview.
      * @param percent A value between 0 and 100.
      */
-    void jumpToPercentVertical(float percent);
+    virtual void jumpToPercentVertical(float percent);
 
     /**
      * Move inner container to horizontal percent position of scrollview.
      * @param percent   A value between 0 and 100.
      */
-    void jumpToPercentHorizontal(float percent);
+    virtual void jumpToPercentHorizontal(float percent);
 
     /**
      * Move inner container to both direction percent position of scrollview.
      * @param percent   A value between 0 and 100.
      */
-    void jumpToPercentBothDirection(const Vec2& percent);
+    virtual void jumpToPercentBothDirection(const Vec2& percent);
 
     /**
      * Change inner container size of scrollview.
