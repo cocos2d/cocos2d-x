@@ -196,7 +196,7 @@ __Array* __String::componentsSeparatedByString(const char *delimiter)
         strTmp = strTmp.substr(cutAt + 1);
     }
     
-    if(strTmp.length() > 0)
+    if(!strTmp.empty())
     {
         result->addObject(__String::create(strTmp));
     }

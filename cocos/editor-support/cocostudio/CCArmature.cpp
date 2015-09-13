@@ -212,7 +212,7 @@ Bone *Armature::createBone(const std::string& boneName)
 
     Bone *bone = nullptr;
 
-    if( parentName.length() != 0 )
+    if( !parentName.empty())
     {
         createBone(parentName.c_str());
         bone = Bone::create(boneName);

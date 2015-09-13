@@ -1,0 +1,77 @@
+system flameSystem
+{
+    category                                    Fire
+    technique 
+    {
+        visual_particle_quota                   2000
+        emitted_affector_quota                  200
+        material                                ParticleUniverse/Flame
+        default_particle_width                  1.35
+        default_particle_height                 1.8
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_self
+        }
+        emitter                                 Box flamesEmitter
+        {
+            emission_rate                       200
+            angle                               40
+            time_to_live                        dyn_random
+            {
+                min                             5
+                max                             9
+            }
+            velocity                            dyn_random
+            {
+                min                             1.8
+                max                             2.4
+            }
+            box_width                           3
+            box_height                          0.03
+            box_depth                           3
+        }
+        emitter                                 Box gravityEmitter
+        {
+            emission_rate                       5
+            angle                               80
+            time_to_live                        dyn_random
+            {
+                min                             2
+                max                             5
+            }
+            mass                                dyn_random
+            {
+                min                             0.6
+                max                             1.2
+            }
+            velocity                            dyn_random
+            {
+                min                             2.4
+                max                             3.6
+            }
+            position                            0 1.8 0
+            emits                               affector_particle gravityAffector
+            box_width                           3
+            box_height                          3
+            box_depth                           3
+        }
+        affector                                Gravity gravityAffector
+        {
+            gravity                             1.2
+        }
+        affector                                Scale 
+        {
+            xyz_scale                           -0.3
+        }
+        affector                                SineForce 
+        {
+            force_vector                        0.9 0 0
+            max_frequency                       3
+        }
+        affector                                Colour 
+        {
+            time_colour                         0    1 1 1 1
+            time_colour                         1    0 0 0 1
+        }
+    }
+}

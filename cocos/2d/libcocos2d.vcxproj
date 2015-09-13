@@ -587,9 +587,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\physics3d\CCPhysics3DShape.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DWorld.cpp" />
     <ClCompile Include="..\physics3d\CCPhysicsSprite3D.cpp" />
+    <ClCompile Include="..\physics\CCComponentPhysics2d.cpp" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
+    <ClCompile Include="..\physics\CCPhysicsManager.cpp" />
     <ClCompile Include="..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
@@ -1195,10 +1197,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\physics3d\CCPhysics3DShape.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DWorld.h" />
     <ClInclude Include="..\physics3d\CCPhysicsSprite3D.h" />
+    <ClInclude Include="..\physics\CCComponentPhysics2d.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsHelper.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
+    <ClInclude Include="..\physics\CCPhysicsManager.h" />
     <ClInclude Include="..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />

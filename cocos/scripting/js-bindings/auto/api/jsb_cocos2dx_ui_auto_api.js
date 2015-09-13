@@ -3274,107 +3274,11 @@ ScrollView : function (
 ccui.ListView = {
 
 /**
- * @method getIndex
- * @param {ccui.Widget} arg0
- * @return {long}
- */
-getIndex : function (
-widget 
-)
-{
-    return 0;
-},
-
-/**
- * @method removeAllItems
- */
-removeAllItems : function (
-)
-{
-},
-
-/**
  * @method setGravity
  * @param {ccui.ListView::Gravity} arg0
  */
 setGravity : function (
 gravity 
-)
-{
-},
-
-/**
- * @method pushBackCustomItem
- * @param {ccui.Widget} arg0
- */
-pushBackCustomItem : function (
-widget 
-)
-{
-},
-
-/**
- * @method getItems
- * @return {Array}
- */
-getItems : function (
-)
-{
-    return new Array();
-},
-
-/**
- * @method removeItem
- * @param {long} arg0
- */
-removeItem : function (
-long 
-)
-{
-},
-
-/**
- * @method getCurSelectedIndex
- * @return {long}
- */
-getCurSelectedIndex : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method insertDefaultItem
- * @param {long} arg0
- */
-insertDefaultItem : function (
-long 
-)
-{
-},
-
-/**
- * @method requestRefreshView
- */
-requestRefreshView : function (
-)
-{
-},
-
-/**
- * @method setItemsMargin
- * @param {float} arg0
- */
-setItemsMargin : function (
-float 
-)
-{
-},
-
-/**
- * @method refreshView
- */
-refreshView : function (
 )
 {
 },
@@ -3388,10 +3292,158 @@ removeLastItem : function (
 },
 
 /**
+ * @method getCenterItemInCurrentView
+ * @return {ccui.Widget}
+ */
+getCenterItemInCurrentView : function (
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method getCurSelectedIndex
+ * @return {long}
+ */
+getCurSelectedIndex : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getItemsMargin
  * @return {float}
  */
 getItemsMargin : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMagneticType
+ * @param {ccui.ListView::MagneticType} arg0
+ */
+setMagneticType : function (
+magnetictype 
+)
+{
+},
+
+/**
+ * @method getIndex
+ * @param {ccui.Widget} arg0
+ * @return {long}
+ */
+getIndex : function (
+widget 
+)
+{
+    return 0;
+},
+
+/**
+ * @method pushBackCustomItem
+ * @param {ccui.Widget} arg0
+ */
+pushBackCustomItem : function (
+widget 
+)
+{
+},
+
+/**
+ * @method insertDefaultItem
+ * @param {long} arg0
+ */
+insertDefaultItem : function (
+long 
+)
+{
+},
+
+/**
+ * @method setMagneticAllowedOutOfBoundary
+ * @param {bool} arg0
+ */
+setMagneticAllowedOutOfBoundary : function (
+bool 
+)
+{
+},
+
+/**
+ * @method doLayout
+ */
+doLayout : function (
+)
+{
+},
+
+/**
+ * @method getTopmostItemInCurrentView
+ * @return {ccui.Widget}
+ */
+getTopmostItemInCurrentView : function (
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method removeAllItems
+ */
+removeAllItems : function (
+)
+{
+},
+
+/**
+ * @method getBottommostItemInCurrentView
+ * @return {ccui.Widget}
+ */
+getBottommostItemInCurrentView : function (
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method getItems
+ * @return {Array}
+ */
+getItems : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getLeftmostItemInCurrentView
+ * @return {ccui.Widget}
+ */
+getLeftmostItemInCurrentView : function (
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method setItemsMargin
+ * @param {float} arg0
+ */
+setItemsMargin : function (
+float 
+)
+{
+},
+
+/**
+ * @method getMagneticType
+ * @return {ccui.ListView::MagneticType}
+ */
+getMagneticType : function (
 )
 {
     return 0;
@@ -3410,6 +3462,96 @@ long
 },
 
 /**
+ * @method removeItem
+ * @param {long} arg0
+ */
+removeItem : function (
+long 
+)
+{
+},
+
+/**
+ * @method scrollToItem
+* @param {int|int} int
+* @param {vec2_object|vec2_object} vec2
+* @param {vec2_object|vec2_object} vec2
+* @param {float} float
+*/
+scrollToItem : function(
+int,
+vec2,
+vec2,
+float 
+)
+{
+},
+
+/**
+ * @method pushBackDefaultItem
+ */
+pushBackDefaultItem : function (
+)
+{
+},
+
+/**
+ * @method getMagneticAllowedOutOfBoundary
+ * @return {bool}
+ */
+getMagneticAllowedOutOfBoundary : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getClosestItemToPosition
+ * @param {vec2_object} arg0
+ * @param {vec2_object} arg1
+ * @return {ccui.Widget}
+ */
+getClosestItemToPosition : function (
+vec2, 
+vec2 
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method getRightmostItemInCurrentView
+ * @return {ccui.Widget}
+ */
+getRightmostItemInCurrentView : function (
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method getClosestItemToPositionInCurrentView
+ * @param {vec2_object} arg0
+ * @param {vec2_object} arg1
+ * @return {ccui.Widget}
+ */
+getClosestItemToPositionInCurrentView : function (
+vec2, 
+vec2 
+)
+{
+    return ccui.Widget;
+},
+
+/**
+ * @method refreshView
+ */
+refreshView : function (
+)
+{
+},
+
+/**
  * @method setItemModel
  * @param {ccui.Widget} arg0
  */
@@ -3420,17 +3562,9 @@ widget
 },
 
 /**
- * @method doLayout
+ * @method requestRefreshView
  */
-doLayout : function (
-)
-{
-},
-
-/**
- * @method pushBackDefaultItem
- */
-pushBackDefaultItem : function (
+requestRefreshView : function (
 )
 {
 },

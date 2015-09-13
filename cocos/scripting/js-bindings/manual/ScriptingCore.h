@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.8 RC0"
+#define ENGINE_VERSION "Cocos2d-JS v3.8"
 
 void js_log(const char *format, ...);
 
@@ -70,13 +70,7 @@ private:
 public:
     ~ScriptingCore();
 
-    static ScriptingCore *getInstance() {
-        static ScriptingCore* pInstance = NULL;
-        if (pInstance == NULL) {
-            pInstance = new ScriptingCore();
-        }
-        return pInstance;
-    };
+    static ScriptingCore *getInstance();
 
     virtual cocos2d::ccScriptType getScriptType() { return cocos2d::kScriptTypeJavascript; };
 
@@ -263,6 +257,7 @@ private:
 
 public:
     int handleNodeEvent(void* data);
+    int handleActionEvent(void* data);
     int handleComponentEvent(void* data);
     
     bool handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::EventCode eventCode, const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);

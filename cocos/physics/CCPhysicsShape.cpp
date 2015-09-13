@@ -114,7 +114,7 @@ void PhysicsShape::setMaterial(const PhysicsMaterial& material)
 
 void PhysicsShape::setScale(float scaleX, float scaleY)
 {
-    if (_scaleX != scaleX || _scaleY != scaleY)
+    if (fabs(_scaleX - scaleX) > FLT_EPSILON || fabs(_scaleY - scaleY) > FLT_EPSILON)
     {
         if (_type == Type::CIRCLE && scaleX != scaleY)
         {
@@ -123,7 +123,13 @@ void PhysicsShape::setScale(float scaleX, float scaleY)
         }
         _newScaleX = scaleX;
         _newScaleY = scaleY;
+        
         updateScale();
+        
+        // re-calculate area and mass
+        _area = calculateArea();
+        _mass = _material.density * _area;
+        _moment = calculateDefaultMoment();
     }
 }
 
@@ -649,10 +655,14 @@ void PhysicsShapePolygon::updateScale()
 
     for (int i = 0; i < count; ++i)
     {
-        cpVect n = cpvnormalize(cpvperp(cpvsub(vects[i], vects[(i + 1) % count])));
-
-        planes[i].n = n;
-        planes[i].d = cpvdot(n, vects[i]);
+//        cpVect n = cpvnormalize(cpvperp(cpvsub(vects[i], vects[(i + 1) % count])));
+//
+//        planes[i].n = n;
+//        planes[i].d = cpvdot(n, vects[i]);
+        
+        // FIXED ME: if update 'planes[i]' as the above codes, then can not query polygon shape by PhysicsWorld::getShapes().
+        // But modified like this, then ray test can not work correctly on some cases.
+        planes[i].d = cpvdot(planes[i].n, vects[i]);
     }
     
     PhysicsShape::updateScale();

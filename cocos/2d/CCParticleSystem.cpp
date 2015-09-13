@@ -211,7 +211,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             _duration = dictionary["duration"].asFloat();
 
             // blend function 
-            if (_configName.length()>0)
+            if (!_configName.empty())
             {
                 _blendFunc.src = dictionary["blendFuncSource"].asFloat();
             }
@@ -289,7 +289,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             // or Mode B: radius movement
             else if (_emitterMode == Mode::RADIUS)
             {
-                if (_configName.length()>0)
+                if (!_configName.empty())
                 {
                     modeB.startRadius = dictionary["maxRadius"].asInt();
                 }
@@ -298,7 +298,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     modeB.startRadius = dictionary["maxRadius"].asFloat();
                 }
                 modeB.startRadiusVar = dictionary["maxRadiusVariance"].asFloat();
-                if (_configName.length()>0)
+                if (!_configName.empty())
                 {
                     modeB.endRadius = dictionary["minRadius"].asInt();
                 }
@@ -316,7 +316,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     modeB.endRadiusVar = 0.0f;
                 }
                 
-                if (_configName.length()>0)
+                if (!_configName.empty())
                 {
                     modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
                 }

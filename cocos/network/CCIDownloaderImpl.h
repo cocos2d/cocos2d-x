@@ -59,6 +59,7 @@ namespace network
         // additional info created by CCDownloader
         mutable void* fp;
         mutable bool resumeDownload;
+        mutable double resumeDownloadedSize;
         mutable double downloaded;
         mutable double totalToDownload;
         mutable void *_reserved;
@@ -93,7 +94,7 @@ namespace network
                                          const ErrorCallback& errorCallback
                                          ) = 0;
 
-        virtual int getHeader(const std::string& url, HeaderInfo* headerInfo) = 0;
+        virtual int getHeader(const std::string& url, HeaderInfo* headerInfo, bool resumeFlag = false) = 0;
         virtual std::string getStrError() const = 0;
         virtual void setConnectionTimeout(int timeout) = 0;
     };

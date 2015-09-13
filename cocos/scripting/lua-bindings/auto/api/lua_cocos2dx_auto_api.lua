@@ -37,6 +37,11 @@
 
 
 --------------------------------------------------------
+-- the cc Component
+-- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
 
@@ -1304,11 +1309,6 @@
 --------------------------------------------------------
 -- the cc TileMapAtlas
 -- @field [parent=#cc] TileMapAtlas#TileMapAtlas TileMapAtlas preloaded module
-
-
---------------------------------------------------------
--- the cc Component
--- @field [parent=#cc] Component#Component Component preloaded module
 
 
 return nil

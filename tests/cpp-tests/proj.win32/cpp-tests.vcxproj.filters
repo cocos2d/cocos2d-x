@@ -79,9 +79,6 @@
     <Filter Include="Classes\CocosDenshionTest">
       <UniqueIdentifier>{a786a2de-3545-4fdc-9884-5a8c68bf8eb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\PerformanceTest">
-      <UniqueIdentifier>{2013787a-dc87-456f-bf75-33c4cac37af3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\VibrateTest">
       <UniqueIdentifier>{3bd8ffaa-c24f-455b-bb31-25b038490329}</UniqueIdentifier>
     </Filter>
@@ -468,27 +465,6 @@
     <ClCompile Include="..\Classes\CocosDenshionTest\CocosDenshionTest.cpp">
       <Filter>Classes\CocosDenshionTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\VibrateTest\VibrateTest.cpp">
       <Filter>Classes\VibrateTest</Filter>
     </ClCompile>
@@ -669,9 +645,6 @@
     <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp">
       <Filter>Classes\LabelTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioArmatureTest</Filter>
     </ClCompile>
@@ -705,9 +678,6 @@
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp">
       <Filter>Classes\ConsoleTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp">
       <Filter>Classes\NewRendererTest</Filter>
     </ClCompile>
@@ -723,20 +693,8 @@
     <ClCompile Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp">
       <Filter>Classes\ReleasePoolTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp">
       <Filter>Classes\ShaderTest</Filter>
@@ -933,9 +891,6 @@
     <ClCompile Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
       <Filter>Classes\CocosStudio3DTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClCompile>
@@ -950,9 +905,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\TerrainTest\TerrainTest.cpp">
       <Filter>Classes\TerrainTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp">
       <Filter>Classes\Physics3DTest</Filter>
@@ -1079,27 +1031,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h">
       <Filter>Classes\CocosDenshionTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\VibrateTest\VibrateTest.h">
       <Filter>Classes\VibrateTest</Filter>
@@ -1503,9 +1434,6 @@
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h">
       <Filter>Classes\ConsoleTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h">
       <Filter>Classes\NewRendererTest</Filter>
     </ClInclude>
@@ -1524,23 +1452,8 @@
     <ClInclude Include="..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
       <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h">
       <Filter>Classes\ReleasePoolTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h">
       <Filter>Classes\ShaderTest</Filter>
@@ -1737,9 +1650,6 @@
     <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
       <Filter>Classes\CocosStudio3DTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClInclude>
@@ -1754,9 +1664,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\TerrainTest\TerrainTest.h">
       <Filter>Classes\TerrainTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h">
       <Filter>Classes\Physics3DTest</Filter>

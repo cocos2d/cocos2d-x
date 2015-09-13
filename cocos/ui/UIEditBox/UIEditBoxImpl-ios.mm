@@ -197,21 +197,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         textField.text = [textField.text substringToIndex:maxLength];
     }
     
-    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
-    if (pDelegate != NULL)
-    {
-        pDelegate->editBoxTextChanged(getEditBoxImplIOS()->getEditBox(), getEditBoxImplIOS()->getText());
-    }
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::ui::EditBox*  pEditBox= getEditBoxImplIOS()->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed", pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-#endif
+    const char* inputText = [textField.text UTF8String];
+    getEditBoxImplIOS()->editBoxEditingChanged(inputText);
 }
 
 #pragma mark - UITextField delegate methods
@@ -229,23 +216,7 @@ static const int CC_EDIT_BOX_PADDING = 5;
         [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
     }
     
-    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
-    
-    if (pDelegate != NULL)
-    {
-        pDelegate->editBoxEditingDidBegin(getEditBoxImplIOS()->getEditBox());
-    }
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::ui::EditBox *pEditBox= getEditBoxImplIOS()->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-    {        
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began", pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-#endif
-    
+    getEditBoxImplIOS()->editBoxEditingDidBegin();
     return YES;
 }
 
@@ -253,33 +224,9 @@ static const int CC_EDIT_BOX_PADDING = 5;
 {
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;
-    getEditBoxImplIOS()->refreshInactiveText();
-    
-    cocos2d::ui::EditBoxDelegate *pDelegate = getEditBoxImplIOS()->getDelegate();
-    if (pDelegate != NULL)
-    {
-        pDelegate->editBoxEditingDidEnd(getEditBoxImplIOS()->getEditBox());
-        pDelegate->editBoxReturn(getEditBoxImplIOS()->getEditBox());
-    }
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    cocos2d::ui::EditBox *pEditBox= getEditBoxImplIOS()->getEditBox();
-    if (pEditBox != nullptr && 0 != pEditBox->getScriptEditBoxHandler())
-    {
-        cocos2d::CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "ended", pEditBox);
-        cocos2d::ScriptEvent event(cocos2d::kCommonEvent, (void *)&data);
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-        memset(data.eventName, 0, sizeof(data.eventName));
-        strncpy(data.eventName, "return", sizeof(data.eventName));
-        event.data = (void *)&data;
-        cocos2d::ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-    }
-#endif
-    
-    if (_editBox != nil)
-    {
-        getEditBoxImplIOS()->onEndEditing();
-    }
+    const char* inputText = [sender.text UTF8String];
+
+    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText);
     
     return YES;
 }
@@ -327,18 +274,41 @@ EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 }
 
 EditBoxImplIOS::EditBoxImplIOS(EditBox* pEditText)
-: EditBoxImpl(pEditText)
-, _label(nullptr)
-, _labelPlaceHolder(nullptr)
+: EditBoxImplCommon(pEditText)
+,_systemControl(nullptr)
 , _anchorPoint(Vec2(0.5f, 0.5f))
-, _systemControl(nullptr)
-, _maxTextLength(-1)
 {
+    
 }
 
 EditBoxImplIOS::~EditBoxImplIOS()
 {
     [_systemControl release];
+    _systemControl = nil;
+}
+    
+void EditBoxImplIOS::createNativeControl(const Rect& frame)
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+
+    Rect rect(0, 0, frame.size.width * glview->getScaleX(), frame.size.height * glview->getScaleY());
+
+    float factor = cocos2d::Director::getInstance()->getContentScaleFactor();
+
+    rect.size.width /= factor;
+    rect.size.height /= factor;
+    
+    _systemControl = [[UIEditBoxImplIOS_objc alloc] initWithFrame:CGRectMake(rect.origin.x,
+                                                                             rect.origin.y,
+                                                                             rect.size.width,
+                                                                         rect.size.height)
+                                                          editBox:this];
+
+}
+
+bool EditBoxImplIOS::isEditing()
+{
+    return [_systemControl isEditState] ? true : false;
 }
 
 void EditBoxImplIOS::doAnimationWhenKeyboardMove(float duration, float distance)
@@ -348,150 +318,35 @@ void EditBoxImplIOS::doAnimationWhenKeyboardMove(float duration, float distance)
         [_systemControl doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
     }
 }
-
-bool EditBoxImplIOS::initWithSize(const Size& size)
-{
-    do 
-    {
-        auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-
-        CGRect rect = CGRectMake(0, 0, size.width * glview->getScaleX(),size.height * glview->getScaleY());
-
-        CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
-        float factor = eaglview.contentScaleFactor;
-        rect.size.width /= factor;
-        rect.size.height /= factor;
-        
-        _systemControl = [[UIEditBoxImplIOS_objc alloc] initWithFrame:rect editBox:this];
-        if (!_systemControl) break;
-        
-        initInactiveLabels(size);
-        setContentSize(size);
-        
-        return true;
-    }while (0);
     
-    return false;
-}
-
-void EditBoxImplIOS::initInactiveLabels(const Size& size)
-{
-    const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
-
-    _label = Label::create();
-    _label->setAnchorPoint(Vec2(0, 0.5f));
-    _label->setColor(Color3B::WHITE);
-    _label->setVisible(false);
-    _editBox->addChild(_label, kLabelZOrder);
-    
-    _labelPlaceHolder = Label::create();
-    // align the text vertically center
-    _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
-    _labelPlaceHolder->setColor(Color3B::GRAY);
-    _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
-    
-    setFont(pDefaultFontName, size.height*2/3);
-    setPlaceholderFont(pDefaultFontName, size.height*2/3);
-}
-
-void EditBoxImplIOS::placeInactiveLabels()
-{
-    _label->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
-    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, _contentSize.height / 2.0f);
-}
-
-void EditBoxImplIOS::setInactiveText(const char* pText)
-{
-    if(_systemControl.textField.secureTextEntry == YES)
-    {
-        std::string passwordString;
-        for(int i = 0; i < strlen(pText); ++i)
-            passwordString.append("\u25CF");
-        _label->setString(passwordString.c_str());
-    }
-    else
-        _label->setString(getText());
-
-    // Clip the text width to fit to the text box
-    float fMaxWidth = _editBox->getContentSize().width - CC_EDIT_BOX_PADDING * 2;
-    Size labelSize = _label->getContentSize();
-    if(labelSize.width > fMaxWidth) {
-        _label->setDimensions(fMaxWidth,labelSize.height);
-    }
-}
-    
-UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
-{
-    CCASSERT(fontName != nullptr, "fontName can't be nullptr");
-    CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
-    float retinaFactor = eaglview.contentScaleFactor;
-    NSString * fntName = [NSString stringWithUTF8String:fontName];
-    
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    float scaleFactor = glview->getScaleX();
-
-    if (fontSize == -1)
-    {
-        fontSize = [_systemControl.textField frame].size.height*2/3;
-    }
-    else
-    {
-        fontSize = fontSize * scaleFactor / retinaFactor;
-    }
-    
-    UIFont *textFont = nil;
-    if (strlen(fontName) > 0)
-    {
-        textFont = [UIFont fontWithName:fntName size:fontSize];
-    }
-    else
-    {
-        textFont = [UIFont systemFontOfSize:fontSize];
-    }
-    return textFont;
-}
-
-void EditBoxImplIOS::setFont(const char* pFontName, int fontSize)
+void EditBoxImplIOS::setNativeFont(const char* pFontName, int fontSize)
 {
     UIFont* textFont = constructFont(pFontName, fontSize);
     if(textFont != nil) {
         [_systemControl.textField setFont:textFont];
     }
-
-    if(strlen(pFontName) > 0)
-    {
-        _label->setSystemFontName(pFontName);
-    }
-    if(fontSize > 0)
-    {
-        _label->setSystemFontSize(fontSize);
-    }
-}
-
-void EditBoxImplIOS::setFontColor(const Color4B& color)
-{
-    _systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:color.a / 255.f];
-    _label->setTextColor(color);
-}
-
-void EditBoxImplIOS::setPlaceholderFont(const char* pFontName, int fontSize)
-{
-    if( strlen(pFontName) > 0)
-    {
-        _labelPlaceHolder->setSystemFontName(pFontName);
-    }
-    if(fontSize > 0)
-    {
-        _labelPlaceHolder->setSystemFontSize(fontSize);
-    }
 }
     
-void EditBoxImplIOS::setPlaceholderFontColor(const Color4B &color)
+void EditBoxImplIOS::setNativeFontColor(const Color4B& color)
 {
-    _labelPlaceHolder->setTextColor(color);
+    _systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f
+                                                         green:color.g / 255.0f
+                                                          blue:color.b / 255.0f
+                                                         alpha:color.a / 255.f];
+
 }
 
-void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
+void EditBoxImplIOS::setNativePlaceholderFont(const char* pFontName, int fontSize)
+{
+    //TODO::
+}
+
+void EditBoxImplIOS::setNativePlaceholderFontColor(const Color4B& color)
+{
+    //TODO::
+}
+
+void EditBoxImplIOS::setNativeInputMode(EditBox::InputMode inputMode)
 {
     switch (inputMode)
     {
@@ -519,17 +374,7 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
     }
 }
 
-void EditBoxImplIOS::setMaxLength(int maxLength)
-{
-    _maxTextLength = maxLength;
-}
-
-int EditBoxImplIOS::getMaxLength()
-{
-    return _maxTextLength;
-}
-
-void EditBoxImplIOS::setInputFlag(EditBox::InputFlag inputFlag)
+void EditBoxImplIOS::setNativeInputFlag(EditBox::InputFlag inputFlag)
 {
     switch (inputFlag)
     {
@@ -552,8 +397,20 @@ void EditBoxImplIOS::setInputFlag(EditBox::InputFlag inputFlag)
             break;
     }
 }
+    
+NSString* removeSiriString(NSString* str)
+{
+    NSString* siriString = @"\xef\xbf\xbc";
+    return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
+}
 
-void EditBoxImplIOS::setReturnType(EditBox::KeyboardReturnType returnType)
+const char*  EditBoxImplIOS::getText(void)
+{
+    return [removeSiriString(_systemControl.textField.text) UTF8String];
+}
+
+
+void EditBoxImplIOS::setNativeReturnType(EditBox::KeyboardReturnType returnType)
 {
     switch (returnType) {
         case EditBox::KeyboardReturnType::DEFAULT:
@@ -577,63 +434,113 @@ void EditBoxImplIOS::setReturnType(EditBox::KeyboardReturnType returnType)
     }
 }
 
-bool EditBoxImplIOS::isEditing()
+void EditBoxImplIOS::setNativeText(const char* pText)
 {
-    return [_systemControl isEditState] ? true : false;
-}
-
-void EditBoxImplIOS::refreshInactiveText()
-{
-    const char* text = getText();
-    if(_systemControl.textField.hidden == YES)
-    {
-        setInactiveText(text);
-        if(strlen(text) == 0)
-        {
-            _label->setVisible(false);
-            _labelPlaceHolder->setVisible(true);
-        }
-        else
-        {
-            _label->setVisible(true);
-            _labelPlaceHolder->setVisible(false);
-        }
-    }
-}
-
-void EditBoxImplIOS::setText(const char* text)
-{
-    NSString* nsText =[NSString stringWithUTF8String:text];
+    NSString* nsText =[NSString stringWithUTF8String:pText];
     if ([nsText compare:_systemControl.textField.text] != NSOrderedSame)
     {
         _systemControl.textField.text = nsText;
     }
-    
-    refreshInactiveText();
 }
 
-NSString* removeSiriString(NSString* str)
-{
-    NSString* siriString = @"\xef\xbf\xbc";
-    return [str stringByReplacingOccurrencesOfString:siriString withString:@""];
-}
-
-const char*  EditBoxImplIOS::getText(void)
-{
-    return [removeSiriString(_systemControl.textField.text) UTF8String];
-}
-
-void EditBoxImplIOS::setPlaceHolder(const char* pText)
+void EditBoxImplIOS::setNativePlaceHolder(const char* pText)
 {
     _systemControl.textField.placeholder = [NSString stringWithUTF8String:pText];
-    _labelPlaceHolder->setString(pText);
+}
+
+void EditBoxImplIOS::setNativeVisible(bool visible)
+{
+    _systemControl.textField.hidden = !visible;
+}
+
+void EditBoxImplIOS::updateNativeFrame(const Rect& rect)
+{
+    //no-op
+}
+
+void EditBoxImplIOS::setNativeContentSize(const Size& size)
+{
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
+    float factor = eaglview.contentScaleFactor;
+    
+    [_systemControl setContentSize:CGSizeMake(size.width / factor, size.height / factor)];
+}
+
+const char* EditBoxImplIOS::getNativeDefaultFontName()
+{
+    const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
+    return pDefaultFontName;
+}
+
+void EditBoxImplIOS::nativeOpenKeyboard()
+{
+    _systemControl.textField.hidden = NO;
+    [_systemControl openKeyboard];
+}
+
+void EditBoxImplIOS::nativeCloseKeyboard()
+{
+    [_systemControl closeKeyboard];
+}
+    
+UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
+{
+    CCASSERT(fontName != nullptr, "fontName can't be nullptr");
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView());
+    float retinaFactor = eaglview.contentScaleFactor;
+    NSString * fntName = [NSString stringWithUTF8String:fontName];
+    
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    float scaleFactor = glview->getScaleX();
+    
+    if (fontSize == -1)
+    {
+        fontSize = [_systemControl.textField frame].size.height*2/3;
+    }
+    else
+    {
+        fontSize = fontSize * scaleFactor / retinaFactor;
+    }
+    
+    UIFont *textFont = nil;
+    if (strlen(fontName) > 0)
+    {
+        textFont = [UIFont fontWithName:fntName size:fontSize];
+    }
+    else
+    {
+        textFont = [UIFont systemFontOfSize:fontSize];
+    }
+    return textFont;
+}
+    
+void EditBoxImplIOS::setPosition(const Vec2& pos)
+{
+    _position = pos;
+    adjustTextFieldPosition();
+}
+
+void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
+{
+    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
+    _anchorPoint = anchorPoint;
+    setPosition(_position);
+}
+
+void EditBoxImplIOS::updatePosition(float dt)
+{
+    if (nullptr != _systemControl) {
+        this->adjustTextFieldPosition();
+    }
 }
 
 static CGPoint convertDesignCoordToScreenCoord(const Vec2& designCoord)
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *) glview->getEAGLView();
-
+    
     float viewH = (float)[eaglview getHeight];
     
     Vec2 visiblePos = Vec2(designCoord.x * glview->getScaleX(), designCoord.y * glview->getScaleY());
@@ -644,65 +551,10 @@ static CGPoint convertDesignCoordToScreenCoord(const Vec2& designCoord)
     float factor = eaglview.contentScaleFactor;
     screenPos.x = screenPos.x / factor;
     screenPos.y = screenPos.y / factor;
-
+    
     CCLOGINFO("[EditBox] pos x = %f, y = %f", screenGLPos.x, screenGLPos.y);
     return screenPos;
 }
-
-void EditBoxImplIOS::setPosition(const Vec2& pos)
-{
-    _position = pos;
-    adjustTextFieldPosition();
-}
-
-void EditBoxImplIOS::setVisible(bool visible)
-{
-//    _systemControl.textField.hidden = !visible;
-}
-
-void EditBoxImplIOS::setContentSize(const Size& size)
-{
-    _contentSize = size;
-    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
-    placeInactiveLabels();
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
-    
-    CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
-    float factor = eaglview.contentScaleFactor;
-    controlSize.width /= factor;
-    controlSize.height /= factor;
-    
-    [_systemControl setContentSize:controlSize];
-}
-
-void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
-{
-    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
-    _anchorPoint = anchorPoint;
-    setPosition(_position);
-}
-
-void EditBoxImplIOS::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-}
-
-void EditBoxImplIOS::onEnter(void)
-{
-    adjustTextFieldPosition();
-    const char* pText = getText();
-    if (pText) {
-        setInactiveText(pText);
-    }
-}
-
-void EditBoxImplIOS::updatePosition(float dt)
-{
-    if (nullptr != _systemControl) {
-        this->adjustTextFieldPosition();
-    }
-}
-
 
 
 void EditBoxImplIOS::adjustTextFieldPosition()
@@ -713,36 +565,6 @@ void EditBoxImplIOS::adjustTextFieldPosition()
     
     Vec2 designCoord = Vec2(rect.origin.x, rect.origin.y + rect.size.height);
     [_systemControl setPosition:convertDesignCoordToScreenCoord(designCoord)];
-}
-
-void EditBoxImplIOS::openKeyboard()
-{
-    _label->setVisible(false);
-    _labelPlaceHolder->setVisible(false);
-
-    _systemControl.textField.hidden = NO;
-    [_systemControl openKeyboard];
-}
-
-void EditBoxImplIOS::closeKeyboard()
-{
-    [_systemControl closeKeyboard];
-}
-
-void EditBoxImplIOS::onEndEditing()
-{
-    _systemControl.textField.hidden = YES;
-    if(strlen(getText()) == 0)
-    {
-        _label->setVisible(false);
-        _labelPlaceHolder->setVisible(true);
-    }
-    else
-    {
-        _label->setVisible(true);
-        _labelPlaceHolder->setVisible(false);
-        setInactiveText(getText());
-    }
 }
 
 }

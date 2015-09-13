@@ -42,7 +42,7 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 	return 0;
 }    
 
-@implementation AVAudioPlayer
+@implementation CCAudioPlayer
 
 @synthesize delegate, numberOfChannels, pan, deviceCurrentTime, url, data;
 
