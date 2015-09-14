@@ -316,7 +316,7 @@ public:
 	virtual const ccColor3B& getColor();
 
     virtual bool updateWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect, bool rotated, CCRect capInsets);
-
+	virtual void setShaderProgram(CCGLProgram *pShaderProgram);
     virtual void setSpriteFrame(CCSpriteFrame * spriteFrame);
     
     virtual void updateDisplayedOpacity(GLubyte parentOpacity);

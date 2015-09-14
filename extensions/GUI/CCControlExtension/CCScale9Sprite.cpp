@@ -837,6 +837,20 @@ const ccColor3B& CCScale9Sprite::getColor()
 	return _color;
 }
 
+void CCScale9Sprite::setShaderProgram(CCGLProgram *pShaderProgram)
+{
+	CCNode::setShaderProgram(pShaderProgram);
+
+	CCObject* child;
+	CCArray* children = getChildren();
+	CCARRAY_FOREACH(children, child)
+	{
+		CCNode* pNode = dynamic_cast<CCNode*>(child);
+		if (pNode)
+			pNode->setShaderProgram(pShaderProgram);
+	}
+}
+
 void CCScale9Sprite::setOpacity(GLubyte opacity)
 {
     if (!_scale9Image)
