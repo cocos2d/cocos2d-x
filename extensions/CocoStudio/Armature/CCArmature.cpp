@@ -148,16 +148,15 @@ bool CCArmature::init(const char *name)
             m_strName = name;
 
             CCAnimationData *animationData = armatureDataManager->getAnimationData(name);
-            CCAssert(animationData, "CCAnimationData not exist! ");
+			CCArmatureData *armatureData = armatureDataManager->getArmatureData(name);
+			if (!animationData || !armatureData)
+			{
+				CCLOG("CCAnimation Data: %s not exist", name);
+				return false;
+			}
 
             m_pAnimation->setAnimationData(animationData);
-
-
-            CCArmatureData *armatureData = armatureDataManager->getArmatureData(name);
-            CCAssert(armatureData, "");
-
             m_pArmatureData = armatureData;
-
 
             CCDictElement *_element = NULL;
             CCDictionary *boneDataDic = &armatureData->boneDataDic;
