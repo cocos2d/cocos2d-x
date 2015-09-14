@@ -98,6 +98,23 @@ bool js_cocos2dx_ComponentContainer_add(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ComponentContainer_isEmpty(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ComponentContainer_get(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_Component_class;
+extern JSObject *jsb_cocos2d_Component_prototype;
+
+bool js_cocos2dx_Component_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Component_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_Component(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Node_class;
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -3701,23 +3718,6 @@ bool js_cocos2dx_TextureCache_removeUnusedTextures(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_TextureCache_removeTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextureCache_waitForQuit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextureCache_TextureCache(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_Component_class;
-extern JSObject *jsb_cocos2d_Component_prototype;
-
-bool js_cocos2dx_Component_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_Component_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_Component(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_Device_class;
 extern JSObject *jsb_cocos2d_Device_prototype;
