@@ -83,20 +83,9 @@ namespace cocos2d { namespace network {
                                        int64_t totalBytesExpected,
                                        std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)
         {
-            if (task.storagePath.length())
+            if (onTaskProgress)
             {
-                if (onFileTaskProgress)
-                {
-                    onFileTaskProgress(task, bytesReceived, totalBytesReceived, totalBytesExpected);
-                }
-            }
-            else
-            {
-                if (onDataTaskProgress)
-                {
-                    // data task
-                    onDataTaskProgress(task, bytesReceived, totalBytesReceived, totalBytesExpected, transferDataToBuffer);
-                }
+                onTaskProgress(task, bytesReceived, totalBytesReceived, totalBytesExpected);
             }
         };
         

@@ -71,19 +71,13 @@ namespace cocos2d { namespace network {
         
         std::function<void(const DownloadTask& task,
                            std::vector<unsigned char>& data)> onDataTaskSuccess;
-        
-        std::function<void(const DownloadTask& task,
-                           int64_t bytesReceived,
-                           int64_t totalBytesReceived,
-                           int64_t totalBytesExpected,
-                           std::function<int64_t(void *buffer, int64_t len)>& transferDataToBuffer)> onDataTaskProgress;
-        
+
         std::function<void(const DownloadTask& task)> onFileTaskSuccess;
         
         std::function<void(const DownloadTask& task,
                            int64_t bytesReceived,
                            int64_t totalBytesReceived,
-                           int64_t totalBytesExpected)> onFileTaskProgress;
+                           int64_t totalBytesExpected)> onTaskProgress;
         
         std::function<void(const DownloadTask& task,
                            int errorCode,
