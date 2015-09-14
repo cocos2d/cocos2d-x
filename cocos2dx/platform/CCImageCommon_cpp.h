@@ -110,7 +110,7 @@ CCImage::~CCImage()
 #endif
 }
 
-bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/)
+bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = eFmtPng*/, const char* strPixelFormatToUse/* = NULL*/)
 {
     bool bRet = false;
 
@@ -139,6 +139,10 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     unsigned char* pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &nSize);
     if (pBuffer != NULL && nSize > 0)
     {
+		if (strPixelFormatToUse != NULL) 
+		{
+			m_strPixelFormatToUse = strPixelFormatToUse;
+		}
         bRet = initWithImageData(pBuffer, nSize, eImgFmt);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
@@ -147,7 +151,7 @@ bool CCImage::initWithImageFile(const char * strPath, EImageFormat eImgFmt/* = e
     return bRet;
 }
 
-bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType)
+bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType, const char* strPixelFormatToUse/* = NULL*/)
 {
     bool bRet = false;
     unsigned long nSize = 0;
@@ -159,6 +163,10 @@ bool CCImage::initWithImageFileThreadSafe(const char *fullpath, EImageFormat ima
 #endif
     if (pBuffer != NULL && nSize > 0)
     {
+		if (strPixelFormatToUse != NULL)
+		{
+			m_strPixelFormatToUse = strPixelFormatToUse;
+		}
         bRet = initWithImageData(pBuffer, nSize, imageType);
     }
     CC_SAFE_DELETE_ARRAY(pBuffer);
