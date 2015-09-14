@@ -246,7 +246,6 @@ public:
     float getItemsMargin()const;
     
     //override methods
-    virtual void forceDoLayout()override;
     virtual void doLayout() override;
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
@@ -371,16 +370,16 @@ public:
     
     /**
      * @brief Refresh view and layout of ListView manually.
-     * This method will mark ListView content as dirty and the content view will be refershed in the next frame.
+     * This method will mark ListView content as dirty and the content view will be refreshed in the next frame.
+     * @deprecated Use method requestDoLayout() instead
      */
-    void requestRefreshView();
+    CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
 
-    
     /**
      * @brief Refresh content view of ListView.
+     * @deprecated Use method forceDoLayout() instead
      */
-    void refreshView();
-    void refreshViewIfNecessary();
+    CC_DEPRECATED_ATTRIBUTE void refreshView();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -419,7 +418,6 @@ protected:
     float _itemsMargin;
     
     ssize_t _curSelectedIndex;
-    bool _refreshViewDirty;
     
     Ref*       _listViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
