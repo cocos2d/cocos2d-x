@@ -6,7 +6,7 @@
 #include "cocos2d.h"
 #include <time.h>
 
-#define LOG_FILE_NAME       "PerformanceLog.json"
+#define LOG_FILE_NAME_FMT   "PerformanceLog-%s-%s.json"
 #define PLIST_FILE_NAME     "PerformanceLog.plist"
 
 #define KEY_DEVICE              "device"
@@ -20,14 +20,14 @@
 
 #define FILE_VERSION          1
 
-#define USE_PRETTY_OUTPUT_FORMAT        1
+#define USE_PRETTY_OUTPUT_FORMAT        0
 #define USE_JSON_FORMAT                 1
 
 
 // For different device & os, change these values
 // TODO : get device info automatically
-#define DEVICE_NAME         "iphone 5s"
-#define OS_VERSION          "iOS 8.4"
+#define DEVICE_NAME         "DeviceName"
+#define OS_VERSION          "SystemVersion"
 
 static Profile* s_profile = nullptr;
 
@@ -223,10 +223,13 @@ void Profile::flush()
     testData[KEY_TIMESTAMP] = Value(genStr("%ld", t));
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    std::string checkPath = "/mnt/sdcard";
+    std::string checkPath = "/mnt/sdcard/PerfTest";
     auto writablePath = checkPath;
     if (! cocos2d::FileUtils::getInstance()->isDirectoryExist(checkPath)) {
-        writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
+        auto createRet = cocos2d::FileUtils::getInstance()->createDirectory(checkPath);
+        if (! createRet) {
+            writablePath = cocos2d::FileUtils::getInstance()->getWritablePath();
+        }
     }
     cocos2d::log("write path : %s", writablePath.c_str());
 #else
@@ -234,8 +237,11 @@ void Profile::flush()
 #endif
 
 #if USE_JSON_FORMAT
-    std::string fullPath = genStr("%s/%s", writablePath.c_str(), LOG_FILE_NAME);
-    
+    char timeStr[64];
+    strftime(timeStr, sizeof(timeStr), "%Y-%m-%d-%H%M", localtime(&t));
+    std::string fileName = genStr(LOG_FILE_NAME_FMT, DEVICE_NAME, timeStr);
+    std::string fullPath = genStr("%s/%s", writablePath.c_str(), fileName.c_str());
+
     rapidjson::Document document;
     rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
     rapidjson::Value theData = valueMapToJson(testData, allocator);
