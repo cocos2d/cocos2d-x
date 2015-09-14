@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
+ Copyright (c) 2013-2015 zilongshanren
  
  http://www.cocos2d-x.org
  
@@ -42,12 +43,124 @@ static const int CC_EDIT_BOX_PADDING = 5;
 
 #pragma mark - Internal Classes
 
-/** TODO: Missing doc - Why is this subclass necessary?
+/**
+ * http://stackoverflow.com/questions/1328638/placeholder-in-uitextview
  */
-@interface UICustomUITextField : UITextField
+CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
+
+@interface UIMultilineTextField : UITextView
+@property (nonatomic, retain) NSString *placeholder;
+@property (nonatomic, retain) UIColor *placeholderColor;
+-(void)textChanged:(NSNotification*)notification;
 @end
 
-@implementation UICustomUITextField
+@interface UIMultilineTextField ()
+@property (nonatomic, retain) UILabel *placeHolderLabel;
+@end
+
+@implementation UIMultilineTextField
+
+- (CGRect)textRectForBounds:(CGRect)bounds
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    
+    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
+    return CGRectInset(bounds, padding, padding);
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    if( (self = [super initWithFrame:frame]) )
+    {
+        [self setPlaceholder:@""];
+        [self setPlaceholderColor:[UIColor lightGrayColor]];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textChanged:)
+                                                     name:UITextViewTextDidChangeNotification object:nil];
+    }
+    return self;
+}
+
+- (void)textChanged:(NSNotification *)notification
+{
+    if([[self placeholder] length] == 0)
+    {
+        return;
+    }
+    
+    [UIView animateWithDuration:UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION animations:^{
+        if([[self text] length] == 0)
+        {
+            [[self viewWithTag:999] setAlpha:1];
+        }
+        else
+        {
+            [[self viewWithTag:999] setAlpha:0];
+        }
+    }];
+}
+
+- (void)setText:(NSString *)text {
+    [super setText:text];
+    [self textChanged:nil];
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    if( [[self placeholder] length] > 0 )
+    {
+        if (_placeHolderLabel == nil )
+        {
+            _placeHolderLabel = [[UILabel alloc] initWithFrame:CGRectMake(8,8,self.bounds.size.width - 16,0)];
+            _placeHolderLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            _placeHolderLabel.numberOfLines = 0;
+            _placeHolderLabel.font = self.font;
+            _placeHolderLabel.backgroundColor = [UIColor clearColor];
+            _placeHolderLabel.textColor = self.placeholderColor;
+            _placeHolderLabel.alpha = 0;
+            _placeHolderLabel.tag = 999;
+            [self addSubview:_placeHolderLabel];
+        }
+        
+        _placeHolderLabel.text = self.placeholder;
+        [_placeHolderLabel sizeToFit];
+        [self sendSubviewToBack:_placeHolderLabel];
+    }
+    
+    if( [[self text] length] == 0 && [[self placeholder] length] > 0 )
+    {
+        [[self viewWithTag:999] setAlpha:1];
+    }
+    
+    [super drawRect:rect];
+}
+
+- (CGRect)editingRectForBounds:(CGRect)bounds
+{
+    return [self textRectForBounds:bounds];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [_placeHolderLabel release];
+    _placeHolderLabel = nil;
+    [_placeholderColor release];
+    _placeholderColor = nil;
+    [_placeholder release];
+    _placeholder = nil;
+    [super dealloc];
+}
+
+@end
+
+/** TODO: Missing doc - Why is this subclass necessary?
+ */
+@interface UISingleLineTextField : UITextField
+@end
+
+@implementation UISingleLineTextField
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
@@ -67,10 +180,14 @@ static const int CC_EDIT_BOX_PADDING = 5;
 #pragma mark - UIEditBox ios implementation
 
 
-@interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate>
+@interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, retain) UITextField *textField;
+@property (nonatomic, retain) UITextView *textView;
 @property (nonatomic, assign) void *editBox;
+@property (nonatomic, assign) CGRect frameRect;
+@property (nonatomic, assign) cocos2d::ui::EditBox::InputFlag dataInputMode;
+@property (nonatomic, assign) cocos2d::ui::EditBox::KeyboardReturnType keyboardReturnType;
 @property (nonatomic, readonly, getter = isEditState) BOOL editState;
 
 - (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
@@ -97,39 +214,349 @@ static const int CC_EDIT_BOX_PADDING = 5;
     if (self)
     {
         _editState = NO;
-        UITextField *textField = [[[UICustomUITextField alloc] initWithFrame: frameRect] autorelease];
-
-        textField.textColor = [UIColor whiteColor];
-         // TODO: need to delete hard code here.
-        textField.font = [UIFont systemFontOfSize:frameRect.size.height*2/3];
-        textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        textField.backgroundColor = [UIColor clearColor];
-        textField.borderStyle = UITextBorderStyleNone;
-        textField.delegate = self;
-        textField.hidden = true;
-        textField.returnKeyType = UIReturnKeyDefault;
-        
-        [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
-
-        
-        self.textField = textField;
+        self.textField = nil;
+        self.textView = nil;
+        self.frameRect = frameRect;
         self.editBox = editBox;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS;
+        self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
+        [self createMultiLineTextField];
     }
     
     return self;
 }
 
+- (void)createSingleLineTextField{
+    UISingleLineTextField *textField = [[[UISingleLineTextField alloc] initWithFrame: self.frameRect] autorelease];
+    
+    UIColor *textColor;
+    NSString *text;
+    NSString *placeholder;
+    CGFloat fontSize;
+    if (self.textView != nil) {
+        textColor = self.textView.textColor;
+        text = self.textView.text;
+        placeholder = [(UIMultilineTextField*)self.textView placeholder];
+        fontSize = [self.textView.font pointSize];
+    }
+    else{
+        textColor = [UIColor whiteColor];
+        text = @"";
+        placeholder = @"";
+        fontSize = self.frameRect.size.height*2/3;
+    }
+    
+    textField.textColor = textColor;
+    // TODO: need to delete hard code here.
+    textField.font = [UIFont systemFontOfSize: fontSize];
+    textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    textField.backgroundColor = [UIColor clearColor];
+    textField.borderStyle = UITextBorderStyleNone;
+    textField.delegate = self;
+    textField.hidden = true;
+    textField.returnKeyType = UIReturnKeyDefault;
+    textField.text = text;
+    
+    [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
+    
+    self.textField = textField;
+    
+    [self removeMultiLineTextField];
+}
+
+- (void)createMultiLineTextField{
+    UIMultilineTextField *textView = [[[UIMultilineTextField alloc] initWithFrame: self.frameRect] autorelease];
+    
+    UIColor *textColor;
+    NSString *text;
+    NSString *placeholder;
+    CGFloat fontSize;
+    if (self.textField != nil) {
+        textColor = self.textField.textColor;
+        text = self.textField.text;
+        placeholder = [self.textField placeholder];
+        fontSize = [self.textField.font pointSize];
+    }
+    else{
+        textColor = [UIColor whiteColor];
+        text = @"";
+        placeholder = @"";
+        fontSize = self.frameRect.size.height*2/3;
+    }
+    textView.textColor = textColor;
+    textView.font = [UIFont systemFontOfSize:fontSize];
+    textView.backgroundColor = [UIColor clearColor];
+    textView.delegate = self;
+    textView.hidden = true;
+    textView.returnKeyType = UIReturnKeyDefault;
+    textView.text = text;
+    textView.placeholder = placeholder;
+    
+    self.textView = textView;
+    
+    [self removeSingleLineTextField];
+}
+
+-(void)removeSingleLineTextField{
+    if (_textField != nil)
+    {
+        [_textField resignFirstResponder];
+        [_textField removeFromSuperview];
+        self.textField = nil;
+    }
+}
+
+-(void)removeMultiLineTextField{
+    if (_textView != nil)
+    {
+        [_textView resignFirstResponder];
+        [_textView removeFromSuperview];
+        self.textView = nil;
+    }
+}
+
 - (void)dealloc
 {
-    [_textField resignFirstResponder];
-    [_textField removeFromSuperview];
-    
-    self.textField = nil;
+    [self removeSingleLineTextField];
+    [self removeMultiLineTextField];
     
     [super dealloc];
 }
 
 #pragma mark - Public methods
+- (void)setFont:(UIFont*)font{
+    if (_textField != nil)
+    {
+        [_textField setFont:font];
+    }
+    if (_textView != nil) {
+        [_textView setFont:font];
+    }
+}
+
+- (void)setTextColor:(UIColor*)color{
+    if (_textField != nil)
+    {
+        [_textField setTextColor:color];
+    }
+    if (_textView != nil) {
+        [_textView setTextColor:color];
+    }
+}
+
+- (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode{
+    //multiline input
+    if (inputMode == cocos2d::ui::EditBox::InputMode::ANY)
+    {
+        if (self.textField != nil)
+        {
+            [self createMultiLineTextField];
+            [self setInputFlag:self.dataInputMode];
+            [self setReturnType:self.keyboardReturnType];
+        }
+    }
+    else
+    {
+        if (self.textView != nil) {
+            [self createSingleLineTextField];
+            [self setInputFlag:self.dataInputMode];
+            [self setReturnType:self.keyboardReturnType];
+        }
+    }
+    
+    switch (inputMode)
+    {
+        case cocos2d::ui::EditBox::InputMode::EMAIL_ADDRESS:
+            self.keyboardType = UIKeyboardTypeEmailAddress;
+            break;
+        case cocos2d::ui::EditBox::InputMode::NUMERIC:
+            self.keyboardType = UIKeyboardTypeDecimalPad;
+            break;
+        case cocos2d::ui::EditBox::InputMode::PHONE_NUMBER:
+            self.keyboardType = UIKeyboardTypePhonePad;
+            break;
+        case cocos2d::ui::EditBox::InputMode::URL:
+            self.keyboardType = UIKeyboardTypeURL;
+            break;
+        case cocos2d::ui::EditBox::InputMode::DECIMAL:
+            self.keyboardType = UIKeyboardTypeDecimalPad;
+            break;
+        case cocos2d::ui::EditBox::InputMode::SINGLE_LINE:
+            self.keyboardType = UIKeyboardTypeDefault;
+            break;
+        default:
+            self.keyboardType = UIKeyboardTypeDefault;
+            break;
+    }
+}
+
+- (void)setKeyboardType:(UIKeyboardType)type{
+    if (_textField != nil)
+    {
+        [_textField setKeyboardType:type];
+    }
+    if (_textView != nil) {
+        [_textView setKeyboardType:type];
+    }
+}
+
+- (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag{
+    self.dataInputMode = flag;
+    switch (flag)
+    {
+        case cocos2d::ui::EditBox::InputFlag::PASSWORD:
+            if (self.textField != nil)
+            {
+                self.textField.secureTextEntry = YES;
+            }
+            //textView can't be used for input password
+            break;
+        case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_WORD:
+            if (self.textField != nil)
+            {
+                self.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            }
+            if (self.textView != nil)
+            {
+                self.textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            }
+            break;
+        case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
+            if (self.textField != nil)
+            {
+                self.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+            }
+            if (self.textView != nil)
+            {
+                self.textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+            }
+            break;
+        case cocos2d::ui::EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
+            if (self.textField != nil)
+            {
+                self.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+            }
+            if (self.textView != nil)
+            {
+                self.textView.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+            }
+            break;
+        case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
+            if (self.textField != nil)
+            {
+                self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            }
+            if (self.textView != nil)
+            {
+                self.textView.autocorrectionType = UITextAutocorrectionTypeNo;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType{
+    self.keyboardReturnType = returnType;
+    switch (returnType) {
+        case cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT:
+            if (self.textField != nil) {
+                self.textField.returnKeyType = UIReturnKeyDefault;
+            }
+            if (self.textView != nil) {
+                self.textView.returnKeyType = UIReturnKeyDefault;
+            }
+            break;
+        case cocos2d::ui::EditBox::KeyboardReturnType::DONE:
+            if (self.textField != nil) {
+                self.textField.returnKeyType = UIReturnKeyDone;
+            }
+            if (self.textView != nil) {
+                self.textView.returnKeyType = UIReturnKeyDone;
+            }
+            break;
+        case cocos2d::ui::EditBox::KeyboardReturnType::SEND:
+            if (self.textField != nil) {
+                self.textField.returnKeyType = UIReturnKeySend;
+            }
+            if (self.textView != nil) {
+                self.textView.returnKeyType = UIReturnKeySend;
+            }
+            break;
+        case cocos2d::ui::EditBox::KeyboardReturnType::SEARCH:
+            if (self.textField !=  nil) {
+                self.textField.returnKeyType = UIReturnKeySearch;
+            }
+            if (self.textView != nil) {
+                self.textView.returnKeyType = UIReturnKeySearch;
+            }
+            break;
+        case cocos2d::ui::EditBox::KeyboardReturnType::GO:
+            if (self.textField != nil) {
+                self.textField.returnKeyType = UIReturnKeyGo;
+            }
+            if (self.textView != nil) {
+                self.textView.returnKeyType = UIReturnKeyGo;
+            }
+            break;
+        default:
+            if (self.textField != nil) {
+                self.textField.returnKeyType = UIReturnKeyDefault;
+            }
+            if (self.textView != nil) {
+                self.textView.returnKeyType = UIReturnKeyDefault;
+            }
+            break;
+    }
+}
+
+- (void)setText:(NSString*)text{
+    if (self.textField != nil) {
+        self.textField.text = text;
+    }
+    if (self.textView != nil) {
+        self.textView.text = text;
+    }
+}
+
+- (NSString*)getText{
+    if (self.textField != nil) {
+        return self.textField.text;
+    }
+    if (self.textView != nil) {
+        return self.textView.text;
+    }
+    return @"";
+}
+
+- (void)setVisible:(BOOL)visible{
+    if (self.textField != nil) {
+        self.textField.hidden = !visible;
+    }
+    if (self.textView != nil) {
+        self.textView.hidden = !visible;
+    }
+}
+
+- (NSString*)getDefaultFontName{
+    if (self.textField != nil) {
+        return [self.textField.font fontName];
+    }
+    if (self.textView != nil) {
+        return [self.textView.font fontName];
+    }
+    
+    return @"";
+}
+
+- (void)setPlaceHolder:(NSString*)text{
+    if (self.textField != nil) {
+        self.textField.placeholder = text;
+    }
+    if (self.textView != nil) {
+        [(UIMultilineTextField*)self.textView setPlaceholder:text];
+    }
+}
 
 - (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance
 {
@@ -142,18 +569,34 @@ static const int CC_EDIT_BOX_PADDING = 5;
 - (void)setPosition:(CGPoint)pos
 {
     // TODO: Handle anchor point?
-    CGRect frame = _textField.frame;
-    frame.origin = pos;
-    
-    _textField.frame = frame;
+    if (_textField != nil)
+    {
+        CGRect frame = _textField.frame;
+        frame.origin = pos;
+        _textField.frame = frame;
+    }
+    if (_textView != nil)
+    {
+        CGRect frame = _textView.frame;
+        frame.origin = pos;
+        _textView.frame = frame;
+    }
 }
 
 - (void)setContentSize:(CGSize)size
 {
-    CGRect frame = _textField.frame;
-    frame.size = size;
-    
-    _textField.frame = frame;
+    if (_textField != nil)
+    {
+        CGRect frame = _textField.frame;
+        frame.size = size;
+        _textField.frame = frame;
+    }
+    if (_textView != nil)
+    {
+        CGRect frame = _textView.frame;
+        frame.size = size;
+        _textView.frame = frame;
+    }
 }
 
 - (void)openKeyboard
@@ -161,14 +604,30 @@ static const int CC_EDIT_BOX_PADDING = 5;
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *)view->getEAGLView();
 
-    [eaglview addSubview:_textField];
-    [_textField becomeFirstResponder];
+    if (_textField != nil)
+    {
+        [eaglview addSubview:_textField];
+        [_textField becomeFirstResponder];
+    }
+    if (_textView != nil)
+    {
+        [eaglview addSubview:_textView];
+        [_textView becomeFirstResponder];
+    }
 }
 
 - (void)closeKeyboard
 {
-    [_textField resignFirstResponder];
-    [_textField removeFromSuperview];
+    if (_textField != nil)
+    {
+        [_textField resignFirstResponder];
+        [_textField removeFromSuperview];
+    }
+    if (_textView != nil)
+    {
+        [_textView resignFirstResponder];
+        [_textView removeFromSuperview];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
@@ -187,6 +646,72 @@ static const int CC_EDIT_BOX_PADDING = 5;
     [eaglview doAnimationWhenAnotherEditBeClicked];
 }
 
+#pragma mark - UITextView delegate methods
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    CCLOG("textFieldShouldBeginEditing...");
+    _editState = YES;
+    
+    auto view = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
+    
+    if ([eaglview isKeyboardShown])
+    {
+        [self performSelector:@selector(animationSelector) withObject:nil afterDelay:0.0f];
+    }
+    
+    getEditBoxImplIOS()->editBoxEditingDidBegin();
+    return YES;
+}
+
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView;
+{
+    CCLOG("textFieldShouldEndEditing...");
+    _editState = NO;
+    getEditBoxImplIOS()->refreshInactiveText();
+    
+    const char* inputText = [textView.text UTF8String];
+    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText);
+
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (maxLength < 0)
+    {
+        return YES;
+    }
+    
+    // Prevent crashing undo bug http://stackoverflow.com/questions/433337/set-the-maximum-character-length-of-a-uitextfield
+    if(range.length + range.location > textView.text.length)
+    {
+        return NO;
+    }
+    
+    NSUInteger oldLength = textView.text.length;
+    NSUInteger replacementLength = text.length;
+    NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    return newLength <= maxLength;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    int maxLength = getEditBoxImplIOS()->getMaxLength();
+    if (textView.text.length > maxLength) {
+        textView.text = [textView.text substringToIndex:maxLength];
+    }
+    
+    const char* inputText = [textView.text UTF8String];
+    getEditBoxImplIOS()->editBoxEditingChanged(inputText);
+}
+
+
+#pragma mark - UITextField delegate methods
 /**
  * Called each time when the text field's text has changed.
  */
@@ -200,8 +725,6 @@ static const int CC_EDIT_BOX_PADDING = 5;
     const char* inputText = [textField.text UTF8String];
     getEditBoxImplIOS()->editBoxEditingChanged(inputText);
 }
-
-#pragma mark - UITextField delegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
 {
@@ -323,13 +846,13 @@ void EditBoxImplIOS::setNativeFont(const char* pFontName, int fontSize)
 {
     UIFont* textFont = constructFont(pFontName, fontSize);
     if(textFont != nil) {
-        [_systemControl.textField setFont:textFont];
+        [_systemControl setFont:textFont];
     }
 }
     
 void EditBoxImplIOS::setNativeFontColor(const Color4B& color)
 {
-    _systemControl.textField.textColor = [UIColor colorWithRed:color.r / 255.0f
+    _systemControl.textColor = [UIColor colorWithRed:color.r / 255.0f
                                                          green:color.g / 255.0f
                                                           blue:color.b / 255.0f
                                                          alpha:color.a / 255.f];
@@ -348,54 +871,12 @@ void EditBoxImplIOS::setNativePlaceholderFontColor(const Color4B& color)
 
 void EditBoxImplIOS::setNativeInputMode(EditBox::InputMode inputMode)
 {
-    switch (inputMode)
-    {
-        case EditBox::InputMode::EMAIL_ADDRESS:
-            _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
-            break;
-        case EditBox::InputMode::NUMERIC:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
-            break;
-        case EditBox::InputMode::PHONE_NUMBER:
-            _systemControl.textField.keyboardType = UIKeyboardTypePhonePad;
-            break;
-        case EditBox::InputMode::URL:
-            _systemControl.textField.keyboardType = UIKeyboardTypeURL;
-            break;
-        case EditBox::InputMode::DECIMAL:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
-            break;
-        case EditBox::InputMode::SINGLE_LINE:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
-            break;
-        default:
-            _systemControl.textField.keyboardType = UIKeyboardTypeDefault;
-            break;
-    }
+    [_systemControl setInputMode:inputMode];
 }
 
 void EditBoxImplIOS::setNativeInputFlag(EditBox::InputFlag inputFlag)
 {
-    switch (inputFlag)
-    {
-        case EditBox::InputFlag::PASSWORD:
-            _systemControl.textField.secureTextEntry = YES;
-            break;
-        case EditBox::InputFlag::INITIAL_CAPS_WORD:
-            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-            break;
-        case EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
-            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
-            break;
-        case EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
-            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-            break;
-        case EditBox::InputFlag::SENSITIVE:
-            _systemControl.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-            break;
-        default:
-            break;
-    }
+    [_systemControl setInputFlag:inputFlag];
 }
     
 NSString* removeSiriString(NSString* str)
@@ -406,51 +887,32 @@ NSString* removeSiriString(NSString* str)
 
 const char*  EditBoxImplIOS::getText(void)
 {
-    return [removeSiriString(_systemControl.textField.text) UTF8String];
+    return [removeSiriString([_systemControl getText]) UTF8String];
 }
 
 
 void EditBoxImplIOS::setNativeReturnType(EditBox::KeyboardReturnType returnType)
 {
-    switch (returnType) {
-        case EditBox::KeyboardReturnType::DEFAULT:
-            _systemControl.textField.returnKeyType = UIReturnKeyDefault;
-            break;
-        case EditBox::KeyboardReturnType::DONE:
-            _systemControl.textField.returnKeyType = UIReturnKeyDone;
-            break;
-        case EditBox::KeyboardReturnType::SEND:
-            _systemControl.textField.returnKeyType = UIReturnKeySend;
-            break;
-        case EditBox::KeyboardReturnType::SEARCH:
-            _systemControl.textField.returnKeyType = UIReturnKeySearch;
-            break;
-        case EditBox::KeyboardReturnType::GO:
-            _systemControl.textField.returnKeyType = UIReturnKeyGo;
-            break;
-        default:
-            _systemControl.textField.returnKeyType = UIReturnKeyDefault;
-            break;
-    }
+    [_systemControl setReturnType:returnType];
 }
 
 void EditBoxImplIOS::setNativeText(const char* pText)
 {
     NSString* nsText =[NSString stringWithUTF8String:pText];
-    if ([nsText compare:_systemControl.textField.text] != NSOrderedSame)
+    if ([nsText compare: [_systemControl getText]] != NSOrderedSame)
     {
-        _systemControl.textField.text = nsText;
+        _systemControl.text = nsText;
     }
 }
 
 void EditBoxImplIOS::setNativePlaceHolder(const char* pText)
 {
-    _systemControl.textField.placeholder = [NSString stringWithUTF8String:pText];
+    [_systemControl setPlaceHolder:[NSString stringWithUTF8String:pText]];
 }
 
 void EditBoxImplIOS::setNativeVisible(bool visible)
 {
-    _systemControl.textField.hidden = !visible;
+    [_systemControl setVisible:visible];
 }
 
 void EditBoxImplIOS::updateNativeFrame(const Rect& rect)
@@ -470,13 +932,13 @@ void EditBoxImplIOS::setNativeContentSize(const Size& size)
 
 const char* EditBoxImplIOS::getNativeDefaultFontName()
 {
-    const char* pDefaultFontName = [[_systemControl.textField.font fontName] UTF8String];
+    const char* pDefaultFontName = [[_systemControl getDefaultFontName] UTF8String];
     return pDefaultFontName;
 }
 
 void EditBoxImplIOS::nativeOpenKeyboard()
 {
-    _systemControl.textField.hidden = NO;
+    [_systemControl setVisible:YES];
     [_systemControl openKeyboard];
 }
 
@@ -497,7 +959,7 @@ UIFont* EditBoxImplIOS::constructFont(const char *fontName, int fontSize)
     
     if (fontSize == -1)
     {
-        fontSize = [_systemControl.textField frame].size.height*2/3;
+        fontSize = _systemControl.frameRect.size.height*2/3;
     }
     else
     {
