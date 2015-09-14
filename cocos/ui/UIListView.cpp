@@ -40,6 +40,7 @@ _magneticType(MagneticType::NONE),
 _magneticAllowedOutOfBoundary(true),
 _itemsMargin(0.0f),
 _curSelectedIndex(-1),
+_innerContainerDoLayoutDirty(true),
 _listViewEventListener(nullptr),
 _listViewEventSelector(nullptr),
 _eventCallback(nullptr)
@@ -459,9 +460,14 @@ void ListView::refreshView()
     forceDoLayout();
 }
 
+void ListView::requestDoLayout()
+{
+    _innerContainerDoLayoutDirty = true;
+}
+
 void ListView::doLayout()
 {
-    if(!_doLayoutDirty)
+    if(!_innerContainerDoLayoutDirty)
     {
         return;
     }
@@ -475,7 +481,7 @@ void ListView::doLayout()
     }
     _innerContainer->forceDoLayout();
     updateInnerContainerSize();
-    _doLayoutDirty = false;
+    _innerContainerDoLayoutDirty = false;
 }
     
 void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)

@@ -247,6 +247,7 @@ public:
     
     //override methods
     virtual void doLayout() override;
+    virtual void requestDoLayout() override;
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -254,7 +255,7 @@ public:
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
-    
+
 	/**
 	 * @brief Query the closest item to a specific position in inner container.
 	 *
@@ -418,6 +419,8 @@ protected:
     float _itemsMargin;
     
     ssize_t _curSelectedIndex;
+
+    bool _innerContainerDoLayoutDirty;
     
     Ref*       _listViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
