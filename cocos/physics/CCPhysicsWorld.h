@@ -288,6 +288,14 @@ public:
     inline int getSubsteps() const { return _substeps; }
 
     /**
+     * Set the update filter factor.
+     *
+     * Value must be between FLT_EPSILON and 1.0, where 1.0 applies no filter to dt and FLT_EPSILON applies maximum filter to dt. The filterFactor is a parameter for a low-pass-filter that is used to smooth out the dt of the physics update loop. Setting this valuie to 1.0 will turn the filter off. Setting the value to less than 1.0 will turn the filter on. e.g. Setting filterFactor to 0.15 will apply a significant low-pass-filter to smooth out the delta time step dt and as a result smooth out the phyiscs simulation.
+     * @param filterFactor A float number, default value is 1.0. Valid values are between FLT_EPSILON and 1.0.
+     */
+    void setUpdateFilterFactor(float filterFactor);
+    
+    /**
     * Set the debug draw mask of this physics world.
     * 
     * This physics world will draw shapes and joints by DrawNode acoording to mask.
@@ -361,6 +369,8 @@ protected:
     float _updateTime;
     int _substeps;
     cpSpace* _cpSpace;
+    float _updateFilteredDelta;
+    float _updateFilterFactor;
     
     bool _updateBodyTransform;
     Vector<PhysicsBody*> _bodies;

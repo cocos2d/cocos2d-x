@@ -798,6 +798,20 @@ void PhysicsWorld::setSubsteps(int steps)
     }
 }
 
+void PhysicsWorld::setUpdateFilterFactor(float filterFactor)
+{
+    if (filterFactor < FLT_EPSILON)
+    {
+        filterFactor = FLT_EPSILON;
+    }
+    else if(filterFactor > 1.0)
+    {
+        filterFactor = 1.0;
+    }
+    _updateFilterFactor = filterFactor;
+}
+
+
 void PhysicsWorld::step(float delta)
 {
     if (_autoStep)
@@ -845,12 +859,21 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
         if (++_updateRateCount >= _updateRate)
         {
             const float dt = _updateTime * _speed / _substeps;
+            if (dt > FLT_EPSILON)
+            {
+                _updateFilteredDelta = _updateFilterFactor * dt +  (1 - _updateFilterFactor)  * _updateFilteredDelta;
+            }
+            else
+            {
+                _updateFilteredDelta = 0.0;
+            }
+            
             for (int i = 0; i < _substeps; ++i)
             {
-                cpSpaceStep(_cpSpace, dt);
+                cpSpaceStep(_cpSpace, _updateFilteredDelta);
                 for (auto& body : _bodies)
                 {
-                    body->update(dt);
+                    body->update(_updateFilteredDelta);
                 }
             }
             _updateRateCount = 0;
@@ -877,6 +900,8 @@ PhysicsWorld::PhysicsWorld()
 , _autoStep(true)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
+, _updateFilteredDelta(0.0)
+, _updateFilterFactor(1.0)
 {
     
 }
