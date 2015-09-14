@@ -294,7 +294,7 @@ public:
      * @return the nine-patch sprite of disabled state
      * @since v3.9
      */
-    Scale9Sprite* getRendererDisable() const { return _buttonDisableRenderer; }
+    Scale9Sprite* getRendererDisabled() const { return _buttonDisabledRenderer; }
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -335,7 +335,7 @@ protected:
 protected:
     Scale9Sprite* _buttonNormalRenderer;
     Scale9Sprite* _buttonClickedRenderer;
-    Scale9Sprite* _buttonDisableRenderer;
+    Scale9Sprite* _buttonDisabledRenderer;
     Label* _titleRenderer;
 
     float _zoomScale;
