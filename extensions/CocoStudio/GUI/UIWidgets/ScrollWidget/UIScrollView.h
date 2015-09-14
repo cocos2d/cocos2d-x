@@ -38,6 +38,7 @@ public:
     ScrollInnerContainer();
     virtual ~ScrollInnerContainer();
     static ScrollInnerContainer* create();
+	virtual void setPosition(const CCPoint& newPosition);
     virtual const CCSize& getLayoutSize();
 protected:
 };
@@ -60,7 +61,8 @@ typedef enum
     SCROLLVIEW_EVENT_BOUNCE_TOP,
     SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
     SCROLLVIEW_EVENT_BOUNCE_LEFT,
-    SCROLLVIEW_EVENT_BOUNCE_RIGHT
+    SCROLLVIEW_EVENT_BOUNCE_RIGHT,
+	SCROLLVIEW_EVENT_INNERCONTAINERMOVING
 }ScrollviewEventType;
 
 typedef void (CCObject::*SEL_ScrollViewEvent)(CCObject*, ScrollviewEventType);
@@ -344,6 +346,12 @@ public:
     virtual std::string getDescription() const;
     
     virtual void onEnter();
+
+	const CCPoint& getContainerPosition();
+	void jumpToDestination(const CCPoint& des);
+
+	void innerContainerMoving();
+
 protected:
     virtual bool init();
     virtual void initRenderer();
@@ -354,7 +362,6 @@ protected:
     bool checkNeedBounce();
     void startAutoScrollChildrenWithOriginalSpeed(const CCPoint& dir, float v, bool attenuated, float acceleration);
     void startAutoScrollChildrenWithDestination(const CCPoint& des, float time, bool attenuated);
-    void jumpToDestination(const CCPoint& des);
     void stopAutoScrollChildren();
     void startBounceChildren(float v);
     void stopBounceChildren();
@@ -378,12 +385,16 @@ protected:
     void bounceBottomEvent();
     void bounceLeftEvent();
     void bounceRightEvent();
+
     virtual void onSizeChanged();
     virtual Widget* createCloneInstance();
     virtual void copySpecialProperties(Widget* model);
     virtual void copyClonedWidgetChildren(Widget* model);
     virtual void setClippingEnabled(bool able) {Layout::setClippingEnabled(able);};
     virtual void doLayout();
+	void hideChildrenHorizontal(float offsetY);
+	void hideChildrenVertical(float offsetY);
+	void hideChildrenBoth(float offsetX, float offsetY);
 protected:
     ScrollInnerContainer* _innerContainer;
     

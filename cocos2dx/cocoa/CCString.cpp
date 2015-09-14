@@ -119,6 +119,11 @@ const char* CCString::getCString() const
     return m_sString.c_str();
 }
 
+const std::string& CCString::getString() const
+{
+	return m_sString;
+}
+
 unsigned int CCString::length() const
 {
     return m_sString.length();

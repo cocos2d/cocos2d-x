@@ -11,46 +11,8 @@ using namespace cocos2d::ui;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
-    JSStudioEventListenerWrapper();
-    virtual ~JSStudioEventListenerWrapper();
-
-    virtual void setJSCallbackThis(jsval thisObj);
-
     virtual void eventCallbackFunc(CCObject*,int);
-    
-private:
-    bool m_bNeedUnroot;
 };
-
-JSStudioEventListenerWrapper::JSStudioEventListenerWrapper()
-    : m_bNeedUnroot(false)
-{
-
-}
-
-JSStudioEventListenerWrapper::~JSStudioEventListenerWrapper()
-{
-    if (m_bNeedUnroot)
-    {
-        JSObject *thisObj = JSVAL_TO_OBJECT(jsThisObj);
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_RemoveObjectRoot(cx, &thisObj);
-    }
-}
-
-void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
-{
-    JSCallbackWrapper::setJSCallbackThis(jsThisObj);
-
-    JSObject *thisObj = JSVAL_TO_OBJECT(jsThisObj);
-    js_proxy *p = jsb_get_js_proxy(thisObj);
-    if (!p)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddObjectRoot(cx, &thisObj);
-        m_bNeedUnroot = true;
-    }
-}
 
 void JSStudioEventListenerWrapper::eventCallbackFunc(CCObject* sender,int eventType)
 {
@@ -66,7 +28,8 @@ void JSStudioEventListenerWrapper::eventCallbackFunc(CCObject* sender,int eventT
         valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
         valArr[1] = touchVal;
 
-        JS_AddValueRoot(cx, valArr);
+		JS_AddValueRoot(cx, valArr);
+		JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET;
         JS_CallFunctionValue(cx, thisObj, jsCallback, 2, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }
@@ -102,6 +65,38 @@ static JSBool js_cocos2dx_Widget_addTouchEventListener(JSContext *cx, uint32_t a
     }
     JS_ReportError(cx, "Invalid number of arguments");
     return JS_FALSE;
+}
+
+static JSBool js_cocos2dx_Widget_addPressStateChangeEventListener(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject *obj = JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ui::Widget* cobj = (cocos2d::ui::Widget *)(proxy ? proxy->ptr : NULL);
+	JSB_PRECONDITION2(cobj, cx, JS_FALSE, "Invalid Native Object");
+
+	if (argc == 2) {
+		jsval *argv = JS_ARGV(cx, vp);
+
+		JSStudioEventListenerWrapper *tmpObj = new JSStudioEventListenerWrapper();
+		tmpObj->autorelease();
+
+		CCDictionary* dict = static_cast<CCDictionary*>(cobj->getScriptObjectDict());
+		if (NULL == dict)
+		{
+			dict = CCDictionary::create();
+			cobj->setScriptObjectDict(dict);
+		}
+		dict->setObject(tmpObj, "pressStateChangeEvent");
+
+		tmpObj->setJSCallbackFunc(argv[0]);
+		tmpObj->setJSCallbackThis(argv[1]);
+
+		cobj->addPressStateChangeEventListener(tmpObj, statechangeeventselector(JSStudioEventListenerWrapper::eventCallbackFunc));
+
+		return JS_TRUE;
+	}
+	JS_ReportError(cx, "Invalid number of arguments");
+	return JS_FALSE;
 }
 
 static JSBool js_cocos2dx_CheckBox_addEventListener(JSContext *cx, uint32_t argc, jsval *vp)
@@ -310,7 +305,7 @@ void JSArmatureWrapper::movementCallbackFunc(cocos2d::extension::CCArmature *pAr
     JSObject *thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
     js_proxy_t *proxy = js_get_or_create_proxy(cx, pArmature);
     jsval retval;
-    if (jsCallback != JSVAL_VOID)
+    if (jsCallback != JSVAL_VOID && jsCallback != JSVAL_NULL)
     {
         int movementEventType = (int)pMovementEventType;
         jsval movementVal = INT_TO_JSVAL(movementEventType);
@@ -323,6 +318,7 @@ void JSArmatureWrapper::movementCallbackFunc(cocos2d::extension::CCArmature *pAr
         valArr[2] = idVal;
         
         JS_AddValueRoot(cx, valArr);
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         JS_CallFunctionValue(cx, thisObj, jsCallback, 3, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }
@@ -337,7 +333,8 @@ void JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc(float percent)
     {
         jsval percentVal = DOUBLE_TO_JSVAL(percent);
         
-        JS_AddValueRoot(cx, &percentVal);
+        JS_AddValueRoot(cx, &percentVal); 
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &percentVal, &retval);
         JS_RemoveValueRoot(cx, &percentVal);
     }
@@ -349,7 +346,7 @@ void JSArmatureWrapper::frameCallbackFunc(cocos2d::extension::CCBone *pBone, con
     JSObject *thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
     js_proxy_t *proxy = js_get_or_create_proxy(cx, pBone);
     jsval retval;
-    if (jsCallback != JSVAL_VOID)
+	if (jsCallback != JSVAL_VOID && jsCallback != JSVAL_NULL)
     {
         jsval nameVal = c_string_to_jsval(cx, frameEventName);
         jsval originIndexVal = INT_TO_JSVAL(originFrameIndex);
@@ -361,9 +358,11 @@ void JSArmatureWrapper::frameCallbackFunc(cocos2d::extension::CCBone *pBone, con
         valArr[2] = originIndexVal;
         valArr[3] = currentIndexVal;
         
-        JS_AddValueRoot(cx, valArr);
-        JS_CallFunctionValue(cx, thisObj, jsCallback, 4, valArr, &retval);
-        JS_RemoveValueRoot(cx, valArr);
+		JS_AddValueRoot(cx, valArr);
+		JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET;
+		JS_CallFunctionValue(cx, thisObj, jsCallback, 4, valArr, &retval);
+		JS_RemoveValueRoot(cx, valArr);
+		
     }
 }
 
@@ -661,6 +660,8 @@ void register_all_cocos2dx_studio_manual(JSContext* cx, JSObject* global)
     JS_DefineFunction(cx, jsb_ColliderBody_prototype, "getCalculatedVertexList", js_cocos2dx_studio_ColliderBody_getCalculatedVertexList, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_Widget_prototype, "addTouchEventListener", js_cocos2dx_Widget_addTouchEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+
+	JS_DefineFunction(cx, jsb_Widget_prototype, "addPressStateChangeEventListener", js_cocos2dx_Widget_addPressStateChangeEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_CheckBox_prototype, "addEventListenerCheckBox", js_cocos2dx_CheckBox_addEventListener, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 

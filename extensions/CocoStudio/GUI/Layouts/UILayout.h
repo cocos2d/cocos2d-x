@@ -184,6 +184,8 @@ public:
     virtual void setClippingEnabled(bool enabled);
     
     void setClippingType(LayoutClippingType type);
+
+	void setStencilClippingVertices(CCPoint *verts, unsigned int count);
     
     LayoutClippingType getClippingType();
     
@@ -306,6 +308,7 @@ protected:
     CCRect _clippingRect;
     Layout* _clippingParent;
     bool _doLayoutDirty;
+	bool _clippingStencilDraw;
     bool _clippingRectDirty;
     ccColor3B _backGroundImageColor;
     GLubyte _backGroundImageOpacity;

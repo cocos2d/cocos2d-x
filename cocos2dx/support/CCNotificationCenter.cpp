@@ -68,7 +68,10 @@ bool CCNotificationCenter::observerExisted(CCObject *target,const char *name)
     CCARRAY_FOREACH(m_observers, obj)
     {
         CCNotificationObserver* observer = (CCNotificationObserver*) obj;
-        if (observer && observer->getTarget() == target && !strcmp(observer->getName(),name))
+        if (!observer)
+            continue;
+        
+        if (!strcmp(observer->getName(),name) && observer->getTarget() == target)
             return true;
     }
     return false;
@@ -173,7 +176,7 @@ void CCNotificationCenter::postNotification(const char *name, CCObject *object)
         if (!observer)
             continue;
         
-        if ((observer->getObject() == object || observer->getObject() == NULL || object == NULL) && !strcmp(name,observer->getName()))
+        if (!strcmp(name,observer->getName()) && (observer->getObject() == object || observer->getObject() == NULL || object == NULL))
         {
             if (0 != observer->getHandler())
             {

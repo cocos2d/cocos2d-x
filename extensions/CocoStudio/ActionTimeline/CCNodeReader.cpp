@@ -205,23 +205,25 @@ void NodeReader::init()
     _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadParticle)),   ClassName_Particle);
 
 
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Button);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_CheckBox);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_ImageView);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_LabelAtlas);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_LabelBMFont);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Text);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_LoadingBar);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Slider);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Layout);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_ScrollView);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_ListView);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_PageView);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Widget);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Panel);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Label);
-    _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_TextField);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Button);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_CheckBox);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_ImageView);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_LabelAtlas);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_LabelBMFont);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Text);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_LoadingBar);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Slider);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Layout);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_ScrollView);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_ListView);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_PageView);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Widget);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Panel);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Label);
+	_funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_TextField);
+	
 
+	_guiReader = new WidgetPropertiesReader0300();
 }
 
 cocos2d::CCNode* NodeReader::createNode(const std::string& filename)
@@ -403,7 +405,7 @@ void NodeReader::initNode(cocos2d::CCNode* node, const rapidjson::Value& json)
     }
 
     node->setTag(tag);
-    node->setUserObject(TimelineActionData::create(actionTag));
+	node->setUserObject(TimelineActionData::create(actionTag));
 }
 
 
@@ -432,27 +434,27 @@ CCNode* NodeReader::loadSprite(const rapidjson::Value& json, cocos2d::CCNode* pa
 
     CCSprite *sprite = NULL;
 
-    if(filePath != NULL)
-    {
+	if(filePath != NULL)
+	{
         std::string path = filePath;
-        CCSpriteFrame* spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(path.c_str());
-        if(!spriteFrame)
+		CCSpriteFrame* spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(path.c_str());
+		if(!spriteFrame)
         {
             path = _jsonPath + path;
-            sprite = CCSprite::create(path.c_str());
-        }
-        else
-        {
-            sprite = CCSprite::createWithSpriteFrame(spriteFrame);
-        }
+			sprite = CCSprite::create(path.c_str());
+		}
+		else
+		{
+			sprite = CCSprite::createWithSpriteFrame(spriteFrame);
+		}
 
-        if(sprite == NULL)
-            CCLOG("create sprite with file name : %s  failed.", filePath);
-    }
-    else
-    {
-        sprite = CCSprite::create();
-    }
+		if(sprite == NULL)
+			CCLOG("create sprite with file name : %s  failed.", filePath);
+	}
+	else
+	{
+		sprite = CCSprite::create();
+	}
 
     initNode(sprite, json);
 
@@ -469,13 +471,13 @@ CCNode* NodeReader::loadSprite(const rapidjson::Value& json, cocos2d::CCNode* pa
 
 CCNode* NodeReader::loadParticle(const rapidjson::Value& json, cocos2d::CCNode* parent)
 {
-    const char* filePath = DICTOOL->getStringValue_json(json, PLIST_FILE);
+	const char* filePath = DICTOOL->getStringValue_json(json, PLIST_FILE);
 
-    CCParticleSystemQuad* particle = CCParticleSystemQuad::create(filePath);
+	CCParticleSystemQuad* particle = CCParticleSystemQuad::create(filePath);
 
-    initNode(particle, json);
+	initNode(particle, json);
 
-    return particle;
+	return particle;
 }
 
 CCNode* NodeReader::loadWidget(const rapidjson::Value& json, cocos2d::CCNode* parent)

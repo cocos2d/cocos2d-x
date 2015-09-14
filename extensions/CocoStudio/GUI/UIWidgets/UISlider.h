@@ -81,6 +81,8 @@ public:
     void setScale9Enabled(bool able);
     
     bool isScale9Enabled();
+
+	void setProgressBarTextureSize(float width, float height);
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.

@@ -171,10 +171,18 @@ float CCArmatureAnimation::getSpeedScale() const
 
 void CCArmatureAnimation::play(const char *animationName, int durationTo, int durationTween,  int loop, int tweenEasing)
 {
-    CCAssert(m_pAnimationData, "m_pAnimationData can not be null");
+	if (!m_pAnimationData) 
+	{
+		CCLOG("CCArmatureAnimation::play>m_pAnimationData can not be null");
+		return;
+	}
 
     m_pMovementData = m_pAnimationData->getMovement(animationName);
-    CCAssert(m_pMovementData, "m_pMovementData can not be null");
+	if (!m_pMovementData)
+	{
+		CCLOG("CCArmatureAnimation::play>m_pMovementData(%s) can not be null", animationName);
+		return;
+	}
 
     //! Get key frame count
     m_iRawDuration = m_pMovementData->duration;

@@ -54,7 +54,7 @@ _alongVector(CCPoint(0.0f, -1.0f)),
 _cOpacity(255),
 _backGroundImageTextureSize(CCSizeZero),
 _layoutType(LAYOUT_ABSOLUTE),
-_clippingType(LAYOUT_CLIPPING_STENCIL),
+_clippingType(LAYOUT_CLIPPING_SCISSOR),
 _clippingStencil(NULL),
 _handleScissor(false),
 _scissorRectDirty(false),
@@ -62,6 +62,7 @@ _clippingRect(CCRectZero),
 _clippingParent(NULL),
 _doLayoutDirty(true),
 _clippingRectDirty(true),
+_clippingStencilDraw(true),
 _backGroundImageColor(ccWHITE),
 _backGroundImageOpacity(255)
 {
@@ -362,6 +363,14 @@ void Layout::setClippingType(LayoutClippingType type)
     _clippingType = type;
     setClippingEnabled(clippingEnabled);
 }
+
+void Layout::setStencilClippingVertices(CCPoint *verts, unsigned int count) {
+	_clippingStencilDraw = false;
+	setClippingType(LAYOUT_CLIPPING_STENCIL);
+	ccColor4F green = ccc4f(0, 1, 0, 1);
+	_clippingStencil->clear();
+	_clippingStencil->drawPolygon(verts, count, green, 0, green);
+}
     
 LayoutClippingType Layout::getClippingType()
 {
@@ -370,7 +379,7 @@ LayoutClippingType Layout::getClippingType()
     
 void Layout::setStencilClippingSize(const CCSize &size)
 {
-    if (_clippingEnabled && _clippingType == LAYOUT_CLIPPING_STENCIL)
+	if (_clippingEnabled && _clippingStencilDraw && _clippingType == LAYOUT_CLIPPING_STENCIL)
     {
         CCPoint rect[4];
         rect[0] = CCPointZero;

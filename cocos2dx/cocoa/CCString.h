@@ -90,6 +90,9 @@ public:
     /** convert to bool value */
     bool boolValue() const;
 
+	/** get string */
+	const std::string& getString() const;
+
     /** get the C string */
     const char* getCString() const;
 

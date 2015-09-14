@@ -41,6 +41,8 @@ namespace tinyxml2
 NS_CC_EXT_BEGIN
 
 typedef struct _DataInfo DataInfo;
+typedef struct _LoadCfgNode  LoadCfgNode;
+
 /**
 *   @js NA
 *   @lua NA
@@ -112,38 +114,38 @@ public:
 public:
     static void addDataFromJsonCache(const char *fileContent, DataInfo *dataInfo = NULL);
 
-    static CCArmatureData *decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCBoneData *decodeBone(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCDisplayData *decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCAnimationData *decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCMovementData *decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCArmatureData *decodeArmature(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCBoneData *decodeBone(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCDisplayData *decodeBoneDisplay(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCAnimationData *decodeAnimation(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCMovementData *decodeMovement(const rapidjson::Value &json, DataInfo *dataInfo);
     
-    static CCMovementBoneData *decodeMovementBone(const rapidjson::Value &json, DataInfo *dataInfo);
-    static CCFrameData *decodeFrame(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCMovementBoneData *decodeMovementBone(const rapidjson::Value &json, DataInfo *dataInfo);
+	static CCFrameData *decodeFrame(const rapidjson::Value &json, DataInfo *dataInfo);
 
-    static CCTextureData *decodeTexture(const rapidjson::Value &json);
-    static CCContourData *decodeContour(const rapidjson::Value &json);
+	static CCTextureData *decodeTexture(const rapidjson::Value &json);
+	static CCContourData *decodeContour(const rapidjson::Value &json);
 
-    static void decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo);
+	static void decodeNode(CCBaseData *node, const rapidjson::Value &json, DataInfo *dataInfo);
 
 public:
-    static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = NULL);
-    static CCArmatureData *decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-    static CCBoneData *decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-    static CCDisplayData *decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-    static CCAnimationData *decodeAnimation(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-    static CCMovementData *decodeMovement(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static void addDataFromBinaryCache(const char *fileContent, DataInfo *dataInfo = NULL);
+	static CCArmatureData *decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static CCBoneData *decodeBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static CCDisplayData *decodeBoneDisplay(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static CCAnimationData *decodeAnimation(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static CCMovementData *decodeMovement(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 
-    static CCMovementBoneData *decodeMovementBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
-    static CCFrameData *decodeFrame(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static CCMovementBoneData *decodeMovementBone(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static CCFrameData *decodeFrame(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 
-    static CCTextureData *decodeTexture(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
-    static CCContourData *decodeContour(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
+	static CCTextureData *decodeTexture(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
+	static CCContourData *decodeContour(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode);
 
-    static void decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
+	static void decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 
 private:
-    static std::vector<std::string> s_arrConfigFileList;
+	static std::vector<LoadCfgNode> s_arrConfigFileList;
 
     static CCDataReaderHelper *s_DataReaderHelper;
 };
