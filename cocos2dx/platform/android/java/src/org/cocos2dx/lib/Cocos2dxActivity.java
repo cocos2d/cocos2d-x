@@ -27,6 +27,7 @@ import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -153,7 +154,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 	}
 	
     public Cocos2dxGLSurfaceView onCreateView() {
-    	return new Cocos2dxGLSurfaceView(this);
+    	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+        glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
+        glSurfaceView.getHolder().setFormat(PixelFormat.RGB_565);
+        return glSurfaceView;
     }
 
    private final static boolean isAndroidEmulator() {

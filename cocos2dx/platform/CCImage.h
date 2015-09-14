@@ -160,9 +160,6 @@ public:
     unsigned char *   getData()               { return m_pData; }
     int               getDataLen()            { return m_nWidth * m_nHeight; }
 
-	unsigned char *   getPalette()			  { return m_pPlt; }
-	int				  getPaletteNum()		  { return m_nPaletteNum; }
-
 	const std::string&getPixelFormatToUse()	  { return m_strPixelFormatToUse; }
 
     bool hasAlpha()                     { return m_bHasAlpha;   }
@@ -180,9 +177,6 @@ public:
     CC_SYNTHESIZE_READONLY(unsigned short,   m_nHeight,      Height);
     CC_SYNTHESIZE_READONLY(int,     m_nBitsPerComponent,   BitsPerComponent);
 
-public:
-	static bool s_enablePng8Render;
-
 protected:
     bool _initWithJpgData(void *pData, int nDatalen);
     bool _initWithPngData(void *pData, int nDatalen);
@@ -195,11 +189,9 @@ protected:
     bool _saveImageToJPG(const char *pszFilePath);
 
     unsigned char *m_pData;
-	unsigned char *m_pPlt;
     bool m_bHasAlpha;
     bool m_bPreMulti;
-	int  m_nPaletteNum;
-	std::string m_strPixelFormatToUse;
+    std::string m_strPixelFormatToUse;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     CCFreeTypeFont* m_ft;

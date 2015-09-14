@@ -648,32 +648,24 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, open)
  */
 JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, send)
 {
+
+    JSString *str = NULL;
+    std::string data;
+    
     // Clean up header map. New request, new headers!
     http_header.clear();
-	if (meth.compare("post") == 0 || meth.compare("POST") == 0) {
-		if (argc == 1) {
-			JSString *str = NULL;
-			JSObject *o = NULL;
-			
-			if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) && JS_IsArrayBufferObject(o)) {
-				uint8_t* data = JS_GetArrayBufferData(o);
-				uint32_t len = JS_GetArrayBufferByteLength(o);
-				if (data != NULL && len > 0) {
-					cc_request->setRequestData((char*)data, len);
-				}
-			}
-			else if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
-				JSStringWrapper strWrap(str);
-				std::string data = strWrap.get();
-				if (data.length() > 0) {
-					cc_request->setRequestData(data.c_str(), data.length());
-				}
-			}
-			else{
-				return JS_FALSE;
-			}
-		}
-	}
+    if (argc == 1) {
+        if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &str)) {
+            return JS_FALSE;
+        };
+        JSStringWrapper strWrap(str);
+        data = strWrap.get();
+    }
+
+
+    if (data.length() > 0 && (meth.compare("post") == 0 || meth.compare("POST") == 0)) {
+        cc_request->setRequestData(data.c_str(), data.length());
+    }
 
     _setHttpRequestHeader();
     _sendRequest(cx);
@@ -706,7 +698,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, getAllResponseHeaders)
     responseheader = responseheaders.str();
     
 //    JSString* str = JS_NewStringCopyZ(cx, responseheader.c_str());
-//    
+    
 //    if (str) {
 //        JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(str));
     jsval strVal = std_string_to_jsval(cx, responseheader);

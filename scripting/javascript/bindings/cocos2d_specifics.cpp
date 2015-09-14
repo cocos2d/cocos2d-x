@@ -8,29 +8,6 @@
 
 USING_NS_CC_EXT;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-extern "C"
-{
-	void SendLogToSvrJni(const char* spec);
-	void RestartApp();
-	void ExitApp();
-	bool IsWiFiActive();
-
-	int __srget(FILE *stream)
-	{
-		return getc(stream);
-	}
-}
-#else
-extern "C"
-{
-	void SendLogToSvrJni(const char* spec)  {}
-	void RestartApp() { CCLOG("RestartApp Not Impl"); }
-	void ExitApp() { CCLOG("ExitApp Not Impl"); }
-	bool IsWiFiActive() { CCLOG("ExitApp Not Impl"); return false; }
-}
-#endif
-
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
 schedTarget_proxy_t *_schedObj_target_ht = NULL;
 callfuncTarget_proxy_t *_callfuncTarget_native_ht = NULL;
@@ -777,61 +754,6 @@ JSBool js_platform(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-JSBool TouchDispatchEvents(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	do {
-		if (argc == 1) {
-			JSBool arg0;
-			ok &= JS_ValueToBoolean(cx, argv[0], &arg0);
-			JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-			CCDirector::sharedDirector()->getTouchDispatcher()->setDispatchEvents(arg0);
-			JS_SET_RVAL(cx, vp, JSVAL_VOID);
-			return JS_TRUE;
-		}
-	} while (0);
-	return JS_FALSE;
-}
-
-JSBool SendLogToSvr(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	jsval *argv = JS_ARGV(cx, vp);
-	JSBool ok = JS_TRUE;
-	do {
-		if (argc == 1) {
-			const char* arg0;
-			std::string arg0_tmp; 
-			ok &= jsval_to_std_string(cx, argv[0], &arg0_tmp); 
-			arg0 = arg0_tmp.c_str();
-
-			JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
-			SendLogToSvrJni(arg0);
-			JS_SET_RVAL(cx, vp, JSVAL_VOID);
-			return JS_TRUE;
-		}
-	} while (0);
-	return JS_FALSE;
-}
-
-JSBool restartApp(JSContext *cx, uint32_t argc, jsval *vp) {
-	RestartApp();
-	return JS_TRUE;
-}
-
-JSBool isWiFiActive(JSContext *cx, uint32_t argc, jsval *vp) {
-	bool ret = IsWiFiActive();
-	jsval jsret;
-	jsret = BOOLEAN_TO_JSVAL(ret);
-	JS_SET_RVAL(cx, vp, jsret);
-	return JS_TRUE;
-}
-
-JSBool exitApp(JSContext *cx, uint32_t argc, jsval *vp) {
-	ExitApp();
-	return JS_TRUE;
-}
-
 JSCallbackWrapper::JSCallbackWrapper()
 : m_jsArmatureWrapper(JSVAL_VOID), jsCallback(JSVAL_VOID), jsThisObj(JSVAL_VOID), extraData(JSVAL_VOID)
 {
@@ -843,13 +765,13 @@ JSCallbackWrapper::JSCallbackWrapper()
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
 	JS_RemoveValueRoot(cx, &this->m_jsArmatureWrapper);
 }
 
 void JSCallbackWrapper::setJSCallbackFunc(jsval obj)
 {
-	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
 	JSObject* jsArmatureWrapper = JSVAL_TO_OBJECT(this->m_jsArmatureWrapper);
 	JS_SetProperty(cx, jsArmatureWrapper, "selector", &obj);
 	jsCallback = obj;
@@ -860,14 +782,14 @@ void JSCallbackWrapper::setJSCallbackThis(jsval thisObj)
 	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
 	JSObject* jsArmatureWrapper = JSVAL_TO_OBJECT(this->m_jsArmatureWrapper);
 	JS_SetProperty(cx, jsArmatureWrapper, "listener", &thisObj);
-	jsThisObj = thisObj;
+    jsThisObj = thisObj;
 }
 
 void JSCallbackWrapper::setJSExtraData(jsval data) {
 	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
 	JSObject* jsArmatureWrapper = JSVAL_TO_OBJECT(this->m_jsArmatureWrapper);
 	JS_SetProperty(cx, jsArmatureWrapper, "extraData", &data);
-	extraData = data;
+    extraData = data;
 }
 
 const jsval& JSCallbackWrapper::getJSCallbackFunc() const
@@ -920,7 +842,6 @@ void JSCallFuncWrapper::callbackFunc(CCNode *node) const {
 
     bool hasExtraData = !JSVAL_IS_VOID(extraData);
     JSObject* thisObj = JSVAL_IS_VOID(jsThisObj) ? NULL : JSVAL_TO_OBJECT(jsThisObj);
-
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
 	js_proxy_t *proxy = NULL;
 	if (node) {
@@ -3095,35 +3016,27 @@ JSBool js_cocos2dx_Layout_setStencilClippingVertices(JSContext *cx, uint32_t arg
 	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 	cocos2d::ui::Layout* cobj = (cocos2d::ui::Layout*)(proxy ? proxy->ptr : NULL);
 	TEST_NATIVE_OBJECT(cx, cobj)
-
 	if (argc == 1) {
 		jsval *argvp = JS_ARGV(cx, vp);
 		JSBool ok = JS_TRUE;
 		JSObject *argArray = NULL;
-
-		// Points
 		ok &= JS_ValueToObject(cx, *argvp++, &argArray);
 		JSB_PRECONDITION2((argArray && JS_IsArrayObject(cx, argArray)), cx, JS_FALSE, "Vertex should be anArray object");
-
 		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error parsing arguments");
 		{
 			uint32_t l;
 			if (!JS_GetArrayLength(cx, argArray, &l))
 				return JS_FALSE;
-
 			CCPoint* verts = new CCPoint[l];
 			CCPoint p;
-
 			for (uint32_t i = 0; i < l; i++) {
 				jsval pointvp;
 				ok &= JS_GetElement(cx, argArray, i, &pointvp);
 				JSB_PRECONDITION2(ok, cx, JS_FALSE, "JS_GetElement fails.");
-
 				ok &= jsval_to_ccpoint(cx, pointvp, &p);
 				JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
 				verts[i] = p;
 			}
-
 			cobj->setStencilClippingVertices(verts, l);
 			CC_SAFE_DELETE_ARRAY(verts);
 		}
@@ -3133,7 +3046,6 @@ JSBool js_cocos2dx_Layout_setStencilClippingVertices(JSContext *cx, uint32_t arg
 	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
 	return JS_FALSE;
 }
-
 static JSBool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::string>& ret) {
     JSObject *jsobj;
     JSBool ok = JS_ValueToObject( cx, v, &jsobj );
@@ -3635,11 +3547,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
 	JS_DefineFunction(cx, global, "__associateObjWithNative", js_cocos2dx_swap_native_object, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, global, "__getPlatform", js_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, global, "TouchDispatchEvents", TouchDispatchEvents, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, global, "SendLogToSvr", SendLogToSvr, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, global, "restartApp", restartApp, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, global, "exitApp", exitApp, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, global, "isWiFiActive", isWiFiActive, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 	JSObject *tmpObj;
 
@@ -3687,7 +3594,6 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_CCDrawNode_prototype, "drawPoly", js_cocos2dx_CCDrawNode_drawPolygon, 4, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCDrawNode_prototype, "setBlendFunc", js_cocos2dx_CCDrawNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-
 	JS_DefineFunction(cx, jsb_Layout_prototype, "setStencilClippingVertices", js_cocos2dx_Layout_setStencilClippingVertices, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_CCTexture2D_prototype, "setTexParameters", js_cocos2dx_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE  | JSPROP_PERMANENT);

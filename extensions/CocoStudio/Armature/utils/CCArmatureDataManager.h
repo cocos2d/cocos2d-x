@@ -168,6 +168,7 @@ public:
     CCDictionary *getArmatureDatas() const;
     CCDictionary *getAnimationDatas() const;
     CCDictionary *getTextureDatas() const;
+	bool isDataLoaded(const char *id);
 
 protected:
     void addRelativeData(const char* configFilePath);
@@ -181,7 +182,7 @@ private:
     CCDictionary *m_pArmarureDatas;
 
     /**
-     *  @brief  save animation datas
+     *	@brief	save animation datas
      *  @key	std::string
      *  @value	CCAnimationData *
      */

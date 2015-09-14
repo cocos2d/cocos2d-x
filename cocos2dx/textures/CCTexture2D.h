@@ -141,7 +141,6 @@ public:
      * @lua NA
      */
     bool initWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh, const CCSize& contentSize);
-	bool initPaletteWithData(const void* data, CCTexture2DPixelFormat pixelFormat, unsigned int pixelsWide, unsigned int pixelsHigh);
 
     /**
     Drawing extensions to make it easy to draw basic quads using a CCTexture2D object.
@@ -263,8 +262,6 @@ public:
      */
     static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
 
-	static void enablePng8Render(bool value);
-
     /** content size */
     const CCSize& getContentSizeInPixels();
     
@@ -286,13 +283,6 @@ private:
     /** texture name */
     CC_PROPERTY_READONLY(GLuint, m_uName, Name)
 
-	/** texture name */
-	CC_PROPERTY_READONLY(GLuint, m_uNameIndex, NameIndex)
-
-	CC_PROPERTY_READONLY(int, m_nPaletteNum, PaletteNum)
-
-	
-
     /** texture max S */
     CC_PROPERTY(GLfloat, m_fMaxS, MaxS)
     /** texture max T */
@@ -307,8 +297,6 @@ private:
 
     /** shader program used by drawAtPoint and drawInRect */
     CC_PROPERTY(CCGLProgram*, m_pShaderProgram, ShaderProgram);
-
-	CCTexture2DPixelFormat getPixelFormatByStr(const std::string& type);
 };
 
 // end of textures group

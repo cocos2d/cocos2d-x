@@ -68,7 +68,38 @@ typedef struct _hashSelectorEntry
     UT_hash_handle      hh;
 } tHashTimerEntry;
 
+
+class Worker
+{
+public:
+	Worker(SEL_CallFuncO selector, CCObject* listener, CCObject* arg)
+		: m_selector(selector)
+		, m_listener(listener)
+		, m_arg(arg)
+	{
+		CC_SAFE_RETAIN(m_listener);
+		CC_SAFE_RETAIN(m_arg);
+	}
+	void operator ()()
+	{
+		if (m_selector && m_listener)
+		{
+			(m_listener->*m_selector)(m_arg);
+		}
+	}
+	~Worker() 
+	{
+		CC_SAFE_RELEASE(m_listener);
+		CC_SAFE_RELEASE(m_arg);
+	}
+private:
+	SEL_CallFuncO m_selector;
+	CCObject* m_arg;
+	CCObject* m_listener;
+};
+
 // implementation CCTimer
+
 
 CCTimer::CCTimer()
 : m_pTarget(NULL)
@@ -246,13 +277,23 @@ CCScheduler::CCScheduler(void)
 , m_bUpdateHashLocked(false)
 , m_pScriptHandlerEntries(NULL)
 {
-
+	pthread_mutex_init(&m_performMutex, NULL);
+	m_functionsToPerform.clear();
 }
 
 CCScheduler::~CCScheduler(void)
 {
     unscheduleAll();
     CC_SAFE_RELEASE(m_pScriptHandlerEntries);
+
+	pthread_mutex_lock(&m_performMutex);
+	for (std::list<Worker*>::iterator it = m_functionsToPerform.begin(), endIt = m_functionsToPerform.end(); it != endIt; ++it) 
+	{
+		delete (*it);
+	}
+	m_functionsToPerform.clear();
+	pthread_mutex_unlock(&m_performMutex);
+	pthread_mutex_destroy(&m_performMutex);
 }
 
 void CCScheduler::removeHashElement(_hashSelectorEntry *pElement)
@@ -278,8 +319,10 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
 void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, float fInterval, unsigned int repeat, float delay, bool bPaused)
 {
-    CCAssert(pfnSelector, "Argument selector must be non-NULL");
-    CCAssert(pTarget, "Argument target must be non-NULL");
+	if (pTarget == 0 || pfnSelector == 0)
+	{
+		return;
+	}
 
     tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
@@ -330,14 +373,10 @@ void CCScheduler::scheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget, 
 
 void CCScheduler::unscheduleSelector(SEL_SCHEDULE pfnSelector, CCObject *pTarget)
 {
-    // explicity handle nil arguments when removing an object
     if (pTarget == 0 || pfnSelector == 0)
     {
         return;
     }
-
-    //CCAssert(pTarget);
-    //CCAssert(pfnSelector);
 
     tHashTimerEntry *pElement = NULL;
     HASH_FIND_INT(m_pHashForTimers, &pTarget, pElement);
@@ -652,7 +691,10 @@ void CCScheduler::unscheduleScriptEntry(unsigned int uScheduleScriptEntryID)
 
 void CCScheduler::resumeTarget(CCObject *pTarget)
 {
-    CCAssert(pTarget != NULL, "");
+	if (!pTarget) 
+	{
+		return;
+	}
 
     // custom selectors
     tHashTimerEntry *pElement = NULL;
@@ -665,16 +707,18 @@ void CCScheduler::resumeTarget(CCObject *pTarget)
     // update selector
     tHashUpdateEntry *pElementUpdate = NULL;
     HASH_FIND_INT(m_pHashForUpdates, &pTarget, pElementUpdate);
-    if (pElementUpdate)
+	if (pElementUpdate && pElementUpdate->entry != NULL)
     {
-        CCAssert(pElementUpdate->entry != NULL, "");
-        pElementUpdate->entry->paused = false;
+		pElementUpdate->entry->paused = false;
     }
 }
 
 void CCScheduler::pauseTarget(CCObject *pTarget)
 {
-    CCAssert(pTarget != NULL, "");
+	if (!pTarget)
+	{
+		return;
+	}
 
     // custom selectors
     tHashTimerEntry *pElement = NULL;
@@ -687,16 +731,18 @@ void CCScheduler::pauseTarget(CCObject *pTarget)
     // update selector
     tHashUpdateEntry *pElementUpdate = NULL;
     HASH_FIND_INT(m_pHashForUpdates, &pTarget, pElementUpdate);
-    if (pElementUpdate)
+	if (pElementUpdate && pElementUpdate->entry != NULL)
     {
-        CCAssert(pElementUpdate->entry != NULL, "");
-        pElementUpdate->entry->paused = true;
+		pElementUpdate->entry->paused = true;
     }
 }
 
 bool CCScheduler::isTargetPaused(CCObject *pTarget)
 {
-    CCAssert( pTarget != NULL, "target must be non nil" );
+	if (!pTarget)
+	{
+		return false;
+	}
 
     // Custom selectors
     tHashTimerEntry *pElement = NULL;
@@ -709,7 +755,7 @@ bool CCScheduler::isTargetPaused(CCObject *pTarget)
     // We should check update selectors if target does not have custom selectors
 	tHashUpdateEntry *elementUpdate = NULL;
 	HASH_FIND_INT(m_pHashForUpdates, &pTarget, elementUpdate);
-	if ( elementUpdate )
+	if (elementUpdate && elementUpdate->entry)
     {
 		return elementUpdate->entry->paused;
     }
@@ -778,6 +824,41 @@ void CCScheduler::resumeTargets(CCSet* pTargetsToResume)
         resumeTarget(*iter);
     }
 }
+
+void CCScheduler::performFunctionInCocosThread(SEL_CallFuncO selector, CCObject* listener, CCObject* arg)
+{
+	Worker* worker = new Worker(selector, listener, arg);
+	pthread_mutex_lock(&m_performMutex);
+	m_functionsToPerform.push_back(worker);
+	pthread_mutex_unlock(&m_performMutex);
+}
+
+CCNode* CCScheduler::seekNodeByAddress(CCNode* root, int addr)
+{
+	if (!root)
+	{
+		return NULL;
+	}
+	if ((int)root == addr)
+	{
+		return root;
+	}
+
+	const CCArray* arrayRootChildren = root->getChildren();
+	CCObject* pObj = NULL;
+
+	CCARRAY_FOREACH(arrayRootChildren, pObj)
+	{
+		CCNode* child = (CCNode*)pObj;
+		CCNode* ret = seekNodeByAddress(child, addr);
+		if (ret != NULL)
+		{
+			return ret;
+		}
+	}
+	return NULL;
+}
+
 
 // main loop
 void CCScheduler::update(float dt)
@@ -904,9 +985,26 @@ void CCScheduler::update(float dt)
     }
 
     m_bUpdateHashLocked = false;
-
     m_pCurrentTarget = NULL;
-}
 
+	if (!m_functionsToPerform.empty()) 
+	{
+		pthread_mutex_lock(&m_performMutex);
+		std::list<Worker*> functions;
+		int size = MIN(m_functionsToPerform.size(), 5);
+		while (size-- > 0)
+		{
+			functions.push_back(m_functionsToPerform.front());
+			m_functionsToPerform.pop_front();
+		}
+		pthread_mutex_unlock(&m_performMutex);
+
+		for (std::list<Worker*>::iterator it = functions.begin(), endIt = functions.end(); it != endIt; ++it)
+		{
+			(**it)();
+			delete *it;
+		}
+	}
+}
 
 NS_CC_END

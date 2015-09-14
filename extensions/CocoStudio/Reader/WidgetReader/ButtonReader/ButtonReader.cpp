@@ -30,6 +30,11 @@ ButtonReader* ButtonReader::getInstance()
 
 void ButtonReader::purge()
 {
+    ButtonReader::destroyInstance();
+}
+
+void ButtonReader::destroyInstance()
+{
     CC_SAFE_DELETE(instanceButtonReader);
 }
 
@@ -38,7 +43,7 @@ void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::Button* button = (ui::Button*)widget;
     bool scale9Enable = DICTOOL->getBooleanValue_json(options, "scale9Enable");

@@ -327,7 +327,12 @@ static void *loadData(void *)
 
 CCDataReaderHelper *CCDataReaderHelper::sharedDataReaderHelper()
 {
-    if(!s_DataReaderHelper)
+    return CCDataReaderHelper::getInstance();
+}
+
+CCDataReaderHelper *CCDataReaderHelper::getInstance()
+{
+    if (!s_DataReaderHelper)
     {
         s_DataReaderHelper = new CCDataReaderHelper();
     }
@@ -347,6 +352,11 @@ float CCDataReaderHelper::getPositionReadScale()
 
 
 void CCDataReaderHelper::purge()
+{
+    CCDataReaderHelper::destroyInstance();
+}
+
+void CCDataReaderHelper::destroyInstance()
 {
     s_arrConfigFileList.clear();
     CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
@@ -515,7 +525,7 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
     data->baseFilePath = basefilePath;
     data->target = target;
     data->selector = selector;
-    data->autoLoadSpriteFile = CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile();
+    data->autoLoadSpriteFile = CCArmatureDataManager::getInstance()->isAutoLoadSpriteFile();
 
     data->imagePath = imagePath;
     data->plistPath = plistPath;
@@ -575,7 +585,7 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
         if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
         {
             pthread_mutex_lock(&s_GetFileDataMutex);
-            CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str());
+            CCArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath.c_str(), pAsyncStruct->imagePath.c_str());
             pthread_mutex_unlock(&s_GetFileDataMutex);
         }
 
@@ -583,7 +593,7 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
         {
             std::string configPath = pDataInfo->configFileQueue.front();
             pthread_mutex_lock(&s_GetFileDataMutex);
-			CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str(), pAsyncStruct->filename.c_str());
+            CCArmatureDataManager::getInstance()->addSpriteFrameFromFile((pAsyncStruct->baseFilePath + configPath + ".plist").c_str(), (pAsyncStruct->baseFilePath + configPath + ".png").c_str());
             pthread_mutex_unlock(&s_GetFileDataMutex);
             pDataInfo->configFileQueue.pop();
         }
@@ -665,7 +675,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+        CCArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
         armatureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -688,7 +698,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+        CCArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
         animationData->release();
         if (dataInfo->asyncStruct)
         {
@@ -711,7 +721,7 @@ void CCDataReaderHelper::addDataFromCache(const char *pFileContent, DataInfo *da
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+        CCArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
         textureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -840,7 +850,7 @@ CCAnimationData *CCDataReaderHelper::decodeAnimation(tinyxml2::XMLElement *anima
 
     const char	*name = animationXML->Attribute(A_NAME);
 
-    CCArmatureData *armatureData = CCArmatureDataManager::sharedArmatureDataManager()->getArmatureData(name);
+    CCArmatureData *armatureData = CCArmatureDataManager::getInstance()->getArmatureData(name);
 
     aniData->name = name;
 
@@ -1356,7 +1366,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+        CCArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
         armatureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1376,7 +1386,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+        CCArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
         animationData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1395,7 +1405,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
         {
             pthread_mutex_lock(&s_addDataMutex);
         }
-        CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+        CCArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
         textureData->release();
         if (dataInfo->asyncStruct)
         {
@@ -1405,7 +1415,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
     }
 
     // Auto load sprite file
-    bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+    bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::getInstance()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
     if (autoLoad)
     {
         length =  DICTOOL->getArrayCount_json(json, CONFIG_FILE_PATH); 
@@ -1430,7 +1440,7 @@ void CCDataReaderHelper::addDataFromJsonCache(const char *fileContent, DataInfo 
                 std::string plistPath = filePath + ".plist";
                 std::string pngPath =  filePath + ".png";
 
-                CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+                CCArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
             }
         }
     }
@@ -1849,99 +1859,99 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 			stExpCocoNode *tpChildArray = tpRootCocoNode->GetChildArray(&tCocoLoader);
 			int nCount = tpRootCocoNode->GetChildNum();
 
-			dataInfo->contentScale = 1.0f;
-			int length = 0;
-			std::string key;
-			stExpCocoNode* pDataArray; 
-			for (int i = 0; i < nCount; ++i)
-			{
-			    key = tpChildArray[i].GetName(&tCocoLoader);
-				if (key.compare(CONTENT_SCALE) == 0)
-				{
-					std::string value = tpChildArray[i].GetValue(&tCocoLoader);
-					dataInfo->contentScale = atof(value.c_str());
-				}
-				else if ( 0 == key.compare(ARMATURE_DATA))
-				{
-					pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
-					length = tpChildArray[i].GetChildNum();
-					CCArmatureData * armatureData;
-					for (int i = 0; i < length; ++i)
-					{
-						armatureData = decodeArmature(&tCocoLoader, &pDataArray[i], dataInfo);
-						if (dataInfo->asyncStruct)
-						{
-							pthread_mutex_lock(&s_addDataMutex);
-						}
-						CCArmatureDataManager::sharedArmatureDataManager()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
-						armatureData->release();
-						if (dataInfo->asyncStruct)
-						{
-							pthread_mutex_unlock(&s_addDataMutex);
-						}
-					}
-				}
-				else if ( 0 == key.compare(ANIMATION_DATA))
-				{
-					pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
-					length = tpChildArray[i].GetChildNum();
-					CCAnimationData *animationData;
-					for (int i = 0; i < length; ++i)
-					{
-						animationData = decodeAnimation(&tCocoLoader, &pDataArray[i], dataInfo);
-						if (dataInfo->asyncStruct)
-						{
-							pthread_mutex_lock(&s_addDataMutex);
-						}
-						CCArmatureDataManager::sharedArmatureDataManager()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
-						animationData->release();
-						if (dataInfo->asyncStruct)
-						{
-							pthread_mutex_unlock(&s_addDataMutex);
-						}
-					}
-				}
-				else if (key.compare(TEXTURE_DATA) == 0)
-				{
-					pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
-					length = tpChildArray[i].GetChildNum();
-					for (int i = 0; i < length; ++i)
-					{
-						CCTextureData *textureData = decodeTexture(&tCocoLoader, &pDataArray[i]);
-						if (dataInfo->asyncStruct)
-						{
-							pthread_mutex_lock(&s_addDataMutex);
-						}
-						CCArmatureDataManager::sharedArmatureDataManager()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
-						textureData->release();
-						if (dataInfo->asyncStruct)
-						{
-							pthread_mutex_unlock(&s_addDataMutex);
-						}
-					}
-				}
-			}
-			// Auto losprite file
-			bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::sharedArmatureDataManager()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
-			if (autoLoad)
-			{
-				for (int i = 0; i < nCount; ++i)
-				{
-					key = tpChildArray[i].GetName(&tCocoLoader);
-					if( 0 != key.compare(CONFIG_FILE_PATH))
-					{
-						continue;
-					}
-					length = tpChildArray[i].GetChildNum();
-					stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray(&tCocoLoader);
-					for (int i = 0; i < length; i++)
-					{
-						const char *path = pConfigFilePath[i].GetValue(&tCocoLoader);
-						if (path == NULL)
-						{
-							CCLOG("load CONFIG_FILE_PATH error.");
-							return;
-						}
+            dataInfo->contentScale = 1.0f;
+            int length = 0;
+            std::string key;
+            stExpCocoNode* pDataArray; 
+            for (int i = 0; i < nCount; ++i)
+            {
+                key = tpChildArray[i].GetName(&tCocoLoader);
+                if (key.compare(CONTENT_SCALE) == 0)
+                {
+                    std::string value = tpChildArray[i].GetValue(&tCocoLoader);
+                    dataInfo->contentScale = atof(value.c_str());
+                }
+                else if ( 0 == key.compare(ARMATURE_DATA))
+                {
+                    pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
+                    length = tpChildArray[i].GetChildNum();
+                    CCArmatureData * armatureData;
+                    for (int i = 0; i < length; ++i)
+                    {
+                        armatureData = decodeArmature(&tCocoLoader, &pDataArray[i], dataInfo);
+                        if (dataInfo->asyncStruct)
+                        {
+                            pthread_mutex_lock(&s_addDataMutex);
+                        }
+                        CCArmatureDataManager::getInstance()->addArmatureData(armatureData->name.c_str(), armatureData, dataInfo->filename.c_str());
+                        armatureData->release();
+                        if (dataInfo->asyncStruct)
+                        {
+                            pthread_mutex_unlock(&s_addDataMutex);
+                        }
+                    }
+                }
+                else if ( 0 == key.compare(ANIMATION_DATA))
+                {
+                    pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
+                    length = tpChildArray[i].GetChildNum();
+                    CCAnimationData *animationData;
+                    for (int i = 0; i < length; ++i)
+                    {
+                        animationData = decodeAnimation(&tCocoLoader, &pDataArray[i], dataInfo);
+                        if (dataInfo->asyncStruct)
+                        {
+                            pthread_mutex_lock(&s_addDataMutex);
+                        }
+                        CCArmatureDataManager::getInstance()->addAnimationData(animationData->name.c_str(), animationData, dataInfo->filename.c_str());
+                        animationData->release();
+                        if (dataInfo->asyncStruct)
+                        {
+                            pthread_mutex_unlock(&s_addDataMutex);
+                        }
+                    }
+                }
+                else if (key.compare(TEXTURE_DATA) == 0)
+                {
+                    pDataArray = tpChildArray[i].GetChildArray(&tCocoLoader);
+                    length = tpChildArray[i].GetChildNum();
+                    for (int i = 0; i < length; ++i)
+                    {
+                        CCTextureData *textureData = decodeTexture(&tCocoLoader, &pDataArray[i]);
+                        if (dataInfo->asyncStruct)
+                        {
+                            pthread_mutex_lock(&s_addDataMutex);
+                        }
+                        CCArmatureDataManager::getInstance()->addTextureData(textureData->name.c_str(), textureData, dataInfo->filename.c_str());
+                        textureData->release();
+                        if (dataInfo->asyncStruct)
+                        {
+                            pthread_mutex_unlock(&s_addDataMutex);
+                        }
+                    }
+                }
+            }
+            // Auto losprite file
+            bool autoLoad = dataInfo->asyncStruct == NULL ? CCArmatureDataManager::getInstance()->isAutoLoadSpriteFile() : dataInfo->asyncStruct->autoLoadSpriteFile;
+            if (autoLoad)
+            {
+                for (int i = 0; i < nCount; ++i)
+                {
+                    key = tpChildArray[i].GetName(&tCocoLoader);
+                    if( 0 != key.compare(CONFIG_FILE_PATH))
+                    {
+                        continue;
+                    }
+                    length = tpChildArray[i].GetChildNum();
+                    stExpCocoNode *pConfigFilePath = tpChildArray[i].GetChildArray(&tCocoLoader);
+                    for (int i = 0; i < length; i++)
+                    {
+                        const char *path = pConfigFilePath[i].GetValue(&tCocoLoader);
+                        if (path == NULL)
+                        {
+                            CCLOG("load CONFIG_FILE_PATH error.");
+                            return;
+                        }
 
 						std::string filePath = path;
 						filePath = filePath.erase(filePath.find_last_of("."));
@@ -1955,13 +1965,13 @@ void CCDataReaderHelper::addDataFromBinaryCache(const char *fileContent, DataInf
 							std::string plistPath = filePath + ".plist";
 							std::string pngPath =  filePath + ".png";
 
-							CCArmatureDataManager::sharedArmatureDataManager()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
-						}
-					}
-				}
-			}
-		}
-	}
+                            CCArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 CCArmatureData* CCDataReaderHelper::decodeArmature(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo)

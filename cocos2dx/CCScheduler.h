@@ -29,6 +29,8 @@ THE SOFTWARE.
 
 #include "cocoa/CCObject.h"
 #include "support/data_support/uthash.h"
+#include <pthread.h>
+#include <list>
 
 NS_CC_BEGIN
 
@@ -123,6 +125,7 @@ struct _hashSelectorEntry;
 struct _hashUpdateEntry;
 
 class CCArray;
+class Worker;
 
 /** @brief Scheduler is responsible for triggering the scheduled callbacks.
 You should not use NSTimer. Instead use this class.
@@ -135,6 +138,8 @@ There are 2 different types of callbacks (selectors):
 The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
 
 */
+
+
 class CC_DLL CCScheduler : public CCObject
 {
 public:
@@ -282,6 +287,9 @@ public:
      */
     void resumeTargets(CCSet* targetsToResume);
 
+	void performFunctionInCocosThread(SEL_CallFuncO selector, CCObject* listener, CCObject* arg);
+	CCNode* seekNodeByAddress(CCNode* root, int addr);
+
 private:
     void removeHashElement(struct _hashSelectorEntry *pElement);
     void removeUpdateFromHash(struct _listEntry *entry);
@@ -309,6 +317,9 @@ protected:
     // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
     bool m_bUpdateHashLocked;
     CCArray* m_pScriptHandlerEntries;
+
+	std::list<Worker*> m_functionsToPerform;
+	pthread_mutex_t m_performMutex;
 };
 
 // end of global group
