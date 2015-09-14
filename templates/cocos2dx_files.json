@@ -5235,6 +5235,8 @@
         "tools/fbx-conv/mac/libfbxsdk.dylib", 
         "tools/missing-tools.txt", 
         "tools/particle/convert_YCoordFlipped.py", 
+        "tools/performance-analyze/README.md", 
+        "tools/performance-analyze/convertor.py", 
         "tools/simulator/.cocos-project.json", 
         "tools/simulator/.project", 
         "tools/simulator/config.json", 
