@@ -265,24 +265,17 @@ Node* CSLoader::createNode(const std::string& filename)
     CCLOG("suffix = %s", suffix.c_str());
     
     CSLoader* load = CSLoader::getInstance();
-    Node *node = nullptr;
+
     if (suffix == "csb")
     {
-        node = load->createNodeWithFlatBuffersFile(filename);
+        return load->createNodeWithFlatBuffersFile(filename);
     }
     else if (suffix == "json" || suffix == "ExportJson")
     {
-        node = load->createNodeFromJson(filename);
+        return load->createNodeFromJson(filename);
     }
 
-    if (node != nullptr)
-    {
-        Size frameSize = Director::getInstance()->getVisibleSize();
-        node->setContentSize(frameSize);
-        ui::Helper::doLayout(node);
-    }
-
-    return node;
+    return nullptr;
 }
 
 Node* CSLoader::createNode(const std::string &filename, const ccNodeLoadCallback &callback)
@@ -293,19 +286,36 @@ Node* CSLoader::createNode(const std::string &filename, const ccNodeLoadCallback
     CCLOG("suffix = %s", suffix.c_str());
     
     CSLoader* load = CSLoader::getInstance();
-    Node *node = nullptr;
+
     if (suffix == "csb")
     {
-        node = load->createNodeWithFlatBuffersFile(filename, callback);
+        return load->createNodeWithFlatBuffersFile(filename, callback);
     }
     
+    return nullptr;
+}
+
+Node* CSLoader::createNodeWithVisibleSize(const std::string& filename)
+{
+    auto node = createNode(filename);
     if (node != nullptr)
     {
         Size frameSize = Director::getInstance()->getVisibleSize();
         node->setContentSize(frameSize);
         ui::Helper::doLayout(node);
     }
+    return node;
+}
 
+Node* CSLoader::createNodeWithVisibleSize(const std::string &filename, const ccNodeLoadCallback &callback)
+{
+    auto node = createNode(filename, callback);
+    if (node != nullptr)
+    {
+        Size frameSize = Director::getInstance()->getVisibleSize();
+        node->setContentSize(frameSize);
+        ui::Helper::doLayout(node);
+    }
     return node;
 }
 
