@@ -16744,16 +16744,6 @@ getTextureRect : function (
 },
 
 /**
- * @method debugDraw
- * @param {bool} arg0
- */
-debugDraw : function (
-bool 
-)
-{
-},
-
-/**
  * @method initWithFile
 * @param {String|String} str
 * @param {rect_object} rect
