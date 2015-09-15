@@ -5,6 +5,7 @@
 import os, time
 import utils
 import shutil
+import sys
 
 from argparse import ArgumentParser
 
@@ -17,6 +18,9 @@ DOCUMENT_CONFIG = {
 
 OUTPUT_DIR = 'docs'
 GENERATE_FOLDER_NAME = 'html'
+
+class KnownException(Exception):
+    pass
 
 class Generator:
     def __init__(self, args):
@@ -48,17 +52,14 @@ class Generator:
 
     def do_generate(self):
         if not os.path.isfile(self.doxygen):
-            print('%s is not a valid file.' % self.doxygen)
-            return
+            raise KnownException('%s is not a valid file.' % self.doxygen)
 
         if self.do_upload:
             if self.ftp_ip is None:
-                print('To upload file, please specify the ftp ip by "--ftp-ip".')
-                return
+                raise KnownException('To upload file, please specify the ftp ip by "--ftp-ip".')
 
             if self.ftp_folder is None:
-                print('To upload file, please specify the ftp folder by "--ftp-folder".')
-                return
+                raise KnownException('To upload file, please specify the ftp folder by "--ftp-folder".')
 
         out_dir = os.path.join(self.engine_root, OUTPUT_DIR)
         engine_version = utils.get_src_engine_version(self.engine_root)
@@ -105,5 +106,12 @@ if __name__ == "__main__":
 
     (args, unknown) = parser.parse_known_args()
 
-    generator = Generator(args)
-    generator.do_generate()
+    try:
+        generator = Generator(args)
+        generator.do_generate()
+    except Exception as e:
+        if e.__class__.__name__ == 'KnownException':
+            print(' '.join(e.args))
+            sys.exit(1)
+        else:
+            raise e
