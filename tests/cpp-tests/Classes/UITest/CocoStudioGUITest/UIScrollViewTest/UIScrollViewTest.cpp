@@ -85,7 +85,7 @@ bool UIScrollViewTest_Vertical::init()
         
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
         scrollView->addChild(imageView);            
-      
+        scrollView->scrollToBottom(2.0, true);
         return true;
     }
     

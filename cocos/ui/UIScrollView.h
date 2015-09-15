@@ -357,7 +357,6 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     virtual void update(float dt) override;
-    virtual void setContentSize(const Size &contentSize) override;
 
     /**
      * @brief Toggle bounce enabled when scroll to the edge.
