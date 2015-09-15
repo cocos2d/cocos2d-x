@@ -212,11 +212,11 @@ ccs.loadWithVisibleSize = function(file, path){
     };
 
     object.node = ccs._load(file, null, path);
-	var size = cc.director.getVisibleSize();
-	if(object.node && size){
-		object.node.setContentSize(size.width, size.height);
-		ccui.helper.doLayout(object.node);
-	}
+    var size = cc.director.getVisibleSize();
+    if(object.node && size){
+        object.node.setContentSize(size.width, size.height);
+        ccui.helper.doLayout(object.node);
+    }
     object.action = ccs._load(file, "action", path);
     if(object.action && object.action.tag === -1 && object.node)
         object.action.tag = object.node.tag;
