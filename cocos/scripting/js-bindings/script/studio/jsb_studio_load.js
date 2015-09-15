@@ -206,20 +206,12 @@ ccs.load = function(file, path){
  * @returns {{node: cc.Node, action: cc.Action}}
  */
 ccs.loadWithVisibleSize = function(file, path){
-    var object = {
-        node: null,
-        action: null
-    };
-
-    object.node = ccs._load(file, null, path);
+    var object = ccs.load(file, path);
     var size = cc.director.getVisibleSize();
     if(object.node && size){
         object.node.setContentSize(size.width, size.height);
         ccui.helper.doLayout(object.node);
     }
-    object.action = ccs._load(file, "action", path);
-    if(object.action && object.action.tag === -1 && object.node)
-        object.action.tag = object.node.tag;
     return object;
 };
 
