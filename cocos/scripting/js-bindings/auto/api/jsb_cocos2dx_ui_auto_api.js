@@ -3362,6 +3362,14 @@ magnetictype
 },
 
 /**
+ * @method refreshViewIfNecessary
+ */
+refreshViewIfNecessary : function (
+)
+{
+},
+
+/**
  * @method getIndex
  * @param {ccui.Widget} arg0
  * @return {long}
