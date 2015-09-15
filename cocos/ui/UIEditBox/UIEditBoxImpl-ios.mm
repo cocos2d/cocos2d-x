@@ -108,9 +108,8 @@ static const int CC_EDIT_BOX_PADDING = 5;
         textField.delegate = self;
         textField.hidden = true;
         textField.returnKeyType = UIReturnKeyDefault;
-        
+        textField.autocorrectionType = UITextAutocorrectionTypeNo;
         [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
-
         
         self.textField = textField;
         self.editBox = editBox;
