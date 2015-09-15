@@ -57,7 +57,7 @@ namespace network
                                  const ProgressCallback& progressCallback,
                                  const ErrorCallback& errorCallback                                         
                                  ) override;
-        int getHeader(const std::string& url, HeaderInfo* headerInfo) override;
+        int getHeader(const std::string& url, HeaderInfo* headerInfo, bool resumeFlag = false) override;
         std::string getStrError() const override;
         void setConnectionTimeout(int timeout) override;
         bool supportsResume(const std::string& url);

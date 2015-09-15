@@ -17,6 +17,7 @@ DrawPrimitivesTests::DrawPrimitivesTests()
 {
     ADD_TEST_CASE(DrawPrimitivesTest);
     ADD_TEST_CASE(DrawNodeTest);
+    ADD_TEST_CASE(PrimitivesCommandTest);
 }
 
 string DrawPrimitivesBaseTest::title() const
@@ -301,6 +302,81 @@ string DrawNodeTest::subtitle() const
 {
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
 }
+
+// PrimitivesCommandTest
+PrimitivesCommandTest::PrimitivesCommandTest()
+{
+    // draws a quad
+    V3F_C4B_T2F data[] = {
+        {{0,    0,0}, {255,  0,  0,255}, {0,1}},
+        {{200,  0,0}, {0,  255,255,255}, {1,1}},
+        {{200,200,0}, {255,255,  0,255}, {1,0}},
+        {{0,  200,0}, {255,255,255,255}, {0,0}},
+    };
+
+    uint16_t indices[] = {
+        0,1,2,
+        2,0,3
+    };
+
+    static const int TOTAL_VERTS = sizeof(data) / sizeof(data[0]);
+    static const int TOTAL_INDICES = TOTAL_VERTS*6/4;
+
+    auto vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), TOTAL_VERTS);
+    vertexBuffer->updateVertices(data, TOTAL_VERTS,0);
+
+    auto vertsData = VertexData::create();
+    vertsData->setStream(vertexBuffer, VertexStreamAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, GL_FLOAT, 3));
+    vertsData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, GL_UNSIGNED_BYTE, 4, true));
+    vertsData->setStream(vertexBuffer, VertexStreamAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, GL_FLOAT, 2));
+
+
+    auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, TOTAL_INDICES);
+    indexBuffer->updateIndices(indices, TOTAL_INDICES, 0);
+
+    _primitive = Primitive::create(vertsData, indexBuffer, GL_TRIANGLES);
+    _primitive->setCount(TOTAL_INDICES);
+    _primitive->setStart(0);
+
+    auto cache = Director::getInstance()->getTextureCache();
+    _texture = cache->addImage("Images/grossini.png");
+    _programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+
+    _primitive->retain();
+    _texture->retain();
+    _programState->retain();
+}
+
+PrimitivesCommandTest::~PrimitivesCommandTest()
+{
+    CC_SAFE_RELEASE(_primitive);
+    CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_programState);
+}
+
+
+void PrimitivesCommandTest::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
+{
+    _primitiveCommand.init(_globalZOrder,
+                           _texture->getName(),
+                           _programState,
+                           BlendFunc::ALPHA_NON_PREMULTIPLIED,
+                           _primitive,
+                           transform,
+                           flags);
+    renderer->addCommand(&_primitiveCommand);
+}
+
+string PrimitivesCommandTest::title() const
+{
+    return "PrimitiveCommand test";
+}
+
+string PrimitivesCommandTest::subtitle() const
+{
+    return "Drawing Primitives using PrimitiveCommand";
+}
+
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"

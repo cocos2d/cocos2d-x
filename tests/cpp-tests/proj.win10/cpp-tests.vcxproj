@@ -198,6 +198,7 @@
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <LinkTimeCodeGeneration />
@@ -226,6 +227,7 @@
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <LinkTimeCodeGeneration />
@@ -398,21 +400,6 @@
     <ClInclude Include="..\Classes\ParallaxTest\ParallaxTest.h" />
     <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
     <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
@@ -628,21 +615,6 @@
     <ClCompile Include="..\Classes\ParallaxTest\ParallaxTest.cpp" />
     <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
     <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />

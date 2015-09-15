@@ -29,46 +29,46 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-ComponentContainer::ComponentContainer(Node *node)
-: _components(nullptr)
-, _owner(node)
+ComponentContainer::ComponentContainer(Node* node)
+: _owner(node)
 {
 }
 
-ComponentContainer::~ComponentContainer(void)
-{
-    CC_SAFE_DELETE(_components);
+ComponentContainer::~ComponentContainer()
+{  
 }
 
 Component* ComponentContainer::get(const std::string& name) const
 {
     Component* ret = nullptr;
-    do {
-        CC_BREAK_IF(nullptr == _components);
-        ret = _components->at(name);
-        
-    } while (0);
+
+    auto it = _componentMap.find(name);
+    if (it != _componentMap.end())
+    {
+        ret = it->second;
+    }
+
     return ret;
 }
 
 bool ComponentContainer::add(Component *com)
 {
     bool ret = false;
-    CCASSERT(com != nullptr, "Argument must be non-nil");
+    CCASSERT(com != nullptr, "Component must be non-nil");
     CCASSERT(com->getOwner() == nullptr, "Component already added. It can't be added again");
     do
     {
-        if (_components == nullptr)
+        auto typeName = typeid(*com).name();
+        if (_components.find(typeName) != _components.end())
         {
-            _components = new (std::nothrow) Map<std::string, Component*>();
+            CCASSERT(true,"ComponentContainer already have this kind of component");
+            break;
         }
-        Component *component = _components->at(com->getName());
-        
-        CCASSERT(component == nullptr, "Component already added. It can't be added again");
-        CC_BREAK_IF(component);
         com->setOwner(_owner);
-        _components->insert(com->getName(), com);
+        _components.insert(typeName, com);
+        _componentMap[com->getName()] = com;
         com->onAdd();
+
         ret = true;
     } while(0);
     return ret;
@@ -79,18 +79,13 @@ bool ComponentContainer::remove(const std::string& name)
     bool ret = false;
     do 
     {        
-        CC_BREAK_IF(!_components);
-        
-        auto iter = _components->find(name);
-        CC_BREAK_IF(iter == _components->end());
-        
-        auto com = iter->second;
-        com->onRemove();
-        com->setOwner(nullptr);
-        
-        _components->erase(iter);
+        auto iter = _componentMap.find(name);
+        CC_BREAK_IF(iter == _componentMap.end());      
+        remove(iter->second);
+
         ret = true;
     } while(0);
+
     return ret;
  }
 
@@ -99,51 +94,45 @@ bool ComponentContainer::remove(Component *com)
     bool ret = false;
     do
     {
-        CC_BREAK_IF(!_components);
-        
-        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        auto iter = _components.find(typeid(*com).name());
+        if (iter != _components.end())
         {
-            if (iter->second == com)
-            {
-                com->onRemove();
-                com->setOwner(nullptr);
-                _components->erase(iter);
-                break;
-            }
+            _componentMap.erase(com->getName());
+
+            com->onRemove();
+            com->setOwner(nullptr);
+            _components.erase(iter);
         }
+        
         ret = true;
     } while(0);
+
     return ret;
 }
 
 void ComponentContainer::removeAll()
 {
-    if (_components != nullptr)
+    if (!_componentMap.empty())
     {
-        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        for (auto iter = _components.begin(); iter != _components.end(); ++iter)
         {
             iter->second->onRemove();
             iter->second->setOwner(nullptr);
         }
         
-        _components->clear();
-        CC_SAFE_DELETE(_components);
-        
+        _components.clear();
+        _componentMap.clear();
         _owner->unscheduleUpdate();
     }
 }
 
-void ComponentContainer::alloc(void)
-{
-    _components = new (std::nothrow) Map<std::string, Component*>();
-}
-
 void ComponentContainer::visit(float delta)
 {
-    if (_components != nullptr)
+    if (!_components.empty())
     {
         CC_SAFE_RETAIN(_owner);
-        for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+        auto iterEnd = _components.end();
+        for (auto iter = _components.begin(); iter != iterEnd; ++iter)
         {
             iter->second->update(delta);
         }
@@ -151,21 +140,17 @@ void ComponentContainer::visit(float delta)
     }
 }
 
-bool ComponentContainer::isEmpty() const
-{
-    return (_components == nullptr || _components->empty());
-}
-
 void ComponentContainer::onEnter()
 {
-    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    for (auto iter = _components.begin(); iter != _components.end(); ++iter)
     {
         iter->second->onEnter();
     }
 }
+
 void ComponentContainer::onExit()
 {
-    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    for (auto iter = _components.begin(); iter != _components.end(); ++iter)
     {
         iter->second->onExit();
     }

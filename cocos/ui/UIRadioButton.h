@@ -205,6 +205,20 @@ public:
     virtual void setSelectedButton(RadioButton* radioButton);
     
     /**
+     * Select a radio button by index without event dispatch.
+     *
+     * @param index of the radio button
+     */
+    virtual void setSelectedButtonWithoutEvent(int index);
+    
+    /**
+     * Select a radio button by instance without event dispatch.
+     *
+     * @param radio button instance
+     */
+    virtual void setSelectedButtonWithoutEvent(RadioButton* radioButton);
+    
+    /**
      * Add a radio button into this group.
      *
      * @param radio button instance
@@ -217,6 +231,11 @@ public:
      * @param radio button instance
      */
     virtual void removeRadioButton(RadioButton* radioButton);
+    
+    /**
+     * Remove all radio button from this group.
+     */
+    virtual void removeAllRadioButtons();
     
     /**
      * Get the number of radio buttons in this group.

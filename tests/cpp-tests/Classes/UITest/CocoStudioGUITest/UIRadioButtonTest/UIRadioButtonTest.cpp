@@ -99,7 +99,7 @@ void UIRadioButtonTest::addRadioButton(Ref* sender)
     }
     
     RadioButton* radioButton = RadioButton::create("cocosui/radio_button_off.png", "cocosui/radio_button_on.png");
-    pos.x += + BUTTON_WIDTH;
+    pos.x += BUTTON_WIDTH;
     radioButton->setPosition(pos);
     _radioButtonGroup->addRadioButton(radioButton);
     _uiLayer->addChild(radioButton);

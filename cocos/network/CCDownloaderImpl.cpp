@@ -48,12 +48,22 @@ static size_t _fileWriteFunc(void *ptr, size_t size, size_t nmemb, void* userdat
     int ret = this_->getWriterCallback()(ptr, size, nmemb, unit);
     return ret;
 }
-
+static size_t _fileWriteFuncForAdapter(void *ptr, size_t size, size_t nmemb, void* userdata)
+{
+    return nmemb;
+}
 static int _downloadProgressFunc(void* userdata, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     DownloadUnit *downloadUnit = (DownloadUnit*)userdata;
     DownloaderImpl* this_ = (DownloaderImpl*)downloadUnit->_reserved;
 
+    // curl when downloading files, the progress function callback in first time, totalToDownload value is 0,
+    // then it do not need to do callback notification, so the exclusion of this situation, avoid subsequent judgment exception
+    if (totalToDownload != 0)
+    {
+        totalToDownload += downloadUnit->resumeDownloadedSize;
+        nowDownloaded += downloadUnit->resumeDownloadedSize;
+    }
     this_->getProgressCallback()(downloadUnit, totalToDownload, nowDownloaded);
 
     // must return 0, otherwise download will get cancelled
@@ -177,6 +187,7 @@ int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
                 if (size != -1)
                 {
                     curl_easy_setopt(curl, CURLOPT_RESUME_FROM_LARGE, size);
+                    unit.resumeDownloadedSize = size;
                 }
             }
 
@@ -274,7 +285,7 @@ int DownloaderImpl::performBatchDownload(const DownloadUnits& units,
 }
 
 
-int DownloaderImpl::getHeader(const std::string& url, HeaderInfo* headerInfo)
+int DownloaderImpl::getHeader(const std::string& url, HeaderInfo* headerInfo, bool resumeFlag)
 {
 
     void *curlHandle = curl_easy_init();
@@ -284,7 +295,14 @@ int DownloaderImpl::getHeader(const std::string& url, HeaderInfo* headerInfo)
     curl_easy_setopt(curlHandle, CURLOPT_HEADER, 1);
     curl_easy_setopt(curlHandle, CURLOPT_NOBODY, 1);
     curl_easy_setopt(curlHandle, CURLOPT_NOSIGNAL, 1);
-
+    // in win32 platform, if not set the writeFunction, it will return CURLE_WRITE_ERROR
+    curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, _fileWriteFuncForAdapter);
+    if (resumeFlag)
+    {
+        // use to judge the remote server support continuous transmission or not. the 1 is the test continue size, can't not use zero.
+        curl_easy_setopt(curlHandle, CURLOPT_RESUME_FROM_LARGE, 1);
+    }
+    
     if ((_lastErrCode=curl_easy_perform(curlHandle)) == CURLE_OK)
     {
         char *effectiveUrl;
@@ -319,9 +337,7 @@ bool DownloaderImpl::supportsResume(const std::string& url)
 
     HeaderInfo headerInfo;
     // Make a resume request
-
-    curl_easy_setopt(_curlHandle, CURLOPT_RESUME_FROM_LARGE, 0);
-    if (getHeader(url, &headerInfo) == 0 && headerInfo.valid)
+    if (getHeader(url, &headerInfo, true) == 0 && headerInfo.valid)
     {
         return (headerInfo.responseCode == HTTP_CODE_SUPPORT_RESUME);
     }

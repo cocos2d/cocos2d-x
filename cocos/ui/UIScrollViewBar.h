@@ -153,6 +153,7 @@ private:
     Vec2 calculatePosition(float innerContainerMeasure, float scrollViewMeasure, float innerContainerPosition, float outOfBoundaryValue, float actualLength);
     
     void updateLength(float length);
+    void processAutoHide(float deltaTime);
     
     ScrollView* _parent;
     ScrollView::Direction _direction;

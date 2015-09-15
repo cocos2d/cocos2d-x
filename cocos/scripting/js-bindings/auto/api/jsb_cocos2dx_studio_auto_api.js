@@ -3905,6 +3905,52 @@ ZOrderFrame : function (
 };
 
 /**
+ * @class BlendFuncFrame
+ */
+ccs.BlendFuncFrame = {
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {ccs.timeline::BlendFuncFrame}
+ */
+create : function (
+)
+{
+    return ccs.timeline::BlendFuncFrame;
+},
+
+/**
+ * @method BlendFuncFrame
+ * @constructor
+ */
+BlendFuncFrame : function (
+)
+{
+},
+
+};
+
+/**
  * @class Timeline
  */
 ccs.Timeline = {
