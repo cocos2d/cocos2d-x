@@ -997,16 +997,6 @@ void ScrollView::update(float dt)
     }
 }
 
-void ScrollView::setContentSize(const cocos2d::Size &contentSize)
-{
-    Size previousSize = Layout::getContentSize();
-    if(previousSize.equals(contentSize))
-    {
-        return;
-    }
-    Layout::setContentSize(contentSize);
-}
-
 void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sender,Touch* touch)
 {
     if(!_touchEnabled)

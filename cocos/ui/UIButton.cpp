@@ -772,6 +772,7 @@ void Button::setTitleText(const std::string& text)
     _titleRenderer->setString(text);
     this->setTitleFontSize(_fontSize);
     updateContentSize();
+    updateTitleLocation();
 }
 
 const std::string Button::getTitleText() const
