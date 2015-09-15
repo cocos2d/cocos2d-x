@@ -33,14 +33,17 @@ if __name__ == "__main__":
     current_dir = os.path.normpath(os.path.realpath(os.path.dirname(__file__)))
     engine_path = os.path.normpath(os.path.join(current_dir, os.path.pardir, os.path.pardir))
 
-    # Synchronize the code of repo
-    sync_tool_path = os.path.join(current_dir, 'sync_x.py')
-    sync_cmd = 'python "%s" -e "%s"' % (sync_tool_path, engine_path)
-    if args.branch is not None:
-        sync_cmd = '%s -b %s' % (sync_cmd, args.branch)
-    utils.execute_command(sync_cmd)
+    try:
+        # Synchronize the code of repo
+        sync_tool_path = os.path.join(current_dir, 'sync_x.py')
+        sync_cmd = 'python "%s" -e "%s"' % (sync_tool_path, engine_path)
+        if args.branch is not None:
+            sync_cmd = '%s -b %s' % (sync_cmd, args.branch)
+        utils.execute_command(sync_cmd)
 
-    # Generate documents
-    gendoc_tool_path = os.path.join(current_dir, 'generate_docs.py')
-    gen_cmd = 'python "%s" %s' % (gendoc_tool_path, ' '.join(argv))
-    utils.execute_command(gen_cmd)
+        # Generate documents
+        gendoc_tool_path = os.path.join(current_dir, 'generate_docs.py')
+        gen_cmd = 'python "%s" %s' % (gendoc_tool_path, ' '.join(argv))
+        utils.execute_command(gen_cmd)
+    except Exception as e:
+        sys.exit(1)
