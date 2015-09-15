@@ -65,21 +65,4 @@ namespace cocos2d { namespace network
         virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) = 0;
     };
 
-    struct DownloadUnit
-    {
-        // info provided by the user
-        std::string srcUrl;
-        std::string storagePath;
-        std::string customId;
-
-        // additional info created by CCDownloader
-        mutable void* fp;
-        mutable bool resumeDownload;
-        mutable double downloaded;
-        mutable double totalToDownload;
-        mutable void *_reserved;
-    };
-
-    typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
-
 }}  // namespace cocos2d::network
