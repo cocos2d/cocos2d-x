@@ -199,7 +199,10 @@ bool UIListViewTest_Vertical::init()
                 _indexLabels[2]->setString(StringUtils::format("Bottom index=%zd", listView->getIndex(bottom)));
             });
         }
-        
+
+        // Jump to bottom
+        listView->jumpToBottom();
+
         return true;
     }
     
@@ -387,7 +390,10 @@ bool UIListViewTest_Horizontal::init()
         
         // set items margin
         listView->setItemsMargin(2);
-        
+
+        // Jump to right
+        listView->jumpToRight();
+
         return true;
     }
     
