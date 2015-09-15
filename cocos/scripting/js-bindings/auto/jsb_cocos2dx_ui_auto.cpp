@@ -3320,6 +3320,31 @@ bool js_cocos2dx_ui_Button_getTitleRenderer(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_cocos2dx_ui_Button_getTitleRenderer : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_Button_getRendererClicked(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererClicked : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererClicked();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Button_getRendererClicked : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_Button_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -3374,6 +3399,31 @@ bool js_cocos2dx_ui_Button_setTitleColor(JSContext *cx, uint32_t argc, jsval *vp
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_Button_setTitleColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_Button_getRendererDisabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererDisabled : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererDisabled();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Button_getRendererDisabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_Button_setCapInsetsDisabledRenderer(JSContext *cx, uint32_t argc, jsval *vp)
@@ -3809,6 +3859,31 @@ bool js_cocos2dx_ui_Button_getTitleFontSize(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_cocos2dx_ui_Button_getTitleFontSize : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_Button_getRendererNormal(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Button* cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_getRendererNormal : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::ui::Scale9Sprite* ret = cobj->getRendererNormal();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ui::Scale9Sprite>(cx, (cocos2d::ui::Scale9Sprite*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Button_getRendererNormal : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_Button_getTitleFontName(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4099,9 +4174,11 @@ void js_register_cocos2dx_ui_Button(JSContext *cx, JS::HandleObject global) {
         JS_FN("setTitleFontSize", js_cocos2dx_ui_Button_setTitleFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScale9Enabled", js_cocos2dx_ui_Button_setScale9Enabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleRenderer", js_cocos2dx_ui_Button_getTitleRenderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererClicked", js_cocos2dx_ui_Button_getRendererClicked, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getZoomScale", js_cocos2dx_ui_Button_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCapInsetsDisabledRenderer", js_cocos2dx_ui_Button_getCapInsetsDisabledRenderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleColor", js_cocos2dx_ui_Button_setTitleColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererDisabled", js_cocos2dx_ui_Button_getRendererDisabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsetsDisabledRenderer", js_cocos2dx_ui_Button_setCapInsetsDisabledRenderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsets", js_cocos2dx_ui_Button_setCapInsets, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextureDisabled", js_cocos2dx_ui_Button_loadTextureDisabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -4118,6 +4195,7 @@ void js_register_cocos2dx_ui_Button(JSContext *cx, JS::HandleObject global) {
         JS_FN("loadTextureNormal", js_cocos2dx_ui_Button_loadTextureNormal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCapInsetsPressedRenderer", js_cocos2dx_ui_Button_setCapInsetsPressedRenderer, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleFontSize", js_cocos2dx_ui_Button_getTitleFontSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getRendererNormal", js_cocos2dx_ui_Button_getRendererNormal, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleFontName", js_cocos2dx_ui_Button_getTitleFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTitleColor", js_cocos2dx_ui_Button_getTitleColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPressedActionEnabled", js_cocos2dx_ui_Button_setPressedActionEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
