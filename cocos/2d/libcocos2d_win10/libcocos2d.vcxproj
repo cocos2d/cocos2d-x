@@ -285,7 +285,6 @@
     <ClCompile Include="..\..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\..\3d\CCSprite3DMaterial.cpp" />
     <ClCompile Include="..\..\3d\CCTerrain.cpp" />
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\..\audio\AudioEngine.cpp" />
     <ClCompile Include="..\..\audio\winrt\Audio.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -512,6 +511,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
@@ -565,9 +565,11 @@
     <ClCompile Include="..\..\physics3d\CCPhysics3DShape.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3DWorld.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp" />
+    <ClCompile Include="..\..\physics\CCComponentPhysics2d.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp" />
+    <ClCompile Include="..\..\physics\CCPhysicsManager.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsWorld.cpp" />
     <ClCompile Include="..\..\platform\CCFileUtils.cpp" />
@@ -620,6 +622,7 @@
     <ClCompile Include="..\..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\..\renderer\CCTextureCache.cpp" />
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp" />
     <ClCompile Include="..\..\renderer\CCTrianglesCommand.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\..\renderer\CCVertexIndexBuffer.cpp" />
@@ -673,6 +676,7 @@
     <ClCompile Include="..\CCAtlasNode.cpp" />
     <ClCompile Include="..\CCAutoPolygon.cpp" />
     <ClCompile Include="..\CCCamera.cpp" />
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp" />
     <ClCompile Include="..\CCClippingNode.cpp" />
     <ClCompile Include="..\CCClippingRectangleNode.cpp" />
     <ClCompile Include="..\CCComponent.cpp" />
@@ -940,7 +944,6 @@
     <ClInclude Include="..\..\3d\CCSprite3D.h" />
     <ClInclude Include="..\..\3d\CCSprite3DMaterial.h" />
     <ClInclude Include="..\..\3d\CCTerrain.h" />
-    <ClInclude Include="..\..\3d\CCTextureCube.h" />
     <ClInclude Include="..\..\3d\cocos3d.h" />
     <ClInclude Include="..\..\audio\include\AudioEngine.h" />
     <ClInclude Include="..\..\audio\include\Export.h" />
@@ -1118,6 +1121,7 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\CheckBoxReader\CheckBoxReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ComAudioReader\ComAudioReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameMapReader\GameMapReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
@@ -1177,10 +1181,12 @@
     <ClInclude Include="..\..\physics3d\CCPhysics3DShape.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3DWorld.h" />
     <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h" />
+    <ClInclude Include="..\..\physics\CCComponentPhysics2d.h" />
     <ClInclude Include="..\..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\..\physics\CCPhysicsHelper.h" />
     <ClInclude Include="..\..\physics\CCPhysicsJoint.h" />
+    <ClInclude Include="..\..\physics\CCPhysicsManager.h" />
     <ClInclude Include="..\..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\..\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\..\platform\CCApplication.h" />
@@ -1217,7 +1223,9 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h" />
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
+    <ClInclude Include="..\..\renderer\CCTextureCube.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
+    <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
     <ClInclude Include="..\..\renderer\CCGLProgram.h" />
     <ClInclude Include="..\..\renderer\CCGLProgramCache.h" />
@@ -1399,9 +1407,6 @@
     <None Include="..\cocos2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
       <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
     </ProjectReference>
@@ -1425,8 +1430,8 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
-    <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -1502,34 +1507,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.8_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -1561,6 +1566,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -1638,6 +1644,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

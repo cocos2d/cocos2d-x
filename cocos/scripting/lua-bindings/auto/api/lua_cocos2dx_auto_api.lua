@@ -37,6 +37,11 @@
 
 
 --------------------------------------------------------
+-- the cc Component
+-- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
 
@@ -1142,6 +1147,26 @@
 
 
 --------------------------------------------------------
+-- the cc CameraBackgroundBrush
+-- @field [parent=#cc] CameraBackgroundBrush#CameraBackgroundBrush CameraBackgroundBrush preloaded module
+
+
+--------------------------------------------------------
+-- the cc CameraBackgroundDepthBrush
+-- @field [parent=#cc] CameraBackgroundDepthBrush#CameraBackgroundDepthBrush CameraBackgroundDepthBrush preloaded module
+
+
+--------------------------------------------------------
+-- the cc CameraBackgroundColorBrush
+-- @field [parent=#cc] CameraBackgroundColorBrush#CameraBackgroundColorBrush CameraBackgroundColorBrush preloaded module
+
+
+--------------------------------------------------------
+-- the cc CameraBackgroundSkyBoxBrush
+-- @field [parent=#cc] CameraBackgroundSkyBoxBrush#CameraBackgroundSkyBoxBrush CameraBackgroundSkyBoxBrush preloaded module
+
+
+--------------------------------------------------------
 -- the cc GridBase
 -- @field [parent=#cc] GridBase#GridBase GridBase preloaded module
 
@@ -1284,11 +1309,6 @@
 --------------------------------------------------------
 -- the cc TileMapAtlas
 -- @field [parent=#cc] TileMapAtlas#TileMapAtlas TileMapAtlas preloaded module
-
-
---------------------------------------------------------
--- the cc Component
--- @field [parent=#cc] Component#Component Component preloaded module
 
 
 return nil

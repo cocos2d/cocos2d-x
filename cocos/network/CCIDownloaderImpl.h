@@ -41,13 +41,15 @@ namespace cocos2d { namespace network
 {
     class DownloadTask;
     
-    struct CC_DLL IDownloadTask
+    class CC_DLL IDownloadTask
     {
+    public:
         virtual ~IDownloadTask(){}
     };
 
-    struct IDownloaderImpl
+    class IDownloaderImpl
     {
+    public:
         virtual ~IDownloaderImpl(){}
         
         std::function<void(const DownloadTask& task,

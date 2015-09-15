@@ -95,6 +95,7 @@ Developers:
     stari4ek
         Fix VideoPlayer on Android ignore search paths
         Label: Improve rendering of letter's inner shapes when outline is used
+        platform: Fixed issue that depth/stencil buffers attributes are ignored on iOS
 
     FlagellumDei
         Center the window correctly on windows
@@ -407,6 +408,11 @@ Developers:
         Add scroll bar feature into ui::ScrollView.
         Add RadioButton and RaidoButtonGroup widgets.
         Add a setter for line width in DrawNode.
+        UI: Added a setter for line width in DrawNode
+        UI: Added ScrollViewBar for displaying a scroll bar at the side of ScrollView
+        UI: Added RadioButton widget
+        UI: Refined scroll event dispatching for ScrollView
+        platform: Fixed Android app occasionally freeze issue caused by Cocos2dxRenderer.nativeOnResume() is not called when the activity is resumed
 
     Sam Clegg (sbc100)
         Author of Native Client port.
@@ -700,6 +706,7 @@ Developers:
         Added operator == != for Value
         Replace dynamic_cast to std::is_base_of in object_to_luaval
         Added support normalize path on android
+        FileUtils: Remove old path while adding existing search path
         
     superrad
         Clear NoSuchMethodError Exception when JniHelper fails to find methodID
@@ -977,6 +984,7 @@ Developers:
         
     billtt
         Fixed a bug that Node::setScale(float) may not work properly
+        network: Fixed a problem where WebSocket messages may pile up
         
     Teivaz
         Custom uniform search optimization
@@ -1019,6 +1027,7 @@ Developers:
         
     takaken1994
         Added function for setting min/max scale for ScrollView
+        studio: Removed "using namespace cocos2d" from CCFrame.h
         
     maltium 
         Added 3D rotation support to RotateTo action
@@ -1115,6 +1124,7 @@ Developers:
         
     kompjoefriek
         Fix compiling warnings
+        Device: Added vibrate support to enable vibration for a duration.
         
     tmr111116
         fix random int overflow
@@ -1148,6 +1158,10 @@ Developers:
     perminovVS
         Optimize Vec3 and Vec2
         Added `UserDefault::setDelegate()`
+        FileUtils: Added FileUtils::getSuitableFOpen() for convert utf8 to locale, for specific platform
+        platform: Correct all usage of unicode version winapi in FileUtils for win32
+        FileUtils: Added FileUtils::getFileExtension for getting file's extension name
+        utils: Made utils::captureScreen saving file in another thread to improve the performance
         
     qiutaoleo
         Added a feature to check case characters for filename on windows
@@ -1159,12 +1173,14 @@ Developers:
         Fixed crash on AssetsManager
         Fixed memory leak of WebView on iOS
         Fixed crahed that if url contains illegal characters on Android
+        log: Fixed crash on Windows if passing string more than 16kb to cocos2d::log
         
     tankorsmash
         Fixed the bug that ProgressTimer::setSprite() doesn't take effect
 
     namezero111111
         ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+        Physics: Fixed circle shape debug draw incorrect issue
 
     shinhirota
         JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
@@ -1177,14 +1193,26 @@ Developers:
     iris-wy
         platform: Fixed warning "Service Intent must be explicit" on Android
 
+    alexpeak
+        Label: Fixed rendering LabelTTF characters as black boxes on Android by ensuring atlases are purged before resetting
+
+    ywxzm
+        Lua: Fixed onTouch begin don't return value
+
+    xpol
+        Sprite: Fixed some warnings and a related bug in CCSprite
+
+    marzapower
+        UI: Fixed inertial scrolling for CCScrollView
+
+    MAUSMAUSgames
+        Action: Permitted setting bitwise flags to action
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
         Designer of CCApplication/CCEGLView/platform structure.
         He's working together with 2dx core team but leading FishingJoy game
-
-    Bin Zhang
-        core-team member but put himself in FishingJoy game since 2012.
 
     RongHong Huang (flyingpaper)
         Author of cocos2d-xna and spent all his time on wp7.

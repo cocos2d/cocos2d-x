@@ -120,7 +120,7 @@ namespace cocos2d { namespace network {
                 // ensure directory is exist
                 auto util = FileUtils::getInstance();
                 dir = _tempFileName.substr(0, found+1);
-                if (util->isDirectoryExist(dir))
+                if (false == util->isDirectoryExist(dir))
                 {
                     if (false == util->createDirectory(dir))
                     {
@@ -131,7 +131,7 @@ namespace cocos2d { namespace network {
                         break;
                     }
                 }
-                
+
                 // open file
                 _fp = fopen(util->getSuitableFOpen(_tempFileName).c_str(), "ab");
                 if (nullptr == _fp)

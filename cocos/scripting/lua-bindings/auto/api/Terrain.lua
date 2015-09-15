@@ -97,7 +97,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Set threshold distance of each LOD level,must equal or gereater than the chunk size<br>
+-- Set threshold distance of each LOD level,must equal or greater than the chunk size<br>
 -- Note when invoke initHeightMap, the LOD distance will be automatic calculated.
 -- @function [parent=#Terrain] setLODDistance 
 -- @param self
@@ -113,7 +113,7 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- get the normal of the specified pistion in terrain<br>
+-- get the normal of the specified position in terrain<br>
 -- return the normal vector of the specified position of the terrain.<br>
 -- note the fast normal calculation may not get precise normal vector.
 -- @function [parent=#Terrain] getNormal 
@@ -152,13 +152,13 @@
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------
--- get the terrain's mininal height.
+-- get the terrain's minimal height.
 -- @function [parent=#Terrain] getMinHeight 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- get the terrain's maximum height.
+-- get the terrain's maximal height.
 -- @function [parent=#Terrain] getMaxHeight 
 -- @param self
 -- @return float#float ret (return value: float)

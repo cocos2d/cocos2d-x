@@ -297,7 +297,11 @@ bool UIS9FrameNameSpriteSheet::init()
 
         
         auto blocks = ui::Scale9Sprite::createWithSpriteFrameName("blocks9.png");
-        
+        blocks->setInsetLeft(0);
+        blocks->setInsetRight(0);
+        blocks->setInsetTop(0);
+        blocks->setInsetBottom(0);
+        blocks->setPreferredSize(Size(400,80));
         blocks->setPosition(Vec2(x, y));
         
         this->addChild(blocks);

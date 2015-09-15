@@ -2261,10 +2261,10 @@ static int lua_cocos2dx_Node_enumerateChildren(lua_State* tolua_S)
             int* luaID = node ? &node->_luaID : nullptr;
             toluafix_pushusertype_ccobject(tolua_S, id, luaID, (void*)node,"cc.Node");
             bool ret = LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
-            LuaEngine::getInstance()->removeScriptHandler(handler);
+            
             return ret;
         });
-        
+        LuaEngine::getInstance()->removeScriptHandler(handler);
         lua_settop(tolua_S, 1);
         return 1;
     }
@@ -2378,157 +2378,6 @@ tolua_lerror:
     
     return 0;
 }
-
-#if CC_USE_PHYSICS
-
-int lua_cocos2dx_Node_setPhysicsBody(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_setPhysicsBody'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    {
-        cocos2d::PhysicsBody* arg0;
-        
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.Node:setPhysicsBody");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setPhysicsBody'", nullptr);
-            return 0;
-        }
-        cobj->setPhysicsBody(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:setPhysicsBody",argc, 1);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_setPhysicsBody'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-int lua_cocos2dx_Node_removeFromPhysicsWorld(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_removeFromPhysicsWorld'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_removeFromPhysicsWorld'", nullptr);
-            return 0;
-        }
-        cobj->removeFromPhysicsWorld();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:removeFromPhysicsWorld",argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_removeFromPhysicsWorld'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-int lua_cocos2dx_Node_getPhysicsBody(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Node* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Node",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Node*)tolua_tousertype(tolua_S,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Node_getPhysicsBody'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0)
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getPhysicsBody'", nullptr);
-            return 0;
-        }
-        cocos2d::PhysicsBody* ret = cobj->getPhysicsBody();
-        object_to_luaval<cocos2d::PhysicsBody>(tolua_S, "cc.PhysicsBody",(cocos2d::PhysicsBody*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Node:getPhysicsBody",argc, 0);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Node_getPhysicsBody'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-#endif //CC_USE_PHYSICS
 
 #if CC_USE_NAVMESH
 #include "navmesh/CCNavMesh.h"
@@ -5083,18 +4932,6 @@ static void extendNode(lua_State* tolua_S)
         lua_pushstring(tolua_S, "setRotationQuat");
         lua_pushcfunction(tolua_S, lua_cocos2dx_Node_setRotationQuat);
         lua_rawset(tolua_S, -3);
-#if CC_USE_PHYSICS
-        lua_pushstring(tolua_S, "setPhysicsBody");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_setPhysicsBody);
-        lua_rawset(tolua_S, -3);
-        lua_pushstring(tolua_S, "removeFromPhysicsWorld");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_removeFromPhysicsWorld);
-        lua_rawset(tolua_S, -3);
-        lua_pushstring(tolua_S, "getPhysicsBody");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_Node_getPhysicsBody);
-        lua_rawset(tolua_S, -3);
-#endif //CC_USE_PHYSICS
-        
     }
     lua_pop(tolua_S, 1);
 }
@@ -7210,67 +7047,6 @@ static int lua_cocos2dx_GLProgramState_setVertexAttribPointer(lua_State* tolua_S
         if(!ok)
             return 0;
         cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    else if (argc == 7)
-    {
-        std::string arg0;
-        int arg1;
-        unsigned int arg2;
-        bool arg3;
-        int arg4;
-        GLfloat* arg5;
-        int arg6;
-        
-        
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_boolean(tolua_S, 5, &arg3, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "cc.GLProgramState:setVertexAttribPointer");
-        
-        ok &= luaval_to_int32(tolua_S, 8, (int *)&arg6, "cc.GLProgramState:setVertexAttribPointer");
-        
-        size_t len = lua_objlen(tolua_S, 7);
-        
-        if (len != arg6)
-        {
-            luaL_error(tolua_S, "table size is  %zu,but input size is %d \n", len, arg6);
-            return 0;
-        }
-        
-        arg5 = new (std::nothrow) GLfloat[len];
-        for (int i = 0; i < len; i++)
-        {
-            lua_pushnumber(tolua_S,i + 1);
-            lua_gettable(tolua_S,7);
-            bool isnum = true;
-#if COCOS2D_DEBUG >= 1
-            if (!tolua_isnumber(tolua_S, -1, 0, &tolua_err))
-            {
-                isnum = false;
-            }
-#endif
-            if (isnum)
-            {
-                arg5[i] = tolua_tonumber(tolua_S, -1, 0);
-            }
-            else
-            {
-                arg5[i] = 0;
-            }
-            lua_pop(tolua_S, 1);
-        }
-        
-        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (void*)arg5);
-        
-        CC_SAFE_DELETE(arg5);
-        
         lua_settop(tolua_S, 1);
         return 1;
     }

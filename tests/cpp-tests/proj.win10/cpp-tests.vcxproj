@@ -2,12 +2,14 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{c1307b42-d00a-4b88-bcdd-0a16a81ff4c1}</ProjectGuid>
-    <RootNamespace>cpp_tests</RootNamespace>
+    <RootNamespace>CocosAppWinRT</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.2</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -78,7 +80,7 @@
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10.props" />
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10_app.props" />
     <Import Project="resources.props" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -86,7 +88,7 @@
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10.props" />
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10_app.props" />
     <Import Project="resources.props" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -94,7 +96,7 @@
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10.props" />
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10_app.props" />
     <Import Project="resources.props" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -102,7 +104,7 @@
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10.props" />
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10_app.props" />
     <Import Project="resources.props" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -110,7 +112,7 @@
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10.props" />
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10_app.props" />
     <Import Project="resources.props" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -118,7 +120,7 @@
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10.props" />
     <Import Project="..\..\..\cocos\2d\win10_props\cocos2d_win10_app.props" />
     <Import Project="resources.props" />
-    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.0.1`, $(TargetPlatformIdentifier), $(TargetPlatformVersion), null, $(ExtensionSDKDirectoryRoot), null))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
+    <Import Project="$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props" Condition="exists('$([Microsoft.Build.Utilities.ToolLocationHelper]::GetPlatformExtensionSDKLocation(`WindowsMobile, Version=10.0.10240.0`, $(TargetPlatformIdentifier), $(TargetPlatformVersion),  $(SDKReferenceDirectoryRoot), $(SDKExtensionDirectoryRoot), $(SDKReferenceRegistryRoot)))\DesignTime\CommonConfiguration\Neutral\WindowsMobile.props')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -196,6 +198,7 @@
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <LinkTimeCodeGeneration />
@@ -224,6 +227,7 @@
       <SDLCheck>false</SDLCheck>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <PreprocessorDefinitions>CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <LinkTimeCodeGeneration />
@@ -396,21 +400,6 @@
     <ClInclude Include="..\Classes\ParallaxTest\ParallaxTest.h" />
     <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
     <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
@@ -515,13 +504,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="cpp-tests_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\Logo.scale-100.png" />
-    <Image Include="Assets\SmallLogo.scale-100.png" />
-    <Image Include="Assets\StoreLogo.scale-100.png" />
-    <Image Include="Assets\SplashScreen.scale-100.png" />
-    <Image Include="Assets\WideLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.cpp" />
@@ -633,21 +615,6 @@
     <ClCompile Include="..\Classes\ParallaxTest\ParallaxTest.cpp" />
     <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
     <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
@@ -754,7 +721,16 @@
     <Page Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.0.1" />
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\SplashScreen.scale-200.png" />
+    <Image Include="Assets\Square150x150Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.scale-200.png" />
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

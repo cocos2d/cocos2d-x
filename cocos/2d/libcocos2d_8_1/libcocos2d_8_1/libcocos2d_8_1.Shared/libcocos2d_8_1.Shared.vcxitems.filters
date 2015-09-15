@@ -210,6 +210,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.h">
+      <Filter>physics</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocosStudioExport.h">
       <Filter>cocostudio</Filter>
     </ClInclude>
@@ -1728,9 +1734,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.h">
       <Filter>3d</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.h">
-      <Filter>3d</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.h">
       <Filter>3d</Filter>
     </ClInclude>
@@ -1858,11 +1861,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCIDownloaderImpl.h">
       <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2046,6 +2058,12 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCActionFrame.cpp">
@@ -3425,9 +3443,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -3555,8 +3570,17 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.cpp">
       <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3829,6 +3853,9 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\SkeletonReader">
       <UniqueIdentifier>{a40f3972-1316-4674-a6d6-c9fae0b83e88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
+      <UniqueIdentifier>{4cfeb8e0-8355-4a28-aff7-3e96e400bad1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

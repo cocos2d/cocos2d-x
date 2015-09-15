@@ -54,7 +54,7 @@ public:
      */
     static int setResolutionPercent(int percent);
 
-	/**
+    /**
    *@brief  The function is used to set FPS level.
    *@Warn The input fps level(0-99) corresponds to game fps value(0-60).
    * FPS level 99 means game FPS value 60.

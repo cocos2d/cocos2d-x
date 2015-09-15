@@ -47,55 +47,6 @@ static inline std::string convertPathFormatToUnixStyle(const std::string& path)
     return ret;
 }
 
-static std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
-{
-    std::wstring ret;
-    if (!strUtf8.empty())
-    {
-        int nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, nullptr, 0);
-        if (nNum)
-        {
-            WCHAR* wideCharString = new WCHAR[nNum + 1];
-            wideCharString[0] = 0;
-
-            nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, wideCharString, nNum + 1);
-
-            ret = wideCharString;
-            delete[] wideCharString;
-        }
-        else
-        {
-            CCLOG("Wrong convert to WideChar code:0x%x", GetLastError());
-        }
-    }
-    return ret;
-}
-
-static std::string StringWideCharToUtf8(const std::wstring& strWideChar)
-{
-    std::string ret;
-    if (!strWideChar.empty())
-    {
-        int nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
-        if (nNum)
-        {
-            char* utf8String = new char[nNum + 1];
-            utf8String[0] = 0;
-
-            nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, utf8String, nNum + 1, nullptr, FALSE);
-
-            ret = utf8String;
-            delete[] utf8String;
-        }
-        else
-        {
-            CCLOG("Wrong convert to Utf8 code:0x%x", GetLastError());
-        }
-    }
-
-    return ret;
-}
-
 static std::string UTF8StringToMultiByte(const std::string& strUtf8)
 {
     std::string ret;
@@ -202,7 +153,7 @@ bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
 bool CCFileUtilsWinRT::isDirectoryExistInternal(const std::string& dirPath) const
 {
     WIN32_FILE_ATTRIBUTE_DATA wfad;
-    std::wstring wdirPath(dirPath.begin(), dirPath.end());
+    std::wstring wdirPath = StringUtf8ToWideChar(dirPath);
     if (GetFileAttributesEx(wdirPath.c_str(), GetFileExInfoStandard, &wfad))
     {
         return true;
@@ -244,8 +195,8 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
     }
 
     WIN32_FILE_ATTRIBUTE_DATA wfad;
-    std::wstring wpath(path.begin(), path.end());
-    if (!(GetFileAttributesEx(wpath.c_str(), GetFileExInfoStandard, &wfad)))
+    
+    if (!(GetFileAttributesEx(StringUtf8ToWideChar(path).c_str(), GetFileExInfoStandard, &wfad)))
     {
         subpath = "";
         for (unsigned int i = 0; i < dirs.size(); ++i)
@@ -253,8 +204,7 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
             subpath += dirs[i];
             if (i > 0 && !isDirectoryExist(subpath))
             {
-                std::wstring wsubpath(subpath.begin(), subpath.end());
-                BOOL ret = CreateDirectory(wsubpath.c_str(), NULL);
+                BOOL ret = CreateDirectory(StringUtf8ToWideChar(subpath).c_str(), NULL);
                 if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
                 {
                     return false;
@@ -267,7 +217,7 @@ bool CCFileUtilsWinRT::createDirectory(const std::string& path)
 
 bool CCFileUtilsWinRT::removeDirectory(const std::string& path)
 {
-    std::wstring wpath = std::wstring(path.begin(), path.end());
+    std::wstring wpath = StringUtf8ToWideChar(path);
     std::wstring files = wpath + L"*.*";
     WIN32_FIND_DATA wfd;
     HANDLE  search = FindFirstFileEx(files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
@@ -316,12 +266,16 @@ bool CCFileUtilsWinRT::isAbsolutePath(const std::string& strPath) const
 
 bool CCFileUtilsWinRT::removeFile(const std::string &path)
 {
-    std::wstring wpath(path.begin(), path.end());
+    std::wstring wpath = StringUtf8ToWideChar(path);
     if (DeleteFile(wpath.c_str()))
     {
         return true;
     }
-    return false;
+    else
+    {
+        CCLOG("Remove file failed with error: %d", GetLastError());
+        return false;
+    }
 }
 
 bool CCFileUtilsWinRT::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
@@ -329,16 +283,30 @@ bool CCFileUtilsWinRT::renameFile(const std::string &oldfullpath, const std::str
     CCASSERT(!oldfullpath.empty(), "Invalid path");
     CCASSERT(!newfullpath.empty(), "Invalid path");
 
-    std::wstring oldfile(oldfullpath.begin(), oldfullpath.end());
-    std::wstring newfile(newfullpath.begin(), newfullpath.end());
+    std::regex pat("\\/");
+    std::string _oldfullpath = std::regex_replace(oldfullpath, pat, "\\");
+    std::string _newfullpath = std::regex_replace(newfullpath, pat, "\\");
 
-    if (MoveFileEx(oldfile.c_str(), newfile.c_str(),
-        MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
+    std::wstring _wNewfullpath = StringUtf8ToWideChar(_newfullpath);
+
+    if (FileUtils::getInstance()->isFileExist(_newfullpath))
+    {
+        if (!DeleteFile(_wNewfullpath.c_str()))
+        {
+            CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newfullpath.c_str(), GetLastError());
+        }
+    }
+
+    if (MoveFileEx(StringUtf8ToWideChar(_oldfullpath).c_str(), _wNewfullpath.c_str(),
+        MOVEFILE_REPLACE_EXISTING & MOVEFILE_WRITE_THROUGH))
     {
         return true;
     }
-    CCLOG("Rename failed with error: %d", GetLastError());
-    return false;
+    else
+    {
+        CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldfullpath.c_str(), newfullpath.c_str(), GetLastError());
+        return false;
+    }
 }
 
 bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
@@ -347,71 +315,17 @@ bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &ol
     std::string oldPath = path + oldname;
     std::string newPath = path + name;
 
-    std::regex pat("\\/");
-    std::string _old = std::regex_replace(oldPath, pat, "\\");
-    std::string _new = std::regex_replace(newPath, pat, "\\");
-    return renameFile(_old, _new);
-}
-
-static Data getData(const std::string& filename, bool forString)
-{
-    if (filename.empty())
-    {
-        CCASSERT(!filename.empty(), "Invalid filename!");
-    }
-
-    Data ret;
-    unsigned char* buffer = nullptr;
-    ssize_t size = 0;
-    const char* mode = nullptr;
-    mode = "rb";
-
-    do
-    {
-        // Read the file from hardware
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-        FILE *fp = fopen(fullPath.c_str(), mode);
-        CC_BREAK_IF(!fp);
-        fseek(fp,0,SEEK_END);
-        size = ftell(fp);
-        fseek(fp,0,SEEK_SET);
-
-        if (forString)
-        {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * (size + 1));
-            buffer[size] = '\0';
-        }
-        else
-        {
-            buffer = (unsigned char*)malloc(sizeof(unsigned char) * size);
-        }
-
-        size = fread(buffer, sizeof(unsigned char), size, fp);
-        fclose(fp);
-    } while (0);
-
-    if (nullptr == buffer || 0 == size)
-    {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
-        CCLOG("%s", msg.c_str());
-    }
-    else
-    {
-        ret.fastSet(buffer, size);
-    }
-
-    return ret;
+    return renameFile(oldPath, newPath);
 }
 
 std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
 {
-    Data data = getData(filename, true);
+    Data data = getDataFromFile(filename);
     if (data.isNull())
     {
         return "";
     }
-    std::string ret((const char*)data.getBytes());
+    std::string ret((const char*)data.getBytes(), data.getSize());
     return ret;
 }
 

@@ -329,8 +329,9 @@ public:
     void step(float delta);
     
 protected:
-    static PhysicsWorld* construct(Scene& scene);
-    bool init(Scene& scene);
+    static PhysicsWorld* construct();
+    bool init();
+    
     
     virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
@@ -389,6 +390,7 @@ protected:
     friend class PhysicsJoint;
     friend class PhysicsWorldCallback;
     friend class PhysicsDebugDraw;
+    friend class PhysicsManager;
 };
 
 /** A physics helper class. Draw physics shape, joint in debug mode. 

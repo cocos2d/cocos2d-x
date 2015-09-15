@@ -66,9 +66,9 @@ namespace cocos2d { namespace network {
     {
         DownloaderHints hints =
         {
-            .countOfMaxProcessingTasks = 6,
-            .timeoutInSeconds = 45,
-            .tempFileNameSuffix = ".tmp"
+            6,
+            45,
+            ".tmp"
         };
         new(this)Downloader(hints);
     }

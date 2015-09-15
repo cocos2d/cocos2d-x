@@ -109,6 +109,7 @@ namespace cocostudio
         bool runAction = false;
         std::string path;
         int resourceType = 0;
+        bool isFlipped = false;
         
         std::string attriname;
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -120,7 +121,10 @@ namespace cocostudio
             if(attriname == "RunAction3D")
             {
                 runAction = value == "True" ? true : false;
-                break;
+            }
+            else if (attriname == "IsFlipped")
+            {
+                isFlipped = value == "True" ? true : false;
             }
             
             attribute = attribute->Next();
@@ -170,7 +174,8 @@ namespace cocostudio
                                                                 builder->CreateString(path),
                                                                 builder->CreateString(""),
                                                                 resourceType),
-                                             runAction
+                                             runAction,
+                                             isFlipped
                                              );
         
         return *(Offset<Table>*)(&options);
@@ -184,6 +189,7 @@ namespace cocostudio
         auto options = (Sprite3DOptions*)sprite3DOptions;
         
         bool runAction = options->runAction() != 0;
+        bool isFlipped = options->isFlipped() != 0;
         auto fileData = options->fileData();
         std::string path = fileData->path()->c_str();
 
@@ -213,6 +219,11 @@ namespace cocostudio
         {
             sprite3D->setColor(Color3B(red, green, blue));
         }
+        if (isFlipped)
+        {
+            sprite3D->setCullFaceEnabled(true);
+            sprite3D->setCullFace(GL_FRONT);
+        }
         
         auto node3DReader = Node3DReader::getInstance();
         node3DReader->setPropsWithFlatBuffers(sprite3D, (Table*)(options->node3DOption()));
@@ -230,7 +241,7 @@ namespace cocostudio
         {
             ret->initWithFile(path);
         }
-
+        
         setPropsWithFlatBuffers(ret, sprite3DOptions);
         
         return ret;

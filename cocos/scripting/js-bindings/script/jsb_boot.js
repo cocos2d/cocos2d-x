@@ -765,10 +765,7 @@ cc.winSize = cc.director.getWinSize();
  * cc.view is the shared view object.
  */
 cc.view = cc.director.getOpenGLView();
-cc.view.getDevicePixelRatio = function () {
-    var sys = cc.sys;
-    return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? 2 : 1;
-};
+cc.view.getDevicePixelRatio = cc.view.getRetinaFactor;
 cc.view.convertToLocationInView = function (tx, ty, relatedPos) {
     var _devicePixelRatio = cc.view.getDevicePixelRatio();
     return {x: _devicePixelRatio * (tx - relatedPos.left), y: _devicePixelRatio * (relatedPos.top + relatedPos.height - ty)};
@@ -789,6 +786,7 @@ cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.winSize = cc.director.getWinSize();
     cc.visibleRect.init();
 };
+cc.view.setRealPixelResolution = cc.view.setDesignResolutionSize;
 cc.view.setResolutionPolicy = function(resolutionPolicy){
     var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
@@ -818,6 +816,10 @@ cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
     this.stopMusic();
     this.stopAllEffects();
+};
+cc.audioEngine.features = {
+    MULTI_CHANNEL: true, 
+    AUTOPLAY: true
 };
 /**
  * @type {Object}
@@ -1368,8 +1370,18 @@ cc._initSys = function(config, CONFIG_KEY){
         }
     })();
 
+    /**
+     * Indicate the real pixel resolution of the whole game window
+     * @memberof cc.sys
+     * @name windowPixelResolution
+     * @type {Number}
+     */
+    locSys.windowPixelResolution = cc.view.getFrameSize();
+
     /** The type of browser */
-    locSys.browserType = null;//null in jsb
+    locSys.browserType = null; //null in jsb
+    /** The version of browser */
+    locSys.browserVersion = null; //null in jsb
 
     capabilities = locSys.capabilities = {"opengl":true};
     if( locSys.isMobile ) {

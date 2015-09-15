@@ -242,7 +242,7 @@ void Audio::RewindBackgroundMusic()
 
 bool Audio::IsBackgroundMusicPlaying()
 {
-    return IsSoundEffectStarted(m_backgroundID);
+    return IsSoundEffectStarted(m_backgroundID) && !IsSoundEffectPaused(m_backgroundID);
 }
 
 void Audio::SetBackgroundVolume(float volume)
@@ -331,7 +331,8 @@ void Audio::PlaySoundEffect(unsigned int sound)
         return;
     }
 
-	m_soundEffects[sound].m_soundEffectStarted = true;
+    m_soundEffects[sound].m_soundEffectStarted = true;
+    m_soundEffects[sound].m_soundEffectPaused = false;
 }
 
 void Audio::StopSoundEffect(unsigned int sound)
@@ -353,6 +354,7 @@ void Audio::StopSoundEffect(unsigned int sound)
     }
 
     m_soundEffects[sound].m_soundEffectStarted = false;
+    m_soundEffects[sound].m_soundEffectPaused = false;
 }
 
 void Audio::PauseSoundEffect(unsigned int sound)
@@ -371,6 +373,7 @@ void Audio::PauseSoundEffect(unsigned int sound)
         m_engineExperiencedCriticalError = true;
         return;
     }
+    m_soundEffects[sound].m_soundEffectPaused = true;
 }
 
 void Audio::ResumeSoundEffect(unsigned int sound)
@@ -389,6 +392,7 @@ void Audio::ResumeSoundEffect(unsigned int sound)
         m_engineExperiencedCriticalError = true;
         return;
     }
+    m_soundEffects[sound].m_soundEffectPaused = false;
 }
 
 void Audio::RewindSoundEffect(unsigned int sound)
@@ -472,51 +476,12 @@ bool Audio::IsSoundEffectStarted(unsigned int sound)
     return m_soundEffects[sound].m_soundEffectStarted;
 }
 
-std::wstring CCUtf8ToUnicode(const char * pszUtf8Str)
+bool Audio::IsSoundEffectPaused(unsigned int sound)
 {
-    std::wstring ret;
-    do
-    {
-        if (! pszUtf8Str) break;
-        size_t len = strlen(pszUtf8Str);
-        if (len <= 0) break;
-		++len;
-        wchar_t * pwszStr = new wchar_t[len];
-        if (! pwszStr) break;
-        pwszStr[len - 1] = 0;
-        MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, len);
-        ret = pwszStr;
+    if (m_soundEffects.end() == m_soundEffects.find(sound))
+        return false;
 
-		if(pwszStr) { 
-			delete[] (pwszStr); 
-			(pwszStr) = 0; 
-		}
-
-
-    } while (0);
-    return ret;
-}
-
-std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
-{
-	std::string ret;
-	do
-	{
-		if(! pwszStr) break;
-		size_t len = wcslen(pwszStr);
-		if (len <= 0) break;
-		
-		char * pszUtf8Str = new char[len*3 + 1];
-		WideCharToMultiByte(CP_UTF8, 0, pwszStr, len+1, pszUtf8Str, len*3 + 1, 0, 0);
-		ret = pszUtf8Str;
-				
-		if(pszUtf8Str) { 
-			delete[] (pszUtf8Str); 
-			(pszUtf8Str) = 0; 
-		}
-	}while(0);
-
-	return ret;
+    return m_soundEffects[sound].m_soundEffectPaused;
 }
 
 void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
@@ -628,6 +593,7 @@ void Audio::UnloadSoundEffect(unsigned int sound)
     m_soundEffects[sound].m_soundEffectBufferData = nullptr;
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
 	m_soundEffects[sound].m_soundEffectStarted = false;
+    m_soundEffects[sound].m_soundEffectPaused = false;
     ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));    
 }
 

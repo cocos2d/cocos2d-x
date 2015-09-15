@@ -122,14 +122,26 @@ void VertexData::use()
     }
     
     GL::enableVertexAttribs(flags);
-    
+
+    int lastVBO = -1;
     for(auto& element : _vertexStreams)
     {
         //glEnableVertexAttribArray((GLint)element.second._stream._semantic);
-        glBindBuffer(GL_ARRAY_BUFFER, element.second._buffer->getVBO());
-        size_t offet = element.second._stream._offset;
-        glVertexAttribPointer(GLint(element.second._stream._semantic),element.second._stream._size,
-                              element.second._stream._type,element.second._stream._normalize, element.second._buffer->getSizePerVertex(), (GLvoid*)offet);
+        auto vertexStreamAttrib = element.second._stream;
+        auto vertexBuffer = element.second._buffer;
+
+        // don't call glBindBuffer() if not needed. Expensive operation.
+        int vbo = vertexBuffer->getVBO();
+        if (vbo != lastVBO) {
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getVBO());
+            lastVBO = vbo;
+        }
+        glVertexAttribPointer(GLint(vertexStreamAttrib._semantic),
+                              vertexStreamAttrib._size,
+                              vertexStreamAttrib._type,
+                              vertexStreamAttrib._normalize,
+                              vertexBuffer->getSizePerVertex(),
+                              (GLvoid*)((long)vertexStreamAttrib._offset));
     }
 }
 

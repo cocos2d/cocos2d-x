@@ -522,6 +522,173 @@ EventTouch : function (
 };
 
 /**
+ * @class ComponentContainer
+ */
+cc.ComponentContainer = {
+
+/**
+ * @method visit
+ * @param {float} arg0
+ */
+visit : function (
+float 
+)
+{
+},
+
+/**
+ * @method remove
+* @param {cc.Component|String} component
+* @return {bool|bool}
+*/
+remove : function(
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAll
+ */
+removeAll : function (
+)
+{
+},
+
+/**
+ * @method add
+ * @param {cc.Component} arg0
+ * @return {bool}
+ */
+add : function (
+component 
+)
+{
+    return false;
+},
+
+/**
+ * @method isEmpty
+ * @return {bool}
+ */
+isEmpty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method get
+ * @param {String} arg0
+ * @return {cc.Component}
+ */
+get : function (
+str 
+)
+{
+    return cc.Component;
+},
+
+};
+
+/**
+ * @class Component
+ */
+cc.Component = {
+
+/**
+ * @method setEnabled
+ * @param {bool} arg0
+ */
+setEnabled : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
+},
+
+/**
+ * @method isEnabled
+ * @return {bool}
+ */
+isEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getOwner
+ * @return {cc.Node}
+ */
+getOwner : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {cc.Component}
+ */
+create : function (
+)
+{
+    return cc.Component;
+},
+
+/**
+ * @method Component
+ * @constructor
+ */
+Component : function (
+)
+{
+},
+
+};
+
+/**
  * @class Node
  */
 cc.Node = {
@@ -553,16 +720,6 @@ str
 },
 
 /**
- * @method setPhysicsBody
- * @param {cc.PhysicsBody} arg0
- */
-setPhysicsBody : function (
-physicsbody 
-)
-{
-},
-
-/**
  * @method getGLProgram
  * @return {cc.GLProgram}
  */
@@ -570,18 +727,6 @@ getGLProgram : function (
 )
 {
     return cc.GLProgram;
-},
-
-/**
- * @method updateTransformFromPhysics
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- */
-updateTransformFromPhysics : function (
-mat4, 
-int 
-)
-{
 },
 
 /**
@@ -747,14 +892,6 @@ func
 },
 
 /**
- * @method removeFromPhysicsWorld
- */
-removeFromPhysicsWorld : function (
-)
-{
-},
-
-/**
  * @method removeAllComponents
  */
 removeAllComponents : function (
@@ -802,16 +939,6 @@ getonEnterTransitionDidFinishCallback : function (
 )
 {
     return std::function<void ()>;
-},
-
-/**
- * @method isOpacityModifyRGB
- * @return {bool}
- */
-isOpacityModifyRGB : function (
-)
-{
-    return false;
 },
 
 /**
@@ -1053,13 +1180,13 @@ getOnEnterCallback : function (
 },
 
 /**
- * @method getPhysicsBody
- * @return {cc.PhysicsBody}
+ * @method isOpacityModifyRGB
+ * @return {bool}
  */
-getPhysicsBody : function (
+isOpacityModifyRGB : function (
 )
 {
-    return cc.PhysicsBody;
+    return false;
 },
 
 /**
@@ -1414,22 +1541,6 @@ float
  */
 setName : function (
 str 
-)
-{
-},
-
-/**
- * @method updatePhysicsBodyTransform
- * @param {mat4_object} arg0
- * @param {unsigned int} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-updatePhysicsBodyTransform : function (
-mat4, 
-int, 
-float, 
-float 
 )
 {
 },
@@ -2049,6 +2160,16 @@ onProjectionChanged : function (
 eventcustom 
 )
 {
+},
+
+/**
+ * @method getPhysicsManager
+ * @return {cc.PhysicsManager}
+ */
+getPhysicsManager : function (
+)
+{
+    return cc.PhysicsManager;
 },
 
 /**
@@ -18380,6 +18501,16 @@ applyViewport : function (
 },
 
 /**
+ * @method setBackgroundBrush
+ * @param {cc.CameraBackgroundBrush} arg0
+ */
+setBackgroundBrush : function (
+camerabackgroundbrush 
+)
+{
+},
+
+/**
  * @method lookAt
  * @param {vec3_object} arg0
  * @param {vec3_object} arg1
@@ -18397,6 +18528,16 @@ vec3
 apply : function (
 )
 {
+},
+
+/**
+ * @method getBackgroundBrush
+ * @return {cc.CameraBackgroundBrush}
+ */
+getBackgroundBrush : function (
+)
+{
+    return cc.CameraBackgroundBrush;
 },
 
 /**
@@ -18423,10 +18564,8 @@ mat4
 
 /**
  * @method clearBackground
- * @param {float} arg0
  */
 clearBackground : function (
-float 
 )
 {
 },
@@ -18730,6 +18869,234 @@ getDefaultCamera : function (
  * @constructor
  */
 Camera : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundBrush
+ */
+cc.CameraBackgroundBrush = {
+
+/**
+ * @method getBrushType
+ * @return {cc.CameraBackgroundBrush::BrushType}
+ */
+getBrushType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method drawBackground
+ * @param {cc.Camera} arg0
+ */
+drawBackground : function (
+camera 
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method createSkyboxBrush
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.CameraBackgroundSkyBoxBrush}
+ */
+createSkyboxBrush : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.CameraBackgroundSkyBoxBrush;
+},
+
+/**
+ * @method createColorBrush
+ * @param {color4f_object} arg0
+ * @param {float} arg1
+ * @return {cc.CameraBackgroundColorBrush}
+ */
+createColorBrush : function (
+color4f, 
+float 
+)
+{
+    return cc.CameraBackgroundColorBrush;
+},
+
+/**
+ * @method createNoneBrush
+ * @return {cc.CameraBackgroundBrush}
+ */
+createNoneBrush : function (
+)
+{
+    return cc.CameraBackgroundBrush;
+},
+
+/**
+ * @method createDepthBrush
+ * @return {cc.CameraBackgroundDepthBrush}
+ */
+createDepthBrush : function (
+)
+{
+    return cc.CameraBackgroundDepthBrush;
+},
+
+/**
+ * @method CameraBackgroundBrush
+ * @constructor
+ */
+CameraBackgroundBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundDepthBrush
+ */
+cc.CameraBackgroundDepthBrush = {
+
+/**
+ * @method setDepth
+ * @param {float} arg0
+ */
+setDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @return {cc.CameraBackgroundDepthBrush}
+ */
+create : function (
+float 
+)
+{
+    return cc.CameraBackgroundDepthBrush;
+},
+
+/**
+ * @method CameraBackgroundDepthBrush
+ * @constructor
+ */
+CameraBackgroundDepthBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundColorBrush
+ */
+cc.CameraBackgroundColorBrush = {
+
+/**
+ * @method setColor
+ * @param {color4f_object} arg0
+ */
+setColor : function (
+color4f 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {color4f_object} arg0
+ * @param {float} arg1
+ * @return {cc.CameraBackgroundColorBrush}
+ */
+create : function (
+color4f, 
+float 
+)
+{
+    return cc.CameraBackgroundColorBrush;
+},
+
+/**
+ * @method CameraBackgroundColorBrush
+ * @constructor
+ */
+CameraBackgroundColorBrush : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CameraBackgroundSkyBoxBrush
+ */
+cc.CameraBackgroundSkyBoxBrush = {
+
+/**
+ * @method setTexture
+ * @param {cc.TextureCube} arg0
+ */
+setTexture : function (
+texturecube 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {cc.CameraBackgroundSkyBoxBrush|cc.CameraBackgroundSkyBoxBrush}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return cc.CameraBackgroundSkyBoxBrush;
+},
+
+/**
+ * @method CameraBackgroundSkyBoxBrush
+ * @constructor
+ */
+CameraBackgroundSkyBoxBrush : function (
 )
 {
 },
@@ -22422,173 +22789,6 @@ int
 TileMapAtlas : function (
 )
 {
-},
-
-};
-
-/**
- * @class Component
- */
-cc.Component = {
-
-/**
- * @method setEnabled
- * @param {bool} arg0
- */
-setEnabled : function (
-bool 
-)
-{
-},
-
-/**
- * @method setName
- * @param {String} arg0
- */
-setName : function (
-str 
-)
-{
-},
-
-/**
- * @method isEnabled
- * @return {bool}
- */
-isEnabled : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getOwner
- * @return {cc.Node}
- */
-getOwner : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
- * @method setOwner
- * @param {cc.Node} arg0
- */
-setOwner : function (
-node 
-)
-{
-},
-
-/**
- * @method create
- * @return {cc.Component}
- */
-create : function (
-)
-{
-    return cc.Component;
-},
-
-/**
- * @method Component
- * @constructor
- */
-Component : function (
-)
-{
-},
-
-};
-
-/**
- * @class ComponentContainer
- */
-cc.ComponentContainer = {
-
-/**
- * @method visit
- * @param {float} arg0
- */
-visit : function (
-float 
-)
-{
-},
-
-/**
- * @method remove
-* @param {cc.Component|String} component
-* @return {bool|bool}
-*/
-remove : function(
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method removeAll
- */
-removeAll : function (
-)
-{
-},
-
-/**
- * @method add
- * @param {cc.Component} arg0
- * @return {bool}
- */
-add : function (
-component 
-)
-{
-    return false;
-},
-
-/**
- * @method isEmpty
- * @return {bool}
- */
-isEmpty : function (
-)
-{
-    return false;
-},
-
-/**
- * @method get
- * @param {String} arg0
- * @return {cc.Component}
- */
-get : function (
-str 
-)
-{
-    return cc.Component;
 },
 
 };

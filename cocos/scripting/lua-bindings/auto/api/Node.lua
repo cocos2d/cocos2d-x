@@ -197,7 +197,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- 
+-- / @} end of component functions
 -- @function [parent=#Node] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -424,6 +424,12 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
+-- @function [parent=#Node] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- @overload self, float, float         
 -- @overload self, vec2_table         
 -- @function [parent=#Node] setPosition
@@ -599,12 +605,6 @@
 -- @param #unsigned int parentFlags
 -- @return Node#Node self (return value: cc.Node)
 
---------------------------------
--- 
--- @function [parent=#Node] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
 --------------------------------
 -- Returns the rotation of the node in degrees.<br>
 -- see `setRotation(float)`<br>

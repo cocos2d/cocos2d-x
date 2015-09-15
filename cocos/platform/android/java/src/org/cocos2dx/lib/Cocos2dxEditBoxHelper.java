@@ -75,8 +75,17 @@ public class Cocos2dxEditBoxHelper {
         Cocos2dxEditBoxHelper.mEditBoxArray = new SparseArray<Cocos2dxEditBox>();
     }
 
+    public static int convertToSP(float point){
+        Resources r = mCocos2dxActivity.getResources();
 
-    public static int createEditBox(final int left, final int top, final int width, final int height) {
+        int convertedValue = (int)TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP, point, r.getDisplayMetrics());
+
+        return  convertedValue;
+
+    }
+
+    public static int createEditBox(final int left, final int top, final int width, final int height, final float scaleX) {
         final int index = mViewTag;
         mCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
@@ -92,6 +101,17 @@ public class Cocos2dxEditBoxHelper {
                 editBox.setBackgroundColor(Color.TRANSPARENT);
                 editBox.setTextColor(Color.WHITE);
                 editBox.setSingleLine();
+                editBox.setOpenGLViewScaleX(scaleX);
+                Resources r = mCocos2dxActivity.getResources();
+                float density =  r.getDisplayMetrics().density;
+                int paddingBottom = (int)(height * 0.33f / density);
+                paddingBottom = convertToSP(paddingBottom  - 5 * scaleX / density);
+                paddingBottom = paddingBottom / 2;
+                int paddingTop = paddingBottom;
+                int paddingLeft = (int)(5 * scaleX / density);
+                paddingLeft = convertToSP(paddingLeft);
+
+                editBox.setPadding(paddingLeft,paddingTop, 0, paddingBottom);
 
 
                 FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
@@ -101,7 +121,7 @@ public class Cocos2dxEditBoxHelper {
                 lParams.leftMargin = left;
                 lParams.topMargin = top;
                 lParams.width = width;
-                lParams.height = height+20;
+                lParams.height = height;
                 lParams.gravity = Gravity.TOP | Gravity.LEFT;
 
                 mFrameLayout.addView(editBox, lParams);
@@ -222,7 +242,10 @@ public class Cocos2dxEditBoxHelper {
                     }
                     //TODO: The font size is not the same across all the anroid devices...
                     if (fontSize >= 0){
-                        editBox.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                        float density =  mCocos2dxActivity.getResources().getDisplayMetrics().density;
+//                        Log.e("XXX", "density is " + density);
+                        editBox.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+                                fontSize / density );
                     }
                     editBox.setTypeface(tf);
                 }

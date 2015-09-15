@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include <functional>
 #include <string>
 #include <memory>
 #include <vector>
@@ -36,8 +37,9 @@ namespace cocos2d { namespace network {
     class IDownloaderImpl;
     class Downloader;
     
-    struct CC_DLL DownloadTask final
+    class CC_DLL DownloadTask final
     {
+    public:
         const static int ERROR_NO_ERROR = 0;
         const static int ERROR_INVALID_PARAMS = -1;
         const static int ERROR_FILE_OP_FAILED = -2;
@@ -55,8 +57,9 @@ namespace cocos2d { namespace network {
         std::unique_ptr<IDownloadTask> _coTask;
     };
     
-    struct CC_DLL DownloaderHints
+    class CC_DLL DownloaderHints
     {
+    public:
         uint32_t countOfMaxProcessingTasks;
         uint32_t timeoutInSeconds;
         std::string tempFileNameSuffix;

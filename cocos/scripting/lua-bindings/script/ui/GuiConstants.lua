@@ -40,6 +40,17 @@ ccui.CheckBoxEventType =
     unselected = 1,
 }
 
+ccui.RadioButtonEventType=
+{
+        selected = 0,
+        unselected = 1
+}
+
+ccui.RadioButtonGroupEventType=
+{
+    select_changed = 0
+}
+
 ccui.TextFiledEventType =
 {
     attach_with_ime = 0,
@@ -107,7 +118,12 @@ ccui.RelativeAlign =
     locationBelowRightAlign = 21,
 }
 
-ccui.SliderEventType = {percentChanged = 0}
+ccui.SliderEventType = {
+    percentChanged = 0,
+    slideBallDown = 1,
+    slideBallUp = 2,
+    slideBallCancel = 3
+}
 
 ccui.LoadingBarDirection = { LEFT = 0, RIGHT = 1}
 

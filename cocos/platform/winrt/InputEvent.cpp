@@ -84,10 +84,7 @@ void KeyboardEvent::execute()
     {
     case Cocos2dKeyEvent::Text:
     {
-        std::wstring w(m_text.Get()->Data());
-        std::u16string  s16(w.begin(),w.end());
-        std::string utf8String;
-        StringUtils::UTF16ToUTF8(s16, utf8String);
+        std::string utf8String = PlatformStringToString(m_text.Get());
         IMEDispatcher::sharedDispatcher()->dispatchInsertText(utf8String.c_str(), utf8String.size());
         break;
     }

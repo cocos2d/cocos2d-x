@@ -260,6 +260,9 @@
     <Filter Include="cocostudio\TimelineAction\Skeleton">
       <UniqueIdentifier>{438e0063-bdbc-4252-a0f5-f55f7d54ed6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
+      <UniqueIdentifier>{0760e708-a93e-41f5-abaf-a7e422882920}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cocos2d.cpp" />
@@ -529,9 +532,6 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3d\CCTerrain.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\base\atitc.cpp">
@@ -1578,6 +1578,9 @@
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -1585,6 +1588,9 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsShape.cpp">
@@ -1933,6 +1939,15 @@
     <ClCompile Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.cpp">
       <Filter>cocostudio\TimelineAction\Skeleton</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -2208,9 +2223,6 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3d\CCTerrain.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCTextureCube.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3d\cocos3d.h">
@@ -3383,6 +3395,9 @@
     <ClInclude Include="..\..\network\WebSocket.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -3393,6 +3408,9 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsJoint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsManager.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsShape.h">
@@ -3779,6 +3797,15 @@
     <ClInclude Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.h">
       <Filter>cocostudio\TimelineAction\Skeleton</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\base\CCController-iOS.mm">
@@ -3935,10 +3962,5 @@
     <None Include="..\..\renderer\ccShader_UI_Gray.frag">
       <Filter>renderer</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt">
-      <Filter>renderer</Filter>
-    </Text>
   </ItemGroup>
 </Project>
