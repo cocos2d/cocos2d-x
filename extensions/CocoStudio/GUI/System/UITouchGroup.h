@@ -114,6 +114,7 @@ public:
 protected:
     bool checkEventWidget(CCTouch* touch, CCEvent *pEvent);
     bool checkTouchEvent(Widget* root, CCTouch* touch, CCEvent* pEvent);
+	void setTouchEnabled(bool enabled);
 protected:
     Widget* m_pRootWidget;
     CCPoint touchBeganedPoint;
@@ -121,6 +122,7 @@ protected:
     CCPoint touchEndedPoint;
     CCPoint touchCanceledPoint;
     CCArray* m_pSelectedWidgets;
+	bool m_bTouchEnabledExit;
 };
     
 }
