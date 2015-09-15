@@ -1401,8 +1401,8 @@ void ScrollView::copySpecialProperties(Widget *widget)
     if (scrollView)
     {
         Layout::copySpecialProperties(widget);
-        _innerContainer = scrollView->_innerContainer;
         setDirection(scrollView->_direction);
+        setInnerContainerPosition(scrollView->getInnerContainerPosition());
         setInnerContainerSize(scrollView->getInnerContainerSize());
         _topBoundary = scrollView->_topBoundary;
         _bottomBoundary = scrollView->_bottomBoundary;
