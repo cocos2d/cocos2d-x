@@ -7,7 +7,7 @@
 --------------------------------
 -- Sets LinearGravity parameter for LayoutParameter.<br>
 -- see LinearGravity<br>
--- param LinearGravity Gravity in LinearGravity.
+-- param gravity Gravity in LinearGravity.
 -- @function [parent=#LinearLayoutParameter] setGravity 
 -- @param self
 -- @param #int gravity

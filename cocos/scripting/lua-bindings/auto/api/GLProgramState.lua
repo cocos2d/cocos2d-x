@@ -41,7 +41,7 @@
 -- Get the number of user defined uniform count.
 -- @function [parent=#GLProgramState] getUniformCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -80,7 +80,7 @@
 -- Get the number of vertex attributes.
 -- @function [parent=#GLProgramState] getVertexAttribCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- @overload self, int, vec4_table         

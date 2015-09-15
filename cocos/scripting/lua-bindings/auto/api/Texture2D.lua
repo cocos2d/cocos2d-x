@@ -162,6 +162,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+--  sets whether the texture2d instance will delete the GL texture when it's destructor is called
+-- @function [parent=#Texture2D] setDeleteGLOnDestruction 
+-- @param self
+-- @param #bool deleteGLOnDestruction
+-- @return Texture2D#Texture2D self (return value: cc.Texture2D)
+        
+--------------------------------
 -- Drawing extensions to make it easy to draw basic quads using a Texture2D object.<br>
 -- These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.<br>
 -- Draws a texture at a given point. 
@@ -179,6 +186,12 @@
 --------------------------------
 --  Whether or not the texture has mip maps.
 -- @function [parent=#Texture2D] hasMipmaps 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  gets whether the texture2d instance will delete the GL texture when it's destructor is called
+-- @function [parent=#Texture2D] getDeleteGLOnDestruction 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

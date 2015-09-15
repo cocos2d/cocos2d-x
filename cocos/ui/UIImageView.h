@@ -78,7 +78,7 @@ public:
      * @param fileName   file name of texture.
      * @param texType    @see `Widget::TextureResType`
      */
-    void loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
+    bool loadTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Updates the texture rect of the ImageView in points.

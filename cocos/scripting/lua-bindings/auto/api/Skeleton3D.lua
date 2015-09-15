@@ -35,7 +35,7 @@
 -- get & set root bone
 -- @function [parent=#Skeleton3D] getRootCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- get bone index
@@ -48,6 +48,6 @@
 -- get total bone count
 -- @function [parent=#Skeleton3D] getBoneCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 return nil

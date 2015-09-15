@@ -16,7 +16,7 @@
 -- return current page index.
 -- @function [parent=#PageView] getCurPageIndex 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- Add a widget as a page of PageView in a given index.<br>
@@ -26,7 +26,7 @@
 -- @function [parent=#PageView] addWidgetToPage 
 -- @param self
 -- @param #ccui.Widget widget
--- @param #long pageIdx
+-- @param #int pageIdx
 -- @param #bool forceCreate
 -- @return PageView#PageView self (return value: ccui.PageView)
         
@@ -43,7 +43,7 @@
 -- return A layout pointer in PageView container.
 -- @function [parent=#PageView] getPage 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return Layout#Layout ret (return value: ccui.Layout)
         
 --------------------------------
@@ -94,7 +94,7 @@
 -- param idx   A given index in the PageView.
 -- @function [parent=#PageView] scrollToPage 
 -- @param self
--- @param #long idx
+-- @param #int idx
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -102,7 +102,7 @@
 -- param index  A given index.
 -- @function [parent=#PageView] removePageAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------

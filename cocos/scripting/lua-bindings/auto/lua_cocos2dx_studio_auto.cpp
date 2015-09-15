@@ -21169,7 +21169,7 @@ int lua_cocos2dx_studio_ActionTimeline_getAnimationInfo(lua_State* tolua_S)
             return 0;
         }
         cocostudio::timeline::AnimationInfo ret = cobj->getAnimationInfo(arg0);
-        animationInfo_to_luaval(tolua_S, ret);
+        #pragma warning NO CONVERSION FROM NATIVE FOR AnimationInfo;
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.ActionTimeline:getAnimationInfo",argc, 1);
@@ -21356,7 +21356,8 @@ int lua_cocos2dx_studio_ActionTimeline_addAnimationInfo(lua_State* tolua_S)
     {
         cocostudio::timeline::AnimationInfo arg0;
 
-        ok &= luaval_to_animationInfo(tolua_S, 2, &arg0, "ccs.ActionTimeline:addAnimationInfo");
+        #pragma warning NO CONVERSION TO NATIVE FOR AnimationInfo
+		ok = false;
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_ActionTimeline_addAnimationInfo'", nullptr);

@@ -210,8 +210,7 @@
 
 --------------------------------
 -- Sets the source blending function.<br>
--- param blendFunc A structure with source and destination factor to specify pixel arithmetic,<br>
--- e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
+-- param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
 -- js NA<br>
 -- lua NA
 -- @function [parent=#Scale9Sprite] setBlendFunc 
@@ -347,6 +346,20 @@
 -- @function [parent=#Scale9Sprite] getScaleX 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Sets the shader program for this node and its renderables<br>
+-- HIMEX: Added to fix stencil clipping bug<br>
+-- Since v2.0, each rendering node must set its shader program.<br>
+-- It should be set in initialize phase.<br>
+-- code<br>
+-- node->setGLrProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));<br>
+-- endcode<br>
+-- param shaderProgram The shader program
+-- @function [parent=#Scale9Sprite] setGLProgram 
+-- @param self
+-- @param #cc.GLProgram glProgram
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- 

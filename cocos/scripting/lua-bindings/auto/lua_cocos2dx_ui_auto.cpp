@@ -8309,8 +8309,8 @@ int lua_cocos2dx_ui_ImageView_loadTexture(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ImageView_loadTexture'", nullptr);
             return 0;
         }
-        cobj->loadTexture(arg0);
-        lua_settop(tolua_S, 1);
+        bool ret = cobj->loadTexture(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
     if (argc == 2) 
@@ -8326,8 +8326,8 @@ int lua_cocos2dx_ui_ImageView_loadTexture(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ImageView_loadTexture'", nullptr);
             return 0;
         }
-        cobj->loadTexture(arg0, arg1);
-        lua_settop(tolua_S, 1);
+        bool ret = cobj->loadTexture(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ImageView:loadTexture",argc, 1);

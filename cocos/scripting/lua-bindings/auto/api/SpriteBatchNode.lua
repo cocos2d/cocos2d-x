@@ -49,7 +49,7 @@
 -- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Get the nearest index from the sprite in z.<br>
@@ -60,7 +60,7 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #int z
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Sets the TextureAtlas object. <br>
@@ -96,7 +96,7 @@
 -- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
 -- @param self
 -- @param #cc.Sprite sprite
--- @param #long index
+-- @param #int index
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -114,8 +114,8 @@
 -- @function [parent=#SpriteBatchNode] rebuildIndexInOrder 
 -- @param self
 -- @param #cc.Sprite parent
--- @param #long index
--- @return long#long ret (return value: long)
+-- @param #int index
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Get the Max image block index,in all child.<br>
@@ -124,7 +124,7 @@
 -- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.<br>
@@ -133,7 +133,7 @@
 -- warning Removing a child from a SpriteBatchNode is very slow.
 -- @function [parent=#SpriteBatchNode] removeChildAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @param #bool doCleanup
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
@@ -166,7 +166,7 @@
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
 -- @param #string fileImage
--- @param #long capacity
+-- @param #int capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -178,7 +178,7 @@
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
--- @param #long capacity
+-- @param #int capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------

@@ -683,8 +683,11 @@ namespace ui {
     bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
     {
         Sprite *sprite = Sprite::create(file);
-        bool pReturn = this->init(sprite, rect, capInsets);
-        return pReturn;
+        if(sprite)
+        {
+            return this->init(sprite, rect, capInsets);
+        }
+        return false;
     }
     
     Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  const Rect& capInsets)

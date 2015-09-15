@@ -116,21 +116,22 @@ void ImageView::initRenderer()
     addProtectedChild(_imageRenderer, IMAGE_RENDERER_Z, -1);
 }
 
-void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
+bool ImageView::loadTexture(const std::string& fileName, TextureResType texType)
 {
     if (fileName.empty() || (_textureFile == fileName && _imageTexType == texType))
     {
-        return;
+        return true;
     }
     _textureFile = fileName;
     _imageTexType = texType;
+    bool success = false;
     switch (_imageTexType)
     {
         case TextureResType::LOCAL:
-            _imageRenderer->initWithFile(fileName);
+            success = _imageRenderer->initWithFile(fileName);
             break;
         case TextureResType::PLIST:
-            _imageRenderer->initWithSpriteFrameName(fileName);
+            success = _imageRenderer->initWithSpriteFrameName(fileName);
             break;
         default:
             break;
@@ -142,6 +143,8 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
 
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
+    
+    return success;
 }
 
 void ImageView::setTextureRect(const Rect &rect)

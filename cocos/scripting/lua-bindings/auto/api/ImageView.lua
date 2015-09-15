@@ -12,7 +12,7 @@
 -- @param self
 -- @param #string fileName
 -- @param #int texType
--- @return ImageView#ImageView self (return value: ccui.ImageView)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Enable scale9 renderer.<br>
@@ -92,6 +92,13 @@
 -- @function [parent=#ImageView] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool ignore
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] setColor 
+-- @param self
+-- @param #color3b_table color
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
