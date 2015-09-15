@@ -265,7 +265,7 @@ Node* CSLoader::createNode(const std::string& filename)
     CCLOG("suffix = %s", suffix.c_str());
     
     CSLoader* load = CSLoader::getInstance();
-    
+
     if (suffix == "csb")
     {
         return load->createNodeWithFlatBuffersFile(filename);
@@ -274,7 +274,7 @@ Node* CSLoader::createNode(const std::string& filename)
     {
         return load->createNodeFromJson(filename);
     }
-    
+
     return nullptr;
 }
 
@@ -286,13 +286,37 @@ Node* CSLoader::createNode(const std::string &filename, const ccNodeLoadCallback
     CCLOG("suffix = %s", suffix.c_str());
     
     CSLoader* load = CSLoader::getInstance();
-    
+
     if (suffix == "csb")
     {
         return load->createNodeWithFlatBuffersFile(filename, callback);
     }
     
     return nullptr;
+}
+
+Node* CSLoader::createNodeWithVisibleSize(const std::string& filename)
+{
+    auto node = createNode(filename);
+    if (node != nullptr)
+    {
+        Size frameSize = Director::getInstance()->getVisibleSize();
+        node->setContentSize(frameSize);
+        ui::Helper::doLayout(node);
+    }
+    return node;
+}
+
+Node* CSLoader::createNodeWithVisibleSize(const std::string &filename, const ccNodeLoadCallback &callback)
+{
+    auto node = createNode(filename, callback);
+    if (node != nullptr)
+    {
+        Size frameSize = Director::getInstance()->getVisibleSize();
+        node->setContentSize(frameSize);
+        ui::Helper::doLayout(node);
+    }
+    return node;
 }
 
 std::string CSLoader::getExtentionName(const std::string& name)
@@ -551,7 +575,7 @@ void CSLoader::initNode(Node* node, const rapidjson::Value& json)
     GLubyte red         = (GLubyte)DICTOOL->getIntValue_json(json, RED, 255);
     GLubyte green       = (GLubyte)DICTOOL->getIntValue_json(json, GREEN, 255);
     GLubyte blue        = (GLubyte)DICTOOL->getIntValue_json(json, BLUE, 255);
-    int zorder		    = DICTOOL->getIntValue_json(json, ZORDER);
+    int zorder            = DICTOOL->getIntValue_json(json, ZORDER);
     int tag             = DICTOOL->getIntValue_json(json, TAG);
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);
     bool visible        = DICTOOL->getBooleanValue_json(json, VISIBLE);

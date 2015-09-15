@@ -193,6 +193,28 @@ ccs.load = function(file, path){
     return object;
 };
 
+/**
+ * Analysis of studio JSON file and layout ui widgets by visible size.
+ * The incoming file name, parse out the corresponding object
+ * Temporary support file list:
+ *   ui 1.*
+ *   node 1.* - 2.*
+ *   action 1.* - 2.*
+ *   scene 0.* - 1.*
+ * @param {String} file
+ * @param {String} [path=] Resource path
+ * @returns {{node: cc.Node, action: cc.Action}}
+ */
+ccs.loadWithVisibleSize = function(file, path){
+    var object = ccs.load(file, path);
+    var size = cc.director.getVisibleSize();
+    if(object.node && size){
+        object.node.setContentSize(size.width, size.height);
+        ccui.helper.doLayout(object.node);
+    }
+    return object;
+};
+
 //Forward compatible interface
 
 ccs.actionTimelineCache = {
