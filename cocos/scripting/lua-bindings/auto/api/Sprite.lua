@@ -187,13 +187,6 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- 
--- @function [parent=#Sprite] debugDraw 
--- @param self
--- @param #bool on
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
 -- @overload self, string, rect_table         
 -- @overload self, string         
 -- @function [parent=#Sprite] initWithFile
