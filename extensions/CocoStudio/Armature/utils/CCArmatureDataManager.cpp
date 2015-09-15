@@ -320,4 +320,8 @@ CCRelativeData *CCArmatureDataManager::getRelativeData(const char* configFilePat
     return &m_sRelativeDatas[configFilePath];
 }
 
+bool CCArmatureDataManager::isDataLoaded(const char *id)
+{
+	return getAnimationData(id) != NULL && getArmatureData(id) != NULL;
+}
 NS_CC_EXT_END
