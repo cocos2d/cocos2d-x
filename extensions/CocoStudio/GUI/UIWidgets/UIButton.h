@@ -171,6 +171,10 @@ public:
     void setTitleFontName(const char* fontName);
     const char* getTitleFontName() const;
 
+	const std::string& getNormalFileName() const { return _normalFileName; }
+	const std::string& getClickedFileName() const { return _clickedFileName; }
+	const std::string& getDisabledFileName() const { return _disabledFileName; }
+
 protected:
     virtual bool init();
     virtual void initRenderer();
