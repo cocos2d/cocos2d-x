@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,5 +24,38 @@
 
 #pragma once
 
-#include "../BaseTest.h"
-DEFINE_TEST_SUITE(DownloaderTests);
+#include "network/CCIDownloaderImpl.h"
+
+namespace cocos2d {
+    class Scheduler;
+}
+
+namespace cocos2d { namespace network
+{
+    class DownloadTaskCURL;
+    class DownloaderHints;
+    
+    class DownloaderCURL : public IDownloaderImpl
+    {
+    public:
+        DownloaderCURL(const DownloaderHints& hints);
+        virtual ~DownloaderCURL();
+
+        virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) override;
+
+    protected:
+        class Impl;
+        std::shared_ptr<Impl>   _impl;
+        
+        // for transfer data on schedule
+        DownloadTaskCURL* _currTask;        // temp ref
+        std::function<int64_t(void*, int64_t)> _transferDataToBuffer;
+        
+        // scheduler for update processing and finished task in main schedule
+        void _onSchedule(float);
+        std::string             _schedulerKey;
+        Scheduler*              _scheduler;
+    };
+
+}}  // namespace cocos2d::network
+

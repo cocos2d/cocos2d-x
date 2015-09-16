@@ -867,7 +867,6 @@ bool js_cocos2dx_ext_AssetsManager_getFailedAssets(JSContext *cx, uint32_t argc,
 __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
 : _cx(cx)
 , _url(url)
-, _buffer(nullptr)
 {
     _obj.construct(_cx);
     _obj.ref().set(obj);
@@ -879,10 +878,8 @@ __JSDownloaderDelegator::~__JSDownloaderDelegator()
 {
     _obj.destroyIfConstructed();
     _jsCallback.destroyIfConstructed();
-    if (_buffer != nullptr)
-        free(_buffer);
-    _downloader->setErrorCallback(nullptr);
-    _downloader->setSuccessCallback(nullptr);
+    _downloader->onTaskError = (nullptr);
+    _downloader->onDataTaskSuccess = (nullptr);
 }
 
 __JSDownloaderDelegator *__JSDownloaderDelegator::create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
@@ -894,24 +891,46 @@ __JSDownloaderDelegator *__JSDownloaderDelegator::create(JSContext *cx, JS::Hand
 
 void __JSDownloaderDelegator::startDownload()
 {
-    if (Director::getInstance()->getTextureCache()->getTextureForKey(_url))
+    if (auto texture = Director::getInstance()->getTextureCache()->getTextureForKey(_url))
     {
-        onSuccess(nullptr, nullptr, nullptr);
+        onSuccess(texture);
     }
     else
     {
         _downloader = std::make_shared<cocos2d::network::Downloader>();
-        _downloader->setConnectionTimeout(8);
-        _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
-        _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
+//        _downloader->setConnectionTimeout(8);
+        _downloader->onTaskError = [this](const cocos2d::network::DownloadTask& task,
+                                          int errorCode,
+                                          int errorCodeInternal,
+                                          const std::string& errorStr)
+        {
+            this->onError();
+        };
         
-        auto info = _downloader->getHeader(_url);
-        long contentSize = info.contentSize;
-        if (contentSize > 0 && info.responseCode < 400) {
-            _size = contentSize / sizeof(unsigned char);
-            _buffer = (unsigned char*)malloc(contentSize);
-            _downloader->downloadToBufferSync(_url, _buffer, _size);
-        }
+        _downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask& task,
+                                                std::vector<unsigned char>& data)
+        {
+            Image img;
+            Texture2D *tex = nullptr;
+            do
+            {
+                if (false == img.initWithImageData(data.data(), data.size()))
+                {
+                    break;
+                }
+                tex = Director::getInstance()->getTextureCache()->addImage(&img, _url);
+            } while (0);
+            if (tex)
+            {
+                this->onSuccess(tex);
+            }
+            else
+            {
+                this->onError();
+            }
+        };
+        
+        _downloader->createDownloadDataTask(_url);
     }
 }
 
@@ -928,7 +947,7 @@ void __JSDownloaderDelegator::downloadAsync()
     t.detach();
 }
 
-void __JSDownloaderDelegator::onError(const cocos2d::network::Downloader::Error &error)
+void __JSDownloaderDelegator::onError()
 {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
     {
@@ -945,22 +964,10 @@ void __JSDownloaderDelegator::onError(const cocos2d::network::Downloader::Error 
     });
 }
 
-void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
 {
-    Image *image = new Image();
-    cocos2d::TextureCache *cache = Director::getInstance()->getTextureCache();
-    
-    Texture2D *tex = cache->getTextureForKey(_url);
-    if (!tex)
-    {
-        if (image->initWithImageData(_buffer, _size))
-        {
-            tex = Director::getInstance()->getTextureCache()->addImage(image, _url);
-        }
-    }
-    image->release();
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
+    CCASSERT(tex, "__JSDownloaderDelegator::onSuccess must make sure tex not null!");
+    //Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
     {
         JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
         JSAutoCompartment ac(_cx, global);
@@ -993,7 +1000,7 @@ void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::st
             JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(2, valArr), &retval);
         }
         release();
-    });
+    }//);
 }
 
 // jsb.loadRemoteImg(url, function(succeed, result) {})
