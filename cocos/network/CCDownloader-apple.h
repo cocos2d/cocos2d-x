@@ -1,7 +1,5 @@
 /****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2012 James Chen
- Copyright (c) 2015 Mazyad Alabduljaleel
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,25 +22,23 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUISingleLineTextField.h"
-#import "CCUITextInput.h"
+#pragma once
 
-#include "base/CCDirector.h"
+#include "network/CCIDownloaderImpl.h"
 
-
-@implementation CCUISingleLineTextField
-
-- (CGRect)textRectForBounds:(CGRect)bounds
+namespace cocos2d { namespace network
 {
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    
-    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
-    return CGRectInset(bounds, padding, padding);
-}
+    class DownloaderHints;
+    class DownloaderApple : public IDownloaderImpl
+    {
+    public:
+        DownloaderApple(const DownloaderHints& hints);
+        virtual ~DownloaderApple();
+        
+        virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) override;
+        
+    private:
+        void* _impl;
+    };
+}}  // namespace cocos2d::network
 
-- (CGRect)editingRectForBounds:(CGRect)bounds
-{
-    return [self textRectForBounds:bounds];
-}
-
-@end

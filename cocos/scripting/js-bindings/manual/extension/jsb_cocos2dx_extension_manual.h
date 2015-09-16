@@ -28,6 +28,7 @@
 #include "jsfriendapi.h"
 #include "mozilla/Maybe.h"
 #include "cocos/network/CCDownloader.h"
+#include "renderer/CCTexture2D.h"
 
 class __JSDownloaderDelegator : cocos2d::Ref
 {
@@ -44,10 +45,8 @@ protected:
     void startDownload();
     
 private:
-    void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
-    void onError(const cocos2d::network::Downloader::Error &error);
-    unsigned char *_buffer;
-    long _size;
+    void onSuccess(cocos2d::Texture2D *tex);
+    void onError();
     std::shared_ptr<cocos2d::network::Downloader> _downloader;
     std::string _url;
     JSContext *_cx;

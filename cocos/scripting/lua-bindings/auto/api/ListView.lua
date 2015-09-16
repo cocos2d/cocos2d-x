@@ -48,6 +48,12 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- 
+-- @function [parent=#ListView] refreshViewIfNecessary 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- Return the index of specified widget.<br>
 -- param item  A widget pointer.<br>
 -- return The index of a given widget in ListView.
@@ -269,6 +275,12 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
 
 --------------------------------
+-- Override functions
+-- @function [parent=#ListView] jumpToBottom 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- 
 -- @function [parent=#ListView] forceDoLayout 
 -- @param self
@@ -285,9 +297,15 @@
         
 --------------------------------
 -- 
--- @function [parent=#ListView] getDescription 
+-- @function [parent=#ListView] jumpToTopRight 
 -- @param self
--- @return string#string ret (return value: string)
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToLeft 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- 
@@ -304,6 +322,18 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ListView] jumpToTop 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToTopLeft 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
 -- @function [parent=#ListView] removeChild 
 -- @param self
 -- @param #cc.Node child
@@ -315,6 +345,51 @@
 -- @function [parent=#ListView] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToBottomLeft 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToBottomRight 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToPercentBothDirection 
+-- @param self
+-- @param #vec2_table percent
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToPercentHorizontal 
+-- @param self
+-- @param #float percent
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToRight 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToPercentVertical 
+-- @param self
+-- @param #float percent
+-- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- Default constructor<br>

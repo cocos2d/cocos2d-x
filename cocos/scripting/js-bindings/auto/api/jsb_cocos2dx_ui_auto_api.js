@@ -1369,6 +1369,16 @@ getTitleRenderer : function (
 },
 
 /**
+ * @method getRendererClicked
+ * @return {ccui.Scale9Sprite}
+ */
+getRendererClicked : function (
+)
+{
+    return ccui.Scale9Sprite;
+},
+
+/**
  * @method getZoomScale
  * @return {float}
  */
@@ -1396,6 +1406,16 @@ setTitleColor : function (
 color3b 
 )
 {
+},
+
+/**
+ * @method getRendererDisabled
+ * @return {ccui.Scale9Sprite}
+ */
+getRendererDisabled : function (
+)
+{
+    return ccui.Scale9Sprite;
 },
 
 /**
@@ -1578,6 +1598,16 @@ getTitleFontSize : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getRendererNormal
+ * @return {ccui.Scale9Sprite}
+ */
+getRendererNormal : function (
+)
+{
+    return ccui.Scale9Sprite;
 },
 
 /**
@@ -3327,6 +3357,14 @@ getItemsMargin : function (
  */
 setMagneticType : function (
 magnetictype 
+)
+{
+},
+
+/**
+ * @method refreshViewIfNecessary
+ */
+refreshViewIfNecessary : function (
 )
 {
 },
