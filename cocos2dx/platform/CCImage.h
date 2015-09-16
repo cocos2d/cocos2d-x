@@ -80,7 +80,7 @@ public:
     @param imageType the type of image, currently only supporting two types.
     @return  true if loaded correctly.
     */
-    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng);
+    bool initWithImageFile(const char * strPath, EImageFormat imageType = kFmtPng, const char* strPixelFormatToUse = NULL);
 
     /*
      @brief The same result as with initWithImageFile, but thread safe. It is caused by
@@ -89,7 +89,7 @@ public:
      @param imageType the type of image, currently only supporting two types.
      @return  true if loaded correctly.
      */
-    bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng);
+	bool initWithImageFileThreadSafe(const char *fullpath, EImageFormat imageType = kFmtPng, const char* strPixelFormatToUse = NULL);
 
     /**
     @brief  Load image from stream buffer.
@@ -160,6 +160,7 @@ public:
     unsigned char *   getData()               { return m_pData; }
     int               getDataLen()            { return m_nWidth * m_nHeight; }
 
+	const std::string&getPixelFormatToUse()	  { return m_strPixelFormatToUse; }
 
     bool hasAlpha()                     { return m_bHasAlpha;   }
     bool isPremultipliedAlpha()         { return m_bPreMulti;   }
@@ -190,6 +191,7 @@ protected:
     unsigned char *m_pData;
     bool m_bHasAlpha;
     bool m_bPreMulti;
+    std::string m_strPixelFormatToUse;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     CCFreeTypeFont* m_ft;

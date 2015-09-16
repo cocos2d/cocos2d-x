@@ -58,9 +58,10 @@ NS_CC_BEGIN
 
 typedef struct _AsyncStruct
 {
-    std::string            filename;
-    CCObject    *target;
-    SEL_CallFuncO        selector;
+    std::string         filename;
+    CCObject			*target;
+	const char*			pixelFormatToUse;
+    SEL_CallFuncO       selector;
 } AsyncStruct;
 
 typedef struct _ImageInfo
@@ -133,7 +134,7 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
         
     // generate image            
     CCImage *pImage = new CCImage();
-    if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType))
+	if (pImage && !pImage->initWithImageFileThreadSafe(filename, imageType, pAsyncStruct->pixelFormatToUse))
     {
         CC_SAFE_RELEASE(pImage);
         CCLOG("can not load %s", filename);
@@ -229,6 +230,45 @@ CCTextureCache::~CCTextureCache()
     CC_SAFE_RELEASE(m_pTextures);
 }
 
+void CCTextureCache::addTexturePixelFormatDir(const char* path, const char* type)
+{
+	if (path != NULL && type != NULL)
+	{
+		m_pTexturesPixelFormatDir[path] = type;
+	}
+}
+
+void CCTextureCache::addTexturePixelFormatFile(const char* path, const char* type)
+{
+	if (path != NULL && type != NULL)
+	{
+		m_pTexturesPixelFormatFile[path] = type;
+	}
+}
+
+const char* CCTextureCache::getPixelFormatStr(const char* path) {
+	std::string pathStr(path);
+	std::map<std::string, std::string>::iterator it = m_pTexturesPixelFormatDir.begin();
+	for (std::map<std::string, std::string>::iterator itEnd = m_pTexturesPixelFormatDir.end(); it != itEnd; ++it)
+	{
+		if (pathStr.find(it->first) != it->first.npos)
+		{
+			return it->second.c_str();
+		}
+	}
+
+	it = m_pTexturesPixelFormatFile.begin();
+	for (std::map<std::string, std::string>::iterator itEnd = m_pTexturesPixelFormatFile.end(); it != itEnd; ++it)
+	{
+		if (pathStr.find(it->first) != it->first.npos)
+		{
+			return it->second.c_str();
+		}
+	}
+
+	return NULL;
+}
+
 void CCTextureCache::purgeSharedTextureCache()
 {
     CC_SAFE_RELEASE_NULL(g_sharedTextureCache);
@@ -315,6 +355,7 @@ void CCTextureCache::addImageAsync(const char *path, CCObject *target, SEL_CallF
     // generate async struct
     AsyncStruct *data = new AsyncStruct();
     data->filename = fullpath.c_str();
+	data->pixelFormatToUse = getPixelFormatStr(path);
     data->target = target;
     data->selector = selector;
 
@@ -412,9 +453,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     }
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
+    std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if (! texture) 
     {
-		std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
@@ -455,7 +496,7 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
                 pImage = new CCImage();
                 CC_BREAK_IF(NULL == pImage);
 
-                bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat);
+				bool bRet = pImage->initWithImageFile(fullpath.c_str(), eImageFormat, getPixelFormatStr(path));
                 CC_BREAK_IF(!bRet);
 
                 texture = new CCTexture2D();
@@ -744,6 +785,7 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 , m_pTextureData(NULL)
 , m_PixelFormat(kTexture2DPixelFormat_RGBA8888)
 , m_strFileName("")
+, m_bHasMipmaps(false)
 , m_FmtImage(CCImage::kFmtPng)
 , m_alignment(kCCTextAlignmentCenter)
 , m_vAlignment(kCCVerticalTextAlignmentCenter)
@@ -859,6 +901,12 @@ void VolatileTexture::setTexParameters(CCTexture2D *t, ccTexParams *texParams)
         vt->m_texParams.wrapT = texParams->wrapT;
 }
 
+void VolatileTexture::generateMipmap(CCTexture2D *t)
+{
+	VolatileTexture *vt = findVolotileTexture(t);
+	vt->m_bHasMipmaps = true;
+}
+
 void VolatileTexture::removeTexture(CCTexture2D *t) 
 {
 
@@ -950,6 +998,11 @@ void VolatileTexture::reloadAllTextures()
         default:
             break;
         }
+
+		if (vt->m_bHasMipmaps) 
+		{
+			vt->texture->generateMipmap();
+		}
         vt->texture->setTexParameters(&vt->m_texParams);
     }
 
