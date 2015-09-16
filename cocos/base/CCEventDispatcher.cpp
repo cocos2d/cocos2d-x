@@ -841,8 +841,13 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
                 }
                 
                 Camera::_visitingCamera = camera;
+                auto cameraFlag = (unsigned short)camera->getCameraFlag();
                 for (auto& l : sceneListeners)
                 {
+                    if (0 == (l->getAssociatedNode()->getCameraMask() & cameraFlag))
+                    {
+                        continue;
+                    }
                     if (onEvent(l))
                     {
                         shouldStopPropagation = true;
