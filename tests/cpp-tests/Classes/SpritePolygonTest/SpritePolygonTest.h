@@ -16,8 +16,8 @@ protected:
     virtual std::string title() const override {return _title;};
     virtual std::string subtitle() const override {return _subtitle;};
     virtual bool init() override;
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter()override;
+    virtual void onExit()override;
     SpritePolygonTestCase();
     ~SpritePolygonTestCase();
     void updateDrawNode();
@@ -89,7 +89,7 @@ protected:
     void initTouch();
     void loadDefaultSprites();
     void addSpritePolygon(const cocos2d::Vec2& pos);
-    void update(float dt);
+    void update(float dt)override;
 private:
     cocos2d::PolygonInfo _polygonInfo;
     int _tagIndex;
@@ -125,7 +125,7 @@ protected:
     unsigned int _incPix;
 
     void updateLabel();
-    virtual void update(float dt);
+    virtual void update(float dt)override;
     virtual bool init() override;
     virtual Node* makeSprite();
     void incrementStats();

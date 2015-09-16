@@ -57,8 +57,8 @@ bool UIEditBoxTest::init()
         
         // top
         std::string pNormalSprite = "extensions/green_edit.png";
-        _editName = ui::EditBox::create(editBoxSize, ui::Scale9Sprite::create(pNormalSprite));
-        _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+        _editName = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create(pNormalSprite));
+        _editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height*3/4));
         _editName->setFontColor(Color3B::RED);
         _editName->setPlaceHolder("Name:");
         _editName->setPlaceholderFontColor(Color3B::WHITE);
@@ -68,10 +68,20 @@ bool UIEditBoxTest::init()
         _editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
         _editName->setDelegate(this);
         addChild(_editName);
-        
+
+        Button* button = Button::create("cocosui/animationbuttonnormal.png",
+                                        "cocosui/animationbuttonpressed.png");
+        auto buttonSize = button->getContentSize();
+        button->setTitleText("Single Line");
+        button->setPosition(_editName->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        button->addClickEventListener([=](Ref* ref){
+            _editName->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
+        });
+        addChild(button);
+
         // middle
         _editPassword = ui::EditBox::create(editBoxSize, "extensions/orange_edit.png");
-        _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+        _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/2));
         _editPassword->setFontColor(Color3B::GREEN);
         _editPassword->setPlaceHolder("Password:");
         _editPassword->setMaxLength(6);
@@ -81,14 +91,30 @@ bool UIEditBoxTest::init()
         _editPassword->setDelegate(this);
         addChild(_editPassword);
         
+        auto buttonPassword = (ui::Button*)button->clone();
+        buttonPassword->setTitleText("Multiline");
+        buttonPassword->setPosition(_editPassword->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonPassword->addClickEventListener([=](Ref* ref){
+            _editPassword->setInputMode(ui::EditBox::InputMode::ANY);
+        });
+        addChild(buttonPassword);
+        
         // bottom
         auto bottomButtonSize = Size(editBoxSize.width, editBoxSize.height + 10);
         _editEmail = ui::EditBox::create(bottomButtonSize, "extensions/yellow_edit.png");
-        _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+        _editEmail->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/4));
         _editEmail->setPlaceHolder("Email:");
         _editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
         _editEmail->setDelegate(this);
         addChild(_editEmail);
+        
+        auto buttonEmail = (ui::Button*)button->clone();
+        buttonEmail->setTitleText("Multiline");
+        buttonEmail->setPosition(_editEmail->getPosition() + Vec2(editBoxSize.width/2 + buttonSize.width/2, 0 ));
+        buttonEmail->addClickEventListener([=](Ref* ref){
+            _editEmail->setInputMode(ui::EditBox::InputMode::ANY);
+        });
+        addChild(buttonEmail);
         
         return true;
     }
