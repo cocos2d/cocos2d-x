@@ -58,8 +58,19 @@ typedef enum
     TOUCH_EVENT_BEGAN,
     TOUCH_EVENT_MOVED,
     TOUCH_EVENT_ENDED,
-    TOUCH_EVENT_CANCELED
+    TOUCH_EVENT_CANCELED,
+	TOUCH_EVENT_CHECK_BEGAN,
+	TOUCH_EVENT_CHECK_MOVED,
+	TOUCH_EVENT_CHECK_ENDED,
+	TOUCH_EVENT_CHECK_CANCELED,
 }TouchEventType;
+
+typedef enum
+{
+	PRESS_STATE_CHANGE_TO_NORMAL,
+	PRESS_STATE_CHANGE_TO_PRESS,
+	PRESS_STATE_CHANGE_TO_DISABLE,
+} PressStateChangeEventType;
 
 typedef enum
 {
@@ -75,6 +86,12 @@ typedef enum
 
 typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
+
+typedef void(CCObject::*SEL_PressStateEvent)(CCObject*, PressStateChangeEventType);
+#define statechangeeventselector(_SELECTOR) (SEL_PressStateEvent)(&_SELECTOR)
+
+typedef bool(*TouchEvent_DISPATCHER)(CCObject*, uint32_t);
+
 /**
 *   @js NA
 *   @lua NA
@@ -96,6 +113,15 @@ public:
      * Allocates and initializes a widget.
      */
     static Widget* create();
+
+	/**
+	* Sets whether the node is visible
+	*
+	* The default value is true, a node is default to visible and enable
+	*
+	* @param visible   true if the node is visible and enable, false if the node is hidden and disable.
+	*/
+	virtual void setVisible(bool visible);
     
     /**
      * Sets whether the widget is enabled
@@ -334,11 +360,18 @@ public:
     virtual void removeAllNodes();
     
     virtual void visit();
+
+	virtual bool isUnVisible();
     
     /**
      * Sets the touch event target/selector of the menu item
      */
     void addTouchEventListener(CCObject* target,SEL_TouchEvent selector);
+
+	/**
+	* Sets the press state change event target/selector of the menu item
+	*/
+	void addPressStateChangeEventListener(CCObject* target, SEL_PressStateEvent selector);
     
     
     //cocos2d property
@@ -708,6 +741,8 @@ protected:
     CCObject*       _touchEventListener;
     SEL_TouchEvent    _touchEventSelector;
     
+	CCObject*		_pressStateChangeEventListener;
+	SEL_PressStateEvent _pressStateChangeSelector;
 
     
     std::string _name;
@@ -737,6 +772,10 @@ protected:
     cocos2d::CCDictionary* _scriptObjectDict;
     
     friend class TouchGroup;
+
+
+public:
+	static TouchEvent_DISPATCHER WidgetTouchEventDispatcher;
 };
 }
 
