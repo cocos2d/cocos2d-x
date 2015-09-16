@@ -66,6 +66,8 @@ static CCDictionary* s_pConfigurations = NULL;
 
 CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
 {
+	std::string fullpathStr = CCFileUtils::sharedFileUtils()->fullPathForFilename(fntFile);
+
     CCBMFontConfiguration* pRet = NULL;
 
     if( s_pConfigurations == NULL )
@@ -73,13 +75,13 @@ CCBMFontConfiguration* FNTConfigLoadFile( const char *fntFile)
         s_pConfigurations = new CCDictionary();
     }
 
-    pRet = (CCBMFontConfiguration*)s_pConfigurations->objectForKey(fntFile);
+	pRet = (CCBMFontConfiguration*)s_pConfigurations->objectForKey(fullpathStr.c_str());
     if( pRet == NULL )
     {
-        pRet = CCBMFontConfiguration::create(fntFile);
+		pRet = CCBMFontConfiguration::create(fullpathStr.c_str());
         if (pRet)
         {
-            s_pConfigurations->setObject(pRet, fntFile);
+			s_pConfigurations->setObject(pRet, fullpathStr.c_str());
         }        
     }
 
@@ -622,7 +624,10 @@ void CCLabelBMFont::createFontChars()
         
         if (charSet->find(c) == charSet->end())
         {
-            CCLOGWARN("cocos2d::CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
+			if (c != ' ')
+			{
+				CCLOGWARN("cocos2d::CCLabelBMFont: Attempted to use character not defined in this bitmap: %d", c);
+			}
             continue;      
         }
 
@@ -635,7 +640,10 @@ void CCLabelBMFont::createFontChars()
         HASH_FIND_INT(m_pConfiguration->m_pFontDefDictionary, &key, element);
         if (! element)
         {
-            CCLOGWARN("cocos2d::CCLabelBMFont: characer not found %d", c);
+			if (c != ' ')
+			{
+				CCLOGWARN("cocos2d::CCLabelBMFont: characer not found %d", c);
+			}
             continue;
         }
 
