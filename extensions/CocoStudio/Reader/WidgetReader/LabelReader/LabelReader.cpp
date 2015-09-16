@@ -52,8 +52,6 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
     ui::Label* label = (ui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
     label->setTouchScaleChangeEnabled(touchScaleChangeAble);
-    const char* text = DICTOOL->getStringValue_json(options, "text","Text Label");
-    label->setText(text);
    
     label->setFontSize(DICTOOL->getIntValue_json(options, "fontSize",20));
     
@@ -93,7 +91,9 @@ void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson
     {
         label->setTextVerticalAlignment((CCVerticalTextAlignment)DICTOOL->getIntValue_json(options, "vAlignment"));
     }
-    
+
+    const char* text = DICTOOL->getStringValue_json(options, "text", "Text Label");
+    label->setText(text);
     
     WidgetReader::setColorPropsFromJsonDictionary(widget, options);
 }
