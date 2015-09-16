@@ -564,7 +564,10 @@ MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
         for (auto iter = _children.crbegin(); iter != _children.crend(); ++iter)
         {
             MenuItem* child = dynamic_cast<MenuItem*>(*iter);
-            if (nullptr == child || false == child->isVisible() || false == child->isEnabled())
+            if (nullptr == child ||
+                false == child->isVisible() ||
+                false == child->isEnabled() ||
+                (((unsigned short)camera->getCameraFlag() & child->getCameraMask()) == 0))
             {
                 continue;
             }

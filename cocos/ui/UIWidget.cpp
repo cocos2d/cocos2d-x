@@ -770,7 +770,9 @@ bool Widget::onTouchBegan(Touch *touch, Event *unusedEvent)
     {
         _touchBeganPosition = touch->getLocation();
         auto camera = Camera::getVisitingCamera();
-        if(hitTest(_touchBeganPosition, camera, nullptr))
+        
+        if((((unsigned short)camera->getCameraFlag() & getCameraMask()) != 0) &&
+           hitTest(_touchBeganPosition, camera, nullptr))
         {
             _hittedByCamera = camera;
             if (isClippingParentContainsPoint(_touchBeganPosition)) {
