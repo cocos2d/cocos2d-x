@@ -443,9 +443,6 @@ Material* Material::clone() const
         {
             auto t = technique->clone();
             t->_parent = material;
-            for (ssize_t i = 0; i < t->getPassCount(); i++) {
-                t->getPassByIndex(i)->_parent = t;
-            }
             material->_techniques.pushBack(t);
         }
 

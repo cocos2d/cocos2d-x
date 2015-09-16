@@ -82,7 +82,7 @@ bool JSB_cpConstraint_getA(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpBody* ret_val;
+    cpBody* ret_val = nullptr;
 
     ret_val = cpConstraintGetA((cpConstraint*)arg0  );
 
@@ -100,7 +100,7 @@ bool JSB_cpConstraint_getB(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpBody* ret_val;
+    cpBody* ret_val = nullptr;
 
     ret_val = cpConstraintGetB((cpConstraint*)arg0  );
 
@@ -118,7 +118,7 @@ bool JSB_cpConstraint_getErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpConstraintGetErrorBias((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -133,7 +133,7 @@ bool JSB_cpConstraint_getImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpConstraintGetImpulse((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -148,7 +148,7 @@ bool JSB_cpConstraint_getMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpConstraintGetMaxBias((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -163,7 +163,7 @@ bool JSB_cpConstraint_getMaxForce(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpConstraintGetMaxForce((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -178,7 +178,7 @@ bool JSB_cpConstraint_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpConstraint* arg0 = (cpConstraint*) proxy->handle;
-    cpSpace* ret_val;
+    cpSpace* ret_val = nullptr;
 
     ret_val = cpConstraintGetSpace((cpConstraint*)arg0  );
 
@@ -304,7 +304,7 @@ bool JSB_cpGrooveJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpGrooveJoint_class, JS::RootedObject(cx, JSB_cpGrooveJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; cpVect arg4; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; cpVect arg4; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -501,7 +501,7 @@ bool JSB_cpSimpleMotor_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpSimpleMotor_class, JS::RootedObject(cx, JSB_cpSimpleMotor_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; double arg2; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -540,7 +540,7 @@ bool JSB_cpSimpleMotor_getRate(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSimpleMotor* arg0 = (cpSimpleMotor*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSimpleMotorGetRate((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -613,7 +613,7 @@ bool JSB_cpPivotJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpPivotJoint_class, JS::RootedObject(cx, JSB_cpPivotJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; void *ret_val;
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; void *ret_val = nullptr;
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -773,7 +773,7 @@ bool JSB_cpPinJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpPinJoint_class, JS::RootedObject(cx, JSB_cpPinJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -849,7 +849,7 @@ bool JSB_cpPinJoint_getDist(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpPinJointGetDist((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -906,7 +906,7 @@ bool JSB_cpPinJoint_setDist(JSContext *cx, uint32_t argc, jsval *vp) {
     cpPinJoint* arg0 = (cpPinJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -966,7 +966,7 @@ bool JSB_cpSlideJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpSlideJoint_class, JS::RootedObject(cx, JSB_cpSlideJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; double arg4; double arg5; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; double arg4 = 0; double arg5 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -1044,7 +1044,7 @@ bool JSB_cpSlideJoint_getMax(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSlideJointGetMax((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1059,7 +1059,7 @@ bool JSB_cpSlideJoint_getMin(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSlideJointGetMin((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1116,7 +1116,7 @@ bool JSB_cpSlideJoint_setMax(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1136,7 +1136,7 @@ bool JSB_cpSlideJoint_setMin(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSlideJoint* arg0 = (cpSlideJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1198,7 +1198,7 @@ bool JSB_cpGearJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpGearJoint_class, JS::RootedObject(cx, JSB_cpGearJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; double arg2; double arg3; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -1238,7 +1238,7 @@ bool JSB_cpGearJoint_getPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpGearJointGetPhase((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1253,7 +1253,7 @@ bool JSB_cpGearJoint_getRatio(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpGearJointGetRatio((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1270,7 +1270,7 @@ bool JSB_cpGearJoint_setPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1290,7 +1290,7 @@ bool JSB_cpGearJoint_setRatio(JSContext *cx, uint32_t argc, jsval *vp) {
     cpGearJoint* arg0 = (cpGearJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1348,7 +1348,7 @@ bool JSB_cpDampedRotarySpring_constructor(JSContext *cx, uint32_t argc, jsval *v
     JSObject *jsobj = JS_NewObject(cx, JSB_cpDampedRotarySpring_class, JS::RootedObject(cx, JSB_cpDampedRotarySpring_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; double arg2; double arg3; double arg4; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; double arg4 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -1389,7 +1389,7 @@ bool JSB_cpDampedRotarySpring_getDamping(JSContext *cx, uint32_t argc, jsval *vp
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpDampedRotarySpringGetDamping((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1404,7 +1404,7 @@ bool JSB_cpDampedRotarySpring_getRestAngle(JSContext *cx, uint32_t argc, jsval *
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpDampedRotarySpringGetRestAngle((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1419,7 +1419,7 @@ bool JSB_cpDampedRotarySpring_getStiffness(JSContext *cx, uint32_t argc, jsval *
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpDampedRotarySpringGetStiffness((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1436,7 +1436,7 @@ bool JSB_cpDampedRotarySpring_setDamping(JSContext *cx, uint32_t argc, jsval *vp
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1456,7 +1456,7 @@ bool JSB_cpDampedRotarySpring_setRestAngle(JSContext *cx, uint32_t argc, jsval *
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1476,7 +1476,7 @@ bool JSB_cpDampedRotarySpring_setStiffness(JSContext *cx, uint32_t argc, jsval *
     cpDampedRotarySpring* arg0 = (cpDampedRotarySpring*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1536,7 +1536,7 @@ bool JSB_cpDampedSpring_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpDampedSpring_class, JS::RootedObject(cx, JSB_cpDampedSpring_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; double arg4; double arg5; double arg6; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; cpVect arg2; cpVect arg3; double arg4 = 0; double arg5 = 0; double arg6 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -1615,7 +1615,7 @@ bool JSB_cpDampedSpring_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpDampedSpringGetDamping((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1630,7 +1630,7 @@ bool JSB_cpDampedSpring_getRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpDampedSpringGetRestLength((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1645,7 +1645,7 @@ bool JSB_cpDampedSpring_getStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpDampedSpringGetStiffness((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1702,7 +1702,7 @@ bool JSB_cpDampedSpring_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1722,7 +1722,7 @@ bool JSB_cpDampedSpring_setRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1742,7 +1742,7 @@ bool JSB_cpDampedSpring_setStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
     cpDampedSpring* arg0 = (cpDampedSpring*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1806,7 +1806,7 @@ bool JSB_cpRatchetJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpRatchetJoint_class, JS::RootedObject(cx, JSB_cpRatchetJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; double arg2; double arg3; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -1846,7 +1846,7 @@ bool JSB_cpRatchetJoint_getAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpRatchetJointGetAngle((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1861,7 +1861,7 @@ bool JSB_cpRatchetJoint_getPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpRatchetJointGetPhase((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1876,7 +1876,7 @@ bool JSB_cpRatchetJoint_getRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpRatchetJointGetRatchet((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -1893,7 +1893,7 @@ bool JSB_cpRatchetJoint_setAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1913,7 +1913,7 @@ bool JSB_cpRatchetJoint_setPhase(JSContext *cx, uint32_t argc, jsval *vp) {
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1933,7 +1933,7 @@ bool JSB_cpRatchetJoint_setRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
     cpRatchetJoint* arg0 = (cpRatchetJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -1993,7 +1993,7 @@ bool JSB_cpRotaryLimitJoint_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpRotaryLimitJoint_class, JS::RootedObject(cx, JSB_cpRotaryLimitJoint_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpBody* arg1; double arg2; double arg3; 
+    cpBody* arg0 = nullptr; cpBody* arg1 = nullptr; double arg2 = 0; double arg3 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_c_class( cx, args.get(1), (void**)&arg1, NULL );
@@ -2033,7 +2033,7 @@ bool JSB_cpRotaryLimitJoint_getMax(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpRotaryLimitJointGetMax((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2048,7 +2048,7 @@ bool JSB_cpRotaryLimitJoint_getMin(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpRotaryLimitJointGetMin((cpConstraint*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2065,7 +2065,7 @@ bool JSB_cpRotaryLimitJoint_setMax(JSContext *cx, uint32_t argc, jsval *vp) {
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2085,7 +2085,7 @@ bool JSB_cpRotaryLimitJoint_setMin(JSContext *cx, uint32_t argc, jsval *vp) {
     cpRotaryLimitJoint* arg0 = (cpRotaryLimitJoint*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2169,7 +2169,7 @@ bool JSB_cpArbiter_getCount(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    int ret_val;
+    int ret_val = 0;
 
     ret_val = cpArbiterGetCount((cpArbiter*)arg0  );
     args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
@@ -2186,11 +2186,11 @@ bool JSB_cpArbiter_getDepth(JSContext *cx, uint32_t argc, jsval *vp) {
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpArbiterGetDepth((cpArbiter*)arg0 , (int)arg1  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2205,7 +2205,7 @@ bool JSB_cpArbiter_getElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpArbiterGetElasticity((cpArbiter*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2220,7 +2220,7 @@ bool JSB_cpArbiter_getFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpArbiterGetFriction((cpArbiter*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2237,7 +2237,7 @@ bool JSB_cpArbiter_getNormal(JSContext *cx, uint32_t argc, jsval *vp) {
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2261,7 +2261,7 @@ bool JSB_cpArbiter_getPoint(JSContext *cx, uint32_t argc, jsval *vp) {
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2332,7 +2332,7 @@ bool JSB_cpArbiter_setElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2352,7 +2352,7 @@ bool JSB_cpArbiter_setFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2426,7 +2426,7 @@ bool JSB_cpArbiter_totalKE(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpArbiter* arg0 = (cpArbiter*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpArbiterTotalKE((cpArbiter*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2577,7 +2577,7 @@ bool JSB_cpSpace_activateShapesTouchingShape(JSContext *cx, uint32_t argc, jsval
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpShape* arg1; 
+    cpShape* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2597,7 +2597,7 @@ bool JSB_cpSpace_containsBody(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg1; 
+    cpBody* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2618,7 +2618,7 @@ bool JSB_cpSpace_containsConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpConstraint* arg1; 
+    cpConstraint* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2639,7 +2639,7 @@ bool JSB_cpSpace_containsShape(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpShape* arg1; 
+    cpShape* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2672,7 +2672,7 @@ bool JSB_cpSpace_getCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSpaceGetCollisionBias((cpSpace*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2687,7 +2687,7 @@ bool JSB_cpSpace_getCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpTimestamp ret_val;
+    cpTimestamp ret_val = 0;
 
     ret_val = cpSpaceGetCollisionPersistence((cpSpace*)arg0  );
     args.rval().set(UINT_TO_JSVAL((uint32_t)ret_val));
@@ -2702,7 +2702,7 @@ bool JSB_cpSpace_getCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSpaceGetCollisionSlop((cpSpace*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2717,7 +2717,7 @@ bool JSB_cpSpace_getCurrentTimeStep(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSpaceGetCurrentTimeStep((cpSpace*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2732,7 +2732,7 @@ bool JSB_cpSpace_getDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSpaceGetDamping((cpSpace*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2780,7 +2780,7 @@ bool JSB_cpSpace_getIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSpaceGetIdleSpeedThreshold((cpSpace*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2795,7 +2795,7 @@ bool JSB_cpSpace_getIterations(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    int ret_val;
+    int ret_val = 0;
 
     ret_val = cpSpaceGetIterations((cpSpace*)arg0  );
     args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
@@ -2810,7 +2810,7 @@ bool JSB_cpSpace_getSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSpaceGetSleepTimeThreshold((cpSpace*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -2825,7 +2825,7 @@ bool JSB_cpSpace_getStaticBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpBody* ret_val;
+    cpBody* ret_val = nullptr;
 
     ret_val = cpSpaceGetStaticBody((cpSpace*)arg0  );
 
@@ -2843,7 +2843,7 @@ bool JSB_cpSpace_init(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSpace* arg0 = (cpSpace*) proxy->handle;
-    cpSpace* ret_val;
+    cpSpace* ret_val = nullptr;
 
     ret_val = cpSpaceInit((cpSpace*)arg0  );
 
@@ -2878,13 +2878,13 @@ bool JSB_cpSpace_pointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpVect arg1; uint32_t arg2; cpGroup arg3;
+    cpVect arg1; uint32_t arg2 = 0; cpGroup arg3 = 0;
 
     ok &= jsval_to_cpVect( cx, args.get(0), (cpVect*) &arg1 );
     ok &= jsval_to_uint32( cx, args.get(1), &arg2 );
     ok &= jsval_to_uint( cx, args.get(2), (unsigned int*) &arg3 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-    cpShape* ret_val;
+    cpShape* ret_val = nullptr;
 
     ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
 
@@ -2906,7 +2906,7 @@ bool JSB_cpSpace_reindexShape(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpShape* arg1; 
+    cpShape* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2926,7 +2926,7 @@ bool JSB_cpSpace_reindexShapesForBody(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg1; 
+    cpBody* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2960,7 +2960,7 @@ bool JSB_cpSpace_setCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -2980,7 +2980,7 @@ bool JSB_cpSpace_setCollisionPersistence(JSContext *cx, uint32_t argc, jsval *vp
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    uint32_t arg1; 
+    uint32_t arg1 = 0; 
 
     ok &= jsval_to_uint32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3000,7 +3000,7 @@ bool JSB_cpSpace_setCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3020,7 +3020,7 @@ bool JSB_cpSpace_setDamping(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3040,7 +3040,7 @@ bool JSB_cpSpace_setEnableContactGraph(JSContext *cx, uint32_t argc, jsval *vp) 
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3080,7 +3080,7 @@ bool JSB_cpSpace_setIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3100,7 +3100,7 @@ bool JSB_cpSpace_setIterations(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3120,7 +3120,7 @@ bool JSB_cpSpace_setSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval *vp) 
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3140,7 +3140,7 @@ bool JSB_cpSpace_step(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3160,7 +3160,7 @@ bool JSB_cpSpace_useSpatialHash(JSContext *cx, uint32_t argc, jsval *vp) {
     cpSpace* arg0 = (cpSpace*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; int32_t arg2; 
+    double arg1 = 0; int32_t arg2 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     ok &= jsval_to_int32( cx, args.get(1), &arg2 );
@@ -3298,7 +3298,7 @@ bool JSB_cpBody_activateStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpShape* arg1; 
+    cpShape* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3372,7 +3372,7 @@ bool JSB_cpBody_getAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetAngVel((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3387,7 +3387,7 @@ bool JSB_cpBody_getAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetAngVelLimit((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3402,7 +3402,7 @@ bool JSB_cpBody_getAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetAngle((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3435,7 +3435,7 @@ bool JSB_cpBody_getMass(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetMass((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3450,7 +3450,7 @@ bool JSB_cpBody_getMoment(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetMoment((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3501,7 +3501,7 @@ bool JSB_cpBody_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpSpace* ret_val;
+    cpSpace* ret_val = nullptr;
 
     ret_val = cpBodyGetSpace((cpBody*)arg0  );
 
@@ -3519,7 +3519,7 @@ bool JSB_cpBody_getTorque(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetTorque((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3600,7 +3600,7 @@ bool JSB_cpBody_getVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyGetVelLimit((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3617,12 +3617,12 @@ bool JSB_cpBody_init(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; double arg2; 
+    double arg1 = 0; double arg2 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     ok &= JS::ToNumber( cx, args.get(1), &arg2 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-    cpBody* ret_val;
+    cpBody* ret_val = nullptr;
 
     ret_val = cpBodyInit((cpBody*)arg0 , (cpFloat)arg1 , (cpFloat)arg2  );
 
@@ -3640,7 +3640,7 @@ bool JSB_cpBody_initStatic(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpBody* ret_val;
+    cpBody* ret_val = nullptr;
 
     ret_val = cpBodyInitStatic((cpBody*)arg0  );
 
@@ -3703,7 +3703,7 @@ bool JSB_cpBody_kineticEnergy(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpBody* arg0 = (cpBody*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpBodyKineticEnergy((cpBody*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -3758,7 +3758,7 @@ bool JSB_cpBody_setAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3778,7 +3778,7 @@ bool JSB_cpBody_setAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3798,7 +3798,7 @@ bool JSB_cpBody_setAngle(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3838,7 +3838,7 @@ bool JSB_cpBody_setMass(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3858,7 +3858,7 @@ bool JSB_cpBody_setMoment(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3898,7 +3898,7 @@ bool JSB_cpBody_setTorque(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3938,7 +3938,7 @@ bool JSB_cpBody_setVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3972,7 +3972,7 @@ bool JSB_cpBody_sleepWithGroup(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg1; 
+    cpBody* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -3992,7 +3992,7 @@ bool JSB_cpBody_updatePosition(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4012,7 +4012,7 @@ bool JSB_cpBody_updateVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
     cpBody* arg0 = (cpBody*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpVect arg1; double arg2; double arg3; 
+    cpVect arg1; double arg2 = 0; double arg3 = 0; 
 
     ok &= jsval_to_cpVect( cx, args.get(0), (cpVect*) &arg1 );
     ok &= JS::ToNumber( cx, args.get(1), &arg2 );
@@ -4255,7 +4255,7 @@ bool JSB_cpShape_getBody(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpBody* ret_val;
+    cpBody* ret_val = nullptr;
 
     ret_val = cpShapeGetBody((cpShape*)arg0  );
 
@@ -4273,7 +4273,7 @@ bool JSB_cpShape_getCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpCollisionType ret_val;
+    cpCollisionType ret_val = 0;
 
     ret_val = cpShapeGetCollisionType((cpShape*)arg0  );
 
@@ -4291,7 +4291,7 @@ bool JSB_cpShape_getElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpShapeGetElasticity((cpShape*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -4306,7 +4306,7 @@ bool JSB_cpShape_getFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpShapeGetFriction((cpShape*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -4321,7 +4321,7 @@ bool JSB_cpShape_getGroup(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpGroup ret_val;
+    cpGroup ret_val = 0;
 
     ret_val = cpShapeGetGroup((cpShape*)arg0  );
 
@@ -4339,7 +4339,7 @@ bool JSB_cpShape_getLayers(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpLayers ret_val;
+    cpLayers ret_val = 0;
 
     ret_val = cpShapeGetLayers((cpShape*)arg0  );
     args.rval().set(UINT_TO_JSVAL((uint32_t)ret_val));
@@ -4369,7 +4369,7 @@ bool JSB_cpShape_getSpace(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpShape* arg0 = (cpShape*) proxy->handle;
-    cpSpace* ret_val;
+    cpSpace* ret_val = nullptr;
 
     ret_val = cpShapeGetSpace((cpShape*)arg0  );
 
@@ -4428,7 +4428,7 @@ bool JSB_cpShape_setBody(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg1; 
+    cpBody* arg1 = nullptr; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg1, NULL );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4448,7 +4448,7 @@ bool JSB_cpShape_setCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpCollisionType arg1; 
+    cpCollisionType arg1 = 0;
 
     ok &= jsval_to_uint( cx, args.get(0), (unsigned int*) &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4468,7 +4468,7 @@ bool JSB_cpShape_setElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4488,7 +4488,7 @@ bool JSB_cpShape_setFriction(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    double arg1; 
+    double arg1 = 0; 
 
     ok &= JS::ToNumber( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4508,7 +4508,7 @@ bool JSB_cpShape_setGroup(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpGroup arg1; 
+    cpGroup arg1 = 0; 
 
     ok &= jsval_to_uint( cx, args.get(0), (unsigned int*) &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4528,7 +4528,7 @@ bool JSB_cpShape_setLayers(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    uint32_t arg1; 
+    uint32_t arg1 = 0; 
 
     ok &= jsval_to_uint32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4548,7 +4548,7 @@ bool JSB_cpShape_setSensor(JSContext *cx, uint32_t argc, jsval *vp) {
     cpShape* arg0 = (cpShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -4808,7 +4808,7 @@ bool JSB_cpCircleShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpCircleShape_class, JS::RootedObject(cx, JSB_cpCircleShape_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; double arg1; cpVect arg2; 
+    cpBody* arg0 = nullptr; double arg1 = 0; cpVect arg2; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= JS::ToNumber( cx, args.get(1), &arg1 );
@@ -4865,7 +4865,7 @@ bool JSB_cpCircleShape_getRadius(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpCircleShape* arg0 = (cpCircleShape*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpCircleShapeGetRadius((cpShape*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -4918,7 +4918,7 @@ bool JSB_cpSegmentShape_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = JS_NewObject(cx, JSB_cpSegmentShape_class, JS::RootedObject(cx, JSB_cpSegmentShape_object), JS::NullPtr());
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    cpBody* arg0; cpVect arg1; cpVect arg2; double arg3; 
+    cpBody* arg0 = nullptr; cpVect arg1; cpVect arg2; double arg3 = 0; 
 
     ok &= jsval_to_c_class( cx, args.get(0), (void**)&arg0, NULL );
     ok &= jsval_to_cpVect( cx, args.get(1), (cpVect*) &arg1 );
@@ -5012,7 +5012,7 @@ bool JSB_cpSegmentShape_getRadius(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpSegmentShape* arg0 = (cpSegmentShape*) proxy->handle;
-    cpFloat ret_val;
+    cpFloat ret_val = 0;
 
     ret_val = cpSegmentShapeGetRadius((cpShape*)arg0  );
     args.rval().set(DOUBLE_TO_JSVAL(ret_val));
@@ -5130,7 +5130,7 @@ bool JSB_cpPolyShape_getNumVerts(JSContext *cx, uint32_t argc, jsval *vp) {
     JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(jsthis);
     cpPolyShape* arg0 = (cpPolyShape*) proxy->handle;
-    int ret_val;
+    int ret_val = 0;
 
     ret_val = cpPolyShapeGetNumVerts((cpShape*)arg0  );
     args.rval().set(INT_TO_JSVAL((int32_t)ret_val));
@@ -5147,7 +5147,7 @@ bool JSB_cpPolyShape_getVert(JSContext *cx, uint32_t argc, jsval *vp) {
     cpPolyShape* arg0 = (cpPolyShape*) proxy->handle;
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    int32_t arg1; 
+    int32_t arg1 = 0; 
 
     ok &= jsval_to_int32( cx, args.get(0), &arg1 );
     JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
@@ -5403,8 +5403,8 @@ bool js_set_cpSegmentQueryInfo_shape(JSContext *cx, uint32_t argc, jsval *vp)
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(args.thisv().toObjectOrNull());
     cpSegmentQueryInfo* info = (cpSegmentQueryInfo*) proxy->handle;
 
-    cpShape* shape;
-    struct jsb_c_proxy_s *retproxy;
+    cpShape* shape = nullptr;
+    struct jsb_c_proxy_s *retproxy = nullptr;
     jsval_to_c_class( cx, args.get(0), (void**)&shape, &retproxy );
 
     info->shape = shape;
@@ -5509,8 +5509,8 @@ bool js_set_cpNearestPointQueryInfo_shape(JSContext *cx, uint32_t argc, jsval *v
     struct jsb_c_proxy_s *proxy = jsb_get_c_proxy_for_jsobject(args.thisv().toObjectOrNull());
     cpNearestPointQueryInfo* info = (cpNearestPointQueryInfo*) proxy->handle;
 
-    cpShape* shape;
-    struct jsb_c_proxy_s *retproxy;
+    cpShape* shape = nullptr;
+    struct jsb_c_proxy_s *retproxy = nullptr;
     jsval_to_c_class( cx, args.get(0), (void**)&shape, &retproxy );
 
     info->shape = shape;

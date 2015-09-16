@@ -144,12 +144,13 @@ public:
     /**
      * trace all the points along the outline of the image, 
      * @warning must create AutoPolygon with filename to use this function
-     * @param   rect    a texture rect for specify an area of the image, use Rect::Zero for the size of the image, default to Rect::Zero
+     * @param   rect    a texture rect for specify an area of the image
      * @param   threshold   the value when alpha is greater than this value will be counted as opaque, default to 0.0
      * @return  a vector of vec2 of all the points found in clockwise order
      * @code
      * auto ap = AutoPolygon("grossini.png");
-     * std::vector<Vec2> points = ap.trace();//default to size of the image and threshold 0.0
+     * auto rect = Rect(100, 100, 200, 200);
+     * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
      std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);

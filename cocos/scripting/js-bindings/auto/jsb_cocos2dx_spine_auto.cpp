@@ -54,7 +54,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_setTimeScale(JSContext *cx, uint32_t arg
     spine::SkeletonRenderer* cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setTimeScale : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setTimeScale : Error processing arguments");
         cobj->setTimeScale(arg0);
@@ -99,7 +99,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_setAttachment(JSContext *cx, uint32_t ar
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            const char* arg1;
+            const char* arg1 = nullptr;
             std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
             if (!ok) { ok = true; break; }
             bool ret = cobj->setAttachment(arg0, arg1);
@@ -154,7 +154,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_initWithData(JSContext *cx, uint32_t arg
     spine::SkeletonRenderer* cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_initWithData : Invalid Native Object");
     if (argc == 1) {
-        spSkeletonData* arg0;
+        spSkeletonData* arg0 = nullptr;
         #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 		ok = false;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonRenderer_initWithData : Error processing arguments");
@@ -163,7 +163,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_initWithData(JSContext *cx, uint32_t arg
         return true;
     }
     if (argc == 2) {
-        spSkeletonData* arg0;
+        spSkeletonData* arg0 = nullptr;
         bool arg1;
         #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 		ok = false;
@@ -257,7 +257,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_drawSkeleton(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_drawSkeleton : Invalid Native Object");
     if (argc == 2) {
         cocos2d::Mat4 arg0;
-        unsigned int arg1;
+        unsigned int arg1 = 0;
         ok &= jsval_to_matrix(cx, args.get(0), &arg0);
         ok &= jsval_to_uint32(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonRenderer_drawSkeleton : Error processing arguments");
@@ -390,7 +390,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_initWithFile(JSContext *cx, uint32_t arg
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj->initWithFile(arg0, arg1, arg2);
@@ -404,7 +404,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_initWithFile(JSContext *cx, uint32_t arg
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -419,11 +419,11 @@ bool js_cocos2dx_spine_SkeletonRenderer_initWithFile(JSContext *cx, uint32_t arg
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj->initWithFile(arg0, arg1, arg2);
@@ -468,7 +468,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_setSkin(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setSkin : Invalid Native Object");
     do {
         if (argc == 1) {
-            const char* arg0;
+            const char* arg0 = nullptr;
             std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
             if (!ok) { ok = true; break; }
             bool ret = cobj->setSkin(arg0);
@@ -548,7 +548,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_createWithFile(JSContext *cx, uint32_t a
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             spine::SkeletonRenderer* ret = spine::SkeletonRenderer::createWithFile(arg0, arg1, arg2);
@@ -571,7 +571,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_createWithFile(JSContext *cx, uint32_t a
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -594,11 +594,11 @@ bool js_cocos2dx_spine_SkeletonRenderer_createWithFile(JSContext *cx, uint32_t a
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             spine::SkeletonRenderer* ret = spine::SkeletonRenderer::createWithFile(arg0, arg1, arg2);
@@ -627,7 +627,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
     spine::SkeletonRenderer* cobj = NULL;
     do {
         if (argc == 1) {
-            spSkeletonData* arg0;
+            spSkeletonData* arg0 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -655,7 +655,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
 
     do {
         if (argc == 2) {
-            spSkeletonData* arg0;
+            spSkeletonData* arg0 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -712,7 +712,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -743,11 +743,11 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) spine::SkeletonRenderer(arg0, arg1, arg2);
@@ -810,7 +810,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) spine::SkeletonRenderer(arg0, arg1, arg2);
@@ -979,7 +979,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener(JSContext *cx, ui
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackEventListener : Invalid Native Object");
     if (argc == 2) {
-        spTrackEntry* arg0;
+        spTrackEntry* arg0 = nullptr;
         std::function<void (int, spEvent *)> arg1;
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
@@ -1042,7 +1042,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener(JSContext *cx,
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackCompleteListener : Invalid Native Object");
     if (argc == 2) {
-        spTrackEntry* arg0;
+        spTrackEntry* arg0 = nullptr;
         std::function<void (int, int)> arg1;
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
@@ -1087,10 +1087,10 @@ bool js_cocos2dx_spine_SkeletonAnimation_onTrackEntryEvent(JSContext *cx, uint32
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_onTrackEntryEvent : Invalid Native Object");
     if (argc == 4) {
-        int arg0;
+        int arg0 = 0;
         spEventType arg1;
-        spEvent* arg2;
-        int arg3;
+        spEvent* arg2 = nullptr;
+        int arg3 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         #pragma warning NO CONVERSION TO NATIVE FOR spEvent*
@@ -1114,7 +1114,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackStartListener(JSContext *cx, ui
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackStartListener : Invalid Native Object");
     if (argc == 2) {
-        spTrackEntry* arg0;
+        spTrackEntry* arg0 = nullptr;
         std::function<void (int)> arg1;
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
@@ -1158,7 +1158,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_update(JSContext *cx, uint32_t argc, js
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_update : Invalid Native Object");
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_update : Error processing arguments");
         cobj->update(arg0);
@@ -1220,7 +1220,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setTrackEndListener(JSContext *cx, uint
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_setTrackEndListener : Invalid Native Object");
     if (argc == 2) {
-        spTrackEntry* arg0;
+        spTrackEntry* arg0 = nullptr;
         std::function<void (int)> arg1;
         #pragma warning NO CONVERSION TO NATIVE FOR spTrackEntry*
 		ok = false;
@@ -1308,7 +1308,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_setMix(JSContext *cx, uint32_t argc, js
     if (argc == 3) {
         std::string arg0;
         std::string arg1;
-        double arg2;
+        double arg2 = 0;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_std_string(cx, args.get(1), &arg1);
         ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
@@ -1408,7 +1408,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_clearTrack(JSContext *cx, uint32_t argc
         return true;
     }
     if (argc == 1) {
-        int arg0;
+        int arg0 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_spine_SkeletonAnimation_clearTrack : Error processing arguments");
         cobj->clearTrack(arg0);
@@ -1428,10 +1428,10 @@ bool js_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent(JSContext *cx, ui
     spine::SkeletonAnimation* cobj = (spine::SkeletonAnimation *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonAnimation_onAnimationStateEvent : Invalid Native Object");
     if (argc == 4) {
-        int arg0;
+        int arg0 = 0;
         spEventType arg1;
-        spEvent* arg2;
-        int arg3;
+        spEvent* arg2 = nullptr;
+        int arg3 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         #pragma warning NO CONVERSION TO NATIVE FOR spEvent*
@@ -1481,7 +1481,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             spine::SkeletonAnimation* ret = spine::SkeletonAnimation::createWithFile(arg0, arg1, arg2);
@@ -1504,7 +1504,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1527,11 +1527,11 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             spine::SkeletonAnimation* ret = spine::SkeletonAnimation::createWithFile(arg0, arg1, arg2);
@@ -1560,7 +1560,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
     spine::SkeletonAnimation* cobj = NULL;
     do {
         if (argc == 1) {
-            spSkeletonData* arg0;
+            spSkeletonData* arg0 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1588,7 +1588,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 
     do {
         if (argc == 2) {
-            spSkeletonData* arg0;
+            spSkeletonData* arg0 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1645,7 +1645,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1676,11 +1676,11 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) spine::SkeletonAnimation(arg0, arg1, arg2);
@@ -1743,7 +1743,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) spine::SkeletonAnimation(arg0, arg1, arg2);
@@ -1787,7 +1787,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
     spine::SkeletonAnimation* cobj = NULL;
     do {
         if (argc == 1) {
-            spSkeletonData* arg0;
+            spSkeletonData* arg0 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1815,7 +1815,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
 
     do {
         if (argc == 2) {
-            spSkeletonData* arg0;
+            spSkeletonData* arg0 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spSkeletonData*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1872,7 +1872,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
@@ -1903,11 +1903,11 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            spAtlas* arg1;
+            spAtlas* arg1 = nullptr;
             #pragma warning NO CONVERSION TO NATIVE FOR spAtlas*
 			ok = false;
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) spine::SkeletonAnimation(arg0, arg1, arg2);
@@ -1970,7 +1970,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             std::string arg1;
             ok &= jsval_to_std_string(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            double arg2;
+            double arg2 = 0;
             ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
             if (!ok) { ok = true; break; }
             cobj = new (std::nothrow) spine::SkeletonAnimation(arg0, arg1, arg2);

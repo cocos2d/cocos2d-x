@@ -563,8 +563,6 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-
-    void debugDraw(bool on);
     
     /**
      * returns a copy of the polygon information associated with this sprite
@@ -609,8 +607,9 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
-
-
+#if CC_SPRITE_DEBUG_DRAW
+    DrawNode *_debugDrawNode;
+#endif //CC_SPRITE_DEBUG_DRAW
     //
     // Shared data
     //

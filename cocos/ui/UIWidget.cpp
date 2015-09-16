@@ -289,6 +289,11 @@ LayoutComponent* Widget::getOrCreateLayoutComponent()
 
 void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
+    Size previousSize = ProtectedNode::getContentSize();
+    if(previousSize.equals(contentSize))
+    {
+        return;
+    }
     ProtectedNode::setContentSize(contentSize);
 
     _customSize = contentSize;

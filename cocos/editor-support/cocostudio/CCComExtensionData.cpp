@@ -80,7 +80,6 @@ namespace cocostudio
 
     void ComExtensionData::onRemove()
     {
-        CC_SAFE_RELEASE_NULL(_timelineData);
     }
 
     void ComExtensionData::setActionTag(int actionTag)
