@@ -304,7 +304,22 @@ public:
      * @return A item instance.
      */
     Widget* getBottommostItemInCurrentView() const;
-	
+
+    /**
+     * Override functions
+     */
+    virtual void jumpToBottom() override;
+    virtual void jumpToTop() override;
+    virtual void jumpToLeft() override;
+    virtual void jumpToRight() override;
+    virtual void jumpToTopLeft() override;
+    virtual void jumpToTopRight() override;
+    virtual void jumpToBottomLeft() override;
+    virtual void jumpToBottomRight() override;
+    virtual void jumpToPercentVertical(float percent) override;
+    virtual void jumpToPercentHorizontal(float percent) override;
+    virtual void jumpToPercentBothDirection(const Vec2& percent) override;
+
 	/**
 	 * @brief Scroll to specific item
 	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
@@ -358,6 +373,7 @@ public:
      * @brief Refresh content view of ListView.
      */
     void refreshView();
+    void refreshViewIfNecessary();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
