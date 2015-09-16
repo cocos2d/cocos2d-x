@@ -6,6 +6,9 @@ using namespace cocos2d::ui;
 
 UIPageViewTests::UIPageViewTests()
 {
+    ADD_TEST_CASE(UIPageViewByListViewTest);
+
+
     ADD_TEST_CASE(UIPageViewTest);
     ADD_TEST_CASE(UIPageViewButtonTest);
     ADD_TEST_CASE(UIPageViewCustomScrollThreshold);
@@ -57,7 +60,7 @@ bool UIPageViewTest::init()
         pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);
-        pageView->removeAllPages();
+        pageView->removeAllItems();
         
         int pageCount = 4;
         for (int i = 0; i < pageCount; ++i)
@@ -76,11 +79,11 @@ bool UIPageViewTest::init()
             label->setPosition(Vec2(layout->getContentSize().width / 2.0f, layout->getContentSize().height / 2.0f));
             layout->addChild(label);
             
-            pageView->insertPage(layout,i);
+            pageView->insertCustomItem(layout, i);
         }
         
-        pageView->removePageAtIndex(0);
-        pageView->scrollToPage(pageCount-2);
+        pageView->removeItem(0);
+        pageView->scrollToItem(pageCount - 2, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
         
         pageView->addEventListener(CC_CALLBACK_2(UIPageViewTest::pageViewEvent, this));
         
@@ -109,6 +112,73 @@ void UIPageViewTest::pageViewEvent(Ref *pSender, PageView::EventType type)
 }
 
 
+// UIPageViewByListViewTest
+bool UIPageViewByListViewTest::init()
+{
+    if (!UIScene::init())
+    {
+        return false;
+    }
+
+    Size widgetSize = _widget->getContentSize();
+
+    // Add a label in which the dragpanel events will be displayed
+    auto label = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
+    label->setAnchorPoint(Vec2(0.5f, -1.0f));
+    label->setPosition(Vec2(widgetSize / 2) + Vec2(0, label->getContentSize().height * 1.5));
+    _uiLayer->addChild(label);
+
+    Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+    Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+
+    // Create the page view
+    Size size(240.0f, 130.0f);
+//    auto pageView = ListView::create();
+    auto pageView = PageView::create();
+    {
+        pageView->setDirection(ScrollView::Direction::HORIZONTAL);
+        pageView->setContentSize(size);
+        Size backgroundSize = background->getContentSize();
+        pageView->setPosition((widgetSize - pageView->getContentSize()) / 2);
+        _uiLayer->addChild(pageView);
+    }
+
+    int pageCount = 20;
+    for (int i = 0; i < pageCount; ++i)
+    {
+        Color3B color;
+        if(i % 3 == 0)
+        {
+            color = Color3B::WHITE;
+        }
+        else if(i % 3 == 1)
+        {
+            color = Color3B::YELLOW;
+        }
+        else if(i % 3 == 2)
+        {
+            color = Color3B::ORANGE;
+        }
+
+        Layout* pLayout = Layout::create();
+        pLayout->setContentSize(size);
+        pLayout->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
+        pLayout->setBackGroundColor(color);
+
+        Button *btn = Button::create("cocosui/animationbuttonnormal.png",
+                                     "cocosui/animationbuttonpressed.png");
+        btn->setName(StringUtils::format("button %d", i));
+        btn->setScale9Enabled(true);
+        btn->setContentSize(size);
+        btn->setPosition(size / 2);
+        pLayout->addChild(btn);
+
+        pageView->pushBackCustomItem(pLayout);
+    }
+    return true;
+}
+
+
 // UIPageViewButtonTest
 UIPageViewButtonTest::UIPageViewButtonTest()
 : _displayValueLabel(nullptr)
@@ -126,7 +196,7 @@ bool UIPageViewButtonTest::init()
     {
         Size widgetSize = _widget->getContentSize();
         
-        // Add a label in which the dragpanel events will be displayed
+        // Add a label in which the drag panel events will be displayed
         _displayValueLabel = Text::create("Move by horizontal direction", "fonts/Marker Felt.ttf", 32);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,

@@ -172,8 +172,7 @@ public:
      * @param index A given index in ssize_t.
      */
     void removeItem(ssize_t index);
-    
-    
+
     /**
      * @brief Remove all items in current ListView.
      *
@@ -326,7 +325,7 @@ public:
      * @param positionRatioInView Specifies the position with ratio in list view's content size.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
      */
-    void jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    void jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
     
 	/**
 	 * @brief Scroll to specific item
@@ -334,8 +333,8 @@ public:
 	 * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
 	 * @param timeInSec Scroll time
 	 */
-    void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
-	void scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
+    void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+	void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
 	
     /**
      * @brief Query current selected widget's idnex.

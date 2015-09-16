@@ -84,7 +84,7 @@ public:
     /**
      * PageView page turn event callback.
      */
-    typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
+    typedef std::function<void(Ref*, EventType)> ccPageViewCallback;
 
     /**
      * Default constructor
@@ -112,50 +112,63 @@ public:
      * @param widget    Widget to be added to pageview.
      * @param pageIdx   A given index.
      * @param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
      */
-    void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
+    CC_DEPRECATED_ATTRIBUTE void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
     
     /**
      * Insert a page into the end of PageView.
      *
      * @param page Page to be inserted.
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::pushBackCustomItem(Widget* item)` instead.
      */
-    void addPage(Layout* page);
+    CC_DEPRECATED_ATTRIBUTE void addPage(Layout* page);
     
     /**
      * Insert a page into PageView at a given index.
      *
      * @param page  Page to be inserted.
      * @param idx   A given index.
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::insertCustomItem(Widget* item, ssize_t index)` instead.
      */
-    void insertPage(Layout* page, int idx);
+    CC_DEPRECATED_ATTRIBUTE void insertPage(Layout* page, int idx);
     
     /**
      * Remove a page of PageView.
      *
      * @param page  Page to be removed.
-     */
-    void removePage(Layout* page);
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::removeItem(getIndex(item))` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE void removePage(Layout* page);
 
     /**
      * Remove a page at a given index of PageView.
      *
      * @param index  A given index.
-     */
-    void removePageAtIndex(ssize_t index);
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::removeItem(ssize_t index)` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE void removePageAtIndex(ssize_t index);
 
     /**
      * @brief Remove all pages of the PageView.
-     */
-    void removeAllPages();
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::removeAllItems()` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE void removeAllPages();
     
     /**
      * Scroll to a page with a given index.
      *
      * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
-     */
-    void scrollToPage(ssize_t idx);
-
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::scrollToItem(ssize_t itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE void scrollToPage(ssize_t idx);
 
     /**
      * Gets current displayed page index.
@@ -168,23 +181,28 @@ public:
      * This is the different between scrollToPage.
      *
      * @param index A given index in PageView. Index start from 0 to pageCount -1.
-     */
-    void setCurPageIndex(ssize_t index);
-     
+	 *
+	 * Since v3.9, this is deprecated. Use `ListView::jumpToItem(ssize_t itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE void setCurPageIndex(ssize_t index);
+
     /**
      * @brief Get all the pages in the PageView.
      * @return A vector of Layout pointers.
-     */
-    Vector<Layout*>& getPages();
-    
-    
+	 *
+	 * Since v3.9, this is obsolete. Use `Vector<Widget*>& ListView::getItems()` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE Vector<Layout*>& getPages();
+
     /**
      * @brief Get a page at a given index
      *
      * @param index A given index.
      * @return A layout pointer in PageView container.
-     */
-    Layout* getPage(ssize_t index);
+	 *
+	 * Since v3.9, this is obsolete. Use `Widget* ListView::getItem(index)` instead.
+	 */
+	CC_DEPRECATED_ATTRIBUTE Layout* getPage(ssize_t index);
     
     /**
      * Add a page turn callback to PageView, then when one page is turning, the callback will be called.
@@ -203,18 +221,7 @@ public:
     void addEventListener(const ccPageViewCallback& callback);
     
     //override methods
-    virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
-    virtual void onTouchMoved(Touch *touch, Event *unusedEvent) override;
-    virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
-    virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
-    virtual void update(float dt) override;
-    virtual void setLayoutType(Type type) override{};
-    virtual Type getLayoutType() const override{return Type::ABSOLUTE;};
     virtual std::string getDescription() const override;
-    /**
-     * @lua NA
-     */
-    virtual void onEnter() override;
 
     /**   
      *@brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
@@ -245,55 +252,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-
-    Layout* createPage();
-    float getPositionXByIndex(ssize_t idx)const;
-    float getPositionYByIndex(ssize_t idx)const;
-    ssize_t getPageCount()const;
-
-    void updateBoundaryPages();
-    virtual bool scrollPages(Vec2 touchOffset);
-    void movePages(Vec2 offset);
     void pageTurningEvent();
-    void updateAllPagesSize();
-    void updateAllPagesPosition();
-    void autoScroll(float dt);
 
-    virtual void handleMoveLogic(Touch *touch) ;
-    virtual void handleReleaseLogic(Touch *touch) ;
-    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) override;
-    
-    
-    virtual void onSizeChanged() override;
+    virtual void handleReleaseLogic(Touch *touch) override;
+
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-    virtual void copyClonedWidgetChildren(Widget* model) override;
-
-    virtual void doLayout() override;
 
 protected:
-    enum class AutoScrollDirection
-    {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-    };
-    bool _isAutoScrolling;
-    float _autoScrollDistance;
-    float _autoScrollSpeed;
-    AutoScrollDirection _autoScrollDirection;
-
-    ssize_t _curPageIdx;
-    Vector<Layout*> _pages;
-
-    TouchDirection _touchMoveDirection;
-   
-    Widget* _leftBoundaryChild;
-    Widget* _rightBoundaryChild;
-    
-    float _leftBoundary;
-    float _rightBoundary;
     float _customScrollThreshold;
     bool _usingCustomScrollThreshold;
 

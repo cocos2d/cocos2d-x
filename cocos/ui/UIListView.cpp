@@ -72,7 +72,7 @@ bool ListView::init()
 {
     if (ScrollView::init())
     {
-        setLayoutType(Type::VERTICAL);
+        setDirection(Direction::VERTICAL);
         return true;
     }
     return false;
@@ -365,7 +365,7 @@ void ListView::removeAllItems()
     removeAllChildren();
 }
 
-Widget* ListView::getItem(ssize_t index)const
+Widget* ListView::getItem(ssize_t index) const
 {
     if (index < 0 || index >= _items.size())
     {
@@ -748,7 +748,7 @@ static Vec2 calculateItemDestination(const Size& contentSize, Widget* item, cons
     return -(itemPosition - positionInView);
 }
 
-void ListView::jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
@@ -765,12 +765,12 @@ void ListView::jumpToItem(int itemIndex, const Vec2& positionRatioInView, const 
     moveChildrenToPosition(destination);
 }
 
-void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
 {
     scrollToItem(itemIndex, positionRatioInView, itemAnchorPoint, DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM);
 }
 
-void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
+void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec)
 {
     Widget* item = getItem(itemIndex);
     if (item == nullptr)
@@ -847,7 +847,7 @@ Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
     float topBoundary = _topBoundary;
     float bottomBoundary = _bottomBoundary;
     {
-        int lastItemIndex = _items.size() - 1;
+        ssize_t lastItemIndex = _items.size() - 1;
         Size contentSize = getContentSize();
         Vec2 firstItemAdjustment, lastItemAdjustment;
         if(_magneticType == MagneticType::CENTER)
