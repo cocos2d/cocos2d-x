@@ -36,6 +36,9 @@ THE SOFTWARE.
 #include <cctype>
 #include <queue>
 #include <list>
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "platform/android/CCFileUtilsAndroid.h"
+#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <pthread.h>
 #else
@@ -150,7 +153,7 @@ NS_CC_EXT_BEGIN
 
 float s_PositionReadScale = 1;
 
-std::vector<std::string> CCDataReaderHelper::s_arrConfigFileList;
+std::vector<LoadCfgNode> CCDataReaderHelper::s_arrConfigFileList;
 CCDataReaderHelper *CCDataReaderHelper::s_DataReaderHelper = NULL;
 
 enum ConfigType
@@ -188,6 +191,12 @@ typedef struct _DataInfo
     float cocoStudioVersion;
 } DataInfo;
 
+typedef struct _LoadCfgNode
+{
+	std::string filename; 
+	bool loaded;
+} LoadCfgNode;
+
 
 static pthread_t s_loadingThread;
 
@@ -218,13 +227,22 @@ static std::queue<DataInfo *>   *s_pDataQueue = NULL;
 static void addData(AsyncStruct *pAsyncStruct)
 {
     std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pAsyncStruct->filename.c_str());
-    unsigned long size;
     pthread_mutex_lock(&s_GetFileDataMutex);
     std::string readmode = "r";
     bool isbinary = pAsyncStruct->configType == CocoStudio_Binary;
     if(isbinary)
         readmode += "b";
-    unsigned char *pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str() , readmode.c_str(), &size);
+
+	unsigned long size = 0;
+	unsigned char *pBytes = NULL;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+	CCFileUtilsAndroid *fileUitls = (CCFileUtilsAndroid*)CCFileUtils::sharedFileUtils();
+	pBytes = fileUitls->getFileDataForAsync(fullPath.c_str() , readmode.c_str(), &size);
+#else
+	pBytes = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), readmode.c_str(), &size);
+#endif
+
     CCData data(pBytes, size);
     CC_SAFE_DELETE_ARRAY(pBytes);
     pAsyncStruct->fileContent = std::string((const char*)data.getBytes(), data.getSize());
@@ -344,6 +362,7 @@ void CCDataReaderHelper::destroyInstance()
     CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
 }
 
+
 CCDataReaderHelper::~CCDataReaderHelper()
 {
     need_quit = true;
@@ -357,16 +376,19 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     */
     for(unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
     {
-        if (s_arrConfigFileList[i].compare(filePath) == 0)
+        if (s_arrConfigFileList[i].filename.compare(filePath) == 0)
         {
             return;
         }
     }
-    s_arrConfigFileList.push_back(filePath);
 
+	std::string basefilePath = filePath;
+	LoadCfgNode node;
+	node.filename = basefilePath;
+	node.loaded = true;
+	s_arrConfigFileList.push_back(node);
 
     //! find the base file path
-    std::string basefilePath = filePath;
     size_t pos = basefilePath.find_last_of("/");
     if (pos != std::string::npos)
     {
@@ -429,9 +451,9 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
     */
     for(unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
     {
-        if (s_arrConfigFileList[i].compare(filePath) == 0)
+		if (s_arrConfigFileList[i].filename.compare(filePath) == 0)
         {
-            if (target && selector)
+			if (s_arrConfigFileList[i].loaded && target && selector)
             {
                 if (s_nAsyncRefTotalCount == 0 && s_nAsyncRefCount == 0)
                 {
@@ -442,13 +464,18 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
                     (target->*selector)((s_nAsyncRefTotalCount - s_nAsyncRefCount) / (float)s_nAsyncRefTotalCount);
                 }
             }
+			
             return;
         }
     }
-    s_arrConfigFileList.push_back(filePath);
+
+	std::string basefilePath = filePath;
+	LoadCfgNode node;
+	node.filename = basefilePath;
+	node.loaded = false;
+	s_arrConfigFileList.push_back(node);
 
     //! find the base file path
-    std::string basefilePath = filePath;
     size_t pos = basefilePath.find_last_of("/");
     if (pos != std::string::npos)
     {
@@ -583,6 +610,15 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
             target->release();
         }
 
+		for (unsigned int i = 0; i < s_arrConfigFileList.size(); i++)
+		{
+			if (s_arrConfigFileList[i].filename == pAsyncStruct->filename)
+			{
+				s_arrConfigFileList[i].loaded = true;
+				break;
+			}
+		}
+
 
         delete pAsyncStruct;
         delete pDataInfo;
@@ -597,10 +633,10 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
 
 void CCDataReaderHelper::removeConfigFile(const char *configFile)
 {
-    std::vector<std::string>::iterator it = s_arrConfigFileList.end();
-    for (std::vector<std::string>::iterator i = s_arrConfigFileList.begin(); i != s_arrConfigFileList.end(); i++)
+    std::vector<LoadCfgNode>::iterator it = s_arrConfigFileList.end();
+	for (std::vector<LoadCfgNode>::iterator i = s_arrConfigFileList.begin(); i != s_arrConfigFileList.end(); i++)
     {
-        if (*i == configFile)
+        if (i->filename.compare(configFile) == 0)
         {
             it = i;
         }
@@ -1499,8 +1535,8 @@ CCDisplayData *CCDataReaderHelper::decodeBoneDisplay(const rapidjson::Value &jso
                 sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
                 sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
                 sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
-                sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 0.0f);
-                sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 0.0f);
+				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
+				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
 
                 sdd->skinData.x *= dataInfo->contentScale;
                 sdd->skinData.y *= dataInfo->contentScale;
