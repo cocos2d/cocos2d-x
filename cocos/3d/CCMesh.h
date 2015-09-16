@@ -200,6 +200,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Mesh();
 
 protected:
+    void resetLightUniformValues();
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
@@ -218,6 +219,21 @@ protected:
     Material*           _material;
     AABB                _aabb;
     std::function<void()> _visibleChanged;
+    
+    ///light parameters
+    std::vector<Vec3> _dirLightUniformColorValues;
+    std::vector<Vec3> _dirLightUniformDirValues;
+    
+    std::vector<Vec3> _pointLightUniformColorValues;
+    std::vector<Vec3> _pointLightUniformPositionValues;
+    std::vector<float> _pointLightUniformRangeInverseValues;
+    
+    std::vector<Vec3> _spotLightUniformColorValues;
+    std::vector<Vec3> _spotLightUniformPositionValues;
+    std::vector<Vec3> _spotLightUniformDirValues;
+    std::vector<float> _spotLightUniformInnerAngleCosValues;
+    std::vector<float> _spotLightUniformOuterAngleCosValues;
+    std::vector<float> _spotLightUniformRangeInverseValues;
 };
 
 // end of 3d group
