@@ -168,6 +168,7 @@ public:
     CCDictionary *getArmatureDatas() const;
     CCDictionary *getAnimationDatas() const;
     CCDictionary *getTextureDatas() const;
+	bool isDataLoaded(const char *id);
 
 protected:
     void addRelativeData(const char* configFilePath);
