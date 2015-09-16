@@ -53,6 +53,7 @@ bool UIPageViewTest::init()
         
         // Create the page view
         PageView* pageView = PageView::create();
+        pageView->setDirection(PageView::Direction::HORIZONTAL);
         pageView->setContentSize(Size(240.0f, 130.0f));
         Size backgroundSize = background->getContentSize();
         pageView->setPosition((widgetSize - pageView->getContentSize()) / 2.0f);

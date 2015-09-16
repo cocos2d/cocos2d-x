@@ -35,7 +35,6 @@ _isAutoScrolling(false),
 _autoScrollDistance(0.0f),
 _autoScrollSpeed(0.0f),
 _autoScrollDirection(AutoScrollDirection::LEFT),
-_direction(Direction::HORIZONTAL),
 _curPageIdx(-1),
 _touchMoveDirection(TouchDirection::LEFT),
 _leftBoundaryChild(nullptr),
@@ -50,6 +49,7 @@ _pageViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     this->setTouchEnabled(true);
+    setDirection(ScrollView::Direction::HORIZONTAL);
 }
 
 PageView::~PageView()
@@ -80,15 +80,17 @@ void PageView::onEnter()
     }
 #endif
     
-    Layout::onEnter();
+    ListView::onEnter();
     scheduleUpdate();
 }
 
 bool PageView::init()
 {
-    if (Layout::init())
+    if (ListView::init())
     {
-        setClippingEnabled(true);
+        setDirection(ListView::Direction::HORIZONTAL);
+        setMagneticType(MagneticType::CENTER);
+		setScrollBarEnabled(false);
         return true;
     }
     return false;
@@ -239,7 +241,7 @@ float PageView::getPositionYByIndex(ssize_t idx)const
 
 void PageView::onSizeChanged()
 {
-    Layout::onSizeChanged();
+    ListView::onSizeChanged();
     if (_direction == Direction::HORIZONTAL)
     {
         _rightBoundary = getContentSize().width;
@@ -343,16 +345,6 @@ void PageView::scrollToPage(ssize_t idx)
     _autoScrollSpeed = fabs(_autoScrollDistance)/0.2f;
     _isAutoScrolling = true;
 }
-    
-void PageView::setDirection(cocos2d::ui::PageView::Direction direction)
-{
-    this->_direction = direction;
-}
-    
-PageView::Direction PageView::getDirection()const
-{
-    return this->_direction;
-}
 
 void PageView::update(float dt)
 {
@@ -421,13 +413,13 @@ void PageView::autoScroll(float dt)
 
 bool PageView::onTouchBegan(Touch *touch, Event *unusedEvent)
 {
-    bool pass = Layout::onTouchBegan(touch, unusedEvent);
+    bool pass = ListView::onTouchBegan(touch, unusedEvent);
     return pass;
 }
 
 void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
 {
-    Layout::onTouchMoved(touch, unusedEvent);
+    ListView::onTouchMoved(touch, unusedEvent);
     if (!_isInterceptTouch)
     {
         handleMoveLogic(touch);
@@ -436,7 +428,7 @@ void PageView::onTouchMoved(Touch *touch, Event *unusedEvent)
 
 void PageView::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
-    Layout::onTouchEnded(touch, unusedEvent);
+    ListView::onTouchEnded(touch, unusedEvent);
     if (!_isInterceptTouch)
     {
         handleReleaseLogic(touch);
@@ -446,7 +438,7 @@ void PageView::onTouchEnded(Touch *touch, Event *unusedEvent)
     
 void PageView::onTouchCancelled(Touch *touch, Event *unusedEvent)
 {
-    Layout::onTouchCancelled(touch, unusedEvent);
+    ListView::onTouchCancelled(touch, unusedEvent);
     if (!_isInterceptTouch)
     {
         handleReleaseLogic(touch);
@@ -701,7 +693,7 @@ void PageView::interceptTouchEvent(TouchEventType event, Widget *sender, Touch *
 {
     if (!_touchEnabled)
     {
-        Layout::interceptTouchEvent(event, sender, touch);
+        ListView::interceptTouchEvent(event, sender, touch);
         return;
     }
     Vec2 touchPoint = touch->getLocation();
@@ -819,14 +811,13 @@ void PageView::copySpecialProperties(Widget *widget)
     PageView* pageView = dynamic_cast<PageView*>(widget);
     if (pageView)
     {
-        Layout::copySpecialProperties(widget);
+        ListView::copySpecialProperties(widget);
         _eventCallback = pageView->_eventCallback;
         _ccEventCallback = pageView->_ccEventCallback;
         _pageViewEventListener = pageView->_pageViewEventListener;
         _pageViewEventSelector = pageView->_pageViewEventSelector;
         _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;
         _customScrollThreshold = pageView->_customScrollThreshold;
-        _direction = pageView->_direction;
     }
 }
 

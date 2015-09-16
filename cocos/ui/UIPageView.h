@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEW_H__
 #define __UIPAGEVIEW_H__
 
-#include "ui/UILayout.h"
+#include "ui/UIListView.h"
 #include "ui/GUIExport.h"
 
 /**
@@ -56,7 +56,7 @@ typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
  *@brief Layout manager that allows the user to flip left & right and up & down through pages of data.
  *
  */
-class CC_GUI_DLL PageView : public Layout
+class CC_GUI_DLL PageView : public ListView
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -80,15 +80,9 @@ public:
         UP,
         DOWN
     };
-    
-    enum class Direction
-    {
-        HORIZONTAL,
-        VERTICAL
-    };
-    
+
     /**
-     *PageView page turn event callback.
+     * PageView page turn event callback.
      */
     typedef std::function<void(Ref*,EventType)> ccPageViewCallback;
 
@@ -150,24 +144,6 @@ public:
      */
     void removePageAtIndex(ssize_t index);
 
-    /**
-     * Changes scroll direction of PageView
-     *
-     * @see `Direction`
-     * @param direction Scroll direction enum.
-     * @since v3.8
-     */
-    void setDirection(Direction direction);
-
-    /**
-     * Query scroll direction of PageView.
-     *
-     * @see `Direction`
-     * @since v3.8
-     * @return PageView scroll direction.
-     */
-    Direction getDirection()const;
-    
     /**
      * @brief Remove all pages of the PageView.
      */
@@ -307,8 +283,7 @@ protected:
     float _autoScrollDistance;
     float _autoScrollSpeed;
     AutoScrollDirection _autoScrollDirection;
-    Direction _direction;
-    
+
     ssize_t _curPageIdx;
     Vector<Layout*> _pages;
 
