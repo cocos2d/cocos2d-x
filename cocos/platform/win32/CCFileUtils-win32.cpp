@@ -592,8 +592,9 @@ bool FileUtilsWin32::removeDirectory(const std::string& dirPath)
         BOOL find = true;
         while (find)
         {
-            //. ..
-            if (wfd.cFileName[0] != '.')
+            // Need check string . and .. for delete folders and files begin name.
+            std::wstring fileName = wfd.cFileName;
+            if (fileName != L"." && fileName != L"..")
             {
                 std::wstring temp = wpath + wfd.cFileName;
                 if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
