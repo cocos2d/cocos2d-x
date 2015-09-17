@@ -352,7 +352,7 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
              createAttachSprite3DNode(it,materialdatas);
         }
     }
-    genGLProgramState();
+    genMaterial();
     
     return true;
 }
@@ -405,7 +405,7 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
         
         sprite->addMesh(mesh);
         sprite->autorelease();
-        sprite->genGLProgramState(); 
+        sprite->genMaterial();
     }
     return   sprite;
 }
@@ -462,7 +462,7 @@ Material* Sprite3D::getMaterial(int meshIndex) const
 }
 
 
-void Sprite3D::genGLProgramState(bool useLight)
+void Sprite3D::genMaterial(bool useLight)
 {
     _shaderUsingLight = useLight;
 
@@ -736,7 +736,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         if (usingLight != _shaderUsingLight)
         {
-            genGLProgramState(usingLight);
+            genMaterial(usingLight);
         }
     }
     
