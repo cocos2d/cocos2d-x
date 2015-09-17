@@ -30,7 +30,8 @@ NS_CC_BEGIN
 namespace ui {
 
 TouchGroup::TouchGroup():
-m_pRootWidget(NULL)
+m_pRootWidget(NULL),
+m_bTouchEnabledExit(true)
 {
 }
 
@@ -50,6 +51,7 @@ bool TouchGroup::init()
         m_pRootWidget = Widget::create();
         m_pRootWidget->retain();
         addChild(m_pRootWidget);
+        setTouchEnabled(true);
         return true;
     }
     return false;
@@ -73,14 +75,23 @@ TouchGroup* TouchGroup::create(void)
 void TouchGroup::onEnter()
 {
     setTouchMode(kCCTouchesOneByOne);
-    setTouchEnabled(true);
+    bool isTouchGroupTouch = this->m_bTouchEnabledExit;
+    setTouchEnabled(isTouchGroupTouch);
     CCLayer::onEnter();
 }
 
 void TouchGroup::onExit()
 {
+    bool isTouchGroupTouch = isTouchEnabled();
     setTouchEnabled(false);
+    this->m_bTouchEnabledExit = isTouchGroupTouch;
     CCLayer::onExit();
+}
+
+void TouchGroup::setTouchEnabled(bool enabled)
+{
+    this->m_bTouchEnabledExit = enabled;
+    CCLayer::setTouchEnabled(enabled);
 }
 
 void TouchGroup::onEnterTransitionDidFinish()
