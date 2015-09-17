@@ -223,8 +223,8 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
     
-    /**generate default GLProgramState*/
-    void genGLProgramState(bool useLight = false);
+    /**generate default material*/
+    void genMaterial(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
