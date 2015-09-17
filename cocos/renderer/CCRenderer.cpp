@@ -569,9 +569,10 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         //Clear depth to achieve layered rendering
         glEnable(GL_DEPTH_TEST);
         glDepthMask(true);
+        glDisable(GL_BLEND);
         RenderState::StateBlock::_defaultState->setDepthTest(true);
         RenderState::StateBlock::_defaultState->setDepthWrite(true);
-
+        RenderState::StateBlock::_defaultState->setBlendFunc(BlendFunc::DISABLE);
 
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
         {

@@ -17,8 +17,8 @@ void main(void)
 const char* cc3D_SkinPositionTex_vert = STRINGIFY(
 attribute vec3 a_position;
 
-attribute vec4 a_blendWeight;
-attribute vec4 a_blendIndex;
+attribute lowp vec4 a_blendWeight;
+attribute lowp vec4 a_blendIndex;
 
 attribute vec2 a_texCoord;
 
