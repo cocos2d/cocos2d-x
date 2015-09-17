@@ -298,12 +298,12 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
-    _glProgramState->apply(Mat4::IDENTITY);
-    
     Vec4 color(1.f, 1.f, 1.f, 1.f);
     _glProgramState->setUniformVec4("u_color", color);
     cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
     _glProgramState->setUniformMat4("u_cameraRot", cameraModelMat);
+    
+    _glProgramState->apply(Mat4::IDENTITY);
     
     glEnable(GL_DEPTH_TEST);
     RenderState::StateBlock::_defaultState->setDepthTest(true);
