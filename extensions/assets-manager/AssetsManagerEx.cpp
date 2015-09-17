@@ -33,6 +33,7 @@
 #else // from our embedded sources
 #include "unzip.h"
 #endif
+#include "base/CCAsyncTaskPool.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -140,7 +141,7 @@ void AssetsManagerEx::initManifests(const std::string& manifestUrl)
         if (_tempManifest)
         {
             _tempManifest->parse(_tempManifestPath);
-            if (!_tempManifest->isLoaded())
+            if (!_tempManifest->isLoaded() && _fileUtils->isFileExist(_tempManifestPath))
                 _fileUtils->removeFile(_tempManifestPath);
         }
         else
@@ -290,7 +291,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
     const std::string rootPath = zip.substr(0, pos+1);
     
     // Open the zip file
-    unzFile zipfile = unzOpen(zip.c_str());
+    unzFile zipfile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zip).c_str());
     if (! zipfile)
     {
         CCLOG("AssetsManagerEx : can not open downloaded zip file %s\n", zip.c_str());
@@ -640,12 +641,50 @@ void AssetsManagerEx::updateSucceed()
     _remoteManifest = nullptr;
     // 3. make local manifest take effect
     prepareLocalManifest();
+
+
+    _updateState = State::UNZIPPING;
     // 4. decompress all compressed files
-    decompressDownloadedZip();
-    // 5. Set update state
-    _updateState = State::UP_TO_DATE;
-    // 6. Notify finished event
-    dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FINISHED);
+    //decompressDownloadedZip();
+
+    struct AsyncData
+    {
+        std::vector<std::string> compressedFiles;
+        std::string errorCompressedFile;
+    };
+
+    AsyncData* asyncData = new AsyncData;
+    asyncData->compressedFiles = _compressedFiles;
+    _compressedFiles.clear();
+
+    std::function<void(void*)> mainThread = [this](void* param) {
+        AsyncData* asyncData = (AsyncData*)param;
+        if (asyncData->errorCompressedFile.empty())
+        {
+            // 5. Set update state
+            _updateState = State::UP_TO_DATE;
+            // 6. Notify finished event
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_FINISHED);
+        }
+        else
+        {
+            _updateState = State::FAIL_TO_UPDATE;
+            dispatchUpdateEvent(EventAssetsManagerEx::EventCode::ERROR_DECOMPRESS, "", "Unable to decompress file " + asyncData->errorCompressedFile);
+        }
+
+        delete asyncData;
+    };
+    AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_OTHER, mainThread, (void*)asyncData, [this, asyncData]() {
+        // Decompress all compressed files
+        for (auto& zipFile : asyncData->compressedFiles) {
+            if (!decompress(zipFile))
+            {
+                asyncData->errorCompressedFile = zipFile;
+                break;
+            }
+            _fileUtils->removeFile(zipFile);
+        }
+    });
 }
 
 void AssetsManagerEx::checkUpdate()
@@ -744,6 +783,7 @@ void AssetsManagerEx::update()
             break;
         case State::UP_TO_DATE:
         case State::UPDATING:
+        case State::UNZIPPING:
             _waitToUpdate = false;
             break;
         default:
