@@ -607,7 +607,7 @@ void AssetsManagerEx::startUpdate()
                 }
             }
             // Set other assets' downloadState to SUCCESSED
-            auto assets = _remoteManifest->getAssets();
+            auto &assets = _remoteManifest->getAssets();
             for (auto it = assets.cbegin(); it != assets.cend(); ++it)
             {
                 const std::string &key = it->first;
@@ -883,7 +883,7 @@ void AssetsManagerEx::onSuccess(const std::string &srcUrl, const std::string &st
     }
     else
     {
-        auto assets = _remoteManifest->getAssets();
+        auto &assets = _remoteManifest->getAssets();
         auto assetIt = assets.find(customId);
         if (assetIt != assets.end())
         {
