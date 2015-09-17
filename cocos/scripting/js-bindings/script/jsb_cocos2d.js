@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.8 RC0";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.8";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -1275,49 +1275,6 @@ cc.defineGetterSetter(_proto, "ORANGE", _proto._getOrange);
 /** @expose */
 _proto.GRAY;
 cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
-
-// Extends
-cc.Node.extend = cc.Class.extend;
-cc.AtlasNode.extend = cc.Class.extend;
-cc.Layer.extend = cc.Class.extend;
-cc.LayerGradient.extend = cc.Class.extend;
-cc.LayerColor.extend = cc.Class.extend;
-cc.LayerMultiplex.extend = cc.Class.extend;
-cc.Sprite.extend = cc.Class.extend;
-cc.SpriteBatchNode.extend = cc.Class.extend;
-cc.SpriteFrame.extend = cc.Class.extend;
-cc.LabelTTF.extend = cc.Class.extend;
-cc.LabelBMFont.extend = cc.Class.extend;
-cc.LabelAtlas.extend = cc.Class.extend;
-cc.Menu.extend = cc.Class.extend;
-cc.MenuItem.extend = cc.Class.extend;
-cc.MenuItemLabel.extend = cc.Class.extend;
-cc.MenuItemFont.extend = cc.Class.extend;
-cc.MenuItemAtlasFont.extend = cc.Class.extend;
-cc.MenuItemSprite.extend = cc.Class.extend;
-cc.MenuItemImage.extend = cc.Class.extend;
-cc.MenuItemToggle.extend = cc.Class.extend;
-cc.Scene.extend = cc.Class.extend;
-cc.ClippingNode.extend = cc.Class.extend;
-cc.ProgressTimer.extend = cc.Class.extend;
-cc.ParallaxNode.extend = cc.Class.extend;
-cc.DrawNode.extend = cc.Class.extend;
-cc.Component.extend = cc.Class.extend;
-cc.GridBase.extend = cc.Class.extend;
-cc.Grid3D.extend = cc.Class.extend;
-cc.TiledGrid3D.extend = cc.Class.extend;
-cc.MotionStreak.extend = cc.Class.extend;
-cc.ParticleBatchNode.extend = cc.Class.extend;
-cc.ParticleSystem.extend = cc.Class.extend;
-cc.TextFieldTTF.extend = cc.Class.extend;
-cc.RenderTexture.extend = cc.Class.extend;
-cc.TileMapAtlas.extend = cc.Class.extend;
-cc.TMXLayer.extend = cc.Class.extend;
-cc.TMXTiledMap.extend = cc.Class.extend;
-cc.TMXMapInfo.extend = cc.Class.extend;
-cc.TransitionScene.extend = cc.Class.extend;
-cc.GLProgram.extend = cc.Class.extend;
-
 
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.

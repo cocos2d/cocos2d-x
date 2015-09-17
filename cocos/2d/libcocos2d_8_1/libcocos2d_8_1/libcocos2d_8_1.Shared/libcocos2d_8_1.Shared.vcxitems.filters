@@ -213,6 +213,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.h">
+      <Filter>physics</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocosStudioExport.h">
       <Filter>cocostudio</Filter>
     </ClInclude>
@@ -1858,7 +1864,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.h">
       <Filter>network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCIDownloaderImpl.h">
@@ -2058,6 +2064,12 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsWorld.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCActionFrame.cpp">
@@ -3564,7 +3576,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloaderImpl.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\CCDownloader-curl.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">

@@ -82,19 +82,19 @@ bool EventListenerMouse::init()
         {
             case EventMouse::MouseEventType::MOUSE_DOWN:
                 if(onMouseDown != nullptr)
-                    onMouseDown(event);
+                    onMouseDown(mouseEvent);
                 break;
             case EventMouse::MouseEventType::MOUSE_UP:
                 if(onMouseUp != nullptr)
-                    onMouseUp(event);
+                    onMouseUp(mouseEvent);
                 break;
             case EventMouse::MouseEventType::MOUSE_MOVE:
                 if(onMouseMove != nullptr)
-                    onMouseMove(event);
+                    onMouseMove(mouseEvent);
                 break;
             case EventMouse::MouseEventType::MOUSE_SCROLL:
                 if(onMouseScroll != nullptr)
-                    onMouseScroll(event);
+                    onMouseScroll(mouseEvent);
                 break;
             default:
                 break;

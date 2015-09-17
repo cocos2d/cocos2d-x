@@ -25,7 +25,7 @@
         
 --------------------------------
 -- @{<br>
--- Implementations for interfaces in base calss.
+-- Implementations for interfaces in base class.
 -- @function [parent=#TiledGrid3D] blit 
 -- @param self
 -- @return TiledGrid3D#TiledGrid3D self (return value: cc.TiledGrid3D)

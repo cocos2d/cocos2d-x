@@ -113,21 +113,6 @@ set(TESTS_SRC
   Classes/ParallaxTest/ParallaxTest.cpp
   Classes/Particle3DTest/Particle3DTest.cpp
   Classes/ParticleTest/ParticleTest.cpp
-  Classes/PerformanceTest/PerformanceAllocTest.cpp
-  Classes/PerformanceTest/PerformanceCallbackTest.cpp
-  Classes/PerformanceTest/PerformanceContainerTest.cpp
-  Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp
-  Classes/PerformanceTest/PerformanceLabelTest.cpp
-  Classes/PerformanceTest/PerformanceMathTest.cpp
-  Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp
-  Classes/PerformanceTest/PerformanceParticle3DTest.cpp
-  Classes/PerformanceTest/PerformanceParticleTest.cpp
-  Classes/PerformanceTest/PerformanceRendererTest.cpp
-  Classes/PerformanceTest/PerformanceScenarioTest.cpp
-  Classes/PerformanceTest/PerformanceSpriteTest.cpp
-  Classes/PerformanceTest/PerformanceTest.cpp
-  Classes/PerformanceTest/PerformanceTextureTest.cpp
-  Classes/PerformanceTest/PerformanceTouchesTest.cpp
   Classes/PhysicsTest/PhysicsTest.cpp
   Classes/ReleasePoolTest/ReleasePoolTest.cpp
   Classes/RenderTextureTest/RenderTextureTest.cpp

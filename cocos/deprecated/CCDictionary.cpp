@@ -217,7 +217,7 @@ const __String* __Dictionary::valueForKey(intptr_t key)
 
 void __Dictionary::setObject(Ref* pObject, const std::string& key)
 {
-    CCASSERT(key.length() > 0 && pObject != nullptr, "Invalid Argument!");
+    CCASSERT(!key.empty() && pObject != nullptr, "Invalid Argument!");
     if (_dictType == kDictUnknown)
     {
         _dictType = kDictStr;
@@ -276,7 +276,7 @@ void __Dictionary::removeObjectForKey(const std::string& key)
     }
     
     CCASSERT(_dictType == kDictStr, "this dictionary doesn't use string as its key");
-    CCASSERT(key.length() > 0, "Invalid Argument!");
+    CCASSERT(!key.empty(), "Invalid Argument!");
     DictElement *pElement = nullptr;
     HASH_FIND_STR(_elements, key.c_str(), pElement);
     removeObjectForElememt(pElement);

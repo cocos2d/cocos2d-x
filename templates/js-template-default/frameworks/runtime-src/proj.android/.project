@@ -44,7 +44,7 @@
 		<link>
 			<name>jsjavabridge</name>
 			<type>2</type>
-			<location>PARENT-2-PROJECT_LOC/js-bindings/bindings/manual/platform/android/java/src</location>
+			<location>PARENT-2-PROJECT_LOC/cocos2d-x/cocos/platform/android/java/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

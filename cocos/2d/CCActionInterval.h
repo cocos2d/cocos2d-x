@@ -112,6 +112,9 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     float _elapsed;
     bool   _firstTick;
+
+protected:
+    bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
 
 /** @class Sequence

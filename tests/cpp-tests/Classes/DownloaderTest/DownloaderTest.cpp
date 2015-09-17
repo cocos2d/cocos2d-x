@@ -27,236 +27,298 @@
 
 #include "../testResource.h"
 
+#include "cocos/ui/UILoadingBar.h"
 #include "network/CCDownloader.h"
 
 USING_NS_CC;
 
-DownloaderTests::DownloaderTests()
+static const char* sURLList[] =
 {
-    ADD_TEST_CASE(DownloaderSyncTest);
-	ADD_TEST_CASE(DownloaderAsyncTest);
-    ADD_TEST_CASE(DownloaderBatchSyncTest);
-    ADD_TEST_CASE(DownloaderBatchAsyncTest);
+    "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
+    "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
+    "http://www.cocos2d-x.org/attachments/1503/Cocos2CoordinateRelease.png",
+    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v1.2.3.3.tar.gz",
+};
+const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));
+static const char* sNameList[sListSize] =
+{
+    "cocos2dx_landscape.png",
+    "2dx_icon_512_rounded.png",
+    "Cocos2CoordinateRelease.png",
+    "big file",
 };
 
-//
-//
-//
-DownloaderBaseTest::DownloaderBaseTest()
+struct DownloaderTest : public TestCase
 {
-    _downloader = std::shared_ptr<network::Downloader>(new network::Downloader);
-    _downloader->setErrorCallback(std::bind(&DownloaderBaseTest::errorCallback, this, std::placeholders::_1));
-    _downloader->setProgressCallback(std::bind(&DownloaderBaseTest::progressCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
-    _downloader->setSuccessCallback(std::bind(&DownloaderBaseTest::successCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-}
+    CREATE_FUNC(DownloaderTest);
+    
+    virtual std::string title() const override { return "Downloader Test"; }
+    
+    std::unique_ptr<network::Downloader> downloader;
+    
+    DownloaderTest()
+    {
+        downloader.reset(new network::Downloader());
+    }
+    
+    enum {
+        TAG_TITLE = 1,
+        TAG_BUTTON,
+        TAG_PROGRESS_BAR,
+        TAG_STATUS,
+        TAG_SPRITE,
+    };
+    
+    Node* createDownloadView(const char *name, const cocos2d::ui::Button::ccWidgetClickCallback &callback)
+    {
+        Size viewSize(220, 120);
+        float margin = 5;
+        
+        // create background
+        auto bg = ui::Scale9Sprite::createWithSpriteFrameName("button_actived.png");
+        bg->setContentSize(viewSize);
+        
+        // add a titile on the top
+        auto title = Label::createWithTTF(name,"fonts/arial.ttf",16);
+        title->setTag(TAG_TITLE);
+        title->setAnchorPoint(Vec2(0.5, 1));
+        title->setPosition(viewSize.width / 2, viewSize.height - margin);
+        bg->addChild(title, 10);
+        
+        // add a button on the bottom
+        auto btn = ui::Button::create("cocosui/animationbuttonnormal.png",
+                                      "cocosui/animationbuttonpressed.png");
+        btn->setTag(TAG_BUTTON);
+        btn->setTitleText("Download");
+        btn->setAnchorPoint(Vec2(0.5, 0));
+        btn->setPosition(Vec2(viewSize.width / 2, margin));
+        btn->addClickEventListener(callback);
+        bg->addChild(btn, 10);
+        
+        // add a progress bar
+        auto bar = ui::LoadingBar::create("cocosui/UIEditorTest/UISlider/silder_progressBar.png");
+        bar->setTag(TAG_PROGRESS_BAR);
+        bar->ignoreContentAdaptWithSize(false);
+        bar->setAnchorPoint(Vec2(0.5, 0));
+        bar->setContentSize(Size(viewSize.width - margin * 2, btn->getContentSize().height));
+        bar->setPosition(btn->getPosition());
+        bar->setVisible(false);
+        bg->addChild(bar, 10);
 
-std::string DownloaderBaseTest::title() const
-{
-    return "Downloader Test";
-}
+        // add a status label
+        auto label = Label::createWithTTF("","fonts/arial.ttf",14);
+        label->setTag(TAG_STATUS);
+        label->setAnchorPoint(Vec2(0.5, 0.5));
+        label->setPosition(Vec2(viewSize.width / 2, viewSize.height / 2));
+        label->setContentSize(Size(viewSize.width, 0));
+        label->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
+        bg->addChild(label, 20);
+        
+        return bg;
+    }
+    
+    virtual void onEnter() override
+    {
+        TestCase::onEnter();
+        _restartTestItem->setVisible(true);
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile(s_s9s_ui_plist);
 
-void DownloaderBaseTest::errorCallback(const cocos2d::network::Downloader::Error& error)
-{
-    cocos2d::log("error downloading: %s - %s", error.url.c_str(), error.message.c_str());
-}
-
-void DownloaderBaseTest::progressCallback(double totalToDownload, double nowDownloaded, const std::string& url, const std::string& customId)
-{
-    cocos2d::log("download progress: %d%% - %s", (int)((nowDownloaded/totalToDownload)*100), url.c_str());
-}
-
-void DownloaderBaseTest::successCallback(const std::string& url, const std::string& path, const std::string& customId)
-{
-    cocos2d::log("download finished: %s", path.c_str());
-}
-
-//------------------------------------------------------------------
-//
-// DownloaderSyncTest
-//
-//------------------------------------------------------------------
-void DownloaderSyncTest::onEnter()
-{
-    DownloaderBaseTest::onEnter();
-
-    auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
-
-        if (_downloader)
+        // add four download view in test case
+        Node* topRightView = createDownloadView(sNameList[0], [this](Ref*)
         {
-
-            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_sync.jpg";
-            std::string remote = "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png";
-            cocos2d::log("Downloading '%s' into '%s'", remote.c_str(), path.c_str());
-
-            _downloader->downloadSync(remote, path, "download_async_test");
-        }
-    });
-    auto menu = Menu::create(menuItem, nullptr);
-    addChild(menu);
-    menu->setNormalizedPosition(Vec2(0.5, 0.5));
-}
-
-std::string DownloaderSyncTest::title() const
-{
-    return "Downloader";
-}
-
-std::string DownloaderSyncTest::subtitle() const
-{
-    return "Sync test";
-}
-
-
-//------------------------------------------------------------------
-//
-// DownloaderAsyncTest
-//
-//------------------------------------------------------------------
-void DownloaderAsyncTest::onEnter()
-{
-    DownloaderBaseTest::onEnter();
-
-    auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
-        MenuItemFont* item = (MenuItemFont*)sender;
-        item->setEnabled(false);
-        if (_downloader)
-        {
-            std::string path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/cocos2d_logo_async.jpg";
-            std::string remote = "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png";
-            _downloader->downloadAsync(remote, path, "download_async_test");
-
-            cocos2d::log("Downloading '%s' into '%s'", remote.c_str(), path.c_str());
-        }
-    });
-    auto menu = Menu::create(menuItem, nullptr);
-    addChild(menu);
-    menu->setNormalizedPosition(Vec2(0.5, 0.5));
-}
-
-std::string DownloaderAsyncTest::title() const
-{
-    return "Downloader";
-}
-
-std::string DownloaderAsyncTest::subtitle() const
-{
-    return "Async test";
-}
-
-//------------------------------------------------------------------
-//
-// DownloaderBatchSyncTest
-//
-//------------------------------------------------------------------
-void DownloaderBatchSyncTest::onEnter()
-{
-    DownloaderBaseTest::onEnter();
-
-    auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
-
-        if (_downloader)
-        {
-            std::vector<std::string> images = {
-                "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
-                "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
-                "http://www.cocos2d-x.org/attachments/1503/Cocos2CoordinateRelease.png"
-            };
-
-            std::vector<std::string> names = {
-                "cocos2dx_landscape.png",
-                "2dx_icon_512_rounded.png",
-                "Cocos2CoordinateRelease.png"
-            };
-
-            network::DownloadUnits units;
-
-            int i=0;
-            for(const auto& image: images)
+            auto view = this->getChildByName(sNameList[0]);
+            auto sprite = view->getChildByTag(TAG_SPRITE);
+            if (sprite)
             {
-                network::DownloadUnit unit;
-                unit.storagePath = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/Sync/" + names[i];
-                unit.srcUrl = image;
-                unit.customId = image;
-                i++;
-                units[image] = unit;
+                sprite->removeFromParentAndCleanup(true);
             }
+            auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+            btn->setEnabled(false);
+            btn->setVisible(false);
+            auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+            bar->setPercent(0);
+            bar->setVisible(true);
+            this->downloader->createDownloadDataTask(sURLList[0], sNameList[0]);
+        });
+        topRightView->setName(sNameList[0]);
+        topRightView->setAnchorPoint(Vec2(0, 0));
+        topRightView->setPosition(VisibleRect::center());
+        this->addChild(topRightView);
 
-            _downloader->batchDownloadSync(units, "sync_download");
-            cocos2d::log("Downloading...");
-        }
-    });
-    auto menu = Menu::create(menuItem, nullptr);
-    addChild(menu);
-    menu->setNormalizedPosition(Vec2(0.5, 0.5));
-}
-
-std::string DownloaderBatchSyncTest::title() const
-{
-    return "Downloader";
-}
-
-std::string DownloaderBatchSyncTest::subtitle() const
-{
-    return "Batch Sync test";
-}
-
-
-//------------------------------------------------------------------
-//
-// DownloaderBatchAsyncTest
-//
-//------------------------------------------------------------------
-void DownloaderBatchAsyncTest::onEnter()
-{
-    DownloaderBaseTest::onEnter();
-
-    auto menuItem = MenuItemFont::create("start download", [=](Ref* sender){
-
-        if (_downloader)
+        Node* topLeftView = createDownloadView(sNameList[1], [this](Ref*)
         {
-            std::vector<std::string> images = {
-                "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
-                "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
-                "http://www.cocos2d-x.org/attachments/1503/Cocos2CoordinateRelease.png"
-            };
-
-            std::vector<std::string> names = {
-                "cocos2dx_landscape.png",
-                "2dx_icon_512_rounded.png",
-                "Cocos2CoordinateRelease.png"
-            };
-
-            network::DownloadUnits units;
-
-            int i=0;
-            for(const auto& image: images)
+            auto view = this->getChildByName(sNameList[1]);
+            auto sprite = view->getChildByTag(TAG_SPRITE);
+            if (sprite)
             {
-                network::DownloadUnit unit;
-                unit.storagePath = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/Async/" + names[i];
-                unit.srcUrl = image;
-                unit.customId = image;
-                i++;
-                units[image] = unit;
+                sprite->removeFromParentAndCleanup(true);
             }
+            auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+            btn->setEnabled(false);
+            btn->setVisible(false);
+            auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+            bar->setPercent(0);
+            bar->setVisible(true);
+            bar->setEnabled(true);
+            this->downloader->createDownloadDataTask(sURLList[1], sNameList[1]);
+        });
+        topLeftView->setName(sNameList[1]);
+        topLeftView->setAnchorPoint(Vec2(1, 0));
+        topLeftView->setPosition(VisibleRect::center());
+        this->addChild(topLeftView);
 
-            _downloader->batchDownloadAsync(units, "sync_download");
-            cocos2d::log("Downloading...");
-        }
-    });
-    auto menu = Menu::create(menuItem, nullptr);
-    addChild(menu);
-    menu->setNormalizedPosition(Vec2(0.5, 0.5));
-}
+        Node* bottomLeftView = createDownloadView(sNameList[2], [this](Ref*)
+        {
+            auto view = this->getChildByName(sNameList[2]);
+            auto sprite = view->getChildByTag(TAG_SPRITE);
+            if (sprite)
+            {
+                sprite->removeFromParentAndCleanup(true);
+            }
+            auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+            btn->setEnabled(false);
+            btn->setVisible(false);
+            auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+            bar->setPercent(0);
+            bar->setVisible(true);
+            bar->setEnabled(true);
+            auto path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" + sNameList[2];
+            this->downloader->createDownloadFileTask(sURLList[2], path, sNameList[2]);
+        });
+        bottomLeftView->setName(sNameList[2]);
+        bottomLeftView->setAnchorPoint(Vec2(1, 1));
+        bottomLeftView->setPosition(VisibleRect::center());
+        this->addChild(bottomLeftView);
 
-std::string DownloaderBatchAsyncTest::title() const
+        Node* bottomRightView = createDownloadView(sNameList[3], [this](Ref*)
+        {
+            auto view = this->getChildByName(sNameList[3]);
+            auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+            btn->setEnabled(false);
+            btn->setVisible(false);
+            auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+            bar->setPercent(0);
+            bar->setVisible(true);
+            bar->setEnabled(true);
+            auto path = FileUtils::getInstance()->getWritablePath() + "CppTests/DownloaderTest/" + sNameList[3];
+            this->downloader->createDownloadFileTask(sURLList[3], path, sNameList[3]);
+        });
+        bottomRightView->setName(sNameList[3]);
+        bottomRightView->setAnchorPoint(Vec2(0, 1));
+        bottomRightView->setPosition(VisibleRect::center());
+        this->addChild(bottomRightView);
+
+        // define progress callback
+        downloader->onTaskProgress = [this](const network::DownloadTask& task,
+                                          int64_t bytesReceived,
+                                          int64_t totalBytesReceived,
+                                          int64_t totalBytesExpected)
+        {
+            Node* view = this->getChildByName(task.identifier);
+            auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+            float percent = float(totalBytesReceived * 100) / totalBytesExpected;
+            bar->setPercent(percent);
+            char buf[32];
+            sprintf(buf, "%.1f%%[total %d KB]", percent, int(totalBytesExpected/1024));
+            auto status = (Label*)view->getChildByTag(TAG_STATUS);
+            status->setString(buf);
+        };
+        
+        // define success callback
+        downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask& task,
+                                               std::vector<unsigned char>& data)
+        {
+            // create texture from data
+            Texture2D* texture = nullptr;
+            do
+            {
+                Image img;
+                if (false == img.initWithImageData(data.data(), data.size()))
+                {
+                    break;
+                }
+                
+                texture = new Texture2D();
+                if (false == texture->initWithImage(&img))
+                {
+                    break;
+                }
+                auto sprite = Sprite::createWithTexture(texture);
+                auto view = this->getChildByName(task.identifier);
+                auto viewSize = view->getContentSize();
+                sprite->setPosition(viewSize.width / 2, viewSize.height / 2);
+                auto spriteSize = sprite->getContentSize();
+                float scale = MIN((viewSize.height - 20) / spriteSize.height, (viewSize.width - 20) / spriteSize.width);
+                sprite->setScale(scale);
+                view->addChild(sprite, 5, TAG_SPRITE);
+                
+                auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+                btn->setEnabled(true);
+                btn->setVisible(true);
+                auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+                bar->setVisible(false);
+            } while (0);
+            CC_SAFE_RELEASE(texture);
+        };
+        
+        downloader->onFileTaskSuccess = [this](const cocos2d::network::DownloadTask& task)
+        {
+            Texture2D* texture = nullptr;
+            do
+            {
+                auto view = this->getChildByName(task.identifier);
+                if (std::string::npos == task.storagePath.find(".png"))
+                {
+                    // download big file success
+                    char buf[32];
+                    sprintf(buf, "Download [%s] success.", task.identifier.c_str());
+                    auto status = (Label*)view->getChildByTag(TAG_STATUS);
+                    status->setString(buf);
+                    break;
+                }
+                // create sprite from file
+                auto sprite = Sprite::create(task.storagePath);
+                auto viewSize = view->getContentSize();
+                sprite->setPosition(viewSize.width / 2, viewSize.height / 2);
+                auto spriteSize = sprite->getContentSize();
+                float scale = MIN((viewSize.height - 20) / spriteSize.height, (viewSize.width - 20) / spriteSize.width);
+                sprite->setScale(scale);
+                view->addChild(sprite, 5, TAG_SPRITE);
+                
+                auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+                btn->setEnabled(true);
+                btn->setVisible(true);
+                auto bar = (ui::LoadingBar*)view->getChildByTag(TAG_PROGRESS_BAR);
+                bar->setVisible(false);
+            } while (0);
+            CC_SAFE_RELEASE(texture);
+        };
+        
+        // define failed callback
+        downloader->onTaskError = [this](const cocos2d::network::DownloadTask& task,
+                                         int errorCode,
+                                         int errorCodeInternal,
+                                         const std::string& errorStr)
+        {
+            log("Failed to download : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
+                , task.requestURL.c_str()
+                , task.identifier.c_str()
+                , errorCode
+                , errorCodeInternal
+                , errorStr.c_str());
+            auto view = this->getChildByName(task.identifier);
+            auto status = (Label*)view->getChildByTag(TAG_STATUS);
+            status->setString(errorStr.length() ? errorStr : "Download failed.");
+            
+            auto btn = (ui::Button*)view->getChildByTag(TAG_BUTTON);
+            btn->setEnabled(true);
+            btn->setVisible(true);
+        };
+    }
+};
+
+DownloaderTests::DownloaderTests()
 {
-    return "Downloader";
-}
-
-std::string DownloaderBatchAsyncTest::subtitle() const
-{
-    return "Batch Async test";
-}
-
-
-
+    ADD_TEST_CASE(DownloaderTest);
+};

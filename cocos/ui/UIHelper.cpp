@@ -193,25 +193,25 @@ Rect Helper::restrictCapInsetRect(const cocos2d::Rect &capInsets, const Size& te
     return Rect(x, y, width, height);
 }
 
-    Rect Helper::convertBoundingBoxToScreen(Node* node)
-    {
-        auto director = Director::getInstance();
-        auto glView = director->getOpenGLView();
-        auto frameSize = glView->getFrameSize();
+Rect Helper::convertBoundingBoxToScreen(Node* node)
+{
+    auto director = Director::getInstance();
+    auto glView = director->getOpenGLView();
+    auto frameSize = glView->getFrameSize();
 
-        auto winSize = director->getWinSize();
-        auto leftBottom = node->convertToWorldSpace(Point::ZERO);
+    auto winSize = director->getWinSize();
+    auto leftBottom = node->convertToWorldSpace(Point::ZERO);
 
-        auto contentSize = node->getContentSize();
-        auto rightTop = node->convertToWorldSpace(Point(contentSize.width, contentSize.height));
+    auto contentSize = node->getContentSize();
+    auto rightTop = node->convertToWorldSpace(Point(contentSize.width, contentSize.height));
 
-        auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
-        auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
-
-        return Rect(uiLeft,uiTop,
-                    (rightTop.x - leftBottom.x) * glView->getScaleX(),
-                    (rightTop.y - leftBottom.y) * glView->getScaleY());
-    }
+    auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
+    auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
+    auto uiWidth = (rightTop.x - leftBottom.x) * glView->getScaleX();
+    auto uiHeight = (rightTop.y - leftBottom.y) * glView->getScaleY();
+    
+    return Rect(uiLeft, uiTop, uiWidth, uiHeight);
+}
 }
 
 NS_CC_END

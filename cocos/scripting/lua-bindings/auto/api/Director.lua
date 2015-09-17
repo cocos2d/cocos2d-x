@@ -358,7 +358,7 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Whether or not to display the FPS on the bottom-left corner. 
+--  Whether or not displaying the FPS on the bottom-left corner of the screen. 
 -- @function [parent=#Director] isDisplayStats 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -390,8 +390,8 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
--- Gets the distance between camera and near clipping frane.<br>
--- It is correct for default camera that near clipping frane is the same as screen.
+-- Gets the distance between camera and near clipping frame.<br>
+-- It is correct for default camera that near clipping frame is same as the screen.
 -- @function [parent=#Director] getZEye 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -450,7 +450,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Display the FPS on the bottom-left corner. 
+--  Display the FPS on the bottom-left corner of the screen. 
 -- @function [parent=#Director] setDisplayStats 
 -- @param self
 -- @param #bool displayStats
@@ -474,7 +474,7 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Sets the FPS value. FPS = 1/internal. 
+--  Sets the FPS value. FPS = 1/interval. 
 -- @function [parent=#Director] setAnimationInterval 
 -- @param self
 -- @param #float interval
