@@ -12,6 +12,22 @@
 #include "js_manual_conversions.h"
 #include "js_bindings_chipmunk_auto_classes.h"
 
+NS_CC_BEGIN
+bool WidgetTouchEventDispatcher(CCObject* object, uint32_t eventType)
+{
+	js_proxy_t * p = jsb_get_native_proxy(object);
+	if (!p) return false;
+
+	jsval retVal;
+	jsval args[2];
+	args[0] = OBJECT_TO_JSVAL(p->obj);
+	args[1] = UINT_TO_JSVAL(eventType);
+	jsval owner = OBJECT_TO_JSVAL(ScriptingCore::getInstance()->getGlobalObject());
+	ScriptingCore::getInstance()->executeFunctionWithOwner(owner, "WidgetTouchEventDispatcher", 2, args, &retVal);
+	return JSVAL_IS_BOOLEAN(retVal) && JSVAL_TO_BOOLEAN(retVal);
+}
+NS_CC_END
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -769,8 +785,10 @@ extern JSObject* jsb_CCTableView_prototype;
 extern JSObject* jsb_CCEditBox_prototype;
 extern JSObject* jsb_CCControl_prototype;
 
+
 void register_all_cocos2dx_extension_manual(JSContext* cx, JSObject* global)
 {
+	ui::Widget::WidgetTouchEventDispatcher = WidgetTouchEventDispatcher;
     JS_DefineFunction(cx, jsb_CCScrollView_prototype, "setDelegate", js_cocos2dx_CCScrollView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDelegate", js_cocos2dx_CCTableView_setDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCTableView_prototype, "setDataSource", js_cocos2dx_CCTableView_setDataSource, 1, JSPROP_READONLY | JSPROP_PERMANENT);
