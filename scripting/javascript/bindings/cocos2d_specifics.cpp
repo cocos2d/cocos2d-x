@@ -4,6 +4,7 @@
 #include <typeinfo>
 #include "js_bindings_config.h"
 #include "generated/jsb_cocos2dx_auto.hpp"
+#include "generated/jsb_cocos2dx_studio_auto.hpp"
 
 USING_NS_CC_EXT;
 
@@ -2998,6 +2999,42 @@ JSBool js_cocos2dx_CCDrawNode_drawPolygon(JSContext *cx, uint32_t argc, jsval *v
     return JS_FALSE;
 }
 
+JSBool js_cocos2dx_Layout_setStencilClippingVertices(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	js_proxy_t *proxy = jsb_get_js_proxy(obj);
+	cocos2d::ui::Layout* cobj = (cocos2d::ui::Layout*)(proxy ? proxy->ptr : NULL);
+	TEST_NATIVE_OBJECT(cx, cobj)
+	if (argc == 1) {
+		jsval *argvp = JS_ARGV(cx, vp);
+		JSBool ok = JS_TRUE;
+		JSObject *argArray = NULL;
+		ok &= JS_ValueToObject(cx, *argvp++, &argArray);
+		JSB_PRECONDITION2((argArray && JS_IsArrayObject(cx, argArray)), cx, JS_FALSE, "Vertex should be anArray object");
+		JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error parsing arguments");
+		{
+			uint32_t l;
+			if (!JS_GetArrayLength(cx, argArray, &l))
+				return JS_FALSE;
+			CCPoint* verts = new CCPoint[l];
+			CCPoint p;
+			for (uint32_t i = 0; i < l; i++) {
+				jsval pointvp;
+				ok &= JS_GetElement(cx, argArray, i, &pointvp);
+				JSB_PRECONDITION2(ok, cx, JS_FALSE, "JS_GetElement fails.");
+				ok &= jsval_to_ccpoint(cx, pointvp, &p);
+				JSB_PRECONDITION2(ok, cx, JS_FALSE, "Error processing arguments");
+				verts[i] = p;
+			}
+			cobj->setStencilClippingVertices(verts, l);
+			CC_SAFE_DELETE_ARRAY(verts);
+		}
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_TRUE;
+	}
+	JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
+	return JS_FALSE;
+}
 static JSBool jsval_to_string_vector(JSContext* cx, jsval v, std::vector<std::string>& ret) {
     JSObject *jsobj;
     JSBool ok = JS_ValueToObject( cx, v, &jsobj );
@@ -3546,6 +3583,7 @@ void register_cocos2dx_js_extensions(JSContext* cx, JSObject* global)
 
     JS_DefineFunction(cx, jsb_CCDrawNode_prototype, "drawPoly", js_cocos2dx_CCDrawNode_drawPolygon, 4, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCDrawNode_prototype, "setBlendFunc", js_cocos2dx_CCDrawNode_setBlendFunc, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, jsb_Layout_prototype, "setStencilClippingVertices", js_cocos2dx_Layout_setStencilClippingVertices, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsb_CCTexture2D_prototype, "setTexParameters", js_cocos2dx_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsb_CCMenu_prototype, "alignItemsInRows", js_cocos2dx_CCMenu_alignItemsInRows, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
