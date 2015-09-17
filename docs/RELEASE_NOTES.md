@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x v3.8 Release Notes](#cocos2d-x-v38-release-notes)
+- [Cocos2d-x v3.8.1 Release Notes](#cocos2d-x-v381-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,8 +14,8 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.8](#v38)
-  - [Highlights and API changes of v3.8](#highlights-and-api-changes-of-v38)
+- [v3.8.1](#v38)
+  - [Highlights and API changes of v3.8.1](#highlights-and-api-changes-of-v381)
   - [Download](#download)
   - [The main features in detail:](#the-main-features-in-detail)
     - [3D Module](#3d-module)
@@ -29,7 +29,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x v3.8 Release Notes #
+# Cocos2d-x v3.8.1 Release Notes #
 
 # Misc Information
 
@@ -150,30 +150,31 @@ Use Cocos Console to create a new game:
 cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.8
+# v3.8.1
 
-## Highlights and API changes of v3.8
+## Highlights and API changes of v3.8.1
 
 As promised, Cocos2d-x v3.8 have greatly improved the stability and API friendliness. On one side, we continue to improve 3D capacity by providing 3D physics collider, skybox background brush and key frame event callback in Animate3D. On another side, we have refined several core modules, including UI system, AudioEngine, FileUtils, Bindings Generator, etc.
 
 Here is some highlighted improvments and API changes:
 
-1. 3D Module
+1. Xcode 7 support
+2. 3D Module
     - Added 3D physics collider
     - Supported setting camera background brushes with color/depth/skybox 
     - Added key frame event Callback in Animate3D
     - Added light map support in Terrain
-2. UI System
+3. UI System
     - Reimplemented and enhanced EditBox on Android
     - Added ScrollViewBar for displaying a scroll bar at the side of ScrollView (JSB/Lua ready)
     - Added RadioButton widget (JSB/Lua ready)
     - Added HANYI FullType font support
-3. AudioEngine
+4. AudioEngine
     - AudioEngine supported audio preloading
     - Bound new AudioEngine in JSB
-4. FileUtils
+5. FileUtils
     - Added a set of file writing APIs: writeStringToFile, writeDataToFile, writeValueMapToFile, writeValueVectorToFile
-5. Others
+6. Others
     - Improved Bindings Generator tool
     - Merged JSB test project into cocos2d test project
     - framework: Support generate prebuilt libs of engine with debug mode
@@ -181,7 +182,7 @@ Here is some highlighted improvments and API changes:
 
 ## Download
 
-[Cocos2d-x v3.8](http://www.cocos2d-x.org/filedown/cocos2d-x-3.8.zip) including : C++, Lua & JS
+[Cocos2d-x v3.8.1](http://www.cocos2d-x.org/filedown/cocos2d-x-3.8.1.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
