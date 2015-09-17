@@ -11,46 +11,8 @@ using namespace cocos2d::ui;
 
 class JSStudioEventListenerWrapper: public JSCallbackWrapper {
 public:
-    JSStudioEventListenerWrapper();
-    virtual ~JSStudioEventListenerWrapper();
-
-    virtual void setJSCallbackThis(jsval thisObj);
-
     virtual void eventCallbackFunc(CCObject*,int);
-    
-private:
-    bool m_bNeedUnroot;
 };
-
-JSStudioEventListenerWrapper::JSStudioEventListenerWrapper()
-    : m_bNeedUnroot(false)
-{
-
-}
-
-JSStudioEventListenerWrapper::~JSStudioEventListenerWrapper()
-{
-    if (m_bNeedUnroot)
-    {
-        JSObject *thisObj = JSVAL_TO_OBJECT(jsThisObj);
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_RemoveObjectRoot(cx, &thisObj);
-    }
-}
-
-void JSStudioEventListenerWrapper::setJSCallbackThis(jsval jsThisObj)
-{
-    JSCallbackWrapper::setJSCallbackThis(jsThisObj);
-
-    JSObject *thisObj = JSVAL_TO_OBJECT(jsThisObj);
-    js_proxy *p = jsb_get_js_proxy(thisObj);
-    if (!p)
-    {
-        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS_AddObjectRoot(cx, &thisObj);
-        m_bNeedUnroot = true;
-    }
-}
 
 void JSStudioEventListenerWrapper::eventCallbackFunc(CCObject* sender,int eventType)
 {
@@ -67,6 +29,7 @@ void JSStudioEventListenerWrapper::eventCallbackFunc(CCObject* sender,int eventT
         valArr[1] = touchVal;
 
         JS_AddValueRoot(cx, valArr);
+		JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET;
         JS_CallFunctionValue(cx, thisObj, jsCallback, 2, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }
@@ -323,6 +286,7 @@ void JSArmatureWrapper::movementCallbackFunc(cocos2d::extension::CCArmature *pAr
         valArr[2] = idVal;
         
         JS_AddValueRoot(cx, valArr);
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         JS_CallFunctionValue(cx, thisObj, jsCallback, 3, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }
@@ -338,6 +302,7 @@ void JSArmatureWrapper::addArmatureFileInfoAsyncCallbackFunc(float percent)
         jsval percentVal = DOUBLE_TO_JSVAL(percent);
         
         JS_AddValueRoot(cx, &percentVal);
+        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
         JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &percentVal, &retval);
         JS_RemoveValueRoot(cx, &percentVal);
     }
@@ -362,6 +327,7 @@ void JSArmatureWrapper::frameCallbackFunc(cocos2d::extension::CCBone *pBone, con
         valArr[3] = currentIndexVal;
         
         JS_AddValueRoot(cx, valArr);
+		JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET;
         JS_CallFunctionValue(cx, thisObj, jsCallback, 4, valArr, &retval);
         JS_RemoveValueRoot(cx, valArr);
     }

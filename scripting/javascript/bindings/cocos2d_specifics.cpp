@@ -754,30 +754,41 @@ JSBool js_platform(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 JSCallbackWrapper::JSCallbackWrapper()
-: jsCallback(JSVAL_VOID), jsThisObj(JSVAL_VOID), extraData(JSVAL_VOID)
+: m_jsArmatureWrapper(JSVAL_VOID), jsCallback(JSVAL_VOID), jsThisObj(JSVAL_VOID), extraData(JSVAL_VOID)
 {
-
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JSObject* jsArmatureWrapper = JS_NewObject(cx, NULL, NULL, NULL);
+	this->m_jsArmatureWrapper = OBJECT_TO_JSVAL(jsArmatureWrapper);
+	JS_AddValueRoot(cx, &this->m_jsArmatureWrapper);
 }
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS_RemoveValueRoot(cx, &jsCallback);
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JS_RemoveValueRoot(cx, &this->m_jsArmatureWrapper);
 }
 
-void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
-    jsCallback = func;
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-	// Root the callback function.
-    JS_AddNamedValueRoot(cx, &jsCallback, "JSCallbackWrapper_callback_func");
+void JSCallbackWrapper::setJSCallbackFunc(jsval obj)
+{
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JSObject* jsArmatureWrapper = JSVAL_TO_OBJECT(this->m_jsArmatureWrapper);
+	JS_SetProperty(cx, jsArmatureWrapper, "selector", &obj);
+	jsCallback = obj;
 }
 
-void JSCallbackWrapper::setJSCallbackThis(jsval thisObj) {
-    jsThisObj = thisObj;
+void JSCallbackWrapper::setJSCallbackThis(jsval thisObj)
+{
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JSObject* jsArmatureWrapper = JSVAL_TO_OBJECT(this->m_jsArmatureWrapper);
+	JS_SetProperty(cx, jsArmatureWrapper, "listener", &thisObj);
+	jsThisObj = thisObj;
 }
 
 void JSCallbackWrapper::setJSExtraData(jsval data) {
-    extraData = data;
+	JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+	JSObject* jsArmatureWrapper = JSVAL_TO_OBJECT(this->m_jsArmatureWrapper);
+	JS_SetProperty(cx, jsArmatureWrapper, "extraData", &data);
+	extraData = data;
 }
 
 const jsval& JSCallbackWrapper::getJSCallbackFunc() const
@@ -843,6 +854,7 @@ void JSCallFuncWrapper::callbackFunc(CCNode *node) const {
             valArr[1] = extraData;
 
             JS_AddValueRoot(cx, valArr);
+			JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             JS_CallFunctionValue(cx, thisObj, jsCallback, 2, valArr, &retval);
             JS_RemoveValueRoot(cx, valArr);
         }
@@ -850,6 +862,7 @@ void JSCallFuncWrapper::callbackFunc(CCNode *node) const {
         {
             jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
             JS_AddValueRoot(cx, &senderVal);
+			JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             JS_CallFunctionValue(cx, thisObj, jsCallback, 1, &senderVal, &retval);
             JS_RemoveValueRoot(cx, &senderVal);
         }
@@ -1200,7 +1213,7 @@ void JSScheduleWrapper::scheduleFunc(float dt) const
         CCLOG("scheduleFunc: Root value fails.");
         return;
     }
-
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
     if(!jsCallback.isNullOrUndefined()) {
         if (!jsThisObj.isNullOrUndefined()) {
             JSAutoCompartment ac(cx, JSVAL_TO_OBJECT(jsThisObj));
