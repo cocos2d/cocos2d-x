@@ -290,7 +290,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
     const std::string rootPath = zip.substr(0, pos+1);
     
     // Open the zip file
-    unzFile zipfile = unzOpen(zip.c_str());
+    unzFile zipfile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(zip).c_str());
     if (! zipfile)
     {
         CCLOG("AssetsManagerEx : can not open downloaded zip file %s\n", zip.c_str());
