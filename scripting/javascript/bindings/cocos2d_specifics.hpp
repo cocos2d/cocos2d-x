@@ -102,6 +102,7 @@ public:
     const jsval& getJSCallbackThis() const;
     const jsval& getJSExtraData() const;
 protected:
+	jsval m_jsArmatureWrapper;
     jsval jsCallback;
     jsval jsThisObj;
     jsval extraData;
@@ -128,15 +129,16 @@ public:
 
 class JSCallFuncWrapper: public JSCallbackWrapper {
 public:
-    JSCallFuncWrapper() {}
-    virtual ~JSCallFuncWrapper(void) {
-        return;
-    }
+	JSCallFuncWrapper() : m_pCallFunc(NULL) {}
+    virtual ~JSCallFuncWrapper(void) {}
 
     static void setTargetForNativeNode(CCNode *pNode, JSCallFuncWrapper *target);
     static CCArray * getTargetForNativeNode(CCNode *pNode);
 
     void callbackFunc(CCNode *node) const;
+	void setCallFunc(CCCallFunc* pFunc) { m_pCallFunc = pFunc;  }
+private:
+	CCCallFunc* m_pCallFunc;
 };
 
 
