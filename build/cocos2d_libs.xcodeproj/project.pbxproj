@@ -603,7 +603,6 @@
 		15AE1AD919AAD41000C27E9E /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169331807AF9C005B8026 /* b2Rope.h */; };
 		15AE1ADA19AAD41000C27E9E /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A169321807AF9C005B8026 /* b2Rope.cpp */; };
 		15AE1ADB19AAD41000C27E9E /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169331807AF9C005B8026 /* b2Rope.h */; };
-		15AE1B4A19AAD49000C27E9E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF541C180E3B6A000584C8 /* libcurl.a */; };
 		15AE1B4D19AADA9900C27E9E /* UIListView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905F9FE18CF08D000240AA3 /* UIListView.cpp */; };
 		15AE1B4E19AADA9900C27E9E /* UIListView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2905F9FF18CF08D000240AA3 /* UIListView.h */; };
 		15AE1B4F19AADA9900C27E9E /* UILoadingBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2905FA0018CF08D000240AA3 /* UILoadingBar.cpp */; };
@@ -1219,17 +1218,17 @@
 		29394CF519B01DBA00D2DE1A /* UIWebViewImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEE19B01DBA00D2DE1A /* UIWebViewImpl-ios.h */; };
 		29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */; };
 		29394CF719B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */; };
-		2980F0221BA9A5550059E678 /* CCUIEditBoxIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0171BA9A5550059E678 /* CCUIEditBoxIOS.h */; settings = {ASSET_TAGS = (); }; };
-		2980F0231BA9A5550059E678 /* CCUIEditBoxIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0181BA9A5550059E678 /* CCUIEditBoxIOS.mm */; settings = {ASSET_TAGS = (); }; };
-		2980F0241BA9A5550059E678 /* CCUIMultilineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0191BA9A5550059E678 /* CCUIMultilineTextField.h */; settings = {ASSET_TAGS = (); }; };
-		2980F0251BA9A5550059E678 /* CCUIMultilineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01A1BA9A5550059E678 /* CCUIMultilineTextField.mm */; settings = {ASSET_TAGS = (); }; };
-		2980F0261BA9A5550059E678 /* CCUISingleLineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01B1BA9A5550059E678 /* CCUISingleLineTextField.h */; settings = {ASSET_TAGS = (); }; };
-		2980F0271BA9A5550059E678 /* CCUISingleLineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01C1BA9A5550059E678 /* CCUISingleLineTextField.mm */; settings = {ASSET_TAGS = (); }; };
-		2980F0281BA9A5550059E678 /* CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01D1BA9A5550059E678 /* CCUITextInput.h */; settings = {ASSET_TAGS = (); }; };
-		2980F0291BA9A5550059E678 /* UITextField+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01E1BA9A5550059E678 /* UITextField+CCUITextInput.h */; settings = {ASSET_TAGS = (); }; };
-		2980F02A1BA9A5550059E678 /* UITextField+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01F1BA9A5550059E678 /* UITextField+CCUITextInput.mm */; settings = {ASSET_TAGS = (); }; };
-		2980F02B1BA9A5550059E678 /* UITextView+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */; settings = {ASSET_TAGS = (); }; };
-		2980F02C1BA9A5550059E678 /* UITextView+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */; settings = {ASSET_TAGS = (); }; };
+		2980F0221BA9A5550059E678 /* CCUIEditBoxIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0171BA9A5550059E678 /* CCUIEditBoxIOS.h */; };
+		2980F0231BA9A5550059E678 /* CCUIEditBoxIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0181BA9A5550059E678 /* CCUIEditBoxIOS.mm */; };
+		2980F0241BA9A5550059E678 /* CCUIMultilineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0191BA9A5550059E678 /* CCUIMultilineTextField.h */; };
+		2980F0251BA9A5550059E678 /* CCUIMultilineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01A1BA9A5550059E678 /* CCUIMultilineTextField.mm */; };
+		2980F0261BA9A5550059E678 /* CCUISingleLineTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01B1BA9A5550059E678 /* CCUISingleLineTextField.h */; };
+		2980F0271BA9A5550059E678 /* CCUISingleLineTextField.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01C1BA9A5550059E678 /* CCUISingleLineTextField.mm */; };
+		2980F0281BA9A5550059E678 /* CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01D1BA9A5550059E678 /* CCUITextInput.h */; };
+		2980F0291BA9A5550059E678 /* UITextField+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F01E1BA9A5550059E678 /* UITextField+CCUITextInput.h */; };
+		2980F02A1BA9A5550059E678 /* UITextField+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F01F1BA9A5550059E678 /* UITextField+CCUITextInput.mm */; };
+		2980F02B1BA9A5550059E678 /* UITextView+CCUITextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980F0201BA9A5550059E678 /* UITextView+CCUITextInput.h */; };
+		2980F02C1BA9A5550059E678 /* UITextView+CCUITextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2980F0211BA9A5550059E678 /* UITextView+CCUITextInput.mm */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
@@ -1481,11 +1480,8 @@
 		50693C601B6BF2AE005C5820 /* CCDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50693C5D1B6BF2AE005C5820 /* CCDownloader.h */; };
 		50693C611B6BF2AE005C5820 /* CCDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50693C5D1B6BF2AE005C5820 /* CCDownloader.h */; };
 		5070031B1B69735200E83DDD /* HttpClient-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003161B69735200E83DDD /* HttpClient-android.cpp */; };
-		5070031C1B69735200E83DDD /* HttpClient-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003161B69735200E83DDD /* HttpClient-android.cpp */; };
 		5070031D1B69735200E83DDD /* HttpClient-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003171B69735200E83DDD /* HttpClient-winrt.cpp */; };
-		5070031E1B69735200E83DDD /* HttpClient-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003171B69735200E83DDD /* HttpClient-winrt.cpp */; };
 		5070031F1B69735200E83DDD /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003181B69735200E83DDD /* HttpClient.cpp */; };
-		507003201B69735200E83DDD /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003181B69735200E83DDD /* HttpClient.cpp */; };
 		507003211B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
 		507003221B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
 		507003231B69735300E83DDD /* HttpConnection-winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5070031A1B69735200E83DDD /* HttpConnection-winrt.h */; };
@@ -5657,7 +5653,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15AE1C1919AAE30900C27E9E /* libwebsockets.a in Frameworks */,
-				15AE1B4A19AAD49000C27E9E /* libcurl.a in Frameworks */,
 				292F1A5E1A5151CE00E479F8 /* libssl.a in Frameworks */,
 				A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */,
 				1A570364180BD1120088DEC7 /* libpng.a in Frameworks */,
@@ -12098,7 +12093,6 @@
 				3E6176681960F89B00DE83F5 /* CCController-iOS.mm in Sources */,
 				15AE18B219AAD33D00C27E9E /* CCBReader.cpp in Sources */,
 				15AE193C19AAD35100C27E9E /* CCArmatureDefine.cpp in Sources */,
-				5070031E1B69735200E83DDD /* HttpClient-winrt.cpp in Sources */,
 				B665E35F1AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.cpp in Sources */,
 				B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
 				15AE194B19AAD35100C27E9E /* CCComRender.cpp in Sources */,
@@ -12194,7 +12188,6 @@
 				B665E3331AA80A6500DDB1C5 /* CCPUOnEmissionObserver.cpp in Sources */,
 				A045F6E51BA8170A005076C7 /* CCComponentPhysics2d.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
-				507003201B69735200E83DDD /* HttpClient.cpp in Sources */,
 				A0534A681B872FFD006B03E5 /* CCDownloader-apple.mm in Sources */,
 				B665E22F1AA80A6500DDB1C5 /* CCPUBoxColliderTranslator.cpp in Sources */,
 				1A570086180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
@@ -12712,7 +12705,6 @@
 				A045F6DD1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp in Sources */,
 				B665E41F1AA80A6600DDB1C5 /* CCPUTextureRotatorTranslator.cpp in Sources */,
 				503DD8E51926736A00CD74DD /* CCDirectorCaller-ios.mm in Sources */,
-				5070031C1B69735200E83DDD /* HttpClient-android.cpp in Sources */,
 				B665E2571AA80A6500DDB1C5 /* CCPUDoAffectorEventHandlerTranslator.cpp in Sources */,
 				B6CAAFF71AF9A9E100B9B856 /* CCPhysics3DShape.cpp in Sources */,
 				15AE194519AAD35100C27E9E /* CCComAttribute.cpp in Sources */,

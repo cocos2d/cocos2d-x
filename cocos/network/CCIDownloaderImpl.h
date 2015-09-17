@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "base/CCConsole.h"
 
-#define CC_DOWNLOADER_DEBUG
+//#define CC_DOWNLOADER_DEBUG
 #ifdef  CC_DOWNLOADER_DEBUG
 #define DLLOG(format, ...)      cocos2d::log(format, ##__VA_ARGS__)
 #else
