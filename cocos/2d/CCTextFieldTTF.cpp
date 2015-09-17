@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "2d/CCTextFieldTTF.h"
 
 #include "base/CCDirector.h"
+#include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
@@ -108,21 +109,33 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
 
 bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize)
 {
-    _placeHolder = placeholder;
-    setDimensions(dimensions.width,dimensions.height);
-    setSystemFontName(fontName);
-    setSystemFontSize(fontSize);
-    setAlignment(alignment,TextVAlignment::CENTER);
-    Label::setTextColor(_colorSpaceHolder);
-    Label::setString(_placeHolder);
+    setDimensions(dimensions.width, dimensions.height);
+    setAlignment(alignment, TextVAlignment::CENTER);
 
-    return true;
+    return initWithPlaceHolder(placeholder, fontName, fontSize);
 }
 bool TextFieldTTF::initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
-    _placeHolder = std::string(placeholder);
-    setSystemFontName(fontName);
-    setSystemFontSize(fontSize);
+    _placeHolder = placeholder;
+
+    do 
+    {
+        // If fontName is ttf file and it corrected, use TTFConfig
+        if (FileUtils::getInstance()->isFileExist(fontName))
+        {
+            TTFConfig ttfConfig(fontName.c_str(), fontSize, GlyphCollection::DYNAMIC);
+            if (setTTFConfig(ttfConfig))
+            {
+                break;
+            }
+        }
+
+        setSystemFontName(fontName);
+        setSystemFontSize(fontSize);
+
+    } while (false);
+
+
     Label::setTextColor(_colorSpaceHolder);
     Label::setString(_placeHolder);
 
