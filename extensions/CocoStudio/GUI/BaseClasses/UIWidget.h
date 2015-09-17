@@ -75,6 +75,10 @@ typedef enum
 
 typedef void (CCObject::*SEL_TouchEvent)(CCObject*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
+
+
+typedef void(*TouchEvent_DISPATCHER)(CCObject*, uint32_t);
+
 /**
 *   @js NA
 *   @lua NA
@@ -737,6 +741,10 @@ protected:
     cocos2d::CCDictionary* _scriptObjectDict;
     
     friend class TouchGroup;
+
+
+public:
+	static TouchEvent_DISPATCHER WidgetTouchEventDispatcher;
 };
 }
 
