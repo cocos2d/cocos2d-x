@@ -62,6 +62,7 @@ public:
         MANIFEST_LOADED,
         NEED_UPDATE,
         UPDATING,
+        UNZIPPING,
         UP_TO_DATE,
         FAIL_TO_UPDATE
     };
