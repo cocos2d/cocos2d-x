@@ -59,7 +59,7 @@ class CC_DLL Mesh : public Ref
     friend class Sprite3D;
 public:
     typedef std::vector<unsigned short> IndexArray;
-    /**create mesh from positions, normals, and so on, sigle SubMesh*/
+    /**create mesh from positions, normals, and so on, single SubMesh*/
     static Mesh* create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices);
     /**create mesh with vertex attributes*/
     CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount){ return create(vertices, perVertexSizeInFloat, indices, attribs); }
@@ -189,6 +189,10 @@ public:
      */
     void calculateAABB();
     
+    /**
+     * force set this Sprite3D to 2D render queue
+     */
+    void setForce2DQueue(bool force2D) { _force2DQueue = force2D; }
 
 CC_CONSTRUCTOR_ACCESS:
 
@@ -196,6 +200,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Mesh();
 
 protected:
+    void resetLightUniformValues();
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
@@ -203,6 +208,7 @@ protected:
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
+    bool                _force2DQueue; // add this mesh to 2D render queue
     
     std::string         _name;
     MeshCommand         _meshCommand;
@@ -213,6 +219,21 @@ protected:
     Material*           _material;
     AABB                _aabb;
     std::function<void()> _visibleChanged;
+    
+    ///light parameters
+    std::vector<Vec3> _dirLightUniformColorValues;
+    std::vector<Vec3> _dirLightUniformDirValues;
+    
+    std::vector<Vec3> _pointLightUniformColorValues;
+    std::vector<Vec3> _pointLightUniformPositionValues;
+    std::vector<float> _pointLightUniformRangeInverseValues;
+    
+    std::vector<Vec3> _spotLightUniformColorValues;
+    std::vector<Vec3> _spotLightUniformPositionValues;
+    std::vector<Vec3> _spotLightUniformDirValues;
+    std::vector<float> _spotLightUniformInnerAngleCosValues;
+    std::vector<float> _spotLightUniformOuterAngleCosValues;
+    std::vector<float> _spotLightUniformRangeInverseValues;
 };
 
 // end of 3d group

@@ -350,6 +350,8 @@
 -- @function [parent=#TextField] hitTest 
 -- @param self
 -- @param #vec2_table pt
+-- @param #cc.Camera camera
+-- @param #vec3_table p
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

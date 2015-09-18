@@ -53,7 +53,7 @@ typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
 
 /**
- *@brief Layout manager that allows the user to flip left and right through pages of data.
+ *@brief Layout manager that allows the user to flip left & right and up & down through pages of data.
  *
  */
 class CC_GUI_DLL PageView : public Layout
@@ -76,7 +76,15 @@ public:
     enum class TouchDirection
     {
         LEFT,
-        RIGHT
+        RIGHT,
+        UP,
+        DOWN
+    };
+    
+    enum class Direction
+    {
+        HORIZONTAL,
+        VERTICAL
     };
     
     /**
@@ -141,7 +149,24 @@ public:
      * @param index  A given index.
      */
     void removePageAtIndex(ssize_t index);
-    
+
+    /**
+     * Changes scroll direction of PageView
+     *
+     * @see `Direction`
+     * @param direction Scroll direction enum.
+     * @since v3.8
+     */
+    void setDirection(Direction direction);
+
+    /**
+     * Query scroll direction of PageView.
+     *
+     * @see `Direction`
+     * @since v3.8
+     * @return PageView scroll direction.
+     */
+    Direction getDirection()const;
     
     /**
      * @brief Remove all pages of the PageView.
@@ -151,16 +176,24 @@ public:
     /**
      * Scroll to a page with a given index.
      *
-     * @param idx   A given index in the PageView.
+     * @param idx   A given index in the PageView. Index start from 0 to pageCount -1.
      */
     void scrollToPage(ssize_t idx);
-    
+
+
     /**
      * Gets current displayed page index.
      * @return current page index.
      */
     ssize_t getCurPageIndex() const;
-    
+
+    /**
+     * Jump to a page with a given index without scrolling.
+     * This is the different between scrollToPage.
+     *
+     * @param index A given index in PageView. Index start from 0 to pageCount -1.
+     */
+    void setCurPageIndex(ssize_t index);
      
     /**
      * @brief Get all the pages in the PageView.
@@ -239,11 +272,12 @@ protected:
 
     Layout* createPage();
     float getPositionXByIndex(ssize_t idx)const;
+    float getPositionYByIndex(ssize_t idx)const;
     ssize_t getPageCount()const;
 
     void updateBoundaryPages();
-    virtual bool scrollPages(float touchOffset);
-    void movePages(float offset);
+    virtual bool scrollPages(Vec2 touchOffset);
+    void movePages(Vec2 offset);
     void pageTurningEvent();
     void updateAllPagesSize();
     void updateAllPagesPosition();
@@ -265,12 +299,15 @@ protected:
     enum class AutoScrollDirection
     {
         LEFT,
-        RIGHT
+        RIGHT,
+        UP,
+        DOWN
     };
     bool _isAutoScrolling;
     float _autoScrollDistance;
     float _autoScrollSpeed;
     AutoScrollDirection _autoScrollDirection;
+    Direction _direction;
     
     ssize_t _curPageIdx;
     Vector<Layout*> _pages;

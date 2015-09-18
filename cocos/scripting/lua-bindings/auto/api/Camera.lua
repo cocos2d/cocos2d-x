@@ -23,6 +23,14 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
+-- set the background brush. See CameraBackgroundBrush for more information.<br>
+-- param clearBrush Brush used to clear the background
+-- @function [parent=#Camera] setBackgroundBrush 
+-- @param self
+-- @param #cc.CameraBackgroundBrush clearBrush
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
 -- Make Camera looks at target<br>
 -- param target The target camera is point at<br>
 -- param up The up vector, usually it's Y axis
@@ -39,6 +47,12 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
+-- Get clear brush
+-- @function [parent=#Camera] getBackgroundBrush 
+-- @param self
+-- @return CameraBackgroundBrush#CameraBackgroundBrush ret (return value: cc.CameraBackgroundBrush)
+        
+--------------------------------
 -- Gets the camera's projection matrix.<br>
 -- return The camera projection matrix.
 -- @function [parent=#Camera] getProjectionMatrix 
@@ -53,10 +67,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Before rendering scene with this camera, the background need to be cleared.
+-- Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
 -- @function [parent=#Camera] clearBackground 
 -- @param self
--- @param #float depth
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
@@ -183,6 +196,13 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
+-- Whether or not the viewprojection matrix was updated since the last frame.<br>
+-- return True if the viewprojection matrix was updated since the last frame.
+-- @function [parent=#Camera] isViewProjectionUpdated 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Camera] initPerspective 
 -- @param self
@@ -250,6 +270,15 @@
 -- @function [parent=#Camera] getDefaultCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- 

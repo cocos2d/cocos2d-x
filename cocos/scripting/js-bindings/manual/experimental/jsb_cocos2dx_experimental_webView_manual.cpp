@@ -37,6 +37,7 @@ static bool jsb_cocos2dx_experimental_webView_setOnShouldStartLoading(JSContext 
                     JS_ReportPendingException(cx);
                 }
             });
+            return true;
         });
         return true;
     }

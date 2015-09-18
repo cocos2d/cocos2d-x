@@ -178,7 +178,7 @@ var BillBoardTest = BillBoardTestDemo.extend({
 
         var s = cc.winSize;
         if(!this._camera){
-            this._camera = cc.Camera.createPerspective(60, s.width/s.height, 1, 500);
+            this._camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, s.width/s.height, 1, 500);
             this._camera.setCameraFlag(cc.CameraFlag.USER1);
             this._layerBillBorad.addChild(this._camera);
         }

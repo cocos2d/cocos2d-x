@@ -21,6 +21,8 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #include "AudioCachePlayer.h"
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -62,8 +64,6 @@ void AudioCache::readDataTask()
         return;
     }
 
-    std::wstring path(_fileFullPath.begin(), _fileFullPath.end());
-
     if (nullptr != _srcReader) {
         delete _srcReader;
         _srcReader = nullptr;
@@ -94,16 +94,18 @@ void AudioCache::readDataTask()
         _audInfo._wfx = _srcReader->getWaveFormatInfo();
         _isReady = true;
         _retry = false;
-        invokeCallbacks();
+        invokePlayCallbacks();
     }
 
     if (!_isReady) {
         _retry = true;
         log("Failed to read input file: %s.\n", _fileFullPath.c_str());
     }
+
+    invokeLoadCallbacks();
 }
 
-void AudioCache::addCallback(const std::function<void()> &callback)
+void AudioCache::addPlayCallback(const std::function<void()> &callback)
 {
     _cbMutex.lock();
     if (_isReady) {
@@ -119,7 +121,21 @@ void AudioCache::addCallback(const std::function<void()> &callback)
     }
 }
 
-void AudioCache::invokeCallbacks()
+void AudioCache::addLoadCallback(const std::function<void(bool)> &callback)
+{
+    if (_isReady) {
+        callback(true);
+    }
+    else {
+        _loadCallbacks.push_back(callback);
+    }
+
+    if (_retry) {
+        readDataTask();
+    }
+}
+
+void AudioCache::invokePlayCallbacks()
 {
     _cbMutex.lock();
     auto cnt = _callbacks.size();
@@ -129,6 +145,19 @@ void AudioCache::invokeCallbacks()
     }
     _callbacks.clear();
     _cbMutex.unlock();
+}
+
+void AudioCache::invokeLoadCallbacks()
+{
+    auto scheduler = Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([&](){
+        auto cnt = _loadCallbacks.size();
+        for (size_t ind = 0; ind < cnt; ind++)
+        {
+            _loadCallbacks[ind](_isReady);
+        }
+        _loadCallbacks.clear();
+    });
 }
 
 bool AudioCache::getChunk(AudioDataChunk& chunk)
@@ -311,6 +340,7 @@ void AudioPlayer::setVolume(float volume)
 bool AudioPlayer::play2d(AudioCache* cache)
 {
     bool ret = false;
+    HRESULT hr = S_OK;
 
     if (cache != nullptr)
     {
@@ -323,12 +353,17 @@ bool AudioPlayer::play2d(AudioCache* cache)
             XAUDIO2_VOICE_SENDS sends = { 0 };
             sends.SendCount = 1;
             sends.pSends = descriptors;
-            ThrowIfFailed(_xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends));
+            hr = _xaEngine->CreateSourceVoice(&_xaSourceVoice, &cache->_audInfo._wfx, 0, 1.0, this, &sends);
         }
 
-        _isStreaming = _cache->isStreamingSource();
-        _duration = getDuration();
-        ret = _play();
+        if (SUCCEEDED(hr)) {
+            _isStreaming = _cache->isStreamingSource();
+            _duration = getDuration();
+            ret = _play();
+        }
+        else {
+            error();
+        }
     }
 
     return ret;
@@ -336,28 +371,39 @@ bool AudioPlayer::play2d(AudioCache* cache)
 
 void AudioPlayer::init()
 {
-    memset(&_xaBuffer, 0, sizeof(_xaBuffer));
-    ThrowIfFailed(XAudio2Create(_xaEngine.ReleaseAndGetAddressOf()));
+    do {
+        memset(&_xaBuffer, 0, sizeof(_xaBuffer));
+        if (FAILED(XAudio2Create(_xaEngine.ReleaseAndGetAddressOf()))) {
+            error();
+            break;
+        }
 
 #if defined(_DEBUG)
-    XAUDIO2_DEBUG_CONFIGURATION debugConfig = { 0 };
-    debugConfig.BreakMask = XAUDIO2_LOG_ERRORS;
-    debugConfig.TraceMask = XAUDIO2_LOG_ERRORS;
-    _xaEngine->SetDebugConfiguration(&debugConfig);
+        XAUDIO2_DEBUG_CONFIGURATION debugConfig = { 0 };
+        debugConfig.BreakMask = XAUDIO2_LOG_ERRORS;
+        debugConfig.TraceMask = XAUDIO2_LOG_ERRORS;
+        _xaEngine->SetDebugConfiguration(&debugConfig);
 #endif
 
-    _xaEngine->RegisterForCallbacks(this);
-    ThrowIfFailed(_xaEngine->CreateMasteringVoice(&_xaMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia));
-    _ready = true;
-    _state = AudioPlayerState::READY;
+        _xaEngine->RegisterForCallbacks(this);
+        if (FAILED(_xaEngine->CreateMasteringVoice(&_xaMasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia))) {
+            error();
+            break;
+        }
+
+        _ready = true;
+        _state = AudioPlayerState::READY;
+    } while (false);
 }
 
 void AudioPlayer::free()
 {
+    _ready = false;
     _stop();
     memset(&_xaBuffer, 0, sizeof(_xaBuffer));
 
     if (_xaEngine) {
+        _xaEngine->UnregisterForCallbacks(this);
         _xaEngine->StopEngine();
     }
 
@@ -421,6 +467,7 @@ void AudioPlayer::error()
     _criticalError = true;
     _ready = false;
     _state = AudioPlayerState::ERRORED;
+    CCLOG("Audio system encountered error.");
 }
 
 void AudioPlayer::popBuffer()
@@ -528,13 +575,15 @@ void AudioPlayer::OnProcessingPassEnd()
 void AudioPlayer::OnCriticalError(HRESULT err)
 {
     UNREFERENCED_PARAMETER(err);
-    error();
+    if (_ready) {
+        error();
+    }
 }
 
 // IXAudio2VoiceCallback
 void AudioPlayer::OnVoiceProcessingPassStart(UINT32 uBytesRequired)
 {
-    if (uBytesRequired && _isStreaming){
+    if (_ready && uBytesRequired && _isStreaming){
         submitBuffers();
     }
 }
@@ -545,7 +594,9 @@ void AudioPlayer::OnVoiceProcessingPassEnd()
 
 void AudioPlayer::OnStreamEnd()
 {
-    onBufferRunOut();
+    if (_ready) {
+        onBufferRunOut();
+    }
 }
 
 void AudioPlayer::OnBufferStart(void* pBufferContext)
@@ -556,14 +607,16 @@ void AudioPlayer::OnBufferStart(void* pBufferContext)
 void AudioPlayer::OnBufferEnd(void* pBufferContext)
 {
     UNREFERENCED_PARAMETER(pBufferContext);
-    updateState();
+    if (_ready) {
+        updateState();
+    }
 }
 
 void AudioPlayer::OnLoopEnd(void* pBufferContext)
 {
     UNREFERENCED_PARAMETER(pBufferContext);
 
-    if (!_loop) {
+    if (_ready && !_loop) {
         _stop();
     }
 }
@@ -572,7 +625,9 @@ void AudioPlayer::OnVoiceError(void* pBufferContext, HRESULT err)
 {
     UNREFERENCED_PARAMETER(pBufferContext);
     UNREFERENCED_PARAMETER(err);
-    error();
+    if (_ready) {
+        error();
+    }
 }
 
 #endif

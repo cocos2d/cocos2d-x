@@ -255,16 +255,6 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- @overload self, string         
--- @overload self         
--- @overload self, string, rect_table         
--- @function [parent=#Sprite] create
--- @param self
--- @param #string filename
--- @param #rect_table rect
--- @return Sprite#Sprite ret (return value: cc.Sprite)
-
---------------------------------
 -- @overload self, cc.Texture2D, rect_table, bool         
 -- @overload self, cc.Texture2D         
 -- @function [parent=#Sprite] createWithTexture

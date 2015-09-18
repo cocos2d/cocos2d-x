@@ -2,9 +2,18 @@
 var s_resprefix = "";
 
 var ccbjs = "";
+// js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
+// so the respath will modify to res,
 if (!cc.sys.isNative)
 {
-    ccbjs = "../../js-tests/resjs/";
+    if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+        ccbjs = "../../js-tests/resjs/";
+    }
+    else
+    {
+        ccbjs = "";
+    }
+
 }
 
 var s_pathGrossini = "Images/grossini.png";
@@ -906,7 +915,9 @@ var g_cocoStudio = [
     "Particles/BoilingFoam.plist",
     "ccs-res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson",
     "ccs-res/cocosui/CustomImageViewTest/NewProject_20.plist",
-    "ccs-res/cocosui/CustomImageViewTest/NewProject_20.png"
+    "ccs-res/cocosui/CustomImageViewTest/NewProject_20.png",
+
+    "ActionTimeline/DemoPlayer_skeleton.json"
 ];
 
 var g_ui = [
@@ -1096,3 +1107,9 @@ var g_ccs2 = [
     "ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.fnt",
     "ccs-res/cocosui/UIEditorTest/UILabelBMFont_Editor/GUI/missing-font.png"
 ];
+
+if (!cc.sys.isNative) {
+    var res = res || {};
+    res.CCControlColourPickerSpriteSheet_plist = "extensions/CCControlColourPickerSpriteSheet.plist";
+    res.CCControlColourPickerSpriteSheet_png = "extensions/CCControlColourPickerSpriteSheet.png";
+}

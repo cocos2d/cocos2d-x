@@ -36,7 +36,6 @@ require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
 require "Particle3DTest/Particle3DTest"
-require "PerformanceTest/PerformanceTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
 require "Sprite3DTest/Sprite3DTest"
@@ -49,6 +48,7 @@ require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
 require "TransitionsTest/TransitionsTest"
 require "UserDefaultTest/UserDefaultTest"
+require "VibrateTest/VibrateTest"
 require "ZwoptexTest/ZwoptexTest"
 require "LuaBridgeTest/LuaBridgeTest"
 require "XMLHttpRequestTest/XMLHttpRequestTest"
@@ -63,6 +63,7 @@ require "SpritePolygonTest/SpritePolygonTest"
 require "Physics3DTest/Physics3DTest"
 require "Scene3DTest/Scene3DTest"
 require "MaterialSystemTest/MaterialSystemTest"
+require "NavMeshTest/NavMeshTest"
 
 local LINE_SPACE = 40
 
@@ -115,13 +116,13 @@ local _allTests = {
     { isSupported = true,  name = "MenuTest"               , create_func   =                  MenuTestMain  }, 
     { isSupported = true,  name = "MotionStreakTest"       , create_func   =          MotionStreakTest      },
     { isSupported = false,  name = "MutiTouchTest"          , create_func=          MutiTouchTestMain     },
+    { isSupported = true,  name = "NavMeshTest"            , create_func   =       NavMeshTest },
     { isSupported = true,  name = "NewEventDispatcherTest"  , create_func   =       NewEventDispatcherTest },
     { isSupported = true,  name = "NodeTest"               , create_func   =                  CocosNodeTest },
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
     { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
-    { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "Physics3DTest"            , create_func =          Physics3DTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
@@ -145,6 +146,7 @@ local _allTests = {
     { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
     { isSupported = true,  name = "WebViewTest"            , create_func=           WebViewTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
+    { isSupported = true,  name = "VibrateTest"            , create_func   =               VibrateTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 
@@ -213,6 +215,10 @@ function CreateTestMenu()
         end
 
         if obj.name == "Physics3DTest" and nil == cc.Physics3DComponent then
+            testMenuItem:setEnabled(false) 
+        end
+
+        if obj.name == "NavMeshTest" and nil == cc.NavMesh then
             testMenuItem:setEnabled(false) 
         end
 

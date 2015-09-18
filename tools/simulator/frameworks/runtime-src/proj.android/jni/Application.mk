@@ -14,3 +14,4 @@ else
 endif
 
 COCOS_SIMULATOR_BUILD := 1
+USE_ARM_MODE := 1

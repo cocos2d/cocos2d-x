@@ -6,7 +6,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocos2d_experimental_ui_VideoPlayer_class;
 extern JSObject *jsb_cocos2d_experimental_ui_VideoPlayer_prototype;
 
@@ -17,9 +16,7 @@ void register_all_cocos2dx_experimental_video(JSContext* cx, JS::HandleObject ob
 bool js_cocos2dx_experimental_video_VideoPlayer_getFileName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_getURL(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_play(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_experimental_video_VideoPlayer_pause(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_experimental_video_VideoPlayer_resume(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_stop(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setFullScreenEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setFileName(JSContext *cx, uint32_t argc, jsval *vp);

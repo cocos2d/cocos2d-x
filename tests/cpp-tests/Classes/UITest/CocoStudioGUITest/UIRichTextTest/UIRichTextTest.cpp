@@ -64,9 +64,9 @@ bool UIRichTextTest::init()
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
         
-        RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, str1, "Marker Felt", 10);
+        RichElementText* re1 = RichElementText::create(1, Color3B::WHITE, 255, str1, "SimSun", 10);
         RichElementText* re2 = RichElementText::create(2, Color3B::YELLOW, 255, "And this is yellow. ", "Helvetica", 10);
-        RichElementText* re3 = RichElementText::create(3, Color3B::GRAY, 255, str2, "Helvetica", 10);
+        RichElementText* re3 = RichElementText::create(3, Color3B::GRAY, 255, str2, "Yu Mincho", 10);
         RichElementText* re4 = RichElementText::create(4, Color3B::GREEN, 255, "And green with TTF support. ", "fonts/Marker Felt.ttf", 10);
         RichElementText* re5 = RichElementText::create(5, Color3B::RED, 255, "Last one is red ", "Helvetica", 10);
         
@@ -92,6 +92,9 @@ bool UIRichTextTest::init()
         
         
         _widget->addChild(_richText);
+        
+        // test remove all children, this call won't effect the test
+        _richText->removeAllChildren();
         
         return true;
     }

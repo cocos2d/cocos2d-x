@@ -26,12 +26,17 @@ THE SOFTWARE.
 
 #include "base/CCConfiguration.h"
 #include "platform/CCFileUtils.h"
+#include "base/CCEventCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion();
 
 Configuration* Configuration::s_sharedConfiguration = nullptr;
+
+const char* Configuration::CONFIG_FILE_LOADED = "config_file_loaded";
 
 Configuration::Configuration()
 : _maxTextureSize(0) 
@@ -50,8 +55,9 @@ Configuration::Configuration()
 , _maxDirLightInShader(1)
 , _maxPointLightInShader(1)
 , _maxSpotLightInShader(1)
-, _animate3DQuality(Animate3DQuality::QUALITY_HIGH)
+, _animate3DQuality(Animate3DQuality::QUALITY_LOW)
 {
+    _loadedEvent = new EventCustom(CONFIG_FILE_LOADED);
 }
 
 bool Configuration::init()
@@ -82,6 +88,7 @@ bool Configuration::init()
 
 Configuration::~Configuration()
 {
+    CC_SAFE_DELETE(_loadedEvent);
 }
 
 std::string Configuration::getInfo() const
@@ -221,7 +228,11 @@ bool Configuration::supportsETC() const
 
 bool Configuration::supportsS3TC() const
 {
+#ifdef GL_EXT_texture_compression_s3tc
     return _supportsS3TC;
+#else
+    return false;
+#endif
 }
 
 bool Configuration::supportsATITC() const
@@ -362,6 +373,8 @@ void Configuration::loadConfigFile(const std::string& filename)
         _animate3DQuality = (Animate3DQuality)_valueDict[name].asInt();
     else
         _valueDict[name] = Value((int)_animate3DQuality);
+    
+    Director::getInstance()->getEventDispatcher()->dispatchEvent(_loadedEvent);
 }
 
 NS_CC_END

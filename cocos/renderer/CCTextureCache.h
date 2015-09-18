@@ -209,30 +209,18 @@ private:
     void loadImage();
     void parseNinePatchImage(Image* image, Texture2D* texture, const std::string& path);
 public:
-    struct AsyncStruct
-    {
-    public:
-        AsyncStruct(const std::string& fn, std::function<void(Texture2D*)> f) : filename(fn), callback(f) {}
-
-        std::string filename;
-        std::function<void(Texture2D*)> callback;
-    };
-
 protected:
-    typedef struct _ImageInfo
-    {
-        AsyncStruct *asyncStruct;
-        Image        *image;
-    } ImageInfo;
+    struct AsyncStruct;
     
     std::thread* _loadingThread;
 
-    std::deque<AsyncStruct*>* _asyncStructQueue;
-    std::deque<ImageInfo*>* _imageInfoQueue;
+    std::deque<AsyncStruct*> _asyncStructQueue;
+    std::deque<AsyncStruct*> _requestQueue;
+    std::deque<AsyncStruct*> _responseQueue;
 
-    std::mutex _asyncMutex;
-
-    std::mutex _sleepMutex;
+    std::mutex _requestMutex;
+    std::mutex _responseMutex;
+    
     std::condition_variable _sleepCondition;
 
     bool _needQuit;

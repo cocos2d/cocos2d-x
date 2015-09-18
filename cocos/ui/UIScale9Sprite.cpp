@@ -58,6 +58,7 @@ namespace ui {
         ,_flippedX(false)
         ,_flippedY(false)
         ,_isPatch9(false)
+        ,_brightState(State::NORMAL)
 
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
@@ -149,15 +150,17 @@ namespace ui {
         {
             auto texture = sprite->getTexture();
             auto spriteFrame = sprite->getSpriteFrame();
+            Rect actualCapInsets = capInsets;
+
             if (texture->isContain9PatchInfo())
             {
-                auto parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
+                auto& parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
                 if(!parsedCapInset.equals(Rect::ZERO))
                 {
                     this->_isPatch9 = true;
                     if(capInsets.equals(Rect::ZERO))
                     {
-                        this->_capInsetsInternal = this->_capInsets = parsedCapInset;
+                        actualCapInsets = parsedCapInset;
                     }
 
                 }
@@ -168,7 +171,7 @@ namespace ui {
                                    rotated,
                                    offset,
                                    originalSize,
-                                   capInsets);
+                                   actualCapInsets);
         }
 
         return true;
@@ -521,9 +524,8 @@ namespace ui {
 
         Rect rect(textureRect);
         Size size(originalSize);
-
-        if(_capInsets.equals(Rect::ZERO))
-            _capInsets = capInsets;
+        
+        _capInsets = capInsets;
 
         // If there is no given rect
         if ( rect.equals(Rect::ZERO) )
@@ -545,10 +547,8 @@ namespace ui {
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
-        if(!capInsets.equals(Rect::ZERO))
-        {
-            _capInsetsInternal = capInsets;
-        }
+
+        _capInsetsInternal = capInsets;
 
         if (_scale9Enabled)
         {
@@ -556,6 +556,7 @@ namespace ui {
         }
 
         applyBlendFunc();
+        this->setState(_brightState);
         if(this->_isPatch9)
         {
             size.width = size.width - 2;
@@ -579,8 +580,8 @@ namespace ui {
         float width = _originalSize.width;
         float height = _originalSize.height;
 
-        Vec2 offsetPosition(ceilf(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
-                            ceilf(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
+        Vec2 offsetPosition(floor(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
+                            floor(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
 
         // If there is no specified center region
         if ( _capInsetsInternal.equals(Rect::ZERO) )
@@ -793,7 +794,7 @@ namespace ui {
         //shrink the image size when it is 9-patch
         if(_isPatch9)
         {
-            float offset = 1.4f;
+            float offset = 1.0f;
             //Top left
             if(!_spriteFrameRotated)
             {
@@ -1051,7 +1052,11 @@ namespace ui {
         CC_SAFE_DELETE(pReturn);
         return NULL;
     }
-
+    
+    Scale9Sprite::State Scale9Sprite::getState()const
+    {
+        return _brightState;
+    }
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
     {
@@ -1070,7 +1075,7 @@ namespace ui {
         default:
             break;
         }
-
+        
         if (nullptr != _scale9Image)
         {
             _scale9Image->setGLProgramState(glState);
@@ -1083,6 +1088,7 @@ namespace ui {
                 sp->setGLProgramState(glState);
             }
         }
+        _brightState = state;
     }
 
 /** sets the opacity.
@@ -1385,6 +1391,14 @@ namespace ui {
 
     void Scale9Sprite::cleanup()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
+                return;
+        }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+        
         Node::cleanup();
         // timers
         for( const auto &child: _protectedChildren)
@@ -1407,6 +1421,14 @@ namespace ui {
 
     void Scale9Sprite::onExit()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+                return;
+        }
+#endif
+        
         Node::onExit();
         for( const auto &child: _protectedChildren)
             child->onExit();
@@ -1414,6 +1436,14 @@ namespace ui {
 
     void Scale9Sprite::onEnterTransitionDidFinish()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+                return;
+        }
+#endif
+        
         Node::onEnterTransitionDidFinish();
         for( const auto &child: _protectedChildren)
             child->onEnterTransitionDidFinish();
@@ -1421,6 +1451,14 @@ namespace ui {
 
     void Scale9Sprite::onExitTransitionDidStart()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+                return;
+        }
+#endif
+        
         Node::onExitTransitionDidStart();
         for( const auto &child: _protectedChildren)
             child->onExitTransitionDidStart();

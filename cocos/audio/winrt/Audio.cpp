@@ -61,11 +61,13 @@ void Audio::Initialize()
 
 void Audio::CreateResources()
 {
-    try
+    do
     {	
-        ThrowIfFailed(
-            XAudio2Create(&m_musicEngine)
-            );
+        if (FAILED(XAudio2Create(&m_musicEngine)))
+        {
+            m_engineExperiencedCriticalError = true;
+            break;
+        }
 
 #if defined(_DEBUG)
         XAUDIO2_DEBUG_CONFIGURATION debugConfig = {0};
@@ -83,31 +85,33 @@ void Audio::CreateResources()
 	    // decode the data then we feed it through the XAudio2 pipeline as a separate Mastering Voice, so that we can tag it
 	    // as Game Media.
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    ThrowIfFailed(
-		    m_musicEngine->CreateMasteringVoice(&m_musicMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia)
-        );
+        if(FAILED(m_musicEngine->CreateMasteringVoice(&m_musicMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameMedia)))
+        {
+            m_engineExperiencedCriticalError = true;
+            break;
+        }
 
         // Create a separate engine and mastering voice for sound effects in the sample
 	    // Games will use many voices in a complex graph for audio, mixing all effects down to a
 	    // single mastering voice.
 	    // We are creating an entirely new engine instance and mastering voice in order to tag
 	    // our sound effects with the audio category AudioCategory_GameEffects.
-	    ThrowIfFailed(
-		    XAudio2Create(&m_soundEffectEngine)
-		    );
+        if(FAILED(XAudio2Create(&m_soundEffectEngine)))
+        {
+            m_engineExperiencedCriticalError = true;
+            break;
+        }
     
         m_soundEffectEngineCallback.Initialize(this);
         m_soundEffectEngine->RegisterForCallbacks(&m_soundEffectEngineCallback);
 
         // We default the mastering voice to 2 channels to simplify the reverb logic.
-	    ThrowIfFailed(
-		    m_soundEffectEngine->CreateMasteringVoice(&m_soundEffectMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameEffects)
-		    );
-    }
-    catch (...)
-    {
-        m_engineExperiencedCriticalError = true;
-    }
+        if(FAILED(m_soundEffectEngine->CreateMasteringVoice(&m_soundEffectMasteringVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, nullptr, nullptr, AudioCategory_GameEffects)))
+        {
+            m_engineExperiencedCriticalError = true;
+            break;
+        }
+    } while (false);
 }
 
 unsigned int Audio::Hash(const char *key)
@@ -238,7 +242,7 @@ void Audio::RewindBackgroundMusic()
 
 bool Audio::IsBackgroundMusicPlaying()
 {
-    return IsSoundEffectStarted(m_backgroundID);
+    return IsSoundEffectStarted(m_backgroundID) && !IsSoundEffectPaused(m_backgroundID);
 }
 
 void Audio::SetBackgroundVolume(float volume)
@@ -309,9 +313,10 @@ void Audio::PlaySoundEffect(unsigned int sound)
 
     StopSoundEffect(sound);
 
-    ThrowIfFailed(
-		m_soundEffects[sound].m_soundEffectSourceVoice->SubmitSourceBuffer(&m_soundEffects[sound].m_audioBuffer)
-		);
+    if (FAILED(m_soundEffects[sound].m_soundEffectSourceVoice->SubmitSourceBuffer(&m_soundEffects[sound].m_audioBuffer)))
+    {
+        m_engineExperiencedCriticalError = true;
+    }
 
     if (m_engineExperiencedCriticalError) {
         // If there's an error, then we'll recreate the engine on the next render pass
@@ -326,7 +331,8 @@ void Audio::PlaySoundEffect(unsigned int sound)
         return;
     }
 
-	m_soundEffects[sound].m_soundEffectStarted = true;
+    m_soundEffects[sound].m_soundEffectStarted = true;
+    m_soundEffects[sound].m_soundEffectPaused = false;
 }
 
 void Audio::StopSoundEffect(unsigned int sound)
@@ -348,6 +354,7 @@ void Audio::StopSoundEffect(unsigned int sound)
     }
 
     m_soundEffects[sound].m_soundEffectStarted = false;
+    m_soundEffects[sound].m_soundEffectPaused = false;
 }
 
 void Audio::PauseSoundEffect(unsigned int sound)
@@ -366,6 +373,7 @@ void Audio::PauseSoundEffect(unsigned int sound)
         m_engineExperiencedCriticalError = true;
         return;
     }
+    m_soundEffects[sound].m_soundEffectPaused = true;
 }
 
 void Audio::ResumeSoundEffect(unsigned int sound)
@@ -384,6 +392,7 @@ void Audio::ResumeSoundEffect(unsigned int sound)
         m_engineExperiencedCriticalError = true;
         return;
     }
+    m_soundEffects[sound].m_soundEffectPaused = false;
 }
 
 void Audio::RewindSoundEffect(unsigned int sound)
@@ -467,51 +476,12 @@ bool Audio::IsSoundEffectStarted(unsigned int sound)
     return m_soundEffects[sound].m_soundEffectStarted;
 }
 
-std::wstring CCUtf8ToUnicode(const char * pszUtf8Str)
+bool Audio::IsSoundEffectPaused(unsigned int sound)
 {
-    std::wstring ret;
-    do
-    {
-        if (! pszUtf8Str) break;
-        size_t len = strlen(pszUtf8Str);
-        if (len <= 0) break;
-		++len;
-        wchar_t * pwszStr = new wchar_t[len];
-        if (! pwszStr) break;
-        pwszStr[len - 1] = 0;
-        MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, len);
-        ret = pwszStr;
+    if (m_soundEffects.end() == m_soundEffects.find(sound))
+        return false;
 
-		if(pwszStr) { 
-			delete[] (pwszStr); 
-			(pwszStr) = 0; 
-		}
-
-
-    } while (0);
-    return ret;
-}
-
-std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
-{
-	std::string ret;
-	do
-	{
-		if(! pwszStr) break;
-		size_t len = wcslen(pwszStr);
-		if (len <= 0) break;
-		
-		char * pszUtf8Str = new char[len*3 + 1];
-		WideCharToMultiByte(CP_UTF8, 0, pwszStr, len+1, pszUtf8Str, len*3 + 1, 0, 0);
-		ret = pszUtf8Str;
-				
-		if(pszUtf8Str) { 
-			delete[] (pszUtf8Str); 
-			(pszUtf8Str) = 0; 
-		}
-	}while(0);
-
-	return ret;
+    return m_soundEffects[sound].m_soundEffectPaused;
 }
 
 void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
@@ -560,10 +530,11 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	    sends.SendCount = 1;
 	    sends.pSends = descriptors;
 
-        ThrowIfFailed(
-	    m_musicEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &wfx, 0, 1.0f, &m_voiceContext, &sends)
-	    );
+        if (FAILED(m_musicEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
+            &wfx, 0, 1.0f, &m_voiceContext, &sends)))
+        {
+            m_engineExperiencedCriticalError = true;
+        }
 		//fix bug: set a initial volume
 		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
     } else
@@ -575,10 +546,11 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 	    sends.SendCount = 1;
 	    sends.pSends = descriptors;
 
-        ThrowIfFailed(
-	    m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &wfx, 0, 1.0f, &m_voiceContext, &sends, nullptr)
-        );
+        if(FAILED(m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
+            &wfx, 0, 1.0f, &m_voiceContext, &sends, nullptr)))
+        {
+            m_engineExperiencedCriticalError = true;
+        }
 		//fix bug: set a initial volume
 		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
     }
@@ -621,6 +593,7 @@ void Audio::UnloadSoundEffect(unsigned int sound)
     m_soundEffects[sound].m_soundEffectBufferData = nullptr;
 	m_soundEffects[sound].m_soundEffectSourceVoice = nullptr;
 	m_soundEffects[sound].m_soundEffectStarted = false;
+    m_soundEffects[sound].m_soundEffectPaused = false;
     ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));    
 }
 

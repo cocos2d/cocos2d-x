@@ -35,6 +35,7 @@ endif()
 
 set(JSBINDING_SRC
   auto/jsb_cocos2dx_auto.cpp
+  auto/jsb_cocos2dx_audioengine_auto.cpp
   auto/jsb_cocos2dx_builder_auto.cpp
   auto/jsb_cocos2dx_extension_auto.cpp
   auto/jsb_cocos2dx_spine_auto.cpp
@@ -42,8 +43,8 @@ set(JSBINDING_SRC
   auto/jsb_cocos2dx_ui_auto.cpp
   auto/jsb_cocos2dx_3d_auto.cpp
   auto/jsb_cocos2dx_3d_extension_auto.cpp
-  auto/jsb_cocos2dx_experimental.cpp
   auto/jsb_cocos2dx_physics3d_auto.cpp
+  auto/jsb_cocos2dx_navmesh_auto.cpp
   manual/ScriptingCore.cpp
   manual/cocos2d_specifics.cpp
   manual/js_manual_conversions.cpp
@@ -69,8 +70,9 @@ set(JSBINDING_SRC
   manual/spine/jsb_cocos2dx_spine_manual.cpp
   manual/ui/jsb_cocos2dx_ui_manual.cpp
   manual/3d/jsb_cocos2dx_3d_manual.cpp
-  manual/experimental/jsb_cocos2dx_experimental_manual.cpp
   manual/physics3d/jsb_cocos2dx_physics3d_manual.cpp
+  manual/navmesh/jsb_cocos2dx_navmesh_conversions.cpp
+  manual/navmesh/jsb_cocos2dx_navmesh_manual.cpp
   ${cocos_root}/cocos/storage/local-storage/LocalStorage.cpp
 )
 
@@ -79,7 +81,9 @@ include_directories(
   manual
   manual/cocostudio
   manual/spine
+  manual/navmesh
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
+  ${cocos_root}/cocos
   ${cocos_root}/cocos/base
   ${cocos_root}/cocos/2d
   ${cocos_root}/cocos/3d
@@ -89,6 +93,7 @@ include_directories(
   ${cocos_root}/cocos/network
   ${cocos_root}/cocos/platform
   ${cocos_root}/cocos/physics3d
+  ${cocos_root}/cocos/navmesh
   ${cocos_root}/extensions
   ${cocos_root}/external
   ${cocos_root}/cocos/editor-support

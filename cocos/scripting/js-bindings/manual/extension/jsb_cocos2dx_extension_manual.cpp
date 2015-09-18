@@ -535,7 +535,6 @@ static bool js_cocos2dx_CCTableView_init(JSContext *cx, uint32_t argc, jsval *vp
             cocos2d::Node* arg2;
             do 
             {
-                js_proxy_t *proxy;
                 JSObject *tmpObj = args.get(2).toObjectOrNull();
                 proxy = jsb_get_js_proxy(tmpObj);
                 arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
@@ -567,22 +566,19 @@ class JSB_ControlButtonTarget : public Ref
 {
 public:
     JSB_ControlButtonTarget()
-    : _jsFunc(nullptr),
+    : _callback(nullptr),
+      _jsFunc(nullptr),
       _type(Control::EventType::TOUCH_DOWN),
-      _jsTarget(nullptr),
       _needUnroot(false)
     {}
     
     virtual ~JSB_ControlButtonTarget()
     {
         CCLOGINFO("In the destruction of JSB_ControlButtonTarget ...");
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        if (_needUnroot)
+        if (_callback != nullptr)
         {
-            JS::RemoveObjectRoot(cx, &_jsTarget);
+            CC_SAFE_DELETE(_callback);
         }
-        
-        JS::RemoveObjectRoot(cx, &_jsFunc);
 
         for (auto iter = _jsNativeTargetMap.begin(); iter != _jsNativeTargetMap.end(); ++iter)
         {
@@ -604,36 +600,26 @@ public:
             return;
         }
         
+        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+        
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
         int arg1 = (int)event;
         dataVal[1] = INT_TO_JSVAL(arg1);
-
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
         JS::RootedValue jsRet(cx);
-
-        ScriptingCore::getInstance()->executeJSFunctionWithThisObj(JS::RootedValue(cx, OBJECT_TO_JSVAL(_jsTarget)), JS::RootedValue(cx, OBJECT_TO_JSVAL(_jsFunc)), JS::HandleValueArray::fromMarkedLocation(2, dataVal), &jsRet);
-    }
-    
-    void setJSTarget(JSObject* pJSTarget)
-    {
-        _jsTarget = pJSTarget;
         
-        js_proxy_t* p = jsb_get_js_proxy(_jsTarget);
-        if (!p)
-        {
-            JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-            JS::AddNamedObjectRoot(cx, &_jsTarget, "JSB_ControlButtonTarget, target");
-            _needUnroot = true;
-        }
+        _callback->invoke(2, dataVal, &jsRet);
     }
     
-    void setJSAction(JSObject* jsFunc)
+    void setJSCallback(jsval jsFunc, JSObject* jsTarget)
     {
-        _jsFunc = jsFunc;
-
+        if (_callback != nullptr)
+        {
+            CC_SAFE_DELETE(_callback);
+        }
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::AddNamedObjectRoot(cx, &_jsFunc, "JSB_ControlButtonTarget, func");
+        _callback = new JSFunctionWrapper(cx, jsTarget, jsFunc);
+        _jsFunc = jsFunc.toObjectOrNull();
     }
     
     void setEventType(Control::EventType type)
@@ -643,10 +629,10 @@ public:
 public:
     
     static std::multimap<JSObject*, JSB_ControlButtonTarget*> _jsNativeTargetMap;
-    JS::Heap<JSObject*> _jsFunc;
+    JSFunctionWrapper *_callback;
     Control::EventType _type;
+    JSObject *_jsFunc;
 private:
-    JS::Heap<JSObject*> _jsTarget;
     bool _needUnroot;
 };
 
@@ -684,8 +670,7 @@ static bool js_cocos2dx_CCControl_addTargetWithActionForControlEvents(JSContext 
         // save the delegate
         JSB_ControlButtonTarget* nativeDelegate = new JSB_ControlButtonTarget();
         
-        nativeDelegate->setJSTarget(jsDelegate);
-        nativeDelegate->setJSAction(jsFunc);
+        nativeDelegate->setJSCallback(args.get(1), jsDelegate);
         nativeDelegate->setEventType(arg2);
 
         __Array* nativeDelegateArray = static_cast<__Array*>(cobj->getUserObject());
@@ -879,39 +864,9 @@ bool js_cocos2dx_ext_AssetsManager_getFailedAssets(JSContext *cx, uint32_t argc,
 }
 */
 
-bool js_cocos2dx_ext_retain(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ((Ref *)proxy->ptr)->retain();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
-}
-
-bool js_cocos2dx_ext_release(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ((Ref *)proxy->ptr)->release();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
-}
-
-
 __JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
 : _cx(cx)
 , _url(url)
-, _buffer(nullptr)
 {
     _obj.construct(_cx);
     _obj.ref().set(obj);
@@ -923,10 +878,8 @@ __JSDownloaderDelegator::~__JSDownloaderDelegator()
 {
     _obj.destroyIfConstructed();
     _jsCallback.destroyIfConstructed();
-    if (_buffer != nullptr)
-        free(_buffer);
-    _downloader->setErrorCallback(nullptr);
-    _downloader->setSuccessCallback(nullptr);
+    _downloader->onTaskError = (nullptr);
+    _downloader->onDataTaskSuccess = (nullptr);
 }
 
 __JSDownloaderDelegator *__JSDownloaderDelegator::create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
@@ -938,24 +891,46 @@ __JSDownloaderDelegator *__JSDownloaderDelegator::create(JSContext *cx, JS::Hand
 
 void __JSDownloaderDelegator::startDownload()
 {
-    if (Director::getInstance()->getTextureCache()->getTextureForKey(_url))
+    if (auto texture = Director::getInstance()->getTextureCache()->getTextureForKey(_url))
     {
-        onSuccess(nullptr, nullptr, nullptr);
+        onSuccess(texture);
     }
     else
     {
-        _downloader = std::make_shared<cocos2d::extension::Downloader>();
-        _downloader->setConnectionTimeout(8);
-        _downloader->setErrorCallback( std::bind(&__JSDownloaderDelegator::onError, this, std::placeholders::_1) );
-        _downloader->setSuccessCallback( std::bind(&__JSDownloaderDelegator::onSuccess, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3) );
+        _downloader = std::make_shared<cocos2d::network::Downloader>();
+//        _downloader->setConnectionTimeout(8);
+        _downloader->onTaskError = [this](const cocos2d::network::DownloadTask& task,
+                                          int errorCode,
+                                          int errorCodeInternal,
+                                          const std::string& errorStr)
+        {
+            this->onError();
+        };
         
-        cocos2d::extension::Downloader::HeaderInfo info = _downloader->getHeader(_url);
-        long contentSize = info.contentSize;
-        if (contentSize > 0 && info.responseCode < 400) {
-            _size = contentSize / sizeof(unsigned char);
-            _buffer = (unsigned char*)malloc(contentSize);
-            _downloader->downloadToBufferSync(_url, _buffer, _size);
-        }
+        _downloader->onDataTaskSuccess = [this](const cocos2d::network::DownloadTask& task,
+                                                std::vector<unsigned char>& data)
+        {
+            Image img;
+            Texture2D *tex = nullptr;
+            do
+            {
+                if (false == img.initWithImageData(data.data(), data.size()))
+                {
+                    break;
+                }
+                tex = Director::getInstance()->getTextureCache()->addImage(&img, _url);
+            } while (0);
+            if (tex)
+            {
+                this->onSuccess(tex);
+            }
+            else
+            {
+                this->onError();
+            }
+        };
+        
+        _downloader->createDownloadDataTask(_url);
     }
 }
 
@@ -972,7 +947,7 @@ void __JSDownloaderDelegator::downloadAsync()
     t.detach();
 }
 
-void __JSDownloaderDelegator::onError(const cocos2d::extension::Downloader::Error &error)
+void __JSDownloaderDelegator::onError()
 {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
     {
@@ -989,22 +964,10 @@ void __JSDownloaderDelegator::onError(const cocos2d::extension::Downloader::Erro
     });
 }
 
-void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId)
+void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
 {
-    Image *image = new Image();
-    cocos2d::TextureCache *cache = Director::getInstance()->getTextureCache();
-    
-    Texture2D *tex = cache->getTextureForKey(_url);
-    if (!tex)
-    {
-        if (image->initWithImageData(_buffer, _size))
-        {
-            tex = Director::getInstance()->getTextureCache()->addImage(image, _url);
-        }
-    }
-    image->release();
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
+    CCASSERT(tex, "__JSDownloaderDelegator::onSuccess must make sure tex not null!");
+    //Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
     {
         JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
         JSAutoCompartment ac(_cx, global);
@@ -1037,7 +1000,7 @@ void __JSDownloaderDelegator::onSuccess(const std::string &srcUrl, const std::st
             JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(2, valArr), &retval);
         }
         release();
-    });
+    }//);
 }
 
 // jsb.loadRemoteImg(url, function(succeed, result) {})
@@ -1077,11 +1040,11 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     get_or_create_js_obj(cx, global, "cc", &ccObj);
     
     JS::RootedObject am(cx, jsb_cocos2d_extension_AssetsManagerEx_prototype); 
-    JS_DefineFunction(cx, am, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, am, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, am, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, am, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS::RootedObject manifest(cx, jsb_cocos2d_extension_Manifest_prototype); 
-    JS_DefineFunction(cx, manifest, "retain", js_cocos2dx_ext_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, manifest, "release", js_cocos2dx_ext_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, manifest, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, manifest, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "updateAssets", js_cocos2dx_ext_AssetsManager_updateAssets, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     //JS_DefineFunction(cx, jsb_cocos2d_extension_AssetsManager_prototype, "getFailedAssets", js_cocos2dx_ext_AssetsManager_getFailedAssets, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);

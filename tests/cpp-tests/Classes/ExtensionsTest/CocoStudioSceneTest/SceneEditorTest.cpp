@@ -32,8 +32,8 @@ bool SceneEditorTestBase::init()
         _isCsbLoad = false;
         _loadtypelb = cocos2d::Label::createWithSystemFont(_loadtypeStr[0], "Arial", 12);
         // #endif        
-        MenuItemLabel* itemlb = CCMenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestBase::changeLoadTypeCallback, this));
-        Menu* loadtypemenu = CCMenu::create(itemlb, nullptr);
+        MenuItemLabel* itemlb = MenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestBase::changeLoadTypeCallback, this));
+        Menu* loadtypemenu = Menu::create(itemlb, nullptr);
         loadtypemenu->setPosition(Point(VisibleRect::rightTop().x - 50, VisibleRect::rightTop().y - 20));
         addChild(loadtypemenu, 100);
 
@@ -188,8 +188,8 @@ cocos2d::Node* SpriteComponentTest::createGameScene()
 
 void SpriteComponentTest::defaultPlay()
 {
-	ActionInterval*  action1 = CCBlink::create(2, 10);
-	ActionInterval*  action2 = CCBlink::create(2, 5);
+	ActionInterval*  action1 = Blink::create(2, 10);
+	ActionInterval*  action2 = Blink::create(2, 5);
 
 	ComRender *pSister1 = static_cast<ComRender*>(_rootNode->getChildByTag(10003)->getComponent("CCSprite"));
 	pSister1->getNode()->runAction(action1);
@@ -309,10 +309,10 @@ void UIComponentTest::touchEvent(Ref *pSender, ui::Widget::TouchEventType type)
         case ui::Widget::TouchEventType::BEGAN:
 		{
 			ComRender *pBlowFish = static_cast<ComRender*>(_rootNode->getChildByTag(10010)->getComponent("CCArmature"));
-			pBlowFish->getNode()->runAction(CCMoveBy::create(10.0f, Vec2(-1000.0f, 0)));
+			pBlowFish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 
 			ComRender *pButterflyfish = static_cast<ComRender*>(_rootNode->getChildByTag(10011)->getComponent("CCArmature"));
-			pButterflyfish->getNode()->runAction(CCMoveBy::create(10.0f, Vec2(-1000.0f, 0)));
+			pButterflyfish->getNode()->runAction(MoveBy::create(10.0f, Vec2(-1000.0f, 0)));
 		}
 		break;
 	default:
@@ -379,17 +379,17 @@ cocos2d::Node* TmxMapComponentTest::createGameScene()
 void TmxMapComponentTest::defaultPlay()
 {
 	ComRender *tmxMap = static_cast<ComRender*>(_rootNode->getChildByTag(10015)->getComponent("CCTMXTiledMap"));
-	ActionInterval *actionTo = CCSkewTo::create(2, 0.f, 2.f);
-	ActionInterval *rotateTo = CCRotateTo::create(2, 61.0f);
-	ActionInterval *actionScaleTo = CCScaleTo::create(2, -0.44f, 0.47f);
+	ActionInterval *actionTo = SkewTo::create(2, 0.f, 2.f);
+	ActionInterval *rotateTo = RotateTo::create(2, 61.0f);
+	ActionInterval *actionScaleTo = ScaleTo::create(2, -0.44f, 0.47f);
 
-	ActionInterval *actionScaleToBack = CCScaleTo::create(2, 1.0f, 1.0f);
-	ActionInterval *rotateToBack = CCRotateTo::create(2, 0);
-	ActionInterval *actionToBack = CCSkewTo::create(2, 0, 0);
+	ActionInterval *actionScaleToBack = ScaleTo::create(2, 1.0f, 1.0f);
+	ActionInterval *rotateToBack = RotateTo::create(2, 0);
+	ActionInterval *actionToBack = SkewTo::create(2, 0, 0);
 
-	tmxMap->getNode()->runAction(CCSequence::create(actionTo, actionToBack, nullptr));
-	tmxMap->getNode()->runAction(CCSequence::create(rotateTo, rotateToBack, nullptr));
-	tmxMap->getNode()->runAction(CCSequence::create(actionScaleTo, actionScaleToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionTo, actionToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(rotateTo, rotateToBack, nullptr));
+	tmxMap->getNode()->runAction(Sequence::create(actionScaleTo, actionScaleToBack, nullptr));
 }
 
 ParticleComponentTest::ParticleComponentTest()
@@ -441,8 +441,8 @@ cocos2d::Node* ParticleComponentTest::createGameScene()
 void ParticleComponentTest::defaultPlay()
 {
 	ComRender* Particle = static_cast<ComRender*>(_rootNode->getChildByTag(10020)->getComponent("CCParticleSystemQuad"));
-	ActionInterval*  jump = CCJumpBy::create(5, Point(-500,0), 50, 4);
-	FiniteTimeAction*  action = CCSequence::create( jump, jump->reverse(), nullptr);
+	ActionInterval*  jump = JumpBy::create(5, Point(-500,0), 50, 4);
+	FiniteTimeAction*  action = Sequence::create( jump, jump->reverse(), nullptr);
 	Particle->getNode()->runAction(action);
 }
 
@@ -531,17 +531,17 @@ std::string BackgroundComponentTest::title() const
 void BackgroundComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void BackgroundComponentTest::onExit()
 {
-	ArmatureDataManager::destroyInstance();
+    ArmatureDataManager::destroyInstance();
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
@@ -550,20 +550,20 @@ void BackgroundComponentTest::onExit()
 
 cocos2d::Node* BackgroundComponentTest::createGameScene()
 {
-	_filePath = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
+    _filePath = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
-	defaultPlay();
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
+    defaultPlay();
     return _rootNode;
 }
 
 void BackgroundComponentTest::defaultPlay()
 {
-	ComAudio *Audio = static_cast<ComAudio*>(_rootNode->getComponent("CCBackgroundAudio"));
-	Audio->playBackgroundMusic();
+    ComAudio *Audio = static_cast<ComAudio*>(_rootNode->getComponent("CCBackgroundAudio"));
+    Audio->playBackgroundMusic();
 }
 
 
@@ -584,13 +584,13 @@ std::string AttributeComponentTest::title() const
 void AttributeComponentTest::onEnter()
 {
     SceneEditorTestBase::onEnter();
-	do 
-	{
+    do
+    {
         Node *root = createGameScene();
         CC_BREAK_IF(!root);
-		defaultPlay();
+        defaultPlay();
         this->addChild(root, 0, 1);
-	} while (0);
+    } while (0);
 }
 
 void AttributeComponentTest::onExit()
@@ -604,33 +604,33 @@ void AttributeComponentTest::onExit()
 
 bool AttributeComponentTest::initData()
 {
-	bool bRet = false;
-	rapidjson::Document doc;
-	do {
-		CC_BREAK_IF(_rootNode == nullptr);
-		ComAttribute *attribute = static_cast<ComAttribute*>(_rootNode->getChildByTag(10015)->getComponent("CCComAttribute"));
-		CC_BREAK_IF(attribute == nullptr);
-		log("Name: %s, HP: %f, MP: %f", attribute->getString("name").c_str(), attribute->getFloat("maxHP"), attribute->getFloat("maxMP"));
+    bool bRet = false;
+    rapidjson::Document doc;
+    do {
+        CC_BREAK_IF(_rootNode == nullptr);
+        ComAttribute *attribute = static_cast<ComAttribute*>(_rootNode->getChildByTag(10015)->getComponent("CCComAttribute"));
+        CC_BREAK_IF(attribute == nullptr);
+        log("Name: %s, HP: %f, MP: %f", attribute->getString("name").c_str(), attribute->getFloat("maxHP"), attribute->getFloat("maxMP"));
 
-		bRet = true;
-	} while (0);
-	return bRet;
+        bRet = true;
+    } while (0);
+    return bRet;
 }
 
 cocos2d::Node* AttributeComponentTest::createGameScene()
 {
-	_filePath = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
+    _filePath = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
     return _rootNode;
 }
 
 void AttributeComponentTest::defaultPlay()
 {
-	initData();
+    initData();
 }
 
 TriggerTest::TriggerTest()
@@ -652,7 +652,7 @@ std::string TriggerTest::title() const
 // on "init" you need to initialize your instance
 void TriggerTest::onEnter()
 {
-	SceneEditorTestBase::onEnter();
+    SceneEditorTestBase::onEnter();
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
     this->schedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
@@ -670,12 +670,12 @@ void TriggerTest::onEnter()
 
 void TriggerTest::onExit()
 {
-	sendEvent(TRIGGEREVENT_LEAVESCENE);
+    sendEvent(TRIGGEREVENT_LEAVESCENE);
     this->unschedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);
-	ArmatureDataManager::destroyInstance();
+    ArmatureDataManager::destroyInstance();
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
@@ -711,14 +711,14 @@ void TriggerTest::gameLogic(float dt)
 
 cocos2d::Node* TriggerTest::createGameScene()
 {
-	_filePath = "scenetest/TriggerTest/TriggerTest.json";
+    _filePath = "scenetest/TriggerTest/TriggerTest.json";
     _rootNode = SceneReader::getInstance()->createNodeWithSceneFile(_filePath.c_str());
-	if (_rootNode == nullptr)
-	{
-		return nullptr;
-	}
+    if (_rootNode == nullptr)
+    {
+        return nullptr;
+    }
     
-	defaultPlay();
+    defaultPlay();
     return _rootNode;
 }
 void TriggerTest::defaultPlay()

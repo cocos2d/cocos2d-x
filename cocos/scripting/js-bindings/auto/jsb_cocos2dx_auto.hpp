@@ -5,7 +5,6 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 
-
 extern JSClass  *jsb_cocos2d_Texture2D_class;
 extern JSObject *jsb_cocos2d_Texture2D_prototype;
 
@@ -85,6 +84,37 @@ bool js_cocos2dx_EventTouch_getEventCode(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_EventTouch_setEventCode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_EventTouch_EventTouch(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_ComponentContainer_class;
+extern JSObject *jsb_cocos2d_ComponentContainer_prototype;
+
+bool js_cocos2dx_ComponentContainer_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ComponentContainer_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ComponentContainer(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ComponentContainer_visit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_remove(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_removeAll(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_add(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_isEmpty(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ComponentContainer_get(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_Component_class;
+extern JSObject *jsb_cocos2d_Component_prototype;
+
+bool js_cocos2dx_Component_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Component_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Component_Component(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Node_class;
 extern JSObject *jsb_cocos2d_Node_prototype;
 
@@ -94,9 +124,7 @@ void js_register_cocos2dx_Node(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Node_addChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeComponent(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_setPhysicsBody(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_updateTransformFromPhysics(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getDescription(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCascadeOpacityEnabled(JSContext *cx, uint32_t argc, jsval *vp);
@@ -113,13 +141,11 @@ bool js_cocos2dx_Node_setScaleY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_removeFromPhysicsWorld(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeAllComponents(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCameraMask(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getonEnterTransitionDidFinishCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNodeToWorldAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getPosition3D(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeChild(JSContext *cx, uint32_t argc, jsval *vp);
@@ -128,6 +154,7 @@ bool js_cocos2dx_Node_getEventDispatcher(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Node_setSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setGLProgramState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_stopActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
@@ -142,7 +169,7 @@ bool js_cocos2dx_Node_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNodeToParentAffineTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertTouchToNodeSpaceAR(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getPhysicsBody(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Node_isOpacityModifyRGB(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_reorderChild(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_ignoreAnchorPointForPosition(JSContext *cx, uint32_t argc, jsval *vp);
@@ -177,7 +204,6 @@ bool js_cocos2dx_Node_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setRotationSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setRotationSkewY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_updatePhysicsBodyTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getDisplayedOpacity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getScheduler(JSContext *cx, uint32_t argc, jsval *vp);
@@ -206,7 +232,6 @@ bool js_cocos2dx_Node_getScaleX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setCascadeColorEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setOpacity(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getComponent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getContentSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_stopAllActionsByTag(JSContext *cx, uint32_t argc, jsval *vp);
@@ -254,6 +279,7 @@ bool js_cocos2dx_Scene_setCameraOrderDirty(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_Scene_render(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_stepPhysicsAndNavigation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_onProjectionChanged(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Scene_getPhysicsManager(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_initWithSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Scene_createWithSize(JSContext *cx, uint32_t argc, jsval *vp);
@@ -411,8 +437,10 @@ bool js_cocos2dx_Action_getOriginalTarget(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_Action_stop(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_update(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_getTarget(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Action_getFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_step(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_setTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Action_setFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_getTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Action_isDone(JSContext *cx, uint32_t argc, jsval *vp);
@@ -811,8 +839,9 @@ bool js_cocos2dx_Animate_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_Animate_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Animate(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animate_initWithAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Animate_getAnimation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Animate_getCurrentFrameIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animate_setAnimation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animate_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Animate_Animate(JSContext *cx, uint32_t argc, jsval *vp);
@@ -927,17 +956,21 @@ bool js_cocos2dx_FileUtils_getValueVectorFromFile(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_FileUtils_getSearchPaths(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_writeToFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_getValueMapFromFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_FileUtils_getFileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_getValueMapFromData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_removeDirectory(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_FileUtils_getFileSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_FileUtils_writeStringToFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_setSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_addSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_addSearchPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_FileUtils_writeValueVectorToFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_isFileExist(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_purgeCachedEntries(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_fullPathFromRelativeFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_getSuitableFOpen(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_FileUtils_writeValueMapToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_FileUtils_getFileExtension(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_setWritablePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_setPopupNotify(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_isDirectoryExist(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1670,6 +1703,7 @@ bool js_cocos2dx_Grid3DAction_constructor(JSContext *cx, uint32_t argc, jsval *v
 void js_cocos2dx_Grid3DAction_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Grid3DAction(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_Grid3DAction_getGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_TiledGrid3DAction_class;
 extern JSObject *jsb_cocos2d_TiledGrid3DAction_prototype;
@@ -1837,6 +1871,7 @@ void js_register_cocos2dx_ActionManager(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_ActionManager_getActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_removeActionByTag(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ActionManager_removeActionsByFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_removeAllActions(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_addAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ActionManager_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2123,6 +2158,7 @@ bool js_cocos2dx_DrawNode_drawLine(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawPoints(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawSolidCircle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_DrawNode_setLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_onDrawGLPoint(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawDot(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_drawCatmullRom(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2144,36 +2180,6 @@ bool js_cocos2dx_DrawNode_drawCubicBezier(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_DrawNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_DrawNode_DrawNode(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_SpriteBatchNode_class;
-extern JSObject *jsb_cocos2d_SpriteBatchNode_prototype;
-
-bool js_cocos2dx_SpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_SpriteBatchNode_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_SpriteBatchNode(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_SpriteBatchNode_appendChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_reorderBatch(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_initWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_getTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_insertQuadFromSprite(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_setTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpriteBatchNode_SpriteBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_cocos2d_Label_class;
 extern JSObject *jsb_cocos2d_Label_prototype;
 
@@ -2188,6 +2194,7 @@ bool js_cocos2dx_Label_getString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_disableEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getTextColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2203,6 +2210,7 @@ bool js_cocos2dx_Label_setLineBreakWithoutSpace(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_Label_getStringNumLines(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_enableOutline(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getAdditionalKerning(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setCharMap(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getDimensions(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2218,6 +2226,7 @@ bool js_cocos2dx_Label_enableGlow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getLetter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setAdditionalKerning(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getSystemFontSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getTextAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getBMFontFilePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2527,6 +2536,7 @@ void js_register_cocos2dx_NodeGrid(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_NodeGrid_setTarget(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_getGrid(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_NodeGrid_getGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_NodeGrid_NodeGrid(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -2861,6 +2871,31 @@ bool js_cocos2dx_ProtectedNode_removeAllProtectedChildren(JSContext *cx, uint32_
 bool js_cocos2dx_ProtectedNode_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ProtectedNode_ProtectedNode(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_Image_class;
+extern JSObject *jsb_cocos2d_Image_prototype;
+
+bool js_cocos2dx_Image_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_Image_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_Image(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_Image_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getDataLen(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_hasAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_initWithImageFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getFileType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getNumberOfMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getRenderFormat(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Sprite_class;
 extern JSObject *jsb_cocos2d_Sprite_prototype;
 
@@ -2900,36 +2935,7 @@ bool js_cocos2dx_Sprite_initWithSpriteFrame(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_Sprite_isFlippedX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_isFlippedY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_setVertexRect(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_createWithSpriteFrameName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Sprite_createWithSpriteFrame(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Sprite_Sprite(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_Image_class;
-extern JSObject *jsb_cocos2d_Image_prototype;
-
-bool js_cocos2dx_Image_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_Image_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_Image(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_Image_hasPremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getDataLen(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_hasAlpha(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_isCompressed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_initWithImageFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getBitPerPixel(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getFileType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getNumberOfMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getRenderFormat(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getData(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_getMipmaps(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_initWithRawData(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_setPVRImagesHavePremultipliedAlpha(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Image_Image(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_RenderTexture_class;
 extern JSObject *jsb_cocos2d_RenderTexture_prototype;
@@ -3362,8 +3368,10 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Camera_getDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_applyViewport(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_setBackgroundBrush(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_apply(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_getBackgroundBrush(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getDepthInView(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_clearBackground(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3384,6 +3392,7 @@ bool js_cocos2dx_Camera_setCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getFarPlane(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_applyFrameBufferObject(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setFrameBufferObject(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_isViewProjectionUpdated(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_initPerspective(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_createOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getVisitingCamera(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3394,6 +3403,55 @@ bool js_cocos2dx_Camera_setDefaultViewport(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_Camera_getDefaultCamera(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_Camera(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_CameraBackgroundBrush_class;
+extern JSObject *jsb_cocos2d_CameraBackgroundBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CameraBackgroundBrush_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CameraBackgroundBrush(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_CameraBackgroundBrush_getBrushType(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_drawBackground(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_createSkyboxBrush(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_createColorBrush(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_createNoneBrush(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_createDepthBrush(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundBrush_CameraBackgroundBrush(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_CameraBackgroundDepthBrush_class;
+extern JSObject *jsb_cocos2d_CameraBackgroundDepthBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundDepthBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CameraBackgroundDepthBrush_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CameraBackgroundDepthBrush(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_CameraBackgroundDepthBrush_setDepth(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundDepthBrush_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundDepthBrush_CameraBackgroundDepthBrush(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_CameraBackgroundColorBrush_class;
+extern JSObject *jsb_cocos2d_CameraBackgroundColorBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundColorBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CameraBackgroundColorBrush_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CameraBackgroundColorBrush(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_CameraBackgroundColorBrush_setColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundColorBrush_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundColorBrush_CameraBackgroundColorBrush(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_CameraBackgroundSkyBoxBrush_class;
+extern JSObject *jsb_cocos2d_CameraBackgroundSkyBoxBrush_prototype;
+
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_CameraBackgroundSkyBoxBrush_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_CameraBackgroundSkyBoxBrush(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_setTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_CameraBackgroundSkyBoxBrush_CameraBackgroundSkyBoxBrush(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_GridBase_class;
 extern JSObject *jsb_cocos2d_GridBase_prototype;
 
@@ -3402,7 +3460,9 @@ void js_cocos2dx_GridBase_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_GridBase(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_GridBase_setGridSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GridBase_setGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_afterBlit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GridBase_getGridRect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_afterDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_beforeDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GridBase_calculateVertexPoints(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3556,10 +3616,11 @@ bool js_cocos2dx_GLProgramCache_constructor(JSContext *cx, uint32_t argc, jsval 
 void js_cocos2dx_GLProgramCache_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_GLProgramCache(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgramCache_addGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_GLProgramCache_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramCache_loadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramCache_reloadDefaultGLProgramsRelativeToLights(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramCache_addGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramCache_reloadDefaultGLPrograms(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_GLProgramCache_getGLProgram(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_GLProgramCache_GLProgramCache(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3577,6 +3638,7 @@ bool js_cocos2dx_RenderState_getTexture(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_RenderState_bind(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getStateBlock(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_RenderState_setParent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_initialize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_finalize(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -3665,8 +3727,9 @@ void js_cocos2dx_Device_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_Device(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_Device_setAccelerometerEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Device_setKeepScreenOn(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Device_setAccelerometerInterval(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Device_setKeepScreenOn(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Device_vibrate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Device_getDPI(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_SAXParser_class;
@@ -3706,6 +3769,36 @@ bool js_cocos2dx_AnimationCache_addAnimationsWithFile(JSContext *cx, uint32_t ar
 bool js_cocos2dx_AnimationCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_AnimationCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_AnimationCache_AnimationCache(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_SpriteBatchNode_class;
+extern JSObject *jsb_cocos2d_SpriteBatchNode_prototype;
+
+bool js_cocos2dx_SpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_SpriteBatchNode_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_SpriteBatchNode(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_SpriteBatchNode_appendChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_reorderBatch(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_initWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_atlasIndexForChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_setTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_getTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_increaseAtlasCapacity(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_getTextureAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_insertQuadFromSprite(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_setTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_removeChildAtIndex(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpriteBatchNode_SpriteBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_SpriteFrameCache_class;
 extern JSObject *jsb_cocos2d_SpriteFrameCache_prototype;
@@ -3921,37 +4014,6 @@ bool js_cocos2dx_TileMapAtlas_setTGAInfo(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_TileMapAtlas_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TileMapAtlas_TileMapAtlas(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_Component_class;
-extern JSObject *jsb_cocos2d_Component_prototype;
-
-bool js_cocos2dx_Component_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_Component_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_Component_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_setName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_getOwner(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_Component(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_ComponentContainer_class;
-extern JSObject *jsb_cocos2d_ComponentContainer_prototype;
-
-bool js_cocos2dx_ComponentContainer_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_ComponentContainer_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_ComponentContainer(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_ComponentContainer_visit(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ComponentContainer_remove(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ComponentContainer_removeAll(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ComponentContainer_add(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ComponentContainer_isEmpty(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ComponentContainer_get(JSContext *cx, uint32_t argc, jsval *vp);
-
 extern JSClass  *jsb_CocosDenshion_SimpleAudioEngine_class;
 extern JSObject *jsb_CocosDenshion_SimpleAudioEngine_prototype;
 
@@ -3982,19 +4044,5 @@ bool js_cocos2dx_SimpleAudioEngine_unloadEffect(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_SpritePolygonCache_class;
-extern JSObject *jsb_cocos2d_SpritePolygonCache_prototype;
-
-bool js_cocos2dx_SpritePolygonCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_SpritePolygonCache_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_SpritePolygonCache(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_printInfo(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_SpritePolygonCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_h__

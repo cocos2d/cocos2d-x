@@ -442,6 +442,7 @@ Material* Material::clone() const
         for (const auto& technique: _techniques)
         {
             auto t = technique->clone();
+            t->_parent = material;
             material->_techniques.pushBack(t);
         }
 

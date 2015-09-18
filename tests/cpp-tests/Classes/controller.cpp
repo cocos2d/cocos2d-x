@@ -6,10 +6,13 @@
 
 USING_NS_CC;
 
-#define TEST_TIME_OUT 25
+#define TEST_TIME_OUT 50
 #define CREATE_TIME_OUT 25
 #define LOG_INDENTATION "  "
 #define LOG_TAG "[TestController]"
+
+static void initCrashCatch();
+static void disableCrashCatch();
 
 class RootTests : public TestList
 {
@@ -37,10 +40,17 @@ public:
         addTest("Console", []() { return new ConsoleTests(); });
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
         // Window 10 UWP does not yet support CURL
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+        // android and ios don't use CURL
         addTest("Curl", []() { return new CurlTests(); });
+#endif
 #endif
         addTest("Current Language", []() { return new CurrentLanguageTests(); });
         addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
+        // Window 10 UWP does not yet support CURL
+        addTest("Downloader Test", []() { return new DownloaderTests(); });
+#endif
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
         addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
         addTest("Effects - Basic", [](){return new EffectTests(); });
@@ -64,8 +74,10 @@ public:
         addTest("Node: Parallax", [](){return new ParallaxTests(); });
         addTest("Node: Particles", [](){return new ParticleTests(); });
         addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
+#if CC_USE_PHYSICS
         addTest("Node: Physics", []() { return new PhysicsTests(); });
-        addTest( "Node: Physics3D", []() { return new Physics3DTests(); } );
+#endif
+        addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
         addTest("Node: Scene", [](){return new SceneTests(); });
         addTest("Node: Spine", [](){return new SpineTests(); });
@@ -79,11 +91,10 @@ public:
         addTest("Node: UI", [](){  return new UITests(); });
         addTest("Mouse", []() { return new MouseTests(); });
         addTest("MultiTouch", []() { return new MutiTouchTests(); });
-        addTest("Performance tests", []() { return new PerformanceTests(); });
         addTest("Renderer", []() { return new NewRendererTests(); });
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });
-        addTest("Scheduler", [](){return new SchedulerTests(); });//!!!!!!
+        addTest("Scheduler", [](){return new SchedulerTests(); });
         addTest("Shader - Basic", []() { return new ShaderTests(); });
         addTest("Shader - Sprite", []() { return new Shader2Tests(); });
         addTest("Texture2D", [](){return new Texture2DTests(); });
@@ -94,6 +105,7 @@ public:
         addTest("Unit Test", []() { return new UnitTests(); });
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
+        addTest("Vibrate", []() { return new VibrateTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
     }
 };
@@ -128,7 +140,7 @@ void TestController::startAutoTest()
     {
         _stopAutoTest = false;
         _logIndentation = "";
-        _autoTestThread = std::thread(&TestController::traverseTestList, this, _rootTestList);
+        _autoTestThread = std::thread(&TestController::traverseThreadFunc, this);
         _autoTestThread.detach();
     }
 }
@@ -143,18 +155,25 @@ void TestController::stopAutoTest()
     }
 }
 
+void TestController::traverseThreadFunc()
+{
+    std::mutex sleepMutex;
+    auto lock = std::unique_lock<std::mutex>(sleepMutex);
+    _sleepUniqueLock = &lock;
+    traverseTestList(_rootTestList);
+    _sleepUniqueLock = nullptr;
+}
+
 void TestController::traverseTestList(TestList* testList)
 {
     if (testList == _rootTestList)
     {
-        _sleepUniqueLock = std::unique_lock<std::mutex>(_sleepMutex);
-        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
-        //disable touch
+        _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(500));
     }
     else
     {
         _logIndentation += LOG_INDENTATION;
-        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+        _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(500));
     }
     logEx("%s%sBegin traverse TestList:%s", LOG_TAG, _logIndentation.c_str(), testList->getTestName().c_str());
 
@@ -166,7 +185,7 @@ void TestController::traverseTestList(TestList* testList)
         while (_isRunInBackground)
         {
             logEx("_director is paused");
-            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+            _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(500));
         }
         if (callback)
         {
@@ -190,7 +209,6 @@ void TestController::traverseTestList(TestList* testList)
 
     if (testList == _rootTestList)
     {
-        _sleepUniqueLock.release();
         _stopAutoTest = true;
     }
     else
@@ -201,7 +219,7 @@ void TestController::traverseTestList(TestList* testList)
             scheduler->performFunctionInCocosThread([&](){
                 testList->_parentTest->runThisTest();
             });
-            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+            _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(500));
             testList->release();
         }
         
@@ -218,6 +236,7 @@ void TestController::traverseTestSuite(TestSuite* testSuite)
     logEx("%s%sBegin traverse TestSuite:%s", LOG_TAG, _logIndentation.c_str(), testSuite->getTestName().c_str());
 
     _logIndentation += LOG_INDENTATION;
+    testSuite->_currTestIndex = -1;
 
     auto logIndentation = _logIndentation;
     for (auto& callback : testSuite->_testCallbacks)
@@ -229,10 +248,11 @@ void TestController::traverseTestSuite(TestSuite* testSuite)
         TransitionScene* transitionScene = nullptr;
 
         if (_stopAutoTest) break;
+
         while (_isRunInBackground)
         {
             logEx("_director is paused");
-            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+            _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(500));
         }
         //Run test case in the cocos[GL] thread.
         scheduler->performFunctionInCocosThread([&, logIndentation, testName](){
@@ -255,6 +275,7 @@ void TestController::traverseTestSuite(TestSuite* testSuite)
                     testCase = (TestCase*)scene;
                     testCaseDuration = testCase->getDuration();
                 }
+                testSuite->_currTestIndex++;
                 testCase->setTestSuite(testSuite);
                 testCase->setTestCaseName(testName);
                 _director->replaceScene(scene);
@@ -269,7 +290,7 @@ void TestController::traverseTestSuite(TestSuite* testSuite)
         float waitTime = 0.0f;
         while (!testScene && !_stopAutoTest)
         {
-            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(50));
+            _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(50));
             if (!_isRunInBackground)
             {
                 waitTime += 0.05f;
@@ -286,14 +307,14 @@ void TestController::traverseTestSuite(TestSuite* testSuite)
         if (_stopAutoTest) break;
 
         //Wait for test completed.
-        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(int(1000 * testCaseDuration)));
+        _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(int(1000 * testCaseDuration)));
 
         if (transitionScene == nullptr)
         {
             waitTime = 0.0f;
             while (!_stopAutoTest && testCase->getRunTime() < testCaseDuration)
             {
-                _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(50));
+                _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(50));
                 if (!_isRunInBackground)
                 {
                     waitTime += 0.05f;
@@ -323,7 +344,7 @@ void TestController::traverseTestSuite(TestSuite* testSuite)
             parentTest->runThisTest();
         });
 
-        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(1000));
+        _sleepCondition.wait_for(*_sleepUniqueLock, std::chrono::milliseconds(1000));
         testSuite->release();
     }
 
@@ -367,16 +388,14 @@ bool TestController::checkTest(TestCase* testCase)
 
 void TestController::handleCrash()
 {
+    disableCrashCatch();
+
     logEx("%sCatch an crash event", LOG_TAG);
 
     if (!_stopAutoTest)
     {
         stopAutoTest();
     }
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-    exit(1);
-#endif
 }
 
 void TestController::onEnterBackground()
@@ -416,8 +435,6 @@ void TestController::logEx(const char * format, ...)
 
 static TestController* s_testController = nullptr;
 
-static void initCrashCatch();
-
 TestController* TestController::getInstance()
 {
     if (s_testController == nullptr)
@@ -438,6 +455,8 @@ void TestController::destroyInstance()
         delete s_testController;
         s_testController = nullptr;
     }
+
+    disableCrashCatch();
 }
 
 bool TestController::blockTouchBegan(Touch* touch, Event* event)
@@ -462,6 +481,10 @@ static long __stdcall windowExceptionFilter(_EXCEPTION_POINTERS* excp)
 static void initCrashCatch()
 {
     SetUnhandledExceptionFilter(windowExceptionFilter);
+}
+static void disableCrashCatch()
+{
+    SetUnhandledExceptionFilter(UnhandledExceptionFilter);
 }
 
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -499,8 +522,17 @@ static void signalHandler(int sig)
 
 static void initCrashCatch()
 {
-    for (auto sig : s_fatal_signals) {
+    for (auto sig : s_fatal_signals)
+    {
         signal(sig, signalHandler);
+    }
+}
+
+static void disableCrashCatch()
+{
+    for (auto sig : s_fatal_signals)
+    {
+        signal(sig, SIG_DFL);
     }
 }
 
@@ -508,7 +540,10 @@ static void initCrashCatch()
 
 static void initCrashCatch()
 {
+}
 
+static void disableCrashCatch()
+{
 }
 
 #endif

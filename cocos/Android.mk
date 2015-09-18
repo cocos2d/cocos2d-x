@@ -6,6 +6,10 @@ LOCAL_MODULE := cocos2dx_internal_static
 
 LOCAL_MODULE_FILENAME := libcocos2dxinternal
 
+ifeq ($(USE_ARM_MODE),1)
+LOCAL_ARM_MODE := arm
+endif
+
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 MATHNEONFILE := math/MathUtil.cpp.neon
 else
@@ -31,6 +35,7 @@ cocos2d.cpp \
 2d/CCAnimationCache.cpp \
 2d/CCAtlasNode.cpp \
 2d/CCCamera.cpp \
+2d/CCCameraBackgroundBrush.cpp \
 2d/CCClippingNode.cpp \
 2d/CCClippingRectangleNode.cpp \
 2d/CCComponent.cpp \
@@ -83,9 +88,7 @@ cocos2d.cpp \
 2d/CCTransitionPageTurn.cpp \
 2d/CCTransitionProgress.cpp \
 2d/CCTweenFunction.cpp \
-2d/MarchingSquare.cpp \
-2d/SpritePolygon.cpp \
-2d/SpritePolygonCache.cpp \
+2d/CCAutoPolygon.cpp \
 3d/CCFrustum.cpp \
 3d/CCPlane.cpp \
 platform/CCFileUtils.cpp \
@@ -178,6 +181,7 @@ renderer/CCTechnique.cpp \
 renderer/CCTexture2D.cpp \
 renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
+renderer/CCTextureCube.cpp \
 renderer/CCTrianglesCommand.cpp \
 renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
@@ -196,6 +200,8 @@ physics/CCPhysicsContact.cpp \
 physics/CCPhysicsJoint.cpp \
 physics/CCPhysicsShape.cpp \
 physics/CCPhysicsWorld.cpp \
+physics/CCComponentPhysics2d.cpp \
+physics/CCPhysicsManager.cpp \
 physics3d/CCPhysics3D.cpp \
 physics3d/CCPhysics3DWorld.cpp \
 physics3d/CCPhysics3DComponent.cpp \
@@ -221,7 +227,8 @@ navmesh/CCNavMeshUtils.cpp \
 ../external/poly2tri/sweep/advancing_front.cc \
 ../external/poly2tri/sweep/cdt.cc \
 ../external/poly2tri/sweep/sweep_context.cc \
-../external/poly2tri/sweep/sweep.cc
+../external/poly2tri/sweep/sweep.cc \
+../external/clipper/clipper.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
@@ -237,7 +244,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
-                    $(LOCAL_PATH)/../external/poly2tri/sweep
+                    $(LOCAL_PATH)/../external/poly2tri/sweep \
+                    $(LOCAL_PATH)/../external/clipper
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform \
@@ -251,7 +259,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
-                    $(LOCAL_PATH)/../external/poly2tri/sweep
+                    $(LOCAL_PATH)/../external/poly2tri/sweep \
+                    $(LOCAL_PATH)/../external/clipper
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -265,6 +274,7 @@ LOCAL_STATIC_LIBRARIES += cocos_webp_static
 LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
 LOCAL_STATIC_LIBRARIES += cocos_zlib_static
 LOCAL_STATIC_LIBRARIES += recast_static
+LOCAL_STATIC_LIBRARIES += bullet_static
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
@@ -290,7 +300,6 @@ LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
-LOCAL_STATIC_LIBRARIES += bullet_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
@@ -313,6 +322,6 @@ $(call import-module,extensions)
 $(call import-module,Box2D)
 $(call import-module,bullet)
 $(call import-module,recast)
-$(call import-module,curl/prebuilt/android)
+# $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)

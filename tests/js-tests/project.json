@@ -31,7 +31,6 @@
         "src/TouchesTest/Paddle.js",
         "src/TouchesTest/TouchesTest.js",
         "src/SchedulerTest/SchedulerTest.js",
-        "src/ClickAndMoveTest/ClickAndMoveTest.js",
         "src/MenuTest/MenuTest.js",
         "src/ActionsTest/ActionsTest.js",
         "src/TileMapTest/TileMapTest.js",
@@ -57,17 +56,7 @@
         "src/ActionManagerTest/ActionManagerTest.js",
         "src/EaseActionsTest/EaseActionsTest.js",
         "src/ParallaxTest/ParallaxTest.js",
-        "src/PerformanceTest/PerformanceTest.js",
-        "src/PerformanceTest/PerformanceSpriteTest.js",
-        "src/PerformanceTest/PerformanceSpriteTest2.js",
-        "src/PerformanceTest/PerformanceParticleTest.js",
-        "src/PerformanceTest/PerformanceNodeChildrenTest.js",
-        "src/PerformanceTest/PerformanceTextureTest.js",
-        "src/PerformanceTest/PerformanceAnimationTest.js",
-        "src/PerformanceTest/PerformanceVirtualMachineTest.js",
-        "src/PerformanceTest/seedrandom.js",
         "src/FontTest/FontTest.js",
-        "src/PerformanceTest/PerformanceTouchesTest.js",
         "src/LabelTest/LabelTest.js",
         "src/CurrentLanguageTest/CurrentLanguageTest.js",
         "src/TextInputTest/TextInputTest.js",
@@ -150,6 +139,7 @@
         "src/CocoStudioTest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.js",
         "src/CocoStudioTest/CustomTest/CustomImageScene/CustomImageScene.js",
         "src/CocoStudioTest/CustomTest/CustomGUIScene.js",
+        "src/CocoStudioTest/ActionTimelineTest/ActionTimelineTest.js",
         "src/GUITest/UIScene.js",
         "src/GUITest/UIButtonTest/UIButtonTest.js",
         "src/GUITest/UICheckBoxTest/UICheckBoxTest.js",
@@ -171,6 +161,7 @@
         "src/GUITest/UITextTest/UITextTest.js",
         "src/GUITest/UIVideoPlayerTest/UIVideoPlayerTest.js",
         "src/GUITest/UIWebViewTest/UIWebViewTest.js",
+        "src/GUITest/UIS9NinePatchTest/UIS9NinePatchTest.js",
 
         "src/CocoStudioTest/SceneTest/TriggerCode/Acts.js",
         "src/CocoStudioTest/SceneTest/TriggerCode/Cons.js",
@@ -189,6 +180,13 @@
         "src/SpritePolygonTest/SpritePolygonTest.js",
         "src/MaterialSystemTest/MaterialSystemTest.js",
         "src/TerrainTest/TerrainTest.js",
-        "src/Physics3DTest/Physics3DTest.js"
+        "src/Physics3DTest/Physics3DTest.js",
+        "src/NavMeshTest/NavMeshTest.js",
+        "src/VibrateTest/VibrateTest.js",
+
+        "src/NativeTest/NativeTest.js",
+        "src/NativeTest/FileUtils/FileUtilsTest.js",
+        "src/NativeTest/JSBExtendTest.js",
+        "src/NativeTest/AudioEngineTest.js"
     ]
 }

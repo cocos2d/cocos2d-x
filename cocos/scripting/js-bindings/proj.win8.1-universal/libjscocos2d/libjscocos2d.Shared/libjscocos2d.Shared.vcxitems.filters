@@ -8,6 +8,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_audioengine_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -122,17 +125,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.h">
-      <Filter>manual\experimental</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h">
       <Filter>manual\physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_manual.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.hpp">
+      <Filter>auto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +146,9 @@
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_audioengine_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_builder_auto.cpp">
@@ -235,17 +244,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.cpp">
-      <Filter>manual\experimental</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp">
       <Filter>manual\physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_conversions.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\navmesh\jsb_cocos2dx_navmesh_manual.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_navmesh_auto.cpp">
+      <Filter>auto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +302,9 @@
     </Filter>
     <Filter Include="manual\physics3d">
       <UniqueIdentifier>{511b128d-2604-48af-88e1-8cc0eba79e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\navmesh">
+      <UniqueIdentifier>{39b1e456-740e-4665-a251-5dc38687acf8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

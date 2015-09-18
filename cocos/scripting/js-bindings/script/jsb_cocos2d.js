@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.6";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.8";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -1276,194 +1276,6 @@ cc.defineGetterSetter(_proto, "ORANGE", _proto._getOrange);
 _proto.GRAY;
 cc.defineGetterSetter(_proto, "GRAY", _proto._getGray);
 
-
-/**
- * Associates a base class with a native superclass
- * @function
- * @param {object} jsobj subclass
- * @param {object} klass superclass
- */
-cc.associateWithNative = function( jsobj, superclass_or_instance ) {};
-
-//
-// JSB supports 2 official ways to create subclasses
-//
-// 1) Google "subclasses" borrowed from closure library
-// This is the recommended way to do it
-//
-cc.inherits = function (childCtor, parentCtor) {
-    /** @constructor */
-    function tempCtor() {};
-    tempCtor.prototype = parentCtor.prototype;
-    childCtor.superClass_ = parentCtor.prototype;
-    childCtor.prototype = new tempCtor();
-    childCtor.prototype.constructor = childCtor;
-
-    // Copy "static" method, but doesn't generate subclasses.
-//  for( var i in parentCtor ) {
-//      childCtor[ i ] = parentCtor[ i ];
-//  }
-};
-cc.base = function(me, opt_methodName, var_args) {
-    var caller = arguments.callee.caller;
-    if (caller.superClass_) {
-        // This is a constructor. Call the superclass constructor.
-        ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
-        return ret;
-    }
-
-    var args = Array.prototype.slice.call(arguments, 2);
-    var foundCaller = false;
-    for (var ctor = me.constructor;
-        ctor; ctor = ctor.superClass_ && ctor.superClass_.constructor) {
-        if (ctor.prototype[opt_methodName] === caller) {
-            foundCaller = true;
-        } else if (foundCaller) {
-            return ctor.prototype[opt_methodName].apply(me, args);
-        }
-    }
-
-    // If we did not find the caller in the prototype chain,
-    // then one of two things happened:
-    // 1) The caller is an instance method.
-    // 2) This method was not called by the right caller.
-    if (me[opt_methodName] === caller) {
-        return me.constructor.prototype[opt_methodName].apply(me, args);
-    } else {
-        throw Error(
-                    'cc.base called from a method of one name ' +
-                    'to a method of a different name');
-    }
-};
-
-
-var ClassManager = {
-    id : (0|(Math.random()*998)),
-
-    instanceId : (0|(Math.random()*998)),
-
-    getNewID : function(){
-        return this.id++;
-    },
-
-    getNewInstanceId : function(){
-        return this.instanceId++;
-    }
-};
-//
-// 2) Using "extend" subclassing
-// Simple JavaScript Inheritance By John Resig http://ejohn.org/
-//
-cc.Class = function(){};
-cc.Class.extend = function (prop) {
-    var _super = this.prototype;
-
-    // Instantiate a base class (but only create the instance,
-    // don't run the init constructor)
-    initializing = true;
-    var prototype = Object.create(_super);
-    initializing = false;
-    fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
-
-    // Copy the properties over onto the new prototype
-    for (var name in prop) {
-        // Check if we're overwriting an existing function
-        prototype[name] = typeof prop[name] == "function" &&
-            typeof _super[name] == "function" && fnTest.test(prop[name]) ?
-            (function (name, fn) {
-                return function () {
-                    var tmp = this._super;
-
-                    // Add a new ._super() method that is the same method
-                    // but on the super-class
-                    this._super = _super[name];
-
-                    // The method only need to be bound temporarily, so we
-                    // remove it when we're done executing
-                    var ret = fn.apply(this, arguments);
-                    this._super = tmp;
-
-                    return ret;
-                };
-            })(name, prop[name]) :
-            prop[name];
-    }
-
-    // The dummy class constructor
-    function Class() {
-        // All construction is actually done in the init method
-        if (!initializing) {
-            if (!this.ctor) {
-                if (this.__nativeObj)
-                    cc.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");
-            }
-            else {
-                this.ctor.apply(this, arguments);
-            }
-        }
-    }
-
-    var classId = ClassManager.getNewID();
-    ClassManager[classId] = _super;
-    var desc = { writable: true, enumerable: false, configurable: true };
-    Class.id = classId;
-    desc.value = classId;
-    Object.defineProperty(prototype, '__pid', desc);
-
-    // Populate our constructed prototype object
-    Class.prototype = prototype;
-
-    // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
-
-    // And make this class extendable
-    Class.extend = arguments.callee;
-
-    return Class;
-};
-
-cc.Node.extend = cc.Class.extend;
-cc.AtlasNode.extend = cc.Class.extend;
-cc.Layer.extend = cc.Class.extend;
-cc.LayerGradient.extend = cc.Class.extend;
-cc.LayerColor.extend = cc.Class.extend;
-cc.LayerMultiplex.extend = cc.Class.extend;
-cc.Sprite.extend = cc.Class.extend;
-cc.SpriteBatchNode.extend = cc.Class.extend;
-cc.SpriteFrame.extend = cc.Class.extend;
-cc.LabelTTF.extend = cc.Class.extend;
-cc.LabelBMFont.extend = cc.Class.extend;
-cc.LabelAtlas.extend = cc.Class.extend;
-cc.Menu.extend = cc.Class.extend;
-cc.MenuItem.extend = cc.Class.extend;
-cc.MenuItemLabel.extend = cc.Class.extend;
-cc.MenuItemFont.extend = cc.Class.extend;
-cc.MenuItemAtlasFont.extend = cc.Class.extend;
-cc.MenuItemSprite.extend = cc.Class.extend;
-cc.MenuItemImage.extend = cc.Class.extend;
-cc.MenuItemToggle.extend = cc.Class.extend;
-cc.Scene.extend = cc.Class.extend;
-cc.ClippingNode.extend = cc.Class.extend;
-cc.ProgressTimer.extend = cc.Class.extend;
-cc.ParallaxNode.extend = cc.Class.extend;
-cc.DrawNode.extend = cc.Class.extend;
-cc.Component.extend = cc.Class.extend;
-cc.GridBase.extend = cc.Class.extend;
-cc.Grid3D.extend = cc.Class.extend;
-cc.TiledGrid3D.extend = cc.Class.extend;
-cc.MotionStreak.extend = cc.Class.extend;
-cc.ParticleBatchNode.extend = cc.Class.extend;
-cc.ParticleSystem.extend = cc.Class.extend;
-cc.TextFieldTTF.extend = cc.Class.extend;
-cc.RenderTexture.extend = cc.Class.extend;
-cc.TileMapAtlas.extend = cc.Class.extend;
-cc.TMXLayer.extend = cc.Class.extend;
-cc.TMXTiledMap.extend = cc.Class.extend;
-cc.TMXMapInfo.extend = cc.Class.extend;
-cc.TransitionScene.extend = cc.Class.extend;
-cc.GLProgram.extend = cc.Class.extend;
-
-
 // Cocos2d-html5 supports multi scene resources preloading.
 // This is a compatible function for JSB.
 cc.Loader = cc.Class.extend({
@@ -2628,6 +2440,26 @@ cc.affineTransformConcat = function (t1, t2) {
 };
 
 /**
+ * Concatenate a transform matrix to another<br/>
+ * The results are reflected in the first matrix.<br/>
+ * t' = t1 * t2
+ * @function
+ * @param {cc.AffineTransform} t1 The first transform object
+ * @param {cc.AffineTransform} t2 The transform object to concatenate
+ * @return {cc.AffineTransform} The result of concatenation
+ */
+cc.affineTransformConcatIn = function (t1, t2) {
+    var a = t1.a, b = t1.b, c = t1.c, d = t1.d, tx = t1.tx, ty = t1.ty;
+    t1.a = a * t2.a + b * t2.c;
+    t1.b = a * t2.b + b * t2.d;
+    t1.c = c * t2.a + d * t2.c;
+    t1.d = c * t2.b + d * t2.d;
+    t1.tx = tx * t2.a + ty * t2.c + t2.tx;
+    t1.ty = tx * t2.b + ty * t2.d + t2.ty;
+    return t1;
+};
+
+/**
  * Return true if `t1' and `t2' are equal, false otherwise.
  * @memberOf cc
  * @function
@@ -2818,6 +2650,30 @@ _p.unscheduleUpdateForTarget = _p.unscheduleUpdate;
 _p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
 
 
+cc._NodeGrid = cc.NodeGrid;
+cc.NodeGrid = function(rect){
+    if (!(this instanceof cc.NodeGrid)){
+        cc.error("NodeGrid's constructor can not be called as a function, please use 'new cc.NodeGrid()'");
+        return;
+    }
+
+    if (rect) {
+        return cc._NodeGrid.create(rect);
+    }
+    else {
+        return cc._NodeGrid.create();
+    }
+}
+
+cc.NodeGrid.create = function(rect){
+    if (rect) {
+        return cc._NodeGrid.create(rect);
+    }
+    else {
+        return cc._NodeGrid.create();
+    }
+}
+
 //
 // cc.BlendFunc
 //
@@ -2858,6 +2714,23 @@ cc.defineGetterSetter(cc.BlendFunc, "ALPHA_NON_PREMULTIPLIED", cc.BlendFunc._alp
 /** @expose */
 cc.BlendFunc.ADDITIVE;
 cc.defineGetterSetter(cc.BlendFunc, "ADDITIVE", cc.BlendFunc._additive);
+
+cc.GLProgram.prototype.setUniformLocationWithMatrix2fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 2);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+
+cc.GLProgram.prototype.setUniformLocationWithMatrix3fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 3);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 4);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
 
 
 //

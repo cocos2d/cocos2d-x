@@ -35,6 +35,8 @@
 #include "base/CCScriptSupport.h"
 #include "math/CCAffineTransform.h"
 #include "math/CCMath.h"
+#include "2d/CCComponentContainer.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
@@ -53,10 +55,7 @@ class Director;
 class GLProgram;
 class GLProgramState;
 class Material;
-#if CC_USE_PHYSICS
-class PhysicsBody;
-class PhysicsWorld;
-#endif
+class Camera;
 
 /**
  * @addtogroup _2d
@@ -592,9 +591,9 @@ public:
     virtual Vec3 getRotation3D() const;
     
     /**
-     * Set rotation by quaternion.
+     * Set rotation by quaternion. You should make sure the quaternion is normalized.
      *
-     * @param quat The rotation in quaternion.
+     * @param quat The rotation in quaternion, note that the quat must be normalized.
      * @js NA
      */
     virtual void setRotationQuat(const Quaternion& quat);
@@ -1228,6 +1227,13 @@ public:
     void stopAllActionsByTag(int tag);
 
     /**
+     * Removes all actions from the running action list by its flags.
+     *
+     * @param flags   A flag field that removes actions based on bitwise AND.
+     */
+    void stopActionsByFlags(unsigned int flags);
+
+    /**
      * Gets an action from the running action list by its tag.
      *
      * @see `setTag(int)`, `getTag()`.
@@ -1488,6 +1494,29 @@ public:
     virtual const Mat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
+    /**
+     * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * The matrix is in Pixels.
+     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
+     *
+     * @param ancestor The parent's node pointer.
+     * @since v3.7
+     * @return The transformation matrix.
+     */
+    virtual Mat4 getNodeToParentTransform(Node* ancestor) const;
+
+    /**
+     * Returns the affline transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * The matrix is in Pixels.
+     *
+     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
+     *
+     * @param ancestor The parent's node pointer.
+     * @since v3.7
+     * @return The affline transformation matrix.
+     */
+    virtual AffineTransform getNodeToParentAffineTransform(Node* ancestor) const;
+
     /** 
      * Sets the transformation matrix manually.
      *
@@ -1528,7 +1557,6 @@ public:
      */
     virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
-
 
     /** @deprecated Use getWorldToNodeTransform() instead */
     CC_DEPRECATED_ATTRIBUTE inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
@@ -1613,6 +1641,22 @@ public:
      * @return The Component by name.
      */
     Component* getComponent(const std::string& name);
+    
+    /**
+     * Get a component by the type T.
+     * @lua NA
+     * @js NA
+     *
+     * @return The component that match the type T.
+     */
+    template<typename T>
+    T* getComponent() const
+    {
+        if (_componentContainer)
+            return _componentContainer->getComponent<T>();
+        else
+            return nullptr;
+    }
 
     /**
      * Adds a component.
@@ -1642,39 +1686,6 @@ public:
      */
     virtual void removeAllComponents();
     /// @} end of component functions
-
-
-#if CC_USE_PHYSICS
-    /**
-     * Set the PhysicsBody that let the sprite effect with physics.
-     * @note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
-     *
-     * @param body A given physics body.
-     */
-    void setPhysicsBody(PhysicsBody* body);
-
-    /**
-     * Get the PhysicsBody the sprite have.
-     *
-     * @return The PhysicsBody the sprite have.
-     */
-    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
-    
-    /**
-     * Remove this node from physics world. it will remove all the physics bodies in it's children too.
-     */
-    void removeFromPhysicsWorld();
-    
-    /** 
-     * Update the transform matrix from physics.
-     */
-    void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
-
-    /** 
-     * Update physics body transform matrix.
-     */
-    virtual void updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
-#endif
     
     // overrides
     virtual GLubyte getOpacity() const;
@@ -1832,22 +1843,6 @@ protected:
 #endif
     
     ComponentContainer *_componentContainer;        ///< Dictionary of components
-
-#if CC_USE_PHYSICS
-    PhysicsBody* _physicsBody;        ///< the physicsBody the node have
-    float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
-    float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
-    float _physicsRotation;
-    bool _physicsTransformDirty;
-    bool _updateTransformFromPhysics;
-
-    PhysicsWorld* _physicsWorld; /** The PhysicsWorld associated with the node.*/
-    int _physicsBodyAssociatedWith;  /** The count of PhysicsBody associated with the node and children.*/
-    float _physicsRotationOffset;  /** Record the rotation value when invoke Node::setPhysicsBody.*/
-
-    float _offsetX;
-    float _offsetY;
-#endif
     
     // opacity controls
     GLubyte		_displayedOpacity;
@@ -1869,11 +1864,25 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
-    
-#if CC_USE_PHYSICS
-    friend class Scene;
-#endif //CC_USTPS
 };
+
+
+/**
+ * This is a helper function, checks a GL screen point is in content rectangle space.
+ *
+ * The content rectangle defined by origin(0,0) and content size.
+ * This function convert GL screen point to near and far planes as points Pn and Pf,
+ * then calculate the intersect point P which the line PnPf intersect with content rectangle.
+ * If P in content rectangle means this node be hitted.
+ *
+ * @param pt        The point in GL screen space.
+ * @param camera    Which camera used to unproject pt to near/far planes.
+ * @param w2l       World to local transform matrix, used to convert Pn and Pf to rectangle space.
+ * @param rect      The test recangle in local space.
+ * @parma p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
+ * @return true if the point is in content rectangle, flase otherwise.
+ */
+bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
 
 // NodeRGBA
 

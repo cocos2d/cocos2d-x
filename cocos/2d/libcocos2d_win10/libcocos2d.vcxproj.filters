@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -247,6 +247,21 @@
     </Filter>
     <Filter Include="physics3d">
       <UniqueIdentifier>{f68e83b4-2fa3-4f47-9864-e7dfd90c16a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="navmesh">
+      <UniqueIdentifier>{cc4f6ca9-4231-479d-8e19-ede4dff3382e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\clipper">
+      <UniqueIdentifier>{e3a5fe25-a92e-4c98-9026-782b2b5b1388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\SkeletonReader">
+      <UniqueIdentifier>{a10cc84c-5c61-43f4-a665-5e5cbab47ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\TimelineAction\Skeleton">
+      <UniqueIdentifier>{438e0063-bdbc-4252-a0f5-f55f7d54ed6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\GameNodeDReader">
+      <UniqueIdentifier>{0760e708-a93e-41f5-abaf-a7e422882920}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -517,9 +532,6 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3d\CCTerrain.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCTextureCube.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\base\atitc.cpp">
@@ -836,9 +848,6 @@
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\CCInputDelegate.cpp">
       <Filter>cocostudio\components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\editor-support\cocostudio\CCObjectExtensionData.cpp">
-      <Filter>cocostudio\json</Filter>
     </ClCompile>
     <ClCompile Include="..\..\editor-support\cocostudio\CocoLoader.cpp">
       <Filter>cocostudio\json</Filter>
@@ -1569,6 +1578,9 @@
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\physics\CCComponentPhysics2d.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -1576,6 +1588,9 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsShape.cpp">
@@ -1755,10 +1770,19 @@
     <ClCompile Include="..\..\ui\UIScrollView.cpp">
       <Filter>ui\UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ui\UIScrollViewBar.cpp">
+      <Filter>ui\UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ui\UIButton.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\ui\UICheckBox.cpp">
+      <Filter>ui\UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ui\UIRadioButton.cpp">
       <Filter>ui\UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\ui\UIImageView.cpp">
@@ -1793,15 +1817,6 @@
     </ClCompile>
     <ClCompile Include="..\..\platform\winrt\WICImageLoader-winrt.cpp">
       <Filter>platform\winrt</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MarchingSquare.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SpritePolygon.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SpritePolygonCache.cpp">
-      <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\external\poly2tri\common\shapes.cc">
       <Filter>external\poly2tri\common</Filter>
@@ -1840,9 +1855,6 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\renderer\CCVertexAttribBinding.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\renderer\CCFrameBuffer.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\base\CCUserDefault-winrt.cpp">
@@ -1886,6 +1898,55 @@
     </ClCompile>
     <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp">
       <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer\CCFrameBuffer.cpp" />
+    <ClCompile Include="..\..\navmesh\CCNavMesh.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshAgent.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshDebugDraw.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshObstacle.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\navmesh\CCNavMeshUtils.cpp">
+      <Filter>navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCAutoPolygon.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\external\clipper\clipper.cpp">
+      <Filter>external\clipper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\CCComExtensionData.cpp">
+      <Filter>cocostudio\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\ActionTimeline\CCBoneNode.cpp">
+      <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkeletonNode.cpp">
+      <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.cpp">
+      <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CCCameraBackgroundBrush.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\renderer\CCTextureCube.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2162,9 +2223,6 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3d\CCTerrain.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCTextureCube.h">
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3d\cocos3d.h">
@@ -2562,9 +2620,6 @@
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\CCInputDelegate.h">
       <Filter>cocostudio\components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\editor-support\cocostudio\CCObjectExtensionData.h">
-      <Filter>cocostudio\json</Filter>
     </ClInclude>
     <ClInclude Include="..\..\editor-support\cocostudio\CocoLoader.h">
       <Filter>cocostudio\json</Filter>
@@ -3340,6 +3395,9 @@
     <ClInclude Include="..\..\network\WebSocket.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\physics\CCComponentPhysics2d.h">
+      <Filter>physics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -3350,6 +3408,9 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsJoint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsManager.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsShape.h">
@@ -3613,15 +3674,6 @@
     <ClInclude Include="..\..\platform\winrt\WICImageLoader-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="..\MarchingSquare.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SpritePolygon.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SpritePolygonCache.h">
-      <Filter>2d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\external\poly2tri\poly2tri.h">
       <Filter>external\poly2tri</Filter>
     </ClInclude>
@@ -3702,6 +3754,57 @@
     </ClInclude>
     <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h">
       <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMesh.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshAgent.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshDebugDraw.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshObstacle.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\navmesh\CCNavMeshUtils.h">
+      <Filter>navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCAutoPolygon.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\external\clipper\clipper.hpp">
+      <Filter>external\clipper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\CCComExtensionData.h">
+      <Filter>cocostudio\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\BoneNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\CSBoneBinary_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SkeletonReader\SkeletonNodeReader.h">
+      <Filter>cocostudio\reader\WidgetReader\SkeletonReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\ActionTimeline\CCBoneNode.h">
+      <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkeletonNode.h">
+      <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\ActionTimeline\CCSkinNode.h">
+      <Filter>cocostudio\TimelineAction\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\GameNodeDReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CCCameraBackgroundBrush.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\renderer\CCTextureCube.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3859,10 +3962,5 @@
     <None Include="..\..\renderer\ccShader_UI_Gray.frag">
       <Filter>renderer</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\..\renderer\CMakeLists.txt">
-      <Filter>renderer</Filter>
-    </Text>
   </ItemGroup>
 </Project>

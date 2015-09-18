@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -285,16 +285,7 @@ void AudioEngineImpl::update(float dt)
     for (auto iter = _audioPlayers.begin(); iter != itend; )
     {
         player = &(iter->second);
-        if (player->_playOver)
-        {
-            if (player->_finishCallback)
-                player->_finishCallback(player->_audioID, *AudioEngine::_audioIDInfoMap[player->_audioID].filePath);
-
-            AudioEngine::remove(player->_audioID);
-            iter = _audioPlayers.erase(iter);
-            continue;
-        }
-        else if (player->_delayTimeToRemove > 0.f)
+        if (player->_delayTimeToRemove > 0.f)
         {
             player->_delayTimeToRemove -= dt;
             if (player->_delayTimeToRemove < 0.f)
@@ -302,6 +293,15 @@ void AudioEngineImpl::update(float dt)
                 iter = _audioPlayers.erase(iter);
                 continue;
             }
+        }
+        else if (player->_playOver)
+        {
+            if (player->_finishCallback)
+                player->_finishCallback(player->_audioID, *AudioEngine::_audioIDInfoMap[player->_audioID].filePath);
+
+            AudioEngine::remove(player->_audioID);
+            iter = _audioPlayers.erase(iter);
+            continue;
         }
 
         ++iter;
@@ -430,6 +430,15 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
     _audioPlayers[audioID]._finishCallback = callback;
+}
+
+void AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
+{
+    CCLOG("Preload not support on Anroid");
+    if (callback)
+    {
+        callback(false);
+    }
 }
 
 #endif

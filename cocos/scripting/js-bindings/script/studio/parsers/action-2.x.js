@@ -113,7 +113,7 @@
             name: "Rotation",
             handle: function(options){
                 var frame = new ccs.RotationFrame();
-                var rotation = options["Rotation"];
+                var rotation = options["Rotation"] || options["Value"] || 0;
                 frame.setRotation(rotation);
                 return frame;
             }
@@ -175,9 +175,9 @@
                 var frame = new ccs.ColorFrame();
                 var color = options["Color"];
                 if(!color) color = {};
-                color["R"] = color["R"] || 255;
-                color["G"] = color["G"] || 255;
-                color["B"] = color["B"] || 255;
+                color["R"] = color["R"] === undefined ? 255 : color["R"];
+                color["G"] = color["G"] === undefined ? 255 : color["G"];
+                color["B"] = color["B"] === undefined ? 255 : color["B"];
                 frame.setColor(cc.color(color["R"], color["G"], color["B"]));
                 return frame;
             }
@@ -204,6 +204,7 @@
                     if(!spriteFrame && plist){
                         if(cc.loader.getRes(resourcePath + plist)){
                             cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
+                            spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
                         }else{
                             cc.log("%s need to be preloaded", resourcePath + plist);
                         }
@@ -257,6 +258,16 @@
                 if (currentAnimationFrame)
                      frame.setAnimationName(currentAnimationFrame);
 
+                return frame;
+            }
+        },
+        {
+            name: "BlendFunc",
+            handle: function(options){
+                var frame = new ccs.BlendFuncFrame();
+                var blendFunc = options["BlendFunc"];
+                if(blendFunc)
+                    frame.setBlendFunc(new cc.BlendFunc(blendFunc["Src"], blendFunc["Dst"]));
                 return frame;
             }
         }

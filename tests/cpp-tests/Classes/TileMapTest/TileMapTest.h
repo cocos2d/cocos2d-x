@@ -186,7 +186,7 @@ public:
     TMXIsoZorder();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onExit();
+    virtual void onExit()override;
 
     ~TMXIsoZorder();
     void repositionSprite(float dt);

@@ -24,7 +24,7 @@ THE SOFTWARE.
 
 #include "CCActionTimeline.h"
 
-#include "cocostudio/CCObjectExtensionData.h"
+#include "cocostudio/CCComExtensionData.h"
 
 USING_NS_CC;
 
@@ -197,10 +197,12 @@ void ActionTimeline::step(float delta)
     {
         return;
     }
-
     _time += delta * _timeSpeed;
-    const float endtoffset = _time - _endFrame * _frameInternal;
+    float deltaCurrFrameTime = abs(_time - _currentFrame * _frameInternal);
+    if (deltaCurrFrameTime < _frameInternal)
+        return;
 
+    const float endtoffset = _time - _endFrame * _frameInternal;
     if (endtoffset < _frameInternal)
     {
         _currentFrame = (int)(_time / _frameInternal);
@@ -247,7 +249,7 @@ void ActionTimeline::startWithTarget(Node *target)
     foreachNodeDescendant(target, 
         [this, target](Node* child)
     {
-        ObjectExtensionData* data = dynamic_cast<ObjectExtensionData*>(child->getUserObject());
+        ComExtensionData* data = dynamic_cast<ComExtensionData*>(child->getComponent("ComExtensionData"));
 
         if(data)
         {

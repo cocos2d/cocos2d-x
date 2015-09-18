@@ -204,7 +204,7 @@ private:
     HttpRequest* _requestSentinel;
 };
 
-}
+} // namespace network
 
 NS_CC_END
 

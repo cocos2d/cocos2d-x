@@ -33,7 +33,7 @@ var CustomImageLayer = cc.Layer.extend({
             customImageViewReader,
             customImageViewReader.setProperties);
 
-        var layout = guiReader.widgetFromJsonFile("css-res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson");
+        var layout = guiReader.widgetFromJsonFile("ccs-res/cocosui/CustomImageViewTest/NewProject_2_1.ExportJson");
         this.addChild(layout);
     }
 });

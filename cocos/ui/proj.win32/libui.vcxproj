@@ -47,7 +47,9 @@
   <ItemGroup>
     <ClCompile Include="..\CocosGUI.cpp" />
     <ClCompile Include="..\UIButton.cpp" />
+    <ClCompile Include="..\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\UICheckBox.cpp" />
+    <ClCompile Include="..\UIRadioButton.cpp" />
     <ClCompile Include="..\UIDeprecated.cpp" />
     <ClCompile Include="..\UIEditBox\UIEditBox.cpp" />
     <ClCompile Include="..\UIEditBox\UIEditBoxImplWin.cpp" />
@@ -64,6 +66,7 @@
     <ClCompile Include="..\UIRichText.cpp" />
     <ClCompile Include="..\UIScale9Sprite.cpp" />
     <ClCompile Include="..\UIScrollView.cpp" />
+    <ClCompile Include="..\UIScrollViewBar.cpp" />
     <ClCompile Include="..\UISlider.cpp" />
     <ClCompile Include="..\UIText.cpp" />
     <ClCompile Include="..\UITextAtlas.cpp" />

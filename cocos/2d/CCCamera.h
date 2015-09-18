@@ -36,6 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Scene;
+class CameraBackgroundBrush;
 
 /**
  * Note: 
@@ -236,9 +237,9 @@ public:
      */
     static Camera* getDefaultCamera();
     /**
-     Before rendering scene with this camera, the background need to be cleared.
+     Before rendering scene with this camera, the background need to be cleared. It clears the depth buffer with max depth by default. Use setBackgroundBrush to modify the default behavior
      */
-    void clearBackground(float depth);
+    void clearBackground();
     /**
      Apply the FBO, RenderTargets and viewport.
      */
@@ -251,6 +252,26 @@ public:
      Set Viewport for camera.
      */
     void setViewport(const experimental::Viewport& vp) { _viewport = vp; }
+    
+    /**
+     * Whether or not the viewprojection matrix was updated since the last frame.
+     * @return True if the viewprojection matrix was updated since the last frame.
+     */
+    bool isViewProjectionUpdated() const {return _viewProjectionUpdated;}
+    
+    /**
+     * set the background brush. See CameraBackgroundBrush for more information.
+     * @param clearBrush Brush used to clear the background
+     */
+    void setBackgroundBrush(CameraBackgroundBrush* clearBrush);
+    
+    /**
+     * Get clear brush
+     */
+    CameraBackgroundBrush* getBackgroundBrush() const { return _clearBrush; }
+    
+    virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -284,11 +305,14 @@ protected:
     float _nearPlane;
     float _farPlane;
     mutable bool  _viewProjectionDirty;
+    bool _viewProjectionUpdated; //Whether or not the viewprojection matrix was updated since the last frame.
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
     int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
+    
+    CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground
     
     experimental::Viewport _viewport;
     

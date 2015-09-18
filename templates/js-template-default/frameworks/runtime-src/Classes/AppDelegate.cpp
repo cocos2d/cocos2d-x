@@ -23,6 +23,19 @@
 #include "network/jsb_socketio.h"
 #include "jsb_cocos2dx_physics3d_auto.hpp"
 #include "physics3d/jsb_cocos2dx_physics3d_manual.h"
+#include "jsb_cocos2dx_navmesh_auto.hpp"
+#include "navmesh/jsb_cocos2dx_navmesh_manual.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "jsb_cocos2dx_audioengine_auto.hpp"
+#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCJavascriptJavaBridge.h"
@@ -115,7 +128,23 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_physics3d);
     sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
 #endif
-    
+
+#if CC_USE_NAVMESH
+    sc->addRegisterCallback(register_all_cocos2dx_navmesh);
+    sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    sc->addRegisterCallback(register_all_cocos2dx_audioengine);
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -123,6 +152,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
     sc->start();    
     sc->runScript("script/jsb_boot.js");
+#if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
+    sc->enableDebugger();
+#endif
     ScriptEngineProtocol *engine = ScriptingCore::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     ScriptingCore::getInstance()->runScript("main.js");

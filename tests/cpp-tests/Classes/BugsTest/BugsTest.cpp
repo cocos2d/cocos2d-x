@@ -8,7 +8,10 @@
 #include "Bug-914.h"
 #include "Bug-1159.h"
 #include "Bug-1174.h"
+#include "Bug-12847.h"
 #include "Bug-Child.h"
+#include "Bug-CCDrawNode.h"
+#include "Bug-PageViewLayout.h"
 
 BugsTests::BugsTests()
 {
@@ -23,4 +26,7 @@ BugsTests::BugsTests()
     ADD_TEST_CASE(Bug1174Layer);
     ADD_TEST_CASE(BugChild);
     ADD_TEST_CASE(BugCameraMask);
+    ADD_TEST_CASE(BugDrawNodeLayer);
+    ADD_TEST_CASE(BugPageViewLayer);
+    ADD_TEST_CASE(Bug12847Layer);
 }

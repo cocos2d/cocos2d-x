@@ -37,6 +37,11 @@
 
 
 --------------------------------------------------------
+-- the cc Component
+-- @field [parent=#cc] Component#Component Component preloaded module
+
+
+--------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
 
@@ -767,11 +772,6 @@
 
 
 --------------------------------------------------------
--- the cc SpriteBatchNode
--- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
-
-
---------------------------------------------------------
 -- the cc Label
 -- @field [parent=#cc] Label#Label Label preloaded module
 
@@ -932,13 +932,23 @@
 
 
 --------------------------------------------------------
--- the cc Sprite
--- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
+-- the cc Image
+-- @field [parent=#cc] Image#Image Image preloaded module
 
 
 --------------------------------------------------------
--- the cc Image
--- @field [parent=#cc] Image#Image Image preloaded module
+-- the cc PolygonInfo
+-- @field [parent=#cc] PolygonInfo#PolygonInfo PolygonInfo preloaded module
+
+
+--------------------------------------------------------
+-- the cc AutoPolygon
+-- @field [parent=#cc] AutoPolygon#AutoPolygon AutoPolygon preloaded module
+
+
+--------------------------------------------------------
+-- the cc Sprite
+-- @field [parent=#cc] Sprite#Sprite Sprite preloaded module
 
 
 --------------------------------------------------------
@@ -1137,6 +1147,26 @@
 
 
 --------------------------------------------------------
+-- the cc CameraBackgroundBrush
+-- @field [parent=#cc] CameraBackgroundBrush#CameraBackgroundBrush CameraBackgroundBrush preloaded module
+
+
+--------------------------------------------------------
+-- the cc CameraBackgroundDepthBrush
+-- @field [parent=#cc] CameraBackgroundDepthBrush#CameraBackgroundDepthBrush CameraBackgroundDepthBrush preloaded module
+
+
+--------------------------------------------------------
+-- the cc CameraBackgroundColorBrush
+-- @field [parent=#cc] CameraBackgroundColorBrush#CameraBackgroundColorBrush CameraBackgroundColorBrush preloaded module
+
+
+--------------------------------------------------------
+-- the cc CameraBackgroundSkyBoxBrush
+-- @field [parent=#cc] CameraBackgroundSkyBoxBrush#CameraBackgroundSkyBoxBrush CameraBackgroundSkyBoxBrush preloaded module
+
+
+--------------------------------------------------------
 -- the cc GridBase
 -- @field [parent=#cc] GridBase#GridBase GridBase preloaded module
 
@@ -1232,6 +1262,11 @@
 
 
 --------------------------------------------------------
+-- the cc SpriteBatchNode
+-- @field [parent=#cc] SpriteBatchNode#SpriteBatchNode SpriteBatchNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc SpriteFrameCache
 -- @field [parent=#cc] SpriteFrameCache#SpriteFrameCache SpriteFrameCache preloaded module
 
@@ -1277,13 +1312,13 @@
 
 
 --------------------------------------------------------
--- the cc Component
--- @field [parent=#cc] Component#Component Component preloaded module
+-- the cc MotionStreak3D
+-- @field [parent=#cc] MotionStreak3D#MotionStreak3D MotionStreak3D preloaded module
 
 
 --------------------------------------------------------
--- the cc SpritePolygonCache
--- @field [parent=#cc] SpritePolygonCache#SpritePolygonCache SpritePolygonCache preloaded module
+-- the cc Sprite3DMaterial
+-- @field [parent=#cc] Sprite3DMaterial#Sprite3DMaterial Sprite3DMaterial preloaded module
 
 
 return nil

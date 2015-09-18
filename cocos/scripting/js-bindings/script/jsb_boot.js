@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2015 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,130 +23,6 @@
 //
 // cocos2d boot
 //
-
-var cc = cc || {};
-var window = window || this;
-
-/**
- * Iterate over an object or an array, executing a function for each matched element.
- * @param {object|array} obj
- * @param {function} iterator
- * @param {object} [context]
- */
-cc.each = function (obj, iterator, context) {
-    if (!obj)
-        return;
-    if (obj instanceof Array) {
-        for (var i = 0, li = obj.length; i < li; i++) {
-            if (iterator.call(context, obj[i], i) === false)
-                return;
-        }
-    } else {
-        for (var key in obj) {
-            if (iterator.call(context, obj[key], key) === false)
-                return;
-        }
-    }
-};
-
-/**
- * Copy all of the properties in source objects to target object and return the target object.
- * @param {object} target
- * @param {object} *sources
- * @returns {object}
- */
-cc.extend = function(target) {
-    var sources = arguments.length >= 2 ? Array.prototype.slice.call(arguments, 1) : [];
-
-    cc.each(sources, function(src) {
-        for(var key in src) {
-            if (src.hasOwnProperty(key)) {
-                target[key] = src[key];
-            }
-        }
-    });
-    return target;
-};
-
-/**
- * Check the obj whether is function or not
- * @param {*} obj
- * @returns {boolean}
- */
-cc.isFunction = function(obj) {
-    return typeof obj == 'function';
-};
-
-/**
- * Check the obj whether is number or not
- * @param {*} obj
- * @returns {boolean}
- */
-cc.isNumber = function(obj) {
-    return typeof obj == 'number' || Object.prototype.toString.call(obj) == '[object Number]';
-};
-
-/**
- * Check the obj whether is string or not
- * @param {*} obj
- * @returns {boolean}
- */
-cc.isString = function(obj) {
-    return typeof obj == 'string' || Object.prototype.toString.call(obj) == '[object String]';
-};
-
-/**
- * Check the obj whether is array or not
- * @param {*} obj
- * @returns {boolean}
- */
-cc.isArray = function(obj) {
-    return Array.isArray(obj) ||
-        (typeof obj === 'object' && objectToString(obj) === '[object Array]');
-};
-
-/**
- * Check the obj whether is undefined or not
- * @param {*} obj
- * @returns {boolean}
- */
-cc.isUndefined = function(obj) {
-    return typeof obj === 'undefined';
-};
-
-/**
- * Check the obj whether is object or not
- * @param {*} obj
- * @returns {boolean}
- */
-cc.isObject = function(obj) {
-    return obj.__nativeObj !== undefined ||
-        ( typeof obj === "object" && Object.prototype.toString.call(obj) === '[object Object]' );
-};
-
-/**
- * Check the url whether cross origin
- * @param {String} url
- * @returns {boolean}
- */
-cc.isCrossOrigin = function (url) {
-    return false;
-};
-
-/**
- * Common getter setter configuration function
- * @function
- * @param {Object}   proto      A class prototype or an object to config
- * @param {String}   prop       Property name
- * @param {function} getter     Getter function for the property
- * @param {function} setter     Setter function for the property
- */
-cc.defineGetterSetter = function (proto, prop, getter, setter){
-    var desc = { enumerable: false, configurable: true };
-    getter && (desc.get = getter);
-    setter && (desc.set = setter);
-    Object.defineProperty(proto, prop, desc);
-};
 
 //+++++++++++++++++++++++++something about async begin+++++++++++++++++++++++++++++++
 /**
@@ -366,6 +242,20 @@ cc.path = {
         index = pathStr.lastIndexOf(".");
         if(index < 0) return null;
         return pathStr.substring(index, pathStr.length);
+    },
+
+    /**
+     * Get the main name of a file name
+     * @param {string} fileName
+     * @returns {string}
+     */
+    mainFileName: function(fileName){
+        if(fileName){
+           var idx = fileName.lastIndexOf(".");
+            if(idx !== -1)
+               return fileName.substring(0,idx);
+        }
+        return fileName;
     },
     
     /**
@@ -625,15 +515,18 @@ cc.loader = {
         }
         var basePath = loader.getBasePath ? loader.getBasePath() : self.resPath;
         var realUrl = self.getUrl(basePath, url);
-        var data = loader.load(realUrl, url);
-        if (data) {
-            self.cache[url] = data;
-            cb(null, data);
-        } else {
-            self.cache[url] = null;
-            delete self.cache[url];
-            cb();
-        }
+
+        loader.load(realUrl, url, item, function (err, data) {
+            if (err) {
+                cc.log(err);
+                self.cache[url] = null;
+                delete self.cache[url];
+                cb();
+            } else {
+                self.cache[url] = data;
+                cb(null, data);
+            }
+        });
     },
     
     /**
@@ -776,13 +669,18 @@ cc.loader = {
      * Release the cache of resource by url.
      * @param url
      */
-    release : function(url){//do nothing in jsb
+    release : function(url){
+        var cache = this.cache;
+        delete cache[url];
     },
     
     /**
      * Resource cache of all resources.
      */
-    releaseAll : function(){//do nothing in jsb
+    releaseAll : function(){
+        var locCache = this.cache;
+        for (var key in locCache)
+            delete locCache[key];
     }
     
 };
@@ -867,10 +765,7 @@ cc.winSize = cc.director.getWinSize();
  * cc.view is the shared view object.
  */
 cc.view = cc.director.getOpenGLView();
-cc.view.getDevicePixelRatio = function () {
-    var sys = cc.sys;
-    return (sys.os == sys.OS_IOS || sys.os == sys.OS_OSX) ? 2 : 1;
-};
+cc.view.getDevicePixelRatio = cc.view.getRetinaFactor;
 cc.view.convertToLocationInView = function (tx, ty, relatedPos) {
     var _devicePixelRatio = cc.view.getDevicePixelRatio();
     return {x: _devicePixelRatio * (tx - relatedPos.left), y: _devicePixelRatio * (relatedPos.top + relatedPos.height - ty)};
@@ -891,6 +786,7 @@ cc.view.setDesignResolutionSize = function(width,height,resolutionPolicy){
     cc.winSize = cc.director.getWinSize();
     cc.visibleRect.init();
 };
+cc.view.setRealPixelResolution = cc.view.setDesignResolutionSize;
 cc.view.setResolutionPolicy = function(resolutionPolicy){
     var size = cc.view.getDesignResolutionSize();
     cc.view.setDesignResolutionSize(size.width,size.height,resolutionPolicy);
@@ -920,6 +816,10 @@ cc.audioEngine = cc.AudioEngine.getInstance();
 cc.audioEngine.end = function(){
     this.stopMusic();
     this.stopAllEffects();
+};
+cc.audioEngine.features = {
+    MULTI_CHANNEL: true, 
+    AUTOPLAY: true
 };
 /**
  * @type {Object}
@@ -1060,7 +960,9 @@ cc.winEvents = {//TODO register hidden and show callback for window
 //+++++++++++++++++++++++++something about sys begin+++++++++++++++++++++++++++++
 cc._initSys = function(config, CONFIG_KEY){
 
-    var locSys = cc.sys = sys || {};
+    var locSys = cc.sys = sys || {},
+        platform,
+        capabilities;
 
     /**
      * English language code
@@ -1259,23 +1161,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.UNKNOWN = 0;
-    /**
-     * @memberof cc.sys
-     * @name IOS
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.IOS = 1;
-    /**
-     * @memberof cc.sys
-     * @name ANDROID
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.ANDROID = 2;
+    sys.UNKNOWN = -1;
     /**
      * @memberof cc.sys
      * @name WIN32
@@ -1283,15 +1169,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.WIN32 = 3;
-    /**
-     * @memberof cc.sys
-     * @name MARMALADE
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.MARMALADE = 4;
+    sys.WIN32 = 0;
     /**
      * @memberof cc.sys
      * @name LINUX
@@ -1299,23 +1177,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.LINUX = 5;
-    /**
-     * @memberof cc.sys
-     * @name BADA
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.BADA = 6;
-    /**
-     * @memberof cc.sys
-     * @name BLACKBERRY
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.BLACKBERRY = 7;
+    sys.LINUX = 1;
     /**
      * @memberof cc.sys
      * @name MACOS
@@ -1323,7 +1185,39 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.MACOS = 8;
+    sys.MACOS = 2;
+    /**
+     * @memberof cc.sys
+     * @name ANDROID
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.ANDROID = 3;
+    /**
+     * @memberof cc.sys
+     * @name IOS
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.IPHONE = 4;
+    /**
+     * @memberof cc.sys
+     * @name IOS
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.IPAD = 5;
+    /**
+     * @memberof cc.sys
+     * @name BLACKBERRY
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.BLACKBERRY = 6;
     /**
      * @memberof cc.sys
      * @name NACL
@@ -1331,7 +1225,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.NACL = 9;
+    sys.NACL = 7;
     /**
      * @memberof cc.sys
      * @name EMSCRIPTEN
@@ -1339,7 +1233,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.EMSCRIPTEN = 10;
+    sys.EMSCRIPTEN = 8;
     /**
      * @memberof cc.sys
      * @name TIZEN
@@ -1347,23 +1241,7 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.TIZEN = 11;
-    /**
-     * @memberof cc.sys
-     * @name QT5
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.QT5 = 12;
-    /**
-     * @memberof cc.sys
-     * @name WP8
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    sys.WP8 = 13;
+    sys.TIZEN = 9;
     /**
      * @memberof cc.sys
      * @name WINRT
@@ -1371,7 +1249,15 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    sys.WINRT = 14;
+    sys.WINRT = 10;
+    /**
+     * @memberof cc.sys
+     * @name WP8
+     * @constant
+     * @default
+     * @type {Number}
+     */
+    sys.WP8 = 11;
     /**
      * @constant
      * @default
@@ -1410,11 +1296,11 @@ cc._initSys = function(config, CONFIG_KEY){
      */
     locSys.isNative = true;
 
-    /** Get the os of system */
-    locSys.os = __getOS();
-
     /** Get the target platform of system */
     locSys.platform = __getPlatform();
+
+    /** Get the os of system */
+    locSys.os = __getOS();
 
     // Forces the garbage collector
     locSys.garbageCollect = function() {
@@ -1454,7 +1340,13 @@ cc._initSys = function(config, CONFIG_KEY){
         cc.log(str);
     }
 
-    locSys.isMobile = (locSys.os == locSys.OS_ANDROID || locSys.os == locSys.OS_IOS || locSys.os == locSys.OS_WP8 || locSys.os == locSys.OS_WINRT) ? true : false;
+    platform = locSys.platform;
+    locSys.isMobile = ( platform === locSys.ANDROID || 
+                        platform === locSys.IPAD || 
+                        platform === locSys.IPHONE || 
+                        platform === locSys.WP8 || 
+                        platform === locSys.TIZEN ||
+                        platform === locSys.BLACKBERRY ) ? true : false;
 
     locSys.language = (function(){
         var language = cc.Application.getInstance().getCurrentLanguage();
@@ -1478,17 +1370,36 @@ cc._initSys = function(config, CONFIG_KEY){
         }
     })();
 
-    /** The type of browser */
-    locSys.browserType = null;//null in jsb
+    /**
+     * Indicate the real pixel resolution of the whole game window
+     * @memberof cc.sys
+     * @name windowPixelResolution
+     * @type {Number}
+     */
+    locSys.windowPixelResolution = cc.view.getFrameSize();
 
-    var capabilities = locSys.capabilities = {"opengl":true};
+    /** The type of browser */
+    locSys.browserType = null; //null in jsb
+    /** The version of browser */
+    locSys.browserVersion = null; //null in jsb
+
+    capabilities = locSys.capabilities = {"opengl":true};
     if( locSys.isMobile ) {
         capabilities["accelerometer"] = true;
         capabilities["touches"] = true;
+        if (platform === locSys.WINRT || platform === locSys.WP8) {
+            capabilities["keyboard"] = true;
+        }
     } else {
         // desktop
         capabilities["keyboard"] = true;
         capabilities["mouse"] = true;
+        // winrt can't suppot mouse in current version
+        if (platform === locSys.WINRT || platform === locSys.WP8)
+        {
+            capabilities["touches"] = true;
+            capabilities["mouse"] = false;
+        }
     }
 
     /**

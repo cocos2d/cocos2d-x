@@ -235,18 +235,18 @@ namespace cocostudio
             tmx = TMXTiledMap::create(path);
             if (tmx)
             {
+                //prevent that editor's data does not match in size and resources
+                Size fileSize = tmx->getContentSize();
                 setPropsWithFlatBuffers(tmx, (Table*)gameMapOptions);
+                tmx->setContentSize(fileSize);
             }
         }
-        //else
-        //{
-        //    Node* node = Node::create();
-        //    setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-        //    node->addChild(label);
-        //    return node;
-        //}
+        else
+        {
+            Node* node = Node::create();
+            setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
+            return node;
+        }
         
         return tmx;
     }

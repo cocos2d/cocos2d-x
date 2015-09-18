@@ -72,7 +72,12 @@ AndroidJavaEngine::AndroidJavaEngine()
     }
 }
 
-AndroidJavaEngine::~AndroidJavaEngine() {
+AndroidJavaEngine::~AndroidJavaEngine()
+{
+    if (_implementBaseOnAudioEngine)
+    {
+        stopAllEffects();
+    }
     cocos2d::JniMethodInfo methodInfo;
 
     if (!getJNIStaticMethodInfo(methodInfo, "end", "()V")) {
@@ -366,9 +371,9 @@ void AndroidJavaEngine::setEffectsVolume(float volume)
         if (_effectVolume != volume)
         {
             _effectVolume = volume;
-            for (auto& it : _soundIDs)
+            for (auto it : _soundIDs)
             {
-                AudioEngine::setVolume(it.first, volume);
+                AudioEngine::setVolume(it, volume);
             }
         }
     }
@@ -386,10 +391,10 @@ unsigned int AndroidJavaEngine::playEffect(const char* filePath, bool loop,
         auto soundID = AudioEngine::play2d(filePath, loop, _effectVolume);
         if (soundID != AudioEngine::INVALID_AUDIO_ID)
         {
-            _soundIDs[soundID] = soundID;
+            _soundIDs.push_back(soundID);
 
             AudioEngine::setFinishCallback(soundID, [this](int id, const std::string& filePath){
-                _soundIDs.erase(id);
+                _soundIDs.remove(id);
             });
         }
 
@@ -430,7 +435,7 @@ void AndroidJavaEngine::stopEffect(unsigned int soundID)
     if (_implementBaseOnAudioEngine)
     {
         AudioEngine::stop(soundID);
-        _soundIDs.erase(soundID);
+        _soundIDs.remove(soundID);
     }
     else
     {
@@ -442,9 +447,9 @@ void AndroidJavaEngine::pauseAllEffects()
 {
     if (_implementBaseOnAudioEngine)
     {
-        for (auto& it : _soundIDs)
+        for (auto it : _soundIDs)
         {
-            AudioEngine::pause(it.first);
+            AudioEngine::pause(it);
         }
     }
     else
@@ -457,9 +462,9 @@ void AndroidJavaEngine::resumeAllEffects()
 {
     if (_implementBaseOnAudioEngine)
     {
-        for (auto& it : _soundIDs)
+        for (auto it : _soundIDs)
         {
-            AudioEngine::resume(it.first);
+            AudioEngine::resume(it);
         }
     }
     else
@@ -472,9 +477,9 @@ void AndroidJavaEngine::stopAllEffects()
 {
     if (_implementBaseOnAudioEngine)
     {
-        for (auto& it : _soundIDs)
+        for (auto it : _soundIDs)
         {
-            AudioEngine::stop(it.first);
+            AudioEngine::stop(it);
         }
         _soundIDs.clear();
     }

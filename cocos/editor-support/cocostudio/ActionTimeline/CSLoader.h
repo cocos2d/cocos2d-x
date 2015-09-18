@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -79,7 +79,13 @@ public:
     
     static cocos2d::Node* createNode(const std::string& filename);
     static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
+    static cocos2d::Node* createNode(const Data data);
+    static cocos2d::Node* createNode(const Data data, const ccNodeLoadCallback &callback);
+    static cocos2d::Node* createNodeWithVisibleSize(const std::string& filename);
+    static cocos2d::Node* createNodeWithVisibleSize(const std::string& filename, const ccNodeLoadCallback& callback);
+
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
+    static cocostudio::timeline::ActionTimeline* createTimeline(const Data data, const std::string& filename);
 
     /*
     static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename);
@@ -143,6 +149,9 @@ protected:
     std::string getGUIClassName(const std::string &name);
     std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
     
+    inline void reconstructNestNode(cocos2d::Node * node);
+    static inline std::string getExtentionName(const std::string& name);
+
     typedef std::function<cocos2d::Node*(const rapidjson::Value& json)> NodeCreateFunc;
     typedef std::pair<std::string, NodeCreateFunc> Pair;
     
