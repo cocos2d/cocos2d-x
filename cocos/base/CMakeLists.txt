@@ -41,6 +41,7 @@ set(COCOS_BASE_SRC
   base/CCRef.cpp
   base/CCScheduler.cpp
   base/CCScriptSupport.cpp
+  base/CCScriptComponent.cpp
   base/CCTouch.cpp
   base/CCUserDefault.cpp
   base/CCValue.cpp

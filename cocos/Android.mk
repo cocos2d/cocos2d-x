@@ -140,6 +140,7 @@ base/CCProperties.cpp \
 base/CCRef.cpp \
 base/CCScheduler.cpp \
 base/CCScriptSupport.cpp \
+base/CCScriptComponent.cpp \
 base/CCTouch.cpp \
 base/CCUserDefault-android.cpp \
 base/CCUserDefault.cpp \
