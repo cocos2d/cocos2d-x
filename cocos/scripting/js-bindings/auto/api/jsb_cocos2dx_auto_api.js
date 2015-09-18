@@ -648,16 +648,6 @@ init : function (
 },
 
 /**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
  * @method setOwner
  * @param {cc.Node} arg0
  */
@@ -665,6 +655,16 @@ setOwner : function (
 node 
 )
 {
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
 },
 
 /**
@@ -717,6 +717,16 @@ str
 )
 {
     return false;
+},
+
+/**
+ * @method setPhysicsBody
+ * @param {cc.Component} arg0
+ */
+setPhysicsBody : function (
+component 
+)
+{
 },
 
 /**
@@ -1389,6 +1399,16 @@ getRotation : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getPhysicsBody
+ * @return {cc.PhysicsBody}
+ */
+getPhysicsBody : function (
+)
+{
+    return cc.PhysicsBody;
 },
 
 /**
@@ -2160,16 +2180,6 @@ onProjectionChanged : function (
 eventcustom 
 )
 {
-},
-
-/**
- * @method getPhysicsManager
- * @return {cc.PhysicsManager}
- */
-getPhysicsManager : function (
-)
-{
-    return cc.PhysicsManager;
 },
 
 /**
