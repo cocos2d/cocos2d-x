@@ -40,7 +40,6 @@ class EventListenerCustom;
 class EventCustom;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
-class PhysicsManager;
 #endif
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 class Physics3DWorld;
@@ -153,14 +152,6 @@ public:
      * @js NA
      */
     inline PhysicsWorld* getPhysicsWorld() const { return _physicsWorld; }
-    
-    /**
-     * Get the `PhysicsManager` belongs to this `Scene`.
-     * 
-     * @return PhysicsManager of the scene.
-     * @js NA
-     */
-    PhysicsManager* getPhysicsManager() const { return _physicsManager; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -190,7 +181,6 @@ protected:
 
 #if CC_USE_PHYSICS
     PhysicsWorld* _physicsWorld;
-    PhysicsManager* _physicsManager;
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION

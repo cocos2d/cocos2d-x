@@ -33,21 +33,23 @@ namespace cocostudio {
 
 class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
-
     DECLARE_CLASS_COMPONENT_INFO
-
 public:
+    const static std::string COMPONENT_NAME;
+
     /**
      * @js ctor
      */
-    ComAudio(void);
+    ComAudio();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ComAudio(void);
+    virtual ~ComAudio();
     
 public:
+    static ComAudio* create();
+
     virtual bool init() override;
     /**
      * @js NA
@@ -69,12 +71,8 @@ public:
     * @lua NA
     */
     virtual void onRemove() override;
-    virtual bool isEnabled() const override;
-    virtual void setEnabled(bool b) override;
-    virtual bool serialize(void* r) override;
 
-    static ComAudio* create(void);
-   
+    virtual bool serialize(void* r) override;
 public:
     void end();
     void preloadBackgroundMusic(const char* pszFilePath);

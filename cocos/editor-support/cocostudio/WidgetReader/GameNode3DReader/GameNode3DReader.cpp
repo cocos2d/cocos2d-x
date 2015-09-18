@@ -414,10 +414,10 @@ namespace cocostudio
 
         std::string customProperty = options->customProperty()->c_str();
         ComExtensionData* extensionData = ComExtensionData::create();
-        extensionData->setCustomProperty(customProperty);\
-        if (node->getComponent("ComExtensionData"))
+        extensionData->setCustomProperty(customProperty);
+        if (node->getComponent(ComExtensionData::COMPONENT_NAME))
         {
-            node->removeComponent("ComExtensionData");
+            node->removeComponent(ComExtensionData::COMPONENT_NAME);
         }
         node->addComponent(extensionData);
     }
