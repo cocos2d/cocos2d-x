@@ -4184,6 +4184,26 @@ func
 },
 
 /**
+ * @method clearFrameEndCalls
+ */
+clearFrameEndCalls : function (
+)
+{
+},
+
+/**
+ * @method setAnimationEndCallBack
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+setAnimationEndCallBack : function (
+str, 
+func 
+)
+{
+},
+
+/**
  * @method addTimeline
  * @param {ccs.timeline::Timeline} arg0
  */
@@ -4306,6 +4326,20 @@ resume : function (
 },
 
 /**
+ * @method addFrameEndCallFunc
+ * @param {int} arg0
+ * @param {String} arg1
+ * @param {function} arg2
+ */
+addFrameEndCallFunc : function (
+int, 
+str, 
+func 
+)
+{
+},
+
+/**
  * @method removeAnimationInfo
  * @param {String} arg0
  */
@@ -4343,6 +4377,18 @@ getDuration : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method removeFrameEndCall
+* @param {int|int} int
+* @param {String} str
+*/
+removeFrameEndCall : function(
+int,
+str 
+)
+{
 },
 
 /**
