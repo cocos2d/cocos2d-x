@@ -25,46 +25,29 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
 #include "base/CCScriptComponent.h"
+#include "jsapi.h"
+#include "mozilla/Maybe.h"
 
 NS_CC_BEGIN
 
-class CC_DLL ComponentLua : public ScriptComponent
+class CC_DLL ComponentJS : public ScriptComponent
 {
 public:
-    static ComponentLua* create(const std::string& scriptFileName);
+    ComponentJS(const std::string& scriptFileName);
     
-    ComponentLua(const std::string& scriptFileName);
     /**
-     * This function is used to be invoked from lua side to get the corresponding script object of this component.
+     * This function is used to be invoked from JS side to get the corresponding script object of this component.
      */
     void* getScriptObject() const override;
     
     virtual void update(float dt) override;
     virtual void onEnter() override;
     virtual void onExit() override;
-
-private:
-    ~ComponentLua();
-    void getScriptObjectInternal() const;
-    bool loadAndExecuteScript();
-    void getUserData();
-    void storeLuaTable();
-    bool getLuaFunction(const std::string& functionName);
-    void removeLuaTable();
-    
-    static void initClass();
     
 private:
-    // a table returned from lua
-    const void* _table;
-    
-    // string value of index
-    std::string _strIndex;
-    
-    // the index used to get lua table, it is unique for every component
-    static int _index;
+    // The returned value from require
+    mozilla::Maybe<JS::PersistentRootedObject> _jsObj;
 };
 
 NS_CC_END

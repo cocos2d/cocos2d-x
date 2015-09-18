@@ -29,10 +29,6 @@
 
 NS_CC_BEGIN
 
-const std::string ComponentLua::ON_ENTER = "onEnter";
-const std::string ComponentLua::ON_EXIT = "onExit";
-const std::string ComponentLua::UPDATE = "update";
-
 #define KEY_COMPONENT  "component"
 
 int ComponentLua::_index = 0;
@@ -52,8 +48,13 @@ ComponentLua* ComponentLua::create(const std::string& scriptFileName)
     return componentLua;
 }
 
+ScriptComponent* ScriptComponent::create(const std::string& scriptFileName)
+{
+    return ComponentLua::create(scriptFileName);
+}
+
 ComponentLua::ComponentLua(const std::string& scriptFileName)
-: _scriptFileName(scriptFileName)
+: ScriptComponent(scriptFileName)
 , _table(nullptr)
 , _strIndex("")
 {
@@ -65,7 +66,7 @@ ComponentLua::~ComponentLua()
     removeLuaTable();
 }
 
-void ComponentLua::getScriptObject() const
+void ComponentLua::getScriptObjectInternal() const
 {
     lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
     lua_pushstring(l, KEY_COMPONENT);      // stack: "component"
@@ -74,9 +75,15 @@ void ComponentLua::getScriptObject() const
     lua_rawget(l, -2);                     // stack: LUA_REGISTRYINDEX["component"]
 }
 
+void* ComponentLua::getScriptObject() const
+{
+    getScriptObjectInternal();
+    return nullptr;
+}
+
 void ComponentLua::update(float delta)
 {
-    if (_succeedLoadingScript && getLuaFunction(ComponentLua::UPDATE))
+    if (_succeedLoadingScript && getLuaFunction(ScriptComponent::UPDATE))
     {
         getUserData();
         lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
@@ -87,7 +94,7 @@ void ComponentLua::update(float delta)
 
 void ComponentLua::onEnter()
 {
-    if (_succeedLoadingScript && getLuaFunction(ComponentLua::ON_ENTER))
+    if (_succeedLoadingScript && getLuaFunction(ScriptComponent::ON_ENTER))
     {
         getUserData();
         LuaEngine::getInstance()->getLuaStack()->executeFunction(1);
@@ -96,7 +103,7 @@ void ComponentLua::onEnter()
 
 void ComponentLua::onExit()
 {
-    if (_succeedLoadingScript && getLuaFunction(ComponentLua::ON_EXIT))
+    if (_succeedLoadingScript && getLuaFunction(ScriptComponent::ON_EXIT))
     {
         getUserData();
         LuaEngine::getInstance()->getLuaStack()->executeFunction(1);
@@ -197,7 +204,7 @@ void ComponentLua::storeLuaTable()
     lua_pop(l, 1);                             // stack: table_return_from_lua
     
     // add table's elements to userdata's metatable
-    object_to_luaval<cocos2d::ComponentLua>(l, "cc.ComponentLua",this);  // stack: table_return_from_lua userdata
+    object_to_luaval<cocos2d::ScriptComponent>(l, "cc.ComponentLua", this);  // stack: table_return_from_lua userdata
     lua_getmetatable(l, -1);                   // stack: table_return_from_lua userdata mt
     lua_remove(l, -2);                         // stack: table_return_from_lua mt
     lua_pushnil(l);                            // stack: table_return_from_lua mt nil
