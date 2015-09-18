@@ -45,7 +45,7 @@ bool LinuxInputBox(std::string &entryLine)
     GtkWidget *entry;
     GtkWidget *contentArea;
 
-    gtk_init(0, NULL);
+    gtk_init(0, nullptr);
     dialog = gtk_dialog_new();
     entry = gtk_entry_new();
     contentArea = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
@@ -54,7 +54,7 @@ bool LinuxInputBox(std::string &entryLine)
     gtk_dialog_add_button(GTK_DIALOG(dialog), "OK", 0);
     gtk_entry_set_text(GTK_ENTRY(entry), entryLine.c_str());
 
-    g_signal_connect(dialog, "focus-out-event", G_CALLBACK(dialogFocusOutCallback), NULL);
+    g_signal_connect(dialog, "focus-out-event", G_CALLBACK(dialogFocusOutCallback), nullptr);
     gtk_window_set_keep_above(GTK_WINDOW(dialog), true);
     gtk_window_set_type_hint(GTK_WINDOW(dialog), GDK_WINDOW_TYPE_HINT_MENU);
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
@@ -73,7 +73,7 @@ bool LinuxInputBox(std::string &entryLine)
     }
 
     gtk_widget_destroy(dialog);
-    while (g_main_context_iteration(NULL, false));
+    while (g_main_context_iteration(nullptr, false));
     return didChange;
 }
 
@@ -81,13 +81,13 @@ NS_CC_BEGIN
 
 namespace ui {
 
-EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
+EditBoxImpl* __createSystemEditBox(EditBox* editBox)
 {
-    return new EditBoxImplLinux(pEditBox);
+    return new (std::nothrow) EditBoxImplLinux(editBox);
 }
 
-EditBoxImplLinux::EditBoxImplLinux(EditBox* pEditText)
-: EditBoxImpl(pEditText)
+EditBoxImplLinux::EditBoxImplLinux(EditBox* editBox)
+: EditBoxImpl(editBox)
 , _label(nullptr)
 , _labelPlaceHolder(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
@@ -135,15 +135,15 @@ bool EditBoxImplLinux::initWithSize(const Size& size)
     return true;
 }
 
-void EditBoxImplLinux::setFont(const char* pFontName, int fontSize)
+void EditBoxImplLinux::setFont(const char* fontName, int fontSize)
 {
-	if(_label != NULL) {
-		_label->setSystemFontName(pFontName);
+	if(_label != nullptr) {
+        _label->setSystemFontName(fontName);
 		_label->setSystemFontSize(fontSize);
 	}
 	
-	if(_labelPlaceHolder != NULL) {
-		_labelPlaceHolder->setSystemFontName(pFontName);
+	if(_labelPlaceHolder != nullptr) {
+        _labelPlaceHolder->setSystemFontName(fontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
@@ -154,10 +154,10 @@ void EditBoxImplLinux::setFontColor(const Color4B& color)
     _label->setTextColor(color);
 }
 
-void EditBoxImplLinux::setPlaceholderFont(const char* pFontName, int fontSize)
+void EditBoxImplLinux::setPlaceholderFont(const char* fontName, int fontSize)
 {
-	if(_labelPlaceHolder != NULL) {
-		_labelPlaceHolder->setSystemFontName(pFontName);
+	if(_labelPlaceHolder != nullptr) {
+        _labelPlaceHolder->setSystemFontName(fontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
@@ -198,11 +198,11 @@ bool EditBoxImplLinux::isEditing()
     return false;
 }
 
-void EditBoxImplLinux::setText(const char* pText)
+void EditBoxImplLinux::setText(const char* text)
 {
-    if (pText != NULL)
+    if (text != nullptr)
     {
-        _text = pText;
+        _text = text;
 		
         if (_text.length() > 0)
         {
@@ -247,11 +247,11 @@ const char*  EditBoxImplLinux::getText(void)
     return _text.c_str();
 }
 
-void EditBoxImplLinux::setPlaceHolder(const char* pText)
+void EditBoxImplLinux::setPlaceHolder(const char* text)
 {
-    if (pText != NULL)
+    if (text != nullptr)
     {
-        _placeHolder = pText;
+        _placeHolder = text;
         if (_placeHolder.length() > 0 && _text.length() == 0)
         {
             _labelPlaceHolder->setVisible(true);
@@ -281,22 +281,22 @@ void EditBoxImplLinux::setAnchorPoint(const Vec2& anchorPoint)
 	
 }
 
-void EditBoxImplLinux::visit(void)
+void EditBoxImplLinux::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags)
 { // don't need to be implemented on linux platform.
     
 }
 
-void EditBoxImplLinux::onEnter(void)
+void EditBoxImplLinux::onEnter()
 { // don't need to be implemented on linux platform.
     
 }
 
-static void editBoxCallbackFunc(const char* pText, void* ctx)
+static void editBoxCallbackFunc(const char* text, void* ctx)
 {
     EditBoxImplLinux* thiz = (EditBoxImplLinux*)ctx;
-    thiz->setText(pText);
+    thiz->setText(text);
 	
-    if (thiz->getDelegate() != NULL)
+    if (thiz->getDelegate() != nullptr)
     {
         thiz->getDelegate()->editBoxTextChanged(thiz->getEditBox(), thiz->getText());
         thiz->getDelegate()->editBoxEditingDidEnd(thiz->getEditBox());
@@ -305,7 +305,7 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
     
 #if CC_ENABLE_SCRIPT_BINDING
     EditBox* pEditBox = thiz->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "changed",pEditBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
@@ -324,14 +324,14 @@ static void editBoxCallbackFunc(const char* pText, void* ctx)
 
 void EditBoxImplLinux::openKeyboard()
 {
-    if (_delegate != NULL)
+    if (_delegate != nullptr)
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
     
 #if CC_ENABLE_SCRIPT_BINDING
     EditBox* pEditBox = this->getEditBox();
-    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
     {        
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         ScriptEvent event(cocos2d::kCommonEvent,(void*)&data);

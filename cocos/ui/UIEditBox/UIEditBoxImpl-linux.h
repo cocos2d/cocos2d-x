@@ -46,7 +46,7 @@ public:
     /**
      * @js NA
      */
-    EditBoxImplLinux(EditBox* pEditText);
+    EditBoxImplLinux(EditBox* editText);
     /**
      * @js NA
      * @lua NA
@@ -54,9 +54,9 @@ public:
     virtual ~EditBoxImplLinux();
     
     virtual bool initWithSize(const Size& size);
-    virtual void setFont(const char* pFontName, int fontSize);
+    virtual void setFont(const char* fontName, int fontSize);
     virtual void setFontColor(const Color4B& color);
-    virtual void setPlaceholderFont(const char* pFontName, int fontSize);
+    virtual void setPlaceholderFont(const char* fontName, int fontSize);
     virtual void setPlaceholderFontColor(const Color4B& color);
     virtual void setInputMode(EditBox::InputMode inputMode);
     virtual void setInputFlag(EditBox::InputFlag inputFlag);
@@ -65,9 +65,9 @@ public:
     virtual void setReturnType(EditBox::KeyboardReturnType returnType);
     virtual bool isEditing();
     
-    virtual void setText(const char* pText);
+    virtual void setText(const char* text);
     virtual const char* getText(void);
-    virtual void setPlaceHolder(const char* pText);
+    virtual void setPlaceHolder(const char* text);
     virtual void setPosition(const Vec2& pos);
     virtual void setVisible(bool visible);
     virtual void setContentSize(const Size& size);
@@ -76,12 +76,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags);
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter(void);
+    virtual void onEnter();
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
