@@ -53,7 +53,7 @@ local function addGrossiniAtPosition(layer, p, scale)
 
    local sp = cc.Sprite:createWithTexture(layer.spriteTexture, cc.rect(posx, posy, 85, 121))
    sp:setScale(scale)
-   sp:setPhysicsBody(cc.PhysicsBody:createBox(cc.size(48.0*scale, 108.0*scale)))
+   sp:setPhysicsBody(cc.PhysicsBody:createBox(cc.size(48.0, 108.0)))
    layer:addChild(sp)
    sp:setPosition(p)
    return sp
@@ -1612,7 +1612,7 @@ local function PhysicsTransformTest()
   local function onEnter()
     layer:toggleDebug()
     cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0,0))
-
+    
     local touchListener = cc.EventListenerTouchOneByOne:create()
     touchListener:registerScriptHandler(onTouchBegan, cc.Handler.EVENT_TOUCH_BEGAN)
     local eventDispatcher = layer:getEventDispatcher()
@@ -1627,7 +1627,7 @@ local function PhysicsTransformTest()
                                                      cc.PhysicsMaterial(0.1, 1.0, 0.0)))
     wall:setPosition(VisibleRect:center());
     _rootLayer:addChild(wall)
-
+    
     local _parentSprite = cc.Sprite:create("Images/YellowSquare.png")
     _parentSprite:setPosition(cc.p(200,100))
     _parentSprite:setScale(0.25)
@@ -1650,7 +1650,7 @@ local function PhysicsTransformTest()
     local normal = cc.Sprite:create("Images/YellowSquare.png")
     normal:setPosition(cc.p(300,100))
     normal:setScale(0.25,0.5)
-    normal:setPhysicsBody(cc.PhysicsBody:createBox(normal:getContentSize()),cc.PhysicsMaterial(0.1,1.0,0.0))
+    normal:setPhysicsBody(cc.PhysicsBody:createBox(normal:getContentSize(),cc.PhysicsMaterial(0.1,1.0,0.0)))
     normal:getPhysicsBody():setTag(DRAG_BODYS_TAG)
     _rootLayer:addChild(normal)
 
@@ -1673,8 +1673,7 @@ local function PhysicsTransformTest()
   end
 
   initWithLayer(layer, onEnter)
-  Helper.titleLabel:setString("Reorder issue #9959")
-  Helper.subtitleLabel:setString("Test Scale9Sprite run scale/move/rotation action in physics scene")
+  Helper.titleLabel:setString("Physics transform test")
   return layer
 end
 
@@ -1703,7 +1702,8 @@ local function PhysicsIssue9959()
   end
 
   initWithLayer(layer, onEnter)
-  Helper.titleLabel:setString("Physics transform test")
+  Helper.titleLabel:setString("Reorder issue #9959")
+  Helper.subtitleLabel:setString("Test Scale9Sprite run scale/move/rotation action in physics scene")
   return layer
 end
 
