@@ -73,11 +73,11 @@ int Application::run()
     return -1;
 }
 
-void Application::setAnimationInterval(double interval)
+void Application::setAnimationInterval(float interval)
 {
   JniMethodInfo methodInfo;
   if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxRenderer", "setAnimationInterval",
-                                       "(D)V"))
+                                       "(F)V"))
   {
     CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
   }
@@ -115,7 +115,7 @@ LanguageType Application::getCurrentLanguage()
     std::string languageName = getCurrentLanguageJNI();
     const char* pLanguageName = languageName.c_str();
     LanguageType ret = LanguageType::ENGLISH;
-
+    
     if (0 == strcmp("zh", pLanguageName))
     {
         ret = LanguageType::CHINESE;
@@ -175,6 +175,22 @@ LanguageType Application::getCurrentLanguage()
     else if (0 == strcmp("pl", pLanguageName))
     {
         ret = LanguageType::POLISH;
+    }
+    else if (0 == strcmp("tr", pLanguageName))
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (0 == strcmp("uk", pLanguageName))
+    {
+        ret = LanguageType::UKRAINIAN;
+    }
+    else if (0 == strcmp("ro", pLanguageName))
+    {
+        ret = LanguageType::ROMANIAN;
+    }
+    else if (0 == strcmp("bg", pLanguageName))
+    {
+        ret = LanguageType::BULGARIAN;
     }
     return ret;
 }

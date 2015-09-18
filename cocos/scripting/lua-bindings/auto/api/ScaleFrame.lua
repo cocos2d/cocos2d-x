@@ -9,12 +9,14 @@
 -- @function [parent=#ScaleFrame] setScaleY 
 -- @param self
 -- @param #float scaleY
+-- @return ScaleFrame#ScaleFrame self (return value: ccs.ScaleFrame)
         
 --------------------------------
 -- 
 -- @function [parent=#ScaleFrame] setScaleX 
 -- @param self
 -- @param #float scaleX
+-- @return ScaleFrame#ScaleFrame self (return value: ccs.ScaleFrame)
         
 --------------------------------
 -- 
@@ -33,18 +35,13 @@
 -- @function [parent=#ScaleFrame] setScale 
 -- @param self
 -- @param #float scale
+-- @return ScaleFrame#ScaleFrame self (return value: ccs.ScaleFrame)
         
 --------------------------------
 -- 
 -- @function [parent=#ScaleFrame] create 
 -- @param self
 -- @return ScaleFrame#ScaleFrame ret (return value: ccs.ScaleFrame)
-        
---------------------------------
--- 
--- @function [parent=#ScaleFrame] apply 
--- @param self
--- @param #float percent
         
 --------------------------------
 -- 
@@ -56,5 +53,6 @@
 -- 
 -- @function [parent=#ScaleFrame] ScaleFrame 
 -- @param self
+-- @return ScaleFrame#ScaleFrame self (return value: ccs.ScaleFrame)
         
 return nil

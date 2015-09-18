@@ -93,7 +93,8 @@ local function VideoPlayerTest()
     ------------------------------------------------------------
     local function menuResourceVideoCallback(tag, sender)
         if nil ~= videoPlayer then
-            videoPlayer:setFileName("res/cocosvideo.mp4")
+            local videoFullPath = cc.FileUtils:getInstance():fullPathForFilename("cocosvideo.mp4")
+            videoPlayer:setFileName(videoFullPath)   
             videoPlayer:play()
         end
     end
@@ -105,7 +106,7 @@ local function VideoPlayerTest()
 
     local function menuOnlineVideoCallback(tag, sender)
         if nil ~= videoPlayer then
-            videoPlayer:setURL("http://video001.smgbb.cn/gslb/program/FDN/FDN1190949/HLSVodService.m3u8?_mdCode=6065719&_cdnCode=B2B_XL_TEST&_type=0&_rCode=TerOut_18865&_userId=020341000456068&_categoryCode=SMG_HUAYU&_categoryPath=SMG_1002,SMG_HUAYU,&_adPositionId=01001000&_adCategorySource=0&_flag=.m3u8&_enCode=m3u8&taskID=ysh_ps_002-ott_1397459105893_020341000456068&_client=103&_cms=ctv&_CDNToken=76C043FD4969501754DC19E54EC8DC2C")
+            videoPlayer:setURL("http://benchmark.cocos2d-x.org/cocosvideo.mp4")
             videoPlayer:play()
         end
     end

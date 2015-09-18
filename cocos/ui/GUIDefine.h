@@ -28,6 +28,7 @@
 #include <string>
 #include "base/ObjectFactory.h"
 
+///@cond DO_NOT_SHOW
 //
 //// Widget macro
 //
@@ -70,5 +71,6 @@
 #define CC_VIDEOPLAYER_DEBUG_DRAW  0
 
 #define __LAYOUT_COMPONENT_NAME "__ui_layout"
+///@endcond
 
 #endif /* defined(__TestCpp__GUIDefine__) */

@@ -93,8 +93,6 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(Vec2::ZERO)
-, _posVar(Vec2::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -116,7 +114,7 @@ ParticleSystem::ParticleSystem()
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
 {
-    modeA.gravity = Vec2::ZERO;
+    modeA.gravity.setZero();
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -166,7 +164,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
     bool ret = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile.c_str());
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile);
 
     CCASSERT( !dict.empty(), "Particles: file not found");
     
@@ -213,7 +211,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             _duration = dictionary["duration"].asFloat();
 
             // blend function 
-            if (_configName.length()>0)
+            if (!_configName.empty())
             {
                 _blendFunc.src = dictionary["blendFuncSource"].asFloat();
             }
@@ -291,7 +289,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             // or Mode B: radius movement
             else if (_emitterMode == Mode::RADIUS)
             {
-                if (_configName.length()>0)
+                if (!_configName.empty())
                 {
                     modeB.startRadius = dictionary["maxRadius"].asInt();
                 }
@@ -300,7 +298,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     modeB.startRadius = dictionary["maxRadius"].asFloat();
                 }
                 modeB.startRadiusVar = dictionary["maxRadiusVariance"].asFloat();
-                if (_configName.length()>0)
+                if (!_configName.empty())
                 {
                     modeB.endRadius = dictionary["minRadius"].asInt();
                 }
@@ -318,7 +316,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                     modeB.endRadiusVar = 0.0f;
                 }
                 
-                if (_configName.length()>0)
+                if (!_configName.empty())
                 {
                     modeB.rotatePerSecond = dictionary["rotatePerSecond"].asInt();
                 }
@@ -369,7 +367,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 
                 Texture2D *tex = nullptr;
                 
-                if (textureName.length() > 0)
+                if (!textureName.empty())
                 {
                     // set not pop-up message box when load image failed
                     bool notify = FileUtils::getInstance()->isPopupNotify();
@@ -386,7 +384,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                 else if( dictionary.find("textureImageData") != dictionary.end() )
                 {                        
                     std::string textureData = dictionary.at("textureImageData").asString();
-                    CCASSERT(!textureData.empty(), "");
+                    CCASSERT(!textureData.empty(), "textureData can't be empty!");
                     
                     auto dataLen = textureData.size();
                     if (dataLen != 0)
@@ -406,7 +404,7 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
                         CCASSERT(isOK, "CCParticleSystem: error init image with Data");
                         CC_BREAK_IF(!isOK);
                         
-                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, textureName.c_str()));
+                        setTexture(Director::getInstance()->getTextureCache()->addImage(image, _plistFile + textureName));
 
                         image->release();
                     }
@@ -628,6 +626,14 @@ void ParticleSystem::onEnter()
 
 void ParticleSystem::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     this->unscheduleUpdate();
     Node::onExit();
 }
@@ -683,7 +689,7 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Vec2 currentPosition = Vec2::ZERO;
+    Vec2 currentPosition;
     if (_positionType == PositionType::FREE)
     {
         currentPosition = this->convertToWorldSpace(Vec2::ZERO);
@@ -710,7 +716,6 @@ void ParticleSystem::update(float dt)
                 {
                     Vec2 tmp, radial, tangential;
 
-                    radial = Vec2::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
@@ -1180,4 +1185,3 @@ void ParticleSystem::setScaleY(float newScaleY)
 
 
 NS_CC_END
-

@@ -17,7 +17,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../.. \
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz \
                        -landroid
 
 LOCAL_STATIC_LIBRARIES := luajit_static
@@ -31,6 +30,10 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := cocos2d_lua_static
 
 LOCAL_MODULE_FILENAME := libluacocos2d
+
+ifeq ($(COCOS_SIMULATOR_BUILD),1)
+LOCAL_ARM_MODE := arm
+endif
 
 LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/CCLuaEngine.cpp \
@@ -97,7 +100,8 @@ LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
                    ../manual/cocostudio/CustomGUIReader.cpp \
                    ../manual/cocostudio/lua_cocos2dx_csloader_manual.cpp \
                    ../auto/lua_cocos2dx_csloader_auto.cpp \
-                   ../auto/lua_cocos2dx_studio_auto.cpp
+                   ../auto/lua_cocos2dx_studio_auto.cpp \
+                   ../manual/cocostudio/lua-cocos-studio-conversions.cpp
 
 #spine
 LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
@@ -105,21 +109,25 @@ LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
                    ../auto/lua_cocos2dx_spine_auto.cpp
 
 #ui
-LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
+LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_webview_manual.cpp \
+                   ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
                    ../manual/ui/lua_cocos2dx_ui_manual.cpp \
                    ../auto/lua_cocos2dx_experimental_video_auto.cpp \
-                   ../auto/lua_cocos2dx_ui_auto.cpp
-
-#quick
-LOCAL_SRC_FILES += ../../../../external/lua/quick/lua_cocos2dx_quick_manual.cpp \
-                   ../../../../external/lua/quick/LuaEventNode.cpp \
-                   ../../../../external/lua/quick/LuaNodeManager.cpp \
-                   ../../../../external/lua/quick/LuaTouchEventManager.cpp \
-                   ../../../../external/lua/quick/LuaTouchTargetNode.cpp
+                   ../auto/lua_cocos2dx_ui_auto.cpp \
+                   ../auto/lua_cocos2dx_experimental_webview_auto.cpp
 
 #extension
 LOCAL_SRC_FILES += ../manual/extension/lua_cocos2dx_extension_manual.cpp \
                    ../auto/lua_cocos2dx_extension_auto.cpp \
+
+#physics3d
+LOCAL_SRC_FILES += ../manual/physics3d/lua_cocos2dx_physics3d_manual.cpp \
+                   ../auto/lua_cocos2dx_physics3d_auto.cpp \
+
+#navmesh
+LOCAL_SRC_FILES += ../manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp \
+                   ../manual/navmesh/lua_cocos2dx_navmesh_manual.cpp \
+                   ../auto/lua_cocos2dx_navmesh_auto.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../../external/lua/luajit/include \
@@ -131,6 +139,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../editor-support/cocostudio/ActionTimeline \
                     $(LOCAL_PATH)/../../../editor-support/spine \
                     $(LOCAL_PATH)/../../../ui \
+                    $(LOCAL_PATH)/../../../physics3d \
+                    $(LOCAL_PATH)/../../../navmesh \
                     $(LOCAL_PATH)/../../../../extensions \
                     $(LOCAL_PATH)/../auto \
                     $(LOCAL_PATH)/../manual \
@@ -144,10 +154,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../manual/cocosbuilder \
                     $(LOCAL_PATH)/../manual/spine \
                     $(LOCAL_PATH)/../manual/ui \
+                    $(LOCAL_PATH)/../manual/navmesh \
                     $(LOCAL_PATH)/../../../../external/xxtea \
                     $(LOCAL_PATH)/../../../.. \
-                    $(LOCAL_PATH)/../../../../external/lua \
-                    $(LOCAL_PATH)/../../../../external/lua/quick
+                    $(LOCAL_PATH)/../../../../external/lua
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../../../../external/lua/luajit/include \
@@ -163,7 +173,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/spine \
                            $(LOCAL_PATH)/../manual/extension \
                            $(LOCAL_PATH)/../manual/ui \
-                           $(LOCAL_PATH)/../../../../external/lua/quick \
+                           $(LOCAL_PATH)/../manual/navmesh \
                            $(LOCAL_PATH)/../../../..
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_android_static

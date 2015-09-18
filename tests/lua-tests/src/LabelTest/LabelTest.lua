@@ -45,6 +45,10 @@ end
 function LabelAtlasTest.onNodeEvent(tag)
     if tag == "exit" then
         LabelAtlasTest.layer:unscheduleUpdate()
+    elseif tag == "enter" then
+        if nil ~= LabelAtlasTest.layer then
+            LabelAtlasTest.layer:scheduleUpdateWithPriorityLua(LabelAtlasTest.step, 0)
+        end
     end
 end
 
@@ -63,8 +67,6 @@ function LabelAtlasTest.create()
     layer:addChild(label2, 0, kTagSprite2)
     label2:setPosition( cc.p(10,200) )
     label2:setOpacity( 32 )
-
-    layer:scheduleUpdateWithPriorityLua(LabelAtlasTest.step, 0)
 
     Helper.titleLabel:setString("LabelAtlas")
     Helper.subtitleLabel:setString("Updating label should be fast")
@@ -105,6 +107,10 @@ end
 function LabelAtlasColorTest.onNodeEvent(tag)
     if tag == "exit" then
         LabelAtlasColorTest.layer:unscheduleUpdate()
+    elseif tag == "enter" then
+        if nil ~= LabelAtlasColorTest.layer then
+            LabelAtlasColorTest.layer:scheduleUpdateWithPriorityLua(LabelAtlasColorTest.step, 0)
+        end
     end
 end
 
@@ -135,7 +141,6 @@ function LabelAtlasColorTest.create()
     label2:runAction( repeatAction )
 
     layer:registerScriptHandler(LabelAtlasColorTest.onNodeEvent)
-    layer:scheduleUpdateWithPriorityLua(LabelAtlasColorTest.step, 0)
 
     Helper.titleLabel:setString("LabelAtlas")
     Helper.subtitleLabel:setString("Opacity + Color should work at the same time")
@@ -161,6 +166,8 @@ Atlas3.__index = Atlas3
 function Atlas3.onNodeEvent(tag)
     if tag == "exit" then
         Atlas3.layer:unscheduleUpdate()
+    elseif tag == "enter" then
+        Atlas3.layer:scheduleUpdateWithPriorityLua(Atlas3.step, 0)
     end
 end
 
@@ -211,7 +218,6 @@ function Atlas3.create()
     label3:setPosition( VisibleRect:rightTop() )
 
     layer:registerScriptHandler(Atlas3.onNodeEvent)
-    layer:scheduleUpdateWithPriorityLua(Atlas3.step, 0)
 
     Helper.titleLabel:setString( "LabelBMFont" )
     Helper.subtitleLabel:setString( "Testing alignment. Testing opacity + tint" )

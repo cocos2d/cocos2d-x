@@ -1,0 +1,36 @@
+{
+    "copy_resources": [
+        {
+            "from": "../../src", 
+            "to": "src"
+        }, 
+        {
+            "from": "../../../cpp-tests/Resources/", 
+            "to": "res/",
+            "exclude": [
+                "*.gz"
+            ]
+        }, 
+        {
+            "from": "../../main.js", 
+            "to": ""
+        }, 
+        {
+            "from": "../../project.json", 
+            "to": ""
+        }, 
+        {
+            "from": "../../../../cocos/scripting/js-bindings/script", 
+            "to": "script"
+        },
+        {
+            "from": "../../resjs", 
+            "to": "res/resjs/"
+        }
+    ], 
+    "ndk_module_path": [
+        "../../../..", 
+        "../../../../cocos", 
+        "../../../../external"
+    ]
+}

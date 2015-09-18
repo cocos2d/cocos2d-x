@@ -609,7 +609,7 @@ ActionInterval* CCBAnimationManager::getEaseAction(ActionInterval *pAction, CCBK
     }
     else
     {
-        log("CCBReader: Unkown easing type %d", easingType);
+        log("CCBReader: Unknown easing type %d", static_cast<int>(easingType));
         return pAction;
     }
 }
@@ -663,7 +663,7 @@ Sequence*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* ch
             
             if(target != nullptr)
             {
-                if(selectorName.length() > 0)
+                if(!selectorName.empty())
                 {
                     SEL_CallFuncN selCallFunc = 0;
                     

@@ -24,7 +24,7 @@
 #ifndef __LUA_WEB_SOCKET_H__
 #define __LUA_WEB_SOCKET_H__
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #ifdef __cplusplus
 extern "C" {
@@ -35,6 +35,8 @@ extern "C" {
 #endif
 
 #include "network/WebSocket.h"
+
+///@cond
 class LuaWebSocket: public cocos2d::network::WebSocket,public cocos2d::network::WebSocket::Delegate
 {
 public:
@@ -55,6 +57,7 @@ public:
 
 TOLUA_API int tolua_web_socket_open(lua_State* tolua_S);
 TOLUA_API int register_web_socket_manual(lua_State* tolua_S);
+///@endcond
 
 #endif //(CC_TARGET_PLATFORM == CC_PLATFORM_IOS ...
 

@@ -17,8 +17,8 @@ public:
     
 public:
     virtual bool init() override;
-    virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void onAdd() override;
+    virtual void onRemove() override;
     virtual void update(float delta) override;
    
    static PlayerController* create(void);

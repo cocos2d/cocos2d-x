@@ -7,7 +7,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -43,6 +43,11 @@ namespace cocostudio
             instanceTextAtalsReader = new (std::nothrow) TextAtlasReader();
         }
         return instanceTextAtalsReader;
+    }
+    
+    void TextAtlasReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextAtalsReader);
     }
     
     void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -247,25 +252,50 @@ namespace cocostudio
             case 0:
             {
                 const char* cmfPath = cmftDic->path()->c_str();
-                std::string stringValue = options->stringValue()->c_str();
-                int itemWidth = options->itemWidth();
-                int itemHeight = options->itemHeight();
-                labelAtlas->setProperty(stringValue,
-                                        cmfPath,
-                                        itemWidth,
-                                        itemHeight,
-                                        options->startCharMap()->c_str());
+                
+                bool fileExist = false;
+                std::string errorFilePath = "";
+                
+                if (FileUtils::getInstance()->isFileExist(cmfPath))
+                {
+                    fileExist = true;
+                    
+                    std::string stringValue = options->stringValue()->c_str();
+                    int itemWidth = options->itemWidth();
+                    int itemHeight = options->itemHeight();
+                    labelAtlas->setProperty(stringValue,
+                                            cmfPath,
+                                            itemWidth,
+                                            itemHeight,
+                                            options->startCharMap()->c_str());
+                }
+                else
+                {
+                    errorFilePath = cmfPath;
+                    fileExist = false;
+                }
+                
+                //if (!fileExist)
+                //{
+                //    auto label = Label::create();
+                //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                //    labelAtlas->addChild(label);
+                //}
                 break;
             }
+                
             case 1:
                 CCLOG("Wrong res type of LabelAtlas!");
                 break;
+                
             default:
                 break;
         }
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        labelAtlas->ignoreContentAdaptWithSize(true);
         
     }
     

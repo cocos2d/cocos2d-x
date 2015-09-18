@@ -36,7 +36,7 @@ set(_sqlite3_inc sqlite3.h)
 set(_sqlite3_libs sqlite3)
 
 set(_gles_prefix GLEW)
-set(_gles_inc glew.h)
+set(_gles_inc GL/glew.h)
 set(_gles_inc_paths OGLES)
 set(_gles_libs glew32)
 
@@ -58,7 +58,7 @@ set(_OpenalSoft_inc_paths AL)
 set(_OpenalSoft_libs OpenAL32)
 
 set(_zlib_inc zlib.h)
-set(_zlib_libs libzlib)
+set(_zlib_libs z libzlib libz)
 
 set(_fmod_prefix FMODEX)
 set(_fmod_inc fmod.h)
@@ -77,7 +77,7 @@ set(all_prebuilt_libs
 
 
 if(MACOSX)
-  list(APPEND all_prebuilt_libs glfw3)
+  list(APPEND all_prebuilt_libs glfw3 zlib)
 endif()
 
 # We use MSVC instead of WINDOWS because it can be mingw that can't use our prebuilt libs

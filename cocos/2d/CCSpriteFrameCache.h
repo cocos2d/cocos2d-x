@@ -47,41 +47,60 @@ class Sprite;
 class Texture2D;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 
-/** @brief Singleton that handles the loading of the sprite frames.
+/** @class SpriteFrameCache
+ * @brief Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.
  @since v0.9
+ @js cc.spriteFrameCache
  */
 class CC_DLL SpriteFrameCache : public Ref
 {
 public:
-    /** Returns the shared instance of the Sprite Frame cache */
+    /** Returns the shared instance of the Sprite Frame cache.
+     *
+     * @return The instance of the Sprite Frame Cache.
+     * @js NA
+     */
     static SpriteFrameCache* getInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated Use getInstance() instead 
+     @js NA 
+	*/
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
-    /** Destroys the cache. It releases all the Sprite Frames and the retained instance. */
+    /** Destroys the cache. It releases all the Sprite Frames and the retained instance.
+	 * @js NA
+     */
     static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead  */
+    /** @deprecated Use destroyInstance() instead 
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
-    /**
+    /** Destructor.
      * @js NA
      * @lua NA
      */
     virtual ~SpriteFrameCache();
+    
+    /** Initialize method.
+     *
+     * @return if success return true.
+     */
     bool init();
 
     /** Adds multiple Sprite Frames from a plist file.
-     * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
+     * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png.
      * If you want to use another texture, you should use the addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) method.
      * @js addSpriteFrames
      * @lua addSpriteFrames
+     *
+     * @param plist Plist file name.
      */
     void addSpriteFramesWithFile(const std::string& plist);
 
@@ -89,25 +108,46 @@ public:
      @since v0.99.5
      * @js addSpriteFrames
      * @lua addSpriteFrames
+     *
+     * @param plist Plist file name.
+     * @param textureFileName Texture file name.
      */
     void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
      * @js addSpriteFrames
      * @lua addSpriteFrames
+     *
+     * @param plist Plist file name.
+     * @param texture Texture pointer.
      */
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
     /** Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. 
-     * @js addSpriteFrames
+     * @js NA
      * @lua addSpriteFrames
+     *
+     * @param plist_content Plist file content string.
+     * @param texture Texture pointer.
      */
     void addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture);
 
     /** Adds an sprite frame with a given name.
      If the name already exists, then the contents of the old name will be replaced with the new one.
+     *
+     * @param frame A certain sprite frame.
+     * @param frameName The name of the sprite frame.
      */
     void addSpriteFrame(SpriteFrame *frame, const std::string& frameName);
+
+    /** Check if multiple Sprite Frames from a plist file have been loaded.
+    * @js NA
+    * @lua NA
+    *
+    * @param plist Plist file name.
+    * @return True if the file is loaded.
+    */
+    bool isSpriteFramesWithFileLoaded(const std::string& plist) const;
 
     /** Purges the dictionary of loaded sprite frames.
      * Call this method if you receive the "Memory Warning".
@@ -120,28 +160,39 @@ public:
     /** Removes unused sprite frames.
      * Sprite Frames that have a retain count of 1 will be deleted.
      * It is convenient to call this method after when starting a new Scene.
+	 * @js NA
      */
     void removeUnusedSpriteFrames();
 
-    /** Deletes an sprite frame from the sprite frame cache. */
+    /** Deletes an sprite frame from the sprite frame cache. 
+     *
+     * @param name The name of the sprite frame that needs to removed.
+     */
     void removeSpriteFrameByName(const std::string& name);
 
     /** Removes multiple Sprite Frames from a plist file.
     * Sprite Frames stored in this file will be removed.
     * It is convenient to call this method when a specific texture needs to be removed.
     * @since v0.99.5
+    *
+    * @param plist The name of the plist that needs to removed.
     */
     void removeSpriteFramesFromFile(const std::string& plist);
 
     /** Removes multiple Sprite Frames from a plist file content.
     * Sprite Frames stored in this file will be removed.
     * It is convenient to call this method when a specific texture needs to be removed.
+    *
+    * @param plist_content The string of the plist content that needs to removed.
+    * @js NA
     */
     void removeSpriteFramesFromFileContent(const std::string& plist_content);
 
     /** Removes all Sprite Frames associated with the specified textures.
      * It is convenient to call this method when a specific texture needs to be removed.
      * @since v0.995.
+     *
+     * @param texture The texture that needs to removed.
      */
     void removeSpriteFramesFromTexture(Texture2D* texture);
 
@@ -150,6 +201,9 @@ public:
      You should retain the returned copy if you are going to use it.
      * @js getSpriteFrame
      * @lua getSpriteFrame
+     *
+     * @param name A certain sprite frame name.
+     * @return The sprite frame.
      */
     SpriteFrame* getSpriteFrameByName(const std::string& name);
 
@@ -175,7 +229,7 @@ protected:
     std::set<std::string>*  _loadedFileNames;
 };
 
-// end of sprite_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

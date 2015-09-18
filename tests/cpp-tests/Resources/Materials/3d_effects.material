@@ -1,0 +1,121 @@
+// A "Material" file can contain one or more materials
+material spaceship
+{
+	// A Material contains one or more Techniques
+	// The first technique is going to be the default one.
+	// In this case, the default one is "unlit"
+	// A "Technique" describes how the material is going to be renderer
+	// Techniques could be:
+	//  - How a Model is going to be renderer in high quality
+	//  - or in low quality
+	//  - or when using lights
+	//  - or when not using lights
+	//  - or to "outline" a model
+	// etc...
+	technique normal
+	{
+		// A technique can contain one or more passes
+		// A "Pass" describes the "draws" that will be needed
+		//   in order to achieve the desired technique
+		// The 3 properties of the Passes are:
+		//
+		// renderState:
+		//   resposinble for depth buffer, cullface, stencil, blending, etc.
+		// shader:
+		//   responsible for the vertex and frag shaders, and its uniforms, including the samplers
+		pass 0
+		{
+			shader
+			{
+				vertexShader = Shaders3D/3d_position_tex.vert
+				fragmentShader = Shaders3D/3d_color_tex.frag
+				// sampler:
+				//   responsible for setting the texture and its parameters
+				//   the Id of the sampler is the uniform name
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
+			}
+		}
+	}
+
+	// This is another technique. It "outlines" the model
+	// It has 3 passes in order to get the desired effect
+	technique outline
+	{
+		// 1st pass:
+		// creates a yellow outline of only the hull 
+		pass outline
+		{
+			renderState
+			{
+				cullFace = true
+				cullFaceSide = BACK
+				depthTest = false
+			}
+			shader
+			{
+				vertexShader = Shaders3D/OutLine.vert
+				fragmentShader = Shaders3D/OutLine.frag
+				// Uniforms
+				OutLineColor = 1,1,0
+				OutlineWidth = 0.04
+			}
+		}
+
+		// 2nd pass:
+		// creates a blue outline of the borders
+		pass outline thick
+		{
+			renderState
+			{
+				cullFace = true
+				cullFaceSide = FRONT
+				depthTest = true
+			}
+			shader
+			{
+				vertexShader = Shaders3D/OutLine.vert
+				fragmentShader = Shaders3D/OutLine.frag
+				// Uniforms
+				OutLineColor = 0,0,1
+				OutlineWidth = 0.02
+			}
+		}
+		// 3rd pass
+		// Renders the model "normally"
+		// When a 'renderState' is not present it will use the default renderState
+		pass normal
+		{
+			shader
+			{
+				vertexShader = Shaders3D/3d_position_tex.vert
+				fragmentShader = Shaders3D/3d_color_tex.frag
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
+			}
+		}
+	}
+	// Another technique:
+	// This one renders the model using the lights avaiable from the Scene
+	technique lit
+	{
+		pass 0
+		{
+			shader
+			{
+				// You can pass "compile time" variables to your shader using a 'defines'
+				defines = MAX_POINT_LIGHT_NUM 1;MAX_SPOT_LIGHT_NUM 1;MAX_DIRECTIONAL_LIGHT_NUM 1
+				vertexShader = Shaders3D/3d_position_normal_tex.vert
+				fragmentShader = Shaders3D/3d_color_normal_tex.frag
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
+			}
+		}
+	}
+}

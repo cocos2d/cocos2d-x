@@ -26,6 +26,8 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "lua_cocos2dx_experimental_video_auto.hpp"
 #include "lua_cocos2dx_experimental_video_manual.hpp"
+#include "lua_cocos2dx_experimental_webview_auto.hpp"
+#include "lua_cocos2dx_experimental_webview_manual.hpp"
 #endif
 #include "cocos2d.h"
 #include "tolua_fix.h"
@@ -103,6 +105,62 @@ tolua_lerror:
 #endif
 }
 
+static int lua_cocos2dx_Widget_addClickEventListener(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Widget* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<Widget*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Widget_addClickEventListener'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+        
+        self->addClickEventListener([=](cocos2d::Ref* sender){
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+            stack->pushObject(sender, "cc.Ref");
+            stack->executeFunctionByHandler(handler, 1);
+            stack->clean();
+        });
+        
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
+        return 0;
+    }
+    
+    luaL_error(L, "'addClickEventListener' function of Widget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'addClickEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static void extendWidget(lua_State* L)
 {
     lua_pushstring(L, "ccui.Widget");
@@ -110,6 +168,7 @@ static void extendWidget(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "addTouchEventListener", lua_cocos2dx_Widget_addTouchEventListener);
+        tolua_function(L, "addClickEventListener", lua_cocos2dx_Widget_addClickEventListener);
     }
     lua_pop(L, 1);
 }
@@ -172,6 +231,140 @@ static void extendCheckBox(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "addEventListener", lua_cocos2dx_CheckBox_addEventListener);
+    }
+    lua_pop(L, 1);
+}
+
+static int lua_cocos2dx_RadioButton_addEventListener(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+
+    int argc = 0;
+    RadioButton* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+  if (!tolua_isusertype(L,1,"ccui.RadioButton",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    self = static_cast<RadioButton*>(tolua_tousertype(L,1,0));
+
+#if COCOS2D_DEBUG >= 1
+  if (nullptr == self) {
+    tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_RadioButton_addEventListener'\n", NULL);
+    return 0;
+  }
+#endif
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+
+        self->addEventListener([=](RadioButton* radioButton,RadioButton::EventType eventType){
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+            stack->pushObject(radioButton, "ccui.RadioButton");
+            stack->pushInt((int)eventType);
+
+            stack->executeFunctionByHandler(handler, 2);
+            stack->clean();
+        });
+
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
+        return 0;
+    }
+
+    luaL_error(L, "'addEventListener' function of CheckBox has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendRadioButton(lua_State* L)
+{
+    lua_pushstring(L, "ccui.RadioButton");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "addEventListener", lua_cocos2dx_RadioButton_addEventListener);
+    }
+    lua_pop(L, 1);
+}
+
+static int lua_cocos2dx_RadioButtonGroup_addEventListener(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+
+    int argc = 0;
+    RadioButtonGroup* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+  if (!tolua_isusertype(L,1,"ccui.RadioButtonGroup",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    self = static_cast<RadioButtonGroup*>(tolua_tousertype(L,1,0));
+
+#if COCOS2D_DEBUG >= 1
+  if (nullptr == self) {
+    tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_RadioButtonGroup_addEventListener'\n", NULL);
+    return 0;
+  }
+#endif
+    argc = lua_gettop(L) - 1;
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+
+        self->addEventListener([=](RadioButton* radioButton,int index,RadioButtonGroup::EventType eventType){
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+
+            stack->pushObject(radioButton, "ccui.RadioButton");
+            stack->pushInt(index);
+            stack->pushInt((int)eventType);
+
+            stack->executeFunctionByHandler(handler, 3);
+            stack->clean();
+        });
+
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
+        return 0;
+    }
+
+    luaL_error(L, "'addEventListener' function of RadioButtonGroup has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'addEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
+static void extendRadioButtonGroup(lua_State* L)
+{
+    lua_pushstring(L, "ccui.RadioButtonGroup");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "addEventListener", lua_cocos2dx_RadioButtonGroup_addEventListener);
     }
     lua_pop(L, 1);
 }
@@ -791,6 +984,8 @@ int register_all_cocos2dx_ui_manual(lua_State* L)
         return 0;
     extendWidget(L);
     extendCheckBox(L);
+    extendRadioButton(L);
+    extendRadioButtonGroup(L);
     extendSlider(L);
     extendTextField(L);
     extendPageView(L);
@@ -988,6 +1183,8 @@ int register_ui_moudle(lua_State* L)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         register_all_cocos2dx_experimental_video(L);
         register_all_cocos2dx_experimental_video_manual(L);
+		register_all_cocos2dx_experimental_webview(L);
+		register_all_cocos2dx_experimental_webview_manual(L);
 #endif
         extendEventListenerFocusEvent(L);
     }

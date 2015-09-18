@@ -24,12 +24,12 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCFontFreeType.h"
-
+#include FT_BBOX_H
+#include "edtaa3func.h"
+#include "CCFontAtlas.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
-#include "edtaa3func.h"
-#include FT_BBOX_H
 
 NS_CC_BEGIN
 
@@ -37,6 +37,9 @@ NS_CC_BEGIN
 FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
+
+const char* FontFreeType::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
+const char* FontFreeType::_glyphNEHE = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
 typedef struct _DataRef
 {
@@ -53,7 +56,7 @@ FontFreeType * FontFreeType::create(const std::string &fontName, int fontSize, G
     if (!tempFont)
         return nullptr;
     
-    tempFont->setCurrentGlyphCollection(glyphs, customGlyphs);
+    tempFont->setGlyphCollection(glyphs, customGlyphs);
     
     if (!tempFont->createFontObject(fontName, fontSize))
     {
@@ -97,6 +100,10 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */,int outline /
 , _stroker(nullptr)
 , _distanceFieldEnabled(distanceFieldEnabled)
 , _outlineSize(0.0f)
+, _lineHeight(0)
+, _fontAtlas(nullptr)
+, _encoding(FT_ENCODING_UNICODE)
+, _usedGlyphs(GlyphCollection::ASCII)
 {
     if (outline > 0)
     {
@@ -135,9 +142,29 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     if (FT_New_Memory_Face(getFTLibrary(), s_cacheFontData[fontName].data.getBytes(), s_cacheFontData[fontName].data.getSize(), 0, &face ))
         return false;
     
-    //we want to use unicode
     if (FT_Select_Charmap(face, FT_ENCODING_UNICODE))
-        return false;
+    {
+        int foundIndex = -1;
+        for (int charmapIndex = 0; charmapIndex < face->num_charmaps; charmapIndex++)
+        {
+            if (face->charmaps[charmapIndex]->encoding != FT_ENCODING_NONE)
+            {
+                foundIndex = charmapIndex;
+                break;
+            }
+        }
+
+        if (foundIndex == -1)
+        {
+            return false;
+        }
+
+        _encoding = face->charmaps[foundIndex]->encoding;
+        if (FT_Select_Charmap(face, _encoding))
+        {
+            return false;
+        }
+    }
 
     // set the requested font size
     int dpi = 72;
@@ -147,6 +174,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     
     // store the face globally
     _fontRef = face;
+    _lineHeight = static_cast<int>(_fontRef->size->metrics.height >> 6);
     
     // done and good
     return true;
@@ -172,17 +200,21 @@ FontFreeType::~FontFreeType()
 
 FontAtlas * FontFreeType::createFontAtlas()
 {
-    FontAtlas *atlas = new (std::nothrow) FontAtlas(*this);
-    if (_usedGlyphs != GlyphCollection::DYNAMIC)
+    if (_fontAtlas == nullptr)
     {
-        std::u16string utf16;
-        if (StringUtils::UTF8ToUTF16(getCurrentGlyphCollection(), utf16))
+        _fontAtlas = new (std::nothrow) FontAtlas(*this);
+        if (_fontAtlas && _usedGlyphs != GlyphCollection::DYNAMIC)
         {
-            atlas->prepareLetterDefinitions(utf16);
+            std::u16string utf16;
+            if (StringUtils::UTF8ToUTF16(getGlyphCollection(), utf16))
+            {
+                _fontAtlas->prepareLetterDefinitions(utf16);
+            }
         }
+        this->release();
     }
-    this->release();
-    return atlas;
+    
+    return _fontAtlas;
 }
 
 int * FontFreeType::getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
@@ -234,11 +266,6 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     return (static_cast<int>(kerning.x >> 6));
 }
 
-int FontFreeType::getFontMaxHeight() const
-{
-    return (static_cast<int>(_fontRef->size->metrics.height >> 6));
-}
-
 int FontFreeType::getFontAscender() const
 {
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
@@ -247,32 +274,29 @@ int FontFreeType::getFontAscender() const
 unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
-    unsigned char * ret = nullptr;
+    unsigned char* ret = nullptr;
 
-    do 
+    do
     {
-        if (!_fontRef)
-            break;
-
-        auto glyphIndex = FT_Get_Char_Index(_fontRef, theChar);
-        if(!glyphIndex)
+        if (_fontRef == nullptr)
             break;
 
         if (_distanceFieldEnabled)
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT))
                 break;
         }
         else
         {
-            if (FT_Load_Glyph(_fontRef,glyphIndex,FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
+            if (FT_Load_Char(_fontRef, theChar, FT_LOAD_RENDER | FT_LOAD_NO_AUTOHINT))
                 break;
         }
 
-        outRect.origin.x    = _fontRef->glyph->metrics.horiBearingX >> 6;
-        outRect.origin.y    = - (_fontRef->glyph->metrics.horiBearingY >> 6);
-        outRect.size.width  =   (_fontRef->glyph->metrics.width  >> 6);
-        outRect.size.height =   (_fontRef->glyph->metrics.height >> 6);
+        auto& metrics = _fontRef->glyph->metrics;
+        outRect.origin.x = metrics.horiBearingX >> 6;
+        outRect.origin.y = -(metrics.horiBearingY >> 6);
+        outRect.size.width = (metrics.width >> 6);
+        outRect.size.height = (metrics.height >> 6);
 
         xAdvance = (static_cast<int>(_fontRef->glyph->metrics.horiAdvance >> 6));
 
@@ -294,41 +318,54 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
                 break;
             }
 
-            auto outlineWidth = (bbox.xMax - bbox.xMin)>>6;
-            auto outlineHeight = (bbox.yMax - bbox.yMin)>>6;
+            long glyphMinX = outRect.origin.x;
+            long glyphMaxX = outRect.origin.x + outWidth;
+            long glyphMinY = -outHeight - outRect.origin.y;
+            long glyphMaxY = -outRect.origin.y;
 
-            auto blendWidth = outlineWidth > outWidth ? outlineWidth : outWidth;
-            auto blendHeight = outlineHeight > outHeight ? outlineHeight : outHeight;
+            auto outlineMinX = bbox.xMin >> 6;
+            auto outlineMaxX = bbox.xMax >> 6;
+            auto outlineMinY = bbox.yMin >> 6;
+            auto outlineMaxY = bbox.yMax >> 6;
+            auto outlineWidth = outlineMaxX - outlineMinX;
+            auto outlineHeight = outlineMaxY - outlineMinY;
 
-            long index,index2;
+            auto blendImageMinX = MIN(outlineMinX, glyphMinX);
+            auto blendImageMaxY = MAX(outlineMaxY, glyphMaxY);
+            auto blendWidth = MAX(outlineMaxX, glyphMaxX) - blendImageMinX;
+            auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
+
+            outRect.origin.x = blendImageMinX;
+            outRect.origin.y = -blendImageMaxY + _outlineSize;
+
+            long index, index2;
             auto blendImage = new unsigned char[blendWidth * blendHeight * 2];
             memset(blendImage, 0, blendWidth * blendHeight * 2);
 
-            auto px = (blendWidth - outlineWidth) / 2;
-            auto py = (blendHeight - outlineHeight) / 2;
+            auto px = outlineMinX - blendImageMinX;
+            auto py = blendImageMaxY - outlineMaxY;
             for (int x = 0; x < outlineWidth; ++x)
             {
                 for (int y = 0; y < outlineHeight; ++y)
                 {
-                    index = px + x + ( (py + y) * blendWidth );
+                    index = px + x + ((py + y) * blendWidth);
                     index2 = x + (y * outlineWidth);
                     blendImage[2 * index] = outlineBitmap[index2];
                 }
             }
 
-            px = (blendWidth - outWidth) / 2;
-            py = (blendHeight - outHeight) / 2;
+            px = glyphMinX - blendImageMinX;
+            py = blendImageMaxY - glyphMaxY;
             for (int x = 0; x < outWidth; ++x)
             {
                 for (int y = 0; y < outHeight; ++y)
                 {
-                    index = px + x + ( (y + py) * blendWidth );
+                    index = px + x + ((y + py) * blendWidth);
                     index2 = x + (y * outWidth);
                     blendImage[2 * index + 1] = copyBitmap[index2];
                 }
             }
 
-            xAdvance += 2 * _outlineSize;
             outRect.size.width  =  blendWidth;
             outRect.size.height =  blendHeight;
             outWidth  = blendWidth;
@@ -359,9 +396,7 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
 unsigned char * FontFreeType::getGlyphBitmapWithOutline(unsigned short theChar, FT_BBox &bbox)
 {   
     unsigned char* ret = nullptr;
-
-    FT_UInt gindex = FT_Get_Char_Index(_fontRef, theChar);
-    if (FT_Load_Glyph(_fontRef, gindex, FT_LOAD_NO_BITMAP) == 0)
+    if (FT_Load_Char(_fontRef, theChar, FT_LOAD_NO_BITMAP) == 0)
     {
         if (_fontRef->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
         {
@@ -562,6 +597,38 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
             iY += 1;
         }
     } 
+}
+
+void FontFreeType::setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs /* = nullptr */)
+{
+    _usedGlyphs = glyphs;
+    if (glyphs == GlyphCollection::CUSTOM)
+    {
+        _customGlyphs = customGlyphs;
+    }
+}
+
+const char* FontFreeType::getGlyphCollection() const
+{
+    const char* glyphCollection = nullptr;
+    switch (_usedGlyphs)
+    {
+    case cocos2d::GlyphCollection::DYNAMIC:
+        break;
+    case cocos2d::GlyphCollection::NEHE:
+        glyphCollection = _glyphNEHE;
+        break;
+    case cocos2d::GlyphCollection::ASCII:
+        glyphCollection = _glyphASCII;
+        break;
+    case cocos2d::GlyphCollection::CUSTOM:
+        glyphCollection = _customGlyphs.c_str();
+        break;
+    default:
+        break;
+    }
+
+    return glyphCollection;
 }
 
 NS_CC_END

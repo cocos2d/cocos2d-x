@@ -86,4 +86,14 @@
 -- @field [parent=#cc] EventListenerAssetsManagerEx#EventListenerAssetsManagerEx EventListenerAssetsManagerEx preloaded module
 
 
+--------------------------------------------------------
+-- the cc ParticleSystem3D
+-- @field [parent=#cc] ParticleSystem3D#ParticleSystem3D ParticleSystem3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc PUParticleSystem3D
+-- @field [parent=#cc] PUParticleSystem3D#PUParticleSystem3D PUParticleSystem3D preloaded module
+
+
 return nil

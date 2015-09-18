@@ -27,19 +27,21 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UIPageViewEditorTests);
+
 class UIPageViewTest_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIPageViewTest_Editor);
+
     UIPageViewTest_Editor();
     ~UIPageViewTest_Editor();
-    bool init();
+
+    virtual bool init() override;
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIPageViewTest_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest_Editor__) */

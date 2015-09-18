@@ -12,6 +12,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Bone] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Bone#Bone self (return value: ccs.Bone)
+        
+--------------------------------
+-- 
 -- @function [parent=#Bone] isIgnoreMovementBoneData 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -20,6 +27,7 @@
 --  Update zorder
 -- @function [parent=#Bone] updateZOrder 
 -- @param self
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
@@ -35,10 +43,11 @@
         
 --------------------------------
 -- Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent<br>
--- param 	child  the child you want to add
+-- param     child  the child you want to add
 -- @function [parent=#Bone] addChildBone 
 -- @param self
 -- @param #ccs.Bone child
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
@@ -63,12 +72,14 @@
 --  Update color to render display
 -- @function [parent=#Bone] updateColor 
 -- @param self
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] setTransformDirty 
 -- @param self
 -- @param #bool dirty
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
@@ -81,21 +92,23 @@
 -- @function [parent=#Bone] removeDisplay 
 -- @param self
 -- @param #int index
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] setBoneData 
 -- @param self
 -- @param #ccs.BoneData boneData
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
--- @overload self, string         
--- @overload self         
--- @function [parent=#Bone] init
+-- Initializes a Bone with the specified name<br>
+-- param name Bone's name.
+-- @function [parent=#Bone] init 
 -- @param self
 -- @param #string name
 -- @return bool#bool ret (return value: bool)
-
+        
 --------------------------------
 -- Set parent bone.<br>
 -- If parent is NUll, then also remove this bone from armature.<br>
@@ -105,6 +118,7 @@
 -- @function [parent=#Bone] setParentBone 
 -- @param self
 -- @param #ccs.Bone parent
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- @overload self, cc.Node, int         
@@ -113,13 +127,21 @@
 -- @param self
 -- @param #ccs.DisplayData displayData
 -- @param #int index
+-- @return Bone#Bone self (return value: ccs.Bone)
 
+--------------------------------
+-- 
+-- @function [parent=#Bone] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
 --------------------------------
 -- Remove itself from its parent.<br>
 -- param recursion    whether or not to remove childBone's display
 -- @function [parent=#Bone] removeFromParent 
 -- @param self
 -- @param #bool recursion
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
@@ -145,6 +167,7 @@
 -- @param self
 -- @param #int index
 -- @param #bool force
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
@@ -152,32 +175,37 @@
 -- @param self
 -- @param #string name
 -- @param #bool force
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] setArmature 
 -- @param self
 -- @param #ccs.Armature armature
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] setBlendDirty 
 -- @param self
 -- @param #bool dirty
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- Removes a child Bone<br>
--- param 	bone   the bone you want to remove
+-- param     bone   the bone you want to remove
 -- @function [parent=#Bone] removeChildBone 
 -- @param self
 -- @param #ccs.Bone bone
 -- @param #bool recursion
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] setChildArmature 
 -- @param self
 -- @param #ccs.Armature childArmature
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
@@ -213,37 +241,48 @@
 
 --------------------------------
 -- 
--- @function [parent=#Bone] updateDisplayedColor 
--- @param self
--- @param #color3b_table parentColor
-        
---------------------------------
--- 
--- @function [parent=#Bone] setLocalZOrder 
--- @param self
--- @param #int zOrder
-        
---------------------------------
--- 
 -- @function [parent=#Bone] getNodeToWorldTransform 
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
 -- 
+-- @function [parent=#Bone] setLocalZOrder 
+-- @param self
+-- @param #int zOrder
+-- @return Bone#Bone self (return value: ccs.Bone)
+        
+--------------------------------
+-- 
 -- @function [parent=#Bone] update 
 -- @param self
 -- @param #float delta
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- 
 -- @function [parent=#Bone] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
+-- @return Bone#Bone self (return value: ccs.Bone)
+        
+--------------------------------
+-- Initializes an empty Bone with nothing init.
+-- @function [parent=#Bone] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Bone] updateDisplayedColor 
+-- @param self
+-- @param #color3b_table parentColor
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 --------------------------------
 -- js ctor
 -- @function [parent=#Bone] Bone 
 -- @param self
+-- @return Bone#Bone self (return value: ccs.Bone)
         
 return nil

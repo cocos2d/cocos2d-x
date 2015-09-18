@@ -4,13 +4,17 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "network/HttpClient.h"
+#include "BaseTest.h"
 
-class HttpClientTest : public cocos2d::Layer
+DEFINE_TEST_SUITE(HttpClientTests);
+
+class HttpClientTest : public TestCase
 {
 public:
+    CREATE_FUNC(HttpClientTest);
+
     HttpClientTest();
     virtual ~HttpClientTest();
-    void toExtensionsMainLayer(cocos2d::Ref *sender);
     
     //Menu Callbacks
     void onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate);
@@ -22,10 +26,10 @@ public:
     //Http Response Callback
     void onHttpRequestCompleted(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
 
+    virtual std::string title() const override { return "Http Request Test"; }
+
 private:
     cocos2d::Label* _labelStatusCode;
 };
-
-void runHttpClientTest();
 
 #endif //__HTTPREQUESTHTTP_H

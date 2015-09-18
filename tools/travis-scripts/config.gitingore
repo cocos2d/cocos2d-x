@@ -109,6 +109,9 @@ Device-Release/
 # CTags
 tags
 
+# Ignore web dir
+/web
+
 #include
 !/tools/cocos2d-console/console/bin/
 !/plugin-x/plugin-x_ios.xcworkspace/
@@ -116,6 +119,7 @@ tags
 # Permit plugins to ship third-party libraries.
 !/plugin/plugins/*/proj.android/libs/*.jar
 !/plugin/plugins/*/proj.android/libs
+!/tools/bindings-generator/tools/win32/*
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

@@ -30,10 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 //
+
 #include "ccShader_Position_uColor.frag"
 
-#ifdef CC_NO_GL_POINTSIZE
-#include "ccShader_Position_uColor-no-gl_PointSize.vert"
+#ifdef CC_WINDOWS_PHONE_8_1
+#include "ccShader_Position_uColor_wp81.vert"
 #else
 #include "ccShader_Position_uColor.vert"
 #endif
@@ -41,6 +42,13 @@ NS_CC_BEGIN
 //
 #include "ccShader_PositionColor.frag"
 #include "ccShader_PositionColor.vert"
+
+//
+#ifdef CC_WINDOWS_PHONE_8_1
+#include "ccShader_PositionColorTextureAsPointsize_wp81.vert"
+#else
+#include "ccShader_PositionColorTextureAsPointsize.vert"
+#endif
 
 //
 #include "ccShader_PositionTexture.frag"
@@ -68,6 +76,7 @@ NS_CC_BEGIN
 #include "ccShader_PositionColorLengthTexture.frag"
 #include "ccShader_PositionColorLengthTexture.vert"
 
+#include "ccShader_UI_Gray.frag"
 //
 #include "ccShader_Label.vert"
 #include "ccShader_Label_df.frag"
@@ -82,5 +91,13 @@ NS_CC_BEGIN
 #include "ccShader_3D_PositionNormalTex.vert"
 #include "ccShader_3D_ColorNormal.frag"
 #include "ccShader_3D_ColorNormalTex.frag"
+#include "ccShader_3D_Particle.vert"
+#include "ccShader_3D_Particle.frag"
+#include "ccShader_3D_Skybox.vert"
+#include "ccShader_3D_Skybox.frag"
+#include "ccShader_3D_Terrain.vert"
+#include "ccShader_3D_Terrain.frag"
+#include "ccShader_CameraClear.vert"
+#include "ccShader_CameraClear.frag"
 
 NS_CC_END

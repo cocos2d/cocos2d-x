@@ -265,7 +265,7 @@ cc.Handler.EVENT_SPINE            = 52
 cc.Handler.EVENT_PHYSICS_CONTACT_BEGIN = 53
 cc.Handler.EVENT_PHYSICS_CONTACT_PRESOLVE = 54
 cc.Handler.EVENT_PHYSICS_CONTACT_POSTSOLVE = 55
-cc.Handler.EVENT_PHYSICS_CONTACT_SEPERATE = 56
+cc.Handler.EVENT_PHYSICS_CONTACT_SEPARATE = 56
 cc.Handler.EVENT_FOCUS = 57
 cc.Handler.EVENT_CONTROLLER_CONNECTED = 58
 cc.Handler.EVENT_CONTROLLER_DISCONNECTED = 59
@@ -327,8 +327,11 @@ cc.KeyCodeKey =
     "KEY_RETURN",
     "KEY_CAPS_LOCK",
     "KEY_SHIFT",
+    "KEY_RIGHT_SHIFT",
     "KEY_CTRL",
+    "KEY_RIGHT_CTRL",
     "KEY_ALT",
+    "KEY_RIGHT_ALT",
     "KEY_MENU",
     "KEY_HYPER",
     "KEY_INSERT",
@@ -488,6 +491,9 @@ for k,v in ipairs(cc.KeyCodeKey) do
 end
 
 cc.KeyCode.KEY_BACK = cc.KeyCode.KEY_ESCAPE
+cc.KeyCode.KEY_LEFT_SHIFT = cc.KeyCode.KEY_SHIFT
+cc.KeyCode.KEY_LEFT_CTRL  = cc.KeyCode.KEY_CTRL
+cc.KeyCode.KEY_LEFT_ALT   = cc.KeyCode.KEY_ALT
 
 cc.EventAssetsManagerEx =
 {
@@ -502,6 +508,8 @@ cc.EventAssetsManagerEx =
         ASSET_UPDATED = 6,
         ERROR_UPDATING = 7,
         UPDATE_FINISHED = 8,
+        UPDATE_FAILED = 9,
+        ERROR_DECOMPRESS = 10
     },
 }
 
@@ -542,6 +550,14 @@ cc.CameraFlag =
     USER6 = 64,
     USER7 = 128,
     USER8 = 256,
+}
+
+cc.CameraBackgroundBrush.BrushType = 
+{
+    NONE = 0,
+    DEPTH = 1,
+    COLOR = 2,
+    SKYBOX = 3,
 }
 
 cc.BillBoard_Mode =
@@ -604,3 +620,19 @@ cc.LightFlag =
     LIGHT14 = math.pow(2,14),
     LIGHT15 = math.pow(2,15),
 }
+
+cc.AsyncTaskPool.TaskType =
+{
+    TASK_IO = 0,
+    TASK_NETWORK = 1,
+    TASK_OTHER = 2,
+    TASK_MAX_TYPE = 3,  
+}
+
+
+cc.RED = cc.c3b(255,0,0)
+cc.GREEN = cc.c3b(0,255,0)
+cc.BLUE = cc.c3b(0,0,255)
+cc.BLACK = cc.c3b(0,0,0)
+cc.WHITE = cc.c3b(255,255,255)
+cc.YELLOW = cc.c3b(255,255,0)

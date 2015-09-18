@@ -32,6 +32,8 @@
 #include "jni/JniHelper.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerKeyboard.h"
+#include "platform/CCFileUtils.h"
+#include "ui/UIHelper.h"
 
 //-----------------------------------------------------------------------------------------------------------
 #define  CLASS_NAME "org/cocos2dx/lib/Cocos2dxVideoHelper"
@@ -193,7 +195,7 @@ VideoPlayer::~VideoPlayer()
 
 void VideoPlayer::setFileName(const std::string& fileName)
 {
-    _videoURL = fileName;
+    _videoURL = FileUtils::getInstance()->fullPathForFilename(fileName);
     _videoSource = VideoPlayer::Source::FILENAME;
     setVideoURLJNI(_videoPlayerIndex, (int)Source::FILENAME,_videoURL);
 }
@@ -211,21 +213,10 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
 
     if (flags & FLAGS_TRANSFORM_DIRTY)
     {
-        auto directorInstance = Director::getInstance();
-        auto glView = directorInstance->getOpenGLView();
-        auto frameSize = glView->getFrameSize();
+        auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(this);
 
-        auto winSize = directorInstance->getWinSize();
-
-        auto leftBottom = convertToWorldSpace(Point::ZERO);
-        auto rightTop = convertToWorldSpace(Point(_contentSize.width,_contentSize.height));
-
-        auto uiLeft = frameSize.width / 2 + (leftBottom.x - winSize.width / 2 ) * glView->getScaleX();
-        auto uiTop = frameSize.height /2 - (rightTop.y - winSize.height / 2) * glView->getScaleY();
-
-        setVideoRectJNI(_videoPlayerIndex,uiLeft,uiTop,
-            (rightTop.x - leftBottom.x) * glView->getScaleX(),
-            (rightTop.y - leftBottom.y) * glView->getScaleY());
+        setVideoRectJNI(_videoPlayerIndex, uiRect.origin.x, uiRect.origin.y,
+                        uiRect.size.width, uiRect.size.height);
     }
 
 #if CC_VIDEOPLAYER_DEBUG_DRAW

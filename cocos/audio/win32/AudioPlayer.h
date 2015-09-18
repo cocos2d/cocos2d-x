@@ -37,6 +37,7 @@
 #include <AL/al.h>
 #endif
 #include "CCPlatformMacros.h"
+#include "AudioCache.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -55,7 +56,8 @@ public:
     bool setTime(float time);
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
-    
+    void notifyExitThread();
+
 protected:
     void rotateBufferThread(int offsetFrame);
     bool play2d(AudioCache* cache);
@@ -73,11 +75,12 @@ protected:
     float _currTime;
     bool _timeDirty;
     bool _streamingSource;
-    ALuint _bufferIds[3];
+    ALuint _bufferIds[QUEUEBUFFER_NUM];
     std::thread _rotateBufferThread;
     std::mutex _sleepMutex;
     std::condition_variable _sleepCondition;
-    bool _exitThread; 
+    bool _exitThread;
+    bool _readForRemove;
     
     friend class AudioEngineImpl;
 };

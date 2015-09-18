@@ -1,5 +1,7 @@
 #include "RefPtrTest.h"
 
+USING_NS_CC;
+
 void RefPtrTest::onEnter()
 {
     UnitTestDemo::onEnter();

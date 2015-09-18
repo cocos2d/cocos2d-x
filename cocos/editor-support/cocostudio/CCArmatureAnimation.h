@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -75,7 +75,7 @@ public:
      */
     static ArmatureAnimation *create(Armature *armature);
 public:
-	/**
+    /**
      * @js ctor
      */
     ArmatureAnimation();
@@ -157,15 +157,15 @@ public:
     /**
      * Pause the Process
      */
-    virtual void pause();
+    virtual void pause() override;
     /**
      * Resume the Process
      */
-    virtual void resume();
+    virtual void resume() override;
     /**
      * Stop the Process
      */
-    virtual void stop();
+    virtual void stop() override;
 
 
     /**
@@ -173,7 +173,7 @@ public:
      */
     ssize_t getMovementCount() const;
 
-    void update(float dt);
+    virtual void update(float dt) override;
 
     /**
      * Get current movementID
@@ -242,7 +242,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    void updateHandler();
+    void updateHandler() override;
 
     /**
      * Update current key frame, and process auto stop, pause
@@ -275,13 +275,13 @@ protected:
     //! Scale the animation speed
     float _speedScale;
 
-    MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
+    MovementData *_movementData;                //! MovementData save all MovementFrameDatas this animation used.
 
-    Armature *_armature;						//! A weak reference of armature
+    Armature *_armature;                        //! A weak reference of armature
 
-    std::string _movementID;				//! Current movment's name
+    std::string _movementID;                //! Current movment's name
 
-    int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int _toIndex;                                //! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
 
     cocos2d::Vector<Tween*> _tweenList;
 

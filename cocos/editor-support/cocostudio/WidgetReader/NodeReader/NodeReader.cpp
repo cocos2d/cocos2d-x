@@ -26,16 +26,35 @@
 
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "cocostudio/CCComExtensionData.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
-
+#include "ui/UILayoutComponent.h"
 
 USING_NS_CC;
 using namespace flatbuffers;
 
 namespace cocostudio
 {
+    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnabled";
+    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnabled";
+    const char* Layout_PercentWidthEnable = "PercentWidthEnabled";
+    const char* Layout_PercentHeightEnable = "PercentHeightEnabled";
+    const char* Layout_StretchWidthEnable = "StretchWidthEnable";
+    const char* Layout_StretchHeightEnable = "StretchHeightEnable";
+    const char* Layout_HorizontalEdge = "HorizontalEdge";
+    const char* Layout_VerticalEdge = "VerticalEdge";
+    const char* Layout_LeftMargin = "LeftMargin";
+    const char* Layout_RightMargin = "RightMargin";
+    const char* Layout_TopMargin = "TopMargin";
+    const char* Layout_BottomMargin = "BottomMargin";
+    const char* Layout_BothEdge = "BothEdge";
+    const char* Layout_LeftEdge = "LeftEdge";
+    const char* Layout_RightEdge = "RightEdge";
+    const char* Layout_TopEdge = "TopEdge";
+    const char* Layout_BottomEdge = "BottomEdge";
+
     IMPLEMENT_CLASS_NODE_READER_INFO(NodeReader)
     
     NodeReader::NodeReader()
@@ -60,7 +79,7 @@ namespace cocostudio
         return _instanceNodeReader;
     }
     
-    void NodeReader::purge()
+    void NodeReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceNodeReader);
     }
@@ -70,23 +89,40 @@ namespace cocostudio
     {
         std::string name = "";
         long actionTag = 0;
-        Vec2 rotationSkew = Vec2::ZERO;
+        Vec2 rotationSkew;
         int zOrder = 0;
         bool visible = true;
         GLubyte alpha = 255;
         int tag = 0;
-        Vec2 position = Vec2::ZERO;
-        Vec2 scale = Vec2(1.0f, 1.0f);
-        Vec2 anchorPoint = Vec2::ZERO;
+        Vec2 position;
+        Vec2 scale(1.0f, 1.0f);
+        Vec2 anchorPoint;
         Color4B color(255, 255, 255, 255);
 
-        Vec2 size = Vec2::ZERO;
+        Vec2 size;
         bool flipX = false;
         bool flipY = false;
         bool ignoreSize = false;
         bool touchEnabled = false;
         std::string frameEvent = "";
         std::string customProperty = "";
+
+        bool positionXPercentEnabled = false;
+        bool positionYPercentEnabled = false;
+        float positionXPercent = 0;
+        float positionYPercent = 0;
+        bool sizeXPercentEnable = false;
+        bool sizeYPercentEnable = false;
+        float sizeXPercent = 0;
+        float sizeYPercent = 0;
+        bool stretchHorizontalEnabled = false;
+        bool stretchVerticalEnabled = false;
+        std::string horizontalEdge;
+        std::string verticalEdge;
+        float leftMargin = 0;
+        float rightMargin = 0;
+        float topMargin = 0;
+        float bottomMargin = 0;
         
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -147,9 +183,61 @@ namespace cocostudio
             {
                 touchEnabled = (value == "True") ? true : false;
             }
+            else if (attriname == "UserData")
+            {
+                customProperty = value;
+            }
             else if (attriname == "FrameEvent")
             {
                 frameEvent = value;
+            }
+            else if (attriname == Layout_PositionPercentXEnabled)
+            {
+                positionXPercentEnabled = value == "True";
+            }
+            else if (attriname == Layout_PositionPercentYEnabled)
+            {
+                positionYPercentEnabled = value == "True";
+            }
+            else if (attriname == Layout_PercentWidthEnable)
+            {
+                sizeXPercentEnable = value == "True";
+            }
+            else if (attriname == Layout_PercentHeightEnable)
+            {
+                sizeYPercentEnable = value == "True";
+            }
+            else if (attriname == Layout_StretchWidthEnable)
+            {
+                stretchHorizontalEnabled = value == "True";
+            }
+            else if (attriname == Layout_StretchHeightEnable)
+            {
+                stretchVerticalEnabled = value == "True";
+            }
+            else if (attriname == Layout_HorizontalEdge)
+            {
+                horizontalEdge = value;
+            }
+            else if (attriname == Layout_VerticalEdge)
+            {
+                verticalEdge = value;
+            }
+            else if (attriname == Layout_LeftMargin)
+            {
+                leftMargin = atof(value.c_str());
+            }
+            else if (attriname == Layout_RightMargin)
+            {
+                rightMargin = atof(value.c_str());
+            }
+            else if (attriname == Layout_TopMargin)
+            {
+                topMargin = atof(value.c_str());
+            }
+            else if (attriname == Layout_BottomMargin)
+            {
+                bottomMargin = atof(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -159,11 +247,7 @@ namespace cocostudio
         while (child)
         {
             std::string attriname = child->Name();
-            if (attriname == "Children")
-            {
-                break;
-            }
-            else if (attriname == "Position")
+            if (attriname == "Position")
             {
                 attribute = child->FirstAttribute();
                 
@@ -276,7 +360,48 @@ namespace cocostudio
                     attribute = attribute->Next();
                 }
             }
-            
+            else if (attriname == "PrePosition")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    attriname = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (attriname == "X")
+                    {
+                        positionXPercent = atof(value.c_str());
+                    }
+                    else if (attriname == "Y")
+                    {
+                        positionYPercent = atof(value.c_str());
+                    }
+
+                    attribute = attribute->Next();
+                }
+            }
+            else if (attriname == "PreSize")
+            {
+                attribute = child->FirstAttribute();
+
+                while (attribute)
+                {
+                    attriname = attribute->Name();
+                    std::string value = attribute->Value();
+
+                    if (attriname == "X")
+                    {
+                        sizeXPercent = atof(value.c_str());
+                    }
+                    else if (attriname == "Y")
+                    {
+                        sizeYPercent = atof(value.c_str());
+                    }
+
+                    attribute = attribute->Next();
+                }
+            }
             child = child->NextSiblingElement();
         }
         
@@ -286,7 +411,23 @@ namespace cocostudio
         AnchorPoint f_anchortpoint(anchorPoint.x, anchorPoint.y);
         Color f_color(color.a, color.r, color.g, color.b);
         FlatSize f_size(size.x, size.y);
-        
+        auto f_layoutComponent = CreateLayoutComponentTable(*builder,
+                                                            positionXPercentEnabled,
+                                                            positionYPercentEnabled,
+                                                            positionXPercent,
+                                                            positionYPercent,
+                                                            sizeXPercentEnable,
+                                                            sizeYPercentEnable,
+                                                            sizeXPercent,
+                                                            sizeYPercent,
+                                                            stretchHorizontalEnabled,
+                                                            stretchVerticalEnabled,
+                                                            builder->CreateString(horizontalEdge),
+                                                            builder->CreateString(verticalEdge),
+                                                            leftMargin,
+                                                            rightMargin,
+                                                            topMargin,
+                                                            bottomMargin);
         
         auto options = CreateWidgetOptions(*builder,
                                            builder->CreateString(name),
@@ -306,8 +447,10 @@ namespace cocostudio
                                            ignoreSize,
                                            touchEnabled,
                                            builder->CreateString(frameEvent),
-                                           builder->CreateString(customProperty)
-                                           );
+                                           builder->CreateString(customProperty),
+                                           0,
+                                           0,
+                                           f_layoutComponent);
         
         return *(Offset<Table>*)(&options);
     }
@@ -327,14 +470,15 @@ namespace cocostudio
         float rotationSkewY      = options->rotationSkew()->rotationSkewY();
         float anchorx       = options->anchorPoint()->scaleX();
         float anchory       = options->anchorPoint()->scaleY();
-        int zorder		    = options->zOrder();
+        int zorder            = options->zOrder();
         int tag             = options->tag();
         int actionTag       = options->actionTag();
-        bool visible        = options->visible();
+        bool visible        = options->visible() != 0;
         float w             = options->size()->width();
         float h             = options->size()->height();
         int alpha           = options->alpha();
         Color3B color(options->color()->r(), options->color()->g(), options->color()->b());
+        std::string customProperty = options->customProperty()->c_str();
         
         node->setName(name);
         
@@ -364,12 +508,92 @@ namespace cocostudio
         node->setColor(color);
         
         node->setTag(tag);
-        node->setUserObject(timeline::ActionTimelineData::create(actionTag));
+        
+        ComExtensionData* extensionData = ComExtensionData::create();
+        extensionData->setCustomProperty(customProperty);
+        extensionData->setActionTag(actionTag);
+        if (node->getComponent("ComExtensionData"))
+        {
+            node->removeComponent("ComExtensionData");
+        }
+        node->addComponent(extensionData);
+        
         
         node->setCascadeColorEnabled(true);
         node->setCascadeOpacityEnabled(true);
+
+        setLayoutComponentPropsWithFlatBuffers(node, nodeOptions);
     }
-    
+
+    void NodeReader::setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* nodeOptions)
+    {
+        auto layoutComponentTable = ((WidgetOptions*)nodeOptions)->layoutComponent();
+        if (!layoutComponentTable) return;
+
+        auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
+
+        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled() != 0;
+        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled() != 0;
+        float positionXPercent = layoutComponentTable->positionXPercent();
+        float positionYPercent = layoutComponentTable->positionYPercent();
+        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable() != 0;
+        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable() != 0;
+        float sizeXPercent = layoutComponentTable->sizeXPercent();
+        float sizeYPercent = layoutComponentTable->sizeYPercent();
+        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled() != 0;
+        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled() != 0;
+        std::string horizontalEdge = layoutComponentTable->horizontalEdge()->c_str();
+        std::string verticalEdge = layoutComponentTable->verticalEdge()->c_str();
+        float leftMargin = layoutComponentTable->leftMargin();
+        float rightMargin = layoutComponentTable->rightMargin();
+        float topMargin = layoutComponentTable->topMargin();
+        float bottomMargin = layoutComponentTable->bottomMargin();
+
+        layoutComponent->setPositionPercentXEnabled(positionXPercentEnabled);
+        layoutComponent->setPositionPercentYEnabled(positionYPercentEnabled);
+        layoutComponent->setPositionPercentX(positionXPercent);
+        layoutComponent->setPositionPercentY(positionYPercent);
+        layoutComponent->setPercentWidthEnabled(sizeXPercentEnable);
+        layoutComponent->setPercentHeightEnabled(sizeYPercentEnable);
+        layoutComponent->setPercentWidth(sizeXPercent);
+        layoutComponent->setPercentHeight(sizeYPercent);
+        layoutComponent->setStretchWidthEnabled(stretchHorizontalEnabled);
+        layoutComponent->setStretchHeightEnabled(stretchVerticalEnabled);
+        ui::LayoutComponent::HorizontalEdge horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::None;
+        if (horizontalEdge == Layout_LeftEdge)
+        {
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::Left;
+        }
+        else if (horizontalEdge == Layout_RightEdge)
+        {
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::Right;
+        }
+        else if (horizontalEdge == Layout_BothEdge)
+        {
+            horizontalEdgeType = ui::LayoutComponent::HorizontalEdge::Center;
+        }
+        layoutComponent->setHorizontalEdge(horizontalEdgeType);
+        ui::LayoutComponent::VerticalEdge verticalEdgeType = ui::LayoutComponent::VerticalEdge::None;
+        if (verticalEdge == Layout_TopEdge)
+        {
+            verticalEdgeType = ui::LayoutComponent::VerticalEdge::Top;
+        }
+        else if (verticalEdge == Layout_BottomEdge)
+        {
+            verticalEdgeType = ui::LayoutComponent::VerticalEdge::Bottom;
+        }
+        else if (verticalEdge == Layout_BothEdge)
+        {
+            verticalEdgeType = ui::LayoutComponent::VerticalEdge::Center;
+        }
+        layoutComponent->setVerticalEdge(verticalEdgeType);
+
+        layoutComponent->setTopMargin(topMargin);
+        layoutComponent->setBottomMargin(bottomMargin);
+        layoutComponent->setLeftMargin(leftMargin);
+        layoutComponent->setRightMargin(rightMargin);
+    }
+
     Node* NodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
     {
         Node* node = Node::create();

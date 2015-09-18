@@ -11,118 +11,109 @@
 
 #include "../UIScene.h"
 
-
+DEFINE_TEST_SUITE(UIFocusTests);
 
 class UIFocusTestBase : public UIScene
 {
 public:
     UIFocusTestBase();
     virtual ~UIFocusTestBase();
-    bool init();
-    
+
+    virtual bool init() override;
+
     virtual void onLeftKeyPressed();
     virtual void onRightKeyPressed();
     virtual void onUpKeyPressed();
     virtual void onDownKeyPressed();
-    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
+    virtual void onFocusChanged(cocos2d::ui::Widget* widgetLostFocus, cocos2d::ui::Widget* widgetGetFocus);
 
-    void onImageViewClicked(Ref* ref, Widget::TouchEventType touchType);
+    void onImageViewClicked(cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType touchType);
 
 protected:
-    Menu *_dpadMenu;
-    Widget *_firstFocusedWidget;
-    EventListenerFocus *_eventListener;
+    cocos2d::Menu* _dpadMenu;
+    cocos2d::ui::Widget* _firstFocusedWidget;
+    cocos2d::EventListenerFocus* _eventListener;
 };
 
 class UIFocusTestHorizontal : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestHorizontal);
+
     UIFocusTestHorizontal();
     virtual ~UIFocusTestHorizontal();
-    bool init();
-   
-    
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
-    
+
+    virtual bool init() override;
+
+    void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestHorizontal);
-    Layout *_horizontalLayout;
-    Text *_loopText;
+    cocos2d::ui::Layout* _horizontalLayout;
+    cocos2d::ui::Text* _loopText;
 };
 
 class UIFocusTestVertical : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestVertical);
+
     UIFocusTestVertical();
     virtual ~UIFocusTestVertical();
-    bool init();
-   
-    
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+
+    virtual bool init() override;
+
+    void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestVertical);
-    Layout *_verticalLayout;
-    Text *_loopText;
+    cocos2d::ui::Layout* _verticalLayout;
+    cocos2d::ui::Text* _loopText;
 };
 
 class UIFocusTestNestedLayout1 : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestNestedLayout1);
+
     UIFocusTestNestedLayout1();
     virtual ~UIFocusTestNestedLayout1();
-    bool init();
-    
-    
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+
+    virtual bool init() override;
+
+    void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout1);
-    Layout *_verticalLayout;
-    Text *_loopText;
+    cocos2d::ui::Layout* _verticalLayout;
+    cocos2d::ui::Text* _loopText;
 };
 
 class UIFocusTestNestedLayout2 : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestNestedLayout2);
+
     UIFocusTestNestedLayout2();
     virtual ~UIFocusTestNestedLayout2();
-    bool init();
-    
-    
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+
+    virtual bool init() override;
+
+    void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout2);
-    Layout *_horizontalLayout;
-    Text *_loopText;
+    cocos2d::ui::Layout* _horizontalLayout;
+    cocos2d::ui::Text* _loopText;
 };
 
 class UIFocusTestNestedLayout3 : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestNestedLayout3);
+
     UIFocusTestNestedLayout3();
     virtual ~UIFocusTestNestedLayout3();
-    bool init();
-    
-    
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
-protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout3);
-    Layout *_verticalLayout;
-    Text *_loopText;
-};
 
-class UIFocusTestListView : public UIFocusTestBase
-{
-public:
-    UIFocusTestListView();
-    virtual ~UIFocusTestListView();
-    bool init();
-    
-    
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    virtual bool init() override;
+
+    void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestListView);
-    ListView *_listView;
-    Text *_loopText;
+    cocos2d::ui::Layout* _verticalLayout;
+    cocos2d::ui::Text* _loopText;
 };
 
 

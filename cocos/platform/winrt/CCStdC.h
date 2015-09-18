@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CC_STD_C_H__
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 
 #include "platform/CCPlatformMacros.h"
@@ -108,7 +108,7 @@ struct timezone
 
 int CC_DLL gettimeofday(struct timeval *, struct timezone *);
 
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
 #endif  // __CC_STD_C_H__
 

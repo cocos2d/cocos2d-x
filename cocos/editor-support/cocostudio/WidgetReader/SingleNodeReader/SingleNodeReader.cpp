@@ -28,7 +28,7 @@
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
 #include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 
@@ -63,6 +63,11 @@ namespace cocostudio
     }
     
     void SingleNodeReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceSingleNodeReader);
+    }
+    
+    void SingleNodeReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceSingleNodeReader);
     }

@@ -25,34 +25,8 @@
 #ifndef __cocos2d_tests__CocostudioParserTest__
 #define __cocos2d_tests__CocostudioParserTest__
 
-#include "cocos2d.h"
-#include "extensions/cocos-ext.h"
-#include "../../testBasic.h"
-#include "ui/CocosGUI.h"
+#include "../../BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace cocos2d::ui;
-
-class CocostudioParserTestMainLayer : public Layer
-{
-public:
-    virtual void onEnter();
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    
-    void touchEvent(Ref* pSender, Widget::TouchEventType type);
-    
-private:
-    Vec2 _beginPos;
-    Menu* _itemMenu;
-};
-
-class CocostudioParserTestScene : public TestScene
-{
-public:
-    virtual void onEnter();
-    virtual void runThisTest();
-    void BackCallback(Ref* pSender);
-};
+DEFINE_TEST_SUITE(CocostudioParserTests);
 
 #endif /* defined(__cocos2d_tests__CocostudioParserTest__) */

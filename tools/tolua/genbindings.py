@@ -147,6 +147,9 @@ def main():
                     'cocos2dx_3d.ini': ('cocos2dx_3d', 'lua_cocos2dx_3d_auto'), \
                     'cocos2dx_audioengine.ini': ('cocos2dx_audioengine', 'lua_cocos2dx_audioengine_auto'), \
                     'cocos2dx_csloader.ini' : ('cocos2dx_csloader', 'lua_cocos2dx_csloader_auto'), \
+                    'cocos2dx_experimental_webview.ini' : ('cocos2dx_experimental_webview', 'lua_cocos2dx_experimental_webview_auto'), \
+                    'cocos2dx_physics3d.ini' : ('cocos2dx_physics3d', 'lua_cocos2dx_physics3d_auto'), \
+                    'cocos2dx_navmesh.ini' : ('cocos2dx_navmesh', 'lua_cocos2dx_navmesh_auto'), \
                     }
         target = 'lua'
         generator_py = '%s/generator.py' % cxx_generator_root
@@ -156,10 +159,6 @@ def main():
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             _run_cmd(command)
-
-        if platform == 'win32':
-            with _pushd(output_dir):
-                _run_cmd('dos2unix *')
 
         print '---------------------------------'
         print 'Generating lua bindings succeeds.'

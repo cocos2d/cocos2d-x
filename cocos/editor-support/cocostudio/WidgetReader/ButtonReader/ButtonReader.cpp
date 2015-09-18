@@ -7,7 +7,7 @@
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/FlatBuffersSerialize.h"
 
-#include "tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
@@ -60,6 +60,11 @@ namespace cocostudio
     }
     
     void ButtonReader::purge()
+    {
+        CC_SAFE_DELETE(instanceButtonReader);
+    }
+    
+    void ButtonReader::destroyInstance()
     {
         CC_SAFE_DELETE(instanceButtonReader);
     }
@@ -269,6 +274,14 @@ namespace cocostudio
         std::string fontResourcePlistFile = "";
         int fontResourceResourceType = 0;
         
+        bool outlineEnabled = false;
+        Color4B outlineColor = Color4B::BLACK;
+        int outlineSize = 1;
+        bool shadowEnabled = false;
+        Color4B shadowColor = Color4B::BLACK;
+        Size shadowOffset = Size(2, -2);
+        int shadowBlurRadius = 0;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -314,6 +327,30 @@ namespace cocostudio
             else if (name == "DisplayState")
             {
                 displaystate = (value == "True") ? true : false;
+            }
+            else if (name == "OutlineEnabled")
+            {
+                outlineEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "OutlineSize")
+            {
+                outlineSize = atoi(value.c_str());
+            }
+            else if (name == "ShadowEnabled")
+            {
+                shadowEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "ShadowOffsetX")
+            {
+                shadowOffset.width = atof(value.c_str());
+            }
+            else if (name == "ShadowOffsetY")
+            {
+                shadowOffset.height = atof(value.c_str());
+            }
+            else if (name == "ShadowBlurRadius")
+            {
+                shadowBlurRadius = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -500,6 +537,64 @@ namespace cocostudio
                     attribute = attribute->Next();
                 }
             }
+            else if (name == "OutlineColor")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        outlineColor.a = atoi(value.c_str());
+                    }
+                    else if (name == "R")
+                    {
+                        outlineColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        outlineColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        outlineColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "ShadowColor")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        shadowColor.a = atoi(value.c_str());
+                    }
+                    else if (name == "R")
+                    {
+                        shadowColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        shadowColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        shadowColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
             
             child = child->NextSiblingElement();
         }
@@ -507,6 +602,8 @@ namespace cocostudio
         Color f_textColor(255, textColor.r, textColor.g, textColor.b);
         CapInsets f_capInsets(capInsets.origin.x, capInsets.origin.y, capInsets.size.width, capInsets.size.height);
         FlatSize f_scale9Size(scale9Size.width, scale9Size.height);
+        flatbuffers::Color f_outlineColor(outlineColor.a, outlineColor.r, outlineColor.g, outlineColor.b);
+        flatbuffers::Color f_shadowColor(shadowColor.a, shadowColor.r, shadowColor.g, shadowColor.b);
         
         auto options = CreateButtonOptions(*builder,
                                            widgetOptions,
@@ -533,8 +630,15 @@ namespace cocostudio
                                            &f_capInsets,
                                            &f_scale9Size,
                                            scale9Enabled,
-                                           displaystate
-                                           );
+                                           displaystate,
+                                           outlineEnabled,
+                                           &f_outlineColor,
+                                           outlineSize,
+                                           shadowEnabled,
+                                           &f_shadowColor,
+                                           shadowOffset.width,
+                                           shadowOffset.height,
+                                           shadowBlurRadius);
         
         return *(Offset<Table>*)(&options);
     }
@@ -544,24 +648,198 @@ namespace cocostudio
         Button* button = static_cast<Button*>(node);
         auto options = (ButtonOptions*)buttonOptions;
         
-        bool scale9Enabled = options->scale9Enabled();
+        bool scale9Enabled = options->scale9Enabled() != 0;
         button->setScale9Enabled(scale9Enabled);
         
-        
+        bool normalFileExist = false;
+        std::string normalErrorFilePath = "";
         auto normalDic = options->normalData();
         int normalType = normalDic->resourceType();
         std::string normalTexturePath = normalDic->path()->c_str();
-        button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        switch (normalType)
+        {
+            case 0:
+                if (FileUtils::getInstance()->isFileExist(normalTexturePath))
+                {
+                    normalFileExist = true;
+                }
+                else
+                {
+                    normalErrorFilePath = normalTexturePath;
+                    normalFileExist = false;
+                }
+                break;
+                
+            case 1:
+            {
+                std::string plist = normalDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(normalTexturePath);
+                if (spriteFrame)
+                {
+                    normalFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            normalErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        normalErrorFilePath = plist;
+                    }
+                    normalFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (normalFileExist)
+        {
+            button->loadTextureNormal(normalTexturePath, (Widget::TextureResType)normalType);
+        }
+        //else if (!normalTexturePath.empty())
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", normalErrorFilePath.c_str())->getCString());
+        //    button->addChild(label);
+        //}
         
+        bool pressedFileExist = false;
+        std::string pressedErrorFilePath = "";
         auto pressedDic = options->pressedData();
         int pressedType = pressedDic->resourceType();
         std::string pressedTexturePath = pressedDic->path()->c_str();
-        button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        switch (pressedType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(pressedTexturePath))
+                {
+                    pressedFileExist = true;
+                }
+                else
+                {
+                    pressedErrorFilePath = pressedTexturePath;
+                    pressedFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = pressedDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(pressedTexturePath);
+                if (spriteFrame)
+                {
+                    pressedFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            pressedErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        pressedErrorFilePath = plist;
+                    }
+                    pressedFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (pressedFileExist)
+        {
+            button->loadTexturePressed(pressedTexturePath, (Widget::TextureResType)pressedType);
+        }
+        //else if (!pressedTexturePath.empty())
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", pressedErrorFilePath.c_str())->getCString());
+        //    button->addChild(label);
+        //}
         
+        bool disabledFileExist = false;
+        std::string disabledErrorFilePath = "";
         auto disabledDic = options->disabledData();
         int disabledType = disabledDic->resourceType();
         std::string disabledTexturePath = disabledDic->path()->c_str();
-        button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        switch (disabledType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(disabledTexturePath))
+                {
+                    disabledFileExist = true;
+                }
+                else
+                {
+                    disabledErrorFilePath = disabledTexturePath;
+                    disabledFileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = disabledDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(disabledTexturePath);
+                if (spriteFrame)
+                {
+                    disabledFileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            disabledErrorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        disabledErrorFilePath = plist;
+                    }
+                    disabledFileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (disabledFileExist)
+        {
+            button->loadTextureDisabled(disabledTexturePath, (Widget::TextureResType)disabledType);
+        }
+        //else if (!disabledTexturePath.empty())
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", disabledErrorFilePath.c_str())->getCString());
+        //    button->addChild(label);
+        //}
         
         std::string titleText = options->text()->c_str();
         button->setTitleText(titleText);
@@ -577,16 +855,60 @@ namespace cocostudio
         button->setTitleFontName(titleFontName);
         
         auto resourceData = options->fontResource();
+        bool fileExist = false;
+        std::string errorFilePath = "";
         std::string path = resourceData->path()->c_str();
         if (path != "")
         {
-            button->setTitleFontName(path);
+            if (FileUtils::getInstance()->isFileExist(path))
+            {
+                fileExist = true;
+            }
+            else
+            {
+                errorFilePath = path;
+                fileExist = false;
+            }
+            if (fileExist)
+            {
+                button->setTitleFontName(path);
+            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    button->addChild(label);
+            //}
         }
         
-        bool displaystate = options->displaystate();
+        bool displaystate = options->displaystate() != 0;
         button->setBright(displaystate);
         button->setEnabled(displaystate);
-
+        
+        bool outlineEnabled = options->outlineEnabled() != 0;
+        if (outlineEnabled)
+        {
+            auto f_outlineColor = options->outlineColor();
+            if (f_outlineColor)
+            {
+                Color4B outlineColor(f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b(), f_outlineColor->a());
+                auto label = button->getTitleRenderer();
+                label->enableOutline(outlineColor, options->outlineSize());
+            }
+        }
+        
+        bool shadowEnabled = options->shadowEnabled() != 0;
+        if (shadowEnabled)
+        {
+            auto f_shadowColor = options->shadowColor();
+            if (f_shadowColor)
+            {
+                Color4B shadowColor(f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b(), f_shadowColor->a());
+                auto label = button->getTitleRenderer();
+                label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
+            }
+        }
+        
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
         
@@ -602,6 +924,13 @@ namespace cocostudio
             Size scale9Size(options->scale9Size()->width(), options->scale9Size()->height());
             button->setContentSize(scale9Size);
         }
+        else
+        {
+            Size contentSize(options->widgetOptions()->size()->width(), options->widgetOptions()->size()->height());
+            button->setContentSize(contentSize);
+        }
+
+        button->setBright(displaystate);
     }
     
     Node* ButtonReader::createNodeWithFlatBuffers(const flatbuffers::Table *buttonOptions)

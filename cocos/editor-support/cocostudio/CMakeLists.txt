@@ -3,6 +3,8 @@ if(WINDOWS AND BUILD_SHARED_LIBS)
   ADD_DEFINITIONS (-D_USRSTUDIODLL)
 endif()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
+
 set(COCOS_CS_SRC
 
   editor-support/cocostudio/CCActionFrame.cpp
@@ -41,6 +43,8 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/TriggerMng.cpp
   editor-support/cocostudio/TriggerObj.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
+  editor-support/cocostudio/CCComExtensionData.cpp
+  editor-support/cocostudio/CocoStudio.cpp
   editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.cpp
   editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.cpp
   editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.cpp 
@@ -57,18 +61,30 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.cpp
   editor-support/cocostudio/WidgetReader/PageViewReader/PageViewReader.cpp
   editor-support/cocostudio/WidgetReader/TextReader/TextReader.cpp
+  editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.cpp
+  editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.cpp
+  editor-support/cocostudio/WidgetReader/Particle3DReader/Particle3DReader.cpp    
+  editor-support/cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.cpp
+  editor-support/cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.cpp
+  editor-support/cocostudio/WidgetReader/SkeletonReader/SkeletonNodeReader.cpp
   editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.cpp
   editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.cpp
   editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.cpp
   editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.cpp
   editor-support/cocostudio/WidgetReader/ButtonReader/ButtonReader.cpp
   editor-support/cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.cpp
+  editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimelineCache.cpp
   editor-support/cocostudio/ActionTimeline/CCActionTimeline.cpp
+  editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.cpp
   editor-support/cocostudio/ActionTimeline/CCFrame.cpp
   editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp
   editor-support/cocostudio/ActionTimeline/CSLoader.cpp
+  editor-support/cocostudio/ActionTimeline/CCBoneNode.cpp
+  editor-support/cocostudio/ActionTimeline/CCSkeletonNode.cpp
+  editor-support/cocostudio/ActionTimeline/CCSkinNode.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
+  editor-support/cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
 )
 
 include_directories( editor-support )

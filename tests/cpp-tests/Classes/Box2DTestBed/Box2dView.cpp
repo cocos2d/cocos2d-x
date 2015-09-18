@@ -3,6 +3,8 @@
 #include "Test.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
+
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
 
@@ -15,39 +17,46 @@ enum
     kTagBox2DNode,
 }; 
 
-
-//------------------------------------------------------------------
-//
-// MenuLayer
-//
-//------------------------------------------------------------------
-enum
+Box2dTestBedSuite::Box2dTestBedSuite()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
+    for (int entryId = 0; entryId < g_totalEntries; ++entryId)
+    {
+        addTestCase(g_testEntries[entryId].name, [entryId](){
+            return Box2dTestBed::createWithEntryID(entryId);
+        });
+    }
+}
 
-MenuLayer::MenuLayer(void)
+//------------------------------------------------------------------
+//
+// Box2dTestBed
+//
+//------------------------------------------------------------------
+
+Box2dTestBed::Box2dTestBed()
 {
 }
 
-MenuLayer::~MenuLayer(void)
+Box2dTestBed::~Box2dTestBed()
 {
     _eventDispatcher->removeEventListener(_touchListener);
 }
 
-MenuLayer* MenuLayer::menuWithEntryID(int entryId)
+Box2dTestBed* Box2dTestBed::createWithEntryID(int entryId)
 {
-    auto layer = new (std::nothrow) MenuLayer();
+    auto layer = new (std::nothrow) Box2dTestBed();
     layer->initWithEntryID(entryId);
     layer->autorelease();
 
     return layer;
 }
 
-bool MenuLayer::initWithEntryID(int entryId)
+bool Box2dTestBed::initWithEntryID(int entryId)
 {
+    if (!TestCase::init())
+    {
+        return false;
+    }
     auto director = Director::getInstance();
 	Vec2 visibleOrigin = director->getVisibleOrigin();
 	Size visibleSize = director->getVisibleSize();
@@ -62,26 +71,13 @@ bool MenuLayer::initWithEntryID(int entryId)
     auto label = Label::createWithTTF(view->title().c_str(), "fonts/arial.ttf", 28);
     addChild(label, 1);
     label->setPosition(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height-50);
-
-    auto item1 = MenuItemImage::create("Images/b1.png", "Images/b2.png", CC_CALLBACK_1(MenuLayer::backCallback, this) );
-    auto item2 = MenuItemImage::create("Images/r1.png","Images/r2.png", CC_CALLBACK_1( MenuLayer::restartCallback, this) );
-    auto item3 = MenuItemImage::create("Images/f1.png", "Images/f2.png", CC_CALLBACK_1(MenuLayer::nextCallback, this) );
-
-    auto menu = Menu::create(item1, item2, item3, nullptr);
-
-    menu->setPosition( Vec2::ZERO );
-    item1->setPosition(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
-    item2->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2);
-    item3->setPosition(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
-    
-    addChild(menu, 1);
     
     // Adds touch event listener
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
 
-    listener->onTouchBegan = CC_CALLBACK_2(MenuLayer::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(MenuLayer::onTouchMoved, this);
+    listener->onTouchBegan = CC_CALLBACK_2(Box2dTestBed::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(Box2dTestBed::onTouchMoved, this);
 
     _eventDispatcher->addEventListenerWithFixedPriority(listener, 1);
 
@@ -90,62 +86,12 @@ bool MenuLayer::initWithEntryID(int entryId)
     return true;
 }
 
-void MenuLayer::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Box2dTestBedScene();
-    auto box = MenuLayer::menuWithEntryID(m_entryID);
-    s->addChild( box );
-    Director::getInstance()->replaceScene( s );
-    s->release();
-}
-
-void MenuLayer::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Box2dTestBedScene();
-    int next = m_entryID + 1;
-    if( next >= g_totalEntries)
-        next = 0;
-    auto box = MenuLayer::menuWithEntryID(next);
-    s->addChild( box );
-    Director::getInstance()->replaceScene( s );
-    s->release();
-}
-
-void MenuLayer::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Box2dTestBedScene();
-    int next = m_entryID - 1;
-    if( next < 0 ) {
-        next = g_totalEntries - 1;
-    }
-    
-    auto box = MenuLayer::menuWithEntryID(next);
-
-    s->addChild( box );
-    Director::getInstance()->replaceScene( s );
-    s->release();
-}
-
-//void MenuLayer::registerWithTouchDispatcher()
-//{
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
-//}
-
-bool MenuLayer::onTouchBegan(Touch* touch, Event* event)
+bool Box2dTestBed::onTouchBegan(Touch* touch, Event* event)
 {
     return true;
 }
 
-//-(void) MenuLayer::ccTouchEnded:(UITouch *)touch withEvent:(Event *)event
-//{
-//}
-//
-//-(void) MenuLayer::ccTouchCancelled:(UITouch *)touch withEvent:(Event *)event
-//{
-//}
-
-void MenuLayer::onTouchMoved(Touch* touch, Event* event)
+void Box2dTestBed::onTouchMoved(Touch* touch, Event* event)
 {
     auto diff = touch->getDelta();    
     auto node = getChildByTag( kTagBox2DNode );
@@ -206,7 +152,7 @@ void Box2DView::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     Layer::draw(renderer, transform, flags);
 
-    _customCmd.init(_globalZOrder);
+    _customCmd.init(_globalZOrder, transform, flags);
     _customCmd.func = CC_CALLBACK_0(Box2DView::onDraw, this, transform, flags);
     renderer->addCommand(&_customCmd);
 }
@@ -233,13 +179,6 @@ Box2DView::~Box2DView()
     _eventDispatcher->removeEventListener(_keyboardListener);
     delete m_test;
 }
-//
-//void Box2DView::registerWithTouchDispatcher()
-//{
-//    // higher priority than dragging
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->addTargetedDelegate(this, -10, true);
-//}
 
 bool Box2DView::onTouchBegan(Touch* touch, Event* event)
 {
@@ -281,21 +220,4 @@ void Box2DView::onKeyReleased(EventKeyboard::KeyCode code, Event* event)
 {
     log("onKeyReleased, keycode: %d", code);
     m_test->KeyboardUp(static_cast<unsigned char>(code));
-}
-
-// void Box2DView::accelerometer(UIAccelerometer* accelerometer, Acceleration* acceleration)
-// {
-//     //// Only run for valid values
-//     //if (acceleration.y!=0 && acceleration.x!=0)
-//     //{
-//     //    if (test) test->SetGravity((float)-acceleration.y,(float)acceleration.x);
-//     //}
-// } 
-
-
-void Box2dTestBedScene::runThisTest()
-{
-    addChild(MenuLayer::menuWithEntryID(0));
-
-    Director::getInstance()->replaceScene(this);
 }

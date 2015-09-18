@@ -95,6 +95,11 @@ void MathUtil::smooth(float* x, float target, float elapsedTime, float riseTime,
     }
 }
 
+float MathUtil::lerp(float from, float to, float alpha)
+{
+    return from * (1.0f - alpha) + to * alpha;
+}
+
 bool MathUtil::isNeon32Enabled()
 {
 #ifdef USE_NEON32

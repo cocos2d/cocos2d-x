@@ -80,6 +80,37 @@ static void extendExperimentalTMXLayer(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
+bool isVectorV3FC4BT2F(lua_State* tolua_S, int lo)
+{
+    if (!lua_istable(tolua_S, lo))
+        return false;
+    
+    lua_pushnumber(tolua_S, 1);
+    lua_gettable(tolua_S,lo);
+    if (!lua_istable(tolua_S, -1))
+        return false;
+    
+    lua_pushstring(tolua_S, "vertices");
+    lua_gettable(tolua_S, -2);
+    if (lua_isnil(tolua_S, -1))
+        return  false;
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "colors");
+    lua_gettable(tolua_S, -2);
+    if (lua_isnil(tolua_S, -1))
+        return  false;
+    lua_pop(tolua_S, 1);
+    
+    lua_pushstring(tolua_S, "texCoords");
+    lua_gettable(tolua_S, -2);
+    if (lua_isnil(tolua_S, -1))
+        return  false;
+    lua_pop(tolua_S, 1);
+    
+    return true;
+}
+
 int register_all_cocos2dx_experimental_manual(lua_State* L)
 {
     if (nullptr == L)

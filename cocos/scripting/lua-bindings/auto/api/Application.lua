@@ -37,7 +37,8 @@
 -- param interval The time, expressed in seconds, between current frame and next.
 -- @function [parent=#Application] setAnimationInterval 
 -- @param self
--- @param #double interval
+-- @param #float interval
+-- @return Application#Application self (return value: cc.Application)
         
 --------------------------------
 -- brief    Get current application instance.<br>

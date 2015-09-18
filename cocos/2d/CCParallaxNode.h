@@ -35,11 +35,12 @@ NS_CC_BEGIN
 struct _ccArray;
 
 /**
- * @addtogroup tilemap_parallax_nodes
+ * @addtogroup _2d
  * @{
  */
 
-/** @brief ParallaxNode: A node that simulates a parallax scroller
+/** @class ParallaxNode
+ * @brief ParallaxNode: A node that simulates a parallax scroller
 
 The children will be moved faster / slower than the parent according the the parallax ratio.
 
@@ -47,17 +48,33 @@ The children will be moved faster / slower than the parent according the the par
 class CC_DLL ParallaxNode : public Node
 {
 public:
-    // Create a Parallax node
+    /** Create a Parallax node. 
+     *
+     * @return An autoreleased ParallaxNode object.
+     */
     static ParallaxNode * create();
 
     // prevents compiler warning: "Included function hides overloaded virtual functions"
     using Node::addChild;
 
+    /** Adds a child to the container with a local z-order, parallax ratio and position offset.
+     *
+     * @param child A child node.
+     * @param z Z order for drawing priority.
+     * @param parallaxRatio A given parallax ratio.
+     * @param positionOffset A given position offset.
+     */
     void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
 
-    /** Sets an array of layers for the Parallax node */
+    /** Sets an array of layers for the Parallax node.
+     *
+     * @param parallaxArray An array of layers for the Parallax node.
+     */
     void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
-    /** Returns the array of layers of the Parallax node */
+    /** Returns the array of layers of the Parallax node.
+     *
+     * @return An array of layers for the Parallax node.
+     */
     struct _ccArray* getParallaxArray() { return _parallaxArray; }
     const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
 
@@ -93,7 +110,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParallaxNode);
 };
 
-// end of tilemap_parallax_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

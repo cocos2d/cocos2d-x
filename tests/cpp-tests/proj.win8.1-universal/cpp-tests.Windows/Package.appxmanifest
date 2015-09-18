@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="333e2568-b954-4f2c-9ff8-1f5d48d26457" Publisher="CN=dalestam" Version="1.0.0.0" />
+  <Identity Name="5358F942-A49C-41B1-A448-B70423FF35A0" Publisher="CN=msopentech" Version="1.0.0.0" />
   <Properties>
     <DisplayName>cpp-tests.Windows</DisplayName>
-    <PublisherDisplayName>dalestam</PublisherDisplayName>
+    <PublisherDisplayName>msopentech</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>

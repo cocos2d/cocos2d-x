@@ -35,7 +35,9 @@ include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)
 include(physics/CMakeLists.txt)
+include(physics3d/CMakeLists.txt)
 include(math/CMakeLists.txt)
+include(navmesh/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
 include(base/CMakeLists.txt)
 include(deprecated/CMakeLists.txt)
@@ -67,7 +69,9 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_3D_SRC}
     ${COCOS_PLATFORM_SRC}
     ${COCOS_PHYSICS_SRC}
+    ${COCOS_PHYSICS3D_SRC}
     ${COCOS_MATH_SRC}
+    ${COCOS_NAVMESH_SRC}
     ${COCOS_RENDERER_SRC}
     ${COCOS_BASE_SRC}
     ${COCOS_AUDIO_SRC}
@@ -79,9 +83,8 @@ set(COCOS_SRC cocos2d.cpp
     )
 
   #todo: provide prebuild versions of the xx libs for all platforms
-  include_directories(
-    ../external/xxhash
-    ../external/xxtea)
+  include_directories(../external/xxtea)
+  include_directories(../external/clipper)
 
 
 add_library(cocos2d ${COCOS_SRC})
@@ -127,11 +130,15 @@ else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS)
+foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2d ${pkg})
 endforeach()
 
-target_link_libraries(cocos2d xxhash ${PLATFORM_SPECIFIC_LIBS})
+if(LINUX)
+  set(glfw_other_linker_flags X11)
+endif(LINUX)
+
+target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
@@ -146,6 +153,14 @@ endif()
 
 if(USE_BOX2D)
   cocos_use_pkg(cocos2d Box2D)
+endif()
+
+if(USE_BULLET)
+  cocos_use_pkg(cocos2d BULLET)
+endif()
+
+if(USE_RECAST)
+  cocos_use_pkg(cocos2d RECAST)
 endif()
 
 set_target_properties(cocos2d

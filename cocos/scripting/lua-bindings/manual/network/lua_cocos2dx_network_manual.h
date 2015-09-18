@@ -32,6 +32,20 @@ extern "C" {
 }
 #endif
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
+ * Call this function can import the lua bindings for the network module.
+ * After registering, we could call the related network code conveniently in the lua.eg,.cc.WebSocket:create("ws://echo.websocket.org").
+ * If you don't want to use the network module in the lua, you only don't call this registering function.
+ * If you don't register the network module, the package size would become smaller .
+ * The current mechanism,this registering function is called in the lua_module_register.h
+ */
 TOLUA_API int register_network_module(lua_State* L);
 
+// end group
+/// @}
 #endif //#ifndef __COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_NETWORK_LUA_COCOS2DX_NETWORK_MANUAL_H__

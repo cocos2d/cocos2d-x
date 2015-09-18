@@ -1,5 +1,6 @@
-
-ccui = ccui or {}
+if nil == ccui then
+    return
+end
 
 ccui.BrightStyle =
 {
@@ -37,6 +38,17 @@ ccui.CheckBoxEventType =
 {
     selected = 0,
     unselected = 1,
+}
+
+ccui.RadioButtonEventType=
+{
+        selected = 0,
+        unselected = 1
+}
+
+ccui.RadioButtonGroupEventType=
+{
+    select_changed = 0
 }
 
 ccui.TextFiledEventType =
@@ -106,7 +118,12 @@ ccui.RelativeAlign =
     locationBelowRightAlign = 21,
 }
 
-ccui.SliderEventType = {percentChanged = 0}
+ccui.SliderEventType = {
+    percentChanged = 0,
+    slideBallDown = 1,
+    slideBallUp = 2,
+    slideBallCancel = 3
+}
 
 ccui.LoadingBarDirection = { LEFT = 0, RIGHT = 1}
 
@@ -160,9 +177,16 @@ ccui.PageViewEventType = {
    turning = 0,
 }
 
+ccui.PageViewDirection = {
+  HORIZONTAL = 0,
+  VERTICAL = 1
+}
+
 ccui.PVTouchDir = {
     touchLeft = 0,
     touchRight = 1,
+    touchUp = 2,
+    touchDown = 3
 }
 
 ccui.ListViewGravity = {
@@ -177,4 +201,18 @@ ccui.ListViewGravity = {
 ccui.TextType = {
     SYSTEM = 0,
     TTF    = 1,
+}
+
+ccui.LayoutComponent.HorizontalEdge = {
+    None = 0,
+    Left = 1,
+    Right = 2,
+    Center = 3,
+}
+
+ccui.LayoutComponent.VerticalEdge = {
+    None = 0,
+    Bottom = 1,
+    Top = 2,
+    Center = 3,
 }

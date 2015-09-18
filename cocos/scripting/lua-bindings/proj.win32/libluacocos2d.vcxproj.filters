@@ -70,11 +70,14 @@
     <Filter Include="luasocket">
       <UniqueIdentifier>{617e3909-01ff-4c11-bae5-790787963c34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="quick">
-      <UniqueIdentifier>{e6d6c5da-e7da-40cf-bde0-f383f9dd9dbe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="manual\audioengine">
       <UniqueIdentifier>{08e7d51a-6f8a-4e54-8abe-a86101be8dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{3934b26e-18b0-465a-a89e-69a3417d107e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\navmesh">
+      <UniqueIdentifier>{fa8be49e-8b79-4dc5-8f28-febde1347eda}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,21 +258,6 @@
     <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp">
-      <Filter>quick</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.cpp">
-      <Filter>quick</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.cpp">
-      <Filter>quick</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp">
-      <Filter>quick</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp">
-      <Filter>quick</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_audioengine_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
@@ -281,6 +269,30 @@
     </ClCompile>
     <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
       <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\cocostudio\lua-cocos-studio-conversions.cpp">
+      <Filter>manual\cocostudio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_webview_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_webview_manual.cpp">
+      <Filter>manual\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_physics3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\lua_cocos2dx_navmesh_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\lua_cocos2dx_navmesh_conversions.cpp">
+      <Filter>manual\navmesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\navmesh\lua_cocos2dx_navmesh_manual.cpp">
+      <Filter>manual\navmesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -467,21 +479,6 @@
     <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h">
       <Filter>manual\cocostudio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h">
-      <Filter>quick</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h">
-      <Filter>quick</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.h">
-      <Filter>quick</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.hpp">
-      <Filter>quick</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h">
-      <Filter>quick</Filter>
-    </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_audioengine_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -493,6 +490,30 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
       <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\cocostudio\lua-cocos-studio-conversions.h">
+      <Filter>manual\cocostudio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_webview_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_webview_manual.hpp">
+      <Filter>manual\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_physics3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\physics3d\lua_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\lua_cocos2dx_navmesh_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\lua_cocos2dx_navmesh_conversions.h">
+      <Filter>manual\navmesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\navmesh\lua_cocos2dx_navmesh_manual.h">
+      <Filter>manual\navmesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

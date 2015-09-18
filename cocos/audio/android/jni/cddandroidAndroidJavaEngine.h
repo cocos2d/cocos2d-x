@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -27,39 +27,42 @@ THE SOFTWARE.
 
 #include "SimpleAudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
+#include <list>
 
 namespace CocosDenshion {
     namespace android {
         class AndroidJavaEngine : public SimpleAudioEngine {
+        public:
+            AndroidJavaEngine();
             ~AndroidJavaEngine();
 
-            void preloadBackgroundMusic(const char* pszFilePath);
-            void playBackgroundMusic(const char* pszFilePath, bool bLoop);
-            void stopBackgroundMusic(bool bReleaseData);
-            void pauseBackgroundMusic();
-            void resumeBackgroundMusic();
-            void rewindBackgroundMusic();
-            bool willPlayBackgroundMusic();
-            bool isBackgroundMusicPlaying();
-            float getBackgroundMusicVolume();
-            void setBackgroundMusicVolume(float volume);
-            float getEffectsVolume();
-            void setEffectsVolume(float volume);
-            unsigned int playEffect(const char* pszFilePath, bool bLoop = false,
+            virtual void preloadBackgroundMusic(const char* filePath);
+            virtual void playBackgroundMusic(const char* filePath, bool loop);
+            virtual void stopBackgroundMusic(bool releaseData);
+            virtual void pauseBackgroundMusic();
+            virtual void resumeBackgroundMusic();
+            virtual void rewindBackgroundMusic();
+            virtual bool willPlayBackgroundMusic();
+            virtual bool isBackgroundMusicPlaying();
+            virtual float getBackgroundMusicVolume();
+            virtual void setBackgroundMusicVolume(float volume);
+            virtual float getEffectsVolume();
+            virtual void setEffectsVolume(float volume);
+            virtual unsigned int playEffect(const char* filePath, bool loop = false,
                                     float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
-            void pauseEffect(unsigned int nSoundId);
-            void pauseAllEffects();
-            void resumeEffect(unsigned int nSoundId);
-            void resumeAllEffects();
-            void stopEffect(unsigned int nSoundId);
-            void stopAllEffects();
-            void preloadEffect(const char* pszFilePath);
-            void unloadEffect(const char* pszFilePath);
+            virtual void pauseEffect(unsigned int soundId);
+            virtual void pauseAllEffects();
+            virtual void resumeEffect(unsigned int soundId);
+            virtual void resumeAllEffects();
+            virtual void stopEffect(unsigned int soundId);
+            virtual void stopAllEffects();
+            virtual void preloadEffect(const char* filePath);
+            virtual void unloadEffect(const char* filePath);
 
         private :
-            static bool getJNIStaticMethodInfo(cocos2d::JniMethodInfo &methodinfo,
-                                               const char *methodName,
-                                               const char *paramCode);
+            bool _implementBaseOnAudioEngine;
+            float _effectVolume;
+            std::list<int> _soundIDs;
         };
     }
 }

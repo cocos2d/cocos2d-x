@@ -30,37 +30,9 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
-#import <Foundation/Foundation.h>
-#import <AppKit/AppKit.h>
-
 #include "UIEditBoxImpl.h"
 
-
-@interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
-{
-    NSTextField* textField_;
-    NSSecureTextField* secureTextField_;
-    void* editBox_;
-    BOOL editState_;
-    NSMutableDictionary* placeholderAttributes_;
-}
-
-@property(nonatomic, retain) NSTextField* textField;
-@property(nonatomic, retain) NSSecureTextField* secureTextField;
-@property(nonatomic, retain) NSMutableDictionary* placeholderAttributes;
-@property(nonatomic, readonly, getter = isEditState) BOOL editState;
-@property(nonatomic, assign) void* editBox;
-
--(id) initWithFrame: (NSRect) frameRect editBox: (void*) editBox;
--(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
--(void) setPosition:(NSPoint) pos;
--(void) setContentSize:(NSSize) size;
--(void) visit;
--(void) openKeyboard;
--(void) closeKeyboard;
-
-@end
-
+@class UIEditBoxImplMac;
 
 NS_CC_BEGIN
 
@@ -83,9 +55,9 @@ public:
     
     virtual bool initWithSize(const Size& size);
     virtual void setFont(const char* pFontName, int fontSize);
-    virtual void setFontColor(const Color3B& color);
+    virtual void setFontColor(const Color4B& color);
     virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-    virtual void setPlaceholderFontColor(const Color3B& color);
+    virtual void setPlaceholderFontColor(const Color4B& color);
     virtual void setInputMode(EditBox::InputMode inputMode);
     virtual void setInputFlag(EditBox::InputFlag inputFlag);
     virtual void setMaxLength(int maxLength);
@@ -104,7 +76,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)override;
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();
@@ -117,12 +89,13 @@ public:
 private:
     NSPoint    convertDesignCoordToScreenCoord(const Vec2& designCoord, bool bInRetinaMode);
     void       adjustTextFieldPosition();
-    Size     _contentSize;
-    Vec2    _position;
-    Vec2    _anchorPoint;
-    int        _maxTextLength;
-    bool       _inRetinaMode;
-    UIEditBoxImplMac*  _sysEdit;
+    NSFont*    constructFont(const char* fontName, int fontSize);
+    Size              _contentSize;
+    Vec2              _position;
+    Vec2              _anchorPoint;
+    int               _maxTextLength;
+    bool              _inRetinaMode;
+    UIEditBoxImplMac* _sysEdit;
 };
 
 

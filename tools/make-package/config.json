@@ -7,18 +7,9 @@
             "extract_to_zip_path": "external"
         },
         {
-            "zip_config_path": "../../templates/lua-template-runtime/runtime/config.json",
-            "zip_file_path": "../../",
-            "extract_to_zip_path": "templates/lua-template-runtime/runtime"
-        },
-        {
             "zip_config_path": "../cocos2d-console/config.json",
             "zip_file_path": "../cocos2d-console",
             "extract_to_zip_path": "tools/cocos2d-console"
         }
-    ],
-    "extra_dirs":
-    [
-        "tools/fbx-conv"
     ]
 }

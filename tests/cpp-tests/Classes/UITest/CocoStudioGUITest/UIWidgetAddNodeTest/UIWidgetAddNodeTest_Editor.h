@@ -27,16 +27,17 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UIWidgetAddNodeEditorTests);
 class UIWidgetAddNodeTest_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIWidgetAddNodeTest_Editor);
+
     UIWidgetAddNodeTest_Editor();
     ~UIWidgetAddNodeTest_Editor();
-    bool init();
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
-protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIWidgetAddNodeTest_Editor)
+
+    virtual bool init() override;
+    virtual void configureGUIScene() override;
 };
 
 #endif /* defined(__TestCpp__UIWidgetAddNodeTest_Editor__) */

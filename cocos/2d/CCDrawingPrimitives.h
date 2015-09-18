@@ -70,99 +70,202 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup global
+ * @addtogroup _2d
  * @{
  */
 
 class PointArray;
 
+/**
+* @js cc.DrawingPrimitiveCanvas/cc.DrawingPrimitiveWebGL
+*/
 namespace DrawPrimitives
 {
-    /** Initializes the drawing primitives */
+    /**
+     * Initializes the drawing primitives.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL init();
 
-    /** Frees allocated resources by the drawing primitives */
+    /**
+     * Frees allocated resources by the drawing primitives.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL free();
 
-    /** draws a point given x and y coordinate measured in points */
+    /** Draws a point given x and y coordinate measured in points
+     *
+     * @param point A Vec2 with a point given x and y coordinate.
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoint(const Vec2& point);
 
-    /** draws an array of points.
-     @since v0.7.2
+    /** Draws an array of points.
+     *
+     * @param point A point coordinates.
+     * @param numberOfPoints The number of points.
+     * @since v0.7.2
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoints(const Vec2 *points, unsigned int numberOfPoints);
 
-    /** draws a line given the origin and destination point measured in points */
+    /** Draws a line given the origin and destination point measured in points
+     *
+     * @param origin A Vec2 Type point used to the line origin.
+     * @param destination A Vec2 Type point used to the line destination.
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawLine(const Vec2& origin, const Vec2& destination);
 
-    /** draws a rectangle given the origin and destination point measured in points. */
+    /** Draws a rectangle given the origin and destination point measured in points.
+     * The origin and the destination can not have the same x and y coordinate.
+     *
+     * @param origin The rectangle origin.
+     * @param destination The rectangle destination.
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawRect(Vec2 origin, Vec2 destination);
 
-    /** draws a solid rectangle given the origin and destination point measured in points.
-        @since 1.1
+    /** Draws a solid rectangle given the origin and destination point measured in points.
+     * The origin and the destination can not have the same x and y coordinate.
+     *
+     * @param origin The rectangle origin.
+     * @param destination The rectangle destination.
+     * @param color The rectangle color.
+     * @since 1.1
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidRect(Vec2 origin, Vec2 destination, Color4F color);
 
-    /** draws a polygon given a pointer to point coordinates and the number of vertices measured in points.
-    The polygon can be closed or open
-    */
+    /** Draws a polygon given a pointer to point coordinates and the number of vertices measured in points.
+     * The polygon can be closed or open.
+     *
+     * @param vertices A pointer to point coordinates.
+     * @param numOfVertices The number of vertices measured in points.
+     * @param closePolygon The polygon can be closed or open.
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoly(const Vec2 *vertices, unsigned int numOfVertices, bool closePolygon);
 
-    /** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
+    /** Draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
+     *
+     * @param poli A solid polygon given a pointer to CGPoint coordinates.
+     * @param numberOfPoints The number of vertices measured in points.
+     * @param color The solid polygon color.
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color);
 
-    /** draws a circle given the center, radius and number of segments. */
+    /** Draws a circle given the center, radius and number of segments. 
+     *
+     * @param center The circle center point.
+     * @param radius The circle rotate of radius.
+     * @param angle  The circle angle.
+     * @param segments The number of segments.
+     * @param drawLineToCenter Whether or not draw the line from the origin to center.
+     * @param scaleX The scale value in x.
+     * @param scaleY The scale value in y.
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
+    
+    /** Draws a circle given the center, radius and number of segments.
+     *
+     * @param center The circle center point.
+     * @param radius The circle rotate of radius.
+     * @param angle  The circle angle.
+     * @param segments The number of segments.
+     * @param drawLineToCenter Whether or not draw the line from the origin to center.
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
-    /** draws a solid circle given the center, radius and number of segments. */
+    /** Draws a solid circle given the center, radius and number of segments.
+     * @param center The circle center point.
+     * @param radius The circle rotate of radius.
+     * @param angle  The circle angle.
+     * @param segments The number of segments.
+     * @param scaleX The scale value in x.
+     * @param scaleY The scale value in y.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
+    
+    /** Draws a solid circle given the center, radius and number of segments.
+     * @param center The circle center point.
+     * @param radius The circle rotate of radius.
+     * @param angle  The circle angle.
+     * @param segments The number of segments.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments);
 
-    /** draws a quad bezier path
-     @warning This function could be pretty slow. Use it only for debugging purposes.
-     @since v0.8
+    /** Draws a quad bezier path.
+     *
+     * @param origin The origin of the bezier path.
+     * @param control The control of the bezier path.
+     * @param destination The destination of the bezier path.
+     * @param segments The The number of segments.
+     * @warning This function could be pretty slow. Use it only for debugging purposes.
+     * @since v0.8
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destination, unsigned int segments);
 
-    /** draws a cubic bezier path
-     @warning This function could be pretty slow. Use it only for debugging purposes.
-     @since v0.8
+    /** Draws a cubic bezier path.
+     *
+     * @param origin The origin of the bezier path.
+     * @param control1 The first control of the bezier path.
+     * @param control2 The second control of the bezier path.
+     * @param destination The destination of the bezier path.
+     * @param segments The The number of segments.
+     * @warning This function could be pretty slow. Use it only for debugging purposes.
+     * @since v0.8
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments);
 
-    /** draws a Catmull Rom path.
-     @warning This function could be pretty slow. Use it only for debugging purposes.
-     @since v2.0
+    /** Draws a Catmull Rom path.
+     *
+     * @param arrayOfControlPoints A point array  of control point.
+     * @param segments The The number of segments.
+     * @warning This function could be pretty slow. Use it only for debugging purposes.
+     * @since v2.0
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCatmullRom(PointArray *arrayOfControlPoints, unsigned int segments);
 
-    /** draws a Cardinal Spline path.
-     @warning This function could be pretty slow. Use it only for debugging purposes.
-     @since v2.0
+    /** Draws a Cardinal Spline path.
+     *
+     * @param config A array point.
+     * @param tension The tension of the spline.
+     * @param segments The The number of segments.
+     * @warning This function could be pretty slow. Use it only for debugging purposes.
+     * @since v2.0
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCardinalSpline(PointArray *config, float tension,  unsigned int segments);
 
-    /** set the drawing color with 4 unsigned bytes
-     @since v2.0
+    /** Set the drawing color with 4 unsigned bytes.
+     *
+     * @param r The red color with a unsigned bytes.
+     * @param g The green color with a unsigned bytes.
+     * @param b The blue color with a unsigned bytes.
+     * @param a Alpha with a unsigned bytes.
+     * @since v2.0
+     * @js setDrawColor
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL setDrawColor4B(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 
-    /** set the drawing color with 4 floats
-     @since v2.0
+    /** Set the drawing color with 4 floats.
+     *
+     * @param r The red color with an floats.
+     * @param g The green color with an floats.
+     * @param b The blue color with an floats.
+     * @param a Alpha with an floats.
+     * @since v2.0
+     * @js setDrawColor
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL setDrawColor4F(GLfloat r, GLfloat g, GLfloat b, GLfloat a);
 
-    /** set the point size in points. Default 1.
-     @since v2.0
+    /** Set the point size in points. Default 1.
+     *
+     * @param pointSize The point size with an float.
+     * @since v2.0
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL setPointSize(GLfloat pointSize);
 
 };
 
 // end of global group
-/// @}
+/** @} */
 
 NS_CC_END
 

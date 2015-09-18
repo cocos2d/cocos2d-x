@@ -1,4 +1,6 @@
-
+if nil == cc.SimpleAudioEngine then
+    return
+end
 --Encapsulate SimpleAudioEngine to AudioEngine,Play music and sound effects.
 local M = {}
 

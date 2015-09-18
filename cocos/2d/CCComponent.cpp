@@ -74,8 +74,7 @@ void Component::onEnter()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendComponentEventToJS(this, kComponentOnEnter))
-            return;
+        sendComponentEventToJS(this, kComponentOnEnter);
     }
 #endif
 }
@@ -85,8 +84,27 @@ void Component::onExit()
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendComponentEventToJS(this, kComponentOnExit))
-            return;
+        sendComponentEventToJS(this, kComponentOnExit);
+    }
+#endif
+}
+
+void Component::onAdd()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        sendComponentEventToJS(this, kComponentOnAdd);
+    }
+#endif
+}
+
+void Component::onRemove()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        sendComponentEventToJS(this, kComponentOnRemove);
     }
 #endif
 }
@@ -96,8 +114,7 @@ void Component::update(float delta)
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
-        if (sendComponentEventToJS(this, kComponentOnUpdate))
-            return;
+        sendComponentEventToJS(this, kComponentOnUpdate);
     }
 #endif
 }
@@ -118,7 +135,7 @@ Component* Component::create(void)
     {
         CC_SAFE_DELETE(ret);
     }
-	return ret;
+    return ret;
 }
 
 const std::string& Component::getName() const

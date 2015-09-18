@@ -37,18 +37,27 @@ NS_CC_BEGIN
 
 /**
  @brief This action simulates a page turn from the bottom right hand corner of the screen.
- It's not much use by itself but is used by the PageTurnTransition.
  
- Based on an original paper by L Hong et al.
- http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
+ @details It's not much use by itself but is used by the PageTurnTransition.
+         Based on an original paper by L Hong et al.
+         http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
   
  @since v0.8.2
  */
 class CC_DLL PageTurn3D : public Grid3DAction
 {
 public:
-    virtual GridBase* getGrid();
-    /** create the action */
+    /**
+     * @js NA 
+     */
+    virtual GridBase* getGrid() override;
+
+    /**
+    @brief Create an action with duration, grid size.
+    @param duration Specify the duration of the PageTurn3D action. It's a value in seconds.
+    @param gridSize Specify the size of the grid.
+    @return If the creation sucess, return a pointer of PageTurn3D action; otherwise, return nil.
+    */
     static PageTurn3D* create(float duration, const Size& gridSize);
 
     // Overrides

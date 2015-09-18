@@ -25,12 +25,14 @@ THE SOFTWARE.
 
 package org.cocos2dx.lib;
 
-import java.io.FileInputStream;
-
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.util.Log;
+
+import com.chukong.cocosplay.client.CocosPlayClient;
+
+import java.io.FileInputStream;
 
 public class Cocos2dxMusic {
     // ===========================================================
@@ -245,6 +247,10 @@ public class Cocos2dxMusic {
         MediaPlayer mediaPlayer = new MediaPlayer();
 
         try {
+            if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
+                CocosPlayClient.updateAssets(path);
+            }
+            CocosPlayClient.notifyFileLoaded(path);
             if (path.startsWith("/")) {
                 final FileInputStream fis = new FileInputStream(path);
                 mediaPlayer.setDataSource(fis.getFD());

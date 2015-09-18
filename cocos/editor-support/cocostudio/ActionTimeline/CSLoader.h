@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -32,7 +32,7 @@
 
 namespace flatbuffers
 {
-    struct FlatBufferBuilder;
+    class FlatBufferBuilder;
     
     struct NodeTree;
     
@@ -57,10 +57,13 @@ namespace cocostudio
     namespace timeline
     {
         class ActionTimeline;
+        class ActionTimelineNode;
     }
 }
 
 NS_CC_BEGIN
+
+typedef std::function<void(Ref*)> ccNodeLoadCallback;
 
 class CC_STUDIO_DLL CSLoader
 {
@@ -69,12 +72,25 @@ public:
     static void destroyInstance();
     
     CSLoader();
-    void purge();
+    /** @deprecated Use method destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE void purge();    
     
     void init();
     
     static cocos2d::Node* createNode(const std::string& filename);
+    static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
+    static cocos2d::Node* createNode(const Data data);
+    static cocos2d::Node* createNode(const Data data, const ccNodeLoadCallback &callback);
+    static cocos2d::Node* createNodeWithVisibleSize(const std::string& filename);
+    static cocos2d::Node* createNodeWithVisibleSize(const std::string& filename, const ccNodeLoadCallback& callback);
+
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
+    static cocostudio::timeline::ActionTimeline* createTimeline(const Data data, const std::string& filename);
+
+    /*
+    static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename);
+    static cocostudio::timeline::ActionTimelineNode* createActionTimelineNode(const std::string& filename, int startIndex, int endIndex, bool loop);
+     */
     
     cocos2d::Node* createNodeFromJson(const std::string& filename);
     cocos2d::Node* loadNodeWithFile(const std::string& fileName);
@@ -100,8 +116,12 @@ public:
     
     cocos2d::Node* createNodeWithFlatBuffersForSimulator(const std::string& filename);
     cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
-    
+
 protected:
+
+    cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename, const ccNodeLoadCallback& callback);
+    cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName, const ccNodeLoadCallback& callback);
+    cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree, const ccNodeLoadCallback& callback);
     
     cocos2d::Node* loadNode(const rapidjson::Value& json);
     
@@ -121,7 +141,7 @@ protected:
     
     // load component
     cocos2d::Component* loadComponent(const rapidjson::Value& json);
-    cocos2d::Component* loadComAudio(const rapidjson::Value& json);    
+    cocos2d::Component* loadComAudio(const rapidjson::Value& json);
     
     bool isWidget(const std::string& type);
     bool isCustomWidget(const std::string& type);
@@ -129,6 +149,9 @@ protected:
     std::string getGUIClassName(const std::string &name);
     std::string getWidgetReaderClassName(cocos2d::ui::Widget *widget);
     
+    inline void reconstructNestNode(cocos2d::Node * node);
+    static inline std::string getExtentionName(const std::string& name);
+
     typedef std::function<cocos2d::Node*(const rapidjson::Value& json)> NodeCreateFunc;
     typedef std::pair<std::string, NodeCreateFunc> Pair;
     
@@ -146,7 +169,10 @@ protected:
     std::string _monoCocos2dxVersion;
     
     Node* _rootNode;
-//    std::vector<Node*> _loadingNodeParentHierarchy;
+    cocos2d::Vector<cocos2d::Node*> _callbackHandlers;
+    
+    std::string _csBuildID;
+    
 };
 
 NS_CC_END

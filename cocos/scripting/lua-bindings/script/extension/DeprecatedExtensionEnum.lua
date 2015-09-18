@@ -1,3 +1,6 @@
+if nil == cc.Control then
+    return
+end
 
 _G.kCCControlStepperPartMinus        = cc.CONTROL_STEPPER_PART_MINUS
 _G.kCCControlStepperPartPlus         = cc.CONTROL_STEPPER_PART_PLUS
