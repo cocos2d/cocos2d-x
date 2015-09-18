@@ -5,6 +5,20 @@
 -- @parent_module ccs
 
 --------------------------------
+-- 
+-- @function [parent=#ActionTimeline] clearFrameEndCalls 
+-- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] setAnimationEndCallBack 
+-- @param self
+-- @param #string animationName
+-- @param #function func
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
 --  add Timeline to ActionTimeline 
 -- @function [parent=#ActionTimeline] addTimeline 
 -- @param self
@@ -84,6 +98,15 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ActionTimeline] addFrameEndCallFunc 
+-- @param self
+-- @param #int frameIndex
+-- @param #string funcKey
+-- @param #function func
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- 
 -- @function [parent=#ActionTimeline] removeAnimationInfo 
 -- @param self
 -- @param #string animationName
@@ -108,6 +131,15 @@
 -- @param self
 -- @return int#int ret (return value: int)
         
+--------------------------------
+-- @overload self, int         
+-- @overload self, int, string         
+-- @function [parent=#ActionTimeline] removeFrameEndCall
+-- @param self
+-- @param #int frameIndex
+-- @param #string funcKey
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+
 --------------------------------
 --  Goto the specified frame index, and pause at this index.<br>
 -- param startIndex The animation will pause at this index.
