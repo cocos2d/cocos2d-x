@@ -2963,16 +2963,6 @@ ComController : function (
 ccs.ComRender = {
 
 /**
- * @method getNode
- * @return {cc.Node}
- */
-getNode : function (
-)
-{
-    return cc.Node;
-},
-
-/**
  * @method setNode
  * @param {cc.Node} arg0
  */
@@ -2980,6 +2970,16 @@ setNode : function (
 node 
 )
 {
+},
+
+/**
+ * @method getNode
+ * @return {cc.Node}
+ */
+getNode : function (
+)
+{
+    return cc.Node;
 },
 
 /**

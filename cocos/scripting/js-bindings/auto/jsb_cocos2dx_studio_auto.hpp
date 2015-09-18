@@ -470,8 +470,8 @@ bool js_cocos2dx_studio_ComRender_constructor(JSContext *cx, uint32_t argc, jsva
 void js_cocos2dx_studio_ComRender_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_studio_ComRender(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_studio(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_studio_ComRender_getNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComRender_setNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_studio_ComRender_getNode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComRender_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_studio_ComRender_ComRender(JSContext *cx, uint32_t argc, jsval *vp);
 

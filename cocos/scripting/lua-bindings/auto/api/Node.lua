@@ -25,6 +25,13 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
+-- 
+-- @function [parent=#Node] setPhysicsBody 
+-- @param self
+-- @param #cc.Component physicsBody
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Gets the description string. It makes debugging easier.<br>
 -- return A string<br>
 -- js NA<br>
@@ -612,6 +619,12 @@
 -- @function [parent=#Node] getRotation 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getPhysicsBody 
+-- @param self
+-- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
 -- Returns the anchorPoint in absolute pixels.<br>
