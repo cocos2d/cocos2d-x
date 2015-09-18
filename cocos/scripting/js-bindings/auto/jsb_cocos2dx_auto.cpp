@@ -63768,6 +63768,34 @@ bool js_cocos2dx_RenderState_getStateBlock(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_RenderState_getStateBlock : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_RenderState_setParent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::RenderState* cobj = (cocos2d::RenderState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderState_setParent : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::RenderState* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::RenderState*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_RenderState_setParent : Error processing arguments");
+        cobj->setParent(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_RenderState_setParent : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_RenderState_initialize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -63821,6 +63849,7 @@ void js_register_cocos2dx_RenderState(JSContext *cx, JS::HandleObject global) {
         JS_FN("bind", js_cocos2dx_RenderState_bind, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_cocos2dx_RenderState_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStateBlock", js_cocos2dx_RenderState_getStateBlock, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setParent", js_cocos2dx_RenderState_setParent, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

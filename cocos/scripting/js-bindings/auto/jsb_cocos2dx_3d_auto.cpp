@@ -2953,31 +2953,6 @@ bool js_cocos2dx_3d_Sprite3D_setMaterial(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_setMaterial : wrong number of arguments");
     return false;
 }
-bool js_cocos2dx_3d_Sprite3D_genGLProgramState(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Sprite3D* cobj = (cocos2d::Sprite3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Sprite3D_genGLProgramState : Invalid Native Object");
-    if (argc == 0) {
-        cobj->genGLProgramState();
-        args.rval().setUndefined();
-        return true;
-    }
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Sprite3D_genGLProgramState : Error processing arguments");
-        cobj->genGLProgramState(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_genGLProgramState : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_3d_Sprite3D_getMesh(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -3386,6 +3361,31 @@ bool js_cocos2dx_3d_Sprite3D_setForce2DQueue(JSContext *cx, uint32_t argc, jsval
     JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_setForce2DQueue : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_3d_Sprite3D_genMaterial(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Sprite3D* cobj = (cocos2d::Sprite3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Sprite3D_genMaterial : Invalid Native Object");
+    if (argc == 0) {
+        cobj->genMaterial();
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Sprite3D_genMaterial : Error processing arguments");
+        cobj->genMaterial(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_genMaterial : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_3d_Sprite3D_removeAttachNode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -3626,7 +3626,6 @@ void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
         JS_FN("addMesh", js_cocos2dx_3d_Sprite3D_addMesh, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllAttachNode", js_cocos2dx_3d_Sprite3D_removeAllAttachNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaterial", js_cocos2dx_3d_Sprite3D_setMaterial, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("genGLProgramState", js_cocos2dx_3d_Sprite3D_genGLProgramState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMesh", js_cocos2dx_3d_Sprite3D_getMesh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createSprite3DNode", js_cocos2dx_3d_Sprite3D_createSprite3DNode, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshCount", js_cocos2dx_3d_Sprite3D_getMeshCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -3644,6 +3643,7 @@ void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
         JS_FN("initWithFile", js_cocos2dx_3d_Sprite3D_initWithFile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBlendFunc", js_cocos2dx_3d_Sprite3D_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setForce2DQueue", js_cocos2dx_3d_Sprite3D_setForce2DQueue, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("genMaterial", js_cocos2dx_3d_Sprite3D_genMaterial, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAttachNode", js_cocos2dx_3d_Sprite3D_removeAttachNode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSkeleton", js_cocos2dx_3d_Sprite3D_getSkeleton, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setForceDepthWrite", js_cocos2dx_3d_Sprite3D_setForceDepthWrite, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

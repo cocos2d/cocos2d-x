@@ -20259,6 +20259,16 @@ getStateBlock : function (
 },
 
 /**
+ * @method setParent
+ * @param {cc.RenderState} arg0
+ */
+setParent : function (
+renderstate 
+)
+{
+},
+
+/**
  * @method initialize
  */
 initialize : function (

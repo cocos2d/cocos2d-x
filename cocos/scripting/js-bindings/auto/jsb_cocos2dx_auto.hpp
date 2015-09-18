@@ -3638,6 +3638,7 @@ bool js_cocos2dx_RenderState_getTexture(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_RenderState_bind(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_getStateBlock(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_RenderState_setParent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_initialize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_RenderState_finalize(JSContext *cx, uint32_t argc, jsval *vp);
 
