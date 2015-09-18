@@ -58,15 +58,16 @@ bool ComponentContainer::add(Component *com)
     CCASSERT(com->getOwner() == nullptr, "Component already added. It can't be added again");
     do
     {
-        auto typeName = typeid(*com).name();
-        if (_components.find(typeName) != _components.end())
+        auto componentName = com->getName();
+
+        if (_componentMap.find(componentName) != _componentMap.end())
         {
-            CCASSERT(true,"ComponentContainer already have this kind of component");
+            CCASSERT(true, "ComponentContainer already have this kind of component");
             break;
         }
+        _componentMap[componentName] = com;
+        com->retain();
         com->setOwner(_owner);
-        _components.insert(typeName, com);
-        _componentMap[com->getName()] = com;
         com->onAdd();
 
         ret = true;
@@ -74,14 +75,20 @@ bool ComponentContainer::add(Component *com)
     return ret;
 }
 
-bool ComponentContainer::remove(const std::string& name)
+bool ComponentContainer::remove(const std::string& componentName)
 {
     bool ret = false;
     do 
     {        
-        auto iter = _componentMap.find(name);
-        CC_BREAK_IF(iter == _componentMap.end());      
-        remove(iter->second);
+        auto iter = _componentMap.find(componentName);
+        CC_BREAK_IF(iter == _componentMap.end());
+
+        auto component = iter->second;
+        _componentMap.erase(componentName);
+
+        component->onRemove();
+        component->setOwner(nullptr);
+        component->release();
 
         ret = true;
     } while(0);
@@ -91,36 +98,21 @@ bool ComponentContainer::remove(const std::string& name)
 
 bool ComponentContainer::remove(Component *com)
 {
-    bool ret = false;
-    do
-    {
-        auto iter = _components.find(typeid(*com).name());
-        if (iter != _components.end())
-        {
-            _componentMap.erase(com->getName());
-
-            com->onRemove();
-            com->setOwner(nullptr);
-            _components.erase(iter);
-        }
-        
-        ret = true;
-    } while(0);
-
-    return ret;
+    return remove(com->getName());
 }
 
 void ComponentContainer::removeAll()
 {
     if (!_componentMap.empty())
     {
-        for (auto iter = _components.begin(); iter != _components.end(); ++iter)
+        for (auto iter = _componentMap.begin(); iter != _componentMap.end(); ++iter)
         {
-            iter->second->onRemove();
-            iter->second->setOwner(nullptr);
+            auto component = iter->second;
+            component->onRemove();
+            component->setOwner(nullptr);
+            component->release();
         }
         
-        _components.clear();
         _componentMap.clear();
         _owner->unscheduleUpdate();
     }
@@ -128,11 +120,11 @@ void ComponentContainer::removeAll()
 
 void ComponentContainer::visit(float delta)
 {
-    if (!_components.empty())
+    if (!_componentMap.empty())
     {
         CC_SAFE_RETAIN(_owner);
-        auto iterEnd = _components.end();
-        for (auto iter = _components.begin(); iter != iterEnd; ++iter)
+        auto iterEnd = _componentMap.end();
+        for (auto iter = _componentMap.begin(); iter != iterEnd; ++iter)
         {
             iter->second->update(delta);
         }
@@ -142,7 +134,7 @@ void ComponentContainer::visit(float delta)
 
 void ComponentContainer::onEnter()
 {
-    for (auto iter = _components.begin(); iter != _components.end(); ++iter)
+    for (auto iter = _componentMap.begin(); iter != _componentMap.end(); ++iter)
     {
         iter->second->onEnter();
     }
@@ -150,7 +142,7 @@ void ComponentContainer::onEnter()
 
 void ComponentContainer::onExit()
 {
-    for (auto iter = _components.begin(); iter != _components.end(); ++iter)
+    for (auto iter = _componentMap.begin(); iter != _componentMap.end(); ++iter)
     {
         iter->second->onExit();
     }

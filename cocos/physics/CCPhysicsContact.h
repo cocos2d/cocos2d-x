@@ -40,8 +40,6 @@ class PhysicsShape;
 class PhysicsBody;
 class PhysicsWorld;
 
-typedef Vec2 Vect;
-
 typedef struct CC_DLL PhysicsContactData
 {
     static const int POINT_MAX = 4;
@@ -162,7 +160,7 @@ public:
     /** Set the friction.*/
     void setFriction(float friction);
     /** Set the surface velocity.*/
-    void setSurfaceVelocity(const Vect& velocity);
+    void setSurfaceVelocity(const Vec2& velocity);
     /** Ignore the rest of the contact presolve and postsolve callbacks. */
     void ignore();
     

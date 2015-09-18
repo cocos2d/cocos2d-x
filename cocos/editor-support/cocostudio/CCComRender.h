@@ -34,19 +34,13 @@ namespace cocostudio {
 class CC_STUDIO_DLL ComRender : public cocos2d::Component
 {
     DECLARE_CLASS_COMPONENT_INFO
-CC_CONSTRUCTOR_ACCESS:
-    /**
-     *  @js ctor
-     */
-    ComRender(void);
-    ComRender(cocos2d::Node *node, const char *comName);
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~ComRender(void);
-    
+ 
 public:
+    const static std::string COMPONENT_NAME;
+
+    static ComRender* create();
+    static ComRender* create(cocos2d::Node *node, const char *comName);
+
     /**
      * @js NA
      * @lua NA
@@ -71,12 +65,21 @@ public:
     virtual cocos2d::Node* getNode();
     virtual void setNode(cocos2d::Node *node);
 
-    static ComRender* create(void);
-    static ComRender* create(cocos2d::Node *node, const char *comName);
+CC_CONSTRUCTOR_ACCESS:
+    /**
+    *  @js ctor
+    */
+    ComRender();
+    ComRender(cocos2d::Node *node, const char *comName);
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual ~ComRender();
+
 private:
     bool readJson(const std::string &fileName, rapidjson::Document &doc);
 
-private:
     cocos2d::Node *_render;
 };
 

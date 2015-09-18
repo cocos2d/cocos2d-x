@@ -56,6 +56,7 @@ class GLProgram;
 class GLProgramState;
 class Material;
 class Camera;
+class PhysicsBody;
 
 /**
  * @addtogroup _2d
@@ -1641,22 +1642,6 @@ public:
      * @return The Component by name.
      */
     Component* getComponent(const std::string& name);
-    
-    /**
-     * Get a component by the type T.
-     * @lua NA
-     * @js NA
-     *
-     * @return The component that match the type T.
-     */
-    template<typename T>
-    T* getComponent() const
-    {
-        if (_componentContainer)
-            return _componentContainer->getComponent<T>();
-        else
-            return nullptr;
-    }
 
     /**
      * Adds a component.
@@ -1861,6 +1846,19 @@ protected:
     std::function<void()> _onExitCallback;
     std::function<void()> _onEnterTransitionDidFinishCallback;
     std::function<void()> _onExitTransitionDidStartCallback;
+
+//Physics:remaining backwardly compatible  
+#if CC_USE_PHYSICS
+    PhysicsBody* _physicsBody;
+public:
+    void setPhysicsBody(Component* physicsBody) 
+    { 
+        addComponent(physicsBody);
+    }
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
+
+    friend class PhysicsBody;
+#endif
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
