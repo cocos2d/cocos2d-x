@@ -857,6 +857,21 @@ TextVAlignment TextField::getTextVerticalAlignment() const
     return _textFieldRenderer->getVerticalAlignment();
 }
 
+int TextField::getStringNumLines()
+{
+    return _textFieldRenderer->getStringNumLines();
+}
+
+int TextField::getLineHeight() const
+{
+    return _textFieldRenderer->getLineHeight();
+}
+
+void TextField::setLineBreakWithoutSpace(bool breakWithoutSpace)
+{
+    _textFieldRenderer->setLineBreakWithoutSpace(breakWithoutSpace);
+}
+
 }
 
 NS_CC_END
