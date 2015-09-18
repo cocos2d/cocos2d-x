@@ -186,8 +186,6 @@ THE SOFTWARE.
 #include "physics/CCPhysicsJoint.h"
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsWorld.h"
-#include "physics/CCComponentPhysics2d.h"
-#include "physics/CCPhysicsManager.h"
 
 // platform
 #include "platform/CCCommon.h"

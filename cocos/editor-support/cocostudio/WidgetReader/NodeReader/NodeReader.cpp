@@ -512,9 +512,9 @@ namespace cocostudio
         ComExtensionData* extensionData = ComExtensionData::create();
         extensionData->setCustomProperty(customProperty);
         extensionData->setActionTag(actionTag);
-        if (node->getComponent("ComExtensionData"))
+        if (node->getComponent(ComExtensionData::COMPONENT_NAME))
         {
-            node->removeComponent("ComExtensionData");
+            node->removeComponent(ComExtensionData::COMPONENT_NAME);
         }
         node->addComponent(extensionData);
         
