@@ -94372,6 +94372,818 @@ int lua_register_cocos2dx_TileMapAtlas(lua_State* tolua_S)
     g_typeCast["TileMapAtlas"] = "cc.TileMapAtlas";
     return 1;
 }
+
+int lua_cocos2dx_MotionStreak3D_reset(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_reset'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_reset'", nullptr);
+            return 0;
+        }
+        cobj->reset();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:reset",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_reset'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_setTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_setTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Texture2D* arg0;
+
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.MotionStreak3D:setTexture");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_setTexture'", nullptr);
+            return 0;
+        }
+        cobj->setTexture(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:setTexture",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_setTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_getTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_getTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_getTexture'", nullptr);
+            return 0;
+        }
+        cocos2d::Texture2D* ret = cobj->getTexture();
+        object_to_luaval<cocos2d::Texture2D>(tolua_S, "cc.Texture2D",(cocos2d::Texture2D*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:getTexture",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_getTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_tintWithColor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_tintWithColor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Color3B arg0;
+
+        ok &= luaval_to_color3b(tolua_S, 2, &arg0, "cc.MotionStreak3D:tintWithColor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_tintWithColor'", nullptr);
+            return 0;
+        }
+        cobj->tintWithColor(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:tintWithColor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_tintWithColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_getSweepAxis(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_getSweepAxis'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_getSweepAxis'", nullptr);
+            return 0;
+        }
+        const cocos2d::Vec3& ret = cobj->getSweepAxis();
+        vec3_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:getSweepAxis",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_getSweepAxis'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "cc.MotionStreak3D:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_setBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_setStartingPositionInitialized(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_setStartingPositionInitialized'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.MotionStreak3D:setStartingPositionInitialized");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_setStartingPositionInitialized'", nullptr);
+            return 0;
+        }
+        cobj->setStartingPositionInitialized(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:setStartingPositionInitialized",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_setStartingPositionInitialized'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_getBlendFunc'", nullptr);
+            return 0;
+        }
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_getBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_isStartingPositionInitialized(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_isStartingPositionInitialized'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_isStartingPositionInitialized'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isStartingPositionInitialized();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:isStartingPositionInitialized",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_isStartingPositionInitialized'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_getStroke(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_getStroke'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_getStroke'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getStroke();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:getStroke",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_getStroke'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_initWithFade(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_initWithFade'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 5) {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            cocos2d::Color3B arg3;
+            ok &= luaval_to_color3b(tolua_S, 5, &arg3, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            cocos2d::Texture2D* arg4;
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 6, "cc.Texture2D",&arg4, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            bool ret = cobj->initWithFade(arg0, arg1, arg2, arg3, arg4);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 5) {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            cocos2d::Color3B arg3;
+            ok &= luaval_to_color3b(tolua_S, 5, &arg3, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            std::string arg4;
+            ok &= luaval_to_std_string(tolua_S, 6,&arg4, "cc.MotionStreak3D:initWithFade");
+
+            if (!ok) { break; }
+            bool ret = cobj->initWithFade(arg0, arg1, arg2, arg3, arg4);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.MotionStreak3D:initWithFade",argc, 5);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_initWithFade'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_setSweepAxis(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_setSweepAxis'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Vec3 arg0;
+
+        ok &= luaval_to_vec3(tolua_S, 2, &arg0, "cc.MotionStreak3D:setSweepAxis");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_setSweepAxis'", nullptr);
+            return 0;
+        }
+        cobj->setSweepAxis(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:setSweepAxis",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_setSweepAxis'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_setStroke(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::MotionStreak3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_MotionStreak3D_setStroke'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.MotionStreak3D:setStroke");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_setStroke'", nullptr);
+            return 0;
+        }
+        cobj->setStroke(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:setStroke",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_setStroke'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.MotionStreak3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+
+    do 
+    {
+        if (argc == 5)
+        {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            cocos2d::Color3B arg3;
+            ok &= luaval_to_color3b(tolua_S, 5, &arg3, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            cocos2d::Texture2D* arg4;
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 6, "cc.Texture2D",&arg4, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            cocos2d::MotionStreak3D* ret = cocos2d::MotionStreak3D::create(arg0, arg1, arg2, arg3, arg4);
+            object_to_luaval<cocos2d::MotionStreak3D>(tolua_S, "cc.MotionStreak3D",(cocos2d::MotionStreak3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 5)
+        {
+            double arg0;
+            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            double arg1;
+            ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            double arg2;
+            ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            cocos2d::Color3B arg3;
+            ok &= luaval_to_color3b(tolua_S, 5, &arg3, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            std::string arg4;
+            ok &= luaval_to_std_string(tolua_S, 6,&arg4, "cc.MotionStreak3D:create");
+            if (!ok) { break; }
+            cocos2d::MotionStreak3D* ret = cocos2d::MotionStreak3D::create(arg0, arg1, arg2, arg3, arg4);
+            object_to_luaval<cocos2d::MotionStreak3D>(tolua_S, "cc.MotionStreak3D",(cocos2d::MotionStreak3D*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.MotionStreak3D:create",argc, 5);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_MotionStreak3D_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::MotionStreak3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak3D_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::MotionStreak3D();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"cc.MotionStreak3D");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.MotionStreak3D:MotionStreak3D",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_MotionStreak3D_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_MotionStreak3D_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (MotionStreak3D)");
+    return 0;
+}
+
+int lua_register_cocos2dx_MotionStreak3D(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.MotionStreak3D");
+    tolua_cclass(tolua_S,"MotionStreak3D","cc.MotionStreak3D","cc.Node",nullptr);
+
+    tolua_beginmodule(tolua_S,"MotionStreak3D");
+        tolua_function(tolua_S,"new",lua_cocos2dx_MotionStreak3D_constructor);
+        tolua_function(tolua_S,"reset",lua_cocos2dx_MotionStreak3D_reset);
+        tolua_function(tolua_S,"setTexture",lua_cocos2dx_MotionStreak3D_setTexture);
+        tolua_function(tolua_S,"getTexture",lua_cocos2dx_MotionStreak3D_getTexture);
+        tolua_function(tolua_S,"tintWithColor",lua_cocos2dx_MotionStreak3D_tintWithColor);
+        tolua_function(tolua_S,"getSweepAxis",lua_cocos2dx_MotionStreak3D_getSweepAxis);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_MotionStreak3D_setBlendFunc);
+        tolua_function(tolua_S,"setStartingPositionInitialized",lua_cocos2dx_MotionStreak3D_setStartingPositionInitialized);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_MotionStreak3D_getBlendFunc);
+        tolua_function(tolua_S,"isStartingPositionInitialized",lua_cocos2dx_MotionStreak3D_isStartingPositionInitialized);
+        tolua_function(tolua_S,"getStroke",lua_cocos2dx_MotionStreak3D_getStroke);
+        tolua_function(tolua_S,"initWithFade",lua_cocos2dx_MotionStreak3D_initWithFade);
+        tolua_function(tolua_S,"setSweepAxis",lua_cocos2dx_MotionStreak3D_setSweepAxis);
+        tolua_function(tolua_S,"setStroke",lua_cocos2dx_MotionStreak3D_setStroke);
+        tolua_function(tolua_S,"create", lua_cocos2dx_MotionStreak3D_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::MotionStreak3D).name();
+    g_luaType[typeName] = "cc.MotionStreak3D";
+    g_typeCast["MotionStreak3D"] = "cc.MotionStreak3D";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -94613,6 +95425,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_EventListenerTouchOneByOne(tolua_S);
 	lua_register_cocos2dx_ParticleRain(tolua_S);
 	lua_register_cocos2dx_Waves(tolua_S);
+	lua_register_cocos2dx_MotionStreak3D(tolua_S);
 	lua_register_cocos2dx_EaseOut(tolua_S);
 	lua_register_cocos2dx_MenuItemFont(tolua_S);
 	lua_register_cocos2dx_TransitionFadeUp(tolua_S);
