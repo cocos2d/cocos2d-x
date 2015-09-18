@@ -43,8 +43,9 @@ void ClippingRectangleNode::onBeforeVisitScissor()
         glEnable(GL_SCISSOR_TEST);
 
         GLView* glView = Director::getInstance()->getOpenGLView();
-        glView->setScissorInPoints(_clippingRegion.origin.x,
-                                   _clippingRegion.origin.y,
+		const Point wsPos = convertToWorldSpace(Point(_clippingRegion.origin.x, _clippingRegion.origin.y));
+        glView->setScissorInPoints(wsPos.x,
+                                   wsPos.y,
                                    _clippingRegion.size.width,
                                    _clippingRegion.size.height);
     }
