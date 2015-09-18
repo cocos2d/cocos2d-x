@@ -1311,4 +1311,9 @@
 -- @field [parent=#cc] TileMapAtlas#TileMapAtlas TileMapAtlas preloaded module
 
 
+--------------------------------------------------------
+-- the cc MotionStreak3D
+-- @field [parent=#cc] MotionStreak3D#MotionStreak3D MotionStreak3D preloaded module
+
+
 return nil

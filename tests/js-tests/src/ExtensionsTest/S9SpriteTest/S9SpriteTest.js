@@ -512,6 +512,38 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = S9SpriteTestDemo.extend({
     }
 });
 
+var S9SpriteActionTest = S9SpriteTestDemo.extend({
+
+    _title:"Scale9Sprite from sprite sheet",
+    _subtitle:"Test Action for ccui.scale9Sprite : Rotate + Scale + Translate",
+
+    ctor:function() {
+        this._super();
+
+        var blocks = new cc.Scale9Sprite('blocks9.png');
+
+        blocks.x = winSize.width / 2;
+        blocks.y = winSize.height / 2;
+
+        this.addChild(blocks);
+
+        var delay = cc.delayTime(0.25);
+
+        var rotateBy = cc.rotateBy(2, 360);
+        var rotateByBack = rotateBy.reverse();
+
+        var ScaleTo = cc.scaleTo(2, -0.44, 0.47);
+        var ScaleToBack = cc.scaleTo(2, 1.0, 1.0);
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+
+        blocks.runAction(cc.sequence(rotateBy, delay, rotateByBack));
+        blocks.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
+    }
+});
+
 var S9SpriteTestScene = TestScene.extend({
     runThisTest:function (num) {
         sceneIdx = (num || num == 0) ? (num - 1) : -1;
@@ -538,7 +570,8 @@ var arrayOfS9SpriteTest = [
     S9FrameNameSpriteSheetInsetsScaled,
     S9FrameNameSpriteSheetRotatedInsets,
     S9FrameNameSpriteSheetRotatedInsetsScaled,
-    S9_TexturePacker
+    S9_TexturePacker,
+    S9SpriteActionTest
 ];
 
 var nextS9SpriteTest = function () {

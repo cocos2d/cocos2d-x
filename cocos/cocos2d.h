@@ -292,6 +292,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "3d/CCMesh.h"
 #include "3d/CCMeshSkin.h"
+#include "3d/CCMotionStreak3D.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCOBB.h"
 #include "3d/CCPlane.h"
