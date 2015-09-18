@@ -18,6 +18,7 @@ CCBundleReader.cpp \
 CCMesh.cpp \
 CCMeshSkin.cpp \
 CCMeshVertexIndexData.cpp \
+CCMotionStreak3D.cpp \
 CCSprite3DMaterial.cpp \
 CCObjLoader.cpp \
 CCSkeleton3D.cpp \

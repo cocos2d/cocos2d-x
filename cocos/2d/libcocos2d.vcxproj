@@ -386,6 +386,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
     <ClCompile Include="..\3d\CCPlane.cpp" />
@@ -955,6 +956,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
     <ClInclude Include="..\3d\CCPlane.h" />

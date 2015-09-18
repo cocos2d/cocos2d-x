@@ -26,6 +26,7 @@
 #include "Sprite3DTest.h"
 #include "DrawNode3D.h"
 #include "2d/CCCameraBackgroundBrush.h"
+#include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
@@ -63,6 +64,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DTestMeshLight);
     ADD_TEST_CASE(Animate3DCallbackTest);
     ADD_TEST_CASE(CameraBackgroundClearTest);
+    ADD_TEST_CASE(MotionStreak3DTest);
 };
 
 //------------------------------------------------------------------
@@ -2784,4 +2786,48 @@ std::string CameraBackgroundClearTest::title() const
 std::string CameraBackgroundClearTest::subtitle() const
 {
     return "";
+}
+
+MotionStreak3DTest::MotionStreak3DTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 50.f, 200.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+    
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    sprite->setPosition(20.f, 0.f);
+    addChild(sprite);
+    
+    auto streak = MotionStreak3D::create(1.0f, 1.0f, 5.f, Color3B(255, 255, 0), "Images/Icon.png");
+    addChild(streak);
+    
+    setCameraMask(2);
+    
+    _sprite = sprite;
+    _streak = streak;
+    scheduleUpdate();
+}
+std::string MotionStreak3DTest::title() const
+{
+    return "MotionStreak3D Test";
+}
+std::string MotionStreak3DTest::subtitle() const
+{
+    return "";
+}
+
+void MotionStreak3DTest::update(float delta)
+{
+    static float t = 0;
+    t += delta;
+    float angle = t * M_PI;
+    float r = 20.f;
+    
+    _sprite->setPosition3D(Vec3(r * cosf(angle), 0, r * sinf(angle)));
+    _streak->setPosition3D(_sprite->getPosition3D());
+    _streak->setSweepAxis(Vec3(cosf(angle), 0, sinf(angle)));
 }
