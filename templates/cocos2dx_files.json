@@ -6644,6 +6644,7 @@
         "cocos/scripting/lua-bindings/auto/api/MenuItemToggle.lua", 
         "cocos/scripting/lua-bindings/auto/api/Mesh.lua", 
         "cocos/scripting/lua-bindings/auto/api/MotionStreak.lua", 
+        "cocos/scripting/lua-bindings/auto/api/MotionStreak3D.lua", 
         "cocos/scripting/lua-bindings/auto/api/MoveBy.lua", 
         "cocos/scripting/lua-bindings/auto/api/MoveTo.lua", 
         "cocos/scripting/lua-bindings/auto/api/MovementBoneData.lua", 
