@@ -25,7 +25,6 @@
 #include "CCComponentLua.h"
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
-#include "lua_cocos2dx_luacomponent_auto.hpp"
 #include "LuaBasicConversions.h"
 
 NS_CC_BEGIN
@@ -175,8 +174,6 @@ void ComponentLua::initClass()
         lua_pushstring(l, KEY_COMPONENT);              // stack: "component"
         lua_newtable(l);                               // stack: "component" table
         lua_rawset(l, LUA_REGISTRYINDEX);              // stack: -
-
-        register_all_cocos2dx_luacomponent(l);
         
         run = false;
     }
