@@ -234,6 +234,8 @@
         "cocos/3d/CCMeshSkin.h", 
         "cocos/3d/CCMeshVertexIndexData.cpp", 
         "cocos/3d/CCMeshVertexIndexData.h", 
+        "cocos/3d/CCMotionStreak3D.cpp", 
+        "cocos/3d/CCMotionStreak3D.h", 
         "cocos/3d/CCOBB.cpp", 
         "cocos/3d/CCOBB.h", 
         "cocos/3d/CCObjLoader.cpp", 
