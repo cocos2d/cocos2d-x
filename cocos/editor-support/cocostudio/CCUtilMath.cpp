@@ -33,7 +33,7 @@ bool isSpriteContainPoint(Sprite *sprite, Vec2 point, Vec2 &outPoint)
 {
     outPoint = sprite->convertToNodeSpace(point);
 
-    Size s  = sprite->getContentSize();
+    const Size& s  = sprite->getContentSize();
     Rect r(0, 0, s.width, s.height);
 
     return r.containsPoint(outPoint);

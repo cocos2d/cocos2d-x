@@ -633,7 +633,7 @@ Widget* ListView::getClosestItemToPosition(const Vec2& targetPosition, const Vec
 Widget* ListView::getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const
 {
     // Calculate the target position
-    Size contentSize = getContentSize();
+    const Size& contentSize = getContentSize();
     Vec2 targetPosition = -_innerContainer->getPosition();
     targetPosition.x += contentSize.width * positionRatioInView.x;
     targetPosition.y += contentSize.height * positionRatioInView.y;
@@ -760,7 +760,7 @@ void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, cons
         return;
     }
     
-    Size contentSize = getContentSize();
+    const Size& contentSize = getContentSize();
     Vec2 positionInView;
     positionInView.x += contentSize.width * positionRatioInView.x;
     positionInView.y += contentSize.height * positionRatioInView.y;
@@ -838,7 +838,7 @@ Vec2 ListView::getHowMuchOutOfBoundary(const Vec2& addition)
     float bottomBoundary = _bottomBoundary;
     {
         int lastItemIndex = _items.size() - 1;
-        Size contentSize = getContentSize();
+        const Size& contentSize = getContentSize();
         Vec2 firstItemAdjustment, lastItemAdjustment;
         if(_magneticType == MagneticType::CENTER)
         {

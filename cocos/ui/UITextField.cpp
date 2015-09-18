@@ -388,8 +388,8 @@ bool TextField::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
         return Widget::hitTest(pt, camera, nullptr);
     }
 
-    auto size = getContentSize();
-    auto anch = getAnchorPoint();
+    auto& size = getContentSize();
+    auto& anch = getAnchorPoint();
     Rect rect((size.width - _touchWidth) * anch.x, (size.height - _touchHeight) * anch.y, _touchWidth, _touchHeight);
     return isScreenPointInRect(pt, camera, getWorldToNodeTransform(), rect, nullptr);
 }
