@@ -13,7 +13,7 @@ set(COCOS_NETWORK_SRC
     network/SocketIO.cpp
     network/WebSocket.cpp
     network/CCDownloader.cpp
-    network/CCDownloaderImpl.cpp
+    network/CCDownloader-curl.cpp
 )
 
 if(MSVC)

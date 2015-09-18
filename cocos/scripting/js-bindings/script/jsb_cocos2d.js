@@ -2715,6 +2715,23 @@ cc.defineGetterSetter(cc.BlendFunc, "ALPHA_NON_PREMULTIPLIED", cc.BlendFunc._alp
 cc.BlendFunc.ADDITIVE;
 cc.defineGetterSetter(cc.BlendFunc, "ADDITIVE", cc.BlendFunc._additive);
 
+cc.GLProgram.prototype.setUniformLocationWithMatrix2fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 2);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+
+cc.GLProgram.prototype.setUniformLocationWithMatrix3fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 3);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 4);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+
 
 //
 // 3D module rename to jsb namespace

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -24,5 +24,31 @@
 
 #pragma once
 
-#include "../BaseTest.h"
-DEFINE_TEST_SUITE(DownloaderTests);
+#include "network/CCIDownloaderImpl.h"
+
+class _jobject;
+
+namespace cocos2d { namespace network
+    {
+        class DownloadTaskAndroid;
+        class DownloaderHints;
+
+        class DownloaderAndroid : public IDownloaderImpl
+        {
+        public:
+            DownloaderAndroid(const DownloaderHints& hints);
+            virtual ~DownloaderAndroid();
+
+            virtual IDownloadTask *createCoTask(std::shared_ptr<const DownloadTask>& task) override;
+
+            // designed called by internal
+            void _onProcess(int taskId, int64_t dl, int64_t dlNow, int64_t dlTotal);
+            void _onFinish(int taskId, int errCode, const char *errStr, std::vector<unsigned char>& data);
+        protected:
+            int _id;
+            _jobject* _impl;
+            std::unordered_map<int, DownloadTaskAndroid*> _taskMap;
+        };
+
+    }}  // namespace cocos2d::network
+

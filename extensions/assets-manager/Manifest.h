@@ -32,12 +32,20 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 #include "network/CCDownloader.h"
-
+#include "platform/CCFileUtils.h"
 
 #include "json/document.h"
 
 NS_CC_EXT_BEGIN
 
+struct DownloadUnit
+{
+    std::string srcUrl;
+    std::string storagePath;
+    std::string customId;
+};
+
+typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
 
 class CC_EX_DLL Manifest : public Ref
 {
@@ -135,7 +143,7 @@ protected:
     /** @brief Generate resuming download assets list
      * @param units   The download units reference to be modified by the generation result
      */
-    void genResumeAssetsList(network::DownloadUnits *units) const;
+    void genResumeAssetsList(DownloadUnits *units) const;
     
     /** @brief Prepend all search paths to the FileUtils.
      */

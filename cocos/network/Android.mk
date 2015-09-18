@@ -9,7 +9,7 @@ LOCAL_SRC_FILES := HttpClient-android.cpp \
 SocketIO.cpp \
 WebSocket.cpp \
 CCDownloader.cpp \
-CCDownloaderImpl.cpp
+CCDownloader-android.cpp
 
 LOCAL_EXPORT_C_INCLUDES :=
 
