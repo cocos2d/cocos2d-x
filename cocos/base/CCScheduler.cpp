@@ -345,9 +345,9 @@ void Scheduler::unschedule(const std::string &key, void *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
 
-            if (key == timer->getKey())
+            if (timer && key == timer->getKey())
             {
                 if (timer == element->currentTimer && (! element->currentTimerSalvaged))
                 {
@@ -526,9 +526,9 @@ bool Scheduler::isScheduled(const std::string& key, void *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
             
-            if (key == timer->getKey())
+            if (timer && key == timer->getKey())
             {
                 return true;
             }
@@ -1054,9 +1054,9 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetSelector *timer = static_cast<TimerTargetSelector*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (selector == timer->getSelector())
+            if (timer && selector == timer->getSelector())
             {
                 return true;
             }
@@ -1086,9 +1086,9 @@ void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetSelector *timer = static_cast<TimerTargetSelector*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (selector == timer->getSelector())
+            if (timer && selector == timer->getSelector())
             {
                 if (timer == element->currentTimer && (! element->currentTimerSalvaged))
                 {
