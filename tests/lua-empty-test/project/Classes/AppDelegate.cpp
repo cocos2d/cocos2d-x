@@ -4,7 +4,7 @@
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 #include "lua_module_register.h"
-#include "CCComponentLua.h"
+#include "component/CCComponentLua.h"
 
 USING_NS_CC;
 

@@ -829,9 +829,6 @@
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
-		46A238C71B311A4A001437D0 /* CCComponentLua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A238C51B311A4A001437D0 /* CCComponentLua.cpp */; };
-		46A238C81B311A4A001437D0 /* CCComponentLua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A238C51B311A4A001437D0 /* CCComponentLua.cpp */; };
-		46A238E21B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A238E01B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.cpp */; };
 		5046AB4A1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB4B1AF2A8D80060550B /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */; };
 		5046AB5B1AF2C4180060550B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
@@ -2000,10 +1997,6 @@
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
 		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
-		46A238C51B311A4A001437D0 /* CCComponentLua.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentLua.cpp; sourceTree = "<group>"; };
-		46A238C61B311A4A001437D0 /* CCComponentLua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentLua.h; sourceTree = "<group>"; };
-		46A238E01B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_luacomponent_auto.cpp; sourceTree = "<group>"; };
-		46A238E11B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_luacomponent_auto.hpp; sourceTree = "<group>"; };
 		5046AB481AF2A8D80060550B /* MaterialSystemTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialSystemTest.cpp; sourceTree = "<group>"; };
 		5046AB491AF2A8D80060550B /* MaterialSystemTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialSystemTest.h; sourceTree = "<group>"; };
 		5046AB5A1AF2C4180060550B /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Materials; path = "../tests/cpp-tests/Resources/Materials"; sourceTree = "<group>"; };
@@ -3836,10 +3829,6 @@
 		1AC35D2E18CEDE8B00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				46A238E01B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.cpp */,
-				46A238E11B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.hpp */,
-				46A238C51B311A4A001437D0 /* CCComponentLua.cpp */,
-				46A238C61B311A4A001437D0 /* CCComponentLua.h */,
 				15427B77198B843300DC375D /* lua_module_register.h */,
 				1AC35D2F18CEDE8B00F37B72 /* AppDelegate.cpp */,
 				1AC35D3018CEDE8B00F37B72 /* AppDelegate.h */,
@@ -5737,8 +5726,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46A238C71B311A4A001437D0 /* CCComponentLua.cpp in Sources */,
-				46A238E21B33B78B001437D0 /* lua_cocos2dx_luacomponent_auto.cpp in Sources */,
 				1AC35D6018CEDE9E00F37B72 /* main.cpp in Sources */,
 				1AC35D3118CEDE8B00F37B72 /* AppDelegate.cpp in Sources */,
 			);
@@ -5761,7 +5748,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AC35D5218CEDE9400F37B72 /* RootViewController.mm in Sources */,
-				46A238C81B311A4A001437D0 /* CCComponentLua.cpp in Sources */,
 				1AC35D3218CEDE8B00F37B72 /* AppDelegate.cpp in Sources */,
 				1AC35D5118CEDE9400F37B72 /* main.m in Sources */,
 				1AC35D4518CEDE9400F37B72 /* AppController.mm in Sources */,
