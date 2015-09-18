@@ -22,50 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#pragma once
-
-#include <string>
-#include <unordered_map>
-#include "base/CCScriptComponent.h"
+#include "CCScriptComponent.h"
+#include "base/CCScriptSupport.h"
 
 NS_CC_BEGIN
 
-class CC_DLL ComponentLua : public ScriptComponent
-{
-public:
-    static ComponentLua* create(const std::string& scriptFileName);
-    
-    ComponentLua(const std::string& scriptFileName);
-    /**
-     * This function is used to be invoked from lua side to get the corresponding script object of this component.
-     */
-    void* getScriptObject() const override;
-    
-    virtual void update(float dt) override;
-    virtual void onEnter() override;
-    virtual void onExit() override;
+const std::string ScriptComponent::ON_ENTER = "onEnter";
+const std::string ScriptComponent::ON_EXIT = "onExit";
+const std::string ScriptComponent::UPDATE = "update";
 
-private:
-    ~ComponentLua();
-    void getScriptObjectInternal() const;
-    bool loadAndExecuteScript();
-    void getUserData();
-    void storeLuaTable();
-    bool getLuaFunction(const std::string& functionName);
-    void removeLuaTable();
-    
-    static void initClass();
-    
-private:
-    // a table returned from lua
-    const void* _table;
-    
-    // string value of index
-    std::string _strIndex;
-    
-    // the index used to get lua table, it is unique for every component
-    static int _index;
-};
+ScriptComponent::ScriptComponent(const std::string& scriptFileName)
+: _scriptFileName(scriptFileName)
+{
+}
 
 NS_CC_END
-

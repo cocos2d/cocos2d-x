@@ -25,46 +25,32 @@
 #pragma once
 
 #include <string>
-#include <unordered_map>
-#include "base/CCScriptComponent.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
-class CC_DLL ComponentLua : public ScriptComponent
+class CC_DLL ScriptComponent : public Component
 {
 public:
-    static ComponentLua* create(const std::string& scriptFileName);
+    static ScriptComponent* create(const std::string& scriptFileName);
     
-    ComponentLua(const std::string& scriptFileName);
-    /**
-     * This function is used to be invoked from lua side to get the corresponding script object of this component.
-     */
-    void* getScriptObject() const override;
+    virtual void* getScriptObject() const = 0;
     
-    virtual void update(float dt) override;
-    virtual void onEnter() override;
-    virtual void onExit() override;
-
-private:
-    ~ComponentLua();
-    void getScriptObjectInternal() const;
-    bool loadAndExecuteScript();
-    void getUserData();
-    void storeLuaTable();
-    bool getLuaFunction(const std::string& functionName);
-    void removeLuaTable();
+    virtual void update(float dt) override = 0;
+    virtual void onEnter() override = 0;
+    virtual void onExit() override = 0;
     
-    static void initClass();
+protected:
+    ScriptComponent(const std::string& scriptFileName);
     
-private:
-    // a table returned from lua
-    const void* _table;
+protected:
+    // Script file path
+    std::string _scriptFileName;
+    bool _succeedLoadingScript;
     
-    // string value of index
-    std::string _strIndex;
-    
-    // the index used to get lua table, it is unique for every component
-    static int _index;
+    static const std::string ON_ENTER;
+    static const std::string ON_EXIT;
+    static const std::string UPDATE;
 };
 
 NS_CC_END
