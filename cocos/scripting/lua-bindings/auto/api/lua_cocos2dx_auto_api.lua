@@ -1316,4 +1316,9 @@
 -- @field [parent=#cc] MotionStreak3D#MotionStreak3D MotionStreak3D preloaded module
 
 
+--------------------------------------------------------
+-- the cc Sprite3DMaterial
+-- @field [parent=#cc] Sprite3DMaterial#Sprite3DMaterial Sprite3DMaterial preloaded module
+
+
 return nil

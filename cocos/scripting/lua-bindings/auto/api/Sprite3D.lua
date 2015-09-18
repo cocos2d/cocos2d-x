@@ -116,6 +116,12 @@
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
+-- generate default material
+-- @function [parent=#Sprite3D] genMaterial 
+-- @param self
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
 -- remove attach node
 -- @function [parent=#Sprite3D] removeAttachNode 
 -- @param self
