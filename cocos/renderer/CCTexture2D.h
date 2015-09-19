@@ -339,11 +339,19 @@ public:
     void setAliasTexParameters();
 
 
-    /** Generates mipmap images for the texture.
+    /** DEPRECATED, use setAutoGenerateMipmap(before call init)
+    Generates mipmap images for the texture.
     It only works if the texture size is POT (power of 2).
     @since v0.99.0
     */
-    void generateMipmap();
+    CC_DEPRECATED_ATTRIBUTE void generateMipmap(){ generateMipmapInternal(); }
+
+    /** Need generate mipmap images for the texture.
+    Call before init
+    It only works if the texture size is POT (power of 2).
+    @since v3.8.0
+    */
+    void setAutoGenerateMipmap(bool generateMipmaps);
 
     /** Returns the pixel format.
      @since v2.0
@@ -429,6 +437,12 @@ private:
      * @return True is Texture contains a 9-patch info, false otherwise.
      */
     bool isContain9PatchInfo()const;
+
+    /** Generates mipmap images for the texture.
+    It only works if the texture size is POT (power of 2).
+    @since v0.99.0
+    */
+    void generateMipmapInternal();
 
     /**
      * Get spriteFrame capInset, If spriteFrame can't be found in 9-patch info map,
@@ -529,6 +543,9 @@ protected:
     
     /** whether or not the texture has mip maps*/
     bool _hasMipmaps;
+
+    /** whether or not generate the texture mip maps*/
+    bool _generateMipmaps;
 
     /** shader program used by drawAtPoint and drawInRect */
     GLProgram* _shaderProgram;

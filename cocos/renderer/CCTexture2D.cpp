@@ -433,6 +433,7 @@ Texture2D::Texture2D()
 , _maxT(0.0)
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
+, _generateMipmaps(false)
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
@@ -550,8 +551,6 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
 {
-
-
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
     CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
@@ -627,6 +626,15 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
+#ifndef GL_ES_VERSION_2_0
+    if (mipmapsNum == 1 && _generateMipmaps && !Configuration::getInstance()->supportsGenerateMipmap())
+    {
+        // glGenerateMipmap supports: OpenGL ES 2.0 or greater and OpenGL 3.0 or greater
+        // https://www.opengl.org/wiki/Common_Mistakes#Automatic_mipmap_generation
+        glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); 
+    }
+#endif
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     if (_antialiasEnabled)
     {
@@ -689,7 +697,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _maxT = 1;
 
     _hasPremultipliedAlpha = false;
-    _hasMipmaps = mipmapsNum > 1;
+    _hasMipmaps = mipmapsNum > 1 || _generateMipmaps;
+
+    if (mipmapsNum == 1 && _generateMipmaps && Configuration::getInstance()->supportsGenerateMipmap())
+    {
+        generateMipmapInternal();
+    }
 
     // shader
     setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
@@ -1205,15 +1218,22 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 //
 // implementation Texture2D (GLFilter)
 
-void Texture2D::generateMipmap()
+void Texture2D::generateMipmapInternal()
 {
-    CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
-    GL::bindTexture2D( _name );
-    glGenerateMipmap(GL_TEXTURE_2D);
-    _hasMipmaps = true;
+    if (Configuration::getInstance()->supportsGenerateMipmap())
+    {
+        CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+        GL::bindTexture2D( _name );
+        glGenerateMipmap(GL_TEXTURE_2D);
+        _hasMipmaps = true;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
+        VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
 #endif
+    }
+    else
+    {
+        CCLOG("glGenerateMipmap required OpenGL 3.0 or OpenGL ES 2.0 or greater");
+    }
 }
 
 bool Texture2D::hasMipmaps() const
@@ -1434,6 +1454,11 @@ void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
             capInsetMap.erase(spriteFrame);
         }
     }
+}
+
+void Texture2D::setAutoGenerateMipmap(bool generateMipmaps)
+{
+    _generateMipmaps = generateMipmaps;
 }
 
 NS_CC_END

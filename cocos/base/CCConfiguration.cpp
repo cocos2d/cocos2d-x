@@ -49,6 +49,7 @@ Configuration::Configuration()
 , _supportsBGRA8888(false)
 , _supportsDiscardFramebuffer(false)
 , _supportsShareableVAO(false)
+, _supportsGenerateMipmap(false)
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
@@ -148,7 +149,22 @@ void Configuration::gatherGPUInfo()
 	_valueDict["gl.supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
 
     _supportsShareableVAO = checkForGLExtension("vertex_array_object");
-	_valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
+    _valueDict["gl.supports_vertex_array_object"] = Value(_supportsShareableVAO);
+
+    _supportsGenerateMipmap = true;
+
+#ifndef GL_ES_VERSION_2_0
+    // glGenerateMipmap supports:
+    // OpenGL ES 2.0 or greater https://www.khronos.org/opengles/sdk/docs/man3/html/glGenerateMipmap.xhtml
+    // OpenGL 3.0 or greater https://www.opengl.org/sdk/docs/man/html/glGenerateMipmap.xhtml
+
+    float glVersion = _valueDict["gl.version"].asFloat();
+    if (glVersion < 3.0)
+    {
+        _supportsGenerateMipmap = false;
+    }
+#endif
+    _valueDict["gl.supports_generate_mipmap"] = Value(_supportsGenerateMipmap);
 
     CHECK_GL_ERROR_DEBUG();
 }
@@ -257,6 +273,11 @@ bool Configuration::supportsShareableVAO() const
 #else
     return false;
 #endif
+}
+
+bool Configuration::supportsGenerateMipmap() const
+{
+    return _supportsGenerateMipmap;
 }
 
 int Configuration::getMaxSupportDirLightInShader() const
