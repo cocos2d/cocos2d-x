@@ -566,17 +566,8 @@ void ScrollView::processAutoScrolling(float deltaTime)
 
 void ScrollView::jumpToDestination(const Vec2 &des)
 {
-    float finalOffsetX = des.x;
-    float finalOffsetY = des.y;
-    if (des.y <= 0 && _direction != Direction::HORIZONTAL)
-    {
-        finalOffsetY = MAX(des.y, _contentSize.height - _innerContainer->getContentSize().height);
-    }
-    if (des.x <= 0 && _direction != Direction::VERTICAL)
-    {
-        finalOffsetX = MAX(des.x, _contentSize.width - _innerContainer->getContentSize().width);
-    }
-    moveInnerContainer(Vec2(finalOffsetX, finalOffsetY) - getInnerContainerPosition(), true);
+    _autoScrolling = false;
+    moveInnerContainer(des - getInnerContainerPosition(), true);
 }
 
 bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)

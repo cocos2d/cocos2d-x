@@ -758,11 +758,13 @@ void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, co
     doLayout();
 
     Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
-    destination = flattenVectorByDirection(destination);
-    Vec2 delta = destination - getInnerContainerPosition();
-    Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
-    destination += outOfBoundary;
-    moveChildrenToPosition(destination);
+    if(!_bounceEnabled)
+    {
+        Vec2 delta = destination - getInnerContainerPosition();
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
+        destination += outOfBoundary;
+    }
+    jumpToDestination(destination);
 }
 
 void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
