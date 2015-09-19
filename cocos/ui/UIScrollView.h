@@ -588,7 +588,7 @@ protected:
 
     void jumpToDestination(const Vec2& des);
 
-    virtual bool scrollChildren(float touchOffsetX, float touchOffsetY);
+    virtual void scrollChildren(float touchOffsetX, float touchOffsetY);
 
     virtual void handlePressLogic(Touch *touch);
     virtual void handleMoveLogic(Touch *touch);

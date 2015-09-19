@@ -570,7 +570,7 @@ void ScrollView::jumpToDestination(const Vec2 &des)
     moveInnerContainer(des - getInnerContainerPosition(), true);
 }
 
-bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
+void ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
 {
     touchOffsetX = (_direction == Direction::VERTICAL ? 0 : touchOffsetX);
     touchOffsetY = (_direction == Direction::HORIZONTAL ? 0 : touchOffsetY);
@@ -659,10 +659,6 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
     {
         processScrollEvent(MoveDirection::RIGHT, false);
     }
-    
-    bool scrollEnabledUpDown = (!scrolledToBottom && !scrolledToTop);
-    bool scrollEnabledLeftRight = (!scrolledToLeft && !scrolledToRight);
-    return scrollEnabledUpDown || scrollEnabledLeftRight;
 }
 
 void ScrollView::scrollToBottom(float timeInSec, bool attenuated)
