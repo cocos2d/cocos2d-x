@@ -569,9 +569,8 @@ protected:
     virtual Vec2 getHowMuchOutOfBoundary(const Vec2& addition = Vec2::ZERO);
     bool isOutOfBoundary(MoveDirection dir);
     bool isOutOfBoundary();
-    
-    void moveChildren(float offsetX, float offsetY);
-    void moveChildrenToPosition(const Vec2& position);
+
+    void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack);
 	
 	bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
 	void gatherTouchMove(const Vec2& delta);
