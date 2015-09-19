@@ -380,4 +380,12 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class DemoFlowerWithRotationInFreeMode : public DemoFlower
+{
+public:
+    CREATE_FUNC(DemoFlowerWithRotationInFreeMode);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 #endif

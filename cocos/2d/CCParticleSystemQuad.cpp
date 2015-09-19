@@ -343,6 +343,25 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2&
         quad->tr.vertices.x = newPosition.x + size_2;
         quad->tr.vertices.y = newPosition.y + size_2;                
     }
+    
+    if (PositionType::FREE == _positionType) {
+        Vec2 quadPos;
+        quadPos.set(quad->bl.vertices.x, quad->bl.vertices.y);
+        quadPos = PointApplyAffineTransform(quadPos, particle->affineTransform);
+        quad->bl.vertices.set(quadPos.x, quadPos.y, 0);
+        
+        quadPos.set(quad->br.vertices.x, quad->br.vertices.y);
+        quadPos = PointApplyAffineTransform(quadPos, particle->affineTransform);
+        quad->br.vertices.set(quadPos.x, quadPos.y, 0);
+        
+        quadPos.set(quad->tl.vertices.x, quad->tl.vertices.y);
+        quadPos = PointApplyAffineTransform(quadPos, particle->affineTransform);
+        quad->tl.vertices.set(quadPos.x, quadPos.y, 0);
+
+        quadPos.set(quad->tr.vertices.x, quad->tr.vertices.y);
+        quadPos = PointApplyAffineTransform(quadPos, particle->affineTransform);
+        quad->tr.vertices.set(quadPos.x, quadPos.y, 0);
+    }
 }
 void ParticleSystemQuad::postStep()
 {
@@ -372,7 +391,8 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform, flags);
+        auto realtransform = PositionType::FREE == _positionType ? Mat4() : transform;
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, realtransform, flags);
         renderer->addCommand(&_quadCommand);
     }
 }

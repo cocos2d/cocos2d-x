@@ -59,6 +59,8 @@ typedef struct sParticle {
     float        timeToLive;
 
     unsigned int    atlasIndex;
+    
+    AffineTransform affineTransform;
 
     /** @struct modeA
      Mode A: gravity, direction, radial accel, tangential accel.
