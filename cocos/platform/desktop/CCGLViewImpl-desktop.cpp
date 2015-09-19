@@ -888,4 +888,9 @@ bool GLViewImpl::initGlew()
     return true;
 }
 
+void GLViewImpl::makeContextCurrent()
+{
+    glfwMakeContextCurrent(_mainWindow);
+}
+
 NS_CC_END // end of namespace cocos2d;

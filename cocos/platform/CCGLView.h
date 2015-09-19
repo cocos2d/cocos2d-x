@@ -373,7 +373,10 @@ public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     virtual id getCocoaWindow() = 0;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
-    
+
+    /** Makes the OpenGL context current. */
+    virtual void makeContextCurrent();
+
 protected:
     void updateDesignResolutionSize();
     
