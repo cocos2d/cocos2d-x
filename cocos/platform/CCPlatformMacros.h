@@ -150,7 +150,7 @@ public: virtual const varType& get##funName(void) const;
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
-public: virtual varType get##funName(void);\
+public: virtual varType get##funName(void) const;\
 public: virtual void set##funName(varType var);
 
 #define CC_PROPERTY_PASS_BY_REF(varType, varName, funName)\
