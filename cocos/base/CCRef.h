@@ -135,6 +135,16 @@ protected:
     Ref();
 
 public:
+
+    Ref& operator=(const Ref& other)
+    {
+        this->_referenceCount.store(other._referenceCount.load());
+        this->_ID = other._ID;
+        this->_luaID = other._luaID;
+
+        return *this;
+    }
+
     /**
      * Destructor
      *
