@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccConfig.h"
+#include <atomic>
 
 #define CC_REF_LEAK_DETECTION 0
 
@@ -133,7 +134,23 @@ protected:
      */
     Ref();
 
+    Ref(const Ref& other);
+
 public:
+
+    Ref& operator=(const Ref& other)
+    {
+        this->_referenceCount.store(other._referenceCount.load(std::memory_order_relaxed), std::memory_order_relaxed);
+        
+#if CC_ENABLE_SCRIPT_BINDING
+        this->_ID = other._ID;
+        this->_luaID = other._luaID;
+        this->_scriptObject = other._scriptObject;
+#endif
+
+        return *this;
+    }
+
     /**
      * Destructor
      *
@@ -144,7 +161,7 @@ public:
 
 protected:
     /// count of references
-    unsigned int _referenceCount;
+    std::atomic<unsigned int> _referenceCount;
 
     friend class AutoreleasePool;
 
