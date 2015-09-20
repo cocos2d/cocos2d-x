@@ -1028,6 +1028,8 @@ void Renderer::flushTriangles()
 // helpers
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
+    if (size.equals(Size::ZERO)) return false;
+
     auto scene = Director::getInstance()->getRunningScene();
     
     //If draw to Rendertexture, return true directly.
