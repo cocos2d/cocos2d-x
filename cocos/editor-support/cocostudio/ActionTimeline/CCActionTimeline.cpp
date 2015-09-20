@@ -334,7 +334,7 @@ const AnimationInfo& ActionTimeline::getAnimationInfo(const std::string &animati
     return _animationInfos.find(animationName)->second;
 }
 
-void ActionTimeline::setAnimationEndCallBackFunc(const std::string animationName, std::function<void()> func)
+void ActionTimeline::setAnimationEndCallFunc(const std::string animationName, std::function<void()> func)
 {
     auto clipIter = _animationInfos.find(animationName);
     if (clipIter == _animationInfos.end())

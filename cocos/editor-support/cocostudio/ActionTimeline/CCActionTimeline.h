@@ -160,7 +160,7 @@ public:
      * @param animationName  @addFrameEndCallFunc, make the animationName as funcKey
      * @param func the callback function
      */
-    virtual void setAnimationEndCallBackFunc(const std::string animationName, std::function<void()> func);
+    virtual void setAnimationEndCallFunc(const std::string animationName, std::function<void()> func);
 
     /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
