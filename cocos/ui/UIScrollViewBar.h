@@ -59,8 +59,8 @@ public:
     virtual ~ScrollViewBar();
     
     /**
-     * Create a ScrollView with its parent ScrollView and direction.
-     * @return A ScrollViewBar instance.
+     * Create a scroll bar with its parent scroll view and direction.
+     * @return A scroll bar instance.
      */
     static ScrollViewBar* create(ScrollView* parent, ScrollView::Direction direction);
     
