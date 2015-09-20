@@ -156,8 +156,11 @@ public:
     virtual void removeAnimationInfo(std::string animationName);
     virtual bool IsAnimationInfoExists(const std::string& animationName);
     virtual const AnimationInfo& getAnimationInfo(const std::string& animationName);
-    // add a frame end call back to animation's end frame @addFrameEndCallFunc, make animationName as the key of func
-    virtual void setAnimationEndCallBack(const std::string animationName, std::function<void()> func);
+    /**add a frame end call back to animation's end frame
+     * @param animationName  @addFrameEndCallFunc, make the animationName as funcKey
+     * @param func the callback function
+     */
+    virtual void setAnimationEndCallBackFunc(const std::string animationName, std::function<void()> func);
 
     /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
@@ -167,14 +170,18 @@ public:
     void setLastFrameCallFunc(std::function<void()> listener);
     void clearLastFrameCallFunc();
 
-    // add a call back after played frameIndex 
+    /** add a callback function after played frameIndex
+     * @param frameIndex the frame index call back after
+     * @param funcKey for identity the callback function
+     * @param func the callback function
+     */
     virtual void addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func);
-    // clear frame call back func after frameIndex
-    virtual void removeFrameEndCall(int frameIndex, const std::string& funcKey);
-    // clear frame call backs after frameIndex
-    virtual void removeFrameEndCall(int frameIndex);
-    // clear all frame call backs in this actiontimeline
-    virtual void clearFrameEndCalls();
+    // remove callback function after frameIndex which identified with funcKey
+    virtual void removeFrameEndCallFunc(int frameIndex, const std::string& funcKey);
+    // clear callback functions after frameIndex
+    virtual void removeFrameEndCallFuncs(int frameIndex);
+    // clear all the callback functions after frameIndexs in this actiontimeline
+    virtual void clearFrameEndCallFuncs();
 
     /** Inherit from Action. */
 
