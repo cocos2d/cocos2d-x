@@ -230,7 +230,7 @@ std::string SocketIOPacket::stringify()const
 
 SocketIOPacketV10x::SocketIOPacketV10x()
 {
-    _separator = ":";
+    _separator = "";
     _endpointseperator = ",";
     _types.push_back("disconnected");
     _types.push_back("connected");
