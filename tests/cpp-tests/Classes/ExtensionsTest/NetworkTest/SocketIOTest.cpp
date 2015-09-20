@@ -195,7 +195,7 @@ void SocketIOTest::closedSocketAction(network::SIOClient* client)
 void SocketIOTest::onMenuSIOClientClicked(cocos2d::Ref *sender)
 {
 	//create a client by using this static method, url does not need to contain the protocol
-	_sioClient = SocketIO::connect("ws://dev.channon.us:3010", *this);
+	_sioClient = SocketIO::connect("ws://localhost:3010", *this);
 	//you may set a tag for the client for reference in callbacks
 	_sioClient->setTag("Test Client");
 
@@ -212,7 +212,7 @@ void SocketIOTest::onMenuSIOClientClicked(cocos2d::Ref *sender)
 void SocketIOTest::onMenuSIOEndpointClicked(cocos2d::Ref *sender)
 {
 	//repeat the same connection steps for the namespace "testpoint"
-	_sioEndpoint = SocketIO::connect("ws://dev.channon.us:3010/testpoint", *this);
+	_sioEndpoint = SocketIO::connect("ws://localhost:3010/testpoint", *this);
 	//a tag to differentiate in shared callbacks
 	_sioEndpoint->setTag("Test Endpoint");
 
