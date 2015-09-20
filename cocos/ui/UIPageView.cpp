@@ -134,7 +134,31 @@ bool PageView::isUsingCustomScrollThreshold()const
 
 void PageView::handleReleaseLogic(Touch *touch)
 {
-    ListView::handleReleaseLogic(touch);
+    // Use `ScrollView` method instead of `ListView` to
+    ScrollView::handleReleaseLogic(touch);
+
+    static const float THRESHOLD = 5000;
+    Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
+    CCLOG("handleReleaseLogic() touchMoveVelocity.length()=%.2f", touchMoveVelocity.length());
+    if(touchMoveVelocity.length() < THRESHOLD)
+    {
+        startMagneticScroll();
+    }
+    else
+    {
+        ssize_t currentIndex = getIndex(getCenterItemInCurrentView());
+        if(touchMoveVelocity.x < 0 || touchMoveVelocity.y > 0)
+        {
+            ++currentIndex;
+        }
+        else
+        {
+            --currentIndex;
+        }
+        currentIndex = MIN(currentIndex, _items.size());
+        currentIndex = MAX(currentIndex, 0);
+        scrollToItem(currentIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+    }
 }
 
 void PageView::pageTurningEvent()
