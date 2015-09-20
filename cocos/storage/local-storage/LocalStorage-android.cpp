@@ -31,6 +31,8 @@
 #include "LocalStorage.h"
 #include "platform/CCPlatformMacros.h"
 
+#include "base/ccUTF8.h"
+ 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
 #include <stdio.h>
@@ -101,8 +103,8 @@ void localStorageSetItem( const std::string& key, const std::string& value)
     JniMethodInfo t;
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "setItem", "(Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring jkey = t.env->NewStringUTF(key.c_str());
-        jstring jvalue = t.env->NewStringUTF(value.c_str());
+        jstring jkey = cocos2d::StringUtils::newStringUTFJNI(t.env, key.c_str());
+        jstring jvalue = cocos2d::StringUtils::newStringUTFJNI(t.env, value.c_str());
         t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey, jvalue);
         t.env->DeleteLocalRef(jkey);
         t.env->DeleteLocalRef(jvalue);
@@ -118,7 +120,7 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
     {
-        jstring jkey = t.env->NewStringUTF(key.c_str());
+        jstring jkey = cocos2d::StringUtils::newStringUTFJNI(t.env, key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);
         outItem->assign(JniHelper::jstring2string(jret));
         t.env->DeleteLocalRef(jret);
@@ -139,7 +141,7 @@ void localStorageRemoveItem( const std::string& key )
     JniMethodInfo t;
 
     if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "removeItem", "(Ljava/lang/String;)V")) {
-        jstring jkey = t.env->NewStringUTF(key.c_str());
+        jstring jkey = cocos2d::StringUtils::newStringUTFJNI(t.env, key.c_str());
         t.env->CallStaticVoidMethod(t.classID, t.methodID, jkey);
         t.env->DeleteLocalRef(jkey);
         t.env->DeleteLocalRef(t.classID);

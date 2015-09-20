@@ -38,6 +38,8 @@
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 
+#include "base/ccUTF8.h"
+ 
 #define CLASS_NAME "org/cocos2dx/lib/Cocos2dxWebViewHelper"
 
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
@@ -175,7 +177,7 @@ void loadDataJNI(const int index, const std::string &data, const std::string &MI
     // LOGD("error: %s,%d",__func__,__LINE__);
     cocos2d::JniMethodInfo t;
     if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadData", "(ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V")) {
-        jstring jData = t.env->NewStringUTF(data.c_str());
+        jstring jData = cocos2d::StringUtils::newStringUTFJNI(t.env, data.c_str());
         jstring jMIMEType = t.env->NewStringUTF(MIMEType.c_str());
         jstring jEncoding = t.env->NewStringUTF(encoding.c_str());
         jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());
@@ -193,7 +195,7 @@ void loadHTMLStringJNI(const int index, const std::string &string, const std::st
     // LOGD("error: %s,%d",__func__,__LINE__);
     cocos2d::JniMethodInfo t;
     if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "loadHTMLString", "(ILjava/lang/String;Ljava/lang/String;)V")) {
-        jstring jString = t.env->NewStringUTF(string.c_str());
+        jstring jString = cocos2d::StringUtils::newStringUTFJNI(t.env, string);
         jstring jBaseURL = t.env->NewStringUTF(getFixedBaseUrl(baseURL).c_str());
         t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jString, jBaseURL);
 
@@ -288,7 +290,7 @@ void evaluateJSJNI(const int index, const std::string &js) {
     // LOGD("error: %s,%d",__func__,__LINE__);
     cocos2d::JniMethodInfo t;
     if (cocos2d::JniHelper::getStaticMethodInfo(t, CLASS_NAME, "evaluateJS", "(ILjava/lang/String;)V")) {
-        jstring jjs = t.env->NewStringUTF(js.c_str());
+        jstring jjs = cocos2d::StringUtils::newStringUTFJNI(t.env, js);
         t.env->CallStaticVoidMethod(t.classID, t.methodID, index, jjs);
 
         t.env->DeleteLocalRef(jjs);

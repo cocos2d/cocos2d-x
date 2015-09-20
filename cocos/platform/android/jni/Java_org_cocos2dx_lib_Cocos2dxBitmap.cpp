@@ -56,7 +56,7 @@ std::string getStringWithEllipsisJni(const char* text, float width, float fontSi
         if (!text) {
             stringArg1 = t.env->NewStringUTF("");
         } else {
-            stringArg1 = t.env->NewStringUTF(text);
+            stringArg1 = cocos2d::StringUtils::newStringUTFJNI(t.env, text);
         }
 
         jstring retFromJava = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, width, fontSize);
