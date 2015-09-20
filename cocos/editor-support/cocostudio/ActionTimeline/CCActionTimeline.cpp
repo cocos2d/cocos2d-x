@@ -198,7 +198,7 @@ void ActionTimeline::step(float delta)
         return;
     }
     _time += delta * _timeSpeed;
-    float deltaCurrFrameTime = abs(_time - _currentFrame * _frameInternal);
+    float deltaCurrFrameTime = std::abs(_time - _currentFrame * _frameInternal);
     if (deltaCurrFrameTime < _frameInternal)
         return;
 
@@ -320,8 +320,7 @@ void ActionTimeline::removeAnimationInfo(std::string animationName)
         return;
     }
 
-    auto clipEndCall = (*clipIter).second.clipEndCallBack;
-    removeFrameEndCall((*clipIter).second.endIndex, animationName);
+    removeFrameEndCallFunc((*clipIter).second.endIndex, animationName);
     _animationInfos.erase(animationName);
 }
 
@@ -335,7 +334,7 @@ const AnimationInfo& ActionTimeline::getAnimationInfo(const std::string &animati
     return _animationInfos.find(animationName)->second;
 }
 
-void ActionTimeline::setAnimationEndCallBack(const std::string animationName, std::function<void()> func)
+void ActionTimeline::setAnimationEndCallFunc(const std::string animationName, std::function<void()> func)
 {
     auto clipIter = _animationInfos.find(animationName);
     if (clipIter == _animationInfos.end())
@@ -383,7 +382,7 @@ void ActionTimeline::addFrameEndCallFunc(int frameIndex, const std::string& func
     }
 }
 
-void ActionTimeline::removeFrameEndCall(int frameIndex, const std::string& funcKey)
+void ActionTimeline::removeFrameEndCallFunc(int frameIndex, const std::string& funcKey)
 {
     auto endClipCallsIter = _frameEndCallFuncs.find(frameIndex);
     if (endClipCallsIter != _frameEndCallFuncs.end())
@@ -396,7 +395,7 @@ void ActionTimeline::removeFrameEndCall(int frameIndex, const std::string& funcK
     }
 }
 
-void ActionTimeline::removeFrameEndCall(int frameIndex)
+void ActionTimeline::removeFrameEndCallFuncs(int frameIndex)
 {
     auto endClipCallsIter = _frameEndCallFuncs.find(frameIndex);
     if (endClipCallsIter != _frameEndCallFuncs.end())
@@ -405,7 +404,7 @@ void ActionTimeline::removeFrameEndCall(int frameIndex)
     }
 }
 
-void ActionTimeline::clearFrameEndCalls()
+void ActionTimeline::clearFrameEndCallFuncs()
 {
     _frameEndCallFuncs.clear();
 }
