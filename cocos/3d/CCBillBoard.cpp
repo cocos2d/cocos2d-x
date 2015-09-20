@@ -224,9 +224,7 @@ bool BillBoard::calculateBillbaordTransform()
 
 void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    CCLOG("kevin BillBoard::draw textureID = %d", _texture->getName());
 #if CC_USE_CULLING
-    CCLOG("kevin BillBoard::draw texture = %d, _contentSize.width = %f, _contentSize.height = %f", _texture->getName(), _contentSize.width, _contentSize.height);
     // Don't do calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
     auto defaultCamera = Camera::getDefaultCamera();
@@ -241,7 +239,6 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        CCLOG("kevin BillBoard::draw _insideBounds texture = %d, _contentSize.width = %f, _contentSize.height = %f", _texture->getName(), _contentSize.width, _contentSize.height);
         //FIXME: frustum culling here
         flags |= Node::FLAGS_RENDER_AS_3D;
         _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
