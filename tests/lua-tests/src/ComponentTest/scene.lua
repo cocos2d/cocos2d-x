@@ -1,6 +1,5 @@
-cc.FileUtils:getInstance():addSearchPath("src")
 require "cocos.init"
-require "gameoverscene"
+require "ComponentTest/gameoverscene"
 
 local scene = {
     -- add a new enemy every second
@@ -11,7 +10,7 @@ local scene = {
     enemies = {},
 
     onEnter = function(self)
-        ccexp.AudioEngine:play2d("res/background.mp3", true)
+        ccexp.AudioEngine:play2d("background-music-aac.mp3", true)
     end,
 
     update = function(self, dt)
@@ -24,8 +23,8 @@ local scene = {
 
     addNewEnemy = function(self)
         local owner = self:getOwner()
-        local enemy = cc.Sprite:create("res/Target.png")
-        local enemyLuaComponent = cc.ComponentLua:create("src/enemy.lua")
+        local enemy = cc.Sprite:create("components/Target.png")
+        local enemyLuaComponent = cc.ComponentLua:create("src/ComponentTest/enemy.lua")
         enemy:addComponent(enemyLuaComponent)
         owner:addChild(enemy)
         table.insert(self.enemies, enemy)
