@@ -461,7 +461,7 @@ void EditBox::onExit(void)
 
 static Rect getRect(Node * pNode)
 {
-	Size contentSize = pNode->getContentSize();
+	const Size& contentSize = pNode->getContentSize();
 	Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 	return RectApplyTransform(rect, pNode->getNodeToWorldTransform());
 }

@@ -115,7 +115,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     // Clip the text width to fit to the text box
     float fMaxWidth = _editBox->getContentSize().width;
     float fMaxHeight = _editBox->getContentSize().height;
-    Size labelSize = _label->getContentSize();
+    const Size& labelSize = _label->getContentSize();
     if(labelSize.width > fMaxWidth || labelSize.height > fMaxHeight)
     {
         _label->setDimensions(fMaxWidth, fMaxHeight);

@@ -254,7 +254,7 @@ void PageView::onSizeChanged()
 
 void PageView::updateAllPagesSize()
 {
-    Size selfSize = getContentSize();
+    const Size& selfSize = getContentSize();
     for (auto& page : _pages)
     {
         page->setContentSize(selfSize);
@@ -612,7 +612,7 @@ void PageView::handleReleaseLogic(Touch *touch)
         Vec2 curPagePos = curPage->getPosition();
         ssize_t pageCount = this->getPageCount();
         
-        auto contentSize = getContentSize();
+        auto& contentSize = getContentSize();
        
         float moveBoundray = 0.0f;
         float scrollDistance;

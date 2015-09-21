@@ -325,7 +325,7 @@ void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags
     
 #if CC_VIDEOPLAYER_DEBUG_DRAW
     _debugDrawNode->clear();
-    auto size = getContentSize();
+    auto& size = getContentSize();
     Point vertices[4]=
     {
         Point::ZERO,

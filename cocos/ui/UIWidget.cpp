@@ -289,7 +289,7 @@ LayoutComponent* Widget::getOrCreateLayoutComponent()
 
 void Widget::setContentSize(const cocos2d::Size &contentSize)
 {
-    Size previousSize = ProtectedNode::getContentSize();
+    const Size& previousSize = ProtectedNode::getContentSize();
     if(previousSize.equals(contentSize))
     {
         return;
@@ -376,7 +376,7 @@ void Widget::setSizePercent(const Vec2 &percent)
 
 void Widget::updateSizeAndPosition()
 {
-    Size pSize = _parent->getContentSize();
+    const Size& pSize = _parent->getContentSize();
 
     updateSizeAndPosition(pSize);
 }
@@ -1010,7 +1010,7 @@ void Widget::setPosition(const Vec2 &pos)
         Widget* widgetParent = getWidgetParent();
         if (widgetParent)
         {
-            Size pSize = widgetParent->getContentSize();
+            const Size& pSize = widgetParent->getContentSize();
             if (pSize.width <= 0.0f || pSize.height <= 0.0f)
             {
                 _positionPercent.setZero();
@@ -1041,7 +1041,7 @@ void Widget::setPositionPercent(const Vec2 &percent)
             Widget* widgetParent = getWidgetParent();
             if (widgetParent)
             {
-                Size parentSize = widgetParent->getContentSize();
+                const Size& parentSize = widgetParent->getContentSize();
                 Vec2 absPos(parentSize.width * _positionPercent.x, parentSize.height * _positionPercent.y);
                 setPosition(absPos);
             }

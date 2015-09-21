@@ -538,7 +538,7 @@ void EditBoxImplMac::updatePosition(float dt)
 
 void EditBoxImplMac::adjustTextFieldPosition()
 {
-    Size contentSize = _editBox->getContentSize();
+    const Size& contentSize = _editBox->getContentSize();
     Rect rect = Rect(0, 0, contentSize.width, contentSize.height);
 
     rect = RectApplyAffineTransform(rect, _editBox->nodeToWorldTransform());
