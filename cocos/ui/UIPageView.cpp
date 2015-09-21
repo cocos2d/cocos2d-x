@@ -65,7 +65,7 @@ bool PageView::init()
     if (ListView::init())
     {
         _indicator = PageViewIndicator::create();
-        addProtectedChild(_indicator);
+        addProtectedChild(_indicator, 10000);
         
         setDirection(ListView::Direction::HORIZONTAL);
         setMagneticType(MagneticType::CENTER);
@@ -147,7 +147,7 @@ void PageView::onItemListChanged()
 void PageView::onSizeChanged()
 {
     ListView::onSizeChanged();
-    _indicator->setPosition(getContentSize() / 2);
+    _indicator->setPosition(Vec2(getContentSize() / 2) + Vec2(0, -50));
 }
 
 void PageView::handleReleaseLogic(Touch *touch)

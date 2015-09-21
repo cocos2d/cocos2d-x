@@ -64,9 +64,27 @@ bool PageViewIndicator::init()
     return true;
 }
 
-void PageViewIndicator::indicate(int index)
+void PageViewIndicator::reset(ssize_t numberOfTotalPages, ssize_t currentIndex)
 {
-    CCASSERT(index >= 0 && index < _indexNodes.size(), "");
+    while(_indexNodes.size() < numberOfTotalPages)
+    {
+        increaseNumberOfPages();
+    }
+    while(_indexNodes.size() > numberOfTotalPages)
+    {
+        decreaseNumberOfPages();
+    }
+    rearrange();
+    indicate(currentIndex);
+    _currentIndexNode->setVisible(!_indexNodes.empty());
+}
+
+void PageViewIndicator::indicate(ssize_t index)
+{
+    if (index < 0 || index >= _indexNodes.size())
+    {
+        return;
+    }
     _currentIndexNode->setPosition(_indexNodes.at(index)->getPosition());
 }
 
@@ -80,13 +98,15 @@ void PageViewIndicator::rearrange()
 //    bool bHorizon = m_eContainerDirection == CONTAINER_HORIZONTAL;
     bool horizontal = true;
 
-    // Positions
+    // Calculate total size
     Size indexNodeSize = _indexNodes.at(0)->getContentSize();
     float sizeValue = (horizontal ? indexNodeSize.width : indexNodeSize.height);
 
-    float posValue = -sizeValue / 2;
+    ssize_t numberOfItems = _indexNodes.size();
+    float totalSizeValue = sizeValue * numberOfItems + _spaceBetweenIndexNodes * (numberOfItems - 1);
+
+    float posValue = -(totalSizeValue / 2) + (sizeValue / 2);
     for(auto indexNode : _indexNodes) {
-        posValue += sizeValue + _spaceBetweenIndexNodes;
         Vec2 position;
         if(horizontal)
         {
@@ -97,6 +117,7 @@ void PageViewIndicator::rearrange()
             position = Vec2(indexNodeSize.width / 2.0f, posValue);
         }
         indexNode->setPosition(position);
+        posValue += sizeValue + _spaceBetweenIndexNodes;
     }
 
 }
@@ -117,24 +138,16 @@ void PageViewIndicator::increaseNumberOfPages()
     indexNode->setOpacity(255 * 0.3f);
     addProtectedChild(indexNode);
     _indexNodes.pushBack(indexNode);
-    rearrange();
-
-    if(_indexNodes.size() == 1) {
-        _currentIndexNode->setVisible(true);
-        indicate(0);
-    }
 }
 
 void PageViewIndicator::decreaseNumberOfPages()
 {
-    (*(_indexNodes.end() - 1))->removeFromParent();
-    _indexNodes.erase(_indexNodes.end() - 1);
-    rearrange();
-
     if(_indexNodes.empty())
     {
-        _currentIndexNode->setVisible(false);
+        return;
     }
+    removeProtectedChild(*_indexNodes.begin());
+    _indexNodes.erase(_indexNodes.begin());
 }
 
 void PageViewIndicator::clear()

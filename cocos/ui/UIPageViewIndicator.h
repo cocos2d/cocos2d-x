@@ -48,14 +48,15 @@ public:
     PageViewIndicator();
     virtual ~PageViewIndicator();
 
-    void indicate(int index);
-    void increaseNumberOfPages();
-    void decreaseNumberOfPages();
+    void reset(ssize_t numberOfTotalPages, ssize_t currentIndex);
+    void indicate(ssize_t index);
     void clear();
     void setSpaceBetweenIndexNodes(float fSpaceBetweenIndexNodes);
 
 protected:
     bool init() override;
+    void increaseNumberOfPages();
+    void decreaseNumberOfPages();
     void rearrange();
 
     Vector<Node*> _indexNodes;
