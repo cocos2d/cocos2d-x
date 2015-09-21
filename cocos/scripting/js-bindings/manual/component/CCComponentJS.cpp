@@ -54,9 +54,29 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
     
     if (_succeedLoadingScript)
     {
-        const JSClass* theClass = JS_GetClass(classValue.toObjectOrNull());
+        JSObject* classObj = classValue.toObjectOrNull();
+        const JSClass* theClass = JS_GetClass(classObj);
+        JS::RootedValue protoValue(cx);
+        JS_GetProperty(cx, JS::RootedObject(cx, classObj), "prototype", &protoValue);
+        
+        TypeTest<ScriptComponent> t;
+        js_type_class_t *typeClass = nullptr;
+        std::string typeName = t.s_name();
+        auto typeMapIter = _js_global_type_map.find(typeName);
+        CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+        typeClass = typeMapIter->second;
+        
+        JS::RootedObject proto(cx, protoValue.toObjectOrNull());
+        JS::RootedObject parent(cx, typeClass->proto.get());
         _jsObj.construct(cx);
-        _jsObj.ref() = JS_NewObject(cx, theClass, JS::NullPtr(), JS::NullPtr());
+        _jsObj.ref() = JS_NewObject(cx, theClass, proto, parent);
+        
+        // Unbind current proxy binding
+        js_proxy_t* jsproxy = js_get_or_create_proxy<ScriptComponent>(cx, this);
+        JS::RemoveObjectRoot(cx, &jsproxy->obj);
+        jsb_remove_proxy(jsb_get_native_proxy(this), jsproxy);
+        // link the native object with the javascript object
+        jsb_new_proxy(this, _jsObj.ref().get());
     }
 }
 
