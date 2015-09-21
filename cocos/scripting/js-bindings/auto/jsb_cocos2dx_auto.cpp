@@ -45153,6 +45153,183 @@ void js_register_cocos2dx_ParticleBatchNode(JSContext *cx, JS::HandleObject glob
     anonEvaluate(cx, global, "(function () { cc.ParticleBatchNode.extend = cc.Class.extend; })()");
 }
 
+JSClass  *jsb_cocos2d_ParticleData_class;
+JSObject *jsb_cocos2d_ParticleData_prototype;
+
+bool js_cocos2dx_ParticleData_release(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ParticleData* cobj = (cocos2d::ParticleData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleData_release : Invalid Native Object");
+    if (argc == 0) {
+        cobj->release();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ParticleData_release : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ParticleData_getMaxCount(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ParticleData* cobj = (cocos2d::ParticleData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleData_getMaxCount : Invalid Native Object");
+    if (argc == 0) {
+        unsigned int ret = cobj->getMaxCount();
+        jsval jsret = JSVAL_NULL;
+        jsret = uint32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ParticleData_getMaxCount : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ParticleData_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ParticleData* cobj = (cocos2d::ParticleData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleData_init : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleData_init : Error processing arguments");
+        bool ret = cobj->init(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ParticleData_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ParticleData_copyParticle(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ParticleData* cobj = (cocos2d::ParticleData *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleData_copyParticle : Invalid Native Object");
+    if (argc == 2) {
+        int arg0 = 0;
+        int arg1 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleData_copyParticle : Error processing arguments");
+        cobj->copyParticle(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ParticleData_copyParticle : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_ParticleData_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::ParticleData* cobj = new (std::nothrow) cocos2d::ParticleData();
+    TypeTest<cocos2d::ParticleData> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::ParticleData");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+void js_cocos2d_ParticleData_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ParticleData)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        cocos2d::ParticleData *nobj = static_cast<cocos2d::ParticleData *>(nproxy->ptr);
+        if (nobj)
+            delete nobj;
+        
+        jsb_remove_proxy(nproxy, jsproxy);
+    }
+}
+void js_register_cocos2dx_ParticleData(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_ParticleData_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_ParticleData_class->name = "ParticleData";
+    jsb_cocos2d_ParticleData_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_ParticleData_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_ParticleData_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_ParticleData_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_ParticleData_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_ParticleData_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_ParticleData_class->convert = JS_ConvertStub;
+    jsb_cocos2d_ParticleData_class->finalize = js_cocos2d_ParticleData_finalize;
+    jsb_cocos2d_ParticleData_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("release", js_cocos2dx_ParticleData_release, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getMaxCount", js_cocos2dx_ParticleData_getMaxCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_ParticleData_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("copyParticle", js_cocos2dx_ParticleData_copyParticle, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    JSFunctionSpec *st_funcs = NULL;
+
+    jsb_cocos2d_ParticleData_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_cocos2d_ParticleData_class,
+        js_cocos2dx_ParticleData_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "ParticleData", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::ParticleData> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_ParticleData_class;
+        p->proto = jsb_cocos2d_ParticleData_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 JSClass  *jsb_cocos2d_ParticleSystem_class;
 JSObject *jsb_cocos2d_ParticleSystem_prototype;
 
@@ -45662,6 +45839,26 @@ bool js_cocos2dx_ParticleSystem_initWithTotalParticles(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_cocos2dx_ParticleSystem_initWithTotalParticles : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ParticleSystem_addParticles(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_addParticles : Invalid Native Object");
+    if (argc == 1) {
+        int arg0 = 0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_addParticles : Error processing arguments");
+        cobj->addParticles(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ParticleSystem_addParticles : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ParticleSystem_setTexture(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -45872,29 +46069,6 @@ bool js_cocos2dx_ParticleSystem_setEndColorVar(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_cocos2dx_ParticleSystem_setEndColorVar : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_ParticleSystem_updateQuadWithParticle(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_updateQuadWithParticle : Invalid Native Object");
-    if (argc == 2) {
-        cocos2d::sParticle* arg0 = nullptr;
-        cocos2d::Vec2 arg1;
-        #pragma warning NO CONVERSION TO NATIVE FOR sParticle*
-		ok = false;
-        ok &= jsval_to_vector2(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_updateQuadWithParticle : Error processing arguments");
-        cobj->updateQuadWithParticle(arg0, arg1);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ParticleSystem_updateQuadWithParticle : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_ParticleSystem_getAtlasIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -46161,27 +46335,6 @@ bool js_cocos2dx_ParticleSystem_getRotatePerSecond(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_cocos2dx_ParticleSystem_getRotatePerSecond : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_ParticleSystem_initParticle(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_initParticle : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::sParticle* arg0 = nullptr;
-        #pragma warning NO CONVERSION TO NATIVE FOR sParticle*
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ParticleSystem_initParticle : Error processing arguments");
-        cobj->initParticle(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ParticleSystem_initParticle : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_cocos2dx_ParticleSystem_setEmitterMode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -46238,6 +46391,22 @@ bool js_cocos2dx_ParticleSystem_setSourcePosition(JSContext *cx, uint32_t argc, 
     }
 
     JS_ReportError(cx, "js_cocos2dx_ParticleSystem_setSourcePosition : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ParticleSystem_updateParticleQuads(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_updateParticleQuads : Invalid Native Object");
+    if (argc == 0) {
+        cobj->updateParticleQuads();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ParticleSystem_updateParticleQuads : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ParticleSystem_getEndSpinVar(JSContext *cx, uint32_t argc, jsval *vp)
@@ -46782,24 +46951,6 @@ bool js_cocos2dx_ParticleSystem_setStartSizeVar(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_cocos2dx_ParticleSystem_setStartSizeVar : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_ParticleSystem_addParticle(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ParticleSystem* cobj = (cocos2d::ParticleSystem *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ParticleSystem_addParticle : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->addParticle();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ParticleSystem_addParticle : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_ParticleSystem_getStartRadius(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -47232,6 +47383,7 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
         JS_FN("setStartSpin", js_cocos2dx_ParticleSystem_setStartSpin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDuration", js_cocos2dx_ParticleSystem_setDuration, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("initWithTotalParticles", js_cocos2dx_ParticleSystem_initWithTotalParticles, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("addParticles", js_cocos2dx_ParticleSystem_addParticles, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTexture", js_cocos2dx_ParticleSystem_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPosVar", js_cocos2dx_ParticleSystem_getPosVar, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("updateWithNoTime", js_cocos2dx_ParticleSystem_updateWithNoTime, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -47243,7 +47395,6 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
         JS_FN("setLifeVar", js_cocos2dx_ParticleSystem_setLifeVar, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTotalParticles", js_cocos2dx_ParticleSystem_setTotalParticles, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setEndColorVar", js_cocos2dx_ParticleSystem_setEndColorVar, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("updateQuadWithParticle", js_cocos2dx_ParticleSystem_updateQuadWithParticle, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAtlasIndex", js_cocos2dx_ParticleSystem_getAtlasIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStartSize", js_cocos2dx_ParticleSystem_getStartSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setStartSpinVar", js_cocos2dx_ParticleSystem_setStartSpinVar, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -47258,10 +47409,10 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
         JS_FN("setSpeed", js_cocos2dx_ParticleSystem_setSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStartSpin", js_cocos2dx_ParticleSystem_getStartSpin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRotatePerSecond", js_cocos2dx_ParticleSystem_getRotatePerSecond, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initParticle", js_cocos2dx_ParticleSystem_initParticle, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setEmitterMode", js_cocos2dx_ParticleSystem_setEmitterMode, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDuration", js_cocos2dx_ParticleSystem_getDuration, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSourcePosition", js_cocos2dx_ParticleSystem_setSourcePosition, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("updateParticleQuads", js_cocos2dx_ParticleSystem_updateParticleQuads, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getEndSpinVar", js_cocos2dx_ParticleSystem_getEndSpinVar, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBlendAdditive", js_cocos2dx_ParticleSystem_setBlendAdditive, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLife", js_cocos2dx_ParticleSystem_setLife, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -47290,7 +47441,6 @@ void js_register_cocos2dx_ParticleSystem(JSContext *cx, JS::HandleObject global)
         JS_FN("getEndColor", js_cocos2dx_ParticleSystem_getEndColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLifeVar", js_cocos2dx_ParticleSystem_getLifeVar, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setStartSizeVar", js_cocos2dx_ParticleSystem_setStartSizeVar, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("addParticle", js_cocos2dx_ParticleSystem_addParticle, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStartRadius", js_cocos2dx_ParticleSystem_getStartRadius, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getParticleCount", js_cocos2dx_ParticleSystem_getParticleCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStartRadiusVar", js_cocos2dx_ParticleSystem_getStartRadiusVar, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -71688,6 +71838,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_EaseCircleActionOut(cx, ns);
     js_register_cocos2dx_TransitionProgressInOut(cx, ns);
     js_register_cocos2dx_EaseCubicActionInOut(cx, ns);
+    js_register_cocos2dx_ParticleData(cx, ns);
     js_register_cocos2dx_EaseBackIn(cx, ns);
     js_register_cocos2dx_SplitRows(cx, ns);
     js_register_cocos2dx_Follow(cx, ns);
