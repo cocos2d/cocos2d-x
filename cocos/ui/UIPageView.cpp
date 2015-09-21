@@ -33,6 +33,7 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _indicator(nullptr),
+_currentPageIndex(-1),
 _customScrollThreshold(0.0),
 _usingCustomScrollThreshold(false),
 _childFocusCancelOffset(5.0f),
@@ -107,7 +108,12 @@ void PageView::removeAllPages()
 
 void PageView::setCurPageIndex( ssize_t index )
 {
-	jumpToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+    setCurrentPageIndex(index);
+}
+
+void PageView::setCurrentPageIndex(ssize_t index)
+{
+    jumpToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
 void PageView::scrollToPage(ssize_t idx)
@@ -137,6 +143,13 @@ bool PageView::isUsingCustomScrollThreshold()const
     return _usingCustomScrollThreshold;
 }
 
+void PageView::moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack)
+{
+    ListView::moveInnerContainer(deltaMove, canStartBounceBack);
+    _currentPageIndex = getIndex(getCenterItemInCurrentView());
+    _indicator->indicate(_currentPageIndex);
+}
+
 void PageView::onItemListChanged()
 {
     ListView::onItemListChanged();
@@ -152,11 +165,17 @@ void PageView::onSizeChanged()
 
 void PageView::handleReleaseLogic(Touch *touch)
 {
-    // Use `ScrollView` method instead of `ListView` to
+    // Use `ScrollView` method in order to avoid `startMagneticScroll()` by `ListView`.
     ScrollView::handleReleaseLogic(touch);
 
-    static const float THRESHOLD = 5000;
+    if(_items.empty())
+    {
+        return;
+    }
+
     Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
+
+    static const float THRESHOLD = 500;
     CCLOG("handleReleaseLogic() touchMoveVelocity.length()=%.2f", touchMoveVelocity.length());
     if(touchMoveVelocity.length() < THRESHOLD)
     {
@@ -164,18 +183,30 @@ void PageView::handleReleaseLogic(Touch *touch)
     }
     else
     {
-        ssize_t currentIndex = getIndex(getCenterItemInCurrentView());
-        if(touchMoveVelocity.x < 0 || touchMoveVelocity.y > 0)
+        Widget* currentPage = getItem(_currentPageIndex);
+        Vec2 destination = calculateItemDestination(Vec2::ANCHOR_MIDDLE, currentPage, Vec2::ANCHOR_MIDDLE);
+        Vec2 deltaToCurrentpage;
+        deltaToCurrentpage = destination - getInnerContainerPosition();
+        deltaToCurrentpage = flattenVectorByDirection(deltaToCurrentpage);
+
+        if(touchMoveVelocity.x * deltaToCurrentpage.x > 0 || touchMoveVelocity.y * deltaToCurrentpage.y > 0)
         {
-            ++currentIndex;
+            startMagneticScroll();
         }
         else
         {
-            --currentIndex;
+            if(touchMoveVelocity.x < 0 || touchMoveVelocity.y > 0)
+            {
+                ++_currentPageIndex;
+            }
+            else
+            {
+                --_currentPageIndex;
+            }
+            _currentPageIndex = MIN(_currentPageIndex, _items.size());
+            _currentPageIndex = MAX(_currentPageIndex, 0);
+            scrollToItem(_currentPageIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
         }
-        currentIndex = MIN(currentIndex, _items.size());
-        currentIndex = MAX(currentIndex, 0);
-        scrollToItem(currentIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
     }
 }
 

@@ -175,8 +175,16 @@ public:
     /**
      * Gets current displayed page index.
      * @return current page index.
+     *
+     * Since v3.9, this is deprecated. Use `getCurrentPageIndex()` instead.
      */
-    ssize_t getCurPageIndex() const;
+    CC_DEPRECATED_ATTRIBUTE ssize_t getCurPageIndex() const;
+
+    /**
+     * Gets current displayed page index.
+     * @return current page index.
+     */
+    ssize_t getCurrentPageIndex() const { return _currentPageIndex; }
 
     /**
      * Jump to a page with a given index without scrolling.
@@ -184,9 +192,17 @@ public:
      *
      * @param index A given index in PageView. Index start from 0 to pageCount -1.
 	 *
-	 * Since v3.9, this is deprecated. Use `ListView::jumpToItem(ssize_t itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE)` instead.
+	 * Since v3.9, this is deprecated. Use `setCurrentPageIndex()` instead.
 	 */
-	CC_DEPRECATED_ATTRIBUTE void setCurPageIndex(ssize_t index);
+    CC_DEPRECATED_ATTRIBUTE void setCurPageIndex(ssize_t index);
+
+    /**
+     * Jump to a page with a given index without scrolling.
+     * This is the different between scrollToPage.
+     *
+     * @param index A given index in PageView. Index start from 0 to pageCount -1.
+     */
+    void setCurrentPageIndex(ssize_t index);
 
     /**
      * @brief Get all the pages in the PageView.
@@ -256,6 +272,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void pageTurningEvent();
 
+    virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack) override;
     virtual void onItemListChanged() override;
     virtual void onSizeChanged() override;
     virtual void handleReleaseLogic(Touch *touch) override;
@@ -265,6 +282,8 @@ protected:
 
 protected:
     PageViewIndicator* _indicator;
+
+    ssize_t _currentPageIndex;
 
     float _customScrollThreshold;
     bool _usingCustomScrollThreshold;
