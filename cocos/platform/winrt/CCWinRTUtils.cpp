@@ -59,6 +59,7 @@ bool isWindowsPhone()
 #else
     return false;
 #endif
+    return false;
 }
 
 CC_DEPRECATED_ATTRIBUTE std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len /*= -1*/)
