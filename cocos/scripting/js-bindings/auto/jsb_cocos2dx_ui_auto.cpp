@@ -8800,6 +8800,30 @@ bool js_cocos2dx_ui_ListView_getItemsMargin(JSContext *cx, uint32_t argc, jsval 
     JS_ReportError(cx, "js_cocos2dx_ui_ListView_getItemsMargin : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_ListView_jumpToItem(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::ListView* cobj = (cocos2d::ui::ListView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_jumpToItem : Invalid Native Object");
+    if (argc == 3) {
+        int arg0 = 0;
+        cocos2d::Vec2 arg1;
+        cocos2d::Vec2 arg2;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_vector2(cx, args.get(1), &arg1);
+        ok &= jsval_to_vector2(cx, args.get(2), &arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ListView_jumpToItem : Error processing arguments");
+        cobj->jumpToItem(arg0, arg1, arg2);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_ListView_jumpToItem : wrong number of arguments: %d, was expecting %d", argc, 3);
+    return false;
+}
 bool js_cocos2dx_ui_ListView_setMagneticType(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8818,22 +8842,6 @@ bool js_cocos2dx_ui_ListView_setMagneticType(JSContext *cx, uint32_t argc, jsval
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_ListView_setMagneticType : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_ui_ListView_refreshViewIfNecessary(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::ListView* cobj = (cocos2d::ui::ListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_refreshViewIfNecessary : Invalid Native Object");
-    if (argc == 0) {
-        cobj->refreshViewIfNecessary();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_ListView_refreshViewIfNecessary : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_ListView_getIndex(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9318,22 +9326,6 @@ bool js_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView(JSContext *cx
     JS_ReportError(cx, "js_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_cocos2dx_ui_ListView_refreshView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::ListView* cobj = (cocos2d::ui::ListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_refreshView : Invalid Native Object");
-    if (argc == 0) {
-        cobj->refreshView();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_ListView_refreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_ui_ListView_setItemModel(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -9360,22 +9352,6 @@ bool js_cocos2dx_ui_ListView_setItemModel(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_ListView_setItemModel : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_ui_ListView_requestRefreshView(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::ListView* cobj = (cocos2d::ui::ListView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ListView_requestRefreshView : Invalid Native Object");
-    if (argc == 0) {
-        cobj->requestRefreshView();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_ListView_requestRefreshView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_ListView_insertCustomItem(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9524,8 +9500,8 @@ void js_register_cocos2dx_ui_ListView(JSContext *cx, JS::HandleObject global) {
         JS_FN("getCenterItemInCurrentView", js_cocos2dx_ui_ListView_getCenterItemInCurrentView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCurSelectedIndex", js_cocos2dx_ui_ListView_getCurSelectedIndex, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getItemsMargin", js_cocos2dx_ui_ListView_getItemsMargin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("jumpToItem", js_cocos2dx_ui_ListView_jumpToItem, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMagneticType", js_cocos2dx_ui_ListView_setMagneticType, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("refreshViewIfNecessary", js_cocos2dx_ui_ListView_refreshViewIfNecessary, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getIndex", js_cocos2dx_ui_ListView_getIndex, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("pushBackCustomItem", js_cocos2dx_ui_ListView_pushBackCustomItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("insertDefaultItem", js_cocos2dx_ui_ListView_insertDefaultItem, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -9546,9 +9522,7 @@ void js_register_cocos2dx_ui_ListView(JSContext *cx, JS::HandleObject global) {
         JS_FN("getClosestItemToPosition", js_cocos2dx_ui_ListView_getClosestItemToPosition, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getRightmostItemInCurrentView", js_cocos2dx_ui_ListView_getRightmostItemInCurrentView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getClosestItemToPositionInCurrentView", js_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("refreshView", js_cocos2dx_ui_ListView_refreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setItemModel", js_cocos2dx_ui_ListView_setItemModel, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("requestRefreshView", js_cocos2dx_ui_ListView_requestRefreshView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("insertCustomItem", js_cocos2dx_ui_ListView_insertCustomItem, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_ui_ListView_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
