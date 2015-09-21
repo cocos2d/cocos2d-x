@@ -322,6 +322,7 @@ public:
 
     /**
      * @brief Jump to specific item
+     * @param itemIndex Specifies the item's index
      * @param positionRatioInView Specifies the position with ratio in list view's content size.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
      */
