@@ -22,13 +22,12 @@ install_android_ndk()
     else
         HOST_NAME="linux"
     fi
-    echo "Download android-ndk-r10e-${HOST_NAME}-x86_64.bin ..."
-    curl -O http://dl.google.com/android/ndk/android-ndk-r10e-${HOST_NAME}-x86_64.bin
-    echo "Decompress android-ndk-r10e-${HOST_NAME}-x86_64.bin ..."
-    chmod +x android-ndk-r10e-${HOST_NAME}-x86_64.bin
-    ./android-ndk-r10e-${HOST_NAME}-x86_64.bin > tmpLog
+    echo "Download android-ndk-r9d-${HOST_NAME}-x86_64.tar.bz2 ..."
+    curl -O http://dl.google.com/android/ndk/android-ndk-r9d-${HOST_NAME}-x86_64.tar.bz2
+    echo "Decompress android-ndk-r9d-${HOST_NAME}-x86_64.tar.bz2 ..."
+    tar xjf android-ndk-r9d-${HOST_NAME}-x86_64.tar.bz2
     # Rename ndk
-    mv android-ndk-r10e android-ndk
+    mv android-ndk-r9d android-ndk
 }
 
 install_nacl_sdk()
