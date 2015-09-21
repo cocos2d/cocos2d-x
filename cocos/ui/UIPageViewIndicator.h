@@ -25,6 +25,8 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEWINDICATOR_H__
 #define __UIPAGEVIEWINDICATOR_H__
 
+#include "2d/CCProtectedNode.h"
+
 NS_CC_BEGIN
 /**
  * @addtogroup ui
@@ -33,12 +35,32 @@ NS_CC_BEGIN
 
 namespace ui {
 
-class UIPageViewIndicator
+class PageViewIndicator : public ProtectedNode
 {
 
 public:
-    UIPageViewIndicator();
-    virtual ~UIPageViewIndicator();
+    /**
+     * Create a page view indicator with its parent page view.
+     * @return A page view indicator instance.
+     */
+    static PageViewIndicator* create();
+
+    PageViewIndicator();
+    virtual ~PageViewIndicator();
+
+    void indicate(int index);
+    void increaseNumberOfPages();
+    void decreaseNumberOfPages();
+    void clear();
+    void setSpaceBetweenIndexNodes(float fSpaceBetweenIndexNodes);
+
+protected:
+    bool init() override;
+    void rearrange();
+
+    Vector<Node*> _indexNodes;
+    Node* _currentIndexNode;
+    float _spaceBetweenIndexNodes;
 
 };
 

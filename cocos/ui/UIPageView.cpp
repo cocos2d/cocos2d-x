@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIPageView.h"
+#include "ui/UIPageViewIndicator.h"
 
 NS_CC_BEGIN
 
@@ -31,6 +32,7 @@ namespace ui {
 IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
+_indicator(nullptr),
 _customScrollThreshold(0.0),
 _usingCustomScrollThreshold(false),
 _childFocusCancelOffset(5.0f),
@@ -62,6 +64,9 @@ bool PageView::init()
 {
     if (ListView::init())
     {
+        _indicator = PageViewIndicator::create();
+        addProtectedChild(_indicator);
+        
         setDirection(ListView::Direction::HORIZONTAL);
         setMagneticType(MagneticType::CENTER);
 		setScrollBarEnabled(false);
@@ -130,6 +135,12 @@ void PageView::setUsingCustomScrollThreshold(bool flag)
 bool PageView::isUsingCustomScrollThreshold()const
 {
     return _usingCustomScrollThreshold;
+}
+
+void PageView::onSizeChanged()
+{
+    ListView::onSizeChanged();
+    _indicator->setPosition(getContentSize() / 2);
 }
 
 void PageView::handleReleaseLogic(Touch *touch)

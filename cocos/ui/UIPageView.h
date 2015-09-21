@@ -36,6 +36,8 @@ NS_CC_BEGIN
 
 namespace ui {
 
+class PageViewIndicator;
+
 /**
  *PageView page turn event type.
  *@deprecated Use `PageView::EventType` instead.
@@ -254,12 +256,15 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void pageTurningEvent();
 
+    virtual void onSizeChanged() override;
     virtual void handleReleaseLogic(Touch *touch) override;
 
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 
 protected:
+    PageViewIndicator* _indicator;
+
     float _customScrollThreshold;
     bool _usingCustomScrollThreshold;
 
