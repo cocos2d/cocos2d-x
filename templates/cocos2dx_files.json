@@ -6664,6 +6664,7 @@
         "cocos/scripting/lua-bindings/auto/api/PageView.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParallaxNode.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleBatchNode.lua", 
+        "cocos/scripting/lua-bindings/auto/api/ParticleData.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleDisplayData.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleExplosion.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleFire.lua", 
