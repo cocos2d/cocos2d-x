@@ -1,8 +1,8 @@
 
 local player = {
     generateProjectile = function (self, x, y)
-        local projectile = cc.Sprite:create("res/Projectile.png", cc.rect(0, 0, 20, 20))
-        local scriptComponent = cc.ComponentLua:create("src/projectile.lua")
+        local projectile = cc.Sprite:create("components/Projectile.png", cc.rect(0, 0, 20, 20))
+        local scriptComponent = cc.ComponentLua:create("src/ComponentTest/projectile.lua")
         projectile:addComponent(scriptComponent)
         self:getOwner():getParent():addChild(projectile)
 
@@ -40,7 +40,7 @@ local player = {
         local function onTouchesEnded(touches, event)
             local location = touches[1]:getLocation()
             self:generateProjectile(location.x, location.y)
-            ccexp.AudioEngine:play2d("res/pew-pew-lei.wav")
+            ccexp.AudioEngine:play2d("pew-pew-lei.wav")
         end
 
         local listener = cc.EventListenerTouchAllAtOnce:create()
