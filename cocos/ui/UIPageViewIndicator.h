@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __UIPAGEVIEWINDICATOR_H__
 #define __UIPAGEVIEWINDICATOR_H__
 
-#include "2d/CCProtectedNode.h"
+#include "UIPageView.h"
 
 NS_CC_BEGIN
 /**
@@ -48,6 +48,7 @@ public:
     PageViewIndicator();
     virtual ~PageViewIndicator();
 
+    void setDirection(PageView::Direction direction);
     void reset(ssize_t numberOfTotalPages, ssize_t currentIndex);
     void indicate(ssize_t index);
     void clear();
@@ -59,6 +60,7 @@ protected:
     void decreaseNumberOfPages();
     void rearrange();
 
+    PageView::Direction _direction;
     Vector<Node*> _indexNodes;
     Node* _currentIndexNode;
     float _spaceBetweenIndexNodes;

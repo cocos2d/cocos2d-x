@@ -47,7 +47,8 @@ PageViewIndicator* PageViewIndicator::create()
 }
 
 PageViewIndicator::PageViewIndicator()
-: _currentIndexNode(nullptr)
+: _direction(PageView::Direction::HORIZONTAL)
+, _currentIndexNode(nullptr)
 , _spaceBetweenIndexNodes(SPACE_BETWEEN_INDEX_NODES_DEFAULT)
 {
 }
@@ -62,6 +63,12 @@ bool PageViewIndicator::init()
     _currentIndexNode->setVisible(false);
     addProtectedChild(_currentIndexNode);
     return true;
+}
+
+void PageViewIndicator::setDirection(PageView::Direction direction)
+{
+    _direction = direction;
+    rearrange();
 }
 
 void PageViewIndicator::reset(ssize_t numberOfTotalPages, ssize_t currentIndex)
@@ -95,8 +102,7 @@ void PageViewIndicator::rearrange()
         return;
     }
 
-//    bool bHorizon = m_eContainerDirection == CONTAINER_HORIZONTAL;
-    bool horizontal = true;
+    bool horizontal = (_direction == PageView::Direction::HORIZONTAL);
 
     // Calculate total size
     Size indexNodeSize = _indexNodes.at(0)->getContentSize();
