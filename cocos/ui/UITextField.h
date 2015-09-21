@@ -625,13 +625,14 @@ public:
 
     /**
      * Return the number of lines of text.
+     * @since v3.9
      */
     int getStringNumLines();
 
     /**
      * Returns the line height.
      * @warning Not support system font.
-     * @since v3.2.0
+     * @since v3.9
      */
     int getLineHeight() const;
 
@@ -639,6 +640,7 @@ public:
      * Specify what happens when a line is too long.
      *
      * @param breakWithoutSpace Lines are automatically broken between words if this value is false.
+     * @since v3.9
      */
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
