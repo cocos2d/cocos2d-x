@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCComponentLua.h"
+#include <string>
 #include "base/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 #include "LuaBasicConversions.h"

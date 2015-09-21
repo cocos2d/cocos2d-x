@@ -61,7 +61,7 @@ LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
 
 #Component
-LOCAL_SRC_FILES += ../manual/component/CCComponentLua.cpp \
+LOCAL_SRC_FILES += ../manual/CCComponentLua.cpp \
 
 #3d
 LOCAL_SRC_FILES += ../manual/3d/lua_cocos2dx_3d_manual.cpp \

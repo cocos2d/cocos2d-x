@@ -123,6 +123,9 @@
     <ClCompile Include="..\manual\LuaBasicConversions.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\CCComponentLua.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
     <ClCompile Include="..\manual\tolua_fix.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -273,9 +276,6 @@
     <ClCompile Include="..\manual\cocostudio\lua-cocos-studio-conversions.cpp">
       <Filter>manual\cocostudio</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\component\CCComponentLua.cpp">
-      <Filter>manual\component</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_webview_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
@@ -342,6 +342,9 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaBasicConversions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCComponentLua.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\tolua_fix.h">
@@ -496,9 +499,6 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocostudio\lua-cocos-studio-conversions.h">
       <Filter>manual\cocostudio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\component\CCComponentLua.h">
-      <Filter>manual\component</Filter>
     </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_webview_auto.hpp">
       <Filter>auto</Filter>
