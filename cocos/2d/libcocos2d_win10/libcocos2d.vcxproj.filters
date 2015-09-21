@@ -1578,9 +1578,6 @@
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\physics\CCComponentPhysics2d.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -3394,9 +3391,6 @@
     </ClInclude>
     <ClInclude Include="..\..\network\WebSocket.h">
       <Filter>network</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics\CCComponentPhysics2d.h">
-      <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
