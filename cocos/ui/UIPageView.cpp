@@ -32,6 +32,7 @@ namespace ui {
 IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
+_indicatorEnabled(false),
 _indicator(nullptr),
 _indicatorPositionAsAnchorPoint(Vec2::ANCHOR_MIDDLE),
 _currentPageIndex(-1),
@@ -69,14 +70,27 @@ bool PageView::init()
         _indicator = PageViewIndicator::create();
         addProtectedChild(_indicator, 10000);
         
-        setDirection(ListView::Direction::HORIZONTAL);
-        _indicatorPositionAsAnchorPoint = Vec2(0.5f, 0.1f);
-
+        setDirection(Direction::HORIZONTAL);
         setMagneticType(MagneticType::CENTER);
 		setScrollBarEnabled(false);
         return true;
     }
     return false;
+}
+
+void PageView::setDirection(PageView::Direction direction)
+{
+    ListView::setDirection(direction);
+    if(direction == Direction::HORIZONTAL)
+    {
+        _indicatorPositionAsAnchorPoint = Vec2(0.5f, 0.1f);
+    }
+    else if(direction == Direction::VERTICAL)
+    {
+        _indicatorPositionAsAnchorPoint = Vec2(0.1f, 0.5f);
+    }
+	_indicator->setDirection(direction);
+    refreshIndicatorPosition();
 }
 
 void PageView::addWidgetToPage(Widget *widget, ssize_t pageIdx, bool forceCreate)
@@ -310,6 +324,12 @@ void PageView::copySpecialProperties(Widget *widget)
         _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;
         _customScrollThreshold = pageView->_customScrollThreshold;
     }
+}
+
+void PageView::setIndicatorEnabled(bool enabled)
+{
+    _indicatorEnabled = enabled;
+    _indicator->setVisible(_indicatorEnabled);
 }
 
 void PageView::setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint)

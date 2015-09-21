@@ -107,7 +107,14 @@ public:
      *@return A PageView instance.
      */
     static PageView* create();
-    
+
+    /**
+     * Changes direction
+     *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.
+     * @param direction Set the page view's scroll direction.
+     */
+    virtual void setDirection(Direction direction) override;
+
     /**
      * Add a widget as a page of PageView in a given index.
      *
@@ -241,6 +248,9 @@ public:
     //override methods
     virtual std::string getDescription() const override;
 
+    void setIndicatorEnabled(bool enabled);
+
+    bool getIndicatorEnabled() const { return _indicatorEnabled; }
 
     void setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint);
     const Vec2& getIndicatorPositionAsAnchorPoint() const;
@@ -291,6 +301,7 @@ protected:
     void refreshIndicatorPosition();
 
 protected:
+    bool _indicatorEnabled;
     PageViewIndicator* _indicator;
     Vec2 _indicatorPositionAsAnchorPoint;
 
