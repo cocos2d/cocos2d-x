@@ -120,7 +120,7 @@ void PageViewIndicator::rearrange()
         }
         else
         {
-            position = Vec2(indexNodeSize.width / 2.0f, posValue);
+            position = Vec2(indexNodeSize.width / 2.0f, -posValue);
         }
         indexNode->setPosition(position);
         posValue += sizeValue + _spaceBetweenIndexNodes;
