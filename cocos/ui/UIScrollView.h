@@ -570,7 +570,7 @@ protected:
     bool isOutOfBoundary(MoveDirection dir);
     bool isOutOfBoundary();
 
-    void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack);
+    virtual void moveInnerContainer(const Vec2& deltaMove, bool canStartBounceBack);
 
 	bool calculateCurrAndPrevTouchPoints(Touch* touch, Vec3* currPt, Vec3* prevPt);
 	void gatherTouchMove(const Vec2& delta);
