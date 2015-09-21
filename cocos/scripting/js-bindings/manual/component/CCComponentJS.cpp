@@ -24,7 +24,6 @@
 
 #include "CCComponentJS.h"
 #include "base/CCScriptSupport.h"
-#include "jsapi.h"
 #include "ScriptingCore.h"
 #include "js_manual_conversions.h"
 
