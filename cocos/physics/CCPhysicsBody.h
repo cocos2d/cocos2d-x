@@ -490,7 +490,7 @@ protected:
     PhysicsBody();
     virtual ~PhysicsBody();
 
-    virtual bool init();
+    virtual bool init()override;
     
     virtual void setPosition(float positionX, float positionY);
 
@@ -498,7 +498,7 @@ protected:
 
     virtual void setScale(float scaleX, float scaleY);
     
-    void update(float delta);
+    void update(float delta)override;
     
     void removeJoint(PhysicsJoint* joint);
 
