@@ -266,8 +266,11 @@ bool Menu::onTouchBegan(Touch* touch, Event* event)
             return false;
         }
     }
-    
-    _selectedItem = this->getItemForTouch(touch, camera);
+	unsigned int flag = (unsigned int)camera->getCameraFlag();
+	unsigned int mask = (unsigned int)this->getCameraMask();
+	if((flag & mask)!=0){
+		_selectedItem = this->getItemForTouch(touch, camera);
+	}
     if (_selectedItem)
     {
         _state = Menu::State::TRACKING_TOUCH;
