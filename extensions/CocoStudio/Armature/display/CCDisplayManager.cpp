@@ -203,7 +203,9 @@ void CCDisplayManager::removeDisplay(int index)
         m_iDisplayIndex = -1;
     }
 
-    m_pDecoDisplayList->removeObjectAtIndex(index);
+    if (m_pDecoDisplayList->count() > 0 && index < m_pDecoDisplayList->count()) {
+        m_pDecoDisplayList->removeObjectAtIndex(index);
+    }
 }
 
 CCArray *CCDisplayManager::getDecorativeDisplayList()
