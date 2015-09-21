@@ -28,6 +28,7 @@
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_event_dispatcher_manual.h"
 #include "navmesh/CCNavMesh.h"
+#include "base/CCScriptComponent.h"
 using namespace cocos2d;
 
 schedFunc_proxy_t *_schedFunc_target_ht = NULL;
@@ -6138,6 +6139,24 @@ void js_register_cocos2dx_AutoPolygon(JSContext *cx, JS::HandleObject global) {
     }
 }
 
+bool js_cocos2dx_ScriptComponent_getScriptObject(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ScriptComponent* cobj = (cocos2d::ScriptComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ScriptComponent_getScriptObject : Invalid Native Object");
+    if (argc == 0) {
+        JSObject* ret = static_cast<JSObject*>(cobj->getScriptObject());
+        jsval jsret = OBJECT_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    
+    JS_ReportError(cx, "js_cocos2dx_ScriptComponent_getScriptObject : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
@@ -6391,8 +6410,6 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCGLProgram_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "createWithString", js_cocos2dx_CCGLProgram_createWithString, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-    
-    JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_Camera_prototype);
     JS_DefineFunction(cx, tmpObj, "unproject", js_cocos2dx_Camera_unproject, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -6400,6 +6417,9 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     
     tmpObj.set(jsb_cocos2d_ClippingNode_prototype);
     JS_DefineFunction(cx, tmpObj, "init", js_cocos2dx_ClippingNode_init, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    tmpObj.set(jsb_cocos2d_ScriptComponent_prototype);
+    JS_DefineFunction(cx, tmpObj, "getScriptObject", js_cocos2dx_ScriptComponent_getScriptObject, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, ccObj, "glEnableVertexAttribs", js_cocos2dx_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, ccObj, "pAdd", js_cocos2dx_ccpAdd, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -6443,6 +6463,8 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     get_or_create_js_obj(cx, global, "console", &tmpObj);
     JS_DefineFunction(cx, tmpObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
+    JS_DefineFunction(cx, global, "garbageCollect", js_forceGC, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    
 #if CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
     tmpObj.set(jsb_cocos2d_Scene_prototype);
     JS_DefineFunction(cx, tmpObj, "setPhysics3DDebugCamera", js_cocos2dx_Scene_setPhysics3DDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -6455,5 +6477,5 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 	JS_DefineFunction(cx, tmpObj, "getNavMesh", js_cocos2dx_Scene_getNavMesh, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, tmpObj, "setNavMeshDebugCamera", js_cocos2dx_Scene_setNavMeshDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 	JS_DefineFunction(cx, tmpObj, "setNavMesh", js_cocos2dx_Scene_setNavMesh, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-#endif CC_USE_NAVMESH
+#endif //CC_USE_NAVMESH
 }

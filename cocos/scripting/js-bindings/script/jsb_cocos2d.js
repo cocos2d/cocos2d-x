@@ -2734,6 +2734,20 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
 
 
 //
+// Script Component
+//
+cc.ScriptComponent.extend = cc.Class.extend;
+cc.ComponentJS = function (filename) {
+    var comp = cc.ScriptComponent.create(filename);
+    var res = comp.getScriptObject();
+    return res;
+}
+cc.ComponentJS.extend = function (prop) {
+    return cc.ScriptComponent.extend(prop);
+};
+
+
+//
 // 3D module rename to jsb namespace
 //
 jsb.BaseLight = cc.BaseLight;
