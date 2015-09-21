@@ -3352,19 +3352,25 @@ getItemsMargin : function (
 },
 
 /**
- * @method setMagneticType
- * @param {ccui.ListView::MagneticType} arg0
+ * @method jumpToItem
+ * @param {int} arg0
+ * @param {vec2_object} arg1
+ * @param {vec2_object} arg2
  */
-setMagneticType : function (
-magnetictype 
+jumpToItem : function (
+int, 
+vec2, 
+vec2 
 )
 {
 },
 
 /**
- * @method refreshViewIfNecessary
+ * @method setMagneticType
+ * @param {ccui.ListView::MagneticType} arg0
  */
-refreshViewIfNecessary : function (
+setMagneticType : function (
+magnetictype 
 )
 {
 },
@@ -3582,27 +3588,11 @@ vec2
 },
 
 /**
- * @method refreshView
- */
-refreshView : function (
-)
-{
-},
-
-/**
  * @method setItemModel
  * @param {ccui.Widget} arg0
  */
 setItemModel : function (
 widget 
-)
-{
-},
-
-/**
- * @method requestRefreshView
- */
-requestRefreshView : function (
 )
 {
 },
