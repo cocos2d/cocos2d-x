@@ -34,7 +34,7 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 PageView::PageView():
 _indicatorEnabled(false),
 _indicator(nullptr),
-_indicatorPositionAsAnchorPoint(Vec2::ANCHOR_MIDDLE),
+_indicatorPositionAsAnchorPoint(Vec2(0.5f, 0.1f)),
 _currentPageIndex(-1),
 _customScrollThreshold(0.0),
 _usingCustomScrollThreshold(false),
@@ -65,11 +65,11 @@ PageView* PageView::create()
     
 bool PageView::init()
 {
+    _indicator = PageViewIndicator::create();
+    addProtectedChild(_indicator, 10000);
+
     if (ListView::init())
     {
-        _indicator = PageViewIndicator::create();
-        addProtectedChild(_indicator, 10000);
-        
         setDirection(Direction::HORIZONTAL);
         setMagneticType(MagneticType::CENTER);
 		setScrollBarEnabled(false);
@@ -200,9 +200,8 @@ void PageView::handleReleaseLogic(Touch *touch)
 
     Vec2 touchMoveVelocity = flattenVectorByDirection(calculateTouchMoveVelocity());
 
-    static const float THRESHOLD = 500;
-    CCLOG("handleReleaseLogic() touchMoveVelocity.length()=%.2f", touchMoveVelocity.length());
-    if(touchMoveVelocity.length() < THRESHOLD)
+    static const float DEFAULT_THRESHOLD = 500;
+    if(touchMoveVelocity.length() < DEFAULT_THRESHOLD)
     {
         startMagneticScroll();
     }
