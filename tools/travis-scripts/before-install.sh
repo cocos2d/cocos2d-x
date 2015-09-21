@@ -25,6 +25,7 @@ install_android_ndk()
     echo "Download android-ndk-r10e-${HOST_NAME}-x86_64.bin ..."
     curl -O http://dl.google.com/android/ndk/android-ndk-r10e-${HOST_NAME}-x86_64.bin
     echo "Decompress android-ndk-r10e-${HOST_NAME}-x86_64.bin ..."
+    chmod +x android-ndk-r10e-${HOST_NAME}-x86_64.bin
     ./android-ndk-r10e-${HOST_NAME}-x86_64.bin
     # Rename ndk
     mv android-ndk-r10e android-ndk
