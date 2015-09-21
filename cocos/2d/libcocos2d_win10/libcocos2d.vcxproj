@@ -565,7 +565,6 @@
     <ClCompile Include="..\..\physics3d\CCPhysics3DShape.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3DWorld.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp" />
-    <ClCompile Include="..\..\physics\CCComponentPhysics2d.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp" />
@@ -1181,7 +1180,6 @@
     <ClInclude Include="..\..\physics3d\CCPhysics3DShape.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3DWorld.h" />
     <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h" />
-    <ClInclude Include="..\..\physics\CCComponentPhysics2d.h" />
     <ClInclude Include="..\..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\..\physics\CCPhysicsHelper.h" />
