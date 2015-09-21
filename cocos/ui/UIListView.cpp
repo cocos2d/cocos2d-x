@@ -40,7 +40,7 @@ _magneticType(MagneticType::NONE),
 _magneticAllowedOutOfBoundary(true),
 _itemsMargin(0.0f),
 _curSelectedIndex(-1),
-_refreshViewDirty(true),
+_innerContainerDoLayoutDirty(true),
 _listViewEventListener(nullptr),
 _listViewEventSelector(nullptr),
 _eventCallback(nullptr)
@@ -235,7 +235,7 @@ void ListView::pushBackDefaultItem()
     Widget* newItem = _model->clone();
     remedyLayoutParameter(newItem);
     addChild(newItem);
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
 
 void ListView::insertDefaultItem(ssize_t index)
@@ -252,7 +252,7 @@ void ListView::pushBackCustomItem(Widget* item)
 {
     remedyLayoutParameter(item);
     addChild(item);
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
     
 void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
@@ -341,7 +341,7 @@ void ListView::insertCustomItem(Widget* item, ssize_t index)
     ScrollView::addChild(item);
 
     remedyLayoutParameter(item);
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
 
 void ListView::removeItem(ssize_t index)
@@ -352,7 +352,7 @@ void ListView::removeItem(ssize_t index)
         return;
     }
     removeChild(item, true);
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
 
 void ListView::removeLastItem()
@@ -395,7 +395,7 @@ void ListView::setGravity(Gravity gravity)
         return;
     }
     _gravity = gravity;
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
 
 void ListView::setMagneticType(MagneticType magneticType)
@@ -427,7 +427,7 @@ void ListView::setItemsMargin(float margin)
         return;
     }
     _itemsMargin = margin;
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
     
 float ListView::getItemsMargin()const
@@ -455,42 +455,33 @@ void ListView::setDirection(Direction dir)
     ScrollView::setDirection(dir);
 }
     
-void ListView::requestRefreshView()
-{
-    _refreshViewDirty = true;
-}
-
 void ListView::refreshView()
 {
+    forceDoLayout();
+}
+
+void ListView::requestDoLayout()
+{
+    _innerContainerDoLayoutDirty = true;
+}
+
+void ListView::doLayout()
+{
+    if(!_innerContainerDoLayoutDirty)
+    {
+        return;
+    }
+
     ssize_t length = _items.size();
-    for (int i=0; i<length; i++)
+    for (int i = 0; i < length; ++i)
     {
         Widget* item = _items.at(i);
         item->setLocalZOrder(i);
         remedyLayoutParameter(item);
     }
+    _innerContainer->forceDoLayout();
     updateInnerContainerSize();
-    _refreshViewDirty = false;
-}
-
-void ListView::refreshViewIfNecessary()
-{
-    if (_refreshViewDirty)
-    {
-        refreshView();
-    }
-}
-    
-void ListView::forceDoLayout()
-{
-    refreshViewIfNecessary();
-    this->_innerContainer->forceDoLayout();
-}
-
-void ListView::doLayout()
-{
-    Layout::doLayout();
-    refreshViewIfNecessary();
+    _innerContainerDoLayoutDirty = false;
 }
     
 void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
@@ -683,68 +674,95 @@ Widget* ListView::getBottommostItemInCurrentView() const
 
 void ListView::jumpToBottom()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToBottom();
 }
 
 void ListView::jumpToTop()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToTop();
 }
 
 void ListView::jumpToLeft()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToLeft();
 }
 
 void ListView::jumpToRight()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToRight();
 }
 
 void ListView::jumpToTopLeft()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToTopLeft();
 }
 
 void ListView::jumpToTopRight()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToTopRight();
 }
 
 void ListView::jumpToBottomLeft()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToBottomLeft();
 }
 
 void ListView::jumpToBottomRight()
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToBottomRight();
 }
 
 void ListView::jumpToPercentVertical(float percent)
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToPercentVertical(percent);
 }
 
 void ListView::jumpToPercentHorizontal(float percent)
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToPercentHorizontal(percent);
 }
 
 void ListView::jumpToPercentBothDirection(const Vec2& percent)
 {
-    refreshViewIfNecessary();
+    doLayout();
     ScrollView::jumpToPercentBothDirection(percent);
+}
+
+static Vec2 calculateItemDestination(const Size& contentSize, Widget* item, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
+    Vec2 positionInView;
+    positionInView.x += contentSize.width * positionRatioInView.x;
+    positionInView.y += contentSize.height * positionRatioInView.y;
+
+    Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
+    return -(itemPosition - positionInView);
+}
+
+void ListView::jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+{
+    Widget* item = getItem(itemIndex);
+    if (item == nullptr)
+    {
+        return;
+    }
+    doLayout();
+
+    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
+    destination = flattenVectorByDirection(destination);
+    Vec2 delta = destination - getInnerContainerPosition();
+    Vec2 outOfBoundary = getHowMuchOutOfBoundary(delta);
+    destination += outOfBoundary;
+    moveChildrenToPosition(destination);
 }
 
 void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
@@ -759,15 +777,7 @@ void ListView::scrollToItem(int itemIndex, const Vec2& positionRatioInView, cons
     {
         return;
     }
-    
-    Size contentSize = getContentSize();
-    Vec2 positionInView;
-    positionInView.x += contentSize.width * positionRatioInView.x;
-    positionInView.y += contentSize.height * positionRatioInView.y;
-    
-    Vec2 itemPosition = calculateItemPositionWithAnchor(item, itemAnchorPoint);
-    Vec2 destination = -(itemPosition - positionInView);
-    
+    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
     startAutoScrollToDestination(destination, timeInSec, true);
 }
 
@@ -779,7 +789,7 @@ ssize_t ListView::getCurSelectedIndex() const
 void ListView::onSizeChanged()
 {
     ScrollView::onSizeChanged();
-    _refreshViewDirty = true;
+    requestDoLayout();
 }
 
 std::string ListView::getDescription() const

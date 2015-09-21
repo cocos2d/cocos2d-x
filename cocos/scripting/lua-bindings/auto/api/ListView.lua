@@ -40,17 +40,23 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- brief Jump to specific item<br>
+-- param itemIndex Specifies the item's index<br>
+-- param positionRatioInView Specifies the position with ratio in list view's content size.<br>
+-- param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+-- @function [parent=#ListView] jumpToItem 
+-- @param self
+-- @param #int itemIndex
+-- @param #vec2_table positionRatioInView
+-- @param #vec2_table itemAnchorPoint
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
 -- Set magnetic type of ListView.<br>
 -- see `MagneticType`
 -- @function [parent=#ListView] setMagneticType 
 -- @param self
 -- @param #int magneticType
--- @return ListView#ListView self (return value: ccui.ListView)
-        
---------------------------------
--- 
--- @function [parent=#ListView] refreshViewIfNecessary 
--- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -218,25 +224,12 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- brief Refresh content view of ListView.
--- @function [parent=#ListView] refreshView 
--- @param self
--- @return ListView#ListView self (return value: ccui.ListView)
-        
---------------------------------
 -- Set a item model for listview.<br>
 -- When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.<br>
 -- param model  Model in `Widget*`.
 -- @function [parent=#ListView] setItemModel 
 -- @param self
 -- @param #ccui.Widget model
--- @return ListView#ListView self (return value: ccui.ListView)
-        
---------------------------------
--- brief Refresh view and layout of ListView manually.<br>
--- This method will mark ListView content as dirty and the content view will be refershed in the next frame.
--- @function [parent=#ListView] requestRefreshView 
--- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
@@ -282,9 +275,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#ListView] forceDoLayout 
+-- @function [parent=#ListView] init 
 -- @param self
--- @return ListView#ListView self (return value: ccui.ListView)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Changes scroll direction of scrollview.<br>
@@ -316,13 +309,13 @@
         
 --------------------------------
 -- 
--- @function [parent=#ListView] removeAllChildren 
+-- @function [parent=#ListView] requestDoLayout 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- 
--- @function [parent=#ListView] jumpToTop 
+-- @function [parent=#ListView] removeAllChildren 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
@@ -342,19 +335,19 @@
         
 --------------------------------
 -- 
--- @function [parent=#ListView] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#ListView] jumpToBottomLeft 
+-- @function [parent=#ListView] jumpToBottomRight 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
 -- 
--- @function [parent=#ListView] jumpToBottomRight 
+-- @function [parent=#ListView] jumpToTop 
+-- @param self
+-- @return ListView#ListView self (return value: ccui.ListView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ListView] jumpToBottomLeft 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         

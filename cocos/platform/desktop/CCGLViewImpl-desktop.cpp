@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -358,6 +359,19 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
 
+    if (_mainWindow == nullptr)
+    {
+        std::string message = "Can't create window";
+        if (!_glfwError.empty())
+        {
+            message.append("\nMore info: \n");
+            message.append(_glfwError);
+        }
+
+        MessageBox(message.c_str(), "Error launch application");
+        return false;
+    }
+
     /*
     *  Note that the created window and context may differ from what you requested,
     *  as not all parameters and hints are
@@ -600,7 +614,8 @@ Rect GLViewImpl::getScissorRect() const
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
-    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
+    _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    CCLOGERROR(_glfwError.c_str());
 }
 
 void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)

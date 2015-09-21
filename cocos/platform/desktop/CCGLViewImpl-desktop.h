@@ -148,6 +148,8 @@ protected:
     GLFWwindow* _mainWindow;
     GLFWmonitor* _monitor;
 
+    std::string _glfwError;
+
     float _mouseX;
     float _mouseY;
 

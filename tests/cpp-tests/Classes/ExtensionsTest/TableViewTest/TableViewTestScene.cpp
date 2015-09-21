@@ -27,6 +27,13 @@ bool TableViewTest::init()
     this->addChild(tableView);
     tableView->reloadData();
 
+    auto testNode = Node::create();
+    testNode->setName("testNode");
+    tableView->addChild(testNode);
+    tableView->removeChild(testNode, true);
+    CCAssert(nullptr == tableView->getChildByName("testNode"), "The added child has been removed!");
+
+
 	tableView = TableView::create(this, Size(60, 250));
 	tableView->setDirection(ScrollView::Direction::VERTICAL);
 	tableView->setPosition(Vec2(winSize.width-150,winSize.height/2-120));

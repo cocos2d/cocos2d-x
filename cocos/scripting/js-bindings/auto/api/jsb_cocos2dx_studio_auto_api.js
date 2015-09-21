@@ -4184,19 +4184,19 @@ func
 },
 
 /**
- * @method clearFrameEndCalls
+ * @method clearFrameEndCallFuncs
  */
-clearFrameEndCalls : function (
+clearFrameEndCallFuncs : function (
 )
 {
 },
 
 /**
- * @method setAnimationEndCallBack
+ * @method setAnimationEndCallFunc
  * @param {String} arg0
  * @param {function} arg1
  */
-setAnimationEndCallBack : function (
+setAnimationEndCallFunc : function (
 str, 
 func 
 )
@@ -4380,18 +4380,6 @@ getDuration : function (
 },
 
 /**
- * @method removeFrameEndCall
-* @param {int|int} int
-* @param {String} str
-*/
-removeFrameEndCall : function(
-int,
-str 
-)
-{
-},
-
-/**
  * @method gotoFrameAndPause
  * @param {int} arg0
  */
@@ -4409,6 +4397,16 @@ isPlaying : function (
 )
 {
     return false;
+},
+
+/**
+ * @method removeFrameEndCallFuncs
+ * @param {int} arg0
+ */
+removeFrameEndCallFuncs : function (
+int 
+)
+{
 },
 
 /**
@@ -4479,6 +4477,18 @@ int
  */
 setCurrentFrame : function (
 int 
+)
+{
+},
+
+/**
+ * @method removeFrameEndCallFunc
+ * @param {int} arg0
+ * @param {String} arg1
+ */
+removeFrameEndCallFunc : function (
+int, 
+str 
 )
 {
 },

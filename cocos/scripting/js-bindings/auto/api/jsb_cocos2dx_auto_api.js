@@ -14257,6 +14257,64 @@ ParticleBatchNode : function (
 };
 
 /**
+ * @class ParticleData
+ */
+cc.ParticleData = {
+
+/**
+ * @method release
+ */
+release : function (
+)
+{
+},
+
+/**
+ * @method getMaxCount
+ * @return {unsigned int}
+ */
+getMaxCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method init
+ * @param {int} arg0
+ * @return {bool}
+ */
+init : function (
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method copyParticle
+ * @param {int} arg0
+ * @param {int} arg1
+ */
+copyParticle : function (
+int, 
+int 
+)
+{
+},
+
+/**
+ * @method ParticleData
+ * @constructor
+ */
+ParticleData : function (
+)
+{
+},
+
+};
+
+/**
  * @class ParticleSystem
  */
 cc.ParticleSystem = {
@@ -14524,6 +14582,16 @@ int
 },
 
 /**
+ * @method addParticles
+ * @param {int} arg0
+ */
+addParticles : function (
+int 
+)
+{
+},
+
+/**
  * @method setTexture
  * @param {cc.Texture2D} arg0
  */
@@ -14625,18 +14693,6 @@ int
  */
 setEndColorVar : function (
 color4f 
-)
-{
-},
-
-/**
- * @method updateQuadWithParticle
- * @param {cc.sParticle} arg0
- * @param {vec2_object} arg1
- */
-updateQuadWithParticle : function (
-sparticle, 
-vec2 
 )
 {
 },
@@ -14780,16 +14836,6 @@ getRotatePerSecond : function (
 },
 
 /**
- * @method initParticle
- * @param {cc.sParticle} arg0
- */
-initParticle : function (
-sparticle 
-)
-{
-},
-
-/**
  * @method setEmitterMode
  * @param {cc.ParticleSystem::Mode} arg0
  */
@@ -14815,6 +14861,14 @@ getDuration : function (
  */
 setSourcePosition : function (
 vec2 
+)
+{
+},
+
+/**
+ * @method updateParticleQuads
+ */
+updateParticleQuads : function (
 )
 {
 },
@@ -15097,16 +15151,6 @@ setStartSizeVar : function (
 float 
 )
 {
-},
-
-/**
- * @method addParticle
- * @return {bool}
- */
-addParticle : function (
-)
-{
-    return false;
 },
 
 /**

@@ -246,8 +246,8 @@ public:
     float getItemsMargin()const;
     
     //override methods
-    virtual void forceDoLayout()override;
     virtual void doLayout() override;
+    virtual void requestDoLayout() override;
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
     virtual void addChild(Node* child, int zOrder, int tag) override;
@@ -255,7 +255,7 @@ public:
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
-    
+
 	/**
 	 * @brief Query the closest item to a specific position in inner container.
 	 *
@@ -320,6 +320,14 @@ public:
     virtual void jumpToPercentHorizontal(float percent) override;
     virtual void jumpToPercentBothDirection(const Vec2& percent) override;
 
+    /**
+     * @brief Jump to specific item
+     * @param itemIndex Specifies the item's index
+     * @param positionRatioInView Specifies the position with ratio in list view's content size.
+     * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
+     */
+    void jumpToItem(int itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint);
+    
 	/**
 	 * @brief Scroll to specific item
 	 * @param positionRatioInView Specifies the position with ratio in list view's content size.
@@ -364,16 +372,16 @@ public:
     
     /**
      * @brief Refresh view and layout of ListView manually.
-     * This method will mark ListView content as dirty and the content view will be refershed in the next frame.
+     * This method will mark ListView content as dirty and the content view will be refreshed in the next frame.
+     * @deprecated Use method requestDoLayout() instead
      */
-    void requestRefreshView();
+    CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
 
-    
     /**
      * @brief Refresh content view of ListView.
+     * @deprecated Use method forceDoLayout() instead
      */
-    void refreshView();
-    void refreshViewIfNecessary();
+    CC_DEPRECATED_ATTRIBUTE void refreshView();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -412,7 +420,8 @@ protected:
     float _itemsMargin;
     
     ssize_t _curSelectedIndex;
-    bool _refreshViewDirty;
+
+    bool _innerContainerDoLayoutDirty;
     
     Ref*       _listViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

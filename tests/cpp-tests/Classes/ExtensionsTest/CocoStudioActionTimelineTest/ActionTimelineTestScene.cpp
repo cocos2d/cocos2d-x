@@ -644,7 +644,7 @@ void TestAnimationClipEndCallBack::onEnter()
      });
      
      // test for animation clip end call back
-     action->setAnimationEndCallBack("stand", [this]{
+     action->setAnimationEndCallFunc("stand", [this]{
          auto text = ui::Text::create();
          text->setString("CallBackAfterStandAnimationClip");
          text->setPosition(Vec2(100, 130));
