@@ -33,6 +33,7 @@ IMPLEMENT_CLASS_GUI_INFO(PageView)
 
 PageView::PageView():
 _indicator(nullptr),
+_indicatorPositionAsAnchorPoint(Vec2::ANCHOR_MIDDLE),
 _currentPageIndex(-1),
 _customScrollThreshold(0.0),
 _usingCustomScrollThreshold(false),
@@ -69,6 +70,8 @@ bool PageView::init()
         addProtectedChild(_indicator, 10000);
         
         setDirection(ListView::Direction::HORIZONTAL);
+        _indicatorPositionAsAnchorPoint = Vec2(0.5f, 0.1f);
+
         setMagneticType(MagneticType::CENTER);
 		setScrollBarEnabled(false);
         return true;
@@ -160,7 +163,15 @@ void PageView::onItemListChanged()
 void PageView::onSizeChanged()
 {
     ListView::onSizeChanged();
-    _indicator->setPosition(Vec2(getContentSize() / 2) + Vec2(0, -50));
+    refreshIndicatorPosition();
+}
+
+void PageView::refreshIndicatorPosition()
+{
+    const Size& contentSize = getContentSize();
+    float posX = contentSize.width * _indicatorPositionAsAnchorPoint.x;
+    float posY = contentSize.height * _indicatorPositionAsAnchorPoint.y;
+    _indicator->setPosition(Vec2(posX, posY));
 }
 
 void PageView::handleReleaseLogic(Touch *touch)
@@ -299,6 +310,30 @@ void PageView::copySpecialProperties(Widget *widget)
         _usingCustomScrollThreshold = pageView->_usingCustomScrollThreshold;
         _customScrollThreshold = pageView->_customScrollThreshold;
     }
+}
+
+void PageView::setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint)
+{
+    _indicatorPositionAsAnchorPoint = positionAsAnchorPoint;
+    refreshIndicatorPosition();
+}
+
+const Vec2& PageView::getIndicatorPositionAsAnchorPoint() const
+{
+    return _indicatorPositionAsAnchorPoint;
+}
+
+void PageView::setIndicatorPosition(const Vec2& position)
+{
+    const Size& contentSize = getContentSize();
+    _indicatorPositionAsAnchorPoint.x = position.x / contentSize.width;
+    _indicatorPositionAsAnchorPoint.y = position.y / contentSize.height;
+    _indicator->setPosition(position);
+}
+
+const Vec2& PageView::getIndicatorPosition() const
+{
+    return _indicator->getPosition();
 }
 
 }

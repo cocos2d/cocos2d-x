@@ -241,6 +241,14 @@ public:
     //override methods
     virtual std::string getDescription() const override;
 
+
+    void setIndicatorPositionAsAnchorPoint(const Vec2& positionAsAnchorPoint);
+    const Vec2& getIndicatorPositionAsAnchorPoint() const;
+
+    void setIndicatorPosition(const Vec2& position);
+    const Vec2& getIndicatorPosition() const;
+
+
     /**   
      *@brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
      *@param threshold  A threshold in float.
@@ -280,8 +288,11 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 
+    void refreshIndicatorPosition();
+
 protected:
     PageViewIndicator* _indicator;
+    Vec2 _indicatorPositionAsAnchorPoint;
 
     ssize_t _currentPageIndex;
 
