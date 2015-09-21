@@ -62,6 +62,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ParticleSystemQuad] updateParticleQuads 
+-- @param self
+-- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
+        
+--------------------------------
 -- js ctor
 -- @function [parent=#ParticleSystemQuad] ParticleSystemQuad 
 -- @param self

@@ -2564,6 +2564,19 @@ bool js_cocos2dx_ParticleBatchNode_create(JSContext *cx, uint32_t argc, jsval *v
 bool js_cocos2dx_ParticleBatchNode_createWithTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleBatchNode_ParticleBatchNode(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_ParticleData_class;
+extern JSObject *jsb_cocos2d_ParticleData_prototype;
+
+bool js_cocos2dx_ParticleData_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ParticleData_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ParticleData(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ParticleData_release(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParticleData_getMaxCount(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParticleData_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParticleData_copyParticle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParticleData_ParticleData(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_ParticleSystem_class;
 extern JSObject *jsb_cocos2d_ParticleSystem_prototype;
 
@@ -2597,6 +2610,7 @@ bool js_cocos2dx_ParticleSystem_setEndColor(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_ParticleSystem_setStartSpin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_initWithTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParticleSystem_addParticles(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setTexture(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getPosVar(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_updateWithNoTime(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2608,7 +2622,6 @@ bool js_cocos2dx_ParticleSystem_getSourcePosition(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_ParticleSystem_setLifeVar(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setTotalParticles(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setEndColorVar(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParticleSystem_updateQuadWithParticle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getAtlasIndex(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getStartSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setStartSpinVar(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2623,10 +2636,10 @@ bool js_cocos2dx_ParticleSystem_setStartSize(JSContext *cx, uint32_t argc, jsval
 bool js_cocos2dx_ParticleSystem_setSpeed(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getStartSpin(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getRotatePerSecond(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParticleSystem_initParticle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setEmitterMode(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setSourcePosition(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParticleSystem_updateParticleQuads(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getEndSpinVar(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setBlendAdditive(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setLife(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2655,7 +2668,6 @@ bool js_cocos2dx_ParticleSystem_getEmissionRate(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_ParticleSystem_getEndColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getLifeVar(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_setStartSizeVar(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParticleSystem_addParticle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getStartRadius(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getParticleCount(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ParticleSystem_getStartRadiusVar(JSContext *cx, uint32_t argc, jsval *vp);
