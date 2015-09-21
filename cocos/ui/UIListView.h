@@ -387,7 +387,9 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     virtual void handleReleaseLogic(Touch *touch) override;
-    
+
+    virtual void onItemListChanged();
+
     void updateInnerContainerSize();
     void remedyLayoutParameter(Widget* item);
     void remedyVerticalLayoutParameter(LinearLayoutParameter* layoutParameter, ssize_t itemIndex);

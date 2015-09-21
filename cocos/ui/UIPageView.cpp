@@ -137,6 +137,13 @@ bool PageView::isUsingCustomScrollThreshold()const
     return _usingCustomScrollThreshold;
 }
 
+void PageView::onItemListChanged()
+{
+    ListView::onItemListChanged();
+    ssize_t index = getIndex(getCenterItemInCurrentView());
+    _indicator->reset(_items.size(), index);
+}
+
 void PageView::onSizeChanged()
 {
     ListView::onSizeChanged();

@@ -100,6 +100,11 @@ void ListView::handleReleaseLogic(Touch *touch)
     }
 }
 
+void ListView::onItemListChanged()
+{
+    _outOfBoundaryAmountDirty = true;
+}
+
 void ListView::updateInnerContainerSize()
 {
     switch (_direction)
@@ -263,7 +268,7 @@ void ListView::addChild(cocos2d::Node *child, int zOrder, int tag)
     if (nullptr != widget)
     {
         _items.pushBack(widget);
-        _outOfBoundaryAmountDirty = true;
+        onItemListChanged();
     }
 }
     
@@ -285,7 +290,7 @@ void ListView::addChild(Node* child, int zOrder, const std::string &name)
     if (nullptr != widget)
     {
         _items.pushBack(widget);
-        _outOfBoundaryAmountDirty = true;
+        onItemListChanged();
     }
 }
     
@@ -307,7 +312,7 @@ void ListView::removeChild(cocos2d::Node *child, bool cleaup)
             }
         }
         _items.eraseObject(widget);
-        _outOfBoundaryAmountDirty = true;
+        onItemListChanged();
     }
    
     ScrollView::removeChild(child, cleaup);
@@ -321,9 +326,9 @@ void ListView::removeAllChildren()
 void ListView::removeAllChildrenWithCleanup(bool cleanup)
 {
     ScrollView::removeAllChildrenWithCleanup(cleanup);
-    _items.clear();
     _curSelectedIndex = -1;
-    _outOfBoundaryAmountDirty = true;
+    _items.clear();
+    onItemListChanged();
 }
 
 void ListView::insertCustomItem(Widget* item, ssize_t index)
@@ -336,8 +341,8 @@ void ListView::insertCustomItem(Widget* item, ssize_t index)
         }
     }
     _items.insert(index, item);
-    _outOfBoundaryAmountDirty = true;
-    
+    onItemListChanged();
+
     ScrollView::addChild(item);
 
     remedyLayoutParameter(item);

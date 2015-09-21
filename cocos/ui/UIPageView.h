@@ -256,6 +256,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void pageTurningEvent();
 
+    virtual void onItemListChanged() override;
     virtual void onSizeChanged() override;
     virtual void handleReleaseLogic(Touch *touch) override;
 
