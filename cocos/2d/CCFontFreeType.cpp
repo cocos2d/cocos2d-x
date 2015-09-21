@@ -182,13 +182,16 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 
 FontFreeType::~FontFreeType()
 {
-    if (_stroker)
+    if (_FTInitialized)
     {
-        FT_Stroker_Done(_stroker);
-    }
-    if (_fontRef)
-    {
-        FT_Done_Face(_fontRef);
+        if (_stroker)
+        {
+            FT_Stroker_Done(_stroker);
+        }
+        if (_fontRef)
+        {
+            FT_Done_Face(_fontRef);
+        }
     }
 
     s_cacheFontData[_fontName].referenceCount -= 1;
