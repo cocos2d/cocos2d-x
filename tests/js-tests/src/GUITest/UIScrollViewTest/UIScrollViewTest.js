@@ -479,3 +479,52 @@ var UIScrollViewDisableTest = UIMainLayer.extend({
         return false;
     }
 });
+
+var UIScrollViewTest_Vertical_Multiple = UIMainLayer.extend({
+    init: function () {
+        if (this._super()) {
+            var widgetSize = this._widget.getContentSize();
+            //init text
+            this._topDisplayLabel.setString("Move by vertical direction");
+            this._topDisplayLabel.x = widgetSize.width / 2.0;
+            this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height * 1.5;
+            this._bottomDisplayLabel.setString("Compare drawCalls and FPS with Previous Version");
+            this._bottomDisplayLabel.setFontSize(25);
+            this._bottomDisplayLabel.x = widgetSize.width / 2;
+            this._bottomDisplayLabel.y = widgetSize.height / 2 - this._bottomDisplayLabel.height * 4;
+
+            var background = this._widget.getChildByName("background_Panel");
+
+            // Create the scrollview
+            var scrollView = new ccui.ScrollView();
+            scrollView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+            scrollView.setTouchEnabled(true);
+            scrollView.setContentSize(cc.size(280, 150));
+
+            scrollView.x = (widgetSize.width - background.width) / 2 + (background.width - scrollView.width) / 2;
+            scrollView.y = (widgetSize.height - background.height) / 2 + (background.height - scrollView.height) / 2;
+            this._mainNode.addChild(scrollView);
+
+            var Texts = [];
+            var start = new ccui.Text("---start---", "Thonburi", 10);
+            var innerWidth = scrollView.width;
+            var innerHeight = 1000 * start.height;
+            scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
+
+            start.x = innerWidth / 2;
+            start.y = scrollView.getInnerContainerSize().height - start.height / 2;
+            Texts[0] = start;
+            scrollView.addChild(start);
+
+            for(var i=1; i<2000; i++) {
+                var text  = new ccui.Text("This is a test label: "+i, "Thonburi", 10);
+                text.x = innerWidth / 2;
+                text.y = Texts[i-1].getBottomBoundary() - text.height / 2;
+                Texts[i] = text;
+                scrollView.addChild(Texts[i]);
+            }
+            return true;
+        }
+        return false;
+    }
+});
