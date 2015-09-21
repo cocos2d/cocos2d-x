@@ -743,8 +743,9 @@ void ListView::jumpToPercentBothDirection(const Vec2& percent)
     ScrollView::jumpToPercentBothDirection(percent);
 }
 
-static Vec2 calculateItemDestination(const Size& contentSize, Widget* item, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint)
+Vec2 ListView::calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint)
 {
+    const Size& contentSize = getContentSize();
     Vec2 positionInView;
     positionInView.x += contentSize.width * positionRatioInView.x;
     positionInView.y += contentSize.height * positionRatioInView.y;
@@ -762,7 +763,7 @@ void ListView::jumpToItem(ssize_t itemIndex, const Vec2& positionRatioInView, co
     }
     doLayout();
 
-    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
+    Vec2 destination = calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
     if(!_bounceEnabled)
     {
         Vec2 delta = destination - getInnerContainerPosition();
@@ -784,7 +785,7 @@ void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, 
     {
         return;
     }
-    Vec2 destination = calculateItemDestination(getContentSize(), item, positionRatioInView, itemAnchorPoint);
+    Vec2 destination = calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
     startAutoScrollToDestination(destination, timeInSec, true);
 }
 
