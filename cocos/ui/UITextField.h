@@ -622,7 +622,28 @@ public:
      * @return The horizontal alignment
      */
     TextVAlignment getTextVerticalAlignment() const;
-    
+
+    /**
+     * Return the number of lines of text.
+     * @since v3.9
+     */
+    int getStringNumLines();
+
+    /**
+     * Returns the line height.
+     * @warning Not support system font.
+     * @since v3.9
+     */
+    int getLineHeight() const;
+
+    /**
+     * Specify what happens when a line is too long.
+     *
+     * @param breakWithoutSpace Lines are automatically broken between words if this value is false.
+     * @since v3.9
+     */
+    void setLineBreakWithoutSpace(bool breakWithoutSpace);
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
