@@ -214,7 +214,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     // for the bigger tiles.
     int tilesOverX = 0;
     int tilesOverY = 0;
-    // for diagonal oriention tiles
+    // for diagonal orientation tiles
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
     if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
@@ -498,7 +498,7 @@ void TMXLayer::updateTotalQuads()
                 
                 if(tileGID & kTMXTileDiagonalFlag)
                 {
-                    // FIXME: not working correcly
+                    // FIXME: not working correctly
                     quad.bl.vertices.x = left;
                     quad.bl.vertices.y = bottom;
                     quad.bl.vertices.z = z;

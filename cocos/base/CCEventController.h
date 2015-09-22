@@ -54,7 +54,7 @@ public:
         AXIS_STATUS_CHANGED,
     };
     
-    /** Create a EventController with controller event type, contrlloer and key code.
+    /** Create a EventController with controller event type, controller and key code.
      *
      * @param type A given controller event type.
      * @param controller A given controller pointer.

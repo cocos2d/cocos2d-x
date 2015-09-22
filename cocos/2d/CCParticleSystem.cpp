@@ -1000,7 +1000,7 @@ void ParticleSystem::updateWithNoTime(void)
 
 void ParticleSystem::updateParticleQuads()
 {
-    //should be overriden
+    //should be overridden
 }
 
 void ParticleSystem::postStep()

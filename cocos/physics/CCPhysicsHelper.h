@@ -74,7 +74,7 @@ public:
      Make cpVect array convert to Vec2 array.
      
      @param cpvs The be converted object, it's a cpVect array.
-     @param out The coverted object, it's a Vec2 array.
+     @param out The converted object, it's a Vec2 array.
      @param count It's cpvs array length.
      @return The out object's pointer.
      */
@@ -92,7 +92,7 @@ public:
      Make Vec2 array convert to cpVect array.
      
      @param points The be converted object, it's a Vec2 array.
-     @param out The coverted object, it's a cpVect array.
+     @param out The converted object, it's a cpVect array.
      @param count It's points array length.
      @return The out object's pointer.
      */

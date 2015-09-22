@@ -364,7 +364,7 @@ struct SchedulerScriptData
     void* node;
     
     /**
-     * Construtor of SchedulerScriptData.
+     * Constructor of SchedulerScriptData.
      *
      * @js NA
      * @lua NA
@@ -428,7 +428,7 @@ struct TouchesScriptData
 };
 
 /**
- * For Lua, the TouchScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touch data and actionType convered to string type into the Lua stack as the parameters when the touch event is triggered.
+ * For Lua, the TouchScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touch data and actionType converted to string type into the Lua stack as the parameters when the touch event is triggered.
  * @js NA
  */
 struct TouchScriptData
@@ -479,7 +479,7 @@ struct TouchScriptData
 
 
 /**
- * For Lua, the KeypadScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push the actionType convered to string type into the Lua stack as the parameters when the Keypad event is triggered.
+ * For Lua, the KeypadScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push the actionType converted to string type into the Lua stack as the parameters when the Keypad event is triggered.
  * @js NA
  */
 struct KeypadScriptData
@@ -781,9 +781,9 @@ public:
         return _scriptEngine;
     }
     /**
-     * Set the ScriptEngineProtocol object should be managered.
+     * Set the ScriptEngineProtocol object should be managed.
      *
-     * @param scriptEngine should be managered.
+     * @param scriptEngine should be managed.
      *
      * @lua NA
      * @js NA
@@ -791,7 +791,7 @@ public:
     void setScriptEngine(ScriptEngineProtocol *scriptEngine);
     
     /**
-     * Remove the ScriptEngineProtocol object managered.
+     * Remove the ScriptEngineProtocol object managed.
      *
      *
      * @lua NA

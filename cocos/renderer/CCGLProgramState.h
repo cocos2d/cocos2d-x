@@ -61,11 +61,11 @@ class CC_DLL UniformValue
     friend class GLProgramState;
 public:
     /**
-     Construtor. The Uniform and Glprogram will be nullptr.
+     Constructor. The Uniform and Glprogram will be nullptr.
      */
     UniformValue();
     /**
-     Construtor with uniform and glprogram.
+     Constructor with uniform and glprogram.
      @param uniform Uniform to apply the value.
      @param glprogram Specify the owner GLProgram of this uniform and uniform value.
      */
@@ -393,7 +393,7 @@ public:
      * auto bindings found in the GLProgramState::AutoBinding enumeration.
      *
      * When an instance of a class that extends AutoBindingResolver is created, it is automatically
-     * registered as a custom auto binding handler. Likewise, it is automatically deregistered
+     * registered as a custom auto binding handler. Likewise, it is automatically unregistered
      * on destruction.
      *
      * @script{ignore}
@@ -411,7 +411,7 @@ public:
          * Called when an unrecognized uniform variable is encountered
          * during material loading.
          *
-         * Implemenations of this method should do a string comparison on the passed
+         * Implementations of this method should do a string comparison on the passed
          * in name parameter and decide whether or not they should handle the
          * parameter. If the parameter is not handled, false should be returned so
          * that other auto binding resolvers get a chance to handle the parameter.
@@ -422,7 +422,7 @@ public:
          * @param uniformName Name of the uniform
          * @param autoBinding Name of the auto binding to be resolved.
          *
-         * @return True if the auto binding is handled and the associated parmeter is
+         * @return True if the auto binding is handled and the associated parameter is
          *      bound, false otherwise.
          */
         virtual bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniformName, const std::string& autoBinding) = 0;

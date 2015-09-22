@@ -17,7 +17,7 @@
 //                 Parse transmittance material parameter correctly.
 // version 0.9.5 : Parse multiple group name.
 //                 Add support of specifying the base path to load material file.
-// version 0.9.4 : Initial suupport of group tag(g)
+// version 0.9.4 : Initial support of group tag(g)
 // version 0.9.3 : Fix parsing triple 'x/y/z'
 // version 0.9.2 : Add more .mtl load support
 // version 0.9.1 : Add initial .mtl load support

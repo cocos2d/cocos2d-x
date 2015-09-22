@@ -1185,7 +1185,7 @@ bool FileUtils::removeDirectory(const std::string& path)
 {
     if (path.size() > 0 && path[path.size() - 1] != '/')
     {
-        CCLOGERROR("Fail to remove directory, path must termniate with '/': %s", path.c_str());
+        CCLOGERROR("Fail to remove directory, path must terminate with '/': %s", path.c_str());
         return false;
     }
 

@@ -122,7 +122,7 @@ const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePix
 static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
 
 //////////////////////////////////////////////////////////////////////////
-//conventer function
+//convertor function
 
 // IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
 void Texture2D::convertI8ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
@@ -421,7 +421,7 @@ void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataL
             |  (data[i + 3] & 0x0080) >> 7;   //A
     }
 }
-// conventer function end
+// converter function end
 //////////////////////////////////////////////////////////////////////////
 
 Texture2D::Texture2D()
@@ -826,7 +826,7 @@ Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, s
         convertI8ToRGB5A1(data, dataLen, *outData);
         break;
     default:
-        // unsupport convertion or don't need to convert
+        // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::I8)
         {
             CCLOG("Can not convert image format PixelFormat::I8 to format ID:%d, we will use it's origin format PixelFormat::I8", format);
@@ -880,7 +880,7 @@ Texture2D::PixelFormat Texture2D::convertAI88ToFormat(const unsigned char* data,
         convertAI88ToRGB5A1(data, dataLen, *outData);
         break;
     default:
-        // unsupport convertion or don't need to convert
+        // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::AI88)
         {
             CCLOG("Can not convert image format PixelFormat::AI88 to format ID:%d, we will use it's origin format PixelFormat::AI88", format);
@@ -930,7 +930,7 @@ Texture2D::PixelFormat Texture2D::convertRGB888ToFormat(const unsigned char* dat
         convertRGB888ToRGB5A1(data, dataLen, *outData);
         break;
     default:
-        // unsupport convertion or don't need to convert
+        // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::RGB888)
         {
             CCLOG("Can not convert image format PixelFormat::RGB888 to format ID:%d, we will use it's origin format PixelFormat::RGB888", format);
@@ -984,7 +984,7 @@ Texture2D::PixelFormat Texture2D::convertRGBA8888ToFormat(const unsigned char* d
         convertRGBA8888ToRGB5A1(data, dataLen, *outData);
         break;
     default:
-        // unsupport convertion or don't need to convert
+        // unsupported conversion or don't need to convert
         if (format != PixelFormat::AUTO && format != PixelFormat::RGBA8888)
         {
             CCLOG("Can not convert image format PixelFormat::RGBA8888 to format ID:%d, we will use it's origin format PixelFormat::RGBA8888", format);
@@ -1036,7 +1036,7 @@ Texture2D::PixelFormat Texture2D::convertDataToFormat(const unsigned char* data,
     case PixelFormat::RGBA8888:
         return convertRGBA8888ToFormat(data, dataLen, format, outData, outDataLen);
     default:
-        CCLOG("unsupport convert for format %d to format %d", originFormat, format);
+        CCLOG("unsupported conversion from format %d to format %d", originFormat, format);
         *outData = (unsigned char*)data;
         *outDataLen = dataLen;
         return originFormat;

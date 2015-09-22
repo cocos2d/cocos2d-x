@@ -84,7 +84,7 @@ public:
      It will use a fixed priority of 1.
      * @param eventName A given name of the event.
      * @param callback A given callback method that associated the event name.
-     * @return the generated event. Needed in order to remove the event from the dispather
+     * @return the generated event. Needed in order to remove the event from the dispatcher
      */
     EventListenerCustom* addCustomEventListener(const std::string &eventName, const std::function<void(EventCustom*)>& callback);
 
