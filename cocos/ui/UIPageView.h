@@ -258,8 +258,13 @@ public:
     void setIndicatorPosition(const Vec2& position);
     const Vec2& getIndicatorPosition() const;
 
+    void setIndicatorSpaceBetweenIndexNodes(float spaceBetweenIndexNodes);
+    float getIndicatorSpaceBetweenIndexNodes() const;
 
-    /**   
+    void setIndicatorSelectedIndexColor(const Color3B& color);
+    const Color3B& getIndicatorSelectedIndexColor() const;
+
+    /**
      *@brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
      *@param threshold  A threshold in float.
      */

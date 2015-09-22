@@ -52,7 +52,10 @@ public:
     void reset(ssize_t numberOfTotalPages, ssize_t currentIndex);
     void indicate(ssize_t index);
     void clear();
-    void setSpaceBetweenIndexNodes(float fSpaceBetweenIndexNodes);
+    void setSpaceBetweenIndexNodes(float spaceBetweenIndexNodes);
+    float getSpaceBetweenIndexNodes() const { return _spaceBetweenIndexNodes; }
+    void setSelectedIndexColor(const Color3B& color) { _currentIndexNode->setColor(color); }
+    const Color3B& getSelectedIndexColor() const { return _currentIndexNode->getColor(); }
 
 protected:
     bool init() override;

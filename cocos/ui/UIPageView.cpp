@@ -355,6 +355,26 @@ const Vec2& PageView::getIndicatorPosition() const
     return _indicator->getPosition();
 }
 
+void PageView::setIndicatorSpaceBetweenIndexNodes(float spaceBetweenIndexNodes)
+{
+    _indicator->setSpaceBetweenIndexNodes(spaceBetweenIndexNodes);
+}
+float PageView::getIndicatorSpaceBetweenIndexNodes() const
+{
+    return _indicator->getSpaceBetweenIndexNodes();
+}
+
+void PageView::setIndicatorSelectedIndexColor(const Color3B& color)
+{
+    _indicator->setSelectedIndexColor(color);
+}
+
+const Color3B& PageView::getIndicatorSelectedIndexColor() const
+{
+    return _indicator->getSelectedIndexColor();
+}
+
+
 }
 
 NS_CC_END
