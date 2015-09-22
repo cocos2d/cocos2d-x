@@ -24,9 +24,9 @@
 
 #pragma once
 
+#include "jsapi.h"
 #include <string>
 #include "base/CCScriptComponent.h"
-#include "jsapi.h"
 #include "mozilla/Maybe.h"
 
 NS_CC_BEGIN
