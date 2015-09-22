@@ -194,7 +194,7 @@ void ComponentLua::storeLuaTable()
     lua_State *l = LuaEngine::getInstance()->getLuaStack()->getLuaState();
     
     _index++;
-    _strIndex.append(std::to_string(_index));
+    _strIndex.append(StringUtils::toString(_index));
     
     // LUA_REGISTRYINDEX["component"][strIndex] = table return from lua
     lua_pushstring(l, KEY_COMPONENT);          // stack: table_return_from_lua "component"
