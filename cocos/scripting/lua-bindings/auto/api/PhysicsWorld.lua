@@ -121,7 +121,7 @@
         
 --------------------------------
 -- Get the gravity value of this physics world.<br>
--- return A Vect object.
+-- return A Vec2 object.
 -- @function [parent=#PhysicsWorld] getGravity 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)

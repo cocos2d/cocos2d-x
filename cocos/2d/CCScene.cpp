@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
-#include "physics/CCPhysicsManager.h"
+#include "physics/CCPhysicsWorld.h"
 #endif
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
@@ -60,7 +60,7 @@ Scene::Scene()
     _navMeshDebugCamera = nullptr;
 #endif
 #if CC_USE_PHYSICS
-    _physicsManager = nullptr;
+    _physicsWorld = nullptr;
 #endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -90,7 +90,7 @@ Scene::~Scene()
     CC_SAFE_RELEASE(_event);
     
 #if CC_USE_PHYSICS
-    delete _physicsManager;
+    delete _physicsWorld;
 #endif
 }
 
@@ -279,8 +279,9 @@ Scene* Scene::createWithPhysics()
 
 bool Scene::initWithPhysics()
 {
-    _physicsManager = new (std::nothrow) PhysicsManager(this);
-    _physicsWorld = _physicsManager->getPhysicsWorld();
+#if CC_USE_PHYSICS
+    _physicsWorld = PhysicsWorld::construct(this);
+#endif
     
     bool ret = false;
     do
@@ -308,8 +309,8 @@ bool Scene::initWithPhysics()
 void Scene::stepPhysicsAndNavigation(float deltaTime)
 {
 #if CC_USE_PHYSICS
-    if (_physicsManager)
-        _physicsManager->update(deltaTime);
+    if (_physicsWorld && _physicsWorld->isAutoStep())
+        _physicsWorld->update(deltaTime);
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
