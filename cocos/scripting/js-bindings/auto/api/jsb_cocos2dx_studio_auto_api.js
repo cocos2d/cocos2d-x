@@ -2963,16 +2963,6 @@ ComController : function (
 ccs.ComRender = {
 
 /**
- * @method getNode
- * @return {cc.Node}
- */
-getNode : function (
-)
-{
-    return cc.Node;
-},
-
-/**
  * @method setNode
  * @param {cc.Node} arg0
  */
@@ -2980,6 +2970,16 @@ setNode : function (
 node 
 )
 {
+},
+
+/**
+ * @method getNode
+ * @return {cc.Node}
+ */
+getNode : function (
+)
+{
+    return cc.Node;
 },
 
 /**
@@ -4184,6 +4184,26 @@ func
 },
 
 /**
+ * @method clearFrameEndCallFuncs
+ */
+clearFrameEndCallFuncs : function (
+)
+{
+},
+
+/**
+ * @method setAnimationEndCallFunc
+ * @param {String} arg0
+ * @param {function} arg1
+ */
+setAnimationEndCallFunc : function (
+str, 
+func 
+)
+{
+},
+
+/**
  * @method addTimeline
  * @param {ccs.timeline::Timeline} arg0
  */
@@ -4306,6 +4326,20 @@ resume : function (
 },
 
 /**
+ * @method addFrameEndCallFunc
+ * @param {int} arg0
+ * @param {String} arg1
+ * @param {function} arg2
+ */
+addFrameEndCallFunc : function (
+int, 
+str, 
+func 
+)
+{
+},
+
+/**
  * @method removeAnimationInfo
  * @param {String} arg0
  */
@@ -4363,6 +4397,16 @@ isPlaying : function (
 )
 {
     return false;
+},
+
+/**
+ * @method removeFrameEndCallFuncs
+ * @param {int} arg0
+ */
+removeFrameEndCallFuncs : function (
+int 
+)
+{
 },
 
 /**
@@ -4433,6 +4477,18 @@ int
  */
 setCurrentFrame : function (
 int 
+)
+{
+},
+
+/**
+ * @method removeFrameEndCallFunc
+ * @param {int} arg0
+ * @param {String} arg1
+ */
+removeFrameEndCallFunc : function (
+int, 
+str 
 )
 {
 },

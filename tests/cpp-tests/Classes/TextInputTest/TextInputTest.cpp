@@ -107,14 +107,9 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
 
     // decide the trackNode is clicked.
     Rect rect;
-    auto point = _trackNode->convertTouchToNodeSpace(touch);
-    CCLOG("KeyboardNotificationLayer:clickedAt(%f,%f)", point.x, point.y);
-
     rect.size = _trackNode->getContentSize();
-    CCLOG("KeyboardNotificationLayer:TrackNode at(origin:%f,%f, size:%f,%f)",
-        rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-
-    this->onClickTrackNode(rect.containsPoint(point));
+    auto clicked = isScreenPointInRect(endPos, Camera::getVisitingCamera(), _trackNode->getWorldToNodeTransform(), rect, nullptr);
+    this->onClickTrackNode(clicked);
     CCLOG("----------------------------------");
 }
 

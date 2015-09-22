@@ -386,6 +386,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\3d\CCMesh.cpp" />
     <ClCompile Include="..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="..\3d\CCOBB.cpp" />
     <ClCompile Include="..\3d\CCObjLoader.cpp" />
     <ClCompile Include="..\3d\CCPlane.cpp" />
@@ -574,8 +575,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\navmesh\CCNavMeshDebugDraw.cpp" />
     <ClCompile Include="..\navmesh\CCNavMeshObstacle.cpp" />
     <ClCompile Include="..\navmesh\CCNavMeshUtils.cpp" />
+    <ClCompile Include="..\network\CCDownloader-curl.cpp" />
     <ClCompile Include="..\network\CCDownloader.cpp" />
-    <ClCompile Include="..\network\CCDownloaderImpl.cpp" />
     <ClCompile Include="..\network\HttpClient.cpp" />
     <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
@@ -587,11 +588,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\physics3d\CCPhysics3DShape.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DWorld.cpp" />
     <ClCompile Include="..\physics3d\CCPhysicsSprite3D.cpp" />
-    <ClCompile Include="..\physics\CCComponentPhysics2d.cpp" />
     <ClCompile Include="..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
-    <ClCompile Include="..\physics\CCPhysicsManager.cpp" />
     <ClCompile Include="..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
@@ -692,7 +691,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCDrawNode.cpp" />
     <ClCompile Include="CCFastTMXLayer.cpp" />
     <ClCompile Include="CCFastTMXTiledMap.cpp" />
-    <ClCompile Include="CCFont.cpp" />
     <ClCompile Include="CCFontAtlas.cpp" />
     <ClCompile Include="CCFontAtlasCache.cpp" />
     <ClCompile Include="CCFontCharMap.cpp" />
@@ -955,6 +953,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\3d\CCMesh.h" />
     <ClInclude Include="..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="..\3d\CCOBB.h" />
     <ClInclude Include="..\3d\CCObjLoader.h" />
     <ClInclude Include="..\3d\CCPlane.h" />
@@ -1181,6 +1180,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\navmesh\CCNavMeshDebugDraw.h" />
     <ClInclude Include="..\navmesh\CCNavMeshObstacle.h" />
     <ClInclude Include="..\navmesh\CCNavMeshUtils.h" />
+    <ClInclude Include="..\network\CCDownloader-curl.h" />
     <ClInclude Include="..\network\CCDownloader.h" />
     <ClInclude Include="..\network\CCDownloaderImpl.h" />
     <ClInclude Include="..\network\CCIDownloaderImpl.h" />
@@ -1197,12 +1197,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\physics3d\CCPhysics3DShape.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DWorld.h" />
     <ClInclude Include="..\physics3d\CCPhysicsSprite3D.h" />
-    <ClInclude Include="..\physics\CCComponentPhysics2d.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\physics\CCPhysicsHelper.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
-    <ClInclude Include="..\physics\CCPhysicsManager.h" />
     <ClInclude Include="..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
@@ -1322,7 +1320,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCLabel.h" />
     <ClInclude Include="CCLabelAtlas.h" />
     <ClInclude Include="CCLabelBMFont.h" />
-    <ClInclude Include="CCLabelTextFormatter.h" />
     <ClInclude Include="CCLabelTTF.h" />
     <ClInclude Include="CCLayer.h" />
     <ClInclude Include="CCLight.h" />

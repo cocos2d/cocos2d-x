@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module PhysicsBody
--- @extend Ref
+-- @extend Component
 -- @parent_module cc
 
 --------------------------------
@@ -63,14 +63,15 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- @overload self, vec2_table, vec2_table         
--- @overload self, vec2_table         
--- @function [parent=#PhysicsBody] applyImpulse
+-- Applies a immediate force to body.<br>
+-- param impulse The impulse is applies to this body.<br>
+-- param offset A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
+-- @function [parent=#PhysicsBody] applyImpulse 
 -- @param self
 -- @param #vec2_table impulse
 -- @param #vec2_table offset
 -- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
-
+        
 --------------------------------
 --  set body rotation offset, it's the rotation witch relative to node 
 -- @function [parent=#PhysicsBody] setRotationOffset 
@@ -79,14 +80,15 @@
 -- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
--- @overload self, vec2_table, vec2_table         
--- @overload self, vec2_table         
--- @function [parent=#PhysicsBody] applyForce
+-- Applies a continuous force to body.<br>
+-- param force The force is applies to this body.<br>
+-- param offset A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
+-- @function [parent=#PhysicsBody] applyForce 
 -- @param self
 -- @param #vec2_table force
 -- @param #vec2_table offset
 -- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
-
+        
 --------------------------------
 -- brief Add a shape to body.<br>
 -- param shape The shape to be added.<br>
@@ -99,7 +101,7 @@
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
         
 --------------------------------
--- Applies a torque force to body. <br>
+-- Applies a torque force to body.<br>
 -- param torque The torque is applies to this body.
 -- @function [parent=#PhysicsBody] applyTorque 
 -- @param self
@@ -195,14 +197,6 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- Set the enable value.<br>
--- If the body it isn't enabled, it will not has simulation by world.
--- @function [parent=#PhysicsBody] setEnable 
--- @param self
--- @param #bool enable
--- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
-        
---------------------------------
 --  Set the body is affected by the physics world's gravitational force or not. 
 -- @function [parent=#PhysicsBody] setGravityEnable 
 -- @param self
@@ -253,13 +247,6 @@
 -- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
--- Get the first shape of the body shapes.<br>
--- return The first shape in this body.
--- @function [parent=#PhysicsBody] getFirstShape 
--- @param self
--- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
-        
---------------------------------
 -- Get the body shapes.<br>
 -- return A Vector<PhysicsShape*> object contains PhysicsShape pointer.
 -- @function [parent=#PhysicsBody] getShapes 
@@ -287,13 +274,6 @@
 -- @param self
 -- @param #vec2_table point
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
--- Whether the body is enabled.<br>
--- If the body it isn't enabled, it will not has simulation by world.
--- @function [parent=#PhysicsBody] isEnabled 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, int, bool         
@@ -408,7 +388,7 @@
 -- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 --------------------------------
--- get the shape of the body. <br>
+-- get the shape of the body.<br>
 -- param   tag   An interger number that identifies a PhysicsShape object.<br>
 -- return A PhysicsShape object pointer or nullptr if no shapes were found.
 -- @function [parent=#PhysicsBody] getShape 
@@ -453,7 +433,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  get the sprite the body set to. 
+--  get the node the body set to. 
 -- @function [parent=#PhysicsBody] getNode 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
@@ -472,7 +452,7 @@
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
--- Create a body contains a EdgeSegment shape. <br>
+-- Create a body contains a EdgeSegment shape.<br>
 -- param   a It's the edge's begin position.<br>
 -- param   b It's the edge's end position.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
@@ -497,7 +477,7 @@
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
 
 --------------------------------
--- Create a body contains a EdgeBox shape. <br>
+-- Create a body contains a EdgeBox shape.<br>
 -- param   size Size contains this box's width and height.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
 -- param   border It's a edge's border width.<br>
@@ -523,5 +503,37 @@
 -- @param #cc.PhysicsMaterial material
 -- @param #vec2_table offset
 -- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
+        
+--------------------------------
+-- Set the enable value.<br>
+-- If the body it isn't enabled, it will not has simulation by world.
+-- @function [parent=#PhysicsBody] setEnabled 
+-- @param self
+-- @param #bool enable
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsBody] onRemove 
+-- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsBody] onEnter 
+-- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsBody] onExit 
+-- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsBody] onAdd 
+-- @param self
+-- @return PhysicsBody#PhysicsBody self (return value: cc.PhysicsBody)
         
 return nil

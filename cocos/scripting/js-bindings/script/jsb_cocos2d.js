@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.8";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.9 Beta";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -2714,6 +2714,23 @@ cc.defineGetterSetter(cc.BlendFunc, "ALPHA_NON_PREMULTIPLIED", cc.BlendFunc._alp
 /** @expose */
 cc.BlendFunc.ADDITIVE;
 cc.defineGetterSetter(cc.BlendFunc, "ADDITIVE", cc.BlendFunc._additive);
+
+cc.GLProgram.prototype.setUniformLocationWithMatrix2fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 2);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+
+cc.GLProgram.prototype.setUniformLocationWithMatrix3fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 3);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
+cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
+    var tempArray = Array.prototype.slice.call(arguments);
+    tempArray = Array.prototype.concat.call(tempArray, 4);
+    this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
+}
 
 
 //

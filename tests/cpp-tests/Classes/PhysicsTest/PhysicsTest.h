@@ -33,7 +33,6 @@ public:
     void toggleDebug();
     
 protected:
-    void addPhysicsComponent(cocos2d::Node *node, cocos2d::PhysicsBody *physicsBody);
     
     cocos2d::Texture2D* _spriteTexture;
     cocos2d::SpriteBatchNode* _ball;

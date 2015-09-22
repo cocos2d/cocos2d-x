@@ -281,7 +281,7 @@ int PhysicsWorld::collisionBeginCallback(PhysicsContact& contact)
     {
         contact.setEventCode(PhysicsContact::EventCode::BEGIN);
         contact.setWorld(this);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
+        _eventDispatcher->dispatchEvent(&contact);
     }
     
     return ret ? contact.resetResult() : false;
@@ -296,7 +296,7 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::PRESOLVE);
     contact.setWorld(this);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
     
     return contact.resetResult();
 }
@@ -310,7 +310,7 @@ void PhysicsWorld::collisionPostSolveCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::POSTSOLVE);
     contact.setWorld(this);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
@@ -322,7 +322,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     
     contact.setEventCode(PhysicsContact::EventCode::SEPARATE);
     contact.setWorld(this);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&contact);
+    _eventDispatcher->dispatchEvent(&contact);
 }
 
 void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
@@ -417,18 +417,6 @@ PhysicsShape* PhysicsWorld::getShape(const Vec2& point) const
                                     nullptr);
     
     return shape == nullptr ? nullptr : s_physicsShapeMap.find(shape)->second;
-}
-
-PhysicsWorld* PhysicsWorld::construct()
-{
-    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
-    if(world && world->init())
-    {
-        return world;
-    }
-    
-    CC_SAFE_DELETE(world);
-    return nullptr;
 }
 
 bool PhysicsWorld::init()
@@ -560,7 +548,6 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
     _bodies.eraseObject(body);
     body->_world = nullptr;
 }
-
 
 void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
 {
@@ -780,7 +767,7 @@ PhysicsBody* PhysicsWorld::getBody(int tag) const
     return nullptr;
 }
 
-void PhysicsWorld::setGravity(const Vect& gravity)
+void PhysicsWorld::setGravity(const Vec2& gravity)
 {
     _gravity = gravity;
     cpSpaceSetGravity(_cpSpace, PhysicsHelper::point2cpv(gravity));
@@ -821,6 +808,9 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
         updateBodies();
     }
     
+    auto sceneToWorldTransform = _scene->getNodeToParentTransform();
+    beforeSimulation(_scene, sceneToWorldTransform, 1.f, 1.f, 0.f);
+
     if (!_delayAddJoints.empty() || !_delayRemoveJoints.empty())
     {
         updateJoints();
@@ -862,6 +852,24 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         debugDraw();
     }
+
+    // Update physics position, should loop as the same sequence as node tree.
+    // PhysicsWorld::afterSimulation() will depend on the sequence.
+    afterSimulation(_scene, sceneToWorldTransform, 0.f);
+}
+
+PhysicsWorld* PhysicsWorld::construct(Scene* scene)
+{
+    PhysicsWorld * world = new (std::nothrow) PhysicsWorld();
+    if (world && world->init())
+    {
+        world->_scene = scene;
+        world->_eventDispatcher = scene->getEventDispatcher();
+        return world;
+    }
+
+    CC_SAFE_DELETE(world);
+    return nullptr;
 }
 
 PhysicsWorld::PhysicsWorld()
@@ -877,6 +885,7 @@ PhysicsWorld::PhysicsWorld()
 , _autoStep(true)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
+, _eventDispatcher(nullptr)
 {
     
 }
@@ -891,6 +900,40 @@ PhysicsWorld::~PhysicsWorld()
     }
     CC_SAFE_DELETE(_debugDraw);
 }
+
+void PhysicsWorld::beforeSimulation(Node *node, const Mat4& parentToWorldTransform, float nodeParentScaleX, float nodeParentScaleY, float parentRotation)
+{
+    auto scaleX = nodeParentScaleX * node->getScaleX();
+    auto scaleY = nodeParentScaleY * node->getScaleY();
+    auto rotation = parentRotation + node->getRotation();
+
+    auto nodeToWorldTransform = parentToWorldTransform * node->getNodeToParentTransform();
+
+    auto physicsBody = node->getPhysicsBody();
+    if (physicsBody)
+    {
+        physicsBody->beforeSimulation(parentToWorldTransform, nodeToWorldTransform, scaleX, scaleY, rotation);
+    }
+
+    for (auto child : node->getChildren())
+        beforeSimulation(child, nodeToWorldTransform, scaleX, scaleY, rotation);
+}
+
+void PhysicsWorld::afterSimulation(Node *node, const Mat4& parentToWorldTransform, float parentRotation)
+{
+    auto nodeToWorldTransform = parentToWorldTransform * node->getNodeToParentTransform();
+    auto nodeRotation = parentRotation + node->getRotation();
+
+    auto physicsBody = node->getPhysicsBody();
+    if (physicsBody)
+    {
+        physicsBody->afterSimulation(parentToWorldTransform, parentRotation);
+    }
+
+    for (auto child : node->getChildren())
+        afterSimulation(child, nodeToWorldTransform, nodeRotation);
+}
+
 
 PhysicsDebugDraw::PhysicsDebugDraw(PhysicsWorld& world)
 : _drawNode(nullptr)

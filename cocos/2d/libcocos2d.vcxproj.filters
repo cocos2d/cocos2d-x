@@ -285,9 +285,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\physics\CCComponentPhysics2d.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -295,9 +292,6 @@
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\physics\CCPhysicsManager.cpp">
       <Filter>physics</Filter>
     </ClCompile>
     <ClCompile Include="..\physics\CCPhysicsShape.cpp">
@@ -398,9 +392,6 @@
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCDrawNode.cpp">
-      <Filter>2d</Filter>
-    </ClCompile>
-    <ClCompile Include="CCFont.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="CCFontAtlas.cpp">
@@ -831,6 +822,9 @@
     </ClCompile>
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCMotionStreak3D.cpp">
+        <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\extensions\assets-manager\AssetsManager.cpp">
       <Filter>extension\AssetsManager</Filter>
@@ -1931,20 +1925,17 @@
     <ClCompile Include="..\network\CCDownloader.cpp">
       <Filter>network\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\network\CCDownloaderImpl.cpp">
-      <Filter>network\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CCCameraBackgroundBrush.cpp">
       <Filter>2d</Filter>
     </ClCompile>
     <ClCompile Include="..\renderer\CCTextureCube.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="..\network\CCDownloader-curl.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\physics\CCComponentPhysics2d.h">
-      <Filter>physics</Filter>
-    </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -1952,9 +1943,6 @@
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsJoint.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\physics\CCPhysicsManager.h">
       <Filter>physics</Filter>
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsShape.h">
@@ -2100,9 +2088,6 @@
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelBMFont.h">
-      <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="CCLabelTextFormatter.h">
       <Filter>2d</Filter>
     </ClInclude>
     <ClInclude Include="CCLabelTTF.h">
@@ -2560,6 +2545,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCSprite3DMaterial.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCMotionStreak3D.h">
+        <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\cocos3d.h">
       <Filter>3d</Filter>
@@ -3782,6 +3770,9 @@
     </ClInclude>
     <ClInclude Include="..\renderer\CCTextureCube.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\network\CCDownloader-curl.h">
+      <Filter>network\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
