@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-class CC_DLL ComponentLua : public ScriptComponent
+class ComponentLua : public ScriptComponent
 {
 public:
     static ComponentLua* create(const std::string& scriptFileName);
