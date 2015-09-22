@@ -54,7 +54,7 @@ struct CC_DLL NavMeshAgentParam
 
     float pathOptimizationRange;		///< The path visibility optimization range. [Limit: > 0]
 
-    /// How aggresive the agent manager should be at avoiding collisions with this agent. [Limit: >= 0]
+    /// How aggressive the agent manager should be at avoiding collisions with this agent. [Limit: >= 0]
     float separationWeight;
 
     /// Flags that impact steering behavior. (See: #UpdateFlags)
@@ -148,7 +148,7 @@ public:
     */
     void move(const Vec3 &destination, const MoveCallback &callback = nullptr);
 
-    /** puase movement */
+    /** pause movement */
     void pause();
 
     /** resume movement */

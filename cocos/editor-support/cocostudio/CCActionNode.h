@@ -101,7 +101,7 @@ public:
     void insertFrame(int index, ActionFrame* frame);
 
     /**
-    * Pushs back a ActionFrame to ActionNode.
+    * Pushes back a ActionFrame to ActionNode.
     *
     * @param frame  the ActionFrame which will be added
     */

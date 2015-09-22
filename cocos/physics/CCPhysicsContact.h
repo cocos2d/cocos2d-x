@@ -60,9 +60,9 @@ typedef struct CC_DLL PhysicsContactData
  */
 
 /**
- * @brief Contact infomation. 
+ * @brief Contact information. 
  
- * It will created automatically when two shape contact with each other. And it will destoried automatically when two shape separated.
+ * It will created automatically when two shape contact with each other. And it will destroyed automatically when two shape separated.
  */
 class CC_DLL PhysicsContact : public EventCustom
 {
@@ -98,7 +98,7 @@ public:
     /**
      * @brief Set data to contact. 
      
-     * You must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact separate.
+     * You must manage the memory yourself, Generally you can set data at contact begin, and destroy it at contact separate.
      *
      * @lua NA
      */
@@ -197,7 +197,7 @@ private:
     friend class EventListenerPhysicsContact;
 };
 
-/** Contact listener. It will recive all the contact callbacks. */
+/** Contact listener. It will receive all the contact callbacks. */
 class CC_DLL EventListenerPhysicsContact : public EventListenerCustom
 {
 public:

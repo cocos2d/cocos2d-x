@@ -125,14 +125,14 @@ public:
     /**
      * Set this shape's tag.
      *
-     * @param tag An interger number that identifies a shape object.
+     * @param tag An integer number that identifies a shape object.
      */
     inline void setTag(int tag) { _tag = tag; }
     
     /**
      * Get this shape's tag.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     inline int getTag() const { return _tag; }
     
@@ -221,7 +221,7 @@ public:
     /** 
      * Calculate the default moment value.
      * 
-     * This function should be overrided in inherit classes.
+     * This function should be overridden in inherit classes.
      * @return A float number, equals 0.0.
      */
     virtual float calculateDefaultMoment() { return 0.0f; }
@@ -229,7 +229,7 @@ public:
     /**
      * Get this shape's position offset.
      *
-     * This function should be overrided in inherit classes.
+     * This function should be overridden in inherit classes.
      * @return A Vec2 object.
      */
     virtual Vec2 getOffset() { return Vec2::ZERO; }
@@ -237,7 +237,7 @@ public:
     /**
      * Get this shape's center position.
      *
-     * This function should be overrided in inherit classes.
+     * This function should be overridden in inherit classes.
      * @return A Vec2 object.
      */
     virtual Vec2 getCenter() { return getOffset(); }
@@ -254,7 +254,7 @@ public:
      * Move the points to the center.
      * 
      * @param points A Vec2 object pointer.
-     * @param count An interger number.
+     * @param count An integer number.
      * @param center A Vec2 object, default value is Vec2(0,0).
      */
     static void recenterPoints(Vec2* points, int count, const Vec2& center = Vec2::ZERO);
@@ -263,7 +263,7 @@ public:
      * Get center of the polyon points.
      *
      * @param points A Vec2 object pointer.
-     * @param count An interger number.
+     * @param count An integer number.
      * @return A Vec2 object.
      */
     static Vec2 getPolyonCenter(const Vec2* points, int count);
@@ -272,14 +272,14 @@ public:
      * Set a mask that defines which categories this physics body belongs to.
      *
      * Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the bit mask. You define the mask values used in your game. In conjunction with the collisionBitMask and contactTestBitMask properties, you define which physics bodies interact with each other and when your game is notified of these interactions.
-     * @param bitmask An interger number, the default value is 0xFFFFFFFF (all bits set).
+     * @param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
      */
     inline void setCategoryBitmask(int bitmask) { _categoryBitmask = bitmask; }
     
     /**
      * Get a mask that defines which categories this physics body belongs to.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     inline int getCategoryBitmask() const { return _categoryBitmask; }
     
@@ -287,30 +287,30 @@ public:
     /**
      * A mask that defines which categories of bodies cause intersection notifications with this physics body.
      *
-     * When two bodies share the same space, each body’s category mask is tested against the other body’s contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
-     * @param bitmask An interger number, the default value is 0x00000000 (all bits cleared).
+     * When two bodies share the same space, each body's category mask is tested against the other body's contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
+     * @param bitmask An integer number, the default value is 0x00000000 (all bits cleared).
      */
     inline void setContactTestBitmask(int bitmask) { _contactTestBitmask = bitmask; }
     
     /**
      * Get a mask that defines which categories of bodies cause intersection notifications with this physics body.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     inline int getContactTestBitmask() const { return _contactTestBitmask; }
 
     /**
      * A mask that defines which categories of physics bodies can collide with this physics body.
      *
-     * When two physics bodies contact each other, a collision may occur. This body’s collision mask is compared to the other body’s category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body’s velocity.
-     * @param bitmask An interger number, the default value is 0xFFFFFFFF (all bits set).
+     * When two physics bodies contact each other, a collision may occur. This body's collision mask is compared to the other body's category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body's velocity.
+     * @param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
      */
     inline void setCollisionBitmask(int bitmask) { _collisionBitmask = bitmask; }
     
     /**
      * Get a mask that defines which categories of physics bodies can collide with this physics body.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
@@ -318,14 +318,14 @@ public:
      * Set the group of body.
      *
      * Collision groups let you specify an integral group index. You can have all fixtures with the same group index always collide (positive index) or never collide (negative index).
-     * @param group An interger number, it have high priority than bit masks.
+     * @param group An integer number, it have high priority than bit masks.
      */
     void setGroup(int group);
     
     /**
      * Get the group of body.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     inline int getGroup() { return _group; }
     
@@ -378,7 +378,7 @@ public:
      *
      * @param   radius A float number, it is the circle's radius.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsShapeCircle object pointer.
      */
     static PhysicsShapeCircle* create(float radius, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2(0, 0));
@@ -396,7 +396,7 @@ public:
      *
      * @param mass A float number
      * @param radius A float number
-     * @param offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return A float number
      */
     static float calculateMoment(float mass, float radius, const Vec2& offset = Vec2::ZERO);
@@ -440,9 +440,9 @@ public:
      * Creates a PhysicsShapePolygon with specified value.
      *
      * @param   points A Vec2 object pointer, it is an array of Vec2.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsShapePolygon object pointer.
      */
     static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -451,7 +451,7 @@ public:
      * Calculate the area of a polygon with specified value.
      *
      * @param   points A Vec2 object pointer, it is an array of Vec2.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @return A float number.
      */
     static float calculateArea(const Vec2* points, int count);
@@ -461,8 +461,8 @@ public:
      *
      * @param mass A float number
      * @param   points A Vec2 object pointer, it is an array of Vec2.
-     * @param   count An interger number, contains the count of the points array.
-     * @param offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   count An integer number, contains the count of the points array.
+     * @param offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return A float number
      */
     static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO);
@@ -492,7 +492,7 @@ public:
     /**
      * Get this polygon's points array count.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     int getPointsCount() const;
     
@@ -521,7 +521,7 @@ public:
      *
      * @param   size Size contains this box's width and height.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsShapeBox object pointer.
      */
     static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -603,7 +603,7 @@ public:
      * Creates a PhysicsShapeEdgePolygon with specified value.
      *
      * @param   points A Vec2 object pointer, it contains an array of points.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
      * @return  An autoreleased PhysicsShapeEdgePolygon object pointer.
@@ -627,7 +627,7 @@ public:
     /**
      * Get this polygon's points array count.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     int getPointsCount() const;
     
@@ -652,7 +652,7 @@ public:
      * @param   size Size contains this box's width and height.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsShapeEdgeBox object pointer.
      */
     static PhysicsShapeEdgeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, float border = 0, const Vec2& offset = Vec2::ZERO);
@@ -682,7 +682,7 @@ public:
      * Creates a PhysicsShapeEdgeChain with specified value.
      *
      * @param   points A Vec2 object pointer, it contains an array of points.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
      * @return  An autoreleased PhysicsShapeEdgeChain object pointer.
@@ -706,7 +706,7 @@ public:
     /**
      * Get this chain's points array count.
      *
-     * @return An interger number.
+     * @return An integer number.
      */
     int getPointsCount() const;
     

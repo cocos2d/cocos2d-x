@@ -405,7 +405,7 @@ PhysicsShape* PhysicsBody::addShape(PhysicsShape* shape, bool addMassAndMoment/*
     {
         shape->setBody(this);
         
-        // calculate the area, mass, and desity
+        // calculate the area, mass, and density
         // area must update before mass, because the density changes depend on it.
         if (addMassAndMoment)
         {

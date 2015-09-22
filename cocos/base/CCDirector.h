@@ -185,8 +185,8 @@ public:
     /** Whether or not `_nextDeltaTimeZero` is set to 0. */
     inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     /** 
-     * Sets the detal time between current frame and next frame is 0.
-     * This value will be used in Schedule, and will affect all functions that are using frame detal time, such as Actions.
+     * Sets the delta time between current frame and next frame is 0.
+     * This value will be used in Schedule, and will affect all functions that are using frame delta time, such as Actions.
      * This value will take effect only one time.
      */
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
@@ -458,7 +458,7 @@ public:
      * @js NA
      */
     void popMatrix(MATRIX_STACK_TYPE type);
-    /** Adds an identity matrix to the top of specified type of matrxi stack.
+    /** Adds an identity matrix to the top of specified type of matrix stack.
      * @js NA
      */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
@@ -471,10 +471,10 @@ public:
      */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
     /**
-     * Multipies a matrix to the top of specified type of matrix stack.
+     * Multiplies a matrix to the top of specified type of matrix stack.
      *
      * @param type Matrix type.
-     * @param mat The matrix that to be multipied.
+     * @param mat The matrix that to be multiplied.
      * @js NA
      */
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
@@ -484,7 +484,7 @@ public:
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
     /**
-     * Cleras all types of matrix stack, and add indentity matrix to these matrix stacks.
+     * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
      */
     void resetMatrixStack();

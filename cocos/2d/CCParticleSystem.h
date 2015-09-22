@@ -271,7 +271,7 @@ public:
      should be overridden by subclasses. */
     virtual void postStep();
 
-    /** Call the update mathod with no time..
+    /** Call the update method with no time..
      */
     virtual void updateWithNoTime();
 
@@ -288,7 +288,7 @@ public:
     virtual void setAutoRemoveOnFinish(bool var);
 
     // mode A
-    /** Gets the garvity.
+    /** Gets the gravity.
      *
      * @return The gravity.
      */
