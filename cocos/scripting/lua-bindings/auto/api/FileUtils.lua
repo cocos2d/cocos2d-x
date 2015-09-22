@@ -300,7 +300,7 @@
 --------------------------------
 -- Windows fopen can't support UTF-8 filename<br>
 -- Need convert all parameters fopen and other 3rd-party libs<br>
--- param filename std::string name file for convertation from utf-8<br>
+-- param filename std::string name file for conversion from utf-8<br>
 -- return std::string ansi filename in current locale
 -- @function [parent=#FileUtils] getSuitableFOpen 
 -- @param self
