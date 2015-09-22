@@ -844,7 +844,7 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
                 auto cameraFlag = (unsigned short)camera->getCameraFlag();
                 for (auto& l : sceneListeners)
                 {
-                    if (0 == (l->getAssociatedNode()->getCameraMask() & cameraFlag))
+                    if (nullptr == l->getAssociatedNode() || 0 == (l->getAssociatedNode()->getCameraMask() & cameraFlag))
                     {
                         continue;
                     }
