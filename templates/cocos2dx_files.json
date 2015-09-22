@@ -1255,6 +1255,8 @@
         "cocos/ui/UILoadingBar.h", 
         "cocos/ui/UIPageView.cpp", 
         "cocos/ui/UIPageView.h", 
+        "cocos/ui/UIPageViewIndicator.cpp", 
+        "cocos/ui/UIPageViewIndicator.h", 
         "cocos/ui/UIRadioButton.cpp", 
         "cocos/ui/UIRadioButton.h", 
         "cocos/ui/UIRelativeBox.cpp", 

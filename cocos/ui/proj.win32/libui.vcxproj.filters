@@ -131,6 +131,9 @@
     <ClCompile Include="..\UIPageView.cpp">
       <Filter>UIWidgets\ScrollWidget</Filter>
     </ClCompile>
+    <ClCompile Include="..\UIPageViewIndicator.cpp">
+      <Filter>UIWidgets\ScrollWidget</Filter>
+    </ClCompile>
     <ClCompile Include="..\UIButton.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
