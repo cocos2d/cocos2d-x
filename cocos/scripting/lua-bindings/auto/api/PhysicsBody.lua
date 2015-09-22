@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
---  Whether this physics body is affected by the physics world’s gravitational force. 
+--  Whether this physics body is affected by the physics world's gravitational force. 
 -- @function [parent=#PhysicsBody] isGravityEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -65,7 +65,7 @@
 --------------------------------
 -- Applies a immediate force to body.<br>
 -- param impulse The impulse is applies to this body.<br>
--- param offset A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
+-- param offset A Vec2 object, it is the offset from the body's center of gravity in world coordinates.
 -- @function [parent=#PhysicsBody] applyImpulse 
 -- @param self
 -- @param #vec2_table impulse
@@ -82,7 +82,7 @@
 --------------------------------
 -- Applies a continuous force to body.<br>
 -- param force The force is applies to this body.<br>
--- param offset A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
+-- param offset A Vec2 object, it is the offset from the body's center of gravity in world coordinates.
 -- @function [parent=#PhysicsBody] applyForce 
 -- @param self
 -- @param #vec2_table force
@@ -172,7 +172,7 @@
 --------------------------------
 -- A mask that defines which categories this physics body belongs to.<br>
 -- Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the bit mask. You define the mask values used in your game. In conjunction with the collisionBitMask and contactTestBitMask properties, you define which physics bodies interact with each other and when your game is notified of these interactions.<br>
--- param bitmask An interger number, the default value is 0xFFFFFFFF (all bits set).
+-- param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
 -- @function [parent=#PhysicsBody] setCategoryBitmask 
 -- @param self
 -- @param #int bitmask
@@ -323,8 +323,8 @@
         
 --------------------------------
 -- A mask that defines which categories of physics bodies can collide with this physics body.<br>
--- When two physics bodies contact each other, a collision may occur. This body’s collision mask is compared to the other body’s category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body’s velocity.<br>
--- param bitmask An interger number, the default value is 0xFFFFFFFF (all bits set).
+-- When two physics bodies contact each other, a collision may occur. This body's collision mask is compared to the other body's category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body's velocity.<br>
+-- param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
 -- @function [parent=#PhysicsBody] setCollisionBitmask 
 -- @param self
 -- @param #int bitmask
@@ -389,7 +389,7 @@
         
 --------------------------------
 -- get the shape of the body.<br>
--- param   tag   An interger number that identifies a PhysicsShape object.<br>
+-- param   tag   An integer number that identifies a PhysicsShape object.<br>
 -- return A PhysicsShape object pointer or nullptr if no shapes were found.
 -- @function [parent=#PhysicsBody] getShape 
 -- @param self
@@ -412,8 +412,8 @@
         
 --------------------------------
 -- A mask that defines which categories of bodies cause intersection notifications with this physics body.<br>
--- When two bodies share the same space, each body’s category mask is tested against the other body’s contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.<br>
--- param bitmask An interger number, the default value is 0x00000000 (all bits cleared).
+-- When two bodies share the same space, each body's category mask is tested against the other body's contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.<br>
+-- param bitmask An integer number, the default value is 0x00000000 (all bits cleared).
 -- @function [parent=#PhysicsBody] setContactTestBitmask 
 -- @param self
 -- @param #int bitmask
@@ -442,7 +442,7 @@
 -- Create a body contains a box shape.<br>
 -- param   size Size contains this box's width and height.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
--- param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.<br>
+-- param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.<br>
 -- return  An autoreleased PhysicsBody object pointer.
 -- @function [parent=#PhysicsBody] createBox 
 -- @param self
@@ -481,7 +481,7 @@
 -- param   size Size contains this box's width and height.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
 -- param   border It's a edge's border width.<br>
--- param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.<br>
+-- param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.<br>
 -- return  An autoreleased PhysicsBody object pointer.
 -- @function [parent=#PhysicsBody] createEdgeBox 
 -- @param self
@@ -495,7 +495,7 @@
 -- Create a body contains a circle.<br>
 -- param   radius A float number, it is the circle's radius.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
--- param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.<br>
+-- param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.<br>
 -- return  An autoreleased PhysicsBody object pointer.
 -- @function [parent=#PhysicsBody] createCircle 
 -- @param self
