@@ -45,7 +45,7 @@ class CC_DLL TextFieldDelegate
 {
 public:
     /**
-     * Desctructor for TextFieldDelegate.
+     * Destructor for TextFieldDelegate.
      * @js NA
      */
     virtual ~TextFieldDelegate() {}

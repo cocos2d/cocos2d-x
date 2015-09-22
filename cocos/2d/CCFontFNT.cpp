@@ -733,7 +733,7 @@ FontAtlas * FontFNT::createFontAtlas()
     if (_configuration->_commonHeight == 0)
         return nullptr;
     
-    // commone height
+    // common height
     tempAtlas->setLineHeight(_configuration->_commonHeight);
     
     

@@ -158,7 +158,7 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
 {
     if (s_captureScreenListener)
     {
-        CCLOG("Warning: CaptureScreen has been caled yet, don't call more than once in one frame.");
+        CCLOG("Warning: CaptureScreen has been called already, don't call more than once in one frame.");
         return;
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
@@ -225,7 +225,7 @@ Rect getCascadeBoundingBox(Node *node)
     Rect cbb;
     Size contentSize = node->getContentSize();
     
-    // check all childrens bounding box, get maximize box
+    // check all children bounding box, get maximize box
     Node* child = nullptr;
     bool merge = false;
     for(auto object : node->getChildren())

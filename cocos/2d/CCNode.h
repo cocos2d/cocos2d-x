@@ -137,7 +137,7 @@ public:
 
 
     /// @{
-    /// @name Setters & Getters for Graphic Peroperties
+    /// @name Setters & Getters for Graphic Properties
 
     /**
      LocalZOrder is the 'key' used to sort the node relative to its siblings.
@@ -185,7 +185,7 @@ public:
      
      Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
      
-     Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
+     Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.
      And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
 
      @see `setLocalZOrder()`
@@ -494,7 +494,7 @@ public:
      * The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
      * But you can use values higher than (1,1) and lower than (0,0) too.
      * The default anchorPoint is (0.5,0.5), so it starts in the center of the node.
-     * @note If node has a physics body, the anchor must be in the middle, you cann't change this to other value.
+     * @note If node has a physics body, the anchor must be in the middle, you can't change this to other value.
      *
      * @param anchorPoint   The anchor point of node.
      */
@@ -876,7 +876,7 @@ public:
     /**
      * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
      *
-     * @param tag       An interger number that identifies a child node.
+     * @param tag       An integer number that identifies a child node.
      * @param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.
      *
      * Please use `removeChildByName` instead.
@@ -898,7 +898,7 @@ public:
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
-     * @param cleanup   True if all running actions on all children nodes should be cleanup, false oterwise.
+     * @param cleanup   True if all running actions on all children nodes should be cleanup, false otherwise.
      * @js removeAllChildren
      * @lua removeAllChildren
      */
@@ -914,7 +914,7 @@ public:
 
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This appraoch can improves the performance massively.
+     * This approach can improves the performance massively.
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();
@@ -1268,11 +1268,11 @@ public:
      * Sets a Scheduler object that is used to schedule all "updates" and timers.
      *
      * @warning If you set a new Scheduler, then previously created timers/update are going to be removed.
-     * @param scheduler     A Shdeduler object that is used to schedule all "update" and timers.
+     * @param scheduler     A Scheduler object that is used to schedule all "update" and timers.
      */
     virtual void setScheduler(Scheduler* scheduler);
     /**
-     * Gets a Sheduler object.
+     * Gets a Scheduler object.
      *
      * @see setScheduler(Scheduler*)
      * @return A Scheduler object.
@@ -1285,7 +1285,7 @@ public:
      * Checks whether a selector is scheduled.
      *
      * @param selector      A function selector
-     * @return Whether the funcion selector is scheduled.
+     * @return Whether the function selector is scheduled.
      * @js NA
      * @lua NA
      */
@@ -1336,13 +1336,13 @@ public:
      @code
      // firstly, implement a schedule function
      void MyNode::TickMe(float dt);
-     // wrap this function into a selector via schedule_selector marco.
+     // wrap this function into a selector via schedule_selector macro.
      this->schedule(CC_SCHEDULE_SELECTOR(MyNode::TickMe), 0, 0, 0);
      @endcode
      *
      * @param selector  The SEL_SCHEDULE selector to be scheduled.
      * @param interval  Tick interval in seconds. 0 means tick every frame. If interval = 0, it's recommended to use scheduleUpdate() instead.
-     * @param repeat    The selector will be excuted (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
+     * @param repeat    The selector will be executed (repeat + 1) times, you can use CC_REPEAT_FOREVER for tick infinitely.
      * @param delay     The amount of time that the first tick will wait before execution.
      * @lua NA
      */
@@ -1498,7 +1498,7 @@ public:
     /**
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
-     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
+     * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldTransform
      *
      * @param ancestor The parent's node pointer.
      * @since v3.7
@@ -1507,14 +1507,14 @@ public:
     virtual Mat4 getNodeToParentTransform(Node* ancestor) const;
 
     /**
-     * Returns the affline transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
+     * Returns the affine transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      *
-     * Note: If acenstor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
+     * Note: If ancestor is not a valid ancestor of the node, the API would return the same value as @see getNodeToWorldAffineTransform
      *
      * @param ancestor The parent's node pointer.
      * @since v3.7
-     * @return The affline transformation matrix.
+     * @return The affine transformation matrix.
      */
     virtual AffineTransform getNodeToParentAffineTransform(Node* ancestor) const;
 
@@ -1871,14 +1871,14 @@ private:
  * The content rectangle defined by origin(0,0) and content size.
  * This function convert GL screen point to near and far planes as points Pn and Pf,
  * then calculate the intersect point P which the line PnPf intersect with content rectangle.
- * If P in content rectangle means this node be hitted.
+ * If P in content rectangle means this node be hit.
  *
  * @param pt        The point in GL screen space.
  * @param camera    Which camera used to unproject pt to near/far planes.
  * @param w2l       World to local transform matrix, used to convert Pn and Pf to rectangle space.
- * @param rect      The test recangle in local space.
+ * @param rect      The test rectangle in local space.
  * @parma p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
- * @return true if the point is in content rectangle, flase otherwise.
+ * @return true if the point is in content rectangle, false otherwise.
  */
 bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
 
