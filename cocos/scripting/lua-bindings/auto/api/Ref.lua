@@ -6,7 +6,7 @@
 --------------------------------
 -- Releases the ownership immediately.<br>
 -- This decrements the Ref's reference count.<br>
--- If the reference count reaches 0 after the descrement, this Ref is<br>
+-- If the reference count reaches 0 after the decrement, this Ref is<br>
 -- destructed.<br>
 -- see retain, autorelease<br>
 -- js NA

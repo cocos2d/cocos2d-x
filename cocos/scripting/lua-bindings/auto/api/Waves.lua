@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Set the ampliture rate of the effect.<br>
+-- brief Set the amplitude rate of the effect.<br>
 -- param amplitudeRate The value of amplitude rate will be set.
 -- @function [parent=#Waves] setAmplitudeRate 
 -- @param self
@@ -20,7 +20,7 @@
 -- param amplitude Specify the amplitude of the Waves action.<br>
 -- param horizontal Specify whether waves on horizontal.<br>
 -- param vertical Specify whether waves on vertical.<br>
--- return If the initialization sucess, return true; otherwise, return false.
+-- return If the initialization success, return true; otherwise, return false.
 -- @function [parent=#Waves] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -61,7 +61,7 @@
 -- param amplitude Specify the amplitude of the Waves action.<br>
 -- param horizontal Specify whether waves on horizontal.<br>
 -- param vertical Specify whether waves on vertical.<br>
--- return If the creation sucess, return a pointer of Waves action; otherwise, return nil.
+-- return If the creation success, return a pointer of Waves action; otherwise, return nil.
 -- @function [parent=#Waves] create 
 -- @param self
 -- @param #float duration

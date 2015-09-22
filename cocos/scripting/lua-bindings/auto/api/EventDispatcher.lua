@@ -89,7 +89,7 @@
 -- It will use a fixed priority of 1.<br>
 -- param eventName A given name of the event.<br>
 -- param callback A given callback method that associated the event name.<br>
--- return the generated event. Needed in order to remove the event from the dispather
+-- return the generated event. Needed in order to remove the event from the dispatcher
 -- @function [parent=#EventDispatcher] addCustomEventListener 
 -- @param self
 -- @param #string eventName

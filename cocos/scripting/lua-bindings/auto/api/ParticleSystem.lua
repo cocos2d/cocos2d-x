@@ -130,7 +130,7 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
---  Gets the garvity.<br>
+--  Gets the gravity.<br>
 -- return The gravity.
 -- @function [parent=#ParticleSystem] getGravity 
 -- @param self
@@ -218,7 +218,7 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
---  Call the update mathod with no time..
+--  Call the update method with no time..
 -- @function [parent=#ParticleSystem] updateWithNoTime 
 -- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
