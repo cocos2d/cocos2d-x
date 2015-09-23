@@ -1294,14 +1294,18 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
     if (!_utf8Text.empty() && _shadowEnabled && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
     {
+        int tempX = _position.x;
+        int tempY = _position.y;
+
         _position.x += _shadowOffset.width;
         _position.y += _shadowOffset.height;
         _transformDirty = _inverseDirty = true;
 
         _shadowTransform = transform(parentTransform);
 
-        _position.x -= _shadowOffset.width;
-        _position.y -= _shadowOffset.height;
+        _position.x = tempX;
+        _position.y = tempY;
+
         _transformDirty = _inverseDirty = true;
 
         _shadowDirty = false;
