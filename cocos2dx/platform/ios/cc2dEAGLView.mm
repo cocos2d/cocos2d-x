@@ -88,6 +88,7 @@ static cc2dEAGLView *view = nil;
 @synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
 @synthesize context=context_;
 @synthesize multiSampling=multiSampling_;
+@synthesize isKeyboardShown=isKeyboardShown_;
 
 + (Class) layerClass
 {
@@ -229,6 +230,7 @@ static cc2dEAGLView *view = nil;
 {
     if (newWindow == nil)
     {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         cocos2d::CCEGLView::sharedOpenGLView()->clearTouchesState();
     }
     
@@ -239,8 +241,9 @@ static cc2dEAGLView *view = nil;
 {
     [renderer_ release];
     view = nil;
-
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [super dealloc];
 }
 
@@ -676,6 +679,65 @@ static cc2dEAGLView *view = nil;
 {
     CCLOG("selectionRectsForRange");
     return nil;
+}
+
+UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        statusBarOrientation = UIInterfaceOrientationPortrait;
+    }
+    return statusBarOrientation;
+}
+
+#pragma mark -
+
+-(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
+{
+    [UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDelegate:self];
+	[UIView setAnimationDuration:duration];
+	[UIView setAnimationBeginsFromCurrentState:YES];
+    
+    //NSLog(@"[animation] dis = %f, scale = %f \n", dis, cocos2d::CCEGLView::sharedOpenGLView()->getScaleY());
+    
+    if (dis < 0.0f) dis = 0.0f;
+
+	dis *= cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
+    
+    if (self.contentScaleFactor != 0) {
+        dis /= self.contentScaleFactor;
+    }
+    
+    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
+    {
+        case UIInterfaceOrientationPortrait:
+            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y + dis, originalRect_.size.width, originalRect_.size.height);
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            self.frame = CGRectMake(originalRect_.origin.x - dis, originalRect_.origin.y , originalRect_.size.width, originalRect_.size.height);
+            break;
+            
+        case UIInterfaceOrientationLandscapeRight:
+            self.frame = CGRectMake(originalRect_.origin.x + dis, originalRect_.origin.y , originalRect_.size.width, originalRect_.size.height);
+            break;
+            
+        default:
+            break;
+    }
+    
+	[UIView commitAnimations];
+}
+
+
+-(void) doAnimationWhenAnotherEditBeClicked
+{
+    //Do nothing.
 }
 
 @end
