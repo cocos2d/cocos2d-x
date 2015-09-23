@@ -259,7 +259,7 @@ void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     AtlasNode::draw(renderer, transform, _transformUpdated);
 
     _debugDrawNode->clear();
-    auto size = getContentSize();
+    auto& size = getContentSize();
     Vec2 vertices[4]=
     {
         Vec2::ZERO,
