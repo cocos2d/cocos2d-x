@@ -1294,8 +1294,8 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
 
     if (!_utf8Text.empty() && _shadowEnabled && (_shadowDirty || (flags & FLAGS_DIRTY_MASK)))
     {
-        int tempX = _position.x;
-        int tempY = _position.y;
+        float tempX = _position.x;
+        float tempY = _position.y;
 
         _position.x += _shadowOffset.width;
         _position.y += _shadowOffset.height;
