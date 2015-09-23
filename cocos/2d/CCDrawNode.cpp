@@ -327,9 +327,7 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
 {
-    auto glProgram = getGLProgram();
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
+    getGLProgramState()->apply(transform);
     
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
