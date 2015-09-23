@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Set the ampliture rate of the effect.<br>
+-- brief Set the amplitude rate of the effect.<br>
 -- param amplitudeRate The value of amplitude rate will be set.
 -- @function [parent=#Waves3D] setAmplitudeRate 
 -- @param self
@@ -55,7 +55,7 @@
 -- param gridSize Specify the size of the grid.<br>
 -- param waves Specify the waves count of the Waves3D action.<br>
 -- param amplitude Specify the amplitude of the Waves3D action.<br>
--- return If the creation sucess, return a pointer of Waves3D action; otherwise, return nil.
+-- return If the creation success, return a pointer of Waves3D action; otherwise, return nil.
 -- @function [parent=#Waves3D] create 
 -- @param self
 -- @param #float duration

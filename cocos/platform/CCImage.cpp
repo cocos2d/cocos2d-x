@@ -522,7 +522,7 @@ bool Image::initWithImageData(const unsigned char * data, ssize_t dataLen)
         unsigned char* unpackedData = nullptr;
         ssize_t unpackedLen = 0;
         
-        //detecgt and unzip the compress file
+        //detect and unzip the compress file
         if (ZipUtils::isCCZBuffer(data, dataLen))
         {
             unpackedLen = ZipUtils::inflateCCZBuffer(data, dataLen, &unpackedData);
@@ -789,8 +789,8 @@ namespace
         
         /* Always display the message. */
         /* We could postpone this until after returning, if we chose. */
-        /* internal message function cann't show error message in some platforms, so we rewrite it here.
-         * edit it if has version confilict.
+        /* internal message function can't show error message in some platforms, so we rewrite it here.
+         * edit it if has version conflict.
          */
         //(*cinfo->err->output_message) (cinfo);
         char buffer[JMSG_LENGTH_MAX];
@@ -1597,7 +1597,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
     memcpy(_data, static_cast<const unsigned char*>(data) + sizeof(PVRv3TexHeader) + header->metadataLength, _dataLen);
     
     _numberOfMipmaps = header->numberOfMipmaps;
-    CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increate the CC_MIPMAP_MAX value");
+    CCAssert(_numberOfMipmaps < MIPMAP_MAX, "Image: Maximum number of mimpaps reached. Increase the CC_MIPMAP_MAX value");
     
     for (int i = 0; i < _numberOfMipmaps; i++)
     {
@@ -1685,7 +1685,7 @@ bool Image::initWithPVRv3Data(const unsigned char * data, ssize_t dataLen)
         }
         
         dataOffset += packetLength;
-        CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid lenght");
+        CCAssert(dataOffset <= _dataLen, "CCTexurePVR: Invalid length");
         
         
         width = MAX(width >> 1, 1);
@@ -1769,7 +1769,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
         if (2 == tgaData->type || 10 == tgaData->type)
         {
             // true color
-            // unsupport RGB555
+            // unsupported RGB555
             if (tgaData->pixelDepth == 16)
             {
                 _renderFormat = Texture2D::PixelFormat::RGB5A1;
@@ -1784,7 +1784,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
             }
             else
             {
-                CCLOG("Image WARNING: unsupport true color tga data pixel format. FILE: %s", _filePath.c_str());
+                CCLOG("Image WARNING: unsupported true color tga data pixel format. FILE: %s", _filePath.c_str());
                 break;
             }
         }
@@ -1798,7 +1798,7 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
             else
             {
                 // actually this won't happen, if it happens, maybe the image file is not a tga
-                CCLOG("Image WARNING: unsupport gray tga data pixel format. FILE: %s", _filePath.c_str());
+                CCLOG("Image WARNING: unsupported gray tga data pixel format. FILE: %s", _filePath.c_str());
                 break;
             }
         }
@@ -1890,7 +1890,7 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
     
     /* if hardware supports s3tc, set pixelformat before loading mipmaps, to support non-mipmapped textures  */
     if (Configuration::getInstance()->supportsS3TC())
-    {   //decode texture throught hardware
+    {   //decode texture through hardware
         
         if (FOURCC_DXT1 == header->ddsd.DUMMYUNIONNAMEN4.ddpfPixelFormat.fourCC)
         {
@@ -1922,7 +1922,7 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
         int size = ((width+3)/4)*((height+3)/4)*blockSize;
                 
         if (Configuration::getInstance()->supportsS3TC())
-        {   //decode texture throught hardware
+        {   //decode texture through hardware
             _mipmaps[i].address = (unsigned char *)_data + encodeOffset;
             _mipmaps[i].len = size;
         }
@@ -1997,7 +1997,7 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
     /* pixelData point to the compressed data address */
     unsigned char *pixelData = (unsigned char *)data + sizeof(ATITCTexHeader) + header->bytesOfKeyValueData + 4;
     
-    /* caculate the dataLen */
+    /* calculate the dataLen */
     int width = _width;
     int height = _height;
     
@@ -2036,7 +2036,7 @@ bool Image::initWithATITCData(const unsigned char *data, ssize_t dataLen)
         
         if (Configuration::getInstance()->supportsATITC())
         {
-            /* decode texture throught hardware */
+            /* decode texture through hardware */
             
             CCLOG("this is atitc H decode");
             

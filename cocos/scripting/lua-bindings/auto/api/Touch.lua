@@ -49,7 +49,7 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  Set the touch infomation. It always used to monitor touch event.<br>
+--  Set the touch information. It always used to monitor touch event.<br>
 -- param id A given id<br>
 -- param x A given x coordinate.<br>
 -- param y A given y coordinate.

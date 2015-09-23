@@ -615,7 +615,7 @@ protected:
     //
 
     // texture
-    Rect _rect;                             /// Retangle of Texture2D
+    Rect _rect;                             /// Rectangle of Texture2D
     bool   _rectRotated;                    /// Whether the texture is rotated
 
     // Offset Position (used by Zwoptex)

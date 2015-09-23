@@ -401,7 +401,7 @@ public:
     /**
      * request to refresh widget layout
      */
-    void requestDoLayout();
+    virtual void requestDoLayout();
     
     /**
      * @lua NA

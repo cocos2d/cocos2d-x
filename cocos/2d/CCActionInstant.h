@@ -320,7 +320,7 @@ class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 public:
     /** Creates the action with the callback of type std::function<void()>.
      This is the preferred way to create the callback.
-     * When this funtion bound in js or lua ,the input param will be changed.
+     * When this function bound in js or lua ,the input param will be changed.
      * In js: var create(var func, var this, var [data]) or var create(var func).
      * In lua:local create(local funcID).
      *
@@ -422,7 +422,7 @@ public:
     /** Creates the action with the callback of type std::function<void()>.
      This is the preferred way to create the callback.
      *
-     * @param func  A callback function need to be excuted.
+     * @param func  A callback function need to be executed.
      * @return  An autoreleased CallFuncN object.
      */
     static CallFuncN * create(const std::function<void(Node*)>& func);
@@ -516,7 +516,7 @@ public:
         typedef void (Ref::*SEL_CallFuncO)(Ref*);
      *
      * @param target    A certain target.
-     * @param selector  The callback need to be excuted.
+     * @param selector  The callback need to be executed.
      * @param object    An object as the callback's first argument.
      * @return An autoreleased __CCCallFuncO object.
      */

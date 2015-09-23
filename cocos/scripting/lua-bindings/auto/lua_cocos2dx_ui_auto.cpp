@@ -16090,6 +16090,62 @@ int lua_cocos2dx_ui_ListView_getItemsMargin(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_ListView_jumpToItem(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_jumpToItem'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        int arg0;
+        cocos2d::Vec2 arg1;
+        cocos2d::Vec2 arg2;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.ListView:jumpToItem");
+
+        ok &= luaval_to_vec2(tolua_S, 3, &arg1, "ccui.ListView:jumpToItem");
+
+        ok &= luaval_to_vec2(tolua_S, 4, &arg2, "ccui.ListView:jumpToItem");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_jumpToItem'", nullptr);
+            return 0;
+        }
+        cobj->jumpToItem(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:jumpToItem",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_jumpToItem'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ListView_setMagneticType(lua_State* tolua_S)
 {
     int argc = 0;
@@ -16136,53 +16192,6 @@ int lua_cocos2dx_ui_ListView_setMagneticType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setMagneticType'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_ListView_refreshViewIfNecessary(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::ListView* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_refreshViewIfNecessary'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_refreshViewIfNecessary'", nullptr);
-            return 0;
-        }
-        cobj->refreshViewIfNecessary();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:refreshViewIfNecessary",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_refreshViewIfNecessary'.",&tolua_err);
 #endif
 
     return 0;
@@ -17242,53 +17251,6 @@ int lua_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView(lua_State* to
 
     return 0;
 }
-int lua_cocos2dx_ui_ListView_refreshView(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::ListView* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_refreshView'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_refreshView'", nullptr);
-            return 0;
-        }
-        cobj->refreshView();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:refreshView",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_refreshView'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_ui_ListView_setItemModel(lua_State* tolua_S)
 {
     int argc = 0;
@@ -17335,53 +17297,6 @@ int lua_cocos2dx_ui_ListView_setItemModel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setItemModel'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_ListView_requestRefreshView(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::ListView* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_requestRefreshView'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_requestRefreshView'", nullptr);
-            return 0;
-        }
-        cobj->requestRefreshView();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:requestRefreshView",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_requestRefreshView'.",&tolua_err);
 #endif
 
     return 0;
@@ -17562,8 +17477,8 @@ int lua_register_cocos2dx_ui_ListView(lua_State* tolua_S)
         tolua_function(tolua_S,"getCenterItemInCurrentView",lua_cocos2dx_ui_ListView_getCenterItemInCurrentView);
         tolua_function(tolua_S,"getCurSelectedIndex",lua_cocos2dx_ui_ListView_getCurSelectedIndex);
         tolua_function(tolua_S,"getItemsMargin",lua_cocos2dx_ui_ListView_getItemsMargin);
+        tolua_function(tolua_S,"jumpToItem",lua_cocos2dx_ui_ListView_jumpToItem);
         tolua_function(tolua_S,"setMagneticType",lua_cocos2dx_ui_ListView_setMagneticType);
-        tolua_function(tolua_S,"refreshViewIfNecessary",lua_cocos2dx_ui_ListView_refreshViewIfNecessary);
         tolua_function(tolua_S,"getIndex",lua_cocos2dx_ui_ListView_getIndex);
         tolua_function(tolua_S,"pushBackCustomItem",lua_cocos2dx_ui_ListView_pushBackCustomItem);
         tolua_function(tolua_S,"insertDefaultItem",lua_cocos2dx_ui_ListView_insertDefaultItem);
@@ -17585,9 +17500,7 @@ int lua_register_cocos2dx_ui_ListView(lua_State* tolua_S)
         tolua_function(tolua_S,"getClosestItemToPosition",lua_cocos2dx_ui_ListView_getClosestItemToPosition);
         tolua_function(tolua_S,"getRightmostItemInCurrentView",lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView);
         tolua_function(tolua_S,"getClosestItemToPositionInCurrentView",lua_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView);
-        tolua_function(tolua_S,"refreshView",lua_cocos2dx_ui_ListView_refreshView);
         tolua_function(tolua_S,"setItemModel",lua_cocos2dx_ui_ListView_setItemModel);
-        tolua_function(tolua_S,"requestRefreshView",lua_cocos2dx_ui_ListView_requestRefreshView);
         tolua_function(tolua_S,"insertCustomItem",lua_cocos2dx_ui_ListView_insertCustomItem);
         tolua_function(tolua_S,"create", lua_cocos2dx_ui_ListView_create);
         tolua_function(tolua_S,"createInstance", lua_cocos2dx_ui_ListView_createInstance);

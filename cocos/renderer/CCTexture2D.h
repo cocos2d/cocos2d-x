@@ -112,7 +112,7 @@ public:
         ATC_RGB,
         //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
         ATC_EXPLICIT_ALPHA,
-        //! ATITC-compresed texture: ATC_INTERPOLATED_ALPHA
+        //! ATITC-compressed texture: ATC_INTERPOLATED_ALPHA
         ATC_INTERPOLATED_ALPHA,
         //! Default texture format: AUTO
         DEFAULT = AUTO,
@@ -205,7 +205,7 @@ public:
      */
     virtual ~Texture2D();
     /**
-     Get texutre name, dimensions and coordinates message by a string.
+     Get texture name, dimensions and coordinates message by a string.
      * @js NA
      * @lua NA
      */

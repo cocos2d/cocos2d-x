@@ -120,6 +120,8 @@ tags
 !/plugin/plugins/*/proj.android/libs/*.jar
 !/plugin/plugins/*/proj.android/libs
 !/tools/bindings-generator/tools/win32/*
+!/cocos/platform/android/java/libs
+!/cocos/platform/android/ControllerManualAdapter/libs
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

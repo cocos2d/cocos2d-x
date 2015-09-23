@@ -38,7 +38,7 @@ endif()
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.8)
+set(COCOS2D_X_VERSION 3.9)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 include(CocosBuildHelpers)
@@ -202,6 +202,7 @@ if(LINUX OR MACOSX OR WINDOWS)
 
     cocos_find_package(FMODEX FMODEX REQUIRED)
     cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
+    cocos_find_package(GTK3 GTK3 REQUIRED)
   endif()
 
   if(WINDOWS)

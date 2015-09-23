@@ -111,7 +111,7 @@ public:
      * incoming pixel's depth value and the depth value already in the depth buffer.
      * If the compare function passes, the new pixel will be drawn.
      *
-     * The intial depth compare function is DEPTH_LESS.
+     * The initial depth compare function is DEPTH_LESS.
      */
     enum DepthFunction
     {

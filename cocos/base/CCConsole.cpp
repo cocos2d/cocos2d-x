@@ -176,7 +176,7 @@ static void printFileUtils(int fd)
         mydprintf(fd, "%s\n", item.c_str());
     }
 
-    mydprintf(fd, "\nWriteble Path:\n");
+    mydprintf(fd, "\nWritable Path:\n");
     mydprintf(fd, "%s\n", fu->getWritablePath().c_str());
 
     mydprintf(fd, "\nFull Path Cache:\n");
@@ -1146,7 +1146,7 @@ void Console::loop()
         }
         else if( nready == 0 )
         {
-            /* timeout. do somethig ? */
+            /* timeout. do something ? */
         }
         else
         {
@@ -1189,7 +1189,7 @@ void Console::loop()
                 }
             }
 
-            /* remove closed conections */
+            /* remove closed connections */
             for(int fd: to_remove) {
                 FD_CLR(fd, &_read_set);
                 _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());

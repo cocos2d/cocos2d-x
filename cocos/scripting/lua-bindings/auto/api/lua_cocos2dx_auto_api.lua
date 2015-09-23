@@ -857,6 +857,11 @@
 
 
 --------------------------------------------------------
+-- the cc ParticleData
+-- @field [parent=#cc] ParticleData#ParticleData ParticleData preloaded module
+
+
+--------------------------------------------------------
 -- the cc ParticleSystem
 -- @field [parent=#cc] ParticleSystem#ParticleSystem ParticleSystem preloaded module
 

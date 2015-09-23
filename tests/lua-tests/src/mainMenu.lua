@@ -43,6 +43,7 @@ require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
 require "SpineTest/SpineTest"
 require "TerrainTest/TerrainTest"
+require "TextInputTest/TextInputTest"
 require "Texture2dTest/Texture2dTest"
 require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
@@ -136,7 +137,7 @@ local _allTests = {
     { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
     { isSupported = true,  name = "SpritePolygonTest"             , create_func   =         SpritePolygonTest      },
-    { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
+    { isSupported = true,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
     { isSupported = true,  name = "TileMapTest"            , create_func   =               TileMapTestMain  }, 

@@ -508,6 +508,29 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     }
 }
 
+void ScrollView::removeChild(Node* node, bool cleanup)
+{
+    if(_container != node)
+    {
+        _container->removeChild(node, cleanup);
+    }
+    else
+    {
+        Layer::removeChild(node, cleanup);
+    }
+}
+
+void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    _container->removeAllChildrenWithCleanup(cleanup);
+    Layer::removeAllChildrenWithCleanup(cleanup);
+}
+
+void ScrollView::removeAllChildren()
+{
+    removeAllChildrenWithCleanup(true);
+}
+
 void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
 {
     if (_container != child)

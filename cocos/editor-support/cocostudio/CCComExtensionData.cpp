@@ -23,18 +23,19 @@
  ****************************************************************************/
 
 #include "CCComExtensionData.h"
-
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
-
 
 namespace cocostudio
 {
     IMPLEMENT_CLASS_COMPONENT_INFO(ComExtensionData)
+
+    const std::string ComExtensionData::COMPONENT_NAME = "ComExtensionData";
+
     ComExtensionData::ComExtensionData()
     : _customProperty("")
     , _timelineData(nullptr)
     {
-        _name = "ComExtensionData";
+        _name = COMPONENT_NAME;
     }
 
     ComExtensionData::~ComExtensionData()
