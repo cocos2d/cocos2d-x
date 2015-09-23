@@ -121,8 +121,8 @@ public:
  How to deal add image many times?
  - At first, this situation is abnormal, we only ensure the logic is correct.
  - If the image has been loaded, the after load image call will return immediately.
- - If the image request is in queue already, there will be have more than one request in queue,
- - In addImageAsyncCallback, will deduplacated the request to ensure only create one texture.
+ - If the image request is in queue already, there will be more than one request in queue,
+ - In addImageAsyncCallback, will deduplicate the request to ensure only create one texture.
  
  Does process all response in addImageAsyncCallback consume more time?
  - Convert image to texture faster than load image from disk, so this isn't a problem.

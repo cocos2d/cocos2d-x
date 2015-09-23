@@ -198,7 +198,7 @@ void RenderQueue::restoreRenderState()
 static const int DEFAULT_RENDER_QUEUE = 0;
 
 //
-// constructors, destructors, init
+// constructors, destructor, init
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
@@ -1083,7 +1083,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
     float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
     
-    // enlarge visable rect half size in screen coord
+    // enlarge visible rect half size in screen coord
     visiableRect.origin.x -= wshw;
     visiableRect.origin.y -= wshh;
     visiableRect.size.width += wshw * 2;

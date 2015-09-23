@@ -62,16 +62,16 @@ struct CC_DLL AffineTransform {
 CC_DLL AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, float tx, float ty);
 #define AffineTransformMake __CCAffineTransformMake
 
-/**Multiply point (x,y,1) by a  affine tranform.*/
+/**Multiply point (x,y,1) by a  affine transform.*/
 CC_DLL Vec2 __CCPointApplyAffineTransform(const Vec2& point, const AffineTransform& t);
 #define PointApplyAffineTransform __CCPointApplyAffineTransform
 
-/**Multiply size (width,height,0) by a  affine tranform.*/
+/**Multiply size (width,height,0) by a  affine transform.*/
 CC_DLL Size __CCSizeApplyAffineTransform(const Size& size, const AffineTransform& t);
 #define SizeApplyAffineTransform __CCSizeApplyAffineTransform
 /**Make identity affine transform.*/
 CC_DLL AffineTransform AffineTransformMakeIdentity();
-/**Transform Rect, which will transform the four vertice of the point.*/
+/**Transform Rect, which will transform the four vertices of the point.*/
 CC_DLL Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform);
 /**@{
  Transform vec2 and Rect by Mat4.
@@ -82,7 +82,7 @@ CC_DLL Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform);
 /**
  Translation, equals
  1  0  1
- 0  1  0   * affinetransform
+ 0  1  0   * affine transform
  tx ty 1
  */
 CC_DLL AffineTransform AffineTransformTranslate(const AffineTransform& t, float tx, float ty);

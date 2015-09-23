@@ -18,7 +18,7 @@
         
 --------------------------------
 --  Checks whether the listener is enabled.<br>
--- return True if the listenrt is enabled.
+-- return True if the listener is enabled.
 -- @function [parent=#EventListener] isEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)

@@ -357,7 +357,7 @@ void Sequence::update(float t)
         // Reverse mode ?
         // FIXME: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
         // since it will require a hack to know if an action is on reverse mode or not.
-        // "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
+        // "step" should be overridden, and the "reverseMode" value propagated to inner Sequences.
         if (!(sendUpdateEventToScript(0, _actions[1])))
             _actions[1]->update(0);
         _actions[1]->stop();

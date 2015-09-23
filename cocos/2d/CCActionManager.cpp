@@ -348,7 +348,7 @@ void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
 
 // get
 
-// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
+// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
 Action* ActionManager::getActionByTag(int tag, const Node *target) const
 {
@@ -382,7 +382,7 @@ Action* ActionManager::getActionByTag(int tag, const Node *target) const
     return nullptr;
 }
 
-// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requries the address of a pointer
+// FIXME: Passing "const O *" instead of "const O&" because HASH_FIND_IT requires the address of a pointer
 // and, it is not possible to get the address of a reference
 ssize_t ActionManager::getNumberOfRunningActionsInTarget(const Node *target) const
 {

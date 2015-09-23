@@ -379,7 +379,7 @@ struct CC_DLL Physics3DColliderDes
     float restitution;
     /**the hit fraction*/
     float hitFraction;
-    /**the swep sphere radius*/
+    /**the swept sphere radius*/
     float ccdSweptSphereRadius;
     /**the motion threshold*/
     float ccdMotionThreshold;

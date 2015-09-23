@@ -103,7 +103,7 @@ public:
      */
     void setDelayUnits(float delayUnits) { _delayUnits = delayUnits; };
     
-    /** @brief Gets user infomation
+    /** @brief Gets user information
      * A AnimationFrameDisplayedNotification notification will be broadcast when the frame is displayed with this dictionary as UserInfo. 
      * If UserInfo is nil, then no notification will be broadcast.
      *
@@ -112,7 +112,7 @@ public:
     const ValueMap& getUserInfo() const { return _userInfo; };
     ValueMap& getUserInfo() { return _userInfo; };
     
-    /** Sets user infomation.
+    /** Sets user information.
      * @param userInfo A dictionary as UserInfo.
      */
     void setUserInfo(const ValueMap& userInfo)
