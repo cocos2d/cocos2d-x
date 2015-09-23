@@ -97,7 +97,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     NSString *              markedText_;
     CGRect                  caretRect_;
     CGRect                  originalRect_;
-    NSNotification*         keyboardShowNotification_;
     BOOL                    isKeyboardShown_;
 }
 
@@ -108,8 +107,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property (nonatomic, copy) NSDictionary *markedTextStyle;
 @property(readwrite, copy) UITextRange *selectedTextRange;
 @property(nonatomic, readonly) id<UITextInputTokenizer> tokenizer;
+/** Always NO. leaving here though because it's called by CCEditBoxImplIOS that seems scary to mess with. */
 @property(nonatomic, readonly, getter = isKeyboardShown) BOOL isKeyboardShown;
-@property(nonatomic, copy) NSNotification* keyboardShowNotification;
+
 /** creates an initializes an cc2dEAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer */
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an cc2dEAGLView with a frame, a color buffer format, and 0-bit depth buffer */

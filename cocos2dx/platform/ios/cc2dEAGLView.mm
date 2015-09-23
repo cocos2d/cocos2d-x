@@ -89,7 +89,7 @@ static cc2dEAGLView *view = nil;
 @synthesize context=context_;
 @synthesize multiSampling=multiSampling_;
 @synthesize isKeyboardShown=isKeyboardShown_;
-@synthesize keyboardShowNotification = keyboardShowNotification_;
+
 + (Class) layerClass
 {
     return [CAEAGLLayer class];
@@ -150,7 +150,6 @@ static cc2dEAGLView *view = nil;
         view = self;
         
         originalRect_ = self.frame;
-        self.keyboardShowNotification = nil;
 		
 		if ([view respondsToSelector:@selector(setContentScaleFactor:)])
 		{
@@ -182,25 +181,6 @@ static cc2dEAGLView *view = nil;
     
     view = self;
     return self;
-}
-
-- (void)didMoveToWindow;
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onUIKeyboardNotification:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onUIKeyboardNotification:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onUIKeyboardNotification:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(onUIKeyboardNotification:)
-                                                 name:UIKeyboardDidHideNotification object:nil];
-    
 }
 
 -(int) getWidth
@@ -260,11 +240,10 @@ static cc2dEAGLView *view = nil;
 - (void) dealloc
 {
     [renderer_ release];
-    self.keyboardShowNotification = NULL; // implicit release
     view = nil;
-
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [super dealloc];
 }
 
@@ -387,34 +366,10 @@ static cc2dEAGLView *view = nil;
         return ret;
 }
 
-
--(void) handleTouchesAfterKeyboardShow
-{
-    NSArray *subviews = self.subviews;
-    
-    for(UIView* view in subviews)
-    {
-        if([view isKindOfClass:NSClassFromString(@"CustomUITextField")])
-        {
-            if ([view isFirstResponder])
-            {
-                [view resignFirstResponder];
-                return;
-            }
-        }
-    }
-}
-
 // Pass the touches to the superview
 #pragma mark cc2dEAGLView - Touch Delegate
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        [self handleTouchesAfterKeyboardShow];
-        return;
-    }
-    
     int ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -431,10 +386,6 @@ static cc2dEAGLView *view = nil;
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
     int ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -451,11 +402,6 @@ static cc2dEAGLView *view = nil;
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
-    
     int ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -472,11 +418,6 @@ static cc2dEAGLView *view = nil;
     
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (isKeyboardShown_)
-    {
-        return;
-    }
-    
     int ids[IOS_MAX_TOUCHES_COUNT] = {0};
     float xs[IOS_MAX_TOUCHES_COUNT] = {0.0f};
     float ys[IOS_MAX_TOUCHES_COUNT] = {0.0f};
@@ -750,136 +691,6 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
 }
 
 #pragma mark -
-#pragma mark UIKeyboard notification
-
-- (void)onUIKeyboardNotification:(NSNotification *)notif;
-{
-    NSString * type = notif.name;
-    
-    NSDictionary* info = [notif userInfo];
-    CGRect begin = [self convertRect: 
-                    [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue]
-                            fromView:self];
-    CGRect end = [self convertRect: 
-                  [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue]
-                          fromView:self];
-    double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    CGSize viewSize = self.frame.size;
-    CGFloat tmp;
-    
-    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
-    {
-        case UIInterfaceOrientationPortrait:
-            begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
-            end.origin.y = viewSize.height - end.origin.y - end.size.height;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-            begin.origin.x = viewSize.width - (begin.origin.x + begin.size.width);
-            end.origin.x = viewSize.width - (end.origin.x + end.size.width);
-            break;
-            
-        case UIInterfaceOrientationLandscapeLeft:
-            tmp = begin.size.width;
-            begin.size.width = begin.size.height;
-            begin.size.height = tmp;
-            tmp = end.size.width;
-            end.size.width = end.size.height;
-            end.size.height = tmp;
-            tmp = viewSize.width;
-            viewSize.width = viewSize.height;
-            viewSize.height = tmp;
-            
-            tmp = begin.origin.x;
-            begin.origin.x = begin.origin.y;
-            begin.origin.y = viewSize.height - tmp - begin.size.height;
-            tmp = end.origin.x;
-            end.origin.x = end.origin.y;
-            end.origin.y = viewSize.height - tmp - end.size.height;
-            break;
-            
-        case UIInterfaceOrientationLandscapeRight:
-            tmp = begin.size.width;
-            begin.size.width = begin.size.height;
-            begin.size.height = tmp;
-            tmp = end.size.width;
-            end.size.width = end.size.height;
-            end.size.height = tmp;
-            tmp = viewSize.width;
-            viewSize.width = viewSize.height;
-            viewSize.height = tmp;
-            
-            tmp = begin.origin.x;
-            begin.origin.x = begin.origin.y;
-            begin.origin.y = tmp;
-            tmp = end.origin.x;
-            end.origin.x = end.origin.y;
-            end.origin.y = tmp;
-            break;
-            
-        default:
-            break;
-    }
-    
-    float scaleX = cocos2d::CCEGLView::sharedOpenGLView()->getScaleX();
-	float scaleY = cocos2d::CCEGLView::sharedOpenGLView()->getScaleY();
-    
-    
-    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
-    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
-    
-    float offestY = cocos2d::CCEGLView::sharedOpenGLView()->getViewPortRect().origin.y;
-    CCLOG("offestY = %f", offestY);
-    if (offestY < 0.0f)
-    {
-        begin.origin.y += offestY;
-        begin.size.height -= offestY;
-        end.size.height -= offestY;
-    }
-    
-    // Convert to desigin coordinate
-    begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
-    end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, 1.0f/scaleX, 1.0f/scaleY));
-
-    
-    cocos2d::CCIMEKeyboardNotificationInfo notiInfo;
-    notiInfo.begin = cocos2d::CCRect(begin.origin.x,
-                                     begin.origin.y,
-                                     begin.size.width,
-                                     begin.size.height);
-    notiInfo.end = cocos2d::CCRect(end.origin.x,
-                                   end.origin.y,
-                                   end.size.width,
-                                   end.size.height);
-    notiInfo.duration = (float)aniDuration;
-    
-    cocos2d::CCIMEDispatcher* dispatcher = cocos2d::CCIMEDispatcher::sharedDispatcher();
-    if (UIKeyboardWillShowNotification == type) 
-    {
-        self.keyboardShowNotification = notif; // implicit copy
-        dispatcher->dispatchKeyboardWillShow(notiInfo);
-    }
-    else if (UIKeyboardDidShowNotification == type)
-    {
-        //CGSize screenSize = self.window.screen.bounds.size;
-        dispatcher->dispatchKeyboardDidShow(notiInfo);
-        caretRect_ = end;
-        caretRect_.origin.y = viewSize.height - (caretRect_.origin.y + caretRect_.size.height + [UIFont smallSystemFontSize]);
-        caretRect_.size.height = 0;
-        isKeyboardShown_ = YES;
-    }
-    else if (UIKeyboardWillHideNotification == type)
-    {
-        dispatcher->dispatchKeyboardWillHide(notiInfo);
-    }
-    else if (UIKeyboardDidHideNotification == type)
-    {
-        caretRect_ = CGRectZero;
-        dispatcher->dispatchKeyboardDidHide(notiInfo);
-        isKeyboardShown_ = NO;
-    }
-}
 
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
@@ -926,10 +737,7 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
 
 -(void) doAnimationWhenAnotherEditBeClicked
 {
-    if (self.keyboardShowNotification != nil)
-    {
-        [[NSNotificationCenter defaultCenter]postNotification:self.keyboardShowNotification];
-    }
+    //Do nothing.
 }
 
 @end
