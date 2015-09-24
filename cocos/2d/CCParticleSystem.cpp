@@ -839,6 +839,8 @@ void ParticleSystem::update(float dt)
         if (_particleCount < _totalParticles)
         {
             _emitCounter += dt;
+            if (_emitCounter < 0.f)
+                _emitCounter = 0.f;
         }
         
         int emitCount = MIN(_totalParticles - _particleCount, _emitCounter / rate);
@@ -846,6 +848,8 @@ void ParticleSystem::update(float dt)
         _emitCounter -= rate * emitCount;
         
         _elapsed += dt;
+        if (_elapsed < 0.f)
+            _elapsed = 0.f;
         if (_duration != DURATION_INFINITY && _duration < _elapsed)
         {
             this->stopSystem();
