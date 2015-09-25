@@ -43,6 +43,12 @@ PerformceParticleTests::PerformceParticleTests()
 // ParticleMainScene
 //
 ////////////////////////////////////////////////////////
+ParticleMainScene::ParticleMainScene()
+: particleSize(4)
+{
+    
+}
+
 bool ParticleMainScene::init()
 {
     if (TestCase::init())
