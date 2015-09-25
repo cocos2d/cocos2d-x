@@ -3624,10 +3624,6 @@
 		B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
 		B6DD2FF71B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
 		B6DD2FF81B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
-		BA34E69E1BAC55190087705F /* CCScriptComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34E69C1BAC55190087705F /* CCScriptComponent.cpp */; settings = {ASSET_TAGS = (); }; };
-		BA34E69F1BAC55190087705F /* CCScriptComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA34E69C1BAC55190087705F /* CCScriptComponent.cpp */; settings = {ASSET_TAGS = (); }; };
-		BA34E6A01BAC55190087705F /* CCScriptComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = BA34E69D1BAC55190087705F /* CCScriptComponent.h */; settings = {ASSET_TAGS = (); }; };
-		BA34E6A11BAC55190087705F /* CCScriptComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = BA34E69D1BAC55190087705F /* CCScriptComponent.h */; settings = {ASSET_TAGS = (); }; };
 		C50306691B60B583001E6D43 /* CCBoneNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306631B60B583001E6D43 /* CCBoneNode.cpp */; };
 		C503066A1B60B583001E6D43 /* CCBoneNode.h in Headers */ = {isa = PBXBuildFile; fileRef = C50306641B60B583001E6D43 /* CCBoneNode.h */; };
 		C503066B1B60B583001E6D43 /* CCSkeletonNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */; };
@@ -5590,8 +5586,6 @@
 		B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCacheBuilder.h; sourceTree = "<group>"; };
 		B6DD2FA51B04825B00E47F5F /* fastlz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fastlz.c; sourceTree = "<group>"; };
 		B6DD2FA61B04825B00E47F5F /* fastlz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastlz.h; sourceTree = "<group>"; };
-		BA34E69C1BAC55190087705F /* CCScriptComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCScriptComponent.cpp; path = ../base/CCScriptComponent.cpp; sourceTree = "<group>"; };
-		BA34E69D1BAC55190087705F /* CCScriptComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScriptComponent.h; path = ../base/CCScriptComponent.h; sourceTree = "<group>"; };
 		C50306631B60B583001E6D43 /* CCBoneNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBoneNode.cpp; sourceTree = "<group>"; };
 		C50306641B60B583001E6D43 /* CCBoneNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBoneNode.h; sourceTree = "<group>"; };
 		C50306651B60B583001E6D43 /* CCSkeletonNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkeletonNode.cpp; sourceTree = "<group>"; };
@@ -5996,8 +5990,6 @@
 				50ABBE021925AB6E00A911A9 /* CCScheduler.h */,
 				50ABBE031925AB6E00A911A9 /* CCScriptSupport.cpp */,
 				50ABBE041925AB6E00A911A9 /* CCScriptSupport.h */,
-				BA34E69C1BAC55190087705F /* CCScriptComponent.cpp */,
-				BA34E69D1BAC55190087705F /* CCScriptComponent.h */,
 				50ABBE051925AB6E00A911A9 /* CCTouch.cpp */,
 				50ABBE061925AB6E00A911A9 /* CCTouch.h */,
 				50ABBE071925AB6E00A911A9 /* ccTypes.cpp */,
@@ -9098,7 +9090,6 @@
 				B63990CE1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */,
 				B6CAAFF81AF9A9E100B9B856 /* CCPhysics3DShape.h in Headers */,
 				B665E2201AA80A6500DDB1C5 /* CCPUBehaviourManager.h in Headers */,
-				BA34E6A01BAC55190087705F /* CCScriptComponent.h in Headers */,
 				15AE180A19AAD2F700C27E9E /* CCAABB.h in Headers */,
 				B665E28C1AA80A6500DDB1C5 /* CCPUDynamicAttribute.h in Headers */,
 				B665E3941AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.h in Headers */,
@@ -10418,7 +10409,6 @@
 				15AE1BBA19AADFF000C27E9E /* HttpClient.h in Headers */,
 				B6CAB2241AF9AA1A00B9B856 /* btCollisionConfiguration.h in Headers */,
 				B6DD2FCA1B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */,
-				BA34E6A11BAC55190087705F /* CCScriptComponent.h in Headers */,
 				292DB14619B4574100A80320 /* UIEditBoxImpl-android.h in Headers */,
 				B6CAB49E1AF9AA1A00B9B856 /* PlatformDefinitions.h in Headers */,
 				B665E2DD1AA80A6500DDB1C5 /* CCPUJetAffectorTranslator.h in Headers */,
@@ -11116,7 +11106,6 @@
 				382383F41A258FA7002C4610 /* idl_gen_cpp.cpp in Sources */,
 				B6CAAFEA1AF9A9E100B9B856 /* CCPhysics3DConstraint.cpp in Sources */,
 				B29A7E3B19EE1B7700872B35 /* Animation.c in Sources */,
-				BA34E69E1BAC55190087705F /* CCScriptComponent.cpp in Sources */,
 				15AE1BDE19AAE01E00C27E9E /* CCInvocation.cpp in Sources */,
 				B665E2F21AA80A6500DDB1C5 /* CCPULineEmitterTranslator.cpp in Sources */,
 				292DB14F19B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */,
@@ -12519,7 +12508,6 @@
 				B665E3D71AA80A6600DDB1C5 /* CCPUScriptParser.cpp in Sources */,
 				B665E2331AA80A6500DDB1C5 /* CCPUBoxEmitter.cpp in Sources */,
 				15AE1BA919AADFDF00C27E9E /* UIVBox.cpp in Sources */,
-				BA34E69F1BAC55190087705F /* CCScriptComponent.cpp in Sources */,
 				B6CAB3021AF9AA1A00B9B856 /* btTriangleIndexVertexMaterialArray.cpp in Sources */,
 				50ABBDAE1925AB4100A911A9 /* CCRenderer.cpp in Sources */,
 				B665E3AF1AA80A6500DDB1C5 /* CCPURender.cpp in Sources */,

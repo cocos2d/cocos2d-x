@@ -26,11 +26,11 @@
 
 #include <string>
 #include <unordered_map>
-#include "base/CCScriptComponent.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
-class ComponentLua : public ScriptComponent
+class ComponentLua : public Component
 {
 public:
     static ComponentLua* create(const std::string& scriptFileName);
@@ -39,11 +39,11 @@ public:
     /**
      * This function is used to be invoked from lua side to get the corresponding script object of this component.
      */
-    void* getScriptObject() const override;
+    void* getScriptObject() const;
     
-    virtual void update(float dt) override;
-    virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void update(float dt);
+    virtual void onEnter();
+    virtual void onExit();
 
 private:
     ~ComponentLua();
@@ -57,6 +57,10 @@ private:
     static void initClass();
     
 private:
+    // Script file path
+    std::string _scriptFileName;
+    bool _succeedLoadingScript;
+    
     // a table returned from lua
     const void* _table;
     
@@ -65,6 +69,10 @@ private:
     
     // the index used to get lua table, it is unique for every component
     static int _index;
+    
+    static const std::string ON_ENTER;
+    static const std::string ON_EXIT;
+    static const std::string UPDATE;
 };
 
 NS_CC_END
