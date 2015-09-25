@@ -1430,11 +1430,11 @@ bool js_cocos2dx_builder_CCBReader_setResolutionScale(JSContext *cx, uint32_t ar
 
 bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocosbuilder::CCBReader* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocosbuilder::CCBReader* cobj = NULL;
     do {
         if (argc == 1) {
             cocosbuilder::CCBReader* arg0 = nullptr;
@@ -1453,6 +1453,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1488,6 +1489,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1534,6 +1536,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1591,6 +1594,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1659,6 +1663,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1683,6 +1688,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
