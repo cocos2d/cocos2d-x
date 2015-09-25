@@ -40,8 +40,9 @@ static void untrackRef(Ref* ref);
 #endif
 
 Ref::Ref()
-: _referenceCount(1) // when the Ref is created, the reference count of it is 1
 {
+    _referenceCount.store(1, std::memory_order_relaxed); // when the Ref is created, the reference count of it is 1
+
 #if CC_ENABLE_SCRIPT_BINDING
     static unsigned int uObjectCount = 0;
     _luaID = 0;
@@ -74,23 +75,23 @@ Ref::~Ref()
 
 
 #if CC_REF_LEAK_DETECTION
-    if (_referenceCount != 0)
+    if (_referenceCount.load(std::memory_order_relaxed) != 0)
         untrackRef(this);
 #endif
 }
 
 void Ref::retain()
 {
-    CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
-    ++_referenceCount;
+    CCASSERT(_referenceCount.load(std::memory_order_relaxed) > 0, "reference count should be greater than 0");
+    _referenceCount.fetch_add(1, std::memory_order_relaxed);
 }
 
 void Ref::release()
 {
-    CCASSERT(_referenceCount > 0, "reference count should be greater than 0");
-    --_referenceCount;
+    CCASSERT(_referenceCount.load(std::memory_order_relaxed) > 0, "reference count should be greater than 0");
+    _referenceCount.fetch_sub(1, std::memory_order_relaxed);
 
-    if (_referenceCount == 0)
+    if (_referenceCount.load(std::memory_order_relaxed) == 0)
     {
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
         auto poolManager = PoolManager::getInstance();
@@ -142,7 +143,7 @@ Ref* Ref::autorelease()
 
 unsigned int Ref::getReferenceCount() const
 {
-    return _referenceCount;
+    return _referenceCount.load(std::memory_order_relaxed);
 }
 
 #if CC_REF_LEAK_DETECTION
