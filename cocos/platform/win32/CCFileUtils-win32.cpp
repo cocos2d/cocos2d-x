@@ -270,6 +270,9 @@ static bool checkFileName(const std::string& fullPath, const std::string& filena
             break;
         }
 
+        if (tmpPath.rfind("/") == std::string::npos) 
+            break;
+
         do
         {
             tmpPath = tmpPath.substr(0, tmpPath.rfind("/"));
