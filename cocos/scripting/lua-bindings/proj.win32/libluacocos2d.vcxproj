@@ -56,6 +56,7 @@
     <ClCompile Include="..\manual\Cocos2dxLuaLoader.cpp" />
     <ClCompile Include="..\manual\cocos2d\LuaOpengl.cpp" />
     <ClCompile Include="..\manual\cocos2d\LuaScriptHandlerMgr.cpp" />
+    <ClCompile Include="..\manual\CCComponentLua.cpp" />
     <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_deprecated.cpp" />
     <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_experimental_manual.cpp" />
     <ClCompile Include="..\manual\cocos2d\lua_cocos2dx_manual.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="..\manual\Cocos2dxLuaLoader.h" />
     <ClInclude Include="..\manual\cocos2d\LuaOpengl.h" />
     <ClInclude Include="..\manual\cocos2d\LuaScriptHandlerMgr.h" />
+    <ClInclude Include="..\manual\CCComponentLua.h" />
     <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_deprecated.h" />
     <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_experimental_manual.hpp" />
     <ClInclude Include="..\manual\cocos2d\lua_cocos2dx_manual.hpp" />

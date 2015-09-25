@@ -50,6 +50,7 @@
         "src/TextureCacheTest/TextureCacheTest.js",
         "src/CocosDenshionTest/CocosDenshionTest.js",
         "src/CocosNodeTest/CocosNodeTest.js",
+        "src/ComponentTest/ComponentTest.js",
         "src/RotateWorldTest/RotateWorldTest.js",
         "src/RenderTextureTest/RenderTextureTest.js",
         "src/IntervalTest/IntervalTest.js",
