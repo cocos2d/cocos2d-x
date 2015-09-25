@@ -1102,6 +1102,12 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
     return filenameUtf8;
 }
 
+long FileUtils::getFileSize(const std::string &filepath)
+{
+    CCASSERT(false, "getFileSize should be override by platform FileUtils");
+    return 0;
+}
+
 #else
 // default implements for unix like os
 #include <sys/types.h>
@@ -1236,7 +1242,6 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
     return filenameUtf8;
 }
 
-#endif
 
 long FileUtils::getFileSize(const std::string &filepath)
 {
@@ -1252,10 +1257,10 @@ long FileUtils::getFileSize(const std::string &filepath)
 
     struct stat info;
     // Get data associated with "crt_stat.c":
-    int result = stat( fullpath.c_str(), &info );
+    int result = stat(fullpath.c_str(), &info);
 
     // Check if statistics are valid:
-    if( result != 0 )
+    if (result != 0)
     {
         // Failed
         return -1;
@@ -1265,6 +1270,7 @@ long FileUtils::getFileSize(const std::string &filepath)
         return (long)(info.st_size);
     }
 }
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
