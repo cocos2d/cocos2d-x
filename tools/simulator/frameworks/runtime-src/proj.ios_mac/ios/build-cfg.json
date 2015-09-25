@@ -1,0 +1,6 @@
+{
+    "remove_res" : [
+        "src",
+        "res"
+    ]
+}

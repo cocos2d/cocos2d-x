@@ -133,14 +133,14 @@ void TransitionScene::finish()
     _outScene->setAdditionalTransform(nullptr);
 
     //[self schedule:@selector(setNewScene:) interval:0];
-    this->schedule(schedule_selector(TransitionScene::setNewScene), 0);
+    this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
 void TransitionScene::setNewScene(float dt)
 {    
     CC_UNUSED_PARAM(dt);
 
-    this->unschedule(schedule_selector(TransitionScene::setNewScene));
+    this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"
     Director *director = Director::getInstance();
@@ -162,6 +162,14 @@ void TransitionScene::hideOutShowIn()
 // custom onEnter
 void TransitionScene::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnter))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::onEnter();
     
     // disable events while transitions
@@ -177,6 +185,14 @@ void TransitionScene::onEnter()
 // custom onExit
 void TransitionScene::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::onExit();
     
     // enable events while transitions
@@ -191,6 +207,14 @@ void TransitionScene::onExit()
 // custom cleanup
 void TransitionScene::cleanup()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
+            return;
+    }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+    
     Scene::cleanup();
 
     if( _isSendCleanupToScene )

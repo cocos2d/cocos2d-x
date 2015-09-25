@@ -35,33 +35,78 @@ NS_CC_BEGIN
 class Texture2D;
 
 /**
- * @addtogroup misc_nodes
+ * @addtogroup _2d
  * @{
  */
 
-/** MotionStreak.
- Creates a trailing path.
+/** @class MotionStreak.
+ * @brief Creates a trailing path.
  */
 class CC_DLL MotionStreak : public Node, public TextureProtocol
 {
 public:
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
+    /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename.
+     *
+     * @param fade The fade time, in seconds.
+     * @param minSeg The minimum segments.
+     * @param stroke The width of stroke.
+     * @param color The color of stroke.
+     * @param path The texture file name of stoke.
+     * @return An autoreleased MotionStreak object.
+     */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, const std::string& path);
-    /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
+    /** Creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture.
+     * 
+     * @param fade The fade time, in seconds.
+     * @param minSeg The minimum segments.
+     * @param stroke The width of stroke.
+     * @param color The color of stroke.
+     * @param texture The texture name of stoke.
+     * @return An autoreleased MotionStreak object.
+     */
     static MotionStreak* create(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
-    /** color used for the tint */
+    /** Color used for the tint.
+     *
+     * @param colors The color used for the tint.
+     */
     void tintWithColor(const Color3B& colors);
 
-    /** Remove all living segments of the ribbon */
+    /** Remove all living segments of the ribbon.
+     */
     void reset();
 
-    /** When fast mode is enabled, new points are added faster but with lower precision */
+    /** When fast mode is enabled, new points are added faster but with lower precision. 
+     * 
+     * @return True if fast mode is enabled.
+     */
     inline bool isFastMode() const { return _fastMode; }
+    /** Sets fast mode or not.
+     *
+     * @param bFastMode True if enabled fast mode.
+     */
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
+    /** Get stroke.
+     *
+     * @return float stroke.
+     */
+    inline float getStroke() const { return _stroke; }
+    /** Set stroke.
+     *
+     * @param stroke The width of stroke.
+     */
+    inline void setStroke(float stroke) { _stroke = stroke; }
 
+    /** Is the starting position initialized or not.
+     *
+     * @return True if the starting position is initialized.
+     */
     inline bool isStartingPositionInitialized() const { return _startingPositionInitialized; }
-    inline void setStartingPositionInitialized(bool bStartingPositionInitialized) 
+    /** Sets the starting position initialized or not.
+     *
+     * @param bStartingPositionInitialized True if initialized the starting position.
+     */
+    inline void setStartingPositionInitialized(bool bStartingPositionInitialized)
     {
         _startingPositionInitialized = bStartingPositionInitialized; 
     }
@@ -75,13 +120,13 @@ public:
     virtual void setPositionY(float y) override;
     virtual float getPositionX(void) const override;
     virtual float getPositionY(void) const override;
+    virtual Vec3 getPosition3D() const override;
     /**
     * @js NA
     * @lua NA
     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     /**
-    * @js NA
     * @lua NA
     */
     virtual void update(float delta) override;
@@ -147,7 +192,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);
 };
 
-// end of misc_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

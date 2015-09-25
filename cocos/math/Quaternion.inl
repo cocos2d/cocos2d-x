@@ -35,4 +35,17 @@ inline Quaternion& Quaternion::operator*=(const Quaternion& q)
     return *this;
 }
 
+inline Vec3 Quaternion::operator*(const Vec3& v) const
+{
+    Vec3 uv, uuv;
+    Vec3 qvec(x, y, z);
+    Vec3::cross(qvec, v, &uv);
+    Vec3::cross(qvec, uv, &uuv);
+
+    uv *= (2.0f * w);
+    uuv *= 2.0f;
+
+    return v + uv + uuv;
+}
+
 NS_CC_MATH_END

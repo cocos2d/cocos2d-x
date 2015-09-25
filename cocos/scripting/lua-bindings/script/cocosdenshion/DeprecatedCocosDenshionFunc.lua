@@ -1,3 +1,6 @@
+if nil == cc.SimpleAudioEngine then
+    return
+end
 --tip
 local function deprecatedTip(old_name,new_name)
     print("\n********** \n"..old_name.." was deprecated please use ".. new_name .. " instead.\n**********")
@@ -9,11 +12,11 @@ function SimpleAudioEngineDeprecated.sharedEngine()
     deprecatedTip("SimpleAudioEngine:sharedEngine","SimpleAudioEngine:getInstance")
     return cc.SimpleAudioEngine:getInstance()
 end
-rawset(SimpleAudioEngine,"sharedEngine",SimpleAudioEngineDeprecated.sharedEngine)
+SimpleAudioEngine.sharedEngine = SimpleAudioEngineDeprecated.sharedEngine
 
 function SimpleAudioEngineDeprecated.playBackgroundMusic(self,...)
     deprecatedTip("SimpleAudioEngine:playBackgroundMusic","SimpleAudioEngine:playMusic")
     return self:playMusic(...)
 end
-rawset(SimpleAudioEngine,"playBackgroundMusic",SimpleAudioEngineDeprecated.playBackgroundMusic)
+SimpleAudioEngine.playBackgroundMusic = SimpleAudioEngineDeprecated.playBackgroundMusic
 --functions of SimpleAudioEngine will be deprecated end

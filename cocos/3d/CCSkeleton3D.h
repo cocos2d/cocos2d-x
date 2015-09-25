@@ -26,7 +26,6 @@
 #define __CCSKELETON3D_H__
 
 #include "3d/CCBundle3DData.h"
-#include "3d/3dExport.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 
@@ -34,9 +33,15 @@
 NS_CC_BEGIN
 
 /**
- * Defines a basic hierachial structure of transformation spaces.
+ * @addtogroup _3d
+ * @{
  */
-class CC_3D_DLL Bone3D : public Ref
+
+/**
+ * @brief Defines a basic hierarchical structure of transformation spaces.
+ * @lua NA
+ */
+class CC_DLL Bone3D : public Ref
 {
     friend class Skeleton3D;
     friend class MeshSkin;
@@ -52,7 +57,7 @@ public:
     /**update own world matrix and children's*/
     void updateWorldMat();
     
-    /**get wrod matrix*/
+    /**get world matrix*/
     const Mat4& getWorldMat();
     
     /**get bone name*/
@@ -119,7 +124,10 @@ public:
     
     
 protected:
-    
+    /**
+     * the BoneBlendState struct
+     * @brief store the transformation and weight for bone blending
+     */
     struct BoneBlendState
     {
         Vec3          localTranslate;
@@ -128,8 +136,7 @@ protected:
         float         weight;
         void*         tag; //
         BoneBlendState()
-        : localTranslate(Vec3::ZERO)
-        , localRot(Quaternion::identity())
+        : localRot(Quaternion::identity())
         , localScale(Vec3::ONE)
         , weight(1.f)
         , tag(nullptr)
@@ -179,10 +186,12 @@ protected:
  * Skeleton
  *
  */
-class CC_3D_DLL Skeleton3D: public Ref
+class CC_DLL Skeleton3D: public Ref
 {
 public:
-    
+    /**
+     * @lua NA
+     */
     static Skeleton3D* create(const std::vector<NodeData*>& skeletondata);
     
     /**get total bone count*/
@@ -223,6 +232,9 @@ protected:
 
     Vector<Bone3D*> _rootBones;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

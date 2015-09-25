@@ -23,411 +23,312 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "2d/CCLabelTextFormatter.h"
-
+#include "2d/CCLabel.h"
 #include <vector>
-
 #include "base/ccUTF8.h"
 #include "base/CCDirector.h"
-#include "2d/CCLabel.h"
+#include "2d/CCFontAtlas.h"
 
 NS_CC_BEGIN
 
-bool LabelTextFormatter::multilineText(Label *theLabel)
+void Label::computeAlignmentOffset()
 {
-    auto limit = theLabel->_limitShowCount;
-    auto strWhole = theLabel->_currentUTF16String;
-
-    std::vector<char16_t> multiline_string;
-    multiline_string.reserve( limit );
-
-    std::vector<char16_t> last_word;
-    last_word.reserve( 25 );
-
-    bool   isStartOfLine  = false, isStartOfWord = false;
-    float  startOfLine = -1, startOfWord   = -1;
-
-    int skip = 0;
-    
-    int tIndex = 0;
-    float scalsX = theLabel->getScaleX();
-    float lineWidth = theLabel->_maxLineWidth;
-    bool breakLineWithoutSpace = theLabel->_lineBreakWithoutSpaces;
-    Label::LetterInfo* info = nullptr;
-
-    for (int j = 0; j+skip < limit; j++)
-    {            
-        info = & theLabel->_lettersInfo.at(j+skip);
-
-        unsigned int justSkipped = 0;
-
-        while (info->def.validDefinition == false)
+    _linesOffsetX.clear();
+    switch (_hAlignment)
+    {
+    case cocos2d::TextHAlignment::LEFT:
+        _linesOffsetX.assign(_numberOfLines, 0);
+        break;
+    case cocos2d::TextHAlignment::CENTER:
+        for (auto lineWidth : _linesWidth)
         {
-            justSkipped++;
-            tIndex = j+skip+justSkipped;
-            if (strWhole[tIndex-1] == '\n')
-            {
-                StringUtils::trimUTF16Vector(last_word);
-
-                last_word.push_back('\n');
-                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-                last_word.clear();
-                isStartOfWord = false;
-                isStartOfLine = false;
-                startOfWord = -1;
-                startOfLine = -1;
-            }
-            if(tIndex < limit)
-            {
-                info = & theLabel->_lettersInfo.at( tIndex );
-            }
-            else
-                break;
+            _linesOffsetX.push_back((_contentSize.width - lineWidth) / 2.f);
         }
-        skip += justSkipped;
-        tIndex = j + skip;
-
-        if (tIndex >= limit)
-            break;
-
-        char16_t character = strWhole[tIndex];
-
-        if (!isStartOfWord)
+        break;
+    case cocos2d::TextHAlignment::RIGHT:
+        for (auto lineWidth : _linesWidth)
         {
-            startOfWord = info->position.x * scalsX;
-            isStartOfWord = true;
+            _linesOffsetX.push_back(_contentSize.width - lineWidth);
         }
-
-        if (!isStartOfLine)
-        {
-            startOfLine = startOfWord;
-            isStartOfLine  = true;
-        }
-        
-        // 1) Whitespace.
-        // 2) This character is non-CJK, but the last character is CJK
-        bool isspace = StringUtils::isUnicodeSpace(character);
-        bool isCJK = false;
-        if(!isspace)
-        {
-            isCJK = StringUtils::isCJKUnicode(character);
-        }
-
-        if (isspace ||
-            (!last_word.empty() && StringUtils::isCJKUnicode(last_word.back()) && !isCJK))
-        {
-            // if current character is white space, put it into the current word
-            if (isspace) last_word.push_back(character);
-            multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-            last_word.clear();
-            isStartOfWord = false;
-            startOfWord = -1;
-            // put the CJK character in the last word
-            // and put the non-CJK(ASCII) character in the current word
-            if (!isspace) last_word.push_back(character);
-            continue;
-        }
-        
-        float posRight = (info->position.x + info->contentSize.width) * scalsX;
-        // Out of bounds.
-        if (posRight - startOfLine > lineWidth)
-        {
-            if (!breakLineWithoutSpace && !isCJK)
-            {
-                last_word.push_back(character);
-                
-                int found = StringUtils::getIndexOfLastNotChar16(multiline_string, ' ');
-                if (found != -1)
-                    StringUtils::trimUTF16Vector(multiline_string);
-                else
-                    multiline_string.clear();
-
-                if (multiline_string.size() > 0)
-                    multiline_string.push_back('\n');
-
-                isStartOfLine = false;
-                startOfLine = -1;
-            }
-            else
-            {
-                StringUtils::trimUTF16Vector(last_word);
-
-                last_word.push_back('\n');
-                
-                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-                last_word.clear();
-                isStartOfWord = false;
-                isStartOfLine = false;
-                startOfWord = -1;
-                startOfLine = -1;
-                --j;
-            }
-        }
-        else
-        {
-            // Character is normal.
-            last_word.push_back(character);
-        }
+        break;
+    default:
+        break;
     }
 
-    multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-
-    std::u16string strNew(multiline_string.begin(), multiline_string.end());
-    
-    theLabel->_currentUTF16String = strNew;
-    theLabel->computeStringNumLines();
-    theLabel->computeHorizontalKernings(theLabel->_currentUTF16String);
-
-    return true;
+    switch (_vAlignment)
+    {
+    case cocos2d::TextVAlignment::TOP:
+        _letterOffsetY = _contentSize.height;
+        break;
+    case cocos2d::TextVAlignment::CENTER:
+        _letterOffsetY = (_contentSize.height + _textDesiredHeight) / 2.f;
+        break;
+    case cocos2d::TextVAlignment::BOTTOM:
+        _letterOffsetY = _textDesiredHeight;
+        break;
+    default:
+        break;
+    }
 }
 
-bool LabelTextFormatter::alignText(Label *theLabel)
+static int getFirstWordLen(const std::u16string& utf16Text, int startIndex, int textLen)
 {
-    int i = 0;
-    
-    int lineNumber = 0;
-    int strLen = theLabel->_limitShowCount;
-    std::vector<char16_t> lastLine;
-    auto strWhole = theLabel->_currentUTF16String;
-
-    if (theLabel->_labelWidth > theLabel->_contentSize.width)
+    auto character = utf16Text[startIndex];
+    if (StringUtils::isCJKUnicode(character) || StringUtils::isUnicodeSpace(character) || character == '\n')
     {
-        theLabel->setContentSize(Size(theLabel->_labelWidth,theLabel->_contentSize.height));
+        return 1;
     }
 
-    for (int ctr = 0; ctr <= strLen; ++ctr)
-    { 
-        char16_t currentChar = strWhole[ctr];
-
-        if (currentChar == '\n' || currentChar == 0)
+    int len = 1;
+    for (int index = startIndex + 1; index < textLen; ++index)
+    {
+        character = utf16Text[index];
+        if (character == '\n' || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
         {
-            auto lineLength = lastLine.size();
-            
-            // if last line is empty we must just increase lineNumber and work with next line
-            if (lineLength == 0)
-            {
-                lineNumber++;
-                continue;
-            }
-            int index = static_cast<int>(i + lineLength - 1 + lineNumber);
-            if (index < 0) continue;
-            
-            auto info = & theLabel->_lettersInfo.at( index );
-            if(info->def.validDefinition == false)
-                continue;
-            
-            float shift = 0;
-            switch (theLabel->_hAlignment)
-            {
-                case TextHAlignment::CENTER:
-                    {
-                        float lineWidth = info->position.x + info->contentSize.width;
-                        shift = theLabel->_contentSize.width/2.0f - lineWidth/2.0f;
-                        break;
-                    }
-                case TextHAlignment::RIGHT:
-                    {
-                        float lineWidth = info->position.x + info->contentSize.width;
-                        shift = theLabel->_contentSize.width - lineWidth;
-                        break;
-                    }
-                default:
-                    break;
-            }
-            
-            if (shift != 0)
-            {
-                for (unsigned j = 0; j < lineLength; ++j)
-                {
-                    index = i + j + lineNumber;
-                    if (index < 0) continue;
-                    
-                    info = & theLabel->_lettersInfo.at( index );
-                    if(info)
-                    {
-                        info->position.x += shift;
-                    }
-                }
-            }
-            
-            i += lineLength;
-            ++lineNumber;
-            
-            lastLine.clear();
-            continue;
+            break;
         }
-        
-        lastLine.push_back(currentChar);
+        len++;
     }
     
-    return true;
+    return len;
 }
 
-bool LabelTextFormatter::createStringSprites(Label *theLabel)
+bool Label::multilineTextWrapByWord()
 {
-    // check for string
-    unsigned int stringLen = theLabel->getStringLength();
-    theLabel->_limitShowCount = 0;
-
-    // no string
-    if (stringLen == 0)
-        return false;
-    
-    int longestLine             = 0;
-    unsigned int totalHeight    = theLabel->_commonLineHeight * theLabel->_currNumLines;
-    int nextFontPositionX       = 0;
-    int nextFontPositionY       = totalHeight;
-    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
-
-    if (theLabel->_labelHeight > 0)
-    {
-        auto labelHeightPixel = theLabel->_labelHeight * contentScaleFactor;
-        if (totalHeight > labelHeightPixel)
-        {
-            int numLines = labelHeightPixel / theLabel->_commonLineHeight;
-            totalHeight = numLines * theLabel->_commonLineHeight;
-        }
-        switch (theLabel->_vAlignment)
-        {
-        case TextVAlignment::TOP:
-            nextFontPositionY = labelHeightPixel;
-            break;
-        case TextVAlignment::CENTER:
-            nextFontPositionY = (labelHeightPixel + totalHeight) / 2.0f;
-            break;
-        case TextVAlignment::BOTTOM:
-            nextFontPositionY = totalHeight;
-            break;
-        default:
-            break;
-        }
-    }
-    
-    Rect charRect;
-    int charXOffset = 0;
-    int charYOffset = 0;
-    int charAdvance = 0;
-
-    auto strWhole = theLabel->_currentUTF16String;
-    auto fontAtlas = theLabel->_fontAtlas;
-    FontLetterDefinition tempDefinition;
-    Vec2 letterPosition;
-    const auto& kernings = theLabel->_horizontalKernings;
-
-    float clipTop = 0;
-    float clipBottom = 0;
+    int textLen = getStringLength();
     int lineIndex = 0;
-    bool lineStart = true;
-    bool clip = false;
-    if (theLabel->_currentLabelType == Label::LabelType::TTF && theLabel->_clipEnabled)
-    {
-        clip = true;
-    }
+    float nextWordX = 0.f;
+    float nextWordY = 0.f;
+    float longestLine = 0.f;
+    float letterRight = 0.f;
+
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();  
+    float highestY = 0.f;
+    float lowestY = 0.f;
+    FontLetterDefinition letterDef;
+    Vec2 letterPosition;
     
-    for (unsigned int i = 0; i < stringLen; i++)
+    for (int index = 0; index < textLen; )
     {
-        char16_t c    = strWhole[i];
-        if (fontAtlas->getLetterDefinitionForChar(c, tempDefinition))
+        auto character = _utf16Text[index];
+        if (character == '\n')
         {
-            charXOffset         = tempDefinition.offsetX;
-            charYOffset         = tempDefinition.offsetY;
-            charAdvance         = tempDefinition.xAdvance;
-        }
-        else
-        {
-            charXOffset         = -1;
-            charYOffset         = -1;
-            charAdvance         = -1;
-        }
-
-        if (c == '\n')
-        {
+            _linesWidth.push_back(letterRight);
+            letterRight = 0.f;
             lineIndex++;
-            nextFontPositionX  = 0;
-            nextFontPositionY -= theLabel->_commonLineHeight;
-            
-            theLabel->recordPlaceholderInfo(i);
-            if(nextFontPositionY < theLabel->_commonLineHeight)
-                break;
-
-            lineStart = true;
-            continue;     
-        }
-        else if (clip && tempDefinition.height > 0.0f)
-        {
-            if (lineStart)
-            {
-                if (lineIndex == 0)
-                {
-                    clipTop = charYOffset;
-                }
-                lineStart = false;
-                clipBottom = tempDefinition.clipBottom;
-            }
-            else if(tempDefinition.clipBottom < clipBottom)
-            {
-                clipBottom = tempDefinition.clipBottom;
-            }
-
-            if (lineIndex == 0 && charYOffset < clipTop)
-            {
-                clipTop = charYOffset;
-            }
-        }
-        
-        letterPosition.x = (nextFontPositionX + charXOffset + kernings[i]) / contentScaleFactor;
-        letterPosition.y = (nextFontPositionY - charYOffset) / contentScaleFactor;
-               
-        if( theLabel->recordLetterInfo(letterPosition,tempDefinition,i) == false)
-        {
-            log("WARNING: can't find letter definition in font file for letter: %c", c);
+            nextWordX = 0.f;
+            nextWordY -= _lineHeight;
+            recordPlaceholderInfo(index, character);
+            index++;
             continue;
         }
 
-        nextFontPositionX += charAdvance + kernings[i] + theLabel->_additionalKerning;
+        auto wordLen = getFirstWordLen(_utf16Text, index, textLen);
+        float wordHighestY = highestY;;
+        float wordLowestY = lowestY;
+        float wordRight = letterRight;
+        float nextLetterX = nextWordX;
+        bool newLine = false;
+        for (int tmp = 0; tmp < wordLen;++tmp)
+        {
+            int letterIndex = index + tmp;
+            character = _utf16Text[letterIndex];
+            if (character == '\r')
+            {
+                recordPlaceholderInfo(letterIndex, character);
+                continue;
+            }
+            if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
+            {
+                recordPlaceholderInfo(letterIndex, character);
+                CCLOG("LabelTextFormatter error:can't find letter definition in font file for letter: %c", character);
+                continue;
+            }
+
+            auto letterX = (nextLetterX + letterDef.offsetX) / contentScaleFactor;
+            if (_maxLineWidth > 0.f && nextWordX > 0.f && letterX + letterDef.width > _maxLineWidth)
+            {
+                _linesWidth.push_back(letterRight);
+                letterRight = 0.f;
+                lineIndex++;
+                nextWordX = 0.f;
+                nextWordY -= _lineHeight;
+                newLine = true;
+                break;
+            }
+            else
+            {
+                letterPosition.x = letterX;
+            }
+            letterPosition.y = (nextWordY - letterDef.offsetY) / contentScaleFactor;
+            recordLetterInfo(letterPosition, character, letterIndex, lineIndex);
+
+            if (_horizontalKernings && letterIndex < textLen - 1)
+                nextLetterX += _horizontalKernings[letterIndex + 1];
+            nextLetterX += letterDef.xAdvance + _additionalKerning;
+
+            wordRight = letterPosition.x + letterDef.width;
+
+            if (wordHighestY < letterPosition.y)
+                wordHighestY = letterPosition.y;
+            if (wordLowestY > letterPosition.y - letterDef.height)
+                wordLowestY = letterPosition.y - letterDef.height;
+        }
         
-        if (longestLine < nextFontPositionX)
+        if (newLine)
         {
-            longestLine = nextFontPositionX;
+            continue;
         }
-    }
-    
-    float lastCharWidth = tempDefinition.width * contentScaleFactor;
-    Size tmpSize;
-    // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
-    // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
-    // box
-    if(charAdvance < lastCharWidth)
-    {
-        tmpSize.width = longestLine - charAdvance + lastCharWidth;
-    }
-    else
-    {
-        tmpSize.width = longestLine;
-    }
-    
-    tmpSize.height = totalHeight;
-    
-    if (theLabel->_labelHeight > 0)
-    {
-        tmpSize.height = theLabel->_labelHeight * contentScaleFactor;
+
+        nextWordX = nextLetterX;
+        letterRight = wordRight;
+        if (highestY < wordHighestY)
+            highestY = wordHighestY;
+        if (lowestY > wordLowestY)
+            lowestY = wordLowestY;
+        if (longestLine < letterRight)
+            longestLine = letterRight;
+
+        index += wordLen;
     }
 
-    if (clip)
-    {
-        int clipTotal = (clipTop + clipBottom) / contentScaleFactor;
-        tmpSize.height -= clipTotal * contentScaleFactor;
-        clipBottom /= contentScaleFactor;
+    _linesWidth.push_back(letterRight);
 
-        for (int i = 0; i < theLabel->_limitShowCount; i++)
-        {
-            theLabel->_lettersInfo[i].position.y -= clipBottom;
-        }
-    }
-    
-    theLabel->setContentSize(CC_SIZE_PIXELS_TO_POINTS(tmpSize));
+    _numberOfLines = lineIndex + 1;
+    _textDesiredHeight = (_numberOfLines * _lineHeight) / contentScaleFactor;
+    Size contentSize(_labelWidth, _labelHeight);
+    if (_labelWidth <= 0.f)
+        contentSize.width = longestLine;
+    if (_labelHeight <= 0.f)
+        contentSize.height = _textDesiredHeight;
+    setContentSize(contentSize);
+
+    _tailoredTopY = contentSize.height;
+    _tailoredBottomY = 0.f;
+    if (highestY > 0.f)
+        _tailoredTopY = contentSize.height + highestY;
+    if (lowestY < -_textDesiredHeight)
+        _tailoredBottomY = _textDesiredHeight + lowestY;
 
     return true;
+}
+
+bool Label::multilineTextWrapByChar()
+{
+    int textLen = getStringLength();
+    int lineIndex = 0;
+    float nextLetterX = 0.f;
+    float nextLetterY = 0.f;
+    float longestLine = 0.f;
+    float letterRight = 0.f;
+
+    auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
+    float highestY = 0.f;
+    float lowestY = 0.f;
+    FontLetterDefinition letterDef;
+    Vec2 letterPosition;
+
+    for (int index = 0; index < textLen; index++)
+    {
+        auto character = _utf16Text[index];
+        if (character == '\r')
+        {
+            recordPlaceholderInfo(index, character);
+            continue;
+        }
+        if (character == '\n')
+        {
+            _linesWidth.push_back(letterRight);
+            letterRight = 0.f;
+            lineIndex++;
+            nextLetterX = 0.f;
+            nextLetterY -= _lineHeight;
+            recordPlaceholderInfo(index, character);
+            continue;
+        }
+
+        if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
+        {
+            recordPlaceholderInfo(index, character);
+            CCLOG("LabelTextFormatter error:can't find letter definition in font file for letter: %c", character);
+            continue;
+        }
+
+        auto letterX = (nextLetterX + letterDef.offsetX) / contentScaleFactor;
+        if (_maxLineWidth > 0.f && nextLetterX > 0.f && letterX + letterDef.width > _maxLineWidth)
+        {
+            _linesWidth.push_back(letterRight);
+            letterRight = 0.f;
+            lineIndex++;
+            nextLetterX = 0.f;
+            nextLetterY -= _lineHeight;
+            letterPosition.x = letterDef.offsetX / contentScaleFactor;
+        }
+        else
+        {
+            letterPosition.x = letterX;
+        }
+        letterPosition.y = (nextLetterY - letterDef.offsetY) / contentScaleFactor;
+        recordLetterInfo(letterPosition, character, index, lineIndex);
+
+        if (_horizontalKernings && index < textLen - 1)
+            nextLetterX += _horizontalKernings[index + 1];
+        nextLetterX += letterDef.xAdvance + _additionalKerning;
+
+        letterRight = letterPosition.x + letterDef.width;
+
+        if (highestY < letterPosition.y)
+            highestY = letterPosition.y;
+        if (lowestY > letterPosition.y - letterDef.height)
+            lowestY = letterPosition.y - letterDef.height;
+        if (longestLine < letterRight)
+            longestLine = letterRight;
+    }
+
+    _linesWidth.push_back(letterRight);
+
+    _numberOfLines = lineIndex + 1;
+    _textDesiredHeight = (_numberOfLines * _lineHeight) / contentScaleFactor;
+    Size contentSize(_labelWidth, _labelHeight);
+    if (_labelWidth <= 0.f)
+        contentSize.width = longestLine;
+    if (_labelHeight <= 0.f)
+        contentSize.height = _textDesiredHeight;
+    setContentSize(contentSize);
+
+    _tailoredTopY = contentSize.height;
+    _tailoredBottomY = 0.f;
+    if (highestY > 0.f)
+        _tailoredTopY = contentSize.height + highestY;
+    if (lowestY < -_textDesiredHeight)
+        _tailoredBottomY = _textDesiredHeight + lowestY;
+
+    return true;
+}
+
+void Label::recordLetterInfo(const cocos2d::Vec2& point, char16_t utf16Char, int letterIndex, int lineIndex)
+{
+    if (static_cast<std::size_t>(letterIndex) >= _lettersInfo.size())
+    {
+        LetterInfo tmpInfo;
+        _lettersInfo.push_back(tmpInfo);
+    }
+    _lettersInfo[letterIndex].lineIndex = lineIndex;
+    _lettersInfo[letterIndex].utf16Char = utf16Char;
+    _lettersInfo[letterIndex].valid = _fontAtlas->_letterDefinitions[utf16Char].validDefinition;
+    _lettersInfo[letterIndex].positionX = point.x;
+    _lettersInfo[letterIndex].positionY = point.y;
+}
+
+void Label::recordPlaceholderInfo(int letterIndex, char16_t utf16Char)
+{
+    if (static_cast<std::size_t>(letterIndex) >= _lettersInfo.size())
+    {
+        LetterInfo tmpInfo;
+        _lettersInfo.push_back(tmpInfo);
+    }
+    _lettersInfo[letterIndex].utf16Char = utf16Char;
+    _lettersInfo[letterIndex].valid = false;
 }
 
 NS_CC_END

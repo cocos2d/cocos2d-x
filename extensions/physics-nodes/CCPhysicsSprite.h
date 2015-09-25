@@ -26,6 +26,7 @@
 #include "2d/CCSprite.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "base/CCEventListenerCustom.h"
 
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
@@ -45,6 +46,7 @@ NS_CC_EXT_BEGIN
  - Position and rotation are going to updated from the physics body
  - If you update the rotation or position manually, the physics body will be updated
  - You can't enble both Chipmunk support and Box2d support at the same time. Only one can be enabled at compile time
+ * @lua NA
  */
 class CC_EX_DLL PhysicsSprite : public Sprite
 {
@@ -85,7 +87,7 @@ public:
 
     PhysicsSprite();
 
-    virtual bool isDirty() const;
+    virtual bool isDirty() const override;
 
     /** Keep the sprite's rotation separate from the body. */
     bool isIgnoreBodyRotation() const;
@@ -107,6 +109,7 @@ public:
 
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
+    virtual void syncPhysicsTransform() const;
 
     // overrides
     virtual const Vec2& getPosition() const override;
@@ -116,13 +119,13 @@ public:
     virtual void setPosition(const Vec2 &position) override;
     virtual float getRotation() const override;
     virtual void setRotation(float fRotation) override;
-    virtual void syncPhysicsTransform() const;
-    virtual const Mat4& getNodeToParentTransform() const override;
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
 protected:
     const Vec2& getPosFromPhysics() const;
+    void afterUpdate(EventCustom *event);
 
 protected:
     bool    _ignoreBodyRotation;
@@ -133,6 +136,9 @@ protected:
     // box2d specific
     b2Body  *_pB2Body;
     float   _PTMRatio;
+    
+    // Event for update synchronise physic transform
+    cocos2d::EventListenerCustom* _syncTransform;
 };
 
 NS_CC_EXT_END

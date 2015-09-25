@@ -1,88 +1,18 @@
 #include "RenderTextureTest.h"
-#include "../testBasic.h"
 
-// Test #1 by Jason Booth (slipster216)
-// Test #3 by David Deaco (ddeaco)
+USING_NS_CC;
+using namespace cocos2d::ui;
 
-
-static std::function<Layer*()> createFunctions[] = {
-    CL(RenderTextureSave),
-    CL(RenderTextureIssue937),
-    CL(RenderTextureZbuffer),
-    CL(RenderTextureTestDepthStencil),
-    CL(RenderTextureTargetNode),
-    CL(SpriteRenderTextureBug),
-    CL(RenderTexturePartTest),
+RenderTextureTests::RenderTextureTests()
+{
+    ADD_TEST_CASE(RenderTextureSave);
+    ADD_TEST_CASE(RenderTextureIssue937);
+    ADD_TEST_CASE(RenderTextureZbuffer);
+    ADD_TEST_CASE(RenderTextureTestDepthStencil);
+    ADD_TEST_CASE(RenderTextureTargetNode);
+    ADD_TEST_CASE(SpriteRenderTextureBug);
+    ADD_TEST_CASE(RenderTexturePartTest);
 };
-
-#define MAX_LAYER   (sizeof(createFunctions)/sizeof(createFunctions[0]))
-static int sceneIdx = -1; 
-
-static Layer* nextTestCase()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backTestCase()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartTestCase()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void RenderTextureTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void RenderTextureTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) RenderTextureScene();
-    s->addChild(restartTestCase()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void RenderTextureTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) RenderTextureScene();
-    s->addChild( nextTestCase() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void RenderTextureTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) RenderTextureScene();
-    s->addChild( backTestCase() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-std::string RenderTextureTest::title() const
-{
-    return "No title";
-}
-
-std::string RenderTextureTest::subtitle() const
-{
-    return "";
-}
 
 /**
 * Impelmentation of RenderTextureSave
@@ -146,7 +76,8 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
     };
     
     _target->saveToFile(png, Image::Format::PNG, true, callback);
-
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", png);
 
     counter++;
@@ -265,14 +196,6 @@ std::string RenderTextureIssue937::title() const
 std::string RenderTextureIssue937::subtitle() const
 {
     return "All images should be equal...";
-}
-
-void RenderTextureScene::runThisTest()
-{
-    auto layer = nextTestCase();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 /**
@@ -511,19 +434,19 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
 
 void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _renderCmds[0].init(_globalZOrder);
+    _renderCmds[0].init(_globalZOrder, transform, flags);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
     renderer->addCommand(&_renderCmds[0]);
 
     _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
-    _renderCmds[1].init(_globalZOrder);
+    _renderCmds[1].init(_globalZOrder, transform, flags);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     renderer->addCommand(&_renderCmds[1]);
 
     _spriteDS->visit();
     
-    _renderCmds[2].init(_globalZOrder);
+    _renderCmds[2].init(_globalZOrder, transform, flags);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
     renderer->addCommand(&_renderCmds[2]);
 
@@ -531,7 +454,7 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
     
     _rend->end();
     
-    _renderCmds[3].init(_globalZOrder);
+    _renderCmds[3].init(_globalZOrder, transform, flags);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
     renderer->addCommand(&_renderCmds[3]);
 }
@@ -539,6 +462,10 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
 void RenderTextureTestDepthStencil::onBeforeClear()
 {
     glStencilMask(0xFF);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilWrite(0xFF);
 }
 
 void RenderTextureTestDepthStencil::onBeforeStencil()
@@ -547,16 +474,30 @@ void RenderTextureTestDepthStencil::onBeforeStencil()
     glEnable(GL_STENCIL_TEST);
     glStencilFunc(GL_NEVER, 1, 0xFF);
     glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilTest(true);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, 1, 0xFF);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE, RenderState::STENCIL_OP_REPLACE);
 }
 
 void RenderTextureTestDepthStencil::onBeforDraw()
 {
     glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NOTEQUAL, 1, 0xFF);
 }
 
 void RenderTextureTestDepthStencil::onAfterDraw()
 {
     glDisable(GL_STENCIL_TEST);
+
+    // Since cocos2d-x v3.7, users should avoid calling GL directly because it will break the internal GL state
+    // But if users must call GL directly, they should update the state manually,
+//    RenderState::StateBlock::_defaultState->setStencilTest(false);
 }
 
 std::string RenderTextureTestDepthStencil::title() const

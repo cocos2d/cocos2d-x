@@ -350,13 +350,11 @@ function AudioProfileTest.create()
     AudioProfileTest._files = {}
     AudioProfileTest._files[1] = "background.mp3"
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if (cc.PLATFORM_OS_MAC == currPlatform or cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) then
+    if (cc.PLATFORM_OS_MAC == targetPlatform or cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) then
         AudioProfileTest._files[2] = "background.caf"
-    elseif (cc.PLATFORM_OS_ANDROID == targetPlatform) then
+    else
         AudioProfileTest._files[2] = "background.ogg"
     end
-    AudioProfileTest._files[3] = "background.wav"
-    AudioProfileTest._files[4] = "pew-pew-lei.wav"
     
     AudioProfileTest._profile = ccexp.AudioProfile:new()
     AudioProfileTest._profile.name = "AudioProfileTest"
@@ -372,7 +370,7 @@ function AudioProfileTest.create()
     layer:addChild(menu)
     
     local heightRatio = 0.7
-    for index=1,4 do
+    for index=1,2 do
         local function itemClickCallback(tag, sender)
             local audioID = ccexp.AudioEngine:play2d(AudioProfileTest._files[tag],false,1.0,AudioProfileTest._profile)
             if audioID ~= cc.AUDIO_INVAILD_ID then
@@ -388,7 +386,7 @@ function AudioProfileTest.create()
                 ccexp.AudioEngine:setFinishCallback(audioID,finishCallback)
             end
         end
-        
+
         local item = cc.MenuItemFont:create("play "..AudioProfileTest._files[index])
         item:setFontSizeObj(20)
         item:setPosition(cc.p(layerSize.width * 0.5,layerSize.height * heightRatio))
@@ -490,7 +488,7 @@ function LargeAudioFileTest.create()
     local layerSize = layer:getContentSize()
     
     local function playAudio(tag, sender)
-        ccexp.AudioEngine:play2d("audio/Chee Lai(Arise).mp3")
+        ccexp.AudioEngine:play2d("audio/LuckyDay.mp3")
     end
     
     local playItem = cc.MenuItemFont:create("play large audio file")

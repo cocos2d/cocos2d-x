@@ -7,7 +7,12 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "afxres.h"
+#include "winres.h"
+
+/* IDC_STATIC is documented in winuser.h, but not defined. */
+#ifndef IDC_STATIC
+#define IDC_STATIC (-1)
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -27,7 +32,7 @@ LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""afxres.h""\r\n"
+    "#include ""winres.h""\r\n"
     "\0"
 END
 
@@ -47,29 +52,9 @@ END
 
 IDR_MENU_COCOS MENU
 BEGIN
-    POPUP "&File"
+    POPUP "°ïÖú(&H)"
     BEGIN
-        MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_FILE_EXIT
-    END
-    POPUP "&View"
-    BEGIN
-        MENUITEM SEPARATOR
-        MENUITEM "&Portrait",                   ID_VIEW_PORTRAIT
-        MENUITEM "&Landscape",                  ID_VIEW_LANDSCAPE
-        MENUITEM SEPARATOR
-        MENUITEM "&Actual(100%)",               ID_VIEW_ZOOMOUT100
-        MENUITEM "Zoom Out(75%)",               ID_VIEW_ZOOMOUT75
-        MENUITEM "Zoom Out(50%)",               ID_VIEW_ZOOMOUT50
-        MENUITEM "Zoom Out(25%)",               ID_VIEW_ZOOMOUT25
-    END
-    POPUP "&Control"
-    BEGIN
-        MENUITEM "Reload",                      ID_CONTROL_RELOAD
-    END
-    POPUP "&Help"
-    BEGIN
-        MENUITEM "&About ...",                  ID_HELP_ABOUT
+        MENUITEM "¹ØÓÚ(&A)",                      ID_HELP_ABOUT
     END
 END
 
@@ -85,20 +70,7 @@ CAPTION "About Simulator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,173,69,63,18
-    LTEXT           "Cocos2d-x-Simulator",IDC_STATIC,29,17,169,25
-END
-
-IDD_DIALOG_VIEWCUSTOM DIALOGEX 0, 0, 179, 98
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Custom"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,47,77,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,104,77,50,14
-    LTEXT           "Width£º",IDC_STATIC,15,14,30,8
-    LTEXT           "Height£º",IDC_STATIC,15,36,36,12
-    EDITTEXT        IDC_EDIT_WIDTH,60,15,89,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_HEIGHT,62,36,87,14,ES_AUTOHSCROLL
+    CTEXT           "Cocos Simulator",IDC_STATIC,28,23,173,17
 END
 
 
@@ -117,18 +89,34 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 87
     END
-
-    IDD_DIALOG_VIEWCUSTOM, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 172
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 91
-    END
 END
 #endif    // APSTUDIO_INVOKED
 
 #endif    // Chinese (Simplified, PRC) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_COCOS MENU
+BEGIN
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About ...",                  ID_HELP_ABOUT
+    END
+END
+
+#endif    // English resources
 /////////////////////////////////////////////////////////////////////////////
 
 

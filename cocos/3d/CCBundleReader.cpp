@@ -49,13 +49,16 @@ void BundleReader::init(char* buffer, ssize_t length)
 ssize_t BundleReader::read(void* ptr, ssize_t size, ssize_t count)
 {
     if (!_buffer || eof())
+    {
+        CCLOG("warning: bundle reader out of range");
         return 0;
+    }
 
     ssize_t validCount;
     ssize_t validLength = _length - _position;
     ssize_t needLength = size*count;
     char* ptr1 = (char*)ptr;
-    if(validLength <= needLength)
+    if(validLength < needLength)
     {
         validCount = validLength/size;
         ssize_t readLength = size*validCount;
@@ -167,7 +170,7 @@ std::string BundleReader::readString()
     std::string str;
     
     ssize_t validLength = _length - _position;
-    if (length > 0 && length <= validLength)
+    if (length > 0 && static_cast<ssize_t>(length) <= validLength)
     {
         str.resize(length);
         if (read(&str[0], 1, length) != length)
@@ -184,4 +187,4 @@ bool BundleReader::readMatrix(float* m)
     return (read(m, sizeof(float), 16) == 16);
 }
 
-}
+NS_CC_END

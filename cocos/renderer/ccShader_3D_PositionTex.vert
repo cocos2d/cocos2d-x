@@ -46,28 +46,25 @@ vec4 getPosition()
         matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
         matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
         matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
+        
+        blendWeight = a_blendWeight[2];
+        if (blendWeight > 0.0)
+        {
+            matrixIndex = int(a_blendIndex[2]) * 3;
+            matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
+            matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
+            matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
+            
+            blendWeight = a_blendWeight[3];
+            if (blendWeight > 0.0)
+            {
+                matrixIndex = int(a_blendIndex[3]) * 3;
+                matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
+                matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
+                matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
+            }
+        }
     }
-    
-    
-    blendWeight = a_blendWeight[2];
-    if (blendWeight > 0.0)
-    {
-        matrixIndex = int(a_blendIndex[2]) * 3;
-        matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
-        matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
-        matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
-    }
-    
-    
-    blendWeight = a_blendWeight[3];
-    if (blendWeight > 0.0)
-    {
-        matrixIndex = int(a_blendIndex[3]) * 3;
-        matrixPalette1 += u_matrixPalette[matrixIndex] * blendWeight;
-        matrixPalette2 += u_matrixPalette[matrixIndex + 1] * blendWeight;
-        matrixPalette3 += u_matrixPalette[matrixIndex + 2] * blendWeight;
-    }
-    
 
     vec4 _skinnedPosition;
     vec4 postion = vec4(a_position, 1.0);

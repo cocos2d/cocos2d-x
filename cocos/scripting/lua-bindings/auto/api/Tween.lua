@@ -15,6 +15,7 @@
 -- @function [parent=#Tween] gotoAndPause 
 -- @param self
 -- @param #int frameIndex
+-- @return Tween#Tween self (return value: ccs.Tween)
         
 --------------------------------
 -- Start the Process<br>
@@ -38,12 +39,14 @@
 -- @param #int durationTween
 -- @param #int loop
 -- @param #int tweenEasing
+-- @return Tween#Tween self (return value: ccs.Tween)
         
 --------------------------------
 -- 
 -- @function [parent=#Tween] gotoAndPlay 
 -- @param self
 -- @param #int frameIndex
+-- @return Tween#Tween self (return value: ccs.Tween)
         
 --------------------------------
 -- Init with a Bone<br>
@@ -58,6 +61,7 @@
 -- @function [parent=#Tween] setAnimation 
 -- @param self
 -- @param #ccs.ArmatureAnimation animation
+-- @return Tween#Tween self (return value: ccs.Tween)
         
 --------------------------------
 -- Create with a Bone<br>
@@ -71,5 +75,6 @@
 -- 
 -- @function [parent=#Tween] Tween 
 -- @param self
+-- @return Tween#Tween self (return value: ccs.Tween)
         
 return nil

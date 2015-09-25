@@ -128,7 +128,7 @@ CCBReader::~CCBReader()
 
 void CCBReader::setCCBRootPath(const char* ccbRootPath)
 {
-    CCASSERT(ccbRootPath != nullptr, "");
+    CCASSERT(ccbRootPath != nullptr, "ccbRootPath can't be nullptr!");
     _CCBRootPath = ccbRootPath;
 }
 
@@ -796,7 +796,7 @@ CCBKeyframe* CCBReader::readKeyframe(PropertyType type)
         
         SpriteFrame* spriteFrame;
 
-        if (spriteSheet.length() == 0)
+        if (spriteSheet.empty())
         {
             spriteFile = _CCBRootPath + spriteFile;
 

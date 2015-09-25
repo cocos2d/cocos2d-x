@@ -243,7 +243,7 @@ void TMoveBy::done()
 		if (_reverse == true)
 		{
 			ActionInterval*  actionByBack = actionBy->reverse();
-			node->runAction( CCSequence::create(actionBy, actionByBack, nullptr));
+			node->runAction( Sequence::create(actionBy, actionByBack, nullptr));
 		}
 		else
 		{

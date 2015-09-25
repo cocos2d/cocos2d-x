@@ -33,8 +33,5 @@ int  register_cocosdenshion_module(lua_State* L)
         register_all_cocos2dx_cocosdenshion(L);
     }
     lua_pop(L, 1);
-    
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedCocosDenshionClass");
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedCocosDenshionFunc");
     return 1;
 }

@@ -34,7 +34,6 @@ NS_CC_BEGIN
 
 TMXObjectGroup::TMXObjectGroup()
     : _groupName("")
-    , _positionOffset(Vec2::ZERO)
 {
 }
 

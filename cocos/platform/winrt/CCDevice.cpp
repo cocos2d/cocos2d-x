@@ -24,17 +24,21 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "cocos2d.h"
 #include "platform/CCDevice.h"
 #include "platform/CCFileUtils.h"
 #include "platform/winrt/CCFreeTypeFont.h"
+#include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCStdC.h"
 
 using namespace Windows::Graphics::Display;
 using namespace Windows::Devices::Sensors;
 using namespace Windows::Foundation;
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+using namespace Windows::Phone::Devices::Notification;
+#endif // (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 
 NS_CC_BEGIN
 
@@ -42,8 +46,7 @@ CCFreeTypeFont sFT;
 
 int Device::getDPI()
 {
-	static const float dipsPerInch = 96.0f;
-	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
+    return cocos2d::GLViewImpl::sharedOpenGLView()->GetDPI();
 }
 
 static Accelerometer^ sAccelerometer = nullptr;
@@ -62,79 +65,120 @@ void Device::setAccelerometerEnabled(bool isEnabled)
         sEnabled = false;
     }
 
-	if (isEnabled)
-	{
+    if (isEnabled)
+    {
         sAccelerometer = Accelerometer::GetDefault();
 
         if(sAccelerometer == nullptr)
         {
-	        MessageBox("This device does not have an accelerometer.","Alert");
+            // It's not a friendly experience and may cause crash.
+            //MessageBox("This device does not have an accelerometer.","Alert");
+            log("This device does not have an accelerometer.");
             return;
         }
 
-		setAccelerometerInterval(0.0f);
+        setAccelerometerInterval(0.0f);
         sEnabled = true;
 
         sToken = sAccelerometer->ReadingChanged += ref new TypedEventHandler
-			<Accelerometer^,AccelerometerReadingChangedEventArgs^>
-			([](Accelerometer^ a, AccelerometerReadingChangedEventArgs^ e)
-		{
+            <Accelerometer^,AccelerometerReadingChangedEventArgs^>
+            ([](Accelerometer^ a, AccelerometerReadingChangedEventArgs^ e)
+        {
             if (!sEnabled)
             {
                 return;
             }
 
-			AccelerometerReading^ reading = e->Reading;
+            AccelerometerReading^ reading = e->Reading;
             cocos2d::Acceleration acc;
-			acc.x = reading->AccelerationX;
-			acc.y = reading->AccelerationY;
-			acc.z = reading->AccelerationZ;
+            acc.x = reading->AccelerationX;
+            acc.y = reading->AccelerationY;
+            acc.z = reading->AccelerationZ;
             acc.timestamp = 0;
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
             auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
 
-            switch (orientation)
+            if (isWindowsPhone())
             {
-            case DisplayOrientations::Portrait:
- 				acc.x = reading->AccelerationX;
-				acc.y = reading->AccelerationY;
-                break;
-                
-            case DisplayOrientations::Landscape:
-				acc.x = -reading->AccelerationY;
-				acc.y = reading->AccelerationX;
-                break;
-                
-            case DisplayOrientations::PortraitFlipped:
-				acc.x = -reading->AccelerationX;
-				acc.y = reading->AccelerationY;
-                break;
-                
-            case DisplayOrientations::LandscapeFlipped:
- 				acc.x = reading->AccelerationY;
-				acc.y = reading->AccelerationX;
+                switch (orientation)
+                {
+                case DisplayOrientations::Portrait:
+                    acc.x = reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
                     break;
-              
-            default:
-  				acc.x = reading->AccelerationX;
-				acc.y = reading->AccelerationY;
-                break;
+
+                case DisplayOrientations::Landscape:
+                    acc.x = -reading->AccelerationY;
+                    acc.y = reading->AccelerationX;
+                    break;
+
+                case DisplayOrientations::PortraitFlipped:
+                    acc.x = -reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
+                    break;
+
+                case DisplayOrientations::LandscapeFlipped:
+                    acc.x = reading->AccelerationY;
+                    acc.y = -reading->AccelerationX;
+                    break;
+
+                default:
+                    acc.x = reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
+                    break;
+                }
             }
-#endif
-	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
+            else // Windows Store App
+            {
+                // from http://msdn.microsoft.com/en-us/library/windows/apps/dn440593
+                switch (orientation)
+                {
+                case DisplayOrientations::Portrait:
+                    acc.x = reading->AccelerationY;
+                    acc.y = -reading->AccelerationX;
+                    break;
+
+                case DisplayOrientations::Landscape:
+                    acc.x = reading->AccelerationX;
+                    acc.y = reading->AccelerationY;
+                    break;
+
+                case DisplayOrientations::PortraitFlipped:
+                    acc.x = -reading->AccelerationY;
+                    acc.y = reading->AccelerationX;
+                    break;
+
+                case DisplayOrientations::LandscapeFlipped:
+                    acc.x = -reading->AccelerationX;
+                    acc.y = -reading->AccelerationY;
+                    break;
+
+                default:
+                    acc.x = reading->AccelerationY;
+                    acc.y = -reading->AccelerationX;
+                    break;
+                }
+            }
+
+            std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
-		});
-	}
+        });
+    }
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
     if (sAccelerometer)
     {
-        int minInterval = sAccelerometer->MinimumReportInterval;
-	    int reqInterval = (int) interval;
-        sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        try {
+            int minInterval = sAccelerometer->MinimumReportInterval;
+            int reqInterval = (int) interval;
+            sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        }
+        catch (Platform::COMException^)
+        {
+            CCLOG("Device::setAccelerometerInterval not supported on this device");
+        }
     }
     else
     {
@@ -162,8 +206,24 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
+    CC_UNUSED_PARAM(value);
+}
+
+void Device::vibrate(float duration)
+{
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+    Windows::Foundation::TimeSpan timespan;
+    // A time period expressed in 100-nanosecond units, see https://msdn.microsoft.com/en-us/library/windows/apps/windows.foundation.timespan.aspx
+    // The duration is limited to a maximum of 5 seconds, see https://msdn.microsoft.com/en-us/library/windows/apps/windows.phone.devices.notification.vibrationdevice.aspx
+    timespan.Duration = std::min(static_cast<int>(duration * 10000), 50000);
+
+    VibrationDevice^ testVibrationDevice = VibrationDevice::GetDefault();
+    testVibrationDevice->Vibrate(timespan);
+#else
+    CC_UNUSED_PARAM(duration);
+#endif // (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 }
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)

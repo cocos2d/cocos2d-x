@@ -27,20 +27,22 @@
 
 #include "math/CCMath.h"
 #include "2d/CCNode.h"
-#include "3d/3dExport.h"
 
 NS_CC_BEGIN
-
+/**
+ * @addtogroup _3d
+ * @{
+ */
 class Bone3D;
 
 /** 
- * attach a node to a bone
+ * @brief attach a node to a bone
  * usage: auto sprite = Sprite3D::create("girl.c3b");
  *        auto weapon = Sprite3D::create("weapon.c3b");
  *        auto attachNode = sprite->getAttachNode("left hand");
  *        attachNode->addChild(weapon);
  */
-class CC_3D_DLL AttachNode : public Node
+class CC_DLL AttachNode : public Node
 {
 public:
     /** 
@@ -49,7 +51,10 @@ public:
      */
     static AttachNode* create(Bone3D* attachBone);
     
+    //override
     virtual Mat4 getWorldToNodeTransform() const override;
+    virtual Mat4 getNodeToWorldTransform() const override;
+    virtual const Mat4& getNodeToParentTransform() const override;
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -60,8 +65,11 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     Bone3D* _attachBone;
+    mutable Mat4    _transformToParent;
 };
 
+// end of 3d group
+/// @}
 
 NS_CC_END
 #endif // __CCATTACHNODE_H__

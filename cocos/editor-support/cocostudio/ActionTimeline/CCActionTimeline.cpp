@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #include "CCActionTimeline.h"
 
+#include "cocostudio/CCComExtensionData.h"
+
 USING_NS_CC;
 
 NS_TIMELINE_BEGIN
@@ -78,6 +80,7 @@ ActionTimeline::ActionTimeline()
     , _startFrame(0)
     , _endFrame(0)
     , _frameEventListener(nullptr)
+    , _lastFrameListener(nullptr)
 {
 }
 
@@ -88,6 +91,18 @@ ActionTimeline::~ActionTimeline()
 bool ActionTimeline::init()
 {
     return true;
+}
+
+void ActionTimeline::play(std::string name, bool loop)
+{
+    if (_animationInfos.find(name) == _animationInfos.end())
+    {
+        CCLOG("Can't find animation info for %s", name.c_str());
+        return;
+    }
+
+    AnimationInfo& index = _animationInfos[name];
+    gotoFrameAndPlay(index.startIndex, index.endIndex, loop);
 }
 
 void ActionTimeline::gotoFrameAndPlay(int startIndex)
@@ -143,7 +158,7 @@ bool ActionTimeline::isPlaying() const
 
 void ActionTimeline::setCurrentFrame(int frameIndex)
 {
-    if (frameIndex >= _startFrame && frameIndex >= _endFrame)
+    if (frameIndex >= _startFrame && frameIndex <= _endFrame)
     {
         _currentFrame = frameIndex;
         _time = _currentFrame*_frameInternal;
@@ -168,7 +183,11 @@ ActionTimeline* ActionTimeline::clone() const
             newAction->addTimeline(newTimeline);
         }
     }
-
+    
+    for( auto info : _animationInfos)
+    {
+        newAction->addAnimationInfo(info.second);
+    }
     return newAction;
 }
 
@@ -178,21 +197,38 @@ void ActionTimeline::step(float delta)
     {
         return;
     }
-
     _time += delta * _timeSpeed;
-    _currentFrame = (int)(_time / _frameInternal);
+    float deltaCurrFrameTime = std::abs(_time - _currentFrame * _frameInternal);
+    if (deltaCurrFrameTime < _frameInternal)
+        return;
 
-    stepToFrame(_currentFrame);
-
-    if(_time > _endFrame * _frameInternal)
+    const float endtoffset = _time - _endFrame * _frameInternal;
+    if (endtoffset < _frameInternal)
+    {
+        _currentFrame = (int)(_time / _frameInternal);
+        stepToFrame(_currentFrame);
+        emitFrameEndCallFuncs(_currentFrame);
+        if (endtoffset >= 0 && _lastFrameListener != nullptr) // last frame 
+            _lastFrameListener();
+    }
+    else
     {
         _playing = _loop;
-        if(!_playing)
+        if (!_playing)
+        {
             _time = _endFrame * _frameInternal;
-        else           
+            if (_currentFrame != _endFrame)
+            {
+                _currentFrame = _endFrame;
+                stepToFrame(_currentFrame);
+                emitFrameEndCallFuncs(_currentFrame);
+                if (_lastFrameListener != nullptr)  // last frame 
+                    _lastFrameListener();
+            }
+        }
+        else
             gotoFrameAndPlay(_startFrame, _endFrame, _loop);
     }
-
 }
 
 typedef std::function<void(Node*)> tCallBack;
@@ -200,7 +236,7 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
 {
     callback(parent);
 
-    auto children = parent->getChildren();
+    auto& children = parent->getChildren();
     for (auto child : children)
     {
         foreachNodeDescendant(child, callback);
@@ -210,11 +246,12 @@ void foreachNodeDescendant(Node* parent, tCallBack callback)
 void ActionTimeline::startWithTarget(Node *target)
 {
     Action::startWithTarget(target);
+    this->setTag(target->getTag());
 
     foreachNodeDescendant(target, 
         [this, target](Node* child)
     {
-        ActionTimelineData* data = dynamic_cast<ActionTimelineData*>(child->getUserObject());
+        ComExtensionData* data = dynamic_cast<ComExtensionData*>(child->getComponent("ComExtensionData"));
 
         if(data)
         {
@@ -261,6 +298,54 @@ void ActionTimeline::removeTimeline(Timeline* timeline)
     }
 }
 
+
+void ActionTimeline::addAnimationInfo(const AnimationInfo& animationInfo)
+{
+    if (_animationInfos.find(animationInfo.name) != _animationInfos.end())
+    {
+        CCLOG("Animation (%s) already exists.", animationInfo.name.c_str());
+        return;
+    }
+
+    _animationInfos[animationInfo.name] = animationInfo;
+    addFrameEndCallFunc(animationInfo.endIndex, animationInfo.name, animationInfo.clipEndCallBack);
+}
+
+void ActionTimeline::removeAnimationInfo(std::string animationName)
+{
+    auto clipIter = _animationInfos.find(animationName);
+    if (clipIter == _animationInfos.end())
+    {
+        CCLOG("AnimationInfo (%s) not exists.", animationName.c_str());
+        return;
+    }
+
+    removeFrameEndCallFunc((*clipIter).second.endIndex, animationName);
+    _animationInfos.erase(animationName);
+}
+
+bool ActionTimeline::IsAnimationInfoExists(const std::string& animationName)
+{
+    return _animationInfos.find(animationName) != _animationInfos.end();
+}
+
+const AnimationInfo& ActionTimeline::getAnimationInfo(const std::string &animationName)
+{
+    return _animationInfos.find(animationName)->second;
+}
+
+void ActionTimeline::setAnimationEndCallFunc(const std::string animationName, std::function<void()> func)
+{
+    auto clipIter = _animationInfos.find(animationName);
+    if (clipIter == _animationInfos.end())
+    {
+        CCLOG("AnimationInfo (%s) not exists.", animationName.c_str());
+        return;
+    }
+    clipIter->second.clipEndCallBack = func;
+    addFrameEndCallFunc(clipIter->second.endIndex, animationName, func);
+}
+
 void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)
 {
     _frameEventListener = listener;
@@ -271,6 +356,15 @@ void ActionTimeline::clearFrameEventCallFunc()
     _frameEventListener = nullptr;
 }
 
+void ActionTimeline::setLastFrameCallFunc(std::function<void()> listener)
+{
+    _lastFrameListener = listener;
+}
+
+void ActionTimeline::clearLastFrameCallFunc()
+{
+    _lastFrameListener = nullptr;
+}
 
 void ActionTimeline::emitFrameEvent(Frame* frame)
 {
@@ -280,8 +374,57 @@ void ActionTimeline::emitFrameEvent(Frame* frame)
     }
 }
 
+void ActionTimeline::addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func)
+{
+    if (func != nullptr)
+    {
+        _frameEndCallFuncs[frameIndex][funcKey] = func;
+    }
+}
+
+void ActionTimeline::removeFrameEndCallFunc(int frameIndex, const std::string& funcKey)
+{
+    auto endClipCallsIter = _frameEndCallFuncs.find(frameIndex);
+    if (endClipCallsIter != _frameEndCallFuncs.end())
+    {
+        auto funcIter = (*endClipCallsIter).second.find(funcKey);
+        if (funcIter != (*endClipCallsIter).second.end())
+            (*endClipCallsIter).second.erase(funcKey);
+        if ((*endClipCallsIter).second.empty())
+            _frameEndCallFuncs.erase(endClipCallsIter);
+    }
+}
+
+void ActionTimeline::removeFrameEndCallFuncs(int frameIndex)
+{
+    auto endClipCallsIter = _frameEndCallFuncs.find(frameIndex);
+    if (endClipCallsIter != _frameEndCallFuncs.end())
+    {
+        _frameEndCallFuncs.erase(endClipCallsIter);
+    }
+}
+
+void ActionTimeline::clearFrameEndCallFuncs()
+{
+    _frameEndCallFuncs.clear();
+}
+
+void ActionTimeline::emitFrameEndCallFuncs(int frameIndex)
+{
+    auto clipEndCallsIter = _frameEndCallFuncs.find(frameIndex);
+    if (clipEndCallsIter != _frameEndCallFuncs.end())
+    {
+        auto clipEndCalls = (*clipEndCallsIter).second;
+        for (auto call : clipEndCalls)
+            (call).second();
+    }
+}
+
 void ActionTimeline::gotoFrame(int frameIndex)
 {
+    if(_target == nullptr)
+        return;
+
     ssize_t size = _timelineList.size();
     for(ssize_t i = 0; i < size; i++)
     {      

@@ -32,15 +32,20 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCPrimitiveCommand.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
+#include "renderer/CCRenderState.h"
+#include "renderer/ccGLStateCache.h"
+
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "2d/CCScene.h"
 
 NS_CC_BEGIN
@@ -51,81 +56,140 @@ static bool compareRenderCommand(RenderCommand* a, RenderCommand* b)
     return a->getGlobalOrder() < b->getGlobalOrder();
 }
 
+static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
+{
+    return  a->getDepth() > b->getDepth();
+}
+
 // queue
+RenderQueue::RenderQueue()
+{
+    
+}
 
 void RenderQueue::push_back(RenderCommand* command)
 {
     float z = command->getGlobalOrder();
     if(z < 0)
-        _queueNegZ.push_back(command);
+    {
+        _commands[QUEUE_GROUP::GLOBALZ_NEG].push_back(command);
+    }
     else if(z > 0)
-        _queuePosZ.push_back(command);
+    {
+        _commands[QUEUE_GROUP::GLOBALZ_POS].push_back(command);
+    }
     else
-        _queue0.push_back(command);
+    {
+        if(command->is3D())
+        {
+            if(command->isTransparent())
+            {
+                _commands[QUEUE_GROUP::TRANSPARENT_3D].push_back(command);
+            }
+            else
+            {
+                _commands[QUEUE_GROUP::OPAQUE_3D].push_back(command);
+            }
+        }
+        else
+        {
+            _commands[QUEUE_GROUP::GLOBALZ_ZERO].push_back(command);
+        }
+    }
 }
 
 ssize_t RenderQueue::size() const
 {
-    return _queueNegZ.size() + _queue0.size() + _queuePosZ.size();
+    ssize_t result(0);
+    for(int index = 0; index < QUEUE_GROUP::QUEUE_COUNT; ++index)
+    {
+        result += _commands[index].size();
+    }
+    
+    return result;
 }
 
 void RenderQueue::sort()
 {
     // Don't sort _queue0, it already comes sorted
-    std::sort(std::begin(_queueNegZ), std::end(_queueNegZ), compareRenderCommand);
-    std::sort(std::begin(_queuePosZ), std::end(_queuePosZ), compareRenderCommand);
+    std::sort(std::begin(_commands[QUEUE_GROUP::TRANSPARENT_3D]), std::end(_commands[QUEUE_GROUP::TRANSPARENT_3D]), compare3DCommand);
+    std::sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_NEG]), std::end(_commands[QUEUE_GROUP::GLOBALZ_NEG]), compareRenderCommand);
+    std::sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_POS]), std::end(_commands[QUEUE_GROUP::GLOBALZ_POS]), compareRenderCommand);
 }
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    if(index < static_cast<ssize_t>(_queueNegZ.size()))
-        return _queueNegZ[index];
-
-    index -= _queueNegZ.size();
-
-    if(index < static_cast<ssize_t>(_queue0.size()))
-        return _queue0[index];
-
-    index -= _queue0.size();
-
-    if(index < static_cast<ssize_t>(_queuePosZ.size()))
-        return _queuePosZ[index];
-
+    for(int queIndex = 0; queIndex < QUEUE_GROUP::QUEUE_COUNT; ++queIndex)
+    {
+        if(index < static_cast<ssize_t>(_commands[queIndex].size()))
+            return _commands[queIndex][index];
+        else
+        {
+            index -= _commands[queIndex].size();
+        }
+    }
+    
     CCASSERT(false, "invalid index");
     return nullptr;
+
+
 }
 
 void RenderQueue::clear()
 {
-    _queueNegZ.clear();
-    _queue0.clear();
-    _queuePosZ.clear();
+    for(int i = 0; i < QUEUE_COUNT; ++i)
+    {
+        _commands[i].clear();
+    }
 }
 
-// helper
-static bool compareTransparentRenderCommand(RenderCommand* a, RenderCommand* b)
+void RenderQueue::realloc(size_t reserveSize)
 {
-    return a->getGlobalOrder() > b->getGlobalOrder();
+    for(int i = 0; i < QUEUE_COUNT; ++i)
+    {
+        _commands[i] = std::vector<RenderCommand*>();
+        _commands[i].reserve(reserveSize);
+    }
 }
 
-void TransparentRenderQueue::push_back(RenderCommand* command)
+void RenderQueue::saveRenderState()
 {
-    _queueCmd.push_back(command);
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
+    
+    CHECK_GL_ERROR_DEBUG();
 }
 
-void TransparentRenderQueue::sort()
+void RenderQueue::restoreRenderState()
 {
-    std::sort(std::begin(_queueCmd), std::end(_queueCmd), compareTransparentRenderCommand);
-}
+    if (_isCullEnabled)
+    {
+        glEnable(GL_CULL_FACE);
+        RenderState::StateBlock::_defaultState->setCullFace(true);
+    }
+    else
+    {
+        glDisable(GL_CULL_FACE);
+        RenderState::StateBlock::_defaultState->setCullFace(false);
+    }
+    
+    
+    if (_isDepthEnabled)
+    {
+        glEnable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
+    }
+    
+    glDepthMask(_isDepthWrite);
+    RenderState::StateBlock::_defaultState->setDepthWrite(_isDepthEnabled);
 
-RenderCommand* TransparentRenderQueue::operator[](ssize_t index) const
-{
-    return _queueCmd[index];
-}
-
-void TransparentRenderQueue::clear()
-{
-    _queueCmd.clear();
+    CHECK_GL_ERROR_DEBUG();
 }
 
 //
@@ -134,15 +198,17 @@ void TransparentRenderQueue::clear()
 static const int DEFAULT_RENDER_QUEUE = 0;
 
 //
-// constructors, destructors, init
+// constructors, destructor, init
 //
 Renderer::Renderer()
 :_lastMaterialID(0)
 ,_lastBatchedMeshCommand(nullptr)
 ,_filledVertex(0)
 ,_filledIndex(0)
+,_numberQuads(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
+,_isDepthTestFor2D(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
@@ -154,6 +220,9 @@ Renderer::Renderer()
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
     _batchedCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
+
+    // default clear color
+    _clearColor = Color4F::BLACK;
 }
 
 Renderer::~Renderer()
@@ -162,9 +231,11 @@ Renderer::~Renderer()
     _groupCommandManager->release();
     
     glDeleteBuffers(2, _buffersVBO);
+    glDeleteBuffers(2, _quadbuffersVBO);
     
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        glDeleteVertexArrays(1, &_buffersVAO);
         glDeleteVertexArrays(1, &_quadVAO);
         GL::bindVAO(0);
     }
@@ -183,6 +254,18 @@ void Renderer::initGLView()
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
 #endif
+    
+    //setup index data for quads
+    
+    for( int i=0; i < VBO_SIZE/4; i++)
+    {
+        _quadIndices[i*6+0] = (GLushort) (i*4+0);
+        _quadIndices[i*6+1] = (GLushort) (i*4+1);
+        _quadIndices[i*6+2] = (GLushort) (i*4+2);
+        _quadIndices[i*6+3] = (GLushort) (i*4+3);
+        _quadIndices[i*6+4] = (GLushort) (i*4+2);
+        _quadIndices[i*6+5] = (GLushort) (i*4+1);
+    }
     
     setupBuffer();
     
@@ -203,8 +286,9 @@ void Renderer::setupBuffer()
 
 void Renderer::setupVBOAndVAO()
 {
-    glGenVertexArrays(1, &_quadVAO);
-    GL::bindVAO(_quadVAO);
+    //generate vbo and vao for trianglesCommand
+    glGenVertexArrays(1, &_buffersVAO);
+    GL::bindVAO(_buffersVAO);
 
     glGenBuffers(2, &_buffersVBO[0]);
 
@@ -231,13 +315,42 @@ void Renderer::setupVBOAndVAO()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+    //generate vbo and vao for quadCommand
+    glGenVertexArrays(1, &_quadVAO);
+    GL::bindVAO(_quadVAO);
+    
+    glGenBuffers(2, &_quadbuffersVBO[0]);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * VBO_SIZE, _quadVerts, GL_DYNAMIC_DRAW);
+    
+    // vertices
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
+    
+    // colors
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, colors));
+    
+    // tex coords
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_quadIndices[0]) * INDEX_VBO_SIZE, _quadIndices, GL_STATIC_DRAW);
+    
+    // Must unbind the VAO before changing the element buffer.
+    GL::bindVAO(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
     CHECK_GL_ERROR_DEBUG();
 }
 
 void Renderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
-
+    glGenBuffers(2, &_quadbuffersVBO[0]);
     mapBuffers();
 }
 
@@ -248,10 +361,18 @@ void Renderer::mapBuffers()
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * VBO_SIZE, _quadVerts, GL_DYNAMIC_DRAW);
+    
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_quadIndices[0]) * INDEX_VBO_SIZE, _quadIndices, GL_STATIC_DRAW);
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
@@ -268,10 +389,8 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    if (command->isTransparent())
-        _transparentRenderGroups.push_back(command);
-    else
-        _renderGroups[renderQueue].push_back(command);
+
+    _renderGroups[renderQueue].push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)
@@ -293,129 +412,274 @@ int Renderer::createRenderQueue()
     return (int)_renderGroups.size() - 1;
 }
 
-void Renderer::visitRenderQueue(const RenderQueue& queue)
+void Renderer::processRenderCommand(RenderCommand* command)
 {
-    ssize_t size = queue.size();
-    
-    for (ssize_t index = 0; index < size; ++index)
+    auto commandType = command->getType();
+    if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
     {
-        auto command = queue[index];
-        auto commandType = command->getType();
-        if(RenderCommand::Type::QUAD_COMMAND == commandType || RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+        //Draw if we have batched other commands which are not triangle command
+        flush3D();
+        flushQuads();
+        
+        //Process triangle command
+        auto cmd = static_cast<TrianglesCommand*>(command);
+        
+        //Draw batched Triangles if necessary
+        if(cmd->isSkipBatching() || _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+        {
+            CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+            CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
+            //Draw batched Triangles if VBO is full
+            drawBatchedTriangles();
+        }
+        
+        //Batch Triangles
+        _batchedCommands.push_back(cmd);
+        
+        fillVerticesAndIndices(cmd);
+        
+        if(cmd->isSkipBatching())
+        {
+            drawBatchedTriangles();
+        }
+        
+    }
+    else if ( RenderCommand::Type::QUAD_COMMAND == commandType )
+    {
+        //Draw if we have batched other commands which are not quad command
+        flush3D();
+        flushTriangles();
+        
+        //Process quad command
+        auto cmd = static_cast<QuadCommand*>(command);
+        
+        //Draw batched quads if necessary
+        if(cmd->isSkipBatching()|| (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
+        {
+            CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+            //Draw batched quads if VBO is full
+            drawBatchedQuads();
+        }
+        
+        //Batch Quads
+        _batchQuadCommands.push_back(cmd);
+        
+        fillQuads(cmd);
+        
+        if(cmd->isSkipBatching())
+        {
+            drawBatchedQuads();
+        }
+    }
+    else if (RenderCommand::Type::MESH_COMMAND == commandType)
+    {
+        flush2D();
+        auto cmd = static_cast<MeshCommand*>(command);
+        
+        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
         {
             flush3D();
-            auto cmd = static_cast<TrianglesCommand*>(command);
-            //Batch quads
-            if( _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+            
+            if(cmd->isSkipBatching())
             {
-                CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-                CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
-                //Draw batched quads if VBO is full
-                drawBatchedQuads();
+                // XXX: execute() will call bind() and unbind()
+                // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
+                // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
+                cmd->execute();
             }
-            
-            _batchedCommands.push_back(cmd);
-            
-            fillVerticesAndIndices(cmd);
-
-        }
-        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-        {
-            flush();
-            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-        }
-        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<CustomCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<BatchCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-        {
-            flush();
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            cmd->execute();
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            flush2D();
-            auto cmd = static_cast<MeshCommand*>(command);
-            if (_lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            else
             {
-                flush3D();
                 cmd->preBatchDraw();
                 cmd->batchDraw();
                 _lastBatchedMeshCommand = cmd;
             }
-            else
-            {
-                cmd->batchDraw();
-            }
         }
         else
         {
-            CCLOGERROR("Unknown commands in renderQueue");
+            cmd->batchDraw();
         }
+    }
+    else if(RenderCommand::Type::GROUP_COMMAND == commandType)
+    {
+        flush();
+        int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+        visitRenderQueue(_renderGroups[renderQueueID]);
+    }
+    else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
+    {
+        flush();
+        auto cmd = static_cast<CustomCommand*>(command);
+        cmd->execute();
+    }
+    else if(RenderCommand::Type::BATCH_COMMAND == commandType)
+    {
+        flush();
+        auto cmd = static_cast<BatchCommand*>(command);
+        cmd->execute();
+    }
+    else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
+    {
+        flush();
+        auto cmd = static_cast<PrimitiveCommand*>(command);
+        cmd->execute();
+    }
+    else
+    {
+        CCLOGERROR("Unknown commands in renderQueue");
     }
 }
 
-void Renderer::visitTransparentRenderQueue(const TransparentRenderQueue& queue)
+void Renderer::visitRenderQueue(RenderQueue& queue)
 {
-    // do not batch for transparent objects
-    ssize_t size = queue.size();
+    queue.saveRenderState();
     
-    _batchedCommands.clear();
-    _filledVertex = 0;
-    _filledIndex = 0;
-    
-    for (ssize_t index = 0; index < size; ++index)
+    //
+    //Process Global-Z < 0 Objects
+    //
+    const auto& zNegQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG);
+    if (zNegQueue.size() > 0)
     {
-        auto command = queue[index];
-        auto commandType = command->getType();
-        if(RenderCommand::Type::QUAD_COMMAND == commandType || RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+        if(_isDepthTestFor2D)
         {
-            auto cmd = static_cast<TrianglesCommand*>(command);
-            _batchedCommands.push_back(cmd);
-            fillVerticesAndIndices(cmd);
-            drawBatchedQuads();
-        }
-        else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-        {
-            int renderQueueID = (static_cast<GroupCommand*>(command))->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-        }
-        else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-        {
-            auto cmd = static_cast<CustomCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-        {
-            auto cmd = static_cast<BatchCommand*>(command);
-            cmd->execute();
-        }
-        else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-        {
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            cmd->execute();
-        }
-        else if (RenderCommand::Type::MESH_COMMAND == commandType)
-        {
-            auto cmd = static_cast<MeshCommand*>(command);
-            cmd->execute();
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+            glEnable(GL_BLEND);
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
+            RenderState::StateBlock::_defaultState->setBlend(true);
         }
         else
         {
-            CCLOGERROR("Unknown commands in renderQueue");
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+            glEnable(GL_BLEND);
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
+            RenderState::StateBlock::_defaultState->setBlend(true);
         }
+        for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
     }
+    
+    //
+    //Process Opaque Object
+    //
+    const auto& opaqueQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D);
+    if (opaqueQueue.size() > 0)
+    {
+        //Clear depth to achieve layered rendering
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(true);
+        glDisable(GL_BLEND);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(true);
+        RenderState::StateBlock::_defaultState->setBlend(false);
+
+
+        for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    //
+    //Process 3D Transparent object
+    //
+    const auto& transQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D);
+    if (transQueue.size() > 0)
+    {
+        glEnable(GL_DEPTH_TEST);
+        glDepthMask(false);
+        glEnable(GL_BLEND);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(false);
+        RenderState::StateBlock::_defaultState->setBlend(true);
+
+
+        for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    //
+    //Process Global-Z = 0 Queue
+    //
+    const auto& zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
+    if (zZeroQueue.size() > 0)
+    {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+            glEnable(GL_BLEND);
+
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
+            RenderState::StateBlock::_defaultState->setBlend(true);
+
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+            glEnable(GL_BLEND);
+
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
+            RenderState::StateBlock::_defaultState->setBlend(true);
+
+        }
+        for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    //
+    //Process Global-Z > 0 Queue
+    //
+    const auto& zPosQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS);
+    if (zPosQueue.size() > 0)
+    {
+        if(_isDepthTestFor2D)
+        {
+            glEnable(GL_DEPTH_TEST);
+            glDepthMask(true);
+            glEnable(GL_BLEND);
+            
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
+            RenderState::StateBlock::_defaultState->setBlend(true);
+            
+        }
+        else
+        {
+            glDisable(GL_DEPTH_TEST);
+            glDepthMask(false);
+            glEnable(GL_BLEND);
+            
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
+            RenderState::StateBlock::_defaultState->setBlend(true);
+            
+        }
+        
+        for (auto it = zPosQueue.cbegin(); it != zPosQueue.cend(); ++it)
+        {
+            processRenderCommand(*it);
+        }
+        flush();
+    }
+    
+    queue.restoreRenderState();
 }
 
 void Renderer::render()
@@ -435,17 +699,6 @@ void Renderer::render()
             renderqueue.sort();
         }
         visitRenderQueue(_renderGroups[0]);
-        flush();
-        
-        //Process render commands
-        //draw transparent objects here, do not batch for transparent objects
-        if (0 < _transparentRenderGroups.size())
-        {
-            _transparentRenderGroups.sort();
-            glEnable(GL_DEPTH_TEST);
-            visitTransparentRenderQueue(_transparentRenderGroups);
-            glDisable(GL_DEPTH_TEST);
-        }
     }
     clean();
     _isRendering = false;
@@ -464,14 +717,49 @@ void Renderer::clean()
         _renderGroups[j].clear();
     }
 
-    // Clear batch quad commands
+    // Clear batch commands
     _batchedCommands.clear();
+    _batchQuadCommands.clear();
     _filledVertex = 0;
     _filledIndex = 0;
+    _numberQuads = 0;
     _lastMaterialID = 0;
     _lastBatchedMeshCommand = nullptr;
-    
-    _transparentRenderGroups.clear();
+}
+
+void Renderer::clear()
+{
+    //Enable Depth mask to make sure glClear clear the depth buffer correctly
+    glDepthMask(true);
+    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDepthMask(false);
+
+    RenderState::StateBlock::_defaultState->setDepthWrite(false);
+}
+
+void Renderer::setDepthTest(bool enable)
+{
+    if (enable)
+    {
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
+
+//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    }
+    else
+    {
+        glDisable(GL_DEPTH_TEST);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
+    }
+
+    _isDepthTestFor2D = enable;
+    CHECK_GL_ERROR_DEBUG();
 }
 
 void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
@@ -497,7 +785,20 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
     _filledIndex += cmd->getIndexCount();
 }
 
-void Renderer::drawBatchedQuads()
+void Renderer::fillQuads(const QuadCommand *cmd)
+{
+    const Mat4& modelView = cmd->getModelView();
+    const V3F_C4B_T2F* quads =  (V3F_C4B_T2F*)cmd->getQuads();
+    for(ssize_t i=0; i< cmd->getQuadCount() * 4; ++i)
+    {
+        _quadVerts[i + _numberQuads * 4] = quads[i];
+        modelView.transformPoint(quads[i].vertices,&(_quadVerts[i + _numberQuads * 4].vertices));
+    }
+    
+    _numberQuads += cmd->getQuadCount();
+}
+
+void Renderer::drawBatchedTriangles()
 {
     //TODO: we can improve the draw performance by insert material switching command before hand.
 
@@ -513,7 +814,7 @@ void Renderer::drawBatchedQuads()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         //Bind VAO
-        GL::bindVAO(_quadVAO);
+        GL::bindVAO(_buffersVAO);
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
@@ -560,7 +861,7 @@ void Renderer::drawBatchedQuads()
     for(const auto& cmd : _batchedCommands)
     {
         auto newMaterialID = cmd->getMaterialID();
-        if(_lastMaterialID != newMaterialID || newMaterialID == TrianglesCommand::MATERIAL_ID_DO_NOT_BATCH)
+        if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
             if(indexToDraw > 0)
@@ -581,7 +882,7 @@ void Renderer::drawBatchedQuads()
         indexToDraw += cmd->getIndexCount();
     }
 
-    //Draw any remaining quad
+    //Draw any remaining triangles
     if(indexToDraw > 0)
     {
         glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
@@ -605,6 +906,120 @@ void Renderer::drawBatchedQuads()
     _filledIndex = 0;
 }
 
+void Renderer::drawBatchedQuads()
+{
+    //TODO: we can improve the draw performance by insert material switching command before hand.
+    
+    ssize_t indexToDraw = 0;
+    int startIndex = 0;
+    
+    //Upload buffer to VBO
+    if(_numberQuads <= 0 || _batchQuadCommands.empty())
+    {
+        return;
+    }
+    
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        //Bind VAO
+        GL::bindVAO(_quadVAO);
+        //Set VBO data
+        glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
+        
+        // option 1: subdata
+        //  glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+        
+        // option 2: data
+        //  glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+        
+        // option 3: orphaning + glMapBuffer
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4, nullptr, GL_DYNAMIC_DRAW);
+        void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        memcpy(buf, _quadVerts, sizeof(_quadVerts[0])* _numberQuads * 4);
+        glUnmapBuffer(GL_ARRAY_BUFFER);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
+    }
+    else
+    {
+#define kQuadSize sizeof(_verts[0])
+        glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
+        
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4 , _quadVerts, GL_DYNAMIC_DRAW);
+        
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
+        
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
+        
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
+    }
+
+
+    // FIXME: The logic of this code is confusing, and error prone
+    // Needs refactoring
+
+    //Start drawing vertices in batch
+    for(const auto& cmd : _batchQuadCommands)
+    {
+        bool commandQueued = true;
+        auto newMaterialID = cmd->getMaterialID();
+        if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
+        {
+            // flush buffer
+            if(indexToDraw > 0)
+            {
+                glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
+                _drawnBatches++;
+                _drawnVertices += indexToDraw;
+                
+                startIndex += indexToDraw;
+                indexToDraw = 0;
+            }
+            
+            //Use new material
+            _lastMaterialID = newMaterialID;
+
+            cmd->useMaterial();
+        }
+
+        if (commandQueued)
+        {
+            indexToDraw += cmd->getQuadCount() * 6;
+        }
+    }
+    
+    //Draw any remaining quad
+    if(indexToDraw > 0)
+    {
+        glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
+        _drawnBatches++;
+        _drawnVertices += indexToDraw;
+    }
+    
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        //Unbind VAO
+        GL::bindVAO(0);
+    }
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+    
+    _batchQuadCommands.clear();
+    _numberQuads = 0;
+}
+
 void Renderer::flush()
 {
     flush2D();
@@ -613,8 +1028,8 @@ void Renderer::flush()
 
 void Renderer::flush2D()
 {
-    drawBatchedQuads();
-    _lastMaterialID = 0;
+    flushQuads();
+    flushTriangles();
 }
 
 void Renderer::flush3D()
@@ -626,41 +1041,61 @@ void Renderer::flush3D()
     }
 }
 
-// helpers
+void Renderer::flushQuads()
+{
+    if(_numberQuads > 0)
+    {
+        drawBatchedQuads();
+        _lastMaterialID = 0;
+    }
+}
 
+void Renderer::flushTriangles()
+{
+    if(_filledIndex > 0)
+    {
+        drawBatchedTriangles();
+        _lastMaterialID = 0;
+    }
+}
+
+// helpers
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     auto scene = Director::getInstance()->getRunningScene();
-    // only cull the default camera. The culling algorithm is valid for default camera.
-    if (scene && scene->_defaultCamera != Camera::getVisitingCamera())
-        return true;
     
-    // half size of the screen
-    Size screen_half = Director::getInstance()->getWinSize();
-    screen_half.width /= 2;
-    screen_half.height /= 2;
+    //If draw to Rendertexture, return true directly.
+    // only cull the default camera. The culling algorithm is valid for default camera.
+    if (!scene || (scene && scene->_defaultCamera != Camera::getVisitingCamera()))
+        return true;
 
+    auto director = Director::getInstance();
+    Rect visiableRect(director->getVisibleOrigin(), director->getVisibleSize());
+    
+    // transform center point to screen space
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
-
-    Vec4 v4world, v4local;
-    v4local.set(hSizeX, hSizeY, 0, 1);
-    transform.transformVector(v4local, &v4world);
-
-    // center of screen is (0,0)
-    v4world.x -= screen_half.width;
-    v4world.y -= screen_half.height;
+    Vec3 v3p(hSizeX, hSizeY, 0);
+    transform.transformPoint(&v3p);
+    Vec2 v2p = Camera::getVisitingCamera()->projectGL(v3p);
 
     // convert content size to world coordinates
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
     float wshh = std::max(fabsf(hSizeX * transform.m[1] + hSizeY * transform.m[5]), fabsf(hSizeX * transform.m[1] - hSizeY * transform.m[5]));
-
-    // compare if it in the positive quadrant of the screen
-    float tmpx = (fabsf(v4world.x)-wshw);
-    float tmpy = (fabsf(v4world.y)-wshh);
-    bool ret = (tmpx < screen_half.width && tmpy < screen_half.height);
-
+    
+    // enlarge visible rect half size in screen coord
+    visiableRect.origin.x -= wshw;
+    visiableRect.origin.y -= wshh;
+    visiableRect.size.width += wshw * 2;
+    visiableRect.size.height += wshh * 2;
+    bool ret = visiableRect.containsPoint(v2p);
     return ret;
+}
+
+
+void Renderer::setClearColor(const Color4F &clearColor)
+{
+    _clearColor = clearColor;
 }
 
 NS_CC_END

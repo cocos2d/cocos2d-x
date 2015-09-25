@@ -14,5 +14,6 @@
 -- js ctor
 -- @function [parent=#ParticleDisplayData] ParticleDisplayData 
 -- @param self
+-- @return ParticleDisplayData#ParticleDisplayData self (return value: ccs.ParticleDisplayData)
         
 return nil

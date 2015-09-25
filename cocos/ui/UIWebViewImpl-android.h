@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,6 +24,7 @@
 
 #ifndef __COCOS2D__UI__WEBVIEWIMPL_ANDROID_H_
 #define __COCOS2D__UI__WEBVIEWIMPL_ANDROID_H_
+/// @cond DO_NOT_SHOW
 
 #ifdef __ANDROID__
 
@@ -97,4 +98,5 @@ namespace cocos2d {
 
 #endif // __ANDROID__
 
+/// @endcond
 #endif /* __COCOS2D__UI__WEBVIEWIMPL_ANDROID_H_ */

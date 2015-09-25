@@ -29,9 +29,9 @@
 
 NS_CC_BEGIN
 
-const ValueVector ValueVectorNull;
-const ValueMap ValueMapNull;
-const ValueMapIntKey ValueMapIntKeyNull;
+CC_DLL const ValueVector ValueVectorNull;
+CC_DLL const ValueMap ValueMapNull;
+CC_DLL const ValueMapIntKey ValueMapIntKeyNull;
 
 const Value Value::Null;
 
@@ -756,7 +756,7 @@ static std::string visit(const Value& v, int depth)
     return ret.str();
 }
 
-std::string Value::getDescription()
+std::string Value::getDescription() const
 {
     std::string ret("\n");
     ret += visit(*this, 0);

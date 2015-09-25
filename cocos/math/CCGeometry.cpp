@@ -107,6 +107,10 @@ Rect::Rect(float x, float y, float width, float height)
 {
     setRect(x, y, width, height);
 }
+Rect::Rect(const Vec2& pos, const Size& dimension)
+{
+    setRect(pos.x, pos.y, dimension.width, dimension.height);
+}
 
 Rect::Rect(const Rect& other)
 {
@@ -186,6 +190,40 @@ bool Rect::intersectsRect(const Rect& rect) const
              rect.getMaxX() <      getMinX() ||
                   getMaxY() < rect.getMinY() ||
              rect.getMaxY() <      getMinY());
+}
+
+bool Rect::intersectsCircle(const cocos2d::Vec2 &center, float radius) const
+{
+    Vec2 rectangleCenter((origin.x + size.width / 2),
+                         (origin.y + size.height / 2));
+    
+    float w = size.width / 2;
+    float h = size.height / 2;
+    
+    float dx = fabs(center.x - rectangleCenter.x);
+    float dy = fabs(center.y - rectangleCenter.y);
+    
+    if (dx > (radius + w) || dy > (radius + h))
+    {
+        return false;
+    }
+    
+    Vec2 circleDistance(fabs(center.x - origin.x - w),
+                        fabs(center.y - origin.y - h));
+    
+    if (circleDistance.x <= (w))
+    {
+        return true;
+    }
+    
+    if (circleDistance.y <= (h))
+    {
+        return true;
+    }
+    
+    float cornerDistanceSq = powf(circleDistance.x - w, 2) + powf(circleDistance.y - h, 2);
+    
+    return (cornerDistanceSq <= (powf(radius, 2)));
 }
 
 void Rect::merge(const Rect& rect)

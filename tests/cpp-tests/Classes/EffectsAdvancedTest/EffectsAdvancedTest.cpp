@@ -1,5 +1,7 @@
 #include "EffectsAdvancedTest.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagTextLayer = 1,
@@ -11,6 +13,16 @@ enum
     kTagLabel = 2,
 };
 
+EffectAdvanceTests::EffectAdvanceTests()
+{
+    ADD_TEST_CASE(Effect3);
+    ADD_TEST_CASE(Effect2);
+    ADD_TEST_CASE(Effect1);
+    ADD_TEST_CASE(Effect4);
+    ADD_TEST_CASE(Effect5);
+    ADD_TEST_CASE(Issue631);
+}
+
 //------------------------------------------------------------------
 //
 // Effect1
@@ -18,7 +30,7 @@ enum
 //------------------------------------------------------------------
 void Effect1::onEnter()
 {
-    EffectAdvanceTextLayer::onEnter();
+    EffectAdvanceBaseTest::onEnter();
 
     //auto target = getChildByTag(kTagBackground);
     
@@ -53,7 +65,7 @@ std::string Effect1::title() const
 //------------------------------------------------------------------
 void Effect2::onEnter()
 {
-    EffectAdvanceTextLayer::onEnter();
+    EffectAdvanceBaseTest::onEnter();
 
     //auto target = getChildByTag(kTagBackground);
     
@@ -95,7 +107,7 @@ std::string Effect2::title() const
 //------------------------------------------------------------------
 void Effect3::onEnter()
 {
-    EffectAdvanceTextLayer::onEnter();
+    EffectAdvanceBaseTest::onEnter();
     //auto bg = getChildByTag(kTagBackground);
     //auto target1 = bg->getChildByTag(kTagSprite1);
     //auto target2 = bg->getChildByTag(kTagSprite2);    
@@ -153,7 +165,7 @@ private:
 
 void Effect4::onEnter()
 {
-    EffectAdvanceTextLayer::onEnter();
+    EffectAdvanceBaseTest::onEnter();
     //Node* gridNode = NodeGrid::create();
     
     auto lens = Lens3D::create(10, Size(32,24), Vec2(100,180), 150);
@@ -189,7 +201,7 @@ std::string Effect4::title() const
 //------------------------------------------------------------------
 void Effect5::onEnter()
 {
-    EffectAdvanceTextLayer::onEnter();
+    EffectAdvanceBaseTest::onEnter();
 
     //CCDirector::getInstance()->setProjection(DirectorProjection2D);
     
@@ -214,7 +226,7 @@ std::string Effect5::title() const
 
 void Effect5::onExit()
 {
-    EffectAdvanceTextLayer::onExit();
+    EffectAdvanceBaseTest::onExit();
 
     Director::getInstance()->setProjection(Director::Projection::_3D);
 }
@@ -226,7 +238,7 @@ void Effect5::onExit()
 //------------------------------------------------------------------
 void Issue631::onEnter()
 {
-    EffectAdvanceTextLayer::onEnter();
+    EffectAdvanceBaseTest::onEnter();
         
     auto effect = Sequence::create( DelayTime::create(2.0f), Shaky3D::create(5.0f, Size(5, 5), 16, false), nullptr);
 
@@ -267,76 +279,13 @@ std::string Issue631::subtitle() const
 
 //------------------------------------------------------------------
 //
-// EffectAdvanceTextLayer
+// EffectAdvanceBaseTest
 //
 //------------------------------------------------------------------
 
-enum
+void EffectAdvanceBaseTest::onEnter(void)
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    6
-
-Layer* nextEffectAdvanceAction();
-Layer* backEffectAdvanceAction();
-Layer* restartEffectAdvanceAction();
-
-Layer* createEffectAdvanceLayer(int nIndex)
-{
-    switch(nIndex)
-    {
-        case 0: return new Effect3();
-        case 1: return new Effect2();
-        case 2: return new Effect1();
-        case 3: return new Effect4();
-        case 4: return new Effect5();
-        case 5: return new Issue631();
-    }  
-
-    return nullptr;
-}
-
-Layer* nextEffectAdvanceAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createEffectAdvanceLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backEffectAdvanceAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createEffectAdvanceLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartEffectAdvanceAction()
-{
-    auto layer = createEffectAdvanceLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
-
-
-void EffectAdvanceTextLayer::onEnter(void)
-{
-    BaseTest::onEnter();
+    TestCase::onEnter();
     
     _bgNode = NodeGrid::create();
     _bgNode->setAnchorPoint(Vec2(0.5,0.5));
@@ -371,50 +320,16 @@ void EffectAdvanceTextLayer::onEnter(void)
 
 }
 
-EffectAdvanceTextLayer::~EffectAdvanceTextLayer(void)
+EffectAdvanceBaseTest::~EffectAdvanceBaseTest(void)
 {
 }
 
-std::string EffectAdvanceTextLayer::title() const
+std::string EffectAdvanceBaseTest::title() const
 {
     return "No title";
 }
 
-std::string EffectAdvanceTextLayer::subtitle() const
+std::string EffectAdvanceBaseTest::subtitle() const
 {
     return "";
-}
-
-void EffectAdvanceTextLayer::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) EffectAdvanceScene();
-    s->addChild(restartEffectAdvanceAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void EffectAdvanceTextLayer::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) EffectAdvanceScene();
-    s->addChild( nextEffectAdvanceAction() );
-    Director::getInstance()->replaceScene(s);
-
-    s->release();
-}
-
-void EffectAdvanceTextLayer::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) EffectAdvanceScene();
-    s->addChild( backEffectAdvanceAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void EffectAdvanceScene::runThisTest()
-{
-    auto layer = nextEffectAdvanceAction();
-
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
 }

@@ -1,8 +1,19 @@
 #include "UITest.h"
-#include "CocoStudioGUITest/CocoStudioGUITest.h"
+#include "cocostudio/CCArmatureDataManager.h"
+#include "CocoStudioGUITest/CocosGUIScene.h"
+#include "CocoStudioGUITest/GUIEditorTest.h"
+#include "CocoStudioGUITest/CustomGUIScene.h"
+#include "CocoStudioGUITest/CocostudioParserTest.h"
 
-void UITestScene::runThisTest()
+UITests::UITests()
 {
-    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
-    pScene->runThisTest();
+    addTest("GUI Dynamic Create Test", [](){ return new (std::nothrow) GUIDynamicCreateTests; });
+    addTest("GUI Editor Test", [](){ return new (std::nothrow) GUIEditorTests; });
+    addTest("Custom GUI Test", [](){ return new (std::nothrow) CustomGUITests; });
+    addTest("Cocostudio Parser Test", [](){ return new (std::nothrow) CocostudioParserTests; });
+}
+
+UITests::~UITests()
+{
+    cocostudio::ArmatureDataManager::destroyInstance();
 }

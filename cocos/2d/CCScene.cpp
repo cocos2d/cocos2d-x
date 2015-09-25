@@ -27,24 +27,45 @@ THE SOFTWARE.
 
 #include "2d/CCScene.h"
 #include "base/CCDirector.h"
-#include "base/CCCamera.h"
+#include "2d/CCCamera.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCFrameBuffer.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"
 #endif
 
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+#include "physics3d/CCPhysics3DWorld.h"
+#include "physics3d/CCPhysics3DComponent.h"
+#endif
+
+#if CC_USE_NAVMESH
+#include "navmesh/CCNavMesh.h"
+#endif
+
 NS_CC_BEGIN
 
 Scene::Scene()
-#if CC_USE_PHYSICS
-: _physicsWorld(nullptr)
-#endif
 {
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    _physics3DWorld = nullptr;
+    _physics3dDebugCamera = nullptr;
+#endif
+#if CC_USE_NAVMESH
+    _navMesh = nullptr;
+    _navMeshDebugCamera = nullptr;
+#endif
+#if CC_USE_PHYSICS
+    _physicsWorld = nullptr;
+#endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
+    
+    _cameraOrderDirty = true;
     
     //create default camera
     _defaultCamera = Camera::create();
@@ -52,16 +73,38 @@ Scene::Scene()
     
     _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
     _event->retain();
+    
+    Camera::_visitingCamera = nullptr;
 }
 
 Scene::~Scene()
 {
-#if CC_USE_PHYSICS
-    CC_SAFE_DELETE(_physicsWorld);
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    CC_SAFE_RELEASE(_physics3DWorld);
+    CC_SAFE_RELEASE(_physics3dDebugCamera);
+#endif
+#if CC_USE_NAVMESH
+    CC_SAFE_RELEASE(_navMesh);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
+    
+#if CC_USE_PHYSICS
+    delete _physicsWorld;
+#endif
 }
+
+#if CC_USE_NAVMESH
+void Scene::setNavMesh(NavMesh* navMesh)
+{
+    if (_navMesh != navMesh)
+    {
+        CC_SAFE_RETAIN(navMesh);
+        CC_SAFE_RELEASE(_navMesh);
+        _navMesh = navMesh;
+    }
+}
+#endif
 
 bool Scene::init()
 {
@@ -110,12 +153,6 @@ std::string Scene::getDescription() const
     return StringUtils::format("<Scene | tag = %d>", _tag);
 }
 
-Scene* Scene::getScene() const
-{
-    // FIX ME: should use const_case<> to fix compiling error
-    return const_cast<Scene*>(this);
-}
-
 void Scene::onProjectionChanged(EventCustom* event)
 {
     if (_defaultCamera)
@@ -124,27 +161,106 @@ void Scene::onProjectionChanged(EventCustom* event)
     }
 }
 
-#if CC_USE_PHYSICS
-void Scene::addChild(Node* child, int zOrder, int tag)
+static bool camera_cmp(const Camera* a, const Camera* b)
 {
-    Node::addChild(child, zOrder, tag);
-    addChildToPhysicsWorld(child);
+    return a->getRenderOrder() < b->getRenderOrder();
 }
 
-void Scene::addChild(Node* child, int zOrder, const std::string &name)
+const std::vector<Camera*>& Scene::getCameras()
 {
-    Node::addChild(child, zOrder, name);
-    addChildToPhysicsWorld(child);
-}
-
-void Scene::update(float delta)
-{
-    Node::update(delta);
-    if (nullptr != _physicsWorld && _physicsWorld->isAutoStep())
+    if (_cameraOrderDirty)
     {
-        _physicsWorld->update(delta);
+        stable_sort(_cameras.begin(), _cameras.end(), camera_cmp);
+        _cameraOrderDirty = false;
+    }
+    return _cameras;
+}
+
+void Scene::render(Renderer* renderer)
+{
+    auto director = Director::getInstance();
+    Camera* defaultCamera = nullptr;
+    const auto& transform = getNodeToParentTransform();
+
+    for (const auto& camera : getCameras())
+    {
+        if (!camera->isVisible())
+            continue;
+        
+        Camera::_visitingCamera = camera;
+        if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
+        {
+            defaultCamera = Camera::_visitingCamera;
+        }
+        
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
+        camera->apply();
+        //clear background with max depth
+        camera->clearBackground();
+        //visit the scene
+        visit(renderer, transform, 0);
+#if CC_USE_NAVMESH
+        if (_navMesh && _navMeshDebugCamera == camera)
+        {
+            _navMesh->debugDraw(renderer);
+        }
+#endif
+        
+        renderer->render();
+        
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+    
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
+    {
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
+        _physics3DWorld->debugDraw(renderer);
+        renderer->render();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+#endif
+
+    Camera::_visitingCamera = nullptr;
+    experimental::FrameBuffer::applyDefaultFBO();
+}
+
+void Scene::removeAllChildren()
+{
+    if (_defaultCamera)
+        _defaultCamera->retain();
+    
+    Node::removeAllChildren();
+    
+    if (_defaultCamera)
+    {
+        addChild(_defaultCamera);
+        _defaultCamera->release();
     }
 }
+
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+void Scene::setPhysics3DDebugCamera(Camera* camera)
+{
+    CC_SAFE_RETAIN(camera);
+    CC_SAFE_RELEASE(_physics3dDebugCamera);
+    _physics3dDebugCamera = camera;
+}
+#endif
+
+#if CC_USE_NAVMESH
+void Scene::setNavMeshDebugCamera(Camera *camera)
+{
+    CC_SAFE_RETAIN(camera);
+    CC_SAFE_RELEASE(_navMeshDebugCamera);
+    _navMeshDebugCamera = camera;
+}
+
+#endif
+
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 
 Scene* Scene::createWithPhysics()
 {
@@ -163,6 +279,10 @@ Scene* Scene::createWithPhysics()
 
 bool Scene::initWithPhysics()
 {
+#if CC_USE_PHYSICS
+    _physicsWorld = PhysicsWorld::construct(this);
+#endif
+    
     bool ret = false;
     do
     {
@@ -170,37 +290,42 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF( ! (director = Director::getInstance()) );
         
         this->setContentSize(director->getWinSize());
-        CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
         
-        this->scheduleUpdate();
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+        Physics3DWorldDes info;
+        CC_BREAK_IF(! (_physics3DWorld = Physics3DWorld::create(&info)));
+        _physics3DWorld->retain();
+#endif
+        
         // success
         ret = true;
     } while (0);
     return ret;
 }
 
-void Scene::addChildToPhysicsWorld(Node* child)
-{
-    if (_physicsWorld)
-    {
-        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
-        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
-        {
-            if (node->getPhysicsBody())
-            {
-                _physicsWorld->addBody(node->getPhysicsBody());
-            }
-            
-            auto& children = node->getChildren();
-            for( const auto &n : children) {
-                addToPhysicsWorldFunc(n);
-            }
-        };
-        
-        addToPhysicsWorldFunc(child);
-    }
-}
+#endif
 
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
+void Scene::stepPhysicsAndNavigation(float deltaTime)
+{
+#if CC_USE_PHYSICS
+    if (_physicsWorld && _physicsWorld->isAutoStep())
+        _physicsWorld->update(deltaTime);
+#endif
+    
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    if (_physics3DWorld)
+    {
+        _physics3DWorld->stepSimulate(deltaTime);
+    }
+#endif
+#if CC_USE_NAVMESH
+    if (_navMesh)
+    {
+        _navMesh->update(deltaTime);
+    }
+#endif
+}
 #endif
 
 NS_CC_END

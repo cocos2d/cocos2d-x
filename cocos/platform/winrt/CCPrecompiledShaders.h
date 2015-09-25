@@ -48,21 +48,12 @@ typedef struct _CompiledProgram
     int    length;
 } CompiledProgram;
 
-#if 0
-
-const unsigned char gKey[] = "hello";
-const unsigned char gProgram[] = "world";
-PrecompiledShader gFoo = {gKey, gProgram, 100};
-
-PrecompiledShader shaders[]  = {gFoo, gFoo};
-#endif
 
 class CC_DLL CCPrecompiledShaders
 {
 public:
     CCPrecompiledShaders();
     virtual ~CCPrecompiledShaders();
-
 
     /**
     @brief    Get current precompiled shaders instance.

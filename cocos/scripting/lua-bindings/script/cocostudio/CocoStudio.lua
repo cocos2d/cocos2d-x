@@ -1,11 +1,16 @@
-require "json"
-require "extern"
+if nil == ccs then
+    return
+end
 
-ccs = ccs or {}
+if not json then
+    require "cocos.cocos2d.json"
+end
+
+require "cocos.cocostudio.StudioConstants"
 
 function ccs.sendTriggerEvent(event)
     local triggerObjArr = ccs.TriggerMng.getInstance():get(event)
-    
+
     if nil == triggerObjArr then
         return
     end
@@ -106,7 +111,7 @@ end
 function ccs.TriggerObj:detect()
     if (not self._enable) or (table.getn(self._cons) == 0) then
         return true
-    end 
+    end
 
     local ret = true
     local obj = nil
@@ -355,7 +360,7 @@ end
 
 function ccs.TriggerMng:removeTriggerObj(id)
     local obj = self.getTriggerObj(id)
-    
+
     if nil == obj then
         return false
     end
@@ -376,4 +381,9 @@ function __onParseConfig(configType,jasonStr)
     if configType == cc.ConfigType.COCOSTUDIO then
         ccs.TriggerMng.getInstance():parse(jasonStr)
     end
+end
+
+function ccs.AnimationInfo(_name, _startIndex, _endIndex)
+    assert(nil ~= _name and type(_name) == "string" and _startIndex ~= nil and type(_startIndex) == "number" and _endIndex ~= nil and  type(_endIndex) == "number", "ccs.AnimationInfo() - invalid input parameters")
+    return { name = _name, startIndex = _startIndex,  endIndex = _endIndex}
 end

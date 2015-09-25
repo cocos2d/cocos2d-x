@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -38,78 +38,89 @@ class CC_STUDIO_DLL ActionManagerEx:public cocos2d::Ref
 {
 public:
 
-	/**
-	* Default constructor
-	* @js ctor
-	*/
-	ActionManagerEx();
+    /**
+    * Default constructor
+    * @js ctor
+    */
+    ActionManagerEx();
 
-	/**
-	* Default destructor
-	* @js NA
-	* @lua NA
-	*/
-	virtual ~ActionManagerEx();
+    /**
+    * Default destructor
+    * @js NA
+    * @lua NA
+    */
+    virtual ~ActionManagerEx();
 
-	/**
-	* Gets the static instance of ActionManager.
-	* @js getInstance
-	* @lua getInstance
-	*/
-	static ActionManagerEx* getInstance();
+    /**
+    * Gets the static instance of ActionManager.
+    * @js getInstance
+    * @lua getInstance
+    */
+    static ActionManagerEx* getInstance();
 
-	/**
-	* Purges ActionManager point.
-	* @js purge
-	* @lua destroyActionManager
-	*/
-	static void destroyInstance();
+    /**
+    * Purges ActionManager point.
+    * @js purge
+    * @lua destroyActionManager
+    */
+    static void destroyInstance();
 
-	/**
-	* Gets an ActionObject with a name.
-	*
-	* @param jsonName  UI file name
-	*
-	* @param actionName  action name in the UI file.
-	*
-	* @return  ActionObject which named as the param name
-	*/
-	ActionObject* getActionByName(const char* jsonName,const char* actionName);
+    /**
+    * Gets an ActionObject with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in the UI file.
+    *
+    * @return  ActionObject which named as the param name
+    */
+    ActionObject* getActionByName(const char* jsonName,const char* actionName);
 
-	/**
-	* Play an Action with a name.
-	*
-	* @param jsonName  UI file name
-	*
-	* @param actionName  action name in teh UIfile.
-	*
-	* @return  ActionObject which named as the param name
-	*/
-	ActionObject* playActionByName(const char* jsonName,const char* actionName);
+    /**
+    * Play an Action with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in teh UIfile.
+    *
+    * @return  ActionObject which named as the param name
+    */
+    ActionObject* playActionByName(const char* jsonName,const char* actionName);
 
-	/**
-	* Play an Action with a name.
-	*
-	* @param jsonName  UI file name
-	*
-	* @param actionName  action name in teh UIfile.
-	*
-	* @param func ui action call back
-	*/
-	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
+    /**
+    * Play an Action with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in teh UIfile.
+    *
+    * @param func ui action call back
+    */
+    ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
 
-	/*init properties with json dictionay*/
-	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
-    void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
+    /**
+    * Stop an Action with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in teh UIfile.
+    *
+    * @return  ActionObject which named as the param name
+    */
+    ActionObject* stopActionByName(const char* jsonName,const char* actionName);
 
-	/**
-	* Release all actions.
-	*
-	*/
-	void releaseActions();
+    /*init properties with json dictionay*/
+    void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
+    void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*    pCocoNode);
+
+    /**
+    * Release all actions.
+    *
+    */
+    void releaseActions();
 
 protected:
-	std::unordered_map<std::string, cocos2d::Vector<ActionObject*>> _actionDic;
+    std::unordered_map<std::string, cocos2d::Vector<ActionObject*>> _actionDic;
 };
 
 }

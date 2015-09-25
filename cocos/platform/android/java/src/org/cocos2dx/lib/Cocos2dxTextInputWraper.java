@@ -26,6 +26,7 @@ package org.cocos2dx.lib;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -33,140 +34,107 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class Cocos2dxTextInputWraper implements TextWatcher, OnEditorActionListener {
-	// ===========================================================
-	// Constants
-	// ===========================================================
+    // ===========================================================
+    // Constants
+    // ===========================================================
 
-	private static final String TAG = Cocos2dxTextInputWraper.class.getSimpleName();
+    private static final String TAG = Cocos2dxTextInputWraper.class.getSimpleName();
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
+    // ===========================================================
+    // Fields
+    // ===========================================================
 
-	private final Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
-	private String mText;
-	private String mOriginText;
+    private final Cocos2dxGLSurfaceView mCocos2dxGLSurfaceView;
+    private String mText;
+    private String mOriginText;
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
+    // ===========================================================
+    // Constructors
+    // ===========================================================
 
-	public Cocos2dxTextInputWraper(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
-		this.mCocos2dxGLSurfaceView = pCocos2dxGLSurfaceView;
-	}
+    public Cocos2dxTextInputWraper(final Cocos2dxGLSurfaceView pCocos2dxGLSurfaceView) {
+        this.mCocos2dxGLSurfaceView = pCocos2dxGLSurfaceView;
+    }
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
+    // ===========================================================
+    // Getter & Setter
+    // ===========================================================
 
-	private boolean isFullScreenEdit() {
-		final TextView textField = this.mCocos2dxGLSurfaceView.getCocos2dxEditText();
-		final InputMethodManager imm = (InputMethodManager) textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-		return imm.isFullscreenMode();
-	}
+    private boolean isFullScreenEdit() {
+        final TextView textField = this.mCocos2dxGLSurfaceView.getCocos2dxEditText();
+        final InputMethodManager imm = (InputMethodManager) textField.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        return imm.isFullscreenMode();
+    }
 
-	public void setOriginText(final String pOriginText) {
-		this.mOriginText = pOriginText;
-	}
+    public void setOriginText(final String pOriginText) {
+        this.mOriginText = pOriginText;
+    }
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
+    // ===========================================================
+    // Methods for/from SuperClass/Interfaces
+    // ===========================================================
 
-	@Override
-	public void afterTextChanged(final Editable s) {
-		if (this.isFullScreenEdit()) {
-			return;
-		}
+    @Override
+    public void afterTextChanged(final Editable s) {
+        if (this.isFullScreenEdit()) {
+            return;
+        }
 
-		//if (BuildConfig.DEBUG) {
-			//Log.d(TAG, "afterTextChanged: " + s);
-		//}
-		int nModified = s.length() - this.mText.length();
-		if (nModified > 0) {
-			final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
-			/*
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "insertText(" + insertText + ")");
-			}
-			*/
-		} else {
-			for (; nModified < 0; ++nModified) {
-				this.mCocos2dxGLSurfaceView.deleteBackward();
-				/*
-				if (BuildConfig.DEBUG) {
-					Log.d(TAG, "deleteBackward");
-				}
-				*/
-			}
-		}
-		this.mText = s.toString();
-	}
+        int nModified = s.length() - this.mText.length();
+        if (nModified > 0) {
+            final String insertText = s.subSequence(this.mText.length(), s.length()).toString();
+            this.mCocos2dxGLSurfaceView.insertText(insertText);
 
-	@Override
-	public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
-		/*
-		if (BuildConfig.DEBUG) {
-			Log.d(TAG, "beforeTextChanged(" + pCharSequence + ")start: " + start + ",count: " + count + ",after: " + after);
-		}
-		*/
-		this.mText = pCharSequence.toString();
-	}
+        } else if(nModified < 0) {
+            for (; nModified < 0; ++nModified) {
+                this.mCocos2dxGLSurfaceView.deleteBackward();
+            }
+        }
+        this.mText = s.toString();
+    }
 
-	@Override
-	public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
+    @Override
+    public void beforeTextChanged(final CharSequence pCharSequence, final int start, final int count, final int after) {
+        this.mText = pCharSequence.toString();
+    }
 
-	}
+    @Override
+    public void onTextChanged(final CharSequence pCharSequence, final int start, final int before, final int count) {
 
-	@Override
-	public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
-		if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
-			// user press the action button, delete all old text and insert new text
-			if (null != mOriginText) {
-				for (int i = this.mOriginText.length(); i > 0; i--) {
-					this.mCocos2dxGLSurfaceView.deleteBackward();
-					/*
-					if (BuildConfig.DEBUG) {
-						Log.d(TAG, "deleteBackward");
-					}
-					*/
-				}
-			}
-			
-			String text = pTextView.getText().toString();
-			
-			if (text != null) {
-				/* If user input nothing, translate "\n" to engine. */
-				if ( text.compareTo("") == 0) {
-					text = "\n";
-				}
+    }
 
-				if ( '\n' != text.charAt(text.length() - 1)) {
-					text += '\n';
-				}
-			}
-			
-			final String insertText = text;
-			this.mCocos2dxGLSurfaceView.insertText(insertText);
-			/*
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "insertText(" + insertText + ")");
-			}
-			*/
-		}
-		
-		if (pActionID == EditorInfo.IME_ACTION_DONE) {
-			this.mCocos2dxGLSurfaceView.requestFocus();
-		}
-		return false;
-	}
+    @Override
+    public boolean onEditorAction(final TextView pTextView, final int pActionID, final KeyEvent pKeyEvent) {
+        if (this.mCocos2dxGLSurfaceView.getCocos2dxEditText() == pTextView && this.isFullScreenEdit()) {
+            // user press the action button, delete all old text and insert new text
+            if (null != mOriginText) {
+                for (int i = this.mOriginText.length(); i > 0; i--) {
+                    this.mCocos2dxGLSurfaceView.deleteBackward();
+                }
+            }
+            
+            String text = pTextView.getText().toString();
+            
+            if (text != null) {
+                /* If user input nothing, translate "\n" to engine. */
+                if ( text.compareTo("") == 0) {
+                    text = "\n";
+                }
 
-	// ===========================================================
-	// Methods
-	// ===========================================================
+                if ( '\n' != text.charAt(text.length() - 1)) {
+                    text += '\n';
+                }
+            }
+            
+            final String insertText = text;
+            this.mCocos2dxGLSurfaceView.insertText(insertText);
 
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
+        }
+        
+        if (pActionID == EditorInfo.IME_ACTION_DONE) {
+            this.mCocos2dxGLSurfaceView.requestFocus();
+        }
+        return false;
+    }
+
 }

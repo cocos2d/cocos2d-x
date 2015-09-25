@@ -1,10 +1,11 @@
+
 cc = cc or {}
 
 function cc.clampf(value, min_inclusive, max_inclusive)
     -- body
     local temp = 0
     if min_inclusive > max_inclusive then
-        temp = min_inclusive 
+        temp = min_inclusive
         min_inclusive =  max_inclusive
         max_inclusive = temp
     end
@@ -110,7 +111,7 @@ function cc.pIsLineIntersect(A, B, C, D, s, t)
 
         return false, s, t
     end
-    
+
     s = s / denom
     t = t / denom
 
@@ -153,7 +154,7 @@ function cc.pFromSize(sz)
     return { x = sz.width, y = sz.height }
 end
 
-function cc.pLerp(pt1,pt2,alpha) 
+function cc.pLerp(pt1,pt2,alpha)
     return cc.pAdd(cc.pMul(pt1, 1.0 - alpha), cc.pMul(pt2,alpha) )
 end
 
@@ -166,15 +167,15 @@ function cc.pFuzzyEqual(pt1,pt2,variance)
 end
 
 function cc.pRotateByAngle(pt1, pt2, angle)
-    return cc.pAdd(pt2, cc.pRotate( cc.pSub(pt1, pt2),cc.pForAngle(angle)))    
+    return cc.pAdd(pt2, cc.pRotate( cc.pSub(pt1, pt2),cc.pForAngle(angle)))
 end
 
 function cc.pIsSegmentIntersect(pt1,pt2,pt3,pt4)
     local s,t,ret = 0,0,false
     ret,s,t =cc.pIsLineIntersect(pt1, pt2, pt3, pt4,s,t)
-    
-    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 0.0 then
-        return true;
+
+    if ret and  s >= 0.0 and s <= 1.0 and t >= 0.0 and t <= 1.0 then
+        return true
     end
 
     return false
@@ -182,7 +183,7 @@ end
 
 function cc.pGetIntersectPoint(pt1,pt2,pt3,pt4)
     local s,t, ret = 0,0,false
-    ret,s,t = cc.pIsLineIntersect(pt1,pt2,pt3,pt4,s,t) 
+    ret,s,t = cc.pIsLineIntersect(pt1,pt2,pt3,pt4,s,t)
     if ret then
         return cc.p(pt1.x + s * (pt2.x - pt1.x), pt1.y + s * (pt2.y - pt1.y))
     else
@@ -235,7 +236,7 @@ end
 
 function cc.rectContainsPoint( rect, point )
     local ret = false
-    
+
     if (point.x >= rect.x) and (point.x <= rect.x + rect.width) and
        (point.y >= rect.y) and (point.y <= rect.y + rect.height) then
         ret = true
@@ -286,6 +287,55 @@ end
 --Color4F
 function cc.c4f( _r,_g,_b,_a )
     return { r = _r, g = _g, b = _b, a = _a }
+end
+
+local function isFloatColor(c)
+    return (c.r <= 1 and c.g <= 1 and c.b <= 1) and (math.ceil(c.r) ~= c.r or math.ceil(c.g) ~= c.g or math.ceil(c.b) ~= c.b)
+end
+
+function cc.convertColor(input, typ)
+    assert(type(input) == "table" and input.r and input.g and input.b, "cc.convertColor() - invalid input color")
+    local ret
+    if typ == "3b" then
+        if isFloatColor(input) then
+            ret = {r = math.ceil(input.r * 255), g = math.ceil(input.g * 255), b = math.ceil(input.b * 255)}
+        else
+            ret = {r = input.r, g = input.g, b = input.b}
+        end
+    elseif typ == "4b" then
+        if isFloatColor(input) then
+            ret = {r = math.ceil(input.r * 255), g = math.ceil(input.g * 255), b = math.ceil(input.b * 255)}
+        else
+            ret = {r = input.r, g = input.g, b = input.b}
+        end
+        if input.a then
+            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+                ret.a = input.a * 255
+            else
+                ret.a = input.a
+            end
+        else
+            ret.a = 255
+        end
+    elseif typ == "4f" then
+        if isFloatColor(input) then
+            ret = {r = input.r, g = input.g, b = input.b}
+        else
+            ret = {r = input.r / 255, g = input.g / 255, b = input.b / 255}
+        end
+        if input.a then
+            if math.ceil(input.a) ~= input.a or input.a >= 1 then
+                ret.a = input.a
+            else
+                ret.a = input.a / 255
+            end
+        else
+            ret.a = 255
+        end
+    else
+        error(string.format("cc.convertColor() - invalid type %s", typ), 0)
+    end
+    return ret
 end
 
 --Vertex2F
@@ -361,4 +411,170 @@ end
 --PhysicsMaterial
 function cc.PhysicsMaterial(_density, _restitution, _friction)
 	return { density = _density, restitution = _restitution, friction = _friction }
+end
+
+function cc.vec3(_x, _y, _z)
+    return { x = _x, y = _y, z = _z }
+end
+
+function cc.vec4(_x, _y, _z, _w)
+    return { x = _x, y = _y, z = _z, w = _w }
+end
+
+function cc.vec3normalize(vec3)
+    local n = vec3.x * vec3.x + vec3.y * vec3.y + vec3.z * vec3.z
+    if n == 1.0 then
+        return vec3
+    end
+
+    n = math.sqrt(n)
+
+    if n < 2e-37 then
+        return vec3
+    end
+
+    n = 1.0 / n
+    return {x = vec3.x * n, y = vec3.y * n, z = vec3.z * n}
+end
+
+function cc.quaternion(_x, _y ,_z,_w)
+    return { x = _x, y = _y, z = _z, w = _w }
+end
+
+function cc.quaternion_createFromAxisAngle(axis, angle)
+
+    local  halfAngle = angle * 0.5
+    local  sinHalfAngle = math.sin(halfAngle)
+
+    local normal = cc.vec3(axis.x, axis.y, axis.z)
+    normal = cc.vec3normalize(normal)
+    local dst = cc.vec3(0.0, 0.0, 0.0)
+    dst.x = normal.x * sinHalfAngle
+    dst.y = normal.y * sinHalfAngle
+    dst.z = normal.z * sinHalfAngle
+    dst.w = math.cos(halfAngle)
+
+    return dst
+end
+
+function cc.blendFunc(_src, _dst)
+    return {src = _src, dst = _dst}
+end
+
+cc.mat4 = cc.mat4 or {}
+
+function cc.mat4.new(...)
+    local params = {...}
+    local size   = #params
+    local obj = {}
+
+    if 1 == size then
+        assert(type(params[1]) == "table" , "type of input params are wrong to new a mat4 when num of params is 1")
+        for i= 1, 16 do
+            if params[1][i] ~= nil then
+                obj[i] = params[1][i]
+            else
+                obj[i] = 0
+            end
+        end
+    elseif 16 == size then
+        for i= 1, 16 do
+            obj[i] = params[i]
+        end
+    end
+
+    setmetatable(obj, {__index = cc.mat4})
+
+    return obj
+end
+
+function cc.mat4.getInversed(self)
+    return mat4_getInversed(self)
+end
+
+function cc.mat4.transformVector(self, vector, dst)
+    return mat4_transformVector(self, vector, dst)
+end
+
+function cc.mat4.multiply(self, mat)
+    return mat4_multiply(self, mat)
+end
+
+function cc.mat4.decompose(self, scale, rotation, translation)
+    return mat4_decompose(self, scale ,rotation, translation)
+end
+
+function cc.mat4.createIdentity()
+    return cc.mat4.new(1.0 ,0.0, 0.0, 0.0,
+                       0.0, 1.0, 0.0, 0.0,
+                       0.0, 0.0, 1.0, 0.0,
+                       0.0, 0.0, 0.0, 1.0)
+end
+
+function cc.mat4.createTranslation(translation, dst)
+    assert(type(translation) == "table" and type(dst) == "table", "The type of input parameters should be table")
+    dst = cc.mat4.createIdentity()
+    dst[13] = translation.x
+    dst[14] = translation.y
+    dst[15] = translation.z
+    return dst
+end
+
+function cc.mat4.createRotation(q, dst)
+    assert(type(q) == "table" and type(dst) == "table", "The type of input parameters should be table")
+    local x2 = q.x + q.x
+    local y2 = q.y + q.y
+    local z2 = q.z + q.z
+
+    local xx2 = q.x * x2
+    local yy2 = q.y * y2
+    local zz2 = q.z * z2
+    local xy2 = q.x * y2
+    local xz2 = q.x * z2
+    local yz2 = q.y * z2
+    local wx2 = q.w * x2
+    local wy2 = q.w * y2
+    local wz2 = q.w * z2
+
+    dst[1] = 1.0 - yy2 - zz2
+    dst[2] = xy2 + wz2
+    dst[3] = xz2 - wy2
+    dst[4] = 0.0
+
+    dst[5] = xy2 - wz2
+    dst[6] = 1.0 - xx2 - zz2
+    dst[7] = yz2 + wx2
+    dst[8] = 0.0
+
+    dst[9] = xz2 + wy2
+    dst[10] = yz2 - wx2
+    dst[11] = 1.0 - xx2 - yy2
+    dst[12] = 0.0
+
+    dst[13] = 0.0
+    dst[14] = 0.0
+    dst[15] = 0.0
+    dst[16] = 1.0
+
+    return dst
+end
+
+function cc.mat4.translate(self,vec3)
+    return mat4_translate(self,vec3)
+end
+
+function cc.mat4.createRotationZ(self,angle)
+    return mat4_createRotationZ(self,angle)
+end
+
+function cc.mat4.setIdentity(self)
+    return mat4_setIdentity(self)
+end
+
+function cc.mat4.createTranslation(...)
+    return mat4_createTranslation(...)
+end
+
+function cc.mat4.createRotation(...)
+    return mat4_createRotation(...)
 end

@@ -88,10 +88,23 @@ void GLViewImpl::convertAttrs()
     if(_glContextAttrs.redBits==8 && _glContextAttrs.greenBits==8 && _glContextAttrs.blueBits==8 && _glContextAttrs.alphaBits==8)
     {
         _pixelFormat = kEAGLColorFormatRGBA8;
+    } else if (_glContextAttrs.redBits==5 && _glContextAttrs.greenBits==6 && _glContextAttrs.blueBits==5 && _glContextAttrs.alphaBits==0)
+    {
+        _pixelFormat = kEAGLColorFormatRGB565;
+    } else
+    {
+        CCASSERT(0, "Unsupported render buffer pixel format. Using default");
     }
+
     if(_glContextAttrs.depthBits==24 && _glContextAttrs.stencilBits==8)
     {
         _depthFormat = GL_DEPTH24_STENCIL8_OES;
+    } else if (_glContextAttrs.depthBits==0 && _glContextAttrs.stencilBits==0)
+    {
+        _depthFormat = 0;
+    } else
+    {
+        CCASSERT(0, "Unsupported format for depth and stencil buffers. Using default");
     }
 }
 
@@ -128,7 +141,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
                                         sharegroup: nil
                                      multiSampling: NO
                                    numberOfSamples: 0];
-    
+
     [eaglview setMultipleTouchEnabled:YES];
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
@@ -182,12 +195,13 @@ float GLViewImpl::getContentScaleFactor() const
 void GLViewImpl::end()
 {
     [CCDirectorCaller destroy];
-    
+
     // destroy EAGLView
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
     //[eaglview release];
+    release();
 }
 
 
@@ -214,4 +228,3 @@ void GLViewImpl::setIMEKeyboardState(bool open)
 NS_CC_END
 
 #endif // CC_PLATFOR_IOS
-

@@ -1,5 +1,5 @@
---Encapsulate opengl constants. 
-gl = gl or {} 
+
+if not gl then return end
 
 gl.GCCSO_SHADER_BINARY_FJ   = 0x9260
 gl._3DC_XY_AMD  = 0x87fa
@@ -822,3 +822,5 @@ gl.WRITEONLY_RENDERING_QCOM = 0x8823
 gl.WRITE_ONLY_OES   = 0x88b9
 gl.Z400_BINARY_AMD  = 0x8740
 gl.ZERO = 0x0
+gl.VERTEX_ATTRIB_POINTER_VEC3    = 0
+gl.VERTEX_ATTRIB_POINTER_COLOR4B = 1

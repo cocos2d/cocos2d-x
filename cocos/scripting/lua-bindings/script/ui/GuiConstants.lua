@@ -1,19 +1,21 @@
-ccui = ccui or {}
+if nil == ccui then
+    return
+end
 
-ccui.BrightStyle = 
+ccui.BrightStyle =
 {
     none = -1,
     normal = 0,
     highlight = 1,
 }
 
-ccui.TextureResType = 
+ccui.TextureResType =
 {
     localType = 0,
     plistType = 1,
 }
 
-ccui.TouchEventType = 
+ccui.TouchEventType =
 {
     began = 0,
     moved = 1,
@@ -21,7 +23,7 @@ ccui.TouchEventType =
     canceled = 3,
 }
 
-ccui.SizeType = 
+ccui.SizeType =
 {
     absolute = 0,
     percent = 1,
@@ -32,13 +34,24 @@ ccui.PositionType = {
     percent = 1,
 }
 
-ccui.CheckBoxEventType = 
+ccui.CheckBoxEventType =
 {
     selected = 0,
     unselected = 1,
 }
 
-ccui.TextFiledEventType = 
+ccui.RadioButtonEventType=
+{
+        selected = 0,
+        unselected = 1
+}
+
+ccui.RadioButtonGroupEventType=
+{
+    select_changed = 0
+}
+
+ccui.TextFiledEventType =
 {
     attach_with_ime = 0,
     detach_with_ime = 1,
@@ -46,14 +59,14 @@ ccui.TextFiledEventType =
     delete_backward = 3,
 }
 
-ccui.LayoutBackGroundColorType = 
+ccui.LayoutBackGroundColorType =
 {
     none = 0,
     solid = 1,
     gradient = 2,
 }
 
-ccui.LayoutType = 
+ccui.LayoutType =
 {
     ABSOLUTE = 0,
     VERTICAL = 1,
@@ -61,14 +74,14 @@ ccui.LayoutType =
     RELATIVE = 3,
 }
 
-ccui.LayoutParameterType = 
+ccui.LayoutParameterType =
 {
     none = 0,
     linear = 1,
     relative = 2,
 }
 
-ccui.LinearGravity = 
+ccui.LinearGravity =
 {
     none = 0,
     left = 1,
@@ -79,7 +92,7 @@ ccui.LinearGravity =
     centerHorizontal = 6,
 }
 
-ccui.RelativeAlign = 
+ccui.RelativeAlign =
 {
     alignNone = 0,
     alignParentTopLeft = 1,
@@ -105,7 +118,12 @@ ccui.RelativeAlign =
     locationBelowRightAlign = 21,
 }
 
-ccui.SliderEventType = {percentChanged = 0}
+ccui.SliderEventType = {
+    percentChanged = 0,
+    slideBallDown = 1,
+    slideBallUp = 2,
+    slideBallCancel = 3
+}
 
 ccui.LoadingBarDirection = { LEFT = 0, RIGHT = 1}
 
@@ -156,12 +174,19 @@ ccui.ListViewEventType = {
 }
 
 ccui.PageViewEventType = {
-   turning = 0,  
+   turning = 0,
+}
+
+ccui.PageViewDirection = {
+  HORIZONTAL = 0,
+  VERTICAL = 1
 }
 
 ccui.PVTouchDir = {
     touchLeft = 0,
     touchRight = 1,
+    touchUp = 2,
+    touchDown = 3
 }
 
 ccui.ListViewGravity = {
@@ -176,4 +201,18 @@ ccui.ListViewGravity = {
 ccui.TextType = {
     SYSTEM = 0,
     TTF    = 1,
+}
+
+ccui.LayoutComponent.HorizontalEdge = {
+    None = 0,
+    Left = 1,
+    Right = 2,
+    Center = 3,
+}
+
+ccui.LayoutComponent.VerticalEdge = {
+    None = 0,
+    Bottom = 1,
+    Top = 2,
+    Center = 3,
 }

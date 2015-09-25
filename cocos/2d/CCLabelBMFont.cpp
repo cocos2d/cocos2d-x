@@ -213,7 +213,7 @@ Rect LabelBMFont::getBoundingBox() const
 #if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Node::draw(renderer, transform, transformUpdated);
+    Node::draw(renderer, transform, _transformUpdated);
 
     _debugDrawNode->clear();
     auto size = getContentSize();

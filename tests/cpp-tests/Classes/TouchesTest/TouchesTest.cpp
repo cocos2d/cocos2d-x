@@ -3,6 +3,8 @@
 #include "Paddle.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum tagPlayer 
 {
     kHighPlayer,
@@ -17,17 +19,25 @@ enum
     kSpriteTag
 };
 
-
+TouchesTests::TouchesTests()
+{
+    ADD_TEST_CASE(PongScene);
+}
 //------------------------------------------------------------------
 //
 // PongScene
 //
 //------------------------------------------------------------------
-PongScene::PongScene()
+bool PongScene::init()
 {
-    auto pongLayer = new (std::nothrow) PongLayer();//PongLayer::create();
-    addChild(pongLayer);
-    pongLayer->release();
+    if (TestCase::init())
+    {
+        auto pongLayer = PongLayer::create();
+        addChild(pongLayer);
+
+        return true;
+    }
+    return false;
 }
 
 //------------------------------------------------------------------
@@ -71,7 +81,7 @@ PongLayer::PongLayer()
         addChild(paddle);
     }
 
-    schedule( schedule_selector(PongLayer::doStep) );
+    schedule( CC_SCHEDULE_SELECTOR(PongLayer::doStep) );
 }
 
 PongLayer::~PongLayer()
@@ -100,9 +110,4 @@ void PongLayer::doStep(float delta)
         resetAndScoreBallForPlayer( kLowPlayer );
     else if (_ball->getPosition().y < VisibleRect::bottom().y-_ball->radius())
         resetAndScoreBallForPlayer( kHighPlayer );
-} 
-
-void PongScene::runThisTest()
-{
-    Director::getInstance()->replaceScene(this);
 }

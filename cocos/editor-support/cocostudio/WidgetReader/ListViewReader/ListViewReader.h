@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
  
  http://www.cocos2d-x.org
@@ -25,24 +25,33 @@
 #ifndef __TestCpp__ListViewReader__
 #define __TestCpp__ListViewReader__
 
-#include "../ScrollViewReader/ScrollViewReader.h"
+#include "cocostudio/WidgetReader/ScrollViewReader/ScrollViewReader.h"
 #include "cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {
     class CC_STUDIO_DLL ListViewReader : public ScrollViewReader
     {
-    public:
-        DECLARE_CLASS_WIDGET_READER_INFO
+        DECLARE_CLASS_NODE_READER_INFO
         
+    public:
         ListViewReader();
         virtual ~ListViewReader();
         
         static ListViewReader* getInstance();
-        static void purge();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
+        static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
+                                                                             flatbuffers::FlatBufferBuilder* builder);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* listViewOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* listViewOptions);
+        
+        int getResourceType(std::string key);
+        
     };
 }
 

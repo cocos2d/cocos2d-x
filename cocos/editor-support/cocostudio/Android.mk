@@ -40,6 +40,13 @@ TriggerBase.cpp \
 TriggerMng.cpp \
 TriggerObj.cpp \
 CocoLoader.cpp \
+WidgetReader/NodeReader/NodeReader.cpp \
+WidgetReader/SingleNodeReader/SingleNodeReader.cpp \
+WidgetReader/SpriteReader/SpriteReader.cpp \
+WidgetReader/ParticleReader/ParticleReader.cpp \
+WidgetReader/GameMapReader/GameMapReader.cpp \
+WidgetReader/ProjectNodeReader/ProjectNodeReader.cpp \
+WidgetReader/ComAudioReader/ComAudioReader.cpp \
 WidgetReader/WidgetReader.cpp \
 WidgetReader/ButtonReader/ButtonReader.cpp \
 WidgetReader/CheckBoxReader/CheckBoxReader.cpp \
@@ -54,29 +61,38 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
-ActionTimeline/CCNodeReader.cpp \
+WidgetReader/Node3DReader/Node3DReader.cpp \
+WidgetReader/Sprite3DReader/Sprite3DReader.cpp \
+WidgetReader/UserCameraReader/UserCameraReader.cpp \
+WidgetReader/Particle3DReader/Particle3DReader.cpp \
+WidgetReader/SkeletonReader/BoneNodeReader.cpp \
+WidgetReader/SkeletonReader/SkeletonNodeReader.cpp \
+WidgetReader/GameNode3DReader/GameNode3DReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
-ActionTimeline/CCActionTimeline.cpp
+ActionTimeline/CCActionTimeline.cpp \
+ActionTimeline/CCActionTimelineNode.cpp \
+ActionTimeline/CSLoader.cpp \
+ActionTimeline/CCBoneNode.cpp \
+ActionTimeline/CCSkeletonNode.cpp \
+ActionTimeline/CCSkinNode.cpp \
+FlatBuffersSerialize.cpp \
+WidgetCallBackHandlerProtocol.cpp \
+WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
+CCComExtensionData.cpp \
+CocoStudio.cpp
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../../../external
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/../../../external \
-$(LOCAL_PATH)/.. \
-$(LOCAL_PATH)/../.. \
-$(LOCAL_PATH)/WidgetReader \
-$(LOCAL_PATH)/../../platform/android \
-$(LOCAL_PATH)/../../../external/tinyxml2 \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
+                    $(LOCAL_PATH)/WidgetReader
 
 LOCAL_CFLAGS += -fexceptions
 
 LOCAL_STATIC_LIBRARIES := cocos_ui_static
 LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_STATIC_LIBRARIES += cocos_extension_static
-LOCAL_STATIC_LIBRARIES += cocos2dx_internal_static
+LOCAL_STATIC_LIBRARIES += cocos_flatbuffers_static
 
 include $(BUILD_STATIC_LIBRARY)
-

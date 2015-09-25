@@ -4,106 +4,59 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 
+USING_NS_CC;
 
-namespace
+enum
 {
-    enum
-    {
-        kTagTileMap = 1,
-    };
-    
-    Layer* nextTileMapActionNew();
-    Layer* backTileMapActionNew();
-    Layer* restartTileMapAction();
-    
-    //------------------------------------------------------------------
-    //
-    // TileDemoNew
-    //
-    //------------------------------------------------------------------
-    
-    enum
-    {
-        IDC_NEXT = 100,
-        IDC_BACK,
-        IDC_RESTART
-    };
-    
-    static int sceneIdx = -1;
-    
-    static std::function<Layer*()> createFunctions[] = {
-        CLN(TMXIsoZorderNew),
-        CLN(TMXOrthoZorderNew),
-        CLN(TMXIsoVertexZNew),
-        CLN(TMXOrthoVertexZNew),
-        CLN(TMXOrthoTestNew),
-        CLN(TMXOrthoTest2New),
-        CLN(TMXOrthoTest3New),
-        CLN(TMXOrthoTest4New),
-        CLN(TMXIsoTestNew),
-        CLN(TMXIsoTest1New),
-        CLN(TMXIsoTest2New),
-        CLN(TMXUncompressedTestNew),
-        CLN(TMXHexTestNew),
-        CLN(TMXReadWriteTestNew),
-        CLN(TMXTilesetTestNew),
-        CLN(TMXOrthoObjectsTestNew),
-        CLN(TMXIsoObjectsTestNew),
-        CLN(TMXResizeTestNew),
-        CLN(TMXIsoMoveLayerNew),
-        CLN(TMXOrthoMoveLayerNew),
-        CLN(TMXOrthoFlipTestNew),
-        CLN(TMXOrthoFlipRunTimeTestNew),
-        CLN(TMXOrthoFromXMLTestNew),
-        CLN(TMXOrthoXMLFormatTestNew),
-        CLN(TileMapTestNew),
-        CLN(TileMapEditTestNew),
-        CLN(TMXBug987New),
-        CLN(TMXBug787New),
-        CLN(TMXGIDObjectsTestNew),
-        
-    };
+    kTagTileMap = 1,
+};
 
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-    
-    Layer* createTileMalayer(int nIndex)
-    {
-        return createFunctions[nIndex]();
-    }
-    
-    Layer* nextTileMapAction()
-    {
-        sceneIdx++;
-        sceneIdx = sceneIdx % MAX_LAYER;
-        
-        return createTileMalayer(sceneIdx);
-    }
-    
-    Layer* backTileMapAction()
-    {
-        sceneIdx--;
-        int total = MAX_LAYER;
-        if( sceneIdx < 0 )
-            sceneIdx += total;
-        
-        return createTileMalayer(sceneIdx);
-    }
-    
-    Layer* restartTileMapAction()
-    {
-        return createTileMalayer(sceneIdx);
-    }
+FastTileMapTests::FastTileMapTests()
+{
+    ADD_TEST_CASE(TMXIsoZorderNew);
+    ADD_TEST_CASE(TMXOrthoZorderNew);
+    ADD_TEST_CASE(TMXIsoVertexZNew);
+    ADD_TEST_CASE(TMXOrthoVertexZNew);
+    ADD_TEST_CASE(TMXOrthoTestNew);
+    ADD_TEST_CASE(TMXOrthoTest2New);
+    ADD_TEST_CASE(TMXOrthoTest3New);
+    ADD_TEST_CASE(TMXOrthoTest4New);
+    ADD_TEST_CASE(TMXIsoTestNew);
+    ADD_TEST_CASE(TMXIsoTest1New);
+    ADD_TEST_CASE(TMXIsoTest2New);
+    ADD_TEST_CASE(TMXUncompressedTestNew);
+    ADD_TEST_CASE(TMXHexTestNew);
+    ADD_TEST_CASE(TMXReadWriteTestNew);
+    ADD_TEST_CASE(TMXTilesetTestNew);
+    ADD_TEST_CASE(TMXOrthoObjectsTestNew);
+    ADD_TEST_CASE(TMXIsoObjectsTestNew);
+    ADD_TEST_CASE(TMXResizeTestNew);
+    ADD_TEST_CASE(TMXIsoMoveLayerNew);
+    ADD_TEST_CASE(TMXOrthoMoveLayerNew);
+    ADD_TEST_CASE(TMXOrthoFlipTestNew);
+    ADD_TEST_CASE(TMXOrthoFlipRunTimeTestNew);
+    ADD_TEST_CASE(TMXOrthoFromXMLTestNew);
+    ADD_TEST_CASE(TMXOrthoXMLFormatTestNew);
+    ADD_TEST_CASE(TileMapTestNew);
+    ADD_TEST_CASE(TileMapEditTestNew);
+    ADD_TEST_CASE(TMXBug987New);
+    ADD_TEST_CASE(TMXBug787New);
+    ADD_TEST_CASE(TMXGIDObjectsTestNew);
 }
 
-TileDemoNew::TileDemoNew(void)
-: BaseTest()
+TileDemoNew::TileDemoNew()
 {
+    // fix bug #486, #419.
+    // "test" is the default value in Director::setGLDefaultValues()
+    // but TransitionTest may setDepthTest(false), we should revert it here
+    Director::getInstance()->setDepthTest(true);
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TileDemoNew::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-TileDemoNew::~TileDemoNew(void)
+TileDemoNew::~TileDemoNew()
 {
 }
 
@@ -117,39 +70,10 @@ std::string TileDemoNew::subtitle() const
     return "drag the screen";
 }
 
-void TileDemoNew::onEnter()
-{
-    BaseTest::onEnter();
-}
-
 void TileDemoNew::onExit()
 {
-    BaseTest::onExit();
+    TestCase::onExit();
     Director::getInstance()->setDepthTest(false);
-}
-void TileDemoNew::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TileMapTestSceneNew();
-    s->addChild(restartTileMapAction());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TileDemoNew::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TileMapTestSceneNew();
-    s->addChild( nextTileMapAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TileDemoNew::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TileMapTestSceneNew();
-    s->addChild( backTileMapAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void TileDemoNew::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -161,20 +85,6 @@ void TileDemoNew::onTouchesMoved(const std::vector<Touch*>& touches, Event  *eve
     auto currentPos = node->getPosition();
     node->setPosition(currentPos + diff);
 }
-
-void TileMapTestSceneNew::runThisTest()
-{
-    auto layer = nextTileMapAction();
-    addChild(layer);
-
-    // fix bug #486, #419.
-    // "test" is the default value in Director::setGLDefaultValues()
-    // but TransitionTest may setDepthTest(false), we should revert it here
-    Director::getInstance()->setDepthTest(true);
-
-    Director::getInstance()->replaceScene(this);
-}
-
 
 //------------------------------------------------------------------
 //
@@ -228,7 +138,7 @@ TileMapEditTestNew::TileMapEditTestNew()
     // If you are not going to use the Map, you can free it now
     // [tilemap releaseMap);
     // And if you are going to use, it you can access the data with:
-    schedule(schedule_selector(TileMapEditTestNew::updateMap), 0.2f);
+    schedule(CC_SCHEDULE_SELECTOR(TileMapEditTestNew::updateMap), 0.2f);
     
     addChild(map, 0, kTagTileMap);
     
@@ -395,13 +305,13 @@ TMXOrthoTest4New::TMXOrthoTest4New()
     sprite = layer->getTileAt(Vec2(s.width-1,s.height-1));
     sprite->setScale(2);
 
-    schedule( schedule_selector(TMXOrthoTest4New::removeSprite), 2 );
+    schedule( CC_SCHEDULE_SELECTOR(TMXOrthoTest4New::removeSprite), 2 );
 
 }
 
 void TMXOrthoTest4New::removeSprite(float dt)
 {
-    unschedule(schedule_selector(TMXOrthoTest4New::removeSprite));
+    unschedule(CC_SCHEDULE_SELECTOR(TMXOrthoTest4New::removeSprite));
 
     auto map = static_cast<cocos2d::experimental::TMXTiledMap*>( getChildByTag(kTagTileMap) );
     auto layer = map->getLayer("Layer 0");
@@ -477,9 +387,9 @@ TMXReadWriteTestNew::TMXReadWriteTestNew()
     _gid = layer->getTileGIDAt(Vec2(0,63));
     ////----CCLOG("Tile GID at:(0,63) is: %d", _gid);
 
-    schedule(schedule_selector(TMXReadWriteTestNew::updateCol), 2.0f); 
-    schedule(schedule_selector(TMXReadWriteTestNew::repaintWithGID), 2.05f);
-    schedule(schedule_selector(TMXReadWriteTestNew::removeTiles), 1.0f); 
+    schedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::updateCol), 2.0f); 
+    schedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::repaintWithGID), 2.05f);
+    schedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::removeTiles), 1.0f); 
 
     ////----CCLOG("++++atlas quantity: %d", layer->textureAtlas()->getTotalQuads());
     ////----CCLOG("++++children: %d", layer->getChildren()->count() );
@@ -537,7 +447,7 @@ void TMXReadWriteTestNew::repaintWithGID(float dt)
 
 void TMXReadWriteTestNew::removeTiles(float dt)
 {
-    unschedule(schedule_selector(TMXReadWriteTestNew::removeTiles));
+    unschedule(CC_SCHEDULE_SELECTOR(TMXReadWriteTestNew::removeTiles));
 
     auto map = (cocos2d::experimental::TMXTiledMap*)getChildByTag(kTagTileMap);
     auto layer = (cocos2d::experimental::TMXLayer*)map->getChildByTag(0);
@@ -875,7 +785,7 @@ TMXIsoZorderNew::TMXIsoZorderNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
-    schedule( schedule_selector(TMXIsoZorderNew::repositionSprite) );
+    schedule( CC_SCHEDULE_SELECTOR(TMXIsoZorderNew::repositionSprite) );
 }
 
 TMXIsoZorderNew::~TMXIsoZorderNew()
@@ -885,7 +795,7 @@ TMXIsoZorderNew::~TMXIsoZorderNew()
 
 void TMXIsoZorderNew::onExit()
 {
-    unschedule(schedule_selector(TMXIsoZorderNew::repositionSprite));
+    unschedule(CC_SCHEDULE_SELECTOR(TMXIsoZorderNew::repositionSprite));
     TileDemoNew::onExit();
 }
 
@@ -941,7 +851,7 @@ TMXOrthoZorderNew::TMXOrthoZorderNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
-    schedule( schedule_selector(TMXOrthoZorderNew::repositionSprite));
+    schedule( CC_SCHEDULE_SELECTOR(TMXOrthoZorderNew::repositionSprite));
 }
 
 TMXOrthoZorderNew::~TMXOrthoZorderNew()
@@ -1003,7 +913,7 @@ TMXIsoVertexZNew::TMXIsoVertexZNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq) );
     
-    schedule( schedule_selector(TMXIsoVertexZNew::repositionSprite));
+    schedule( CC_SCHEDULE_SELECTOR(TMXIsoVertexZNew::repositionSprite));
     
 }
 
@@ -1075,7 +985,7 @@ TMXOrthoVertexZNew::TMXOrthoVertexZNew()
     auto seq = Sequence::create(move, back,nullptr);
     _tamara->runAction( RepeatForever::create(seq));
     
-    schedule(schedule_selector(TMXOrthoVertexZNew::repositionSprite));
+    schedule(CC_SCHEDULE_SELECTOR(TMXOrthoVertexZNew::repositionSprite));
     
 }
 
@@ -1241,7 +1151,7 @@ TMXOrthoFlipRunTimeTestNew::TMXOrthoFlipRunTimeTestNew()
     auto action = ScaleBy::create(2, 0.5f);
     map->runAction(action);
 
-    schedule(schedule_selector(TMXOrthoFlipRunTimeTestNew::flipIt), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(TMXOrthoFlipRunTimeTestNew::flipIt), 1.0f);
 }
 
 std::string TMXOrthoFlipRunTimeTestNew::title() const
@@ -1301,7 +1211,7 @@ TMXOrthoFromXMLTestNew::TMXOrthoFromXMLTestNew()
     std::string resources = "TileMaps";        // partial paths are OK as resource paths.
     std::string file = resources + "/orthogonal-test1.tmx";
 
-    auto str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
+    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
     CCASSERT(str != nullptr, "Unable to open file");
 
     auto map = cocos2d::experimental::TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());

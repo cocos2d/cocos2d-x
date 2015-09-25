@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,12 +26,22 @@ THE SOFTWARE.
 #ifndef __ccRandom_H_
 #define __ccRandom_H_
 
-#include "platform/CCPlatformMacros.h"
 #include <random>
+#include <cstdlib>
 
+#include "platform/CCPlatformMacros.h"
 
+/**
+* @addtogroup base
+* @{
+*/
 NS_CC_BEGIN
 
+
+/**
+ * @class RandomHelper
+ * @brief A helper class for creating random number.
+ */
 class CC_DLL RandomHelper {
 public:
     template<typename T>
@@ -43,7 +53,7 @@ public:
 
     template<typename T>
     static inline T random_int(T min, T max) {
-        std::uniform_int_distribution<> dist(min, max);
+        std::uniform_int_distribution<T> dist(min, max);
         auto &mt = RandomHelper::getEngine();
         return dist(mt);
     }
@@ -52,11 +62,11 @@ private:
 };
 
 /**
-* returns a random value between `min` and `max`
-*/
+ * Returns a random value between `min` and `max`.
+ */
 template<typename T>
 inline T random(T min, T max) {
-    return RandomHelper::random_int(min, max);
+    return RandomHelper::random_int<T>(min, max);
 }
 
 template<>
@@ -75,25 +85,42 @@ inline double random(double min, double max) {
 }
 
 /**
-* returns a random int between 0 and RAND_MAX
-*/
+ * Returns a random int between 0 and RAND_MAX.
+ */
 inline int random() {
     return cocos2d::random(0, RAND_MAX);
 };
 
 /**
-* returns a random float between -1 and 1
-*/
+ * Returns a random float between -1 and 1.
+ * It can be seeded using std::srand(seed);
+ */
 inline float rand_minus1_1() {
-    return cocos2d::random(-1.f, 1.f);
+    // FIXME: using the new c++11 random engine generator
+    // without a proper way to set a seed is not useful.
+    // Resorting to the old random method since it can
+    // be seeded using std::srand()
+    return ((std::rand() / (float)RAND_MAX) * 2) -1;
+
+//    return cocos2d::random(-1.f, 1.f);
 };
 
 /**
-* returns a random float between 0 and 1
-*/
+ * Returns a random float between 0 and 1.
+ * It can be seeded using std::srand(seed);
+ */
 inline float rand_0_1() {
-    return cocos2d::random(0.f, 1.f);
+    // FIXME: using the new c++11 random engine generator
+    // without a proper way to set a seed is not useful.
+    // Resorting to the old random method since it can
+    // be seeded using std::srand()
+    return std::rand() / (float)RAND_MAX;
+
+//    return cocos2d::random(0.f, 1.f);
 };
 
+
 NS_CC_END
+// end group
+/// @}
 #endif //__ccRandom_H_

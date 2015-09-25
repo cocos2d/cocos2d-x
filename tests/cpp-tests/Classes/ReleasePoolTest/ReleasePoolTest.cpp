@@ -2,6 +2,11 @@
 
 using namespace cocos2d;
 
+ReleasePoolTests::ReleasePoolTests()
+{
+    ADD_TEST_CASE(ReleasePoolTest);
+}
+
 class TestObject : public Ref
 {
 public:
@@ -22,8 +27,12 @@ private:
     std::string _name;
 };
 
-void ReleasePoolTestScene::runThisTest()
+bool ReleasePoolTest::init()
 {
+    if (!TestCase::init())
+    {
+        return false;
+    }
     // title
     auto label = Label::createWithTTF("AutoreasePool Test", "fonts/arial.ttf", 32);
     addChild(label, 9999);
@@ -81,5 +90,5 @@ void ReleasePoolTestScene::runThisTest()
         PoolManager::destroyInstance();
     }
     
-    Director::getInstance()->replaceScene(this);
+    return true;
 }

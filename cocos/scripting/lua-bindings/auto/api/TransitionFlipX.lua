@@ -12,6 +12,12 @@
 -- @param #float t
 -- @param #cc.Scene s
 -- @param #int o
--- @return TransitionFlipX#TransitionFlipX ret (retunr value: cc.TransitionFlipX)
+-- @return TransitionFlipX#TransitionFlipX ret (return value: cc.TransitionFlipX)
 
+--------------------------------
+-- 
+-- @function [parent=#TransitionFlipX] TransitionFlipX 
+-- @param self
+-- @return TransitionFlipX#TransitionFlipX self (return value: cc.TransitionFlipX)
+        
 return nil

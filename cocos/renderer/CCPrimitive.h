@@ -27,28 +27,47 @@
 
 #include "renderer/CCVertexIndexData.h"
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class IndexBuffer;
 
+/**
+ Primitive can support sending points, lines and triangles to glpipeline, which is an abstraction
+ of primitive data.
+ */
 class CC_DLL Primitive : public Ref
 {
 public:
+    /**
+     Create an instance of primitive.
+     @param verts VertexData used in the primitive.
+     @param indices Optional index data.
+     @param type The type (Points, Lines, Triangles) used.
+     */
     static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
-    
+    /**Get the vertexData.*/
     const VertexData* getVertexData() const;
-    
+    /**Get the optional index data, will return null if index data is not used.*/
     const IndexBuffer* getIndexData() const;
-    
+    /**Get the primitive type.*/
     int getType() const { return _type; }
     
-    //called by rendering framework
+    /**called by rendering framework, will send the data to GLPipeline.*/
     void draw();
     
+    /**Get the start index of primitive.*/
     int getStart() const { return _start; }
+    /**Get the number of vertices or indices used for drawing.*/
     int getCount() const { return _count; }
-    void setStart(int start) { _start = start; }
-    void setCount(int count) { _count = count; }
+    /**Setter for the start index.*/
+    void setStart(int start);
+    /**Setter for the count. */
+    void setCount(int count);
     
 protected:
     Primitive();
@@ -66,4 +85,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //__CC_PRIMITIVE_H__

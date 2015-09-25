@@ -1,0 +1,151 @@
+{
+      "do_default":{
+         "exclude_from_template":[
+            "frameworks/runtime-src"
+         ],
+         "append_dir": [
+            {
+                "from": "web",
+                "to": "frameworks/cocos2d-html5"
+            }
+         ]
+      },
+      "do_add_native_support":{
+         "append_from_template":{
+            "from":"frameworks/runtime-src",
+            "to":"frameworks/runtime-src",
+            "exclude":[
+               "proj.android/bin",
+               "proj.android/assets",
+               "proj.android/libs",
+               "proj.ios_mac/HelloJavascript.xcodeproj/project.xcworkspace",
+               "proj.ios_mac/HelloJavascript.xcodeproj/xcuserdata",
+               "proj.win32/Debug.win32",
+               "proj.win32/Release.win32",
+               "proj.win32/HelloJavascript.sdf",
+               "proj.win8.1-universal/HelloJavascript.sdf",
+               "proj.win8.1-universal/HelloJavascript.v12.suo",
+               "proj.win8.1-universal/ipch",
+               "proj.win8.1-universal/Debug",
+               "proj.win8.1-universal/Release",
+               "proj.win8.1-universal/ARM"
+            ]
+         },
+         "append_x_engine":{
+            "from":".",
+            "to":"frameworks/cocos2d-x"
+         },
+         "project_rename":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
+               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj",
+               "frameworks/runtime-src/proj.win8.1-universal/PROJECT_NAME.sln",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",               
+               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
+               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters"
+          ]
+         },
+         "project_replace_project_name":{
+            "src_project_name":"HelloJavascript",
+            "files":[
+               "manifest.webapp",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
+               "frameworks/runtime-src/proj.win32/main.cpp",
+               "frameworks/runtime-src/proj.android/.project",
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "frameworks/runtime-src/proj.android/build.xml",
+               "frameworks/runtime-src/proj.android/res/values/strings.xml",
+               "frameworks/runtime-src/proj.android-studio/settings.gradle",
+               "frameworks/runtime-src/proj.android-studio/app/res/values/strings.xml",
+               "frameworks/runtime-src/proj.ios_mac/ios/main.m",
+               "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
+               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
+               "frameworks/runtime-src/proj.win8.1-universal/PROJECT_NAME.sln",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",               
+               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
+               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/Package.appxmanifest",
+               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
+               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
+               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
+               "frameworks/runtime-src/Classes/AppDelegate.cpp"
+            ]
+         },
+         "project_replace_package_name":{
+            "src_package_name":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "frameworks/runtime-src/proj.android-studio/app/build.gradle",
+               "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml"
+            ]
+         },
+         "project_replace_mac_bundleid":{
+            "src_bundle_id":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.ios_mac/mac/Info.plist"
+            ]
+         },
+         "project_replace_ios_bundleid":{
+            "src_bundle_id":"org.cocos2dx.hellojavascript",
+            "files":[
+               "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
+            ]
+         }
+      },
+      "change_orientation": {
+         "modify_files": [
+            {
+               "file_path": "frameworks/runtime-src/Classes/AppDelegate.cpp",
+               "pattern": "GLViewImpl::createWithRect\\((.*),\\s*Rect\\(\\s*(\\d+),\\s*(\\d+),\\s*(\\d+),\\s*(\\d+)\\)\\)",
+               "replace_string": "GLViewImpl::createWithRect(\\1, Rect(\\2, \\3, \\5, \\4))"
+            },
+            {
+               "file_path": "main.js",
+               "pattern": "setDesignResolutionSize\\(\\s*(\\d+),\\s*(\\d+),(.*)\\)",
+               "replace_string": "setDesignResolutionSize(\\2, \\1,\\3)"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+               "pattern": "UIInterfaceOrientationLandscapeRight",
+               "replace_string": "UIInterfaceOrientationPortrait"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.ios_mac/ios/Info.plist",
+               "pattern": "UIInterfaceOrientationLandscapeLeft",
+               "replace_string": "UIInterfaceOrientationPortraitUpsideDown"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "pattern": "android:screenOrientation=\\\".*\\\"",
+               "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml",
+               "pattern": "android:screenOrientation=\\\".*\\\"",
+               "replace_string": "android:screenOrientation=\"portrait\""
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.win8.1-universal/App.Windows/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            },
+            {
+               "file_path": "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
+               "pattern": "Rotation Preference=\\\"landscape",
+               "replace_string": "Rotation Preference=\"portrait"
+            }
+         ]
+      }
+}
+

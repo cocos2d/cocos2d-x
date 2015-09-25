@@ -21,6 +21,8 @@
  */
 
 #include "CCPhysicsSprite.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
 
@@ -41,6 +43,7 @@ PhysicsSprite::PhysicsSprite()
 , _CPBody(nullptr)
 , _pB2Body(nullptr)
 , _PTMRatio(0.0f)
+, _syncTransform(nullptr)
 {}
 
 PhysicsSprite* PhysicsSprite::create()
@@ -265,14 +268,14 @@ const Vec2& PhysicsSprite::getPosFromPhysics() const
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpBodyGetPos(_CPBody);
-    s_physicPosion = Vec2(cpPos.x, cpPos.y);
+    s_physicPosion.set(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
     b2Vec2 pos = _pB2Body->GetPosition();
     float x = pos.x * _PTMRatio;
     float y = pos.y * _PTMRatio;
-    s_physicPosion = Vec2(x,y);
+    s_physicPosion.set(x,y);
 #endif
     return s_physicPosion;
 }
@@ -376,7 +379,7 @@ void PhysicsSprite::syncPhysicsTransform() const
 	float c = cosf(radians);
 	float s = sinf(radians);
     
-	if (!_anchorPointInPoints.equals(Vec2::ZERO))
+	if (!_anchorPointInPoints.isZero())
     {
 		x += ((c * -_anchorPointInPoints.x * _scaleX) + (-s * -_anchorPointInPoints.y * _scaleY));
 		y += ((s * -_anchorPointInPoints.x * _scaleX) + (c * -_anchorPointInPoints.y * _scaleY));
@@ -393,22 +396,30 @@ void PhysicsSprite::syncPhysicsTransform() const
 #endif
 }
 
-// returns the transform matrix according the Chipmunk Body values
-const Mat4& PhysicsSprite::getNodeToParentTransform() const
+void PhysicsSprite::onEnter()
+{
+    Node::onEnter();
+    _syncTransform = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_UPDATE, std::bind(&PhysicsSprite::afterUpdate, this, std::placeholders::_1));
+    _syncTransform->retain();
+}
+
+void PhysicsSprite::onExit()
+{
+    if (_syncTransform != nullptr)
+    {
+        Director::getInstance()->getEventDispatcher()->removeEventListener(_syncTransform);
+        _syncTransform->release();
+    }
+    Node::onExit();
+}
+
+void PhysicsSprite::afterUpdate(EventCustom *event)
 {
     syncPhysicsTransform();
     
-	return _transform;
-}
-
-void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (isDirty())
-    {
-        syncPhysicsTransform();
-    }
-    
-    Sprite::draw(renderer, _transform, flags);
+    _transformDirty = false;
+    _transformUpdated = true;
+    setDirtyRecursively(true);
 }
 
 NS_CC_EXT_END

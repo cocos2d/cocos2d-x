@@ -1,11 +1,17 @@
 
 
 #include "TextReader.h"
+
 #include "ui/UIText.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary_generated.h"
+
+#include "tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -20,7 +26,7 @@ namespace cocostudio
     
     static TextReader* instanceTextReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(TextReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(TextReader)
     
     TextReader::TextReader()
     {
@@ -39,6 +45,11 @@ namespace cocostudio
             instanceTextReader = new (std::nothrow) TextReader();
         }
         return instanceTextReader;
+    }
+    
+    void TextReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextReader);
     }
     
     void TextReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -105,7 +116,7 @@ namespace cocostudio
       
         label->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
        
-        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "微软雅黑");
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
         
         std::string fontFilePath = jsonPath.append(fontName);
 		if (FileUtils::getInstance()->isFileExist(fontFilePath))
@@ -136,5 +147,344 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }        
+    
+    Offset<Table> TextReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                           flatbuffers::FlatBufferBuilder *builder)
+    {
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        
+        bool touchScaleEnabled = false;
+        bool isCustomSize = false;
+        std::string fontName = "";
+        int fontSize = 20;
+        std::string text = "Text Label";
+        int areaWidth = 0;
+        int areaHeight = 0;
+        int h_alignment = 0;
+        int v_alignment = 0;
+        bool outlineEnabled = false;
+        Color4B outlineColor = Color4B::BLACK;
+        int outlineSize = 1;
+        bool shadowEnabled = false;
+        Color4B shadowColor = Color4B::BLACK;
+        Size shadowOffset = Size(2, -2);
+        int shadowBlurRadius = 0;
+        
+        std::string path = "";
+        std::string plistFile = "";
+        int resourceType = 0;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "TouchScaleChangeAble")
+            {
+                touchScaleEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "LabelText")
+            {
+                text = value;
+            }
+            else if (name == "FontSize")
+            {
+                fontSize = atoi(value.c_str());
+            }
+            else if (name == "FontName")
+            {
+                fontName = value;
+            }
+            else if (name == "AreaWidth")
+            {
+                areaWidth = atoi(value.c_str());
+            }
+            else if (name == "AreaHeight")
+            {
+                areaHeight = atoi(value.c_str());
+            }
+            else if (name == "HorizontalAlignmentType")
+            {
+                if (value == "HT_Left")
+                {
+                    h_alignment = 0;
+                }
+                else if (value == "HT_Center")
+                {
+                    h_alignment = 1;
+                }
+                else if (value == "HT_Right")
+                {
+                    h_alignment = 2;
+                }
+            }
+            else if (name == "VerticalAlignmentType")
+            {
+                if (value == "VT_Top")
+                {
+                    v_alignment = 0;
+                }
+                else if (value == "VT_Center")
+                {
+                    v_alignment = 1;
+                }
+                else if (value == "VT_Bottom")
+                {
+                    v_alignment = 2;
+                }
+            }
+            else if (name == "IsCustomSize")
+            {
+                isCustomSize = (value == "True") ? true : false;
+            }
+            else if (name == "OutlineEnabled")
+            {
+                outlineEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "OutlineSize")
+            {
+                outlineSize = atoi(value.c_str());
+            }
+            else if (name == "ShadowEnabled")
+            {
+                shadowEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "ShadowOffsetX")
+            {
+                shadowOffset.width = atof(value.c_str());
+            }
+            else if (name == "ShadowOffsetY")
+            {
+                shadowOffset.height = atof(value.c_str());
+            }
+            else if (name == "ShadowBlurRadius")
+            {
+                shadowBlurRadius = atoi(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "FontResource")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = 0;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "OutlineColor")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        outlineColor.a = atoi(value.c_str());
+                    }
+                    else if (name == "R")
+                    {
+                        outlineColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        outlineColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        outlineColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "ShadowColor")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        shadowColor.a = atoi(value.c_str());
+                    }
+                    else if (name == "R")
+                    {
+                        shadowColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        shadowColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        shadowColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        flatbuffers::Color f_outlineColor(outlineColor.a, outlineColor.r, outlineColor.g, outlineColor.b);
+        flatbuffers::Color f_shadowColor(shadowColor.a, shadowColor.r, shadowColor.g, shadowColor.b);
+        
+        auto options = CreateTextOptions(*builder,
+                                         widgetOptions,
+                                         CreateResourceData(*builder,
+                                                            builder->CreateString(path),
+                                                            builder->CreateString(plistFile),
+                                                            resourceType),
+                                         builder->CreateString(fontName),
+                                         fontSize,
+                                         builder->CreateString(text),
+                                         areaWidth,
+                                         areaHeight,
+                                         h_alignment,
+                                         v_alignment,
+                                         touchScaleEnabled,
+                                         isCustomSize,
+                                         outlineEnabled,
+                                         &f_outlineColor,
+                                         outlineSize,
+                                         shadowEnabled,
+                                         &f_shadowColor,
+                                         shadowOffset.width,
+                                         shadowOffset.height,
+                                         shadowBlurRadius);
+        
+        return *(Offset<Table>*)(&options);
     }
+    
+    void TextReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *textOptions)
+    {
+        Text* label = static_cast<Text*>(node);
+        auto options = (TextOptions*)textOptions;
+        
+        bool touchScaleEnabled = options->touchScaleEnable() != 0;
+        label->setTouchScaleChangeEnabled(touchScaleEnabled);
+        
+        int fontSize = options->fontSize();
+        label->setFontSize(fontSize);
+
+        Size areaSize = Size(options->areaWidth(), options->areaHeight());
+        if (!areaSize.equals(Size::ZERO))
+        {
+            label->setTextAreaSize(areaSize);
+        }
+
+        auto resourceData = options->fontResource();
+        std::string path = resourceData->path()->c_str();
+        if (!path.empty() && FileUtils::getInstance()->isFileExist(path))
+        {
+            label->setFontName(path);
+        }
+        else
+        {
+            std::string fontName = options->fontName()->c_str();
+            label->setFontName(fontName);
+        }
+        
+        TextHAlignment h_alignment = (TextHAlignment)options->hAlignment();
+        label->setTextHorizontalAlignment(h_alignment);
+
+        TextVAlignment v_alignment = (TextVAlignment)options->vAlignment();
+        label->setTextVerticalAlignment((TextVAlignment)v_alignment);
+
+        bool outlineEnabled = options->outlineEnabled() != 0;
+        if (outlineEnabled)
+        {
+            auto f_outlineColor = options->outlineColor();
+            if (f_outlineColor)
+            {
+                Color4B outlineColor(f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b(), f_outlineColor->a());
+                label->enableOutline(outlineColor, options->outlineSize());
+            }
+        }
+        
+        bool shadowEnabled = options->shadowEnabled() != 0;
+        if (shadowEnabled)
+        {
+            auto f_shadowColor = options->shadowColor();
+            if (f_shadowColor)
+            {
+                Color4B shadowColor(f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b(), f_shadowColor->a());
+                label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
+            }
+        }
+
+        std::string text = options->text()->c_str();
+        label->setString(text);
+
+        // Save node color before set widget properties
+        auto oldColor = node->getColor();
+
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+
+        // restore node color and set color to text to fix shadow & outline color won't show correct bug
+        node->setColor(oldColor);
+        auto optionsWidget = (WidgetOptions*)options->widgetOptions();
+        auto f_color = optionsWidget->color();
+        Color4B color(f_color->r(), f_color->g(), f_color->b(), f_color->a());
+        ((Text *)node)->setTextColor(color);
+
+        label->setUnifySizeEnabled(false);
+        
+        bool IsCustomSize = options->isCustomSize() != 0;
+        label->ignoreContentAdaptWithSize(!IsCustomSize);
+        
+        auto widgetOptions = options->widgetOptions();
+        if (!label->isIgnoreContentAdaptWithSize())
+        {
+            Size contentSize(widgetOptions->size()->width(), widgetOptions->size()->height());
+            label->setContentSize(contentSize);
+        }
+    }
+    
+    Node* TextReader::createNodeWithFlatBuffers(const flatbuffers::Table *textOptions)
+    {
+        Text* text = Text::create();
+        
+        setPropsWithFlatBuffers(text, (Table*)textOptions);
+        
+        return text;
+    }
+    
 }

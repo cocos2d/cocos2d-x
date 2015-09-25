@@ -27,13 +27,14 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UITextBMFontTests);
+
 class UITextBMFontTest : public UIScene
 {
 public:
-    bool init();
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UITextBMFontTest)
+    CREATE_FUNC(UITextBMFontTest)
+
+    virtual bool init() override;
 };
 
 #endif /* defined(__TestCpp__UITextBMFontTest__) */

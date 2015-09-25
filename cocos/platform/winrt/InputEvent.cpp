@@ -24,13 +24,11 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "InputEvent.h"
-#include "CCGLViewImpl.h"
+#include "CCWinRTUtils.h"
+#include "CCGLViewImpl-winrt.h"
 #include "base/CCEventAcceleration.h"
 
 NS_CC_BEGIN
-
-using namespace PhoneDirect3DXamlAppComponent;
-
 
 AccelerometerEvent::AccelerometerEvent(const Acceleration& event)
     : m_event(event)
@@ -65,6 +63,18 @@ void PointerEvent::execute()
     case PointerEventType::PointerReleased:
         GLViewImpl::sharedOpenGLView()->OnPointerReleased(m_args.Get());
         break;
+    case cocos2d::MousePressed:
+        GLViewImpl::sharedOpenGLView()->OnMousePressed(m_args.Get());
+        break;
+    case cocos2d::MouseMoved:
+        GLViewImpl::sharedOpenGLView()->OnMouseMoved(m_args.Get());
+        break;
+    case cocos2d::MouseReleased:
+        GLViewImpl::sharedOpenGLView()->OnMouseReleased(m_args.Get());
+        break;
+    case cocos2d::MouseWheelChanged:
+        GLViewImpl::sharedOpenGLView()->OnMouseWheelChanged(m_args.Get());
+        break;
     }
 }
 
@@ -86,9 +96,8 @@ void KeyboardEvent::execute()
     {
     case Cocos2dKeyEvent::Text:
     {
-        char szUtf8[256] = { 0 };
-        int nLen = WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR) m_text.Get()->Data(), -1, szUtf8, sizeof(szUtf8), NULL, NULL);
-        IMEDispatcher::sharedDispatcher()->dispatchInsertText(szUtf8, nLen - 1);
+        std::string utf8String = PlatformStringToString(m_text.Get());
+        IMEDispatcher::sharedDispatcher()->dispatchInsertText(utf8String.c_str(), utf8String.size());
         break;
     }
 
@@ -102,7 +111,6 @@ void KeyboardEvent::execute()
             IMEDispatcher::sharedDispatcher()->dispatchDeleteBackward();
             break;
         case Cocos2dKeyEvent::Enter:
-            //SetFocus(false);
             IMEDispatcher::sharedDispatcher()->dispatchInsertText("\n", 1);
             break;
         default:
@@ -112,6 +120,15 @@ void KeyboardEvent::execute()
     }
 }
 
+WinRTKeyboardEvent::WinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args)
+	: m_type(type), m_key(args)
+{
+}
+
+void WinRTKeyboardEvent::execute()
+{
+	GLViewImpl::sharedOpenGLView()->OnWinRTKeyboardEvent(m_type, m_key.Get());
+}
 
 BackButtonEvent::BackButtonEvent()
 {
@@ -123,6 +140,31 @@ void BackButtonEvent::execute()
     GLViewImpl::sharedOpenGLView()->OnBackKeyPress();
 }
 
+CustomInputEvent::CustomInputEvent(const std::function<void()>& fun)
+: m_fun(fun)
+{
+}
+
+void CustomInputEvent::execute()
+{
+    m_fun();
+}
+
+UIEditBoxEvent::UIEditBoxEvent(Platform::Object^ sender, Platform::String^ text, Windows::Foundation::EventHandler<Platform::String^>^ handle) 
+    : m_sender(sender)
+    , m_text(text)
+    , m_handler(handle)
+{
+
+}
+
+void UIEditBoxEvent::execute()
+{
+    if (m_handler.Get())
+    {
+        m_handler.Get()->Invoke(m_sender.Get(), m_text.Get());
+    }
+}
 
 NS_CC_END
 

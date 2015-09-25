@@ -1,34 +1,24 @@
 #include "TextureAtlasEncryptionTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
+TextureAtlasEncryptionTests::TextureAtlasEncryptionTests()
+{
+    ADD_TEST_CASE(TextureAtlasEncryptionDemo);
+}
+
 std::string TextureAtlasEncryptionDemo::title() const
 {
     return "Texture Atlas Encryption";
 }
 
-std::string TextureAtlasEncryptionDemo::subtitle() const
-{
-    return "";
-}
-
 void TextureAtlasEncryptionDemo::onEnter()
 {
-    Layer::onEnter();
+    TestCase::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 28);
-    label->setPosition( Vec2(s.width/2, s.height * 0.75f) );
-    this->addChild(label, 1);
-    
-    std::string strSubtitle = subtitle();
-    if(strSubtitle.empty() == false)
-    {
-        auto subLabel = Label::createWithTTF(strSubtitle.c_str(), "fonts/Thonburi.ttf", 16);
-        subLabel->setPosition( Vec2(s.width/2, s.height-80) );
-        this->addChild(subLabel, 1);
-    }
-    
+
     // Load the non-encrypted atlas
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/nonencryptedAtlas.plist", "Images/nonencryptedAtlas.pvr.ccz");
     
@@ -68,14 +58,3 @@ void TextureAtlasEncryptionDemo::onEnter()
     encryptedSpriteLabel->setPosition(Vec2(s.width * 0.75f, encryptedSprite->getBoundingBox().getMinY() - encryptedSpriteLabel->getContentSize().height/2));
     this->addChild(encryptedSpriteLabel, 1);
 }
-
-void TextureAtlasEncryptionTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) TextureAtlasEncryptionDemo;
-    layer->autorelease();
-    
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-

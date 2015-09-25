@@ -5,24 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
--- get mesh vertex attribute count
--- @function [parent=#Mesh] getMeshVertexAttribCount 
--- @param self
--- @return long#long ret (return value: long)
-        
---------------------------------
 -- @overload self, cc.Texture2D         
 -- @overload self, string         
 -- @function [parent=#Mesh] setTexture
 -- @param self
 -- @param #string texPath
+-- @return Mesh#Mesh self (return value: cc.Mesh)
 
---------------------------------
--- mesh index data getter 
--- @function [parent=#Mesh] getMeshIndexData 
--- @param self
--- @return MeshIndexData#MeshIndexData ret (return value: cc.MeshIndexData)
-        
 --------------------------------
 -- 
 -- @function [parent=#Mesh] getTexture 
@@ -30,28 +19,10 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
--- skin getter 
--- @function [parent=#Mesh] getSkin 
+--  Returns the Material being used by the Mesh 
+-- @function [parent=#Mesh] getMaterial 
 -- @param self
--- @return MeshSkin#MeshSkin ret (return value: cc.MeshSkin)
-        
---------------------------------
--- name getter 
--- @function [parent=#Mesh] getName 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#Mesh] setBlendFunc 
--- @param self
--- @param #cc.BlendFunc blendFunc
-        
---------------------------------
--- get index format
--- @function [parent=#Mesh] getIndexFormat 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @return Material#Material ret (return value: cc.Material)
         
 --------------------------------
 -- get per vertex size in bytes
@@ -60,28 +31,17 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- 
--- @function [parent=#Mesh] getBlendFunc 
+--  Sets a new Material to the Mesh 
+-- @function [parent=#Mesh] setMaterial 
 -- @param self
--- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+-- @param #cc.Material material
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
--- get GLProgramState
--- @function [parent=#Mesh] getGLProgramState 
+-- name getter 
+-- @function [parent=#Mesh] getName 
 -- @param self
--- @return GLProgramState#GLProgramState ret (return value: cc.GLProgramState)
-        
---------------------------------
--- get index count
--- @function [parent=#Mesh] getIndexCount 
--- @param self
--- @return long#long ret (return value: long)
-        
---------------------------------
--- get vertex buffer
--- @function [parent=#Mesh] getVertexBuffer 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- get MeshVertexAttribute by index
@@ -91,34 +51,97 @@
 -- @return MeshVertexAttrib#MeshVertexAttrib ret (return value: cc.MeshVertexAttrib)
         
 --------------------------------
+-- calculate the AABB of the mesh<br>
+-- note the AABB is in the local space, not the world space
+-- @function [parent=#Mesh] calculateAABB 
+-- @param self
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- 
+-- @function [parent=#Mesh] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #float globalZ
+-- @param #mat4_table transform
+-- @param #unsigned int flags
+-- @param #unsigned int lightMask
+-- @param #vec4_table color
+-- @param #bool forceDepthWrite
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- 
+-- @function [parent=#Mesh] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+-- name setter
+-- @function [parent=#Mesh] setName 
+-- @param self
+-- @param #string name
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- Mesh index data setter
+-- @function [parent=#Mesh] setMeshIndexData 
+-- @param self
+-- @param #cc.MeshIndexData indexdata
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- get mesh vertex attribute count
+-- @function [parent=#Mesh] getMeshVertexAttribCount 
+-- @param self
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+-- 
+-- @function [parent=#Mesh] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- force set this Sprite3D to 2D render queue
+-- @function [parent=#Mesh] setForce2DQueue 
+-- @param self
+-- @param #bool force2D
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- skin setter
+-- @function [parent=#Mesh] setSkin 
+-- @param self
+-- @param #cc.MeshSkin skin
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
 -- 
 -- @function [parent=#Mesh] isVisible 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- get index buffer
--- @function [parent=#Mesh] getIndexBuffer 
+--   Sets a new GLProgramState for the Mesh<br>
+-- A new Material will be created for it
+-- @function [parent=#Mesh] setGLProgramState 
 -- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
-        
---------------------------------
--- has vertex attribute?
--- @function [parent=#Mesh] hasVertexAttrib 
--- @param self
--- @param #int attrib
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
---  get primitive type
--- @function [parent=#Mesh] getPrimitiveType 
--- @param self
--- @return unsigned int#unsigned int ret (return value: unsigned int)
+-- @param #cc.GLProgramState glProgramState
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
 -- visible getter and setter
 -- @function [parent=#Mesh] setVisible 
 -- @param self
 -- @param #bool visible
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- 
+-- @function [parent=#Mesh] Mesh 
+-- @param self
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 return nil

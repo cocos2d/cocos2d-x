@@ -6,9 +6,9 @@ import android.view.MotionEvent;
 
 public interface GameControllerDelegate {
 
-	static final int KEY_BASE = 1000;
-	
-	public static final int THUMBSTICK_LEFT_X = KEY_BASE;
+    static final int KEY_BASE = 1000;
+    
+    public static final int THUMBSTICK_LEFT_X = KEY_BASE;
     public static final int THUMBSTICK_LEFT_Y = KEY_BASE + 1;
     public static final int THUMBSTICK_RIGHT_X = KEY_BASE + 2;
     public static final int THUMBSTICK_RIGHT_Y = KEY_BASE + 3;
@@ -37,21 +37,21 @@ public interface GameControllerDelegate {
     public static final int BUTTON_START = KEY_BASE + 21;
     public static final int BUTTON_SELECT = KEY_BASE + 22;  
     
-	void onCreate(Context context);
-	void onPause();
-	void onResume();
-	void onDestroy();
-	
-	boolean dispatchKeyEvent(KeyEvent event);
-	boolean dispatchGenericMotionEvent(MotionEvent event);
-	
-	void setControllerEventListener(ControllerEventListener listener);
-	
-	public interface ControllerEventListener {
-		void onButtonEvent(String vendorName, int controller, int button, boolean isPressed, float value, boolean isAnalog);
-		void onAxisEvent(String vendorName, int controller, int axisID, float value, boolean isAnalog);
-		
-		void onConnected(String vendorName, int controller);
-		void onDisconnected(String vendorName, int controller);
-	}
+    void onCreate(Context context);
+    void onPause();
+    void onResume();
+    void onDestroy();
+    
+    boolean dispatchKeyEvent(KeyEvent event);
+    boolean dispatchGenericMotionEvent(MotionEvent event);
+    
+    void setControllerEventListener(ControllerEventListener listener);
+    
+    public interface ControllerEventListener {
+        void onButtonEvent(String vendorName, int controller, int button, boolean isPressed, float value, boolean isAnalog);
+        void onAxisEvent(String vendorName, int controller, int axisID, float value, boolean isAnalog);
+        
+        void onConnected(String vendorName, int controller);
+        void onDisconnected(String vendorName, int controller);
+    }
 }

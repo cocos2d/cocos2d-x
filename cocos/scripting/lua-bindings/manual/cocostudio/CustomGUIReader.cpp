@@ -1,7 +1,5 @@
 #include "CustomGUIReader.h"
 #include "CCLuaEngine.h"
-#include "base/ObjectFactory.h"
-#include "json/document.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 
@@ -78,9 +76,9 @@ namespace cocostudio
             customOptions.Accept(writer);
 
             auto stack = LuaEngine::getInstance()->getLuaStack();
-            stack->pushString(classType.c_str(), classType.size());
+            stack->pushString(classType.c_str(), static_cast<int>(classType.size()));
             stack->pushObject(widget, "cc.Ref");
-            stack->pushString(buffer.GetString(), buffer.Size());
+            stack->pushString(buffer.GetString(), static_cast<int>(buffer.GetSize()));
             stack->executeFunctionByHandler(_setPropsFunc, 3);
         }
 	}

@@ -9,12 +9,14 @@
 -- @function [parent=#AssetsManager] setStoragePath 
 -- @param self
 -- @param #char storagePath
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 --------------------------------
 -- 
 -- @function [parent=#AssetsManager] setPackageUrl 
 -- @param self
 -- @param #char packageUrl
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 --------------------------------
 -- 
@@ -32,18 +34,21 @@
 -- 
 -- @function [parent=#AssetsManager] update 
 -- @param self
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 --------------------------------
 --  @brief Sets connection time out in seconds
 -- @function [parent=#AssetsManager] setConnectionTimeout 
 -- @param self
 -- @param #unsigned int timeout
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 --------------------------------
 -- 
 -- @function [parent=#AssetsManager] setVersionFileUrl 
 -- @param self
 -- @param #char versionFileUrl
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 --------------------------------
 -- 
@@ -73,6 +78,7 @@
 -- 
 -- @function [parent=#AssetsManager] deleteVersion 
 -- @param self
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 --------------------------------
 -- 
@@ -90,5 +96,6 @@
 -- 
 -- @function [parent=#AssetsManager] AssetsManager 
 -- @param self
+-- @return AssetsManager#AssetsManager self (return value: cc.AssetsManager)
         
 return nil

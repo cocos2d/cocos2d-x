@@ -9,6 +9,8 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
+
 enum {
 	kTagTitleLabel = 1,
 	kTagSubtitleLabel = 2,
@@ -17,55 +19,25 @@ enum {
 	kTagContentNode = 102,
 };
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(ScrollViewDemo),
-    CL(HoleDemo),
-    CL(ShapeTest),
-    CL(ShapeInvertedTest),
-    CL(SpriteTest),
-    CL(SpriteNoAlphaTest),
-    CL(SpriteInvertedTest),
-    CL(NestedTest),
-    CL(RawStencilBufferTest),
-    CL(RawStencilBufferTest2),
-    CL(RawStencilBufferTest3),
-    CL(RawStencilBufferTest4),
-    CL(RawStencilBufferTest5),
-    CL(RawStencilBufferTest6),
-    CL(ClippingToRenderTextureTest),
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+ClippingNodeTests::ClippingNodeTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
+    ADD_TEST_CASE(ScrollViewDemo);
+    ADD_TEST_CASE(HoleDemo);
+    ADD_TEST_CASE(ShapeTest);
+    ADD_TEST_CASE(ShapeInvertedTest);
+    ADD_TEST_CASE(SpriteTest);
+    ADD_TEST_CASE(SpriteNoAlphaTest);
+    ADD_TEST_CASE(SpriteInvertedTest);
+    ADD_TEST_CASE(NestedTest);
+    ADD_TEST_CASE(RawStencilBufferTest);
+    ADD_TEST_CASE(RawStencilBufferTest2);
+    ADD_TEST_CASE(RawStencilBufferTest3);
+    ADD_TEST_CASE(RawStencilBufferTest4);
+    ADD_TEST_CASE(RawStencilBufferTest5);
+    ADD_TEST_CASE(RawStencilBufferTest6);
+    ADD_TEST_CASE(ClippingToRenderTextureTest);
+    ADD_TEST_CASE(ClippingRectangleNodeTest);
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-} 
 
 //// Demo examples start here
 
@@ -73,7 +45,7 @@ static Layer* restartAction()
 
 bool BaseClippingNodeTest::init()
 {
-	if (BaseTest::init()) {
+	if (TestCase::init()) {
         
         auto background = Sprite::create(s_back3);
         background->setAnchorPoint( Vec2::ZERO );
@@ -94,35 +66,6 @@ BaseClippingNodeTest::~BaseClippingNodeTest()
 std::string BaseClippingNodeTest::title() const
 {
 	return "Clipping Demo";
-}
-
-std::string BaseClippingNodeTest::subtitle() const
-{
-	return "";
-}
-
-void BaseClippingNodeTest::restartCallback(Ref* sender)
-{
-	Scene *s = new (std::nothrow) ClippingNodeTestScene();
-	s->addChild(restartAction());
-	Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseClippingNodeTest::nextCallback(Ref* sender)
-{
-	Scene *s = new (std::nothrow) ClippingNodeTestScene();
-	s->addChild(nextAction());
-	Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseClippingNodeTest::backCallback(Ref* sender)
-{
-	Scene *s = new (std::nothrow) ClippingNodeTestScene();
-	s->addChild(backAction());
-	Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 void BaseClippingNodeTest::setup()
@@ -978,17 +921,21 @@ std::string ClippingToRenderTextureTest::subtitle() const
 void ClippingToRenderTextureTest::setup()
 {
     auto button = MenuItemFont::create("Reproduce bug", [&](Ref *sender) {
+        std::vector<Node*> nodes;
         enumerateChildren("remove me [0-9]", [&](Node *node) {
-            this->removeChild(node);
-            this->reproduceBug();
+            nodes.push_back(node);
             return false;
+        });
+        for (auto node : nodes)
+        {
+            this->removeChild(node);
         }
-                          );
+        this->reproduceBug();
     });
 
     auto s = Director::getInstance()->getWinSize();
     // create menu, it's an autorelease object
-    auto menu = Menu::create(button, NULL);
+    auto menu = Menu::create(button, nullptr);
     menu->setPosition(Point(s.width/2, s.height/2));
     this->addChild(menu, 1);
 
@@ -1087,22 +1034,39 @@ void ClippingToRenderTextureTest::reproduceBug()
     img->drawPolygon(triangle, 3, red, 0, red);
     clipper->addChild(img);
 
-    // container rendered on Texture the size of the screen
-    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height);
+    // container rendered on Texture the size of the screen and because Clipping node use stencil buffer so we need to
+    // create RenderTexture with depthStencil format parameter
+    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 
-    rt->beginWithClear(0.3, 0, 0, 1);
+    rt->begin();
     container->visit();
     rt->end();
 }
 
+// ClippingRectangleNodeDemo
 
-// main entry point
-
-void ClippingNodeTestScene::runThisTest()
+std::string ClippingRectangleNodeTest::title() const
 {
-    auto layer = nextAction();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
+	return "ClippingRectangleNode Test";
+}
+
+std::string ClippingRectangleNodeTest::subtitle() const
+{
+	return "more effectively";
+}
+
+void ClippingRectangleNodeTest::setup()
+{
+    auto clipper = ClippingRectangleNode::create();
+    clipper->setClippingRegion(Rect(this->getContentSize().width / 2 - 100, this->getContentSize().height / 2 - 100, 200, 200));
+    clipper->setTag( kTagClipperNode );
+    this->addChild(clipper);
+    
+    auto content = Sprite::create(s_back2);
+    content->setTag( kTagContentNode );
+    content->setAnchorPoint(  Vec2(0.5, 0.5) );
+    content->setPosition(this->getContentSize().width / 2, this->getContentSize().height / 2);
+    clipper->addChild(content);
 }

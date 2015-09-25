@@ -27,7 +27,7 @@ extern "C" {
 #include "lua_extensions.h"
 #endif
 }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "Lua_web_socket.h"
 #endif
 
@@ -44,7 +44,7 @@ int register_network_module(lua_State* L)
         luaopen_lua_extensions(L);
 #endif
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         tolua_web_socket_open(L);
         register_web_socket_manual(L);
 #endif
@@ -52,10 +52,6 @@ int register_network_module(lua_State* L)
         register_xml_http_request(L);
     }
     lua_pop(L, 1);
-    
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedNetworkClass");
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedNetworkEnum");
-    cocos2d::LuaEngine::getInstance()->executeScriptFile("DeprecatedNetworkFunc");
     
     return 1;
 }

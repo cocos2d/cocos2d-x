@@ -27,10 +27,8 @@
 #define LUASKELETONANIMATION_H_
 #include "spine-cocos2dx.h"
 
+/// @cond
 class LuaSkeletonAnimation: public spine::SkeletonAnimation {
-private:
-	void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
-
 public:
 	static LuaSkeletonAnimation* createWithFile (const char* skeletonDataFile, const char* atlasFile, float scale = 1);
 
@@ -38,5 +36,5 @@ public:
 
 	virtual ~LuaSkeletonAnimation();
 };
-
+/// @endcond
 #endif /* LUASKELETONANIMATION_H_ */

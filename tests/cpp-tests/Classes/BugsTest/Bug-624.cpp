@@ -5,6 +5,8 @@
 
 #include "Bug-624.h"
 
+USING_NS_CC;
+
 ////////////////////////////////////////////////////////
 //
 // Bug624Layer
@@ -17,7 +19,7 @@ Bug624Layer::~Bug624Layer()
 
 bool Bug624Layer::init()
 {
-    if(BugsTestBaseLayer::init())
+    if(BugsTestBase::init())
     {
         auto size = Director::getInstance()->getWinSize();
         auto label = Label::createWithTTF("Layer1", "fonts/Marker Felt.ttf", 36.0f);
@@ -29,7 +31,7 @@ bool Bug624Layer::init()
         auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(Bug624Layer::onAcceleration,  this));
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-        schedule(schedule_selector(Bug624Layer::switchLayer), 5.0f);
+        schedule(CC_SCHEDULE_SELECTOR(Bug624Layer::switchLayer), 5.0f);
 
         return true;
     }
@@ -39,7 +41,7 @@ bool Bug624Layer::init()
 
 void Bug624Layer::switchLayer(float dt)
 {
-    unschedule(schedule_selector(Bug624Layer::switchLayer));
+    unschedule(CC_SCHEDULE_SELECTOR(Bug624Layer::switchLayer));
 
     auto scene = Scene::create();    
     scene->addChild(Bug624Layer2::create(), 0);
@@ -63,7 +65,7 @@ Bug624Layer2::~Bug624Layer2()
 
 bool Bug624Layer2::init()
 {
-    if(BugsTestBaseLayer::init())
+    if(BugsTestBase::init())
     {
         auto size = Director::getInstance()->getWinSize();
         auto label = Label::createWithTTF("Layer2", "fonts/Marker Felt.ttf", 36.0f);
@@ -76,7 +78,7 @@ bool Bug624Layer2::init()
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
         
-        schedule(schedule_selector(Bug624Layer2::switchLayer), 5.0f);
+        schedule(CC_SCHEDULE_SELECTOR(Bug624Layer2::switchLayer), 5.0f);
 
         return true;
     }
@@ -86,7 +88,7 @@ bool Bug624Layer2::init()
 
 void Bug624Layer2::switchLayer(float dt)
 {
-    unschedule(schedule_selector(Bug624Layer::switchLayer));
+    unschedule(CC_SCHEDULE_SELECTOR(Bug624Layer::switchLayer));
 
     auto scene = Scene::create();    
     scene->addChild(Bug624Layer::create(), 0);

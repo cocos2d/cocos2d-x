@@ -54,7 +54,7 @@ static int lua_cocos2dx_experimental_video_VideoPlayer_addEventListener(lua_Stat
         
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.VideoPlayer:addEventListener",argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.VideoPlayer:addEventListener",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

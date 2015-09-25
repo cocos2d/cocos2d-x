@@ -1,115 +1,34 @@
 #include "LayerTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagLayer = 1,
 };
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(LayerTestCascadingOpacityA),
-    CL(LayerTestCascadingOpacityB),
-    CL(LayerTestCascadingOpacityC),
-    CL(LayerTestCascadingColorA),
-    CL(LayerTestCascadingColorB),
-    CL(LayerTestCascadingColorC),
-    CL(LayerTest1),
-    CL(LayerTest2),
-    CL(LayerTestBlend),
-    CL(LayerGradientTest),
-    CL(LayerGradientTest2),
-    CL(LayerGradientTest3),
-    CL(LayerIgnoreAnchorPointPos),
-    CL(LayerIgnoreAnchorPointRot),
-    CL(LayerIgnoreAnchorPointScale),
-    CL(LayerExtendedBlendOpacityTest),
-    CL(LayerBug3162A),
-    CL(LayerBug3162B),
-    CL(LayerColorOccludeBug),
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+LayerTests::LayerTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();    
-    return layer;
+    ADD_TEST_CASE(LayerTestCascadingOpacityA);
+    ADD_TEST_CASE(LayerTestCascadingOpacityB);
+    ADD_TEST_CASE(LayerTestCascadingOpacityC);
+    ADD_TEST_CASE(LayerTestCascadingColorA);
+    ADD_TEST_CASE(LayerTestCascadingColorB);
+    ADD_TEST_CASE(LayerTestCascadingColorC);
+    ADD_TEST_CASE(LayerTest1);
+    ADD_TEST_CASE(LayerTest2);
+    ADD_TEST_CASE(LayerTestBlend);
+    ADD_TEST_CASE(LayerGradientTest);
+    ADD_TEST_CASE(LayerGradientTest2);
+    ADD_TEST_CASE(LayerIgnoreAnchorPointPos);
+    ADD_TEST_CASE(LayerIgnoreAnchorPointRot);
+    ADD_TEST_CASE(LayerIgnoreAnchorPointScale);
+    ADD_TEST_CASE(LayerExtendedBlendOpacityTest);
+    ADD_TEST_CASE(LayerBug3162A);
+    ADD_TEST_CASE(LayerBug3162B);
+    ADD_TEST_CASE(LayerColorOccludeBug);
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-//------------------------------------------------------------------
-//
-// LayerTest
-//
-//------------------------------------------------------------------
-
-LayerTest::LayerTest(void)
-{
-}
-
-LayerTest::~LayerTest(void)
-{
-}
-
-std::string LayerTest::subtitle() const
-{
-    return "";
-}
-
-std::string LayerTest::title() const
-{
-    return "Layer Test";
-}
-
-void LayerTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void LayerTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) LayerTestScene();
-    s->addChild(restartAction());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void LayerTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) LayerTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void LayerTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) LayerTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
 
 // Cascading support extensions
 
@@ -122,6 +41,11 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
     for(const auto &child : children) {
         setEnableRecursiveCascading(child, enable);
     }
+}
+
+std::string LayerTest::title() const
+{
+    return "Layer Test";
 }
 
 // LayerTestCascadingOpacityA
@@ -543,7 +467,7 @@ LayerTestBlend::LayerTestBlend()
     sister1->setPosition( Vec2( s.width*1/3, s.height/2) );
     sister2->setPosition( Vec2( s.width*2/3, s.height/2) );
 
-    schedule( schedule_selector(LayerTestBlend::newBlend), 1.0f);
+    schedule( CC_SCHEDULE_SELECTOR(LayerTestBlend::newBlend), 1.0f);
 }
 
 void LayerTestBlend::newBlend(float dt)
@@ -647,28 +571,6 @@ std::string LayerGradientTest2::title() const
 }
 
 std::string LayerGradientTest2::subtitle() const
-{
-    return "You should see a gradient";
-}
-
-
-//------------------------------------------------------------------
-//
-// LayerGradientTest3
-//
-//------------------------------------------------------------------
-LayerGradientTest3::LayerGradientTest3()
-{
-    auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(255,255,0,255));
-    addChild(layer1);
-}
-
-std::string LayerGradientTest3::title() const
-{
-    return "LayerGradientTest 3";
-}
-
-std::string LayerGradientTest3::subtitle() const
 {
     return "You should see a gradient";
 }
@@ -823,15 +725,6 @@ std::string LayerIgnoreAnchorPointScale::subtitle() const
     return "Ignoring Anchor Vec2 for scale";
 }
 
-void LayerTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    auto layer = nextAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
-
 LayerExtendedBlendOpacityTest::LayerExtendedBlendOpacityTest()
 {
     auto layer1 = LayerGradient::create(Color4B(255, 0, 0, 255), Color4B(255, 0, 255, 255));
@@ -890,7 +783,7 @@ void LayerBug3162A::onEnter()
     
     this->addChild(_layer[0]);
     
-    schedule(schedule_selector(LayerBug3162A::step), 0.5, kRepeatForever, 0);
+    schedule(CC_SCHEDULE_SELECTOR(LayerBug3162A::step), 0.5, CC_REPEAT_FOREVER, 0);
 }
 
 void LayerBug3162A::step(float dt)
@@ -936,7 +829,7 @@ void LayerBug3162B::onEnter()
     _layer[1]->setCascadeColorEnabled(true);
     _layer[2]->setCascadeColorEnabled(true);
     
-    schedule(schedule_selector(LayerBug3162B::step), 0.5, kRepeatForever, 0);
+    schedule(CC_SCHEDULE_SELECTOR(LayerBug3162B::step), 0.5, CC_REPEAT_FOREVER, 0);
 }
 
 void LayerBug3162B::step(float dt)

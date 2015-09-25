@@ -1,5 +1,6 @@
-require("Cocos2d")
-require("Cocos2dConstants")
+cc.FileUtils:getInstance():addSearchPath("src")
+-- CC_USE_DEPRECATED_API = true
+require "cocos.init"
 
 collectgarbage("setpause", 100) 
 collectgarbage("setstepmul", 5000)
@@ -52,7 +53,7 @@ end
 fileUtils:setSearchPaths(searchPaths)
 
 local scene = cc.Scene:create()
-scene:addChild(require("src/GameControllerTest").new())
+scene:addChild(require("GameControllerTest").new())
 if cc.Director:getInstance():getRunningScene() then
     cc.Director:getInstance():replaceScene(scene)
 else

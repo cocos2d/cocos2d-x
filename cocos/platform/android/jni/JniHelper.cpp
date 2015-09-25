@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include <string.h>
 #include <pthread.h>
 
+#include "base/ccUTF8.h"
+
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
@@ -56,6 +58,10 @@ jclass _getClassID(const char *className) {
     return _clazz;
 }
 
+void _detachCurrentThread(void* a) {
+    cocos2d::JniHelper::getJavaVM()->DetachCurrentThread();
+}
+
 namespace cocos2d {
 
     JavaVM* JniHelper::_psJavaVM = nullptr;
@@ -73,7 +79,7 @@ namespace cocos2d {
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %ld", javaVM, thisthread);
         _psJavaVM = javaVM;
 
-        pthread_key_create(&g_key, nullptr);
+        pthread_key_create(&g_key, _detachCurrentThread);
     }
 
     JNIEnv* JniHelper::cacheEnv(JavaVM* jvm) {
@@ -89,11 +95,6 @@ namespace cocos2d {
                 
         case JNI_EDETACHED :
             // Thread not attached
-                
-            // TODO : If calling AttachCurrentThread() on a native thread
-            // must call DetachCurrentThread() in future.
-            // see: http://developer.android.com/guide/practices/design/jni.html
-                
             if (jvm->AttachCurrentThread(&_env, nullptr) < 0)
                 {
                     LOGE("Failed to get the environment using AttachCurrentThread()");
@@ -266,14 +267,12 @@ namespace cocos2d {
         
         JNIEnv *env = JniHelper::getEnv();
         if (!env) {
-            return nullptr;
+            return "";
         }
 
-        const char* chars = env->GetStringUTFChars(jstr, nullptr);
-        std::string ret(chars);
-        env->ReleaseStringUTFChars(jstr, chars);
+        std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(env, jstr);
 
-        return ret;
+        return strValue;
     }
 
 } //namespace cocos2d

@@ -54,6 +54,7 @@ public:
     static ControlColourPicker* create();
     /**
      * @js ctor
+     * @lua new
      */
     ControlColourPicker();
     /**
@@ -64,8 +65,8 @@ public:
 
     virtual bool init() override;
 
-    virtual void setColor(const Color3B& colorValue);
-    virtual void setEnabled(bool bEnabled);
+    virtual void setColor(const Color3B& colorValue) override;
+    virtual void setEnabled(bool bEnabled) override;
 
     //virtual ~ControlColourPicker();
     void hueSliderValueChanged(Ref * sender, Control::EventType controlEvent);
@@ -74,7 +75,7 @@ public:
 protected:
     void updateControlPicker();
     void updateHueAndControlPicker();
-    virtual bool onTouchBegan(Touch* touch, Event* pEvent);
+    virtual bool onTouchBegan(Touch* touch, Event* pEvent) override;
 
     HSV _hsv;
     CC_SYNTHESIZE_RETAIN(ControlSaturationBrightnessPicker*, _colourPicker, colourPicker)

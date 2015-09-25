@@ -26,10 +26,6 @@ THE SOFTWARE.
 #include "platform/CCStdC.h"
 #include "CCWinRTUtils.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-#include "platform/wp8/CCGLViewImpl-wp8.h"
-#endif
-
 #if defined(VLD_DEBUG_MEMORY)
 #include <vld.h>
 #endif
@@ -40,19 +36,9 @@ NS_CC_BEGIN
 void MessageBox(const char * pszMsg, const char * pszTitle)
 {
     // Create the message dialog and set its content
-    Platform::String^ message = ref new Platform::String(CCUtf8ToUnicode(pszMsg, -1).c_str());
-    Platform::String^ title = ref new Platform::String(CCUtf8ToUnicode(pszTitle, -1).c_str());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	Windows::UI::Popups::MessageDialog^ msg = ref new Windows::UI::Popups::MessageDialog(message, title);
-    // Set the command to be invoked when a user presses 'ESC'
-    msg->CancelCommandIndex = 1;
-
-    // Show the message dialog
-    msg->ShowAsync();
-#else
+    Platform::String^ message = PlatformStringFromString(pszMsg);
+    Platform::String^ title = PlatformStringFromString(pszTitle);
     GLViewImpl::sharedOpenGLView()->ShowMessageBox(title, message);
-#endif
-
 }
 
 

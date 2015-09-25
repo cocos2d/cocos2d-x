@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
@@ -113,11 +114,11 @@ TMXLayer::TMXLayer()
 , _tiles(nullptr)
 , _tileSet(nullptr)
 , _layerOrientation(FAST_TMX_ORIENTATION_ORTHO)
-,_texture(nullptr)
+, _texture(nullptr)
 , _vertexZvalue(0)
 , _useAutomaticVertexZ(false)
-, _dirty(true)
 , _quadsDirty(true)
+, _dirty(true)
 , _vertexBuffer(nullptr)
 , _vData(nullptr)
 , _indexBuffer(nullptr)
@@ -138,11 +139,21 @@ TMXLayer::~TMXLayer()
 void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 {
     updateTotalQuads();
+
+    bool isViewProjectionUpdated = true;
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == defaultCamera) {
+        isViewProjectionUpdated = visitingCamera->isViewProjectionUpdated();
+    }
     
-    if( flags != 0 || _dirty || _quadsDirty )
+    if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
-        Size s = Director::getInstance()->getWinSize();
-        auto rect = Rect(0, 0, s.width, s.height);
+        Size s = Director::getInstance()->getVisibleSize();
+        auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * 0.5,
+                     Camera::getVisitingCamera()->getPositionY() - s.height * 0.5,
+                     s.width,
+                     s.height);
         
         Mat4 inv = transform;
         inv.inverse();
@@ -154,7 +165,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _primitives.size())
+    if(_renderCommands.size() < static_cast<size_t>(_primitives.size()))
     {
         _renderCommands.resize(_primitives.size());
     }
@@ -165,7 +176,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         if(iter.second->getCount() > 0)
         {
             auto& cmd = _renderCommands[index++];
-            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform);
+            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform, flags);
             renderer->addCommand(&cmd);
         }
     }
@@ -203,7 +214,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     // for the bigger tiles.
     int tilesOverX = 0;
     int tilesOverY = 0;
-    // for diagonal oriention tiles
+    // for diagonal orientation tiles
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
     if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
@@ -487,7 +498,7 @@ void TMXLayer::updateTotalQuads()
                 
                 if(tileGID & kTMXTileDiagonalFlag)
                 {
-                    // FIXME: not working correcly
+                    // FIXME: not working correctly
                     quad.bl.vertices.x = left;
                     quad.bl.vertices.y = bottom;
                     quad.bl.vertices.z = z;
@@ -740,19 +751,19 @@ void TMXLayer::parseInternalProperties()
 //CCTMXLayer2 - obtaining positions, offset
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation) 
     {
     case FAST_TMX_ORIENTATION_ORTHO:
-        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case FAST_TMX_ORIENTATION_ISO:
-        ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case FAST_TMX_ORIENTATION_HEX:
     default:
-        CCASSERT(pos.equals(Vec2::ZERO), "offset for this map not implemented yet");
+        CCASSERT(pos.isZero(), "offset for this map not implemented yet");
         break;
     }
     return ret;    

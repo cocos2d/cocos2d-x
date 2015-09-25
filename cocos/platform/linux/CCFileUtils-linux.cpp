@@ -35,6 +35,11 @@ THE SOFTWARE.
 #include <sys/stat.h>
 #include <stdio.h>
 #include <errno.h>
+#include <sys/stat.h>
+
+#ifndef CC_RESOURCE_FOLDER_LINUX
+#define CC_RESOURCE_FOLDER_LINUX ("/Resources/")
+#endif
 
 using namespace std;
 
@@ -71,7 +76,7 @@ bool FileUtilsLinux::init()
     fullpath[length] = '\0';
     std::string appPath = fullpath;
     _defaultResRootPath = appPath.substr(0, appPath.find_last_of("/"));
-    _defaultResRootPath += "/Resources/";
+    _defaultResRootPath += CC_RESOURCE_FOLDER_LINUX;
 
     // Set writable path to $XDG_CONFIG_HOME or ~/.config/<app name>/ if $XDG_CONFIG_HOME not exists.
     const char* xdg_config_path = getenv("XDG_CONFIG_HOME");
@@ -112,7 +117,7 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
     { // Not absolute path, add the default root path at the beginning.
         strPath.insert(0, _defaultResRootPath);
     }
-    
+
     struct stat sts;
     return (stat(strPath.c_str(), &sts) != -1) ? true : false;
 }

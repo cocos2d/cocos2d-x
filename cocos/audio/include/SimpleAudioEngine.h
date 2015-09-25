@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      Steve Oldmeadow
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,97 +37,108 @@ THE SOFTWARE.
 #define CC_DEPRECATED_ATTRIBUTE
 #endif
 
+/**
+* @addtogroup audio
+* @{
+*/
+
 namespace CocosDenshion {
 
 /**
-  @class          SimpleAudioEngine
-  @brief          Offers a VERY simple interface to play background music & sound effects.
-  @note           Make sure to call SimpleAudioEngine::end() when the sound engine is not needed anymore
-                  to release allocated resources.
+ * @class SimpleAudioEngine
+ *
+ * @brief Offers a very simple interface to play background music & sound effects.
+ *
+ * @note Make sure to call SimpleAudioEngine::end() when the sound engine is not needed anymore to release allocated resources.
+ * @js cc.audioEngine
  */
 
 class EXPORT_DLL SimpleAudioEngine
 {
 public:
     /**
-     @brief Get the shared Engine object,it will new one when first time be called
+     * Returns a shared instance of the SimpleAudioEngine.
+     * @js NA
      */
     static SimpleAudioEngine* getInstance();
+
     /**
+     * @deprecated Use `getInstance` instead.
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
 
     /**
-     @brief Release the shared Engine object
-     @warning It must be called before the application exit, or a memory leak will be casued.
+     * Release the shared Engine object.
+     *
+     * @warning It must be called before the application exit, or it will lead to memory leaks.
+     * @lua destroyInstance
      */
     static void end();
 
-protected:
-    SimpleAudioEngine();
-    virtual ~SimpleAudioEngine();
-
-public:
-
     /**
-     @brief Preload background music
-     @param pszFilePath The path of the background music file.
-     * @js preloadMusic
+     * Preload background music.
+     *
+     * @param filePath The path of the background music file.
+     * @js NA
      * @lua preloadMusic
      */
-    virtual void preloadBackgroundMusic(const char* pszFilePath);
+    virtual void preloadBackgroundMusic(const char* filePath);
     
     /**
-     @brief Play background music
-     @param pszFilePath The path of the background music file,or the FileName of T_SoundResInfo
-     @param bLoop Whether the background music loop or not
+     * Play background music.
+     * 
+     * @param filePath The path of the background music file,or the FileName of T_SoundResInfo.
+     * @param loop Whether the background music loop or not.
      * @js playMusic
      * @lua playMusic
      */
-    virtual void playBackgroundMusic(const char* pszFilePath, bool bLoop = false);
+    virtual void playBackgroundMusic(const char* filePath, bool loop = false);
 
     /**
-     @brief Stop playing background music
-     @param bReleaseData If release the background music data or not.As default value is false
+     * Stop playing background music.
+     *
+     * @param releaseData If release the background music data or not.As default value is false.
      * @js stopMusic
      * @lua stopMusic
      */
-    virtual void stopBackgroundMusic(bool bReleaseData = false);
+    virtual void stopBackgroundMusic(bool releaseData = false);
 
     /**
-     @brief Pause playing background music
+     * Pause playing background music.
      * @js pauseMusic
      * @lua pauseMusic
      */
     virtual void pauseBackgroundMusic();
 
     /**
-     @brief Resume playing background music
+     * Resume playing background music.
      * @js resumeMusic
      * @lua resumeMusic
      */
     virtual void resumeBackgroundMusic();
 
     /**
-     @brief Rewind playing background music
+     * Rewind playing background music.
      * @js rewindMusic
      * @lua rewindMusic
      */
     virtual void rewindBackgroundMusic();
 
     /**
-     @brief Indicates whether any background music can be played or not.
-     @return <i>true</i> if background music can be played, otherwise <i>false</i>.
+     * Indicates whether any background music can be played or not.
+     *
+     * @return <i>true</i> if background music can be played, otherwise <i>false</i>.
      * @js willPlayMusic
      * @lua willPlayMusic
      */
     virtual bool willPlayBackgroundMusic();
 
     /**
-     @brief Indicates whether the background music is playing
-     @return <i>true</i> if the background music is playing, otherwise <i>false</i>
+     * Indicates whether the background music is playing.
+     *
+     * @return <i>true</i> if the background music is playing, otherwise <i>false</i>.
      * @js isMusicPlaying
      * @lua isMusicPlaying
      */
@@ -138,97 +149,121 @@ public:
     //
 
     /**
-     @brief The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * The volume of the background music within the range of 0.0 as the minimum and 1.0 as the maximum.
      * @js getMusicVolume
      * @lua getMusicVolume
      */
     virtual float getBackgroundMusicVolume();
 
     /**
-     @brief Set the volume of background music
-     @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
+     * Set the volume of background music.
+     *
+     * @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
      * @js setMusicVolume
      * @lua setMusicVolume
      */
     virtual void setBackgroundMusicVolume(float volume);
 
     /**
-    @brief The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
-    */
+     * The volume of the effects within the range of 0.0 as the minimum and 1.0 as the maximum.
+     */
     virtual float getEffectsVolume();
 
     /**
-    @brief Set the volume of sound effects
-    @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
-    */
+     * Set the volume of sound effects.
+     *
+     * @param volume must be within the range of 0.0 as the minimum and 1.0 as the maximum.
+     */
     virtual void setEffectsVolume(float volume);
 
     // 
     // for sound effects
 
     /**
-    @brief Play sound effect with a file path, pitch, pan and gain
-    @param pszFilePath The path of the effect file.
-    @param bLoop Determines whether to loop the effect playing or not. The default value is false.
-    @param pitch Frequency, normal value is 1.0. Will also change effect play time.
-    @param pan   Stereo effect, in the range of [-1..1] where -1 enables only left channel.
-    @param gain  Volume, in the range of [0..1]. The normal value is 1.
-    @return the OpenAL source id
-
-    @note Full support is under development, now there are limitations:
-        - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
-        - no pitch/pan/gain on emscrippten, win32, marmalade.
-    */
-    virtual unsigned int playEffect(const char* pszFilePath, bool bLoop = false,
+     * Play sound effect with a file path, pitch, pan and gain.
+     *
+     * @param filePath The path of the effect file.
+     * @param loop Determines whether to loop the effect playing or not. The default value is false.
+     * @param pitch Frequency, normal value is 1.0. Will also change effect play time.
+     * @param pan   Stereo effect, in the range of [-1..1] where -1 enables only left channel.
+     * @param gain  Volume, in the range of [0..1]. The normal value is 1.
+     * @return The sound id.
+     * 
+     * @note Full support is under development, now there are limitations:
+     *     - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
+     *     - no pitch/pan/gain on win32.
+     */
+    virtual unsigned int playEffect(const char* filePath, bool loop = false,
                                     float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
 
     /**
-    @brief Pause playing sound effect
-    @param nSoundId The return value of function playEffect
-    */
-    virtual void pauseEffect(unsigned int nSoundId);
+     * Pause playing sound effect.
+     *
+     * @param soundId The return value of function playEffect.
+     */
+    virtual void pauseEffect(unsigned int soundId);
 
     /**
-    @brief Pause all playing sound effect
-    */
+     * Pause all playing sound effect.
+     */
     virtual void pauseAllEffects();
 
     /**
-    @brief Resume playing sound effect
-    @param nSoundId The return value of function playEffect
-    */
-    virtual void resumeEffect(unsigned int nSoundId);
+     * Resume playing sound effect.
+     *
+     * @param soundId The return value of function playEffect.
+     */
+    virtual void resumeEffect(unsigned int soundId);
 
     /**
-    @brief Resume all playing sound effect
-    */
+     * Resume all playing sound effect.
+     */
     virtual void resumeAllEffects();
 
     /**
-    @brief Stop playing sound effect
-    @param nSoundId The return value of function playEffect
-    */
-    virtual void stopEffect(unsigned int nSoundId);
+     * Stop playing sound effect.
+     *
+     * @param soundId The return value of function playEffect.
+     */
+    virtual void stopEffect(unsigned int soundId);
 
     /**
-    @brief Stop all playing sound effects
-    */
+     * Stop all playing sound effects.
+     */
     virtual void stopAllEffects();
 
     /**
-    @brief          preload a compressed audio file
-    @details        the compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine
-    @param pszFilePath The path of the effect file
-    */
-    virtual void preloadEffect(const char* pszFilePath);
+     * Preload a compressed audio file.
+     *
+     * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
+     *
+     * @param filePath The path of the effect file.
+     * @js NA
+     */
+    virtual void preloadEffect(const char* filePath);
 
     /**
-    @brief          unload the preloaded effect from internal buffer
-    @param pszFilePath        The path of the effect file
+     * Unload the preloaded effect from internal buffer.
+     *
+     * @param filePath The path of the effect file.
+     */
+    virtual void unloadEffect(const char* filePath);
+
+protected:
+    /**
+    * Constructor of SimpleAudioEngine.
     */
-    virtual void unloadEffect(const char* pszFilePath);
+    SimpleAudioEngine();
+
+    /**
+    * Destructor of SimpleAudioEngine.
+    */
+    virtual ~SimpleAudioEngine();
 };
 
 } // end of namespace CocosDenshion
+
+// end audio group
+/// @}
 
 #endif // _SIMPLE_AUDIO_ENGINE_H_

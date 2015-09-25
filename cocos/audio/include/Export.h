@@ -29,12 +29,14 @@ THE SOFTWARE.
     #include <FBaseConfig.h>
     #define EXPORT_DLL  _EXPORT_
 #elif defined(_WIN32)
-    #if defined(_EXPORT_DLL_)
-    #define EXPORT_DLL      __declspec(dllexport)
-	#elif (defined(IGNORE_EXPORT) || defined(WP8))
-    #define EXPORT_DLL 
-    #else         /* use a DLL library */
-    #define EXPORT_DLL     __declspec(dllimport)
+    #if defined(CC_STATIC)
+        #define EXPORT_DLL
+    #else
+        #if defined(_EXPORT_DLL_)
+            #define EXPORT_DLL      __declspec(dllexport)    
+        #else         /* use a DLL library */
+            #define EXPORT_DLL     __declspec(dllimport)
+        #endif
     #endif
 #else
     #if defined(_SHARED_)

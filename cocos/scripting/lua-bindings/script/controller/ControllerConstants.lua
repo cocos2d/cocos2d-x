@@ -1,3 +1,4 @@
+
 cc = cc or {}
 
 cc.ControllerKey =
@@ -13,7 +14,7 @@ cc.ControllerKey =
     BUTTON_X = 1007,
     BUTTON_Y = 1008,
     BUTTON_Z = 1009,
-   
+
     BUTTON_DPAD_UP = 1010,
     BUTTON_DPAD_DOWN = 1011,
     BUTTON_DPAD_LEFT = 1012,

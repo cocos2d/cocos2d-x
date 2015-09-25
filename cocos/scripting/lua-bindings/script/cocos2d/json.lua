@@ -18,7 +18,7 @@
 --   compat-5.1 if using Lua 5.0
 --
 -- CHANGELOG
---   0.9.20 Introduction of local Lua functions for private functions (removed _ function prefix). 
+--   0.9.20 Introduction of local Lua functions for private functions (removed _ function prefix).
 --          Fixed Lua 5.1 compatibility issues.
 --   		Introduced json.null to have null values in associative arrays.
 --          encode() performance improvement (more than 50%) through table.concat rather than ..
@@ -65,19 +65,19 @@ function encode (v)
   if v==nil then
     return "null"
   end
-  
-  local vtype = base.type(v)  
+
+  local vtype = base.type(v)
 
   -- Handle strings
-  if vtype=='string' then    
+  if vtype=='string' then
     return '"' .. encodeString(v) .. '"'	    -- Need to handle encoding in string
   end
-  
+
   -- Handle booleans
   if vtype=='number' or vtype=='boolean' then
     return base.tostring(v)
   end
-  
+
   -- Handle tables
   if vtype=='table' then
     local rval = {}
@@ -100,12 +100,12 @@ function encode (v)
       return '{' .. table.concat(rval,',') .. '}'
     end
   end
-  
+
   -- Handle null values
   if vtype=='function' and v==null then
     return 'null'
   end
-  
+
   base.assert(false,'encode attempt to encode unsupported type ' .. vtype .. ':' .. base.tostring(v))
 end
 
@@ -191,14 +191,14 @@ function decode_scanComment(s, startPos)
   base.assert( string.sub(s,startPos,startPos+1)=='/*', "decode_scanComment called but comment does not start at position " .. startPos)
   local endPos = string.find(s,'*/',startPos+2)
   base.assert(endPos~=nil, "Unterminated comment in string at " .. startPos)
-  return endPos+2  
+  return endPos+2
 end
 
 --- Scans for given constants: true, false or null
 -- Returns the appropriate Lua type, and the position of the next character to read.
 -- @param s The string being scanned.
 -- @param startPos The position in the string at which to start scanning.
--- @return object, int The object (true, false or nil) and the position at which the next character should be 
+-- @return object, int The object (true, false or nil) and the position at which the next character should be
 -- scanned.
 function decode_scanConstant(s, startPos)
   local consts = { ["true"] = true, ["false"] = false, ["null"] = nil }
@@ -290,7 +290,7 @@ function decode_scanString(s,startPos)
   local stringLen = string.len(s)
   repeat
     local curChar = string.sub(s,endPos,endPos)
-    if not escaped then	
+    if not escaped then
       if curChar==[[\]] then
         escaped = true
       else
@@ -306,7 +306,7 @@ function decode_scanString(s,startPos)
   local stringValue = 'return ' .. string.sub(s, startPos, endPos-1)
   local stringEval = base.loadstring(stringValue)
   base.assert(stringEval, 'Failed to load string [ ' .. stringValue .. '] in JSON4Lua.decode_scanString at position ' .. startPos .. ' : ' .. endPos)
-  return stringEval(), endPos  
+  return stringEval(), endPos
 end
 
 --- Scans a JSON string skipping all whitespace from the current start position.
@@ -334,7 +334,7 @@ function encodeString(s)
   s = string.gsub(s,"'","\\'")
   s = string.gsub(s,'\n','\\n')
   s = string.gsub(s,'\t','\\t')
-  return s 
+  return s
 end
 
 -- Determines whether the given Lua type is an array or a table / dictionary.
@@ -344,9 +344,9 @@ end
 -- @param t The table to evaluate as an array
 -- @return boolean, number True if the table can be represented as an array, false otherwise. If true,
 -- the second returned value is the maximum
--- number of indexed elements in the array. 
+-- number of indexed elements in the array.
 function isArray(t)
-  -- Next we count all the elements, ensuring that any non-indexed elements are not-encodable 
+  -- Next we count all the elements, ensuring that any non-indexed elements are not-encodable
   -- (with the possible exception of 'n')
   local maxIndex = 0
   for k,v in base.pairs(t) do
@@ -371,6 +371,6 @@ end
 -- @return boolean True if the object should be JSON encoded, false if it should be ignored.
 function isEncodable(o)
   local t = base.type(o)
-  return (t=='string' or t=='boolean' or t=='number' or t=='nil' or t=='table') or (t=='function' and o==null) 
+  return (t=='string' or t=='boolean' or t=='number' or t=='nil' or t=='table') or (t=='function' and o==null)
 end
 

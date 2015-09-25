@@ -73,7 +73,7 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
 		action->initWithDictionary(actionDic,root);
 		actionList.pushBack(action);
 	}
-	_actionDic.insert(std::pair<std::string, cocos2d::Vector<ActionObject*>>(fileName, actionList));
+	_actionDic[fileName] = actionList;
 }
     
     void ActionManagerEx::initWithBinary(const char* file,
@@ -103,19 +103,23 @@ void ActionManagerEx::initWithDictionary(const char* jsonName,const rapidjson::V
                 ActionObject* action = new (std::nothrow) ActionObject();
                 action->autorelease();
                 
-                action->initWithBinary(cocoLoader, actionNode->GetChildArray(cocoLoader), root);
+                action->initWithBinary(cocoLoader, &actionNode->GetChildArray(cocoLoader)[i], root);
                 
                 actionList.pushBack(action);
             }
         }
-        _actionDic.insert(std::pair<std::string, cocos2d::Vector<ActionObject*>>(fileName, actionList));
+        _actionDic[fileName] = actionList;
         
     }
 
 
 ActionObject* ActionManagerEx::getActionByName(const char* jsonName,const char* actionName)
 {
-	auto iterator = _actionDic.find(jsonName);
+	std::string path = jsonName;
+	ssize_t pos = path.find_last_of("/");
+	std::string fileName = path.substr(pos+1,path.length());
+	CCLOG("find filename == %s",fileName.c_str());
+	auto iterator = _actionDic.find(fileName);
 	if (iterator == _actionDic.end())
 	{
 		return nullptr;
@@ -148,6 +152,16 @@ ActionObject* ActionManagerEx::playActionByName(const char* jsonName,const char*
 	if (action)
 	{
 		action->play(func);
+	}
+	return action;
+}
+
+ActionObject* ActionManagerEx::stopActionByName(const char* jsonName,const char* actionName)
+{
+	ActionObject* action = getActionByName(jsonName,actionName);
+	if (action)
+	{
+		action->stop();
 	}
 	return action;
 }

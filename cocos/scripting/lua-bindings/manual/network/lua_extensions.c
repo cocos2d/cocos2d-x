@@ -6,6 +6,7 @@ extern "C" {
 #endif
 // socket
 #include "luasocket/luasocket.h"
+#include "luasocket/luasocket_scripts.h"
 #include "luasocket/mime.h"
 
 static luaL_Reg luax_exts[] = {
@@ -26,6 +27,8 @@ void luaopen_lua_extensions(lua_State *L)
         lua_setfield(L, -2, lib->name);
     }
     lua_pop(L, 2);
+
+    luaopen_luasocket_scripts(L);
 }
 
 #if __cplusplus

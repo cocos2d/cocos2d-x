@@ -927,21 +927,21 @@ local function TextureBlend()
         local cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 100+i)
         cloud:setPosition(cc.p(50+25*i, 80))
-        cloud:setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        cloud:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
 
         -- CENTER sprites have also alpha pre-multiplied
         -- they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(cc.p(50+25*i, 160))
-        cloud:setBlendFunc(gl.ONE_MINUS_DST_COLOR , gl.ZERO)
+        cloud:setBlendFunc(cc.blendFunc(gl.ONE_MINUS_DST_COLOR , gl.ZERO))
 
         -- UPPER sprites are using custom blending function
         -- You can set any blend function to your sprites
         cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(cc.p(50+25*i, 320-80))
-        cloud:setBlendFunc(gl.SRC_ALPHA, gl.ONE)  -- additive blending
+        cloud:setBlendFunc(cc.blendFunc(gl.SRC_ALPHA, gl.ONE))  -- additive blending
     end
     return ret
 end
@@ -1178,13 +1178,18 @@ local function TextureDrawAtPoint()
     local ret = createTestLayer("Texture2D: drawAtPoint",
                                 "draws 2 textures using drawAtPoint")
 
-    local function draw()
-        -- TextureDemo:draw()
+    local function draw(transform, transformUpdated)
+        local director = cc.Director:getInstance()
+        assert(nil ~= director, "Director is null when seting matrix stack")
+        director:pushMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
+        director:loadMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW, transform)
 
         local s = cc.Director:getInstance():getWinSize()
-
+    
         m_pTex1:drawAtPoint(cc.p(s.width/2-50, s.height/2 - 50))
         m_pTex2F:drawAtPoint(cc.p(s.width/2+50, s.height/2 - 50))
+    
+        director:popMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
     end
 
     m_pTex1 = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister1.png")
@@ -1192,6 +1197,13 @@ local function TextureDrawAtPoint()
 
     m_pTex1:retain()
     m_pTex2F:retain()
+
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(cc.size(256, 256))
+    glNode:setAnchorPoint(cc.p(0, 0))
+    glNode:registerScriptDrawHandler(draw)
+    ret:addChild(glNode)
+
     local function onNodeEvent(event)
         if event == "exit" then
             m_pTex1:release()
@@ -1207,10 +1219,15 @@ end
 -- TextureDrawInRect
 
 local function TextureDrawInRect()
+    local m_pTex1 = nil
+    local m_pTex2F = nil
     local ret = createTestLayer("Texture2D: drawInRect",
                                 "draws 2 textures using drawInRect")
-    local function draw()
-        -- TextureDemo:draw()
+    local function draw(transform, transformUpdated)
+        local director = cc.Director:getInstance()
+        assert(nullptr ~= director, "Director is null when seting matrix stack")
+        director:pushMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
+        director:loadMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW, transform)
 
         local s = cc.Director:getInstance():getWinSize()
 
@@ -1221,11 +1238,18 @@ local function TextureDrawInRect()
         m_pTex2F:drawInRect(rect2)
     end
 
-    local m_pTex1 = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister1.png")
-    local m_pTex2F = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister2.png")
+    m_pTex1 = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister1.png")
+    m_pTex2F = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister2.png")
 
     m_pTex1:retain()
     m_pTex2F:retain()
+
+    local glNode  = gl.glNodeCreate()
+    glNode:setContentSize(cc.size(256, 256))
+    glNode:setAnchorPoint(cc.p(0, 0))
+    glNode:registerScriptDrawHandler(draw)
+    ret:addChild(glNode)
+
     local function onNodeEvent(event)
         if event == "exit" then
             m_pTex1:release()

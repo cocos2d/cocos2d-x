@@ -28,6 +28,7 @@
 #include <algorithm>
 #include "../testResource.h"
 
+USING_NS_CC;
 
 enum 
 {
@@ -51,173 +52,74 @@ enum
     kTagSprite8,
 };
 
-enum
+SpriteTests::SpriteTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
+	ADD_TEST_CASE(Sprite1);
+	ADD_TEST_CASE(SpriteBatchNode1);
+	ADD_TEST_CASE(SpriteAnchorPoint);
+	ADD_TEST_CASE(SpriteBatchNodeAnchorPoint);
+	ADD_TEST_CASE(SpriteOffsetAnchorRotation);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotation);
+	ADD_TEST_CASE(SpriteOffsetAnchorScale);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorScale);
+	ADD_TEST_CASE(SpriteOffsetAnchorSkew);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorSkew);
+	ADD_TEST_CASE(SpriteOffsetAnchorRotationalSkew);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotationalSkew);
+	ADD_TEST_CASE(SpriteOffsetAnchorSkewScale);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorSkewScale);
+	ADD_TEST_CASE(SpriteOffsetAnchorRotationalSkewScale);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotationalSkewScale);
+	ADD_TEST_CASE(SpriteSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteBatchNodeSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteRotationalSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteBatchNodeRotationalSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteOffsetAnchorFlip);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorFlip);
+	ADD_TEST_CASE(SpriteChildrenChildren);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenChildren);
+	ADD_TEST_CASE(SpriteChildrenAnchorPoint);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenAnchorPoint);
+	ADD_TEST_CASE(SpriteColorOpacity);
+	ADD_TEST_CASE(SpriteBatchNodeColorOpacity);
+	ADD_TEST_CASE(SpriteZOrder);
+	ADD_TEST_CASE(SpriteBatchNodeZOrder);
+	ADD_TEST_CASE(SpriteZVertex);
+	ADD_TEST_CASE(SpriteBatchNodeZVertex);
+	ADD_TEST_CASE(SpriteAliased);
+	ADD_TEST_CASE(SpriteBatchNodeAliased);
+	ADD_TEST_CASE(SpriteNewTexture);
+	ADD_TEST_CASE(SpriteBatchNodeNewTexture);
+	ADD_TEST_CASE(SpriteFlip);
+	ADD_TEST_CASE(SpriteBatchNodeFlip);
+	ADD_TEST_CASE(SpriteAnimationSplit);
+	ADD_TEST_CASE(SpriteFrameTest);
+	ADD_TEST_CASE(SpriteFrameAliasNameTest);
+	ADD_TEST_CASE(SpriteFramesFromFileContent);
+	ADD_TEST_CASE(SpriteBatchNodeReorder);
+	ADD_TEST_CASE(SpriteBatchNodeReorderIssue744);
+	ADD_TEST_CASE(SpriteBatchNodeReorderIssue766);
+	ADD_TEST_CASE(SpriteBatchNodeReorderIssue767);
+	ADD_TEST_CASE(SpriteBatchNodeReorderSameIndex);
+	ADD_TEST_CASE(SpriteBatchNodeReorderOneChild);
+	ADD_TEST_CASE(NodeSort);
+	ADD_TEST_CASE(Sprite6);
+	ADD_TEST_CASE(SpriteHybrid);
+	ADD_TEST_CASE(SpriteBatchNodeChildren);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenZ);
+	ADD_TEST_CASE(SpriteChildrenVisibility);
+	ADD_TEST_CASE(SpriteChildrenVisibilityIssue665);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenScale);
+	ADD_TEST_CASE(SpriteNilTexture);
+	ADD_TEST_CASE(SpriteSubclass);
+	ADD_TEST_CASE(SpriteDoubleResolution);
+	ADD_TEST_CASE(SpriteBatchBug1217);
+	ADD_TEST_CASE(AnimationCacheTest);
+	ADD_TEST_CASE(AnimationCacheFile);
+	ADD_TEST_CASE(SpriteCullTest1);
+	ADD_TEST_CASE(SpriteCullTest2);
+    ADD_TEST_CASE(Sprite3DRotationTest);
 };
-
-static int sceneIdx = -1; 
-
-
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-
-static std::function<Layer*()> createFunctions[] =
-{
-	CL(Sprite1),
-	CL(SpriteBatchNode1),
-	CL(SpriteAnchorPoint),
-	CL(SpriteBatchNodeAnchorPoint),
-	CL(SpriteOffsetAnchorRotation),
-	CL(SpriteBatchNodeOffsetAnchorRotation),
-	CL(SpriteOffsetAnchorScale),
-	CL(SpriteBatchNodeOffsetAnchorScale),
-	CL(SpriteOffsetAnchorSkew),
-	CL(SpriteBatchNodeOffsetAnchorSkew),
-	CL(SpriteOffsetAnchorRotationalSkew),
-	CL(SpriteBatchNodeOffsetAnchorRotationalSkew),
-	CL(SpriteOffsetAnchorSkewScale),
-	CL(SpriteBatchNodeOffsetAnchorSkewScale),
-	CL(SpriteOffsetAnchorRotationalSkewScale),
-	CL(SpriteBatchNodeOffsetAnchorRotationalSkewScale),
-	CL(SpriteSkewNegativeScaleChildren),
-	CL(SpriteBatchNodeSkewNegativeScaleChildren),
-	CL(SpriteRotationalSkewNegativeScaleChildren),
-	CL(SpriteBatchNodeRotationalSkewNegativeScaleChildren),
-	CL(SpriteOffsetAnchorFlip),
-	CL(SpriteBatchNodeOffsetAnchorFlip),
-	CL(SpriteChildrenChildren),
-	CL(SpriteBatchNodeChildrenChildren),
-	CL(SpriteChildrenAnchorPoint),
-	CL(SpriteBatchNodeChildrenAnchorPoint),
-	CL(SpriteColorOpacity),
-	CL(SpriteBatchNodeColorOpacity),
-	CL(SpriteZOrder),
-	CL(SpriteBatchNodeZOrder),
-	CL(SpriteZVertex),
-	CL(SpriteBatchNodeZVertex),
-	CL(SpriteAliased),
-	CL(SpriteBatchNodeAliased),
-	CL(SpriteNewTexture),
-	CL(SpriteBatchNodeNewTexture),
-	CL(SpriteFlip),
-	CL(SpriteBatchNodeFlip),
-	CL(SpriteAnimationSplit),
-	CL(SpriteFrameTest),
-	CL(SpriteFrameAliasNameTest),
-	CL(SpriteFramesFromFileContent),
-	CL(SpriteBatchNodeReorder),
-	CL(SpriteBatchNodeReorderIssue744),
-	CL(SpriteBatchNodeReorderIssue766),
-	CL(SpriteBatchNodeReorderIssue767),
-	CL(SpriteBatchNodeReorderSameIndex),
-	CL(SpriteBatchNodeReorderOneChild),
-	CL(NodeSort),
-	CL(Sprite6),
-	CL(SpriteHybrid),
-	CL(SpriteBatchNodeChildren),
-	CL(SpriteBatchNodeChildrenZ),
-	CL(SpriteChildrenVisibility),
-	CL(SpriteChildrenVisibilityIssue665),
-	CL(SpriteBatchNodeChildrenScale),
-	CL(SpriteNilTexture),
-	CL(SpriteSubclass),
-	CL(SpriteDoubleResolution),
-	CL(SpriteBatchBug1217),
-	CL(AnimationCacheTest),
-	CL(AnimationCacheFile),
-	CL(SpriteCullTest1),
-	CL(SpriteCullTest2),
-    CL(Sprite3DRotationTest),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-} 
-
-//------------------------------------------------------------------
-//
-// SpriteTestDemo
-//
-//------------------------------------------------------------------
-
-SpriteTestDemo::SpriteTestDemo(void)
-: BaseTest()
-{
-}
-
-SpriteTestDemo::~SpriteTestDemo(void)
-{
-}
-
-std::string SpriteTestDemo::title() const
-{
-    return "No title";
-}
-
-std::string SpriteTestDemo::subtitle() const
-{
-    return "";
-}
-
-void SpriteTestDemo::onEnter()
-{
-    BaseTest::onEnter();  
-}
-
-void SpriteTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) SpriteTestScene();
-    s->addChild(restartSpriteTestAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SpriteTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) SpriteTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SpriteTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) SpriteTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
 
 //------------------------------------------------------------------
 //
@@ -420,7 +322,7 @@ SpriteColorOpacity::SpriteColorOpacity()
     addChild(sprite7, 0, kTagSprite7);
     addChild(sprite8, 0, kTagSprite8);
     
-    schedule( schedule_selector(SpriteColorOpacity::removeAndAddSprite), 2 );
+    schedule( CC_CALLBACK_1(SpriteColorOpacity::removeAndAddSprite, this), 2, "remove_add_key" );
 }
 
 // this function test if remove and add works as expected:
@@ -513,7 +415,7 @@ SpriteBatchNodeColorOpacity::SpriteBatchNodeColorOpacity()
     batch->addChild(sprite8, 0, kTagSprite8);
     
     
-    schedule( schedule_selector(SpriteBatchNodeColorOpacity::removeAndAddSprite), 2);
+    schedule( CC_CALLBACK_1(SpriteBatchNodeColorOpacity::removeAndAddSprite, this), 2, "remove_add_key");
 }
 
 // this function test if remove and add works as expected:
@@ -575,7 +477,7 @@ SpriteZOrder::SpriteZOrder()
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
     
-    schedule( schedule_selector(SpriteZOrder::reorderSprite), 1);        
+    schedule( CC_CALLBACK_1(SpriteZOrder::reorderSprite, this), 1, "reorder_key");
 }
 
 void SpriteZOrder::reorderSprite(float dt)
@@ -643,7 +545,7 @@ SpriteBatchNodeZOrder::SpriteBatchNodeZOrder()
     sprite->setScaleX( 6 );
     sprite->setColor(Color3B::RED);
     
-    schedule( schedule_selector(SpriteBatchNodeZOrder::reorderSprite), 1);        
+    schedule( CC_CALLBACK_1(SpriteBatchNodeZOrder::reorderSprite, this), 1, "reorder_key");
 }
 
 void SpriteBatchNodeZOrder::reorderSprite(float dt)
@@ -682,7 +584,7 @@ std::string SpriteBatchNodeZOrder::subtitle() const
 
 SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 {
-    auto a = Array::createWithCapacity(10);
+    auto a = __Array::createWithCapacity(10);
     auto asmtest = SpriteBatchNode::create("animations/ghosts.png");
     
     for(int i=0; i<10; i++)
@@ -773,15 +675,24 @@ std::string SpriteBatchNodeReorderIssue744::subtitle() const
 
 Sprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 {
-    auto sprite = Sprite::createWithTexture(batchNode->getTexture(), Rect(128,0,64,64));
+    Rect rcw(128,0,64,64);
+    rcw = CC_RECT_PIXELS_TO_POINTS(rcw);
+    auto sprite = Sprite::createWithTexture(batchNode->getTexture(), rcw);
+    sprite->setScale(CC_CONTENT_SCALE_FACTOR());
     batchNode->addChild(sprite, aZ+1, 0);
 
     //children
-    auto spriteShadow = Sprite::createWithTexture(batchNode->getTexture(), Rect(0,0,64,64));
+    Rect rc1(0,0,64,64);
+    rc1 = CC_RECT_PIXELS_TO_POINTS(rc1);
+    auto spriteShadow = Sprite::createWithTexture(batchNode->getTexture(), rc1);
     spriteShadow->setOpacity(128);
+    sprite->setScale(CC_CONTENT_SCALE_FACTOR());
     sprite->addChild(spriteShadow, aZ, 3);
 
-    auto spriteTop = Sprite::createWithTexture(batchNode->getTexture(), Rect(64,0,64,64));
+    Rect rc2(64,0,64,64);
+    rc2 = CC_RECT_PIXELS_TO_POINTS(rc2);
+    auto spriteTop = Sprite::createWithTexture(batchNode->getTexture(), rc2);
+    sprite->setScale(CC_CONTENT_SCALE_FACTOR());
     sprite->addChild(spriteTop, aZ+2, 3);
 
     return sprite;
@@ -789,7 +700,7 @@ Sprite* SpriteBatchNodeReorderIssue766::makeSpriteZ(int aZ)
 
 void SpriteBatchNodeReorderIssue766::reorderSprite(float dt)
 {
-    unschedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite));
+    unschedule("issue_766_key");
 
     batchNode->reorderChild(sprite1, 4);
 }
@@ -809,7 +720,7 @@ SpriteBatchNodeReorderIssue766::SpriteBatchNodeReorderIssue766()
     sprite3 = makeSpriteZ(4);
     sprite3->setPosition(Vec2(328,160));
 
-    schedule(schedule_selector(SpriteBatchNodeReorderIssue766::reorderSprite), 2);
+    schedule(CC_CALLBACK_1(SpriteBatchNodeReorderIssue766::reorderSprite, this), 2, "issue_766_key");
 }
 
 std::string SpriteBatchNodeReorderIssue766::title() const
@@ -885,7 +796,7 @@ SpriteBatchNodeReorderIssue767::SpriteBatchNodeReorderIssue767()
     l3b2->setPosition(Vec2(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2, 1);
 
-    schedule(schedule_selector(SpriteBatchNodeReorderIssue767::reorderSprites), 1);
+    schedule(CC_CALLBACK_1(SpriteBatchNodeReorderIssue767::reorderSprites, this), 1, "issue_767_key");
 }
 
 std::string SpriteBatchNodeReorderIssue767::title() const
@@ -1273,7 +1184,7 @@ SpriteFlip::SpriteFlip()
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
     addChild(sprite2, 0, kTagSprite2);
     
-    schedule( schedule_selector(SpriteFlip::flipSprites), 1);
+    schedule( CC_CALLBACK_1(SpriteFlip::flipSprites,this), 1, "sprite_flip_key");
 }
 
 void SpriteFlip::flipSprites(float dt)
@@ -1321,7 +1232,7 @@ SpriteBatchNodeFlip::SpriteBatchNodeFlip()
     sprite2->setPosition( Vec2( s.width/2 + 100, s.height/2 ) );
     batch->addChild(sprite2, 0, kTagSprite2);
     
-    schedule( schedule_selector(SpriteBatchNodeFlip::flipSprites), 1);
+    schedule(CC_CALLBACK_1(SpriteBatchNodeFlip::flipSprites, this), 1, "flip_sprites_key");
 }
 
 void SpriteBatchNodeFlip::flipSprites(float dt)
@@ -1746,7 +1657,7 @@ void SpriteFrameTest::onEnter()
     _sprite2->setFlippedX(false);
     _sprite2->setFlippedY(false);
 
-    schedule(schedule_selector(SpriteFrameTest::startIn05Secs), 0.5f);
+    schedule(CC_CALLBACK_1(SpriteFrameTest::startIn05Secs, this), 0.5f, "in_05_secs_key");
     _counter = 0;
 }
 
@@ -1771,8 +1682,8 @@ std::string SpriteFrameTest::subtitle() const
 
 void SpriteFrameTest::startIn05Secs(float dt)
 {
-    unschedule(schedule_selector(SpriteFrameTest::startIn05Secs));
-    schedule(schedule_selector(SpriteFrameTest::flipSprites), 1.0f);
+    unschedule("in_05_secs_key");
+    schedule(CC_CALLBACK_1(SpriteFrameTest::flipSprites, this), 1.0f, "flip_sprites_key");
 }
 
 void SpriteFrameTest::flipSprites(float dt)
@@ -2392,7 +2303,7 @@ SpriteHybrid::SpriteHybrid()
     
     _usingSpriteBatchNode = false;
     
-    schedule( schedule_selector(SpriteHybrid::reparentSprite), 2);
+    schedule(CC_CALLBACK_1(SpriteHybrid::reparentSprite, this), 2, "reparent_sprite_key");
 }
 
 void SpriteHybrid::reparentSprite(float dt)
@@ -2403,7 +2314,7 @@ void SpriteHybrid::reparentSprite(float dt)
     Vector<Node*> retArray(250);
 
     if( _usingSpriteBatchNode )
-        CC_SWAP(p1,p2, Node*);
+        std::swap(p1, p2);
 
     ////----CCLOG("New parent is: %x", p2);
     
@@ -3430,32 +3341,26 @@ class MySprite1 : public Sprite
 {
 public:
     CREATE_FUNC(MySprite1);
-    MySprite1() : ivar(10) {}
+    MySprite1() {}
     static MySprite1* createWithSpriteFrameName(const std::string& spriteFrameName)
     {
         auto sprite = MySprite1::create();
         sprite->setSpriteFrame(spriteFrameName);
         return sprite;
     }
-
-private:
-    int ivar;
 };
 
 class MySprite2 : public Sprite
 {
 public:
     CREATE_FUNC(MySprite2);
-    MySprite2() : ivar(10) {}
+    MySprite2() {}
     static MySprite2* create(const std::string& name)
     {
         auto sprite = MySprite2::create();
         sprite ->setTexture(name);
         return sprite;
     }
-
-private:
-    int ivar;
 };
 
 //------------------------------------------------------------------
@@ -3814,15 +3719,6 @@ std::string SpriteBatchBug1217::title() const
 std::string SpriteBatchBug1217::subtitle() const
 {
     return "Adding big family to spritebatch. You shall see 3 heads";
-}
-
-
-void SpriteTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 //
@@ -4353,7 +4249,7 @@ NodeSort::NodeSort()
     _sprite5->setPosition(Vec2(356, 160));
     _node->addChild(_sprite5, -3, 5);
 
-    schedule(schedule_selector(NodeSort::reorderSprite));
+    schedule(CC_CALLBACK_1(NodeSort::reorderSprite, this), "reorder_sprite_key");
 }
 
 std::string NodeSort::title() const
@@ -4368,7 +4264,7 @@ std::string NodeSort::subtitle() const
 
 void NodeSort::reorderSprite(float dt)
 {
-    unschedule(schedule_selector(NodeSort::reorderSprite));
+    unschedule("reorder_sprite_key");
 
     log("Before reorder--");
     
@@ -4415,7 +4311,7 @@ SpriteBatchNodeReorderSameIndex::SpriteBatchNodeReorderSameIndex()
     _batchNode->addChild(_sprite5, 6, 5);
 
 
-    scheduleOnce(schedule_selector(SpriteBatchNodeReorderSameIndex::reorderSprite), 2);
+    scheduleOnce(CC_CALLBACK_1(SpriteBatchNodeReorderSameIndex::reorderSprite, this), 2, "reorder_sprite_key");
 }
 
 std::string SpriteBatchNodeReorderSameIndex::title() const
@@ -4512,7 +4408,7 @@ SpriteBatchNodeReorderOneChild::SpriteBatchNodeReorderOneChild()
     l3b2->setPosition(Vec2(0+l2bSize.width/2,+50+l2bSize.height/2));
     l2b->addChild(l3b2);
 
-    scheduleOnce(schedule_selector(SpriteBatchNodeReorderOneChild::reorderSprite), 2.0f);
+    scheduleOnce(CC_CALLBACK_1(SpriteBatchNodeReorderOneChild::reorderSprite, this), 2.0f, "reorder_sprite_key");
 }
 
 void SpriteBatchNodeReorderOneChild::reorderSprite(float dt)
@@ -5111,15 +5007,13 @@ Sprite3DRotationTest::Sprite3DRotationTest()
     
     addChild(sprite2);
     
-    scheduleUpdate();
+    schedule([&](float dt) {
+        rotation.y += 1;
+        sprite1->setRotation3D(rotation);
+        sprite2->setRotation3D(rotation);
+    }, "update_key");
 }
 
-void Sprite3DRotationTest::update(float delta)
-{
-    rotation.y += 1;
-    sprite1->setRotation3D(rotation);
-    sprite2->setRotation3D(rotation);
-}
 
 
 

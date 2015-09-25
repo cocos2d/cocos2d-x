@@ -40,6 +40,11 @@ struct libwebsocket;
 struct libwebsocket_context;
 struct libwebsocket_protocols;
 
+/**
+ * @addtogroup network
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -47,21 +52,28 @@ namespace network {
 class WsThreadHelper;
 class WsMessage;
 
+/**
+ * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
+ */
 class CC_DLL WebSocket
 {
 public:
     /**
+     * Construtor of WebSocket.
+     *
      * @js ctor
      */
     WebSocket();
     /**
+     * Destructor of WebSocket.
+     *
      * @js NA
      * @lua NA
      */
     virtual ~WebSocket();
 
     /**
-     *  @brief Data structure for message
+     * Data structure for message
      */
     struct Data
     {
@@ -72,36 +84,67 @@ public:
     };
 
     /**
-     *  @brief Errors in websocket
+     * ErrorCode enum used to represent the error in the websocket.
      */
     enum class ErrorCode
     {
-        TIME_OUT,
-        CONNECTION_FAILURE,
-        UNKNOWN,
+        TIME_OUT,           /** &lt; value 0 */
+        CONNECTION_FAILURE, /** &lt; value 1 */
+        UNKNOWN,            /** &lt; value 2 */
     };
 
     /**
-     *  Websocket state
+     *  State enum used to represent the Websocket state.
      */
     enum class State
     {
-        CONNECTING,
-        OPEN,
-        CLOSING,
-        CLOSED,
+        CONNECTING,  /** &lt; value 0 */
+        OPEN,        /** &lt; value 1 */
+        CLOSING,     /** &lt; value 2 */
+        CLOSED,      /** &lt; value 3 */
     };
 
     /**
-     *  @brief The delegate class to process websocket events.
+     * The delegate class is used to process websocket events.
+     *
+     * The most member function are pure virtual functions,they should be implemented the in subclass.
+     * @lua NA
      */
     class Delegate
     {
     public:
+        /** Destructor of Delegate. */
         virtual ~Delegate() {}
+        /**
+         * This function to be called after the client connection complete a handshake with the remote server.
+         * This means that the WebSocket connection is ready to send and receive data.
+         * 
+         * @param ws The WebSocket object connected
+         */
         virtual void onOpen(WebSocket* ws) = 0;
+        /**
+         * This function to be called when data has appeared from the server for the client connection.
+         *
+         * @param ws The WebSocket object connected.
+         * @param data Data object for message.
+         */
         virtual void onMessage(WebSocket* ws, const Data& data) = 0;
+        /**
+         * When the WebSocket object connected wants to close or the protocol won't get used at all and current _readyState is State::CLOSING,this function is to be called.
+         *
+         * @param ws The WebSocket object connected.
+         */
         virtual void onClose(WebSocket* ws) = 0;
+        /**
+         * This function is to be called in the following cases:
+         * 1. client connection is failed.
+         * 2. the request client connection has been unable to complete a handshake with the remote server.
+         * 3. the protocol won't get used at all after this callback and current _readyState is State::CONNECTING.
+         * 4. when a socket descriptor needs to be removed from an external polling array. in is again the struct libwebsocket_pollargs containing the fd member to be removed. If you are using the internal polling loop, you can just ignore it and current _readyState is State::CONNECTING.
+         *
+         * @param ws The WebSocket object connected.
+         * @param error WebSocket::ErrorCode enum,would be ErrorCode::TIME_OUT or ErrorCode::CONNECTION_FAILURE.
+         */
         virtual void onError(WebSocket* ws, const ErrorCode& error) = 0;
     };
 
@@ -111,7 +154,8 @@ public:
      *          It needs to be invoked right after websocket instance is allocated.
      *  @param  delegate The delegate which want to receive event from websocket.
      *  @param  url      The URL of websocket server.
-     *  @return true: Success, false: Failure
+     *  @return true: Success, false: Failure.
+     *  @lua NA
      */
     bool init(const Delegate& delegate,
               const std::string& url,
@@ -119,11 +163,18 @@ public:
 
     /**
      *  @brief Sends string data to websocket server.
+     *  
+     *  @param message string data.
+     *  @lua sendstring
      */
     void send(const std::string& message);
 
     /**
      *  @brief Sends binary data to websocket server.
+     *  
+     *  @param binaryMsg binary string data.
+     *  @param len the size of binary string data.
+     *  @lua sendstring
      */
     void send(const unsigned char* binaryMsg, unsigned int len);
 
@@ -134,6 +185,7 @@ public:
 
     /**
      *  @brief Gets current state of connection.
+     *  @return State the state value coule be State::CONNECTING, State::OPEN, State::CLOSING or State::CLOSED
      */
     State getReadyState();
 
@@ -173,5 +225,8 @@ private:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */

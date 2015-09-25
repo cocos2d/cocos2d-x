@@ -26,14 +26,12 @@
 #include <string>
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
 #include "LuaOpengl.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
 
 NS_CC_BEGIN
 

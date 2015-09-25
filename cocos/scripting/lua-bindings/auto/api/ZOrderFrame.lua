@@ -15,6 +15,7 @@
 -- @function [parent=#ZOrderFrame] setZOrder 
 -- @param self
 -- @param #int zorder
+-- @return ZOrderFrame#ZOrderFrame self (return value: ccs.ZOrderFrame)
         
 --------------------------------
 -- 
@@ -32,5 +33,6 @@
 -- 
 -- @function [parent=#ZOrderFrame] ZOrderFrame 
 -- @param self
+-- @return ZOrderFrame#ZOrderFrame self (return value: ccs.ZOrderFrame)
         
 return nil

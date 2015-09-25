@@ -33,8 +33,8 @@ static int PALETTE_ROWS = 3;
 
 MeshSkin::MeshSkin()
 : _rootBone(nullptr)
-, _matrixPalette(nullptr)
 , _skeleton(nullptr)
+, _matrixPalette(nullptr)
 {
     
 }
@@ -70,7 +70,7 @@ ssize_t MeshSkin::getBoneCount() const
 //get bone
 Bone3D* MeshSkin::getBoneByIndex(unsigned int index) const
 {
-    if (index < _skinBones.size())
+    if (static_cast<int>(index) < _skinBones.size())
         return _skinBones.at(index);
     
     return nullptr;
@@ -144,6 +144,17 @@ Bone3D* MeshSkin::getRootBone() const
         }
     }
     return root;
+}
+
+const Mat4& MeshSkin::getInvBindPose(const Bone3D* bone)
+{
+    for (ssize_t i = 0; i < _skinBones.size(); i++) {
+        if (_skinBones.at(i) == bone)
+        {
+            return _invBindPoses.at(i);
+        }
+    }
+    return Mat4::IDENTITY;
 }
 
 NS_CC_END

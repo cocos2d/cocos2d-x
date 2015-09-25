@@ -26,69 +26,18 @@
 #include "ActionsProgressTest.h"
 #include "../testResource.h"
 
-static int sceneIdx = -1; 
+USING_NS_CC;
 
-#define MAX_LAYER    7
-
-Layer* nextAction();
-Layer* backAction();
-Layer* restartAction();
-
-Layer* createLayer(int nIndex)
+ActionsProgressTests::ActionsProgressTests()
 {
-    switch(nIndex)
-    {
-        case 0: return new SpriteProgressToRadial();
-        case 1: return new SpriteProgressToHorizontal();
-        case 2: return new SpriteProgressToVertical();
-        case 3: return new SpriteProgressToRadialMidpointChanged();
-        case 4: return new SpriteProgressBarVarious();
-        case 5: return new SpriteProgressBarTintAndFade();
-        case 6: return new SpriteProgressWithSpriteFrame();
-    }
-
-    return nullptr;
+    ADD_TEST_CASE(SpriteProgressToRadial);
+    ADD_TEST_CASE(SpriteProgressToHorizontal);
+    ADD_TEST_CASE(SpriteProgressToVertical);
+    ADD_TEST_CASE(SpriteProgressToRadialMidpointChanged);
+    ADD_TEST_CASE(SpriteProgressBarVarious);
+    ADD_TEST_CASE(SpriteProgressBarTintAndFade);
+    ADD_TEST_CASE(SpriteProgressWithSpriteFrame);
 }
-
-Layer* nextAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartAction()
-{
-    auto layer = createLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
-
-
-void ProgressActionsTestScene::runThisTest()
-{
-    addChild(nextAction());
-    Director::getInstance()->replaceScene(this);
-}
-
 
 //------------------------------------------------------------------
 //
@@ -108,43 +57,13 @@ std::string SpriteDemo::title() const
     return "ActionsProgressTest";
 }
 
-std::string SpriteDemo::subtitle() const
-{
-    return "";
-}
-
 void SpriteDemo::onEnter()
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
     auto background = LayerColor::create(Color4B(255,0,0,255));
     addChild(background, -10);
 }
-
-void SpriteDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ProgressActionsTestScene();
-    s->addChild(restartAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SpriteDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ProgressActionsTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SpriteDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ProgressActionsTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
 
 //------------------------------------------------------------------
 //

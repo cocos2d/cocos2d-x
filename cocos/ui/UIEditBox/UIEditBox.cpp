@@ -38,13 +38,13 @@ EditBox::EditBox(void)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
 , _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(KeyboardReturnType::DEFAULT)
+, _backgroundSprite(nullptr)
 , _fontSize(-1)
 , _placeholderFontSize(-1)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
 , _maxLength(0)
 , _adjustHeight(0.0f)
-, _backgroundSprite(nullptr)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
 #endif
@@ -203,6 +203,7 @@ const char* EditBox::getText(void)
 
 void EditBox::setFont(const char* pFontName, int fontSize)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _fontName = pFontName;
     _fontSize = fontSize;
     if (pFontName != nullptr)
@@ -216,8 +217,9 @@ void EditBox::setFont(const char* pFontName, int fontSize)
 
 void EditBox::setFontName(const char* pFontName)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _fontName = pFontName;
-    if (_editBoxImpl != nullptr && _fontSize != -1)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setFont(pFontName, _fontSize);
     }
@@ -226,13 +228,18 @@ void EditBox::setFontName(const char* pFontName)
 void EditBox::setFontSize(int fontSize)
 {
     _fontSize = fontSize;
-    if (_editBoxImpl != nullptr && _fontName.length() > 0)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setFont(_fontName.c_str(), _fontSize);
     }
 }
 
 void EditBox::setFontColor(const Color3B& color)
+{
+    setFontColor(Color4B(color));
+}
+
+void EditBox::setFontColor(const Color4B& color)
 {
     _colText = color;
     if (_editBoxImpl != nullptr)
@@ -243,6 +250,7 @@ void EditBox::setFontColor(const Color3B& color)
 
 void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _placeholderFontName = pFontName;
     _placeholderFontSize = fontSize;
     if (pFontName != nullptr)
@@ -256,8 +264,9 @@ void EditBox::setPlaceholderFont(const char* pFontName, int fontSize)
 
 void EditBox::setPlaceholderFontName(const char* pFontName)
 {
+    CCASSERT(pFontName != nullptr, "fontName can't be nullptr");
     _placeholderFontName = pFontName;
-    if (_editBoxImpl != nullptr && _placeholderFontSize != -1)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setPlaceholderFont(pFontName, _fontSize);
     }
@@ -266,7 +275,7 @@ void EditBox::setPlaceholderFontName(const char* pFontName)
 void EditBox::setPlaceholderFontSize(int fontSize)
 {
     _placeholderFontSize = fontSize;
-    if (_editBoxImpl != nullptr && _placeholderFontName.length() > 0)
+    if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setPlaceholderFont(_placeholderFontName.c_str(), fontSize);
     }
@@ -274,7 +283,12 @@ void EditBox::setPlaceholderFontSize(int fontSize)
 
 void EditBox::setPlaceholderFontColor(const Color3B& color)
 {
-    _colText = color;
+    setPlaceholderFontColor(Color4B(color));
+}
+
+void EditBox::setPlaceholderFontColor(const Color4B& color)
+{
+    _colPlaceHolder = color;
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->setPlaceholderFontColor(color);
@@ -385,12 +399,17 @@ void EditBox::setAnchorPoint(const Vec2& anchorPoint)
     }
 }
 
-void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+std::string EditBox::getDescription() const
 {
-    Widget::visit(renderer, parentTransform, parentFlags);
+    return "EditBox";
+}
+
+void EditBox::draw(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    Widget::draw(renderer, parentTransform, parentFlags);
     if (_editBoxImpl != nullptr)
     {
-        _editBoxImpl->visit();
+        _editBoxImpl->draw(renderer, parentTransform, parentFlags & FLAGS_TRANSFORM_DIRTY);
     }
 }
 
@@ -410,7 +429,7 @@ void EditBox::onEnter(void)
         _editBoxImpl->onEnter();
     }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    this->schedule(schedule_selector(EditBox::updatePosition), CHECK_EDITBOX_POSITION_INTERVAL);
+    this->schedule(CC_SCHEDULE_SELECTOR(EditBox::updatePosition), CHECK_EDITBOX_POSITION_INTERVAL);
 #endif
 }
 
@@ -424,6 +443,14 @@ void EditBox::updatePosition(float dt)
 
 void EditBox::onExit(void)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     Widget::onExit();
     if (_editBoxImpl != nullptr)
     {

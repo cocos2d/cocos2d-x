@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,6 +24,7 @@
 
 #ifndef __CCEVENT_TYPE_H__
 #define __CCEVENT_TYPE_H__
+/// @cond DO_NOT_SHOW
 
 /**
  * This header is used for defining event types using in NotificationCenter
@@ -36,11 +37,12 @@
 // The renderer[android:GLSurfaceView.Renderer  WP8:Cocos2dRenderer] was recreated.
 // This message is used for reloading resources before renderer is recreated on Android/WP8.
 // This message is posted in cocos/platform/android/javaactivity.cpp and cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp.
-#define EVENT_RENDERER_RECREATED "event_renderer_recreated"
+#define EVENT_RENDERER_RECREATED    "event_renderer_recreated"
 
 // The application will come to background.
 // This message is used for doing something before coming to background, such as save RenderTexture.
 // This message is posted in cocos/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp and cocos\platform\wp8-xaml\cpp\Cocos2dRenderer.cpp.
 #define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
 
+/// @endcond
 #endif // __CCEVENT_TYPE_H__

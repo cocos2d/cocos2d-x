@@ -177,11 +177,6 @@
 
 
 --------------------------------------------------------
--- the ccs NodeReader
--- @field [parent=#ccs] NodeReader#NodeReader NodeReader preloaded module
-
-
---------------------------------------------------------
 -- the ccs ActionTimelineCache
 -- @field [parent=#ccs] ActionTimelineCache#ActionTimelineCache ActionTimelineCache preloaded module
 
@@ -242,6 +237,11 @@
 
 
 --------------------------------------------------------
+-- the ccs AlphaFrame
+-- @field [parent=#ccs] AlphaFrame#AlphaFrame AlphaFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs EventFrame
 -- @field [parent=#ccs] EventFrame#EventFrame EventFrame preloaded module
 
@@ -249,6 +249,11 @@
 --------------------------------------------------------
 -- the ccs ZOrderFrame
 -- @field [parent=#ccs] ZOrderFrame#ZOrderFrame ZOrderFrame preloaded module
+
+
+--------------------------------------------------------
+-- the ccs BlendFuncFrame
+-- @field [parent=#ccs] BlendFuncFrame#BlendFuncFrame BlendFuncFrame preloaded module
 
 
 --------------------------------------------------------
@@ -264,6 +269,26 @@
 --------------------------------------------------------
 -- the ccs ActionTimeline
 -- @field [parent=#ccs] ActionTimeline#ActionTimeline ActionTimeline preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ActionTimelineNode
+-- @field [parent=#ccs] ActionTimelineNode#ActionTimelineNode ActionTimelineNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs BoneNode
+-- @field [parent=#ccs] BoneNode#BoneNode BoneNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs SkeletonNode
+-- @field [parent=#ccs] SkeletonNode#SkeletonNode SkeletonNode preloaded module
+
+
+--------------------------------------------------------
+-- the ccs ComExtensionData
+-- @field [parent=#ccs] ComExtensionData#ComExtensionData ComExtensionData preloaded module
 
 
 return nil

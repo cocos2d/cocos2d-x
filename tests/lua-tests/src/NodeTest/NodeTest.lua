@@ -603,7 +603,7 @@ local function NodeOpaqueTest()
 
     for i = 0, 49 do
         local background = cc.Sprite:create("Images/background1.png")
-        background:setBlendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
+        background:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
         background:setAnchorPoint(cc.p(0, 0))
         layer:addChild(background)
     end
@@ -621,7 +621,7 @@ local function NodeNonOpaqueTest()
 
     for i = 0, 49 do
         background = cc.Sprite:create("Images/background1.jpg")
-        background:setBlendFunc(gl.ONE, gl.ZERO)
+        background:setBlendFunc(cc.blendFunc(gl.ONE, gl.ZERO))
         background:setAnchorPoint(cc.p(0, 0))
         layer:addChild(background)
     end

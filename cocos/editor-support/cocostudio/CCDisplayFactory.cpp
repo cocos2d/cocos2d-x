@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "cocostudio/CCBone.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"
 
@@ -152,7 +151,7 @@ void DisplayFactory::createSpriteDisplay(Bone *bone, DecorativeDisplay *decoDisp
     }
 
     //! create display
-    if(textureName.length() == 0)
+    if(textureName.empty())
     {
         skin = Skin::create();
     }

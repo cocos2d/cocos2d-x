@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 #include "base/ccUTF8.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -329,9 +330,9 @@ TextField* TextField::create(const std::string &placeholder, const std::string &
     TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
-        widget->setPlaceHolder(placeholder);
         widget->setFontName(fontName);
         widget->setFontSize(fontSize);
+        widget->setPlaceHolder(placeholder);
         widget->autorelease();
         return widget;
     }
@@ -380,25 +381,19 @@ void TextField::setTouchAreaEnabled(bool enable)
     _useTouchArea = enable;
 }
     
-bool TextField::hitTest(const Vec2 &pt)
+bool TextField::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    if (_useTouchArea)
+    if (false == _useTouchArea)
     {
-        Vec2 nsp = convertToNodeSpace(pt);
-        Rect bb = Rect(-_touchWidth * _anchorPoint.x, -_touchHeight * _anchorPoint.y, _touchWidth, _touchHeight);
-        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
-        {
-            return true;
-        }
+        return Widget::hitTest(pt, camera, nullptr);
     }
-    else
-    {
-        return Widget::hitTest(pt);
-    }
-    
-    return false;
+
+    auto size = getContentSize();
+    auto anch = getAnchorPoint();
+    Rect rect((size.width - _touchWidth) * anch.x, (size.height - _touchHeight) * anch.y, _touchWidth, _touchHeight);
+    return isScreenPointInRect(pt, camera, getWorldToNodeTransform(), rect, nullptr);
 }
-    
+
 Size TextField::getTouchSize()const
 {
     return Size(_touchWidth, _touchHeight);
@@ -412,8 +407,7 @@ void TextField::setString(const std::string& text)
     {
         int max = _textFieldRenderer->getMaxLength();
         long text_count = StringUtils::getCharacterCountInUTF8String(text);
-        long total = text_count + StringUtils::getCharacterCountInUTF8String(getString());
-        if (total > max)
+        if (text_count > max)
         {
             strText = Helper::getSubStringOfUTF8String(strText, 0, max);
         }
@@ -460,7 +454,12 @@ void TextField::setPlaceHolderColor(const cocos2d::Color4B &color)
 {
     _textFieldRenderer->setColorSpaceHolder(color);
 }
-    
+
+const Color4B& TextField::getTextColor()const
+{
+    return _textFieldRenderer->getTextColor();
+}
+
 void TextField::setTextColor(const cocos2d::Color4B &textColor)
 {
     _textFieldRenderer->setTextColor(textColor);
@@ -468,9 +467,12 @@ void TextField::setTextColor(const cocos2d::Color4B &textColor)
 
 void TextField::setFontSize(int size)
 {
-    if (_fontType == FontType::SYSTEM) {
+    if (_fontType == FontType::SYSTEM)
+    {
         _textFieldRenderer->setSystemFontSize(size);
-    } else {
+    }
+    else
+    {
         TTFConfig config = _textFieldRenderer->getTTFConfig();
         config.fontSize = size;
         _textFieldRenderer->setTTFConfig(config);
@@ -494,8 +496,14 @@ void TextField::setFontName(const std::string& name)
         config.fontSize = _fontSize;
         _textFieldRenderer->setTTFConfig(config);
         _fontType = FontType::TTF;
-    } else {
+    }
+    else
+    {
         _textFieldRenderer->setSystemFontName(name);
+        if (_fontType == FontType::TTF)
+        {
+            _textFieldRenderer->requestSystemFontRefresh();
+        }
         _fontType = FontType::SYSTEM;
     }
     _fontName = name;
@@ -529,7 +537,9 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     if (_hitted)
     {
         _textFieldRenderer->attachWithIME();
-    } else {
+    }
+    else
+    {
         this->didNotSelectSelf();
     }
     return pass;
@@ -582,31 +592,35 @@ const char* TextField::getPasswordStyleText()const
 
 void TextField::update(float dt)
 {
-    if (getAttachWithIME())
-    {
-        attachWithIMEEvent();
-        setAttachWithIME(false);
-    }
     if (getDetachWithIME())
     {
         detachWithIMEEvent();
         setDetachWithIME(false);
     }
-    if (getInsertText())
+    
+    if (getAttachWithIME())
     {
-        insertTextEvent();
-        setInsertText(false);
-        
-        _textFieldRendererAdaptDirty = true;
-        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        attachWithIMEEvent();
+        setAttachWithIME(false);
     }
+
     if (getDeleteBackward())
     {
-        deleteBackwardEvent();
-        setDeleteBackward(false);
-        
         _textFieldRendererAdaptDirty = true;
         updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+
+        deleteBackwardEvent();
+        setDeleteBackward(false);
+    }
+
+    if (getInsertText())
+    {
+        //we update the content size first such that when user call getContentSize() in event callback won't be wrong
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        
+        insertTextEvent();
+        setInsertText(false);
     }
 }
 
@@ -660,6 +674,10 @@ void TextField::attachWithIMEEvent()
     if (_eventCallback) {
         _eventCallback(this, EventType::ATTACH_WITH_IME);
     }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::ATTACH_WITH_IME));
+    }
     this->release();
 }
 
@@ -670,8 +688,13 @@ void TextField::detachWithIMEEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DETACH_WITH_IME);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::DETACH_WITH_IME);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::DETACH_WITH_IME));
     }
     this->release();
 }
@@ -683,8 +706,13 @@ void TextField::insertTextEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_INSERT_TEXT);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::INSERT_TEXT);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::INSERT_TEXT));
     }
     this->release();
 }
@@ -696,8 +724,13 @@ void TextField::deleteBackwardEvent()
     {
         (_textFieldEventListener->*_textFieldEventSelector)(this, TEXTFIELD_EVENT_DELETE_BACKWARD);
     }
-    if (_eventCallback) {
+    if (_eventCallback)
+    {
         _eventCallback(this, EventType::DELETE_BACKWARD);
+    }
+    if (_ccEventCallback)
+    {
+        _ccEventCallback(this, static_cast<int>(EventType::DELETE_BACKWARD));
     }
     this->release();
 }
@@ -735,6 +768,19 @@ void TextField::textfieldRendererScaleChangedWithSize()
         _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
     }
     _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+}
+
+Size TextField::getAutoRenderSize()
+{
+    Size virtualSize = _textFieldRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _textFieldRenderer->setDimensions(0, 0);
+        virtualSize = _textFieldRenderer->getContentSize();
+        _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+
+    return virtualSize;
 }
 
 Size TextField::getVirtualRendererSize() const
@@ -780,6 +826,7 @@ void TextField::copySpecialProperties(Widget *widget)
         setInsertText(textField->getInsertText());
         setDeleteBackward(textField->getDeleteBackward());
         _eventCallback = textField->_eventCallback;
+        _ccEventCallback = textField->_ccEventCallback;
         _textFieldEventListener = textField->_textFieldEventListener;
         _textFieldEventSelector = textField->_textFieldEventSelector;
     }
@@ -795,9 +842,19 @@ void TextField::setTextHorizontalAlignment(TextHAlignment alignment)
     _textFieldRenderer->setHorizontalAlignment(alignment);
 }
 
+TextHAlignment TextField::getTextHorizontalAlignment() const
+{
+    return _textFieldRenderer->getHorizontalAlignment();
+}
+
 void TextField::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _textFieldRenderer->setVerticalAlignment(alignment);
+}
+
+TextVAlignment TextField::getTextVerticalAlignment() const
+{
+    return _textFieldRenderer->getVerticalAlignment();
 }
 
 }
