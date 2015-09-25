@@ -24,30 +24,40 @@
 
 #pragma once
 
-#include "jsapi.h"
 #include <string>
-#include "base/CCScriptComponent.h"
-#include "mozilla/Maybe.h"
+#include "2d/CCComponent.h"
 
 NS_CC_BEGIN
 
-class CC_DLL ComponentJS : public ScriptComponent
+class ComponentJS : public Component
 {
 public:
+    static ComponentJS* create(const std::string& scriptFileName);
+    
     ComponentJS(const std::string& scriptFileName);
+    ~ComponentJS();
     
     /**
      * This function is used to be invoked from JS side to get the corresponding script object of this component.
      */
-    void* getScriptObject() const override;
+    void* getScriptObject() const;
     
-    virtual void update(float dt) override;
-    virtual void onEnter() override;
-    virtual void onExit() override;
+    virtual void update(float dt);
+    virtual void onEnter();
+    virtual void onExit();
     
 private:
+    // Script file path
+    std::string _scriptFileName;
+    
     // The returned value from require
-    mozilla::Maybe<JS::PersistentRootedObject> _jsObj;
+    void* _jsObj;
+    
+    bool _succeedLoadingScript;
+    
+    static const std::string ON_ENTER;
+    static const std::string ON_EXIT;
+    static const std::string UPDATE;
 };
 
 NS_CC_END

@@ -22,6 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "jsapi.h"
+#include "mozilla/Maybe.h"
 #include "CCComponentJS.h"
 #include "base/CCScriptSupport.h"
 #include "ScriptingCore.h"
@@ -29,7 +31,11 @@
 
 NS_CC_BEGIN
 
-ScriptComponent* ScriptComponent::create(const std::string& scriptFileName)
+const std::string ComponentJS::ON_ENTER = "onEnter";
+const std::string ComponentJS::ON_EXIT = "onExit";
+const std::string ComponentJS::UPDATE = "update";
+
+ComponentJS* ComponentJS::create(const std::string& scriptFileName)
 {
     CC_ASSERT(!scriptFileName.empty());
     
@@ -43,7 +49,8 @@ ScriptComponent* ScriptComponent::create(const std::string& scriptFileName)
 }
 
 ComponentJS::ComponentJS(const std::string& scriptFileName)
-: ScriptComponent(scriptFileName)
+: _scriptFileName(scriptFileName)
+, _jsObj(nullptr)
 {
     ScriptingCore* engine = ScriptingCore::getInstance();
     JSContext* cx = engine->getGlobalContext();
@@ -58,39 +65,54 @@ ComponentJS::ComponentJS(const std::string& scriptFileName)
         JS::RootedValue protoValue(cx);
         JS_GetProperty(cx, JS::RootedObject(cx, classObj), "prototype", &protoValue);
         
-        TypeTest<ScriptComponent> t;
+        TypeTest<ComponentJS> t;
         js_type_class_t *typeClass = nullptr;
         std::string typeName = t.s_name();
         auto typeMapIter = _js_global_type_map.find(typeName);
         CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
         typeClass = typeMapIter->second;
         
+        mozilla::Maybe<JS::PersistentRootedObject> *jsObj = new mozilla::Maybe<JS::PersistentRootedObject>();
+        
         JS::RootedObject proto(cx, protoValue.toObjectOrNull());
         JS::RootedObject parent(cx, typeClass->proto.get());
-        _jsObj.construct(cx);
-        _jsObj.ref() = JS_NewObject(cx, theClass, proto, parent);
+        jsObj->construct(cx);
+        jsObj->ref() = JS_NewObject(cx, theClass, proto, parent);
         
         // Unbind current proxy binding
-        js_proxy_t* jsproxy = js_get_or_create_proxy<ScriptComponent>(cx, this);
+        js_proxy_t* jsproxy = js_get_or_create_proxy<ComponentJS>(cx, this);
         JS::RemoveObjectRoot(cx, &jsproxy->obj);
         jsb_remove_proxy(jsb_get_native_proxy(this), jsproxy);
         // link the native object with the javascript object
-        jsb_new_proxy(this, _jsObj.ref().get());
+        jsb_new_proxy(this, jsObj->ref().get());
+        
+        _jsObj = jsObj;
+    }
+}
+
+ComponentJS::~ComponentJS()
+{
+    mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
+    if (jsObj == nullptr)
+    {
+        delete jsObj;
     }
 }
 
 void* ComponentJS::getScriptObject() const
 {
-    return _jsObj.ref().get();
+    mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
+    return jsObj->ref().get();
 }
 
 void ComponentJS::update(float delta)
 {
     if (_succeedLoadingScript)
     {
+        mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
         jsval dataVal = DOUBLE_TO_JSVAL(delta);
         JS::RootedValue retval(ScriptingCore::getInstance()->getGlobalContext());
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_jsObj.ref().get()), ScriptComponent::UPDATE.c_str(), 1, &dataVal, &retval);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsObj->ref().get()), ComponentJS::UPDATE.c_str(), 1, &dataVal, &retval);
     }
 }
 
@@ -98,9 +120,10 @@ void ComponentJS::onEnter()
 {
     if (_succeedLoadingScript)
     {
+        mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
         jsval dataVal = INT_TO_JSVAL(1);
         JS::RootedValue retval(ScriptingCore::getInstance()->getGlobalContext());
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_jsObj.ref().get()), ScriptComponent::ON_ENTER.c_str(), 1, &dataVal, &retval);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsObj->ref().get()), ComponentJS::ON_ENTER.c_str(), 1, &dataVal, &retval);
     }
 }
 
@@ -108,9 +131,10 @@ void ComponentJS::onExit()
 {
     if (_succeedLoadingScript)
     {
+        mozilla::Maybe<JS::PersistentRootedObject>* jsObj = static_cast<mozilla::Maybe<JS::PersistentRootedObject>*>(_jsObj);
         jsval dataVal = INT_TO_JSVAL(1);
         JS::RootedValue retval(ScriptingCore::getInstance()->getGlobalContext());
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_jsObj.ref().get()), ScriptComponent::ON_EXIT.c_str(), 1, &dataVal, &retval);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(jsObj->ref().get()), ComponentJS::ON_EXIT.c_str(), 1, &dataVal, &retval);
     }
 }
 

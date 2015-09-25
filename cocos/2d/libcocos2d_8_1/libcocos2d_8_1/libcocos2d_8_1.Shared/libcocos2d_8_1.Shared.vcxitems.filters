@@ -1120,9 +1120,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptSupport.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptComponent.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCTouch.h">
       <Filter>base</Filter>
     </ClInclude>
@@ -2863,9 +2860,6 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptSupport.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptComponent.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCTouch.cpp">

@@ -417,7 +417,6 @@
     <ClCompile Include="..\..\base\CCRef.cpp" />
     <ClCompile Include="..\..\base\CCScheduler.cpp" />
     <ClCompile Include="..\..\base\CCScriptSupport.cpp" />
-    <ClCompile Include="..\..\base\CCScriptComponent.cpp" />
     <ClCompile Include="..\..\base\CCTouch.cpp" />
     <ClCompile Include="..\..\base\ccTypes.cpp" />
     <ClCompile Include="..\..\base\CCUserDefault-android.cpp" />
@@ -1009,7 +1008,6 @@
     <ClInclude Include="..\..\base\CCRefPtr.h" />
     <ClInclude Include="..\..\base\CCScheduler.h" />
     <ClInclude Include="..\..\base\CCScriptSupport.h" />
-    <ClInclude Include="..\..\base\CCScriptComponent.h" />
     <ClInclude Include="..\..\base\CCTouch.h" />
     <ClInclude Include="..\..\base\ccTypes.h" />
     <ClInclude Include="..\..\base\CCUserDefault.h" />

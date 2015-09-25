@@ -295,7 +295,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCRefPtr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScheduler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptSupport.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCTouch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault.h" />
@@ -924,7 +923,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCRef.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScheduler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptSupport.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCTouch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccTypes.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault-winrt.cpp" />
