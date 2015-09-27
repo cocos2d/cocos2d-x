@@ -1035,8 +1035,8 @@ end
 function CameraArcBallDemo:updateCameraTransform()
     -- body
     local trans = cc.mat4.createTranslation(cc.vec3(0.0, 10.0, self._distanceZ), cc.mat4.createIdentity())
-    local rot = cc.mat4.createRotation(self._rotationQuat, cc.mat4.createIdentity())
-    local center = cc.mat4.createTranslation(self._center, cc.mat4.createIdentity())
+    local rot = cc.mat4.new(cc.mat4.createRotation(self._rotationQuat, cc.mat4.createIdentity()))
+    local center = cc.mat4.new(cc.mat4.createTranslation(self._center, cc.mat4.createIdentity()))
     local result = cc.mat4.new(center:multiply(rot)):multiply(trans)
 
     self._camera:setNodeToParentTransform(result)

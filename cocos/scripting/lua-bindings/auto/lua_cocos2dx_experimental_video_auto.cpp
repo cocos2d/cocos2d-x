@@ -5,7 +5,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_experimental_video_VideoPlayer_getFileName(lua_State* tolua_S)
 {
     int argc = 0;
@@ -147,53 +146,6 @@ int lua_cocos2dx_experimental_video_VideoPlayer_play(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_experimental_video_VideoPlayer_pause(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::experimental::ui::VideoPlayer* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccexp.VideoPlayer",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::experimental::ui::VideoPlayer*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_experimental_video_VideoPlayer_pause'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_experimental_video_VideoPlayer_pause'", nullptr);
-            return 0;
-        }
-        cobj->pause();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.VideoPlayer:pause",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_experimental_video_VideoPlayer_pause'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled(lua_State* tolua_S)
 {
     int argc = 0;
@@ -240,53 +192,6 @@ int lua_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled(lua_St
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_experimental_video_VideoPlayer_resume(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::experimental::ui::VideoPlayer* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccexp.VideoPlayer",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::experimental::ui::VideoPlayer*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_experimental_video_VideoPlayer_resume'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_experimental_video_VideoPlayer_resume'", nullptr);
-            return 0;
-        }
-        cobj->resume();
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.VideoPlayer:resume",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_experimental_video_VideoPlayer_resume'.",&tolua_err);
 #endif
 
     return 0;
@@ -816,9 +721,7 @@ int lua_register_cocos2dx_experimental_video_VideoPlayer(lua_State* tolua_S)
         tolua_function(tolua_S,"getFileName",lua_cocos2dx_experimental_video_VideoPlayer_getFileName);
         tolua_function(tolua_S,"getURL",lua_cocos2dx_experimental_video_VideoPlayer_getURL);
         tolua_function(tolua_S,"play",lua_cocos2dx_experimental_video_VideoPlayer_play);
-        tolua_function(tolua_S,"pause",lua_cocos2dx_experimental_video_VideoPlayer_pause);
         tolua_function(tolua_S,"setKeepAspectRatioEnabled",lua_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled);
-        tolua_function(tolua_S,"resume",lua_cocos2dx_experimental_video_VideoPlayer_resume);
         tolua_function(tolua_S,"stop",lua_cocos2dx_experimental_video_VideoPlayer_stop);
         tolua_function(tolua_S,"setFullScreenEnabled",lua_cocos2dx_experimental_video_VideoPlayer_setFullScreenEnabled);
         tolua_function(tolua_S,"setFileName",lua_cocos2dx_experimental_video_VideoPlayer_setFileName);

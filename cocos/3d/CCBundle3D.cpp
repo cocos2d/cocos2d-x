@@ -182,8 +182,7 @@ bool Bundle3D::load(const std::string& path)
     getModelRelativePath(path);
 
     bool ret = false;
-    std::string ext = path.substr(path.length() - 4, 4);
-    std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     if (ext == ".c3t")
     {
         _isBinary = false;
@@ -216,73 +215,24 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
     else
         mtlPath = fullPath.substr(0, fullPath.find_last_of("\\/") + 1).c_str();
     
-    ObjLoader::shapes_t shapes;
-    auto ret = ObjLoader::LoadObj(shapes, fullPath.c_str(), mtlPath.c_str());
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
+    auto ret = tinyobj::LoadObj(shapes, materials, fullPath.c_str(), mtlPath.c_str());
     if (ret.empty())
     {
         //fill data
-        MeshData* meshdata = new (std::nothrow) MeshData();
-        MeshVertexAttrib attrib;
-        attrib.size = 3;
-        attrib.type = GL_FLOAT;
-        if (shapes.positions.size())
-        {
-            attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
-            attrib.attribSizeBytes = attrib.size * sizeof(float);
-            meshdata->attribs.push_back(attrib);
-
-        }
-        bool hasnormal = false, hastex = false;
-        if (shapes.normals.size())
-        {
-            hasnormal = true;
-            attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
-            attrib.attribSizeBytes = attrib.size * sizeof(float);;
-            meshdata->attribs.push_back(attrib);
-        }
-        if (shapes.texcoords.size())
-        {
-            hastex = true;
-            attrib.size = 2;
-            attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
-            attrib.attribSizeBytes = attrib.size * sizeof(float);
-            meshdata->attribs.push_back(attrib);
-        }
-        auto vertexNum = shapes.positions.size() / 3;
-        for(unsigned int i = 0; i < vertexNum; i++)
-        {
-            meshdata->vertex.push_back(shapes.positions[i * 3]);
-            meshdata->vertex.push_back(shapes.positions[i * 3 + 1]);
-            meshdata->vertex.push_back(shapes.positions[i * 3 + 2]);
-
-            if (hasnormal)
-            {
-                meshdata->vertex.push_back(shapes.normals[i * 3]);
-                meshdata->vertex.push_back(shapes.normals[i * 3 + 1]);
-                meshdata->vertex.push_back(shapes.normals[i * 3 + 2]);
-            }
-
-            if (hastex)
-            {
-                meshdata->vertex.push_back(shapes.texcoords[i * 2]);
-                meshdata->vertex.push_back(shapes.texcoords[i * 2 + 1]);
-            }
-        }
-        meshdatas.meshDatas.push_back(meshdata);
-
+        //convert material
         int i = 0;
         char str[20];
         std::string dir = "";
         auto last = fullPath.rfind("/");
         if (last != -1)
             dir = fullPath.substr(0, last + 1);
-
-        for (const auto& it : shapes.shapes)
-        {
+        for (auto& material : materials) {
             NMaterialData materialdata;
             
             NTextureData tex;
-            tex.filename = it.material.diffuse_texname.empty() ? it.material.diffuse_texname : dir + it.material.diffuse_texname;
+            tex.filename = material.diffuse_texname.empty() ? material.diffuse_texname : dir + material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
             tex.wrapS = GL_CLAMP_TO_EDGE;
             tex.wrapT = GL_CLAMP_TO_EDGE;
@@ -290,19 +240,91 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             sprintf(str, "%d", i++);
             materialdata.textures.push_back(tex);
             materialdata.id = str;
+            material.name = str;
             materialdatas.materials.push_back(materialdata);
-
-            meshdata->subMeshIndices.push_back(it.mesh.indices);
-            meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), it.mesh.indices));
-            meshdata->subMeshIds.push_back(str);
-            auto node = new (std::nothrow) NodeData();
-            auto modelnode = new (std::nothrow) ModelData();
-            modelnode->matrialId = str;
-            modelnode->subMeshId = str;
-            node->id = it.name;
-            node->modelNodeDatas.push_back(modelnode);
-            nodedatas.nodes.push_back(node);
         }
+        
+        //convert mesh
+        i = 0;
+        for (auto& shape : shapes) {
+            auto mesh = shape.mesh;
+            MeshData* meshdata = new (std::nothrow) MeshData();
+            MeshVertexAttrib attrib;
+            attrib.size = 3;
+            attrib.type = GL_FLOAT;
+            
+            if (mesh.positions.size())
+            {
+                attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
+                attrib.attribSizeBytes = attrib.size * sizeof(float);
+                meshdata->attribs.push_back(attrib);
+                
+            }
+            bool hasnormal = false, hastex = false;
+            if (mesh.normals.size())
+            {
+                hasnormal = true;
+                attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
+                attrib.attribSizeBytes = attrib.size * sizeof(float);;
+                meshdata->attribs.push_back(attrib);
+            }
+            if (mesh.texcoords.size())
+            {
+                hastex = true;
+                attrib.size = 2;
+                attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
+                attrib.attribSizeBytes = attrib.size * sizeof(float);
+                meshdata->attribs.push_back(attrib);
+            }
+            
+            auto vertexNum = mesh.positions.size() / 3;
+            for(unsigned int k = 0; k < vertexNum; k++)
+            {
+                meshdata->vertex.push_back(mesh.positions[k * 3]);
+                meshdata->vertex.push_back(mesh.positions[k * 3 + 1]);
+                meshdata->vertex.push_back(mesh.positions[k * 3 + 2]);
+                
+                if (hasnormal)
+                {
+                    meshdata->vertex.push_back(mesh.normals[k * 3]);
+                    meshdata->vertex.push_back(mesh.normals[k * 3 + 1]);
+                    meshdata->vertex.push_back(mesh.normals[k * 3 + 2]);
+                }
+                
+                if (hastex)
+                {
+                    meshdata->vertex.push_back(mesh.texcoords[k * 2]);
+                    meshdata->vertex.push_back(mesh.texcoords[k * 2 + 1]);
+                }
+            }
+            
+            //split into submesh according to material
+            std::map<int, std::vector<unsigned short> > subMeshMap;
+            for (size_t k = 0; k < mesh.material_ids.size(); k++) {
+                int id = mesh.material_ids[k];
+                size_t idx = k * 3;
+                subMeshMap[id].push_back(mesh.indices[idx]);
+                subMeshMap[id].push_back(mesh.indices[idx + 1]);
+                subMeshMap[id].push_back(mesh.indices[idx + 2]);
+            }
+            
+            auto node = new (std::nothrow) NodeData();
+            node->id = shape.name;
+            for (auto& submesh : subMeshMap) {
+                meshdata->subMeshIndices.push_back(submesh.second);
+                meshdata->subMeshAABB.push_back(calculateAABB(meshdata->vertex, meshdata->getPerVertexSize(), submesh.second));
+                sprintf(str, "%d", i++);
+                meshdata->subMeshIds.push_back(str);
+                
+                auto modelnode = new (std::nothrow) ModelData();
+                modelnode->matrialId = submesh.first == -1 ? "" : materials[submesh.first].name;
+                modelnode->subMeshId = str;
+                node->modelNodeDatas.push_back(modelnode);
+            }
+            nodedatas.nodes.push_back(node);
+            meshdatas.meshDatas.push_back(meshdata);
+        }
+        
         return true;
     }
     CCLOG("warning: load %s file error: %s", fullPath.c_str(), ret.c_str());
@@ -760,18 +782,27 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
 
-            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
-            const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
-            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+            if(mesh_data.HasMember(AABBS))
             {
-                Vec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
-                Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
-                meshData->subMeshAABB.push_back(AABB(min, max));
+                const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
+                if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+                {
+                    Vec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(),
+                             mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                    Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(),
+                             mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                    meshData->subMeshAABB.push_back(AABB(min, max));
+                }
+                else
+                {
+                    meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+                }
             }
             else
             {
                 meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
             }
+           
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -1230,7 +1261,7 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
         skindata->inverseBindPoseMatrices.push_back(mat_bind_pos);
     }
 
-    // set root bone infomation
+    // set root bone information
     const rapidjson::Value& skin_data_1 = skin_data_array[1];
 
     // parent and child relationship map
@@ -1784,7 +1815,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
     bool skeleton_;
     if (_binaryReader.read(&skeleton_, 1, 1) != 1)
     {
-        CCLOG("warning: Failed to read is sleleton");
+        CCLOG("warning: Failed to read is skeleton");
         return nullptr;
     }
     if (skeleton_)
@@ -2114,14 +2145,35 @@ Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
 std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
 {
     std::vector<Vec3> trianglesList;
-    auto bundle = Bundle3D::createBundle();
-    if (!bundle->load(path))
-    {
-        Bundle3D::destroyBundle(bundle);
+    
+    if (path.length() <= 4)
         return trianglesList;
-    }
+    
+    auto bundle = Bundle3D::createBundle();
+    std::string ext = FileUtils::getInstance()->getFileExtension(path);
     MeshDatas meshs;
-    bundle->loadMeshDatas(meshs);
+    if (ext == ".obj")
+    {
+        MaterialDatas materials;
+        NodeDatas nodes;
+        if (!Bundle3D::loadObj(meshs, materials, nodes, path))
+        {
+            Bundle3D::destroyBundle(bundle);
+            return trianglesList;
+        }
+    }
+    else
+    {
+        if (!bundle->load(path))
+        {
+            Bundle3D::destroyBundle(bundle);
+            return trianglesList;
+        }
+        
+        bundle->loadMeshDatas(meshs);
+        
+    }
+    
     Bundle3D::destroyBundle(bundle);
     for (auto iter : meshs.meshDatas){
         int preVertexSize = iter->getPerVertexSize() / sizeof(float);
@@ -2131,6 +2183,7 @@ std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
             }
         }
     }
+    
     return trianglesList;
 }
 

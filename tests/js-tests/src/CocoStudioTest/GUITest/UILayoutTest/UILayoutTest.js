@@ -24,15 +24,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 var LAYOUT_RES = [
-    "res/cocosui/CCS/Layout/Layout/layout_1.json",
-    "res/cocosui/CCS/Layout/Color/color_1.json",
-    "res/cocosui/CCS/Layout/Gradient_Color/gradient_color_1.json",
-    "res/cocosui/CCS/Layout/BackgroundImage/backgroundimage_1.json",
-    "res/cocosui/CCS/Layout/Scale9/scale9.json",
-    "res/cocosui/CCS/Layout/Linear_Vertical/linear_vertical.json",
-    "res/cocosui/CCS/Layout/Linear_Horizontal/linear_horizontal.json",
-    "res/cocosui/CCS/Layout/Relative_Align_Parent/relative_align_parent.json",
-    "res/cocosui/CCS/Layout/Relative_Align_Location/relative_align_location.json"
+    "ccs-res/cocosui/UIEditorTest/UILayout/Layout/layout_1.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Color/color_1.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Gradient_Color/gradient_color_1.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/BackgroundImage/backgroundimage_1.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/scale9.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/linear_vertical.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/linear_horizontal.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Relative_Align_Parent/relative_align_parent.json",
+    "ccs-res/cocosui/UIEditorTest/UILayout/Relative_Align_Location/relative_align_location.json"
 ];
 var LAYOUT_INDEX = 0;
 var UILayoutEditorTest = UIBaseLayer.extend({
@@ -45,7 +45,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent, this);
 
         var left_button = new ccui.Button();
-        left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
+        left_button.loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button.x = 240-50;
         left_button.y = 50;
         left_button.anchorX = 0.5;
@@ -55,7 +55,7 @@ var UILayoutEditorTest = UIBaseLayer.extend({
         this._mainNode.addChild(left_button);
 
         var right_button = new ccui.Button();
-        right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
+        right_button.loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button.x = 240+50;
         right_button.y = 50;
         right_button.zOrder = 999;

@@ -103,9 +103,15 @@ var XHRTestLayer = cc.Layer.extend({
         streamXHREventsToLabel(xhr, statusGetLabel, responseLabel, "GET");
         // 5 seconds for timeout
         xhr.timeout = 5000;
-        
+
         //set arguments with <URL>?xxx=xxx&yyy=yyy
-        xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
+        if(cc.sys.isNative){
+            xhr.open("GET", "http://geek.csdn.net/news/detail/33683", true);
+        }else{
+            xhr.open("GET", "http://httpbin.org/get?show_env=1", true);
+        }
+        xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
+
         xhr.send();
     },
 
@@ -124,11 +130,12 @@ var XHRTestLayer = cc.Layer.extend({
         ensureLeftAligned(responseLabel);
         responseLabel.x = winSize.width / 10 * 3;
         responseLabel.y = winSize.height / 2;
-        
+
         var xhr = cc.loader.getXMLHttpRequest();
         streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
 
         xhr.open("POST", "http://httpbin.org/post");
+
         //set Content-type "text/plain;charset=UTF-8" to post plain text
         xhr.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
         xhr.send("plain text message");

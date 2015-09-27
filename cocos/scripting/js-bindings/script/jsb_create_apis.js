@@ -97,6 +97,9 @@ _p._ctor = function(fileName, rect) {
         } else if (fileName instanceof cc.SpriteFrame) {
             //init with a sprite frame
             this.initWithSpriteFrame(fileName);
+        } else if (fileName instanceof jsb.PolygonInfo) {
+            //init with a polygon info
+            this.initWithPolygon(fileName);
         }
     }
 };
@@ -543,7 +546,7 @@ cc.Place.prototype._ctor = function(pos, y) {
             y = pos.y;
             pos = pos.x;
         }
-        this.initWithPosition(pos, y);
+        this.initWithPosition(cc.p(pos, y));
     }
 };
 
@@ -606,7 +609,7 @@ cc.RotateTo.prototype._ctor = cc.RotateBy.prototype._ctor = function(duration, d
         if (deltaAngleY !== undefined)
             this.initWithDuration(duration, deltaAngleX, deltaAngleY);
         else
-            this.initWithDuration(duration, deltaAngleX);
+            this.initWithDuration(duration, deltaAngleX, deltaAngleX);
     }
 };
 
@@ -1193,3 +1196,5 @@ cc.Menu.create = function(menuItems) {
     }
     return cc.Menu._create.apply(null, items);
 };
+
+cc.TMXLayer.prototype.tileFlagsAt = cc.TMXLayer.prototype.getTileFlagsAt;

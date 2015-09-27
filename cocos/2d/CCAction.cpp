@@ -40,7 +40,12 @@ Action::Action()
 :_originalTarget(nullptr)
 ,_target(nullptr)
 ,_tag(Action::INVALID_TAG)
+,_flags(0)
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
+    _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
+#endif
 }
 
 Action::~Action()

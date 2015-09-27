@@ -76,16 +76,16 @@ def main():
         sys.exit(1)
 
     if platform == 'win32':
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s' % cur_platform))
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s' % cur_platform))
         if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s' % cur_platform))
+            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s' % cur_platform))
     else:
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86')))
         if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86')))
-    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
     if not os.path.exists(x64_llvm_path):
-        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
 
     if os.path.isdir(x86_llvm_path):
         llvm_path = x86_llvm_path
@@ -109,6 +109,11 @@ def main():
     config.set('DEFAULT', 'jsbdir', jsb_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
+    
+    if '3.4' in llvm_path:
+        config.set('DEFAULT', 'clang_version', '3.4')
+    else:
+        config.set('DEFAULT', 'clang_version', '3.3')
 
     # To fix parse error on windows, we must difine __WCHAR_MAX__ and undefine __MINGW32__ .
     if platform == 'win32':
@@ -135,6 +140,7 @@ def main():
         output_dir = '%s/cocos/scripting/js-bindings/auto' % project_root
 
         cmd_args = {'cocos2dx.ini' : ('cocos2d-x', 'jsb_cocos2dx_auto'), \
+                    'cocos2dx_audioengine.ini' : ('cocos2dx_audioengine', 'jsb_cocos2dx_audioengine_auto'), \
                     'cocos2dx_extension.ini' : ('cocos2dx_extension', 'jsb_cocos2dx_extension_auto'), \
                     'cocos2dx_builder.ini' : ('cocos2dx_builder', 'jsb_cocos2dx_builder_auto'), \
                     'cocos2dx_ui.ini' : ('cocos2dx_ui', 'jsb_cocos2dx_ui_auto'), \
@@ -142,7 +148,10 @@ def main():
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'), \
                     'cocos2dx_3d.ini' : ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'), \
                     'cocos2dx_3d_ext.ini' : ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'), \
-                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental')
+                    'cocos2dx_experimental_webView.ini' : ('cocos2dx_experimental_webView', 'jsb_cocos2dx_experimental_webView_auto'), \
+                    'cocos2dx_experimental_video.ini' : ('cocos2dx_experimental_video', 'jsb_cocos2dx_experimental_video_auto'), \
+                    'cocos2dx_physics3d.ini' : ('cocos2dx_physics3d', 'jsb_cocos2dx_physics3d_auto'), \
+                    'cocos2dx_navmesh.ini' : ('cocos2dx_navmesh', 'jsb_cocos2dx_navmesh_auto'), 
                     }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root
@@ -153,9 +162,9 @@ def main():
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             _run_cmd(command)
 
-        if platform == 'win32':
-            with _pushd(output_dir):
-                _run_cmd('dos2unix *')
+        # if platform == 'win32':
+        #     with _pushd(output_dir):
+        #         _run_cmd('dos2unix *')
 
 
         custom_cmd_args = {}
@@ -167,9 +176,9 @@ def main():
                 print 'Generating bindings for %s...' % (key[:-4])
                 command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
                 _run_cmd(command)
-            if platform == 'win32':
-                with _pushd(output_dir):
-                    _run_cmd('dos2unix *')
+            # if platform == 'win32':
+            #     with _pushd(output_dir):
+            #         _run_cmd('dos2unix *')
 
         print '----------------------------------------'
         print 'Generating javascript bindings succeeds.'

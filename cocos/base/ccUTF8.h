@@ -30,6 +30,10 @@
 #include <vector>
 #include <string>
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
+#include "platform/android/jni/JniHelper.h"
+#endif
+
 NS_CC_BEGIN
 
 namespace StringUtils {
@@ -67,6 +71,30 @@ CC_DLL bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16);
  *  @endcode
  */
 CC_DLL bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+
+
+/**
+*  @brief convert jstring to utf8 std::string,  same function with env->getStringUTFChars. 
+*         because getStringUTFChars can not pass special emoticon
+*  @param env   The JNI Env
+*  @param srcjStr The jstring which want to convert
+*  @param ret   True if the conversion succeeds and the ret pointer isn't null
+*  @returns the result of utf8 string
+*/
+CC_DLL std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret = nullptr);
+
+/**
+*  @brief create a jstring with utf8 std::string, same function with env->newStringUTF
+*         because newStringUTF can not convert special emoticon
+*  @param env   The JNI Env
+*  @param srcjStr The std::string which want to convert
+*  @param ret     True if the conversion succeeds and the ret pointer isn't null
+*  @returns the result of jstring,the jstring need to DeleteLocalRef(jstring);
+*/
+CC_DLL jstring newStringUTFJNI(JNIEnv* env, std::string utf8Str, bool* ret = nullptr);
+#endif
 
 /**
  *  @brief Trims the unicode spaces at the end of char16_t vector.

@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 #include "base/ccUTF8.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -380,26 +381,19 @@ void TextField::setTouchAreaEnabled(bool enable)
     _useTouchArea = enable;
 }
     
-bool TextField::hitTest(const Vec2 &pt)
+bool TextField::hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const
 {
-    if (_useTouchArea)
+    if (false == _useTouchArea)
     {
-        Vec2 nsp = convertToNodeSpace(pt);
-        Rect bb = Rect(-_touchWidth * _anchorPoint.x, -_touchHeight * _anchorPoint.y, _touchWidth, _touchHeight);
-        if (nsp.x >= bb.origin.x && nsp.x <= bb.origin.x + bb.size.width
-            && nsp.y >= bb.origin.y && nsp.y <= bb.origin.y + bb.size.height)
-        {
-            return true;
-        }
+        return Widget::hitTest(pt, camera, nullptr);
     }
-    else
-    {
-        return Widget::hitTest(pt);
-    }
-    
-    return false;
+
+    auto size = getContentSize();
+    auto anch = getAnchorPoint();
+    Rect rect((size.width - _touchWidth) * anch.x, (size.height - _touchHeight) * anch.y, _touchWidth, _touchHeight);
+    return isScreenPointInRect(pt, camera, getWorldToNodeTransform(), rect, nullptr);
 }
-    
+
 Size TextField::getTouchSize()const
 {
     return Size(_touchWidth, _touchHeight);
@@ -413,8 +407,7 @@ void TextField::setString(const std::string& text)
     {
         int max = _textFieldRenderer->getMaxLength();
         long text_count = StringUtils::getCharacterCountInUTF8String(text);
-        long total = text_count + StringUtils::getCharacterCountInUTF8String(getString());
-        if (total > max)
+        if (text_count > max)
         {
             strText = Helper::getSubStringOfUTF8String(strText, 0, max);
         }
@@ -461,7 +454,12 @@ void TextField::setPlaceHolderColor(const cocos2d::Color4B &color)
 {
     _textFieldRenderer->setColorSpaceHolder(color);
 }
-    
+
+const Color4B& TextField::getTextColor()const
+{
+    return _textFieldRenderer->getTextColor();
+}
+
 void TextField::setTextColor(const cocos2d::Color4B &textColor)
 {
     _textFieldRenderer->setTextColor(textColor);
@@ -605,7 +603,16 @@ void TextField::update(float dt)
         attachWithIMEEvent();
         setAttachWithIME(false);
     }
-    
+
+    if (getDeleteBackward())
+    {
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+
+        deleteBackwardEvent();
+        setDeleteBackward(false);
+    }
+
     if (getInsertText())
     {
         //we update the content size first such that when user call getContentSize() in event callback won't be wrong
@@ -614,15 +621,6 @@ void TextField::update(float dt)
         
         insertTextEvent();
         setInsertText(false);
-    }
-    
-    if (getDeleteBackward())
-    {
-        _textFieldRendererAdaptDirty = true;
-        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
-        
-        deleteBackwardEvent();
-        setDeleteBackward(false);
     }
 }
 
@@ -844,9 +842,19 @@ void TextField::setTextHorizontalAlignment(TextHAlignment alignment)
     _textFieldRenderer->setHorizontalAlignment(alignment);
 }
 
+TextHAlignment TextField::getTextHorizontalAlignment() const
+{
+    return _textFieldRenderer->getHorizontalAlignment();
+}
+
 void TextField::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _textFieldRenderer->setVerticalAlignment(alignment);
+}
+
+TextVAlignment TextField::getTextVerticalAlignment() const
+{
+    return _textFieldRenderer->getVerticalAlignment();
 }
 
 }

@@ -285,10 +285,12 @@ var TouchAllAtOnce = EventTest.extend({
 //
 //------------------------------------------------------------------
 var AccelerometerTest = EventTest.extend({
+    _logIndex:0,
     init:function () {
         this._super();
 
         if( 'accelerometer' in cc.sys.capabilities ) {
+            var self = this;
             // call is called 30 times per second
             cc.inputManager.setAccelerometerInterval(1/30);
             cc.inputManager.setAccelerometerEnabled(true);
@@ -296,7 +298,13 @@ var AccelerometerTest = EventTest.extend({
                 event: cc.EventListener.ACCELERATION,
                 callback: function(accelEvent, event){
                     var target = event.getCurrentTarget();
-                    cc.log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );
+                    self._logIndex++;
+                    if (self._logIndex > 20)
+                    {
+                        cc.log('Accel x: '+ accelEvent.x + ' y:' + accelEvent.y + ' z:' + accelEvent.z + ' time:' + accelEvent.timestamp );    
+                        self._logIndex = 0;
+                    }
+                    
 
                     var w = winSize.width;
                     var h = winSize.height;

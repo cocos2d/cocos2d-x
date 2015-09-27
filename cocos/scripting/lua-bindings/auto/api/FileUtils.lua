@@ -80,18 +80,15 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Renames a file under the given directory.<br>
--- param path     The parent directory path of the file, it must be an absolute path.<br>
--- param oldname  The current name of the file.<br>
--- param name     The new name of the file.<br>
--- return True if the file have been renamed successfully, false if not.
--- @function [parent=#FileUtils] renameFile 
+-- @overload self, string, string         
+-- @overload self, string, string, string         
+-- @function [parent=#FileUtils] renameFile
 -- @param self
 -- @param #string path
 -- @param #string oldname
 -- @param #string name
 -- @return bool#bool ret (return value: bool)
-        
+
 --------------------------------
 -- Loads the filenameLookup dictionary from the contents of a filename.<br>
 -- note The plist file name should follow the format below:<br>
@@ -127,7 +124,7 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
---  Checks whether to pop up a message box when failed to load an image. <br>
+--  Checks whether to pop up a message box when failed to load an image.<br>
 -- return True if pop up a message box when failed to load an image, false if not.
 -- @function [parent=#FileUtils] isPopupNotify 
 -- @param self
@@ -150,7 +147,10 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- 
+-- write a ValueMap into a plist file<br>
+-- param dict the ValueMap want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool
 -- @function [parent=#FileUtils] writeToFile 
 -- @param self
 -- @param #map_table dict
@@ -168,7 +168,18 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- 
+-- Retrieve the file size.<br>
+-- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
+-- param filepath The path of the file, it could be a relative or absolute path.<br>
+-- return The file size.
+-- @function [parent=#FileUtils] getFileSize 
+-- @param self
+-- @param #string filepath
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+--  Converts the contents of a file to a ValueMap.<br>
+-- This method is used internally.
 -- @function [parent=#FileUtils] getValueMapFromData 
 -- @param self
 -- @param #char filedata
@@ -205,14 +216,15 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Retrieve the file size.<br>
--- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
--- param filepath The path of the file, it could be a relative or absolute path.<br>
--- return The file size.
--- @function [parent=#FileUtils] getFileSize 
+-- write a string into a file<br>
+-- param dataStr the string want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool True if write success
+-- @function [parent=#FileUtils] writeStringToFile 
 -- @param self
--- @param #string filepath
--- @return long#long ret (return value: long)
+-- @param #string dataStr
+-- @param #string fullPath
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Sets the array that contains the search order of the resources.<br>
@@ -246,6 +258,17 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
+-- write ValueVector into a plist file<br>
+-- param vecData the ValueVector want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool
+-- @function [parent=#FileUtils] writeValueVectorToFile 
+-- @param self
+-- @param #array_table vecData
+-- @param #string fullPath
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Checks whether a file exists.<br>
 -- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
 -- param filename The path of the file, it could be a relative or absolute path.<br>
@@ -277,11 +300,32 @@
 --------------------------------
 -- Windows fopen can't support UTF-8 filename<br>
 -- Need convert all parameters fopen and other 3rd-party libs<br>
--- param filename std::string name file for convertation from utf-8<br>
+-- param filename std::string name file for conversion from utf-8<br>
 -- return std::string ansi filename in current locale
 -- @function [parent=#FileUtils] getSuitableFOpen 
 -- @param self
 -- @param #string filenameUtf8
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- write ValueMap into a plist file<br>
+-- param dict the ValueMap want to save<br>
+-- param fullPath The full path to the file you want to save a string<br>
+-- return bool
+-- @function [parent=#FileUtils] writeValueMapToFile 
+-- @param self
+-- @param #map_table dict
+-- @param #string fullPath
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Gets filename extension is a suffix (separated from the base filename by a dot) in lower case.<br>
+-- Examples of filename extensions are .png, .jpeg, .exe, .dmg and .txt.<br>
+-- param filePath The path of the file, it could be a relative or absolute path.<br>
+-- return suffix for filename in lower case or empty if a dot not found.
+-- @function [parent=#FileUtils] getFileExtension 
+-- @param self
+-- @param #string filePath
 -- @return string#string ret (return value: string)
         
 --------------------------------

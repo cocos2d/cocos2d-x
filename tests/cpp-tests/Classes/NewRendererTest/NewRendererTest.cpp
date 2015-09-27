@@ -29,13 +29,13 @@ USING_NS_CC;
 NewRendererTests::NewRendererTests()
 {
     ADD_TEST_CASE(NewSpriteTest);
-    ADD_TEST_CASE(NewSpriteBatchTest);
     ADD_TEST_CASE(GroupCommandTest);
     ADD_TEST_CASE(NewClippingNodeTest);
     ADD_TEST_CASE(NewDrawNodeTest);
     ADD_TEST_CASE(NewCullingTest);
     ADD_TEST_CASE(VBOFullTest);
     ADD_TEST_CASE(CaptureScreenTest);
+    ADD_TEST_CASE(BugAutoCulling)
 };
 
 std::string MultiSceneTest::title() const
@@ -187,76 +187,6 @@ std::string GroupCommandTest::title() const
 std::string GroupCommandTest::subtitle() const
 {
     return "GroupCommandTest: You should see a sprite";
-}
-
-//-------- New Sprite Batch Test
-
-NewSpriteBatchTest::NewSpriteBatchTest()
-{
-    auto touchListener = EventListenerTouchAllAtOnce::create();
-    touchListener->onTouchesEnded = CC_CALLBACK_2(NewSpriteBatchTest::onTouchesEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-
-    auto BatchNode = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 50);
-    addChild(BatchNode, 0, kTagSpriteBatchNode);
-}
-
-NewSpriteBatchTest::~NewSpriteBatchTest()
-{
-
-}
-
-std::string NewSpriteBatchTest::title() const
-{
-    return "Renderer";
-}
-
-std::string NewSpriteBatchTest::subtitle() const
-{
-    return "SpriteBatchTest";
-}
-
-void NewSpriteBatchTest::onTouchesEnded(const std::vector<Touch *> &touches, Event *event)
-{
-    for (auto &touch : touches)
-    {
-        auto location = touch->getLocation();
-        addNewSpriteWithCoords(location);
-    }
-}
-
-void NewSpriteBatchTest::addNewSpriteWithCoords(Vec2 p)
-{
-    auto BatchNode = static_cast<SpriteBatchNode*>( getChildByTag(kTagSpriteBatchNode) );
-
-    int idx = (int) (CCRANDOM_0_1() * 1400 / 100);
-    int x = (idx%5) * 85;
-    int y = (idx/5) * 121;
-
-
-    auto sprite = Sprite::createWithTexture(BatchNode->getTexture(), Rect(x,y,85,121));
-    BatchNode->addChild(sprite);
-
-    sprite->setPosition( Vec2( p.x, p.y) );
-
-    ActionInterval* action;
-    float random = CCRANDOM_0_1();
-
-    if( random < 0.20 )
-        action = ScaleBy::create(3, 2);
-    else if(random < 0.40)
-        action = RotateBy::create(3, 360);
-    else if( random < 0.60)
-        action = Blink::create(1, 3);
-    else if( random < 0.8 )
-        action = TintBy::create(2, 0, -255, -255);
-    else
-        action = FadeOut::create(2);
-
-    auto action_back = action->reverse();
-    auto seq = Sequence::create(action, action_back, nullptr);
-
-    sprite->runAction( RepeatForever::create(seq));
 }
 
 NewClippingNodeTest::NewClippingNodeTest()
@@ -545,4 +475,39 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     {
         log("Capture screen failed.");
     }
+}
+
+BugAutoCulling::BugAutoCulling()
+{
+    Size s = Director::getInstance()->getWinSize();
+    auto fastmap = cocos2d::experimental::TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
+    this->addChild(fastmap);
+    for (int i = 0; i < 30; i++) {
+        auto sprite = Sprite::create("Images/grossini.png");
+        sprite->setPosition(s.width/2 + s.width/10 * i, s.height/2);
+        this->addChild(sprite);
+        auto label = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "Label");
+        label->setPosition(s.width/2 + s.width/10 * i, s.height/2);
+        this->addChild(label);
+    }
+    this->scheduleOnce([=](float){
+        auto camera = Director::getInstance()->getRunningScene()->getCameras().front();
+        auto move  = MoveBy::create(2.0, Vec2(2 * s.width, 0));
+        camera->runAction(Sequence::create(move, move->reverse(),nullptr));
+    }, 1.0f, "lambda-autoculling-bug");
+}
+
+BugAutoCulling::~BugAutoCulling()
+{
+    
+}
+
+std::string BugAutoCulling::title() const
+{
+    return "Bug-AutoCulling";
+}
+
+std::string BugAutoCulling::subtitle() const
+{
+    return "Moving the camera to the right instead of moving the layer";
 }

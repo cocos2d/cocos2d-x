@@ -42,6 +42,14 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
+-- brief Return the nine-patch sprite of clicked state<br>
+-- return the nine-patch sprite of clicked state<br>
+-- since v3.9
+-- @function [parent=#Button] getRendererClicked 
+-- @param self
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
+        
+--------------------------------
 -- brief Return a zoom scale<br>
 -- return the zoom scale in float<br>
 -- since v3.3
@@ -63,6 +71,14 @@
 -- @param self
 -- @param #color3b_table color
 -- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
+-- brief Return the nine-patch sprite of disabled state<br>
+-- return the nine-patch sprite of disabled state<br>
+-- since v3.9
+-- @function [parent=#Button] getRendererDisabled 
+-- @param self
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- Sets capInsets for button, only the disabled state scale9 renderer will be affected.<br>
@@ -143,6 +159,15 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- @overload self, int, int         
+-- @overload self, int         
+-- @function [parent=#Button] setTitleAlignment
+-- @param self
+-- @param #int hAlignment
+-- @param #int vAlignment
+-- @return Button#Button self (return value: ccui.Button)
+
+--------------------------------
 -- Return the capInsets of pressed state scale9sprite.<br>
 -- return The pressed scale9 renderer capInsets.
 -- @function [parent=#Button] getCapInsetsPressedRenderer 
@@ -194,6 +219,14 @@
 -- @function [parent=#Button] getTitleFontSize 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- brief Return the nine-patch sprite of normal state<br>
+-- return the nine-patch sprite of normal state<br>
+-- since v3.9
+-- @function [parent=#Button] getRendererNormal 
+-- @param self
+-- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
         
 --------------------------------
 -- Query the font name of button's title<br>

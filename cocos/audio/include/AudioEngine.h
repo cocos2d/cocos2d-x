@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #ifndef __AUDIO_ENGINE_H_
 #define __AUDIO_ENGINE_H_
@@ -41,7 +41,7 @@
 #endif // ERROR
 
 /**
- * @addtogroup core
+ * @addtogroup audio
  * @{
  */
 
@@ -66,7 +66,7 @@ public:
     double minDelay;
     
     /**
-     * Defautl constructor
+     * Default constructor
      *
      * @lua new
      */
@@ -281,8 +281,21 @@ public:
      */
     static AudioProfile* getProfile(const std::string &profileName);
 
+    /**
+     * Preload audio file.
+     * @param filePath The file path of an audio.
+     */
+    static void preload(const std::string& filePath) { preload(filePath, nullptr); }
+
+    /**
+     * Preload audio file.
+     * @param filePath The file path of an audio.
+     * @param callback A callback which will be called after loading is finished.
+     */
+    static void preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
+
 protected:
-    
+    static void addTask(const std::function<void()>& task);
     static void remove(int audioID);
     
     struct ProfileHelper
@@ -309,8 +322,6 @@ protected:
         bool loop;
         float duration;
         AudioState state;
-        
-        bool is3dAudio;
 
         AudioInfo()
             : profileHelper(nullptr)
@@ -335,6 +346,9 @@ protected:
     static ProfileHelper* _defaultProfileHelper;
     
     static AudioEngineImpl* _audioEngineImpl;
+
+    class AudioEngineThreadPool;
+    static AudioEngineThreadPool* s_threadPool;
     
     friend class AudioEngineImpl;
 };

@@ -468,45 +468,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ParticleTest\ParticleTest.h">
       <Filter>Classes\ParticleTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceAllocTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceCallbackTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceContainerTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceLabelTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticleTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceRendererTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceScenarioTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceSpriteTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTextureTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTouchesTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PhysicsTest\PhysicsTest.h">
       <Filter>Classes\PhysicsTest</Filter>
     </ClInclude>
@@ -620,6 +581,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UserDefaultTest\UserDefaultTest.h">
       <Filter>Classes\UserDefaultTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\VibrateTest\VibrateTest.h">
+      <Filter>Classes\VibrateTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.h">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -751,9 +715,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\UITextFieldTest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClCompile>
@@ -772,9 +733,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
       <Filter>Classes\CocosStudio3DTest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.cpp">
       <Filter>Classes\TerrainTest</Filter>
     </ClCompile>
@@ -786,6 +744,28 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.cpp">
       <Filter>Classes\Physics3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.cpp">
+      <Filter>Classes\Scene3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.cpp">
+      <Filter>Classes\NavMeshTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-12847.cpp">
+      <Filter>Classes\BugsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DownloaderTest\DownloaderTest.cpp">
+      <Filter>Classes\DownloaderTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1059,45 +1039,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ParticleTest\ParticleTest.cpp">
       <Filter>Classes\ParticleTest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceContainerTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticleTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceRendererTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceScenarioTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceSpriteTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTextureTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PhysicsTest\PhysicsTest.cpp">
       <Filter>Classes\PhysicsTest</Filter>
     </ClCompile>
@@ -1205,6 +1146,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UserDefaultTest\UserDefaultTest.cpp">
       <Filter>Classes\UserDefaultTest</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\VibrateTest\VibrateTest.cpp">
+      <Filter>Classes\VibrateTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ZwoptexTest\ZwoptexTest.cpp">
       <Filter>Classes\ZwoptexTest</Filter>
@@ -1536,9 +1480,6 @@
     <Filter Include="Classes\ParticleTest">
       <UniqueIdentifier>{82efd737-e8e7-4086-85e8-fb4229430d52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\PerformanceTest">
-      <UniqueIdentifier>{cc43ce58-9f43-4a06-9c51-e8aa588dfa94}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\PhysicsTest">
       <UniqueIdentifier>{baa5d22b-c453-4aba-a286-86a79614ee79}</UniqueIdentifier>
     </Filter>
@@ -1607,6 +1548,9 @@
     </Filter>
     <Filter Include="Classes\UserDefaultTest">
       <UniqueIdentifier>{b8edd306-886d-4fa6-a97c-b930adc2de36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\VibrateTest">
+      <UniqueIdentifier>{3bd8ffaa-c24f-455b-bb31-25b038490329}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ZwoptexTest">
       <UniqueIdentifier>{3fd77e97-6478-4076-bcce-78366417556f}</UniqueIdentifier>
@@ -1701,15 +1645,21 @@
     <Filter Include="Classes\Physics3DTest">
       <UniqueIdentifier>{dbeed6f6-158b-4f99-8196-61616f724ae1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Scene3DTest">
+      <UniqueIdentifier>{77f319c0-fd62-4505-b872-a2fd52375636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\NavMeshTest">
+      <UniqueIdentifier>{63894b40-d29e-4744-8cac-bd3d12916fe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\DownloaderTest">
+      <UniqueIdentifier>{3f798ee7-4d68-4949-8f23-072dd022efd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\testBasic.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h">
       <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClInclude>
@@ -1728,9 +1678,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
       <Filter>Classes\CocosStudio3DTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.h">
       <Filter>Classes\TerrainTest</Filter>
     </ClInclude>
@@ -1742,6 +1689,27 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.h">
       <Filter>Classes\Physics3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.h">
+      <Filter>Classes\Scene3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.h">
+      <Filter>Classes\NavMeshTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-CCDrawNode.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-PageViewLayout.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BugsTest\Bug-12847.h">
+      <Filter>Classes\BugsTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DownloaderTest\DownloaderTest.h">
+      <Filter>Classes\DownloaderTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,6 +31,8 @@
 #import <OpenAL/alc.h>
 #import <AudioToolbox/ExtendedAudioFile.h>
 #include <thread>
+#include "base/CCDirector.h"
+#include "base/CCScheduler.h"
 
 #define PCMDATA_CACHEMAXSIZE 1048576
 
@@ -59,6 +61,7 @@ AudioCache::AudioCache()
 , _queBufferFrames(0)
 , _queBufferBytes(0)
 , _alBufferReady(false)
+, _loadFail(false)
 , _exitReadDataTask(false)
 {
     
@@ -177,7 +180,7 @@ void AudioCache::readDataTask()
         ExtAudioFileRead(extRef, (UInt32*)&frames, &theDataBuffer);
         _alBufferReady = true;
         _bytesOfRead += dataSize;
-        invokingCallbacks();
+        invokingPlayCallbacks();
         
         while (!_exitReadDataTask && _bytesOfRead + dataSize < _dataSize) {
             theDataBuffer.mBuffers[0].mData = _pcmData + _bytesOfRead;
@@ -222,11 +225,26 @@ ExitThread:
     _readDataTaskMutex.unlock();
     if (_queBufferFrames > 0)
         _alBufferReady = true;
+    else
+        _loadFail = true;
     
-    invokingCallbacks();
+    invokingPlayCallbacks();
+
+    invokingLoadCallbacks();
 }
 
-void AudioCache::invokingCallbacks()
+void AudioCache::addPlayCallback(const std::function<void()>& callback)
+{
+    _callbackMutex.lock();
+    if (_alBufferReady) {
+        callback();
+    } else if(!_loadFail){
+        _callbacks.push_back(callback);
+    }
+    _callbackMutex.unlock();
+}
+
+void AudioCache::invokingPlayCallbacks()
 {
     _callbackMutex.lock();
     auto count = _callbacks.size();
@@ -237,15 +255,28 @@ void AudioCache::invokingCallbacks()
     _callbackMutex.unlock();
 }
 
-void AudioCache::addCallbacks(const std::function<void ()> &callback)
+void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
 {
-    _callbackMutex.lock();
     if (_alBufferReady) {
-        callback();
-    } else {
-        _callbacks.push_back(callback);
+        callback(true);
+    } else if(_loadFail){
+        callback(false);
     }
-    _callbackMutex.unlock();
+    else {
+        _loadCallbacks.push_back(callback);
+    }
+}
+
+void AudioCache::invokingLoadCallbacks()
+{
+    auto scheduler = Director::getInstance()->getScheduler();
+    scheduler->performFunctionInCocosThread([&](){
+        auto count = _loadCallbacks.size();
+        for (size_t index = 0; index < count; ++index) {
+            _loadCallbacks[index](_alBufferReady);
+        }
+        _loadCallbacks.clear();
+    });
 }
 
 #endif

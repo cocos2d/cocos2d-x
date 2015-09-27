@@ -87,7 +87,7 @@ struct GLContextAttrs
 NS_CC_BEGIN
 
 /**
- * @addtogroup core
+ * @addtogroup platform
  * @{
  */
 /**

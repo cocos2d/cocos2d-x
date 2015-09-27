@@ -63,9 +63,13 @@ public:
      @param gridSize the size of the grid.
      @param texture The texture used for grab.
      @param flipped whether or not the grab texture should be flip by Y or not.
+     @param rect The effective grid rect.
     */
-    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
+    bool initWithSize(const Size& gridSize, const Rect& rect);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
+    bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
+
     /**@}*/
     /** @{
     Getter and setter of the active state of the grid.
@@ -118,6 +122,17 @@ public:
     
     /**Change projection to 2D for grabbing.*/
     void set2DProjection(void);
+    
+    /**
+     * @brief Set the effect grid rect.
+     * @param rect The effect grid rect.
+     */
+    void setGridRect(const Rect& rect);
+    /**
+     * @brief Get the effect grid rect.
+     * @return Return the effect grid rect.
+     */
+    inline const Rect& getGridRect() const {return _gridRect;}
 
 protected:
     bool _active;
@@ -129,6 +144,7 @@ protected:
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
     Director::Projection _directorProjection;
+    Rect _gridRect;
 };
 
 /**
@@ -138,9 +154,13 @@ class CC_DLL Grid3D : public GridBase
 {
 public:
     /** create one Grid. */
+    static Grid3D* create(const Size& gridSize);
+    /** create one Grid. */
+    static Grid3D* create(const Size& gridSize, const Rect& rect);
+    /** create one Grid. */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** create one Grid. */
-    static Grid3D* create(const Size& gridSize);
+    static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
     /**
      Constructor.
      * @js ctor
@@ -177,7 +197,7 @@ public:
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
     /**@{
-     Implementations for interfaces in base calss.
+     Implementations for interfaces in base class.
      */
     virtual void beforeBlit() override;
     virtual void afterBlit() override;
@@ -211,9 +231,13 @@ class CC_DLL TiledGrid3D : public GridBase
 {
 public:
     /** Create one Grid. */
+    static TiledGrid3D* create(const Size& gridSize);
+    /** Create one Grid. */
+    static TiledGrid3D* create(const Size& gridSize, const Rect& rect);
+    /** Create one Grid. */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** Create one Grid. */
-    static TiledGrid3D* create(const Size& gridSize);
+    static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
     /**
      Constructor.
      * @js ctor
@@ -251,7 +275,7 @@ public:
     void setTile(const Vec2& pos, const Quad3& coords);
 
     /**@{
-     Implementations for interfaces in base calss.
+     Implementations for interfaces in base class.
      */
     virtual void blit() override;
     virtual void reuse() override;

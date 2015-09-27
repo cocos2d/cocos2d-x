@@ -557,9 +557,9 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
         var action2 = action.clone();
         var action3 = action.clone();
 
-        var grossini = new cc.Sprite("res/Images/grossini.png");
-        var tamara = new cc.Sprite("res/Images/grossinis_sister1.png");
-        var kathia = new cc.Sprite("res/Images/grossinis_sister2.png");
+        var grossini = new cc.Sprite("Images/grossini.png");
+        var tamara = new cc.Sprite("Images/grossinis_sister1.png");
+        var kathia = new cc.Sprite("Images/grossinis_sister2.png");
         
         grossini.setActionManager(this._newActionManager);
         grossini.setScheduler(this._newScheduler);
@@ -589,9 +589,9 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
 
         slider = new ccui.Slider();
         slider.setTouchEnabled(true);
-        slider.loadBarTexture("res/cocosui/sliderTrack.png");
-        slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-        slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+        slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+        slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+        slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
         slider.x = cc.winSize.width / 2.0;
         slider.y = cc.winSize.height / 3.0 * 2;
         slider.addEventListener(this.sliderEventForGrossini, this);
@@ -605,9 +605,9 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
 
         slider = new ccui.Slider();
         slider.setTouchEnabled(true);
-        slider.loadBarTexture("res/cocosui/sliderTrack.png");
-        slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-        slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+        slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+        slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+        slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
         slider.x = cc.winSize.width / 2.0;
         slider.y = cc.winSize.height / 3.0;
         slider.addEventListener(this.sliderEventForGlobal, this);
@@ -644,6 +644,7 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
     },
 
     onExit: function() {
+        cc.director.getScheduler().setTimeScale(1);
         // restore scale
         cc.director.getScheduler().unscheduleUpdateForTarget(this._newScheduler);
         this._super();

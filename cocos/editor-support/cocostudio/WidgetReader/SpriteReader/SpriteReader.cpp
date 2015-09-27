@@ -167,6 +167,8 @@ namespace cocostudio
         Sprite *sprite = static_cast<Sprite*>(node);
         auto options = (SpriteOptions*)spriteOptions;
         
+        auto nodeReader = NodeReader::getInstance();
+        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
         
         auto fileNameData = options->fileNameData();
         
@@ -226,12 +228,12 @@ namespace cocostudio
             default:
                 break;
         }
-        if (!fileExist)
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            sprite->addChild(label);
-        }
+        //if (!fileExist)
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+        //    sprite->addChild(label);
+        //}
         
         auto f_blendFunc = options->blendFunc();
         if (f_blendFunc)
@@ -241,11 +243,6 @@ namespace cocostudio
             blendFunc.dst = f_blendFunc->dst();
             sprite->setBlendFunc(blendFunc);
         }
-        
-        
-        auto nodeReader = NodeReader::getInstance();
-        nodeReader->setPropsWithFlatBuffers(node, (Table*)(options->nodeOptions()));
-        
         
         auto nodeOptions = options->nodeOptions();
         

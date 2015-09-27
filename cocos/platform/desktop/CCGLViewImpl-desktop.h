@@ -72,7 +72,7 @@ public:
 
     virtual void setViewPortInPoints(float x , float y , float w , float h) override;
     virtual void setScissorInPoints(float x , float y , float w , float h) override;
-
+    virtual Rect getScissorRect() const override;
 
     bool windowShouldClose() override;
     void pollEvents() override;
@@ -108,7 +108,7 @@ public:
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    id getCocoaWindow() { return glfwGetCocoaWindow(_mainWindow); }
+    id getCocoaWindow() override { return glfwGetCocoaWindow(_mainWindow); }
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
@@ -145,6 +145,8 @@ protected:
 
     GLFWwindow* _mainWindow;
     GLFWmonitor* _monitor;
+
+    std::string _glfwError;
 
     float _mouseX;
     float _mouseY;

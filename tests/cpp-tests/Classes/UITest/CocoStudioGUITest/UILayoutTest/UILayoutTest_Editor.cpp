@@ -345,7 +345,7 @@ bool UILayoutComponentTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/UILayoutComponent.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -457,7 +457,7 @@ void UILayoutComponentTest_Editor::onChangeLayoutComponent(Ref* sender)
         }
     }
 
-    statusPin = String::createWithFormat("Pin:%s%s", hPinStatus.c_str(), vPinStatus.c_str())->getCString();
+    statusPin = StringUtils::format("Pin:%s%s", hPinStatus.c_str(), vPinStatus.c_str());
     _textPin->setString(statusPin);
 
     auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(_widget);
@@ -523,7 +523,7 @@ void UILayoutComponentTest_Editor::onResizeContainer(Ref* sender)
                 switchButton->setEnabled(true);
                 switchButton->setBright(true);
             }
-        }, 0.025, 39, 0, "1");
+        }, 0.025f, 39, 0, "1");
     } 
     else
     {
@@ -539,6 +539,6 @@ void UILayoutComponentTest_Editor::onResizeContainer(Ref* sender)
                 switchButton->setEnabled(true);
                 switchButton->setBright(true);
             }
-        }, 0.025, 39, 0, "2");
+        }, 0.025f, 39, 0, "2");
     }
 }

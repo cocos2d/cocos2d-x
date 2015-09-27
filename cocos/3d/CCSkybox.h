@@ -40,7 +40,7 @@ NS_CC_BEGIN
 class TextureCube;
 
 /**
-* Sky box technology usually used to simulate infinity sky, mountains and other phenomena.
+* Sky box technology is usually used to simulate infinity sky, mountains and other phenomena.
 */
 class CC_DLL Skybox : public Node
 {
@@ -49,7 +49,7 @@ public:
     
     /** create skybox from 6 textures.
      @param positive_x texture for the right side of the texture cube face.
-     @param negative_x texture for the up side of the texture cube face.
+     @param negative_x texture for the left side of the texture cube face.
      @param positive_y texture for the top side of the texture cube face
      @param negative_y texture for the bottom side of the texture cube face
      @param positive_z texture for the forward side of the texture cube face.
@@ -83,7 +83,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
     * init Skybox.
     */
-    virtual bool init();
+    virtual bool init() override;
     
     /**
      * initialize with texture path

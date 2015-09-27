@@ -25,7 +25,6 @@
 #ifndef _COCOSSTUDIO3D_TEST_H_
 #define _COCOSSTUDIO3D_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
 
@@ -72,6 +71,17 @@ public:
     CREATE_FUNC(CSParticle3DTest);
     CSParticle3DTest();
     virtual std::string title() const override;
+};
+
+class CSSceneSkyBoxTest : public CocosStudio3DTestDemo
+{
+private:
+    cocos2d::Camera *_camera;
+public:
+    CREATE_FUNC(CSSceneSkyBoxTest);
+    CSSceneSkyBoxTest();
+    virtual std::string title() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 };
 
 

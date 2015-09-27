@@ -22,6 +22,12 @@
     <ProjectReference Include="..\..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
       <Project>{22f798d8-bfff-4754-996f-a5395343d5ec}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\external\bullet\proj.win8.1-universal\libbullet.WindowsPhone\libbullet.WindowsPhone.vcxproj">
+      <Project>{e35634bd-b91b-4a6d-b957-96f56dd065f9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\external\recast\proj.win8.1-universal\librecast.WindowsPhone\librecast.WindowsPhone.vcxproj">
+      <Project>{d3bcfc1a-94bd-43b7-9c15-3f48ac6a9fac}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
       <Project>{cc1da216-a80d-4be4-b309-acb6af313aff}</Project>
     </ProjectReference>
@@ -85,23 +91,23 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7_WindowsPhone_8.1</TargetName>
+    <TargetName>libcocos2d_v3.9_WindowsPhone_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7_WindowsPhone_8.1</TargetName>
+    <TargetName>libcocos2d_v3.9_WindowsPhone_8.1</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7_WindowsPhone_8.1</TargetName>
+    <TargetName>libcocos2d_v3.9_WindowsPhone_8.1</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.7_WindowsPhone_8.1</TargetName>
+    <TargetName>libcocos2d_v3.9_WindowsPhone_8.1</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -110,10 +116,11 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\OggDecoder\include;$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,6 +129,7 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>..\..\..\cocos2d.def</ModuleDefinitionFile>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -130,10 +138,11 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\OggDecoder\include;$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,10 +159,11 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\OggDecoder\include;$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -162,6 +172,7 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>..\..\..\cocos2d.def</ModuleDefinitionFile>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm'">
@@ -170,10 +181,11 @@
       <CompileAsWinRT>true</CompileAsWinRT>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)external\wp_8.1-specific\OggDecoder\include;$(EngineRoot)external\wp_8.1-specific\zlib\include;$(EngineRoot)external\freetype2\include\wp_8.1\freetype2;$(EngineRoot)external\websockets\include\wp_8.1;$(EngineRoot)external\curl\include\wp_8.1;$(EngineRoot)external\tiff\include\wp_8.1;$(EngineRoot)external\jpeg\include\wp_8.1;$(EngineRoot)external\png\include\wp_8.1;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CC_WINDOWS_PHONE_8_1;_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

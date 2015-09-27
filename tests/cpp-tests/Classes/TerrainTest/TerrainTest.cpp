@@ -6,6 +6,7 @@ TerrainTests::TerrainTests()
 {
     ADD_TEST_CASE(TerrainSimple);
     ADD_TEST_CASE(TerrainWalkThru);
+    ADD_TEST_CASE(TerrainWithLightMap);
 }
 
 Vec3 camera_offset(0, 45, 60);
@@ -16,9 +17,9 @@ TerrainSimple::TerrainSimple()
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
-    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,800);
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1f,800);
     _camera->setCameraFlag(CameraFlag::USER1);
-    _camera->setPosition3D(Vec3(-1,1.6,4));
+    _camera->setPosition3D(Vec3(-1,1.6f,4));
     addChild(_camera);
 
     Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg"),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg");
@@ -26,7 +27,7 @@ TerrainSimple::TerrainSimple()
     Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
 
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
-    _terrain->setLODDistance(3.2,6.4,9.6);
+    _terrain->setLODDistance(3.2f,6.4f,9.6f);
     _terrain->setMaxDetailMapAmount(4);
     addChild(_terrain);
     _terrain->setCameraMask(2);
@@ -95,7 +96,7 @@ TerrainWalkThru::TerrainWalkThru()
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
-    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,200);
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1f,200);
     _camera->setCameraFlag(CameraFlag::USER1);
     addChild(_camera);
 
@@ -111,7 +112,7 @@ TerrainWalkThru::TerrainWalkThru()
     _terrain->setLODDistance(64,128,192);
     _player = Player::create("Sprite3DTest/girl.c3b",_camera,_terrain);
     _player->setCameraMask(2);
-    _player->setScale(0.08);
+    _player->setScale(0.08f);
     _player->setPositionY(_terrain->getHeight(_player->getPositionX(),_player->getPositionZ())+PLAYER_HEIGHT);
     
     // add Particle3D for test blend
@@ -161,34 +162,13 @@ void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, 
             _camera->unproject(size, &farP, &farP);
             Vec3 dir = farP - nearP;
             dir.normalize();
-            Vec3 rayStep = 15*dir;
-            Vec3 rayPos =  nearP;
-            Vec3 rayStartPosition = nearP;
-            Vec3 lastRayPosition =rayPos;
-            rayPos += rayStep; 
-            // Linear search - Loop until find a point inside and outside the terrain Vector3 
-            float height = _terrain->getHeight(rayPos.x,rayPos.z); 
-
-            while (rayPos.y > height)
+            Vec3 collisionPoint(-999,-999,-999);
+            bool isInTerrain = _terrain->getIntersectionPoint(Ray(nearP, dir), collisionPoint);
+            if (!isInTerrain) 
             {
-                lastRayPosition = rayPos; 
-                rayPos += rayStep; 
-                height = _terrain->getHeight(rayPos.x,rayPos.z); 
-            } 
-
-            Vec3 startPosition = lastRayPosition;
-            Vec3 endPosition = rayPos;
-
-            for (int i= 0; i< 32; i++) 
-            { 
-                // Binary search pass 
-                Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
-                if (middlePoint.y < height) 
-                    endPosition = middlePoint; 
-                else 
-                    startPosition = middlePoint;
-            } 
-            Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
+            _player->idle();
+            return;
+            }
             dir = collisionPoint - _player->getPosition3D();
             dir.y = 0;
             dir.normalize();
@@ -246,12 +226,23 @@ void Player::update(float dt)
     default:
         break;
     }
+    // transform player position to world coord
+    auto playerPos = player->getPosition3D();
+    auto playerModelMat = player->getParent()->getNodeToWorldTransform();
+    playerModelMat.transformPoint(&playerPos);
     Vec3 Normal;
-    float player_h = _terrain->getHeight(player->getPositionX(),player->getPositionZ(),&Normal);
-
-    player->setPositionY(player_h+PLAYER_HEIGHT);
+    float player_h = _terrain->getHeight(playerPos.x, playerPos.z,&Normal);
+    if (Normal.isZero())//check the player whether is out of the terrain
+    {
+        player_h = playerPos.y;
+    }
+    else
+    {
+        player_h += PLAYER_HEIGHT;
+    }
+    player->setPositionY(player_h);
     Quaternion q2;
-    q2.createFromAxisAngle(Vec3(0,1,0),-M_PI,&q2);
+    q2.createFromAxisAngle(Vec3(0,1,0),(float)-M_PI,&q2);
  
     Quaternion headingQ;
     headingQ.createFromAxisAngle(_headingAxis,_headingAngle,&headingQ);
@@ -325,4 +316,60 @@ Player * Player::create(const char * file,Camera * cam,Terrain * terrain)
     }
     CC_SAFE_DELETE(sprite);
     return nullptr;
+}
+
+TerrainWithLightMap::TerrainWithLightMap()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    //use custom camera
+    _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1f,800);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(-1,1.6f,4));
+    addChild(_camera);
+    
+    Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg"),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg");
+    
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
+    
+    _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+    _terrain->setLODDistance(3.2f,6.4f,9.6f);
+    _terrain->setMaxDetailMapAmount(4);
+    addChild(_terrain);
+    _terrain->setCameraMask(2);
+    _terrain->setDrawWire(false);
+    _terrain->setLightMap("TerrainTest/Lightmap.png");
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(TerrainWithLightMap::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+}
+std::string TerrainWithLightMap::title() const
+{
+    return "Terrain using light map";
+}
+std::string TerrainWithLightMap::subtitle() const
+{
+    return "Drag to walkThru";
+}
+void TerrainWithLightMap::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    float delta = Director::getInstance()->getDeltaTime();
+    auto touch = touches[0];
+    auto location = touch->getLocation();
+    auto PreviousLocation = touch->getPreviousLocation();
+    Point newPos = PreviousLocation - location;
+    
+    Vec3 cameraDir;
+    Vec3 cameraRightDir;
+    _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+    cameraDir.normalize();
+    cameraDir.y=0;
+    _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+    cameraRightDir.normalize();
+    cameraRightDir.y=0;
+    Vec3 cameraPos=  _camera->getPosition3D();
+    cameraPos+=cameraDir*newPos.y*0.5*delta;
+    cameraPos+=cameraRightDir*newPos.x*0.5*delta;
+    _camera->setPosition3D(cameraPos);
 }

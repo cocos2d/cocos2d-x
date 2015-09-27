@@ -5,7 +5,7 @@
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
 #include "../ActionTimeline/CCActionTimeline.h"
-#include "cocostudio/CCObjectExtensionData.h"
+#include "cocostudio/CCComExtensionData.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2.h"
@@ -160,12 +160,22 @@ namespace cocostudio
         
         /* adapt screen */
         float w = 0, h = 0;
-        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
-        if (adaptScrenn)
+        bool adaptScrennExsit = DICTOOL->checkObjectExist_json(options, P_AdaptScreen);
+        if (adaptScrennExsit)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
-            w = screenSize.width;
-            h = screenSize.height;
+            bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
+            if (adaptScrenn)
+            {
+                Size screenSize = Director::getInstance()->getWinSize();
+                w = screenSize.width;
+                h = screenSize.height;
+            }
+            else
+            {
+                w = DICTOOL->getFloatValue_json(options, P_Width);
+                h = DICTOOL->getFloatValue_json(options, P_Height);
+            }
+
         }
         else
         {
@@ -795,10 +805,14 @@ namespace cocostudio
         
         std::string customProperty = options->customProperty()->c_str();
         
-        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        ComExtensionData* extensionData = ComExtensionData::create();
         extensionData->setCustomProperty(customProperty);
         extensionData->setActionTag(actionTag);
-        node->setUserObject(extensionData);
+        if (node->getComponent(ComExtensionData::COMPONENT_NAME))
+        {
+            node->removeComponent(ComExtensionData::COMPONENT_NAME);
+        }
+        node->addComponent(extensionData);
         
         bool touchEnabled = options->touchEnabled() != 0;
         widget->setTouchEnabled(touchEnabled);

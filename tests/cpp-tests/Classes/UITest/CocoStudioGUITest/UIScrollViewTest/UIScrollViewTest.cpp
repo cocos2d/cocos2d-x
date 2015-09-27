@@ -12,6 +12,7 @@ UIScrollViewTests::UIScrollViewTests()
     ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection_Bounce);
     ADD_TEST_CASE(UIScrollViewNestTest);
     ADD_TEST_CASE(UIScrollViewRotated);
+    ADD_TEST_CASE(UIScrollViewDisableTest);
 }
 // UIScrollViewTest_Vertical
 
@@ -55,6 +56,9 @@ bool UIScrollViewTest_Vertical::init()
                                (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
                                (widgetSize.height - backgroundSize.height) / 2.0f +
                                (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+		scrollView->setScrollBarWidth(4);
+		scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
+		scrollView->setScrollBarColor(Color3B::WHITE);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -81,8 +85,7 @@ bool UIScrollViewTest_Vertical::init()
         
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
         scrollView->addChild(imageView);            
-      
- 
+        scrollView->scrollToBottom(2.0, true);
         return true;
     }
     
@@ -127,11 +130,10 @@ bool UIScrollViewTest_Horizontal::init()
         scrollView->setDirection(ui::ScrollView::Direction::HORIZONTAL);
         scrollView->setContentSize(Size(280.0f, 150.0f));
         scrollView->setInnerContainerSize(scrollView->getContentSize());
+		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
+		scrollView->setScrollBarColor(Color3B::YELLOW);
         Size backgroundSize = background->getContentSize();
-        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                    (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
-                                    (widgetSize.height - backgroundSize.height) / 2.0f +
-                                    (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+        scrollView->setPosition((widgetSize - scrollView->getContentSize()) / 2.0f);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -157,12 +159,15 @@ bool UIScrollViewTest_Horizontal::init()
         button_scale9->setContentSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vec2(titleButton->getRightBoundary() + titleButton->getContentSize().width / 2.0f,
                                        titleButton->getBottomBoundary() - titleButton->getContentSize().height / 2.0f));
-        scrollView->addChild(button_scale9);                
+        scrollView->addChild(button_scale9);
                 
         imageView->setPosition(Vec2(innerWidth - imageView->getContentSize().width / 2.0f,
                                    button_scale9->getBottomBoundary() - button_scale9->getContentSize().height / 2.0f));
-        scrollView->addChild(imageView);                
-        
+        scrollView->addChild(imageView);
+
+        // Jump to right
+        scrollView->jumpToRight();
+
         return true;
     }
     
@@ -210,6 +215,8 @@ bool UIScrollViewTest_Both::init()
         scrollView->setBackGroundImageScale9Enabled(true);
         scrollView->setBackGroundImage("cocosui/green_edit.png");
         scrollView->setContentSize(Size(210, 122.5));
+		scrollView->setScrollBarWidth(4);
+		scrollView->setScrollBarPositionFromCorner(Vec2(6, 6));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                     (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
@@ -223,7 +230,10 @@ bool UIScrollViewTest_Both::init()
         imageView->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
         
         _uiLayer->addChild(scrollView);
-        
+
+        // Jump to right bottom
+        scrollView->jumpToBottomRight();
+
         return true;
     }
     
@@ -254,7 +264,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("ScrollView scroll to percent both directrion","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("ScrollView scroll to percent both direction without scroll bar","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5));
         _uiLayer->addChild(alert);
@@ -269,6 +279,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection::init()
         sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
         sc->setContentSize(Size(100,100));
+		sc->setScrollBarEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getContentSize().width) / 2.0f,
@@ -309,7 +320,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         _uiLayer->addChild(_displayValueLabel);
         
         // Add the alert
-        Text* alert = Text::create("ScrollView scroll to percent both directrion bounce","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("ScrollView scroll to percent both direction bounce","fonts/Marker Felt.ttf",20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5));
         _uiLayer->addChild(alert);
@@ -325,6 +336,9 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce::init()
         sc->setDirection(ui::ScrollView::Direction::BOTH);
         sc->setInnerContainerSize(Size(480, 320));
         sc->setContentSize(Size(100,100));
+		sc->setScrollBarPositionFromCornerForHorizontal(Vec2(5, sc->getContentSize().height - 5));
+		sc->setScrollBarPositionFromCornerForVertical(Vec2(sc->getContentSize().width - 5, 5));
+		sc->setScrollBarAutoHideEnabled(false);
         Size backgroundSize = background->getContentSize();
         sc->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                               (backgroundSize.width - sc->getContentSize().width) / 2.0f,
@@ -378,12 +392,15 @@ bool UIScrollViewNestTest::init()
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setContentSize(Size(280.0f, 150.0f));
-        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
+		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
                                      (widgetSize.height - backgroundSize.height) / 2.0f +
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+		scrollView->setScrollBarPositionFromCornerForVertical(Vec2(scrollView->getContentSize().width - 4, 4));
+		scrollView->setScrollBarColor(Color3B::BLUE);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -413,7 +430,7 @@ bool UIScrollViewNestTest::init()
         
         
         
-        // Create the scrollview by horizontal
+        // Create the scrollview by both
         ui::ScrollView* sc = ui::ScrollView::create();
         sc->setBackGroundColor(Color3B::GREEN);
         sc->setBackGroundColorType(Layout::BackGroundColorType::SOLID);
@@ -424,6 +441,7 @@ bool UIScrollViewNestTest::init()
         sc->setPropagateTouchEvents(false);
         sc->setPosition(Vec2(180,100));
         sc->scrollToPercentBothDirection(Vec2(50, 50), 1, true);
+		sc->setScrollBarPositionFromCorner(Vec2(4, 4));
         ImageView* iv = ImageView::create("cocosui/Hello.png");
         iv->setPosition(Vec2(240, 160));
         sc->addChild(iv);
@@ -436,6 +454,10 @@ bool UIScrollViewNestTest::init()
     
     return false;
 }
+
+
+
+
 // UIScrollViewRotated
 
 UIScrollViewRotated::UIScrollViewRotated()
@@ -473,13 +495,15 @@ bool UIScrollViewRotated::init()
         // Create the scrollview by vertical
         ui::ScrollView* scrollView = ui::ScrollView::create();
         scrollView->setContentSize(Size(280.0f, 150.0f));
-        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        scrollView->setDirection(ui::ScrollView::Direction::VERTICAL);
         Size backgroundSize = background->getContentSize();
         scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
                                      (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
                                      (widgetSize.height - backgroundSize.height) / 2.0f +
                                      (backgroundSize.height - scrollView->getContentSize().height) / 2.0f + 100) );
         scrollView->setRotation(45);
+		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
+		scrollView->setScrollBarColor(Color3B::WHITE);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -512,5 +536,85 @@ bool UIScrollViewRotated::init()
         return true;
     }
     
+    return false;
+}
+
+// UIScrollViewDisableTest
+
+UIScrollViewDisableTest::UIScrollViewDisableTest()
+: _displayValueLabel(nullptr)
+{
+}
+
+UIScrollViewDisableTest::~UIScrollViewDisableTest()
+{
+}
+
+bool UIScrollViewDisableTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the scrollview alert will be displayed
+        _displayValueLabel = Text::create("ScrollView Disable Test", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f,
+                                              widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("ScrollView vertical", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+
+        // Create the scrollview by vertical
+        ui::ScrollView* scrollView = ui::ScrollView::create();
+        scrollView->setContentSize(Size(280.0f, 100.0f));
+        Size backgroundSize = background->getContentSize();
+        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                               (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
+                               (widgetSize.height - backgroundSize.height) / 2.0f +
+                               (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+        scrollView->setScrollBarWidth(4);
+        scrollView->setTouchEnabled(false);
+        scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
+        scrollView->setScrollBarColor(Color3B::WHITE);
+        _uiLayer->addChild(scrollView);
+
+        ImageView* imageView = ImageView::create("cocosui/ccicon.png");
+
+        float innerWidth = scrollView->getContentSize().width;
+        float innerHeight = scrollView->getContentSize().height + imageView->getContentSize().height;
+
+        scrollView->setInnerContainerSize(Size(innerWidth, innerHeight));
+
+        Button* button = Button::create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png");
+        button->setPosition(Vec2(innerWidth / 2.0f, scrollView->getInnerContainerSize().height - button->getContentSize().height / 2.0f));
+        scrollView->addChild(button);
+
+        Button* titleButton = Button::create("cocosui/backtotopnormal.png", "cocosui/backtotoppressed.png");
+        titleButton->setTitleText("Title Button");
+        titleButton->setPosition(Vec2(innerWidth / 2.0f, button->getBottomBoundary() - button->getContentSize().height));
+        scrollView->addChild(titleButton);
+
+        Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button_scale9->setScale9Enabled(true);
+        button_scale9->setContentSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
+        button_scale9->setPosition(Vec2(innerWidth / 2.0f, titleButton->getBottomBoundary() - titleButton->getContentSize().height));
+        scrollView->addChild(button_scale9);
+
+        imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
+        scrollView->addChild(imageView);
+
+
+        return true;
+    }
+
     return false;
 }

@@ -28,6 +28,7 @@ THE SOFTWARE.
 #endif
 #include <Windows.h>
 #include <wrl/client.h>
+#include <wrl/wrappers/corewrappers.h>
 #include <ppl.h>
 #include <ppltasks.h>
 #include <sstream>
@@ -46,64 +47,116 @@ using namespace Windows::Storage::Pickers;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Networking::Connectivity;
 
-std::wstring CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len/* = -1*/)
+bool isWindowsPhone()
+{
+#if _MSC_VER >= 1900
+    if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+    {
+        return true;
+    }
+#elif (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+    return true;
+#else
+    return false;
+#endif
+    return false;
+}
+
+CC_DEPRECATED_ATTRIBUTE std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len /*= -1*/)
+{
+    if (len == -1)
+    {
+        return StringUtf8ToWideChar(pszUtf8Str);
+    }
+    else
+    {
+        std::wstring ret;
+        do
+        {
+            if (!pszUtf8Str || !len) break;
+
+            // get UTF16 string length
+            int wLen = MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, 0, 0);
+            if (0 == wLen || 0xFFFD == wLen) break;
+
+            // convert string  
+            wchar_t * pwszStr = new wchar_t[wLen + 1];
+            if (!pwszStr) break;
+            pwszStr[wLen] = 0;
+            MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, wLen + 1);
+            ret = pwszStr;
+            CC_SAFE_DELETE_ARRAY(pwszStr);
+        } while (0);
+        return ret;
+    }
+}
+
+CC_DEPRECATED_ATTRIBUTE std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr)
+{
+    return StringWideCharToUtf8(pwszStr);
+}
+
+
+std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
 {
     std::wstring ret;
-    do
+    if (!strUtf8.empty())
     {
-        if (! pszUtf8Str) break;
-		// get UTF8 string length
-		if (-1 == len)
-		{
-			len = strlen(pszUtf8Str);
-		}
-        if (len <= 0) break;
+        int nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, nullptr, 0);
+        if (nNum)
+        {
+            WCHAR* wideCharString = new WCHAR[nNum + 1];
+            wideCharString[0] = 0;
 
-		// get UTF16 string length
-		int wLen = MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, 0, 0);
-		if (0 == wLen || 0xFFFD == wLen) break;
-		
-		// convert string  
-        wchar_t * pwszStr = new wchar_t[wLen + 1];
-        if (! pwszStr) break;
-        pwszStr[wLen] = 0;
-        MultiByteToWideChar(CP_UTF8, 0, pszUtf8Str, len, pwszStr, wLen + 1);
-        ret = pwszStr;
-        CC_SAFE_DELETE_ARRAY(pwszStr);
-    } while (0);
+            nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, wideCharString, nNum + 1);
+
+            ret = wideCharString;
+            delete[] wideCharString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to WideChar code:0x%x", GetLastError());
+        }
+    }
     return ret;
 }
 
-std::string CCUnicodeToUtf8(const wchar_t* pwszStr)
+std::string StringWideCharToUtf8(const std::wstring& strWideChar)
 {
-	std::string ret;
-	do
-	{
-		if(! pwszStr) break;
-		size_t len = wcslen(pwszStr);
-		if (len <= 0) break;
-		
-		size_t convertedChars = 0;
-		char * pszUtf8Str = new char[len*3 + 1];
-		WideCharToMultiByte(CP_UTF8, 0, pwszStr, len+1, pszUtf8Str, len*3 + 1, 0, 0);
-		ret = pszUtf8Str;
-		CC_SAFE_DELETE_ARRAY(pszUtf8Str);
-	}while(0);
+    std::string ret;
+    if (!strWideChar.empty())
+    {
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* utf8String = new char[nNum + 1];
+            utf8String[0] = 0;
 
-	return ret;
+            nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, utf8String, nNum + 1, nullptr, FALSE);
+
+            ret = utf8String;
+            delete[] utf8String;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Utf8 code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
 }
 
 std::string PlatformStringToString(Platform::String^ s) {
-	std::wstring t = std::wstring(s->Data());
-	return std::string(t.begin(),t.end());
+	return StringWideCharToUtf8(std::wstring(s->Data()));
 }
 
 Platform::String^ PlatformStringFromString(const std::string& s)
 {
-    std::wstring ws(CCUtf8ToUnicode(s.c_str()));
+    std::wstring ws = StringUtf8ToWideChar(s);
     return ref new Platform::String(ws.data(), ws.length());
 }
 
+#if 0
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
 float ConvertDipsToPixels(float dips)
 {
@@ -115,11 +168,10 @@ float getScaledDPIValue(float v) {
 	auto dipFactor = DisplayProperties::LogicalDpi / 96.0f;
 	return v * dipFactor;
 }
-
+#endif
 
 void CC_DLL CCLogIPAddresses()
 {
-#ifndef WP8_SHADER_COMPILER
     auto hostnames = NetworkInformation::GetHostNames();
     int length = hostnames->Size;
 
@@ -132,7 +184,6 @@ void CC_DLL CCLogIPAddresses()
             log("IP Address: %s:", s.c_str());
         }
     }
-#endif
 }
 
 std::string CC_DLL getDeviceIPAddresses()
@@ -267,5 +318,73 @@ Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path)
 	});
 }
 
+std::string computeHashForFile(const std::string& filePath)
+{
+    std::string ret = filePath;
+    int pos = std::string::npos;
+    pos = ret.find_last_of('/');
+
+    if (pos != std::string::npos) {
+        ret = ret.substr(pos);
+    }
+
+    pos = ret.find_last_of('.');
+
+    if (pos != std::string::npos) {
+        ret = ret.substr(0, pos);
+    }
+
+    CREATEFILE2_EXTENDED_PARAMETERS extParams = { 0 };
+    extParams.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
+    extParams.dwFileFlags = FILE_FLAG_RANDOM_ACCESS;
+    extParams.dwSecurityQosFlags = SECURITY_ANONYMOUS;
+    extParams.dwSize = sizeof(extParams);
+    extParams.hTemplateFile = nullptr;
+    extParams.lpSecurityAttributes = nullptr;
+
+    Microsoft::WRL::Wrappers::FileHandle file(CreateFile2(std::wstring(filePath.begin(), filePath.end()).c_str(), GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, &extParams));
+
+    if (file.Get() != INVALID_HANDLE_VALUE) {
+        FILE_BASIC_INFO  fInfo = { 0 };
+        if (GetFileInformationByHandleEx(file.Get(), FileBasicInfo, &fInfo, sizeof(FILE_BASIC_INFO))) {
+            std::stringstream ss;
+            ss << ret << "_";
+            ss << fInfo.CreationTime.QuadPart;
+            ss << fInfo.ChangeTime.QuadPart;
+            ret = ss.str();
+        }
+    }
+
+    return ret;
+}
+
+bool createMappedCacheFile(const std::string& srcFilePath, std::string& cacheFilePath, std::string ext)
+{
+    bool ret = false;
+    auto folderPath = FileUtils::getInstance()->getWritablePath();
+    cacheFilePath = folderPath + computeHashForFile(srcFilePath) + ext;
+    std::string prevFile = UserDefault::getInstance()->getStringForKey(srcFilePath.c_str());
+
+    if (prevFile == cacheFilePath) {
+        ret = FileUtils::getInstance()->isFileExist(cacheFilePath);
+    }
+    else {
+        FileUtils::getInstance()->removeFile(prevFile);
+    }
+
+    UserDefault::getInstance()->setStringForKey(srcFilePath.c_str(), cacheFilePath);
+    return ret;
+}
+
+void destroyMappedCacheFile(const std::string& key)
+{
+    std::string value = UserDefault::getInstance()->getStringForKey(key.c_str());
+    
+    if (!value.empty()) {
+        FileUtils::getInstance()->removeFile(value);
+    }
+
+    UserDefault::getInstance()->setStringForKey(key.c_str(), "");
+}
 
 NS_CC_END

@@ -127,7 +127,7 @@ public:
     void destroyAll(void);
 
     virtual PUBeamRender* clone() override;
-    virtual void copyAttributesTo (PURender *render) override;
+    void copyAttributesTo(PUBeamRender *render);
 
 CC_CONSTRUCTOR_ACCESS:
     PUBeamRender();

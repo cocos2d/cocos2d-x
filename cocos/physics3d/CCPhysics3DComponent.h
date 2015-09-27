@@ -110,14 +110,14 @@ public:
     void setSyncFlag(PhysicsSyncFlag syncFlag);
     
     /**
-     * align node and physics according to physics object
+     * synchronize node transformation to physics
      */
-    void syncToPhysics();
+    void syncNodeToPhysics();
     
     /**
-     * align node and physics according to node
+     * synchronize physics transformation to node
      */
-    void syncToNode();
+    void syncPhysicsToNode();
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();

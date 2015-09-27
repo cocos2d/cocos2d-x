@@ -247,6 +247,21 @@ public:
      */
     const std::string getTitleFontName() const;
 
+    /**
+     * Sets the title's text horizontal alignment.
+     *
+     * @param hAlignment see TextHAlignment
+     */
+    void setTitleAlignment(TextHAlignment hAlignment);
+
+    /**
+     * Sets the title's text vertical alignment.
+     *
+     * @param hAlignment see TextHAlignment.
+     * @param vAlignment see TextVAlignment.
+     */
+    void setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment);
+
     /** @brief When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)
      * @since v3.3
@@ -259,6 +274,27 @@ public:
      * @since v3.3
      */
     float getZoomScale()const;
+    
+    /**
+     * @brief Return the nine-patch sprite of normal state
+     * @return the nine-patch sprite of normal state
+     * @since v3.9
+     */
+    Scale9Sprite* getRendererNormal() const { return _buttonNormalRenderer; }
+    
+    /**
+     * @brief Return the nine-patch sprite of clicked state
+     * @return the nine-patch sprite of clicked state
+     * @since v3.9
+     */
+    Scale9Sprite* getRendererClicked() const { return _buttonClickedRenderer; }
+    
+    /**
+     * @brief Return the nine-patch sprite of disabled state
+     * @return the nine-patch sprite of disabled state
+     * @since v3.9
+     */
+    Scale9Sprite* getRendererDisabled() const { return _buttonDisabledRenderer; }
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -299,7 +335,7 @@ protected:
 protected:
     Scale9Sprite* _buttonNormalRenderer;
     Scale9Sprite* _buttonClickedRenderer;
-    Scale9Sprite* _buttonDisableRenderer;
+    Scale9Sprite* _buttonDisabledRenderer;
     Label* _titleRenderer;
 
     float _zoomScale;
@@ -331,7 +367,8 @@ private:
     enum class FontType
     {
         SYSTEM,
-        TTF
+        TTF,
+        BMFONT
     };
 
     int _fontSize;

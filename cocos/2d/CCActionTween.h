@@ -42,7 +42,7 @@ NS_CC_BEGIN
         1. The node should be inherit from ActionTweenDelegate.
         2. Override the virtual method updateTweenAction in the node.
 
-        Then once you running ActionTween on the node, the method updateTweenAction will be incoked.
+        Then once you running ActionTween on the node, the method updateTweenAction will be invoked.
 */
 class CC_DLL ActionTweenDelegate
 {

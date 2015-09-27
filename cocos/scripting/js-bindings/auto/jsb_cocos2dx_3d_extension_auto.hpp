@@ -1,9 +1,9 @@
+#include "base/ccConfig.h"
 #ifndef __cocos2dx_3d_extension_h__
 #define __cocos2dx_3d_extension_h__
 
 #include "jsapi.h"
 #include "jsfriendapi.h"
-
 
 extern JSClass  *jsb_cocos2d_ParticleSystem3D_class;
 extern JSObject *jsb_cocos2d_ParticleSystem3D_prototype;
@@ -70,5 +70,5 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_removeAllListener(JSContext *cx
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_setDefaultDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_PUParticleSystem3D(JSContext *cx, uint32_t argc, jsval *vp);
-#endif
 
+#endif // __cocos2dx_3d_extension_h__

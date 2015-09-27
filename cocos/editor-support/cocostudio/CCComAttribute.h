@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -47,6 +47,8 @@ public:
     virtual ~ComAttribute(void);
     
 public:
+    const static std::string COMPONENT_NAME;
+
     static ComAttribute* create(void);
     virtual bool init() override;
     virtual bool serialize(void* r) override;

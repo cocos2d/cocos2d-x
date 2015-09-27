@@ -89,6 +89,7 @@ const char* GLProgram::SHADER_3D_PARTICLE_COLOR = "Shader3DParticleColor";
 const char* GLProgram::SHADER_3D_PARTICLE_TEXTURE = "Shader3DParticleTexture";
 const char* GLProgram::SHADER_3D_SKYBOX = "Shader3DSkybox";
 const char* GLProgram::SHADER_3D_TERRAIN = "Shader3DTerrain";
+const char* GLProgram::SHADER_CAMERA_CLEAR = "ShaderCameraClear";
 
 
 // uniform names
@@ -307,7 +308,7 @@ void GLProgram::bindPredefinedVertexAttribs()
 
 void GLProgram::parseVertexAttribs()
 {
-    _vertexAttribs.clear();
+    //_vertexAttribs.clear();
 
     // Query and store vertex attribute meta-data from the program.
     GLint activeAttributes;
@@ -345,7 +346,7 @@ void GLProgram::parseVertexAttribs()
 
 void GLProgram::parseUniforms()
 {
-    _userUniforms.clear();
+    //_userUniforms.clear();
 
     // Query and store uniforms from the program.
     GLint activeUniforms;

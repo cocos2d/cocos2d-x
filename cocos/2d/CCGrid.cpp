@@ -33,8 +33,10 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "renderer/CCTexture2D.h"
 #include "platform/CCGL.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 // implementation of GridBase
@@ -77,22 +79,76 @@ GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flippe
     return pGridBase;
 }
 
+bool GridBase::initWithSize(const Size& gridSize)
+{
+    return initWithSize(gridSize, Rect::ZERO);
+}
+
+bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &rect)
+{
+    Director *director = Director::getInstance();
+    Size s = director->getWinSizeInPixels();
+    
+    auto POTWide = ccNextPOT((unsigned int)s.width);
+    auto POTHigh = ccNextPOT((unsigned int)s.height);
+    
+    // we only use rgba8888
+    Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
+    
+    auto dataLen = POTWide * POTHigh * 4;
+    void *data = calloc(dataLen, 1);
+    if (! data)
+    {
+        CCLOG("cocos2d: Grid: not enough memory.");
+        this->release();
+        return false;
+    }
+    
+    Texture2D *texture = new (std::nothrow) Texture2D();
+    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
+    
+    free(data);
+    
+    if (! texture)
+    {
+        CCLOG("cocos2d: Grid: error creating texture");
+        return false;
+    }
+    
+    initWithSize(gridSize, texture, false, rect);
+    
+    texture->release();
+    
+    return true;
+}
+
 bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped)
 {
-    bool ret = true;
+    return initWithSize(gridSize, texture, flipped, Rect::ZERO);
+}
 
+bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    bool ret = true;
+    
     _active = false;
     _reuseGrid = 0;
     _gridSize = gridSize;
-
+    
     _texture = texture;
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = flipped;
-
-    Size texSize = _texture->getContentSize();
-    _step.x = texSize.width / _gridSize.width;
-    _step.y = texSize.height / _gridSize.height;
-
+    
+    if (rect.equals(Rect::ZERO)) {
+        auto size = _texture->getContentSize();
+        _gridRect.setRect(0, 0, size.width, size.height);
+    }
+    else{
+        _gridRect = rect;
+    }
+    _step.x = _gridRect.size.width/_gridSize.width;
+    _step.y = _gridRect.size.height/_gridSize.height;
+    
     _grabber = new (std::nothrow) Grabber();
     if (_grabber)
     {
@@ -105,46 +161,8 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     
     _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     calculateVertexPoints();
-
-    return ret;
-}
-
-bool GridBase::initWithSize(const Size& gridSize)
-{
-    Director *director = Director::getInstance();
-    Size s = director->getWinSizeInPixels();
     
-    auto POTWide = ccNextPOT((unsigned int)s.width);
-    auto POTHigh = ccNextPOT((unsigned int)s.height);
-
-    // we only use rgba8888
-    Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
-
-    auto dataLen = POTWide * POTHigh * 4;
-    void *data = calloc(dataLen, 1);
-    if (! data)
-    {
-        CCLOG("cocos2d: Grid: not enough memory.");
-        this->release();
-        return false;
-    }
-
-    Texture2D *texture = new (std::nothrow) Texture2D();
-    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
-
-    free(data);
-
-    if (! texture)
-    {
-        CCLOG("cocos2d: Grid: error creating texture");
-        return false;
-    }
-
-    initWithSize(gridSize, texture, false);
-
-    texture->release();
-
-    return true;
+    return ret;
 }
 
 GridBase::~GridBase(void)
@@ -180,10 +198,8 @@ void GridBase::setTextureFlipped(bool flipped)
 void GridBase::set2DProjection()
 {
     Director *director = Director::getInstance();
-
     Size    size = director->getWinSizeInPixels();
-
-    glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
+    
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     Mat4 orthoMatrix;
@@ -195,6 +211,11 @@ void GridBase::set2DProjection()
     GL::setProjectionMatrixDirty();
 }
 
+void GridBase::setGridRect(const cocos2d::Rect &rect)
+{
+    _gridRect = rect;
+}
+
 void GridBase::beforeDraw(void)
 {
     // save projection
@@ -204,6 +225,9 @@ void GridBase::beforeDraw(void)
     // 2d projection
     //    [director setProjection:Director::Projection::_2D];
     set2DProjection();
+    
+    Size    size = director->getWinSizeInPixels();
+    glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
     _grabber->beforeRender(_texture);
 }
 
@@ -215,6 +239,9 @@ void GridBase::afterDraw(cocos2d::Node *target)
     Director *director = Director::getInstance();
     director->setProjection(_directorProjection);
 
+    director->setViewport();
+    const auto& vp = Camera::getDefaultViewport();
+    glViewport(vp._left, vp._bottom, vp._width, vp._height);
 //    if (target->getCamera()->isDirty())
 //    {
 //        Vec2 offset = target->getAnchorPointInPoints();
@@ -239,40 +266,20 @@ void GridBase::afterDraw(cocos2d::Node *target)
 
 void GridBase::blit(void)
 {
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement it.");
 }
 
 void GridBase::reuse(void)
 {
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement it!");
 }
 
 void GridBase::calculateVertexPoints(void)
 {
-    CCASSERT(0, "");
+    CCASSERT(0, "Subclass should implement it.");
 }
 
 // implementation of Grid3D
-
-Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
-{
-    Grid3D *ret= new (std::nothrow) Grid3D();
-
-    if (ret)
-    {
-        if (ret->initWithSize(gridSize, texture, flipped))
-        {
-            ret->autorelease();
-        }
-        else
-        {
-            delete ret;
-            ret = nullptr;
-        }
-    }
-
-    return ret;
-}
 
 Grid3D* Grid3D::create(const Size& gridSize)
 {
@@ -291,6 +298,66 @@ Grid3D* Grid3D::create(const Size& gridSize)
         }
     }
 
+    return ret;
+}
+
+Grid3D* Grid3D::create(const Size& gridSize, const Rect& rect)
+{
+    Grid3D *ret= new (std::nothrow) Grid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
+{
+    Grid3D *ret= new (std::nothrow) Grid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    Grid3D *ret= new (std::nothrow) Grid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
     return ret;
 }
 
@@ -322,8 +389,12 @@ void Grid3D::beforeBlit()
         glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriteMask);
 		_oldDepthWriteValue = depthWriteMask != GL_FALSE;
         CHECK_GL_ERROR_DEBUG();
+
         glEnable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+
         glDepthMask(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(true);
     }
 }
 
@@ -335,8 +406,10 @@ void Grid3D::afterBlit()
             glEnable(GL_DEPTH_TEST);
         else
             glDisable(GL_DEPTH_TEST);
-        
+        RenderState::StateBlock::_defaultState->setDepthTest(_oldDepthTestValue);
+
         glDepthMask(_oldDepthWriteValue);
+        RenderState::StateBlock::_defaultState->setDepthWrite(_oldDepthWriteValue);
     }
 }
 
@@ -390,9 +463,9 @@ void Grid3D::calculateVertexPoints(void)
         {
             int idx = (y * _gridSize.width) + x;
 
-            GLfloat x1 = x * _step.x;
+            GLfloat x1 = x * _step.x + _gridRect.origin.x;
             GLfloat x2 = x1 + _step.x;
-            GLfloat y1 = y * _step.y;
+            GLfloat y1 = y * _step.y + _gridRect.origin.y;
             GLfloat y2= y1 + _step.y;
 
             GLushort a = (GLushort)(x * (_gridSize.height + 1) + y);
@@ -499,26 +572,6 @@ TiledGrid3D::~TiledGrid3D(void)
     CC_SAFE_FREE(_indices);
 }
 
-TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
-{
-    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
-
-    if (ret)
-    {
-        if (ret->initWithSize(gridSize, texture, flipped))
-        {
-            ret->autorelease();
-        }
-        else
-        {
-            delete ret;
-            ret = nullptr;
-        }
-    }
-
-    return ret;
-}
-
 TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
 {
     TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
@@ -536,6 +589,66 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
         }
     }
 
+    return ret;
+}
+
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, const Rect& rect)
+{
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect)
+{
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped, rect))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
+    return ret;
+}
+
+TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool flipped)
+{
+    TiledGrid3D *ret= new (std::nothrow) TiledGrid3D();
+    
+    if (ret)
+    {
+        if (ret->initWithSize(gridSize, texture, flipped))
+        {
+            ret->autorelease();
+        }
+        else
+        {
+            delete ret;
+            ret = nullptr;
+        }
+    }
+    
     return ret;
 }
 
@@ -590,9 +703,9 @@ void TiledGrid3D::calculateVertexPoints(void)
     {
         for( y = 0; y < _gridSize.height; y++ )
         {
-            float x1 = x * _step.x;
+            float x1 = x * _step.x + _gridRect.origin.x;
             float x2 = x1 + _step.x;
-            float y1 = y * _step.y;
+            float y1 = y * _step.y + _gridRect.origin.y;
             float y2 = y1 + _step.y;
             
             *vertArray++ = x1;

@@ -87,6 +87,18 @@ Animation3D : function (
 jsb.Animate3D = {
 
 /**
+ * @method setKeyFrameUserInfo
+ * @param {int} arg0
+ * @param {map_object} arg1
+ */
+setKeyFrameUserInfo : function (
+int, 
+map 
+)
+{
+},
+
+/**
  * @method getSpeed
  * @return {float}
  */
@@ -267,6 +279,54 @@ float
  * @constructor
  */
 Animate3D : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TextureCube
+ */
+jsb.TextureCube = {
+
+/**
+ * @method reloadTexture
+ * @return {bool}
+ */
+reloadTexture : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {cc.TextureCube}
+ */
+create : function (
+str, 
+str, 
+str, 
+str, 
+str, 
+str 
+)
+{
+    return cc.TextureCube;
+},
+
+/**
+ * @method TextureCube
+ * @constructor
+ */
+TextureCube : function (
 )
 {
 },
@@ -563,6 +623,16 @@ blendfunc
 },
 
 /**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
+)
+{
+},
+
+/**
  * @method getPrimitiveType
  * @return {unsigned int}
  */
@@ -758,20 +828,20 @@ reload : function (
 
 /**
  * @method init
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
-str,
-str,
-str,
-str,
-str,
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {String} arg4
+ * @param {String} arg5
+ * @return {bool}
+ */
+init : function (
+str, 
+str, 
+str, 
+str, 
+str, 
 str 
 )
 {
@@ -934,14 +1004,6 @@ removeAllAttachNode : function (
 setMaterial : function(
 material,
 int 
-)
-{
-},
-
-/**
- * @method genGLProgramState
- */
-genGLProgramState : function (
 )
 {
 },
@@ -1133,6 +1195,24 @@ blendfunc
 },
 
 /**
+ * @method setForce2DQueue
+ * @param {bool} arg0
+ */
+setForce2DQueue : function (
+bool 
+)
+{
+},
+
+/**
+ * @method genMaterial
+ */
+genMaterial : function (
+)
+{
+},
+
+/**
  * @method removeAttachNode
  * @param {String} arg0
  */
@@ -1280,16 +1360,6 @@ bool
 },
 
 /**
- * @method setIsEnableFrustumCull
- * @param {bool} arg0
- */
-setIsEnableFrustumCull : function (
-bool 
-)
-{
-},
-
-/**
  * @method setDetailMap
  * @param {unsigned int} arg0
  * @param {cc.Terrain::DetailMap} arg1
@@ -1307,6 +1377,16 @@ map
  */
 resetHeightMap : function (
 char 
+)
+{
+},
+
+/**
+ * @method setLightDir
+ * @param {vec3_object} arg0
+ */
+setLightDir : function (
+vec3 
 )
 {
 },
@@ -1380,6 +1460,20 @@ vec3
 },
 
 /**
+ * @method initWithTerrainData
+ * @param {cc.Terrain::TerrainData} arg0
+ * @param {cc.Terrain::CrackFixedType} arg1
+ * @return {bool}
+ */
+initWithTerrainData : function (
+terraindata, 
+crackfixedtype 
+)
+{
+    return false;
+},
+
+/**
  * @method setLODDistance
  * @param {float} arg0
  * @param {float} arg1
@@ -1405,14 +1499,16 @@ getTerrainSize : function (
 
 /**
  * @method getIntersectionPoint
- * @param {cc.Ray} arg0
- * @return {vec3_object}
- */
-getIntersectionPoint : function (
-ray 
+* @param {cc.Ray|cc.Ray} ray
+* @param {vec3_object} vec3
+* @return {bool|vec3_object}
+*/
+getIntersectionPoint : function(
+ray,
+vec3 
 )
 {
-    return cc.Vec3;
+    return false;
 },
 
 /**
@@ -1452,13 +1548,23 @@ int
 },
 
 /**
- * @method getMaxHeight
- * @return {float}
+ * @method setLightMap
+ * @param {String} arg0
  */
-getMaxHeight : function (
+setLightMap : function (
+str 
 )
 {
-    return 0;
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
+)
+{
 },
 
 /**
@@ -1471,50 +1577,161 @@ getMinHeight : function (
     return 0;
 },
 
+/**
+ * @method getMaxHeight
+ * @return {float}
+ */
+getMaxHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method Terrain
+ * @constructor
+ */
+Terrain : function (
+)
+{
+},
+
 };
 
 /**
- * @class TextureCube
+ * @class Bundle3D
  */
-jsb.TextureCube = {
+jsb.Bundle3D = {
 
 /**
- * @method reloadTexture
+ * @method load
+ * @param {String} arg0
  * @return {bool}
  */
-reloadTexture : function (
+load : function (
+str 
 )
 {
     return false;
 },
 
 /**
- * @method create
+ * @method loadSkinData
  * @param {String} arg0
- * @param {String} arg1
- * @param {String} arg2
- * @param {String} arg3
- * @param {String} arg4
- * @param {String} arg5
- * @return {cc.TextureCube}
+ * @param {cc.SkinData} arg1
+ * @return {bool}
  */
-create : function (
+loadSkinData : function (
 str, 
-str, 
-str, 
-str, 
-str, 
-str 
+skindata 
 )
 {
-    return cc.TextureCube;
+    return false;
 },
 
 /**
- * @method TextureCube
+ * @method clear
+ */
+clear : function (
+)
+{
+},
+
+/**
+ * @method loadMaterials
+ * @param {cc.MaterialDatas} arg0
+ * @return {bool}
+ */
+loadMaterials : function (
+materialdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadMeshDatas
+ * @param {cc.MeshDatas} arg0
+ * @return {bool}
+ */
+loadMeshDatas : function (
+meshdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadNodes
+ * @param {cc.NodeDatas} arg0
+ * @return {bool}
+ */
+loadNodes : function (
+nodedatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadAnimationData
+ * @param {String} arg0
+ * @param {cc.Animation3DData} arg1
+ * @return {bool}
+ */
+loadAnimationData : function (
+str, 
+animation3ddata 
+)
+{
+    return false;
+},
+
+/**
+ * @method createBundle
+ * @return {cc.Bundle3D}
+ */
+createBundle : function (
+)
+{
+    return cc.Bundle3D;
+},
+
+/**
+ * @method destroyBundle
+ * @param {cc.Bundle3D} arg0
+ */
+destroyBundle : function (
+bundle3d 
+)
+{
+},
+
+/**
+ * @method loadObj
+ * @param {cc.MeshDatas} arg0
+ * @param {cc.MaterialDatas} arg1
+ * @param {cc.NodeDatas} arg2
+ * @param {String} arg3
+ * @param {char} arg4
+ * @return {bool}
+ */
+loadObj : function (
+meshdatas, 
+materialdatas, 
+nodedatas, 
+str, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method Bundle3D
  * @constructor
  */
-TextureCube : function (
+Bundle3D : function (
 )
 {
 },

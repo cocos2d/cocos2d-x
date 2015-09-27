@@ -26,9 +26,9 @@
 
 
 
-var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest"];
-var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3"];
-var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png"];
+var sceneManifests = ["Manifests/AMTestScene1/project.manifest", "Manifests/AMTestScene2/project.manifest", "Manifests/AMTestScene3/project.manifest", "Manifests/AMTestScene4/project.manifest"];
+var storagePaths = ["JSBTests/AssetsManagerTest/scene1/", "JSBTests/AssetsManagerTest/scene2/", "JSBTests/AssetsManagerTest/scene3", "JSBTests/AssetsManagerTest/scene4"];
+var backgroundPaths = ["Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png", "Images/assetMgrBackground2.png"];
 
 var currentScene = 0;
 
@@ -39,7 +39,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
     ctor : function (spritePath) {
         this._super();
         this._spritePath = spritePath;
-        cc.loader.resPath = "res/";
+        cc.loader.resPath = "../cpp-tests/Resources/";
     },
 
     getTitle : function() {
@@ -60,7 +60,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
     },
 
     onNextCallback : function () {
-        if (currentScene < 2)
+        if (currentScene < sceneManifests.length - 1)
         {
             currentScene++;
         }
@@ -74,7 +74,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
         {
             currentScene--;
         }
-        else currentScene = 2;
+        else currentScene = sceneManifests.length - 1;
         var scene = new AssetsManagerLoaderScene();
         scene.runThisTest();
     }
@@ -115,12 +115,12 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        this._loadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
+        this._loadingBar = new ccui.LoadingBar("ccs-res/cocosui/sliderProgress.png");
         this._loadingBar.x = cc.visibleRect.center.x;
         this._loadingBar.y = cc.visibleRect.top.y - 40;
         layer.addChild(this._loadingBar);
 
-        this._fileLoadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
+        this._fileLoadingBar = new ccui.LoadingBar("ccs-res/cocosui/sliderProgress.png");
         this._fileLoadingBar.x = cc.visibleRect.center.x;
         this._fileLoadingBar.y = cc.visibleRect.top.y - 80;
         layer.addChild(this._fileLoadingBar);

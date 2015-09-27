@@ -20,6 +20,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+ 
+ Autobinding Interface from GamePlay3D: http://www.gameplay3d.org/
 ****************************************************************************/
 
 #ifndef __CCGLPROGRAMSTATE_H__
@@ -34,7 +36,7 @@ THE SOFTWARE.
 #include "math/Vec4.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -46,6 +48,7 @@ struct Uniform;
 struct VertexAttrib;
 class EventListenerCustom;
 class EventCustom;
+class Node;
 
 /**
  * Uniform Value, which is used to store to value send to openGL pipe line by glUniformXXX.
@@ -58,11 +61,11 @@ class CC_DLL UniformValue
     friend class GLProgramState;
 public:
     /**
-     Construtor. The Uniform and Glprogram will be nullptr.
+     Constructor. The Uniform and Glprogram will be nullptr.
      */
     UniformValue();
     /**
-     Construtor with uniform and glprogram.
+     Constructor with uniform and glprogram.
      @param uniform Uniform to apply the value.
      @param glprogram Specify the owner GLProgram of this uniform and uniform value.
      */
@@ -246,7 +249,7 @@ public:
     static GLProgramState* getOrCreateWithGLProgram(GLProgram* glprogram);
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
-    static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
+    static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName );
 
     /** gets-or-creates an instance of GLProgramState for given shaders */
     static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);
@@ -289,8 +292,8 @@ public:
     /**@{
      Set the vertex attribute value.
      */
-    void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
-    void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
+    void setVertexAttribCallback(const std::string& name, const std::function<void(VertexAttrib*)> &callback);
+    void setVertexAttribPointer(const std::string& name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
     /**@}*/
     
     /**Get the number of user defined uniform count.*/
@@ -299,19 +302,19 @@ public:
     /** @{
      Setting user defined uniforms by uniform string name in the shader.
      */
-    void setUniformInt(const std::string &uniformName, int value);
-    void setUniformFloat(const std::string &uniformName, float value);
-    void setUniformFloatv(const std::string &uniformName, ssize_t size, const float* pointer);
-    void setUniformVec2(const std::string &uniformName, const Vec2& value);
-    void setUniformVec2v(const std::string &uniformName, ssize_t size, const Vec2* pointer);
-    void setUniformVec3(const std::string &uniformName, const Vec3& value);
-    void setUniformVec3v(const std::string &uniformName, ssize_t size, const Vec3* pointer);
-    void setUniformVec4(const std::string &uniformName, const Vec4& value);
-    void setUniformVec4v(const std::string &uniformName, ssize_t size, const Vec4* pointer);
-    void setUniformMat4(const std::string &uniformName, const Mat4& value);
-    void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
-    void setUniformTexture(const std::string &uniformName, Texture2D *texture);
-    void setUniformTexture(const std::string &uniformName, GLuint textureId);
+    void setUniformInt(const std::string& uniformName, int value);
+    void setUniformFloat(const std::string& uniformName, float value);
+    void setUniformFloatv(const std::string& uniformName, ssize_t size, const float* pointer);
+    void setUniformVec2(const std::string& uniformName, const Vec2& value);
+    void setUniformVec2v(const std::string& uniformName, ssize_t size, const Vec2* pointer);
+    void setUniformVec3(const std::string& uniformName, const Vec3& value);
+    void setUniformVec3v(const std::string& uniformName, ssize_t size, const Vec3* pointer);
+    void setUniformVec4(const std::string& uniformName, const Vec4& value);
+    void setUniformVec4v(const std::string& uniformName, ssize_t size, const Vec4* pointer);
+    void setUniformMat4(const std::string& uniformName, const Mat4& value);
+    void setUniformCallback(const std::string& uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
+    void setUniformTexture(const std::string& uniformName, Texture2D *texture);
+    void setUniformTexture(const std::string& uniformName, GLuint textureId);
     /**@}*/
     
     /** @{
@@ -331,17 +334,118 @@ public:
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
     void setUniformTexture(GLint uniformLocation, GLuint textureId);
     /**@}*/
-    
+
+    /** 
+     * Returns the Node bound to the GLProgramState
+     */
+    Node* getNodeBinding() const;
+
+    /**
+     * Sets the node that this render state is bound to.
+     *
+     * The specified node is used to apply auto-bindings for the render state.
+     * This is typically set to the node of the model that a material is
+     * applied to.
+     *
+     * @param node The node to use for applying auto-bindings.
+     */
+    void setNodeBinding(Node* node);
+
+    /**
+     * Applies the specified custom auto-binding.
+     *
+     * @param uniformName Name of the shader uniform.
+     * @param autoBinding Name of the auto binding.
+     */
+    void applyAutoBinding(const std::string& uniformName, const std::string& autoBinding);
+
+    /**
+     * Sets a uniform auto-binding.
+     *
+     * This method parses the passed in autoBinding string and attempts to convert it
+     * to an enumeration value. If it matches to one of the predefined strings, it will create a
+     * callback to get the correct value at runtime.
+     *
+     * @param name The name of the material parameter to store an auto-binding for.
+     * @param autoBinding A string matching one of the built-in AutoBinding enum constants.
+     */
+    void setParameterAutoBinding(const std::string& uniformName, const std::string& autoBinding);
+
+    /**
+     * An abstract base class that can be extended to support custom material auto bindings.
+     *
+     * Implementing a custom auto binding resolver allows the set of built-in parameter auto
+     * bindings to be extended or overridden. Any parameter auto binding that is set on a
+     * material will be forwarded to any custom auto binding resolvers, in the order in which
+     * they are registered. If a registered resolver returns true (specifying that it handles
+     * the specified autoBinding), no further code will be executed for that autoBinding.
+     * This allows auto binding resolvers to not only implement new/custom binding strings,
+     * but it also lets them override existing/built-in ones. For this reason, you should
+     * ensure that you ONLY return true if you explicitly handle a custom auto binding; return
+     * false otherwise.
+     *
+     * Note that the custom resolver is called only once for a GLProgramState object when its
+     * node binding is initially set. This occurs when a material is initially bound to a
+     * Node. The resolver is NOT called each frame or each time the GLProgramState is bound.
+     *
+     * If no registered resolvers explicitly handle an auto binding, the binding will attempt
+     * to be resolved using the internal/built-in resolver, which is able to handle any
+     * auto bindings found in the GLProgramState::AutoBinding enumeration.
+     *
+     * When an instance of a class that extends AutoBindingResolver is created, it is automatically
+     * registered as a custom auto binding handler. Likewise, it is automatically unregistered
+     * on destruction.
+     *
+     * @script{ignore}
+     */
+    class CC_DLL AutoBindingResolver
+    {
+    public:
+
+        /**
+         * Destructor.
+         */
+        virtual ~AutoBindingResolver();
+
+        /**
+         * Called when an unrecognized uniform variable is encountered
+         * during material loading.
+         *
+         * Implementations of this method should do a string comparison on the passed
+         * in name parameter and decide whether or not they should handle the
+         * parameter. If the parameter is not handled, false should be returned so
+         * that other auto binding resolvers get a chance to handle the parameter.
+         * Otherwise, the parameter should be set or bound and true should be returned.
+         *
+         * @param glProgramState The glProgramState
+         * @param node The node that the material is attached to.
+         * @param uniformName Name of the uniform
+         * @param autoBinding Name of the auto binding to be resolved.
+         *
+         * @return True if the auto binding is handled and the associated parameter is
+         *      bound, false otherwise.
+         */
+        virtual bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniformName, const std::string& autoBinding) = 0;
+
+    protected:
+
+        /**
+         * Constructor.
+         */
+        AutoBindingResolver();
+    };
+
 protected:
     GLProgramState();
     ~GLProgramState();
     bool init(GLProgram* program);
     void resetGLProgram();
     void updateUniformsAndAttributes();
-    VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
-    UniformValue* getUniformValue(const std::string &uniformName);
+    VertexAttribValue* getVertexAttribValue(const std::string& attributeName);
+    UniformValue* getUniformValue(const std::string& uniformName);
     UniformValue* getUniformValue(GLint uniformLocation);
-    
+
+
     bool _uniformAttributeValueDirty;
     std::unordered_map<std::string, GLint> _uniformsByName;
     std::unordered_map<GLint, UniformValue> _uniforms;
@@ -350,11 +454,20 @@ protected:
 
     int _textureUnitIndex;
     uint32_t _vertexAttribsFlags;
-    GLProgram *_glprogram;
+    GLProgram* _glprogram;
+
+    Node* _nodeBinding; // weak ref
+
+    // contains uniform name and variable
+    std::unordered_map<std::string, std::string> _autoBindings;
+
+    // Map of custom auto binding resolvers.
+    static std::vector<AutoBindingResolver*> _customAutoBindingResolvers;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundlistener;
 #endif
+
 };
 
 NS_CC_END

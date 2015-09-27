@@ -351,7 +351,7 @@ public:
     void calulateRotationOffset(void);
 
     virtual PUParticleSystem3D* clone();
-    virtual void copyAttributesTo (PUParticleSystem3D* system);
+    virtual void copyAttributesTo(PUParticleSystem3D* system);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
@@ -371,7 +371,7 @@ protected:
     void executeEmitParticles(PUEmitter* emitter, unsigned requested, float elapsedTime);
     void emitParticles(ParticlePool &pool, PUEmitter* emitter, unsigned requested, float elapsedTime);
     void processParticle(ParticlePool &pool, bool &firstActiveParticle, bool &firstParticle, float elapsedTime);
-    void processMotion(PUParticle3D* particle, float timeElapsed, bool firstParticle);
+    void processMotion(PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool firstParticle);
     void notifyRescaled(const Vec3 &scl);
     void initParticleForEmission(PUParticle3D* particle);
     void initParticleForExpiration(PUParticle3D* particle, float timeElapsed);

@@ -25,6 +25,13 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
+-- 
+-- @function [parent=#Node] setPhysicsBody 
+-- @param self
+-- @param #cc.Component physicsBody
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 -- Gets the description string. It makes debugging easier.<br>
 -- return A string<br>
 -- js NA<br>
@@ -197,7 +204,7 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
--- 
+-- / @} end of component functions
 -- @function [parent=#Node] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -306,6 +313,14 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- Removes all actions from the running action list by its flags.<br>
+-- param flags   A flag field that removes actions based on bitwise AND.
+-- @function [parent=#Node] stopActionsByFlags 
+-- @param self
+-- @param #unsigned int flags
+-- @return Node#Node self (return value: cc.Node)
+        
+--------------------------------
 --  Sets the position (x,y) using values between 0 and 1.<br>
 -- The positions in pixels is calculated like the following:<br>
 -- code pseudo code<br>
@@ -345,11 +360,13 @@
 -- @return Node#Node self (return value: cc.Node)
 
 --------------------------------
--- 
--- @function [parent=#Node] getNodeToParentAffineTransform 
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#Node] getNodeToParentAffineTransform
 -- @param self
+-- @param #cc.Node ancestor
 -- @return AffineTransform#AffineTransform ret (return value: cc.AffineTransform)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#Node] isCascadeOpacityEnabled 
@@ -388,13 +405,13 @@
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
--- Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.<br>
--- The matrix is in Pixels.<br>
--- return The transformation matrix.
--- @function [parent=#Node] getNodeToParentTransform 
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#Node] getNodeToParentTransform
 -- @param self
+-- @param #cc.Node ancestor
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
-        
+
 --------------------------------
 -- converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).<br>
 -- param touch A given touch.<br>
@@ -412,6 +429,12 @@
 -- @param self
 -- @param #vec2_table worldPoint
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, float, float         
@@ -590,18 +613,18 @@
 -- @return Node#Node self (return value: cc.Node)
 
 --------------------------------
--- 
--- @function [parent=#Node] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- Returns the rotation of the node in degrees.<br>
 -- see `setRotation(float)`<br>
 -- return The rotation of the node in degrees.
 -- @function [parent=#Node] getRotation 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] getPhysicsBody 
+-- @param self
+-- @return PhysicsBody#PhysicsBody ret (return value: cc.PhysicsBody)
         
 --------------------------------
 -- Returns the anchorPoint in absolute pixels.<br>
@@ -632,7 +655,7 @@
 --------------------------------
 -- Sets a Scheduler object that is used to schedule all "updates" and timers.<br>
 -- warning If you set a new Scheduler, then previously created timers/update are going to be removed.<br>
--- param scheduler     A Shdeduler object that is used to schedule all "update" and timers.
+-- param scheduler     A Scheduler object that is used to schedule all "update" and timers.
 -- @function [parent=#Node] setScheduler 
 -- @param self
 -- @param #cc.Scheduler scheduler
@@ -775,7 +798,7 @@
         
 --------------------------------
 -- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.<br>
--- param tag       An interger number that identifies a child node.<br>
+-- param tag       An integer number that identifies a child node.<br>
 -- param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.<br>
 -- Please use `removeChildByName` instead.
 -- @function [parent=#Node] removeChildByTag 
@@ -840,7 +863,7 @@
 -- The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.<br>
 -- By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.<br>
 -- Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.<br>
--- Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.<br>
+-- Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.<br>
 -- And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.<br>
 -- see `setLocalZOrder()`<br>
 -- see `setVertexZ()`<br>
@@ -1050,7 +1073,7 @@
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
--- This appraoch can improves the performance massively.<br>
+-- This approach can improves the performance massively.<br>
 -- note Don't call this manually unless a child added needs to be removed in the same frame.
 -- @function [parent=#Node] sortAllChildren 
 -- @param self

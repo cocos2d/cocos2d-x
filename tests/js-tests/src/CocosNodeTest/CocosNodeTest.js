@@ -32,9 +32,10 @@ var TAG_SLIDER = 4;
 var nodeTestSceneIdx = -1;
 var MAX_LAYER = 9;
 
-var TestNodeDemo = BaseTestLayer.extend({
+var TestNodeDemo = cc.Layer.extend({
     ctor:function () {
         this._super();
+        this.init();
     },
     title:function () {
         return "No title";
@@ -61,9 +62,39 @@ var TestNodeDemo = BaseTestLayer.extend({
     numberOfPendingTests:function () {
         return ( (arrayOfNodeTest.length - 1) - nodeTestSceneIdx );
     },
-
     getTestNumber:function () {
         return nodeTestSceneIdx;
+    },
+    onEnter: function(){
+        this._super();
+        var s = director.getWinSize();
+        var label = new cc.LabelTTF(this.title(), "Arial", 24);
+        this.addChild(label);
+        label.x = s.width / 2;
+        label.y = s.height - 50;
+
+        var subTitle = this.subtitle();
+        if (subTitle && subTitle !== "") {
+            var l = new cc.LabelTTF(subTitle, "Thonburi", 16);
+            this.addChild(l, 1);
+            l.x = s.width / 2;
+            l.y = s.height - 80;
+        }
+        var item1 = new cc.MenuItemImage(s_pathB1, s_pathB2, this.onBackCallback, this);
+        var item2 = new cc.MenuItemImage(s_pathR1, s_pathR2, this.onRestartCallback, this);
+        var item3 = new cc.MenuItemImage(s_pathF1, s_pathF2, this.onNextCallback, this);
+
+        var menu = new cc.Menu(item1, item2, item3);
+        menu.x = 0;
+        menu.y = 0;
+        item1.x = s.width / 2 - 100;
+        item1.y = 30;
+        item2.x = s.width / 2;
+        item2.y = 30;
+        item3.x = s.width / 2 + 100;
+        item3.y = 30;
+
+        this.addChild(menu, 1);
     }
 });
 
@@ -502,8 +533,12 @@ var NodeToWorld = TestNodeDemo.extend({
 });
 
 var CameraOrbitTest = TestNodeDemo.extend({
+    _preProjection : null,
     ctor:function () {
-        //----start11----ctor
+        this._super();
+        this.init();
+    },
+    onEnter:function () {
         this._super();
 
         var p = new cc.Sprite(s_back3);
@@ -513,7 +548,7 @@ var CameraOrbitTest = TestNodeDemo.extend({
         p.opacity = 128;
 
         // LEFT
-        var sw = p.width, sh = p.height;
+        var sw = p.getContentSize().width, sh = p.getContentSize().height;
         var sprite = new cc.Sprite(s_pathGrossini);
         sprite.scale = 0.5;
         p.addChild(sprite, 0);
@@ -546,16 +581,15 @@ var CameraOrbitTest = TestNodeDemo.extend({
 
         this.scale = 1;
         //----end11----
-    },
-    onEnter:function () {
-        //----start11----onEnter
-        this._super();
+        this._preProjection = director.getProjection();
+        director.setDepthTest(true);
         director.setProjection(cc.Director.PROJECTION_3D);
         //----end11----
     },
     onExit:function () {
         //----start11----onExit
-        director.setProjection(cc.Director.PROJECTION_2D);
+        director.setDepthTest(false);
+        director.setProjection(this._preProjection);
         this._super();
         //----end11----
     },
@@ -884,7 +918,7 @@ var BoundingBoxTest = TestNodeDemo.extend({
         sprite.x = winSize.width / 2;
         sprite.y = winSize.height / 2;
         var bb = sprite.getBoundingBox();
-        this.log('BoundingBox:');
+        cc.log('BoundingBox:');
         //for( var i in bb )
         //    cc.log( i + " = " + bb[i] );
         cc.log('origin = [ ' + bb.x + "," + bb.y + "]");

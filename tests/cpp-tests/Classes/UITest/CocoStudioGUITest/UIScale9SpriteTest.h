@@ -250,4 +250,12 @@ public:
     virtual bool init() override;
 };
 
+class UIS9NinePatchTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9NinePatchTest);
+
+    virtual bool init() override;
+};
+
 #endif /* defined(__cocos2d_tests__UIScale9SpriteTest__) */

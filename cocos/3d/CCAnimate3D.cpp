@@ -27,6 +27,9 @@
 #include "3d/CCSkeleton3D.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCConfiguration.h"
+#include "base/CCEventCustom.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -94,6 +97,7 @@ bool Animate3D::initWithFrames(Animation3D* animation, int startFrame, int endFr
     float perFrameTime = 1.f / frameRate;
     float fromTime = startFrame * perFrameTime;
     float duration = (endFrame - startFrame) * perFrameTime;
+    _frameRate = frameRate;
     init(animation, fromTime, duration);
     return true;
 }
@@ -220,7 +224,7 @@ void Animate3D::startWithTarget(Node *target)
         
         if (!hasCurve)
         {
-            CCLOG("warning: no animation finde for the skeleton");
+            CCLOG("warning: no animation found for the skeleton");
         }
     }
     
@@ -279,6 +283,16 @@ void Animate3D::step(float dt)
     ActionInterval::step(dt);
 }
 
+bool cmpEventInfoAsc(Animate3D::Animate3DDisplayedEventInfo* info1, Animate3D::Animate3DDisplayedEventInfo* info2)
+{
+    return info1->frame < info2->frame;
+}
+
+bool cmpEventInfoDes(Animate3D::Animate3DDisplayedEventInfo* info1, Animate3D::Animate3DDisplayedEventInfo* info2)
+{
+    return info1->frame > info2->frame;
+}
+
 void Animate3D::update(float t)
 {
     if (_target)
@@ -308,8 +322,11 @@ void Animate3D::update(float t)
                 _weight = 0.0f;
                 
                 s_fadeOutAnimates.erase(_target);
+                _target->stopAction(this);
+                return;
             }
         }
+        float lastTime = _lastTime;
         _lastTime = t;
         
         if (_quality != Animate3DQuality::QUALITY_NONE)
@@ -318,10 +335,13 @@ void Animate3D::update(float t)
             {
                 float transDst[3], rotDst[4], scaleDst[3];
                 float* trans = nullptr, *rot = nullptr, *scale = nullptr;
-                if (_playReverse)
+                if (_playReverse){
                     t = 1 - t;
+                    lastTime = 1.0 - lastTime;
+                }
                 
                 t = _start + t * _last;
+                lastTime = _start + lastTime * _last;
                 
                 for (const auto& it : _boneCurves) {
                     auto bone = it.first;
@@ -366,6 +386,31 @@ void Animate3D::update(float t)
                         transform.scale(scaleDst[0], scaleDst[1], scaleDst[2]);
                     }
                     node->setAdditionalTransform(&transform);
+                }
+                if (!_keyFrameUserInfos.empty()){
+                    float prekeyTime = lastTime * getDuration() * _frameRate;
+                    float keyTime = t * getDuration() * _frameRate;
+                    std::vector<Animate3DDisplayedEventInfo*> eventInfos;
+                    for (auto keyFrame : _keyFrameUserInfos)
+                    {
+                        if ((!_playReverse && keyFrame.first >= prekeyTime && keyFrame.first < keyTime)
+                            || (_playReverse && keyFrame.first >= keyTime && keyFrame.first < prekeyTime))
+                            {
+                                auto& frameEvent = _keyFrameEvent[keyFrame.first];
+                                if (frameEvent == nullptr)
+                                    frameEvent = new (std::nothrow) EventCustom(Animate3DDisplayedNotification);
+                                auto eventInfo = &_displayedEventInfo[keyFrame.first];
+                                eventInfo->target = _target;
+                                eventInfo->frame = keyFrame.first;
+                                eventInfo->userInfo = &_keyFrameUserInfos[keyFrame.first];
+                                eventInfos.push_back(eventInfo);
+                                frameEvent->setUserData((void*)eventInfo);
+                            }
+                    }
+                    std::sort(eventInfos.begin(), eventInfos.end(), _playReverse ? cmpEventInfoDes : cmpEventInfoAsc);
+                    for (auto eventInfo : eventInfos) {
+                        Director::getInstance()->getEventDispatcher()->dispatchEvent(_keyFrameEvent[eventInfo->frame]);
+                    }
                 }
             }
         }
@@ -416,6 +461,29 @@ Animate3DQuality Animate3D::getQuality() const
     return _quality;
 }
 
+const ValueMap* Animate3D::getKeyFrameUserInfo(int keyFrame) const
+{
+    auto iter = _keyFrameUserInfos.find(keyFrame);
+    if (iter != _keyFrameUserInfos.end())
+        return &iter->second;
+
+    return nullptr;
+}
+
+ValueMap* Animate3D::getKeyFrameUserInfo(int keyFrame)
+{
+    auto iter = _keyFrameUserInfos.find(keyFrame);
+    if (iter != _keyFrameUserInfos.end())
+        return &iter->second;
+
+    return nullptr;
+}
+
+void Animate3D::setKeyFrameUserInfo(int keyFrame, const ValueMap &userInfo)
+{
+    _keyFrameUserInfos[keyFrame] = userInfo;
+}
+
 Animate3D::Animate3D()
 : _state(Animate3D::Animate3DState::Running)
 , _animation(nullptr)
@@ -427,12 +495,18 @@ Animate3D::Animate3D()
 , _accTransTime(0.0f)
 , _lastTime(0.0f)
 , _originInterval(0.0f)
+, _frameRate(30.0f)
 {
     setQuality(Animate3DQuality::QUALITY_HIGH);
 }
 Animate3D::~Animate3D()
 {
     removeFromMap();
+    
+    for (auto& it : _keyFrameEvent) {
+        delete it.second;
+    }
+    _keyFrameEvent.clear();
     
     CC_SAFE_RELEASE(_animation);
 }
@@ -442,10 +516,17 @@ void Animate3D::removeFromMap()
     //remove this action from map
     if (_target)
     {
-        Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-        s_fadeInAnimates.erase(sprite);
-        s_fadeOutAnimates.erase(sprite);
-        s_runningAnimates.erase(sprite);
+        auto it = s_fadeInAnimates.find(_target);
+        if (it != s_fadeInAnimates.end() && it->second == this)
+            s_fadeInAnimates.erase(it);
+        
+        it = s_fadeOutAnimates.find(_target);
+        if (it != s_fadeOutAnimates.end() && it->second == this)
+            s_fadeOutAnimates.erase(it);
+        
+        it = s_runningAnimates.find(_target);
+        if (it != s_runningAnimates.end() && it->second == this)
+            s_runningAnimates.erase(it);
     }
 }
 

@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "../CCApplication.h"
 #include "platform/CCFileUtils.h"
 #include <jni.h>
+#include "base/ccUTF8.h"
 
 using namespace cocos2d;
 
@@ -59,10 +60,8 @@ std::string getStringWithEllipsisJni(const char* text, float width, float fontSi
         }
 
         jstring retFromJava = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, stringArg1, width, fontSize);
-        const char* str = t.env->GetStringUTFChars(retFromJava, 0);
-        ret = str;
-
-        t.env->ReleaseStringUTFChars(retFromJava, str);
+        ret = cocos2d::StringUtils::getStringUTFCharsJNI(t.env, retFromJava);
+        
         t.env->DeleteLocalRef(stringArg1);
         t.env->DeleteLocalRef(t.classID);
     }

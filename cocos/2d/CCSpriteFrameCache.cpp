@@ -39,7 +39,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-
+#include "base/CCNinePatchImageParser.h"
 
 #include "deprecated/CCString.h"
 
@@ -104,6 +104,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     // check the format
     CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
+    auto textureFileName = Director::getInstance()->getTextureCache()->getTextureFilePath(texture);
+    auto image = new Image();
+    image->initWithImageFile(textureFileName);
+    NinePatchImageParser parser;
     for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
     {
         ValueMap& frameDict = iter->second.asValueMap();
@@ -127,7 +131,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             // check ow/oh
             if(!ow || !oh)
             {
-                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
             ow = abs(ow);
@@ -183,7 +187,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
             }
-            
+
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
@@ -192,9 +196,16 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                                                          spriteSourceSize);
         }
 
+        bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
+        if(flag)
+        {
+            parser.setSpriteFrameInfo(image, spriteFrame->getRectInPixels(), spriteFrame->isRotated());
+            texture->addSpriteFrameCapInset(spriteFrame, parser.parseCapInset());
+        }
         // add sprite frame
         _spriteFrames.insert(spriteFrameName, spriteFrame);
     }
+    CC_SAFE_DELETE(image);
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
@@ -327,13 +338,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
+            spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
             removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
-    
+
     // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {

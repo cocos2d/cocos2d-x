@@ -42,93 +42,6 @@ using namespace cocos2d::experimental;
 static ALCdevice *s_ALDevice = nullptr;
 static ALCcontext *s_ALContext = nullptr;
 
-namespace cocos2d {
-    namespace experimental {
-        class AudioEngineThreadPool
-        {
-        public:
-            AudioEngineThreadPool()
-            : _running(true)
-            , _numThread(6)
-            {
-                _threads.reserve(_numThread);
-                _tasks.reserve(_numThread);
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _tasks.push_back(nullptr);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
-                }
-            }
-            
-            void addTask(const std::function<void()> &task){
-                _taskMutex.lock();
-                int targetIndex = -1;
-                for (int index = 0; index < _numThread; ++index) {
-                    if (_tasks[index] == nullptr) {
-                        targetIndex = index;
-                        _tasks[index] = task;
-                        break;
-                    }
-                }
-                if (targetIndex == -1) {
-                    _tasks.push_back(task);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
-                    
-                    _numThread++;
-                }
-                _taskMutex.unlock();
-                
-                _sleepCondition.notify_all();
-            }
-            
-            void destroy()
-            {
-                _running = false;
-                _sleepCondition.notify_all();
-                
-                for (int index = 0; index < _numThread; ++index) {
-                    _threads[index].join();
-                }
-            }
-            
-        private:
-            bool _running;
-            std::vector<std::thread>  _threads;
-            std::vector< std::function<void ()> > _tasks;
-            
-            void threadFunc(int index)
-            {
-                while (_running) {
-                    std::function<void ()> task = nullptr;
-                    _taskMutex.lock();
-                    task = _tasks[index];
-                    _taskMutex.unlock();
-                    
-                    if (nullptr == task)
-                    {
-                        std::unique_lock<std::mutex> lk(_sleepMutex);
-                        _sleepCondition.wait(lk);
-                        continue;
-                    }
-                    
-                    task();
-                    
-                    _taskMutex.lock();
-                    _tasks[index] = nullptr;
-                    _taskMutex.unlock();
-                }
-            }
-            
-            int _numThread;
-            
-            std::mutex _taskMutex;
-            std::mutex _sleepMutex;
-            std::condition_variable _sleepCondition;
-            
-        };
-    }
-}
-
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 @interface AudioEngineSessionHandler : NSObject
 {
@@ -158,10 +71,11 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 
 -(id) init
 {
-    if (self == [super init])
+    if (self = [super init])
     {
       if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:nil];
       }
       else {
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
@@ -172,6 +86,8 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 
 -(void)handleInterruption:(NSNotification*)notification
 {
+    static bool resumeOnBecomingActive = false;
+    
     if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
         NSInteger reason = [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
         if (reason == AVAudioSessionInterruptionTypeBegan) {
@@ -179,17 +95,35 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
         }
         
         if (reason == AVAudioSessionInterruptionTypeEnded) {
-            OSStatus result = AudioSessionSetActive(true);
-            if (result) NSLog(@"Error setting audio session active! %d\n", result);
-            
-            alcMakeContextCurrent(s_ALContext);
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                NSError *error = nil;
+                [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                alcMakeContextCurrent(s_ALContext);
+            } else {
+                resumeOnBecomingActive = true;
+            }
         }
+    }
+    
+    if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification] && resumeOnBecomingActive) {
+        resumeOnBecomingActive = false;
+        NSError *error = nil;
+        BOOL success = [[AVAudioSession sharedInstance]
+                        setCategory: AVAudioSessionCategoryAmbient
+                        error: &error];
+        if (!success) {
+            printf("Fail to set audio session.\n");
+            return;
+        }
+        [[AVAudioSession sharedInstance] setActive:YES error:&error];
+        alcMakeContextCurrent(s_ALContext);
     }
 }
 
 -(void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [super dealloc];
 }
@@ -199,8 +133,7 @@ static id s_AudioEngineSessionHandler = nullptr;
 #endif
 
 AudioEngineImpl::AudioEngineImpl()
-: _threadPool(nullptr)
-, _lazyInitLoop(true)
+: _lazyInitLoop(true)
 , _currentAudioID(0)
 {
     
@@ -219,10 +152,7 @@ AudioEngineImpl::~AudioEngineImpl()
     if (s_ALDevice) {
         alcCloseDevice(s_ALDevice);
     }
-    if (_threadPool) {
-        _threadPool->destroy();
-        delete _threadPool;
-    }
+
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     [s_AudioEngineSessionHandler release];
 #endif
@@ -239,12 +169,11 @@ bool AudioEngineImpl::init()
         s_ALDevice = alcOpenDevice(nullptr);
         
         if (s_ALDevice) {
-            auto alError = alGetError();
             s_ALContext = alcCreateContext(s_ALDevice, nullptr);
             alcMakeContextCurrent(s_ALContext);
             
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
-            alError = alGetError();
+            auto alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
                 printf("%s:generating sources fail! error = %x\n", __PRETTY_FUNCTION__, alError);
@@ -254,13 +183,34 @@ bool AudioEngineImpl::init()
             for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
                 _alSourceUsed[_alSources[i]] = false;
             }
-            
-            _threadPool = new (std::nothrow) AudioEngineThreadPool();
+            _scheduler = Director::getInstance()->getScheduler();
             ret = true;
         }
     }while (false);
     
     return ret;
+}
+
+AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
+{
+    AudioCache* audioCache = nullptr;
+    
+    auto it = _audioCaches.find(filePath);
+    if (it == _audioCaches.end()) {
+        audioCache = &_audioCaches[filePath];
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        
+        AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    }
+    else {
+        audioCache = &it->second;
+    }
+    
+    if(audioCache && callback)
+    {
+        audioCache->addLoadCallback(callback);
+    }
+    return audioCache;
 }
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
@@ -283,31 +233,31 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         return AudioEngine::INVALID_AUDIO_ID;
     }
     
-    AudioCache* audioCache = nullptr;
-    auto it = _audioCaches.find(filePath);
-    if (it == _audioCaches.end()) {
-        audioCache = &_audioCaches[filePath];
-        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        
-        _threadPool->addTask(std::bind(&AudioCache::readDataTask, audioCache));
+    auto player = new (std::nothrow) AudioPlayer;
+    if (player == nullptr) {
+        return AudioEngine::INVALID_AUDIO_ID;
     }
-    else {
-        audioCache = &it->second;
-    }
-    
-    auto player = &_audioPlayers[_currentAudioID];
     player->_alSource = alSource;
     player->_loop = loop;
     player->_volume = volume;
-    audioCache->addCallbacks(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
+    
+    auto audioCache = preload(filePath, nullptr);
+    if (audioCache == nullptr) {
+        delete player;
+        return AudioEngine::INVALID_AUDIO_ID;
+    }
+    
+    _threadMutex.lock();
+    _audioPlayers[_currentAudioID] = player;
+    _threadMutex.unlock();
+    
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
     
     _alSourceUsed[alSource] = true;
     
     if (_lazyInitLoop) {
         _lazyInitLoop = false;
-        
-        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
-        scheduler->schedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this, 0.05f, false);
+        _scheduler->schedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this, 0.05f, false);
     }
     
     return _currentAudioID++;
@@ -316,33 +266,26 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
 {
     if(cache->_alBufferReady){
-        auto playerIt = _audioPlayers.find(audioID);
-        if (playerIt != _audioPlayers.end()) {
-            if (playerIt->second.play2d(cache)) {
-                AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
-            }
-            else{
-                _threadMutex.lock();
-                _toRemoveAudioIDs.push_back(audioID);
-                _threadMutex.unlock();
-            }
-        }
-    }
-    else {
         _threadMutex.lock();
-        _toRemoveCaches.push_back(cache);
-        _toRemoveAudioIDs.push_back(audioID);
+        auto playerIt = _audioPlayers.find(audioID);
+        if (playerIt != _audioPlayers.end() && playerIt->second->play2d(cache)) {
+            _scheduler->performFunctionInCocosThread([audioID](){
+                if (AudioEngine::_audioIDInfoMap.find(audioID) != AudioEngine::_audioIDInfoMap.end()) {
+                    AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
+                }
+            });
+        }
         _threadMutex.unlock();
     }
 }
 
 void AudioEngineImpl::setVolume(int audioID,float volume)
 {
-    auto& player = _audioPlayers[audioID];
-    player._volume = volume;
+    auto player = _audioPlayers[audioID];
+    player->_volume = volume;
     
-    if (player._ready) {
-        alSourcef(_audioPlayers[audioID]._alSource, AL_GAIN, volume);
+    if (player->_ready) {
+        alSourcef(_audioPlayers[audioID]->_alSource, AL_GAIN, volume);
         
         auto error = alGetError();
         if (error != AL_NO_ERROR) {
@@ -353,16 +296,16 @@ void AudioEngineImpl::setVolume(int audioID,float volume)
 
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
-    auto& player = _audioPlayers[audioID];
+    auto player = _audioPlayers[audioID];
     
-    if (player._ready) {
-        if (player._streamingSource) {
-            player.setLoop(loop);
+    if (player->_ready) {
+        if (player->_streamingSource) {
+            player->setLoop(loop);
         } else {
             if (loop) {
-                alSourcei(player._alSource, AL_LOOPING, AL_TRUE);
+                alSourcei(player->_alSource, AL_LOOPING, AL_TRUE);
             } else {
-                alSourcei(player._alSource, AL_LOOPING, AL_FALSE);
+                alSourcei(player->_alSource, AL_LOOPING, AL_FALSE);
             }
             
             auto error = alGetError();
@@ -372,14 +315,14 @@ void AudioEngineImpl::setLoop(int audioID, bool loop)
         }
     }
     else {
-        player._loop = loop;
+        player->_loop = loop;
     }
 }
 
 bool AudioEngineImpl::pause(int audioID)
 {
     bool ret = true;
-    alSourcePause(_audioPlayers[audioID]._alSource);
+    alSourcePause(_audioPlayers[audioID]->_alSource);
     
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
@@ -393,7 +336,7 @@ bool AudioEngineImpl::pause(int audioID)
 bool AudioEngineImpl::resume(int audioID)
 {
     bool ret = true;
-    alSourcePlay(_audioPlayers[audioID]._alSource);
+    alSourcePlay(_audioPlayers[audioID]->_alSource);
     
     auto error = alGetError();
     if (error != AL_NO_ERROR) {
@@ -404,45 +347,30 @@ bool AudioEngineImpl::resume(int audioID)
     return ret;
 }
 
-bool AudioEngineImpl::stop(int audioID)
+void AudioEngineImpl::stop(int audioID)
 {
-    bool ret = true;
-    auto& player = _audioPlayers[audioID];
-    if (player._ready) {
-        alSourceStop(player._alSource);
-        
-        auto error = alGetError();
-        if (error != AL_NO_ERROR) {
-            ret = false;
-            printf("%s: audio id = %d, error = %x\n", __PRETTY_FUNCTION__,audioID,error);
-        }
-    }
-    
-    alSourcei(player._alSource, AL_BUFFER, 0);
-    
-    _alSourceUsed[player._alSource] = false;
-    _audioPlayers.erase(audioID);
-    
-    return ret;
+    auto player = _audioPlayers[audioID];
+    player->destroy();
+    _alSourceUsed[player->_alSource] = false;
 }
 
 void AudioEngineImpl::stopAll()
 {
+    for(auto&& player : _audioPlayers)
+    {
+        player.second->destroy();
+    }
     for(int index = 0; index < MAX_AUDIOINSTANCES; ++index)
     {
-        alSourceStop(_alSources[index]);
-        alSourcei(_alSources[index], AL_BUFFER, 0);
         _alSourceUsed[_alSources[index]] = false;
     }
-    
-    _audioPlayers.clear();
 }
 
 float AudioEngineImpl::getDuration(int audioID)
 {
-    auto& player = _audioPlayers[audioID];
-    if(player._ready){
-        return player._audioCache->_duration;
+    auto player = _audioPlayers[audioID];
+    if(player->_ready){
+        return player->_audioCache->_duration;
     } else {
         return AudioEngine::TIME_UNKNOWN;
     }
@@ -451,12 +379,12 @@ float AudioEngineImpl::getDuration(int audioID)
 float AudioEngineImpl::getCurrentTime(int audioID)
 {
     float ret = 0.0f;
-    auto& player = _audioPlayers[audioID];
-    if(player._ready){
-        if (player._streamingSource) {
-            ret = player.getTime();
+    auto player = _audioPlayers[audioID];
+    if(player->_ready){
+        if (player->_streamingSource) {
+            ret = player->getTime();
         } else {
-            alGetSourcef(player._alSource, AL_SEC_OFFSET, &ret);
+            alGetSourcef(player->_alSource, AL_SEC_OFFSET, &ret);
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
@@ -471,25 +399,25 @@ float AudioEngineImpl::getCurrentTime(int audioID)
 bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 {
     bool ret = false;
-    auto& player = _audioPlayers[audioID];
+    auto player = _audioPlayers[audioID];
     
     do {
-        if (!player._ready) {
+        if (!player->_ready) {
             break;
         }
         
-        if (player._streamingSource) {
-            ret = player.setTime(time);
+        if (player->_streamingSource) {
+            ret = player->setTime(time);
             break;
         }
         else {
-            if (player._audioCache->_bytesOfRead != player._audioCache->_dataSize &&
-                (time * player._audioCache->_sampleRate * player._audioCache->_bytesPerFrame) > player._audioCache->_bytesOfRead) {
+            if (player->_audioCache->_bytesOfRead != player->_audioCache->_dataSize &&
+                (time * player->_audioCache->_sampleRate * player->_audioCache->_bytesPerFrame) > player->_audioCache->_bytesOfRead) {
                 printf("%s: audio id = %d\n", __PRETTY_FUNCTION__,audioID);
                 break;
             }
             
-            alSourcef(player._alSource, AL_SEC_OFFSET, time);
+            alSourcef(player->_alSource, AL_SEC_OFFSET, time);
             
             auto error = alGetError();
             if (error != AL_NO_ERROR) {
@@ -504,57 +432,40 @@ bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
-    _audioPlayers[audioID]._finishCallbak = callback;
+    _audioPlayers[audioID]->_finishCallbak = callback;
 }
 
 void AudioEngineImpl::update(float dt)
 {
     ALint sourceState;
     int audioID;
-    
-    if (_threadMutex.try_lock()) {
-        size_t removeAudioCount = _toRemoveAudioIDs.size();
-        for (size_t index = 0; index < removeAudioCount; ++index) {
-            audioID = _toRemoveAudioIDs[index];
-            auto playerIt = _audioPlayers.find(audioID);
-            if (playerIt != _audioPlayers.end()) {
-                _alSourceUsed[playerIt->second._alSource] = false;
-                if(playerIt->second._finishCallbak) {
-                    auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
-                    playerIt->second._finishCallbak(audioID, *audioInfo.filePath);
-                }
-                _audioPlayers.erase(audioID);
-                AudioEngine::remove(audioID);
-            }
-        }
-        size_t removeCacheCount = _toRemoveCaches.size();
-        for (size_t index = 0; index < removeCacheCount; ++index) {
-            auto itEnd = _audioCaches.end();
-            for (auto it = _audioCaches.begin(); it != itEnd; ++it) {
-                if (&it->second == _toRemoveCaches[index]) {
-                    _audioCaches.erase(it);
-                    break;
-                }
-            }
-        }
-        _threadMutex.unlock();
-    }
+    AudioPlayer* player;
     
     for (auto it = _audioPlayers.begin(); it != _audioPlayers.end(); ) {
         audioID = it->first;
-        auto& player = it->second;
-        alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
+        player = it->second;
+        alGetSourcei(player->_alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._ready && sourceState == AL_STOPPED) {
-            _alSourceUsed[player._alSource] = false;
-            if (player._finishCallbak) {
+        if(player->_removeByAudioEngine)
+        {
+            AudioEngine::remove(audioID);
+            _threadMutex.lock();
+            it = _audioPlayers.erase(it);
+            _threadMutex.unlock();
+            delete player;
+        }
+        else if (player->_ready && sourceState == AL_STOPPED) {
+            _alSourceUsed[player->_alSource] = false;
+            if (player->_finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
-                player._finishCallbak(audioID, *audioInfo.filePath);
+                player->_finishCallbak(audioID, *audioInfo.filePath);
             }
             
             AudioEngine::remove(audioID);
-            
+            delete player;
+            _threadMutex.lock();
             it = _audioPlayers.erase(it);
+            _threadMutex.unlock();
         }
         else{
             ++it;
@@ -563,9 +474,7 @@ void AudioEngineImpl::update(float dt)
     
     if(_audioPlayers.empty()){
         _lazyInitLoop = true;
-        
-        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
-        scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
+        _scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
     }
 }
 

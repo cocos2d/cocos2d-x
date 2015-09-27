@@ -216,7 +216,7 @@ var GLClearTest = OpenGLTestLayer.extend({
         return "gl.clear(gl.COLOR_BUFFER_BIT)";
     },
     subtitle:function () {
-        return "Testing gl.clear() with cc.GLNode";
+        return "Testing gl.clear() with cc.GLNode\n The layer should be in black";
     },
 
     //
@@ -595,7 +595,13 @@ var ShaderNode = cc.GLNode.extend({
         // Uniforms
         //
         var frameSize = cc.view.getFrameSize();
-        this.shader.setUniformLocationF32( this.uniformCenter, frameSize.width/2, frameSize.height/2);
+        var visibleSize = cc.view.getVisibleSize();
+        var retinaFactor = cc.view.getDevicePixelRatio();
+        var position = this.getPosition();
+
+        var centerx = position.x * frameSize.width/visibleSize.width * retinaFactor;
+        var centery = position.y * frameSize.height/visibleSize.height * retinaFactor;
+        this.shader.setUniformLocationF32( this.uniformCenter, centerx, centery);
         this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
 
         cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_POSITION );
@@ -638,7 +644,7 @@ var ShaderHeartTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("res/Shaders/example_Heart.vsh", "res/Shaders/example_Heart.fsh");
+            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Heart.vsh", ccbjs + "Shaders/example_Heart.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -678,7 +684,7 @@ var ShaderMandelbrotTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("res/Shaders/example_Mandelbrot.vsh", "res/Shaders/example_Mandelbrot.fsh");
+            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Mandelbrot.vsh", ccbjs + "Shaders/example_Mandelbrot.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -713,7 +719,7 @@ var ShaderMonjoriTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("res/Shaders/example_Monjori.vsh", "res/Shaders/example_Monjori.fsh");
+            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Monjori.vsh", ccbjs + "Shaders/example_Monjori.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -748,7 +754,7 @@ var ShaderPlasmaTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("res/Shaders/example_Plasma.vsh", "res/Shaders/example_Plasma.fsh");
+            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Plasma.vsh", ccbjs + "Shaders/example_Plasma.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -787,7 +793,7 @@ var ShaderFlowerTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
 
-            var shaderNode = new ShaderNode("res/Shaders/example_Flower.vsh", "res/Shaders/example_Flower.fsh");
+            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Flower.vsh", ccbjs + "Shaders/example_Flower.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -826,7 +832,7 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
 
-            var shaderNode = new ShaderNode("res/Shaders/example_Julia.vsh", "res/Shaders/example_Julia.fsh");
+            var shaderNode = new ShaderNode(ccbjs + "Shaders/example_Julia.vsh", ccbjs + "Shaders/example_Julia.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -867,12 +873,12 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
             if(cc.sys.isNative){
-                this.shader = new cc.GLProgram("res/Shaders/example_Outline_noMVP.vsh", "res/Shaders/example_Outline.fsh");
+                this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline_noMVP.vsh", ccbjs + "Shaders/example_Outline.fsh");
                 this.shader.link();
                 this.shader.updateUniforms();
             }
             else{
-                this.shader = new cc.GLProgram("res/Shaders/example_Outline.vsh", "res/Shaders/example_Outline.fsh");
+                this.shader = new cc.GLProgram(ccbjs + "Shaders/example_Outline.vsh", ccbjs + "Shaders/example_Outline.fsh");
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR);
@@ -884,7 +890,7 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
                 this.shader.setUniformLocationWith3f(this.shader.getUniformLocationForName('u_outlineColor'), 0 / 255, 255 / 255, 0 / 255);
             }
 
-            this.sprite = new cc.Sprite('res/Images/grossini.png');
+            this.sprite = new cc.Sprite('Images/grossini.png');
             this.sprite.attr({
                 x: winSize.width / 2,
                 y: winSize.height / 2
@@ -943,13 +949,13 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var program = new cc.GLProgram("res/Shaders/example_ColorBars.vsh", "res/Shaders/example_ColorBars.fsh");
+            var program = new cc.GLProgram(ccbjs + "Shaders/example_ColorBars.vsh", ccbjs + "Shaders/example_ColorBars.fsh");
             program.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
             program.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
             program.link();
             program.updateUniforms();
 
-            var label = new cc.LabelBMFont("RETRO EFFECT","res/fonts/west_england-64.fnt");
+            var label = new cc.LabelBMFont("RETRO EFFECT","fonts/west_england-64.fnt");
             
             if(cc.sys.isNative)
                 label.children[0].shaderProgram = program;
@@ -1013,7 +1019,7 @@ var GLGetActiveTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var sprite = this.sprite = new cc.Sprite("res/Images/grossini.png");
+            var sprite = this.sprite = new cc.Sprite("Images/grossini.png");
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
             this.addChild( sprite );
@@ -1028,7 +1034,7 @@ var GLGetActiveTest = OpenGLTestLayer.extend({
     },
 
     title:function () {
-        return "gl.getActive***";
+        return "gl.getActiveXXX Function Test";
     },
     subtitle:function () {
         return "Tests gl.getActiveUniform / getActiveAttrib. See console";
@@ -1218,6 +1224,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
             if( ! autoTestEnabled ) {
+                cc.log( "[Max, MIN, WRAP_S, WRAP_T]" );
                 cc.log( this.getTexValues() );
             }
         }
@@ -1227,7 +1234,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
         return "GLTexParamterTest";
     },
     subtitle:function () {
-        return "tests texParameter()";
+        return "tests texParameter()\n See the Console";
     },
     getTexValues:function() {
         if(!cc.sys.isNative){
@@ -1244,7 +1251,7 @@ var GLTexParamterTest = OpenGLTestLayer.extend({
         var mag = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER);
         var min = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER);
         var w_s = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S);
-        var w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S);
+        var w_t = gl.getTexParameter(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T);
 
         var a = [mag, min, w_s, w_t];
         return a;
@@ -1287,7 +1294,7 @@ var GLGetUniformTest = OpenGLTestLayer.extend({
         return "GLGetUniformTest";
     },
     subtitle:function () {
-        return "tests texParameter()";
+        return "tests texParameter()\n See the Console";
     },
     runTest:function() {
 

@@ -20,7 +20,7 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- ****************************************************************************/
+****************************************************************************/
 
 #include "UIScale9Sprite.h"
 #include "2d/CCSprite.h"
@@ -29,31 +29,36 @@
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
+#include "platform/CCImage.h"
+#include "base/CCNinePatchImageParser.h"
+
 
 NS_CC_BEGIN
 namespace ui {
 
     Scale9Sprite::Scale9Sprite()
-    : _spritesGenerated(false)
-    , _spriteFrameRotated(false)
-    , _positionsAreDirty(true)
-    , _scale9Image(nullptr)
-    , _topLeftSprite(nullptr)
-    , _topSprite(nullptr)
-    , _topRightSprite(nullptr)
-    , _leftSprite(nullptr)
-    , _centerSprite(nullptr)
-    , _rightSprite(nullptr)
-    , _bottomLeftSprite(nullptr)
-    , _bottomSprite(nullptr)
-    , _bottomRightSprite(nullptr)
-    , _scale9Enabled(true)
-    , _insetLeft(0)
-    , _insetTop(0)
-    , _insetRight(0)
-    , _insetBottom(0)
-    ,_flippedX(false)
-    ,_flippedY(false)
+        : _spritesGenerated(false)
+        , _spriteFrameRotated(false)
+        , _positionsAreDirty(true)
+        , _scale9Image(nullptr)
+        , _topLeftSprite(nullptr)
+        , _topSprite(nullptr)
+        , _topRightSprite(nullptr)
+        , _leftSprite(nullptr)
+        , _centerSprite(nullptr)
+        , _rightSprite(nullptr)
+        , _bottomLeftSprite(nullptr)
+        , _bottomSprite(nullptr)
+        , _bottomRightSprite(nullptr)
+        , _scale9Enabled(true)
+        , _insetLeft(0)
+        , _insetTop(0)
+        , _insetRight(0)
+        , _insetBottom(0)
+        ,_flippedX(false)
+        ,_flippedY(false)
+        ,_isPatch9(false)
+        ,_brightState(State::NORMAL)
 
     {
         this->setAnchorPoint(Vec2(0.5,0.5));
@@ -63,6 +68,267 @@ namespace ui {
     {
         this->cleanupSlicedSprites();
         CC_SAFE_RELEASE(_scale9Image);
+    }
+
+    bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
+    {
+        bool pReturn = this->initWithFile(file, Rect::ZERO, capInsets);
+        return pReturn;
+    }
+
+    bool Scale9Sprite::initWithFile(const std::string& file)
+    {
+        bool pReturn = this->initWithFile(file, Rect::ZERO);
+        return pReturn;
+    }
+    bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame,
+                                           const Rect& capInsets)
+    {
+        Texture2D* texture = spriteFrame->getTexture();
+        CCASSERT(texture != NULL, "CCTexture must be not nil");
+        Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
+        CCASSERT(sprite != NULL, "sprite must be not nil");
+        bool pReturn = this->init(sprite,
+                                  spriteFrame->getRect(),
+                                  spriteFrame->isRotated(),
+                                  spriteFrame->getOffset(),
+                                  spriteFrame->getOriginalSize(),
+                                  capInsets);
+        return pReturn;
+    }
+    bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
+    {
+        CCASSERT(spriteFrame != NULL, "Invalid spriteFrame for sprite");
+        bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
+        return pReturn;
+    }
+    bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName,
+                                               const Rect& capInsets)
+    {
+        CCASSERT((SpriteFrameCache::getInstance()) != NULL,
+                 "SpriteFrameCache::getInstance() must be non-NULL");
+
+        SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+        CCASSERT(frame != NULL, "CCSpriteFrame must be non-NULL");
+
+        if (NULL == frame) return false;
+        bool pReturn = this->initWithSpriteFrame(frame, capInsets);
+        return pReturn;
+    }
+    bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
+    {
+        bool pReturn = this->initWithSpriteFrameName(spriteFrameName, Rect::ZERO);
+        return pReturn;
+    }
+
+    bool Scale9Sprite::init()
+    {
+        return this->init(NULL, Rect::ZERO, Rect::ZERO);
+    }
+
+    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
+    {
+        return this->init(sprite, rect, false, capInsets);
+    }
+
+    bool Scale9Sprite::init(Sprite* sprite,
+                            const Rect& rect,
+                            bool rotated,
+                            const Rect& capInsets)
+    {
+        return init(sprite, rect, rotated, Vec2::ZERO, rect.size, capInsets);
+    }
+
+    bool Scale9Sprite::init(Sprite* sprite,
+                            const Rect& rect,
+                            bool rotated,
+                            const Vec2 &offset,
+                            const Size &originalSize,
+                            const Rect& capInsets)
+    {
+        if(sprite)
+        {
+            auto texture = sprite->getTexture();
+            auto spriteFrame = sprite->getSpriteFrame();
+            Rect actualCapInsets = capInsets;
+
+            if (texture->isContain9PatchInfo())
+            {
+                auto& parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
+                if(!parsedCapInset.equals(Rect::ZERO))
+                {
+                    this->_isPatch9 = true;
+                    if(capInsets.equals(Rect::ZERO))
+                    {
+                        actualCapInsets = parsedCapInset;
+                    }
+
+                }
+            }
+           
+            this->updateWithSprite(sprite,
+                                   rect,
+                                   rotated,
+                                   offset,
+                                   originalSize,
+                                   actualCapInsets);
+        }
+
+        return true;
+    }
+
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
+                                         const cocos2d::Rect &rect,
+                                         bool rotated,
+                                         const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return init(sprite, rect, rotated, capInsets);
+    }
+
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
+                                         const cocos2d::Rect &rect,
+                                         const cocos2d::Rect &capInsets)
+    {
+        auto sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return init(sprite, rect, false, capInsets);
+    }
+    bool Scale9Sprite::initWithFile(const std::string& file,
+                                    const Rect& rect,
+                                    const Rect& capInsets)
+    {
+        Sprite *sprite = nullptr;
+        sprite = Sprite::create(file);
+        bool pReturn = this->init(sprite, rect, capInsets);
+        return pReturn;
+    }
+
+    bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
+    {
+        bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
+        return pReturn;
+    }
+
+    Scale9Sprite* Scale9Sprite::create()
+    {
+        Scale9Sprite *pReturn = new (std::nothrow) Scale9Sprite();
+        if (pReturn && pReturn->init())
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+    Scale9Sprite* Scale9Sprite::create(const std::string& file,
+                                       const Rect& rect,
+                                       const Rect& capInsets)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+
+    Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithFile(file, rect) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+
+
+    Scale9Sprite* Scale9Sprite::create(const Rect& capInsets,
+                                       const std::string& file)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithFile(capInsets, file) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+
+    Scale9Sprite* Scale9Sprite::create(const std::string& file)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithFile(file) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+
+    Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame,
+                                                      const Rect& capInsets)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+    Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+
+    Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName,
+                                                          const Rect& capInsets)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+        return NULL;
+    }
+
+    Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
+    {
+        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
+        if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
+        {
+            pReturn->autorelease();
+            return pReturn;
+        }
+        CC_SAFE_DELETE(pReturn);
+
+        log("Could not allocate Scale9Sprite()");
+        return NULL;
+
     }
 
     void Scale9Sprite::cleanupSlicedSprites()
@@ -121,42 +387,6 @@ namespace ui {
         CC_SAFE_RELEASE_NULL(_bottomRightSprite);
     }
 
-    bool Scale9Sprite::init()
-    {
-        return this->init(NULL, Rect::ZERO, Rect::ZERO);
-    }
-
-    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, const Rect& capInsets)
-    {
-        return this->init(sprite, rect, false, capInsets);
-    }
-
-    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets)
-    {
-        return init(sprite, rect, rotated, Vec2::ZERO, rect.size, capInsets);
-    }
-
-    bool Scale9Sprite::init(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets)
-    {
-        if(sprite)
-        {
-            this->updateWithSprite(sprite, rect, rotated, offset, originalSize, capInsets);
-        }
-
-        return true;
-    }
-
-    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, bool rotated, const cocos2d::Rect &capInsets)
-    {
-        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
-        return init(sprite, rect, rotated, capInsets);
-    }
-
-    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &rect, const cocos2d::Rect &capInsets)
-    {
-        auto sprite = Sprite::createWithTexture(batchnode->getTexture());
-        return init(sprite, rect, false, capInsets);
-    }
 
     void Scale9Sprite::setBlendFunc(const BlendFunc &blendFunc)
     {
@@ -208,13 +438,24 @@ namespace ui {
             _bottomRightSprite->setBlendFunc(_blendFunc);
     }
 
-    bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode, const cocos2d::Rect &originalRect, bool rotated, const cocos2d::Rect &capInsets)
+    bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
+                                           const cocos2d::Rect &originalRect,
+                                           bool rotated,
+                                           const cocos2d::Rect &capInsets)
     {
         Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
-        return this->updateWithSprite(sprite, originalRect, rotated, Vec2::ZERO, originalRect.size, capInsets);
+        return this->updateWithSprite(sprite,
+                                      originalRect,
+                                      rotated,
+                                      Vec2::ZERO,
+                                      originalRect.size,
+                                      capInsets);
     }
 
-    bool Scale9Sprite::updateWithSprite(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets)
+    bool Scale9Sprite::updateWithSprite(Sprite* sprite,
+                                        const Rect& rect,
+                                        bool rotated,
+                                        const Rect& capInsets)
     {
         return updateWithSprite(sprite, rect, rotated, Vec2::ZERO, rect.size, capInsets);
     }
@@ -225,15 +466,22 @@ namespace ui {
         ret.origin.x = std::max(first.origin.x,second.origin.x);
         ret.origin.y = std::max(first.origin.y,second.origin.y);
 
-        float rightRealPoint = std::min(first.origin.x + first.size.width, second.origin.x + second.size.width);
-        float bottomRealPoint = std::min(first.origin.y + first.size.height, second.origin.y + second.size.height);
+        float rightRealPoint = std::min(first.origin.x + first.size.width,
+                                        second.origin.x + second.size.width);
+        float bottomRealPoint = std::min(first.origin.y + first.size.height,
+                                         second.origin.y + second.size.height);
 
         ret.size.width = std::max(rightRealPoint - ret.origin.x, 0.0f);
         ret.size.height = std::max(bottomRealPoint - ret.origin.y, 0.0f);
         return ret;
     }
 
-    bool Scale9Sprite::updateWithSprite(Sprite* sprite, const Rect& textureRect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets)
+    bool Scale9Sprite::updateWithSprite(Sprite* sprite,
+                                        const Rect& textureRect,
+                                        bool rotated,
+                                        const Vec2 &offset,
+                                        const Size &originalSize,
+                                        const Rect& capInsets)
     {
         GLubyte opacity = getOpacity();
         Color3B color = getColor();
@@ -276,7 +524,7 @@ namespace ui {
 
         Rect rect(textureRect);
         Size size(originalSize);
-
+        
         _capInsets = capInsets;
 
         // If there is no given rect
@@ -299,6 +547,7 @@ namespace ui {
         _spriteFrameRotated = rotated;
         _originalSize = size;
         _preferredSize = size;
+
         _capInsetsInternal = capInsets;
 
         if (_scale9Enabled)
@@ -307,7 +556,12 @@ namespace ui {
         }
 
         applyBlendFunc();
-
+        this->setState(_brightState);
+        if(this->_isPatch9)
+        {
+            size.width = size.width - 2;
+            size.height = size.height - 2;
+        }
         this->setContentSize(size);
 
         if (_spritesGenerated)
@@ -326,8 +580,8 @@ namespace ui {
         float width = _originalSize.width;
         float height = _originalSize.height;
 
-        Vec2 offsetPosition(ceilf(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
-                ceilf(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
+        Vec2 offsetPosition(floor(_offset.x + (_originalSize.width - _spriteRect.size.width) / 2),
+                            floor(_offset.y + (_originalSize.height - _spriteRect.size.height) / 2));
 
         // If there is no specified center region
         if ( _capInsetsInternal.equals(Rect::ZERO) )
@@ -336,11 +590,15 @@ namespace ui {
             _capInsetsInternal = Rect(width /3, height /3, width /3, height /3);
         }
 
-        Rect originalRect;
+        Rect originalRect=_spriteRect;
         if(_spriteFrameRotated)
-            originalRect = Rect(_spriteRect.origin.x - offsetPosition.y, _spriteRect.origin.y - offsetPosition.x, _originalSize.width, _originalSize.height);
+            originalRect = Rect(_spriteRect.origin.x - offsetPosition.y,
+                                _spriteRect.origin.y - offsetPosition.x,
+                                _originalSize.width, _originalSize.height);
         else
-            originalRect = Rect(_spriteRect.origin.x - offsetPosition.x, _spriteRect.origin.y - offsetPosition.y, _originalSize.width, _originalSize.height);
+            originalRect = Rect(_spriteRect.origin.x - offsetPosition.x,
+                                _spriteRect.origin.y - offsetPosition.y,
+                                _originalSize.width, _originalSize.height);
 
         float leftWidth = _capInsetsInternal.origin.x;
         float centerWidth = _capInsetsInternal.size.width;
@@ -355,8 +613,9 @@ namespace ui {
         // ... top row
         float x = 0.0;
         float y = 0.0;
-
-        Rect pixelRect = Rect(offsetPosition.x, offsetPosition.y, _spriteRect.size.width, _spriteRect.size.height);
+        //why do we need pixelRect?
+        Rect pixelRect = Rect(offsetPosition.x, offsetPosition.y,
+                              _spriteRect.size.width, _spriteRect.size.height);
 
         // top left
         Rect leftTopBoundsOriginal = Rect(x, y, leftWidth, topHeight);
@@ -407,7 +666,7 @@ namespace ui {
 
         if((_capInsetsInternal.origin.x + _capInsetsInternal.size.width) <= _originalSize.width
            || (_capInsetsInternal.origin.y + _capInsetsInternal.size.height) <= _originalSize.height)
-        //in general case it is error but for legacy support we will check it
+            //in general case it is error but for legacy support we will check it
         {
             leftTopBounds = intersectRect(leftTopBounds, pixelRect);
             centerTopBounds = intersectRect(centerTopBounds, pixelRect);
@@ -458,7 +717,9 @@ namespace ui {
             rotatedCenterTopBounds = RectApplyAffineTransform(rotatedCenterTopBounds, t);
 
 
-        } else {
+        }
+        else
+        {
             // set up transformation of coordinates
             // to handle the case where the sprite is stored rotated
             // in the spritesheet
@@ -503,26 +764,103 @@ namespace ui {
         _topLeftSize = rotatedLeftTopBoundsOriginal.size;
         _centerSize = rotatedCenterBoundsOriginal.size;
         _bottomRightSize = rotatedRightBottomBoundsOriginal.size;
+        if(_isPatch9)
+        {
+            _topLeftSize.width = _topLeftSize.width - 1;
+            _topLeftSize.height = _topLeftSize.height - 1;
+            _bottomRightSize.width = _bottomRightSize.width - 1;
+            _bottomRightSize.height = _bottomRightSize.height - 1;
+        }
 
         if(_spriteFrameRotated)
         {
-            float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.height/2) - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.height/2);
-            float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.width/2)- (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.width/2);
+            float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.height/2)
+                - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.height/2);
+            float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.width/2)
+                - (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.width/2);
             _centerOffset.x = -offsetY;
             _centerOffset.y = offsetX;
         }
         else
         {
-            float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.width/2) - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.width/2);
-            float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.height/2)- (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.height/2);
+            float offsetX = (rotatedCenterBounds.origin.x + rotatedCenterBounds.size.width/2)
+                - (rotatedCenterBoundsOriginal.origin.x + rotatedCenterBoundsOriginal.size.width/2);
+            float offsetY = (rotatedCenterBoundsOriginal.origin.y + rotatedCenterBoundsOriginal.size.height/2)
+                - (rotatedCenterBounds.origin.y + rotatedCenterBounds.size.height/2);
             _centerOffset.x = offsetX;
             _centerOffset.y = offsetY;
+        }
+
+        //shrink the image size when it is 9-patch
+        if(_isPatch9)
+        {
+            float offset = 1.0f;
+            //Top left
+            if(!_spriteFrameRotated)
+            {
+                rotatedLeftTopBounds.origin.x+=offset;
+                rotatedLeftTopBounds.origin.y+=offset;
+                rotatedLeftTopBounds.size.width-=offset;
+                rotatedLeftTopBounds.size.height-=offset;
+                //Center left
+                rotatedLeftCenterBounds.origin.x+=offset;
+                rotatedLeftCenterBounds.size.width-=offset;
+                //Bottom left
+                rotatedLeftBottomBounds.origin.x+=offset;
+                rotatedLeftBottomBounds.size.width-=offset;
+                rotatedLeftBottomBounds.size.height-=offset;
+                //Top center
+                rotatedCenterTopBounds.size.height-=offset;
+                rotatedCenterTopBounds.origin.y+=offset;
+                //Bottom center
+                rotatedCenterBottomBounds.size.height-=offset;
+                //Top right
+                rotatedRightTopBounds.size.width-=offset;
+                rotatedRightTopBounds.size.height-=offset;
+                rotatedRightTopBounds.origin.y+=offset;
+                //Center right
+                rotatedRightCenterBounds.size.width-=offset;
+                //Bottom right
+                rotatedRightBottomBounds.size.width-=offset;
+                rotatedRightBottomBounds.size.height-=offset;
+            }
+            else
+            {
+                //Top left
+                rotatedLeftTopBounds.size.width-=offset;
+                rotatedLeftTopBounds.size.height-=offset;
+                rotatedLeftTopBounds.origin.y+=offset;
+                //Center left
+                rotatedLeftCenterBounds.origin.y+=offset;
+                rotatedLeftCenterBounds.size.width-=offset;
+                //Bottom left
+                rotatedLeftBottomBounds.origin.x+=offset;
+                rotatedLeftBottomBounds.origin.y+=offset;
+                rotatedLeftBottomBounds.size.width-=offset;
+                rotatedLeftBottomBounds.size.height-=offset;
+                //Top center
+                rotatedCenterTopBounds.size.height-=offset;
+                //Bottom center
+                rotatedCenterBottomBounds.size.height-=offset;
+                rotatedCenterBottomBounds.origin.x+=offset;
+                //Top right
+                rotatedRightTopBounds.size.width-=offset;
+                rotatedRightTopBounds.size.height-=offset;
+                //Center right
+                rotatedRightCenterBounds.size.width-=offset;
+                //Bottom right
+                rotatedRightBottomBounds.size.width-=offset;
+                rotatedRightBottomBounds.size.height-=offset;
+                rotatedRightBottomBounds.origin.x+=offset;
+            }
         }
 
         // Centre
         if(rotatedCenterBounds.size.width > 0 && rotatedCenterBounds.size.height > 0 )
         {
-            _centerSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedCenterBounds, _spriteFrameRotated);
+            _centerSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                      rotatedCenterBounds,
+                                                      _spriteFrameRotated);
             _centerSprite->retain();
             this->addProtectedChild(_centerSprite);
         }
@@ -530,7 +868,9 @@ namespace ui {
         // Top
         if(rotatedCenterTopBounds.size.width > 0 && rotatedCenterTopBounds.size.height > 0 )
         {
-            _topSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedCenterTopBounds, _spriteFrameRotated);
+            _topSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                   rotatedCenterTopBounds,
+                                                   _spriteFrameRotated);
             _topSprite->retain();
             this->addProtectedChild(_topSprite);
         }
@@ -538,7 +878,9 @@ namespace ui {
         // Bottom
         if(rotatedCenterBottomBounds.size.width > 0 && rotatedCenterBottomBounds.size.height > 0 )
         {
-            _bottomSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedCenterBottomBounds, _spriteFrameRotated);
+            _bottomSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                      rotatedCenterBottomBounds,
+                                                      _spriteFrameRotated);
             _bottomSprite->retain();
             this->addProtectedChild(_bottomSprite);
         }
@@ -546,7 +888,9 @@ namespace ui {
         // Left
         if(rotatedLeftCenterBounds.size.width > 0 && rotatedLeftCenterBounds.size.height > 0 )
         {
-            _leftSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedLeftCenterBounds, _spriteFrameRotated);
+            _leftSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                    rotatedLeftCenterBounds,
+                                                    _spriteFrameRotated);
             _leftSprite->retain();
             this->addProtectedChild(_leftSprite);
         }
@@ -554,7 +898,9 @@ namespace ui {
         // Right
         if(rotatedRightCenterBounds.size.width > 0 && rotatedRightCenterBounds.size.height > 0 )
         {
-            _rightSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedRightCenterBounds, _spriteFrameRotated);
+            _rightSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                     rotatedRightCenterBounds,
+                                                     _spriteFrameRotated);
             _rightSprite->retain();
             this->addProtectedChild(_rightSprite);
         }
@@ -562,7 +908,9 @@ namespace ui {
         // Top left
         if(rotatedLeftTopBounds.size.width > 0 && rotatedLeftTopBounds.size.height > 0 )
         {
-            _topLeftSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedLeftTopBounds, _spriteFrameRotated);
+            _topLeftSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                       rotatedLeftTopBounds,
+                                                       _spriteFrameRotated);
             _topLeftSprite->retain();
             this->addProtectedChild(_topLeftSprite);
         }
@@ -570,7 +918,9 @@ namespace ui {
         // Top right
         if(rotatedRightTopBounds.size.width > 0 && rotatedRightTopBounds.size.height > 0 )
         {
-            _topRightSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedRightTopBounds, _spriteFrameRotated);
+            _topRightSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                        rotatedRightTopBounds,
+                                                        _spriteFrameRotated);
             _topRightSprite->retain();
             this->addProtectedChild(_topRightSprite);
         }
@@ -578,7 +928,9 @@ namespace ui {
         // Bottom left
         if(rotatedLeftBottomBounds.size.width > 0 && rotatedLeftBottomBounds.size.height > 0 )
         {
-            _bottomLeftSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedLeftBottomBounds, _spriteFrameRotated);
+            _bottomLeftSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                          rotatedLeftBottomBounds,
+                                                          _spriteFrameRotated);
             _bottomLeftSprite->retain();
             this->addProtectedChild(_bottomLeftSprite);
         }
@@ -586,7 +938,9 @@ namespace ui {
         // Bottom right
         if(rotatedRightBottomBounds.size.width > 0 && rotatedRightBottomBounds.size.height > 0 )
         {
-            _bottomRightSprite = Sprite::createWithTexture(_scale9Image->getTexture(), rotatedRightBottomBounds, _spriteFrameRotated);
+            _bottomRightSprite = Sprite::createWithTexture(_scale9Image->getTexture(),
+                                                           rotatedRightBottomBounds,
+                                                           _spriteFrameRotated);
             _bottomRightSprite->retain();
             this->addProtectedChild(_bottomRightSprite);
         }
@@ -673,179 +1027,24 @@ namespace ui {
         if(_centerSprite)
         {
             _centerSprite->setAnchorPoint(Vec2(0.5,0.5));
-            _centerSprite->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x, bottomHeight+rescaledHeight/2 + centerOffset.y);
+            _centerSprite->setPosition(leftWidth+rescaledWidth/2 + centerOffset.x,
+                                       bottomHeight+rescaledHeight/2 + centerOffset.y);
             _centerSprite->setScaleX(horizontalScale);
             _centerSprite->setScaleY(verticalScale);
         }
     }
 
-    bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets)
-    {
-        Sprite *sprite = Sprite::create(file);
-        bool pReturn = this->init(sprite, rect, capInsets);
-        return pReturn;
-    }
 
-    Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect,  const Rect& capInsets)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithFile(file, rect, capInsets) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-
-    bool Scale9Sprite::initWithFile(const std::string& file, const Rect& rect)
-    {
-        bool pReturn = this->initWithFile(file, rect, Rect::ZERO);
-        return pReturn;
-    }
-
-    Scale9Sprite* Scale9Sprite::create(const std::string& file, const Rect& rect)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithFile(file, rect) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-
-
-    bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)
-    {
-        bool pReturn = this->initWithFile(file, Rect::ZERO, capInsets);
-        return pReturn;
-    }
-
-    Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& file)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithFile(capInsets, file) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-
-    bool Scale9Sprite::initWithFile(const std::string& file)
-    {
-        bool pReturn = this->initWithFile(file, Rect::ZERO);
-        return pReturn;
-
-    }
-
-    Scale9Sprite* Scale9Sprite::create(const std::string& file)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithFile(file) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-
-    bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
-    {
-        Texture2D* texture = spriteFrame->getTexture();
-        CCASSERT(texture != NULL, "CCTexture must be not nil");
-
-        Sprite *sprite = Sprite::createWithSpriteFrame(spriteFrame);
-        CCASSERT(sprite != NULL, "sprite must be not nil");
-
-        bool pReturn = this->init(sprite, spriteFrame->getRect(), spriteFrame->isRotated(), spriteFrame->getOffset(), spriteFrame->getOriginalSize(), capInsets);
-        return pReturn;
-    }
-
-    Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame, capInsets) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-    bool Scale9Sprite::initWithSpriteFrame(SpriteFrame* spriteFrame)
-    {
-        CCASSERT(spriteFrame != NULL, "Invalid spriteFrame for sprite");
-        bool pReturn = this->initWithSpriteFrame(spriteFrame, Rect::ZERO);
-        return pReturn;
-    }
-
-    Scale9Sprite* Scale9Sprite::createWithSpriteFrame(SpriteFrame* spriteFrame)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithSpriteFrame(spriteFrame) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-
-    bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
-    {
-        CCASSERT((SpriteFrameCache::getInstance()) != NULL, "SpriteFrameCache::getInstance() must be non-NULL");
-
-        SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-        CCASSERT(frame != NULL, "CCSpriteFrame must be non-NULL");
-
-        if (NULL == frame) return false;
-
-        bool pReturn = this->initWithSpriteFrame(frame, capInsets);
-        return pReturn;
-    }
-
-    Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName, capInsets) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
-    }
-
-    bool Scale9Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
-    {
-        bool pReturn = this->initWithSpriteFrameName(spriteFrameName, Rect::ZERO);
-        return pReturn;
-    }
-
-    Scale9Sprite* Scale9Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
-    {
-        Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->initWithSpriteFrameName(spriteFrameName) )
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-
-        log("Could not allocate Scale9Sprite()");
-        return NULL;
-
-    }
 
     Scale9Sprite* Scale9Sprite::resizableSpriteWithCapInsets(const Rect& capInsets) const
     {
         Scale9Sprite* pReturn = new (std::nothrow) Scale9Sprite();
-        if ( pReturn && pReturn->init(_scale9Image, _spriteRect, _spriteFrameRotated, _offset, _originalSize, _capInsets) )
+        if ( pReturn && pReturn->init(_scale9Image,
+                                      _spriteRect,
+                                      _spriteFrameRotated,
+                                      _offset,
+                                      _originalSize,
+                                      _capInsets) )
         {
             pReturn->autorelease();
             return pReturn;
@@ -853,17 +1052,10 @@ namespace ui {
         CC_SAFE_DELETE(pReturn);
         return NULL;
     }
-
-    Scale9Sprite* Scale9Sprite::create()
+    
+    Scale9Sprite::State Scale9Sprite::getState()const
     {
-        Scale9Sprite *pReturn = new (std::nothrow) Scale9Sprite();
-        if (pReturn && pReturn->init())
-        {
-            pReturn->autorelease();
-            return pReturn;
-        }
-        CC_SAFE_DELETE(pReturn);
-        return NULL;
+        return _brightState;
     }
 
     void Scale9Sprite::setState(cocos2d::ui::Scale9Sprite::State state)
@@ -871,19 +1063,19 @@ namespace ui {
         GLProgramState *glState = nullptr;
         switch (state)
         {
-            case State::NORMAL:
-            {
-                glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-            }
-                break;
-            case State::GRAY:
-            {
-                glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
-            }
-            default:
-                break;
+        case State::NORMAL:
+        {
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
         }
-
+        break;
+        case State::GRAY:
+        {
+            glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+        }
+        default:
+            break;
+        }
+        
         if (nullptr != _scale9Image)
         {
             _scale9Image->setGLProgramState(glState);
@@ -896,12 +1088,13 @@ namespace ui {
                 sp->setGLProgramState(glState);
             }
         }
+        _brightState = state;
     }
 
-    /** sets the opacity.
-     @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
-     Values goes from 0 to 255, where 255 means fully opaque.
-     */
+/** sets the opacity.
+    @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modifed.
+    Values goes from 0 to 255, where 255 means fully opaque.
+*/
 
 
 
@@ -926,7 +1119,12 @@ namespace ui {
     void Scale9Sprite::setSpriteFrame(SpriteFrame * spriteFrame, const Rect& capInsets)
     {
         Sprite * sprite = Sprite::createWithTexture(spriteFrame->getTexture());
-        this->updateWithSprite(sprite, spriteFrame->getRect(), spriteFrame->isRotated(), spriteFrame->getOffset(), spriteFrame->getOriginalSize(), capInsets);
+        this->updateWithSprite(sprite,
+                               spriteFrame->getRect(),
+                               spriteFrame->isRotated(),
+                               spriteFrame->getOffset(),
+                               spriteFrame->getOriginalSize(),
+                               capInsets);
 
         // Reset insets
         this->_insetLeft = capInsets.origin.x;
@@ -945,7 +1143,12 @@ namespace ui {
     void Scale9Sprite::setCapInsets(const Rect& capInsets)
     {
         Size contentSize = this->_contentSize;
-        this->updateWithSprite(this->_scale9Image, _spriteRect, _spriteFrameRotated, _offset, _originalSize, capInsets);
+        this->updateWithSprite(this->_scale9Image,
+                               _spriteRect,
+                               _spriteFrameRotated,
+                               _offset,
+                               _originalSize,
+                               capInsets);
         this->_insetLeft = capInsets.origin.x;
         this->_insetTop = capInsets.origin.y;
         this->_insetRight = _originalSize.width - _insetLeft - capInsets.size.width;
@@ -1125,7 +1328,12 @@ namespace ui {
         {
             if (_scale9Image)
             {
-                this->updateWithSprite(this->_scale9Image, _spriteRect, _spriteFrameRotated, _offset, _originalSize, _capInsets);
+                this->updateWithSprite(this->_scale9Image,
+                                       _spriteRect,
+                                       _spriteFrameRotated,
+                                       _offset,
+                                       _originalSize,
+                                       _capInsets);
             }
         }
         _positionsAreDirty = true;
@@ -1152,7 +1360,9 @@ namespace ui {
         }
         if( _reorderProtectedChildDirty )
         {
-            std::sort( std::begin(_protectedChildren), std::end(_protectedChildren), nodeComparisonLess );
+            std::sort( std::begin(_protectedChildren),
+                       std::end(_protectedChildren),
+                       nodeComparisonLess );
             _reorderProtectedChildDirty = false;
         }
     }
@@ -1162,7 +1372,7 @@ namespace ui {
         if (_scale9Image)
         {
             _scale9Image->setPosition(_contentSize.width * _scale9Image->getAnchorPoint().x,
-                                           _contentSize.height * _scale9Image->getAnchorPoint().y);
+                                      _contentSize.height * _scale9Image->getAnchorPoint().y);
         }
     }
 
@@ -1181,6 +1391,14 @@ namespace ui {
 
     void Scale9Sprite::cleanup()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnCleanup))
+                return;
+        }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
+        
         Node::cleanup();
         // timers
         for( const auto &child: _protectedChildren)
@@ -1203,6 +1421,14 @@ namespace ui {
 
     void Scale9Sprite::onExit()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+                return;
+        }
+#endif
+        
         Node::onExit();
         for( const auto &child: _protectedChildren)
             child->onExit();
@@ -1210,6 +1436,14 @@ namespace ui {
 
     void Scale9Sprite::onEnterTransitionDidFinish()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+                return;
+        }
+#endif
+        
         Node::onEnterTransitionDidFinish();
         for( const auto &child: _protectedChildren)
             child->onEnterTransitionDidFinish();
@@ -1217,6 +1451,14 @@ namespace ui {
 
     void Scale9Sprite::onExitTransitionDidStart()
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if (_scriptType == kScriptTypeJavascript)
+        {
+            if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+                return;
+        }
+#endif
+        
         Node::onExitTransitionDidStart();
         for( const auto &child: _protectedChildren)
             child->onExitTransitionDidStart();
@@ -1382,7 +1624,8 @@ namespace ui {
 
     float Scale9Sprite::getScale()const
     {
-        CCASSERT(this->getScaleX() == this->getScaleY(), "Scale9Sprite#scale. ScaleX != ScaleY. Don't know which one to return");
+        CCASSERT(this->getScaleX() == this->getScaleY(),
+                 "Scale9Sprite#scale. ScaleX != ScaleY. Don't know which one to return");
         return this->getScaleX();
     }
 

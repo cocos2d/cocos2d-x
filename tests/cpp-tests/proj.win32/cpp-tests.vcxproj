@@ -72,7 +72,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\network;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2DXWIN32_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;COCOS2DXWIN32_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -111,7 +111,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\Classes;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos\network;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\win32\include;$(EngineRoot)extensions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;CC_ENABLE_BULLET_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level3</WarningLevel>
@@ -151,13 +151,17 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp" />
     <ClCompile Include="..\Classes\BaseTest.cpp" />
     <ClCompile Include="..\Classes\BillBoardTest\BillBoardTest.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-CCDrawNode.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-Child.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-PageViewLayout.cpp" />
     <ClCompile Include="..\Classes\Camera3DTest\Camera3DTest.cpp" />
     <ClCompile Include="..\Classes\ChipmunkTest\ChipmunkTest.cpp" />
     <ClCompile Include="..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="..\Classes\ConsoleTest\ConsoleTest.cpp" />
     <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
+    <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp" />
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp" />
@@ -184,22 +188,16 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\LabelTest\LabelTestNew.cpp" />
     <ClCompile Include="..\Classes\LightTest\LightTest.cpp" />
     <ClCompile Include="..\Classes\MaterialSystemTest\MaterialSystemTest.cpp" />
+    <ClCompile Include="..\Classes\NavMeshTest\NavMeshTest.cpp" />
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
     <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp" />
     <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
+    <ClCompile Include="..\Classes\Scene3DTest\Scene3DTest.cpp" />
     <ClCompile Include="..\Classes\ShaderTest\ShaderTest2.cpp" />
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\Classes\Sprite3DTest\DrawNode3D.cpp" />
@@ -228,6 +226,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
@@ -294,14 +293,8 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\RenderTextureTest\RenderTextureTest.cpp" />
     <ClCompile Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="..\Classes\CocosDenshionTest\CocosDenshionTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
     <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp" />
+    <ClCompile Include="..\Classes\VibrateTest\VibrateTest.cpp" />
     <ClCompile Include="..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
     <ClCompile Include="..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="..\Classes\TextInputTest\TextInputTest.cpp" />
@@ -352,13 +345,17 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\Mobile.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MobileBalanced.h" />
     <ClInclude Include="..\Classes\Box2DTestBed\Tests\MotorJoint.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-12847.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-CCDrawNode.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-Child.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-PageViewLayout.h" />
     <ClInclude Include="..\Classes\Camera3DTest\Camera3DTest.h" />
     <ClInclude Include="..\Classes\ChipmunkTest\ChipmunkTest.h" />
     <ClInclude Include="..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="..\Classes\ConsoleTest\ConsoleTest.h" />
     <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h" />
+    <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h" />
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h" />
@@ -388,22 +385,16 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\LabelTest\LabelTestNew.h" />
     <ClInclude Include="..\Classes\LightTest\LightTest.h" />
     <ClInclude Include="..\Classes\MaterialSystemTest\MaterialSystemTest.h" />
+    <ClInclude Include="..\Classes\NavMeshTest\NavMeshTest.h" />
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h" />
     <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h" />
     <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
+    <ClInclude Include="..\Classes\Scene3DTest\Scene3DTest.h" />
     <ClInclude Include="..\Classes\ShaderTest\ShaderTest2.h" />
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\Classes\Sprite3DTest\DrawNode3D.h" />
@@ -500,14 +491,8 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\RenderTextureTest\RenderTextureTest.h" />
     <ClInclude Include="..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="..\Classes\CocosDenshionTest\CocosDenshionTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
     <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h" />
+    <ClInclude Include="..\Classes\VibrateTest\VibrateTest.h" />
     <ClInclude Include="..\Classes\ZwoptexTest\ZwoptexTest.h" />
     <ClInclude Include="..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="..\Classes\TextInputTest\TextInputTest.h" />

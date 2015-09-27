@@ -60,6 +60,7 @@ ActionNode::~ActionNode()
     else
     {
         CC_SAFE_RELEASE_NULL(_action);
+        CC_SAFE_RELEASE_NULL(_actionSpawn);
     }
 
     for (auto object : _frameArray)
@@ -464,6 +465,7 @@ Spawn * ActionNode::refreshActionProperty()
     else
     {
     CC_SAFE_RELEASE_NULL(_action);
+    CC_SAFE_RELEASE_NULL(_actionSpawn);
     }
 
     _actionSpawn = Spawn::create(cSpawnArray);

@@ -106,7 +106,7 @@ public:
 
     /** Checks whether the listener is enabled.
      *
-     * @return True if the listenrt is enabled.
+     * @return True if the listener is enabled.
      */
     inline bool isEnabled() const { return _isEnabled; };
 

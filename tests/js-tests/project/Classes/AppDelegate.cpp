@@ -9,8 +9,10 @@
 #include "jsb_cocos2dx_spine_auto.hpp"
 #include "jsb_cocos2dx_3d_auto.hpp"
 #include "jsb_cocos2dx_3d_extension_auto.hpp"
-#include "jsb_cocos2dx_experimental.hpp"
-#include "experimental/jsb_cocos2dx_experimental_manual.h"
+#include "jsb_cocos2dx_physics3d_auto.hpp"
+#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
+#include "jsb_cocos2dx_navmesh_auto.hpp"
+#include "navmesh/jsb_cocos2dx_navmesh_manual.h"
 #include "3d/jsb_cocos2dx_3d_manual.h"
 #include "extension/jsb_cocos2dx_extension_manual.h"
 #include "cocostudio/jsb_cocos2dx_studio_manual.h"
@@ -35,8 +37,20 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include "js_Effect3D_bindings.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_experimental_video_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_video_manual.h"
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#include "jsb_cocos2dx_audioengine_auto.hpp"
 #endif
 
 USING_NS_CC;
@@ -65,7 +79,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         glview = cocos2d::GLViewImpl::create("js-tests");
 #else
         glview = cocos2d::GLViewImpl::createWithRect("js-tests", Rect(0,0,900,640));
@@ -106,10 +120,17 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
     
     sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
+
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d);
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
+#endif
     
-    sc->addRegisterCallback(register_all_cocos2dx_experimental);
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_manual);
-    
+#if CC_USE_NAVMESH
+	sc->addRegisterCallback(register_all_cocos2dx_navmesh);
+	sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -117,8 +138,20 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
     sc->addRegisterCallback(register_DrawNode3D_bindings);
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     sc->addRegisterCallback(register_Effect3D_bindings);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+#endif
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    sc->addRegisterCallback(register_all_cocos2dx_audioengine);
 #endif
 
     sc->start();

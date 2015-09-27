@@ -1,14 +1,6 @@
-//
-//  SpritePolygonTest.cpp
-//  cocos2d_tests
-//
-//  Created by WuHao on 15/4/23.
-//
-//
-
 #include "SpritePolygonTest.h"
-#include "2d/SpritePolygon.h"
 #include "../testResource.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -18,61 +10,541 @@ SpritePolygonTest::SpritePolygonTest()
     ADD_TEST_CASE(SpritePolygonTest2);
     ADD_TEST_CASE(SpritePolygonTest3);
     ADD_TEST_CASE(SpritePolygonTest4);
-    ADD_TEST_CASE(SpritePolygonPerformanceTestStatic);
-    ADD_TEST_CASE(SpritePerformanceTestStatic);
+    ADD_TEST_CASE(SpritePolygonTest5);
     ADD_TEST_CASE(SpritePolygonPerformanceTestDynamic);
     ADD_TEST_CASE(SpritePerformanceTestDynamic);
 }
+
+SpritePolygonTestCase::SpritePolygonTestCase()
+{
+    _isDebugDraw = true;
+    _isNeedDebugMenu = true;
+}
+
+SpritePolygonTestCase::~SpritePolygonTestCase()
+{
+    _drawNodes.clear();
+}
+
+void SpritePolygonTestCase::onEnter()
+{
+    TestCase::onEnter();
+    Director::getInstance()->setClearColor(Color4F(102.0f/255.0f, 184.0f/255.0f, 204.0f/255.0f, 1.0f));
+}
+
+void SpritePolygonTestCase::onExit()
+{
+    Director::getInstance()->setClearColor(Color4F::BLACK);
+    TestCase::onExit();
+}
+
+bool SpritePolygonTestCase::init()
+{
+    if(TestCase::init())
+    {
+        if (_isNeedDebugMenu)
+        {
+            TTFConfig ttfConfig("fonts/arial.ttf", 10);
+            auto label = Label::createWithTTF(ttfConfig,"DebugDraw OFF");
+            auto menuItem = MenuItemLabel::create(label, [=](Ref *ref){
+                if (_isDebugDraw){
+                    _isDebugDraw = false;
+                    label->setString("DebugDraw ON");
+                    for (int i = 0; i < _drawNodes.size(); i++)
+                    {
+                        _drawNodes.at(i)->setVisible(false);
+                    }
+                }else{
+                    _isDebugDraw = true;
+                    label->setString("DebugDraw OFF");
+                    for (int i = 0; i < _drawNodes.size(); i++)
+                    {
+                        _drawNodes.at(i)->setVisible(true);
+                        updateDrawNode();
+                    }
+                }
+            });
+            
+            auto menu = Menu::create(menuItem, nullptr);
+            menu->setPosition(Vec2::ZERO);
+            menuItem->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+            menuItem->setPosition( VisibleRect::leftBottom() + Vec2(0, VisibleRect::leftTop().y/4));
+            this->addChild(menu, 9999);
+        }
+        return true;
+    }
+    return false;
+}
+
+void SpritePolygonTestCase::updateDrawNode()
+{
+    if (_isDebugDraw && _drawNodes.size() > 0) {
+        for (int i = 0; i < _drawNodes.size(); i++)
+        {
+                auto drawnode = _drawNodes.at(i);
+                auto sp = (Sprite*)drawnode->getParent();
+                if(!sp) return;
+                auto polygoninfo = sp->getPolygonInfo();
+                drawnode->clear();
+                auto count = polygoninfo.triangles.indexCount/3;
+                auto indices = polygoninfo.triangles.indices;
+                auto verts = polygoninfo.triangles.verts;
+                for(ssize_t i = 0; i < count; i++)
+                {
+                    //draw 3 lines
+                    Vec3 from =verts[indices[i*3]].vertices;
+                    Vec3 to = verts[indices[i*3+1]].vertices;
+                    drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+                    
+                    from =verts[indices[i*3+1]].vertices;
+                    to = verts[indices[i*3+2]].vertices;
+                    drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+                    
+                    from =verts[indices[i*3+2]].vertices;
+                    to = verts[indices[i*3]].vertices;
+                    drawnode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+                }
+        }
+    }
+}
+
+bool SpritePolygonTestDemo::init()
+{
+    if (SpritePolygonTestCase::init()) {
+        initSprites();
+        initTouches();
+        return true;
+    }
+    return false;
+}
+
+void SpritePolygonTestDemo::initTouches()
+{
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [&](Touch* touch, Event* event){
+        return true;
+    };
+    touchListener->onTouchMoved = [&](Touch* touch, Event* event){
+        auto pos = touch->getDelta();
+        float newScale = clampf(_polygonSprite->getScale() + pos.x * 0.01f, 0.1f, 2.f);
+        _polygonSprite->setScale(newScale);
+        _normalSprite->setScale(newScale);
+        updateDrawNode();
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+}
+
+SpritePolygonTest1::SpritePolygonTest1()
+{
+    _title = "SpritePolygon Creation";
+    _subtitle = "Sprite::create(AutoPolygon::generatePolygon(filename))";
+}
+
+void SpritePolygonTest1::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto offset = Vec2(0.15*s.width,0);
+    auto filename = s_pathGrossini;
+    
+    //Sprite
+    auto pinfo = AutoPolygon::generatePolygon(filename);
+    _polygonSprite = Sprite::create(pinfo);
+    _polygonSprite->setTag(101);
+    addChild(_polygonSprite);
+    _polygonSprite->setPosition(Vec2(s)/2 + offset);
+
+    _normalSprite = Sprite::create(filename);
+    _normalSprite->setTag(100);
+    addChild(_normalSprite);
+    _normalSprite->setPosition(Vec2(s)/2 - offset);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    spDrawNode->setTag(_normalSprite->getTag());
+    spDrawNode->clear();
+    _normalSprite->addChild(spDrawNode);
+    _drawNodes.pushBack(spDrawNode);
+    
+    auto sppDrawNode = DrawNode::create();
+    sppDrawNode->setTag(_polygonSprite->getTag());
+    sppDrawNode->clear();
+    _polygonSprite->addChild(sppDrawNode);
+    _drawNodes.pushBack(sppDrawNode);
+    
+    //Label
+    TTFConfig ttfConfig("fonts/arial.ttf", 8);
+    std::string temp = "Sprite:\nPixels drawn: ";
+    auto spSize = _normalSprite->getContentSize();
+    auto spArea = Label::createWithTTF(ttfConfig, temp+Value((int)spSize.width*(int)spSize.height).asString());
+    _normalSprite->addChild(spArea);
+    spArea->setAnchorPoint(Vec2(0,1));
+    
+    temp = "SpritePolygon:\nPixels drawn: ";
+    auto vertCount = "\nverts:"+Value((int)pinfo.getVertCount()).asString();
+    auto sppArea = Label::createWithTTF(ttfConfig, temp+Value((int)pinfo.getArea()).asString()+vertCount);
+    _polygonSprite->addChild(sppArea);
+    sppArea->setAnchorPoint(Vec2(0,1));
+    
+    updateDrawNode();
+}
+
+SpritePolygonTest2::SpritePolygonTest2()
+{
+    _title = "SpritePolygon Creation with a rect";
+    _subtitle = "Sprite::create(AutoPolygon::generatePolygon(filename, rect))";
+}
+
+void SpritePolygonTest2::initSprites()
+{
+    auto s = Director::getInstance()->getWinSize();
+    auto offset = Vec2(0.15*s.width,0);
+    auto filename = s_pathGrossini;
+    Rect head = Rect(30,25,25,25);
+    
+    //Sprite
+    auto pinfo = AutoPolygon::generatePolygon(filename, head);
+    _polygonSprite = Sprite::create(pinfo);
+    _polygonSprite->setTag(101);
+    addChild(_polygonSprite);
+    _polygonSprite->setPosition(Vec2(s)/2 + offset);
+    
+    _normalSprite = Sprite::create(filename,head);
+    _normalSprite->setTag(100);
+    addChild(_normalSprite);
+    _normalSprite->setPosition(Vec2(s)/2 - offset);
+
+    //DrawNode
+    auto spDrawNode = DrawNode::create();
+    _drawNodes.pushBack(spDrawNode);
+    spDrawNode->setTag(_normalSprite->getTag());
+    spDrawNode->clear();
+    _normalSprite->addChild(spDrawNode);
+
+    auto sppDrawNode = DrawNode::create();
+    _drawNodes.pushBack(sppDrawNode);
+    sppDrawNode->setTag(_polygonSprite->getTag());
+    sppDrawNode->clear();
+    _polygonSprite->addChild(sppDrawNode);
+    
+    //Label
+    TTFConfig ttfConfig("fonts/arial.ttf", 8);
+    std::string temp = "Sprite:\nPixels drawn: ";
+    auto spSize = _normalSprite->getContentSize();
+    auto spArea = Label::createWithTTF(ttfConfig, temp+Value((int)spSize.width*(int)spSize.height).asString());
+    _normalSprite->addChild(spArea);
+    spArea->setAnchorPoint(Vec2(0,1));
+    
+    temp = "SpritePolygon:\nPixels drawn: ";
+    auto vertCount = "\nverts:"+Value((int)pinfo.getVertCount()).asString();
+    auto sppArea = Label::createWithTTF(ttfConfig, temp+Value((int)pinfo.getArea()).asString()+vertCount);
+    _polygonSprite->addChild(sppArea);
+    sppArea->setAnchorPoint(Vec2(0,1));
+    
+    updateDrawNode();
+}
+
+bool SpritePolygonTestSlider::init()
+{
+    if(SpritePolygonTestCase::init())
+    {
+        initSliders();
+        initSprites();
+        return true;
+    }
+    return false;
+}
+
+void SpritePolygonTestSlider::initSliders()
+{
+    auto vsize =Director::getInstance()->getVisibleSize();
+    cocos2d::ui::Slider* slider = cocos2d::ui::Slider::create();
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(vsize.width/2, vsize.height/4));
+    
+    slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
+    slider->setPercent((int)(sqrtf(1.0f/19.0f)*100));
+    
+    auto ttfConfig = TTFConfig("fonts/arial.ttf", 8);
+    _epsilonLabel = Label::createWithTTF(ttfConfig, "Epsilon: 2.0");
+    addChild(_epsilonLabel);
+    _epsilonLabel->setPosition(Vec2(vsize.width/2, vsize.height/4 + 15));
+    addChild(slider);
+}
+
+void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
+{
+    auto vsize =Director::getInstance()->getVisibleSize();
+    float offset = (vsize.width-100)/(count-1);
+    for(int i = 0; i < count; i++)
+    {
+        auto sp = makeSprite(list[i], Vec2(50+offset*i, y));
+        addChild(sp);
+    }
+}
+
+void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::Slider::EventType type)
+{
+    if (type == cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        cocos2d::ui::Slider* slider = dynamic_cast<cocos2d::ui::Slider*>(pSender);
+        float epsilon = powf(slider->getPercent()/100.0,2)*19.0f + 1.0f;
+        for(auto child : _children)
+        {
+            if(child->getName().size())
+            {
+                Sprite *sp = (Sprite*)child;
+                auto file = sp->getName();
+                auto pinfo = AutoPolygon::generatePolygon(file, Rect::ZERO, epsilon);
+                sp->setPolygonInfo(pinfo);
+                updateLabel(sp, pinfo);
+            }
+        }
+        _epsilonLabel->setString("Epsilon: "+ Value(epsilon).asString());
+        updateDrawNode();
+    }
+}
+
+void SpritePolygonTestSlider::updateLabel(const cocos2d::Sprite *sp, const PolygonInfo &pinfo)
+{
+    Label *label = (Label*)(sp->getChildByName(sp->getName()));
+    auto filename = sp->getName();
+    auto size = pinfo.rect.size/Director::getInstance()->getContentScaleFactor();
+    label->setString(filename+"\nVerts: "+Value((int)pinfo.getVertCount()).asString()+ "\nPixels: "+Value((int)(pinfo.getArea()/(size.width*size.height)*100)).asString()+"%");
+}
+
+Sprite* SpritePolygonTestSlider::makeSprite(const std::string &filename, const Vec2 &pos)
+{
+    //Sprite
+    auto quadSize = Sprite::create(filename)->getContentSize();
+    int originalSize = quadSize.width * quadSize.height;
+    auto pinfo = AutoPolygon::generatePolygon(filename);
+    auto ret = Sprite::create(pinfo);
+    ret->setName(filename);
+    ret->setTag(_tagIndex);
+    _tagIndex++;
+    ret->setPosition(pos);
+    
+    //DrawNode
+    auto drawNode = DrawNode::create();
+    _drawNodes.pushBack(drawNode);
+    drawNode->setTag(ret->getTag());
+    drawNode->clear();
+    ret->addChild(drawNode);
+ 
+    //Label
+    auto ttfConfig = TTFConfig("fonts/arial.ttf", 8);
+    auto spArea = Label::createWithTTF(ttfConfig, filename+"\nVerts: "+Value((int)pinfo.getVertCount()).asString()+ "\nPixels: "+Value((int)(pinfo.getArea()/originalSize*100)).asString()+"%");
+    ret->addChild(spArea);
+    spArea->setAnchorPoint(Vec2(0,1));
+    spArea->setName(filename);
+    ret->setAnchorPoint(Vec2(0.5, 0));
+    
+    updateDrawNode();
+    
+    return ret;
+}
+
+SpritePolygonTest3::SpritePolygonTest3()
+{
+    _title = "Optimization Value (default:2.0)";
+    _subtitle = "";
+    _tagIndex = 100;
+}
+
+void SpritePolygonTest3::initSprites()
+{
+    auto vsize =Director::getInstance()->getVisibleSize();
+    std::string list[] = {
+        "Images/arrows.png",
+        "Images/CyanTriangle.png",
+        s_pathB2,
+        "Images/elephant1_Diffuse.png"
+    };
+    int count = 4;
+    makeSprites(list, count, vsize.height/2);
+}
+
+SpritePolygonTest4::SpritePolygonTest4()
+{
+    _title = "Optimization Value (default:2.0)";
+    _subtitle = "";
+    _tagIndex = 100;
+}
+
+void SpritePolygonTest4::initSprites()
+{
+    auto vsize =Director::getInstance()->getVisibleSize();
+    int count = 3;
+    std::string list[] = {
+        s_pathGrossini,
+        "Images/grossinis_sister1.png",
+        "Images/grossinis_sister2.png"
+    };
+    makeSprites(list, count, vsize.height/5*2);
+}
+
+SpritePolygonTest5::SpritePolygonTest5()
+{
+    _title = "SpritePolygon Actions";
+    _subtitle = "Touch screen to add sprite with random action.";
+    _tagIndex = 100;
+}
+
+bool SpritePolygonTest5::init()
+{
+    if (SpritePolygonTestCase::init())
+    {
+        _polygonInfo = AutoPolygon::generatePolygon(s_pathGrossini);
+        loadDefaultSprites();
+        initTouch();
+        scheduleUpdate();
+        return true;
+    }
+    return false;
+}
+
+void SpritePolygonTest5::initTouch()
+{
+    auto touchListener = EventListenerTouchOneByOne::create();
+    touchListener->onTouchBegan = [&](Touch* touch, Event* event){
+        return true;
+    };
+    touchListener->onTouchEnded = [&](Touch* touch, Event* event){
+        auto pos = touch->getLocation();
+        addSpritePolygon(pos);
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+}
+
+void SpritePolygonTest5::loadDefaultSprites()
+{
+    auto s = Director::getInstance()->getVisibleSize();
+    
+    const int DEFAULT_SPRITEPOLYGON_COUNT = 8;
+    Sprite* sprites[DEFAULT_SPRITEPOLYGON_COUNT];
+
+    for (int i = 0; i < DEFAULT_SPRITEPOLYGON_COUNT; i++) {
+        sprites[i] = Sprite::create(_polygonInfo);
+        sprites[i]->setTag(_tagIndex);
+        _tagIndex++;
+        sprites[i]->setPosition(s.width * CCRANDOM_0_1(), s.height * CCRANDOM_0_1());
+        this->addChild(sprites[i]);
+        auto drawNode = DrawNode::create();
+        _drawNodes.pushBack(drawNode);
+        drawNode->setTag(sprites[i]->getTag());
+        drawNode->clear();
+        sprites[i]->addChild(drawNode);
+    }
+    sprites[0]->setColor(Color3B::RED);
+    sprites[1]->setOpacity(100);
+    sprites[2]->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister1.png"));
+    sprites[3]->setTextureRect(Rect(0,0,100,30));
+    sprites[4]->setScale(0.5f, 2.0f);
+    sprites[5]->setFlippedY(true);
+    sprites[6]->setSkewX(60);
+    sprites[7]->setRotation(90);
+    
+    updateDrawNode();
+}
+
+void SpritePolygonTest5::addSpritePolygon(const Vec2& pos)
+{
+    auto sprite = Sprite::create(_polygonInfo);
+    sprite->setTag(_tagIndex);
+    _tagIndex++;
+    sprite->setPosition(pos);
+    this->addChild(sprite);
+    auto drawNode = DrawNode::create();
+    _drawNodes.pushBack(drawNode);
+    drawNode->setTag(sprite->getTag());
+    drawNode->clear();
+    sprite->addChild(drawNode);
+    
+    ActionInterval* action;
+    float random = CCRANDOM_0_1();
+    if( random < 0.20 )
+        action = ScaleBy::create(3, 2);
+    else if(random < 0.40)
+        action = RotateBy::create(3, 360);
+    else if( random < 0.60)
+        action = Blink::create(1, 3);
+    else if( random < 0.8 )
+        action = TintBy::create(2, 0, -255, -255);
+    else
+        action = FadeOut::create(2);
+    auto seq = Sequence::create( action, action->reverse(), nullptr );
+    sprite->runAction(RepeatForever::create(seq));
+}
+
+void SpritePolygonTest5::update(float dt)
+{
+    updateDrawNode();
+}
+
 SpritePolygonPerformance::SpritePolygonPerformance()
 {
-    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
-    Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
     TTFConfig ttfConfig("fonts/arial.ttf", 10);
-    perfLabel = Label::createWithTTF(ttfConfig, "performance test");
-    addChild(perfLabel);
-    perfLabel->setPosition(Director::getInstance()->getVisibleSize().width/2, 80);
+    _perfLabel = Label::createWithTTF(ttfConfig, "performance test");
+    addChild(_perfLabel);
+    _perfLabel->setPosition(Director::getInstance()->getVisibleSize().width/2, 80);
     
-    spriteCount = vertCount = triCount = pixelCount = continuousLowDt =0;
+    _spriteCount = _vertCount = _triCount = _pixelCount = _continuousLowDt =0;
     auto size = Director::getInstance()->getVisibleSize();
-    elapsedTime = 0;
+    _elapsedTime = 0;
     _posX = _leftX = size.width*0.15;
     _rightX = size.width*0.85;
     _posY = size.height/2;
     prevDt = 0.016f;
     goRight = true;
     ended = false;
-    scheduleUpdate();
-    continuousHighDtTime = 0.0;
-    waitingTime = 0.0;
+    _continuousHighDtTime = 0.0;
+    _waitingTime = 0.0;
+    
+    _isNeedDebugMenu = false;
 }
+
+bool SpritePolygonPerformance::init()
+{
+    if (SpritePolygonTestCase::init()) {
+        initIncrementStats();
+        scheduleUpdate();
+        return true;
+    }
+    return false;
+}
+
 void SpritePolygonPerformance::updateLabel()
 {
-//    std::string temp = "Nodes: " + Value(spriteCount).asString() + " Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + " Vertices: " + Value(vertCount).asString();
+    std::string temp = "Nodes: " + Value(_spriteCount).asString() + " Triangles: " + Value(_triCount).asString() + "\nPixels: " + Value(_pixelCount).asString() + " Vertices: " + Value(_vertCount).asString();
     if(!ended)
-    perfLabel->setString("Nodes: " + Value(spriteCount).asString() + "   Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + "   Vertices: " + Value(vertCount).asString());
+    _perfLabel->setString("Nodes: " + Value(_spriteCount).asString() + "   Triangles: " + Value(_triCount).asString() + "\nPixels: " + Value(_pixelCount).asString() + "   Vertices: " + Value(_vertCount).asString());
 }
+
 Node *SpritePolygonPerformance::makeSprite()
 {
-    return Node::create();
+    return nullptr;
 }
+
 void SpritePolygonPerformance::update(float dt)
 {
     dt = dt*0.3 + prevDt*0.7;
     prevDt = dt;
-    elapsedTime += dt;
+    _elapsedTime += dt;
     int loops = (0.025-dt)*1000;
     if(dt < 0.025 && loops>0)
     {
-        continuousHighDtTime = clampf(continuousHighDtTime-dt*2, 0.0, 1.0);
-        waitingTime = clampf(waitingTime-dt, 0.0, 5.0);
-        continuousLowDt++;
+        _continuousHighDtTime = clampf(_continuousHighDtTime-dt*2, 0.0, 1.0);
+        _waitingTime = clampf(_waitingTime-dt, 0.0, 5.0);
+        _continuousLowDt++;
     }
     else
     {
-        continuousHighDtTime+=dt;
-        continuousLowDt = 0;
+        _continuousHighDtTime+=dt;
+        _continuousLowDt = 0;
     }
-    if (continuousLowDt >= 5 && loops > 0) {
+    if (_continuousLowDt >= 5 && loops > 0) {
         for(int i = 0; i < loops; i++)
         {
             if(_posX >= _rightX)
@@ -97,72 +569,54 @@ void SpritePolygonPerformance::update(float dt)
     }
 
     //if we have 10 continuous low dt, then we will start to create more sprites
-    else if(continuousHighDtTime >= .5 || waitingTime > 3.0){
+    else if(_continuousHighDtTime >= .5 || _waitingTime > 3.0){
         // its now 1 seconds with high DT time, time to end
         ended = true;
         unscheduleUpdate();
-        perfLabel->setString("Test ended in " + Value(elapsedTime).asString() + " seconds\nNodes: " + Value(spriteCount).asString() + "   Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + "   Vertices: " + Value(vertCount).asString());
+        _perfLabel->setString("Test ended in " + Value(_elapsedTime).asString() + " seconds\nNodes: " + Value(_spriteCount).asString() + "   Triangles: " + Value(_triCount).asString() + "\nPixels: " + Value(_pixelCount).asString() + "   Vertices: " + Value(_vertCount).asString());
         _subtitleLabel->setString("Test ended");
     }
     else{
-        waitingTime += dt;
+        _waitingTime += dt;
     }
 }
+
 void SpritePolygonPerformance::incrementStats()
 {
-    spriteCount ++;
-    vertCount += _incVert;
-    triCount += _incTri;
-    pixelCount += _incPix;
+    _spriteCount ++;
+    _vertCount += _incVert;
+    _triCount += _incTri;
+    _pixelCount += _incPix;
 }
 
-
-
-
-
-SpritePolygonPerformanceTestStatic::SpritePolygonPerformanceTestStatic()
+void SpritePolygonPerformanceTestDynamic::initIncrementStats()
 {
-    _title = "Static SpritePolygon Performance";
-    _subtitle = "Test running, please wait until it ends";
-    initIncrementStats();
-}
-experimental::SpritePolygon* SpritePolygonPerformanceTestStatic::makeSprite()
-{
-    return experimental::SpritePolygon::create(s_pathGrossini);
-}
-void SpritePolygonPerformanceTestStatic::initIncrementStats()
-{
-    auto t = experimental::SpritePolygon::create(s_pathGrossini);
-    _incVert = (int)t->getVertCount();
-    _incTri = (int)t->getTrianglesCount();
-    _incPix = (int)t->getArea();
+    _pinfo = AutoPolygon::generatePolygon(s_pathGrossini);
+    _incVert = _pinfo.getVertCount();
+    _incTri = _pinfo.getTriaglesCount();
+    _incPix = _pinfo.getArea();
 }
 
 SpritePolygonPerformanceTestDynamic::SpritePolygonPerformanceTestDynamic()
 {
     _title = "Dynamic SpritePolygon Performance";
     _subtitle = "Test running, please wait until it ends";
-    initIncrementStats();
 }
-experimental::SpritePolygon* SpritePolygonPerformanceTestDynamic::makeSprite()
+
+Sprite* SpritePolygonPerformanceTestDynamic::makeSprite()
 {
-    auto ret = experimental::SpritePolygon::create(s_pathGrossini);
+    auto ret = Sprite::create(_pinfo);
     ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
     return ret;
 }
 
-
-SpritePerformanceTestStatic::SpritePerformanceTestStatic()
+SpritePerformanceTestDynamic::SpritePerformanceTestDynamic()
 {
-    _title = "Static Sprite Performance";
+    _title = "Dynamic Sprite Performance";
     _subtitle = "Test running, please wait until it ends";
-    initIncrementStats();
 }
-Sprite* SpritePerformanceTestStatic::makeSprite()
-{
-    return Sprite::create(s_pathGrossini);
-}
-void SpritePerformanceTestStatic::initIncrementStats()
+
+void SpritePerformanceTestDynamic::initIncrementStats()
 {
     auto t = Sprite::create(s_pathGrossini);
     _incVert = 4;
@@ -170,329 +624,9 @@ void SpritePerformanceTestStatic::initIncrementStats()
     _incPix = t->getContentSize().width * t->getContentSize().height;
 }
 
-SpritePerformanceTestDynamic::SpritePerformanceTestDynamic()
-{
-    _title = "Dynamic Sprite Performance";
-    _subtitle = "Test running, please wait until it ends";
-    initIncrementStats();
-}
 Sprite* SpritePerformanceTestDynamic::makeSprite()
 {
-    auto ret = Sprite::create(s_pathGrossini);
+    auto ret =  Sprite::create(s_pathGrossini);
     ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
     return ret;
 }
-
-
-
-void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon * inst)
-{
-    Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
-    
-    spp = inst;
-    addChild(spp);
-    auto s = Director::getInstance()->getWinSize();
-    auto offset = Vec2(0.15*s.width,0);
-    spp->setPosition(Vec2(s)/2 + offset);
-
-    
-    sp = Sprite::create(filename);
-    addChild(sp);
-    sp->setPosition(Vec2(s)/2 - offset);
-    
-    auto touchListener = EventListenerTouchOneByOne::create();
-    touchListener->onTouchBegan = [&](Touch* touch, Event* event){
-        spp->showDebug(true);
-        debugForNormalSprite->setVisible(true);
-        return true;
-    };
-    touchListener->onTouchMoved = [&](Touch* touch, Event* event){
-            auto pos = touch->getDelta();
-            float newScale = clampf(spp->getScale() + pos.x * 0.01f, 0.1f, 2.f);
-            spp->setScale(newScale);
-            sp->setScale(newScale);
-    };
-    touchListener->onTouchEnded = [&](Touch* touch, Event* event){
-        spp->showDebug(false);
-        debugForNormalSprite->setVisible(false);
-    };
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
-    
-    debugForNormalSprite = DrawNode::create();
-    sp->addChild(debugForNormalSprite);
-    
-    auto positions = new Vec2[4];
-    auto spSize = sp->getContentSize();
-    positions[0] = Vec2(0, spSize.height);
-    positions[1] = Vec2(spSize);
-    positions[2] = Vec2(spSize.width, 0);
-    positions[3] = Vec2(0,0);
-    debugForNormalSprite->drawPoints(positions, 4, 8, Color4F(0.0,1.0,1.0,1.0));
-    debugForNormalSprite->drawLine(positions[0], positions[1], Color4F::GREEN);
-    debugForNormalSprite->drawLine(positions[1], positions[2], Color4F::GREEN);
-    debugForNormalSprite->drawLine(positions[2], positions[3], Color4F::GREEN);
-    debugForNormalSprite->drawLine(positions[3], positions[0], Color4F::GREEN);
-    debugForNormalSprite->drawLine(positions[0], positions[2], Color4F::GREEN);
-    debugForNormalSprite->setVisible(false);
-    delete [] positions;
-    
-    TTFConfig ttfConfig("fonts/arial.ttf", 8);
-    std::string temp = "Sprite:\nPixels drawn: ";
-    auto spArea = Label::createWithTTF(ttfConfig, temp+Value((int)spSize.width*(int)spSize.height).asString());
-    sp->addChild(spArea);
-    spArea->setAnchorPoint(Vec2(0,1));
-    
-    temp = "SpritePolygon:\nPixels drawn: ";
-    auto vertCount = "\nverts:"+Value((int)spp->getVertCount()).asString();
-    auto sppArea = Label::createWithTTF(ttfConfig, temp+Value((int)spp->getArea()).asString()+vertCount);
-    spp->addChild(sppArea);
-    sppArea->setAnchorPoint(Vec2(0,1));
-}
-void SpritePolygonTestCase::onBackCallback(cocos2d::Ref *sender)
-{
-    TestCase::onBackCallback(sender);
-    Director::getInstance()->setClearColor(Color4F::BLACK);
-}
-
-
-SpritePolygonTest1::SpritePolygonTest1()
-{
-    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
-    _title = "SpritePolygon Creation";
-    _subtitle = "SpritePolygon::create(\"Images/grossini.png\")";
-    cocos2d::experimental::SpritePolygon *s;
-    for(int i = 0; i < 10; i ++)
-    {
-         s=   experimental::SpritePolygon::create(s_pathGrossini);
-    }
-    initDefaultSprite(s_pathGrossini, s);
-}
-
-SpritePolygonTest2::SpritePolygonTest2()
-{
-    /*
-     36.5 128.5
-     27.5 133.5
-     24.5 145.5
-     26.5 161.5
-     33.5 168.5
-     27.5 168.5
-     16.5 179.5
-     30.5 197.5
-     28.5 237.5
-     56.5 237.5
-     54.5 197.5
-     68.5 184.5
-     57.5 168.5
-     51.5 168.5
-     60.5 154.5
-     57.5 133.5
-     48.5 127.5
-     36.5 127.5
-     */
-    std::vector<Vec2> verts;
-    verts.push_back(Vec2(36.5, 242.0-128.5));
-    verts.push_back(Vec2(27.5, 242.0-133.5));
-    verts.push_back(Vec2(24.5, 242.0-145.5));
-    verts.push_back(Vec2(26.5, 242.0-161.5));
-    verts.push_back(Vec2(33.5, 242.0-168.5));
-    verts.push_back(Vec2(27.5, 242.0-168.5));
-    verts.push_back(Vec2(16.5, 242.0-179.5));
-    verts.push_back(Vec2(30.5, 242.0-197.5));
-    verts.push_back(Vec2(28.5, 242.0-237.5));
-    verts.push_back(Vec2(56.5, 242.0-237.5));
-    verts.push_back(Vec2(54.5, 242.0-197.5));
-    verts.push_back(Vec2(68.5, 242.0-184.5));
-    verts.push_back(Vec2(57.5, 242.0-168.5));
-    verts.push_back(Vec2(51.5, 242.0-168.5));
-    verts.push_back(Vec2(60.5, 242.0-154.5));
-    verts.push_back(Vec2(57.5, 242.0-133.5));
-    verts.push_back(Vec2(48.5, 242.0-127.5));
-    verts.push_back(Vec2(36.5, 242.0-127.5));
-    
-    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
-    _title = "SpritePolygon Creation";
-    _subtitle = "SpritePolygon::create(\"Images/grossini.png\", verts)";
-    auto s = experimental::SpritePolygon::create(s_pathGrossini, verts);
-    initDefaultSprite(s_pathGrossini, s);
-}
-
-SpritePolygonTest3::SpritePolygonTest3()
-{
-    /*
-     18, 48
-     33.500000, 73.500000
-     27.500000, 73.500000
-     16.500000, 62.500000
-     30.500000, 44.500000
-     54.500000, 44.500000
-     51.500000, 73.500000
-     60.500000, 87.500000
-     26.500000, 80.500000
-     24.500000, 96.500000
-     57.500000, 108.500000
-     36.500000, 113.500000
-     48.500000, 114.500000
-     36.500000, 114.500000
-     27.500000, 108.500000
-     68.500000, 57.500000
-     57.500000, 73.500000
-     56.500000, 4.500000
-     28.500000, 4.500000
-     0, 1, 2
-     3, 0, 2
-     4, 0, 3
-     5, 0, 4
-     5, 6, 0
-     0, 6, 7
-     8, 7, 6
-     6, 9, 8
-     9, 10, 8
-     9, 11, 10
-     11, 12, 10
-     8, 10, 13
-     14, 5, 4
-     15, 5, 14
-     4, 3, 16
-     3, 17, 16
-     */
-    std::vector<Vec2> verts;
-    verts.push_back(Vec2(33.500000, 73.500000));
-    verts.push_back(Vec2(27.500000, 73.500000));
-    verts.push_back(Vec2(16.500000, 62.500000));
-    verts.push_back(Vec2(30.500000, 44.500000));
-    verts.push_back(Vec2(54.500000, 44.500000));
-    verts.push_back(Vec2(51.500000, 73.500000));
-    verts.push_back(Vec2(60.500000, 87.500000));
-    verts.push_back(Vec2(26.500000, 80.500000));
-    verts.push_back(Vec2(24.500000, 96.500000));
-    verts.push_back(Vec2(57.500000, 108.500000));
-    verts.push_back(Vec2(36.500000, 113.500000));
-    verts.push_back(Vec2(48.500000, 114.500000));
-    verts.push_back(Vec2(36.500000, 114.500000));
-    verts.push_back(Vec2(27.500000, 108.500000));
-    verts.push_back(Vec2(68.500000, 57.500000));
-    verts.push_back(Vec2(57.500000, 73.500000));
-    verts.push_back(Vec2(56.500000, 4.500000));
-    verts.push_back(Vec2(28.500000, 4.500000));
-    unsigned short indicesArr[] = {0, 1, 2, 3, 0, 2, 4, 0, 3, 5, 0, 4, 5, 6, 0, 0, 6, 7, 8, 7, 6, 6, 9, 8, 9, 10, 8, 9, 11, 10, 11, 12, 10, 8, 10, 13, 14, 5, 4, 15, 5, 14, 4, 3, 16, 3, 17, 16};
-    std::vector<unsigned short> indices(indicesArr, indicesArr + sizeof indicesArr / sizeof indicesArr[0]);
-    
-    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
-    _title = "SpritePolygon Creation";
-    _subtitle = "SpritePolygon::create(\"Images/grossini.png\", verts, indices)";
-    auto s = experimental::SpritePolygon::create(s_pathGrossini, verts, indices);
-    initDefaultSprite(s_pathGrossini, s);
-}
-
-SpritePolygonTest4::SpritePolygonTest4(){
-    /*
-     18, 48
-     33.500000, 73.500000
-     27.500000, 73.500000
-     16.500000, 62.500000
-     30.500000, 44.500000
-     54.500000, 44.500000
-     51.500000, 73.500000
-     60.500000, 87.500000
-     26.500000, 80.500000
-     24.500000, 96.500000
-     57.500000, 108.500000
-     36.500000, 113.500000
-     48.500000, 114.500000
-     36.500000, 114.500000
-     27.500000, 108.500000
-     68.500000, 57.500000
-     57.500000, 73.500000
-     56.500000, 4.500000
-     28.500000, 4.500000
-     0, 1, 2,
-     3, 0, 2,
-     4, 0, 3,
-     5, 0, 4,
-     5, 6, 0,
-     0, 6, 7,
-     8, 7, 6,
-     6, 9, 8,
-     9, 10, 8,
-     9, 11, 10,
-     11, 12, 10,
-     8, 10, 13,
-     14, 5, 4,
-     15, 5, 14,
-     4, 3, 16,
-     3, 17, 16,
-     0.394118, 0.392562
-     0.323529, 0.392562
-     0.194118, 0.483471
-     0.358824, 0.632231
-     0.641176, 0.632231
-     0.605882, 0.392562
-     0.711765, 0.276859
-     0.311765, 0.334711
-     0.288235, 0.202479
-     0.676471, 0.103306
-     0.429412, 0.061983
-     0.570588, 0.053719
-     0.429412, 0.053719
-     0.323529, 0.103306
-     0.805882, 0.524793
-     0.676471, 0.392562
-     0.664706, 0.962810
-     0.335294, 0.962810
-     */
-    Vec3 poss[] = {Vec3(33.500000, 73.500000,0),
-    Vec3(27.500000, 73.500000,0),
-    Vec3(16.500000, 62.500000,0),
-    Vec3(30.500000, 44.500000,0),
-    Vec3(54.500000, 44.500000,0),
-    Vec3(51.500000, 73.500000,0),
-    Vec3(60.500000, 87.500000,0),
-    Vec3(26.500000, 80.500000,0),
-    Vec3(24.500000, 96.500000,0),
-    Vec3(57.500000, 108.500000,0),
-    Vec3(36.500000, 113.500000,0),
-    Vec3(48.500000, 114.500000,0),
-    Vec3(36.500000, 114.500000,0),
-    Vec3(27.500000, 108.500000,0),
-    Vec3(68.500000, 57.500000,0),
-    Vec3(57.500000, 73.500000,0),
-    Vec3(56.500000, 4.500000,0),
-    Vec3(28.500000, 4.50000, 0)
-    };
-    unsigned short idxs[] = {0, 1, 2, 3, 0, 2, 4, 0, 3, 5, 0, 4, 5, 6, 0, 0, 6, 7, 8, 7, 6, 6, 9, 8, 9, 10, 8, 9, 11, 10, 11, 12, 10, 8, 10, 13, 14, 5, 4, 15, 5, 14, 4, 3, 16, 3, 17, 16};
-    std::vector<unsigned short> indices(idxs, idxs + sizeof idxs / sizeof idxs[0]);
-    Tex2F t2f[] = {
-        Tex2F(0.394118f, 0.392562f),
-        Tex2F(0.323529f, 0.392562f),
-        Tex2F(0.194118f, 0.483471f),
-        Tex2F(0.358824f, 0.632231f),
-        Tex2F(0.641176f, 0.632231f),
-        Tex2F(0.605882f, 0.392562f),
-        Tex2F(0.711765f, 0.276859f),
-        Tex2F(0.311765f, 0.334711f),
-        Tex2F(0.288235f, 0.202479f),
-        Tex2F(0.676471f, 0.103306f),
-        Tex2F(0.429412f, 0.061983f),
-        Tex2F(0.570588f, 0.053719f),
-        Tex2F(0.429412f, 0.053719f),
-        Tex2F(0.323529f, 0.103306f),
-        Tex2F(0.805882f, 0.524793f),
-        Tex2F(0.676471f, 0.392562f),
-        Tex2F(0.664706f, 0.962810f),
-        Tex2F(0.335294f, 0.962810f)
-    };
-    std::vector<V3F_C4B_T2F> vs;
-    for(int i = 0; i < 18; i++)
-    {
-        V3F_C4B_T2F t = {poss[i],Color4B::WHITE, t2f[i]};
-        vs.push_back(t);
-    }
-    
-    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
-    _title = "SpritePolygon Creation";
-    _subtitle = "SpritePolygon::create(\"Images/grossini.png\", vector<V3F_C4B_T2F> v, vector<unsigned short> indices)";
-    auto s = experimental::SpritePolygon::create(s_pathGrossini, vs, indices);
-    initDefaultSprite(s_pathGrossini, s);
-}
-

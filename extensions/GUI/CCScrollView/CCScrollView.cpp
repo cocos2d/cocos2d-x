@@ -436,8 +436,8 @@ void ScrollView::deaccelerateScrolling(float dt)
     
     if ((fabsf(_scrollDistance.x) <= SCROLL_DEACCEL_DIST &&
          fabsf(_scrollDistance.y) <= SCROLL_DEACCEL_DIST) ||
-        newY >= maxInset.y || newY <= minInset.y ||
-        newX >= maxInset.x || newX <= minInset.x)
+        ((_direction == Direction::BOTH || _direction == Direction::VERTICAL) && (newY >= maxInset.y || newY <= minInset.y)) ||
+        ((_direction == Direction::BOTH || _direction == Direction::HORIZONTAL) && (newX >= maxInset.x || newX <= minInset.x)))
     {
         this->unschedule(CC_SCHEDULE_SELECTOR(ScrollView::deaccelerateScrolling));
         this->relocateContainer(true);
@@ -506,6 +506,29 @@ void ScrollView::addChild(Node * child, int zOrder, int tag)
     } else {
         Layer::addChild(child, zOrder, tag);
     }
+}
+
+void ScrollView::removeChild(Node* node, bool cleanup)
+{
+    if(_container != node)
+    {
+        _container->removeChild(node, cleanup);
+    }
+    else
+    {
+        Layer::removeChild(node, cleanup);
+    }
+}
+
+void ScrollView::removeAllChildrenWithCleanup(bool cleanup)
+{
+    _container->removeAllChildrenWithCleanup(cleanup);
+    Layer::removeAllChildrenWithCleanup(cleanup);
+}
+
+void ScrollView::removeAllChildren()
+{
+    removeAllChildrenWithCleanup(true);
 }
 
 void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
@@ -587,7 +610,7 @@ void ScrollView::onAfterDraw()
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible
-    if (!isVisible() || !isVisitableByVisitingCamera())
+    if (!isVisible())
     {
         return;
     }

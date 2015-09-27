@@ -295,14 +295,11 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
         basefilePath = "";
     }
 
-
-    std::string filePathStr =  filePath;
-    size_t startPos = filePathStr.find_last_of(".");
-    std::string str = &filePathStr[startPos];
+    std::string fileExtension = cocos2d::FileUtils::getInstance()->getFileExtension(filePath);
 
     // Read content from file
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-    bool isbinaryfilesrc = str==".csb";
+    bool isbinaryfilesrc = fileExtension == ".csb";
     std::string filemode("r");
     if(isbinaryfilesrc)
         filemode += "b";
@@ -314,14 +311,14 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
     _dataReaderHelper->_getFileMutex.unlock();
     
     DataInfo dataInfo;
-    dataInfo.filename = filePathStr;
+    dataInfo.filename = filePath;
     dataInfo.asyncStruct = nullptr;
     dataInfo.baseFilePath = basefilePath;
-    if (str == ".xml")
+    if (fileExtension == ".xml")
     {
         DataReaderHelper::addDataFromCache(contentStr, &dataInfo);
     }
-    else if(str == ".json" || str == ".ExportJson")
+    else if(fileExtension == ".json" || fileExtension == ".exportjson")
     {
         DataReaderHelper::addDataFromJsonCache(contentStr, &dataInfo);
     }
@@ -408,13 +405,10 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     data->imagePath = imagePath;
     data->plistPath = plistPath;
 
-    std::string filePathStr =  filePath;
-    size_t startPos = filePathStr.find_last_of(".");
-    std::string str = &filePathStr[startPos];
-
+    std::string fileExtension = cocos2d::FileUtils::getInstance()->getFileExtension(filePath);
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
 
-    bool isbinaryfilesrc = str==".csb";
+    bool isbinaryfilesrc = fileExtension == ".csb";
     std::string filereadmode("r");
     if (isbinaryfilesrc) {
         filereadmode += "b";
@@ -435,11 +429,11 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     // fix memory leak for v3.3
     free(pBytes);
     
-    if (str == ".xml")
+    if (fileExtension == ".xml")
     {
         data->configType = DragonBone_XML;
     }
-    else if(str == ".json" || str == ".ExportJson")
+    else if(fileExtension == ".json" || fileExtension == ".exportjson")
     {
         data->configType = CocoStudio_JSON;
     }
@@ -815,7 +809,7 @@ MovementData *DataReaderHelper::decodeMovement(tinyxml2::XMLElement *movementXML
 
 
         tinyxml2::XMLElement *parentXml = nullptr;
-        if (parentName.length() != 0)
+        if (!parentName.empty())
         {
             parentXml = movementXML->FirstChildElement(BONE);
 
@@ -1247,7 +1241,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
     
     json.ParseStream<0>(stream);
     if (json.HasParseError()) {
-        CCLOG("GetParseError %s\n",json.GetParseError());
+        CCLOG("GetParseError %d\n",json.GetParseError());
     }
 	
 	dataInfo->contentScale = DICTOOL->getFloatValue_json(json, CONTENT_SCALE, 1.0f);
@@ -1417,29 +1411,33 @@ DisplayData *DataReaderHelper::decodeBoneDisplay(const rapidjson::Value& json, D
     {
         displayData = new (std::nothrow) SpriteDisplayData();
 
-		const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
+        const char *name =  DICTOOL->getStringValue_json(json, A_NAME);
         if(name != nullptr)
         {
             ((SpriteDisplayData *)displayData)->displayName = name;
         }
-		const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
-		if(!dicArray.IsNull())
-		{
-			rapidjson::SizeType index = 0;
-			const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);
-			if (!dic.IsNull())
-			{
-				SpriteDisplayData *sdd = (SpriteDisplayData *)displayData;
-				sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
-				sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
-				sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
-				sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
-				sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
-				sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
+        if(json.HasMember(SKIN_DATA))
+        {
+            const rapidjson::Value &dicArray = DICTOOL->getSubDictionary_json(json, SKIN_DATA);
+            if(!dicArray.IsNull())
+            {
+                rapidjson::SizeType index = 0;
+                const rapidjson::Value &dic = DICTOOL->getSubDictionary_json(dicArray, index);
+                if (!dic.IsNull())
+                {
+                    SpriteDisplayData *sdd = (SpriteDisplayData *)displayData;
+                    sdd->skinData.x = DICTOOL->getFloatValue_json(dic, A_X) * s_PositionReadScale;
+                    sdd->skinData.y = DICTOOL->getFloatValue_json(dic, A_Y) * s_PositionReadScale;
+                    sdd->skinData.scaleX = DICTOOL->getFloatValue_json(dic, A_SCALE_X, 1.0f);
+                    sdd->skinData.scaleY = DICTOOL->getFloatValue_json(dic, A_SCALE_Y, 1.0f);
+                    sdd->skinData.skewX = DICTOOL->getFloatValue_json(dic, A_SKEW_X, 1.0f);
+                    sdd->skinData.skewY = DICTOOL->getFloatValue_json(dic, A_SKEW_Y, 1.0f);
 
-                sdd->skinData.x *= dataInfo->contentScale;
-                sdd->skinData.y *= dataInfo->contentScale;
-			}
+                    sdd->skinData.x *= dataInfo->contentScale;
+                    sdd->skinData.y *= dataInfo->contentScale;
+                }
+            }
+
         }
     }
 

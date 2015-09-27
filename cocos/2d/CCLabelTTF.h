@@ -85,7 +85,7 @@ public:
                              TextVAlignment vAlignment = TextVAlignment::TOP);
     
     
-    /** Create a lable with string and a font definition*/
+    /** Create a label with string and a font definition*/
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */
@@ -100,7 +100,7 @@ public:
     void setTextDefinition(const FontDefinition& theDefinition);
     
     /** get the text definition used by this label */
-    const FontDefinition& getTextDefinition() const;
+    const FontDefinition& getTextDefinition();
     
     
     
@@ -163,6 +163,7 @@ public:
 protected:
     Label*    _renderLabel;
     bool _contentDirty;
+    FontDefinition _fontDef;
 };
 
 

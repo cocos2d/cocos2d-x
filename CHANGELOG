@@ -1,22 +1,437 @@
-cocos2d-x-3.7  ??
-    [NEW]           3d: added physics3d support
-    [NEW]           C++: added ActionFloat
-    [NEW]           C++: support physical keyboard on WinRT
+cocos2d-x-3.8 final September.6 2015
+cocos2d-x-3.8 rc0   August.26 2015
+cocos2d-x-3.8 beta0 August.14 2015
+    
+    [HIGHLIGHT]     3D: Added 3d physics collider
+    [HIGHLIGHT]     3D: Supported setting camera background brushes with color/depth/skybox 
+    [HIGHLIGHT]     3D: Added key frame event Callback in Animate3D
+    [HIGHLIGHT]     FileUtils: Added a set of file writing APIs: writeStringToFile, writeDataToFile, writeValueMapToFile, writeValueVectorToFile
+    [HIGHLIGHT]     UI: Refined UI system
+    [HIGHLIGHT]     UI: Added RadioButton widget (JSB/Lua ready)
+    [HIGHLIGHT]     UI: Reimplemented and enhanced EditBox on Android: display cursor; support copy, cut, paste and select actions; support multi-line input; pretty adjustment when virtual keyboard shown
+    [HIGHLIGHT]     JS: Bound new AudioEngine in JSB
+    [HIGHLIGHT]     JS: Merged JSB test project into cocos2d test project
+    [HIGHLIGHT]     network: Upgrade SocketIO support to v1.x
+    [HIGHLIGHT]     tools: Optimize Bindings Generator
+    [HIGHLIGHT]     Label: Added HANYI FullType font support
+
+    [NEW]           3D: Added light map support in Terrain
+    [NEW]           UI: Added ScrollViewBar for displaying a scroll bar at the side of ScrollView (JSB/Lua ready)
+    [NEW]           UI: Enhanced ScrollView with easing out scrolling
+    [NEW]           UI: Added PageView vertical scroll support
+    [NEW]           UI: Added PageView::JumpToPage API
+    [NEW]           UI: Added a setter for line width in DrawNode
+    [NEW]           Action: Permitted setting bitwise flags to action
+    [NEW]           Animate: Added Animate's getCurrentFrameIndex function
+    [NEW]           FileUtils: Added FileUtils::getFileExtension for getting file's extension name
+    [NEW]           Device: Added vibrate support to enable vibration for a duration
+    [NEW]           audio: AudioEngine supported audio preloading
+    [NEW]           UserDefault: Supported removing key pairs from UserDefault
+    [NEW]           spine: Supported Spine runtime 2.3 (Both native and web engine)
+    [NEW]           JS: Added auto binding for BlendFuncFrame
+    [NEW]           console: Supported new portrait projects from templates
+    [NEW]           console: Moved the framework-compile tools into cocos2d-console
+    [NEW]           framework: Support generate prebuilt libs of engine with debug mode
+    [NEW]           Supported Xcode 7
+
+    [REFINE]        3D: Supported composite 2D/3D scene by moving UI and camera far away
+    [REFINE]        3D: Improved Particle3D performance
+    [REFINE]        3D: Made SkyBox not transparent 
+    [REFINE]        3D: Enable depth write for SkyBox
+    [REFINE]        3D: Enable depth write for transparent object
+    [REFINE]        3D: Set depth test function of Skybox brush to always
+    [REFINE]        renderer: Enabled blending all the time for 2D render queue
+    [REFINE]        Director: Made types to handle time consistent by modifing setAnimationInterval argument from double to float
+    [REFINE]        Sprite: Made Sprite::setTexture accept nullptr as parameter
+    [REFINE]        TextureCache: Made addImageAsync function thread safe
+    [REFINE]        Label: Improved code readability
+    [REFINE]        Label: Supported adding child nodes in Label
+    [REFINE]        Label: Refine the implementation about text layout and support debug draw
+    [REFINE]        Label: Supported auto batch with bitmap font or char map
+    [REFINE]        UI: Improved Slider's precision
+    [REFINE]        UI: Made Label and Text share the same fontSize type
+    [REFINE]        UI: Reduced memory usage in Text
+    [REFINE]        UI: Refined scroll event dispatching for ScrollView
+    [REFINE]        UI: Made EditBox::setFontSize not rely on font name property
+    [REFINE]        UI: Made viewport constructor more compile friendly
+    [REFINE]        UI: Improved event handling in TextField
+    [REFINE]        studio: Avoid CSLoader from openning csb file multiple times with fopen
+    [REFINE]        studio: Added BlendFrame support to Skeleton Animation
+    [REFINE]        studio: Enabled blendfunc cascade to the skin of BoneNode 
+    [REFINE]        studio: Update reader with parse logic for valid attribute of SkyBox
+    [REFINE]        FileUtils: Remove old path while adding existing search path
+    [REFINE]        Device: Implemented Device::getDPI for Mac
+    [REFINE]        network: Refine NSLog in HttpAsynConnection in release mode
+    [REFINE]        network: Fixed a problem where WebSocket messages may pile up
+    [REFINE]        utils: Made utils::captureScreen saving file in another thread to improve the performance
+    [REFINE]        3rd party: Update Nibiru SDK to 2.6
+    [REFINE]        platform: Correct all usage of unicode version winapi in FileUtils for win32
+    [REFINE]        JS: Supported new construction for 3d classes in JS
+    [REFINE]        JS: Automatically add extend to need to extend classes in bindings generator
+    [REFINE]        JS: Made UI classes safely extendable in JSB
+    [REFINE]        JS: Improved NodeGrid binding
+    [REFINE]        JS: Refine performance for Cocos Studio JSON parser for 2.x
+    [REFINE]        JS: Made binding functions accept null in JS and convert to nullptr
+    [REFINE]        web: Avoid re-bake the content when the parent node's position get changed
+    [REFINE]        web: Solved repeat loading same resource issue when parsing cocos studio project
+    [REFINE]        web: Added GameNodeObjectData and GameLayerObjectData in JSON parser
+    [REFINE]        web: Updated skeleton animation to the latest version
+    [REFINE]        web: Optimized resources automatic loading in JSON parser
+    [REFINE]        web: Avoid cc.loader resource loading being terminated while encounter errors
+    [REFINE]        web: Throw new Error object instead of error message string
+    [REFINE]        web: Move setDepthTest to renderer
+    [REFINE]        web: Added BlendFuncFrame parser
+    [REFINE]        web: Permitted webp image loading on Chrome
+    [REFINE]        web: Suspended the video player when the browser is minimized
+    [REFINE]        framework: Optimized the lua & js templates
+    [REFINE]        simulator: Made Node, Skeleton needs shown in the middle of the simulator window
+    [REFINE]        Removed EMSCRIPTEN support
+    [REFINE]        Added template project daily build in Jenkins-ci
+    [REFINE]        Removed unused tool gen-prebuilt
+    [REFINE]        Removed deprecated API in templates
+
+    [FIX]           3D: Fixed Effect3DOutline issue when the Sprite3D is mirrored
+    [FIX]           3D: Fixed issue that Sprite3D::getAABBRecursively does not get AABB of Nodes with Sprite3d children
+    [FIX]           3D: Fixed Menu unusable in 3D scene
+    [FIX]           renderer: UI component can't click correctly by moving UI and camera far away of origin
+    [FIX]           renderer: ListView in Camera with custom mask isn't visible
+    [FIX]           renderer: Temporary fix for Sprite/Label/FastTMX auto-culling failure
+    [FIX]           renderer: Fixed shader issue by reloading shader when light number changed
+    [FIX]           Scheduler: Fixed timer's delta time is error when interval equals to zero
+    [FIX]           Scheduler: Fixed Pause/Resume act incorrectly
+    [FIX]           Scheduler: Fixed the callback will be executed multiple times if the value of delay parameter equal zero
+    [FIX]           Node: Fixed issue that euler angle is NaN when update Euler angle from quaternion and asin value is not between -1 and 1 by accident
+    [FIX]           Scene: Fixed bug that can't add custom member to Scene subclass
+    [FIX]           Sprite: Fixed some warnings and a related bug in CCSprite
+    [FIX]           AutoPolygon: Fixed copy construct & assignment operator memory leakage
+    [FIX]           SpriteBatchNode: Touch screen might cause rendering order disorder when the screen have numerous sprites
+    [FIX]           SpriteBatchNode: Fixed SpriteBatchNode doesn't support setFlipped
+    [FIX]           event: Fixed EventDispatcher wrong dispatch order bug
+    [FIX]           event: Fixed EventListenerKeyboard.onKeyPressed not firing for back button on Android
+    [FIX]           FileUtils: Fixed bug that FileUtils::isDirectoryExist result is not correct on Android while using relative path in 'assets'
+    [FIX]           Action: Fixed bug that CCTargetedAction executes callback twice
+    [FIX]           audio: Fixed playing new audio after stopping an incessant(loop) audio may fail on MAC/iOS
+    [FIX]           audio: Fixed bug that playing audio may fail(error code:-1) on iOS
+    [FIX]           audio: Fixed AudioEngine possible crash on iOS/Mac while playing multiply audio
+    [FIX]           Label: Fixed rendering LabelTTF characters as black boxes on Android by ensuring atlases are purged before resetting
+    [FIX]           Label: Fixed bug that characters are displayed incorrectly with "dark roast.ttf" font
+    [FIX]           Label: Fixed opacity setting is invalid with bitmap font
+    [FIX]           Label: Fixed the color of letter will be overridden by fade action
+    [FIX]           Label: Fixed Label with some specific font is cropped
+    [FIX]           Label: Fixed the content size of Label is incorrect with GLOW effect
+    [FIX]           Label: Fixed spaces is lost if label created with Fingerpop.ttf
+    [FIX]           Label: Fixed Label::getLetter(index)->setVisible(true) cause rendering duplicate letters
+    [FIX]           Label: Fixed Label::setGlobalZOrder invalid issue if label create with system font
+    [FIX]           UI: Fixed issue that Slider::addEventListener doesn't respect the button pressed and button release event
+    [FIX]           UI: Fixed bug that UI component can't be clicked correctly by moving UI and camera far away of origin
+    [FIX]           UI: Fixed inertial scrolling for CCScrollView
+    [FIX]           UI: Fixed bug that ListView::getCurSelectedIndex may cause out of range issue
+    [FIX]           UI: Fixed PageView scrollToPage bug and the curPageIndex bug
+    [FIX]           UI: Fixed game scene displays wrongly while clicking EditBox
+    [FIX]           UI: Fixed RichText layout cause infinite loop issue
+    [FIX]           UI: Fixed formarRenderers in RichText doesn’t update container size
+    [FIX]           UI: Fixed TextField hitTest not working as expected issue
+    [FIX]           UI: Fixed Widget::setHighlighted does not work after setBright
+    [FIX]           UI: Fixed Button touch doesn't work with setScale9Enabled
+    [FIX]           UI: Fixed calculation error of Layout viewing area's clipping position in SCISSOR mode
+    [FIX]           UI: Fixed logic error in isMaxLengthEnabled handling invoked by TextField::setString
+    [FIX]           UI: Fixed improper touch intercept event propagation in UI system
+    [FIX]           UI: Fixed EditBox input maxLength for Chinese character issue on iOS
+    [FIX]           UI: Fixed EditBox turning black when soft keyboard hiding
+    [FIX]           UI: Fixed scrollview innerContainer initial position error
+    [FIX]           UI: Fixed issue that Slider create function is not taking account of res type (TextureResType)
+    [FIX]           Scale9Sprite: Fixed Scale9Sprite default capInset bug
+    [FIX]           Scale9Sprite: Fixed issue that Scale9Sprite draw extra 1 pixel when creating from spritesheet
+    [FIX]           studio: Removed "using namespace cocos2d" from CCFrame.h
+    [FIX]           studio: Fixed the SkyBox display error while parsed from editor files
+    [FIX]           studio: Fixed userCamera flag error while parsing old version exported files
+    [FIX]           studio: Fixed GameNode3DReader parse failed error
+    [FIX]           studio: Fixed crash when loading cocostudio json files with null or empty fontName
+    [FIX]           studio: Fixed bug that setColor works on a whole armature, but not on an individual bone
+    [FIX]           studio: Fixed object size error while data is error
+    [FIX]           studio: Fixed issue that bone's color and opacity cannot cascade to bone
+    [FIX]           studio: Fixed issue that bone can be see by other cameras
+    [FIX]           ClippingNode: Removed CCClippingRectangleNode transform error support
+    [FIX]           spine: Fixed the position of debug draw of bones is incorrect
+    [FIX]           spine: Fixed memory leak caused by SkeletonRenderer::initialize
+    [FIX]           network: Fixed Downloader::getHeader failure on win32
+    [FIX]           AssetsManagerEx: Fix AssetsManager crash by protecting Downloader with shared_ptr
+    [FIX]           RenderTexture: Fixed RenderTexture switch foreground to background issue
+    [FIX]           Physics: Fixed circle shape debug draw incorrect issue
+    [FIX]           Physics: Fix transform issue of PhysicsSprite itself and its children
+    [FIX]           tilemap: Fixed small errors in the function TMXXMLParser::getRectForGID
+    [FIX]           tilemap: Fixed crash caused by creating TMX object when related image file is missing or broken
+    [FIX]           effect: Fixed PageTurn3D effect abnormal
+    [FIX]           ProgressTimer: Fixed SpriteProgressToRadialMidpointChanged bug
+    [FIX]           log: Fixed crash on Windows if passing string more than 16kb to cocos2d::log
+    [FIX]           utils: Fixed utils::captureScreen bug while using multiple camera
+    [FIX]           JS: Fixed issue of iOS/JS reflection `callStaticMethod` with bool arg
+    [FIX]           JS: Fixed Objective-C JS reflection bug while using callStaticMethod() with bool argument
+    [FIX]           JS: Fixed issue that subclass of ccui.Widget which overwrote onEnter will cause infinite recursion
+    [FIX]           JS: Fixed Node color property can not be used issue
+    [FIX]           JS: Fixed issue that SocketIO events don’t get fired when compile mode set to release
+    [FIX]           JS: Added the conversion for tmxTileFlags to fix TMXLayer::tileFlagsAt binding issue
+    [FIX]           JS: Fixed jsval_to_int and jsval_to_uint issue on 64 bit system
+    [FIX]           Lua: Fixed onTouch begin don't return value
+    [FIX]           Lua: Fixed memory leak in LuaMinXmlHttpRequest
+    [FIX]           Lua: Fixed checkbox Lua bindings issue
+    [FIX]           Lua: Fixed logic issue in cc.pIsSegmentIntersect
+    [FIX]           platform: Fixed issue that getStringUTFChars can not passing emotion from java to c++ on Android
+    [FIX]           platform: Fixed bug that paused game will be awaked by the Clock on Android
+    [FIX]           platform: Fixed bug that Cocos2dxHelper won't be initialized after activity recreate
+    [FIX]           platform: Fixed clipping node doesn't work on Android 5.0
+    [FIX]           platform: Fixed blur shader compliant on win8 universal
+    [FIX]           platform: Fixed the error when compiling android project with release mode on Windows
+    [FIX]           platform: Fixed issue that depth/stencil buffers attributes are ignored on iOS
+    [FIX]           platform: Fixed engine crash because of wrong initialisation on some android device
+    [FIX]           platform: Removed unneeded protocol for AppController on iOS
+    [FIX]           platform: Fixed link errors in release mode on win32
+    [FIX]           platform: Fixed Windows 10 UWP and WP8.1 app certification issue
+    [FIX]           platform: Fixed Android app occasionally freeze issue caused by Cocos2dxRenderer.nativeOnResume() is not called when the activity is resumed
+    [FIX]           web: Fixed a bug that VideoPlayer remove event throw error
+    [FIX]           web: Fixed Armature position error in studio JSON parser
+    [FIX]           web: Fixed default clearColor error in director
+    [FIX]           web: Fixed rotation value parsing error in the timeline parser
+    [FIX]           web: Fixed a bug that nested animation may be affected by outer animation
+    [FIX]           web: Made LabelAtlas ignoring invalid characters and updating correctly the content size
+    [FIX]           web: Fixed a bug that VideoPlayer remove event throw error
+    [FIX]           web: Fixed a bug that cc.director.setNotificationNode(null) doesn't take effect
+    [FIX]           web: Fixed texture rect update issue while changing sprite frame
+    [FIX]           web: Fixed effect issue in ActionGrid and NodeGrid
+    [FIX]           web: Fixed logic issue in Menu's _onTouchCancelled function
+    [FIX]           web: Fixed MenuItem crash when normal image is null
+    [FIX]           web: Fixed CCTouch's startPoint unset issue
+    [FIX]           web: Fixed incomplete fadeout effects
+    [FIX]           web: Fixed issue that return value of cc.screen.fullScreen is not boolean
+    [FIX]           web: Fixed a bug that SkeletonNode is not drawing children
+
+    [TEST]          3D: Avoid to trigger touch event multiple times in Physics3D Test and Physics3D Constraint Test
+    [TEST]          3D: Fixed Sprite3D test background to foreground bug
+    [TEST]          renderer: Added auto culling test case
+    [TEST]          renderer: Fixed material parsing test on wp8.1
+    [TEST]          OpenGL: Fixed shader-basic and OpenGL testcase 'center' uniform error
+    [TEST]          OpenGL: Fixed ShaderRetroEffect random crash issue
+    [TEST]          OpenGL: Fixed offset on retina screen in shaderTest
+    [TEST]          OpenGL: Fixed shader test crash on android device
+    [TEST]          OpenGL: Fixed retro effect pos bug in ShaderTest
+    [TEST]          UI: Improved UIScene testcase
+    [TEST]          studio: Fixed cocostudio 3d test crash on mobile platform
+    [TEST]          studio: Added blendfunc Frame test case for skeleton animation
+    [TEST]          spine: Fixed bug that spine animition can't be rendered in Scene3DTest
+    [TEST]          tilemap: Fixed the problem that white frame didn't move as map did in JSB TMXOrthoObjectsTest
+    [TEST]          JS: Fixed Button position error in UIPageViewTest
+    [TEST]          web: Rewrote testcase for stencil depth mask in RenderTextureTest
+    [TEST]          web: Improved renderTexture stencilDepth test
+    [TEST]          web: Fixed abnormal effects in effectsTest
+    [TEST]          web: Fixed invisiable testcase of effects
+
+cocos2d-x-3.7.1    August.12 2015
+    [HIGHLIGHT]     studio: Added new skeleton animation support and csb parser for cocos v2.3.2 beta
+    [HIGHLIGHT]     studio: Added new skeleton animation support and JSON parser in the web engine
+    [HIGHLIGHT]     studio: Added Skybox csb/JSON parser for cocos v2.3.2 beta
+
+    [NEW]           Node: Added getNodeToParentTransform with selected ancestor
+    [NEW]           studio: Parsed Touch/Click/Event callback in JSON parser
+    [NEW]           web: Added cc.director.setClearColor and support transparent background
+
+    [REFINE]        Widget: Synchronize enable state and bright state for Widget
+    [REFINE]        studio: Optimized JSON parser's performance by removing audio play
+    [REFINE]        studio: Optimized editor related extension data to a component instead of hosting in _userObject
+    [REFINE]        studio: Updated Game3DNodeReader & UserCameraReader
+    [REFINE]        Label: Remove file error notice label from TextBMFontReader
+    [REFINE]        JSB: Add firefox remote debugger support in JS templates
+    [REFINE]        web: Improved color/opacity manipulations in MenuItems
+
+    [FIX]           Scene: Fixed Scene can't be inherited with std::vector members
+    [FIX]           Sprite: Fixed a compile error when CC_SPRITE_DEBUG_DRAW is on
+    [FIX]           Label: Fixed creation fail if the font(TTF) contains a non-unicode charmap
+    [FIX]           Label: Fixed LabelAtlas rendering error for invalid characters and characters out of boundaries
+    [FIX]           Label: Fixed Mac system font crash issue
+    [FIX]           platform: Fixed building with system prebuilt libs on Linux
+    [FIX]           studio: Fixed ccs.Skin construction issue in JSON parser
+    [FIX]           studio: Fixed Particle3d crash while reading file with error
+    [FIX]           studio: Fixed parser crash when sprite 3d resource isn't correct
+    [FIX]           UI: Fixed CheckBox issue that _isSelected state is updated after event processing callbacks
+    [FIX]           JSB: Fixed JSON parser issue that 3d particle can not be displayed
+    [FIX]           web: Fixed an issue that loading process won't trigger callback problem
+    [FIX]           web: Fixed a bug where not resetting cc.Audio._ignoreEnded when replaying a sound caused it to stay in a "playing" state
+    [FIX]           web: cc.ScrollView and cc.TableView: added check for parent visibility in onTouchBegan method
+    [FIX]           web: Fixed TurnPageDown effect
+    [FIX]           web: Fixed Cocos Studio parser issue that all elements are missing while the timeline action contains rotation
+
+cocos2d-x-3.7final July.21 2015
+    [REFINE]        JS: Improve manual binding code for `retain`, `release`, `onEnter`, `onExit`, `onEnterTransitionDidFinish` and `onExitTransitionDidStart`
+    [REFINE]        web: Add compatible Uint16Array defintion
+
+    [FIX]           Scale9Sprite: Fixed Scale9Sprite gray state issue while `setCapInsets` called
+    [FIX]           studio: Fixed parser issue by checking texture existance
+    [FIX]           studio: Fixed Armature parser issue
+    [FIX]           JS: Fixed cleanup overriding issue in JS that it will cause `too much recursion` error
+    [FIX]           web: Fixed url check regular expression not supporting localhost issue
+    [FIX]           web: Fixed issue that sprite doesn't update texture rect correctly in some condition
+
+cocos2d-x-3.7rc1  July.14 2015
+    [REFINE]        framework: Used msbuild to generating engine prebuilt libs on win32.
+    [REFINE]        3d: Used shader with normal while creating mesh with normals
+    [REFINE]        3d: Set default 3d animation quality to low
+    [REFINE]        web: Improved localStorage warning when disabled
+
+    [FIX]           studio: Fixed percentage setting won't take effect when UISlider's background resource set to null
+    [FIX]           studio: Fixed a bug that SingleNode's color isn't set
+    [FIX]           studio: Fixed child nodes can't be rendered when particle and TiledMap as parent and their resource have been removed from disk
+    [FIX]           studio: Fixed a bug of JSON parser that texture address is wrong
+    [FIX]           studio: Fixed a bug that drawLine & drawPoints don't apply blend function in parser
+    [FIX]           studio: Fixed a bug that check box front cross texture will expand to normal size when change status between normal and disable frequently
+    [FIX]           studio: Fixed a bug that normal texture won't show when slider set to disable mode then clean slider ball disable texture
+    [FIX]           3d: Fixed obj loading failed on windows
+    [FIX]           3d: Fixed clipping node does not work for Sprite3D
+    [FIX]           platform: Fixed js template run error on linux
+    [FIX]           Tilemap: Fixed CCTMXXMLParser code negligence
+    [FIX]           JS: Fixed constant value error for ccui.Layout.BACKGROUND_IMAGE_ZORDER
+    [FIX]           JS: Fixed XMLHttpRequest can't be retain in JSB
+    [FIX]           JS: Added cc.path.mainFileName
+    [FIX]           JS: Fixed issue that override cleanup function in JS can't get invoked during node detaching
+    [FIX]           JS: Fixed cc.loader notification issue with image asynchonous loading
+    [FIX]           web: Fixed MenuItems' color/opacity setter issue with child nodes
+    [FIX]           web: Fixed page view's layout issue for JSON parser
+    [FIX]           web: Add ttc loader and prevent the pure digital fonts is invalid
+    [FIX]           web: Fixed Float32Array initialization
+    [FIX]           web: Fixed a bug that layout background is missing
+    [FIX]           web: Fixed a bug that ObjectExtensionData miss setCustomProperty and getCustomProperty function
+
+cocos2d-x-3.7rc0  July.1 2015
+    [HIGHLIGHT]     core: Added Material system (JS/Lua ready)
+    [HIGHLIGHT]     3d: Added Physics3d support (JS/Lua ready)
+    [HIGHLIGHT]     3d: Added NavMesh support (JS/Lua ready)
+    [HIGHLIGHT]     Scale9Sprite: Added Android 9-patch image support (JS/Lua ready)
+    [HIGHLIGHT]     sprite: Supported polygon sprite with AutoPolygon generator (JS/Lua ready)
+    [HIGHLIGHT]     platform: Added Windows 10.0 Universal App(UWP) support
+    [HIGHLIGHT]     platform: Add Samsung Enhanced API on Android for cocos, please refer to the release note for more details
+    [HIGHLIGHT]     C++: Added Android Studio support
+    [HIGHLIGHT]     JS: Merged JSB and web engine into Cocos2d-x for a All-in-one engine
+    [HIGHLIGHT]     JS: Added `ccui.VideoPlayer` and `ccui.WebView` for iOS/Android/Web
+    [HIGHLIGHT]     console: Supported build & run Android Studio project with cocos console
+    
+    [NEW]           C++: Added ActionFloat
+    [NEW]           C++: Supported physical keyboard on WinRT
     [NEW]           FileUtils: checked filename case characters on windows
     [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
     [NEW]           PhysicsShape: added sensor property
+    [NEW]           Sprite: used triangle command
+    [NEW]           3d: Added `getFarPlane` and `getNearPlane` in `Camera` class
+    [NEW]           3d: Added opengl version project/unproject function in camera
+    [NEW]           ui: button add BMFont title support
+    [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+    [NEW]           ui: Reduce memory consumption of a few UI widgets.
+    [NEW]           audio: added support on WP8.1, now it supports wav format
+    [NEW]           audio: Added MP3 support to winrt audio
+    [NEW]           audio: Added OGG support to winrt audio
+    [NEW]           3rd: updated rapidjson to v1.0.2
+    [NEW]           web: SIMD.js optimization for kazmath functions (from Intel)
+    [NEW]           web: The json loader of Cocos Studio will automatically load dependencies resources
+    [NEW]           Framework: Added Cocos Framework compilation script tool (used by Cocos)
+    [NEW]           Simulator: Added Cocos Simulator project (used by Cocos)
 
-    [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
+    [REFINE]        core: Use quaternion instead of euler angle in `Camera::lookAt`
+    [REFINE]        platform: Differentiated Windows Phone Application and Windows Store Application with `Application::getTargetPlatform`
+    [REFINE]        platform: Improved UserDefault's robustness on Android, now the converting behavior is the same as iOS platform
+    [REFINE]        platform: Added debug flag -Wextra to linux CMakeFile
+    [REFINE]        audio: Permitted to play large ogg files on windows
+    [REFINE]        ui: Use inch for childFocusCancelOffset in UIScrollView
+    [REFINE]        3d: Improved `Terrain::getIntersectionPoint` by calculating the intersection with triangles
+    [REFINE]        Label: Improve rendering of letter's inner shapes when outline is used
+    [REFINE]        console: Built engine with `LOCAL_ARM_MODE=arm` when building JS projects for android
+    [REFINE]        web: Deleted the redundant variables defined and log informations in ccui.RichText
+    [REFINE]        web: Allowed timeline animations with only one frame
+    [REFINE]        web: Improved property declaration of cc.Texture2D
+    
+    [FIX]           core: Fixed `Director::setClearColor` has no effect bug
+    [FIX]           platform: Fixed VideoPlayer on Android ignore search paths
+    [FIX]           platform: Fixed crash while using s3tc on Nexus 9 (Android 5.0.1)
+    [FIX]           platform: Fixed Application may be created more than once on Android
+    [FIX]           platform: Fixed the Windows 8.1 Universal Apps crash when there is no audio device
+    [FIX]           platform: Fixed android background and foreground switching bug with VertexAttributeBinding
+    [FIX]           platform: Fixed warning "Service Intent must be explicit" on Android
+    [FIX]           studio: Fixed ActionNode memory leaks
+    [FIX]           studio: Fixed CocoLoader destructor memory release bug
+    [FIX]           studio: Fixed cocos studio json reader's bug in percentage mode
+    [FIX]           studio: Fixed rapidjson assert error in cocos studio module
+    [FIX]           network: Win32 CURL doesn't support zlib
+    [FIX]           network: Fixed memory leak of HttpClient on iOS and Mac platform
+    [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
+    [FIX]           audio: Fixed a freezing crash in Windows 10 with the new audio engine when pressing stop after play
+    [FIX]           audio: Fixed audio can't resume if it is interrupted by an incoming phone call
+    [FIX]           audio: Fixed `SimpleAudioEngine::playEffect` lagged on Android 5.0.x
+    [FIX]           audio: Fixed `SimpleAudioEngine` may cause application to crash on Android 5.0.x
+    [FIX]           audio: Fixed thread safety problem on Android
+    [FIX]           audio: Added guard to audio engine pointer in `SimpleAudioEngine::end`
+    [FIX]           ui: Text scale factor is wrong with multiline text
+    [FIX]           3d: skybox can't move to other position except origin point in world space
+    [FIX]           3d: terrain can't move to other position except origin point in world space
+    [FIX]           3d: Fixed Terrain lod computing bugs
+    [FIX]           3d: Fixed clipping node not working for Sprite3D
+    [FIX]           3rd: Fixed PIE link error on iOS caused by libpng and libtiff
+    [FIX]           3rd: Fixed iOS libtiff 32bit header file error
     [FIX]           AssetsManager: crashed issue
     [FIX]           EaseRateAction: no way to create an `EaseRateAction` instance
+    [FIX]           Label: Fixed compile error when enabling CC_ENABLE_BOX2D_INTEGRATION
     [FIX]           Label: crashed if invoking `setString(text` after `getLetter(letterIndex)` and `letterIndex` is greater than the length of text
     [FIX]           Label: position is wrong if label content is changed after invoking `getLetter(letterIndex)`
     [FIX]           Label: shadow effect cause OpenGL error on iOS
     [FIX]           Label: outline effect doesn't match characters well
+    [FIX]           Label: Fixed system font label line height calculation is wrong  on Android.
+    [FIX]           Label: Fixed IllegalArgumentException on Android 2.3.x
+    [FIX]           Label: Fixed line wrap error without space. 
+    [FIX]           Label: The texture of character have not cropped if character cross the axis-aligned bounding-box
+    [FIX]           Label: Fixed the top of character's texture may be tailored if enable outline effect
+    [FIX]           ProgressTimer: `setSprite()` doesn't take effect
     [FIX]           Sprite3D: setGLProgram() does not work
+    [FIX]           Sprite3D: transition breaks when there is a Sprite3D in the scene
     [FIX]           Terrain: terrain is on top of particles, particles can not be seen
+    [FIX]           TextureCache: unbindImageAsync failed to unbind all asynchronous callback for a specified bound image
+    [FIX]           TileMap: crashed if a layer contains nothing
     [FIX]           WebView: memory leak on iOS
+    [FIX]           WebView: Fixed crash on Android
     [FIX]           WebView: crashed if url contains illegal characters on Android
+    [FIX]           Lua: luaLoadChunksFromZip should just remove .lua or .luac extension
+    [FIX]           Lua: Added some skipped create functions for Sprite
+    [FIX]           Lua: Fixed some lua test case bugs
+    [FIX]           JS: Enabled touches support for Windows 8.1 platform
+    [FIX]           JS: Fixed keyboard support for Windows Phone 8.1 platform
+    [FIX]           web: Fixed positionType error of particle system in timeline parser
+    [FIX]           web: Fixed setAnimationName issue while the property is undefined in timeline parser
+    [FIX]           web: Fixed `cc.TMXObjectGroup#objectNamed` not returning the result bug
+    [FIX]           web: Fixed TransitionSlideX callback sequence issue
+    [FIX]           web: Fixed issue in music end event
+    [FIX]           web: Fixed bug that LayerColor's color will disappear when update transform after being baked
+    [FIX]           web: Fixed `inverse` function bug of `cc.math.Matrix4`
+    [FIX]           web: Fixed the webaudio's invalid loop attribute bug for chrome 42
+    [FIX]           web: Fixed crash when character not found into BMP font
+    [FIX]           web: Fixed spine's js parser issue by avoid NaN duration
+    [FIX]           web: Fixed LabelTTF multiline detection
+    [FIX]           web: Fixed issue in ccui.Widget#getScale
+    [FIX]           web: Fixed texture is not updated in some cases
+    [FIX]           web: PlayMusic should not use the search path (timeline 2.x)
+    [FIX]           web: Fixed bug of loading path of resources
+    [FIX]           web: Premultiply texture's alpha for png by default to fix Cocos Studio render issues
+    [FIX]           web: Fixed cache update issue of Layout after bake
+    [FIX]           web: Fixed isBaked returning undefined issue
+    [FIX]           web: Made CCProgressTimerCanvasRenderCmd to properly show colorized sprites
+    [FIX]           web: Fixed attributes being reset issue while baked cache canvas' size changed
+    [FIX]           web: Fixed texture does not rotate bug of ccui.LoadingBar
+    [FIX]           web: Fixed color not being set issue in timeline parser
+    [FIX]           web: Fixed custom easing animation bug
+    [FIX]           web: Fixed return empty texture2d bug when adding image with same url multiple times
+    [FIX]           web: Fixed actiontimeline can not step to last frame issue when loop play
+    [FIX]           web: Fixed the prompt can not be used in iOS wechat 6.2
+    [FIX]           web: Fixed restoring of sprite's color issue
+    [FIX]           web: Fixed Uint8Array initialize issue
+    [FIX]           web: Fixed cc.TextFieldTTF Delegate memory leaks
+    [FIX]           web: Fixed sorted result is wrong in cc.eventManager (_sortEventListenersOfSceneGraphPriorityDes)
+    [FIX]           web: Fixed BinaryLoader issue on IE11
+    [FIX]           web: Fixed the sprite's texture bug when frequently change the color
+    [FIX]           web: Fixed an issue that action will result in automatic termination
+    [FIX]           web: Fixed ScrollView initWithViewSize issue
 
 cocos2d-x-3.6  Apr.30 2015
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App

@@ -308,14 +308,14 @@ namespace ui {
         const char* getText(void);
             
         /**
-         * Set the font.
+         * Set the font. Only system font is allowed.
          * @param pFontName The font name.
          * @param fontSize The font size.
          */
         void setFont(const char* pFontName, int fontSize);
             
         /**
-         * Set the font name.
+         * Set the font name. Only system font is allowed.
          * @param pFontName The font name.
          */
         void setFontName(const char* pFontName);
@@ -333,14 +333,14 @@ namespace ui {
         void setFontColor(const Color4B& color);
             
         /**
-         * Set the placeholder's font.
+         * Set the placeholder's font. Only system font is allowed.
          * @param pFontName The font name.
          * @param fontSize The font size.
          */
         void setPlaceholderFont(const char* pFontName, int fontSize);
             
         /**
-         * Set the placeholder's font name.
+         * Set the placeholder's font name. only system font is allowed.
          * @param pFontName The font name.
          */
         void setPlaceholderFontName(const char* pFontName);
@@ -423,7 +423,7 @@ namespace ui {
          * @js NA
          * @lua NA
          */
-        virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+        virtual void draw(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
         /**
          * @js NA
          * @lua NA

@@ -49,13 +49,13 @@ public:
     int run();
 
     /**
-    @brief    Get current applicaiton instance.
+    @brief    Get current application instance.
     @return Current application instance pointer.
     */
     static Application* getInstance();
 
     /* override functions */
-    virtual void setAnimationInterval(double interval);
+    virtual void setAnimationInterval(float interval);
     virtual LanguageType getCurrentLanguage();
     virtual const char * getCurrentLanguageCode();
 

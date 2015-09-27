@@ -50,22 +50,6 @@ protected:
     virtual ~GroupCommandTest();
 };
 
-class NewSpriteBatchTest : public MultiSceneTest
-{
-public:
-
-    CREATE_FUNC(NewSpriteBatchTest);
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-
-protected:
-    NewSpriteBatchTest();
-    virtual ~NewSpriteBatchTest();
-};
-
 class NewClippingNodeTest : public MultiSceneTest
 {
 public:
@@ -143,6 +127,17 @@ protected:
     void afterCaptured(bool succeed, const std::string& outputFile);
 
     std::string _filename;
+};
+
+class BugAutoCulling : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(BugAutoCulling);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+protected:
+    BugAutoCulling();
+    virtual ~BugAutoCulling();
 };
 
 #endif //__NewRendererTest_H_

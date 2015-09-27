@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
 
 http://www.cocos2d-x.org
@@ -34,8 +34,6 @@ THE SOFTWARE.
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
 
-using namespace cocos2d;
-
 NS_TIMELINE_BEGIN
 
 class Timeline;
@@ -57,8 +55,8 @@ public:
     virtual void setTween(bool tween) { _tween = tween; }
     virtual bool isTween() const { return _tween; }
 
-    virtual void setTweenType(const tweenfunc::TweenType& tweenType) { _tweenType = tweenType; }
-    virtual tweenfunc::TweenType getTweenType() const { return _tweenType; }
+    virtual void setTweenType(const cocos2d::tweenfunc::TweenType& tweenType) { _tweenType = tweenType; }
+    virtual cocos2d::tweenfunc::TweenType getTweenType() const { return _tweenType; }
     
     // !to make easing with params, need setTweenType(TweenType::CUSTOM_EASING)
     virtual void setEasingParams(const std::vector<float>& easingParams);
@@ -86,7 +84,7 @@ protected:
     bool            _tween;
     bool            _enterWhenPassed;
     
-    tweenfunc::TweenType _tweenType;
+    cocos2d::tweenfunc::TweenType _tweenType;
     std::vector<float>   _easingParam;
     Timeline* _timeline;
     cocos2d::Node*  _node;
@@ -406,11 +404,11 @@ public:
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
     
-    inline BlendFunc getBlendFunc() const { return _blendFunc; }
-    inline void setBlendFunc(BlendFunc blendFunc) { _blendFunc = blendFunc; }
+    inline cocos2d::BlendFunc getBlendFunc() const { return _blendFunc; }
+    inline void setBlendFunc(cocos2d::BlendFunc blendFunc) { _blendFunc = blendFunc; }
     
 protected:
-    BlendFunc  _blendFunc;
+    cocos2d::BlendFunc  _blendFunc;
 };
 NS_TIMELINE_END
 

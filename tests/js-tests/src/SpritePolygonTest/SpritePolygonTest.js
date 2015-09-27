@@ -29,62 +29,37 @@ var SpritePolygonTestDemo = BaseTestLayer.extend({
     _title:"",
     _subtitle:"",
     _debugDraw:null,
+    _sp: null,
+    _spp: null,
 
     ctor:function () {
         this._super();
     },
 
-    initDefaultSprite:function(filename, inst){
-        cc.director.setClearColor(cc.color(102/255, 184/255, 204/255, 255/255));
-        this.addChild(inst);
-
-        var s = cc.director.getWinSize();
-        inst.setPosition(s.width/2 + 0.15*s.width, s.height/2);
-
-        var sp = new cc.Sprite(filename);
-        this.addChild(sp);
-        sp.setPosition(s.width/2 - 0.15*s.width, s.height/2);
-
-        this._debugDraw = new cc.DrawNode();
-        sp.addChild(this._debugDraw);
-
-        var self = this;
-        cc.eventManager.addListener({
-            event:cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan:function(){
-                inst.showDebug(true);
-                self._debugDraw.setVisible(true);
+    initTouchDebugDraw: function() {
+        var touchListener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouch: true,
+            onTouchBegan: function (touch, event) {
+                var target = event.getCurrentTarget();
+                target._sp.debugDraw(true);
+                target._spp.debugDraw(true);
                 return true;
             },
-            onTouchEnded:function(){
-                inst.showDebug(false);
-                self._debugDraw.setVisible(false);
+            onTouchMoved: function (touch, event) {
+                var target = event.getCurrentTarget();
+                var pos = touch.getDelta();
+                var newScale = cc.clampf(target._spp.getScale() + pos.x * 0.01, 0.1, 2);
+                target._spp.setScale(newScale);
+                target._sp.setScale(newScale);
+            },
+            onTouchEnded: function (touch, event) {
+                var target = event.getCurrentTarget();
+                target._sp.debugDraw(false);
+                target._spp.debugDraw(false);
             }
-        }, this);
-
-        var positions = new Array(4);
-        var spSize = sp.getContentSize();
-        positions[0] = cc.p(0, spSize.height);
-        positions[1] = cc.p(spSize.width, spSize.height);
-        positions[2] = cc.p(spSize.width, 0);
-        positions[3] = cc.p(0, 0);
-
-        this._debugDraw.drawSegment(positions[0], positions[1], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[1], positions[2], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[2], positions[3], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[3], positions[0], 1, cc.color.GREEN);
-        this._debugDraw.drawSegment(positions[0], positions[2], 1, cc.color.GREEN);
-
-        this._debugDraw.setVisible(false);
-
-        var label1 = new cc.LabelTTF("Sprite:\nPixels drawn:"+spSize.width*spSize.height, "fonts/arial.ttf", 10);
-        sp.addChild(label1);
-        label1.setAnchorPoint(cc.p(0, 1));
-
-        var label2 = new cc.LabelTTF("SpritePolygon:\nPixels drawn:"+(inst.getArea()+inst.getVertCount()), "fonts/arial.ttf", 10);
-        inst.addChild(label2);
-        label2.setAnchorPoint(cc.p(0, 1));
-
+        });
+        cc.eventManager.addListener(touchListener, this);
     },
 
     onRestartCallback:function (sender) {
@@ -136,150 +111,354 @@ var SpritePolygonTestScene = cc.Scene.extend({
 });
 
 var SpritePolygonTest1 = SpritePolygonTestDemo.extend({
-    _title:"SpritePolygon Creation",
-    _subtitle:"SpritePolygon::create(\"Images/grossini.png\")",
+    _title:"PolygonSprite Creation",
+    _subtitle:"new cc.Sprite(jsb.AutoPolygon.generatePolygon(filename))",
 
-    ctor:function(){
+    ctor:function () {
         this._super();
+        this.make2Sprites();
+    },
+    make2Sprites: function() {
+        var polygons = jsb.AutoPolygon.generatePolygon(s_pathGrossini);
+        this._spp = new cc.Sprite(polygons);
+        this._spp.setPosition((0.5+0.15) * winSize.width, 0.5 * winSize.height);
+        this.addChild(this._spp);
 
-        var s = ccexp.SpritePolygon.create(s_pathGrossini);
-        this.initDefaultSprite(s_pathGrossini, s);
+        this._sp = new cc.Sprite(s_pathGrossini);
+        this.addChild(this._sp);
+        this._sp.setPosition((0.5-0.15) * winSize.width, 0.5 * winSize.height);
+
+        var ttfConfig = new cc.FontDefinition({
+            fontName: "fonts/arial.ttf",
+            fontSize: 8
+        });
+        var temp = "Sprite:\nPixels drawn: ";
+        var spSize = this._sp.getContentSize();
+        var spArea = new cc.LabelTTF(temp+Math.round(spSize.width*spSize.height), ttfConfig);
+        spArea.anchorX = 0;
+        spArea.anchorY = 1;
+        this._sp.addChild(spArea);
+        
+        temp = "PolygonSprite:\nPixels drawn: ";
+        var vertCount = "\nverts:"+Math.round(polygons.getVertCount());
+        var sppArea = new cc.LabelTTF(temp+Math.round(polygons.getArea())+vertCount, ttfConfig);
+        sppArea.anchorX = 0;
+        sppArea.anchorY = 1;
+        this._spp.addChild(sppArea);
+        
+        this.initTouchDebugDraw();
     }
 });
 
 var SpritePolygonTest2 = SpritePolygonTestDemo.extend({
-    _title:"SpritePolygon Creation",
-    _subtitle:"SpritePolygon::create(\"Images/grossini.png\", verts)",
+    _title:"PolygonSprite Creation with a rect",
+    _subtitle:"new cc.Sprite(jsb.AutoPolygon.generatePolygon(filename, rect))",
 
     ctor:function(){
         this._super();
+        this.make2Sprites();
+    },
+    make2Sprites: function() {
+        var head = cc.rect(30, 25, 25, 25);
+        var polygons = jsb.AutoPolygon.generatePolygon(s_pathGrossini, head);
+        this._spp = new cc.Sprite(polygons);
+        this._spp.setPosition((0.5+0.15) * winSize.width, 0.5 * winSize.height);
+        this.addChild(this._spp);
 
-        var verts = [];
-        verts.push(cc.p(36.5, 242.0-128.5));
-        verts.push(cc.p(27.5, 242.0-133.5));
-        verts.push(cc.p(24.5, 242.0-145.5));
-        verts.push(cc.p(26.5, 242.0-161.5));
-        verts.push(cc.p(33.5, 242.0-168.5));
-        verts.push(cc.p(27.5, 242.0-168.5));
-        verts.push(cc.p(16.5, 242.0-179.5));
-        verts.push(cc.p(30.5, 242.0-197.5));
-        verts.push(cc.p(28.5, 242.0-237.5));
-        verts.push(cc.p(56.5, 242.0-237.5));
-        verts.push(cc.p(54.5, 242.0-197.5));
-        verts.push(cc.p(68.5, 242.0-184.5));
-        verts.push(cc.p(57.5, 242.0-168.5));
-        verts.push(cc.p(51.5, 242.0-168.5));
-        verts.push(cc.p(60.5, 242.0-154.5));
-        verts.push(cc.p(57.5, 242.0-133.5));
-        verts.push(cc.p(48.5, 242.0-127.5));
-        verts.push(cc.p(36.5, 242.0-127.5));
+        this._sp = new cc.Sprite(s_pathGrossini, head);
+        this.addChild(this._sp);
+        this._sp.setPosition((0.5-0.15) * winSize.width, 0.5 * winSize.height);
 
-        cc.SpritePolygonCache.getInstance().removeAllSpritePolygonCache();
-        var s = ccexp.SpritePolygon.create(s_pathGrossini, verts);
-        this.initDefaultSprite(s_pathGrossini, s);
+        var ttfConfig = new cc.FontDefinition({
+            fontName: "fonts/arial.ttf",
+            fontSize: 8
+        });
+        var temp = "Sprite:\nPixels drawn: ";
+        var spSize = this._sp.getContentSize();
+        var spArea = new cc.LabelTTF(temp+Math.round(spSize.width*spSize.height), ttfConfig);
+        spArea.anchorX = 0;
+        spArea.anchorY = 1;
+        this._sp.addChild(spArea);
+        
+        temp = "PolygonSprite:\nPixels drawn: ";
+        var vertCount = "\nverts:"+Math.round(polygons.getVertCount());
+        var sppArea = new cc.LabelTTF(temp+Math.round(polygons.getArea())+vertCount, ttfConfig);
+        sppArea.anchorX = 0;
+        sppArea.anchorY = 1;
+        this._spp.addChild(sppArea);
+        
+        this.initTouchDebugDraw();
     }
 });
 
-var SpritePolygonTest3 = SpritePolygonTestDemo.extend({
-    _title:"SpritePolygon Creation",
-    _subtitle:"SpritePolygon::create(\"Images/grossini.png\", verts, indices)",
+var SpritePolygonTestSlider = SpritePolygonTestDemo.extend({
+    _title:"Optimization Value (default:2.0)",
+    _subtitle:"",
 
-    ctor:function(){
+    _ttfConfig: null,
+    _epsilonLabel: null,
+
+    ctor: function () {
         this._super();
 
-        var verts = [];
-        verts.push(cc.p(33.500000, 73.500000));
-        verts.push(cc.p(27.500000, 73.500000));
-        verts.push(cc.p(16.500000, 62.500000));
-        verts.push(cc.p(30.500000, 44.500000));
-        verts.push(cc.p(54.500000, 44.500000));
-        verts.push(cc.p(51.500000, 73.500000));
-        verts.push(cc.p(60.500000, 87.500000));
-        verts.push(cc.p(26.500000, 80.500000));
-        verts.push(cc.p(24.500000, 96.500000));
-        verts.push(cc.p(57.500000, 108.500000));
-        verts.push(cc.p(36.500000, 113.500000));
-        verts.push(cc.p(48.500000, 114.500000));
-        verts.push(cc.p(36.500000, 114.500000));
-        verts.push(cc.p(27.500000, 108.500000));
-        verts.push(cc.p(68.500000, 57.500000));
-        verts.push(cc.p(57.500000, 73.500000));
-        verts.push(cc.p(56.500000, 4.500000));
-        verts.push(cc.p(28.500000, 4.500000));
-
-        var indices = [0, 1, 2, 3, 0, 2, 4, 0, 3, 5, 0, 4, 5, 6, 0, 0, 6, 7, 8, 7, 6, 6, 9, 8, 9, 10, 8, 9, 11, 10, 11, 12, 10, 8, 10, 13, 14, 5, 4, 15, 5, 14, 4, 3, 16, 3, 17, 16];
-
-        cc.SpritePolygonCache.getInstance().removeAllSpritePolygonCache();
-        var s = ccexp.SpritePolygon.create(s_pathGrossini, verts, indices);
-        this.initDefaultSprite(s_pathGrossini, s);
-    }
-});
-
-var SpritePolygonTest4 = SpritePolygonTestDemo.extend({
-    _title:"SpritePolygon Creation",
-    _subtitle: "SpritePolygon::create(\"Images/grossini.png\", \n\tvector<V3F_C4B_T2F> v, vector<unsigned short> indices)",
-
-    ctor:function(){
-        this._super();
-
-        var vec3 = [];
-        vec3.push(cc.math.vec3(33.500000, 73.500000,0));
-        vec3.push(cc.math.vec3(27.500000, 73.500000,0));
-        vec3.push(cc.math.vec3(16.500000, 62.500000,0));
-        vec3.push(cc.math.vec3(30.500000, 44.500000,0));
-        vec3.push(cc.math.vec3(54.500000, 44.500000,0));
-        vec3.push(cc.math.vec3(51.500000, 73.500000,0));
-        vec3.push(cc.math.vec3(60.500000, 87.500000,0));
-        vec3.push(cc.math.vec3(26.500000, 80.500000,0));
-        vec3.push(cc.math.vec3(24.500000, 96.500000,0));
-        vec3.push(cc.math.vec3(57.500000, 108.500000,0));
-        vec3.push(cc.math.vec3(36.500000, 113.500000,0));
-        vec3.push(cc.math.vec3(48.500000, 114.500000,0));
-        vec3.push(cc.math.vec3(36.500000, 114.500000,0));
-        vec3.push(cc.math.vec3(27.500000, 108.500000,0));
-        vec3.push(cc.math.vec3(68.500000, 57.500000,0));
-        vec3.push(cc.math.vec3(57.500000, 73.500000,0));
-        vec3.push(cc.math.vec3(56.500000, 4.500000,0));
-        vec3.push(cc.math.vec3(28.500000, 4.50000, 0));
-
-        var t2f = [];
-        t2f.push(cc.p(0.394118, 0.392562));
-        t2f.push(cc.p(0.323529, 0.392562));
-        t2f.push(cc.p(0.194118, 0.483471));
-        t2f.push(cc.p(0.358824, 0.632231));
-        t2f.push(cc.p(0.641176, 0.632231));
-        t2f.push(cc.p(0.605882, 0.392562));
-        t2f.push(cc.p(0.711765, 0.276859));
-        t2f.push(cc.p(0.311765, 0.334711));
-        t2f.push(cc.p(0.288235, 0.202479));
-        t2f.push(cc.p(0.676471, 0.103306));
-        t2f.push(cc.p(0.429412, 0.061983));
-        t2f.push(cc.p(0.570588, 0.053719));
-        t2f.push(cc.p(0.429412, 0.053719));
-        t2f.push(cc.p(0.323529, 0.103306));
-        t2f.push(cc.p(0.805882, 0.524793));
-        t2f.push(cc.p(0.676471, 0.392562));
-        t2f.push(cc.p(0.664706, 0.962810));
-        t2f.push(cc.p(0.335294, 0.962810));
-
-        var verts = [];
-        for(var i = 0; i < 18; ++i)
+        this._ttfConfig = new cc.FontDefinition({
+            fontName: "fonts/arial.ttf",
+            fontSize: 8
+        });
+        
+        var vsize = cc.visibleRect;
+        var slider = new ccui.Slider();
+        slider.setTouchEnabled(true);
+        slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+        slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+        slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
+        slider.setPosition(vsize.width/2, vsize.height/4);
+        
+        slider.addEventListener(this.changeEpsilon, this);
+        slider.setPercent(Math.sqrt(1/19) * 100);
+        
+        this._epsilonLabel = new cc.LabelTTF("Epsilon: 2.0", this._ttfConfig);
+        this.addChild(this._epsilonLabel);
+        this._epsilonLabel.setPosition(vsize.width/2, vsize.height/4 + 15);
+        this.addChild(slider);
+    },
+    makeSprites: function (list, y) {
+        var vsize = cc.visibleRect;
+        var offset = (vsize.width-100)/(list.length-1);
+        for(var i = 0; i < list.length; i++)
         {
-            var t = {
-                v3f:vec3[i],
-                c4b:cc.color.WHITE,
-                t2f:t2f[i]
-            };
-            verts.push(t);
+            var sp = this.makeSprite(list[i], 50+offset*i, y);
+            this.addChild(sp);
+            sp.debugDraw(true);
         }
-        var indices = [0, 1, 2, 3, 0, 2, 4, 0, 3, 5, 0, 4, 5, 6, 0, 0, 6, 7, 8, 7, 6, 6, 9, 8, 9, 10, 8, 9, 11, 10, 11, 12, 10, 8, 10, 13, 14, 5, 4, 15, 5, 14, 4, 3, 16, 3, 17, 16];
+    },
+    makeSprite: function (filename, x, y) {
+        var sp = new cc.Sprite(filename);
+        var quadSize = sp.getContentSize();
+        var originalSize = quadSize.width * quadSize.height;
+        var polygons = jsb.AutoPolygon.generatePolygon(filename);
+        var ret = new cc.Sprite(polygons);
+        ret.setPosition(x, y);
+        
+        var pixels = polygons.getArea()/originalSize*100;
+        var spArea = new cc.LabelTTF(filename+"\nVerts: "+polygons.getVertCount()+ "\nPixels: "+pixels.toFixed(2)+"%", this._ttfConfig);
+        ret.addChild(spArea);
+        spArea.setAnchorPoint(cc.p(0,1));
+        ret.setName(filename);
+        ret.setAnchorPoint(cc.p(0.5, 0));
+        return ret;
+    },
+    updateLabel: function (sp, polygons) {
+        var label = sp.getChildren()[0];
+        var filename = sp.getName();
+        var w = polygons.rect.width/cc.director.getContentScaleFactor();
+        var h = polygons.rect.width/cc.director.getContentScaleFactor();
+        var pixels = polygons.getArea()/(w*h)*100;
+        label.string = filename+"\nVerts: "+polygons.getVertCount()+"\nPixels: "+pixels.toFixed(2)+"%";
+    },
+    changeEpsilon: function (sender, type) {
+        if (type == ccui.Slider.EVENT_PERCENT_CHANGED) {
+            var epsilon = Math.pow(sender.getPercent()/100, 2) * 19 + 1;
+            var children = this.children, child, file;
+            for(var i = 0; i < children.length; i++) {
+                child = children[i];
+                file = child.getName();
+                if(file.length) {
+                    var polygons = jsb.AutoPolygon.generatePolygon(file, cc.rect(), epsilon);
+                    child.setPolygonInfo(polygons);
+                    child.debugDraw(true);
+                    this.updateLabel(child, polygons);
+                }
+            }
+            this._epsilonLabel.setString("Epsilon: "+ epsilon.toFixed(2));
+        }
+    }
+});
 
-        cc.SpritePolygonCache.getInstance().removeAllSpritePolygonCache();
-        var s = ccexp.SpritePolygon.create(s_pathGrossini, verts, indices);
-        this.initDefaultSprite(s_pathGrossini, s);
+var SpritePolygonTest3 = SpritePolygonTestSlider.extend({
+    _title:"Optimization Value (default:2.0)",
+    _subtitle:"",
+
+    ctor:function(){
+        this._super();
+
+        var vsize = cc.visibleRect;
+        var list = [
+            "Images/arrows.png",
+            "Images/CyanTriangle.png",
+            s_pathB2,
+            "Images/elephant1_Diffuse.png"
+        ];
+        this.makeSprites(list, vsize.height/2);
+    }
+});
+
+var SpritePolygonTest4 = SpritePolygonTestSlider.extend({
+    _title:"Optimization Value (default:2.0)",
+    _subtitle: "",
+
+    ctor:function(){
+        this._super();
+
+        var vsize = cc.visibleRect;
+        var list = [
+            s_pathGrossini,
+            "Images/grossinis_sister1.png",
+            "Images/grossinis_sister2.png"
+        ];
+        this.makeSprites(list, vsize.height/2);
     }
 
-})
+});
+
+var SpritePolygonPerformance = SpritePolygonTestDemo.extend({
+    spriteCount: 0,
+    vertCount: 0,
+    triCount: 0,
+    pixelCount: 0,
+    elapsedTime: 0,
+    perfLabel: null,
+    continuousLowDt: 0,
+    continuousHighDtTime: 0,
+    waitingTime: 0,
+    _posX: 0,
+    _posY: 0,
+    _leftX: 0,
+    _rightX: 0,
+    goRight: true,
+    ended: false,
+    prevDt: 0,
+    _incVert: 0,
+    _incTri: 0,
+    _incPix: 0,
+    ctor: function () {
+        this._super();
+        var ttfConfig = new cc.FontDefinition({
+            fontName: "fonts/arial.ttf",
+            fontSize: 10
+        });
+        this.perfLabel = new cc.LabelTTF("Performance test", ttfConfig);
+        this.addChild(this.perfLabel);
+        this.perfLabel.setPosition(cc.visibleRect.width/2, 80);
+        
+        var size = cc.visibleRect;
+        this._posX = this._leftX = size.width*0.15;
+        this._rightX = size.width*0.85;
+        this._posY = size.height/2;
+        this.prevDt = 0.016;
+        this.goRight = true;
+        this.ended = false;
+        this.scheduleUpdate();
+    },
+    updateLabel: function () {
+        var temp = "Nodes: "+this.spriteCount+" Triangles: "+this.triCount+"\nPixels: "+this.pixelCount.toFixed(2)+" Vertices: "+this.vertCount;
+        if(!this.ended)
+            this.perfLabel.string = temp;
+    },
+    makeSprite: function () {
+        return new cc.Node();
+    },
+    update: function (dt) {
+        dt = dt*0.3 + this.prevDt*0.7;
+        this.prevDt = dt;
+        this.elapsedTime += dt;
+        var loops = (0.025-dt)*1000;
+        if(dt < 0.025 && loops>0)
+        {
+            this.continuousHighDtTime = cc.clampf(this.continuousHighDtTime-dt*2, 0.0, 1.0);
+            this.waitingTime = cc.clampf(this.waitingTime-dt, 0.0, 5.0);
+            this.continuousLowDt++;
+        }
+        else
+        {
+            this.continuousHighDtTime+=dt;
+            this.continuousLowDt = 0;
+        }
+        if (this.continuousLowDt >= 5 && loops > 0) {
+            for(var i = 0; i < loops; i++)
+            {
+                if(this._posX >= this._rightX)
+                {
+                    this.goRight = false;
+                }
+                else if(this._posX <= this._leftX)
+                {
+                    this.goRight = true;
+                }
+                var s = this.makeSprite();
+                this.addChild(s);
+                s.setPosition(this._posX, this._posY);
+                if(this.goRight)
+                    this._posX++;
+                else
+                    this._posX--;
+                
+                this.incrementStats();
+            }
+            this.updateLabel();
+        }
+
+        //if we have 10 continuous low dt, then we will start to create more sprites
+        else if(this.continuousHighDtTime >= 0.5 || this.waitingTime > 3.0){
+            // its now 1 seconds with high DT time, time to end
+            this.ended = true;
+            this.unscheduleUpdate();
+            this.perfLabel.string = "Test ended in " + this.elapsedTime + " seconds\nNodes: " + this.spriteCount + "   Triangles: " + this.triCount + "\nPixels: " + this.pixelCount.toFixed() + "   Vertices: " + this.vertCount;
+            this.getChildByTag(BASE_TEST_SUBTITLE_TAG).string = "Test ended";
+        }
+        else{
+            this.waitingTime += dt;
+        }
+    },
+    incrementStats: function () {
+        this.spriteCount ++;
+        this.vertCount += this._incVert;
+        this.triCount += this._incTri;
+        this.pixelCount += this._incPix;
+    }
+});
+
+var SpritePolygonPerformanceTestDynamic = SpritePolygonPerformance.extend({
+    _title: "Dynamic SpritePolygon Performance",
+    _subtitle: "Test running, please wait until it ends",
+    _polygons: null,
+    ctor: function () {
+        this._super();
+        this._polygons = jsb.AutoPolygon.generatePolygon(s_pathGrossini);
+        this.initIncrementStats();
+    },
+    initIncrementStats: function () {
+        this._incVert = this._polygons.getVertCount();
+        this._incTri = this._polygons.getTriaglesCount();
+        this._incPix = this._polygons.getArea();
+    },
+    makeSprite: function () {
+        var ret = new cc.Sprite(this._polygons);
+        ret.runAction(cc.rotateBy(1,360).repeatForever());
+        return ret;
+    }
+});
+
+var SpritePerformanceTestDynamic = SpritePolygonPerformance.extend({
+    _title: "Dynamic Sprite Performance",
+    _subtitle: "Test running, please wait until it ends",
+    ctor: function () {
+        this._super();
+        this.initIncrementStats();
+    },
+    initIncrementStats: function () {
+        var t = new cc.Sprite(s_pathGrossini);
+        this._incVert = 4;
+        this._incTri = 2;
+        this._incPix = t.width * t.height;
+    },
+    makeSprite: function () {
+        var ret = new cc.Sprite(s_pathGrossini);
+        ret.runAction(cc.rotateBy(1,360).repeatForever());
+        return ret;
+    }
+});
+
 //
 // Flow control
 //
@@ -287,7 +466,9 @@ var arrayOfSpritePolygonTest = [
     SpritePolygonTest1,
     SpritePolygonTest2,
     SpritePolygonTest3,
-    SpritePolygonTest4
+    SpritePolygonTest4,
+    SpritePolygonPerformanceTestDynamic,
+    SpritePerformanceTestDynamic
 ];
 
 var nextSpritePolygonTest = function () {

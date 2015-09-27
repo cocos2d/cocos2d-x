@@ -72,8 +72,8 @@ if(MSVC)
 else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
   if(CLANG)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
   endif()
@@ -111,8 +111,16 @@ include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
+  ${COCOS2D_ROOT}/cocos/platform
+  ${COCOS2D_ROOT}/cocos/audio/include/
   Classes
 )
+if ( WIN32 )
+  include_directories(
+  ${COCOS2D_ROOT}/external/glfw3/include/win32
+  ${COCOS2D_ROOT}/external/win32-specific/gles/include/OGLES
+)
+endif( WIN32 )
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
@@ -127,9 +135,17 @@ set(GAME_HEADERS
 )
 
 if(GAME_HEADERS)
-add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
+  if ( WIN32 )
+    add_executable(${APP_NAME} WIN32 ${GAME_SRC} ${GAME_HEADERS})
+  else()
+    add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
+  endif ( WIN32 )
 else()
-add_executable(${APP_NAME} ${GAME_SRC})
+  if ( WIN32 )
+    add_executable(${APP_NAME} WIN32 ${GAME_SRC})
+  else()
+    add_executable(${APP_NAME} ${GAME_SRC})
+  endif ( WIN32 )
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)

@@ -44,7 +44,7 @@ class CC_DLL Touch : public Ref
 {
 public:
     /** 
-     * Dispatch mode, how the touches are dispathced.
+     * Dispatch mode, how the touches are dispatched.
      * @js NA
      */
     enum class DispatchMode {
@@ -96,7 +96,7 @@ public:
      */
     Vec2 getStartLocationInView() const;
     
-    /** Set the touch infomation. It always used to monitor touch event.
+    /** Set the touch information. It always used to monitor touch event.
      *
      * @param id A given id
      * @param x A given x coordinate.

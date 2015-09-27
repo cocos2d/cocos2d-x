@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -33,21 +33,23 @@ namespace cocostudio {
 
 class CC_STUDIO_DLL ComAudio : public cocos2d::Component
 {
-
     DECLARE_CLASS_COMPONENT_INFO
-
 public:
+    const static std::string COMPONENT_NAME;
+
     /**
      * @js ctor
      */
-    ComAudio(void);
+    ComAudio();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~ComAudio(void);
+    virtual ~ComAudio();
     
 public:
+    static ComAudio* create();
+
     virtual bool init() override;
     /**
      * @js NA
@@ -59,12 +61,18 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
-    virtual bool isEnabled() const override;
-    virtual void setEnabled(bool b) override;
-    virtual bool serialize(void* r) override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onAdd() override;
+    /**
+    * @js NA
+    * @lua NA
+    */
+    virtual void onRemove() override;
 
-    static ComAudio* create(void);
-   
+    virtual bool serialize(void* r) override;
 public:
     void end();
     void preloadBackgroundMusic(const char* pszFilePath);
@@ -98,8 +106,8 @@ public:
     void setLoop(bool bLoop);
     bool isLoop();
 private:
-	std::string _filePath;
-	bool _loop;
+    std::string _filePath;
+    bool _loop;
 };
 
 }

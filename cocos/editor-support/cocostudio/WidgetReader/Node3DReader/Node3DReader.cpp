@@ -85,15 +85,15 @@ namespace cocostudio
             attriname = attribute->Name();
             std::string value = attribute->Value();
             
-            if (attriname == "ValueX")
+            if (attriname == "X")
             {
                 ret.x = atof(value.c_str());
             }
-            else if (attriname == "ValueY")
+            else if (attriname == "Y")
             {
                 ret.y = atof(value.c_str());
             }
-            else if(attriname == "ValueZ")
+            else if(attriname == "Z")
             {
                 ret.z = atof(value.c_str());
             }
@@ -196,11 +196,11 @@ namespace cocostudio
                     attriname = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (attriname == "ValueX")
+                    if (attriname == "X")
                     {
                         position.x = atof(value.c_str());
                     }
-                    else if (attriname == "ValueY")
+                    else if (attriname == "Y")
                     {
                         position.y = atof(value.c_str());
                     }
@@ -217,11 +217,11 @@ namespace cocostudio
                     attriname = attribute->Name();
                     std::string value = attribute->Value();
 
-                    if (attriname == "ValueX")
+                    if (attriname == "X")
                     {
                         scale.x = atof(value.c_str());
                     }
-                    else if (attriname == "ValueY")
+                    else if (attriname == "Y")
                     {
                         scale.y = atof(value.c_str());
                     }

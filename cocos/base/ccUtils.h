@@ -89,6 +89,13 @@ namespace utils
     double CC_DLL gettime();
 
     /**
+     * Get current time in milliseconds, accurate to nanoseconds
+     *
+     * @return  Returns the time in milliseconds since the Epoch.
+     */
+    long long CC_DLL getTimeInMilliseconds();
+
+    /**
      * Calculate unionof bounding box of a node and its children.
      * @return Returns unionof bounding box of a node and its children.
      */

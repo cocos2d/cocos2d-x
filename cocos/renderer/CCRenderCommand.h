@@ -32,7 +32,7 @@
 #include "base/ccTypes.h"
 
 /**
- * @addtogroup support
+ * @addtogroup renderer
  * @{
  */
 
@@ -101,7 +101,7 @@ public:
 protected:
     /**Constructor.*/
     RenderCommand();
-    /**Desctructor.*/
+    /**Destructor.*/
     virtual ~RenderCommand();
     //used for debug but it is not implemented.
     void printID();

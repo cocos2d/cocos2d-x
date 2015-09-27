@@ -105,7 +105,7 @@ class Data;
  
  @verbatim
     // Create the top-level Properties object.
-    Properties* properties = Properties::createWithoutAutorelease("example.properties");
+    Properties* properties = Properties::createNonRefCounted("example.properties");
     // Retrieve the "spriteTexture" namespace.
     Properties* spriteTexture = properties->getNamespace("spriteTexture");
  
@@ -187,7 +187,7 @@ public:
      * @return The created Properties or NULL if there was an error.
      * @script{create}
      */
-    static Properties* createWithoutAutorelease(const std::string& url);
+    static Properties* createNonRefCounted(const std::string& url);
 
     /**
      * Destructor.
@@ -579,7 +579,7 @@ private:
     bool seekFromCurrent(int offset);
     bool eof();
 
-    // Called after createWithoutAutorelease(); copies info from parents into derived namespaces.
+    // Called after createNonRefCounted(); copies info from parents into derived namespaces.
     void resolveInheritance(const char* id = NULL);
 
     // Called by resolveInheritance().

@@ -88,7 +88,7 @@ public:
      * @param tilesetInfo An tileset info.
      * @param layerInfo A layer info.
      * @param mapInfo A map info.
-     * @return If initializes success，it will return true.
+     * @return If initializes successfully, it will return true.
      */
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
 

@@ -36,6 +36,7 @@ option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+option(USE_BULLET "Use bullet for physics3d library" ON)
 option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ON)
 
 
@@ -44,6 +45,11 @@ if(DEBUG_MODE)
 else(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE RELEASE)
 endif(DEBUG_MODE)
+
+if(USE_BULLET)
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+  add_definitions(-DCC_USE_PHYSICS=1)
+endif(USE_BULLET)
 
 set(CMAKE_C_FLAGS_DEBUG "-DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
@@ -159,6 +165,7 @@ if(LINUX OR MACOSX OR WINDOWS)
 
     #cocos_find_package(FMODEX FMODEX REQUIRED)
     cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
+    cocos_find_package(GTK3 GTK3 REQUIRED)
   endif()
 
   if(WINDOWS)
@@ -257,6 +264,9 @@ message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 add_subdirectory(frameworks/cocos2d-x/external/xxhash)
 include_directories(frameworks/cocos2d-x/external/xxhash)
 
+#buid recast
+add_subdirectory(frameworks/cocos2d-x/external/recast)
+
 set(GAME_SRC
   frameworks/runtime-src/proj.linux/main.cpp
   frameworks/runtime-src/Classes/AppDelegate.cpp
@@ -268,7 +278,6 @@ add_subdirectory(frameworks/cocos2d-x/cocos)
 #jsbindings library
 add_subdirectory(frameworks/cocos2d-x/cocos/scripting/js-bindings)
 
-
 # add the executable
 add_executable(${APP_NAME}
   ${GAME_SRC}
@@ -277,7 +286,13 @@ add_executable(${APP_NAME}
 target_link_libraries(${APP_NAME}
   jscocos2d
   cocos2d
+  recast
 )
+
+if(USE_BULLET)
+  add_subdirectory(frameworks/cocos2d-x/external/bullet)
+  target_link_libraries(${APP_NAME} bullet)
+endif()
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 

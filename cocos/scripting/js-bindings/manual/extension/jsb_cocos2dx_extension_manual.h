@@ -27,27 +27,31 @@
 #include "jsapi.h"
 #include "jsfriendapi.h"
 #include "mozilla/Maybe.h"
-#include "extensions/assets-manager/Downloader.h"
+#include "cocos/network/CCDownloader.h"
+#include "renderer/CCTexture2D.h"
 
 class __JSDownloaderDelegator : cocos2d::Ref
 {
 public:
-    static void download(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback);
+    void downloadAsync();
+    void download();
     
+    static __JSDownloaderDelegator *create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback);
+
 protected:
-    __JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback);
+    __JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback);
     ~__JSDownloaderDelegator();
     
+    void startDownload();
+    
 private:
-    void onSuccess(const std::string &srcUrl, const std::string &storagePath, const std::string &customId);
-    void onError(const cocos2d::extension::Downloader::Error &error);
-    unsigned char *_buffer;
-    long _size;
-    std::shared_ptr<cocos2d::extension::Downloader> _downloader;
+    void onSuccess(cocos2d::Texture2D *tex);
+    void onError();
+    std::shared_ptr<cocos2d::network::Downloader> _downloader;
     std::string _url;
     JSContext *_cx;
-    mozilla::Maybe<JS::RootedValue> _jsCallback;
-    mozilla::Maybe<JS::RootedObject> _obj;
+    mozilla::Maybe<JS::PersistentRootedObject> _jsCallback;
+    mozilla::Maybe<JS::PersistentRootedObject> _obj;
 };
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global);

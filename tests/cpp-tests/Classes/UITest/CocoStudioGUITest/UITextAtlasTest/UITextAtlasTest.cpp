@@ -22,7 +22,15 @@ bool UITextAtlasTest::init()
         _uiLayer->addChild(alert);
         
         // Create the text atlas
-        TextAtlas* textAtlas = TextAtlas::create("1234567890", "cocosui/labelatlas.png", 17, 22, "0");
+        TextAtlas* textAtlas = nullptr;
+        if (Director::getInstance()->getWinSizeInPixels().height > 320.f)
+        {
+            textAtlas = TextAtlas::create("1234567890", "cocosui/labelatlas.png", 34, 44, "0");
+        }
+        else
+        {
+            textAtlas = TextAtlas::create("1234567890", "cocosui/labelatlas.png", 17, 22, "0");
+        }
         textAtlas->setPosition(Vec2((widgetSize.width) / 2, widgetSize.height / 2.0f));
         _uiLayer->addChild(textAtlas);                
         

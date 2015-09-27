@@ -62,7 +62,12 @@ void OpenGLES::Initialize()
 
         // EGL_ANGLE_DISPLAY_ALLOW_RENDER_TO_BACK_BUFFER is an optimization that can have large performance benefits on mobile devices.
         // Its syntax is subject to change, though. Please update your Visual Studio templates if you experience compilation issues with it.
-        EGL_ANGLE_DISPLAY_ALLOW_RENDER_TO_BACK_BUFFER, EGL_TRUE, 
+        EGL_ANGLE_DISPLAY_ALLOW_RENDER_TO_BACK_BUFFER, EGL_TRUE,
+
+        // EGL_PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE is an option that enables ANGLE to automatically call 
+        // the IDXGIDevice3::Trim method on behalf of the application when it gets suspended. 
+        // Calling IDXGIDevice3::Trim when an application is suspended is a Windows Store application certification requirement.
+        EGL_PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE, EGL_TRUE,
         EGL_NONE,
     };
     
@@ -74,6 +79,7 @@ void OpenGLES::Initialize()
         EGL_PLATFORM_ANGLE_MAX_VERSION_MAJOR_ANGLE, 9,
         EGL_PLATFORM_ANGLE_MAX_VERSION_MINOR_ANGLE, 3,
         EGL_ANGLE_DISPLAY_ALLOW_RENDER_TO_BACK_BUFFER, EGL_TRUE, 
+        EGL_PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE, EGL_TRUE,
         EGL_NONE,
     };
 
@@ -84,6 +90,7 @@ void OpenGLES::Initialize()
         EGL_PLATFORM_ANGLE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_TYPE_D3D11_ANGLE,
         EGL_PLATFORM_ANGLE_DEVICE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_DEVICE_TYPE_WARP_ANGLE,
         EGL_ANGLE_DISPLAY_ALLOW_RENDER_TO_BACK_BUFFER, EGL_TRUE, 
+        EGL_PLATFORM_ANGLE_ENABLE_AUTOMATIC_TRIM_ANGLE, EGL_TRUE,
         EGL_NONE,
     };
     
@@ -200,12 +207,12 @@ EGLSurface OpenGLES::CreateSurface(SwapChainPanel^ panel, const Size* renderSurf
     
     // Create a PropertySet and initialize with the EGLNativeWindowType.
     PropertySet^ surfaceCreationProperties = ref new PropertySet();
-    surfaceCreationProperties->Insert(ref new String(EGLNativeWindowTypeProperty), panel);
+    surfaceCreationProperties->Insert(ref new Platform::String(EGLNativeWindowTypeProperty), panel);
 
     // If a render surface size is specified, add it to the surface creation properties
     if (renderSurfaceSize != nullptr)
     {
-        surfaceCreationProperties->Insert(ref new String(EGLRenderSurfaceSizeProperty), PropertyValue::CreateSize(*renderSurfaceSize));
+        surfaceCreationProperties->Insert(ref new Platform::String(EGLRenderSurfaceSizeProperty), PropertyValue::CreateSize(*renderSurfaceSize));
     }
 
     surface = eglCreateWindowSurface(mEglDisplay, mEglConfig, reinterpret_cast<IInspectable*>(surfaceCreationProperties), surfaceAttributes);

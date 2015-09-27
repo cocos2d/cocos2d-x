@@ -177,8 +177,6 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     Physics3DPointToPointConstraint();
     virtual ~Physics3DPointToPointConstraint();
-    
-protected:
     bool init(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotPointInA);
     bool init(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB);
     
@@ -186,7 +184,7 @@ protected:
 
 /**
  * Hinge constraint restricts two additional angular degrees of freedom, so the body can only rotate around one axis, the hinge axis. This can be useful to represent doors or wheels rotating around one axis.
- * hinge constraint between two rigidbodies each with a pivotpoint that descibes the axis location in local space
+ * hinge constraint between two rigidbodies each with a pivotpoint that describes the axis location in local space
  */
 class CC_DLL Physics3DHingeConstraint : public Physics3DConstraint
 {
@@ -287,7 +285,7 @@ public:
     bool getAngularOnly() const;
     /**get enable angular motor*/
     bool getEnableAngularMotor() const;
-    /**get motor target velosity*/
+    /**get motor target velocity*/
     float getMotorTargetVelosity() const;
     /**get max motor impulse*/
     float getMaxMotorImpulse() const;
@@ -341,13 +339,13 @@ public:
     void setUpperLinLimit(float upperLimit);
     /**get lower angular limit*/
     float getLowerAngLimit() const;
-    /**set lower angualr limit*/
+    /**set lower angular limit*/
     void setLowerAngLimit(float lowerLimit);
-    /**get upper anglular limit*/
+    /**get upper angular limit*/
     float getUpperAngLimit() const;
-    /**set upper anglular limit*/
+    /**set upper angular limit*/
     void setUpperAngLimit(float upperLimit);
-    /**use A's frame as linear refference*/
+    /**use A's frame as linear reference*/
     bool getUseLinearReferenceFrameA() const;
     
     float getSoftnessDirLin() const;

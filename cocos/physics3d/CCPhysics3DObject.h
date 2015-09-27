@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -38,6 +38,7 @@
 class btCollisionShape;
 class btRigidBody;
 class btPersistentManifold;
+class btGhostObject;
 
 NS_CC_BEGIN
 /**
@@ -79,6 +80,7 @@ public:
     {
         UNKNOWN = 0,
         RIGID_BODY,
+        COLLIDER,
     };
     
     /** Get the Physics3DObject Type. */
@@ -172,7 +174,7 @@ public:
      */
     static Physics3DRigidBody* create(Physics3DRigidBodyDes* info);
     
-	/** Get the pointer of btRigidBody. */
+    /** Get the pointer of btRigidBody. */
     btRigidBody* getRigidBody() const { return _btRigidBody; }
     
     /**
@@ -356,6 +358,154 @@ protected:
     btRigidBody* _btRigidBody;
     Physics3DShape *_physics3DShape;
     std::vector<Physics3DConstraint *> _constraintList;
+};
+
+/**
+ * @brief The description of Physics3DCollider.
+ */
+struct CC_DLL Physics3DColliderDes
+{
+    /**shape pointer*/
+    Physics3DShape* shape;
+    /**original world Transform*/
+    cocos2d::Mat4 originalTransform;
+    /**Is collider a trigger?*/
+    bool          isTrigger;
+    /**the friction*/
+    float friction;
+    /**the rolling friction*/
+    float rollingFriction;
+    /**the restitution*/
+    float restitution;
+    /**the hit fraction*/
+    float hitFraction;
+    /**the swept sphere radius*/
+    float ccdSweptSphereRadius;
+    /**the motion threshold*/
+    float ccdMotionThreshold;
+    
+    Physics3DColliderDes()
+    : shape(nullptr)
+    , isTrigger(false)
+    , friction(0.5f)
+    , rollingFriction(0.0f)
+    , restitution(0.0f)
+    , hitFraction(1.0f)
+    , ccdSweptSphereRadius(0.0f)
+    , ccdMotionThreshold(0.0f)
+    {
+        
+    }
+};
+
+/**
+* @brief Inherit from Physics3DObject, the main class for Colliders.
+*/
+class CC_DLL Physics3DCollider : public Physics3DObject
+{
+public:
+
+    /**
+    * Creates a Physics3DCollider with Physics3DColliderDes.
+    *
+    * @return An autoreleased Physics3DCollider object.
+    */
+    static Physics3DCollider* create(Physics3DColliderDes *info);
+
+    /** Get the pointer of btGhostObject. 
+     *  @return The pointer of btGhostObject.
+    */
+    btGhostObject* getGhostObject() const { return _btGhostObject; }
+
+    /** Set trigger. 
+     *  @param isTrigger Is a trigger.
+    */
+    void setTrigger(bool isTrigger);
+
+    /** Check is a trigger. 
+     *  @return Is a trigger.
+    */
+    bool isTrigger() const;
+
+    /** Set restitution. 
+     *  @param rest The restitution.
+    */
+    void setRestitution(float rest);
+
+    /** Get restitution. 
+     *  @return The restitution.
+    */
+    float getRestitution() const;
+
+    /** Set friction. 
+     *  @param rest The friction.
+    */
+    void setFriction(float frict);
+
+    /** Get friction. 
+     *  @return The friction.
+    */
+    float getFriction() const;
+
+    /** Set rolling friction. 
+     *  @param frict The rolling friction.
+    */
+    void setRollingFriction(float frict);
+
+    /** Get rolling friction. 
+     *  @return The rolling friction.
+    */
+    float getRollingFriction() const;
+
+    /** Set hit friction. 
+     *  @param hitFraction The hit friction.
+    */
+    void setHitFraction(float hitFraction);
+
+    /** Get hit friction. 
+     *  @return The hit friction.
+    */
+    float getHitFraction() const;
+
+    /** Set motion threshold, don't do continuous collision detection if the motion (in one step) is less then ccdMotionThreshold.
+     *  @param ccdMotionThreshold The motion threshold.
+    */
+    void setCcdMotionThreshold(float ccdMotionThreshold);
+
+    /** Get motion threshold. 
+     *  @return The motion threshold.
+    */
+    float getCcdMotionThreshold() const;
+
+    /** Set swept sphere radius. 
+     *  @param radius The swept sphere radius.
+    */
+    void setCcdSweptSphereRadius(float radius);
+
+    /** Get swept sphere radius. 
+     *  @return The swept sphere radius.
+    */
+    float getCcdSweptSphereRadius() const;
+
+    /** override. */
+    virtual cocos2d::Mat4 getWorldTransform() const;
+
+    /** Set a callback when trigger enter. */
+    std::function<void(Physics3DObject *otherObject)> onTriggerEnter;
+
+    /** Set a callback when trigger exit. */
+    std::function<void(Physics3DObject *otherObject)> onTriggerExit;
+
+CC_CONSTRUCTOR_ACCESS :
+    Physics3DCollider();
+    virtual ~Physics3DCollider();
+
+    bool init(Physics3DColliderDes *info);
+
+protected:
+
+    btGhostObject *_btGhostObject;
+    Physics3DShape *_physics3DShape;
 };
 
 // end of 3d group

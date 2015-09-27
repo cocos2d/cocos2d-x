@@ -11,16 +11,6 @@ class AtlasDemoNew : public TestCase
 {
 };
 
-class LabelTTFAlignmentNew : public AtlasDemoNew
-{
-public:
-    CREATE_FUNC(LabelTTFAlignmentNew);
-
-    LabelTTFAlignmentNew();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
 class LabelFNTColorAndOpacity : public AtlasDemoNew
 {
     float        _time;
@@ -80,6 +70,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelFNTOpacity : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFNTOpacity);
+
+    LabelFNTOpacity();
+    virtual std::string title() const override;
+
+    virtual std::string subtitle() const override;
+};
+
 class LabelFNTHundredLabels : public AtlasDemoNew
 {
 public:
@@ -130,26 +131,6 @@ public:
     CREATE_FUNC(LabelFNTGlyphDesigner);
 
     LabelFNTGlyphDesigner();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
-class LabelTTFUnicodeChinese : public AtlasDemoNew
-{
-public:
-    CREATE_FUNC(LabelTTFUnicodeChinese);
-
-    LabelTTFUnicodeChinese();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
-class LabelFNTUnicodeChinese : public AtlasDemoNew
-{
-public:
-    CREATE_FUNC(LabelFNTUnicodeChinese);
-
-    LabelFNTUnicodeChinese();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -267,7 +248,6 @@ public:
 private:
 };
 
-
 class LabelTTFFontsTestNew : public AtlasDemoNew
 {
 public:
@@ -277,20 +257,6 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-};
-
-
-class LabelBMFontTestNew : public AtlasDemoNew
-{
-public:
-    CREATE_FUNC(LabelBMFontTestNew);
-
-    LabelBMFontTestNew();
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-private:
 };
 
 class LabelFontDefTestNew : public AtlasDemoNew
@@ -417,7 +383,6 @@ public:
     CREATE_FUNC(LabelAlignmentTest);
 
     LabelAlignmentTest();
-    virtual ~LabelAlignmentTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
@@ -427,11 +392,8 @@ private:
     void  setAlignmentTop(cocos2d::Ref* sender);
     void  setAlignmentMiddle(cocos2d::Ref* sender);
     void  setAlignmentBottom(cocos2d::Ref* sender);
-    const char* getCurrentAlignment();
 
     cocos2d::Label* _label;
-    cocos2d::TextHAlignment _horizAlign;
-    cocos2d::TextVAlignment _vertAlign;
 };
 
 class LabelIssue4428Test : public AtlasDemoNew
@@ -582,6 +544,92 @@ public:
     CREATE_FUNC(LabelIssue11699Test);
 
     LabelIssue11699Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue12409Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue12409Test);
+
+    LabelIssue12409Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelAddChildTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelAddChildTest);
+
+    LabelAddChildTest();
+
+    virtual std::string title() const override;
+};
+
+class LabelIssue12775Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue12775Test);
+
+    LabelIssue12775Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue11585Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue11585Test);
+
+    LabelIssue11585Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelFullTypeFontTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelFullTypeFontTest);
+
+    LabelFullTypeFontTest();
+
+    virtual std::string title() const override;
+};
+
+class LabelIssue10688Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue10688Test);
+
+    LabelIssue10688Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue13202Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue13202Test);
+
+    LabelIssue13202Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue9500Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue9500Test);
+
+    LabelIssue9500Test();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

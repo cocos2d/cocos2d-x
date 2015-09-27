@@ -52,7 +52,13 @@
       <DeploymentContent>true</DeploymentContent>
     </_CustomResource>
   </ItemGroup>
-
+  <ItemGroup>
+    <_CustomResource Include="..\..\..\resjs\**\*">
+      <Link>Assets\Resources\res\resjs\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <DeploymentContent>true</DeploymentContent>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </_CustomResource>
+  </ItemGroup>
   <Target Name="_CollectCustomResources" BeforeTargets="AssignTargetPaths">
     <Message Text="Adding resource: %(_CustomResource.Identity) -&gt; %(_CustomResource.Link)" />
     <ItemGroup>

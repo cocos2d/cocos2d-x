@@ -5,7 +5,6 @@
 #include "LuaBasicConversions.h"
 
 
-
 int lua_cocos2dx_controller_Controller_receiveExternalKeyEvent(lua_State* tolua_S)
 {
     int argc = 0;
@@ -734,7 +733,7 @@ int lua_cocos2dx_controller_EventController_constructor(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Controller* arg1;
-            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1);
+            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1, "cc.EventController:EventController");
 
             if (!ok) { break; }
             bool arg2;
@@ -757,7 +756,7 @@ int lua_cocos2dx_controller_EventController_constructor(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Controller* arg1;
-            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1);
+            ok &= luaval_to_object<cocos2d::Controller>(tolua_S, 3, "cc.Controller",&arg1, "cc.EventController:EventController");
 
             if (!ok) { break; }
             int arg2;

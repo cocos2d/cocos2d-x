@@ -20,12 +20,12 @@ TOLUA_ROOT="$PROJECT_ROOT/tools/tolua"
 TOJS_ROOT="$PROJECT_ROOT/tools/tojs"
 LUA_AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/scripting/lua-bindings/auto"
 JS_AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/scripting/js-bindings/auto"
-COMMITTAG="[AUTO]: updating luabinding & jsbinding automatically"
+COMMITTAG="[ci skip][AUTO]: updating luabinding & jsbinding automatically"
 ELAPSEDSECS=`date +%s`
 COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
 COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
 PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
-FETCH_REMOTE_BRANCH="v3"
+FETCH_REMOTE_BRANCH=$1
 LUA_COMMIT_PATH="cocos/scripting/lua-bindings/auto"
 JS_COMMIT_PATH="cocos/scripting/js-bindings/auto"
 

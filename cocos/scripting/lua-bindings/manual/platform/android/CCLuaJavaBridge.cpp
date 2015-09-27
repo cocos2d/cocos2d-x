@@ -2,6 +2,7 @@
 #include "CCLuaJavaBridge.h"
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
+#include "base/ccUTF8.h"
 
 #define  LOG_TAG    "luajc"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -40,9 +41,8 @@ bool LuaJavaBridge::CallInfo::execute(void)
 
         case TypeString:
             m_retjs = (jstring)m_env->CallStaticObjectMethod(m_classID, m_methodID);
-            const char *stringBuff = m_env->GetStringUTFChars(m_retjs, 0);
-            m_ret.stringValue = new string(stringBuff);
-            m_env->ReleaseStringUTFChars(m_retjs, stringBuff);
+            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs);
+            m_ret.stringValue = new string(strValue);
            break;
     }
 
@@ -80,9 +80,8 @@ bool LuaJavaBridge::CallInfo::executeWithArgs(jvalue *args)
 
          case TypeString:
         	 m_retjs = (jstring)m_env->CallStaticObjectMethodA(m_classID, m_methodID, args);
-			 const char *stringBuff = m_env->GetStringUTFChars(m_retjs, 0);
-			 m_ret.stringValue = new string(stringBuff);
-			 m_env->ReleaseStringUTFChars(m_retjs, stringBuff);
+            std::string strValue = cocos2d::StringUtils::getStringUTFCharsJNI(m_env, m_retjs);
+            m_ret.stringValue = new string(strValue);
             break;
      }
 

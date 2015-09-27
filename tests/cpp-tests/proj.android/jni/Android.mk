@@ -20,6 +20,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/Box2DTestBed/GLES-Render.cpp \
 ../../Classes/Box2DTestBed/Test.cpp \
 ../../Classes/Box2DTestBed/TestEntries.cpp \
+../../Classes/BugsTest/Bug-CCDrawNode.cpp \
+../../Classes/BugsTest/Bug-PageViewLayout.cpp \
 ../../Classes/BugsTest/Bug-1159.cpp \
 ../../Classes/BugsTest/Bug-1174.cpp \
 ../../Classes/BugsTest/Bug-350.cpp \
@@ -30,6 +32,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/BugsTest/Bug-886.cpp \
 ../../Classes/BugsTest/Bug-899.cpp \
 ../../Classes/BugsTest/Bug-914.cpp \
+../../Classes/BugsTest/Bug-12847.cpp \
 ../../Classes/BugsTest/Bug-Child.cpp \
 ../../Classes/BugsTest/BugsTest.cpp \
 ../../Classes/Camera3DTest/Camera3DTest.cpp \
@@ -43,6 +46,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/CurlTest/CurlTest.cpp \
 ../../Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
 ../../Classes/DataVisitorTest/DataVisitorTest.cpp \
+../../Classes/DownloaderTest/DownloaderTest.cpp \
 ../../Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 ../../Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 ../../Classes/EffectsTest/EffectsTest.cpp \
@@ -95,26 +99,12 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/NewAudioEngineTest/NewAudioEngineTest.cpp \
 ../../Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp \
 ../../Classes/NewRendererTest/NewRendererTest.cpp \
+../../Classes/NavMeshTest/NavMeshTest.cpp \
 ../../Classes/NodeTest/NodeTest.cpp \
 ../../Classes/OpenURLTest/OpenURLTest.cpp \
 ../../Classes/ParallaxTest/ParallaxTest.cpp \
 ../../Classes/Particle3DTest/Particle3DTest.cpp \
 ../../Classes/ParticleTest/ParticleTest.cpp \
-../../Classes/PerformanceTest/PerformanceAllocTest.cpp \
-../../Classes/PerformanceTest/PerformanceCallbackTest.cpp \
-../../Classes/PerformanceTest/PerformanceContainerTest.cpp \
-../../Classes/PerformanceTest/PerformanceEventDispatcherTest.cpp \
-../../Classes/PerformanceTest/PerformanceLabelTest.cpp \
-../../Classes/PerformanceTest/PerformanceMathTest.cpp \
-../../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
-../../Classes/PerformanceTest/PerformanceParticle3DTest.cpp \
-../../Classes/PerformanceTest/PerformanceParticleTest.cpp \
-../../Classes/PerformanceTest/PerformanceRendererTest.cpp \
-../../Classes/PerformanceTest/PerformanceScenarioTest.cpp \
-../../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
-../../Classes/PerformanceTest/PerformanceTest.cpp \
-../../Classes/PerformanceTest/PerformanceTextureTest.cpp \
-../../Classes/PerformanceTest/PerformanceTouchesTest.cpp \
 ../../Classes/PhysicsTest/PhysicsTest.cpp \
 ../../Classes/Physics3DTest/Physics3DTest.cpp \
 ../../Classes/ReleasePoolTest/ReleasePoolTest.cpp \
@@ -125,6 +115,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ShaderTest/ShaderTest.cpp \
 ../../Classes/ShaderTest/ShaderTest2.cpp \
 ../../Classes/SpineTest/SpineTest.cpp \
+../../Classes/Scene3DTest/Scene3DTest.cpp \
 ../../Classes/Sprite3DTest/DrawNode3D.cpp \
 ../../Classes/Sprite3DTest/Sprite3DTest.cpp \
 ../../Classes/SpritePolygonTest/SpritePolygonTest.cpp \
@@ -160,6 +151,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp \
+../../Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp \
 ../../Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp \
@@ -199,6 +191,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UnitTest/UnitTest.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/VisibleRect.cpp \
+../../Classes/VibrateTest/VibrateTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp \
 ../../Classes/controller.cpp \
 ../../Classes/testBasic.cpp

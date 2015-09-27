@@ -12,6 +12,11 @@
 
 
 --------------------------------------------------------
+-- the cc TextureCube
+-- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
+
+
+--------------------------------------------------------
 -- the cc AttachNode
 -- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
 
@@ -52,8 +57,8 @@
 
 
 --------------------------------------------------------
--- the cc TextureCube
--- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
+-- the cc Bundle3D
+-- @field [parent=#cc] Bundle3D#Bundle3D Bundle3D preloaded module
 
 
 return nil

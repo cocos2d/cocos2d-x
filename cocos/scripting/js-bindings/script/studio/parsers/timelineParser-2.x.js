@@ -41,7 +41,11 @@
         },
 
         getNodeJson: function(json){
-            return json["Content"]["Content"]["ObjectData"];
+            var content = json["Content"];
+            if(content["ObjectData"])
+                return content["ObjectData"];
+
+            return content["Content"]["ObjectData"];
         },
 
         getClass: function(json){
@@ -104,7 +108,9 @@
         var visible = getParam(json["VisibleForFrame"], true);
         node.setVisible(visible);
 
-        setContentSize(node, json["Size"]);
+        var size = json["Size"];
+        if(size)
+            setContentSize(node, size);
 
         if (json["Alpha"] != null)
             node.setOpacity(json["Alpha"]);
@@ -112,15 +118,19 @@
         node.setTag(json["Tag"] || 0);
 
         var actionTag = json["ActionTag"] || 0;
-        var extensionData = new ccs.ObjectExtensionData();
+        var extensionData = new ccs.ComExtensionData();
         var customProperty = json["UserData"];
         if(customProperty !== undefined)
             extensionData.setCustomProperty(customProperty);
         extensionData.setActionTag(actionTag);
-        node.setUserObject(extensionData);
+        if (node.getComponent("ComExtensionData"))
+            node.removeComponent("ComExtensionData");
+        node.addComponent(extensionData);
 
         node.setCascadeColorEnabled(true);
         node.setCascadeOpacityEnabled(true);
+
+        setLayoutComponent(node, json);
     };
 
     parser.parseChild = function(node, children, resourcePath){
@@ -150,15 +160,47 @@
         }
     };
 
+    var skyBoxBrushInstance = null;
+    var getSkyboxRes = function(json, key) {
+        if(json.hasOwnProperty(key) && json[key].hasOwnProperty("Path")) {
+            return json[key]["Path"];
+        }
+        return "";
+    }
+
     /**
      * SingleNode
      * @param json
      * @returns {cc.Node}
      */
-    parser.initSingleNode = function(json){
+    parser.initSingleNode = function(json, resourcePath){
         var node = new cc.Node();
 
         this.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color != null)
+            node.setColor(getColor(color));
+
+        if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"]&&
+	json.hasOwnProperty("SkyBoxValid") && true == json["SkyBoxValid"])
+        {
+            var leftFileData = resourcePath + getSkyboxRes(json, "LeftImage");
+            var rightFileData = resourcePath + getSkyboxRes(json, "RightImage");
+            var upFileData = resourcePath + getSkyboxRes(json, "UpImage");
+            var downFileData = resourcePath + getSkyboxRes(json, "DownImage");
+            var forwardFileData = resourcePath + getSkyboxRes(json, "ForwardImage");
+            var backFileData = resourcePath + getSkyboxRes(json, "BackImage");
+            var fileUtil = jsb.fileUtils;
+	    if(fileUtil.isFileExist(leftFileData)&&
+                fileUtil.isFileExist(rightFileData)&&
+                fileUtil.isFileExist(upFileData)&&
+                fileUtil.isFileExist(downFileData)&&
+                fileUtil.isFileExist(forwardFileData)&&
+                fileUtil.isFileExist(backFileData))
+            {
+                skyBoxBrushInstance = cc.CameraBackgroundSkyBoxBrush.create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+            }
+        }
 
         return node;
     };
@@ -177,7 +219,8 @@
                 node.setTexture(path);
             else if(type === 1){
                 var spriteFrame = cc.spriteFrameCache.getSpriteFrame(path);
-                node.setSpriteFrame(spriteFrame);
+                if(spriteFrame)
+                    node.setSpriteFrame(spriteFrame);
             }
         });
 
@@ -214,8 +257,6 @@
         var node,
             self = this;
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be preloaded", path);
             node = new cc.ParticleSystem(path);
             self.generalAttributes(node, json);
             node.setPositionType(cc.ParticleSystem.TYPE_GROUPED);
@@ -254,12 +295,14 @@
 
         var actionTag = json["ActionTag"] || 0;
         widget.setActionTag(actionTag);
-        var extensionData = new ccs.ObjectExtensionData();
+        var extensionData = new ccs.ComExtensionData();
         var customProperty = json["UserData"];
         if(customProperty !== undefined)
             extensionData.setCustomProperty(customProperty);
         extensionData.setActionTag(actionTag);
-        widget.setUserObject(extensionData);
+        if (widget.getComponent("ComExtensionData"))
+            widget.removeComponent("ComExtensionData");
+        widget.addComponent(extensionData);
 
         var rotationSkewX = json["RotationSkewX"];
         if (rotationSkewX)
@@ -327,12 +370,34 @@
         if (color != null)
             widget.setColor(getColor(color));
 
+        setLayoutComponent(widget, json);
+        bindCallback(widget, json);
+    };
+
+    var bindCallback = function(widget, json){
+        var callBackType = json["CallBackType"];
+        var callBackName = json["CallBackName"];
+        var callBack = function(e){
+            if(typeof widget[callBackName] === "function")
+                widget[callBackName](e);
+        };
+        if(callBackType === "Click"){
+            widget.addClickEventListener(callBack);
+        }else if(callBackType === "Touch"){
+            widget.addTouchEventListener(callBack);
+        }else if(callBackType === "Event"){
+            widget.addCCSEventListener(callBack);
+        }
+    };
+
+    var setLayoutComponent = function(widget, json){
+
         var layoutComponent = ccui.LayoutComponent.bindLayoutComponent(widget);
         if(!layoutComponent)
             return;
 
-        var positionXPercentEnabled = json["PositionPercentXEnable"] || false;
-        var positionYPercentEnabled = json["PositionPercentYEnable"] || false;
+        var positionXPercentEnabled = json["PositionPercentXEnable"] || json["PositionPercentXEnabled"] || false;
+        var positionYPercentEnabled = json["PositionPercentYEnable"] || json["PositionPercentYEnabled"] || false;
         var positionXPercent = 0,
             positionYPercent = 0,
             PrePosition = json["PrePosition"];
@@ -340,8 +405,8 @@
             positionXPercent = PrePosition["X"] || 0;
             positionYPercent = PrePosition["Y"] || 0;
         }
-        var sizeXPercentEnable = json["PercentWidthEnable"] || false;
-        var sizeYPercentEnable = json["PercentHeightEnable"] || false;
+        var sizeXPercentEnable = json["PercentWidthEnable"] || json["PercentWidthEnabled"]  || false;
+        var sizeYPercentEnable = json["PercentHeightEnable"]|| json["PercentHeightEnabled"]  || false;
         var sizeXPercent = 0,
             sizeYPercent = 0,
             PreSize = json["PreSize"];
@@ -366,6 +431,7 @@
         layoutComponent.setPercentHeightEnabled(sizeYPercentEnable);
         layoutComponent.setPercentWidth(sizeXPercent);
         layoutComponent.setPercentHeight(sizeYPercent);
+        layoutComponent.setPercentWidthEnabled(sizeXPercentEnable || sizeYPercentEnable);
         layoutComponent.setStretchWidthEnabled(stretchHorizontalEnabled);
         layoutComponent.setStretchHeightEnabled(stretchVerticalEnabled);
 
@@ -539,7 +605,7 @@
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
-                    fontName = path.match(/([^\/]+)\.ttf/);
+                    fontName = path.match(/([^\/]+)\.(\S+)/);
                     fontName = fontName ? fontName[1] : "";
                 }
                 widget.setFontName(fontName);
@@ -562,8 +628,11 @@
 
         widget.setUnifySizeEnabled(false);
 
+        var color = json["CColor"];
+        json["CColor"] = null;
+        widget.setTextColor(getColor(color));
         this.widgetAttributes(widget, json, widget.isIgnoreContentAdaptWithSize());
-
+        json["CColor"] = color;
         return widget;
 
     };
@@ -620,7 +689,7 @@
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
-                    fontName = path.match(/([^\/]+)\.ttf/);
+                    fontName = path.match(/([^\/]+)\.(\S+)/);
                     fontName = fontName ? fontName[1] : "";
                 }
                 widget.setTitleFontName(fontName);
@@ -845,8 +914,6 @@
         ];
         textureList.forEach(function(item){
             loadTexture(json[item.name], resourcePath, function(path, type){
-                if(type === 0 && !loader.getRes(path))
-                    cc.log("%s need to be preloaded", path);
                 item.handle.call(widget, path, type);
             });
         });
@@ -1011,8 +1078,6 @@
         var startCharMap = json["StartChar"];
 
         loadTexture(json["LabelAtlasFileImage_CNB"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be preloaded", path);
             if(type === 0){
                 widget.setProperty(stringValue, path, itemWidth, itemHeight, startCharMap);
             }
@@ -1037,8 +1102,6 @@
         widget.setString(text);
 
         loadTexture(json["LabelBMFontFile_CNB"], resourcePath, function(path, type){
-            if(!cc.loader.getRes(path))
-                cc.log("%s need to be pre loaded", path);
             widget.setFntFile(path);
         });
         widget.ignoreContentAdaptWithSize(true);
@@ -1095,7 +1158,7 @@
                 if (cc.sys.isNative) {
                     fontName = cc.path.join(cc.loader.resPath, resourcePath, path);
                 } else {
-                    fontName = path.match(/([^\/]+)\.ttf/);
+                    fontName = path.match(/([^\/]+)\.(\S+)/);
                     fontName = fontName ? fontName[1] : "";
                 }
                 widget.setFontName(fontName);
@@ -1127,18 +1190,13 @@
      */
     parser.initSimpleAudio = function(json, resourcePath){
 
+        var node = new ccs.ComAudio();
         var loop = json["Loop"] || false;
-        var volume = json["Volume"] || 0;
-        cc.audioEngine.setMusicVolume(volume);
-        //var name = json["Name"];
-        var resPath = "";
-        if(cc.loader.resPath)
-            resPath = (cc.loader.resPath + "/").replace(/\/\/$/, "/");
-
+        //var volume = json["Volume"] || 0;
+        //cc.audioEngine.setMusicVolume(volume);
+        node.setLoop(loop);
         loadTexture(json["FileData"], resourcePath, function(path, type){
-            cc.loader.load(path, function(){
-                cc.audioEngine.playMusic(resPath + path, loop);
-            });
+            node.setFile(path);
         });
 
     };
@@ -1214,8 +1272,6 @@
 
         var currentAnimationName = json["CurrentAnimationName"];
 
-        parser.generalAttributes(node, json);
-
         loadTexture(json["FileData"], resourcePath, function(path, type){
             var plists, pngs;
             var armJson = cc.loader.getRes(path);
@@ -1233,8 +1289,44 @@
             node.init(getFileName(path));
             if(isAutoPlay)
                 node.getAnimation().play(currentAnimationName, -1, isLoop);
+            else{
+                node.getAnimation().play(currentAnimationName);
+                node.getAnimation().gotoAndPause(0);
+            }
 
         });
+
+        parser.generalAttributes(node, json);
+
+        node.setColor(getColor(json["CColor"]));
+        return node;
+    };
+
+    parser.initBoneNode = function(json, resourcePath){
+
+        var node = new ccs.BoneNode();
+
+        var length = json["Length"];
+        if(length !== undefined)
+            node.setDebugDrawLength(length);
+
+        var blendFunc = json["BlendFunc"];
+        if(blendFunc)
+            node.setBlendFunc(new cc.BlendFunc(blendFunc["Src"] || 0, blendFunc["Dst"] || 0));
+
+        parser.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color && (color["R"] !== undefined || color["G"] !== undefined || color["B"] !== undefined))
+            node.setColor(getColor(color));
+        return node;
+    };
+
+    parser.initSkeletonNode = function(json){
+        var node = new ccs.SkeletonNode();
+        parser.generalAttributes(node, json);
+        var color = json["CColor"];
+        if(color && (color["R"] !== undefined || color["G"] !== undefined || color["B"] !== undefined))
+            node.setColor(getColor(color));
         return node;
     };
 
@@ -1253,13 +1345,16 @@
                     loadedPlist[resourcePath + plist] = true;
                     cc.spriteFrameCache.addSpriteFrames(resourcePath + plist);
                 }else{
-                    if(!loadedPlist[resourcePath + plist])
+                    if(!loadedPlist[resourcePath + plist] && !cc.spriteFrameCache.getSpriteFrame(path))
                         cc.log("%s need to be preloaded", resourcePath + plist);
                 }
             }
-            if(type !== 0)
-                cb(path, type);
-            else
+            if(type !== 0){
+                if(cc.spriteFrameCache.getSpriteFrame(path))
+                    cb(path, type);
+                else
+                    cc.log("failed to get spriteFrame: %s", path);
+            }else
                 cb(resourcePath + path, type);
         }
     };
@@ -1283,9 +1378,29 @@
     var get3DVector = function(json, name, defValue){
         var x = defValue, y = defValue, z = defValue;
         if(json && name && json[name]){
-            x = null != json[name]["ValueX"] ? json[name]["ValueX"] : defValue;
-            y = null != json[name]["ValueY"] ? json[name]["ValueY"] : defValue;
-            z = null != json[name]["ValueZ"] ? json[name]["ValueZ"] : defValue;
+            if(undefined !== json[name]["ValueX"]) {
+                x = json[name]["ValueX"];
+            } else if(undefined !== json[name]["X"]) {
+                x = json[name]["X"]
+            }
+            if(null === x || isNaN(x))
+                x = defValue;
+
+            if(undefined !== json[name]["ValueY"]) {
+                y = json[name]["ValueY"];
+            } else if(undefined !== json[name]["Y"]) {
+                y = json[name]["Y"]
+            }
+            if(null === y || isNaN(y))
+                y = defValue;
+
+            if(undefined !== json[name]["ValueZ"]) {
+                z = json[name]["ValueZ"];
+            } else if(undefined !== json[name]["Z"]) {
+                z = json[name]["Z"]
+            }
+            if(null === z || isNaN(z))
+                z = defValue;
         }
         var vec3 = cc.math.vec3(x, y, z);
         return vec3;
@@ -1327,15 +1442,25 @@
      * @param json
      * @returns {*}
      */
-    parser.initCamera = function(json){
+    parser.initCamera = function(json,resourcePath){
         var s = cc.winSize;
         var fov = json["Fov"] ? json["Fov"] : 60;
 
         var nearClip = 1;
         var farClip = 500;
         if(json["ClipPlane"]){
-            nearClip = json["ClipPlane"]["ValueX"];
-            farClip  = json["ClipPlane"]["ValueY"];
+            if(undefined !== json["ClipPlane"]["ValueX"]) {
+                nearClip = json["ClipPlane"]["ValueX"];
+            } else if(undefined !== json["ClipPlane"]["X"]) {
+                nearClip = json["ClipPlane"]["X"];
+            }
+
+            if(undefined !== json["ClipPlane"]["ValueY"]) {
+                farClip = json["ClipPlane"]["ValueY"];
+            } else if(undefined !== json["ClipPlane"]["Y"]) {
+                farClip = json["ClipPlane"]["Y"];
+            }
+
             if(null === nearClip || isNaN(nearClip))
                 nearClip = 1;
             if(null === farClip || isNaN(farClip))
@@ -1348,30 +1473,64 @@
             this.general3DAttributes(node, json);
 
             var camMode = json["UserCameraFlagMode"];
-            switch(camMode){
-                case "USER1":
-                    node.setCameraFlag(cc.CameraFlag.USER1); break;
-                case "USER2":
-                    node.setCameraFlag(cc.CameraFlag.USER2); break;
-                case "USER3":
-                    node.setCameraFlag(cc.CameraFlag.USER3); break;
-                case "USER4":
-                    node.setCameraFlag(cc.CameraFlag.USER4); break;
-                case "USER5":
-                    node.setCameraFlag(cc.CameraFlag.USER5); break;
-                case "USER6":
-                    node.setCameraFlag(cc.CameraFlag.USER6); break;
-                case "USER7":
-                    node.setCameraFlag(cc.CameraFlag.USER7); break;
-                case "USER8":
-                    node.setCameraFlag(cc.CameraFlag.USER8); break;
-                case "DEFAULT":
-                    node.setCameraFlag(cc.CameraFlag.DEFAULT); break;
-                default:
-                    node.setCameraFlag(cc.CameraFlag.USER1);
+            var cameraFlagData = json["CameraFlagData"];
+            var cameraFlag = cc.CameraFlag.USER1;
+            if(undefined === cameraFlagData || isNaN(cameraFlagData) || 0 === cameraFlagData)
+            {
+                switch(camMode){
+                    case "USER1":
+                        cameraFlag = cc.CameraFlag.USER1; break;
+                    case "USER2":
+                        cameraFlag = cc.CameraFlag.USER2; break;
+                    case "USER3":
+                        cameraFlag = cc.CameraFlag.USER3; break;
+                    case "USER4":
+                        cameraFlag = cc.CameraFlag.USER4; break;
+                    case "USER5":
+                        cameraFlag = cc.CameraFlag.USER5; break;
+                    case "USER6":
+                        cameraFlag = cc.CameraFlag.USER6; break;
+                    case "USER7":
+                        cameraFlag = cc.CameraFlag.USER7; break;
+                    case "USER8":
+                        cameraFlag = cc.CameraFlag.USER8; break;
+                    case "DEFAULT":
+                        cameraFlag = cc.CameraFlag.DEFAULT; break;
+                }
+            } else {
+                cameraFlag = cameraFlagData;
             }
+            node.setCameraFlag(cameraFlag);
         }
 
+	if(json.hasOwnProperty("SkyBoxEnabled") && true == json["SkyBoxEnabled"] &&
+            json.hasOwnProperty("SkyBoxValid") && true == json["SkyBoxValid"])
+        {
+            var leftFileData = resourcePath + getSkyboxRes(json, "LeftImage");
+            var rightFileData = resourcePath + getSkyboxRes(json, "RightImage");
+            var upFileData = resourcePath + getSkyboxRes(json, "UpImage");
+            var downFileData = resourcePath + getSkyboxRes(json, "DownImage");
+            var forwardFileData = resourcePath + getSkyboxRes(json, "ForwardImage");
+            var backFileData = resourcePath + getSkyboxRes(json, "BackImage");
+
+            var fileUtil = jsb.fileUtils;
+            if(fileUtil.isFileExist(leftFileData)&&
+                fileUtil.isFileExist(rightFileData)&&
+                fileUtil.isFileExist(upFileData)&&
+                fileUtil.isFileExist(downFileData)&&
+                fileUtil.isFileExist(forwardFileData)&&
+                fileUtil.isFileExist(backFileData))
+            {
+                var innerBrush = cc.CameraBackgroundSkyBoxBrush.create(leftFileData,rightFileData,upFileData,downFileData,forwardFileData,backFileData);
+                node.setBackgroundBrush(innerBrush);
+            }
+            else
+                node.setBackgroundBrush(skyBoxBrushInstance);
+        }
+	else if(skyBoxBrushInstance != null)
+	{
+		node.setBackgroundBrush(skyBoxBrushInstance);
+	}
         return node;
     };
 
@@ -1386,10 +1545,12 @@
         if(json["FileData"] && json["FileData"]["Path"])
             resFile = resourcePath + json["FileData"]["Path"];
 
-        var node;
-        if(resFile)
-            node = jsb.Sprite3D.create(resFile);
-        else
+        var node = null;
+        if(resFile) {
+            if(jsb.fileUtils.isFileExist(resFile))
+                node = jsb.Sprite3D.create(resFile);
+        }
+        if(null === node)
             node = jsb.Sprite3D.create();
 
         if(node) {
@@ -1399,6 +1560,11 @@
                 var col = getColor(json["CColor"]);
                 if(col && col.r !== 255 || col.g !== 255 || col.b !== 255)
                     node.setColor(col);
+            }
+
+            if(json.hasOwnProperty("IsFlipped") && true == json["IsFlipped"]) {
+                node.setCullFaceEnabled(true);
+                node.setCullFace(gl.FRONT);
             }
 
             var autoAction = getParam(json["RunAction3D"], false);
@@ -1428,9 +1594,12 @@
         if(json["FileData"] && json["FileData"]["Path"])
             resFile = resourcePath+json["FileData"]["Path"];
 
-        if(resFile)
-            node = jsb.PUParticleSystem3D.create(resFile);
-        else
+        if(resFile){
+            if(jsb.fileUtils.isFileExist(resFile))
+                node = jsb.PUParticleSystem3D.create(resFile);
+        }
+
+        if(null === node)
             node = jsb.PUParticleSystem3D.create();
 
         if(node){
@@ -1445,6 +1614,8 @@
         {name: "SingleNodeObjectData", handle: parser.initSingleNode},
         {name: "NodeObjectData", handle: parser.initSingleNode},
         {name: "LayerObjectData", handle: parser.initSingleNode},
+        {name: "GameNodeObjectData", handle: parser.initSingleNode},
+        {name: "GameLayerObjectData", handle: parser.initSingleNode},
         {name: "SpriteObjectData", handle: parser.initSprite},
         {name: "ParticleObjectData", handle: parser.initParticle},
         {name: "PanelObjectData", handle: parser.initPanel},
@@ -1464,6 +1635,8 @@
         {name: "GameMapObjectData", handle: parser.initGameMap},
         {name: "ProjectNodeObjectData", handle: parser.initProjectNode},
         {name: "ArmatureNodeObjectData", handle: parser.initArmature},
+        {name: "BoneNodeObjectData", handle: parser.initBoneNode},
+        {name: "SkeletonNodeObjectData", handle: parser.initSkeletonNode},
 
         {name: "Sprite3DObjectData", handle: parser.initSprite3D},
         {name: "Particle3DObjectData", handle: parser.initParticle3D},

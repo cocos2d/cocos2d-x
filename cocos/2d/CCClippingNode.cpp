@@ -30,6 +30,7 @@
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -169,6 +170,14 @@ void ClippingNode::onEnter()
 
 void ClippingNode::onEnterTransitionDidFinish()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnEnterTransitionDidFinish))
+            return;
+    }
+#endif
+    
     Node::onEnterTransitionDidFinish();
     
     if (_stencil != nullptr)
@@ -179,6 +188,14 @@ void ClippingNode::onEnterTransitionDidFinish()
 
 void ClippingNode::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExitTransitionDidStart))
+            return;
+    }
+#endif
+    
     if (_stencil != nullptr)
     {
         _stencil->onExitTransitionDidStart();
@@ -189,6 +206,14 @@ void ClippingNode::onExitTransitionDidStart()
 
 void ClippingNode::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+    
     if (_stencil != nullptr)
     {
         _stencil->onExit();
@@ -200,7 +225,7 @@ void ClippingNode::onExit()
 void ClippingNode::drawFullScreenQuadClearStencil()
 {
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -248,7 +273,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
@@ -395,12 +420,15 @@ void ClippingNode::onBeforeVisit()
 
     // enable stencil use
     glEnable(GL_STENCIL_TEST);
+//    RenderState::StateBlock::_defaultState->setStencilTest(true);
+
     // check for OpenGL error while enabling stencil test
     CHECK_GL_ERROR_DEBUG();
 
     // all bits on the stencil buffer are readonly, except the current layer bit,
     // this means that operation like glClear or glStencilOp will be masked with this value
     glStencilMask(mask_layer);
+//    RenderState::StateBlock::_defaultState->setStencilWrite(mask_layer);
 
     // manually save the depth test state
 
@@ -413,6 +441,7 @@ void ClippingNode::onBeforeVisit()
     // it should never prevent something else to be drawn,
     // only disabling depth buffer update should do
     glDepthMask(GL_FALSE);
+    RenderState::StateBlock::_defaultState->setDepthWrite(false);
 
     ///////////////////////////////////
     // CLEAR STENCIL BUFFER
@@ -439,7 +468,14 @@ void ClippingNode::onBeforeVisit()
     //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
     //     if in inverted mode: set the current layer value to 0 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, mask_layer, mask_layer);
+
     glStencilOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(
+//                                                                !_inverted ? RenderState::STENCIL_OP_REPLACE : RenderState::STENCIL_OP_ZERO,
+//                                                                RenderState::STENCIL_OP_KEEP,
+//                                                                RenderState::STENCIL_OP_KEEP);
+
 
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
@@ -467,7 +503,7 @@ void ClippingNode::onAfterDrawStencil()
     if (_alphaThreshold < 1)
     {
 #if CC_CLIPPING_NODE_OPENGLES
-        // FIXME: we need to find a way to restore the shaders of the stencil node and its childs
+        // FIXME: we need to find a way to restore the shaders of the stencil node and its children
 #else
         // manually restore the alpha test state
         glAlphaFunc(_currentAlphaTestFunc, _currentAlphaTestRef);
@@ -480,6 +516,8 @@ void ClippingNode::onAfterDrawStencil()
 
     // restore the depth test state
     glDepthMask(_currentDepthWriteMask);
+    RenderState::StateBlock::_defaultState->setDepthWrite(_currentDepthWriteMask != 0);
+
     //if (currentDepthTestEnabled) {
     //    glEnable(GL_DEPTH_TEST);
     //}
@@ -487,16 +525,19 @@ void ClippingNode::onAfterDrawStencil()
     ///////////////////////////////////
     // DRAW CONTENT
 
-    // setup the stencil test func like this:
-    // for each pixel of this node and its childs
+    // setup the stencil test function like this:
+    // for each pixel of this node and its children
     //     if all layers less than or equals to the current are set to 1 in the stencil buffer
     //         draw the pixel and keep the current layer in the stencil buffer
     //     else
     //         do not draw the pixel but keep the current layer in the stencil buffer
     glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+//    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_EQUAL, _mask_layer_le, _mask_layer_le);
 
-    // draw (according to the stencil test func) this node and its childs
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+//    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP);
+
+    // draw (according to the stencil test function) this node and its children
 }
 
 
@@ -507,11 +548,18 @@ void ClippingNode::onAfterVisit()
 
     // manually restore the stencil state
     glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
+//    RenderState::StateBlock::_defaultState->setStencilFunction((RenderState::StencilFunction)_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
+
     glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
+//    RenderState::StateBlock::_defaultState->setStencilOperation((RenderState::StencilOperation)_currentStencilFail,
+//                                                                (RenderState::StencilOperation)_currentStencilPassDepthFail,
+//                                                                (RenderState::StencilOperation)_currentStencilPassDepthPass);
+
     glStencilMask(_currentStencilWriteMask);
     if (!_currentStencilEnabled)
     {
         glDisable(GL_STENCIL_TEST);
+//        RenderState::StateBlock::_defaultState->setStencilTest(false);
     }
 
     // we are done using this layer, decrement

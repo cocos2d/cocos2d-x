@@ -27,17 +27,24 @@
 #ifndef __CCHTTPCLIENT_H__
 #define __CCHTTPCLIENT_H__
 
+#include <thread>
+#include <condition_variable>
+#include "base/CCVector.h"
+#include "base/CCScheduler.h"
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
+#include "network/HttpCookie.h"
 
 /**
- * @addtogroup core
+ * @addtogroup network
  * @{
  */
 
 NS_CC_BEGIN
 
 namespace network {
+    
+
 
 /** Singleton that handles asynchrounous http requests.
  *
@@ -48,6 +55,11 @@ namespace network {
 class CC_DLL HttpClient
 {
 public:
+	/**
+	* The buffer size of _responseMessage
+	*/
+	static const int RESPONSE_BUFFER_SIZE = 256;
+
     /**
      * Get instance of HttpClient.
      *
@@ -68,11 +80,25 @@ public:
     void enableCookies(const char* cookieFile);
     
     /**
+     * Get the cookie filename
+     * 
+     * @return the cookie filename
+     */
+    const std::string& getCookieFilename();
+    
+    /**
      * Set root certificate path for SSL verification.
      *
      * @param caFile a full path of root certificate.if it is empty, SSL verification is disabled.
      */
     void setSSLVerification(const std::string& caFile);
+    
+    /**
+     * Get ths ssl CA filename
+     * 
+     * @return the ssl CA filename
+     */
+    const std::string& getSSLVerification();
         
     /**
      * Add a get request to task queue
@@ -89,38 +115,40 @@ public:
                       please make sure request->_requestData is clear before calling "sendImmediate" here.
      */
     void sendImmediate(HttpRequest* request);
-  
     
     /**
      * Set the timeout value for connecting.
      *
      * @param value the timeout value for connecting.
      */
-    inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
+    void setTimeoutForConnect(int value);
     
     /**
      * Get the timeout value for connecting.
      *
      * @return int the timeout value for connecting.
      */
-    inline int getTimeoutForConnect() {return _timeoutForConnect;}
-    
+    int getTimeoutForConnect();
     
     /**
      * Set the timeout value for reading.
      *
      * @param value the timeout value for reading.
      */
-    inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
-    
+    void setTimeoutForRead(int value);
 
     /**
      * Get the timeout value for reading.
      *
      * @return int the timeout value for reading.
      */
-    inline int getTimeoutForRead() {return _timeoutForRead;};
-        
+    int getTimeoutForRead();
+    
+    HttpCookie* getCookie() const {return _cookie; }
+    
+    std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
+    
+    std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
 private:
     HttpClient();
     virtual ~HttpClient();
@@ -136,16 +164,51 @@ private:
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
     
+    void processResponse(HttpResponse* response, char* responseMessage);
+    void increaseThreadCount();
+    void decreaseThreadCountAndMayDeleteThis();
+    
 private:
+    bool _isInited;
+    
     int _timeoutForConnect;
+    std::mutex _timeoutForConnectMutex;
+    
     int _timeoutForRead;
+    std::mutex _timeoutForReadMutex;
+    
+    int  _threadCount;
+    std::mutex _threadCountMutex;
+    
+    Scheduler* _scheduler;
+    std::mutex _schedulerMutex;
+    
+    Vector<HttpRequest*>  _requestQueue;
+    std::mutex _requestQueueMutex;
+    
+    Vector<HttpResponse*> _responseQueue;
+    std::mutex _responseQueueMutex;
+    
+    std::string _cookieFilename;
+    std::mutex _cookieFileMutex;
+    
+    std::string _sslCaFilename;
+    std::mutex _sslCaFileMutex;
+    
+    HttpCookie* _cookie;
+    
+    std::condition_variable_any _sleepCondition;
+    
+	char _responseMessage[RESPONSE_BUFFER_SIZE];
+    
+    HttpRequest* _requestSentinel;
 };
 
-}
+} // namespace network
 
 NS_CC_END
 
 // end group
 /// @}
 
-#endif //__CCHTTPREQUEST_H__
+#endif //__CCHTTPCLIENT_H__

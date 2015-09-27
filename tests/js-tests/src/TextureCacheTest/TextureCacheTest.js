@@ -49,6 +49,79 @@ var TextureCacheTestBase = BaseTestLayer.extend({
     }
 });
 
+var TextureLoadImgTest = TextureCacheTestBase.extend({
+    _title: "Load Same Image Twice",
+    _labelFirst:null,
+    _labelSecond:null,
+    ctor: function () {
+        this._super();
+
+        if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
+            var label = new cc.LabelTTF("Not support Loading texture from remote site on HTML5-WebGL", "Times New Roman", 28);
+            label.x = winSize.width / 2;
+            label.y = winSize.height / 2;
+            this.addChild(label, 100);
+            return;
+        }
+
+        this._labelFirst = new cc.LabelTTF("load first image");
+        this._labelFirst.attr({
+            x:cc.winSize.width/2,
+            y:cc.winSize.height/2 + 30
+        });
+        this.addChild(this._labelFirst, 1);
+
+
+        this._labelSecond = new cc.LabelTTF("load second image");
+        this._labelSecond.attr({
+            x:cc.winSize.width/2,
+            y:cc.winSize.height/2 - 30
+        });
+        this.addChild(this._labelSecond, 1);
+
+        var url = "http://cn.cocos2d-x.org/image/logo.png";
+        cc.textureCache.addImageAsync(url, this.texFirstLoaded, this);
+        cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
+    },
+
+    texFirstLoaded: function(texture) {
+        if (!texture)
+        {
+            this._labelFirst.setString("texFirstLoaded fail");
+            return;
+        }
+
+        if (this.sprite) {
+            this.removeChild(this.sprite);
+        }
+        this.sprite = new cc.Sprite(texture);
+        this.sprite.x = cc.winSize.width/2;
+        this.sprite.y = cc.winSize.height/2;
+        this.addChild(this.sprite);
+
+        this._labelFirst.setString("texFirstLoaded successful");
+    },
+
+    texSecondLoaded: function(texture) {
+
+        if (!texture)
+        {
+            this._labelSecond.setString("texSecondLoaded fail");
+            return;
+        }
+
+        if (this.sprite2) {
+            this.removeChild(this.sprite2);
+        }
+        this.sprite2 = new cc.Sprite(texture);
+        this.sprite2.x = cc.winSize.width/2;
+        this.sprite2.y = cc.winSize.height/2 + 70;
+        this.addChild(this.sprite2);
+
+        this._labelSecond.setString("texSecondLoaded successful");
+    }
+});
+
 var TextureCacheTest = TextureCacheTestBase.extend({
     _title:"Texture Cache Loading Test",
     _labelLoading:null,
@@ -74,57 +147,57 @@ var TextureCacheTest = TextureCacheTestBase.extend({
 
         var texCache = cc.textureCache;
         // load textrues
-        texCache.addImageAsync("res/Images/HelloWorld.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_01.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_02.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_03.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_04.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_05.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_06.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_07.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_08.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_09.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_10.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_11.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_12.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_13.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_14.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/background1.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/background2.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/background3.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/blocks.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/HelloWorld.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_01.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_02.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_03.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_04.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_05.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_06.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_07.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_08.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_09.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_10.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_11.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_12.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_13.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_14.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/background1.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/background2.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/background3.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/blocks.png", this.loadingCallBack, this);
     },
     addSprite:function () {
         var size = cc.director.getWinSize();
 
         // create sprites
-        var bg = new cc.Sprite("res/Images/HelloWorld.png");
+        var bg = new cc.Sprite("Images/HelloWorld.png");
         bg.x = size.width / 2;
         bg.y = size.height / 2;
         //bg.scale = 1.7;
 
-        var s1 = new cc.Sprite("res/Images/grossini.png");
-        var s2 = new cc.Sprite("res/Images/grossini_dance_01.png");
-        var s3 = new cc.Sprite("res/Images/grossini_dance_02.png");
-        var s4 = new cc.Sprite("res/Images/grossini_dance_03.png");
-        var s5 = new cc.Sprite("res/Images/grossini_dance_04.png");
-        var s6 = new cc.Sprite("res/Images/grossini_dance_05.png");
-        var s7 = new cc.Sprite("res/Images/grossini_dance_06.png");
-        var s8 = new cc.Sprite("res/Images/grossini_dance_07.png");
-        var s9 = new cc.Sprite("res/Images/grossini_dance_08.png");
-        var s10 = new cc.Sprite("res/Images/grossini_dance_09.png");
-        var s11 = new cc.Sprite("res/Images/grossini_dance_10.png");
-        var s12 = new cc.Sprite("res/Images/grossini_dance_11.png");
-        var s13 = new cc.Sprite("res/Images/grossini_dance_12.png");
-        var s14 = new cc.Sprite("res/Images/grossini_dance_13.png");
-        var s15 = new cc.Sprite("res/Images/grossini_dance_14.png");
+        var s1 = new cc.Sprite("Images/grossini.png");
+        var s2 = new cc.Sprite("Images/grossini_dance_01.png");
+        var s3 = new cc.Sprite("Images/grossini_dance_02.png");
+        var s4 = new cc.Sprite("Images/grossini_dance_03.png");
+        var s5 = new cc.Sprite("Images/grossini_dance_04.png");
+        var s6 = new cc.Sprite("Images/grossini_dance_05.png");
+        var s7 = new cc.Sprite("Images/grossini_dance_06.png");
+        var s8 = new cc.Sprite("Images/grossini_dance_07.png");
+        var s9 = new cc.Sprite("Images/grossini_dance_08.png");
+        var s10 = new cc.Sprite("Images/grossini_dance_09.png");
+        var s11 = new cc.Sprite("Images/grossini_dance_10.png");
+        var s12 = new cc.Sprite("Images/grossini_dance_11.png");
+        var s13 = new cc.Sprite("Images/grossini_dance_12.png");
+        var s14 = new cc.Sprite("Images/grossini_dance_13.png");
+        var s15 = new cc.Sprite("Images/grossini_dance_14.png");
 
         // just loading textures to slow down
-        var s16 = new cc.Sprite("res/Images/background1.png");
-        var s17 = new cc.Sprite("res/Images/background2.png");
-        var s18 = new cc.Sprite("res/Images/background3.png");
-        var s19 = new cc.Sprite("res/Images/blocks.png");
+        var s16 = new cc.Sprite("Images/background1.png");
+        var s17 = new cc.Sprite("Images/background2.png");
+        var s18 = new cc.Sprite("Images/background3.png");
+        var s19 = new cc.Sprite("Images/blocks.png");
 
         s1.x = 50;
         s1.y = 50;
@@ -192,7 +265,6 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     _title:"Remote Texture Test",
     _subtitle:"",
     _remoteTex: "http://cn.cocos2d-x.org/image/logo.png",
-    _sprite : null,
     onEnter:function () {
         this._super();
         if('opengl' in cc.sys.capabilities && !cc.sys.isNative){
@@ -205,19 +277,21 @@ var RemoteTextureTest = TextureCacheTestBase.extend({
     },
 
     startDownload: function() {
-        cc.textureCache.addImageAsync(this._remoteTex, this.texLoaded, this);
+        var imageUrlArray = ["http://www.cocos2d-x.org/s/upload/v35.jpg", "http://www.cocos2d-x.org/s/upload/testin.jpg", "http://www.cocos2d-x.org/s/upload/geometry_dash.jpg", "http://cn.cocos2d-x.org/image/logo.png"];
+
+        for (var i = 0; i < imageUrlArray.length; i++) {
+            cc.textureCache.addImageAsync(imageUrlArray[i], this.texLoaded, this);
+        }
     },
 
     texLoaded: function(texture) {
         if (texture instanceof cc.Texture2D) {
-            cc.log("Remote texture loaded: " + this._remoteTex);
-            if (this._sprite) {
-                this.removeChild(this._sprite);
-            }
-            this._sprite = new cc.Sprite(texture);
-            this._sprite.x = cc.winSize.width/2;
-            this._sprite.y = cc.winSize.height/2;
-            this.addChild(this._sprite);
+            cc.log("Remote texture loaded");
+            
+            var sprite = new cc.Sprite(texture);
+            sprite.x = cc.winSize.width/2;
+            sprite.y = cc.winSize.height/2;
+            this.addChild(sprite);
         }
         else {
             cc.log("Fail to load remote texture");
@@ -243,6 +317,7 @@ var TexCacheTestScene = TestScene.extend({
 });
 
 var arrayOfTexCacheTest = [
+    TextureLoadImgTest,
     TextureCacheTest,
     RemoteTextureTest
 ];

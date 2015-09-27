@@ -37,9 +37,11 @@ Physics3DWorld::Physics3DWorld()
 , _dispatcher(nullptr)
 , _broadphase(nullptr)
 , _solver(nullptr)
+, _ghostCallback(nullptr)
 , _debugDrawer(nullptr)
 , _needCollisionChecking(false)
 , _collisionCheckingFlag(false)
+, _needGhostPairCallbackChecking(false)
 {
     
 }
@@ -51,6 +53,7 @@ Physics3DWorld::~Physics3DWorld()
     CC_SAFE_DELETE(_collisionConfiguration);
     CC_SAFE_DELETE(_dispatcher);
     CC_SAFE_DELETE(_broadphase);
+    CC_SAFE_DELETE(_ghostCallback);
     CC_SAFE_DELETE(_solver);
     CC_SAFE_DELETE(_btPhyiscsWorld);
     CC_SAFE_DELETE(_debugDrawer);
@@ -67,13 +70,23 @@ Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)
     return world;
 }
 
+void Physics3DWorld::setGravity(const Vec3& gravity)
+{
+    _btPhyiscsWorld->setGravity(convertVec3TobtVector3(gravity));
+}
+
+Vec3 Physics3DWorld::getGravity() const
+{
+    return convertbtVector3ToVec3(_btPhyiscsWorld->getGravity());
+}
+
 bool Physics3DWorld::init(Physics3DWorldDes* info)
 {
     ///collision configuration contains default setup for memory, collision setup
     _collisionConfiguration = new (std::nothrow) btDefaultCollisionConfiguration();
     //_collisionConfiguration->setConvexConvexMultipointIterations();
     
-    ///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+    ///use the default collision dispatcher. For parallel processing you can use a different dispatcher (see Extras/BulletMultiThreaded)
     _dispatcher = new (std::nothrow) btCollisionDispatcher(_collisionConfiguration);
     
     _broadphase = new (std::nothrow) btDbvtBroadphase();
@@ -81,6 +94,9 @@ bool Physics3DWorld::init(Physics3DWorldDes* info)
     ///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
     btSequentialImpulseConstraintSolver* sol = new btSequentialImpulseConstraintSolver();
     _solver = sol;
+
+    btGhostPairCallback *ghostCallback = new btGhostPairCallback();
+    _ghostCallback = ghostCallback;
     
     _btPhyiscsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration);
     _btPhyiscsWorld->setGravity(convertVec3TobtVector3(info->gravity));
@@ -118,7 +134,12 @@ void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj)
         {
             _btPhyiscsWorld->addRigidBody(static_cast<Physics3DRigidBody*>(physicsObj)->getRigidBody());
         }
+        else if (physicsObj->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+        {
+            _btPhyiscsWorld->addCollisionObject(static_cast<Physics3DCollider*>(physicsObj)->getGhostObject());
+        }
         _collisionCheckingFlag = true;
+        _needGhostPairCallbackChecking = true;
     }
 }
 
@@ -131,9 +152,14 @@ void Physics3DWorld::removePhysics3DObject(Physics3DObject* physicsObj)
         {
             _btPhyiscsWorld->removeRigidBody(static_cast<Physics3DRigidBody*>(physicsObj)->getRigidBody());
         }
+        else if (physicsObj->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+        {
+            _btPhyiscsWorld->removeCollisionObject(static_cast<Physics3DCollider*>(physicsObj)->getGhostObject());
+        }
         physicsObj->release();
         _objects.erase(it);
         _collisionCheckingFlag = true;
+        _needGhostPairCallbackChecking = true;
     }
 }
 
@@ -144,10 +170,15 @@ void Physics3DWorld::removeAllPhysics3DObjects()
         {
             _btPhyiscsWorld->removeRigidBody(static_cast<Physics3DRigidBody*>(it)->getRigidBody());
         }
+        else if (it->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+        {
+            _btPhyiscsWorld->removeCollisionObject(static_cast<Physics3DCollider*>(it)->getGhostObject());
+        }
         it->release();
     }
     _objects.clear();
     _collisionCheckingFlag = true;
+    _needGhostPairCallbackChecking = true;
 }
 
 void Physics3DWorld::addPhysics3DConstraint(Physics3DConstraint* constraint, bool disableCollisionsBetweenLinkedObjs)
@@ -198,6 +229,7 @@ void Physics3DWorld::stepSimulate(float dt)
 {
     if (_btPhyiscsWorld)
     {
+        setGhostPairCallback();
         //should sync kinematic node before simulation
         for (auto it : _physicsComponents)
         {
@@ -268,6 +300,11 @@ Physics3DObject* Physics3DWorld::getPhysicsObject(const btCollisionObject* btObj
             if (static_cast<Physics3DRigidBody*>(it)->getRigidBody() == btObj)
                 return it;
         }
+        else if (it->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER)
+        {
+            if (static_cast<Physics3DCollider*>(it)->getGhostObject() == btObj)
+                return it;
+        }
     }
     return nullptr;
 }
@@ -322,6 +359,22 @@ bool Physics3DWorld::needCollisionChecking()
         _collisionCheckingFlag = false;
     }
     return _needCollisionChecking;
+}
+
+void Physics3DWorld::setGhostPairCallback()
+{
+    if (_needGhostPairCallbackChecking){
+        bool needCallback = false;
+        for (auto it : _objects)
+        {
+            if (it->getObjType() == Physics3DObject::PhysicsObjType::COLLIDER){
+                needCallback = true;
+                break;
+            }
+        }
+        _btPhyiscsWorld->getPairCache()->setInternalGhostPairCallback(needCallback == true? _ghostCallback: nullptr);
+        _needGhostPairCallbackChecking = false;
+    }
 }
 
 NS_CC_END

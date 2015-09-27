@@ -85,7 +85,7 @@ Properties::Properties(Data* data, ssize_t* dataIdx, const std::string& name, co
     rewind();
 }
 
-Properties* Properties::createWithoutAutorelease(const std::string& url)
+Properties* Properties::createNonRefCounted(const std::string& url)
 {
     if (url.size() == 0)
     {
@@ -419,24 +419,25 @@ signed char Properties::readChar()
 
 char* Properties::readLine(char* output, int num)
 {
-    int idx=0;
-
     if (eof())
         return nullptr;
 
-    // little optimization: avoid uneeded dereferences
-    ssize_t dataIdx = *_dataIdx;
+    // little optimization: avoid unneeded dereferences
+    const ssize_t dataIdx = *_dataIdx;
+    int i;
 
-    while (dataIdx<_data->_size && _data->_bytes[dataIdx]!='\n' && idx-1<num)
+    for (i=0; i<num && dataIdx+i < _data->_size; i++)
     {
-        dataIdx++; idx++;
+        auto c = _data->_bytes[dataIdx+i];
+        if (c == '\n')
+            break;
+        output[i] = c;
     }
 
-    memcpy(output, &_data->_bytes[*_dataIdx], idx);
-    output[idx] = '\0';
+    output[i] = '\0';
 
     // restore value
-    *_dataIdx = dataIdx;
+    *_dataIdx = dataIdx+i;
 
     return output;
 }

@@ -316,7 +316,7 @@ public:
      */
     void setTouchAreaEnabled(bool enable);
     
-    virtual bool hitTest(const Vec2 &pt) override;
+    virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const override;
     
     
     /**
@@ -353,6 +353,13 @@ public:
      * @param color A color value in `Color4B`.
      */
     void setPlaceHolderColor(const Color4B& color);
+    
+    /**
+     * @brief Query the text string color.
+     *
+     * @return The color of the text.
+     */
+    const Color4B& getTextColor()const;
     
     /**
      * @brief Change the text color.
@@ -594,6 +601,13 @@ public:
      * @param alignment A alignment arguments in @see `TextHAlignment`.
      */
     void setTextHorizontalAlignment(TextHAlignment alignment);
+
+    /**
+     * @brief Inquire the horizontal alignment
+     *
+     * @return The horizontal alignment
+     */
+    TextHAlignment getTextHorizontalAlignment() const;
     
     /**
      * @brief Change the vertical text alignment.
@@ -601,6 +615,13 @@ public:
      * @param alignment A alignment arguments in @see `TextVAlignment`.
      */
     void setTextVerticalAlignment(TextVAlignment alignment);
+
+    /**
+     * @brief Inquire the horizontal alignment
+     *
+     * @return The horizontal alignment
+     */
+    TextVAlignment getTextVerticalAlignment() const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
