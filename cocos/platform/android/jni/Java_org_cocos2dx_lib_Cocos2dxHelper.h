@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __Java_org_cocos2dx_lib_Cocos2dxHelper_H__
 
 #include <string>
-
+#include "base/ccTypes.h"
 typedef void (*EditTextCallback)(const char* text, void* ctx);
 
 extern const char * getApkPath();
@@ -38,6 +38,9 @@ extern std::string getFileDirectoryJNI();
 extern void enableAccelerometerJni();
 extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
+extern void enableSensorJni(cocos2d::SensorType ccSensorType);
+extern void disableSensorJni(cocos2d::SensorType ccSensorType);
+extern void setSensorIntervalJni(cocos2d::SensorType ccSensorType, float interval);
 extern void setKeepScreenOnJni(bool value);
 extern void vibrateJni(float duration);
 extern bool openURLJNI(const char* url);

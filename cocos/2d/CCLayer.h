@@ -46,6 +46,7 @@ class TouchScriptHandlerEntry;
 class EventListenerTouch;
 class EventListenerKeyboard;
 class EventListenerAcceleration;
+class EventListenerSensor;
 
 class Touch;
 
@@ -57,7 +58,7 @@ class Touch;
 
 All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
-- It can receive Accelerometer input
+- It can receive Accelerometer, and General motion sensor input
 */
 class CC_DLL Layer : public Node
 {
@@ -155,6 +156,13 @@ public:
      * @js NA
      */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
+
+    /** Callback funtion for device motion.
+     * @param sensor Sensor information.
+     * @param unused_event Event information.
+     * @js NA
+     */
+    virtual void onSensor(Sensor* sensor, Event* unused_event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
@@ -687,4 +695,3 @@ private:
 NS_CC_END
 
 #endif // __CCLAYER_H__
-

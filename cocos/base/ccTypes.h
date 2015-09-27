@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __BASE_CCTYPES_H__
 
 #include <string>
+#include <vector>
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
@@ -595,6 +596,36 @@ public:
     double timestamp;
 
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
+};
+
+/**
+* @brief Device sensor types.
+* This SensorType must be match on each platform. For android,
+* Cocos2dxSensor.java.
+*/
+enum class SensorType : int
+{
+  NONE_SENSOR         = -1,
+  ACCELEROMETER       = 0,
+  GYROSCOPE           = 1,
+  ROTATION_VECTOR     = 2,
+  MAGETOMETER         = 3,
+  LINEAR_ACCELERATION = 4,
+  GRAVITY             = 5,
+};
+
+/** @struct Sensor
+ * The device sensor reports raw values for the sensor.
+ */
+class CC_DLL Sensor
+    : public Ref
+{
+public:
+    std::vector<double> values;
+    SensorType sensorType;
+    double timestamp;
+
+    Sensor(): sensorType(SensorType::NONE_SENSOR), timestamp(0) {}
 };
 
 extern const std::string CC_DLL STD_STRING_EMPTY;

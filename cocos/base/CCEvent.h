@@ -50,6 +50,7 @@ public:
         TOUCH,
         KEYBOARD,
         ACCELERATION,
+        SENSOR,
         MOUSE,
         FOCUS,
         GAME_CONTROLLER,
@@ -68,7 +69,7 @@ public:
      *
      * @return The event type.
      */
-	inline Type getType() const { return _type; };
+	  inline Type getType() const { return _type; };
     
     /** Stops propagation for current event.
      */

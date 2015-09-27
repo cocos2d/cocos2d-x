@@ -130,8 +130,10 @@ base/CCEventListenerCustom.cpp \
 base/CCEventListenerFocus.cpp \
 base/CCEventListenerKeyboard.cpp \
 base/CCEventListenerMouse.cpp \
+base/CCEventListenerSensor.cpp \
 base/CCEventListenerTouch.cpp \
 base/CCEventMouse.cpp \
+base/CCEventSensor.cpp \
 base/CCEventTouch.cpp \
 base/CCIMEDispatcher.cpp \
 base/CCNS.cpp \

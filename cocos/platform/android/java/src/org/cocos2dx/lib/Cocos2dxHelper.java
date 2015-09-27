@@ -32,6 +32,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
+import android.hardware.Sensor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
@@ -44,7 +45,9 @@ import android.view.WindowManager;
 import com.chukong.cocosplay.client.CocosPlayClient;
 import com.enhance.gameservice.IGameTuningService;
 
+import java.lang.Runnable;
 import java.io.UnsupportedEncodingException;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -66,6 +69,9 @@ public class Cocos2dxHelper {
     private static AssetManager sAssetManager;
     private static Cocos2dxAccelerometer sCocos2dxAccelerometer;
     private static boolean sAccelerometerEnabled;
+    private static Cocos2dxSensor sCocos2dxSensor;
+    private static HashSet<Integer> sEnabledSensorTypeSet =
+      new HashSet<Integer>();
     private static boolean sActivityVisible;
     private static String sPackageName;
     private static String sFileDirectory;
@@ -104,6 +110,7 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.nativeSetApkPath(applicationInfo.sourceDir);
     
             Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(activity);
+            Cocos2dxHelper.sCocos2dxSensor = new Cocos2dxSensor(activity);
             Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
             Cocos2dxHelper.sCocos2dSound = new Cocos2dxSound(activity);
             Cocos2dxHelper.sAssetManager = activity.getAssets();
@@ -194,7 +201,6 @@ public class Cocos2dxHelper {
         Cocos2dxHelper.sCocos2dxAccelerometer.enable();
     }
 
-
     public static void setAccelerometerInterval(float interval) {
         Cocos2dxHelper.sCocos2dxAccelerometer.setInterval(interval);
     }
@@ -202,6 +208,22 @@ public class Cocos2dxHelper {
     public static void disableAccelerometer() {
         Cocos2dxHelper.sAccelerometerEnabled = false;
         Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+    }
+
+    public static void enableSensor(int ccSensorType) {
+        Cocos2dxHelper.sEnabledSensorTypeSet.add(ccSensorType);
+        Cocos2dxHelper.sCocos2dxSensor.enable(ccSensorType);
+    }
+
+    public static void setSensorInterval(int ccSensorType,
+                                               float interval) {
+        Cocos2dxHelper.sCocos2dxSensor.setInterval(ccSensorType,
+                                                         interval);
+    }
+
+    public static void disableSensor(int ccSensorType) {
+        Cocos2dxHelper.sEnabledSensorTypeSet.remove(ccSensorType);
+        Cocos2dxHelper.sCocos2dxSensor.disable(ccSensorType);
     }
 
     public static void setKeepScreenOn(boolean value) {
@@ -314,12 +336,18 @@ public class Cocos2dxHelper {
         if (Cocos2dxHelper.sAccelerometerEnabled) {
             Cocos2dxHelper.sCocos2dxAccelerometer.enable();
         }
+        for (Integer type : sEnabledSensorTypeSet) {
+            Cocos2dxHelper.sCocos2dxSensor.enable(type);
+        }
     }
 
     public static void onPause() {
         sActivityVisible = false;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
             Cocos2dxHelper.sCocos2dxAccelerometer.disable();
+        }
+        for (Integer type : sEnabledSensorTypeSet) {
+            Cocos2dxHelper.sCocos2dxSensor.disable(type);
         }
     }
 

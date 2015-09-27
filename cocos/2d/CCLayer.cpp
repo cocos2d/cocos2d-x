@@ -40,6 +40,8 @@ THE SOFTWARE.
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
+#include "base/CCEventSensor.h"
+#include "base/CCEventListenerSensor.h"
 
 
 #include "deprecated/CCString.h"
@@ -257,6 +259,20 @@ void Layer::onAcceleration(Acceleration* acc, Event* unused_event)
     {
         BasicScriptData data(this,(void*)acc);
         ScriptEvent event(kAccelerometerEvent,&data);
+        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
+    }
+#endif
+}
+
+void Layer::onSensor(Sensor* sensor, Event* unused_event)
+{
+    CC_UNUSED_PARAM(sensor);
+    CC_UNUSED_PARAM(unused_event);
+#if CC_ENABLE_SCRIPT_BINDING
+    if(kScriptTypeNone != _scriptType)
+    {
+        BasicScriptData data(this,(void*)sensor);
+        ScriptEvent event(kSensorEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif

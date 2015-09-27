@@ -130,17 +130,29 @@ public class Cocos2dxGLSurfaceView extends GLSurfaceView {
 
 
        public static Cocos2dxGLSurfaceView getInstance() {
-       return mCocos2dxGLSurfaceView;
+         return mCocos2dxGLSurfaceView;
        }
 
-       public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {   
-       mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
-        @Override
-            public void run() {
-                Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
-        }
-        });
-    }
+       public static void queueAccelerometer(final float x, final float y, final float z, final long timestamp) {
+         mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+           @Override
+           public void run() {
+             Cocos2dxAccelerometer.onSensorChanged(x, y, z, timestamp);
+           }
+         });
+       }
+
+       public static void queueSensor(final int senserType,
+                                            final float[] sensorValues,
+                                            final long timestamp) {
+         mCocos2dxGLSurfaceView.queueEvent(new Runnable() {
+           @Override
+           public void run() {
+             Cocos2dxSensor.onSensorChanged(senserType, sensorValues,
+                                            timestamp);
+           }
+         });
+       }
 
     public void setCocos2dxRenderer(final Cocos2dxRenderer renderer) {
         this.mCocos2dxRenderer = renderer;

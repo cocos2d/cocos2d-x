@@ -44,8 +44,11 @@ class Node;
 
 /** @class EventListener
  *  @brief The base class of event listener.
- *  If you need custom listener which with different callback, you need to inherit this class.
- *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
+ *  If you need custom listener which with different callback, you need to
+ *  inherit this class.
+ *  For instance, you could refer to EventListenerAcceleration,
+ *  EventListenerSensor, EventListenerKeyboard,
+ *  EventListenerTouchOneByOne, EventListenerCustom.
  */
 class CC_DLL EventListener : public Ref
 {
@@ -59,8 +62,9 @@ public:
         KEYBOARD,
         MOUSE,
         ACCELERATION,
+        SENSOR,
         FOCUS,
-		GAME_CONTROLLER,
+        GAME_CONTROLLER,
         CUSTOM
     };
 

@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "platform/CCDevice.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventListenerAcceleration.h"
+#include "base/CCEventListenerSensor.h"
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventDispatcher.h"
 
@@ -39,6 +40,8 @@ InputDelegate::InputDelegate(void)
 , _touchListener(nullptr)
 , _accelerometerEnabled(false)
 , _accelerometerListener(nullptr)
+, _sensorEnabled(false)
+, _sensorListener(nullptr)
 , _keypadEnabled(false)
 , _keyboardListener(nullptr)
 , _touchPriority(-1)
@@ -53,6 +56,7 @@ InputDelegate::~InputDelegate(void)
     dispatcher->removeEventListener(_touchListener);
     dispatcher->removeEventListener(_keyboardListener);
     dispatcher->removeEventListener(_accelerometerListener);
+    dispatcher->removeEventListener(_sensorListener);
     Device::setAccelerometerEnabled(false);
 }
 
@@ -207,9 +211,37 @@ void InputDelegate::setAccelerometerEnabled(bool enabled)
         
         if (enabled)
         {
-            auto listener = EventListenerAcceleration::create(CC_CALLBACK_2(InputDelegate::onAcceleration, this));
+            auto listener = EventListenerAcceleration::create(
+              CC_CALLBACK_2(InputDelegate::onAcceleration, this));
             dispatcher->addEventListenerWithFixedPriority(listener, -1);
             _accelerometerListener = listener;
+        }
+    }
+}
+
+bool InputDelegate::isSensorEnabled() const
+{
+    return _sensorEnabled;
+}
+
+void InputDelegate::setSensorEnabled(SensorType type, bool enabled)
+{
+    if (enabled != _sensorEnabled)
+    {
+        _sensorEnabled = enabled;
+
+        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        dispatcher->removeEventListener(_sensorListener);
+        _sensorListener = nullptr;
+
+        Device::setSensorEnabled(type, enabled);
+
+        if (enabled)
+        {
+            auto listener = EventListenerSensor::create(
+              CC_CALLBACK_2(InputDelegate::onSensor, this));
+            dispatcher->addEventListenerWithFixedPriority(listener, -1);
+            _sensorListener = listener;
         }
     }
 }
