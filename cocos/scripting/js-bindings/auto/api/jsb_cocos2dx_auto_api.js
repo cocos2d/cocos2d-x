@@ -23079,3 +23079,33 @@ getInstance : function (
 },
 
 };
+
+/**
+ * @class ComponentJS
+ */
+cc.ComponentJS = {
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @return {cc.ComponentJS}
+ */
+create : function (
+str 
+)
+{
+    return cc.ComponentJS;
+},
+
+/**
+ * @method ComponentJS
+ * @constructor
+ * @param {String} arg0
+ */
+ComponentJS : function (
+str 
+)
+{
+},
+
+};

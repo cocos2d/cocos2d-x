@@ -4,6 +4,7 @@
 #include "SimpleAudioEngine.h"
 #include "CCProtectedNode.h"
 #include "CCAsyncTaskPool.h"
+#include "component/CCComponentJS.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -71629,6 +71630,148 @@ void js_register_cocos2dx_SimpleAudioEngine(JSContext *cx, JS::HandleObject glob
     }
 }
 
+JSClass  *jsb_cocos2d_ComponentJS_class;
+JSObject *jsb_cocos2d_ComponentJS_prototype;
+
+bool js_cocos2dx_ComponentJS_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ComponentJS_create : Error processing arguments");
+        cocos2d::ComponentJS* ret = cocos2d::ComponentJS::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::ComponentJS>(cx, (cocos2d::ComponentJS*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_ComponentJS_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_ComponentJS_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    std::string arg0;
+    ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ComponentJS_constructor : Error processing arguments");
+    cocos2d::ComponentJS* cobj = new (std::nothrow) cocos2d::ComponentJS(arg0);
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::ComponentJS> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::ComponentJS");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}static bool js_cocos2dx_ComponentJS_ctor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    bool ok = true;
+    std::string arg0;
+    ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+    JSB_PRECONDITION2(ok, cx, false, "js_cocos2d_ComponentJS_ctor : Error processing arguments");
+    cocos2d::ComponentJS *nobj = new (std::nothrow) cocos2d::ComponentJS(arg0);
+    if (nobj) {
+        nobj->autorelease();
+    }
+    js_proxy_t* p = jsb_new_proxy(nobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::ComponentJS");
+    bool isFound = false;
+    if (JS_HasProperty(cx, obj, "_ctor", &isFound) && isFound)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    args.rval().setUndefined();
+    return true;
+}
+
+extern JSObject *jsb_cocos2d_Component_prototype;
+
+void js_cocos2d_ComponentJS_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (ComponentJS)", obj);
+}
+    
+void js_register_cocos2dx_ComponentJS(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_ComponentJS_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_ComponentJS_class->name = "ComponentJS";
+    jsb_cocos2d_ComponentJS_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_ComponentJS_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_ComponentJS_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_ComponentJS_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_ComponentJS_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_ComponentJS_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_ComponentJS_class->convert = JS_ConvertStub;
+    jsb_cocos2d_ComponentJS_class->finalize = js_cocos2d_ComponentJS_finalize;
+    jsb_cocos2d_ComponentJS_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("ctor", js_cocos2dx_ComponentJS_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_ComponentJS_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_ComponentJS_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_Component_prototype),
+        jsb_cocos2d_ComponentJS_class,
+        js_cocos2dx_ComponentJS_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "ComponentJS", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::ComponentJS> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_ComponentJS_class;
+        p->proto = jsb_cocos2d_ComponentJS_prototype;
+        p->parentProto = jsb_cocos2d_Component_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+    anonEvaluate(cx, global, "(function () { cc.ComponentJS.extend = cc.Class.extend; })()");
+}
+
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
@@ -71820,6 +71963,8 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_ParticleBatchNode(cx, ns);
     js_register_cocos2dx_TransitionZoomFlipX(cx, ns);
     js_register_cocos2dx_EventFocus(cx, ns);
+    js_register_cocos2dx_Component(cx, ns);
+    js_register_cocos2dx_ComponentJS(cx, ns);
     js_register_cocos2dx_EaseQuinticActionInOut(cx, ns);
     js_register_cocos2dx_TransitionRotoZoom(cx, ns);
     js_register_cocos2dx_SpriteFrameCache(cx, ns);
@@ -71863,7 +72008,6 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_OrbitCamera(cx, ns);
     js_register_cocos2dx_ParallaxNode(cx, ns);
     js_register_cocos2dx_TransitionFade(cx, ns);
-    js_register_cocos2dx_Component(cx, ns);
     js_register_cocos2dx_EaseCubicActionOut(cx, ns);
     js_register_cocos2dx_EventListenerTouchOneByOne(cx, ns);
     js_register_cocos2dx_TextFieldTTF(cx, ns);
