@@ -123,6 +123,9 @@
     <ClCompile Include="..\manual\LuaBasicConversions.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\CCComponentLua.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
     <ClCompile Include="..\manual\tolua_fix.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -339,6 +342,9 @@
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\LuaBasicConversions.h">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\CCComponentLua.h">
       <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\tolua_fix.h">

@@ -765,6 +765,35 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     return evaluatedOK;
 }
 
+bool ScriptingCore::requireScript(const char *path, JS::MutableHandleValue jsvalRet)
+{
+    return requireScript(path, _global.ref(), _cx, jsvalRet);
+}
+
+bool ScriptingCore::requireScript(const char *path, JS::HandleObject global, JSContext* cx, JS::MutableHandleValue jsvalRet)
+{
+    if (cx == NULL)
+    {
+        cx = _cx;
+    }
+    
+    compileScript(path,global,cx);
+    JS::RootedScript script(cx, getScript(path));
+    bool evaluatedOK = false;
+    if (script)
+    {
+        JSAutoCompartment ac(cx, global);
+        evaluatedOK = JS_ExecuteScript(cx, global, script, jsvalRet);
+        if (false == evaluatedOK)
+        {
+            cocos2d::log("(evaluatedOK == JS_FALSE)");
+            JS_ReportPendingException(cx);
+        }
+    }
+    
+    return evaluatedOK;
+}
+
 void ScriptingCore::reset()
 {
     Director::getInstance()->restart();
