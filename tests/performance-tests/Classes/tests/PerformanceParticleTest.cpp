@@ -424,7 +424,7 @@ void ParticleMainScene::updateTitle()
 ////////////////////////////////////////////////////////
 std::string ParticlePerformTest1::title() const
 {
-    char str[20] = {0};
+    char str[32] = {0};
     sprintf(str, "A (%d) size=%d", subtestNumber, particleSize);
     std::string strRet = str;
     return strRet;
