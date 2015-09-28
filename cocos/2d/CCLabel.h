@@ -415,6 +415,9 @@ public:
      */
     float getLineHeight() const;
 
+    void setLineSpacing(float height);
+    float getLineSpacing() const;
+
     /**
      * Sets the additional kerning of the Label.
      *
@@ -554,6 +557,7 @@ protected:
 
     //layout relevant properties.
     float _lineHeight;
+    float _lineSpacing;
     float _additionalKerning;
     int* _horizontalKernings;
     bool _lineBreakWithoutSpaces;
