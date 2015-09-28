@@ -112,6 +112,18 @@ bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity,
     return false;
 }
     
+RichElementNewLine* RichElementNewLine::create(int tag, const Color3B& color, GLubyte opacity)
+{
+    RichElementNewLine* element = new (std::nothrow) RichElementNewLine();
+    if (element && element->init(tag, color, opacity))
+    {
+        element->autorelease();
+        return element;
+    }
+    CC_SAFE_DELETE(element);
+    return nullptr;
+}
+    
 RichText::RichText():
 _formatTextDirty(true),
 _leftSpaceWidth(0.0f),
@@ -214,6 +226,11 @@ void RichText::formatText()
                         elementRenderer = elmtCustom->_customNode;
                         break;
                     }
+                    case RichElement::Type::NEWLINE:
+                    {
+                        addNewLine();
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -249,6 +266,11 @@ void RichText::formatText()
                         handleCustomRenderer(elmtCustom->_customNode);
                         break;
                     }
+                    case RichElement::Type::NEWLINE:
+                    {
+                        addNewLine();
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -279,6 +301,44 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
         std::string curText = text;
         size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
         int leftLength = stringLength * (1.0f - overstepPercent);
+        
+        // The adjustment of the new line position
+        auto originalLeftSpaceWidth = _leftSpaceWidth + textRendererWidth;
+        auto leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
+        textRenderer->setString(leftStr);
+        auto leftWidth = textRenderer->getContentSize().width;
+        if (originalLeftSpaceWidth < leftWidth) {
+            // Have protruding
+            for (;;) {
+                leftLength--;
+                leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
+                textRenderer->setString(leftStr);
+                leftWidth = textRenderer->getContentSize().width;
+                if (leftWidth <= originalLeftSpaceWidth) {
+                    break;
+                }
+                else if (leftLength <= 0) {
+                    break;
+                }
+            }
+        }
+        else if (leftWidth < originalLeftSpaceWidth) {
+            // A wide margin
+            for (;;) {
+                leftLength++;
+                leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
+                textRenderer->setString(leftStr);
+                leftWidth = textRenderer->getContentSize().width;
+                if (originalLeftSpaceWidth < leftWidth) {
+                    leftLength--;
+                    break;
+                }
+                else if (stringLength <= leftLength) {
+                    break;
+                }
+            }
+        }
+        
         //The minimum cut length is 1, otherwise will cause the infinite loop.
         if (0 == leftLength) leftLength = 1;
         std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
