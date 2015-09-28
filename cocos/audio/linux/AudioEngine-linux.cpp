@@ -7,7 +7,7 @@
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-AudioEngineImpl * g_instance = nullptr;
+AudioEngineImpl * g_AudioEngineImpl = nullptr;
 
 void ERRCHECKWITHEXIT(FMOD_RESULT result) {
     if (result != FMOD_OK) {
@@ -23,10 +23,16 @@ bool ERRCHECK(FMOD_RESULT result) {
     return false;
 }
 
-FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE controlType, void *commandData1, void *commandData2)
+//typedef FMOD_RESULT (F_CALLBACK *FMOD_CHANNELCONTROL_CALLBACK)  (FMOD_CHANNELCONTROL *channelcontrol, FMOD_CHANNELCONTROL_TYPE controltype, FMOD_CHANNELCONTROL_CALLBACK_TYPE callbacktype, void *commanddata1, void *commanddata2);
+
+FMOD_RESULT F_CALLBACK channelCallback(FMOD_CHANNELCONTROL *channelcontrol, 
+                                       FMOD_CHANNELCONTROL_TYPE controltype, 
+                                       FMOD_CHANNELCONTROL_CALLBACK_TYPE callbacktype, 
+                                       void *commandData1, void *commandData2)
 {
-    if(controlType == FMOD_CHANNEL_CALLBACKTYPE_END){
-        g_instance->onSoundFinished((FMOD::Channel *)channel);
+  
+  if(controltype == FMOD_CHANNELCONTROL_CHANNEL && callbacktype == FMOD_CHANNELCONTROL_CALLBACK_END){
+        g_AudioEngineImpl->onSoundFinished((FMOD::Channel *)channelcontrol);
     }else{
     }
     return FMOD_OK;
@@ -53,7 +59,7 @@ bool AudioEngineImpl::init(){
   result = FMOD::System_Create(&pSystem);
   ERRCHECKWITHEXIT(result);
   
-  result = pSystem->setOutput(FMOD_OUTPUTTYPE_ALSA);
+  result = pSystem->setOutput(FMOD_OUTPUTTYPE_PULSEAUDIO);
   ERRCHECKWITHEXIT(result);
 
   result = pSystem->init(32, FMOD_INIT_NORMAL, 0);
@@ -65,7 +71,7 @@ bool AudioEngineImpl::init(){
   auto scheduler = cocos2d::Director::getInstance()->getScheduler();
   scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
   
-  g_instance = this; 
+  g_AudioEngineImpl = this; 
   
   return true;
 };
@@ -114,8 +120,9 @@ try{
 
     if(!mapChannelInfo[audioID].channel){
       FMOD::Channel *channel = nullptr;
+      FMOD::ChannelGroup *channelgroup = nullptr;
       //starts the sound in pause mode, use the channel to unpause
-      FMOD_RESULT result = pSystem->playSound(FMOD_CHANNEL_FREE, mapChannelInfo[audioID].sound, true, &channel);
+      FMOD_RESULT result = pSystem->playSound(mapChannelInfo[audioID].sound, channelgroup, true, &channel);
       if(ERRCHECK(result)){
         return false; 
       }
