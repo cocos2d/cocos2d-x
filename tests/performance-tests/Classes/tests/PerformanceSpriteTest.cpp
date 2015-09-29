@@ -38,7 +38,7 @@ USING_NS_CC;
 #define CC_ROUND(__f__) roundf(__f__)
 #endif
 
-#define MAX_SUB_TEST_NUM        13
+#define MAX_SUB_TEST_NUM        15
 #define DELAY_TIME              2
 #define STAT_TIME               3
 
@@ -113,6 +113,7 @@ void SubTest::initWithSubTest(int subtest, Node* p)
     mgr->removeTextureForKey("Images/grossinis_sister1.png");
     mgr->removeTextureForKey("Images/grossini_dance_atlas.png");
     mgr->removeTextureForKey("Images/spritesheet1.png");
+    SpriteFrameCache::getInstance()->removeSpriteFrames();
 
     switch ( _subtestNumber)
     {
@@ -165,6 +166,18 @@ void SubTest::initWithSubTest(int subtest, Node* p)
         case 13:
             Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA4444);
             _parentNode = Node::create();
+            break;
+            
+        case 14:
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+            _parentNode = Node::create();
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/grossini_quad.plist"); // sprite sheet with rectangular frames
+            break;
+
+        case 15:
+            Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
+            _parentNode = Node::create();
+            SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/grossini_polygon.plist"); // sprite sheet with triangulation of sprite outlines
             break;
 
         default:
@@ -300,7 +313,16 @@ Sprite* SubTest::createSpriteWithTag(int tag)
                 sprite = Sprite::createWithTexture(texture, CC_RECT_PIXELS_TO_POINTS(Rect(x,y,32,32)));
                 _parentNode->addChild(sprite, 0, tag+100);
             }
+            break;
         }
+        case 14:
+        case 15:
+        {
+            sprite = Sprite::createWithSpriteFrameName("grossini_dance_05.png");
+            _parentNode->addChild(sprite, 0, tag+100);
+            break;
+        }
+
 
         default:
             break;
@@ -372,7 +394,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     // Sub Tests
     MenuItemFont::setFontSize(28);
     auto subMenu = Menu::create();
-    for (int i = 1; i <= 13; ++i)
+    for (int i = 1; i <= MAX_SUB_TEST_NUM; ++i)
     {
         char str[10] = {0};
         sprintf(str, "%d ", i);
