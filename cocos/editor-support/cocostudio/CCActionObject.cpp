@@ -45,7 +45,7 @@ ActionObject::ActionObject()
 , _CallBack(nullptr)
 , _fTotalTime(0.0f)
 {
-    _pScheduler = Director::getInstance()->getScheduler();
+    _pScheduler = Director::getInstance()->getCurrentWindowScheduler();
     CC_SAFE_RETAIN(_pScheduler);
 }
 

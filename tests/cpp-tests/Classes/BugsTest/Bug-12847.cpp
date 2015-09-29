@@ -15,7 +15,7 @@ bool Bug12847Layer::init()
 {
     if (BugsTestBase::init())
     {
-        Director::getInstance()->setProjection(Director::Projection::_2D);
+        Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
         auto _visibleSize = Director::getInstance()->getVisibleSize();
         
         //Create with Sprite

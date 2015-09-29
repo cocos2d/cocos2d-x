@@ -91,7 +91,7 @@ namespace DrawPrimitives
      * Frees allocated resources by the drawing primitives.
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL free();
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL freeResources();
 
     /** Draws a point given x and y coordinate measured in points
      *

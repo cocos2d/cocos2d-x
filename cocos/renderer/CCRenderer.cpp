@@ -143,7 +143,7 @@ void RenderQueue::clear()
     }
 }
 
-void RenderQueue::realloc(size_t reserveSize)
+void RenderQueue::reallocRenderQueue(size_t reserveSize)
 {
     for(int i = 0; i < QUEUE_COUNT; ++i)
     {

@@ -42,6 +42,9 @@
 #define QUEUEBUFFER_TIME_STEP 0.1f
 
 NS_CC_BEGIN
+
+class Scheduler;
+
 namespace experimental{
 
 class AudioEngineImpl;
@@ -102,6 +105,8 @@ protected:
     std::vector< std::function<void(bool)> > _loadCallbacks;
 
     std::mutex _readDataTaskMutex;    
+
+	Scheduler* _scheduler;
 
     int _mp3Encoding;
     

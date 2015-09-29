@@ -602,7 +602,7 @@ void RenderTexture::onEnd()
 
     // restore viewport
     director->setViewport();
-    const auto& vp = Camera::getDefaultViewport();
+    const auto& vp = Director::getInstance()->getDefaultViewport();
     glViewport(vp._left, vp._bottom, vp._width, vp._height);
     //
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);

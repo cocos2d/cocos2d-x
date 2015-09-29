@@ -133,14 +133,14 @@ CameraRotationTest::CameraRotationTest()
         Camera::getDefaultCamera()->lookAt(_camControlNode->getPosition3D());
     };
 
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_lis, this);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithSceneGraphPriority(_lis, this);
     
     schedule(schedule_selector(CameraRotationTest::update));
 }
 
 CameraRotationTest::~CameraRotationTest()
 {
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_lis);
+	Director::getInstance()->getMainEventDispatcher()->removeEventListener(_lis);
 }
 
 std::string CameraRotationTest::title() const
@@ -1333,7 +1333,7 @@ void FogTestDemo::onEnter()
                                                                 _state->setUniformInt("u_fogEquation" ,0);
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 
 }
@@ -1380,7 +1380,7 @@ void FogTestDemo::onExit()
     }
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 

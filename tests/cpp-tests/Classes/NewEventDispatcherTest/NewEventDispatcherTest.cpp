@@ -726,7 +726,7 @@ void DirectorEventTest::onEnter()
     _label4->setPosition(30,s.height/2 - 60);
     this->addChild(_label4);
 
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
 
     _event1 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_UPDATE, std::bind(&DirectorEventTest::onEvent1, this, std::placeholders::_1));
     _event2 = dispatcher->addCustomEventListener(Director::EVENT_AFTER_VISIT, std::bind(&DirectorEventTest::onEvent2, this, std::placeholders::_1));
@@ -755,7 +755,7 @@ void DirectorEventTest::update(float dt)
 
     time += dt;
     if(time > 0.5) {
-        Director::getInstance()->setProjection(Director::Projection::_2D);
+        Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
         time = 0;
     }
 }
@@ -764,9 +764,9 @@ void DirectorEventTest::onExit()
 {
     EventDispatcherTestDemo::onExit();
 
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
 
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
     dispatcher->removeEventListener(_event1);
     dispatcher->removeEventListener(_event2);
     dispatcher->removeEventListener(_event3);
@@ -1387,7 +1387,7 @@ Issue8194::Issue8194()
             getEventDispatcher()->dispatchCustomEvent("Issue8194");
             
             // clear test nodes and listeners
-            getEventDispatcher()->removeCustomEventListeners("Issue8194");
+			getEventDispatcher()->removeCustomEventListeners("Issue8194");
             removeChildByTag(tagA);
             removeChildByTag(tagB);
             nodesAdded = false;
@@ -1405,7 +1405,7 @@ Issue8194::Issue8194()
             _subtitleLabel->setString("Bug has been fixed.");
             event->stopPropagation();
         });
-        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listenerA, nodeA);
+		getEventDispatcher()->addEventListenerWithSceneGraphPriority(listenerA, nodeA);
        
         // add nodeB to scene
         auto nodeB = Node::create();
@@ -1415,7 +1415,7 @@ Issue8194::Issue8194()
             _subtitleLabel->setString("Bug exist yet.");
             event->stopPropagation();
         });
-        getEventDispatcher()->addEventListenerWithSceneGraphPriority(listenerB, nodeB);
+		getEventDispatcher()->addEventListenerWithSceneGraphPriority(listenerB, nodeB);
         
         nodesAdded = true;
     });
@@ -1428,7 +1428,7 @@ Issue8194::Issue8194()
 
 Issue8194::~Issue8194()
 {
-    getEventDispatcher()->removeEventListener(_listener);
+	getEventDispatcher()->removeEventListener(_listener);
 }
 
 std::string Issue8194::title() const

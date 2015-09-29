@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
+#include "cocos2d.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "platform/CCApplication.h"
@@ -70,6 +71,8 @@ int Application::run()
 
     initGLContextAttrs();
 
+	GLImpl::initGLView();
+
     // Initialize instance and cocos2d.
     if (!applicationDidFinishLaunching())
     {
@@ -77,20 +80,19 @@ int Application::run()
     }
 
     auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
 
-    // Retain glview to avoid glview being released in the while loop
-    glview->retain();
+	bool terminate = false;
+    while((director->getNumGLViews() > 0 || director->isPendingWindowCreate()) && !terminate)
+    { 
+		director->createPendingWindows();
 
-    while(!glview->windowShouldClose())
-    {
         QueryPerformanceCounter(&nNow);
+		
         if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
             nLast.QuadPart = nNow.QuadPart - (nNow.QuadPart % _animationInterval.QuadPart);
-            
-            director->mainLoop();
-            glview->pollEvents();
+
+            terminate = !director->mainLoop();
         }
         else
         {
@@ -98,14 +100,15 @@ int Application::run()
         }
     }
 
-    // Director should still do a cleanup if the window was closed manually.
-    if (glview->isOpenGLReady())
-    {
-        director->end();
-        director->mainLoop();
-        director = nullptr;
-    }
-    glview->release();
+	if(!terminate) //terminate will be true if director destroyed itself.  It will be false, if the window was destroyed without notifying the director.
+	{
+		director->end();
+		director->mainLoop();
+		director = nullptr;
+	}
+
+	GLImpl::destroyGLView();
+
     return 0;
 }
 
@@ -274,16 +277,16 @@ static void PVRFrameEnableControlWindow(bool bEnable)
         return;
     }
 
-    const WCHAR* wszValue = L"hide_gui";
-    const WCHAR* wszNewData = (bEnable) ? L"NO" : L"YES";
-    WCHAR wszOldData[256] = {0};
+	const WCHAR* wszValue = L"hide_gui";
+	const WCHAR* wszNewData = (bEnable) ? L"NO" : L"YES";
+	WCHAR wszOldData[256] = { 0 };
     DWORD   dwSize = sizeof(wszOldData);
-    LSTATUS status = RegQueryValueExW(hKey, wszValue, 0, nullptr, (LPBYTE)wszOldData, &dwSize);
+	LSTATUS status = RegQueryValueExW(hKey, wszValue, 0, nullptr, (LPBYTE)wszOldData, &dwSize);
     if (ERROR_FILE_NOT_FOUND == status              // the key not exist
         || (ERROR_SUCCESS == status                 // or the hide_gui value is exist
         && 0 != wcscmp(wszNewData, wszOldData)))    // but new data and old data not equal
     {
-        dwSize = sizeof(WCHAR) * (wcslen(wszNewData) + 1);
+		dwSize = sizeof(WCHAR) * (wcslen(wszNewData) + 1);
         RegSetValueEx(hKey, wszValue, 0, REG_SZ, (const BYTE *)wszNewData, dwSize);
     }
 

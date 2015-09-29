@@ -76,6 +76,7 @@ private:
     AudioSourceReader *_srcReader;
     std::vector<std::function<void()>> _callbacks;
     std::vector<std::function<void(bool)>> _loadCallbacks;
+	Scheduler* _scheduler;
 
     friend class AudioPlayer;
     friend class AudioEngineImpl;

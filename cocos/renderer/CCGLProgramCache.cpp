@@ -35,6 +35,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 
+// include custom shader manager
+#include "renderer/PYRCustomShaderManager.h"
+
 NS_CC_BEGIN
 
 enum {
@@ -85,6 +88,7 @@ GLProgramCache* GLProgramCache::getInstance()
 
 void GLProgramCache::destroyInstance()
 {
+	CustomShaderManager::destroyInstance();
     CC_SAFE_RELEASE_NULL(_sharedGLProgramCache);
 }
 
@@ -123,7 +127,15 @@ bool GLProgramCache::init()
         reloadDefaultGLProgramsRelativeToLights();
     });
     
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+	EventDispatcher* eventDispatcher = Director::getInstance()->getMainEventDispatcher();
+	if(eventDispatcher != nullptr)
+	{
+		eventDispatcher->addEventListenerWithFixedPriority(listener, -1);
+	}
+	else
+	{
+		CCASSERT(false, "main window needs to be created before initializing GLProgramCache");
+	}
     
     return true;
 }
@@ -403,6 +415,9 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_CameraClear);
+	
+	// custom
+	CustomShaderManager::getInstance()->recreate();
 }
 
 void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()

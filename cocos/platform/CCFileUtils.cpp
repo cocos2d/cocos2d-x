@@ -540,9 +540,27 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath) {return
 // Implement FileUtils
 FileUtils* FileUtils::s_sharedFileUtils = nullptr;
 
+std::map<std::string, std::unique_ptr<FileUtils> > FileUtils::s_FileUtilsMap;
+std::string	FileUtils::s_currentContext;
+    
+void FileUtils::setContext(const std::string& context)
+{
+	if (context == s_currentContext)
+		return;
+	s_FileUtilsMap[s_currentContext].reset(s_sharedFileUtils);
+	s_currentContext = context;
+	s_sharedFileUtils = s_FileUtilsMap[s_currentContext].release();
+}
+
+const std::string& FileUtils::getContext()
+{
+	return s_currentContext;
+}
+
 void FileUtils::destroyInstance()
 {
     CC_SAFE_DELETE(s_sharedFileUtils);
+	s_FileUtilsMap.clear();
 }
 
 void FileUtils::setDelegate(FileUtils *delegate)

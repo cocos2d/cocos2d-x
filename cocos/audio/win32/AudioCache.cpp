@@ -49,6 +49,7 @@ AudioCache::AudioCache()
 , _queBufferFrames(0)
 , _queBufferBytes(0)
 , _mp3Encoding(0)
+, _scheduler(nullptr)
 {
     
 }
@@ -63,6 +64,10 @@ AudioCache::AudioCache(const AudioCache& cache)
     _queBufferFrames = cache._queBufferFrames;
     _queBufferBytes = cache._queBufferBytes;
     _mp3Encoding = cache._mp3Encoding;
+	if(_scheduler != cache._scheduler)
+		_scheduler->release();
+	_scheduler = cache._scheduler;
+	_scheduler->retain();
 }
 
 AudioCache::~AudioCache()
@@ -83,6 +88,9 @@ AudioCache::~AudioCache()
             free(_queBuffers[index]);
         }
     }
+
+	if (_scheduler != nullptr)
+		_scheduler->release();
 }
 
 void AudioCache::readDataTask()
@@ -292,14 +300,21 @@ void AudioCache::addPlayCallback(const std::function<void()>& callback)
 
 void AudioCache::invokingLoadCallbacks()
 {
-    auto scheduler = Director::getInstance()->getScheduler();
-    scheduler->performFunctionInCocosThread([&](){
-        auto count = _loadCallbacks.size();
-        for (size_t index = 0; index < count; ++index) {
-            _loadCallbacks[index](_alBufferReady);
-        }
-        _loadCallbacks.clear();
-    });
+	if(_scheduler != nullptr)
+	{
+		_scheduler->performFunctionInCocosThread([&](){
+			auto count = _loadCallbacks.size();
+			for (size_t index = 0; index < count; ++index) {
+				_loadCallbacks[index](_alBufferReady);
+			}
+			_loadCallbacks.clear();
+		});
+
+		if (_scheduler != nullptr)
+			_scheduler->release();
+
+		_scheduler = nullptr;
+	}
 }
 
 void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)

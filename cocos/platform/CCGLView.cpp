@@ -156,9 +156,17 @@ void GLView::updateDesignResolutionSize()
         
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
-        director->_winSizeInPoints = getDesignResolutionSize();
-        director->_isStatusLabelUpdated = true;
+		bool requiresUnlock = false;
+		if(!director->_contexts.isLocked())
+		{
+			requiresUnlock = true;
+			director->_contexts.setContextAndLock(getKey());
+		}
+		CCASSERT(director->getOpenGLView() == this, "current openGLView in director should be this!");
+        director->_contexts.getCurrentWindow()->isStatusLabelUpdated = true;
         director->setGLDefaultValues();
+		if(requiresUnlock)
+			director->_contexts.unlock();
     }
 }
 
@@ -187,9 +195,14 @@ const Size& GLView::getFrameSize() const
     return _screenSize;
 }
 
+void GLView::setDesignSize(float width, float height)
+{
+	_designResolutionSize = Size(width, height);
+}
+
 void GLView::setFrameSize(float width, float height)
 {
-    _designResolutionSize = _screenSize = Size(width, height);
+    _screenSize = Size(width, height);
 }
 
 Rect GLView::getVisibleRect() const
@@ -231,7 +244,7 @@ void GLView::setViewPortInPoints(float x , float y , float w , float h)
         (float)(y * _scaleY + _viewPortRect.origin.y),
         (float)(w * _scaleX),
         (float)(h * _scaleY));
-    Camera::setDefaultViewport(vp);
+    Director::getInstance()->setDefaultViewport(vp);
 }
 
 void GLView::setScissorInPoints(float x , float y , float w , float h)
@@ -313,7 +326,7 @@ void GLView::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
     }
     
     touchEvent._eventCode = EventTouch::EventCode::BEGAN;
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
     dispatcher->dispatchEvent(&touchEvent);
 }
 
@@ -361,7 +374,7 @@ void GLView::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
     }
     
     touchEvent._eventCode = EventTouch::EventCode::MOVED;
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
     dispatcher->dispatchEvent(&touchEvent);
 }
 
@@ -415,7 +428,7 @@ void GLView::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num
     }
     
     touchEvent._eventCode = eventCode;
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
     dispatcher->dispatchEvent(&touchEvent);
     
     for (auto& touch : touchEvent._touches)

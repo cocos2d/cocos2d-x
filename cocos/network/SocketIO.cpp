@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013      Chris Hannon
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -607,7 +607,7 @@ void SIOClientImpl::disconnect()
         _ws->send(s);
     }
 
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+	Director::getInstance()->getMainScheduler()->unscheduleAllForTarget(this);
 
     _ws->close();
 
@@ -731,7 +731,7 @@ void SIOClientImpl::onOpen(WebSocket* ws)
         _ws->send(s.data());
     }
 
-    Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
+	Director::getInstance()->getMainScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 
     for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
     {

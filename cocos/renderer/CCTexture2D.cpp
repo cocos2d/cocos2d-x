@@ -436,6 +436,7 @@ Texture2D::Texture2D()
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
+, _generateMipmap(false)
 {
 }
 
@@ -601,7 +602,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         {
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         }
-    }else
+    }
+	else
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
@@ -614,31 +616,6 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     glGenTextures(1, &_name);
     GL::bindTexture2D(_name);
-
-    if (mipmapsNum == 1)
-    {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiasEnabled ? GL_LINEAR : GL_NEAREST);
-    }else
-    {
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiasEnabled ? GL_LINEAR_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
-    }
-    
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _antialiasEnabled ? GL_LINEAR : GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    if (_antialiasEnabled)
-    {
-        TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
-        VolatileTextureMgr::setTexParameters(this, texParams);
-    } 
-    else
-    {
-        TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
-        VolatileTextureMgr::setTexParameters(this, texParams);
-    }
-#endif
 
     // clean possible GL error
     GLenum err = glGetError();
@@ -690,6 +667,31 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
+
+	// generate mipmap
+	if (!_hasMipmaps && _generateMipmap && glGenerateMipmap)
+	{
+		glGenerateMipmap(GL_TEXTURE_2D);
+	    GLenum err = glGetError();
+		if (err == GL_NO_ERROR)
+			_hasMipmaps = true;
+	}
+
+	// set texture filtering
+	GLint f_max = _antialiasEnabled ? GL_LINEAR : GL_NEAREST;
+	GLint f_min = _hasMipmaps ? (_antialiasEnabled ? GL_LINEAR_MIPMAP_LINEAR : GL_NEAREST_MIPMAP_NEAREST) : (_antialiasEnabled ? GL_LINEAR : GL_NEAREST);
+    
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f_min );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f_max );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+	{
+	    TexParams texParams = {f_min,f_max,GL_NONE,GL_NONE};
+		VolatileTextureMgr::setTexParameters(this, texParams);
+    } 
+#endif
 
     // shader
     setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
@@ -764,7 +766,9 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         {
             CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
         }
-
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+		_generateMipmap = true;
+#endif
         initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
         return true;
     }
@@ -775,8 +779,10 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID) && (CC_TARGET_PLATFORM != CC_PLATFORM_IOS)
+		_generateMipmap = true;
+#endif
         initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
-
 
         if (outTempData != nullptr && outTempData != tempData)
         {
@@ -789,6 +795,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
         
         return true;
     }
+
 }
 
 Texture2D::PixelFormat Texture2D::convertI8ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
@@ -1207,7 +1214,9 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 
 void Texture2D::generateMipmap()
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+#endif
     GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
@@ -1292,12 +1301,12 @@ void Texture2D::setAntiAliasTexParameters()
     }
     else
     {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
     }
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
+    TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_LINEAR:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
     VolatileTextureMgr::setTexParameters(this, texParams);
 #endif
 }

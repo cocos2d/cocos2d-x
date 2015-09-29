@@ -124,11 +124,11 @@ Node::Node()
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
-    _actionManager = _director->getActionManager();
+    _actionManager = _director->getCurrentWindowActionManager();
     _actionManager->retain();
-    _scheduler = _director->getScheduler();
+    _scheduler = _director->getCurrentWindowScheduler();
     _scheduler->retain();
-    _eventDispatcher = _director->getEventDispatcher();
+    _eventDispatcher = _director->getCurrentWindowEventDispatcher();
     _eventDispatcher->retain();
     
 #if CC_ENABLE_SCRIPT_BINDING

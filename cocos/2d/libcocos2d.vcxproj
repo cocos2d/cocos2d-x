@@ -415,6 +415,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\base\CCData.cpp" />
     <ClCompile Include="..\base\CCDataVisitor.cpp" />
     <ClCompile Include="..\base\CCDirector.cpp" />
+    <ClCompile Include="..\base\CCDirectorContexts.cpp" />
     <ClCompile Include="..\base\CCEvent.cpp" />
     <ClCompile Include="..\base\CCEventAcceleration.cpp" />
     <ClCompile Include="..\base\CCEventCustom.cpp" />
@@ -598,6 +599,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\platform\CCImage.cpp" />
     <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\CCThread.cpp" />
+    <ClCompile Include="..\platform\CCWindowKey.cpp" />
     <ClCompile Include="..\platform\desktop\CCGLViewImpl-desktop.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication-win32.cpp" />
     <ClCompile Include="..\platform\win32\CCCommon-win32.cpp" />
@@ -632,6 +634,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp" />
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
+    <ClCompile Include="..\renderer\PYRCustomShaderManager.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\ui\CocosGUI.cpp" />
     <ClCompile Include="..\ui\UIButton.cpp" />
@@ -991,6 +994,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\CCData.h" />
     <ClInclude Include="..\base\CCDataVisitor.h" />
     <ClInclude Include="..\base\CCDirector.h" />
+    <ClInclude Include="..\base\CCDirectorContexts.h" />
     <ClInclude Include="..\base\CCEvent.h" />
     <ClInclude Include="..\base\CCEventAcceleration.h" />
     <ClInclude Include="..\base\CCEventCustom.h" />
@@ -1213,6 +1217,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
     <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\CCThread.h" />
+    <ClInclude Include="..\platform\CCWindowKey.h" />
     <ClInclude Include="..\platform\desktop\CCGLViewImpl-desktop.h" />
     <ClInclude Include="..\platform\win32\CCApplication-win32.h" />
     <ClInclude Include="..\platform\win32\CCFileUtils-win32.h" />
@@ -1249,6 +1254,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\renderer\CCVertexAttribBinding.h" />
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h" />
     <ClInclude Include="..\renderer\CCVertexIndexData.h" />
+    <ClInclude Include="..\renderer\PYRCustomShaderManager.h" />
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
     <ClInclude Include="..\ui\GUIExport.h" />

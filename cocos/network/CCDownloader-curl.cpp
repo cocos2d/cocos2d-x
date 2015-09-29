@@ -701,7 +701,7 @@ namespace cocos2d { namespace network {
     {
         DLLOG("Construct DownloaderCURL %p", this);
         _impl->hints = hints;
-        _scheduler = Director::getInstance()->getScheduler();
+        _scheduler = Director::getInstance()->getMainScheduler();
         _scheduler->retain();
         
         _transferDataToBuffer = [this](void *buf, int64_t len)->int64_t

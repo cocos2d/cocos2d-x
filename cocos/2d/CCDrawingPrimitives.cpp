@@ -96,7 +96,7 @@ void init()
     lazy_init();
 }
 
-void free()
+void freeResources()
 {
     CC_SAFE_RELEASE_NULL(s_shader);
     s_initialized = false;

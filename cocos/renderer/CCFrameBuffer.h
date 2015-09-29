@@ -148,6 +148,7 @@ protected:
 class CC_DLL FrameBuffer : public Ref
 {
 public:
+	static FrameBuffer* createFromDefault(GLView* view);
     static FrameBuffer* create(uint8_t fid, unsigned int width, unsigned int height);
     
     bool init(uint8_t fid, unsigned int width, unsigned int height);
@@ -193,15 +194,9 @@ private:
     RenderTargetBase* _rt;
     RenderTargetDepthStencil* _rtDepthStencil;
     bool _isDefault;
-public:
-    static FrameBuffer* getOrCreateDefaultFBO(GLView* glView);
-    static void applyDefaultFBO();
-    static void clearAllFBOs();
 private:
     //static GLuint _defaultFBO;
-    static FrameBuffer* _defaultFBO;
-    static std::set<FrameBuffer*> _frameBuffers;
-    
+   
 private:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _dirtyFBOListener;

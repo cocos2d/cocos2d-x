@@ -164,7 +164,7 @@ Effect::Effect()
                                                           glProgram->updateUniforms();
                                                       }
                                                       );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backgroundListener, -1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backgroundListener, -1);
 #endif
 }
 
@@ -172,7 +172,7 @@ Effect::~Effect()
 {
     CC_SAFE_RELEASE_NULL(_glprogramstate);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backgroundListener);
 #endif
 }
 

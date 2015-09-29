@@ -45,6 +45,16 @@ NS_CC_BEGIN
 class CC_DLL FileUtils
 {
 public:
+	/** 
+	 * Change current context. FileUtils has one instance per context.
+	 */
+	static void setContext(const std::string& context);
+
+	/**
+	 * Return current context
+	 */
+	static const std::string& getContext();
+
     /**
      *  Gets the instance of FileUtils.
      */
@@ -584,6 +594,9 @@ protected:
      */
     static FileUtils* s_sharedFileUtils;
 
+	static std::map<std::string, std::unique_ptr<FileUtils> > s_FileUtilsMap;
+	static std::string	s_currentContext;
+    
 };
 
 // end of support group

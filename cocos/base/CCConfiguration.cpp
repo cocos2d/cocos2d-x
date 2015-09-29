@@ -374,7 +374,9 @@ void Configuration::loadConfigFile(const std::string& filename)
     else
         _valueDict[name] = Value((int)_animate3DQuality);
     
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(_loadedEvent);
+	EventDispatcher* dispatcher = Director::getInstance()->getMainEventDispatcher();
+	if(dispatcher)
+		dispatcher->dispatchEvent(_loadedEvent);
 }
 
 NS_CC_END

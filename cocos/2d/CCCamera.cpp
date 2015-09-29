@@ -39,7 +39,6 @@
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
-experimental::Viewport Camera::_defaultViewport;
 
 Camera* Camera::getDefaultCamera()
 {
@@ -185,14 +184,14 @@ bool Camera::initDefault()
     auto projection = Director::getInstance()->getProjection();
     switch (projection)
     {
-        case Director::Projection::_2D:
+        case DirectorWindow::Projection::_2D:
         {
             initOrthographic(size.width, size.height, -1024, 1024);
             setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
             setRotation3D(Vec3(0.f, 0.f, 0.f));
             break;
         }
-        case Director::Projection::_3D:
+        case DirectorWindow::Projection::_3D:
         {
             float zeye = Director::getInstance()->getZEye();
             initPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);
@@ -425,7 +424,7 @@ void Camera::applyFrameBufferObject()
 {
     if(nullptr == _fbo)
     {
-        experimental::FrameBuffer::applyDefaultFBO();
+		Director::getInstance()->applyDefaultFrameBuffer();
     }
     else
     {
@@ -443,7 +442,8 @@ void Camera::applyViewport()
 {
     if(nullptr == _fbo)
     {
-        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
+		const experimental::Viewport& viewport = Director::getInstance()->getDefaultViewport();
+        glViewport(viewport._left, viewport._bottom, viewport._width, viewport._height);
     }
     else
     {

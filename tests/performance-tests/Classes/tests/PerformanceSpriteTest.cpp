@@ -515,7 +515,7 @@ void SpriteMainScene::onEnter()
 void SpriteMainScene::onExit()
 {
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
     sched->unscheduleAllForTarget(this);
     Scene::onExit();
 }
