@@ -218,7 +218,7 @@ void Particle3DMainScene::updateQuantityLabel()
     if( _quantityParticles != _lastRenderedCount )
     {
         auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
-        char str[20] = {0};
+        char str[64] = {0};
         sprintf(str, "%u Particle Systems", _quantityParticles);
         infoLabel->setString(str);
 
