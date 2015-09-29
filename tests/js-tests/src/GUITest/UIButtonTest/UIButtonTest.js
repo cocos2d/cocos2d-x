@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 var UIButtonTest = UIMainLayer.extend({
+    _button:null,
     init: function () {
         if (this._super()) {
             //init text
@@ -32,7 +33,7 @@ var UIButtonTest = UIMainLayer.extend({
 
             var widgetSize = this._widget.getContentSize();
             // Create the button
-            var button = new ccui.Button();
+            var button = this._button = new ccui.Button();
             button.setTouchEnabled(true);
             button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = widgetSize.width / 2.0;
@@ -40,11 +41,23 @@ var UIButtonTest = UIMainLayer.extend({
             button.addTouchEventListener(this.touchEvent, this);
             this._mainNode.addChild(button);
 
+            var label = new cc.LabelTTF("setOpacity", "Arial", 25);
+            var menuItem = new cc.MenuItemLabel(label,this.setOpacityTest,this);
+            var menu = new cc.Menu(menuItem);
+            menu.x = 0;
+            menu.y = 0;
+            menuItem.x = widgetSize.width-100;
+            menuItem.y = 270;
+            this._mainNode.addChild(menu);
             return true;
         }
         return false;
     },
-
+    setOpacityTest:function(){
+        var button = this._button;
+        var opacity = (button._realOpacity===255? 100:255);
+        button.setOpacity(opacity);
+    },
     touchEvent: function (sender, type) {
         switch (type) {
             case ccui.Widget.TOUCH_BEGAN:

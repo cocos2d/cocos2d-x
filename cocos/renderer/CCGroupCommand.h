@@ -56,7 +56,7 @@ protected:
 };
 
 /**
- GroupCommand is used to group several command together, and more, it can be nestd.
+ GroupCommand is used to group several command together, and more, it can be nested.
  So it is used to generate the hierarchy for the rendcommands. Evey group command will be assigned by a group ID.
  */
 class CC_DLL GroupCommand : public RenderCommand

@@ -655,7 +655,7 @@
 --------------------------------
 -- Sets a Scheduler object that is used to schedule all "updates" and timers.<br>
 -- warning If you set a new Scheduler, then previously created timers/update are going to be removed.<br>
--- param scheduler     A Shdeduler object that is used to schedule all "update" and timers.
+-- param scheduler     A Scheduler object that is used to schedule all "update" and timers.
 -- @function [parent=#Node] setScheduler 
 -- @param self
 -- @param #cc.Scheduler scheduler
@@ -798,7 +798,7 @@
         
 --------------------------------
 -- Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.<br>
--- param tag       An interger number that identifies a child node.<br>
+-- param tag       An integer number that identifies a child node.<br>
 -- param cleanup   True if all running actions and callbacks on the child node will be cleanup, false otherwise.<br>
 -- Please use `removeChildByName` instead.
 -- @function [parent=#Node] removeChildByTag 
@@ -863,7 +863,7 @@
 -- The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.<br>
 -- By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.<br>
 -- Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.<br>
--- Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.<br>
+-- Limitations: Global Z Order can't be used by Nodes that have SpriteBatchNode as one of their ancestors.<br>
 -- And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.<br>
 -- see `setLocalZOrder()`<br>
 -- see `setVertexZ()`<br>
@@ -1073,7 +1073,7 @@
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
--- This appraoch can improves the performance massively.<br>
+-- This approach can improves the performance massively.<br>
 -- note Don't call this manually unless a child added needs to be removed in the same frame.
 -- @function [parent=#Node] sortAllChildren 
 -- @param self

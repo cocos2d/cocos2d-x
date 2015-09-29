@@ -293,7 +293,7 @@ public: virtual void set##funName(varType var)   \
 
 /** @def CC_DEPRECATED(...)
  * Macro to mark things deprecated as of a particular version
- * can be used with artibrary parameters which are thrown away.
+ * can be used with arbitrary parameters which are thrown away.
  * e.g. CC_DEPRECATED(4.0) or CC_DEPRECATED(4.0, "not going to need this anymore") etc.
  */
 #define CC_DEPRECATED(...) CC_DEPRECATED_ATTRIBUTE

@@ -459,6 +459,7 @@ void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 void Slider::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchEnded(touch, unusedEvent);
+    percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
     percentChangedEvent(EventType::ON_SLIDEBALL_UP);
 }
 

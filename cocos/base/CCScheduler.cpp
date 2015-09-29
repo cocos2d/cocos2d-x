@@ -329,7 +329,7 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
 
 void Scheduler::unschedule(const std::string &key, void *target)
 {
-    // explicity handle nil arguments when removing an object
+    // explicit handle nil arguments when removing an object
     if (target == nullptr || key.empty())
     {
         return;
@@ -1070,7 +1070,7 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
 
 void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
 {
-    // explicity handle nil arguments when removing an object
+    // explicit handle nil arguments when removing an object
     if (target == nullptr || selector == nullptr)
     {
         return;

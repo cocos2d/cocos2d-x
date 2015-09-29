@@ -471,6 +471,12 @@
                 func: function () {
                     return new UIScrollViewDisableTest();
                 }
+            },
+            {
+                title:"UIScrollView Multiple Items Test",
+                func: function () {
+                    return new UIScrollViewTest_Vertical_Multiple();
+                }
             }
         ],
         "UIPageView": [

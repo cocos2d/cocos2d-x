@@ -39,7 +39,7 @@ SpineTestScene.nextSpineTestLayer = function() {
     spineSceneIdx++;
     var layers = SpineTestScene.testLayers;
     spineSceneIdx = spineSceneIdx % layers.length;
-    return new layers[spineSceneIdx]();
+    return new layers[spineSceneIdx](spineSceneIdx);
 };
 
 SpineTestScene.backSpineTestLayer = function() {
@@ -47,11 +47,11 @@ SpineTestScene.backSpineTestLayer = function() {
     var layers = SpineTestScene.testLayers;
     if(spineSceneIdx < 0)
         spineSceneIdx = layers.length;
-    return new layers[spineSceneIdx]();
+    return new layers[spineSceneIdx](spineSceneIdx);
 };
 
 SpineTestScene.restartSpineTestLayer = function(){
-    return new SpineTestScene.testLayers[spineSceneIdx]();
+    return new SpineTestScene.testLayers[spineSceneIdx](spineSceneIdx);
 };
 
 var SpineTestLayer = BaseTestLayer.extend({
@@ -74,12 +74,20 @@ var SpineTestLayer = BaseTestLayer.extend({
     }
 });
 
+var customSkeletonAnimation = sp.SkeletonAnimation.extend({
+    ctor:function () {
+        this._super.apply(this, arguments);
+    }
+});
+
 var SpineTestLayerNormal = SpineTestLayer.extend({
     _spineboy:null,
     _debugMode: 0,
     _flipped: false,
-    ctor:function () {
+    _idx:0,
+    ctor:function (idx) {
         this._super(cc.color(0,0,0,255), cc.color(98,99,117,255));
+        this._idx = idx;
 
         var size = director.getWinSize();
 
@@ -87,7 +95,13 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
         // Make Spine's Animated skeleton Node
         // You need 'json + atlas + image' resource files to make it.
         // No JS binding for spine-c in this version. So, only file loading is supported.
-        var spineBoy = new sp.SkeletonAnimation('spine/spineboy.json', 'spine/spineboy.atlas');
+        var spineBoy;
+        if (idx % 2 == 0) {
+            spineBoy = new customSkeletonAnimation('spine/spineboy.json', 'spine/spineboy.atlas');
+        } 
+        else {
+            spineBoy = new sp.SkeletonAnimation('spine/spineboy.json', 'spine/spineboy.atlas');
+        }
         spineBoy.setPosition(cc.p(size.width / 2, size.height / 2 - 150));
         spineBoy.setMix('walk', 'jump', 0.2);
         spineBoy.setMix('jump', 'run', 0.2);
@@ -156,7 +170,13 @@ var SpineTestLayerNormal = SpineTestLayer.extend({
     },
 
     subtitle:function () {
-        return "Spine test";
+        if (this._idx % 2 == 0) {
+            return "custom spine test";
+        }
+        else {
+            return "Spine test";
+        }
+        
     },
     title:function () {
         return "Spine test";
@@ -268,7 +288,8 @@ var SpineTestPerformanceLayer = SpineTestLayer.extend({
 });
 
 SpineTestScene.testLayers = [
-    SpineTestLayerNormal
+    SpineTestLayerNormal,
+    SpineTestLayerNormal // custom spine,diff code in sample
     //SpineTestLayerFFD,        //it doesn't support mesh on Web.
     //SpineTestPerformanceLayer
 ];
