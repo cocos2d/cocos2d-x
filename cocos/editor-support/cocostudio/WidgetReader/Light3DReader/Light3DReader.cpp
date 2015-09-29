@@ -150,6 +150,8 @@ namespace cocostudio
     
     Node* Light3DReader::createNodeWithFlatBuffers(const flatbuffers::Table* light3DOptions)
     {
+        Node* lightNode = Node::create();
+
         auto options = (Light3DOption*)light3DOptions;
 
         BaseLight* light = nullptr;
@@ -181,9 +183,10 @@ namespace cocostudio
             light->setIntensity(intensity);
             light->setEnabled(enabled);
         }
+        lightNode->addChild(light);
 
-        setPropsWithFlatBuffers(light, light3DOptions);
+        setPropsWithFlatBuffers(lightNode, light3DOptions);
 
-        return light;
+        return lightNode;
     }
 }

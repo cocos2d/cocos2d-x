@@ -334,6 +334,7 @@ struct GameNode3DOption : private flatbuffers::Table {
   const flatbuffers::ResourceData *backFileData() const { return GetPointer<const flatbuffers::ResourceData *>(20); }
   const flatbuffers::String *frameEvent() const { return GetPointer<const flatbuffers::String *>(22); }
   const flatbuffers::String *customProperty() const { return GetPointer<const flatbuffers::String *>(24); }
+  uint8_t useDefaultLight() const { return GetField<uint8_t>(26, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* name */) &&
@@ -356,6 +357,7 @@ struct GameNode3DOption : private flatbuffers::Table {
            verifier.Verify(frameEvent()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 24 /* customProperty */) &&
            verifier.Verify(customProperty()) &&
+           VerifyField<uint8_t>(verifier, 26 /* useDefaultLight */) &&
            verifier.EndTable();
   }
 };
@@ -374,10 +376,11 @@ struct GameNode3DOptionBuilder {
   void add_backFileData(flatbuffers::Offset<flatbuffers::ResourceData> backFileData) { fbb_.AddOffset(20, backFileData); }
   void add_frameEvent(flatbuffers::Offset<flatbuffers::String> frameEvent) { fbb_.AddOffset(22, frameEvent); }
   void add_customProperty(flatbuffers::Offset<flatbuffers::String> customProperty) { fbb_.AddOffset(24, customProperty); }
+  void add_useDefaultLight(uint8_t useDefaultLight) { fbb_.AddElement<uint8_t>(26, useDefaultLight, 0); }
   GameNode3DOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   GameNode3DOptionBuilder &operator=(const GameNode3DOptionBuilder &);
   flatbuffers::Offset<GameNode3DOption> Finish() {
-    auto o = flatbuffers::Offset<GameNode3DOption>(fbb_.EndTable(start_, 11));
+    auto o = flatbuffers::Offset<GameNode3DOption>(fbb_.EndTable(start_, 12));
     return o;
   }
 };
@@ -393,7 +396,8 @@ inline flatbuffers::Offset<GameNode3DOption> CreateGameNode3DOption(flatbuffers:
    flatbuffers::Offset<flatbuffers::ResourceData> forwardFileData = 0,
    flatbuffers::Offset<flatbuffers::ResourceData> backFileData = 0,
    flatbuffers::Offset<flatbuffers::String> frameEvent = 0,
-   flatbuffers::Offset<flatbuffers::String> customProperty = 0) {
+   flatbuffers::Offset<flatbuffers::String> customProperty = 0,
+   uint8_t useDefaultLight = 0) {
   GameNode3DOptionBuilder builder_(_fbb);
   builder_.add_customProperty(customProperty);
   builder_.add_frameEvent(frameEvent);
@@ -405,6 +409,7 @@ inline flatbuffers::Offset<GameNode3DOption> CreateGameNode3DOption(flatbuffers:
   builder_.add_leftFileData(leftFileData);
   builder_.add_skyBoxMask(skyBoxMask);
   builder_.add_name(name);
+  builder_.add_useDefaultLight(useDefaultLight);
   builder_.add_skyBoxEnabled(skyBoxEnabled);
   return builder_.Finish();
 }

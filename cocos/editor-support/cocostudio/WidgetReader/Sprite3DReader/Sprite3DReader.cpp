@@ -243,6 +243,11 @@ namespace cocostudio
             sprite3D->setCullFaceEnabled(true);
             sprite3D->setCullFace(GL_FRONT);
         }
+
+        if (lightFlag <= 0)
+        {
+            lightFlag = 1;
+        }
         sprite3D->setLightMask(lightFlag);
         
         auto node3DReader = Node3DReader::getInstance();
