@@ -1326,4 +1326,9 @@
 -- @field [parent=#cc] Sprite3DMaterial#Sprite3DMaterial Sprite3DMaterial preloaded module
 
 
+--------------------------------------------------------
+-- the cc ComponentLua
+-- @field [parent=#cc] ComponentLua#ComponentLua ComponentLua preloaded module
+
+
 return nil

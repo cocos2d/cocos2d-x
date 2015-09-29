@@ -408,7 +408,7 @@ GLProgramState* GLProgramState::clone() const
     glprogramstate->_boundTextureUnits = this->_boundTextureUnits;
 
     // _nodeBinding is null since a node can only have one state.
-    // making the null explict to avoid possible bugs in the future
+    // making the null explicit to avoid possible bugs in the future
     glprogramstate->_nodeBinding = nullptr;
 
     // copy autobindings... rebound them once a target is set again

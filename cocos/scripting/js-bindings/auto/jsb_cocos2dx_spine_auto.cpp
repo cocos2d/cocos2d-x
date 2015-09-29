@@ -85,14 +85,14 @@ bool js_cocos2dx_spine_SkeletonRenderer_getDebugSlotsEnabled(JSContext *cx, uint
 }
 bool js_cocos2dx_spine_SkeletonRenderer_setAttachment(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    spine::SkeletonRenderer* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    spine::SkeletonRenderer* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
+    cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setAttachment : Invalid Native Object");
     do {
         if (argc == 2) {
@@ -359,14 +359,14 @@ bool js_cocos2dx_spine_SkeletonRenderer_getTimeScale(JSContext *cx, uint32_t arg
 }
 bool js_cocos2dx_spine_SkeletonRenderer_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    spine::SkeletonRenderer* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    spine::SkeletonRenderer* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
+    cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_initWithFile : Invalid Native Object");
     do {
         if (argc == 2) {
@@ -457,14 +457,14 @@ bool js_cocos2dx_spine_SkeletonRenderer_setBlendFunc(JSContext *cx, uint32_t arg
 }
 bool js_cocos2dx_spine_SkeletonRenderer_setSkin(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    spine::SkeletonRenderer* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    spine::SkeletonRenderer* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : NULL);
+    cobj = (spine::SkeletonRenderer *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_spine_SkeletonRenderer_setSkin : Invalid Native Object");
     do {
         if (argc == 1) {
@@ -620,11 +620,11 @@ bool js_cocos2dx_spine_SkeletonRenderer_createWithFile(JSContext *cx, uint32_t a
 }
 bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    spine::SkeletonRenderer* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    spine::SkeletonRenderer* cobj = NULL;
     do {
         if (argc == 1) {
             spSkeletonData* arg0 = nullptr;
@@ -636,6 +636,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -666,6 +667,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -690,6 +692,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -721,6 +724,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -755,6 +759,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -785,6 +790,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -818,6 +824,7 @@ bool js_cocos2dx_spine_SkeletonRenderer_constructor(JSContext *cx, uint32_t argc
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonRenderer> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1553,11 +1560,11 @@ bool js_cocos2dx_spine_SkeletonAnimation_createWithFile(JSContext *cx, uint32_t 
 }
 bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    spine::SkeletonAnimation* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    spine::SkeletonAnimation* cobj = NULL;
     do {
         if (argc == 1) {
             spSkeletonData* arg0 = nullptr;
@@ -1569,6 +1576,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1599,6 +1607,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1623,6 +1632,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1654,6 +1664,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1688,6 +1699,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1718,6 +1730,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1751,6 +1764,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<spine::SkeletonAnimation> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1780,11 +1794,11 @@ bool js_cocos2dx_spine_SkeletonAnimation_constructor(JSContext *cx, uint32_t arg
 }
 bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    spine::SkeletonAnimation* cobj = nullptr;
 
-    JS::RootedObject obj(cx);
-    spine::SkeletonAnimation* cobj = NULL;
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     do {
         if (argc == 1) {
             spSkeletonData* arg0 = nullptr;
@@ -1796,17 +1810,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
@@ -1826,17 +1830,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
@@ -1850,17 +1844,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
@@ -1881,17 +1865,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
@@ -1915,17 +1889,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
@@ -1945,17 +1909,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");
@@ -1978,17 +1932,7 @@ bool js_cocos2dx_spine_SkeletonAnimation_ctor(JSContext *cx, uint32_t argc, jsva
             if (_ccobj) {
                 _ccobj->autorelease();
             }
-            TypeTest<spine::SkeletonAnimation> t;
-            js_type_class_t *typeClass = nullptr;
-            std::string typeName = t.s_name();
-            auto typeMapIter = _js_global_type_map.find(typeName);
-            CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-            typeClass = typeMapIter->second;
-            CCASSERT(typeClass, "The value is null.");
-            // obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-            JS::RootedObject proto(cx, typeClass->proto.get());
-            JS::RootedObject parent(cx, typeClass->parentProto.get());
-            obj = JS_NewObject(cx, typeClass->jsclass, proto, parent);
+
 
             js_proxy_t* p = jsb_new_proxy(cobj, obj);
             AddNamedObjectRoot(cx, &p->obj, "spine::SkeletonAnimation");

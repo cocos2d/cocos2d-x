@@ -377,7 +377,7 @@ public:
     * Windows fopen can't support UTF-8 filename
     * Need convert all parameters fopen and other 3rd-party libs
     *
-    * @param filename std::string name file for convertation from utf-8
+    * @param filename std::string name file for conversion from utf-8
     * @return std::string ansi filename in current locale
     */
     virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const;
@@ -488,7 +488,7 @@ protected:
      *
      *  @note When you are porting Cocos2d-x to a new platform, you may need to take care of this method.
      *        You could assign a default value to _defaultResRootPath in the subclass of FileUtils(e.g. FileUtilsAndroid). Then invoke the FileUtils::init().
-     *  @return true if successed, otherwise it returns false.
+     *  @return true if succeed, otherwise it returns false.
      *
      */
     virtual bool init();

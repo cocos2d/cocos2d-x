@@ -532,11 +532,11 @@ void PhysicsWorld::removeBody(PhysicsBody* body)
 {
     if (body->getWorld() != this)
     {
-        CCLOG("Physics Warnning: this body doesn't belong to this world");
+        CCLOG("Physics Warning: this body doesn't belong to this world");
         return;
     }
     
-    // destory the body's joints
+    // destroy the body's joints
     auto removeCopy = body->_joints;
     for (auto joint : removeCopy)
     {
@@ -575,7 +575,7 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
     {
         if (joint->getWorld() != this && destroy)
         {
-            CCLOG("physics warnning: the joint is not in this world, it won't be destoried utill the body it conntect is destoried");
+            CCLOG("physics warning: the joint is not in this world, it won't be destroyed until the body it connects is destroyed");
             return;
         }
 
@@ -692,7 +692,7 @@ void PhysicsWorld::doRemoveBody(PhysicsBody* body)
 {
     CCASSERT(body != nullptr, "the body can not be nullptr");
     
-    // remove shaps
+    // remove shapes
     for (auto& shape : body->getShapes())
     {
         removeShape(shape);

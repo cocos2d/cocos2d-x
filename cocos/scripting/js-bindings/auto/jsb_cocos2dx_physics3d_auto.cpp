@@ -764,14 +764,14 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_getFriction(JSContext *cx, uint32_
 }
 bool js_cocos2dx_physics3d_Physics3DRigidBody_setAngularFactor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocos2d::Physics3DRigidBody* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocos2d::Physics3DRigidBody* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::Physics3DRigidBody *)(proxy ? proxy->ptr : NULL);
+    cobj = (cocos2d::Physics3DRigidBody *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_setAngularFactor : Invalid Native Object");
     do {
         if (argc == 1) {
@@ -1445,14 +1445,14 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_setInvInertiaDiagLocal(JSContext *
 }
 bool js_cocos2dx_physics3d_Physics3DRigidBody_removeConstraint(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocos2d::Physics3DRigidBody* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocos2d::Physics3DRigidBody* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::Physics3DRigidBody *)(proxy ? proxy->ptr : NULL);
+    cobj = (cocos2d::Physics3DRigidBody *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DRigidBody_removeConstraint : Invalid Native Object");
     do {
         if (argc == 1) {
@@ -3350,14 +3350,14 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_getPivotPointInB(JSCo
 }
 bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocos2d::Physics3DPointToPointConstraint* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocos2d::Physics3DPointToPointConstraint* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::Physics3DPointToPointConstraint *)(proxy ? proxy->ptr : NULL);
+    cobj = (cocos2d::Physics3DPointToPointConstraint *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DPointToPointConstraint_init : Invalid Native Object");
     do {
         if (argc == 4) {
@@ -3646,14 +3646,14 @@ JSObject *jsb_cocos2d_Physics3DHingeConstraint_prototype;
 
 bool js_cocos2dx_physics3d_Physics3DHingeConstraint_getHingeAngle(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocos2d::Physics3DHingeConstraint* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocos2d::Physics3DHingeConstraint* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::Physics3DHingeConstraint *)(proxy ? proxy->ptr : NULL);
+    cobj = (cocos2d::Physics3DHingeConstraint *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DHingeConstraint_getHingeAngle : Invalid Native Object");
     do {
         if (argc == 2) {
@@ -4038,14 +4038,14 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_setLimit(JSContext *cx, uint
 }
 bool js_cocos2dx_physics3d_Physics3DHingeConstraint_setMotorTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocos2d::Physics3DHingeConstraint* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocos2d::Physics3DHingeConstraint* cobj = NULL;
     obj = args.thisv().toObjectOrNull();
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::Physics3DHingeConstraint *)(proxy ? proxy->ptr : NULL);
+    cobj = (cocos2d::Physics3DHingeConstraint *)(proxy ? proxy->ptr : nullptr);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DHingeConstraint_setMotorTarget : Invalid Native Object");
     do {
         if (argc == 2) {

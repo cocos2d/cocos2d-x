@@ -318,6 +318,14 @@ var testNames = [
         }
     },
     {
+        title:"Component Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/ComponentTest/ComponentTest.js",
+        testScene:function () {
+            return new ComponentTestScene();
+        }
+    },
+    {
         title:"CurrentLanguage Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/CurrentLanguageTest/CurrentLanguageTest.js",

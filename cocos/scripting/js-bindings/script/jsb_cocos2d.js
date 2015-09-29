@@ -2622,7 +2622,7 @@ cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelect
 
 
 //
-// LabelTTF setDimensions support two parameters
+// LabelTTF API wrappers
 //
 cc.LabelTTF.prototype._setDimensions = cc.LabelTTF.prototype.setDimensions;
 cc.LabelTTF.prototype.setDimensions = function (dim, height) {
@@ -2631,6 +2631,12 @@ cc.LabelTTF.prototype.setDimensions = function (dim, height) {
     }
     this._setDimensions(dim);
 };
+
+cc.LabelTTF.prototype._enableShadow = cc.LabelTTF.prototype.enableShadow;
+cc.LabelTTF.prototype.enableShadow = function (shadowColor, offset, blurRadius) {
+    var opacity = 1;
+    this._enableShadow(offset, opacity, blurRadius);
+}
 
 
 //
@@ -2731,6 +2737,20 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
     tempArray = Array.prototype.concat.call(tempArray, 4);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
 }
+
+
+//
+// Script Component
+//
+cc._ComponentJS = cc.ComponentJS;
+cc.ComponentJS = function (filename) {
+    var comp = cc._ComponentJS.create(filename);
+    var res = comp.getScriptObject();
+    return res;
+}
+cc.ComponentJS.extend = function (prop) {
+    return cc._ComponentJS.extend(prop);
+};
 
 
 //

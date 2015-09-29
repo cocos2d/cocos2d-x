@@ -197,7 +197,7 @@ void GLProgramCache::loadDefaultGLPrograms()
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_U_COLOR, p) );
 
     //
-    // Position, Legth(TexCoords, Color (used by Draw Node basically )
+    // Position, Length(TexCoords, Color (used by Draw Node basically )
     //
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
@@ -338,7 +338,7 @@ void GLProgramCache::reloadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_Position_uColor);
 
     //
-    // Position, Legth(TexCoords, Color (used by Draw Node basically )
+    // Position, Length(TexCoords, Color (used by Draw Node basically )
     //
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     p->reset();

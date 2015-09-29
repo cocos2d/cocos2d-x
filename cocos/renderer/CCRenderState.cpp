@@ -160,7 +160,7 @@ RenderState::StateBlock* RenderState::getStateBlock() const
 
 void RenderState::cloneInto(RenderState* renderState) const
 {
-    CCASSERT(renderState, "must be non nill");
+    CCASSERT(renderState, "must be non null");
 
     // Clone our state block
     if (_state)

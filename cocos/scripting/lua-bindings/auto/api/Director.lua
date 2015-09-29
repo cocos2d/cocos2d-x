@@ -154,7 +154,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Cleras all types of matrix stack, and add indentity matrix to these matrix stacks.<br>
+-- Clear all types of matrix stack, and add identity matrix to these matrix stacks.<br>
 -- js NA
 -- @function [parent=#Director] resetMatrixStack 
 -- @param self
@@ -350,7 +350,7 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Adds an identity matrix to the top of specified type of matrxi stack.<br>
+--  Adds an identity matrix to the top of specified type of matrix stack.<br>
 -- js NA
 -- @function [parent=#Director] loadIdentityMatrix 
 -- @param self
@@ -379,9 +379,9 @@
 -- @return Console#Console ret (return value: cc.Console)
         
 --------------------------------
--- Multipies a matrix to the top of specified type of matrix stack.<br>
+-- Multiplies a matrix to the top of specified type of matrix stack.<br>
 -- param type Matrix type.<br>
--- param mat The matrix that to be multipied.<br>
+-- param mat The matrix that to be multiplied.<br>
 -- js NA
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
@@ -397,8 +397,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Sets the detal time between current frame and next frame is 0.<br>
--- This value will be used in Schedule, and will affect all functions that are using frame detal time, such as Actions.<br>
+-- Sets the delta time between current frame and next frame is 0.<br>
+-- This value will be used in Schedule, and will affect all functions that are using frame delta time, such as Actions.<br>
 -- This value will take effect only one time.
 -- @function [parent=#Director] setNextDeltaTimeZero 
 -- @param self
