@@ -45,6 +45,7 @@ class Widget::FocusNavigationController
     void enableFocusNavigation(bool flag);
 
     FocusNavigationController():
+	_dispatcher(nullptr),
     _keyboardListener(nullptr),
     _firstFocusedWidget(nullptr),
     _enableFocusNavigation(false),
@@ -63,6 +64,7 @@ protected:
 
     friend class Widget;
 private:
+	EventDispatcher* _dispatcher ;
     EventListenerKeyboard* _keyboardListener ;
     Widget* _firstFocusedWidget ;
     bool _enableFocusNavigation ;
@@ -121,8 +123,14 @@ void Widget::FocusNavigationController::addKeyboardEventListener()
     {
         _keyboardListener = EventListenerKeyboard::create();
         _keyboardListener->onKeyReleased = CC_CALLBACK_2(Widget::FocusNavigationController::onKeypadKeyPressed, this);
-        EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
-        dispatcher->addEventListenerWithFixedPriority(_keyboardListener, _keyboardEventPriority);
+		if(_dispatcher == nullptr)
+		{
+			_dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
+			_dispatcher->retain();
+		}
+		CCASSERT(_dispatcher == Director::getInstance()->getCurrentWindowEventDispatcher(), "dispatcher has changed from previous registration?");
+
+        _dispatcher->addEventListenerWithFixedPriority(_keyboardListener, _keyboardEventPriority);
     }
 }
 
@@ -130,8 +138,17 @@ void Widget::FocusNavigationController::removeKeyboardEventListener()
 {
     if (nullptr != _keyboardListener)
     {
-        EventDispatcher* dispatcher = Director::getInstance()->getEventDispatcher();
-        dispatcher->removeEventListener(_keyboardListener);
+		if(_dispatcher != nullptr)
+		{
+			_dispatcher->removeEventListener(_keyboardListener);
+			_dispatcher->release();
+			_dispatcher = nullptr;
+		}
+		else
+		{
+			CCASSERT(_dispatcher != nullptr, "dispatcher can't be null when keyboard listener is not null");
+		}
+
         _keyboardListener = nullptr;
     }
 }
@@ -1419,7 +1436,7 @@ void Widget::dispatchFocusEvent(cocos2d::ui::Widget *widgetLoseFocus, cocos2d::u
         }
 
         EventFocus event(widgetLoseFocus, widgetGetFocus);
-        auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
+        auto dispatcher = cocos2d::Director::getInstance()->getCurrentWindowEventDispatcher();
         dispatcher->dispatchEvent(&event);
     }
 

@@ -31,8 +31,6 @@
 
 NS_CC_BEGIN
 namespace experimental{
-FrameBuffer* FrameBuffer::_defaultFBO = nullptr;
-std::set<FrameBuffer*> FrameBuffer::_frameBuffers;
 
 Viewport::Viewport(float left, float bottom, float width, float height)
 : _left(left)
@@ -287,52 +285,42 @@ bool FrameBuffer::initWithGLView(GLView* view)
         return false;
     }
     GLint fbo;
+	
+	if (GLImpl::isAnyContextCurrent())
+	{
+		CCASSERT(false, "current context is expected to be null, as this function will clobber it.");
+		return false;
+	}
+
+	view->makeContextCurrent();
+
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+
+	view->detachContext();
+
     _fbo = fbo;
     return true;
 }
 
-FrameBuffer* FrameBuffer::getOrCreateDefaultFBO(GLView* view)
+FrameBuffer* FrameBuffer::createFromDefault(GLView* view)
 {
-    if(nullptr == _defaultFBO)
-    {
-        auto result = new (std::nothrow) FrameBuffer();
-        
-        if(result && result->initWithGLView(view))
-        {
-            result->autorelease();
-            result->_isDefault = true;
-        }
-        else
-        {
-            CC_SAFE_DELETE(result);
-        }
-        
-        _defaultFBO = result;
-    }
-    
-    return _defaultFBO;
-}
+	auto result = new FrameBuffer();
+	if(result->initWithGLView(view))
+	{
+		result->autorelease();
+		result->_isDefault = true;
+	}
+	else
+	{
+		CC_SAFE_DELETE(result);
+	}
 
-void FrameBuffer::applyDefaultFBO()
-{
-    if(_defaultFBO)
-    {
-        _defaultFBO->applyFBO();
-    }
-}
-
-void FrameBuffer::clearAllFBOs()
-{
-    for (auto fbo : _frameBuffers)
-    {
-        fbo->clearFBO();
-    }
+	return result;
 }
 
 FrameBuffer* FrameBuffer::create(uint8_t fid, unsigned int width, unsigned int height)
 {
-    auto result = new (std::nothrow) FrameBuffer();
+    auto result = new FrameBuffer();
     if(result && result->init(fid, width, height))
     {
         result->autorelease();
@@ -392,7 +380,6 @@ FrameBuffer::FrameBuffer()
 , _dirtyFBOListener(nullptr)
 #endif
 {
-    _frameBuffers.insert(this);
 }
 
 FrameBuffer::~FrameBuffer()
@@ -403,7 +390,6 @@ FrameBuffer::~FrameBuffer()
         CC_SAFE_RELEASE_NULL(_rtDepthStencil);
         glDeleteFramebuffers(1, &_fbo);
         _fbo = 0;
-        _frameBuffers.erase(this);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
 #endif
@@ -417,7 +403,7 @@ void FrameBuffer::clearFBO()
     glClearDepth(_clearDepth);
     glClearStencil(_clearStencil);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
-    applyDefaultFBO();
+	Director::getInstance()->applyDefaultFrameBuffer();
 }
 
 void FrameBuffer::attachRenderTarget(RenderTargetBase* rt)

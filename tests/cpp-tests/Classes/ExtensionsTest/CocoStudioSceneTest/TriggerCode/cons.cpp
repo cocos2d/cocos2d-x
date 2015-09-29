@@ -13,7 +13,7 @@ TimeElapsed::TimeElapsed(void)
 ,_scheduler(nullptr)
 ,_suc(false)
 {
-	_scheduler = Director::getInstance()->getScheduler();
+	_scheduler = Director::getInstance()->getMainScheduler();
 	_scheduler->retain();
 }
 

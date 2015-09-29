@@ -656,7 +656,7 @@ void TriggerTest::onEnter()
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
     this->schedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
     listener->onTouchBegan = CC_CALLBACK_2(TriggerTest::onTouchBegan, this);
@@ -672,7 +672,7 @@ void TriggerTest::onExit()
 {
     sendEvent(TRIGGEREVENT_LEAVESCENE);
     this->unschedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
     dispatcher->removeEventListener(_touchListener);
     Device::setAccelerometerEnabled(false);
     ArmatureDataManager::destroyInstance();

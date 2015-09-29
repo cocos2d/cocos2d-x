@@ -268,7 +268,7 @@ void LabelMainScene::onEnter()
     Scene::onEnter();
     
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
     sched->schedule(CC_SCHEDULE_SELECTOR(LabelMainScene::updateText), this, 0.0f, false);
 
     if (this->isAutoTesting()) {
@@ -283,7 +283,7 @@ void LabelMainScene::onEnter()
 void LabelMainScene::onExit()
 {
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
     sched->unscheduleAllForTarget(this);
 
     Scene::onExit();

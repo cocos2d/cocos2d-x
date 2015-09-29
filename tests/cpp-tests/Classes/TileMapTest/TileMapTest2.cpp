@@ -220,12 +220,12 @@ void TMXOrthoTestNew::onEnter()
 {
     TileDemoNew::onEnter();
 
-    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_3D);
 }
 
 void TMXOrthoTestNew::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     TileDemoNew::onExit();
 }
 
@@ -937,14 +937,14 @@ void TMXIsoVertexZNew::onEnter()
     TileDemoNew::onEnter();
     
     // TIP: 2d projection should be used
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
 }
 
 void TMXIsoVertexZNew::onExit()
 {
     // At exit use any other projection. 
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     Director::getInstance()->setDepthTest(false);
     TileDemoNew::onExit();
 }
@@ -1008,14 +1008,14 @@ void TMXOrthoVertexZNew::onEnter()
     TileDemoNew::onEnter();
     
     // TIP: 2d projection should be used
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
 }
 
 void TMXOrthoVertexZNew::onExit()
 {
     // At exit use any other projection. 
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     Director::getInstance()->setDepthTest(false);
     TileDemoNew::onExit();
 }

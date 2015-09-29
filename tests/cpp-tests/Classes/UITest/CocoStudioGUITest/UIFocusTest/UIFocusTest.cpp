@@ -93,21 +93,21 @@ void UIFocusTestBase::onLeftKeyPressed()
 {
     cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_LEFT;
     cocos2d::EventKeyboard event(cocos2dKey, false);
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    cocos2d::Director::getInstance()->getMainEventDispatcher()->dispatchEvent(&event);
 }
 
 void UIFocusTestBase::onRightKeyPressed()
 {
     cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_RIGHT;
     cocos2d::EventKeyboard event(cocos2dKey, false);
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    cocos2d::Director::getInstance()->getMainEventDispatcher()->dispatchEvent(&event);
 }
 
 void UIFocusTestBase::onUpKeyPressed()
 {
     cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_UP;
     cocos2d::EventKeyboard event(cocos2dKey, false);
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    cocos2d::Director::getInstance()->getMainEventDispatcher()->dispatchEvent(&event);
 
 }
 
@@ -115,7 +115,7 @@ void UIFocusTestBase::onDownKeyPressed()
 {
     cocos2d::EventKeyboard::KeyCode cocos2dKey =EventKeyboard::KeyCode::KEY_DPAD_DOWN;
     cocos2d::EventKeyboard event(cocos2dKey, false);
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    cocos2d::Director::getInstance()->getMainEventDispatcher()->dispatchEvent(&event);
 
 }
 

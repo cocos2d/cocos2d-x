@@ -114,7 +114,7 @@ void NodeGrid::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
-    Director::Projection beforeProjectionType = Director::Projection::DEFAULT;
+    DirectorWindow::Projection beforeProjectionType = DirectorWindow::Projection::DEFAULT;
     if(_nodeGrid && _nodeGrid->isActive())
     {
         beforeProjectionType = Director::getInstance()->getProjection();

@@ -73,7 +73,10 @@ bool Control::init()
         setSelected(false);
         setHighlighted(false);
 
-        auto dispatcher = Director::getInstance()->getEventDispatcher();
+		//NOTE(day): cocos lib doesn't remove listener in this file.  bug? or is it expected to get removed elsewhere?
+		//looks like it expects CCEventDispatcher to remove it.
+		//Also, why doesn't the cocoslib used the cached dispatcher in Node???
+        auto dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
         auto touchListener = EventListenerTouchOneByOne::create();
         touchListener->setSwallowTouches(true);
         touchListener->onTouchBegan = CC_CALLBACK_2(Control::onTouchBegan, this);

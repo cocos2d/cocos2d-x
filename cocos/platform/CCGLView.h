@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "base/ccTypes.h"
 #include "base/CCEventTouch.h"
+#include "platform/CCWindowKey.h"
 
 #include <vector>
 
@@ -86,6 +87,16 @@ struct GLContextAttrs
 
 NS_CC_BEGIN
 
+namespace GLImpl
+{
+	extern bool initGLView();
+	extern void destroyGLView();
+	extern bool isGLViewStaticInitialized();
+	extern void pollEvents();
+	extern bool isAnyContextCurrent();
+
+}
+
 /**
  * @addtogroup platform
  * @{
@@ -106,8 +117,10 @@ public:
      */
     virtual ~GLView();
 
+	virtual WindowKey getKey() const = 0;
+
     /** Force destroying EGL view, subclass must implement this method. */
-    virtual void end() = 0;
+	virtual void end() = 0;
 
     /** Get whether opengl render system is ready, subclass must implement this method. */
     virtual bool isOpenGLReady() = 0;
@@ -127,6 +140,11 @@ public:
      * @return In ios and android it will return false,if in windows or Mac it will return true.
      */
     virtual bool windowShouldClose() { return false; };
+
+	
+	virtual void makeContextCurrent() {}
+
+	virtual void detachContext() {}
 
     /** Static method and member so that we can modify it on all platforms before create OpenGL context. 
      *
@@ -152,6 +170,9 @@ public:
     /** Polls the events. */
     virtual void pollEvents();
 
+	//virtual void pollEventsDeferred();
+	virtual void dispatchDeferredEvents(){}
+
     /**
      * Get the frame size of EGL view.
      * In general, it returns the screen size since the EGL view is a fullscreen view.
@@ -160,6 +181,14 @@ public:
      */
     virtual const Size& getFrameSize() const;
 
+
+	/**
+     * Set the frame size of EGL view.
+     *
+     * @param width The width of the fram size.
+     * @param height The height of the fram size.
+     */
+    virtual void setDesignSize(float width, float height);
     /**
      * Set the frame size of EGL view.
      *

@@ -123,12 +123,12 @@ WsThreadHelper::WsThreadHelper()
     _UIWsMessageQueue = new std::list<WsMessage*>();
     _subThreadWsMessageQueue = new std::list<WsMessage*>();
     
-    Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
+    Director::getInstance()->getMainScheduler()->scheduleUpdate(this, 0, false);
 }
 
 WsThreadHelper::~WsThreadHelper()
 {
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+	Director::getInstance()->getMainScheduler()->unscheduleAllForTarget(this);
     joinSubThread();
     CC_SAFE_DELETE(_subThreadInstance);
     delete _UIWsMessageQueue;
@@ -374,7 +374,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
 
 void WebSocket::close()
 {
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(_wsHelper);
+	Director::getInstance()->getMainScheduler()->unscheduleAllForTarget(_wsHelper);
     
     if (_readyState == State::CLOSING || _readyState == State::CLOSED)
     {

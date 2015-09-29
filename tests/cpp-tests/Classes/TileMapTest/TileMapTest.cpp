@@ -225,12 +225,12 @@ void TMXOrthoTest::onEnter()
 {
     TileDemo::onEnter();
 
-    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_3D);
 }
 
 void TMXOrthoTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
@@ -252,12 +252,12 @@ void TMXStaggeredTest::onEnter()
 {
     TileDemo::onEnter();
     
-    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_3D);
 }
 
 void TMXStaggeredTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
@@ -1008,14 +1008,14 @@ void TMXIsoVertexZ::onEnter()
     TileDemo::onEnter();
     
     // TIP: 2d projection should be used
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     Director::getInstance()->setDepthTest(false);
     TileDemo::onExit();
 }
@@ -1079,14 +1079,14 @@ void TMXOrthoVertexZ::onEnter()
     TileDemo::onEnter();
     
     // TIP: 2d projection should be used
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
 }
 
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
     Director::getInstance()->setDepthTest(false);
     TileDemo::onExit();
 }

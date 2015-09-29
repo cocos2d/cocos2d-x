@@ -462,6 +462,17 @@ public:
     CC_DEPRECATED_ATTRIBUTE FontDefinition getFontDefinition() const { return _getFontDefinition(); }
     CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
 
+public:
+	enum class LabelType {
+        TTF,
+        BMFONT,
+        CHARMAP,
+        STRING_TEXTURE
+    };
+
+	LabelType getType() const { return _currentLabelType; }
+
+
 CC_CONSTRUCTOR_ACCESS:
     /**
      * Constructor of Label.
@@ -488,14 +499,7 @@ protected:
         int lineIndex;
     };
 
-    enum class LabelType {
-        TTF,
-        BMFONT,
-        CHARMAP,
-        STRING_TEXTURE
-    };
-
-    virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
+	virtual void setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled = false, bool useA8Shader = false);
 
     void computeStringNumLines();
 

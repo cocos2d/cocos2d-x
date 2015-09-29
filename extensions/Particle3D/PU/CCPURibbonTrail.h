@@ -30,6 +30,7 @@
 #include "math/CCMath.h"
 #include "extensions/Particle3D/PU/CCPUBillboardChain.h"
 #include <vector>
+#include <map>
 
 NS_CC_BEGIN
 

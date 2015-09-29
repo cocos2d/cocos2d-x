@@ -29,6 +29,7 @@ THE SOFTWARE.
 #define __BASE_CCTYPES_H__
 
 #include <string>
+#include <map>
 
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"

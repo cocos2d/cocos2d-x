@@ -41,12 +41,17 @@
 /** TODO: Missing doc - What does "CustomTextFieldFormatter" do?
  */
 @interface CustomTextFieldFormatter : NSFormatter
+{
+	int _maximumLength;
+}
 
-@property (nonatomic, assign) int maximumLength;
+@property (nonatomic, assign) int _maximumLength;
 
 @end
 
 @implementation CustomTextFieldFormatter
+
+@synthesize _maximumLength;
 
 - (instancetype)init
 {
@@ -75,7 +80,7 @@
        originalSelectedRange:(NSRange)origSelRange
             errorDescription:(NSString **)error
 {
-    return (*partialStringPtr).length <= self.maximumLength;
+    return (*partialStringPtr).length <= self._maximumLength;
 }
 
 - (NSAttributedString *)attributedStringForObjectValue:(id)anObject withDefaultAttributes:(NSDictionary *)attributes
@@ -88,17 +93,25 @@
 #pragma mark - UIEditBox mac implementation
 
 @interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
+{
+	NSTextField* textField;
+	BOOL _editState;
+	BOOL _secure;
+	NSSecureTextField *secureTextField;
+	NSMutableDictionary *placeholderAttributes;
+	void *_editBox;
+}
 
 @property (nonatomic, retain) NSTextField* textField;
 @property (nonatomic, retain) NSSecureTextField *secureTextField;
 @property (nonatomic, retain) NSMutableDictionary *placeholderAttributes;
 @property (nonatomic, readonly) NSWindow *window;
 
-@property (nonatomic, readonly, getter = isEditState) BOOL editState;
-@property (nonatomic, assign, getter = isSecure) BOOL secure;
-@property (nonatomic, assign) void *editBox;
+@property (nonatomic, readonly, getter = isEditState) BOOL _editState;
+@property (nonatomic, assign, getter = isSecure) BOOL _secure;
+@property (nonatomic, assign) void *_editBox;
 
-- (instancetype)initWithFrame:(NSRect)frameRect editBox:(void *)editBox;
+- (instancetype)initWithFrame:(NSRect)frameRect editBox:(void *)_editBox;
 
 - (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
 - (void)setPosition:(NSPoint)pos;
@@ -110,6 +123,14 @@
 
 
 @implementation UIEditBoxImplMac
+
+@synthesize textField;
+@synthesize _editState;
+@synthesize _secure;
+@synthesize secureTextField;
+@synthesize placeholderAttributes;
+@synthesize _editBox;
+
 
 - (instancetype)initWithFrame:(NSRect)frameRect editBox:(void *)editBox
 {
@@ -125,19 +146,19 @@
 
         //TODO: need to delete hard code here.
         NSFont *font = [NSFont systemFontOfSize:frameRect.size.height*2/3];
-        _textField.font = font;
-        _secureTextField.font = font;
+        textField.font = font;
+        secureTextField.font = font;
         
-        [self setupTextField:_textField];
-        [self setupTextField:_secureTextField];
+        [self setupTextField:textField];
+        [self setupTextField:secureTextField];
 
-        self.editBox = editBox;
+        self._editBox = editBox;
         self.placeholderAttributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                       font, NSFontAttributeName,
                                       [NSColor grayColor], NSForegroundColorAttributeName,
                                       nil];
         
-        [self.window.contentView addSubview:_textField];
+        [self.window.contentView addSubview:textField];
     }
     
     return self;
@@ -145,15 +166,15 @@
 
 - (void)dealloc
 {
-    [_textField resignFirstResponder];
-    [_textField removeFromSuperview];
-    [_textField release];
+    [textField resignFirstResponder];
+    [textField removeFromSuperview];
+    [textField release];
     
-    [_secureTextField resignFirstResponder];
-    [_secureTextField removeFromSuperview];
-    [_secureTextField release];
+    [secureTextField resignFirstResponder];
+    [secureTextField removeFromSuperview];
+    [secureTextField release];
     
-    [_placeholderAttributes release];
+    [placeholderAttributes release];
     
     [super dealloc];
 }
@@ -166,11 +187,11 @@
 
 - (void)setPosition:(NSPoint)pos
 {
-    NSRect frame = _textField.frame;
+    NSRect frame = textField.frame;
     frame.origin = pos;
     
-    _textField.frame = frame;
-    _secureTextField.frame = frame;
+    textField.frame = frame;
+    secureTextField.frame = frame;
 }
 
 - (void)setupTextField:(NSTextField *)textField
@@ -194,8 +215,8 @@
     
     _secure = secure;
         
-    [_textField.superview addSubview:_secureTextField];
-    [_textField removeFromSuperview];
+    [textField.superview addSubview:secureTextField];
+    [textField removeFromSuperview];
 }
 
 - (void)openKeyboard
@@ -203,30 +224,30 @@
     NSView *contentView = self.window.contentView;
     
     if (!_secure) {
-        [contentView addSubview:_textField];
-        [_textField becomeFirstResponder];
+        [contentView addSubview:textField];
+        [textField becomeFirstResponder];
     }
     else {
-        [contentView addSubview:_secureTextField];
-        [_secureTextField becomeFirstResponder];
+        [contentView addSubview:secureTextField];
+        [secureTextField becomeFirstResponder];
     }
 }
 
 - (void)closeKeyboard
 {
-    if ([_textField superview]) {
-        [_textField resignFirstResponder];
-        [_textField removeFromSuperview];
+    if ([textField superview]) {
+        [textField resignFirstResponder];
+        [textField removeFromSuperview];
     }
     else {
-        [_secureTextField resignFirstResponder];
-        [_secureTextField removeFromSuperview];
+        [secureTextField resignFirstResponder];
+        [secureTextField removeFromSuperview];
     }
 }
 
 - (BOOL)textFieldShouldReturn:(NSTextField *)sender
 {
-    if (sender == _textField || sender == _secureTextField) {
+    if (sender == textField || sender == secureTextField) {
         [sender resignFirstResponder];
     }
     return NO;

@@ -155,6 +155,11 @@ AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<
         audioCache->_fileFormat = fileFormat;
 
         audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+		//NOTE(day): guessing here's where i should cache the scheduler pointer
+		//can't call getMainScheduler outside of the main thread since it might not exist.
+		//need to cache it and retain it.  Release once the task is done.
+		audioCache->_scheduler = Director::getInstance()->getMainScheduler();
+		audioCache->_scheduler->retain();
         AudioEngine::addTask(std::bind(&AudioCache::readDataTask, audioCache));
     } while (false);
 
@@ -205,7 +210,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     if (_lazyInitLoop) {
         _lazyInitLoop = false;
         
-        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+        auto scheduler = cocos2d::Director::getInstance()->getMainScheduler();
         scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
     }
     
@@ -488,7 +493,7 @@ void AudioEngineImpl::update(float dt)
     if(_audioPlayers.empty()){
         _lazyInitLoop = true;
         
-        auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+        auto scheduler = cocos2d::Director::getInstance()->getMainScheduler();
         scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     }
 }

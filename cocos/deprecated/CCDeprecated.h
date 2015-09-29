@@ -856,11 +856,11 @@ CC_DEPRECATED_ATTRIBUTE const ProgressTimer::Type kCCProgressTimerTypeRadial = P
 CC_DEPRECATED_ATTRIBUTE const ProgressTimer::Type kCCProgressTimerTypeBar = ProgressTimer::Type::BAR;
 CC_DEPRECATED_ATTRIBUTE typedef ProgressTimer::Type ProgressTimerType;
 
-CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjection2D = Director::Projection::_2D;
-CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjection3D = Director::Projection::_3D;
-CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjectionCustom = Director::Projection::CUSTOM;
-CC_DEPRECATED_ATTRIBUTE const Director::Projection kCCDirectorProjectionDefault = Director::Projection::DEFAULT;
-CC_DEPRECATED_ATTRIBUTE typedef Director::Projection ccDirectorProjection;
+CC_DEPRECATED_ATTRIBUTE const DirectorWindow::Projection kCCDirectorProjection2D = DirectorWindow::Projection::_2D;
+CC_DEPRECATED_ATTRIBUTE const DirectorWindow::Projection kCCDirectorProjection3D = DirectorWindow::Projection::_3D;
+CC_DEPRECATED_ATTRIBUTE const DirectorWindow::Projection kCCDirectorProjectionCustom = DirectorWindow::Projection::CUSTOM;
+CC_DEPRECATED_ATTRIBUTE const DirectorWindow::Projection kCCDirectorProjectionDefault = DirectorWindow::Projection::DEFAULT;
+CC_DEPRECATED_ATTRIBUTE typedef DirectorWindow::Projection ccDirectorProjection;
 
 CC_DEPRECATED_ATTRIBUTE const TextVAlignment kCCVerticalTextAlignmentTop = TextVAlignment::TOP;
 CC_DEPRECATED_ATTRIBUTE const TextVAlignment kCCVerticalTextAlignmentCenter = TextVAlignment::CENTER;

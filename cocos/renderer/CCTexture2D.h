@@ -540,6 +540,8 @@ protected:
     friend class SpriteFrameCache;
     friend class TextureCache;
     friend class ui::Scale9Sprite;
+
+	bool _generateMipmap;
 };
 
 

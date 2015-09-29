@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccConfig.h"
+#include <memory>
 
 #define CC_REF_LEAK_DETECTION 0
 
@@ -68,12 +69,53 @@ public:
     }
 };
 
+/** 
+  * Derive from this class to allow weak references.
+  * @lua NA
+  * @js NA
+  */
+class CC_DLL WeakReferencable
+{
+public:
+	typedef WeakReferencable* WeakReferencableRef;
+	typedef std::shared_ptr<WeakReferencableRef> WeakRef;
+
+	inline long getWeakReferenceCount() const
+	{
+		return _weakRef.use_count();
+	}
+
+	const WeakRef& getWeakRef() const
+	{
+		return _weakRef;
+	}
+
+protected:
+	WeakReferencable()
+	{
+		_weakRef.reset(new WeakReferencableRef(this));
+	}
+
+	WeakReferencable(const WeakReferencable&)
+	{
+		_weakRef.reset(new WeakReferencableRef(this));
+	}
+
+	~WeakReferencable()
+	{
+		*_weakRef.get() = nullptr;
+	}
+
+protected:
+	WeakRef _weakRef;
+ };
+
 /**
  * Ref is used for reference count management. If a class inherits from Ref,
  * then it is easy to be shared in different places.
  * @js NA
  */
-class CC_DLL Ref
+class CC_DLL Ref : public WeakReferencable
 {
 public:
     /**

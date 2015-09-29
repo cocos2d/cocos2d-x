@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "base/CCRef.h"
 #include <vector>
 #include <queue>
 #include <memory>
@@ -90,7 +91,7 @@ public:
      * @lua NA
      */
     template<class F>
-    inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);
+    inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Scheduler* scheduler );
     
 CC_CONSTRUCTOR_ACCESS:
     AsyncTaskPool();
@@ -102,8 +103,9 @@ protected:
     class ThreadTasks {
         struct AsyncTaskCallBack
         {
-            TaskCallBack          callback;
-            void*                 callbackParam;
+            TaskCallBack				callback;
+            void*						callbackParam;
+			Scheduler*					scheduler;
         };
     public:
         ThreadTasks()
@@ -129,7 +131,8 @@ protected:
                                           }
                                           
                                           task();
-                                          Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, callback]{ callback.callback(callback.callbackParam); });
+                                          callback.scheduler->performFunctionInCocosThread([&, callback]{ callback.callback(callback.callbackParam); });
+										  callback.scheduler->release();
                                       }
                                   }
                                   );
@@ -157,7 +160,7 @@ protected:
                 _taskCallBacks.pop();
         }
         template<class F>
-        void enqueue(const TaskCallBack& callback, void* callbackParam, F&& f)
+        void enqueue(const TaskCallBack& callback, void* callbackParam, F&& f, Scheduler* scheduler)
         {
             auto task = f;//std::bind(std::forward<F>(f), std::forward<Args>(args)...);
             
@@ -174,6 +177,8 @@ protected:
                 AsyncTaskCallBack taskCallBack;
                 taskCallBack.callback = callback;
                 taskCallBack.callbackParam = callbackParam;
+				taskCallBack.scheduler = scheduler;
+				taskCallBack.scheduler->retain();
                 _tasks.emplace([task](){ task(); });
                 _taskCallBacks.emplace(taskCallBack);
             }
@@ -206,11 +211,16 @@ inline void AsyncTaskPool::stopTasks(TaskType type)
 }
 
 template<class F>
-inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f)
+inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f, Scheduler* scheduler)
 {
+	if(scheduler == nullptr)
+	{
+		CCASSERT(false, "scheduler cannot be null.");
+		return;
+	}
+
     auto& threadTask = _threadTasks[(int)type];
-    
-    threadTask.enqueue(callback, callbackParam, f);
+    threadTask.enqueue(callback, callbackParam, f, scheduler);
 }
 
 

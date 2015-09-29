@@ -98,7 +98,7 @@ void SchedulerPauseResume::tick2(float dt)
 void SchedulerPauseResume::pause(float dt)
 {
     CCLOG("paused, tick1 and tick2 should called six times");
-    Director::getInstance()->getScheduler()->pauseTarget(this);
+    Director::getInstance()->getMainScheduler()->pauseTarget(this);
 }
 
 std::string SchedulerPauseResume::title() const
@@ -151,7 +151,7 @@ void SchedulerPauseResumeAll::onExit()
 {
     if (!_pausedTargets.empty())
     {
-        Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
+        Director::getInstance()->getMainScheduler()->resumeTargets(_pausedTargets);
     }
     SchedulerTestLayer::onExit();
 }
@@ -169,7 +169,7 @@ void SchedulerPauseResumeAll::tick2(float dt)
 void SchedulerPauseResumeAll::pause(float dt)
 {
     log("Pausing, tick1 should be called six times and tick2 three times");
-    auto scheduler = Director::getInstance()->getScheduler();
+    auto scheduler = Director::getInstance()->getMainScheduler();
     _pausedTargets = scheduler->pauseAllTargets();
 
     // should have only 2 items: ActionManager, self
@@ -186,7 +186,7 @@ void SchedulerPauseResumeAll::resume(float dt)
 {
     log("Resuming");
     auto director = Director::getInstance();
-    director->getScheduler()->resumeTargets(_pausedTargets);
+    director->getMainScheduler()->resumeTargets(_pausedTargets);
     _pausedTargets.clear();
 }
 
@@ -237,7 +237,7 @@ void SchedulerPauseResumeAllUser::onExit()
 {
     if (!_pausedTargets.empty())
     {
-        Director::getInstance()->getScheduler()->resumeTargets(_pausedTargets);
+        Director::getInstance()->getMainScheduler()->resumeTargets(_pausedTargets);
     }
     SchedulerTestLayer::onExit();
 }
@@ -256,7 +256,7 @@ void SchedulerPauseResumeAllUser::pause(float dt)
 {
     log("Pausing, tick1 and tick2 should be called three times");
     auto director = Director::getInstance();
-    _pausedTargets = director->getScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
+    _pausedTargets = director->getMainScheduler()->pauseAllTargetsWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
     // because target 'this' has been paused above, so use another node(tag:123) as target
     getChildByTag(123)->scheduleOnce([this](float dt)
                                      {
@@ -363,7 +363,7 @@ void SchedulerUnscheduleAllHard::onExit()
     if(!_actionManagerActive) {
         // Restore the director's action manager.
         auto director = Director::getInstance();
-        director->getScheduler()->scheduleUpdate(director->getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+        director->getMainScheduler()->scheduleUpdate(director->getMainActionManager(), Scheduler::PRIORITY_SYSTEM, false);
     }
     
     SchedulerTestLayer::onExit();
@@ -391,7 +391,7 @@ void SchedulerUnscheduleAllHard::tick4(float dt)
 
 void SchedulerUnscheduleAllHard::unscheduleAll(float dt)
 {
-    Director::getInstance()->getScheduler()->unscheduleAll();
+    Director::getInstance()->getMainScheduler()->unscheduleAll();
     _actionManagerActive = false;
 }
 
@@ -450,7 +450,7 @@ void SchedulerUnscheduleAllUserLevel::tick4(float dt)
 
 void SchedulerUnscheduleAllUserLevel::unscheduleAll(float dt)
 {
-    Director::getInstance()->getScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
+    Director::getInstance()->getMainScheduler()->unscheduleAllWithMinPriority(Scheduler::PRIORITY_NON_SYSTEM_MIN);
 }
 
 std::string SchedulerUnscheduleAllUserLevel::title() const
@@ -769,7 +769,7 @@ void SchedulerTimeScale::sliderAction(Ref* sender, Control::EventType controlEve
     float scale;
     scale = pSliderCtl->getValue();
 
-    Director::getInstance()->getScheduler()->setTimeScale(scale);
+    Director::getInstance()->getMainScheduler()->setTimeScale(scale);
 }
 
 void SchedulerTimeScale::onEnter()
@@ -821,7 +821,7 @@ void SchedulerTimeScale::onEnter()
 void SchedulerTimeScale::onExit()
 {
     // restore scale
-    Director::getInstance()->getScheduler()->setTimeScale(1);
+    Director::getInstance()->getMainScheduler()->setTimeScale(1);
     SchedulerTestLayer::onExit();
 }
 
@@ -889,7 +889,7 @@ void TwoSchedulers::onEnter()
     grossini->setPosition(Vec2(s.width/2,100));
     grossini->runAction(action->clone());
 
-    auto defaultScheduler = Director::getInstance()->getScheduler();
+    auto defaultScheduler = Director::getInstance()->getMainScheduler();
 
     //
     // Left:
@@ -956,7 +956,7 @@ void TwoSchedulers::onEnter()
 
 TwoSchedulers::~TwoSchedulers()
 {
-    auto defaultScheduler = Director::getInstance()->getScheduler();
+    auto defaultScheduler = Director::getInstance()->getMainScheduler();
     defaultScheduler->unscheduleAllForTarget(sched1);
     defaultScheduler->unscheduleAllForTarget(sched2);
 
