@@ -64,6 +64,7 @@ struct Sprite3DOptions;
 struct Particle3DOptions;
 struct UserCameraOptions;
 struct GameNode3DOption;
+struct Light3DOption;
 struct Vector2;
 struct Vector3;
 
@@ -151,6 +152,7 @@ struct Sprite3DOptions : private flatbuffers::Table {
   const flatbuffers::ResourceData *fileData() const { return GetPointer<const flatbuffers::ResourceData *>(6); }
   uint8_t runAction() const { return GetField<uint8_t>(8, 0); }
   uint8_t isFlipped() const { return GetField<uint8_t>(10, 0); }
+  int32_t lightFlag() const { return GetField<int32_t>(12, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
@@ -159,6 +161,7 @@ struct Sprite3DOptions : private flatbuffers::Table {
            verifier.VerifyTable(fileData()) &&
            VerifyField<uint8_t>(verifier, 8 /* runAction */) &&
            VerifyField<uint8_t>(verifier, 10 /* isFlipped */) &&
+           VerifyField<int32_t>(verifier, 12 /* lightFlag */) &&
            verifier.EndTable();
   }
 };
@@ -170,10 +173,11 @@ struct Sprite3DOptionsBuilder {
   void add_fileData(flatbuffers::Offset<flatbuffers::ResourceData> fileData) { fbb_.AddOffset(6, fileData); }
   void add_runAction(uint8_t runAction) { fbb_.AddElement<uint8_t>(8, runAction, 0); }
   void add_isFlipped(uint8_t isFlipped) { fbb_.AddElement<uint8_t>(10, isFlipped, 0); }
+  void add_lightFlag(int32_t lightFlag) { fbb_.AddElement<int32_t>(12, lightFlag, 0); }
   Sprite3DOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   Sprite3DOptionsBuilder &operator=(const Sprite3DOptionsBuilder &);
   flatbuffers::Offset<Sprite3DOptions> Finish() {
-    auto o = flatbuffers::Offset<Sprite3DOptions>(fbb_.EndTable(start_, 4));
+    auto o = flatbuffers::Offset<Sprite3DOptions>(fbb_.EndTable(start_, 5));
     return o;
   }
 };
@@ -182,8 +186,10 @@ inline flatbuffers::Offset<Sprite3DOptions> CreateSprite3DOptions(flatbuffers::F
    flatbuffers::Offset<Node3DOption> node3DOption = 0,
    flatbuffers::Offset<flatbuffers::ResourceData> fileData = 0,
    uint8_t runAction = 0,
-   uint8_t isFlipped = 0) {
+   uint8_t isFlipped = 0,
+   int32_t lightFlag = 0) {
   Sprite3DOptionsBuilder builder_(_fbb);
+  builder_.add_lightFlag(lightFlag);
   builder_.add_fileData(fileData);
   builder_.add_node3DOption(node3DOption);
   builder_.add_isFlipped(isFlipped);
@@ -400,6 +406,65 @@ inline flatbuffers::Offset<GameNode3DOption> CreateGameNode3DOption(flatbuffers:
   builder_.add_skyBoxMask(skyBoxMask);
   builder_.add_name(name);
   builder_.add_skyBoxEnabled(skyBoxEnabled);
+  return builder_.Finish();
+}
+
+struct Light3DOption : private flatbuffers::Table {
+  const Node3DOption *node3DOption() const { return GetPointer<const Node3DOption *>(4); }
+  uint8_t enabled() const { return GetField<uint8_t>(6, 0); }
+  int32_t type() const { return GetField<int32_t>(8, 0); }
+  int32_t flag() const { return GetField<int32_t>(10, 0); }
+  float intensity() const { return GetField<float>(12, 0); }
+  float range() const { return GetField<float>(14, 0); }
+  float outerAngle() const { return GetField<float>(16, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
+           verifier.VerifyTable(node3DOption()) &&
+           VerifyField<uint8_t>(verifier, 6 /* enabled */) &&
+           VerifyField<int32_t>(verifier, 8 /* type */) &&
+           VerifyField<int32_t>(verifier, 10 /* flag */) &&
+           VerifyField<float>(verifier, 12 /* intensity */) &&
+           VerifyField<float>(verifier, 14 /* range */) &&
+           VerifyField<float>(verifier, 16 /* outerAngle */) &&
+           verifier.EndTable();
+  }
+};
+
+struct Light3DOptionBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_node3DOption(flatbuffers::Offset<Node3DOption> node3DOption) { fbb_.AddOffset(4, node3DOption); }
+  void add_enabled(uint8_t enabled) { fbb_.AddElement<uint8_t>(6, enabled, 0); }
+  void add_type(int32_t type) { fbb_.AddElement<int32_t>(8, type, 0); }
+  void add_flag(int32_t flag) { fbb_.AddElement<int32_t>(10, flag, 0); }
+  void add_intensity(float intensity) { fbb_.AddElement<float>(12, intensity, 0); }
+  void add_range(float range) { fbb_.AddElement<float>(14, range, 0); }
+  void add_outerAngle(float outerAngle) { fbb_.AddElement<float>(16, outerAngle, 0); }
+  Light3DOptionBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  Light3DOptionBuilder &operator=(const Light3DOptionBuilder &);
+  flatbuffers::Offset<Light3DOption> Finish() {
+    auto o = flatbuffers::Offset<Light3DOption>(fbb_.EndTable(start_, 7));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Light3DOption> CreateLight3DOption(flatbuffers::FlatBufferBuilder &_fbb,
+   flatbuffers::Offset<Node3DOption> node3DOption = 0,
+   uint8_t enabled = 0,
+   int32_t type = 0,
+   int32_t flag = 0,
+   float intensity = 0,
+   float range = 0,
+   float outerAngle = 0) {
+  Light3DOptionBuilder builder_(_fbb);
+  builder_.add_outerAngle(outerAngle);
+  builder_.add_range(range);
+  builder_.add_intensity(intensity);
+  builder_.add_flag(flag);
+  builder_.add_type(type);
+  builder_.add_node3DOption(node3DOption);
+  builder_.add_enabled(enabled);
   return builder_.Finish();
 }
 

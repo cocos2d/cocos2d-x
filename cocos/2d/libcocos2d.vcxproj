@@ -537,6 +537,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.cpp" />
@@ -1138,6 +1139,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\NodeReaderDefine.h" />
