@@ -323,7 +323,6 @@ Sprite* SubTest::createSpriteWithTag(int tag)
             break;
         }
 
-
         default:
             break;
     }
