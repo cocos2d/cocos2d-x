@@ -1029,6 +1029,11 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     // update rect
     _rectRotated = spriteFrame->isRotated();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
+    
+    if(spriteFrame->hasPolygonInfo())
+    {
+        _polyInfo = spriteFrame->getPolygonInfo();
+    }
 }
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
