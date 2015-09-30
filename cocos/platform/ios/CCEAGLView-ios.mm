@@ -423,11 +423,16 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     
     int i = 0;
     for (UITouch *touch in touches) {
+        if(CGPointEqualToPoint([touch locationInView:self], [touch previousLocationInView:self])) {
+            continue;
+        }
+
         ids[i] = touch;
         xs[i] = [touch locationInView: [touch view]].x * self.contentScaleFactor;;
         ys[i] = [touch locationInView: [touch view]].y * self.contentScaleFactor;;
         ++i;
     }
+    if(i == 0) return;
 
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     glview->handleTouchesMove(i, (intptr_t*)ids, xs, ys);
