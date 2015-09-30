@@ -328,7 +328,7 @@ void ScenarioTest::onEnter()
 
 void ScenarioTest::onExit()
 {
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+    Director::getInstance()->getMainScheduler()->unscheduleAllForTarget(this);
     TestCase::onExit();
 }
 

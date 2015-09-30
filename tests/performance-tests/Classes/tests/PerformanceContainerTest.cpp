@@ -220,7 +220,7 @@ void PerformanceContainerScene::onEnter()
                                               genStrVector("Avg", "Min", "Max", nullptr));
 
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceContainerScene::dumpProfilerInfo), this, 2, false);
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -231,7 +231,7 @@ void PerformanceContainerScene::onExit()
 {
     TestCase::onExit();
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+	auto sched = director->getMainScheduler();
     sched->unscheduleAllForTarget(this);
 }
 

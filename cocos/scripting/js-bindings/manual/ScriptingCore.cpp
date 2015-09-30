@@ -1856,7 +1856,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
         auto t = std::thread(&serverEntryPoint,port);
         t.detach();
         
-        Scheduler* scheduler = Director::getInstance()->getScheduler();
+        Scheduler* scheduler = Director::getInstance()->getMainScheduler();
         scheduler->scheduleUpdate(this->_runLoop, 0, false);
     }
 }

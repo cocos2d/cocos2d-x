@@ -60,8 +60,8 @@ void PerformanceCallbackScene::onEnter()
                                               genStrVector("Avg", "Min", "Max", nullptr));
     }
 
-    getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::onUpdate), this, 0.0f, false);
-    getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::dumpProfilerInfo), this, 2, false);
+	getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::onUpdate), this, 0.0f, false);
+	getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::dumpProfilerInfo), this, 2, false);
 }
 
 std::string PerformanceCallbackScene::title() const
