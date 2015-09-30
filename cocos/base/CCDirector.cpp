@@ -269,6 +269,8 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
+    _openGLView->makeContextCurrent();
+
     _renderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
