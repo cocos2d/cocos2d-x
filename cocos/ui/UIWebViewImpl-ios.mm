@@ -133,6 +133,10 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
     if (!self.uiWebView) {
         self.uiWebView = [[[UIWebView alloc] init] autorelease];
         self.uiWebView.delegate = self;
+
+        auto view = cocos2d::Director::getInstance()->getOpenGLView();
+        auto frame = view->getFrameSize();
+        [self setFrameWithX:0 y:0 width:frame.width height:frame.height];
     }
     if (!self.uiWebView.superview) {
         auto view = cocos2d::Director::getInstance()->getOpenGLView();
