@@ -536,6 +536,7 @@ bool TextField::onTouchBegan(Touch *touch, Event *unusedEvent)
     bool pass = Widget::onTouchBegan(touch, unusedEvent);
     if (_hitted)
     {
+        requestFocus();
         _textFieldRenderer->attachWithIME();
     }
     else
