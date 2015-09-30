@@ -145,7 +145,7 @@ void ParticleMainScene::onExitTransitionDidStart()
     Scene::onExitTransitionDidStart();
     
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+	auto sched = director->getMainScheduler();
 
     sched->unscheduleAllForTarget(this);
 }

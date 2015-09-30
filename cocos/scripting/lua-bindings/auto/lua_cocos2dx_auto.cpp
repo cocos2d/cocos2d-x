@@ -14347,16 +14347,24 @@ int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::GLView* arg0;
+		//TODO: unsure what the desired result is here.  Current multi window implementation
+		//only allows for glviews to get attached once at creation of the window.  
+		//If the desired effect here is to reset the GlView, the implementation would need
+		//a way of obtaining the windowKey (a member in the GLView), then
+		//calling bool ContextManager::setContextAndLock(WindowKey windowKey).
+		//this will not work if there are any contexts that are currently locked (which occurs in 
+		//the body of the director's draw method.
 
-        ok &= luaval_to_object<cocos2d::GLView>(tolua_S, 2, "cc.GLView",&arg0, "cc.Director:setOpenGLView");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setOpenGLView'", nullptr);
-            return 0;
-        }
-        cobj->setOpenGLView(arg0);
-        lua_settop(tolua_S, 1);
+//         cocos2d::GLView* arg0;
+// 
+//         ok &= luaval_to_object<cocos2d::GLView>(tolua_S, 2, "cc.GLView",&arg0, "cc.Director:setOpenGLView");
+//         if(!ok)
+//         {
+//             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setOpenGLView'", nullptr);
+//             return 0;
+//         }
+//         cobj->setOpenGLView(arg0);
+//         lua_settop(tolua_S, 1);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setOpenGLView",argc, 1);
@@ -14879,7 +14887,7 @@ int lua_cocos2dx_Director_setProjection(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Director::Projection arg0;
+        cocos2d::DirectorWindow::Projection arg0;
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Director:setProjection");
         if(!ok)
@@ -15228,7 +15236,7 @@ int lua_cocos2dx_Director_getScheduler(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_getScheduler'", nullptr);
             return 0;
         }
-        cocos2d::Scheduler* ret = cobj->getScheduler();
+        cocos2d::Scheduler* ret = cobj->getMainScheduler();
         object_to_luaval<cocos2d::Scheduler>(tolua_S, "cc.Scheduler",(cocos2d::Scheduler*)ret);
         return 1;
     }
@@ -15469,7 +15477,7 @@ int lua_cocos2dx_Director_getEventDispatcher(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_getEventDispatcher'", nullptr);
             return 0;
         }
-        cocos2d::EventDispatcher* ret = cobj->getEventDispatcher();
+        cocos2d::EventDispatcher* ret = cobj->getMainEventDispatcher();
         object_to_luaval<cocos2d::EventDispatcher>(tolua_S, "cc.EventDispatcher",(cocos2d::EventDispatcher*)ret);
         return 1;
     }
@@ -15616,7 +15624,7 @@ int lua_cocos2dx_Director_getActionManager(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_getActionManager'", nullptr);
             return 0;
         }
-        cocos2d::ActionManager* ret = cobj->getActionManager();
+        cocos2d::ActionManager* ret = cobj->getMainActionManager();
         object_to_luaval<cocos2d::ActionManager>(tolua_S, "cc.ActionManager",(cocos2d::ActionManager*)ret);
         return 1;
     }
@@ -79119,7 +79127,7 @@ int lua_cocos2dx_Camera_getDefaultViewport(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_getDefaultViewport'", nullptr);
             return 0;
         }
-        const cocos2d::experimental::Viewport& ret = cocos2d::Camera::getDefaultViewport();
+        const cocos2d::experimental::Viewport& ret = cocos2d::Director::getInstance()->getDefaultViewport();
         #pragma warning NO CONVERSION FROM NATIVE FOR Viewport;
         return 1;
     }
@@ -79156,7 +79164,7 @@ int lua_cocos2dx_Camera_setDefaultViewport(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_setDefaultViewport'", nullptr);
             return 0;
         }
-        cocos2d::Camera::setDefaultViewport(arg0);
+        cocos2d::Director::getInstance()->setDefaultViewport(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }

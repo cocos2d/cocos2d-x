@@ -292,7 +292,7 @@ MinXmlHttpRequest::MinXmlHttpRequest()
 , _requestHeader()
 , _isAborted(false)
 {
-    _scheduler = cocos2d::Director::getInstance()->getScheduler();
+    _scheduler = cocos2d::Director::getInstance()->getMainScheduler();
     _scheduler->retain();
 }
 

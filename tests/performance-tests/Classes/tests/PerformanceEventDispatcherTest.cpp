@@ -150,7 +150,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     
     auto start = MenuItemFont::create("start", [this](Ref* sender){
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         
         CC_PROFILER_PURGE_ALL();
         sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
@@ -169,7 +169,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     
     auto stop = MenuItemFont::create("stop", [=](Ref* sender){
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         
         sched->unschedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this);
         
@@ -218,7 +218,7 @@ void PerformanceEventDispatcherScene::onEnter()
                                               genStrVector("Avg", "Min", "Max", nullptr));
 
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -229,7 +229,7 @@ void PerformanceEventDispatcherScene::onExit()
 {
     TestCase::onExit();
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+	auto sched = director->getMainScheduler();
     sched->unscheduleAllForTarget(this);
 }
 
