@@ -93,12 +93,12 @@ void SpriteFrameCache::parseIntegerList(const std::string string, std::vector<in
     int i=0;
     while (end != std::string::npos)
     {
-        res[i++] = std::stoi(string.substr(start, end - start));
+        res[i++] = atoi(string.substr(start, end - start).c_str());
         start = end + delim.length();
         end = string.find(delim, start);
     }
     
-    res[i] = std::stoi(string.substr(start, end));
+    res[i] = atoi(string.substr(start, end).c_str());
 }
 
 void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
