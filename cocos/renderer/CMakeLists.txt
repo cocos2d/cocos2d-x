@@ -28,4 +28,5 @@ set(COCOS_RENDERER_SRC
   renderer/ccGLStateCache.cpp
   renderer/ccShaders.cpp
   renderer/CCFrameBuffer.cpp
+  renderer/PYRCustomShaderManager.cpp
 )

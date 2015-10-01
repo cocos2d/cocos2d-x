@@ -80,6 +80,7 @@ set(COCOS_PLATFORM_SRC
   platform/CCGLView.cpp
   platform/CCFileUtils.cpp
   platform/CCImage.cpp
+  platform/CCWindowKey.cpp
   ../external/edtaa3func/edtaa3func.cpp
   ../external/ConvertUTF/ConvertUTFWrapper.cpp
   ../external/ConvertUTF/ConvertUTF.c
