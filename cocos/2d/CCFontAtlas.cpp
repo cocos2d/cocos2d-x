@@ -43,6 +43,8 @@ const int FontAtlas::CacheTextureHeight = 512;
 const char* FontAtlas::CMD_PURGE_FONTATLAS = "__cc_PURGE_FONTATLAS";
 const char* FontAtlas::CMD_RESET_FONTATLAS = "__cc_RESET_FONTATLAS";
 
+bool FontAtlas::_antiAliasDefault = true;
+
 FontAtlas::FontAtlas(Font &theFont) 
 : _font(&theFont)
 , _fontFreeType(nullptr)
@@ -50,7 +52,7 @@ FontAtlas::FontAtlas(Font &theFont)
 , _currentPageData(nullptr)
 , _fontAscender(0)
 , _rendererRecreatedListener(nullptr)
-, _antialiasEnabled(true)
+, _antialiasEnabled(_antiAliasDefault)
 , _currLineHeight(0)
 {
     _font->retain();
@@ -450,5 +452,17 @@ void FontAtlas::setAntiAliasTexParameters()
         }
     }
 }
+
+// set the default mode for mag/minification of texture sampling
+void FontAtlas::setDefaultAliasTexParameters(bool antiAlias)
+{
+    _antiAliasDefault = antiAlias;
+}
+
+bool FontAtlas::getDefaultAliasTexParameters()
+{
+    return _antiAliasDefault;
+}
+
 
 NS_CC_END

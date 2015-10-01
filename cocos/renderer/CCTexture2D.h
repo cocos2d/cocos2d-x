@@ -194,6 +194,20 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
     
+    /** sets the default anitAliased mode for creation of textures.
+
+    @param antiAliasMode
+    This parameter sets the default mode aliased/antialiased on creation of textures
+    alse = Aliased
+    true = Antlialiased
+    CTexture2D has really misnamed this, as this is the minificaiton and magnification mode when sampling a texture, i.e. GL_NEAREST, GL_LINEAR, etc.
+    */
+    static void setDefaultAliasTexParameters(bool antiAliased);
+
+    /** Returns the current AnitAliased mode.
+    */
+    static bool getDefaultAliasTexParameters();
+    
 public:
     /**
      * @js ctor
@@ -540,6 +554,9 @@ protected:
     friend class SpriteFrameCache;
     friend class TextureCache;
     friend class ui::Scale9Sprite;
+    
+    /** default AntiAliased mode to create textures in */
+    static bool _antiAliasDefault;
 };
 
 

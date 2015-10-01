@@ -107,6 +107,18 @@ public:
      - GL_TEXTURE_MAG_FILTER = GL_NEAREST
      */
      void setAliasTexParameters();
+    
+    /** sets default font texture parameters:
+    - GL_TEXTURE_MIN_FILTER = GL_LINEAR
+    - GL_TEXTURE_MAG_FILTER = GL_LINEAR
+    */
+    static void setDefaultAliasTexParameters(bool antiAlias);
+    
+    /** sets default font texture parameters:
+    - GL_TEXTURE_MIN_FILTER = GL_NEAREST
+    - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+    */
+    static bool getDefaultAliasTexParameters();
 
 protected:
     void relaseTextures();
@@ -137,6 +149,9 @@ protected:
     int _currLineHeight;
 
     friend class Label;
+    
+    // default on creation of font atlas for minification and magnification of texture pixel sampling (not really font antialiasing)
+    static bool _antiAliasDefault;
 };
 
 NS_CC_END
