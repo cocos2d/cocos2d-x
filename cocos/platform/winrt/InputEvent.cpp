@@ -27,6 +27,9 @@ THE SOFTWARE.
 #include "CCWinRTUtils.h"
 #include "CCGLViewImpl-winrt.h"
 #include "base/CCEventAcceleration.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCIMEDispatcher.h"
 
 NS_CC_BEGIN
 

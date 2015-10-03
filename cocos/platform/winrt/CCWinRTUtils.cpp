@@ -23,15 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCWinRTUtils.h"
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN 1
-#endif
-#include <Windows.h>
 #include <wrl/client.h>
 #include <wrl/wrappers/corewrappers.h>
 #include <ppl.h>
 #include <ppltasks.h>
 #include <sstream>
+#include "base/ccMacros.h"
+#include "platform/CCPlatformMacros.h"
+#include "platform/CCFileUtils.h"
+#include "base/CCUserDefault.h"
 
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;

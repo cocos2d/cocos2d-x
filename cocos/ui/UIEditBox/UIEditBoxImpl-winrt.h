@@ -27,6 +27,9 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
+#include <agile.h>
+#include <concrt.h>
+
 #include "UIEditBoxImpl.h"
 
 NS_CC_BEGIN

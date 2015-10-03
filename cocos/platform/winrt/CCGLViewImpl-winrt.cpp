@@ -28,9 +28,15 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCTouch.h"
 #include "base/CCIMEDispatcher.h"
+#include "base/CCEventListenerKeyboard.h"
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 #include "deprecated/CCNotificationCenter.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCIMEDispatcher.h"
+#include "base/CCEventMouse.h"
+
 #include <map>
 
 using namespace Platform;

@@ -26,12 +26,12 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "cocos2d.h"
 #include "platform/CCDevice.h"
 #include "platform/CCFileUtils.h"
 #include "platform/winrt/CCFreeTypeFont.h"
 #include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCStdC.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 
 using namespace Windows::Graphics::Display;
 using namespace Windows::Devices::Sensors;
