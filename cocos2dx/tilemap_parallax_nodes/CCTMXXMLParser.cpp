@@ -102,6 +102,8 @@ CCTMXTilesetInfo::CCTMXTilesetInfo()
     :m_uFirstGid(0)
     ,m_tTileSize(CCSizeZero)
     ,m_uSpacing(0)
+	,m_uOffsetX(0)
+	,m_uOffsetY(0)
     ,m_uMargin(0)
     ,m_tImageSize(CCSizeZero)
 {
@@ -402,6 +404,15 @@ void CCTMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
             tileset->release();
         }
     }
+	else if (elementName == "tileoffset")
+	{
+		CCTMXTilesetInfo* tileset = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();
+
+		tileset->m_uOffsetX = (int)atoi(valueForKey("x", attributeDict));
+		tileset->m_uOffsetY = -1 *  (int)atoi(valueForKey("y", attributeDict));
+
+		CCLOG("OFFSET %i %i", tileset->m_uOffsetX, tileset->m_uOffsetY);
+	}
     else if (elementName == "tile")
     {
         CCTMXTilesetInfo* info = (CCTMXTilesetInfo*)pTMXMapInfo->getTilesets()->lastObject();

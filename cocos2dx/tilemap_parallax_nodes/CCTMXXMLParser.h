@@ -122,6 +122,8 @@ public:
     CCSize          m_tTileSize;
     unsigned int    m_uSpacing;
     unsigned int    m_uMargin;
+	int    m_uOffsetX;
+	int    m_uOffsetY;
     //! filename containing the tiles (should be spritesheet / texture atlas)
     std::string     m_sSourceImage;
     //! size in pixels of the image

@@ -237,10 +237,13 @@ void CCTMXLayer::parseInternalProperties()
 
 void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid)
 {
-    sprite->setPosition(positionAt(pos));
+	
+
+	//sprite->setPosition(positionAt(pos));
     sprite->setVertexZ((float)vertexZForPos(pos));
     sprite->setAnchorPoint(CCPointZero);
     sprite->setOpacity(m_cOpacity);
+	sprite->setPosition(ccpAdd(positionAt(pos), ccp(m_pTileSet->m_uOffsetX, m_pTileSet->m_uOffsetY)));
 
     //issue 1264, flip can be undone as well
     sprite->setFlipX(false);
@@ -253,8 +256,7 @@ void CCTMXLayer::setupTileSprite(CCSprite* sprite, CCPoint pos, unsigned int gid
     {
         // put the anchor in the middle for ease of rotation.
         sprite->setAnchorPoint(ccp(0.5f,0.5f));
-        sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height/2,
-           positionAt(pos).y + sprite->getContentSize().width/2 ) );
+		sprite->setPosition(ccp(positionAt(pos).x + sprite->getContentSize().height / 2 + m_pTileSet->m_uOffsetX, positionAt(pos).y + sprite->getContentSize().width / 2 + m_pTileSet->m_uOffsetY));
 
         unsigned int flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
 
@@ -340,7 +342,7 @@ CCSprite * CCTMXLayer::tileAt(const CCPoint& pos)
             tile = new CCSprite();
             tile->initWithTexture(this->getTexture(), rect);
             tile->setBatchNode(this);
-            tile->setPosition(positionAt(pos));
+			tile->setPosition(ccpAdd(positionAt(pos), ccp(m_pTileSet->m_uOffsetX, m_pTileSet->m_uOffsetY)));
             tile->setVertexZ((float)vertexZForPos(pos));
             tile->setAnchorPoint(CCPointZero);
             tile->setOpacity(m_cOpacity);
@@ -398,6 +400,9 @@ CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
     // insert it into the local atlasindex array
     ccCArrayInsertValueAtIndex(m_pAtlasIndexArray, (void*)z, indexForZ);
 
+
+	
+
     // update possible children
     if (m_pChildren && m_pChildren->count()>0)
     {
@@ -415,6 +420,7 @@ CCSprite * CCTMXLayer::insertTileForGID(unsigned int gid, const CCPoint& pos)
             }
         }
     }
+
     m_pTiles[z] = gid;
     return tile;
 }
