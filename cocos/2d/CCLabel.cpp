@@ -122,7 +122,7 @@ public:
         Node::updateTransform();
     }
 
-    virtual void updateColor()
+    virtual void updateColor() override
     {
         if (_textureAtlas == nullptr)
         {
@@ -146,7 +146,7 @@ public:
     }
 
     //LabelLetter doesn't need to draw directly.
-    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
     }
 };
