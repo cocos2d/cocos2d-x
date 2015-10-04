@@ -627,6 +627,11 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
         m_bDragging     = true; //dragging started
         m_tScrollDistance = ccp(0.0f, 0.0f);
         m_fTouchLength    = 0.0f;
+        
+        // *********************************************
+        // Rubber/Elastic effect to mimic UIScrollView
+        m_startTouchPoint = this->convertTouchToNodeSpace(touch);
+        // *********************************************
     }
     else if (m_pTouches->count() == 2)
     {
@@ -641,7 +646,8 @@ bool CCScrollView::ccTouchBegan(CCTouch* touch, CCEvent* event)
 
 void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 {
-    if (!this->isVisible())
+    if (!this->isVisible()
+        || this->getDirection() == kCCScrollViewDirectionNone)  // <<<<<<<<<< ADDED TO FIX BUG IF FORCED NO SCROLL
     {
         return;
     }
@@ -706,7 +712,48 @@ void CCScrollView::ccTouchMoved(CCTouch* touch, CCEvent* event)
 
                 newX     = m_pContainer->getPosition().x + moveDistance.x;
                 newY     = m_pContainer->getPosition().y + moveDistance.y;
-
+                
+                // ************************************************************************************************************
+                // ************************************************************************************************************
+                // Rubber/Elastic effect to mimic UIScrollView
+                if (m_eDirection == kCCScrollViewDirectionVertical || m_eDirection == kCCScrollViewDirectionBoth)
+                {
+                    if (m_pContainer->getPosition().y > 0 && m_pContainer->getContentSize().height > m_tViewSize.height)
+                    {
+                        newY = (m_pContainer->getPosition().y + moveDistance.y + m_tTouchPoint.y) / 4;
+                    }
+                    else if (-m_pContainer->getPosition().y > m_pContainer->getContentSize().height - m_tViewSize.height)
+                    {
+                        CCPoint totalDistance = ccpSub(newPoint, m_startTouchPoint);
+                        newY = -(m_pContainer->getContentSize().height - m_tViewSize.height) + totalDistance.y / 2.5;
+                    }
+                    else if (m_pContainer->getContentSize().height <= m_tViewSize.height)
+                    {
+                        CCPoint totalDistance = ccpSub(newPoint, m_startTouchPoint);
+                        newY = -(m_pContainer->getContentSize().height - m_tViewSize.height) + totalDistance.y / 2.5;
+                    }
+                    pullToRefresh = newY + (m_pContainer->getContentSize().height - m_tViewSize.height) < -200;
+                }
+                if (m_eDirection == kCCScrollViewDirectionHorizontal || m_eDirection == kCCScrollViewDirectionBoth)
+                {
+                    if (m_pContainer->getPosition().x > 0 && m_pContainer->getContentSize().width > m_tViewSize.width)
+                    {
+                        newX = (m_pContainer->getPosition().x + moveDistance.x + m_tTouchPoint.x) / 4;
+                    }
+                    else if (-m_pContainer->getPosition().x > m_pContainer->getContentSize().width - m_tViewSize.width)
+                    {
+                        CCPoint totalDistance = ccpSub(newPoint, m_startTouchPoint);
+                        newX = -(m_pContainer->getContentSize().width - m_tViewSize.width) + totalDistance.x / 2.5;
+                    }
+                    else if (m_pContainer->getContentSize().width <= m_tViewSize.width)
+                    {
+                        CCPoint totalDistance = ccpSub(newPoint, m_startTouchPoint);
+                        newX = -(m_pContainer->getContentSize().width - m_tViewSize.width) + totalDistance.x / 2.5;
+                    }
+                }
+                // ************************************************************************************************************
+                // ************************************************************************************************************
+                
                 m_tScrollDistance = moveDistance;
                 this->setContentOffset(ccp(newX, newY));
             }
@@ -731,6 +778,17 @@ void CCScrollView::ccTouchEnded(CCTouch* touch, CCEvent* event)
         if (m_pTouches->count() == 1 && m_bTouchMoved)
         {
             this->schedule(schedule_selector(CCScrollView::deaccelerateScrolling));
+            
+            // ************************************************************************************************************
+            // ************************************************************************************************************
+            // Rubber/Elastic effect to mimic UIScrollView
+            if (pullToRefresh)
+            {
+                CCNotificationCenter::sharedNotificationCenter()->postNotification("pullToRefresh", NULL);
+                pullToRefresh = false;
+            }
+            // ************************************************************************************************************
+            // ************************************************************************************************************
         }
         m_pTouches->removeObject(touch);
     } 
