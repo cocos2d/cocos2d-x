@@ -177,7 +177,7 @@ void AssetsManagerExLoaderScene::startDownloadCallback(Ref* sender)
                 break;
             }
         });
-        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_amListener, 1);
+        Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_amListener, 1);
 
         _am->update();
     }

@@ -150,7 +150,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     
     auto start = MenuItemFont::create("start", [this](Ref* sender){
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         
         CC_PROFILER_PURGE_ALL();
         sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
@@ -169,7 +169,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     
     auto stop = MenuItemFont::create("stop", [=](Ref* sender){
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         
         sched->unschedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this);
         
@@ -218,7 +218,7 @@ void PerformanceEventDispatcherScene::onEnter()
                                               genStrVector("Avg", "Min", "Max", nullptr));
 
         auto director = Director::getInstance();
-        auto sched = director->getScheduler();
+		auto sched = director->getMainScheduler();
         sched->schedule(CC_SCHEDULE_SELECTOR(PerformanceEventDispatcherScene::dumpProfilerInfo), this, 2, false);
         this->unscheduleUpdate();
         this->scheduleUpdate();
@@ -229,7 +229,7 @@ void PerformanceEventDispatcherScene::onExit()
 {
     TestCase::onExit();
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+	auto sched = director->getMainScheduler();
     sched->unscheduleAllForTarget(this);
 }
 
@@ -257,7 +257,7 @@ void PerformanceEventDispatcherScene::reset()
     // Removes all fixed listeners
     for (auto& listener : _fixedPriorityListeners)
     {
-        Director::getInstance()->getEventDispatcher()->removeEventListener(listener);
+        Director::getInstance()->getMainEventDispatcher()->removeEventListener(listener);
     }
     
     this->_lastRenderedCount = 0;
@@ -364,7 +364,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
 {
     TestFunction testFunctions[] = {
         { "OneByOne-scenegraph",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchOneByOne::create();
@@ -408,7 +408,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         
         { "OneByOne-fixed",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchOneByOne::create();
@@ -449,7 +449,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         
         { "AllAtOnce-scenegraph",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchAllAtOnce::create();
@@ -490,7 +490,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         
         { "AllAtOnce-fixed",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchAllAtOnce::create();
@@ -528,7 +528,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         
         { "TouchModeMix-scenegraph",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listenerOneByOne = EventListenerTouchOneByOne::create();
@@ -587,7 +587,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         
         { "TouchModeMix-fixed",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listenerOneByOne = EventListenerTouchOneByOne::create();
@@ -668,7 +668,7 @@ void KeyboardEventDispatchingPerfTest::generateTestFunctions()
 {
     TestFunction testFunctions[] = {
         { "keyboard-scenegraph",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerKeyboard::create();
@@ -696,7 +696,7 @@ void KeyboardEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         
         { "keyboard-fixed",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerKeyboard::create();
@@ -768,7 +768,7 @@ void CustomEventDispatchingPerfTest::generateTestFunctions()
 {
     TestFunction testFunctions[] = {
         { "custom-scenegraph",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerCustom::create("custom_event_test_scenegraph", [](EventCustom* event){});
@@ -793,7 +793,7 @@ void CustomEventDispatchingPerfTest::generateTestFunctions()
             CC_PROFILER_STOP(this->profilerName());
         } } ,
         { "custom-fixed",    [=](){
-            auto dispatcher = Director::getInstance()->getEventDispatcher();
+            auto dispatcher = Director::getInstance()->getMainEventDispatcher();
             if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerCustom::create("custom_event_test_fixed", [](EventCustom* event){});

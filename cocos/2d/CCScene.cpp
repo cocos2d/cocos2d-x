@@ -70,9 +70,9 @@ Scene::Scene()
     //create default camera
     _defaultCamera = Camera::create();
     addChild(_defaultCamera);
-    
-    _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
-    _event->retain();
+
+	_event = _eventDispatcher->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Scene::onProjectionChanged, this, std::placeholders::_1));
+	_event->retain();  
     
     Camera::_visitingCamera = nullptr;
 }
@@ -86,7 +86,7 @@ Scene::~Scene()
 #if CC_USE_NAVMESH
     CC_SAFE_RELEASE(_navMesh);
 #endif
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
+	_eventDispatcher->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
     
 #if CC_USE_PHYSICS
@@ -224,7 +224,7 @@ void Scene::render(Renderer* renderer)
 #endif
 
     Camera::_visitingCamera = nullptr;
-    experimental::FrameBuffer::applyDefaultFBO();
+	Director::getInstance()->applyDefaultFrameBuffer();
 }
 
 void Scene::removeAllChildren()

@@ -61,6 +61,49 @@ Application::~Application()
     sm_pSharedApplication = 0;
 }
 
+int Application::pyrRenderBegin()
+{
+	initGLContextAttrs();
+	if(!applicationDidFinishLaunching())
+	{
+		return 1;
+	}
+	Director::getInstance()->getOpenGLView()->retain();
+	return 0;
+}
+
+int Application::pyrRender()
+{
+	auto director = Director::getInstance();
+	auto glview = director->getOpenGLView();
+	
+	if (!glview->windowShouldClose())
+	{
+		director->mainLoop();
+		glview->pollEvents();
+	}
+	return 0;
+}
+
+void Application::pyrRenderEnd()
+{
+	/* Only work on Desktop
+	 *  Director::mainLoop is really one frame logic
+	 *  when we want to close the window, we should call Director::end();
+	 *  then call Director::mainLoop to do release of internal resources
+	 */
+	auto director = Director::getInstance();
+	auto glview = director->getOpenGLView();
+	if (glview->isOpenGLReady())
+	{
+		director->end();
+		director->mainLoop();
+	}
+
+	glview->release();
+}
+
+
 int Application::run()
 {
     initGLContextAttrs();

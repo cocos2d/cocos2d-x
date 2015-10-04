@@ -31,6 +31,7 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #include "UIEditBoxImpl.h"
+#import <Cocoa/Cocoa.h>
 
 @class UIEditBoxImplMac;
 

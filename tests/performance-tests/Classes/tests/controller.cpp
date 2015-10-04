@@ -98,7 +98,7 @@ void TestController::traverseTestList(TestList* testList)
     }
     logEx("%s%sBegin traverse TestList:%s", LOG_TAG, _logIndentation.c_str(), testList->getTestName().c_str());
 
-    auto scheduler = _director->getScheduler();
+	auto scheduler = _director->getMainScheduler();
     int testIndex = 0;
     for (auto& callback : testList->_testCallbacks)
     {
@@ -150,7 +150,7 @@ void TestController::traverseTestList(TestList* testList)
 
 void TestController::traverseTestSuite(TestSuite* testSuite)
 {
-    auto scheduler = _director->getScheduler();
+	auto scheduler = _director->getMainScheduler();
     int testIndex = 0;
     float testCaseDuration = 0.0f;
     _logIndentation += LOG_INDENTATION;

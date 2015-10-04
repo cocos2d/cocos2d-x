@@ -267,14 +267,14 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
                                                                 _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
 Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
@@ -368,14 +368,14 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
                                                                 _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
 Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
@@ -569,14 +569,14 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
                                                                 teapot->setMaterial(mat);
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
 Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
@@ -755,14 +755,14 @@ Sprite3DEffectTest::Sprite3DEffectTest()
                                                                 }
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
 
 Sprite3DEffectTest::~Sprite3DEffectTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
@@ -1011,13 +1011,13 @@ Sprite3DWithSkinOutlineTest::Sprite3DWithSkinOutlineTest()
                                                                 }
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
 Sprite3DWithSkinOutlineTest::~Sprite3DWithSkinOutlineTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 std::string Sprite3DWithSkinOutlineTest::title() const
@@ -2053,7 +2053,7 @@ Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
 Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 
     _teapot->release();
@@ -2152,7 +2152,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
                                                                 state->setUniformTexture("u_cubeTex", _textureCube);
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
 
@@ -2309,7 +2309,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
             
             cocos2d::log("frame %d", info->frame);
         });
-        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+        Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     }
 }
 
@@ -2388,14 +2388,14 @@ Sprite3DVertexColorTest::Sprite3DVertexColorTest()
                                                                 sprite->setMaterial(mat);
                                                             }
                                                             );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+    Director::getInstance()->getMainEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
 
 Sprite3DVertexColorTest::~Sprite3DVertexColorTest()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+    Director::getInstance()->getMainEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 

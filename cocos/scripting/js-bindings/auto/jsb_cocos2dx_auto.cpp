@@ -7346,19 +7346,24 @@ bool js_cocos2dx_Director_setOpenGLView(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_setOpenGLView : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::GLView* arg0 = nullptr;
-        do {
-            if (args.get(0).isNull()) { arg0 = nullptr; break; }
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::GLView*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setOpenGLView : Error processing arguments");
-        cobj->setOpenGLView(arg0);
-        args.rval().setUndefined();
+		//TODO: unsure what is the desired behaviour here.  the multi-window implementation changed
+		//the behaviour of setting openGLViews.  Now, each window gets an opengl view one time, when 
+		//it's created.  If there is a need to set it to a new openGLView, setOpenGLView will need to
+		//be reimplimented and the windowKey for the affected window will need to be supplied.
+
+//         cocos2d::GLView* arg0 = nullptr;
+//         do {
+//             if (args.get(0).isNull()) { arg0 = nullptr; break; }
+//             if (!args.get(0).isObject()) { ok = false; break; }
+//             js_proxy_t *jsProxy;
+//             JSObject *tmpObj = args.get(0).toObjectOrNull();
+//             jsProxy = jsb_get_js_proxy(tmpObj);
+//             arg0 = (cocos2d::GLView*)(jsProxy ? jsProxy->ptr : NULL);
+//             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+//         } while (0);
+//         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setOpenGLView : Error processing arguments");
+//         cobj->setOpenGLView(arg0);
+//         args.rval().setUndefined();
         return true;
     }
 
@@ -7572,7 +7577,7 @@ bool js_cocos2dx_Director_setProjection(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_setProjection : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Director::Projection arg0;
+        cocos2d::DirectorWindow::Projection arg0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_setProjection : Error processing arguments");
         cobj->setProjection(arg0);
@@ -7689,7 +7694,7 @@ bool js_cocos2dx_Director_getScheduler(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getScheduler : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::Scheduler* ret = cobj->getScheduler();
+        cocos2d::Scheduler* ret = cobj->getMainScheduler();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
@@ -7798,7 +7803,7 @@ bool js_cocos2dx_Director_getEventDispatcher(JSContext *cx, uint32_t argc, jsval
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getEventDispatcher : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::EventDispatcher* ret = cobj->getEventDispatcher();
+        cocos2d::EventDispatcher* ret = cobj->getMainEventDispatcher();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
@@ -7871,7 +7876,7 @@ bool js_cocos2dx_Director_getActionManager(JSContext *cx, uint32_t argc, jsval *
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_getActionManager : Invalid Native Object");
     if (argc == 0) {
-        cocos2d::ActionManager* ret = cobj->getActionManager();
+        cocos2d::ActionManager* ret = cobj->getMainActionManager();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
@@ -59714,7 +59719,7 @@ bool js_cocos2dx_Camera_getDefaultViewport(JSContext *cx, uint32_t argc, jsval *
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 0) {
-        const cocos2d::experimental::Viewport& ret = cocos2d::Camera::getDefaultViewport();
+        const cocos2d::experimental::Viewport& ret = cocos2d::Director::getInstance()->getDefaultViewport();
         jsval jsret = JSVAL_NULL;
         #pragma warning NO CONVERSION FROM NATIVE FOR Viewport;
         args.rval().set(jsret);
@@ -59733,7 +59738,7 @@ bool js_cocos2dx_Camera_setDefaultViewport(JSContext *cx, uint32_t argc, jsval *
         #pragma warning NO CONVERSION TO NATIVE FOR Viewport
 		ok = false;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_setDefaultViewport : Error processing arguments");
-        cocos2d::Camera::setDefaultViewport(arg0);
+		cocos2d::Director::getInstance()->setDefaultViewport(arg0);
         args.rval().setUndefined();
         return true;
     }

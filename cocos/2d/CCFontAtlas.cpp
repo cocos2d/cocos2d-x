@@ -136,9 +136,12 @@ void FontAtlas::purgeTexturesAtlas()
 {
     if (_fontFreeType && _atlasTextures.size() > 1)
     {
-        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
-        eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
-        eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
+        EventDispatcher* eventDispatcher = Director::getInstance()->getMainEventDispatcher();
+		if(eventDispatcher != nullptr)			
+		{
+			eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
+			eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
+		}
     }
 }
 
@@ -146,9 +149,12 @@ void FontAtlas::listenRendererRecreated(EventCustom *event)
 {
     if (_fontFreeType)
     {
-        auto eventDispatcher = Director::getInstance()->getEventDispatcher();
-        eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
-        eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
+        EventDispatcher* eventDispatcher = Director::getInstance()->getMainEventDispatcher();
+		if(eventDispatcher != nullptr)
+		{
+			eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
+			eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
+		}
     }
 }
 

@@ -26,6 +26,8 @@ THE SOFTWARE.
 #include "CCGLViewImpl-desktop.h"
 
 #include <unordered_map>
+#include <queue>
+#include <functional>
 
 #include "platform/CCApplication.h"
 #include "base/CCDirector.h"
@@ -38,86 +40,109 @@ THE SOFTWARE.
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
 #include "deprecated/CCString.h"
-
 NS_CC_BEGIN
 
-// GLFWEventHandler
+typedef std::function<void(GLViewImpl*)> tGLCallback;
+enum { FunctionListSize = 5 };
+
+class CircularFunctionList
+{
+public:
+	void push_back(tGLCallback callback)
+	{
+		_queue.push_back(callback);
+		while(_queue.size() > FunctionListSize )
+		{
+			_queue.pop_front();
+		}
+	}
+
+	std::list<tGLCallback>::iterator begin()
+	{
+		return _queue.begin();
+	}
+
+	std::list<tGLCallback>::iterator end()
+	{
+		return _queue.end();
+	}
+
+	void clear()
+	{
+		_queue.clear();
+	}
+private:
+	std::list<tGLCallback> _queue;
+};
 
 class GLFWEventHandler
 {
 public:
-    static void onGLFWError(int errorID, const char* errorDesc)
-    {
-        if (_view)
-            _view->onGLFWError(errorID, errorDesc);
-    }
 
-    static void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
-    {
-        if (_view)
-            _view->onGLFWMouseCallBack(window, button, action, modify);
-    }
+	static void onGLFWError(int errorID, const char* errorDesc)
+	{
+		CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
+	}
 
-    static void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
-    {
-        if (_view)
-            _view->onGLFWMouseMoveCallBack(window, x, y);
-    }
+	static void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, button, action, modify](GLViewImpl* view){view->onGLFWMouseCallBack(window, button, action, modify);});
+	}
 
-    static void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
-    {
-        if (_view)
-            _view->onGLFWMouseScrollCallback(window, x, y);
-    }
+	static void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, x, y](GLViewImpl* view){view->onGLFWMouseMoveCallBack(window, x, y);});
+	}
 
-    static void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-    {
-        if (_view)
-            _view->onGLFWKeyCallback(window, key, scancode, action, mods);
-    }
+	static void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, x, y](GLViewImpl* view){view->onGLFWMouseScrollCallback(window, x, y);});
+	}
 
-    static void onGLFWCharCallback(GLFWwindow* window, unsigned int character)
-    {
-        if (_view)
-            _view->onGLFWCharCallback(window, character);
-    }
+	static void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, key, scancode, action, mods](GLViewImpl* view){view->onGLFWKeyCallback(window, key, scancode, action, mods);});
+	}
 
-    static void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y)
-    {
-        if (_view)
-            _view->onGLFWWindowPosCallback(windows, x, y);
-    }
+	static void onGLFWCharCallback(GLFWwindow* window, unsigned int character)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, character](GLViewImpl* view){view->onGLFWCharCallback(window, character);});
+	}
 
-    static void onGLFWframebuffersize(GLFWwindow* window, int w, int h)
-    {
-        if (_view)
-            _view->onGLFWframebuffersize(window, w, h);
-    }
+	static void onGLFWWindowPosCallback(GLFWwindow* window, int x, int y)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, x, y](GLViewImpl* view){view->onGLFWWindowPosCallback(window, x, y);});
+	}
 
-    static void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
-    {
-        if (_view)
-            _view->onGLFWWindowSizeFunCallback(window, width, height);
-    }
+	static void onGLFWframebuffersize(GLFWwindow* window, int w, int h)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, w, h](GLViewImpl* view){view->onGLFWframebuffersize(window, w, h);});
+	}
 
-    static void setGLViewImpl(GLViewImpl* view)
-    {
-        _view = view;
-    }
+	static void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, width, height](GLViewImpl* view){view->onGLFWWindowSizeFunCallback(window, width, height);});
+	}
 
-    static void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
-    {
-        if (_view)
-        {
-            _view->onGLFWWindowIconifyCallback(window, iconified);
-        }
-    }
+	static void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
+	{
+		_deferredCallbacks[WindowKey(window)].push_back([window, iconified](GLViewImpl* view){view->onGLFWWindowIconifyCallback(window, iconified);});
+	}
 
+	static void FireCallbackQueue(GLViewImpl* view)
+	{
+		auto callback = _deferredCallbacks.find(view->getKey());
+		if(callback != _deferredCallbacks.end())
+		{
+			std::for_each((callback->second).begin(), (callback->second).end(), [view](tGLCallback func){func(view);});
+			(callback->second).clear();
+		}
+	}
 private:
-    static GLViewImpl* _view;
+	static std::unordered_map<WindowKey, CircularFunctionList, WindowKeyHash, WindowKeyCompare> _deferredCallbacks;
 };
 
-GLViewImpl* GLFWEventHandler::_view = nullptr;
+std::unordered_map<WindowKey, CircularFunctionList, WindowKeyHash, WindowKeyCompare> GLFWEventHandler::_deferredCallbacks;
 
 ////////////////////////////////////////////////////
 
@@ -277,23 +302,11 @@ GLViewImpl::GLViewImpl()
 , _mouseY(0.0f)
 {
     _viewName = "cocos2dx";
-    g_keyCodeMap.clear();
-    for (auto& item : g_keyCodeStructArray)
-    {
-        g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
-    }
-
-    GLFWEventHandler::setGLViewImpl(this);
-
-    glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
-    glfwInit();
 }
 
 GLViewImpl::~GLViewImpl()
 {
     CCLOGINFO("deallocing GLViewImpl: %p", this);
-    GLFWEventHandler::setGLViewImpl(nullptr);
-    glfwTerminate();
 }
 
 GLViewImpl* GLViewImpl::create(const std::string& viewName)
@@ -340,13 +353,37 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const 
     return nullptr;
 }
 
+void GLViewImpl::makeContextCurrent()
+{
+	glfwMakeContextCurrent(_mainWindow);
+}
+
+void GLViewImpl::detachContext()
+{
+	if( glfwGetCurrentContext() == _mainWindow)
+	{
+		glfwMakeContextCurrent(nullptr);
+	}
+	else
+	{
+		CCASSERT(false, "this is not the active context");
+	}	
+}
+
+WindowKey GLViewImpl::getKey() const
+{
+	return WindowKey(_mainWindow);
+}
+
+static GLFWwindow* sharedWindow = nullptr;
+
 bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
 {
     setViewName(viewName);
 
     _frameZoomFactor = frameZoomFactor;
 
-    glfwWindowHint(GLFW_RESIZABLE,GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE,GL_TRUE);
     glfwWindowHint(GLFW_RED_BITS,_glContextAttrs.redBits);
     glfwWindowHint(GLFW_GREEN_BITS,_glContextAttrs.greenBits);
     glfwWindowHint(GLFW_BLUE_BITS,_glContextAttrs.blueBits);
@@ -357,7 +394,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     int needWidth = rect.size.width * _frameZoomFactor;
     int neeHeight = rect.size.height * _frameZoomFactor;
 
-    _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
+    _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, sharedWindow);
 
     if (_mainWindow == nullptr)
     {
@@ -393,7 +430,14 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
         rect.size.height = realH / _frameZoomFactor;
     }
 
-    glfwMakeContextCurrent(_mainWindow);
+	if(sharedWindow == nullptr)
+	{
+		sharedWindow = _mainWindow;
+	}
+
+	GLFWwindow* prevContext = glfwGetCurrentContext();
+
+	makeContextCurrent();
 
     glfwSetMouseButtonCallback(_mainWindow, GLFWEventHandler::onGLFWMouseCallBack);
     glfwSetCursorPosCallback(_mainWindow, GLFWEventHandler::onGLFWMouseMoveCallBack);
@@ -406,26 +450,32 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwSetWindowIconifyCallback(_mainWindow, GLFWEventHandler::onGLFWWindowIconifyCallback);
 
     setFrameSize(rect.size.width, rect.size.height);
+	setDesignSize(rect.size.width, rect.size.height);
 
-    // check OpenGL version at first
-    const GLubyte* glVersion = glGetString(GL_VERSION);
+	// check OpenGL version at first
+	const GLubyte* glVersion = glGetString(GL_VERSION);
 
-    if ( utils::atof((const char*)glVersion) < 1.5 )
-    {
-        char strComplain[256] = {0};
-        sprintf(strComplain,
-                "OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
-                glVersion);
-        MessageBox(strComplain, "OpenGL version too old");
-        return false;
-    }
+	bool retStatus = false;
+	if ( utils::atof((const char*)glVersion) < 1.5 )
+	{
+		char strComplain[256] = {0};
+		sprintf(strComplain,
+				"OpenGL 1.5 or higher is required (your version is %s). Please upgrade the driver of your video card.",
+				glVersion);
+		MessageBox(strComplain, "OpenGL version too old");
+	}
+	else
+	{
+		initGlew();
 
-    initGlew();
+		// Enable point size by default.
+		glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
-    // Enable point size by default.
-    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+		retStatus = true;
+	}
 
-    return true;
+	glfwMakeContextCurrent(prevContext);
+    return retStatus;
 }
 
 bool GLViewImpl::initWithFullScreen(const std::string& viewName)
@@ -464,7 +514,7 @@ void GLViewImpl::end()
 {
     if(_mainWindow)
     {
-        glfwSetWindowShouldClose(_mainWindow,1);
+		glfwDestroyWindow(_mainWindow);
         _mainWindow = nullptr;
     }
     // Release self. Otherwise, GLViewImpl could not be freed.
@@ -485,9 +535,9 @@ bool GLViewImpl::windowShouldClose()
         return true;
 }
 
-void GLViewImpl::pollEvents()
+void GLViewImpl::dispatchDeferredEvents()
 {
-    glfwPollEvents();
+	GLFWEventHandler::FireCallbackQueue(this);
 }
 
 void GLViewImpl::enableRetina(bool enabled)
@@ -590,7 +640,7 @@ void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
         (float)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
         (float)(w * _scaleX * _retinaFactor * _frameZoomFactor),
         (float)(h * _scaleY * _retinaFactor * _frameZoomFactor));
-    Camera::setDefaultViewport(vp);
+    Director::getInstance()->setDefaultViewport(vp);
 }
 
 void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
@@ -610,12 +660,6 @@ Rect GLViewImpl::getScissorRect() const
     float w = params[2] / (_scaleX * _retinaFactor * _frameZoomFactor);
     float h = params[3] / (_scaleY * _retinaFactor  * _frameZoomFactor);
     return Rect(x, y, w, h);
-}
-
-void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
-{
-    _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
-    CCLOGERROR(_glfwError.c_str());
 }
 
 void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
@@ -651,14 +695,14 @@ void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action,
         EventMouse event(EventMouse::MouseEventType::MOUSE_DOWN);
         event.setCursorPosition(cursorX, cursorY);
         event.setMouseButton(button);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+        Director::getInstance()->getCurrentWindowEventDispatcher()->dispatchEvent(&event);
     }
     else if(GLFW_RELEASE == action)
     {
         EventMouse event(EventMouse::MouseEventType::MOUSE_UP);
         event.setCursorPosition(cursorX, cursorY);
         event.setMouseButton(button);
-        Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+        Director::getInstance()->getCurrentWindowEventDispatcher()->dispatchEvent(&event);
     }
 }
 
@@ -704,7 +748,7 @@ void GLViewImpl::onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
         event.setMouseButton(GLFW_MOUSE_BUTTON_MIDDLE);
     }
     event.setCursorPosition(cursorX, cursorY);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    Director::getInstance()->getCurrentWindowEventDispatcher()->dispatchEvent(&event);
 }
 
 void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
@@ -715,7 +759,7 @@ void GLViewImpl::onGLFWMouseScrollCallback(GLFWwindow* window, double x, double 
     float cursorY = (_viewPortRect.origin.y + _viewPortRect.size.height - _mouseY) / _scaleY;
     event.setScrollData((float)x, -(float)y);
     event.setCursorPosition(cursorX, cursorY);
-    Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+    Director::getInstance()->getCurrentWindowEventDispatcher()->dispatchEvent(&event);
 }
 
 void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -723,7 +767,7 @@ void GLViewImpl::onGLFWKeyCallback(GLFWwindow *window, int key, int scancode, in
     if (GLFW_REPEAT != action)
     {
         EventKeyboard event(g_keyCodeMap[key], GLFW_PRESS == action);
-        auto dispatcher = Director::getInstance()->getEventDispatcher();
+        auto dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
         dispatcher->dispatchEvent(&event);
     }
     
@@ -778,8 +822,10 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
+	CCASSERT(Director::getInstance()->getOpenGLView() == this, "expected this to be the current glview in the director");
     if (_resolutionPolicy != ResolutionPolicy::UNKNOWN)
     {
+		_screenSize.setSize(width, height);
         updateDesignResolutionSize();
         Director::getInstance()->setViewport();
     }
@@ -901,6 +947,52 @@ bool GLViewImpl::initGlew()
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
     return true;
+}
+
+namespace GLImpl
+{
+	bool _isStaticInitialized = false;
+}
+
+bool GLImpl::initGLView()
+{
+	if(glfwInit() == GL_TRUE)
+	{
+		GLImpl::_isStaticInitialized = true;
+
+		g_keyCodeMap.clear();
+		for (auto& item : g_keyCodeStructArray)
+		{
+			g_keyCodeMap[item.glfwKeyCode] = item.keyCode;
+		}
+
+		glfwSetErrorCallback(GLFWEventHandler::onGLFWError);
+	}
+	
+	sharedWindow = nullptr;
+
+	return GLImpl::_isStaticInitialized;
+}
+
+void GLImpl::destroyGLView()
+{
+	sharedWindow = nullptr;
+	glfwTerminate();
+}
+
+bool GLImpl::isGLViewStaticInitialized()
+{
+	return GLImpl::_isStaticInitialized;
+}
+
+void GLImpl::pollEvents()
+{
+	glfwPollEvents();
+}
+
+bool GLImpl::isAnyContextCurrent()
+{
+	return glfwGetCurrentContext() != nullptr;
 }
 
 NS_CC_END // end of namespace cocos2d;

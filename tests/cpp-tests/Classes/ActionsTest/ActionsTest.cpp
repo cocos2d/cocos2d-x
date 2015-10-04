@@ -1153,7 +1153,7 @@ void ActionOrbit::onEnter()
 {
     ActionsDemo::onEnter();
 
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_2D);
     centerSprites(3);
 
     auto orbit1 = OrbitCamera::create(2,1, 0, 0, 180, 0, 0);
@@ -1191,7 +1191,7 @@ void ActionOrbit::onExit()
 {
     ActionsDemo::onExit();
     
-    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::DEFAULT);
 }
 
 std::string ActionOrbit::subtitle() const
@@ -1697,7 +1697,7 @@ void Issue1305_2::onEnter()
     auto actF = Sequence::create(act1, act2, act3, act4, act5, act6, act7, act8, nullptr);
 
     //    [spr runAction:actF);
-    Director::getInstance()->getActionManager()->addAction(actF ,spr, false);
+    Director::getInstance()->getMainActionManager()->addAction(actF ,spr, false);
 
 }
 
@@ -2076,14 +2076,14 @@ void PauseResumeActions::onEnter()
         log("Pausing");
         auto director = Director::getInstance();
 
-        _pausedTargets = director->getActionManager()->pauseAllRunningActions();
+		_pausedTargets = director->getMainActionManager()->pauseAllRunningActions();
     }
                    ,3 ,false ,0 ,"pause_key");
 
     this->schedule([&](float dt) {
         log("Resuming");
         auto director = Director::getInstance();
-        director->getActionManager()->resumeTargets(_pausedTargets);
+		director->getMainActionManager()->resumeTargets(_pausedTargets);
         _pausedTargets.clear();
     }
                    ,5 ,false ,0, "resume_key");

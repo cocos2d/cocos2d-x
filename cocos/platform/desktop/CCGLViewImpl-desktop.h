@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
 #include "platform/CCGLView.h"
+#include "platform/CCWindowKey.h"
 #include "glfw3.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -56,10 +57,12 @@ NS_CC_BEGIN
 class CC_DLL GLViewImpl : public GLView
 {
 public:
-    static GLViewImpl* create(const std::string& viewName);
+    static GLViewImpl* create(const std::string& viewName); //Note that this will set this GLView to be the current one.
     static GLViewImpl* createWithRect(const std::string& viewName, Rect size, float frameZoomFactor = 1.0f);
     static GLViewImpl* createWithFullScreen(const std::string& viewName);
     static GLViewImpl* createWithFullScreen(const std::string& viewName, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
+
+	virtual WindowKey getKey() const override;
 
     /*
      *frameZoomFactor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
@@ -75,7 +78,7 @@ public:
     virtual Rect getScissorRect() const override;
 
     bool windowShouldClose() override;
-    void pollEvents() override;
+	virtual void dispatchDeferredEvents() override;
     GLFWwindow* getWindow() const { return _mainWindow; }
 
     /* override functions */
@@ -111,11 +114,14 @@ public:
     id getCocoaWindow() override { return glfwGetCocoaWindow(_mainWindow); }
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
+	virtual void makeContextCurrent() override;
+	virtual void detachContext() override;
+
 protected:
     GLViewImpl();
     virtual ~GLViewImpl();
 
-    bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
+	bool initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor);
     bool initWithFullScreen(const std::string& viewName);
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
@@ -124,13 +130,12 @@ protected:
     void updateFrameSize();
 
     // GLFW callbacks
-    void onGLFWError(int errorID, const char* errorDesc);
     void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify);
     void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y);
     void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y);
     void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
     void onGLFWCharCallback(GLFWwindow* window, unsigned int character);
-    void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y);
+    void onGLFWWindowPosCallback(GLFWwindow* window, int x, int y);
     void onGLFWframebuffersize(GLFWwindow* window, int w, int h);
     void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height);
     void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified);
@@ -152,7 +157,8 @@ protected:
     float _mouseY;
 
     friend class GLFWEventHandler;
-
+	//refactor and remove Director friend if possible
+	friend class Director;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
 };

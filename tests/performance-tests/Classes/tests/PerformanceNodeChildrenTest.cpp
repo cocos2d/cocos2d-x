@@ -89,7 +89,7 @@ bool NodeChildrenMainScene::init()
 void NodeChildrenMainScene::onExitTransitionDidStart()
 {
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
 
     sched->unschedule(CC_SCHEDULE_SELECTOR(NodeChildrenMainScene::dumpProfilerInfo), this);
 }
@@ -97,7 +97,7 @@ void NodeChildrenMainScene::onExitTransitionDidStart()
 void NodeChildrenMainScene::onEnterTransitionDidFinish()
 {
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
 
     if (this->isAutoTesting()) {
         // Update the quantity of nodes if is auto testing.

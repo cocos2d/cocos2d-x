@@ -30,6 +30,9 @@ THE SOFTWARE.
 
 #include <stack>
 #include <thread>
+#include <list>
+#include <set>
+#include <unordered_map>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
@@ -38,6 +41,10 @@ THE SOFTWARE.
 #include "math/CCMath.h"
 #include "platform/CCGL.h"
 #include "platform/CCGLView.h"
+#include "platform/CCWindowKey.h"
+#include "base/CCEventDispatcher.h"
+#include "renderer/CCFrameBuffer.h"
+#include "base/CCDirectorContexts.h"
 
 NS_CC_BEGIN
 
@@ -53,7 +60,6 @@ class DirectorDelegate;
 class Node;
 class Scheduler;
 class ActionManager;
-class EventDispatcher;
 class EventCustom;
 class EventListenerCustom;
 class TextureCache;
@@ -61,6 +67,7 @@ class Renderer;
 class Camera;
 
 class Console;
+
 namespace experimental
 {
     class FrameBuffer;
@@ -80,6 +87,7 @@ enum class MATRIX_STACK_TYPE
     /// texture matrix stack
     MATRIX_STACK_TEXTURE
 };
+
 
 /**
  @brief Class that creates and handles the main Window and manages how
@@ -105,24 +113,7 @@ public:
     /** Director will trigger an event after a scene is drawn, the data is sent to GPU. */
     static const char* EVENT_AFTER_DRAW;
 
-    /**
-     * @brief Possible OpenGL projections used by director
-     */
-    enum class Projection
-    {
-        /// Sets a 2D projection (orthogonal projection).
-        _2D,
-        
-        /// Sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-        _3D,
-        
-        /// It calls "updateProjection" on the projection delegate.
-        CUSTOM,
-        
-        /// Default projection is 3D projection.
-        DEFAULT = _3D,
-    };
-    
+
     /** 
      * Returns a shared instance of the director. 
      * @js _getInstance
@@ -150,7 +141,7 @@ public:
     // attribute
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
-    inline Scene* getRunningScene() { return _runningScene; }
+    inline Scene* getRunningScene() { return (_contexts.getCurrentWindow() != nullptr) ? _contexts.getCurrentWindow()->runningScene : nullptr; }
 
     /** Gets the FPS value. */
     inline float getAnimationInterval() { return _animationInterval; }
@@ -165,16 +156,37 @@ public:
     /** Get seconds per frame. */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** 
+	/** Gets the number of GLViews*/
+	int getNumGLViews() { return _contexts.getNumContexts(); }
+	int isPendingWindowCreate(){ return _isPendingWindowCreation; }
+
+	/** 
      * Get the GLView.
      * @lua NA
      */
-    inline GLView* getOpenGLView() { return _openGLView; }
-    /** 
-     * Sets the GLView. 
-     * @lua NA
-     */
-    void setOpenGLView(GLView *openGLView);
+	inline GLView* getOpenGLView() { return (_contexts.getCurrentWindow() != nullptr) ? _contexts.getCurrentWindow()->openGLView : nullptr; }
+	//GLView* getOpenGLViewAtKey(WindowKey windowKey);
+
+	inline const experimental::Viewport& getDefaultViewport() { CCASSERT(_contexts.getCurrentWindow() != nullptr, ""); return _contexts.getCurrentWindow()->defaultViewport; }
+
+    inline void setDefaultViewport(const experimental::Viewport& vp) 
+	{ 
+		if(_contexts.getCurrentWindow() != nullptr)
+		{
+			_contexts.getCurrentWindow()->defaultViewport = vp;
+		}
+	}
+
+	/**
+	 * Get the default Framebuffer object
+	 */
+	inline experimental::FrameBuffer* getDefaultFrameBuffer() { return (_contexts.getCurrentWindow() != nullptr) ? _contexts.getCurrentWindow()->defaultFrameBuffer : nullptr; }
+	void applyDefaultFrameBuffer();
+	void clearFBOs();
+
+	void createWithNewScene(GLView *openGLView, const std::function<void()> &onCreateFunction);
+
+	void checkAndCloseGLViews();
 
     /*
      * Gets singleton of TextureCache.
@@ -201,9 +213,10 @@ public:
      * @since v0.8.2
      * @lua NA
      */
-    inline Projection getProjection() { return _projection; }
+    inline DirectorWindow::Projection getProjection() { return ( _contexts.getCurrentWindow() != nullptr ) ? _contexts.getCurrentWindow()->projection : DirectorWindow::Projection::DEFAULT; }
+
     /** Sets OpenGL projection. */
-    void setProjection(Projection projection);
+    void setProjection(DirectorWindow::Projection projection);
     
     /** Sets the glViewport.*/
     void setViewport();
@@ -216,14 +229,14 @@ public:
      * If the new scene replaces the old one, the it will receive the "cleanup" message.
      * @since v0.99.0
      */
-    inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
+    inline bool isSendCleanupToScene() { return ( _contexts.getCurrentWindow() != nullptr ) ? _contexts.getCurrentWindow()->sendCleanupToScene : false;	}
 
     /** This object will be visited after the main scene is visited.
      * This object MUST implement the "visit" function.
      * Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
      * @since v0.99.5
      */
-    Node* getNotificationNode() const { return _notificationNode; }
+    Node* getNotificationNode() const { return ( _contexts.getCurrentWindow() != nullptr ) ? _contexts.getCurrentWindow()->notificationNode : nullptr; }
     /** 
      * Sets the notification node.
      * @see Director::getNotificationNode()
@@ -277,7 +290,7 @@ public:
      */
     void runWithScene(Scene *scene);
 
-    /** 
+	/** 
      * Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
      * The new scene will be executed.
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
@@ -369,7 +382,7 @@ public:
      * It will enable alpha blending, disable depth test.
      * @js NA
      */
-    void setGLDefaultValues();
+	void setGLDefaultValues();
 
     /** Enables/disables OpenGL alpha blending. */
     void setAlphaBlending(bool on);
@@ -383,7 +396,9 @@ public:
     /** Enables/disables OpenGL depth test. */
     void setDepthTest(bool on);
 
-    virtual void mainLoop() = 0;
+	void createPendingWindows();
+
+    virtual bool mainLoop() = 0;
 
     /** The size in pixels of the surface. It could be different than the screen size.
      * High-res devices might have a higher surface size than the screen size.
@@ -395,12 +410,13 @@ public:
      * Gets content scale factor.
      * @see Director::setContentScaleFactor()
      */
-    float getContentScaleFactor() const { return _contentScaleFactor; }
+    float getContentScaleFactor() const { return ( _contexts.getCurrentWindow() != nullptr ) ? _contexts.getCurrentWindow()->contentScaleFactor : false; }
 
     /** Gets the Scheduler associated with this director.
      * @since v2.0
      */
-    Scheduler* getScheduler() const { return _scheduler; }
+	Scheduler* getMainScheduler();
+	Scheduler* getCurrentWindowScheduler() const;
     
     /** Sets the Scheduler associated with this director.
      * @since v2.0
@@ -410,7 +426,8 @@ public:
     /** Gets the ActionManager associated with this director.
      * @since v2.0
      */
-    ActionManager* getActionManager() const { return _actionManager; }
+	ActionManager* getMainActionManager();
+	ActionManager* getCurrentWindowActionManager() const;
     
     /** Sets the ActionManager associated with this director.
      * @since v2.0
@@ -421,9 +438,11 @@ public:
      * @since v3.0
      * @js NA
      */
-    EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
+	EventDispatcher* getMainEventDispatcher();
+	EventDispatcher* getCurrentWindowEventDispatcher() const;
     
     /** Sets the EventDispatcher associated with this director.
+	 * If key is null, it will use the current window.  If it's non-null, it will use the window with that key.
      * @since v3.0
      * @js NA
      */
@@ -484,6 +503,9 @@ public:
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
     /**
+	 * DirectorWindow handles this now.  This function is only here still to support the 
+	 * deprecated function kmGLFreeAll(void) in deprecated.cpp.
+	 *
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
      */
@@ -504,10 +526,9 @@ protected:
     void restartDirector();
     bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
     
-    void setNextScene();
+    void setNextScene(DirectorWindow& window);
     
     void showStats();
-    void createStatsLabel();
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, ssize_t* length);
     
@@ -520,32 +541,16 @@ protected:
 
     void initMatrixStack();
 
-    std::stack<Mat4> _modelViewMatrixStack;
-    std::stack<Mat4> _projectionMatrixStack;
-    std::stack<Mat4> _textureMatrixStack;
+	/** 
+     * Adds the GLView to the map. 
+     * @lua NA
+     */
+    void addOpenGLView(GLView *openGLView);
 
-    /** Scheduler associated with this director
-     @since v2.0
-     */
-    Scheduler *_scheduler;
-    
-    /** ActionManager associated with this director
-     @since v2.0
-     */
-    ActionManager *_actionManager;
-    
-    /** EventDispatcher associated with this director
-     @since v3.0
-     */
-    EventDispatcher* _eventDispatcher;
     EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
-    
-    /* The _openGLView, where everything is rendered, GLView is a abstract class,cocos2d-x provide GLViewImpl
-     which inherit from it as default renderer context,you can have your own by inherit from it*/
-    GLView *_openGLView;
 
     //texture cache belongs to this director
     TextureCache *_textureCache;
@@ -553,16 +558,9 @@ protected:
     float _animationInterval;
     float _oldAnimationInterval;
 
-    /* landscape mode ? */
-    bool _landscape;
-    
     bool _displayStats;
     float _accumDt;
     float _frameRate;
-    
-    LabelAtlas *_FPSLabel;
-    LabelAtlas *_drawnBatchesLabel;
-    LabelAtlas *_drawnVerticesLabel;
     
     /** Whether or not the Director is paused */
     bool _paused;
@@ -571,53 +569,35 @@ protected:
     unsigned int _totalFrames;
     float _secondsPerFrame;
     
-    /* The running scene */
-    Scene *_runningScene;
-    
-    /* will be the next 'runningScene' in the next frame
-     nextScene is a weak reference. */
-    Scene *_nextScene;
-    
-    /* If true, then "old" scene will receive the cleanup message */
-    bool _sendCleanupToScene;
-
-    /* scheduled scenes */
-    Vector<Scene*> _scenesStack;
-    
     /* last time the main loop was updated */
     struct timeval *_lastUpdate;
 
     /* whether or not the next delta time will be zero */
     bool _nextDeltaTimeZero;
-    
-    /* projection used */
-    Projection _projection;
 
-    /* window size in points */
-    Size _winSizeInPoints;
-    
-    /* content scale factor */
-    float _contentScaleFactor;
-
-    /* This object will be visited after the scene. Useful to hook a notification node */
-    Node *_notificationNode;
+	/* projection used */
+	DirectorWindow::Projection _defaultProjection;
 
     /* Renderer for the Director */
     Renderer *_renderer;
     
-    /* Default FrameBufferObject*/
-    experimental::FrameBuffer* _defaultFBO;
+	ContextManager _contexts;
+	
+	/** Scheduler associated with this director (global)
+     @since v2.0
+     */
+    Scheduler* _windowCreatorScheduler;
+	bool _isPendingWindowCreation;
 
     /* Console for the director */
     Console *_console;
-
-    bool _isStatusLabelUpdated;
 
     /* cocos2d thread id */
     std::thread::id _cocos2d_thread_id;
 
     // GLView will recreate stats labels to fit visible rect
     friend class GLView;
+	friend struct DirectorWindow;
 };
 
 // end of base group
@@ -643,7 +623,7 @@ public:
     //
     // Overrides
     //
-    virtual void mainLoop() override;
+    virtual bool mainLoop() override;
     virtual void setAnimationInterval(float value) override;
     virtual void startAnimation() override;
     virtual void stopAnimation() override;

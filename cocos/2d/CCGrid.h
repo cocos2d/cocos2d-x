@@ -143,7 +143,7 @@ protected:
     Grabber *_grabber;
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
-    Director::Projection _directorProjection;
+    DirectorWindow::Projection _directorProjection;
     Rect _gridRect;
 };
 

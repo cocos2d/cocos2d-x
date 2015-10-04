@@ -949,7 +949,7 @@ void __JSDownloaderDelegator::downloadAsync()
 
 void __JSDownloaderDelegator::onError()
 {
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
+    Director::getInstance()->getMainScheduler()->performFunctionInCocosThread([this]
     {
         JS::RootedValue callback(_cx, OBJECT_TO_JSVAL(_jsCallback.ref()));
         if (!callback.isNull()) {

@@ -40,7 +40,7 @@ protected:
     TestCocosNodeDemo();
     virtual ~TestCocosNodeDemo();
 
-    cocos2d::Director::Projection _preProjection;
+    cocos2d::DirectorWindow::Projection _preProjection;
 };
 
 class NodeTest2 : public TestCocosNodeDemo

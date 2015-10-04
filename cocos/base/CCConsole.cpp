@@ -214,9 +214,10 @@ void SendLogToWindow(const char *log)
     myCDS.dwData = CCLOG_STRING_TAG;
     myCDS.cbData = (DWORD)strlen(log) + 1;
     myCDS.lpData = (PVOID)log;
-    if (Director::getInstance()->getOpenGLView())
+	Director* director = Director::getInstance();
+	if (director->getNumGLViews() > 0 && director->getOpenGLView())
     {
-        HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
+		HWND hwnd = director->getOpenGLView()->getWin32Window();
         SendMessage(hwnd,
             WM_COPYDATA,
             (WPARAM)(HWND)hwnd,
@@ -339,7 +340,7 @@ Console::Console()
             if( args.compare("on")==0 || args.compare("off")==0) {
                 bool state = (args.compare("on") == 0);
                 Director *dir = Director::getInstance();
-                Scheduler *sched = dir->getScheduler();
+                Scheduler *sched = dir->getMainScheduler();
                 sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, state));
             } else {
                 mydprintf(fd, "FPS is: %s\n", Director::getInstance()->isDisplayStats() ? "on" : "off");
@@ -521,13 +522,13 @@ void Console::commandExit(int fd, const std::string &args)
 
 void Console::commandSceneGraph(int fd, const std::string &args)
 {
-    Scheduler *sched = Director::getInstance()->getScheduler();
+	Scheduler *sched = Director::getInstance()->getMainScheduler();
     sched->performFunctionInCocosThread( std::bind(&printSceneGraphBoot, fd) );
 }
 
 void Console::commandFileUtils(int fd, const std::string &args)
 {
-    Scheduler *sched = Director::getInstance()->getScheduler();
+	Scheduler *sched = Director::getInstance()->getMainScheduler();
 
     if( args.compare("flush") == 0 )
     {
@@ -545,7 +546,7 @@ void Console::commandFileUtils(int fd, const std::string &args)
 
 void Console::commandConfig(int fd, const std::string& args)
 {
-    Scheduler *sched = Director::getInstance()->getScheduler();
+	Scheduler *sched = Director::getInstance()->getMainScheduler();
     sched->performFunctionInCocosThread( [=](){
         mydprintf(fd, "%s", Configuration::getInstance()->getInfo().c_str());
         sendPrompt(fd);
@@ -586,7 +587,7 @@ void Console::commandResolution(int fd, const std::string& args)
         std::istringstream stream( args );
         stream >> width >> height>> policy;
 
-        Scheduler *sched = Director::getInstance()->getScheduler();
+		Scheduler *sched = Director::getInstance()->getMainScheduler();
         sched->performFunctionInCocosThread( [=](){
             Director::getInstance()->getOpenGLView()->setDesignResolutionSize(width, height, static_cast<ResolutionPolicy>(policy));
         } );
@@ -596,20 +597,20 @@ void Console::commandResolution(int fd, const std::string& args)
 void Console::commandProjection(int fd, const std::string& args)
 {
     auto director = Director::getInstance();
-    Scheduler *sched = director->getScheduler();
+	Scheduler *sched = director->getMainScheduler();
 
     if(args.empty())
     {
         char buf[20];
         auto proj = director->getProjection();
         switch (proj) {
-            case cocos2d::Director::Projection::_2D:
+            case cocos2d::DirectorWindow::Projection::_2D:
                 sprintf(buf,"2d");
                 break;
-            case cocos2d::Director::Projection::_3D:
+            case cocos2d::DirectorWindow::Projection::_3D:
                 sprintf(buf,"3d");
                 break;
-            case cocos2d::Director::Projection::CUSTOM:
+            case cocos2d::DirectorWindow::Projection::CUSTOM:
                 sprintf(buf,"custom");
                 break;
 
@@ -622,13 +623,13 @@ void Console::commandProjection(int fd, const std::string& args)
     else if( args.compare("2d") == 0)
     {
         sched->performFunctionInCocosThread( [=](){
-            director->setProjection(Director::Projection::_2D);
+            director->setProjection(DirectorWindow::Projection::_2D);
         } );
     }
     else if( args.compare("3d") == 0)
     {
         sched->performFunctionInCocosThread( [=](){
-            director->setProjection(Director::Projection::_3D);
+            director->setProjection(DirectorWindow::Projection::_3D);
         } );
     }
     else
@@ -639,7 +640,7 @@ void Console::commandProjection(int fd, const std::string& args)
 
 void Console::commandTextures(int fd, const std::string& args)
 {
-    Scheduler *sched = Director::getInstance()->getScheduler();
+	Scheduler *sched = Director::getInstance()->getMainScheduler();
 
     if( args.compare("flush")== 0)
     {
@@ -678,7 +679,7 @@ void Console::commandDirector(int fd, const std::string& args)
     }
     else if(args == "pause")
     {
-        Scheduler *sched = director->getScheduler();
+		Scheduler *sched = director->getMainScheduler();
             sched->performFunctionInCocosThread( [](){
             Director::getInstance()->pause();
         }
@@ -691,7 +692,7 @@ void Console::commandDirector(int fd, const std::string& args)
     }
     else if(args == "stop")
     {
-        Scheduler *sched = director->getScheduler();
+		Scheduler *sched = director->getMainScheduler();
         sched->performFunctionInCocosThread( [](){
             Director::getInstance()->stopAnimation();
         }
@@ -736,7 +737,7 @@ void Console::commandTouch(int fd, const std::string& args)
 
                 srand ((unsigned)time(nullptr));
                 _touchId = rand();
-                Scheduler *sched = Director::getInstance()->getScheduler();
+				Scheduler *sched = Director::getInstance()->getMainScheduler();
                 sched->performFunctionInCocosThread( [&](){
                     Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &x, &y);
                     Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &_touchId, &x, &y);
@@ -765,7 +766,7 @@ void Console::commandTouch(int fd, const std::string& args)
                 srand ((unsigned)time(nullptr));
                 _touchId = rand();
 
-                Scheduler *sched = Director::getInstance()->getScheduler();
+				Scheduler *sched = Director::getInstance()->getMainScheduler();
                 sched->performFunctionInCocosThread( [=](){
                     float tempx = x1, tempy = y1;
                     Director::getInstance()->getOpenGLView()->handleTouchesBegin(1, &_touchId, &tempx, &tempy);

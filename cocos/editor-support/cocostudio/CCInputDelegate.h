@@ -35,6 +35,7 @@ THE SOFTWARE.
 
 namespace cocos2d {
     class __Set;
+	class EventDispatcher;
 }
 
 namespace cocostudio {
@@ -158,6 +159,7 @@ protected:
 private:
      int _touchPriority;
     cocos2d::Touch::DispatchMode _touchMode;
+	cocos2d::EventDispatcher* _dispatcher;
 };
 
 }

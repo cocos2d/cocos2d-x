@@ -123,12 +123,12 @@ TestController::TestController()
     _touchListener->onTouchBegan = CC_CALLBACK_2(TestController::blockTouchBegan, this);
     _touchListener->setSwallowTouches(true);
 
-    _director->getEventDispatcher()->addEventListenerWithFixedPriority(_touchListener, -200);
+    _director->getMainEventDispatcher()->addEventListenerWithFixedPriority(_touchListener, -200);
 }
 
 TestController::~TestController()
 {
-    _director->getEventDispatcher()->removeEventListener(_touchListener);
+    _director->getMainEventDispatcher()->removeEventListener(_touchListener);
 
     _rootTestList->release();
     _rootTestList = nullptr;
@@ -177,7 +177,7 @@ void TestController::traverseTestList(TestList* testList)
     }
     logEx("%s%sBegin traverse TestList:%s", LOG_TAG, _logIndentation.c_str(), testList->getTestName().c_str());
 
-    auto scheduler = _director->getScheduler();
+    auto scheduler = _director->getMainScheduler();
     int testIndex = 0;
     for (auto& callback : testList->_testCallbacks)
     {
@@ -229,7 +229,7 @@ void TestController::traverseTestList(TestList* testList)
 
 void TestController::traverseTestSuite(TestSuite* testSuite)
 {
-    auto scheduler = _director->getScheduler();
+    auto scheduler = _director->getMainScheduler();
     int testIndex = 0;
     float testCaseDuration = 0.0f;
     _logIndentation += LOG_INDENTATION;

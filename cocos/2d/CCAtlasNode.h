@@ -115,7 +115,7 @@ protected:
     void updateBlendFunc();
     void updateOpacityModifyRGB();
 
-    friend class Director;
+    friend struct DirectorWindow;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
     /** Chars per row. */

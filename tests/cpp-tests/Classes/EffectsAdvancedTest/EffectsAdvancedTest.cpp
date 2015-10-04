@@ -184,7 +184,7 @@ void Effect4::onEnter()
     this->addChild(pTarget);
     //gridNode->addChild(pTarget);
 
-    director->getActionManager()->addAction(seq, pTarget, false);
+    director->getMainActionManager()->addAction(seq, pTarget, false);
     
     _bgNode->runAction( lens );
 }
@@ -228,7 +228,7 @@ void Effect5::onExit()
 {
     EffectAdvanceBaseTest::onExit();
 
-    Director::getInstance()->setProjection(Director::Projection::_3D);
+    Director::getInstance()->setProjection(DirectorWindow::Projection::_3D);
 }
 
 //------------------------------------------------------------------

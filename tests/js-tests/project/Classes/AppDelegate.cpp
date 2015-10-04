@@ -84,86 +84,89 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
         glview = cocos2d::GLViewImpl::createWithRect("js-tests", Rect(0,0,900,640));
 #endif
-        director->setOpenGLView(glview);
     }
 
-    // set FPS. the default value is 1.0/60 if you don't call this
-    director->setAnimationInterval(1.0 / 60);
 
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    sc->addRegisterCallback(register_all_cocos2dx);
-    sc->addRegisterCallback(register_cocos2dx_js_core);
-    sc->addRegisterCallback(jsb_register_system);
-    
-    sc->addRegisterCallback(register_all_cocos2dx_extension);
-    sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
+	director->createWithNewScene(glview, [this, director, glview]()
+	{
+		// set FPS. the default value is 1.0/60 if you don't call this
+		director->setAnimationInterval(1.0 / 60);
 
-    sc->addRegisterCallback(jsb_register_chipmunk);
-    sc->addRegisterCallback(JSB_register_opengl);
-    
-    sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
-    sc->addRegisterCallback(register_jsb_websocket);
-	sc->addRegisterCallback(register_jsb_socketio);
+		ScriptingCore* sc = ScriptingCore::getInstance();
+		sc->addRegisterCallback(register_all_cocos2dx);
+		sc->addRegisterCallback(register_cocos2dx_js_core);
+		sc->addRegisterCallback(jsb_register_system);
 
-    sc->addRegisterCallback(register_all_cocos2dx_builder);
-    sc->addRegisterCallback(register_CCBuilderReader);
+		sc->addRegisterCallback(register_all_cocos2dx_extension);
+		sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
 
-    sc->addRegisterCallback(register_all_cocos2dx_ui);
-    sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-    sc->addRegisterCallback(register_all_cocos2dx_studio);
-    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
-    
-    sc->addRegisterCallback(register_all_cocos2dx_spine);
-    sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+		sc->addRegisterCallback(jsb_register_chipmunk);
+		sc->addRegisterCallback(JSB_register_opengl);
 
-    sc->addRegisterCallback(register_all_cocos2dx_3d);
-    sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
-    
-    sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
+		sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
+		sc->addRegisterCallback(register_jsb_websocket);
+		sc->addRegisterCallback(register_jsb_socketio);
+
+		sc->addRegisterCallback(register_all_cocos2dx_builder);
+		sc->addRegisterCallback(register_CCBuilderReader);
+
+		sc->addRegisterCallback(register_all_cocos2dx_ui);
+		sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
+		sc->addRegisterCallback(register_all_cocos2dx_studio);
+		sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
+
+		sc->addRegisterCallback(register_all_cocos2dx_spine);
+		sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
+
+		sc->addRegisterCallback(register_all_cocos2dx_3d);
+		sc->addRegisterCallback(register_all_cocos2dx_3d_manual);
+
+		sc->addRegisterCallback(register_all_cocos2dx_3d_extension);
 
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    sc->addRegisterCallback(register_all_cocos2dx_physics3d);
-    sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
+		sc->addRegisterCallback(register_all_cocos2dx_physics3d);
+		sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
 #endif
-    
+
 #if CC_USE_NAVMESH
-	sc->addRegisterCallback(register_all_cocos2dx_navmesh);
-	sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
+		sc->addRegisterCallback(register_all_cocos2dx_navmesh);
+		sc->addRegisterCallback(register_all_cocos2dx_navmesh_manual);
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
+		sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
+		sc->addRegisterCallback(JavaScriptObjCBridge::_js_register);
 #endif
 
-    sc->addRegisterCallback(register_DrawNode3D_bindings);
-    sc->addRegisterCallback(register_Effect3D_bindings);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
-#endif
+		sc->addRegisterCallback(register_DrawNode3D_bindings);
+		sc->addRegisterCallback(register_Effect3D_bindings);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
-    sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+		sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+		sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
 #endif
-    
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+		sc->addRegisterCallback(register_all_cocos2dx_experimental_video);
+		sc->addRegisterCallback(register_all_cocos2dx_experimental_video_manual);
+#endif
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    sc->addRegisterCallback(register_all_cocos2dx_audioengine);
+		sc->addRegisterCallback(register_all_cocos2dx_audioengine);
 #endif
 
-    sc->start();
-    sc->runScript("script/jsb_boot.js");
+		sc->start();
+		sc->runScript("script/jsb_boot.js");
 #if defined(COCOS2D_DEBUG) && (COCOS2D_DEBUG > 0)
-    sc->enableDebugger();
+		sc->enableDebugger();
 #endif
-    
-    auto pEngine = ScriptingCore::getInstance();
-    ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-    
-    ScriptingCore::getInstance()->runScript("main.js");
+
+		auto pEngine = ScriptingCore::getInstance();
+		ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
+
+		ScriptingCore::getInstance()->runScript("main.js");
+	});
     
     return true;
 }
@@ -173,7 +176,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     auto director = Director::getInstance();
     director->stopAnimation();
-    director->getEventDispatcher()->dispatchCustomEvent("game_on_hide");
+    director->getMainEventDispatcher()->dispatchCustomEvent("game_on_hide");
     SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
     SimpleAudioEngine::getInstance()->pauseAllEffects();    
 }
@@ -183,7 +186,7 @@ void AppDelegate::applicationWillEnterForeground()
 {
     auto director = Director::getInstance();
     director->startAnimation();
-    director->getEventDispatcher()->dispatchCustomEvent("game_on_show");
+    director->getMainEventDispatcher()->dispatchCustomEvent("game_on_show");
     SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
     SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

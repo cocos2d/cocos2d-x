@@ -73,7 +73,7 @@ AssetsManagerEx::AssetsManagerEx(const std::string& manifestUrl, const std::stri
 , _inited(false)
 {
     // Init variables
-    _eventDispatcher = Director::getInstance()->getEventDispatcher();
+    _eventDispatcher = Director::getInstance()->getMainEventDispatcher();
     std::string pointer = StringUtils::format("%p", this);
     _eventName = EventListenerAssetsManagerEx::LISTENER_ID + pointer;
     _fileUtils = FileUtils::getInstance();
@@ -684,7 +684,7 @@ void AssetsManagerEx::updateSucceed()
             }
             _fileUtils->removeFile(zipFile);
         }
-    });
+	}, Director::getInstance()->getMainScheduler());
 }
 
 void AssetsManagerEx::checkUpdate()
@@ -994,3 +994,4 @@ void AssetsManagerEx::batchDownload()
 }
 
 NS_CC_EXT_END
+

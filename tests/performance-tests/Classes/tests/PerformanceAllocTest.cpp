@@ -170,7 +170,7 @@ void PerformceAllocScene::onExitTransitionDidStart()
     Scene::onExitTransitionDidStart();
     
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
 
     sched->unschedule(CC_SCHEDULE_SELECTOR(PerformceAllocScene::dumpProfilerInfo), this);
 }
@@ -180,7 +180,7 @@ void PerformceAllocScene::onEnterTransitionDidFinish()
     Scene::onEnterTransitionDidFinish();
 
     auto director = Director::getInstance();
-    auto sched = director->getScheduler();
+    auto sched = director->getMainScheduler();
 
     if (this->isAutoTesting()) {
         // Update the quantity of nodes if is auto testing.

@@ -113,7 +113,11 @@ public:
     void setStartupScriptFilename(const std::string& startupScriptFile);
     
     const std::string& getStartupScriptFilename(void);
-    
+	
+	int pyrRenderBegin();
+	int pyrRender();
+	void pyrRenderEnd();
+
 protected:
     static Application * sm_pSharedApplication;
     

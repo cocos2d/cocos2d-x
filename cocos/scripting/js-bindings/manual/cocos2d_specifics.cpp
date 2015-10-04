@@ -89,7 +89,7 @@ void JSTouchDelegate::setJSObject(JSObject *obj)
 
 void JSTouchDelegate::registerStandardDelegate(int priority)
 {
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
     dispatcher->removeEventListener(_touchListenerAllAtOnce);
     
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -106,7 +106,7 @@ void JSTouchDelegate::registerStandardDelegate(int priority)
 
 void JSTouchDelegate::registerTargetedDelegate(int priority, bool swallowsTouches)
 {
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
     dispatcher->removeEventListener(_touchListenerOneByOne);
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -129,7 +129,7 @@ void JSTouchDelegate::unregisterTouchDelegate()
         JS::RemoveObjectRoot(cx, &_obj);
     }
     
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
     dispatcher->removeEventListener(_touchListenerAllAtOnce);
     dispatcher->removeEventListener(_touchListenerOneByOne);
     

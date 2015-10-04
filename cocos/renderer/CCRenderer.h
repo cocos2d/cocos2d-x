@@ -85,7 +85,7 @@ public:
     /**Clear all rendered commands.*/
     void clear();
     /**Realloc command queues and reserve with given size. Note: this clears any existing commands.*/
-    void realloc(size_t reserveSize);
+    void reallocRenderQueue(size_t reserveSize);
     /**Get a sub group of the render queue.*/
     inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**Get the number of render commands contained in a subqueue.*/

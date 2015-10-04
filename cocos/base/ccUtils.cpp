@@ -135,7 +135,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
             {
                 succeedSaveToFile = image->saveToFile(outputFile);
                 delete image;
-            });
+            }, Director::getInstance()->getCurrentWindowScheduler()); // or should it run on the main context?
         }
         else
         {
@@ -152,6 +152,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
 /*
  * Capture screen interface
  */
+//presumably called from the main thread.  If not, grabbing the event dispatcher and the use of the weak ref is not thread safe.
 static EventListenerCustom* s_captureScreenListener;
 static CustomCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
@@ -163,9 +164,19 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
     s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom *event) {
+	
+	EventDispatcher* dispatcher = Director::getInstance()->getCurrentWindowEventDispatcher();
+	if(dispatcher == nullptr)
+	{
+		CCASSERT(false, "event dispatcher is null.  unable to capture screen");
+		return;
+	}
+	dispatcher->retain();
+
+    s_captureScreenListener = dispatcher->addCustomEventListener(Director::EVENT_AFTER_DRAW, [dispatcher](EventCustom *event) {
         auto director = Director::getInstance();
-        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+        dispatcher->removeEventListener((EventListener*)(s_captureScreenListener));
+		dispatcher->release();
         s_captureScreenListener = nullptr;
         director->getRenderer()->addCommand(&s_captureScreenCommand);
         director->getRenderer()->render();

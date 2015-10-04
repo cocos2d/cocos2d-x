@@ -196,6 +196,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCSAXParser.h"
 #include "platform/CCThread.h"
+#include "platform/CCWindowKey.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication-ios.h"
@@ -300,7 +301,6 @@ THE SOFTWARE.
 #include "3d/CCSprite3D.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCTerrain.h"
-
 
 // Deprecated include
 #include "deprecated/CCArray.h"

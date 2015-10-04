@@ -181,7 +181,7 @@ void GridBase::setActive(bool active)
     if (! active)
     {
         Director *pDirector = Director::getInstance();
-        Director::Projection proj = pDirector->getProjection();
+        DirectorWindow::Projection proj = pDirector->getProjection();
         pDirector->setProjection(proj);
     }
 }
@@ -223,7 +223,7 @@ void GridBase::beforeDraw(void)
     _directorProjection = director->getProjection();
 
     // 2d projection
-    //    [director setProjection:Director::Projection::_2D];
+    //    [director setProjection:DirectorWindow::Projection::_2D];
     set2DProjection();
     
     Size    size = director->getWinSizeInPixels();
@@ -240,7 +240,7 @@ void GridBase::afterDraw(cocos2d::Node *target)
     director->setProjection(_directorProjection);
 
     director->setViewport();
-    const auto& vp = Camera::getDefaultViewport();
+    const auto& vp = Director::getInstance()->getDefaultViewport();
     glViewport(vp._left, vp._bottom, vp._width, vp._height);
 //    if (target->getCamera()->isDirty())
 //    {

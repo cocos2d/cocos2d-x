@@ -25,7 +25,7 @@ bool Box2DTest::init()
         return false;
     }
 #if CC_ENABLE_BOX2D_INTEGRATION
-    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    auto dispatcher = Director::getInstance()->getMainEventDispatcher();
 
     auto touchListener = EventListenerTouchAllAtOnce::create();
     touchListener->onTouchesEnded = CC_CALLBACK_2(Box2DTest::onTouchesEnded, this);

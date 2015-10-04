@@ -312,16 +312,11 @@ protected:
     int8_t  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller depth
     static Camera* _visitingCamera;
     
-    CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground
-    
+	CameraBackgroundBrush* _clearBrush; //brush used to clear the back ground
+
     experimental::Viewport _viewport;
     
     experimental::FrameBuffer* _fbo;
-protected:
-    static experimental::Viewport _defaultViewport;
-public:
-    static const experimental::Viewport& getDefaultViewport() { return _defaultViewport; }
-    static void setDefaultViewport(const experimental::Viewport& vp) { _defaultViewport = vp; }
 };
 
 NS_CC_END
