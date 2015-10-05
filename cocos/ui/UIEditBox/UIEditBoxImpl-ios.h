@@ -78,7 +78,7 @@ public:
     //need to remove siri text
     virtual const char* getText(void)override;
 
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance);
+    virtual void doAnimationWhenKeyboardMove(float duration, float distance) override;
 private:
     UIFont*         constructFont(const char* fontName, int fontSize);
     void			adjustTextFieldPosition();

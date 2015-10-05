@@ -28,6 +28,7 @@ THE SOFTWARE.
 #pragma once
 
 #include <agile.h>
+#include "InputEvent.h"
 
 NS_CC_BEGIN
 

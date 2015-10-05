@@ -16,6 +16,7 @@ require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
 require "CocoStudioTest/CocoStudioTest"
+require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
@@ -97,7 +98,8 @@ local _allTests = {
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "CocosStudio3DTest"      , create_func   =               CocosStudio3DTest},
-    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
+    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },
+    { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },

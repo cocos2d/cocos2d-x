@@ -35,6 +35,7 @@ using namespace Windows::Foundation;
 #include <algorithm>
 #include "platform/CCFileUtils.h"
 #include "CCWinRTUtils.h"
+#include "platform/CCApplication.h"
 
 /**
 @brief    This function change the PVRFrame show/hide setting in register.

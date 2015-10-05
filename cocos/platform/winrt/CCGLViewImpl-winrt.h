@@ -28,16 +28,15 @@ THE SOFTWARE.
 
 #include "CCStdC.h"
 #include "platform/CCCommon.h"
+#include "Keyboard-winrt.h"
 #include "platform/CCGLView.h"
-#include "InputEvent.h"
-
+#include "base/CCEventKeyboard.h"
 
 #include <agile.h>
 #include <concurrent_queue.h>
 #include <string>
 #include <memory>
 #include <wrl/client.h>
-#include <Keyboard-winrt.h>
 
 NS_CC_BEGIN
 
