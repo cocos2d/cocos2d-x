@@ -74,6 +74,10 @@ public:
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
+    
+    static void setDefaultFontDPI(int dpi);
+    static int getDefaultFontFPI();
+    
 private:
     static const char* _glyphASCII;
     static const char* _glyphNEHE;
@@ -106,6 +110,8 @@ private:
 
     GlyphCollection _usedGlyphs;
     std::string _customGlyphs;
+    
+    static int _defaultFontDPI;
 };
 
 /// @endcond

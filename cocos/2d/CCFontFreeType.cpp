@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
+#include "platform/CCDevice.h"
 
 NS_CC_BEGIN
 
@@ -37,6 +38,8 @@ NS_CC_BEGIN
 FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
+
+int FontFreeType::_defaultFontDPI;
 
 const char* FontFreeType::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
 const char* FontFreeType::_glyphNEHE = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
@@ -167,7 +170,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     }
 
     // set the requested font size
-    int dpi = 72;
+    int dpi = _defaultFontDPI;
     int fontSizePoints = (int)(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
     if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
         return false;
@@ -632,6 +635,16 @@ const char* FontFreeType::getGlyphCollection() const
     }
 
     return glyphCollection;
+}
+
+void FontFreeType::setDefaultFontDPI(int dpi)
+{
+    FontFreeType::_defaultFontDPI = dpi;
+}
+
+int FontFreeType::getDefaultFontFPI()
+{
+    return FontFreeType::_defaultFontDPI;
 }
 
 NS_CC_END
