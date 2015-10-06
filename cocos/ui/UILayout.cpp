@@ -710,6 +710,11 @@ void Layout::setBackGroundImageScale9Enabled(bool able)
         setBackGroundImage(_backGroundImageFileName,_bgImageTexType);
     }
     _backGroundImage->setScale9Enabled(_backGroundScale9Enabled);
+    
+    if (able) {
+        _backGroundImage->setPreferredSize(_contentSize);
+    }
+    
     setBackGroundImageCapInsets(_backGroundImageCapInsets);
 }
     
