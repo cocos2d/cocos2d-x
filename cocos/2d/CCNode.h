@@ -948,7 +948,7 @@ public:
      * 
      * @since v3.2
      */
-    virtual std::string getName() const;
+    virtual const std::string& getName() const;
     /** Changes the name that is used to identify the node easily.
      * @param name A string that identifies the node.
      *
