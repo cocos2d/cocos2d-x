@@ -27,6 +27,7 @@
 #include "CCComponentJS.h"
 #include "base/CCScriptSupport.h"
 #include "ScriptingCore.h"
+#include "cocos2d_specifics.hpp"
 #include "js_manual_conversions.h"
 
 NS_CC_BEGIN
