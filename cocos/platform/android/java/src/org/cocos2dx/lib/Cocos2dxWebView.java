@@ -57,9 +57,8 @@ public class Cocos2dxWebView extends WebView {
 
     class Cocos2dxWebViewClient extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String urlString) {
+        public boolean shouldOverrideUrlLoading(WebView view, final String urlString) {
             Cocos2dxActivity activity = (Cocos2dxActivity)getContext();
-            final String finalizedUrlString = urlString;
 
             try {
                 URI uri = URI.create(urlString);
@@ -67,7 +66,7 @@ public class Cocos2dxWebView extends WebView {
                     activity.runOnGLThread(new Runnable() {
                         @Override
                         public void run() {
-                            Cocos2dxWebViewHelper._onJsCallback(mViewTag, finalizedUrlString);
+                            Cocos2dxWebViewHelper._onJsCallback(mViewTag, urlString);
                         }
                     });
                     return true;
@@ -76,31 +75,29 @@ public class Cocos2dxWebView extends WebView {
                 Log.d(TAG, "Failed to create URI from url");
             }
 
-            return Cocos2dxWebViewHelper._shouldStartLoading(mViewTag, finalizedUrlString);
+            return Cocos2dxWebViewHelper._shouldStartLoading(mViewTag, urlString);
         }
 
         @Override
-        public void onPageFinished(WebView view, String url) {
+        public void onPageFinished(WebView view, final String url) {
             super.onPageFinished(view, url);
             Cocos2dxActivity activity = (Cocos2dxActivity)getContext();
-            final String finalizedUrl = url;
             activity.runOnGLThread(new Runnable() {
                 @Override
                 public void run() {
-                    Cocos2dxWebViewHelper._didFinishLoading(mViewTag, finalizedUrl);
+                    Cocos2dxWebViewHelper._didFinishLoading(mViewTag, url);
                 }
             });
         }
 
         @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        public void onReceivedError(WebView view, int errorCode, String description, final String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             Cocos2dxActivity activity = (Cocos2dxActivity)getContext();
-            final String finalizedUrl = failingUrl;
             activity.runOnGLThread(new Runnable() {
                 @Override
                 public void run() {
-                    Cocos2dxWebViewHelper._didFailLoading(mViewTag, finalizedUrl);
+                    Cocos2dxWebViewHelper._didFailLoading(mViewTag, failingUrl);
                 }
             });
         }
