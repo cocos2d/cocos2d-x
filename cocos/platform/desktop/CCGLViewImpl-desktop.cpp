@@ -615,7 +615,7 @@ Rect GLViewImpl::getScissorRect() const
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
     _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
-    CCLOGERROR(_glfwError.c_str());
+    CCLOGERROR("%s", _glfwError.c_str());
 }
 
 void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
