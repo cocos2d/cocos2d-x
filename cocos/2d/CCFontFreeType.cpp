@@ -39,7 +39,7 @@ FT_Library FontFreeType::_FTlibrary;
 bool       FontFreeType::_FTInitialized = false;
 const int  FontFreeType::DistanceMapSpread = 3;
 
-int FontFreeType::_defaultFontDPI;
+int FontFreeType::_defaultFontDPI = 72;
 
 const char* FontFreeType::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
 const char* FontFreeType::_glyphNEHE = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
