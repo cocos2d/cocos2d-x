@@ -251,7 +251,7 @@ const char* CCTextureCache::getPixelFormatStr(const char* path) {
 	std::map<std::string, std::string>::iterator it = m_pTexturesPixelFormatDir.begin();
 	for (std::map<std::string, std::string>::iterator itEnd = m_pTexturesPixelFormatDir.end(); it != itEnd; ++it)
 	{
-		if (pathStr.find(it->first) != it->first.npos)
+		if (pathStr.find(it->first) != std::string::npos)
 		{
 			return it->second.c_str();
 		}
@@ -260,7 +260,7 @@ const char* CCTextureCache::getPixelFormatStr(const char* path) {
 	it = m_pTexturesPixelFormatFile.begin();
 	for (std::map<std::string, std::string>::iterator itEnd = m_pTexturesPixelFormatFile.end(); it != itEnd; ++it)
 	{
-		if (pathStr.find(it->first) != it->first.npos)
+		if (pathStr.find(it->first) != std::string::npos)
 		{
 			return it->second.c_str();
 		}
@@ -453,9 +453,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     }
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
-    std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if (! texture) 
     {
+		std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {
@@ -785,7 +785,6 @@ VolatileTexture::VolatileTexture(CCTexture2D *t)
 , m_pTextureData(NULL)
 , m_PixelFormat(kTexture2DPixelFormat_RGBA8888)
 , m_strFileName("")
-, m_bHasMipmaps(false)
 , m_FmtImage(CCImage::kFmtPng)
 , m_alignment(kCCTextAlignmentCenter)
 , m_vAlignment(kCCVerticalTextAlignmentCenter)
@@ -901,12 +900,6 @@ void VolatileTexture::setTexParameters(CCTexture2D *t, ccTexParams *texParams)
         vt->m_texParams.wrapT = texParams->wrapT;
 }
 
-void VolatileTexture::generateMipmap(CCTexture2D *t)
-{
-	VolatileTexture *vt = findVolotileTexture(t);
-	vt->m_bHasMipmaps = true;
-}
-
 void VolatileTexture::removeTexture(CCTexture2D *t) 
 {
 
@@ -998,11 +991,6 @@ void VolatileTexture::reloadAllTextures()
         default:
             break;
         }
-
-		if (vt->m_bHasMipmaps) 
-		{
-			vt->texture->generateMipmap();
-		}
         vt->texture->setTexParameters(&vt->m_texParams);
     }
 

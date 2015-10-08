@@ -221,7 +221,7 @@ public:
                                  CCVerticalTextAlignment vAlignment, const char *fontName, float fontSize);
     static void addDataTexture(CCTexture2D *tt, void* data, CCTexture2DPixelFormat pixelFormat, const CCSize& contentSize);
     static void addCCImage(CCTexture2D *tt, CCImage *image);
-	static void generateMipmap(CCTexture2D *t);
+
     static void setTexParameters(CCTexture2D *t, ccTexParams *texParams);
     static void removeTexture(CCTexture2D *t);
     static void reloadAllTextures();
@@ -248,7 +248,7 @@ protected:
 
     std::string m_strFileName;
     CCImage::EImageFormat m_FmtImage;
-	bool			m_bHasMipmaps;
+
     ccTexParams     m_texParams;
     CCSize          m_size;
     CCTextAlignment m_alignment;
