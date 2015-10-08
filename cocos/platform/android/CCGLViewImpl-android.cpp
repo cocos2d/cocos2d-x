@@ -124,6 +124,11 @@ void GLViewImpl::setIMEKeyboardState(bool bOpen)
     setKeyboardStateJNI((int)bOpen);
 }
 
+void GLViewImpl::setIMEKeyboardInputMode(KeyboardInputMode mode)
+{
+    setKeyboardInputModeJNI((int)mode);
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

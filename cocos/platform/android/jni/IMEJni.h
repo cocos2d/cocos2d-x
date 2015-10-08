@@ -29,6 +29,7 @@ extern "C" {
     extern void setKeyboardStateJNI(int open);
     extern void openKeyboardJNI();
     extern void closeKeyboardJNI();
+    extern void setKeyboardInputModeJNI(int mode);
 }
 
 #endif // __ANDROID_IME_JNI_H__
