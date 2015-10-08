@@ -5714,7 +5714,7 @@ int lua_cocos2dx_Node_getName(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_getName'", nullptr);
             return 0;
         }
-        std::string ret = cobj->getName();
+        const std::string& ret = cobj->getName();
         tolua_pushcppstring(tolua_S,ret);
         return 1;
     }
