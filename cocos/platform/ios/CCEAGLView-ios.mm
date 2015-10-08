@@ -541,6 +541,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize markedTextStyle;
 // @synthesize selectedTextRange;       // must implement
 @synthesize tokenizer;
+@synthesize keyboardType;
 
 /* Text may have a selection, either zero-length (a caret) or ranged.  Editing operations are
  * always performed on the text from this selection.  nil corresponds to no selection. */

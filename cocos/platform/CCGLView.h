@@ -84,6 +84,45 @@ struct GLContextAttrs
     int stencilBits;
 };
 
+enum class KeyboardInputMode
+{
+    /**
+     * The user is allowed to enter any text, including line breaks.
+     */
+    ANY,
+    
+    /**
+     * The user is allowed to enter an e-mail address.
+     */
+    EMAIL_ADDRESS,
+    
+    /**
+     * The user is allowed to enter an integer value.
+     */
+    NUMERIC,
+    
+    /**
+     * The user is allowed to enter a phone number.
+     */
+    PHONE_NUMBER,
+    
+    /**
+     * The user is allowed to enter a URL.
+     */
+    URL,
+    
+    /**
+     * The user is allowed to enter a real number value.
+     * This extends kEditBoxInputModeNumeric by allowing a decimal point.
+     */
+    DECIMAL,
+    
+    /**
+     * The user is allowed to enter any text, except for line breaks.
+     */
+    SINGLE_LINE,
+};
+
 NS_CC_BEGIN
 
 /**
@@ -120,6 +159,8 @@ public:
      * @param open Open or close IME keyboard.
      */
     virtual void setIMEKeyboardState(bool open) = 0;
+    
+    virtual void setIMEKeyboardInputMode(KeyboardInputMode mode) = 0;
     
     /** When the window is closed, it will return false if the platforms is Ios or Android.
      * If the platforms is windows or Mac,it will return true.

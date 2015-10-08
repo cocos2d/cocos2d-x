@@ -512,6 +512,11 @@ void GLViewImpl::setIMEKeyboardState(bool /*bOpen*/)
 
 }
 
+void GLViewImpl::setIMEKeyboardInputMode(KeyboardInputMode mode)
+{
+    
+}
+
 void GLViewImpl::setCursorVisible( bool isVisible )
 {
     if( _mainWindow == NULL )

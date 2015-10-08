@@ -225,6 +225,35 @@ void GLViewImpl::setIMEKeyboardState(bool open)
     }
 }
 
+void GLViewImpl::setIMEKeyboardInputMode(KeyboardInputMode mode)
+{
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
+    switch (mode)
+    {
+        case KeyboardInputMode::EMAIL_ADDRESS:
+            eaglview.keyboardType = UIKeyboardTypeEmailAddress;
+            break;
+        case KeyboardInputMode::NUMERIC:
+            eaglview.keyboardType = UIKeyboardTypeDecimalPad;
+            break;
+        case KeyboardInputMode::PHONE_NUMBER:
+            eaglview.keyboardType = UIKeyboardTypePhonePad;
+            break;
+        case KeyboardInputMode::URL:
+            eaglview.keyboardType = UIKeyboardTypeURL;
+            break;
+        case KeyboardInputMode::DECIMAL:
+            eaglview.keyboardType = UIKeyboardTypeDecimalPad;
+            break;
+        case KeyboardInputMode::SINGLE_LINE:
+            eaglview.keyboardType = UIKeyboardTypeDefault;
+            break;
+        default:
+            eaglview.keyboardType = UIKeyboardTypeDefault;
+            break;
+    }
+}
+
 NS_CC_END
 
 #endif // CC_PLATFOR_IOS
