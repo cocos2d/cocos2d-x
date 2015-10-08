@@ -153,7 +153,7 @@ NS_CC_EXT_BEGIN
 
 float s_PositionReadScale = 1;
 
-std::vector<LoadCfgNode> CCDataReaderHelper::s_arrConfigFileList;
+std::vector<FileInfo> CCDataReaderHelper::s_arrConfigFileList;
 CCDataReaderHelper *CCDataReaderHelper::s_DataReaderHelper = NULL;
 
 enum ConfigType
@@ -191,11 +191,11 @@ typedef struct _DataInfo
     float cocoStudioVersion;
 } DataInfo;
 
-typedef struct _LoadCfgNode
+typedef struct _FileInfo
 {
 	std::string filename; 
 	bool loaded;
-} LoadCfgNode;
+} FileInfo;
 
 
 static pthread_t s_loadingThread;
@@ -383,10 +383,10 @@ void CCDataReaderHelper::addDataFromFile(const char *filePath)
     }
 
 	std::string basefilePath = filePath;
-	LoadCfgNode node;
-	node.filename = basefilePath;
-	node.loaded = true;
-	s_arrConfigFileList.push_back(node);
+	FileInfo loadFileInfo;
+	loadFileInfo.filename = basefilePath;
+	loadFileInfo.loaded = true;
+	s_arrConfigFileList.push_back(loadFileInfo);
 
     //! find the base file path
     size_t pos = basefilePath.find_last_of("/");
@@ -470,10 +470,10 @@ void CCDataReaderHelper::addDataFromFileAsync(const char *imagePath, const char 
     }
 
 	std::string basefilePath = filePath;
-	LoadCfgNode node;
-	node.filename = basefilePath;
-	node.loaded = false;
-	s_arrConfigFileList.push_back(node);
+	FileInfo loadFileInfo;
+	loadFileInfo.filename = basefilePath;
+	loadFileInfo.loaded = false;
+	s_arrConfigFileList.push_back(loadFileInfo);
 
     //! find the base file path
     size_t pos = basefilePath.find_last_of("/");
@@ -633,8 +633,8 @@ void CCDataReaderHelper::addDataAsyncCallBack(float dt)
 
 void CCDataReaderHelper::removeConfigFile(const char *configFile)
 {
-    std::vector<LoadCfgNode>::iterator it = s_arrConfigFileList.end();
-	for (std::vector<LoadCfgNode>::iterator i = s_arrConfigFileList.begin(); i != s_arrConfigFileList.end(); i++)
+    std::vector<FileInfo>::iterator it = s_arrConfigFileList.end();
+	for (std::vector<FileInfo>::iterator i = s_arrConfigFileList.begin(); i != s_arrConfigFileList.end(); i++)
     {
         if (i->filename.compare(configFile) == 0)
         {

@@ -41,7 +41,7 @@ namespace tinyxml2
 NS_CC_EXT_BEGIN
 
 typedef struct _DataInfo DataInfo;
-typedef struct _LoadCfgNode  LoadCfgNode;
+typedef struct _FileInfo FileInfo;
 
 /**
 *   @js NA
@@ -145,7 +145,7 @@ public:
     static void decodeNode(CCBaseData *node, CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, DataInfo *dataInfo);
 
 private:
-	static std::vector<LoadCfgNode> s_arrConfigFileList;
+	static std::vector<FileInfo> s_arrConfigFileList;
 
     static CCDataReaderHelper *s_DataReaderHelper;
 };
