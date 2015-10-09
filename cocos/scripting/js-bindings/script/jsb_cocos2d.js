@@ -2638,6 +2638,8 @@ cc.LabelTTF.prototype.enableShadow = function (shadowColor, offset, blurRadius) 
     this._enableShadow(offset, opacity, blurRadius);
 }
 
+cc.LabelTTF.prototype.setDrawMode = function () {};
+
 
 //
 // Label adaptation to LabelTTF/LabelBMFont/LabelAtlas
