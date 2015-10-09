@@ -56,6 +56,7 @@ AudioPlayer::AudioPlayer(const AudioPlayer& player)
     _finishCallbak = player._finishCallbak;
     _ready = player._ready;
     _audioCache = player._audioCache;
+    _readForRemove = player._readForRemove;
 }
 
 AudioPlayer::~AudioPlayer()
