@@ -593,40 +593,39 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
     
     float realOffsetX = touchOffsetX;
     float realOffsetY = touchOffsetY;
+
+    if(!_bounceEnabled)
+    {
+        Vec2 outOfBoundary = getHowMuchOutOfBoundary(Vec2(realOffsetX, realOffsetY));
+        realOffsetX += outOfBoundary.x;
+        realOffsetY += outOfBoundary.y;
+    }
     
     bool scrolledToLeft = false;
     bool scrolledToRight = false;
     bool scrolledToTop = false;
     bool scrolledToBottom = false;
-    if (touchOffsetY > 0.0f) // up
+    if (realOffsetY > 0.0f) // up
     {
         float icBottomPos = _innerContainer->getBottomBoundary();
-        if (icBottomPos + touchOffsetY >= _bottomBoundary)
+        if (icBottomPos + realOffsetY >= _bottomBoundary)
         {
-            if(!_bounceEnabled)
-            {
-                realOffsetY = _bottomBoundary - icBottomPos;
-            }
             scrolledToBottom = true;
         }
     }
-    else if (touchOffsetY < 0.0f) // down
+    else if (realOffsetY < 0.0f) // down
     {
         float icTopPos = _innerContainer->getTopBoundary();
-        if (icTopPos + touchOffsetY <= _topBoundary)
+        if (icTopPos + realOffsetY <= _topBoundary)
         {
-            if(!_bounceEnabled)
-            {
-                realOffsetY = _topBoundary - icTopPos;
-            }
             scrolledToTop = true;
         }
     }
     
-    if (touchOffsetX < 0.0f) // left
+    if (realOffsetX < 0.0f) // left
     {
         float icRightPos = _innerContainer->getRightBoundary();
-        if (icRightPos + touchOffsetX <= _rightBoundary)
+        if (icRightPos + realOffsetX <= _rightBoundary)
         {
             if(!_bounceEnabled)
             {
@@ -635,10 +634,10 @@ bool ScrollView::scrollChildren(float touchOffsetX, float touchOffsetY)
             scrolledToRight = true;
         }
     }
-    else if (touchOffsetX > 0.0f) // right
+    else if (realOffsetX > 0.0f) // right
     {
         float icLeftPos = _innerContainer->getLeftBoundary();
-        if (icLeftPos + touchOffsetX >= _leftBoundary)
+        if (icLeftPos + realOffsetX >= _leftBoundary)
         {
             if(!_bounceEnabled)
             {
