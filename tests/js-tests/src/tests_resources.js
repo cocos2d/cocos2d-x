@@ -323,7 +323,6 @@ var g_touches = [
 var g_s9s_blocks = [
     s_s9s_blocks9_plist,
     s_s9s_blocks9,
-    s_blocks9,
     s_s9s_ui,
     s_s9s_ui_plist
 ];
