@@ -62,6 +62,9 @@ var TestScene = cc.Scene.extend({
         }
     },
     onMainMenuCallback:function () {
+        if (director.isPaused()) {
+            director.resume();
+        } 
         var scene = new cc.Scene();
         var layer = new TestController();
         scene.addChild(layer);
