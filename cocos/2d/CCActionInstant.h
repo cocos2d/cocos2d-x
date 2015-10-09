@@ -324,7 +324,7 @@ public:
      * In js: var create(var func, var this, var [data]) or var create(var func).
      * In lua:local create(local funcID).
      *
-     * @param func  A callback function need to be excuted.
+     * @param func  A callback function need to be executed.
      * @return  An autoreleased CallFunc object.
      */
     static CallFunc * create(const std::function<void()>& func);
@@ -474,7 +474,7 @@ public:
     /** Creates the action with the callback and the data to pass as an argument.
      *
      * @param target    A certain target.
-     * @param selector  The callback need to be excuted.
+     * @param selector  The callback need to be executed.
      * @param d Data, is void* type.
      * @return An autoreleased __CCCallFuncND object.
      */

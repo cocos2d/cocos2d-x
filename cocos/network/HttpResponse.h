@@ -104,7 +104,7 @@ public:
      * To see if the http reqeust is returned successfully.
      * Althrough users can judge if (http response code = 200), we want an easier way.
      * If this getter returns false, you can call getResponseCode and getErrorBuffer to find more details.
-     * @return bool the flag that represent whether the http request return sucesssfully or not.
+     * @return bool the flag that represent whether the http request return successfully or not.
      */
     inline bool isSucceed()
     {
@@ -130,7 +130,7 @@ public:
     }
 
     /** 
-     * Get the http response code to judge whether response is sucessful or not.
+     * Get the http response code to judge whether response is successful or not.
      * I know that you want to see the _responseCode is 200.
      * If _responseCode is not 200, you should check the meaning for _responseCode by the net.
      * @return long the value of _responseCode

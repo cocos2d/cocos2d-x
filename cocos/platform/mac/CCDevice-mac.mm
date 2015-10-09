@@ -202,7 +202,7 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
         
         [image lockFocus];
         
-        // patch for mac retina display and lableTTF
+        // patch for mac retina display and labelTTF
         [[NSAffineTransform transform] set];
         
         //[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, offsetY)]; // draw at offset position

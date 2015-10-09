@@ -281,7 +281,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
         glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
         
-        // Diabled by default.
+        // Disabled by default.
         _autoDraw = false;
         
         // add sprite for backward compatibility

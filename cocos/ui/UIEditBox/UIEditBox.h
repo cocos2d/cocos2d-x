@@ -455,7 +455,7 @@ namespace ui {
          */
         virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
             
-        /* callback funtions
+        /* callback functions
          * @js NA
          * @lua NA
          */

@@ -1133,10 +1133,10 @@ namespace ui {
         this->_insetBottom = _originalSize.height - _insetTop - capInsets.size.height;
     }
 
-    void Scale9Sprite::setPreferredSize(const Size& preferedSize)
+    void Scale9Sprite::setPreferredSize(const Size& preferredSize)
     {
-        this->setContentSize(preferedSize);
-        this->_preferredSize = preferedSize;
+        this->setContentSize(preferredSize);
+        this->_preferredSize = preferredSize;
     }
 
 
@@ -1196,7 +1196,7 @@ namespace ui {
         // To ease the migration to v3.0, we still support the Mat4 stack,
         // but it is deprecated and your code should not rely on it
         Director* director = Director::getInstance();
-        CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+        CCASSERT(nullptr != director, "Director is null when setting matrix stack");
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
