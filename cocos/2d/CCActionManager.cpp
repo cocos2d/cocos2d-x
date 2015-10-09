@@ -450,6 +450,11 @@ void ActionManager::update(float dt)
         {
             deleteHashElement(_currentTarget);
         }
+        //if some node refrence 'target', it's refrence count >= 2 (issues #14050)
+        else if (_currentTarget->target->getReferenceCount() == 1)
+        {
+            deleteHashElement(_currentTarget);
+        }
     }
 
     // issue #635
