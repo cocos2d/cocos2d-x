@@ -769,6 +769,17 @@ public:
      * Please use `getChildByName()` instead.
      */
      virtual Node * getChildByTag(int tag) const;
+    
+     /**
+     * Gets a child from the container with its tag that can be cast to Type T.
+     *
+     * @param tag   An identifier to find the child node.
+     *
+     * @return a Node with the given tag that can be cast to Type T.
+    */
+    template <typename T>
+    inline T getChildByTag(int tag) const { return static_cast<T>(getChildByTag(tag)); }
+    
     /**
      * Gets a child from the container with its name.
      *
