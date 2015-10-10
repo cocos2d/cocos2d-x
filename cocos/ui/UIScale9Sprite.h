@@ -481,16 +481,16 @@ namespace ui {
         Size getOriginalSize() const;
         
         /**
-         * @brief Change the prefered size of Scale9Sprite.
+         * @brief Change the preferred size of Scale9Sprite.
          *
          * @param size A delimitation zone.
          */
         void setPreferredSize(const Size& size);
         
         /**
-         * @brief Query the  Scale9Sprite's prefered size.
+         * @brief Query the Scale9Sprite's preferred size.
          *
-         * @return Scale9Sprite's prefered size.
+         * @return Scale9Sprite's preferred size.
          */
         Size getPreferredSize() const;
         
@@ -502,7 +502,7 @@ namespace ui {
         void setCapInsets(const Rect& rect);
         
         /**
-         * @brief Query the Scale9Sprite's prefered size.
+         * @brief Query the Scale9Sprite's preferred size.
          *
          * @return Scale9Sprite's cap inset.
          */
@@ -664,7 +664,7 @@ namespace ui {
          * If you want to flip the anchorPoint too, and/or to flip the children too use:
          * widget->setScaleY(widget->getScaleY() * -1);
          *
-         * @return true if the widget is flipped vertically, flase otherwise.
+         * @return true if the widget is flipped vertically, false otherwise.
          */
         virtual bool isFlippedY()const;
         

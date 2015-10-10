@@ -369,7 +369,7 @@ public:
      *
      * @param child     A child node
      * @param localZOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     * @param tag       A integer to identify the node easily. Please refer to setTag(int)
      */
     virtual void addChild(Node* child, int localZOrder, int tag) override;
     virtual void addChild(Node* child, int localZOrder, const std::string &name) override;
@@ -387,7 +387,7 @@ public:
     /**
      * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
      *
-     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @param cleanup   true if all running actions on all children nodes should be cleanup, false otherwise.
      * @js removeAllChildren
      * @lua removeAllChildren
      */

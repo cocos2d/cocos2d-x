@@ -389,7 +389,7 @@ public:
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
-     * @param flippedY true if the widget should be flipped vertically, flase otherwise.
+     * @param flippedY true if the widget should be flipped vertically, false otherwise.
      */
     virtual void setFlippedY(bool flippedY);
 
@@ -400,7 +400,7 @@ public:
      * Also, flipping relies on widget's anchor point.
      * Internally, it just use setScaleY(-1) to flip the widget.
      *
-     * @return true if the widget is flipped vertically, flase otherwise.
+     * @return true if the widget is flipped vertically, false otherwise.
      */
     virtual bool isFlippedY()const{return _flippedY;};
 
@@ -429,7 +429,7 @@ public:
      *
      * @param pt A point in `Vec2`.
      * @deprecated  use `isClippingParentContainsPoint` instead.
-     * @return true if the point is in parent's area, flase otherwise.
+     * @return true if the point is in parent's area, false otherwise.
      */
     CC_DEPRECATED_ATTRIBUTE bool clippingParentAreaContainPoint(const Vec2 &pt){return this->isClippingParentContainsPoint(pt);}
 
@@ -437,7 +437,7 @@ public:
      * Checks a point if in parent's area.
      *
      * @param pt A point in `Vec2`.
-     * @return true if the point is in parent's area, flase otherwise.
+     * @return true if the point is in parent's area, false otherwise.
      */
     bool isClippingParentContainsPoint(const Vec2& pt);
 
@@ -546,7 +546,7 @@ public:
      * @param pt        The point in `Vec2`.
      * @param camera    The camera look at widget, used to convert GL screen point to near/far plane.
      * @param p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
-     * @return true if the point is in widget's content space, flase otherwise.
+     * @return true if the point is in widget's content space, false otherwise.
      */
     virtual bool hitTest(const Vec2 &pt, const Camera* camera, Vec3 *p) const;
 
