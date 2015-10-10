@@ -647,6 +647,8 @@
         "cocos/editor-support/cocostudio/WidgetReader/ImageViewReader/ImageViewReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.h", 
+        "cocos/editor-support/cocostudio/WidgetReader/Light3DReader/Light3DReader.cpp", 
+        "cocos/editor-support/cocostudio/WidgetReader/Light3DReader/Light3DReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/ListViewReader/ListViewReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.cpp", 
