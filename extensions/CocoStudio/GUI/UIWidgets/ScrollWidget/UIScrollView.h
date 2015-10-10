@@ -392,9 +392,7 @@ protected:
     virtual void copyClonedWidgetChildren(Widget* model);
     virtual void setClippingEnabled(bool able) {Layout::setClippingEnabled(able);};
     virtual void doLayout();
-	void hideChildrenHorizontal(float offsetY);
-	void hideChildrenVertical(float offsetY);
-	void hideChildrenBoth(float offsetX, float offsetY);
+
 protected:
     ScrollInnerContainer* _innerContainer;
     
