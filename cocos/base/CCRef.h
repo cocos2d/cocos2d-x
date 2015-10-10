@@ -147,7 +147,6 @@ public:
         this->_luaID = other._luaID;
         this->_scriptObject = other._scriptObject;
 #endif
-
         return *this;
     }
 
