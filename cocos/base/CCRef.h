@@ -138,18 +138,6 @@ protected:
 
 public:
 
-    Ref& operator=(const Ref& other)
-    {
-        this->_referenceCount.store(other._referenceCount.load(std::memory_order_relaxed), std::memory_order_relaxed);
-        
-#if CC_ENABLE_SCRIPT_BINDING
-        this->_ID = other._ID;
-        this->_luaID = other._luaID;
-        this->_scriptObject = other._scriptObject;
-#endif
-        return *this;
-    }
-
     /**
      * Destructor
      *
