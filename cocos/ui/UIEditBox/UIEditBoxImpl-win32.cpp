@@ -458,7 +458,7 @@ void CWin32InputBox::InitDialog()
 		break;
 	case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
 		break;
-	case cocos2d::ui::EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
+	case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS:
 		// Converts all characters to lowercase as they are typed into the edit control.
 		// Please refer to https://msdn.microsoft.com/en-us/library/bb775464%28v=vs.85%29.aspx
 		::SetWindowLongW(hwndEdit1, GWL_STYLE, ::GetWindowLongW(hwndEdit1, GWL_STYLE) | ES_UPPERCASE);
@@ -615,7 +615,7 @@ EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
 , _label(nullptr)
 , _labelPlaceHolder(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _editBoxInputFlag(EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
