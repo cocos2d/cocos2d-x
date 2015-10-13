@@ -406,6 +406,10 @@ int SimulatorWin::run()
     {
         RECT rect;
         GetWindowRect(_hwnd, &rect);
+        if (pos.x < 0)
+            pos.x = 0;
+        if (pos.y < 0)
+            pos.y = 0;
         MoveWindow(_hwnd, pos.x, pos.y, rect.right - rect.left, rect.bottom - rect.top, FALSE);
     }
 
