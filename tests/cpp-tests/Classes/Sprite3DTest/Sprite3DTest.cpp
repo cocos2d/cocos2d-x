@@ -1496,16 +1496,9 @@ void Sprite3DWithOBBPerformanceTest::update(float dt)
         _drawDebug->clear();
         
         Mat4 mat = _sprite->getNodeToWorldTransform();
-        mat.getRightVector(&_obbt._xAxis);
-        _obbt._xAxis.normalize();
         
-        mat.getUpVector(&_obbt._yAxis);
-        _obbt._yAxis.normalize();
-        
-        mat.getForwardVector(&_obbt._zAxis);
-        _obbt._zAxis.normalize();
-        
-        _obbt._center = _sprite->getPosition3D();
+        _obbt = _obbtOri;
+        _obbt.transform(mat);
         
         Vec3 corners[8] = {};
         _obbt.getCorners(corners);
@@ -1534,6 +1527,10 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
 {
     std::string fileName = "Sprite3DTest/tortoise.c3b";
     auto sprite = Sprite3D::create(fileName);
+    AABB aabb = sprite->getAABB();
+    _obbt = OBB(aabb);
+    _obbtOri = _obbt;
+    
     sprite->setScale(0.1f);
     auto s = Director::getInstance()->getWinSize();
     sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
@@ -1552,8 +1549,7 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
     seq->setTag(100);
     sprite->runAction(seq);
     
-    AABB aabb = _sprite->getAABB();
-    _obbt = OBB(aabb);
+    
     
     _drawDebug = DrawNode3D::create();
     addChild(_drawDebug);
