@@ -33,6 +33,7 @@ bool BugDrawNodeLayer::init()
         label->setString(std::string("If you see a red line with a block at center, the bug is fixed!"));
         label->setPosition(size.width / 2, size.height / 4);
         label->setTextColor(Color4B::ORANGE);
+        label->setGlobalZOrder(10);
         addChild(label);
 
         return true;
