@@ -182,13 +182,13 @@ Rect Helper::restrictCapInsetRect(const cocos2d::Rect &capInsets, const Size& te
     
     if (textureSize.width < width)
     {
-        x = 0.0f;
-        width = 0.0f;
+        x = textureSize.width / 2.0f;
+        width = textureSize.width > 0 ? 1.0f : 0.0f;
     }
     if (textureSize.height < height)
     {
-        y = 0.0f;
-        height = 0.0f;
+        y = textureSize.height / 2.0f;
+        height = textureSize.height > 0 ? 1.0f : 0.0f;
     }
     return Rect(x, y, width, height);
 }
