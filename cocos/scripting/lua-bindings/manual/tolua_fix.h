@@ -21,7 +21,7 @@ TOLUA_API void toluafix_open(lua_State* L);
  * If the userdata correspondings to the ptr don't exist, it would call lua_newuserdata to new a userdata.
  * If the userdata correspondings to the ptr exist,it would update the metatable information of the super.
  * In addition, this function would update some table in the Lua registry,such as toluafix_refid_ptr_mapping, toluafix_refid_type_mapping,tolua_value_root,and so on.
- * Meanwhile, Add a refrence about the userdata corresponding to the ptr in the tolua_ubox table.
+ * Meanwhile, Add a reference about the userdata corresponding to the ptr in the tolua_ubox table.
  * The ptr should be point to a Ref object.
  * 
  * @param L the current lua_State.
@@ -41,8 +41,8 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
 
 /**
  * Find the value of Ref object pointer in the Lua registry by the refid.
- * Then, remove the corresponding refrence in some table in the Lua registry by refid, such as toluafix_refid_type_mapping, toluafix_refid_ptr_mapping,tolua_value_root,and so on.
- * Set the value of userdata nullptr and remove the refrence of userdata in the tolua_ubox table.
+ * Then, remove the corresponding reference in some table in the Lua registry by refid, such as toluafix_refid_type_mapping, toluafix_refid_ptr_mapping,tolua_value_root,and so on.
+ * Set the value of userdata nullptr and remove the reference of userdata in the tolua_ubox table.
  * This function is called in the destructor of the Ref automatically.
  *
  * @param L the current lua_State.
@@ -54,13 +54,13 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
 TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
 
 /**
- * Get the refrence id of the Lua function at the given accepteable index lo of stack.
- * Meanwhile add refrence about the Lua function through the toluafix_refid_function_mapping table in the Lua registry.
+ * Get the reference id of the Lua function at the given accepteable index lo of stack.
+ * Meanwhile add reference about the Lua function through the toluafix_refid_function_mapping table in the Lua registry.
  *
  * @param L the current lua_State.
  * @param lo the given accepteable index lo of stack.
  * @param def useless.
- * @return 0 if the type of value at the given accepteable index lo of stack is not LUA_TFUNCTION; otherwise return the refrence id.
+ * @return 0 if the type of value at the given accepteable index lo of stack is not LUA_TFUNCTION; otherwise return the reference id.
  * @lua NA
  * @js NA
  */
