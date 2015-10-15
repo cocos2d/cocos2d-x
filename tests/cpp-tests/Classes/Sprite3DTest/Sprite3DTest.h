@@ -366,6 +366,7 @@ protected:
     cocos2d::Label*                    _labelCubeCount;
     cocos2d::MoveTo*                   _moveAction;
     cocos2d::OBB                       _obbt;
+    cocos2d::OBB                       _obbtOri; //tortoise origin obb
     cocos2d::DrawNode3D*               _drawDebug;
     bool                      _hasCollider;
     std::set<int>             _intersetList;
