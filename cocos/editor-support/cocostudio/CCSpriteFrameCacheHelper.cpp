@@ -105,12 +105,6 @@ SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
-    auto i = _usingSpriteFrames.begin();
-    while (i != _usingSpriteFrames.end())
-    {
-        auto j = i++;
-        removeSpriteFrameFromFile(j->first);
-    }
 }
 
 }
