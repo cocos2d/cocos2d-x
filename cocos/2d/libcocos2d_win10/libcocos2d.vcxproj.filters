@@ -1945,6 +1945,27 @@
     <ClCompile Include="..\..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManager.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\extensions\assets-manager\Manifest.cpp">
+      <Filter>extension\AssetsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network\CCDownloader.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\network\CCDownloader-curl.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\cocos2d.h" />
@@ -3799,6 +3820,30 @@
     </ClInclude>
     <ClInclude Include="..\..\3d\cocos3d.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManager.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\extensions\assets-manager\Manifest.h">
+      <Filter>extension\AssetsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\CCDownloader.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\CCDownloader-curl.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\network\CCIDownloaderImpl.h">
+      <Filter>network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
