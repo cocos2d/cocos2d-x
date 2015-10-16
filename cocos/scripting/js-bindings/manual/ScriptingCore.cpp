@@ -803,7 +803,7 @@ void ScriptingCore::restartVM()
 {
     cleanup();
     initRegister();
-    CCApplication::getInstance()->applicationDidFinishLaunching();
+    Application::getInstance()->applicationDidFinishLaunching();
 }
 
 ScriptingCore::~ScriptingCore()
