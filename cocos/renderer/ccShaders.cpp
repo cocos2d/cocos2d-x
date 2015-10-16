@@ -33,7 +33,7 @@ NS_CC_BEGIN
 
 #include "ccShader_Position_uColor.frag"
 
-#ifdef CC_WINDOWS_PHONE_8_1
+#ifdef CC_PLATFORM_WINRT
 #include "ccShader_Position_uColor_wp81.vert"
 #else
 #include "ccShader_Position_uColor.vert"
@@ -44,7 +44,7 @@ NS_CC_BEGIN
 #include "ccShader_PositionColor.vert"
 
 //
-#ifdef CC_WINDOWS_PHONE_8_1
+#ifdef CC_PLATFORM_WINRT
 #include "ccShader_PositionColorTextureAsPointsize_wp81.vert"
 #else
 #include "ccShader_PositionColorTextureAsPointsize.vert"
