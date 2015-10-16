@@ -20,7 +20,8 @@ extern "C"
 {
 	bool Java_org_cocos2dx_lua_AppActivity_nativeIsLandScape(JNIEnv *env, jobject thisz)
 	{
-		return ConfigParser::getInstance()->isLanscape();
+		//return ConfigParser::getInstance()->isLanscape();
+		return false;
 	}
 
 	bool Java_org_cocos2dx_lua_AppActivity_nativeIsDebug(JNIEnv *env, jobject thisz)
