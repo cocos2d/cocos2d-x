@@ -415,7 +415,7 @@ namespace cocos2d {
                 Director::getInstance()->getScheduler()->performFunctionInCocosThread([&]{
                     auto it = s_WebViewImpls.find(viewTag);
                     if (it != s_WebViewImpls.end()) {
-                        auto webView = s_WebViewImpls[viewTag]->_webView;
+                        auto webView = it->second->_webView;
                         if (webView->_onShouldStartLoading) {
                             allowLoad = webView->_onShouldStartLoading(webView, url);
                         }
@@ -439,7 +439,7 @@ namespace cocos2d {
                 Director::getInstance()->getScheduler()->performFunctionInCocosThread([viewTag, url]{
                     auto it = s_WebViewImpls.find(viewTag);
                     if (it != s_WebViewImpls.end()) {
-                        auto webView = s_WebViewImpls[viewTag]->_webView;
+                        auto webView = it->second->_webView;
                         if (webView->_onDidFinishLoading) {
                             webView->_onDidFinishLoading(webView, url);
                         }
@@ -452,7 +452,7 @@ namespace cocos2d {
                 Director::getInstance()->getScheduler()->performFunctionInCocosThread([viewTag, url]{
                     auto it = s_WebViewImpls.find(viewTag);
                     if (it != s_WebViewImpls.end()) {
-                        auto webView = s_WebViewImpls[viewTag]->_webView;
+                        auto webView = it->second->_webView;
                         if (webView->_onDidFailLoading) {
                             webView->_onDidFailLoading(webView, url);
                         }
@@ -465,7 +465,7 @@ namespace cocos2d {
                 Director::getInstance()->getScheduler()->performFunctionInCocosThread([viewTag, message]{
                     auto it = s_WebViewImpls.find(viewTag);
                     if (it != s_WebViewImpls.end()) {
-                        auto webView = s_WebViewImpls[viewTag]->_webView;
+                        auto webView = it->second->_webView;
                         if (webView->_onJSCallback) {
                             webView->_onJSCallback(webView, message);
                         }
