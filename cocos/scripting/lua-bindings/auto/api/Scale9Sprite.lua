@@ -143,7 +143,7 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- brief Change the prefered size of Scale9Sprite.<br>
+-- brief Change the preferred size of Scale9Sprite.<br>
 -- param size A delimitation zone.
 -- @function [parent=#Scale9Sprite] setPreferredSize 
 -- @param self
@@ -177,7 +177,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- brief Query the Scale9Sprite's prefered size.<br>
+-- brief Query the Scale9Sprite's preferred size.<br>
 -- return Scale9Sprite's cap inset.
 -- @function [parent=#Scale9Sprite] getCapInsets 
 -- @param self
@@ -252,8 +252,8 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- brief Query the  Scale9Sprite's prefered size.<br>
--- return Scale9Sprite's prefered size.
+-- brief Query the Scale9Sprite's preferred size.<br>
+-- return Scale9Sprite's preferred size.
 -- @function [parent=#Scale9Sprite] getPreferredSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
@@ -272,7 +272,7 @@
 -- Also, flipping the texture doesn't alter the anchorPoint.<br>
 -- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
 -- widget->setScaleY(widget->getScaleY() * -1);<br>
--- return true if the widget is flipped vertically, flase otherwise.
+-- return true if the widget is flipped vertically, false otherwise.
 -- @function [parent=#Scale9Sprite] isFlippedY 
 -- @param self
 -- @return bool#bool ret (return value: bool)

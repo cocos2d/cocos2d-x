@@ -97,7 +97,7 @@ public:
     /**
      * Remove the related reference about the Ref object stored in the Lua table by set the value of corresponding key nil:
      * The related Lua tables are toluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_root and object_Metatable["tolua_ubox"] or tolua_ubox.
-     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function refrence corresponding to this object.
+     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function reference corresponding to this object.
      *
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
@@ -108,14 +108,14 @@ public:
     /**
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
-     * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
+     * @param nHandler the function reference index to find the correspoinding Lua function pointer.
      */
     virtual void removeScriptHandler(int nHandler);
     
     /**
-     * Reallocate Lua function reference index to the Lua function pointer to add refrence.
+     * Reallocate Lua function reference index to the Lua function pointer to add reference.
      *
-     * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
+     * @param nHandler the function reference index to find the correspoinding Lua function pointer.
      */
     virtual int reallocateScriptHandler(int nHandler);
     
@@ -123,7 +123,7 @@ public:
      * Execute script code contained in the given string.
      *
      * @param codes holding the valid script code that should be executed.
-     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly.
+     * @return 0 if the string is executed correctly, other if the string is executed wrongly.
      */
     virtual int executeString(const char* codes);
     
@@ -324,7 +324,7 @@ public:
      * Load the Lua chunks from the zip file
      * 
      * @param zipFilePath file path to zip file.
-     * @return 1 if load sucessfully otherwise 0.
+     * @return 1 if load successfully otherwise 0.
      */
     int loadChunksFromZIP(const char *zipFilePath);
     
@@ -332,7 +332,7 @@ public:
      * Load the Lua chunks from current lua_State.
      *
      * @param L the current lua_State.
-     * @return 1 if load sucessfully otherwise 0.
+     * @return 1 if load successfully otherwise 0.
      */
     int luaLoadChunksFromZIP(lua_State *L);
     

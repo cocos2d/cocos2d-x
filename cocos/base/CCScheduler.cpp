@@ -130,19 +130,15 @@ void Timer::update(float dt)
         trigger(interval);
         _elapsed -= interval;
         _timesExecuted += 1;
-        if (_elapsed <= 0.f)
+
+        if (!_runForever && _timesExecuted > _repeat)
         {
+            cancel();
             break;
         }
 
-        if (_runForever)
+        if (_elapsed <= 0.f)
         {
-            continue;
-        }
-        
-        if (_timesExecuted > _repeat)
-        {    //unschedule timer
-            cancel();
             break;
         }
     }
@@ -333,7 +329,7 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
 
 void Scheduler::unschedule(const std::string &key, void *target)
 {
-    // explicity handle nil arguments when removing an object
+    // explicit handle nil arguments when removing an object
     if (target == nullptr || key.empty())
     {
         return;
@@ -349,9 +345,9 @@ void Scheduler::unschedule(const std::string &key, void *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
 
-            if (key == timer->getKey())
+            if (timer && key == timer->getKey())
             {
                 if (timer == element->currentTimer && (! element->currentTimerSalvaged))
                 {
@@ -530,9 +526,9 @@ bool Scheduler::isScheduled(const std::string& key, void *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
             
-            if (key == timer->getKey())
+            if (timer && key == timer->getKey())
             {
                 return true;
             }
@@ -1058,9 +1054,9 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetSelector *timer = static_cast<TimerTargetSelector*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (selector == timer->getSelector())
+            if (timer && selector == timer->getSelector())
             {
                 return true;
             }
@@ -1074,7 +1070,7 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
 
 void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
 {
-    // explicity handle nil arguments when removing an object
+    // explicit handle nil arguments when removing an object
     if (target == nullptr || selector == nullptr)
     {
         return;
@@ -1090,9 +1086,9 @@ void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetSelector *timer = static_cast<TimerTargetSelector*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (selector == timer->getSelector())
+            if (timer && selector == timer->getSelector())
             {
                 if (timer == element->currentTimer && (! element->currentTimerSalvaged))
                 {

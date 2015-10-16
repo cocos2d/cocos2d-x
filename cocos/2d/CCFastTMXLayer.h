@@ -84,7 +84,7 @@ public:
      * @param tilesetInfo An tileset info.
      * @param layerInfo A layer info.
      * @param mapInfo A map info.
-     * @return Reruen an autorelease object.
+     * @return Return an autorelease object.
      */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**

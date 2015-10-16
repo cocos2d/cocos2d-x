@@ -119,6 +119,7 @@ local function addSearchPath(resPrefix, height)
 end
 
 addSearchPath("res/", screenSize.height)
+addSearchPath("res/ccs-res/scene3DTest", screenSize.height)
 addSearchPath("", screenSize.height)
 
 require "mainMenu"

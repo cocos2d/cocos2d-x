@@ -68,19 +68,19 @@ class CC_DLL ActionInterval : public FiniteTimeAction
 public:
     /** How many seconds had elapsed since the actions started to run.
      *
-     * @return The seconds had elapsed since the ations started to run.
+     * @return The seconds had elapsed since the actions started to run.
      */
     inline float getElapsed(void) { return _elapsed; }
 
-    /** Sets the ampliture rate, extension in GridAction
+    /** Sets the amplitude rate, extension in GridAction
      *
-     * @param amp   The ampliture rate.
+     * @param amp   The amplitude rate.
      */
     void setAmplitudeRate(float amp);
     
-    /** Gets the ampliture rate, extension in GridAction
+    /** Gets the amplitude rate, extension in GridAction
      *
-     * @return  The ampliture rate.
+     * @return  The amplitude rate.
      */
     float getAmplitudeRate(void);
 
@@ -112,6 +112,9 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     float _elapsed;
     bool   _firstTick;
+
+protected:
+    bool sendUpdateEventToScript(float dt, Action *actionObject);
 };
 
 /** @class Sequence
@@ -146,7 +149,7 @@ public:
 
     /** Helper constructor to create an array of sequenceable actions given an array.
      * @code
-     * When this funtion bound to the js or lua,the input params changed
+     * When this function bound to the js or lua,the input params changed
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
@@ -344,7 +347,7 @@ class CC_DLL Spawn : public ActionInterval
 public:
     /** Helper constructor to create an array of spawned actions.
      * @code
-     * When this funtion bound to the js or lua, the input params changed.
+     * When this function bound to the js or lua, the input params changed.
      * in js  :var   create(var   object1,var   object2, ...)
      * in lua :local create(local object1,local object2, ...)
      * @endcode
@@ -1560,7 +1563,7 @@ public:
     static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
 
     /**
-     * Overrided ActionInterval methods
+     * Overridden ActionInterval methods
      */
     void startWithTarget(Node* target) override;
     void update(float delta) override;

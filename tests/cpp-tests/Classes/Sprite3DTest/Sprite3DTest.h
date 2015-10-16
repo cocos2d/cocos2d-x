@@ -35,6 +35,7 @@ namespace cocos2d {
     class Ray;
     class DrawNode3D;
     class GLProgramState;
+    class MotionStreak3D;
 }
 
 DEFINE_TEST_SUITE(Sprite3DTests);
@@ -44,6 +45,8 @@ class Sprite3DTestDemo : public TestCase
 public:
     // overrides
     virtual std::string title() const override;
+    
+    virtual ~Sprite3DTestDemo();
 };
 
 class Sprite3DForceDepthTest : public Sprite3DTestDemo
@@ -163,60 +166,6 @@ protected:
 #endif
 
 };
-class EffectSprite3D;
-
-class Effect3D : public cocos2d::Ref
-{
-public:
-    virtual void draw(const cocos2d::Mat4 &transform) = 0;
-    virtual void setTarget(EffectSprite3D *sprite) = 0;
-protected:
-    Effect3D() : _glProgramState(nullptr) {}
-    virtual ~Effect3D()
-    {
-        CC_SAFE_RELEASE(_glProgramState);
-    }
-protected:
-    cocos2d::GLProgramState* _glProgramState;
-};
-
-class Effect3DOutline: public Effect3D
-{
-public:
-    static Effect3DOutline* create();
-    
-    void setOutlineColor(const cocos2d::Vec3& color);
-    
-    void setOutlineWidth(float width);
-    
-    virtual void draw(const cocos2d::Mat4 &transform) override;
-    virtual void setTarget(EffectSprite3D *sprite) override;
-protected:
-    
-    Effect3DOutline();
-    virtual ~Effect3DOutline();
-    
-    bool init();
-    
-    cocos2d::Vec3 _outlineColor;
-    float _outlineWidth;
-    //weak reference
-    EffectSprite3D* _sprite;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    cocos2d::EventListenerCustom* _backToForegroundListener;
-#endif
-    
-protected:
-    static const std::string _vertShaderFile;
-    static const std::string _fragShaderFile;
-    static const std::string _keyInGLProgramCache;
-    
-    static const std::string _vertSkinnedShaderFile;
-    static const std::string _fragSkinnedShaderFile;
-    static const std::string _keySkinnedInGLProgramCache;
-    
-    static cocos2d::GLProgram* getOrCreateProgram(bool isSkinned = false);
-};
 
 class Sprite3DHitTest : public Sprite3DTestDemo
 {
@@ -227,35 +176,25 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class EffectSprite3D : public cocos2d::Sprite3D
-{
-public:
-    static EffectSprite3D* createFromObjFileAndTexture(const std::string& objFilePath, const std::string& textureFilePath);
-    static EffectSprite3D* create(const std::string& path);
-    
-    void setEffect3D(Effect3D* effect);
-    void addEffect(Effect3DOutline* effect, ssize_t order);
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-protected:
-    EffectSprite3D();
-    virtual ~EffectSprite3D();
-    
-    std::vector<std::tuple<ssize_t,Effect3D*, cocos2d::CustomCommand>> _effects;
-    Effect3D* _defaultEffect;
-    cocos2d::CustomCommand _command;
-};
-
 class Sprite3DEffectTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DEffectTest);
     Sprite3DEffectTest();
+    virtual ~Sprite3DEffectTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
     void addNewSpriteWithCoords(cocos2d::Vec2 p);
     
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+protected:
+    std::vector<cocos2d::Sprite3D*> _sprites;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class AsyncLoadSprite3DTest : public Sprite3DTestDemo
@@ -300,12 +239,20 @@ class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DWithSkinOutlineTest);
     Sprite3DWithSkinOutlineTest();
+    virtual ~Sprite3DWithSkinOutlineTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
     void addNewSpriteWithCoords(cocos2d::Vec2 p);
     
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+protected:
+    std::vector<cocos2d::Sprite3D*> _sprites;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class Animate3DTest : public Sprite3DTestDemo
@@ -419,6 +366,7 @@ protected:
     cocos2d::Label*                    _labelCubeCount;
     cocos2d::MoveTo*                   _moveAction;
     cocos2d::OBB                       _obbt;
+    cocos2d::OBB                       _obbtOri; //tortoise origin obb
     cocos2d::DrawNode3D*               _drawDebug;
     bool                      _hasCollider;
     std::set<int>             _intersetList;
@@ -604,6 +552,36 @@ public:
 protected:
     cocos2d::Camera* _camera;
     cocos2d::Label* _label;
+};
+
+class Sprite3DVertexColorTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DVertexColorTest);
+    Sprite3DVertexColorTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual ~Sprite3DVertexColorTest();
+protected:
+    cocos2d::Sprite3D* _sprite;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
+class MotionStreak3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(MotionStreak3DTest);
+    MotionStreak3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float delta) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::MotionStreak3D* _streak;
 };
 
 #endif

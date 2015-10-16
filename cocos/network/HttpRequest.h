@@ -274,9 +274,9 @@ public:
     }
     
     /** 
-     * Get the target of callback selector funtion, mainly used by HttpClient.
+     * Get the target of callback selector function, mainly used by HttpClient.
      *
-     * @return Ref* the target of callback selector funtion
+     * @return Ref* the target of callback selector function
      */
     inline Ref* getTarget()
     {

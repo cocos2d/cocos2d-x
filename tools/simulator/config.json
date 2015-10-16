@@ -1,6 +1,5 @@
 {
     "init_cfg":{
-       "isLandscape": true,
        "isWindowTop": false,
        "name": "simulator",
        "width": 960,

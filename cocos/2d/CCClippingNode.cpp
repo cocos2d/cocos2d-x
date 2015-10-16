@@ -225,7 +225,7 @@ void ClippingNode::onExit()
 void ClippingNode::drawFullScreenQuadClearStencil()
 {
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -273,7 +273,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
@@ -503,7 +503,7 @@ void ClippingNode::onAfterDrawStencil()
     if (_alphaThreshold < 1)
     {
 #if CC_CLIPPING_NODE_OPENGLES
-        // FIXME: we need to find a way to restore the shaders of the stencil node and its childs
+        // FIXME: we need to find a way to restore the shaders of the stencil node and its children
 #else
         // manually restore the alpha test state
         glAlphaFunc(_currentAlphaTestFunc, _currentAlphaTestRef);
@@ -525,8 +525,8 @@ void ClippingNode::onAfterDrawStencil()
     ///////////////////////////////////
     // DRAW CONTENT
 
-    // setup the stencil test func like this:
-    // for each pixel of this node and its childs
+    // setup the stencil test function like this:
+    // for each pixel of this node and its children
     //     if all layers less than or equals to the current are set to 1 in the stencil buffer
     //         draw the pixel and keep the current layer in the stencil buffer
     //     else
@@ -537,7 +537,7 @@ void ClippingNode::onAfterDrawStencil()
     glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 //    RenderState::StateBlock::_defaultState->setStencilOperation(RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP, RenderState::STENCIL_OP_KEEP);
 
-    // draw (according to the stencil test func) this node and its childs
+    // draw (according to the stencil test function) this node and its children
 }
 
 

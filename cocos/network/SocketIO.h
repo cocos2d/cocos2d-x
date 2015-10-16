@@ -105,7 +105,7 @@ public:
         /**
          * This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
          * 
-         * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint sucessfully.
+         * This function would be called when the related SIOClient object recevie messages that mean it have connected to endpoint successfully.
          *
          * @param client the connected SIOClient object.
          */
@@ -262,10 +262,8 @@ public:
      * The tag is used to distinguish the various SIOClient objects.
      * @param tag string object.
      */
-    inline void setTag(const char* tag)
-    {
-        _tag = tag;
-    };
+    void setTag(const char* tag);
+    
     /**
      * Get tag of SIOClient.
      * @return const char* the pointer point to the _tag.

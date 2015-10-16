@@ -85,8 +85,7 @@ bool UIScrollViewTest_Vertical::init()
         
         imageView->setPosition(Vec2(innerWidth / 2.0f, imageView->getContentSize().height / 2.0f));
         scrollView->addChild(imageView);            
-      
- 
+        scrollView->scrollToBottom(2.0, true);
         return true;
     }
     
@@ -134,10 +133,7 @@ bool UIScrollViewTest_Horizontal::init()
 		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
 		scrollView->setScrollBarColor(Color3B::YELLOW);
         Size backgroundSize = background->getContentSize();
-        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
-                                    (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
-                                    (widgetSize.height - backgroundSize.height) / 2.0f +
-                                    (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+        scrollView->setPosition((widgetSize - scrollView->getContentSize()) / 2.0f);
         _uiLayer->addChild(scrollView);
         
         ImageView* imageView = ImageView::create("cocosui/ccicon.png");
@@ -163,12 +159,15 @@ bool UIScrollViewTest_Horizontal::init()
         button_scale9->setContentSize(Size(100.0f, button_scale9->getVirtualRendererSize().height));
         button_scale9->setPosition(Vec2(titleButton->getRightBoundary() + titleButton->getContentSize().width / 2.0f,
                                        titleButton->getBottomBoundary() - titleButton->getContentSize().height / 2.0f));
-        scrollView->addChild(button_scale9);                
+        scrollView->addChild(button_scale9);
                 
         imageView->setPosition(Vec2(innerWidth - imageView->getContentSize().width / 2.0f,
                                    button_scale9->getBottomBoundary() - button_scale9->getContentSize().height / 2.0f));
-        scrollView->addChild(imageView);                
-        
+        scrollView->addChild(imageView);
+
+        // Jump to right
+        scrollView->jumpToRight();
+
         return true;
     }
     
@@ -231,7 +230,10 @@ bool UIScrollViewTest_Both::init()
         imageView->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
         
         _uiLayer->addChild(scrollView);
-        
+
+        // Jump to right bottom
+        scrollView->jumpToBottomRight();
+
         return true;
     }
     

@@ -208,7 +208,7 @@ public:
     /**
      * Get the typename of the Ref object.
      *
-     * @return the refrence of _ccobjectType.
+     * @return the reference of _ccobjectType.
      */
     const std::string& getObjectTypename(void) const {
         return *_ccobjectType;
@@ -244,7 +244,7 @@ public:
     /**
      * Get the boolean value of LuaValue object.
      *
-     * @return the refrence about string value.
+     * @return the reference about string value.
      */
     const std::string& stringValue(void) const {
         return *_field.stringValue;

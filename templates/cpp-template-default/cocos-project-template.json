@@ -49,6 +49,7 @@
                "proj.android/build.xml",
                "proj.android/res/values/strings.xml",
                "proj.android-studio/settings.gradle",
+               "proj.android-studio/app/res/values/strings.xml",
                "proj.ios_mac/ios/main.m",
                "proj.ios_mac/ios/Prefix.pch",
                "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",

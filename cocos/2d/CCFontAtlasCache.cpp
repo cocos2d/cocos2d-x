@@ -202,7 +202,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, i
     return nullptr;
 }
 
-std::string FontAtlasCache::generateFontName(const std::string& fontFileName, int size, bool useDistanceField)
+std::string FontAtlasCache::generateFontName(const std::string& fontFileName, float size, bool useDistanceField)
 {
     std::string tempName(fontFileName);
     
@@ -210,7 +210,8 @@ std::string FontAtlasCache::generateFontName(const std::string& fontFileName, in
         tempName.append("df");
     // std::to_string is not supported on android, using std::stringstream instead.
     std::stringstream ss;
-    ss << size;
+    ss.precision(2);
+    ss << std::fixed << size;
     return  tempName.append(ss.str());
 }
 

@@ -97,7 +97,7 @@ static int readLine (const char* begin, const char* end, Str* str) {
 	return 1;
 }
 
-/* Moves str->begin past the first occurence of c. Returns 0 on failure. */
+/* Moves str->begin past the first occurrence of c. Returns 0 on failure. */
 static int beginPast (Str* str, char c) {
 	const char* begin = str->begin;
 	while (1) {

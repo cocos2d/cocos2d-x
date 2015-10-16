@@ -406,6 +406,10 @@ int SimulatorWin::run()
     {
         RECT rect;
         GetWindowRect(_hwnd, &rect);
+        if (pos.x < 0)
+            pos.x = 0;
+        if (pos.y < 0)
+            pos.y = 0;
         MoveWindow(_hwnd, pos.x, pos.y, rect.right - rect.left, rect.bottom - rect.top, FALSE);
     }
 
@@ -719,25 +723,49 @@ void SimulatorWin::parseCocosProjectConfig(ProjectConfig &config)
     }
 
     // set project directory as search root path
-    FileUtils::getInstance()->setDefaultResourceRootPath(tmpConfig.getProjectDir().c_str());
+    string solutionDir = tmpConfig.getProjectDir();
+    if (!solutionDir.empty())
+    {
+        for (int i = 0; i < solutionDir.size(); ++i)
+        {
+            if (solutionDir[i] == '\\')
+            {
+                solutionDir[i] = '/';
+            }
+        }
+        int nPos = -1;
+        if (solutionDir[solutionDir.length() - 1] == '/')
+            nPos = solutionDir.rfind('/', solutionDir.length() - 2);
+        else
+            nPos = solutionDir.rfind('/');
+        if (nPos > 0)
+            solutionDir = solutionDir.substr(0, nPos + 1);
+        FileUtils::getInstance()->setDefaultResourceRootPath(solutionDir);
+        FileUtils::getInstance()->addSearchPath(solutionDir);
+        FileUtils::getInstance()->addSearchPath(tmpConfig.getProjectDir().c_str());
+    }
+    else
+    {
+        FileUtils::getInstance()->setDefaultResourceRootPath(tmpConfig.getProjectDir().c_str());
+    }
 
     // parse config.json
     auto parser = ConfigParser::getInstance();
-    auto configPath = tmpConfig.getProjectDir().append(CONFIG_FILE);
+    auto configPath = solutionDir.append(CONFIG_FILE);
     parser->readConfig(configPath);
 
     // set information
     config.setConsolePort(parser->getConsolePort());
     config.setFileUploadPort(parser->getUploadPort());
     config.setFrameSize(parser->getInitViewSize());
-    if (parser->isLanscape())
-    {
-        config.changeFrameOrientationToLandscape();
-    }
-    else
-    {
-        config.changeFrameOrientationToPortait();
-    }
+    //if (parser->isLanscape())
+    //{
+    //    config.changeFrameOrientationToLandscape();
+    //}
+    //else
+    //{
+    //    config.changeFrameOrientationToPortait();
+    //}
     config.setScriptFile(parser->getEntryFile());
 }
 

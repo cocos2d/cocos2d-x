@@ -173,12 +173,12 @@ public:
     Value getPropertiesForGID(int GID) const;
     CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
-    /** Assings properties to argument value, returns true if it did found properties 
-     * for that GID and did assinged a value, else it returns false.
+    /** Assigns properties to argument value, returns true if it did found properties 
+     * for that GID and did assigned a value, else it returns false.
      *
      * @param GID The tile GID.
      * @param value Argument value.
-     * @return Return true if it did found properties for that GID and did assinged a value, else it returns false.
+     * @return Return true if it did found properties for that GID and did assigned a value, else it returns false.
      */
     bool getPropertiesForGID(int GID, Value** value);
 

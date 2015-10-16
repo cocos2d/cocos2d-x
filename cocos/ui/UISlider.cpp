@@ -98,8 +98,8 @@ Slider* Slider::create(const std::string& barTextureName,
     Slider* widget = new (std::nothrow) Slider();
     if (widget && widget->init())
     {
-        widget->loadBarTexture(barTextureName);
-        widget->loadSlidBallTextureNormal(normalBallTextureName);
+        widget->loadBarTexture(barTextureName, resType);
+        widget->loadSlidBallTextureNormal(normalBallTextureName, resType);
         widget->autorelease();
         return widget;
     }
@@ -431,7 +431,11 @@ bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3 *p) con
     Rect rect;
     rect.size = _slidBallNormalRenderer->getContentSize();
     auto w2l = _slidBallNormalRenderer->getWorldToNodeTransform();
-    return isScreenPointInRect(pt, camera, w2l, rect, nullptr);
+
+    Rect sliderBarRect;
+    sliderBarRect.size = this->_barRenderer->getContentSize();
+    auto barW2l = this->_barRenderer->getWorldToNodeTransform();
+    return isScreenPointInRect(pt, camera, w2l, rect, nullptr) || isScreenPointInRect(pt, camera, barW2l, sliderBarRect, nullptr);
 }
 
 bool Slider::onTouchBegan(Touch *touch, Event *unusedEvent)
@@ -455,6 +459,7 @@ void Slider::onTouchMoved(Touch *touch, Event *unusedEvent)
 void Slider::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchEnded(touch, unusedEvent);
+    percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
     percentChangedEvent(EventType::ON_SLIDEBALL_UP);
 }
 

@@ -39,7 +39,7 @@ NS_CC_BEGIN
  *  @{
  */
 /** ClippingNode is a subclass of Node.
- * It draws its content (childs) clipped using a stencil.
+ * It draws its content (children) clipped using a stencil.
  * The stencil is an other Node that will not be drawn.
  * The clipping is done using the alpha part of the stencil (adjusted with an alphaThreshold).
  */
@@ -72,7 +72,7 @@ public:
      */
     void setStencil(Node *stencil);
 
-    /** If stencil has no childre it will not be drawn.
+    /** If stencil has no children it will not be drawn.
      * If you have custom stencil-based node with stencil drawing mechanics other then children-based,
      * then this method should return true every time you wish stencil to be visited.
      * By default returns true if has any children attached.

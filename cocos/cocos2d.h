@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 07 00
-#define COCOS2D_VERSION 0x00030700
+// 00   03 08 00
+#define COCOS2D_VERSION 0x00030800
 
 //
 // all cocos2d include files
@@ -290,6 +290,7 @@ THE SOFTWARE.
 #include "3d/CCFrustum.h"
 #include "3d/CCMesh.h"
 #include "3d/CCMeshSkin.h"
+#include "3d/CCMotionStreak3D.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCOBB.h"
 #include "3d/CCPlane.h"

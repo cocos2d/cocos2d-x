@@ -2182,6 +2182,21 @@ jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q)
     return JSVAL_NULL;
 }
 
+jsval uniform_to_jsval(JSContext* cx, const cocos2d::Uniform* uniform)
+{
+    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
+    if(!tmp) return JSVAL_NULL;
+    bool ok = JS_DefineProperty(cx, tmp, "location", uniform->location, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "size", uniform->size, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "type", uniform->type, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+    JS_DefineProperty(cx, tmp, "name", JS::RootedValue(cx, std_string_to_jsval(cx, uniform->name)), JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    if(ok)
+        return OBJECT_TO_JSVAL(tmp);
+    
+    return JSVAL_NULL;
+}
+
+
 jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q)
 {
     JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));

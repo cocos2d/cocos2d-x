@@ -53,8 +53,8 @@ bool js_cocos2dx_builder_CCBAnimationManager_moveAnimationsFromNode(JSContext *c
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_moveAnimationsFromNode : Invalid Native Object");
     if (argc == 2) {
-        cocos2d::Node* arg0;
-        cocos2d::Node* arg1;
+        cocos2d::Node* arg0 = nullptr;
+        cocos2d::Node* arg1 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -91,7 +91,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_setAutoPlaySequenceId(JSContext *cx
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setAutoPlaySequenceId : Invalid Native Object");
     if (argc == 1) {
-        int arg0;
+        int arg0 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setAutoPlaySequenceId : Error processing arguments");
         cobj->setAutoPlaySequenceId(arg0);
@@ -129,7 +129,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_actionForSoundChannel(JSContext *cx
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_actionForSoundChannel : Invalid Native Object");
     if (argc == 1) {
-        cocosbuilder::CCBSequenceProperty* arg0;
+        cocosbuilder::CCBSequenceProperty* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -167,7 +167,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_setBaseValue(JSContext *cx, uint32_
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setBaseValue : Invalid Native Object");
     if (argc == 3) {
         cocos2d::Value arg0;
-        cocos2d::Node* arg1;
+        cocos2d::Node* arg1 = nullptr;
         std::string arg2;
         ok &= jsval_to_ccvalue(cx, args.get(0), &arg0);
         do {
@@ -234,7 +234,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_setRootNode(JSContext *cx, uint32_t
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setRootNode : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Node* arg0;
+        cocos2d::Node* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -262,8 +262,8 @@ bool js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamedTweenD
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration : Invalid Native Object");
     if (argc == 2) {
-        const char* arg0;
-        double arg1;
+        const char* arg0 = nullptr;
+        double arg1 = 0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamedTweenDuration : Error processing arguments");
@@ -342,8 +342,8 @@ bool js_cocos2dx_builder_CCBAnimationManager_setObject(JSContext *cx, uint32_t a
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setObject : Invalid Native Object");
     if (argc == 3) {
-        cocos2d::Ref* arg0;
-        cocos2d::Node* arg1;
+        cocos2d::Ref* arg0 = nullptr;
+        cocos2d::Node* arg1 = nullptr;
         std::string arg2;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
@@ -382,7 +382,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_getContainerSize(JSContext *cx, uin
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_getContainerSize : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Node* arg0;
+        cocos2d::Node* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -412,7 +412,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_actionForCallbackChannel(JSContext 
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_actionForCallbackChannel : Invalid Native Object");
     if (argc == 1) {
-        cocosbuilder::CCBSequenceProperty* arg0;
+        cocosbuilder::CCBSequenceProperty* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -561,8 +561,8 @@ bool js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceIdTweenDura
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceIdTweenDuration : Invalid Native Object");
     if (argc == 2) {
-        int arg0;
-        double arg1;
+        int arg0 = 0;
+        double arg1 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceIdTweenDuration : Error processing arguments");
@@ -664,7 +664,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_addDocumentOutletNode(JSContext *cx
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_addDocumentOutletNode : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Node* arg0;
+        cocos2d::Node* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -692,7 +692,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_setDelegate(JSContext *cx, uint32_t
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setDelegate : Invalid Native Object");
     if (argc == 1) {
-        cocosbuilder::CCBAnimationManagerDelegate* arg0;
+        cocosbuilder::CCBAnimationManagerDelegate* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -720,7 +720,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_getSequenceDuration(JSContext *cx, 
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_getSequenceDuration : Invalid Native Object");
     if (argc == 1) {
-        const char* arg0;
+        const char* arg0 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_getSequenceDuration : Error processing arguments");
         double ret = cobj->getSequenceDuration(arg0);
@@ -742,7 +742,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_addDocumentCallbackNode(JSContext *
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_addDocumentCallbackNode : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Node* arg0;
+        cocos2d::Node* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -770,7 +770,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamed(JSCon
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamed : Invalid Native Object");
     if (argc == 1) {
-        const char* arg0;
+        const char* arg0 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_runAnimationsForSequenceNamed : Error processing arguments");
         cobj->runAnimationsForSequenceNamed(arg0);
@@ -790,7 +790,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_getSequenceId(JSContext *cx, uint32
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_getSequenceId : Invalid Native Object");
     if (argc == 1) {
-        const char* arg0;
+        const char* arg0 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBAnimationManager_getSequenceId : Error processing arguments");
         int ret = cobj->getSequenceId(arg0);
@@ -812,7 +812,7 @@ bool js_cocos2dx_builder_CCBAnimationManager_setCallFunc(JSContext *cx, uint32_t
     cocosbuilder::CCBAnimationManager* cobj = (cocosbuilder::CCBAnimationManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBAnimationManager_setCallFunc : Invalid Native Object");
     if (argc == 2) {
-        cocos2d::CallFunc* arg0;
+        cocos2d::CallFunc* arg0 = nullptr;
         std::string arg1;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
@@ -1063,7 +1063,7 @@ bool js_cocos2dx_builder_CCBReader_setAnimationManager(JSContext *cx, uint32_t a
     cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBReader_setAnimationManager : Invalid Native Object");
     if (argc == 1) {
-        cocosbuilder::CCBAnimationManager* arg0;
+        cocosbuilder::CCBAnimationManager* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1149,7 +1149,7 @@ bool js_cocos2dx_builder_CCBReader_setCCBRootPath(JSContext *cx, uint32_t argc, 
     cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBReader_setCCBRootPath : Invalid Native Object");
     if (argc == 1) {
-        const char* arg0;
+        const char* arg0 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBReader_setCCBRootPath : Error processing arguments");
         cobj->setCCBRootPath(arg0);
@@ -1169,7 +1169,7 @@ bool js_cocos2dx_builder_CCBReader_addOwnerOutletNode(JSContext *cx, uint32_t ar
     cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBReader_addOwnerOutletNode : Invalid Native Object");
     if (argc == 1) {
-        cocos2d::Node* arg0;
+        cocos2d::Node* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1215,7 +1215,7 @@ bool js_cocos2dx_builder_CCBReader_readSoundKeyframesForSeq(JSContext *cx, uint3
     cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBReader_readSoundKeyframesForSeq : Invalid Native Object");
     if (argc == 1) {
-        cocosbuilder::CCBSequence* arg0;
+        cocosbuilder::CCBSequence* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1355,7 +1355,7 @@ bool js_cocos2dx_builder_CCBReader_readCallbackKeyframesForSeq(JSContext *cx, ui
     cocosbuilder::CCBReader* cobj = (cocosbuilder::CCBReader *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_builder_CCBReader_readCallbackKeyframesForSeq : Invalid Native Object");
     if (argc == 1) {
-        cocosbuilder::CCBSequence* arg0;
+        cocosbuilder::CCBSequence* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -1417,7 +1417,7 @@ bool js_cocos2dx_builder_CCBReader_setResolutionScale(JSContext *cx, uint32_t ar
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     if (argc == 1) {
-        double arg0;
+        double arg0 = 0;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_builder_CCBReader_setResolutionScale : Error processing arguments");
         cocosbuilder::CCBReader::setResolutionScale(arg0);
@@ -1430,14 +1430,14 @@ bool js_cocos2dx_builder_CCBReader_setResolutionScale(JSContext *cx, uint32_t ar
 
 bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
+    cocosbuilder::CCBReader* cobj = nullptr;
 
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx);
-    cocosbuilder::CCBReader* cobj = NULL;
     do {
         if (argc == 1) {
-            cocosbuilder::CCBReader* arg0;
+            cocosbuilder::CCBReader* arg0 = nullptr;
             do {
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
@@ -1453,6 +1453,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1472,7 +1473,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 
     do {
         if (argc == 1) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
+            cocosbuilder::NodeLoaderLibrary* arg0 = nullptr;
             do {
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
@@ -1488,6 +1489,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1507,7 +1509,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 
     do {
         if (argc == 2) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
+            cocosbuilder::NodeLoaderLibrary* arg0 = nullptr;
             do {
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
@@ -1518,7 +1520,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
             } while (0);
             if (!ok) { ok = true; break; }
-            cocosbuilder::CCBMemberVariableAssigner* arg1;
+            cocosbuilder::CCBMemberVariableAssigner* arg1 = nullptr;
             do {
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
@@ -1534,6 +1536,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1553,7 +1556,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 
     do {
         if (argc == 3) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
+            cocosbuilder::NodeLoaderLibrary* arg0 = nullptr;
             do {
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
@@ -1564,7 +1567,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
             } while (0);
             if (!ok) { ok = true; break; }
-            cocosbuilder::CCBMemberVariableAssigner* arg1;
+            cocosbuilder::CCBMemberVariableAssigner* arg1 = nullptr;
             do {
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
@@ -1575,7 +1578,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
             } while (0);
             if (!ok) { ok = true; break; }
-            cocosbuilder::CCBSelectorResolver* arg2;
+            cocosbuilder::CCBSelectorResolver* arg2 = nullptr;
             do {
                 if (args.get(2).isNull()) { arg2 = nullptr; break; }
                 if (!args.get(2).isObject()) { ok = false; break; }
@@ -1591,6 +1594,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1610,7 +1614,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
 
     do {
         if (argc == 4) {
-            cocosbuilder::NodeLoaderLibrary* arg0;
+            cocosbuilder::NodeLoaderLibrary* arg0 = nullptr;
             do {
                 if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
@@ -1621,7 +1625,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
                 JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
             } while (0);
             if (!ok) { ok = true; break; }
-            cocosbuilder::CCBMemberVariableAssigner* arg1;
+            cocosbuilder::CCBMemberVariableAssigner* arg1 = nullptr;
             do {
                 if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
@@ -1632,7 +1636,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
                 JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
             } while (0);
             if (!ok) { ok = true; break; }
-            cocosbuilder::CCBSelectorResolver* arg2;
+            cocosbuilder::CCBSelectorResolver* arg2 = nullptr;
             do {
                 if (args.get(2).isNull()) { arg2 = nullptr; break; }
                 if (!args.get(2).isObject()) { ok = false; break; }
@@ -1643,7 +1647,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
                 JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
             } while (0);
             if (!ok) { ok = true; break; }
-            cocosbuilder::NodeLoaderListener* arg3;
+            cocosbuilder::NodeLoaderListener* arg3 = nullptr;
             do {
                 if (args.get(3).isNull()) { arg3 = nullptr; break; }
                 if (!args.get(3).isObject()) { ok = false; break; }
@@ -1659,6 +1663,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();
@@ -1683,6 +1688,7 @@ bool js_cocos2dx_builder_CCBReader_constructor(JSContext *cx, uint32_t argc, jsv
             if (_ccobj) {
                 _ccobj->autorelease();
             }
+
             TypeTest<cocosbuilder::CCBReader> t;
             js_type_class_t *typeClass = nullptr;
             std::string typeName = t.s_name();

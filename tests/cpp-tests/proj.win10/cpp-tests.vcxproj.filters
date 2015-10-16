@@ -131,9 +131,6 @@
     <Filter Include="Classes\ParticleTest">
       <UniqueIdentifier>{0648a349-fa88-45e2-8304-58576ac063b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\PerformanceTest">
-      <UniqueIdentifier>{a52b46b5-e7f9-4780-938f-98e58d702db3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\PhysicsTest">
       <UniqueIdentifier>{1a5d3f8b-3643-47e1-a6d9-7dad49dcb624}</UniqueIdentifier>
     </Filter>
@@ -670,51 +667,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\ParticleTest\ParticleTest.cpp">
       <Filter>Classes\ParticleTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceCallbackTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticleTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceSpriteTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTextureTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PerformanceTest\PerformanceTouchesTest.cpp">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp">
       <Filter>Classes\PhysicsTest</Filter>
@@ -1467,51 +1419,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ParticleTest\ParticleTest.h">
       <Filter>Classes\ParticleTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceCallbackTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticleTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceSpriteTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTextureTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PerformanceTest\PerformanceTouchesTest.h">
-      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h">
       <Filter>Classes\PhysicsTest</Filter>

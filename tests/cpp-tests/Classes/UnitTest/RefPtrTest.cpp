@@ -6,7 +6,7 @@ void RefPtrTest::onEnter()
 {
     UnitTestDemo::onEnter();
 
-#if DEBUG
+#if (defined(COCOS2D_DEBUG) && COCOS2D_DEBUG > 0)
     // TEST(constructors)
     {
         // Default constructor

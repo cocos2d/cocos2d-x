@@ -130,7 +130,7 @@
 -- @return ArmatureDataManager#ArmatureDataManager self (return value: ccs.ArmatureDataManager)
         
 --------------------------------
--- brief    Juge whether or not need auto load sprite file
+-- brief    Judge whether or not need auto load sprite file
 -- @function [parent=#ArmatureDataManager] isAutoLoadSpriteFile 
 -- @param self
 -- @return bool#bool ret (return value: bool)

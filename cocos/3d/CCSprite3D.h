@@ -51,7 +51,7 @@ class Texture2D;
 class MeshSkin;
 class AttachNode;
 struct NodeData;
-/** @brief Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
+/** @brief Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawn as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
@@ -70,7 +70,7 @@ public:
     
     /** create 3d sprite asynchronously
      * If the 3d model was previously loaded, it will create a new 3d sprite and the callback will be called at once.
-     * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the created Sprite3D and a userdefined parameter.
+     * Otherwise it will load the model file in a new thread, and when the 3d sprite is loaded, the callback will be called with the created Sprite3D and a user-defined parameter.
      * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
      * @param modelPath model to be loaded
      * @param callback callback after loading
@@ -124,12 +124,12 @@ public:
     // overrides
     /** set GLProgramState, you should bind attributes by yourself */
     virtual void setGLProgramState(GLProgramState *glProgramState) override;
-    /** just rember bind attributes */
+    /** just remember bind attributes */
     virtual void setGLProgram(GLProgram *glprogram) override;
     
     /*
      * Get AABB
-     * If the sprite has animation, it can't be calculated accuratly,
+     * If the sprite has animation, it can't be calculated accurately,
      * because bone can drive the vertices, we just use the origin vertices
      * to calculate the AABB.
      */
@@ -161,7 +161,7 @@ public:
     
     /**
      * Returns 2d bounding-box
-     * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
+     * Note: the bounding-box is just get from the AABB which as Z=0, so that is not very accurate.
      */
     virtual Rect getBoundingBox() const override;
 
@@ -223,8 +223,8 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
     
-    /**generate default GLProgramState*/
-    void genGLProgramState(bool useLight = false);
+    /**generate default material*/
+    void genMaterial(bool useLight = false);
 
     void createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite);
     void createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas);
@@ -332,7 +332,7 @@ protected:
     
     
     static Sprite3DCache*                        _cacheInstance;
-    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
+    std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite data
 };
 
 // end of 3d group

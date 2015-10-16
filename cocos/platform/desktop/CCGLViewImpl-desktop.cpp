@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -186,7 +187,7 @@ static keyCodeItem g_keyCodeStructArray[] = {
 
     /* Function keys */
     { GLFW_KEY_ESCAPE          , EventKeyboard::KeyCode::KEY_ESCAPE        },
-    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_KP_ENTER      },
+    { GLFW_KEY_ENTER           , EventKeyboard::KeyCode::KEY_ENTER      },
     { GLFW_KEY_TAB             , EventKeyboard::KeyCode::KEY_TAB           },
     { GLFW_KEY_BACKSPACE       , EventKeyboard::KeyCode::KEY_BACKSPACE     },
     { GLFW_KEY_INSERT          , EventKeyboard::KeyCode::KEY_INSERT        },
@@ -195,9 +196,9 @@ static keyCodeItem g_keyCodeStructArray[] = {
     { GLFW_KEY_LEFT            , EventKeyboard::KeyCode::KEY_LEFT_ARROW    },
     { GLFW_KEY_DOWN            , EventKeyboard::KeyCode::KEY_DOWN_ARROW    },
     { GLFW_KEY_UP              , EventKeyboard::KeyCode::KEY_UP_ARROW      },
-    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_KP_PG_UP      },
-    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_KP_PG_DOWN    },
-    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_KP_HOME       },
+    { GLFW_KEY_PAGE_UP         , EventKeyboard::KeyCode::KEY_PG_UP      },
+    { GLFW_KEY_PAGE_DOWN       , EventKeyboard::KeyCode::KEY_PG_DOWN    },
+    { GLFW_KEY_HOME            , EventKeyboard::KeyCode::KEY_HOME       },
     { GLFW_KEY_END             , EventKeyboard::KeyCode::KEY_END           },
     { GLFW_KEY_CAPS_LOCK       , EventKeyboard::KeyCode::KEY_CAPS_LOCK     },
     { GLFW_KEY_SCROLL_LOCK     , EventKeyboard::KeyCode::KEY_SCROLL_LOCK   },
@@ -358,6 +359,19 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     _mainWindow = glfwCreateWindow(needWidth, neeHeight, _viewName.c_str(), _monitor, nullptr);
 
+    if (_mainWindow == nullptr)
+    {
+        std::string message = "Can't create window";
+        if (!_glfwError.empty())
+        {
+            message.append("\nMore info: \n");
+            message.append(_glfwError);
+        }
+
+        MessageBox(message.c_str(), "Error launch application");
+        return false;
+    }
+
     /*
     *  Note that the created window and context may differ from what you requested,
     *  as not all parameters and hints are
@@ -432,7 +446,7 @@ bool GLViewImpl::initWithFullscreen(const std::string &viewname, const GLFWvidmo
     if (nullptr == _monitor)
         return false;
     
-    //These are soft contraints. If the video mode is retrieved at runtime, the resulting window and context should match these exactly. If invalid attribs are passed (eg. from an outdated cache), window creation will NOT fail but the actual window/context may differ.
+    //These are soft constraints. If the video mode is retrieved at runtime, the resulting window and context should match these exactly. If invalid attribs are passed (eg. from an outdated cache), window creation will NOT fail but the actual window/context may differ.
     glfwWindowHint(GLFW_REFRESH_RATE, videoMode.refreshRate);
     glfwWindowHint(GLFW_RED_BITS, videoMode.redBits);
     glfwWindowHint(GLFW_BLUE_BITS, videoMode.blueBits);
@@ -600,7 +614,8 @@ Rect GLViewImpl::getScissorRect() const
 
 void GLViewImpl::onGLFWError(int errorID, const char* errorDesc)
 {
-    CCLOGERROR("GLFWError #%d Happen, %s\n", errorID, errorDesc);
+    _glfwError = StringUtils::format("GLFWError #%d Happen, %s", errorID, errorDesc);
+    CCLOGERROR("%s", _glfwError.c_str());
 }
 
 void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)

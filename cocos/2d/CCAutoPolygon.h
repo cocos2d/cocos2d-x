@@ -85,7 +85,7 @@ public:
      * set the data to be a pointer to a quad
      * the member verts will not be released when this PolygonInfo destructs
      * as the verts memory are managed by other objects
-     * @param quad  a pointer to the V3F_C4B_T2F_Quad obje
+     * @param quad  a pointer to the V3F_C4B_T2F_Quad object
      */
     void setQuad(V3F_C4B_T2F_Quad *quad);
 
@@ -144,18 +144,19 @@ public:
     /**
      * trace all the points along the outline of the image, 
      * @warning must create AutoPolygon with filename to use this function
-     * @param   rect    a texture rect for specify an area of the image, use Rect::Zero for the size of the image, default to Rect::Zero
+     * @param   rect    a texture rect for specify an area of the image
      * @param   threshold   the value when alpha is greater than this value will be counted as opaque, default to 0.0
      * @return  a vector of vec2 of all the points found in clockwise order
      * @code
      * auto ap = AutoPolygon("grossini.png");
-     * std::vector<Vec2> points = ap.trace();//default to size of the image and threshold 0.0
+     * auto rect = Rect(100, 100, 200, 200);
+     * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
      std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
     
     /**
-     * reduce the ammount of points so its faster for GPU to process and draw
+     * reduce the amount of points so its faster for GPU to process and draw
      * based on Ramer-Douglas-Puecker algorithm
      * @param   points  a vector of Vec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
@@ -200,7 +201,7 @@ public:
      * @warning This method requires the AutoPolygon object to know the texture file dimension
      * @param   rect    a texture rect to specify where to map the UV
      * @param   verts   a pointer to the verts array, served both as input and output verts
-     * @param   count   the count for the verts arrac
+     * @param   count   the count for the verts array
      * @code
      * auto ap = AutoPolygon("grossini.png");
      * TrianglesCommand::Triangles myPolygons = ap.triangulate(myPoints);

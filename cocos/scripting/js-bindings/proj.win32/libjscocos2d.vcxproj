@@ -31,6 +31,7 @@
     <ClCompile Include="..\manual\cocosbuilder\js_bindings_ccbreader.cpp" />
     <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp" />
     <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
+    <ClCompile Include="..\manual\component\CCComponentJS.cpp" />
     <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp" />
     <ClCompile Include="..\manual\jsb_opengl_functions.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="..\manual\cocosbuilder\js_bindings_ccbreader.h" />
     <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h" />
     <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
+    <ClInclude Include="..\manual\component\CCComponentJS.h" />
     <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h" />
     <ClInclude Include="..\manual\jsb_helper.h" />

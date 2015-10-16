@@ -37,15 +37,15 @@ ConnectWaitLayer::ConnectWaitLayer()
     int designHeight = 800;
     _imagebg = new Image();
     
-    if (ConfigParser::getInstance()->isLanscape())
-    {
-        _imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth, designHeight, ResolutionPolicy::EXACT_FIT);
-    } else
-    {
-        _imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
-        Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight, designWidth, ResolutionPolicy::FIXED_HEIGHT);
-    }
+    //if (ConfigParser::getInstance()->isLanscape())
+    //{
+    //    _imagebg->initWithImageData(__landscapePngData, sizeof(__landscapePngData));
+    //    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designWidth, designHeight, ResolutionPolicy::EXACT_FIT);
+    //} else
+    //{
+    //    _imagebg->initWithImageData(__portraitPngData, sizeof(__portraitPngData));
+    //    Director::getInstance()->getOpenGLView()->setDesignResolutionSize(designHeight, designWidth, ResolutionPolicy::FIXED_HEIGHT);
+    //}
     Texture2D* texturebg = Director::getInstance()->getTextureCache()->addImage(_imagebg, "play_background");
     auto background = Sprite::createWithTexture(texturebg);
     background->setAnchorPoint(Vec2(0.5, 0.5));
@@ -113,16 +113,16 @@ ConnectWaitLayer::ConnectWaitLayer()
     _labelUploadFile->setAlignment(TextHAlignment::LEFT);
     addChild(_labelUploadFile, 9003);
 
-    if (ConfigParser::getInstance()->isLanscape())
-    {
-        playSprite->setPosition(lanscaptX, lanscaptY);
-        shineSprite->setPosition(lanscaptX, lanscaptY);
-    }
-    else
-    {
-        playSprite->setPosition(portraitX, portraitY);
-        shineSprite->setPosition(portraitX, portraitY);
-    }
+    //if (ConfigParser::getInstance()->isLanscape())
+    //{
+    //    playSprite->setPosition(lanscaptX, lanscaptY);
+    //    shineSprite->setPosition(lanscaptX, lanscaptY);
+    //}
+    //else
+    //{
+    //    playSprite->setPosition(portraitX, portraitY);
+    //    shineSprite->setPosition(portraitX, portraitY);
+    //}
 
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = [](Touch* touch, Event  *event)->bool{

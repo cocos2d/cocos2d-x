@@ -84,7 +84,7 @@ protected:
     std::string _name;//event name
     std::vector<std::string> _args;//we will be using a vector of strings to store multiple data
     std::string _endpoint;//
-    std::string _endpointseperator;//socket.io 1.x requires a ',' between endpoint and payload
+    std::string _endpointseparator;//socket.io 1.x requires a ',' between endpoint and payload
     std::string _type;//message type
     std::string _separator;//for stringify the object
     std::vector<std::string> _types;//types of messages
@@ -101,7 +101,7 @@ private:
     std::vector<std::string> _typesMessage;
 };
 
-SocketIOPacket::SocketIOPacket() :_separator(":")
+SocketIOPacket::SocketIOPacket() :_separator(":"), _endpointseparator("")
 {
     _types.push_back("disconnect");
     _types.push_back("connect");
@@ -149,7 +149,7 @@ std::string SocketIOPacket::toString()const
 
     // Add the endpoint for the namespace to be used if not the default namespace "" or "/", and as long as it is not an ACK, heartbeat, or disconnect packet
     if (_endpoint != "/" && _endpoint != "" && _type != "ack" && _type != "heartbeat" && _type != "disconnect") {
-        encoded << _endpoint << _endpointseperator;
+        encoded << _endpoint << _endpointseparator;
     }
     encoded << this->_separator;
 
@@ -230,8 +230,8 @@ std::string SocketIOPacket::stringify()const
 
 SocketIOPacketV10x::SocketIOPacketV10x()
 {
-    _separator = ":";
-    _endpointseperator = ",";
+    _separator = "";
+    _endpointseparator = ",";
     _types.push_back("disconnected");
     _types.push_back("connected");
     _types.push_back("heartbeat");
@@ -1096,6 +1096,11 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
 
     CCLOGINFO("SIOClient::fireEvent no native event with name %s found", eventName.c_str());
 }
+    
+void SIOClient::setTag(const char* tag)
+{
+    _tag = tag;
+}
 
 //begin SocketIO methods
 SocketIO *SocketIO::_inst = nullptr;
@@ -1194,7 +1199,24 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
             socket->addClient(path, c);
 
             socket->connectToEndpoint(path);
-        }
+        }else{
+	    CCLOG("SocketIO: disconnect previous client");
+	    c->disconnect();
+	
+	    CCLOG("SocketIO: recreate a new socket, new client, connect");
+	    SIOClientImpl* newSocket = nullptr;
+	    SIOClient *newC = nullptr;
+	
+	    newSocket = SIOClientImpl::create(host, port);
+	
+    	    newC = new (std::nothrow) SIOClient(host, port, path, newSocket, delegate);
+	
+	    newSocket->addClient(path, newC);
+	
+	    newSocket->connect();
+	
+	    return newC;
+	}
     }
 
     return c;

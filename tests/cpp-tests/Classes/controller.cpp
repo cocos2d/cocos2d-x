@@ -40,7 +40,10 @@ public:
         addTest("Console", []() { return new ConsoleTests(); });
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
         // Window 10 UWP does not yet support CURL
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+        // android and ios don't use CURL
         addTest("Curl", []() { return new CurlTests(); });
+#endif
 #endif
         addTest("Current Language", []() { return new CurrentLanguageTests(); });
         addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
@@ -71,7 +74,9 @@ public:
         addTest("Node: Parallax", [](){return new ParallaxTests(); });
         addTest("Node: Particles", [](){return new ParticleTests(); });
         addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
+#if CC_USE_PHYSICS
         addTest("Node: Physics", []() { return new PhysicsTests(); });
+#endif
         addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
         addTest("Node: Scene", [](){return new SceneTests(); });
@@ -86,7 +91,6 @@ public:
         addTest("Node: UI", [](){  return new UITests(); });
         addTest("Mouse", []() { return new MouseTests(); });
         addTest("MultiTouch", []() { return new MutiTouchTests(); });
-        addTest("Performance tests", []() { return new PerformanceTests(); });
         addTest("Renderer", []() { return new NewRendererTests(); });
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });

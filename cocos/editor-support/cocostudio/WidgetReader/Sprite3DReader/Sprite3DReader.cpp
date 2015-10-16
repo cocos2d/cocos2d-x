@@ -109,6 +109,8 @@ namespace cocostudio
         bool runAction = false;
         std::string path;
         int resourceType = 0;
+        bool isFlipped = false;
+        int lightFlag = 0;
         
         std::string attriname;
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
@@ -120,7 +122,26 @@ namespace cocostudio
             if(attriname == "RunAction3D")
             {
                 runAction = value == "True" ? true : false;
-                break;
+            }
+            else if (attriname == "IsFlipped")
+            {
+                isFlipped = value == "True" ? true : false;
+            }
+            else if (attriname == "LightFlag")
+            {
+                if (value == "LIGHT0")  lightFlag = (int)LightFlag::LIGHT0;
+                else if (value == "LIGHT1") lightFlag = (int)LightFlag::LIGHT1;
+                else if (value == "LIGHT2") lightFlag = (int)LightFlag::LIGHT2;
+                else if (value == "LIGHT3") lightFlag = (int)LightFlag::LIGHT3;
+                else if (value == "LIGHT4") lightFlag = (int)LightFlag::LIGHT4;
+                else if (value == "LIGHT5") lightFlag = (int)LightFlag::LIGHT5;
+                else if (value == "LIGHT6") lightFlag = (int)LightFlag::LIGHT6;
+                else if (value == "LIGHT7") lightFlag = (int)LightFlag::LIGHT7;
+                else if (value == "LIGHT8") lightFlag = (int)LightFlag::LIGHT8;
+                else if (value == "LIGHT9") lightFlag = (int)LightFlag::LIGHT9;
+                else if (value == "LIGHT10") lightFlag = (int)LightFlag::LIGHT10;
+                else if (value == "LIGHT11") lightFlag = (int)LightFlag::LIGHT11;
+                else if (value == "LIGHT12") lightFlag = (int)LightFlag::LIGHT12;
             }
             
             attribute = attribute->Next();
@@ -170,7 +191,9 @@ namespace cocostudio
                                                                 builder->CreateString(path),
                                                                 builder->CreateString(""),
                                                                 resourceType),
-                                             runAction
+                                             runAction,
+                                             isFlipped,
+                                             lightFlag
                                              );
         
         return *(Offset<Table>*)(&options);
@@ -183,7 +206,9 @@ namespace cocostudio
         
         auto options = (Sprite3DOptions*)sprite3DOptions;
         
+        int lightFlag = options->lightFlag();
         bool runAction = options->runAction() != 0;
+        bool isFlipped = options->isFlipped() != 0;
         auto fileData = options->fileData();
         std::string path = fileData->path()->c_str();
 
@@ -213,6 +238,17 @@ namespace cocostudio
         {
             sprite3D->setColor(Color3B(red, green, blue));
         }
+        if (isFlipped)
+        {
+            sprite3D->setCullFaceEnabled(true);
+            sprite3D->setCullFace(GL_FRONT);
+        }
+
+        if (lightFlag <= 0)
+        {
+            lightFlag = 1;
+        }
+        sprite3D->setLightMask(lightFlag);
         
         auto node3DReader = Node3DReader::getInstance();
         node3DReader->setPropsWithFlatBuffers(sprite3D, (Table*)(options->node3DOption()));
@@ -230,7 +266,7 @@ namespace cocostudio
         {
             ret->initWithFile(path);
         }
-
+        
         setPropsWithFlatBuffers(ret, sprite3DOptions);
         
         return ret;

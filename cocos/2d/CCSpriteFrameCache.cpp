@@ -105,8 +105,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
     auto textureFileName = Director::getInstance()->getTextureCache()->getTextureFilePath(texture);
-    auto image = new Image();
-    image->initWithImageFile(textureFileName);
+    Image* image = nullptr;
     NinePatchImageParser parser;
     for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
     {
@@ -131,7 +130,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             // check ow/oh
             if(!ow || !oh)
             {
-                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenrate the .plist");
+                CCLOGWARN("cocos2d: WARNING: originalWidth/Height not found on the SpriteFrame. AnchorPoint won't work as expected. Regenerate the .plist");
             }
             // abs ow/oh
             ow = abs(ow);
@@ -199,6 +198,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
         bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
         if(flag)
         {
+            if (image == nullptr) {
+                image = new Image();
+                image->initWithImageFile(textureFileName);
+            }
             parser.setSpriteFrameInfo(image, spriteFrame->getRectInPixels(), spriteFrame->isRotated());
             texture->addSpriteFrameCapInset(spriteFrame, parser.parseCapInset());
         }

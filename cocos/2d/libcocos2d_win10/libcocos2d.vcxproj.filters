@@ -474,66 +474,6 @@
     <ClCompile Include="..\CCTweenFunction.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3d\CCAABB.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCAnimate3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCAnimation3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCAttachNode.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCBillBoard.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCBundle3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCBundleReader.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCFrustum.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCMesh.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCMeshSkin.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCMeshVertexIndexData.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCOBB.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCObjLoader.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCPlane.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCRay.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCSkeleton3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCSkybox.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCSprite3D.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCSprite3DMaterial.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3d\CCTerrain.cpp">
-      <Filter>3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\base\atitc.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -1578,21 +1518,6 @@
     <ClCompile Include="..\..\network\WebSocket.cpp">
       <Filter>network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\physics\CCPhysicsBody.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics\CCPhysicsContact.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics\CCPhysicsShape.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics\CCPhysicsWorld.cpp">
-      <Filter>physics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\platform\CCFileUtils.cpp">
       <Filter>platform</Filter>
     </ClCompile>
@@ -1869,30 +1794,6 @@
     <ClCompile Include="..\..\audio\winrt\AudioSourceReader.cpp">
       <Filter>audioengine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3D.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3DComponent.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3DConstraint.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3DDebugDrawer.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3DObject.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3DShape.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysics3DWorld.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp">
-      <Filter>physics3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\renderer\CCFrameBuffer.cpp" />
     <ClCompile Include="..\..\navmesh\CCNavMesh.cpp">
       <Filter>navmesh</Filter>
@@ -1941,6 +1842,108 @@
     </ClCompile>
     <ClCompile Include="..\..\renderer\CCTextureCube.cpp">
       <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsBody.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsContact.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsShape.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics\CCPhysicsWorld.cpp">
+      <Filter>physics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3DComponent.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3DConstraint.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3DDebugDrawer.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3DObject.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3DShape.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysics3DWorld.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCAABB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCAnimate3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCAnimation3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCAttachNode.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCBillBoard.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCBundle3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCBundleReader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCFrustum.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCMesh.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCMeshSkin.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCMeshVertexIndexData.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCMotionStreak3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCOBB.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCObjLoader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCPlane.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCRay.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCSkeleton3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCSkybox.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCSprite3D.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCSprite3DMaterial.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3d\CCTerrain.cpp">
+      <Filter>3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2152,75 +2155,6 @@
     </ClInclude>
     <ClInclude Include="..\CCTweenFunction.h">
       <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCAABB.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCAnimate3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCAnimation3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCAnimationCurve.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCAttachNode.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCBillBoard.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCBundle3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCBundle3DData.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCBundleReader.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCFrustum.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCMesh.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCMeshSkin.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCMeshVertexIndexData.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCOBB.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCObjLoader.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCPlane.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCRay.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCSkeleton3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCSkybox.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCSprite3D.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCSprite3DMaterial.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\CCTerrain.h">
-      <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3d\cocos3d.h">
-      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\base\atitc.h">
       <Filter>base</Filter>
@@ -3389,24 +3323,6 @@
     <ClInclude Include="..\..\network\WebSocket.h">
       <Filter>network</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\physics\CCPhysicsBody.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics\CCPhysicsContact.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics\CCPhysicsHelper.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics\CCPhysicsJoint.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics\CCPhysicsShape.h">
-      <Filter>physics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics\CCPhysicsWorld.h">
-      <Filter>physics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\platform\CCApplication.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -3719,30 +3635,6 @@
     <ClInclude Include="..\..\audio\winrt\AudioSourceReader.h">
       <Filter>audioengine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3D.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3DComponent.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3DConstraint.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3DDebugDrawer.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3DObject.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3DShape.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysics3DWorld.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h">
-      <Filter>physics3d</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\navmesh\CCNavMesh.h">
       <Filter>navmesh</Filter>
     </ClInclude>
@@ -3793,6 +3685,120 @@
     </ClInclude>
     <ClInclude Include="..\..\renderer\CCTextureCube.h">
       <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsBody.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsContact.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsHelper.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsJoint.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsShape.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics\CCPhysicsWorld.h">
+      <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3D.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3DComponent.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3DConstraint.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3DDebugDrawer.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3DObject.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3DShape.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysics3DWorld.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h">
+      <Filter>physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCAABB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCAnimate3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCAnimation3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCAnimationCurve.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCAttachNode.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCBillBoard.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCBundle3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCBundle3DData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCBundleReader.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCFrustum.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCMesh.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCMeshSkin.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCMeshVertexIndexData.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCMotionStreak3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCOBB.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCObjLoader.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCPlane.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCRay.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCSkeleton3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCSkybox.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCSprite3D.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCSprite3DMaterial.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\CCTerrain.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3d\cocos3d.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3949,6 +3955,9 @@
     </None>
     <None Include="..\..\renderer\ccShader_UI_Gray.frag">
       <Filter>renderer</Filter>
+    </None>
+    <None Include="..\..\3d\CCAnimationCurve.inl">
+      <Filter>3d</Filter>
     </None>
   </ItemGroup>
 </Project>

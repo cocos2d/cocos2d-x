@@ -151,6 +151,50 @@ var Material_2DEffects = MaterialSystemTestDemo.extend({
     }
 });
 
+var Material_UniformCallback = MaterialSystemTestDemo.extend({
+    _subtitle:"Testing uniforms call back",
+
+    ctor:function(){
+        this._super();
+        var properties = cc.Properties.createNonRefCounted("Materials/auto_binding_test.material#sample");
+
+        var mat1 = cc.Material.createWithProperties(properties);
+
+        var spriteBlur = new cc.Sprite("Images/grossini.png");
+        spriteBlur.setNormalizedPosition(cc.p(0.2, 0.5));
+        this.addChild(spriteBlur);
+        var spriteBlurProgram = mat1.getTechniqueByName("blur").getPassByIndex(0).getGLProgramState();
+        spriteBlur.setGLProgramState(spriteBlurProgram);
+        spriteBlurProgram.setUniformCallback("blurRadius", function(glprogram, uniform){
+            glprogram.setUniformLocationWith1f(uniform.location, Math.random() * 10);
+        });
+
+
+        var spriteOutline = new cc.Sprite("Images/grossini.png");
+        spriteOutline.setNormalizedPosition(cc.p(0.4, 0.5));
+        this.addChild(spriteOutline);
+        var spriteOutlineProgram = mat1.getTechniqueByName("outline").getPassByIndex(0).getGLProgramState();
+        spriteOutline.setGLProgramState(spriteOutlineProgram);
+        spriteOutlineProgram.setUniformCallback("u_outlineColor", function(glprogram, uniform){
+            var r = Math.random();
+            var g = Math.random();
+            var b = Math.random();
+            glprogram.setUniformLocationWith3f(uniform.location, r, g, b);
+        });
+
+        var spriteNoise = new cc.Sprite("Images/grossini.png");
+        spriteNoise.setNormalizedPosition(cc.p(0.6, 0.5));
+        this.addChild(spriteNoise);
+        spriteNoise.setGLProgramState(mat1.getTechniqueByName("noise").getPassByIndex(0).getGLProgramState());
+
+        var spriteEdgeDetect = new cc.Sprite("Images/grossini.png");
+        spriteEdgeDetect.setNormalizedPosition(cc.p(0.8, 0.5));
+        this.addChild(spriteEdgeDetect);
+        spriteEdgeDetect.setGLProgramState(mat1.getTechniqueByName("edge_detect").getPassByIndex(0).getGLProgramState());
+    }
+});
+
+
 var Material_setTechnique = MaterialSystemTestDemo.extend({
     _subtitle:"Testing setTechnique()",
     _techniqueState:0,
@@ -307,6 +351,7 @@ var Material_parsePerformance = MaterialSystemTestDemo.extend({
 //
 var arrayOfMaterialSystemTest = [
     Material_2DEffects,
+    Material_UniformCallback,
     Material_setTechnique,
     Material_clone,
     Material_MultipleSprite3D,

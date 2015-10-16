@@ -33,6 +33,7 @@
 #include "cocos2d_specifics.hpp"
 #include "jsb_cocos2dx_auto.hpp"
 #include "js_bindings_config.h"
+
 // for debug socket
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include <io.h>
@@ -452,6 +453,14 @@ static const JSClass global_class = {
     JS_GlobalObjectTraceHook
 };
 
+ScriptingCore* ScriptingCore::getInstance()
+{
+    static ScriptingCore* instance = nullptr;
+    if (instance == nullptr)
+        instance = new ScriptingCore();
+
+    return instance;
+}
 
 ScriptingCore::ScriptingCore()
 : _rt(nullptr)
@@ -756,6 +765,35 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
     return evaluatedOK;
 }
 
+bool ScriptingCore::requireScript(const char *path, JS::MutableHandleValue jsvalRet)
+{
+    return requireScript(path, _global.ref(), _cx, jsvalRet);
+}
+
+bool ScriptingCore::requireScript(const char *path, JS::HandleObject global, JSContext* cx, JS::MutableHandleValue jsvalRet)
+{
+    if (cx == NULL)
+    {
+        cx = _cx;
+    }
+    
+    compileScript(path,global,cx);
+    JS::RootedScript script(cx, getScript(path));
+    bool evaluatedOK = false;
+    if (script)
+    {
+        JSAutoCompartment ac(cx, global);
+        evaluatedOK = JS_ExecuteScript(cx, global, script, jsvalRet);
+        if (false == evaluatedOK)
+        {
+            cocos2d::log("(evaluatedOK == JS_FALSE)");
+            JS_ReportPendingException(cx);
+        }
+    }
+    
+    return evaluatedOK;
+}
+
 void ScriptingCore::reset()
 {
     Director::getInstance()->restart();
@@ -983,6 +1021,35 @@ bool ScriptingCore::isFunctionOverridedInJS(JS::HandleObject obj, const std::str
     }
     
     return false;
+}
+
+int ScriptingCore::handleActionEvent(void* data)
+{
+    if (NULL == data)
+        return 0;
+    
+    ActionObjectScriptData* actionObjectScriptData = static_cast<ActionObjectScriptData*>(data);
+    if (NULL == actionObjectScriptData->nativeObject || NULL == actionObjectScriptData->eventType)
+        return 0;
+    
+    Action* actionObject = static_cast<Action*>(actionObjectScriptData->nativeObject);
+    int eventType = *((int*)(actionObjectScriptData->eventType));
+    
+    js_proxy_t * p = jsb_get_native_proxy(actionObject);
+    if (!p) return 0;
+    
+    int ret = 0;
+    JS::RootedValue retval(_cx);
+    
+    if (eventType == kActionUpdate)
+    {
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "update", js_cocos2dx_Action_update))
+        {
+            jsval dataVal = DOUBLE_TO_JSVAL(*((float *)actionObjectScriptData->param));
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
+        }
+    }
+    return ret;
 }
 
 int ScriptingCore::handleNodeEvent(void* data)
@@ -1454,6 +1521,11 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
         case kNodeEvent:
             {
                 return handleNodeEvent(evt->data);
+            }
+            break;
+        case kScriptActionEvent:
+            {
+                return handleActionEvent(evt->data);
             }
             break;
         case kMenuClickedEvent:

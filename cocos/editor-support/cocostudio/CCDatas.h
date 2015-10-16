@@ -450,7 +450,7 @@ public:
 
 
 /**
-*  AnimationData include all movement infomation for the Armature
+*  AnimationData include all movement information for the Armature
 *  The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData
 *                                              -> MovementFrameData
 *  @js NA
