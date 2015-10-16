@@ -197,14 +197,11 @@ void OpenGLESPage::OnPointerWheelChanged(Object^ sender, PointerEventArgs^ e)
 
 void OpenGLESPage::OnKeyPressed(CoreWindow^ sender, KeyEventArgs^ e)
 {
-	if (!e->KeyStatus.WasKeyDown)
-	{
-		//log("OpenGLESPage::OnKeyPressed %d", e->VirtualKey);
-		if (mRenderer)
-		{
-			mRenderer->QueueKeyboardEvent(WinRTKeyboardEventType::KeyPressed, e);
-		}
-	}
+    //log("OpenGLESPage::OnKeyPressed %d", e->VirtualKey);
+    if (mRenderer)
+    {
+        mRenderer->QueueKeyboardEvent(WinRTKeyboardEventType::KeyPressed, e);
+    }
 }
 
 void OpenGLESPage::OnCharacterReceived(CoreWindow^ sender, CharacterReceivedEventArgs^ e)
