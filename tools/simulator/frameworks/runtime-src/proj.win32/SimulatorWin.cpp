@@ -758,14 +758,14 @@ void SimulatorWin::parseCocosProjectConfig(ProjectConfig &config)
     config.setConsolePort(parser->getConsolePort());
     config.setFileUploadPort(parser->getUploadPort());
     config.setFrameSize(parser->getInitViewSize());
-    //if (parser->isLanscape())
-    //{
-    //    config.changeFrameOrientationToLandscape();
-    //}
-    //else
-    //{
-    //    config.changeFrameOrientationToPortait();
-    //}
+    if (parser->isLanscape())
+    {
+        config.changeFrameOrientationToLandscape();
+    }
+    else
+    {
+        config.changeFrameOrientationToPortait();
+    }
     config.setScriptFile(parser->getEntryFile());
 }
 
