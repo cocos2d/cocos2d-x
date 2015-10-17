@@ -331,6 +331,9 @@ protected:
     int _nodePriorityIndex;
     
     std::set<std::string> _internalCustomListenerIDs;
+private:
+    typedef std::unordered_map<EventListener::ListenerID, EventListenerVector*>::iterator ListenerMapIterator;
+    void doUpdateListeners(ListenerMapIterator listenersIter);
 };
 
 
