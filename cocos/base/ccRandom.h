@@ -91,6 +91,10 @@ inline int random() {
     return cocos2d::random(0, RAND_MAX);
 };
 
+inline bool probably(int probability) {
+    return random(0, 100) < probability;
+}
+
 /**
  * Returns a random float between -1 and 1.
  * It can be seeded using std::srand(seed);

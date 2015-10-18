@@ -1241,6 +1241,7 @@ void TransitionFade :: onEnter()
     TransitionScene::onEnter();
 
     LayerColor* l = LayerColor::create(_color);
+    l->setGlobalZOrder(10000);
     _inScene->setVisible(false);
 
     addChild(l, 2, kSceneFade);

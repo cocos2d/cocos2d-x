@@ -16,7 +16,8 @@ LOCAL_EXPORT_LDLIBS := -lOpenSLES
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../platform/android
+                    $(LOCAL_PATH)/../../platform/android \
+                    $(LOCAL_PATH)/../../../../cocos2d-tooflya-sdk/support \
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -36,6 +37,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
-                    $(LOCAL_PATH)/../../platform/android
+                    $(LOCAL_PATH)/../../platform/android \
+                    $(LOCAL_PATH)/../../../../cocos2d-tooflya-sdk/support \
 
 include $(BUILD_STATIC_LIBRARY)

@@ -35,15 +35,15 @@
 USING_NS_CC;
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
-	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
+	/*Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
 	texture->retain();
 	self->rendererObject = texture;
 	self->width = texture->getPixelsWide();
-	self->height = texture->getPixelsHigh();
+	self->height = texture->getPixelsHigh();*/
 }
 
 void _spAtlasPage_disposeTexture (spAtlasPage* self) {
-	((Texture2D*)self->rendererObject)->release();
+	//((Texture2D*)self->rendererObject)->release();
 }
 
 char* _spUtil_readFile (const char* path, int* length) {

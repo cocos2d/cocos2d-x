@@ -111,6 +111,8 @@ void ScrollView::onEnter()
 
     Layout::onEnter();
     scheduleUpdate();
+
+    _autoScrolling = false;
 }
 
 bool ScrollView::init()
@@ -876,6 +878,8 @@ void ScrollView::gatherTouchMove(const Vec2& delta)
 
 void ScrollView::handlePressLogic(Touch *touch)
 {
+    this->getInnerContainer()->stopAllActions();
+
     _bePressed = true;
     _autoScrolling = false;
     

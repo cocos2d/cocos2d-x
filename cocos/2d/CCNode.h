@@ -38,6 +38,15 @@
 #include "2d/CCComponentContainer.h"
 #include "2d/CCComponent.h"
 
+#include "Touch.h"
+#include "State.h"
+#include "Times.h"
+#include "Cull.h"
+
+namespace framework {
+  class Pool;
+}
+
 NS_CC_BEGIN
 
 class GridBase;
@@ -1873,6 +1882,114 @@ public:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
+
+/**
+ * Tooflya Inc. Development
+ *
+ * @author Igor Mats from Tooflya Inc.
+ * @copyright (c) 2015 by Igor Mats
+ * http://www.tooflya.com/development/
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * @cocos2d
+ *
+ */
+
+protected:
+    bool _scheduleUpdate = false;
+
+    void setScheduleUpdate(bool scheduleUpdate)
+    {
+        _scheduleUpdate = scheduleUpdate;
+
+        if(this->state->create)
+        {
+            this->scheduleUpdate();
+        }
+    }
+
+public:
+    int id;
+
+    framework::Touch* touch;
+    framework::State* state;
+    framework::Cull* cull;
+
+    framework::Pool* pool = nullptr;
+
+    Node* _create();
+    Node* _destroy(bool action = false);
+
+    Node* _clone();
+
+    virtual void onCreate();
+    virtual void onDestroy(bool action = false);
+
+    bool onTouchBegan(Touch* touch, Event* e);
+    void onTouchEnded(Touch* touch, Event* e);
+    void onTouchsMoved(Touch* touch, Event* e);
+    void onTouchCancelled(Touch* touch, Event* e);
+
+    virtual void onTouchStart(Touch* touch, Event* e);
+    virtual void onTouchFinish(Touch* touch, Event* e);
+    virtual void onTouch(Touch* touch, Event* e);
+
+    virtual void onHover();
+    virtual void onUnHover();
+
+    virtual bool onSwipe();
+
+    virtual void onSwipeUp();
+    virtual void onSwipeDown();
+    virtual void onSwipeLeft();
+    virtual void onSwipeRight();
+
+    virtual void onEnterShow();
+    virtual void onExitHide();
+
+    void bind(bool bind);
+
+    int detectSwipe(Touch* touch, Event* e);
+
+    virtual bool containsTouchLocation(Touch* touch);
+
+    void setPool(framework::Pool* pool)
+    {
+        this->pool = pool;
+    };
+    void setPoolIdentifier(int id)
+    {
+        this->id = id;
+    }
+
+    framework::Pool* getPool() {
+        return this->pool;
+    };
+    int getPoolIdentifier() {
+        return this->id;
+    };
+
+    float getRecursiveWidth(bool recursive = false);
+    float getRecursiveHeight(bool recursive = false);
+
+    virtual Node* deepCopy();
 };
 
 

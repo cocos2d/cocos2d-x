@@ -151,6 +151,9 @@ public:
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
     inline Scene* getRunningScene() { return _runningScene; }
+  
+    /** Gets previous running Scene. Director can only run one Scene at a time. */
+    inline Scene* getPreviousScene() { unsigned int c = _scenesStack.size(); return (Scene*) _scenesStack.at(c - 2); }
 
     /** Gets the FPS value. */
     inline float getAnimationInterval() { return _animationInterval; }
@@ -292,6 +295,7 @@ public:
      * ONLY call it if there is a running scene.
      */
     void popScene();
+    void popScene(Scene *transition);
 
     /** 
      * Pops out all scenes from the stack until the root scene in the queue.

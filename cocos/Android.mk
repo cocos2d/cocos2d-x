@@ -234,6 +234,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/base \
+                    $(LOCAL_PATH)/editor-support \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -243,10 +244,29 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper \
+                    $(LOCAL_PATH)/../cocos/audio/include \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/audio \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/pools \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/translate \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/support \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/analytics \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/batch \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/heyzap \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/internal \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/media \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/modal \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/purchase \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/screenshot \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/services \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/social \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/platform \
+                    $(LOCAL_PATH)/editor-support \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
@@ -258,7 +278,25 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper \
+                    $(LOCAL_PATH)/../cocos/audio/include \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/audio \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/pools \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/translate \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/support \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/analytics \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/batch \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/heyzap \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/internal \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/media \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/modal \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/purchase \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/screenshot \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/services \
+                    $(LOCAL_PATH)/../../cocos2d-tooflya-sdk/platform/include/social \
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -266,13 +304,13 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
 
 LOCAL_STATIC_LIBRARIES := cocos_freetype2_static
 LOCAL_STATIC_LIBRARIES += cocos_png_static
-LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
-LOCAL_STATIC_LIBRARIES += cocos_tiff_static
+#LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
+#LOCAL_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_STATIC_LIBRARIES += cocos_webp_static
-LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
+#LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
 LOCAL_STATIC_LIBRARIES += cocos_zlib_static
-LOCAL_STATIC_LIBRARIES += recast_static
-LOCAL_STATIC_LIBRARIES += bullet_static
+#LOCAL_STATIC_LIBRARIES += recast_static
+#LOCAL_STATIC_LIBRARIES += bullet_static
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
@@ -294,9 +332,9 @@ LOCAL_MODULE_FILENAME := libcocos2d
 
 LOCAL_STATIC_LIBRARIES := cocostudio_static
 LOCAL_STATIC_LIBRARIES += cocosbuilder_static
-LOCAL_STATIC_LIBRARIES += cocos3d_static
+#LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
-LOCAL_STATIC_LIBRARIES += cocos_network_static
+#LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
 
 include $(BUILD_STATIC_LIBRARY)
@@ -305,21 +343,21 @@ $(call import-module,freetype2/prebuilt/android)
 $(call import-module,platform/android)
 $(call import-module,png/prebuilt/android)
 $(call import-module,zlib/prebuilt/android)
-$(call import-module,jpeg/prebuilt/android)
-$(call import-module,tiff/prebuilt/android)
+#$(call import-module,jpeg/prebuilt/android)
+#$(call import-module,tiff/prebuilt/android)
 $(call import-module,webp/prebuilt/android)
-$(call import-module,chipmunk/prebuilt/android)
-$(call import-module,3d)
+#$(call import-module,chipmunk/prebuilt/android)
+#$(call import-module,3d)
 $(call import-module,audio/android)
 $(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
-$(call import-module,network)
+#$(call import-module,network)
 $(call import-module,ui)
 $(call import-module,extensions)
-$(call import-module,Box2D)
-$(call import-module,bullet)
-$(call import-module,recast)
+#$(call import-module,Box2D)
+#$(call import-module,bullet)
+#$(call import-module,recast)
 # $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)

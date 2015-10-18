@@ -854,6 +854,24 @@ void Director::popScene(void)
     }
 }
 
+void Director::popScene(Scene* transition)
+{
+  _scenesStack.popBack();
+  unsigned int c = _scenesStack.size();
+
+  transition->setGlobalZOrder(10000);
+
+  if(c == 0)
+  {
+    end();
+  }
+  else
+  {
+    _sendCleanupToScene = true;
+    _nextScene = transition;
+  }
+}
+
 void Director::popToRootScene(void)
 {
     popToSceneStackLevel(1);

@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1551A33E158F2AB200E66CFE"
-               BuildableName = "libcocos2d Mac.a"
-               BlueprintName = "libcocos2d Mac"
-               ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+               BlueprintIdentifier = "A07A4C241783777C0073F6A7"
+               BuildableName = "libcocos2d iOS.a"
+               BlueprintName = "libcocos2d iOS"
+               ReferencedContainer = "container:Framework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1551A33E158F2AB200E66CFE"
-            BuildableName = "libcocos2d Mac.a"
-            BlueprintName = "libcocos2d Mac"
-            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+            BlueprintIdentifier = "A07A4C241783777C0073F6A7"
+            BuildableName = "libcocos2d iOS.a"
+            BlueprintName = "libcocos2d iOS"
+            ReferencedContainer = "container:Framework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1551A33E158F2AB200E66CFE"
-            BuildableName = "libcocos2d Mac.a"
-            BlueprintName = "libcocos2d Mac"
-            ReferencedContainer = "container:cocos2d_libs.xcodeproj">
+            BlueprintIdentifier = "A07A4C241783777C0073F6A7"
+            BuildableName = "libcocos2d iOS.a"
+            BlueprintName = "libcocos2d iOS"
+            ReferencedContainer = "container:Framework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
