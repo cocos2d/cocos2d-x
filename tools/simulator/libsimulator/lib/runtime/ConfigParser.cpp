@@ -76,10 +76,10 @@ void ConfigParser::readConfig(const string &filepath)
             {
                 _viewName = objectInitView["name"].GetString();
             }
-            //if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool())
-            //{
-            //    _isLandscape = objectInitView["isLandscape"].GetBool();
-            //}
+            if (objectInitView.HasMember("isLandscape") && objectInitView["isLandscape"].IsBool())
+            {
+                _isLandscape = objectInitView["isLandscape"].GetBool();
+            }
             if (objectInitView.HasMember("entry") && objectInitView["entry"].IsString())
             {
                 setEntryFile(objectInitView["entry"].GetString());
@@ -120,7 +120,7 @@ void ConfigParser::readConfig(const string &filepath)
 }
 
 ConfigParser::ConfigParser(void) :
-//_isLandscape(false),
+_isLandscape(true),
 _isWindowTop(false),
 _consolePort(kProjectConfigConsolePort),
 _uploadPort(kProjectConfigUploadPort),
@@ -152,10 +152,10 @@ Size ConfigParser::getInitViewSize()
     return _initViewSize;
 }
 
-//bool ConfigParser::isLanscape()
-//{
-//    return _isLandscape;
-//}
+bool ConfigParser::isLanscape()
+{
+    return _isLandscape;
+}
 
 bool ConfigParser::isWindowTop()
 {
