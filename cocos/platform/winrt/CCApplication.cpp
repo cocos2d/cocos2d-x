@@ -122,7 +122,7 @@ const char * Application::getCurrentLanguageCode()
 
         if (pwszLanguagesBuffer)
         {
-            delete pwszLanguagesBuffer;
+            delete [] pwszLanguagesBuffer;
         }
     }
 
