@@ -300,7 +300,10 @@ protected:
     
     /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
     void visitTarget(Node* node, bool isRootNode);
-    
+
+    /** Remove all listeners in _toRemoveListeners list and cleanup */
+    void cleanToRemovedListeners(Event* event);
+
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
@@ -318,7 +321,10 @@ protected:
     
     /** The listeners to be added after dispatching event */
     std::vector<EventListener*> _toAddedListeners;
-    
+
+    /** The listeners to be removed after dispatching event */
+    std::vector<EventListener*> _toRemovedListeners;
+
     /** The nodes were associated with scene graph based priority listeners */
     std::set<Node*> _dirtyNodes;
     
