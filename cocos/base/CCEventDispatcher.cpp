@@ -1239,7 +1239,7 @@ void EventDispatcher::updateListeners(Event* event)
 
     if (!_toRemovedListeners.empty())
     {
-        cleanToRemovedListeners(event);
+        cleanToRemovedListeners();
     }
 }
 
@@ -1543,7 +1543,7 @@ void EventDispatcher::setDirty(const EventListener::ListenerID& listenerID, Dirt
     }
 }
 
-void EventDispatcher::cleanToRemovedListeners(Event* event)
+void EventDispatcher::cleanToRemovedListeners()
 {
     for (auto& l : _toRemovedListeners)
     {

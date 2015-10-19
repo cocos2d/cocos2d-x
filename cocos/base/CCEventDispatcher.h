@@ -302,7 +302,7 @@ protected:
     void visitTarget(Node* node, bool isRootNode);
 
     /** Remove all listeners in _toRemoveListeners list and cleanup */
-    void cleanToRemovedListeners(Event* event);
+    void cleanToRemovedListeners();
 
     /** Listeners map */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
