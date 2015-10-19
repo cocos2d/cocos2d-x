@@ -62,13 +62,13 @@ public:
 
     float getOutlineSize() const { return _outlineSize; }
 
-    void renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight); 
+    void renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight, long bitmapPitch);
 
     FT_Encoding getEncoding() const { return _encoding; }
 
     int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
     
-    unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
+    unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, long &outPitch, Rect &outRect,int &xAdvance);
     
     int getFontAscender() const;
 

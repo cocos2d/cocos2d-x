@@ -41,6 +41,9 @@ const int  FontFreeType::DistanceMapSpread = 3;
 
 int FontFreeType::_defaultFontDPI = 72;
 
+#define HRES 64
+#define HRESF 64.f
+
 const char* FontFreeType::_glyphASCII = "\"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþ ";
 const char* FontFreeType::_glyphNEHE = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ";
 
@@ -125,7 +128,13 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
     FT_Face face;
     // save font name locally
     _fontName = fontName;
-
+    
+    FT_Matrix matrix = {
+        (int)((1.0/HRESF) * 0x10000L),
+        (int)((0.0)       * 0x10000L),
+        (int)((0.0)       * 0x10000L),
+        (int)((1.0)       * 0x10000L)};
+    
     auto it = s_cacheFontData.find(fontName);
     if (it != s_cacheFontData.end())
     {
@@ -171,13 +180,20 @@ bool FontFreeType::createFontObject(const std::string &fontName, int fontSize)
 
     // set the requested font size
     int dpi = _defaultFontDPI;
+    
+    // font size if the number of pixels in height?
     int fontSizePoints = (int)(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
-    if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
+    
+    if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi * HRES, dpi))
         return false;
     
+    //FT_Set_Pixel_Sizes(face, 0, fontSize);
     // store the face globally
     _fontRef = face;
     _lineHeight = static_cast<int>(_fontRef->size->metrics.height >> 6);
+    
+    /* Set transform matrix */
+    FT_Set_Transform(face, &matrix, NULL);
     
     // done and good
     return true;
@@ -277,7 +293,7 @@ int FontFreeType::getFontAscender() const
     return (static_cast<int>(_fontRef->size->metrics.ascender >> 6));
 }
 
-unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance)
+unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, long &outPitch, Rect &outRect,int &xAdvance)
 {
     bool invalidChar = true;
     unsigned char* ret = nullptr;
@@ -299,21 +315,30 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
         }
 
         auto& metrics = _fontRef->glyph->metrics;
-        outRect.origin.x = metrics.horiBearingX >> 6;
+        outRect.origin.x = (((metrics.horiBearingX + (HRES/2)) / HRES) >> 6);
         outRect.origin.y = -(metrics.horiBearingY >> 6);
-        outRect.size.width = (metrics.width >> 6);
-        outRect.size.height = (metrics.height >> 6);
+        //outRect.size.width = (((metrics.width + HRES-1) / HRES) >> 6);
+        //outRect.size.height = (metrics.height >> 6);
 
-        xAdvance = (static_cast<int>(_fontRef->glyph->metrics.horiAdvance >> 6));
+        xAdvance = (static_cast<int>(((_fontRef->glyph->metrics.horiAdvance + (HRES/2)) / HRES) >> 6));
 
         outWidth  = _fontRef->glyph->bitmap.width;
         outHeight = _fontRef->glyph->bitmap.rows;
+        outPitch = _fontRef->glyph->bitmap.pitch;
+        
+        outRect.size.width = outWidth;
+        outRect.size.height = outHeight;
+        
         ret = _fontRef->glyph->bitmap.buffer;
 
         if (_outlineSize > 0)
         {
             auto copyBitmap = new unsigned char[outWidth * outHeight];
-            memcpy(copyBitmap,ret,outWidth * outHeight * sizeof(unsigned char));
+            // can't do this...if using transforms.
+            for (int y=0; y<outHeight; y++)
+            {
+                memcpy(copyBitmap, ret + (y * outPitch), outWidth * sizeof(unsigned char));
+            }
 
             FT_BBox bbox;
             auto outlineBitmap = getGlyphBitmapWithOutline(theChar,bbox);
@@ -463,7 +488,7 @@ unsigned char * makeDistanceMap( unsigned char *img, long width, long height)
     {
         for (j = 0; j < height; ++j)
         {
-            data[j * outWidth + FontFreeType::DistanceMapSpread + i] = img[j * width + i] / 255.0;
+            data[j * outWidth + FontFreeType::DistanceMapSpread + i] = (double)(img[j * width + i]) / 255.0;
         }
     }
 
@@ -525,7 +550,7 @@ unsigned char * makeDistanceMap( unsigned char *img, long width, long height)
     return out;
 }
 
-void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight)
+void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned char* bitmap,long bitmapWidth,long bitmapHeight, long bitmapPitch)
 {
     int iX = posX;
     int iY = posY;
@@ -539,7 +564,7 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
 
         for (long y = 0; y < bitmapHeight; ++y)
         {
-            long bitmap_y = y * bitmapWidth;
+            long bitmap_y = y * bitmapPitch;
 
             for (long x = 0; x < bitmapWidth; ++x)
             {    
@@ -566,7 +591,7 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
         unsigned char tempChar;
         for (long y = 0; y < bitmapHeight; ++y)
         {
-            long bitmap_y = y * bitmapWidth;
+            long bitmap_y = y * bitmapPitch;
 
             for (int x = 0; x < bitmapWidth; ++x)
             {
@@ -580,14 +605,14 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
 
             iX  = posX;
             iY += 1;
-        }
+        } 
         delete [] bitmap;
     }
     else
     {
         for (long y = 0; y < bitmapHeight; ++y)
         {
-            long bitmap_y = y * bitmapWidth;
+            long bitmap_y = y * bitmapPitch;
 
             for (int x = 0; x < bitmapWidth; ++x)
             {

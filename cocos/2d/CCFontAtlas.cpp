@@ -306,6 +306,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
     int adjustForExtend = _letterEdgeExtend / 2;
     long bitmapWidth;
     long bitmapHeight;
+    long bitmapPitch;
     Rect tempRect;
     FontLetterDefinition tempDef;
 
@@ -316,8 +317,8 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
 
     for (auto&& it : codeMapOfNewChar)
     {
-        auto bitmap = _fontFreeType->getGlyphBitmap(it.second, bitmapWidth, bitmapHeight, tempRect, tempDef.xAdvance);
-        if (bitmap && bitmapWidth > 0 && bitmapHeight > 0)
+        auto bitmap = _fontFreeType->getGlyphBitmap(it.second, bitmapWidth, bitmapHeight, bitmapPitch, tempRect, tempDef.xAdvance);
+        if (bitmap && bitmapWidth > 0 && bitmapHeight > 0 && bitmapPitch > 0)
         {
             tempDef.validDefinition = true;
             tempDef.width = tempRect.size.width + _letterPadding + _letterEdgeExtend;
@@ -368,7 +369,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16Text)
                     tex->release();
                 }
             }
-            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX + adjustForExtend, _currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight);
+            _fontFreeType->renderCharAt(_currentPageData, _currentPageOrigX + adjustForExtend, _currentPageOrigY + adjustForExtend, bitmap, bitmapWidth, bitmapHeight, bitmapPitch);
 
             tempDef.U = _currentPageOrigX;
             tempDef.V = _currentPageOrigY;
