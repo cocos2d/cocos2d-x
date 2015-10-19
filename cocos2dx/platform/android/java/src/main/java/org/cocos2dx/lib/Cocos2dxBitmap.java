@@ -37,7 +37,6 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.util.FloatMath;
 import android.util.Log;
 
 public class Cocos2dxBitmap {
@@ -237,7 +236,7 @@ public class Cocos2dxBitmap {
             /* Compute the max width. */
             int temp = 0;
             for (final String line : lines) {
-                temp = (int) FloatMath.ceil(pPaint.measureText(line, 0, line.length()));
+                temp = (int) Math.ceil(pPaint.measureText(line, 0, line.length()));
                 if (temp > maxContentWidth) {
                     maxContentWidth = temp;
                 }
@@ -310,7 +309,7 @@ public class Cocos2dxBitmap {
                      * The width of line is exceed maxWidth, should divide it into two or more
                      * lines.
                      */
-                    final int lineWidth = (int) FloatMath.ceil(pPaint.measureText(line));
+                    final int lineWidth = (int) Math.ceil(pPaint.measureText(line));
                     if (lineWidth > pMaxWidth) {
                         strList.addAll(Cocos2dxBitmap.divideStringWithMaxWidth(line, pMaxWidth, pPaint));
                     } else {
@@ -412,7 +411,7 @@ public class Cocos2dxBitmap {
                 wordEnd = charIndex + 1;
 
                 // we will use the width of the current word to decide if we need to word wrap
-                int wordWidth = (int) FloatMath.ceil(pPaint.measureText(pString, wordStart, wordEnd));
+                int wordWidth = (int) Math.ceil(pPaint.measureText(pString, wordStart, wordEnd));
 
                 // if the width of the current word is greater than the desired width, then we need
                 // to wrap
