@@ -446,6 +446,7 @@ void Label::reset()
     }
     _additionalKerning = 0.f;
     _lineHeight = 0.f;
+    _lineSpacing = 0.f;
     _maxLineWidth = 0.f;
     _labelDimensions.width = 0.f;
     _labelDimensions.height = 0.f;
@@ -1463,6 +1464,20 @@ float Label::getLineHeight() const
 {
     CCASSERT(_currentLabelType != LabelType::STRING_TEXTURE, "Not supported system font!");
     return _textSprite ? 0.0f : _lineHeight;
+}
+
+void Label::setLineSpacing(float height)
+{
+	if (_lineSpacing != height)
+	{
+		_lineSpacing = height;
+		_contentDirty = true;
+	}
+}
+
+float Label::getLineSpacing() const
+{
+	return _lineSpacing;
 }
 
 void Label::setAdditionalKerning(float space)
