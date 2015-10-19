@@ -101,6 +101,14 @@
             "files":[
                "frameworks/runtime-src/proj.ios_mac/ios/Info.plist"
             ]
+         },
+         "project_replace_relative_path": {
+            "src_relative_path":"$(SRCROOT)/../../cocos2d-x",
+            "src_relative_prefix":"$(SRCROOT)/../../",
+            "files": [
+               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
+               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj"
+            ]
          }
       },
       "change_orientation": {
