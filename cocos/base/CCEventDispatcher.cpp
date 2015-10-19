@@ -619,7 +619,7 @@ void EventDispatcher::removeEventListener(EventListener* listener)
                 
                 if (_inDispatch == 0)
                 {
-                    listeners->erase(iter);
+                    iter = listeners->erase(iter);
                     CC_SAFE_RELEASE(l);
                 }
                 
@@ -1135,64 +1135,23 @@ void EventDispatcher::updateListeners(Event* event)
 
     auto onUpdateListeners = [this](const EventListener::ListenerID& listenerID)
     {
-        auto listenersIter = _listenerMap.find(listenerID);
+        auto listenersIter = _listenerMap.begin(); //_listenerMap.find(listenerID);
         if (listenersIter == _listenerMap.end())
             return;
-
-        auto listeners = listenersIter->second;
-        
-        auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
-        auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
-        
-        if (sceneGraphPriorityListeners)
-        {
-            for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
-            {
-                auto l = *iter;
-                if (!l->isRegistered())
-                {
-                    iter = sceneGraphPriorityListeners->erase(iter);
-                    l->release();
-                }
-                else
-                {
-                    ++iter;
-                }
-            }
-        }
-        
-        if (fixedPriorityListeners)
-        {
-            for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
-            {
-                auto l = *iter;
-                if (!l->isRegistered())
-                {
-                    iter = fixedPriorityListeners->erase(iter);
-                    l->release();
-                }
-                else
-                {
-                    ++iter;
-                }
-            }
-        }
-        
-        if (sceneGraphPriorityListeners && sceneGraphPriorityListeners->empty())
-        {
-            listeners->clearSceneGraphListeners();
-        }
-
-        if (fixedPriorityListeners && fixedPriorityListeners->empty())
-        {
-            listeners->clearFixedListeners();
-        }
+        doUpdateListeners(listenersIter);
     };
 
     if (event->getType() == Event::Type::TOUCH)
     {
-        onUpdateListeners(EventListenerTouchOneByOne::LISTENER_ID);
-        onUpdateListeners(EventListenerTouchAllAtOnce::LISTENER_ID);
+        //onUpdateListeners(EventListenerTouchOneByOne::LISTENER_ID);
+        //onUpdateListeners(EventListenerTouchAllAtOnce::LISTENER_ID);
+
+        // Clean all type listeners to avoid some UI widget registered listener
+        // won't have chance to be cleaned because it's listened event never happen
+        for (auto iter = _listenerMap.begin(); iter != _listenerMap.end(); iter++)
+        {
+            doUpdateListeners(iter);
+        }
     }
     else
     {
@@ -1222,6 +1181,58 @@ void EventDispatcher::updateListeners(Event* event)
             forceAddEventListener(listener);
         }
         _toAddedListeners.clear();
+    }
+}
+
+void EventDispatcher::doUpdateListeners(ListenerMapIterator listenersIter)
+{
+    auto listeners = listenersIter->second;
+
+    auto fixedPriorityListeners = listeners->getFixedPriorityListeners();
+    auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
+
+    if (sceneGraphPriorityListeners)
+    {
+        for (auto iter = sceneGraphPriorityListeners->begin(); iter != sceneGraphPriorityListeners->end();)
+        {
+            auto l = *iter;
+            if (!l->isRegistered())
+            {
+                iter = sceneGraphPriorityListeners->erase(iter);
+                l->release();
+            }
+            else
+            {
+                ++iter;
+            }
+        }
+    }
+
+    if (fixedPriorityListeners)
+    {
+        for (auto iter = fixedPriorityListeners->begin(); iter != fixedPriorityListeners->end();)
+        {
+            auto l = *iter;
+            if (!l->isRegistered())
+            {
+                iter = fixedPriorityListeners->erase(iter);
+                l->release();
+            }
+            else
+            {
+                ++iter;
+            }
+        }
+    }
+
+    if (sceneGraphPriorityListeners && sceneGraphPriorityListeners->empty())
+    {
+        listeners->clearSceneGraphListeners();
+    }
+
+    if (fixedPriorityListeners && fixedPriorityListeners->empty())
+    {
+        listeners->clearFixedListeners();
     }
 }
 
