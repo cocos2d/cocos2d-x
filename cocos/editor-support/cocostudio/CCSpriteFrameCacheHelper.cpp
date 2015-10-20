@@ -105,11 +105,13 @@ SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
-    for (auto i = _usingSpriteFrames.begin(); i != _usingSpriteFrames.end();)
+    auto i = _usingSpriteFrames.begin();
+    while (i != _usingSpriteFrames.end())
     {
-        const std::string & str = i->first;
-        ++i;
-        removeSpriteFrameFromFile(str);
+        // removeSpriteFrameFromFile will make iterator i invalid
+        // so we increment the value of i first
+        auto j = i++;
+        removeSpriteFrameFromFile(j->first);
     }
 }
 
