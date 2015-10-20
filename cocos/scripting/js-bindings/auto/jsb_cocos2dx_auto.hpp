@@ -2205,6 +2205,7 @@ bool js_cocos2dx_Label_setSystemFontName(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Label_setBMFontFilePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setLineHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setSystemFontSize(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_getLineSpacing(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_updateContent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getStringLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setLineBreakWithoutSpace(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2217,6 +2218,7 @@ bool js_cocos2dx_Label_getDimensions(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setMaxLineWidth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getSystemFontName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_setVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Label_setLineSpacing(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getLineHeight(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getTTFConfig(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Label_getVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp);

@@ -11862,6 +11862,16 @@ float
 },
 
 /**
+ * @method getLineSpacing
+ * @return {float}
+ */
+getLineSpacing : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method updateContent
  */
 updateContent : function (
@@ -11985,6 +11995,16 @@ getSystemFontName : function (
  */
 setVerticalAlignment : function (
 textvalignment 
+)
+{
+},
+
+/**
+ * @method setLineSpacing
+ * @param {float} arg0
+ */
+setLineSpacing : function (
+float 
 )
 {
 },
