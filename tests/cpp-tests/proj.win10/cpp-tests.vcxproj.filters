@@ -380,6 +380,9 @@
     <Filter Include="Classes\DownloaderTest">
       <UniqueIdentifier>{a6b76076-ceeb-43e6-9005-1656c65778b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\UITest\CocoStudioGUITest\UIRadioButtonTest">
+      <UniqueIdentifier>{fd63b656-b611-447b-b4a1-f2d11f92ff83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -933,7 +936,6 @@
     <ClCompile Include="..\Classes\NavMeshTest\NavMeshTest.cpp">
       <Filter>Classes\NavMeshTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-12847.cpp">
       <Filter>Classes\BugsTest</Filter>
     </ClCompile>
@@ -945,6 +947,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\DownloaderTest\DownloaderTest.cpp">
       <Filter>Classes\DownloaderTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.cpp">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1711,6 +1716,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\DownloaderTest\DownloaderTest.h">
       <Filter>Classes\DownloaderTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIRadioButtonTest\UIRadioButtonTest.h">
+      <Filter>Classes\UITest\CocoStudioGUITest\UIRadioButtonTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
