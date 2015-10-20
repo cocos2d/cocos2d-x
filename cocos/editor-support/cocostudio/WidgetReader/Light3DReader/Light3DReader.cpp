@@ -78,7 +78,7 @@ namespace cocostudio
         auto temp = Node3DReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
         auto node3DOptions = *(Offset<Node3DOption>*)(&temp);
         
-        bool enabled = false;
+        bool enabled = true;
         int type = 0;
         int flag = 0;
         float intensity = 1.0f;
