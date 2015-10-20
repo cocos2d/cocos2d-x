@@ -285,7 +285,7 @@ int  FontFreeType::getHorizontalKerningForChars(unsigned short firstChar, unsign
     if (FT_Get_Kerning( _fontRef, glyphIndex1, glyphIndex2,  FT_KERNING_DEFAULT,  &kerning))
         return 0;
     
-    return (static_cast<int>(kerning.x >> 6));
+    return (static_cast<int>(((kerning.x + (HRES/2)) / HRES) >> 6));
 }
 
 int FontFreeType::getFontAscender() const
