@@ -81,7 +81,7 @@ var TextureLoadImgTest = TextureCacheTestBase.extend({
 
         var url = "http://www.cocos2d-x.org/images/logo.png";
         cc.textureCache.addImageAsync(url, this.texFirstLoaded, this);
-        //cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
+        cc.textureCache.addImageAsync(url, this.texSecondLoaded, this);
     },
 
     texFirstLoaded: function(texture) {
