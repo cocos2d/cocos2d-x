@@ -37,6 +37,7 @@ ipch/
 SubmissionInfo
 Generated Files
 AppPackages
+BundleArtifacts
 .vs/
 
 # Ignore files build by ndk and eclipse

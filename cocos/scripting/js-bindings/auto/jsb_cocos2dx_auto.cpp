@@ -37559,6 +37559,24 @@ bool js_cocos2dx_Label_setSystemFontSize(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_Label_setSystemFontSize : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_Label_getLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_getLineSpacing : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getLineSpacing();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_getLineSpacing : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Label_updateContent(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -37852,6 +37870,26 @@ bool js_cocos2dx_Label_setVerticalAlignment(JSContext *cx, uint32_t argc, jsval 
     }
 
     JS_ReportError(cx, "js_cocos2dx_Label_setVerticalAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_Label_setLineSpacing(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setLineSpacing : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setLineSpacing : Error processing arguments");
+        cobj->setLineSpacing(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Label_setLineSpacing : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_Label_getLineHeight(JSContext *cx, uint32_t argc, jsval *vp)
@@ -38584,6 +38622,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         JS_FN("setBMFontFilePath", js_cocos2dx_Label_setBMFontFilePath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLineHeight", js_cocos2dx_Label_setLineHeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSystemFontSize", js_cocos2dx_Label_setSystemFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getLineSpacing", js_cocos2dx_Label_getLineSpacing, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("updateContent", js_cocos2dx_Label_updateContent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStringLength", js_cocos2dx_Label_getStringLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLineBreakWithoutSpace", js_cocos2dx_Label_setLineBreakWithoutSpace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -38596,6 +38635,7 @@ void js_register_cocos2dx_Label(JSContext *cx, JS::HandleObject global) {
         JS_FN("setMaxLineWidth", js_cocos2dx_Label_setMaxLineWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSystemFontName", js_cocos2dx_Label_getSystemFontName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVerticalAlignment", js_cocos2dx_Label_setVerticalAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setLineSpacing", js_cocos2dx_Label_setLineSpacing, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLineHeight", js_cocos2dx_Label_getLineHeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTTFConfig", js_cocos2dx_Label_getTTFConfig, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVerticalAlignment", js_cocos2dx_Label_getVerticalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

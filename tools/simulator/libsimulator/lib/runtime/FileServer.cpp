@@ -508,7 +508,7 @@ void FileServer::loopResponse()
         char dataBuf[1024] = {0};
         struct ResponseHeaderStruct
         {
-            char startFlag[12];
+            char startFlag[13]; // needs to store PROTO_START, which is 12+NULL long
             unsigned short protoNum;
             unsigned short protoBufLen;
         };

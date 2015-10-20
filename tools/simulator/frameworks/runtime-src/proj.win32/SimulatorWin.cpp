@@ -758,14 +758,14 @@ void SimulatorWin::parseCocosProjectConfig(ProjectConfig &config)
     config.setConsolePort(parser->getConsolePort());
     config.setFileUploadPort(parser->getUploadPort());
     config.setFrameSize(parser->getInitViewSize());
-    //if (parser->isLanscape())
-    //{
-    //    config.changeFrameOrientationToLandscape();
-    //}
-    //else
-    //{
-    //    config.changeFrameOrientationToPortait();
-    //}
+    if (parser->isLanscape())
+    {
+        config.changeFrameOrientationToLandscape();
+    }
+    else
+    {
+        config.changeFrameOrientationToPortait();
+    }
     config.setScriptFile(parser->getEntryFile());
 }
 
@@ -797,7 +797,7 @@ std::string SimulatorWin::getUserDocumentPath()
     char* tempstring = new char[length + 1];
     wcstombs(tempstring, filePath, length + 1);
     string userDocumentPath(tempstring);
-    free(tempstring);
+    delete [] tempstring;
 
     userDocumentPath = convertPathFormatToUnixStyle(userDocumentPath);
     userDocumentPath.append("/");

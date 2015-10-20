@@ -46,6 +46,7 @@ TMXLayer * TMXLayer::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo
         ret->autorelease();
         return ret;
     }
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)

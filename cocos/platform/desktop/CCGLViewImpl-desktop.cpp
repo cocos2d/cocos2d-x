@@ -303,7 +303,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -314,7 +314,7 @@ GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, f
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -325,7 +325,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -336,7 +336,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName, const 
         ret->autorelease();
         return ret;
     }
-    
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
