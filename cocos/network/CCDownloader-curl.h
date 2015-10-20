@@ -55,6 +55,7 @@ namespace cocos2d { namespace network
         void _onSchedule(float);
         std::string             _schedulerKey;
         Scheduler*              _scheduler;
+        bool                    _breakScheduleFunc;
     };
 
 }}  // namespace cocos2d::network

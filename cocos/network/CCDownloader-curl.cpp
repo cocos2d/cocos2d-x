@@ -698,6 +698,7 @@ namespace cocos2d { namespace network {
     DownloaderCURL::DownloaderCURL(const DownloaderHints& hints)
     : _impl(std::make_shared<Impl>())
     , _currTask(nullptr)
+    , _breakScheduleFunc(false)
     {
         DLLOG("Construct DownloaderCURL %p", this);
         _impl->hints = hints;
@@ -731,6 +732,7 @@ namespace cocos2d { namespace network {
     
     DownloaderCURL::~DownloaderCURL()
     {
+        _breakScheduleFunc = true;
         _scheduler->unschedule(_schedulerKey, this);
         _scheduler->release();
         
@@ -845,7 +847,7 @@ namespace cocos2d { namespace network {
             DLLOG("    DownloaderCURL: finish Task: Id(%d)", coTask.serialId);
         }
         
-        if (_impl->stoped())
+        if (!_breakScheduleFunc && _impl->stoped())
         {
             _scheduler->pauseTarget(this);
         }
