@@ -424,9 +424,12 @@ void OpenGLESPage::SetVisibility(bool isVisible)
 {
     if (isVisible && mRenderSurface != EGL_NO_SURFACE)
     {
-        std::unique_lock<std::mutex> locker(mSleepMutex);
-        mVisible = true;
-        mSleepCondition.notify_one();
+        if (!mVisible)
+        {
+            std::unique_lock<std::mutex> locker(mSleepMutex);
+            mVisible = true;
+            mSleepCondition.notify_one();
+        }
     }
     else
     {

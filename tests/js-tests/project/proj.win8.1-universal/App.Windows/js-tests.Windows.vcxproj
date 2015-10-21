@@ -114,7 +114,7 @@
     <PackageCertificateKeyFile>js-tests.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>FB58178D2A50D64A72EC25130D072580B999A12E</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>2D1A6993BB7DD73FD4EDC183F0FA7F9A1B7AD3C3</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
