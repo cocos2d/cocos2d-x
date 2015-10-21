@@ -2655,7 +2655,39 @@ _p.setBoundingHeight = _p.setHeight;
 //
 _p = cc.Scheduler.prototype;
 _p.unscheduleUpdateForTarget = _p.unscheduleUpdate;
-_p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
+_p.unscheduleAllCallbacksForTarget = function (target) {
+    this.unschedule(target.__instanceId + "", target);
+};
+_p._schedule = _p.schedule;
+_p.schedule = function (callback, target, interval, repeat, delay, paused, key) {
+    var isSelector = false;
+    if(typeof callback !== "function"){
+        var selector = callback;
+        isSelector = true;
+    }
+    if(isSelector === false){
+        //callback, target, interval, repeat, delay, paused, key
+        //callback, target, interval, paused, key
+        if(arguments.length === 4 || arguments.length === 5) {
+            key = delay;
+            paused = repeat;
+            delay = 0;
+            repeat = cc.REPEAT_FOREVER;
+        }
+    }else{
+        //selector, target, interval, repeat, delay, paused
+        //selector, target, interval, paused
+        if(arguments.length === 4){
+            paused = repeat;
+            repeat = cc.REPEAT_FOREVER;
+            delay = 0;
+        }
+    }
+    if (key === undefined) {
+        key = target.__instanceId + "";
+    }
+    this._schedule(callback, target, interval, repeat, delay, paused, key);
+}
 
 
 cc._NodeGrid = cc.NodeGrid;

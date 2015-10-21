@@ -271,8 +271,8 @@ cc.Class.extend = function (prop) {
 
     // The dummy class constructor
     function Class() {
-        // All construction is actually done in the init method
         if (!initializing) {
+            this.__instanceId = ClassManager.getNewInstanceId();
             if (!this.ctor) {
                 if (this.__nativeObj)
                     cc.log("No ctor function found! Please check whether `classes_need_extend` section in `ini` file like which in `tools/tojs/cocos2dx.ini`");

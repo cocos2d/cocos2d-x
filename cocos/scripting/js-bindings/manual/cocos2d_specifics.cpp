@@ -2124,30 +2124,39 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         js_proxy_t *proxy = jsb_get_js_proxy(obj);
         cocos2d::Scheduler *sched = (cocos2d::Scheduler *)(proxy ? proxy->ptr : NULL);
         
-        JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
-        
         std::function<void (float)> callback;
+        JS::RootedObject targetObj(cx);
         do {
-            if(JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
+            JS::RootedValue callbackVal(cx);
+            if (JS_TypeOfValue(cx, args.get(0)) == JSTYPE_FUNCTION)
             {
-                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, tmpObj, args.get(0)));
-                auto lambda = [=](float larg0) -> void {
-                    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-                    jsval largv[1];
-                    largv[0] = DOUBLE_TO_JSVAL(larg0);
-                    JS::RootedValue rval(cx);
-                    bool invokeOk = func->invoke(1, &largv[0], &rval);
-                    if (!invokeOk && JS_IsExceptionPending(cx)) {
-                        JS_ReportPendingException(cx);
-                    }
-                };
-                callback = lambda;
+                callbackVal.set(args.get(0));
+                targetObj.set(args.get(1).toObjectOrNull());
+            }
+            else if (JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
+            {
+                targetObj.set(args.get(0).toObjectOrNull());
+                callbackVal.set(args.get(1));
             }
             else
             {
                 ok = false;
                 callback = nullptr;
+                break;
             }
+            
+            std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, targetObj, callbackVal));
+            auto lambda = [=](float larg0) -> void {
+                JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+                jsval largv[1];
+                largv[0] = DOUBLE_TO_JSVAL(larg0);
+                JS::RootedValue rval(cx);
+                bool invokeOk = func->invoke(1, &largv[0], &rval);
+                if (!invokeOk && JS_IsExceptionPending(cx)) {
+                    JS_ReportPendingException(cx);
+                }
+            };
+            callback = lambda;
         } while(0);
         
         double interval = 0;
@@ -2171,21 +2180,25 @@ bool js_CCScheduler_schedule(JSContext *cx, uint32_t argc, jsval *vp)
             ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(4)), &delay );
         }
         
+        //
+        // paused
+        //
         bool paused = false;
-        
         if( argc >= 6 ) {
             paused = JS::ToBoolean(JS::RootedValue(cx,  args.get(5)));
         }
         
+        //
+        // key
+        //
         std::string key;
-        
-        if( argc >= 7 ) {
-            ok &= jsval_to_std_string(cx, args.get(6), &key);
+        if ( argc >= 7 ) {
+            jsval_to_std_string(cx, args.get(6), &key);
         }
         
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
         
-        sched->schedule(callback, tmpObj, interval, repeat, delay, paused, key);
+        sched->schedule(callback, targetObj, interval, repeat, delay, paused, key);
                 
         args.rval().setUndefined();
         return true;
