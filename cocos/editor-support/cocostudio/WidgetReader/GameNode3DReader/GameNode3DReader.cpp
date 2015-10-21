@@ -426,14 +426,6 @@ namespace cocostudio
             node->removeComponent(ComExtensionData::COMPONENT_NAME);
         }
         node->addComponent(extensionData);
-
-        bool useDefaultLight = options->useDefaultLight();
-        if (useDefaultLight)
-        {
-            AmbientLight* defaultLight = AmbientLight::create(Color3B::WHITE);
-            defaultLight->setIntensity(0.5f);
-            node->addChild(defaultLight);
-        }
     }
     
     Node* GameNode3DReader::createNodeWithFlatBuffers(const flatbuffers::Table *node3DOptions)
