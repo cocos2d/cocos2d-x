@@ -870,6 +870,11 @@ void FileUtils::setWritablePath(const std::string& writablePath)
     _writablePath = writablePath;
 }
 
+void FileUtils::setCachePath(const std::string& cachePath)
+{
+    _cachePath = cachePath;
+}
+
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
     _defaultResRootPath = path;

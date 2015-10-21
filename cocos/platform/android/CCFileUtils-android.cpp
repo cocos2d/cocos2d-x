@@ -322,6 +322,23 @@ string FileUtilsAndroid::getWritablePath() const
     }
 }
 
+string FileUtilsAndroid::getCachePath() const
+{
+    string dir("");
+    string tmp = JniHelper::callStaticStringMethod("org/cocos2dx/lib/Cocos2dxHelper", "getCocos2dxCachePath");
+
+    if (tmp.length() > 0)
+    {
+        dir.append(tmp).append("/");
+
+        return dir;
+    }
+    else
+    {
+        return "";
+    }
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
