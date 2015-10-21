@@ -6,7 +6,7 @@ cocos2d-x-3.9 beta0 October.20 2015
 [NEW]           ListView: Added a feature for magnetic scrolling.
 [NEW]           Animate: Added ActionTimeline::setAnimationEndCallBack and ActionTimeline::addFrameEndCallFunc.
 [NEW]           Animate: Added CSLoader::createNodeWithVisibleSize, CSLoader::createNodeWithVisibleSize and moved "ui::Helper::DoLayout" into them.
-[NEW]           Stuio: Added support for Cocos Studio Light3D.
+[NEW]           Studio: Added Light3D support for Cocos Studio.
 [NEW]           Platform: Added the missing CURL support to the Windows 10 UWP version.
 [NEW]           Platform: Added UIEditBox support on linux platform.
 
