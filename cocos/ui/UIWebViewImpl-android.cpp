@@ -35,11 +35,8 @@
 #include "UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
-#include "base/CCScheduler.h"
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
-#include <mutex>
-#include <condition_variable>
 
 #define CLASS_NAME "org/cocos2dx/lib/Cocos2dxWebViewHelper"
 
@@ -404,73 +401,46 @@ namespace cocos2d {
                 setScalesPageToFitJNI(_viewTag, scalesPageToFit);
             }
 
-            // executed from Java's thread (we should invoke callback on cocos thread)
             bool WebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
-
-                std::mutex m;
-                std::condition_variable cv;
-                bool finished = false;
                 bool allowLoad = true;
-
-                Director::getInstance()->getScheduler()->performFunctionInCocosThread([&]{
-                    auto it = s_WebViewImpls.find(viewTag);
-                    if (it != s_WebViewImpls.end()) {
-                        auto webView = it->second->_webView;
-                        if (webView->_onShouldStartLoading) {
-                            allowLoad = webView->_onShouldStartLoading(webView, url);
-                        }
+                auto it = s_WebViewImpls.find(viewTag);
+                if (it != s_WebViewImpls.end()) {
+                    auto webView = it->second->_webView;
+                    if (webView->_onShouldStartLoading) {
+                        allowLoad = webView->_onShouldStartLoading(webView, url);
                     }
-
-                    m.lock();
-                    finished = true;
-                    m.unlock();
-                    cv.notify_one();
-                });
-
-                // wait for result from cocos thread
-                std::unique_lock<std::mutex> lk(m);
-                cv.wait(lk, [&finished]{ return finished; });
-
+                }
                 return allowLoad;
             }
 
-            // executed from Java's thread (we should invoke callback on cocos thread)
             void WebViewImpl::didFinishLoading(const int viewTag, const std::string &url){
-                Director::getInstance()->getScheduler()->performFunctionInCocosThread([viewTag, url]{
-                    auto it = s_WebViewImpls.find(viewTag);
-                    if (it != s_WebViewImpls.end()) {
-                        auto webView = it->second->_webView;
-                        if (webView->_onDidFinishLoading) {
-                            webView->_onDidFinishLoading(webView, url);
-                        }
+                auto it = s_WebViewImpls.find(viewTag);
+                if (it != s_WebViewImpls.end()) {
+                    auto webView = it->second->_webView;
+                    if (webView->_onDidFinishLoading) {
+                        webView->_onDidFinishLoading(webView, url);
                     }
-                });
+                }
             }
 
-            // executed from Java's thread (we should invoke callback on cocos thread)
             void WebViewImpl::didFailLoading(const int viewTag, const std::string &url){
-                Director::getInstance()->getScheduler()->performFunctionInCocosThread([viewTag, url]{
-                    auto it = s_WebViewImpls.find(viewTag);
-                    if (it != s_WebViewImpls.end()) {
-                        auto webView = it->second->_webView;
-                        if (webView->_onDidFailLoading) {
-                            webView->_onDidFailLoading(webView, url);
-                        }
+                auto it = s_WebViewImpls.find(viewTag);
+                if (it != s_WebViewImpls.end()) {
+                    auto webView = it->second->_webView;
+                    if (webView->_onDidFailLoading) {
+                        webView->_onDidFailLoading(webView, url);
                     }
-                });
+                }
             }
 
-            // executed from Java's thread (we should invoke callback on cocos thread)
             void WebViewImpl::onJsCallback(const int viewTag, const std::string &message){
-                Director::getInstance()->getScheduler()->performFunctionInCocosThread([viewTag, message]{
-                    auto it = s_WebViewImpls.find(viewTag);
-                    if (it != s_WebViewImpls.end()) {
-                        auto webView = it->second->_webView;
-                        if (webView->_onJSCallback) {
-                            webView->_onJSCallback(webView, message);
-                        }
+                auto it = s_WebViewImpls.find(viewTag);
+                if (it != s_WebViewImpls.end()) {
+                    auto webView = it->second->_webView;
+                    if (webView->_onJSCallback) {
+                        webView->_onJSCallback(webView, message);
                     }
-                });
+                }
             }
 
             void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
