@@ -335,7 +335,11 @@ THE SOFTWARE.
  * protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS public
+  #ifdef CC_ENABLE_SCRIPT_BINDING
+    #define CC_CONSTRUCTOR_ACCESS public
+  #else
+    #define CC_CONSTRUCTOR_ACCESS protected
+  #endif
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR
