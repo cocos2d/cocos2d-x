@@ -350,7 +350,7 @@ public:
      * @~english Sets the scale (x,y,z) of the node.
      *
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
-     * @~chinese 设置几点的缩放（x,y,z）.
+     * @~chinese 设置节点的缩放（x,y,z）.
      *
      * 缩放因子将会乘以该节点和它子节点的宽，高和深度。
      *
