@@ -195,28 +195,28 @@ public:
      *
      * @param index of the radio button
      */
-    virtual void setSelectedButton(int index);
+    virtual bool setSelectedButton(int index);
     
     /**
      * Select a radio button by instance.
      *
      * @param radio button instance
      */
-    virtual void setSelectedButton(RadioButton* radioButton);
+    virtual bool setSelectedButton(RadioButton* radioButton);
     
     /**
      * Select a radio button by index without event dispatch.
      *
      * @param index of the radio button
      */
-    virtual void setSelectedButtonWithoutEvent(int index);
+    virtual bool setSelectedButtonWithoutEvent(int index);
     
     /**
      * Select a radio button by instance without event dispatch.
      *
      * @param radio button instance
      */
-    virtual void setSelectedButtonWithoutEvent(RadioButton* radioButton);
+    virtual bool setSelectedButtonWithoutEvent(RadioButton* radioButton);
     
     /**
      * Add a radio button into this group.
