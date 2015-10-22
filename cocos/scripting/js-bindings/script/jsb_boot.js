@@ -686,8 +686,9 @@ cc.loader = {
         if (cached)
             return cached;
         var type = cc.path.extname(url);
+        if (!type) return cc.log("cc.loader.getRes: Invalid url");
         var loader = this._register[type.toLowerCase()];
-        if(!loader) return cc.log("loader for [" + type + "] not exists!");
+        if (!loader) return cc.log("cc.loader.getRes: loader for [" + type + "] not exists!");
         var basePath = loader.getBasePath ? loader.getBasePath() : this.resPath;
         var realUrl = this.getUrl(basePath, url);
         return loader.load(realUrl, url);
