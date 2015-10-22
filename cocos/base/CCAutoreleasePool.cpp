@@ -24,6 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "base/CCAutoreleasePool.h"
 #include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "base/CCAsyncTaskPool.h"
 
 NS_CC_BEGIN
 
@@ -57,7 +59,17 @@ AutoreleasePool::~AutoreleasePool()
 
 void AutoreleasePool::addObject(Ref* object)
 {
-    _managedObjectArray.push_back(object);
+    auto threadId = std::this_thread::get_id();
+
+    if (Director::getInstance()->getCocos2dThreadId() != threadId)
+    {
+        // Delay the autorelease of this object. It will be autoreleased after the task that added it is done.
+        AsyncTaskPool::getInstance()->addObject(object, threadId);
+    }
+    else
+    {
+        _managedObjectArray.push_back(object);
+    }
 }
 
 void AutoreleasePool::clear()

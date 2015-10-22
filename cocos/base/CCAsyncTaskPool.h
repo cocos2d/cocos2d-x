@@ -91,7 +91,21 @@ public:
      */
     template<class F>
     inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);
-    
+
+    /**
+    * Adds an object that will be managed later.
+    *
+    * The object will be added in an array specific to a thread id. The AutoreleasePool will call this method instead of managing the
+    * object directly when called from a thread other than the main one.
+    * Once the task is over and its callback called, it will be put in the autorelease pool in the cocos thread and then autoreleased.
+    *
+    * @param object Object pointer to be added in the managed object list.
+    * @param threadId Thread creating the object, when the current task is over in this thread the objects are autoreleased.
+    * @js  NA
+    * @lua NA
+    */
+    inline void addObject(Ref* object, std::thread::id threadId);
+
 CC_CONSTRUCTOR_ACCESS:
     AsyncTaskPool();
     ~AsyncTaskPool();
@@ -106,48 +120,9 @@ protected:
             void*                 callbackParam;
         };
     public:
-        ThreadTasks()
-        : _stop(false)
-        {
-            _thread = std::thread(
-                                  [this]
-                                  {
-                                      for(;;)
-                                      {
-                                          std::function<void()> task;
-                                          AsyncTaskCallBack callback;
-                                          {
-                                              std::unique_lock<std::mutex> lock(this->_queueMutex);
-                                              this->_condition.wait(lock,
-                                                                    [this]{ return this->_stop || !this->_tasks.empty(); });
-                                              if(this->_stop && this->_tasks.empty())
-                                                  return;
-                                              task = std::move(this->_tasks.front());
-                                              callback = std::move(this->_taskCallBacks.front());
-                                              this->_tasks.pop();
-                                              this->_taskCallBacks.pop();
-                                          }
-                                          
-                                          task();
-                                          Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, callback]{ callback.callback(callback.callbackParam); });
-                                      }
-                                  }
-                                  );
-        }
-        ~ThreadTasks()
-        {
-            {
-                std::unique_lock<std::mutex> lock(_queueMutex);
-                _stop = true;
-                
-                while(_tasks.size())
-                    _tasks.pop();
-                while (_taskCallBacks.size())
-                    _taskCallBacks.pop();
-            }
-            _condition.notify_all();
-            _thread.join();
-        }
+        ThreadTasks();
+        ~ThreadTasks();
+
         void clear()
         {
             std::unique_lock<std::mutex> lock(_queueMutex);
@@ -156,6 +131,7 @@ protected:
             while (_taskCallBacks.size())
                 _taskCallBacks.pop();
         }
+
         template<class F>
         void enqueue(const TaskCallBack& callback, void* callbackParam, F&& f)
         {
@@ -179,8 +155,9 @@ protected:
             }
             _condition.notify_one();
         }
+
     private:
-        
+       
         // need to keep track of thread so we can join them
         std::thread _thread;
         // the task queue
@@ -196,6 +173,11 @@ protected:
     //tasks
     ThreadTasks _threadTasks[int(TaskType::TASK_MAX_TYPE)];
     
+    // The asynchronous release mechanism.
+    std::vector<Ref*> popThreadManagedObjects(std::thread::id threadId);
+    void mergeThreadManagedObjects(const std::vector<Ref*>& objets);
+    std::map<std::thread::id, std::vector<Ref*>> _managedAsyncObjectArrays;
+
     static AsyncTaskPool* s_asyncTaskPool;
 };
 
@@ -213,6 +195,10 @@ inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallB
     threadTask.enqueue(callback, callbackParam, f);
 }
 
+inline void AsyncTaskPool::addObject(Ref* object, std::thread::id threadId)
+{
+    _managedAsyncObjectArrays[threadId].push_back(object);
+}
 
 NS_CC_END
 // end group
