@@ -66,12 +66,15 @@ struct transformValues_;
  * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
  *
  * Sprite can be created with an image, or with a sub-rectangle of an image.
+ * Sprite comes with two rendering mode.
+ *  - Simple: The original Cocos2D style.
+ *  - Sliced: A new way to draw 9-sliced sprite.
  *
  * To optimize the Sprite rendering, please follow the following best practices:
  *  - Put all your sprites in the same spritesheet (http://www.codeandweb.com/what-is-a-sprite-sheet).
  *  - Use the same blending function for all your sprites.
  *  - ...and the Renderer will automatically "batch" your sprites (will draw all of them in one OpenGL call).
- *  // TODO:  Introduce the new sliced rendering type.
+ *
  *
  *  To gain an additional 5% ~ 10% more in the rendering, you can parent your sprites into a `SpriteBatchNode`.
  *  But doing so carries the following limitations:
@@ -80,6 +83,7 @@ struct transformValues_;
  *  - The Blending function property belongs to `SpriteBatchNode`, so you can't individually set the blending function property.
  *  - `ParallaxNode` is not supported, but can be simulated with a "proxy" sprite.
  *  - Sprites can only have other Sprites (or subclasses of Sprite) as children.
+ *  - Type::Sliced Sprite can't be added as children of SpriteBatchNode
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */

@@ -664,7 +664,6 @@ void Sprite::updateTransform(void)
 void Sprite::caculateSlicedVertices()
 {
     if (_type == Type::Sliced) {
-        CCLOG("draw sliced sprite");
         Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
 
         if (tex == nullptr || _isDefaultTexture)
@@ -928,7 +927,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
 
-#if  0//CC_SPRITE_DEBUG_DRAW
+#if  CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
         auto count = _polyInfo.triangles.indexCount/3;
         auto indices = _polyInfo.triangles.indices;
@@ -938,15 +937,15 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             //draw 3 lines
             Vec3 from =verts[indices[i*3]].vertices;
             Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::RED);
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
 
             from =verts[indices[i*3+1]].vertices;
             to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::RED);
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
 
             from =verts[indices[i*3+2]].vertices;
             to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::RED);
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
         }
 #endif //CC_SPRITE_DEBUG_DRAW
     }
@@ -1177,8 +1176,6 @@ void Sprite::setContentSize(const cocos2d::Size &size)
     if (!_preferredSize.equals(size))
     {
         _preferredSize = size;
-        //TODO: content size change should only update vetices, the texture uv are not changed.
-       
         this->caculateSlicedVertices();
         
     }
@@ -1480,7 +1477,6 @@ void Sprite::setType(Type type)
     }
     else
     {
-        //TODO: optimize the operation
         this->setContentSize(_preferredSize);
     }
 }
