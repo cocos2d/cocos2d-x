@@ -1173,12 +1173,8 @@ void Sprite::setContentSize(const cocos2d::Size &size)
 {
     Node::setContentSize(size);
     
-    if (!_preferredSize.equals(size))
-    {
-        _preferredSize = size;
-        this->caculateSlicedVertices();
-        
-    }
+    _preferredSize = size;
+    this->caculateSlicedVertices();
    
 }
 

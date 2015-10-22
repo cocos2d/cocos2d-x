@@ -57,6 +57,19 @@ namespace ui {
         return nullptr;
     }
     
+    Scale9Sprite* Scale9Sprite::create(const Rect& capInsets, const std::string& file)
+    {
+        Scale9Sprite *sprite = new (std::nothrow) Scale9Sprite();
+        if (sprite && sprite->initWithFile(file))
+        {
+            sprite->setCapInsets(capInsets);
+            sprite->autorelease();
+            return sprite;
+        }
+        CC_SAFE_DELETE(sprite);
+        return nullptr;
+    }
+    
     Scale9Sprite* Scale9Sprite::create(const std::string& filename)
     {
         Scale9Sprite *sprite = new (std::nothrow) Scale9Sprite();
