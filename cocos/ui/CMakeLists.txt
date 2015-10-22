@@ -16,10 +16,14 @@ elseif(LINUX)
       ui/UIEditBox/UIEditBoxImpl-common.cpp
       ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
+elseif(ANDROID)
+  set(COCOS_UI_SPECIFIC_SRC
+      ui/UIWebViewImpl-android.cpp
+      ui/UIVideoPlayer-android.cpp
+      ui/UIEditBox/UIEditBoxImpl-common.cpp
+      ui/UIEditBox/UIEditBoxImpl-android.cpp
+      )
 endif()
-
-#todo: android UIWebViewImpl and UIVideoPlayer
-# will add when doing android support
 
 set(COCOS_UI_SRC
 

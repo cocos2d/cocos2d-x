@@ -43,6 +43,15 @@ elseif(MACOSX)
         ${COCOS_AUDIO_PLATFORM_SRC_C}
         PROPERTIES LANGUAGE C
     )
+
+elseif(ANDROID)
+    set(COCOS_AUDIO_PLATFORM_SRC
+        audio/android/cddSimpleAudioEngine.cpp
+        audio/android/ccdandroidUtils.cpp
+        audio/android/jni/cddandroidAndroidJavaEngine.cpp
+        audio/android/AudioEngine-inl.cpp
+    )
+
 endif()
 
 list(APPEND COCOS_AUDIO_SRC ${COCOS_AUDIO_PLATFORM_SRC})

@@ -136,8 +136,8 @@ static void _checkPath()
 {
     if (s_resourcePath.empty())
     {
-        WCHAR *pUtf16ExePath = nullptr;
-        _get_wpgmptr(&pUtf16ExePath);
+        WCHAR pUtf16ExePath[FILENAME_MAX];
+        GetModuleFileName(NULL, pUtf16ExePath, FILENAME_MAX);
 
         // We need only directory part without exe
         WCHAR *pUtf16DirEnd = wcsrchr(pUtf16ExePath, L'\\');
