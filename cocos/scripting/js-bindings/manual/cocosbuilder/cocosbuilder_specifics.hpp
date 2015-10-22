@@ -32,18 +32,19 @@ public:
     JSCCBAnimationWrapper() {}
     virtual ~JSCCBAnimationWrapper() {}
     
-    void animationCompleteCallback() 
+    void animationCompleteCallback()
     {
-                
-        if(!_jsCallback.isNullOrUndefined()  && !_jsThisObj.isNullOrUndefined()) 
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue callback(cx, getJSCallbackFunc());
+        JS::RootedValue thisObj(cx, getJSCallbackThis());
+        if(!callback.isNullOrUndefined()  && !thisObj.isNullOrUndefined())
         {
 
-            JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
             JS::RootedValue retval(cx);
 
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             
-            JS_CallFunctionValue(cx, JS::RootedObject(cx, _jsThisObj.toObjectOrNull()), JS::RootedValue(cx, _jsCallback), JS::HandleValueArray::empty(), &retval);
+            JS_CallFunctionValue(cx, JS::RootedObject(cx, thisObj.toObjectOrNull()), JS::RootedValue(cx, callback), JS::HandleValueArray::empty(), &retval);
         }
     }
     

@@ -878,49 +878,48 @@ jsval anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string) 
 }
 
 JSCallbackWrapper::JSCallbackWrapper()
-: _jsCallback(JSVAL_VOID), _jsThisObj(JSVAL_VOID), _extraData(JSVAL_VOID)
 {
-
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    _jsCallback.construct(cx, JS::NullHandleValue);
+    _jsThisObj.construct(cx, JS::NullHandleValue);
+    _extraData.construct(cx, JS::NullHandleValue);
 }
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    JS::RemoveValueRoot(cx, &_jsCallback);
-    JS::RemoveValueRoot(cx, &_jsThisObj);
+    _jsCallback.destroyIfConstructed();
+    _jsThisObj.destroyIfConstructed();
+    _extraData.destroyIfConstructed();
 }
 
-void JSCallbackWrapper::setJSCallbackFunc(jsval func) {
-    _jsCallback = func;
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    // Root the callback function.
-    JS::AddNamedValueRoot(cx, &_jsCallback, "JSCallbackWrapper_callback_func");
+void JSCallbackWrapper::setJSCallbackFunc(JS::HandleValue func) {
+    if (!func.isNullOrUndefined())
+        _jsCallback.ref() = func;
 }
 
-void JSCallbackWrapper::setJSCallbackThis(jsval thisObj) {
-    _jsThisObj = thisObj;
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    // Root the this object.
-    JS::AddNamedValueRoot(cx, &_jsThisObj, "JSCallbackWrapper_callback_this");
+void JSCallbackWrapper::setJSCallbackThis(JS::HandleValue thisObj) {
+    if (!thisObj.isNullOrUndefined())
+        _jsThisObj.ref() = thisObj;
 }
 
-void JSCallbackWrapper::setJSExtraData(jsval data) {
-    _extraData = data;
+void JSCallbackWrapper::setJSExtraData(JS::HandleValue data) {
+    if (!data.isNullOrUndefined())
+        _extraData.ref() = data;
 }
 
-const jsval& JSCallbackWrapper::getJSCallbackFunc() const
+const jsval JSCallbackWrapper::getJSCallbackFunc() const
 {
-    return _jsCallback.get();
+    return _jsCallback.ref().get();
 }
 
-const jsval& JSCallbackWrapper::getJSCallbackThis() const
+const jsval JSCallbackWrapper::getJSCallbackThis() const
 {
-    return _jsThisObj.get();
+    return _jsThisObj.ref().get();
 }
 
-const jsval& JSCallbackWrapper::getJSExtraData() const
+const jsval JSCallbackWrapper::getJSExtraData() const
 {
-    return _extraData.get();
+    return _extraData.ref().get();
 }
 
 // cc.CallFunc.create( func, this, [data])
@@ -932,82 +931,52 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
 
         std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
         
-        tmpCobj->setJSCallbackFunc(args.get(0));
+        JS::RootedValue callback(cx, args.get(0));
+        tmpCobj->setJSCallbackFunc(callback);
         if(argc >= 2) {
-            tmpCobj->setJSCallbackThis(args.get(1));
-        } if(argc == 3) {
-            tmpCobj->setJSExtraData(args.get(2));
+            JS::RootedValue thisObj(cx, args.get(1));
+            tmpCobj->setJSCallbackThis(thisObj);
+        }
+        if(argc >= 3) {
+            JS::RootedValue data(cx, args.get(2));
+            tmpCobj->setJSExtraData(data);
         }
         
         CallFuncN *ret = CallFuncN::create([=](Node* sender){
-//            const jsval& jsvalThis = tmpCobj->getJSCallbackThis();
-//            const jsval& jsvalCallback = tmpCobj->getJSCallbackFunc();
-//            const jsval& jsvalExtraData = tmpCobj->getJSExtraData();
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            
             JS::RootedValue jsvalThis(cx, tmpCobj->getJSCallbackThis());
+            JS::RootedObject thisObj(cx, jsvalThis.toObjectOrNull());
             JS::RootedValue jsvalCallback(cx, tmpCobj->getJSCallbackFunc());
             JS::RootedValue jsvalExtraData(cx, tmpCobj->getJSExtraData());
-
-            bool hasExtraData = !jsvalExtraData.isUndefined();
-            JS::RootedObject thisObj(cx, jsvalThis.toObjectOrNull());
-
-            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-
-            if(sender)
+            
+            JS::RootedValue senderVal(cx);
+            if (sender)
             {
                 js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
-            
-                JS::RootedValue retval(cx);
-                if(jsvalCallback != JSVAL_VOID)
-                {
-                    if (hasExtraData)
-                    {
-                        jsval valArr[2];
-                        valArr[0] = OBJECT_TO_JSVAL(proxy->obj);
-                        valArr[1] = jsvalExtraData;
-                        
-                        //TODO: really need root?
-//                        JS_AddValueRoot(cx, valArr);
-                        JS::HandleValueArray callArgs = JS::HandleValueArray::fromMarkedLocation(2, valArr);
-                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, callArgs, &retval);
-//                        JS_RemoveValueRoot(cx, valArr);
-                    }
-                    else
-                    {
-                        jsval senderVal = OBJECT_TO_JSVAL(proxy->obj);
-                        JS::HandleValueArray callArgs = JS::HandleValueArray::fromMarkedLocation(1, &senderVal);
-//                        JS_AddValueRoot(cx, &senderVal);
-
-                        JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-
-                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, callArgs, &retval);
-//                        JS_RemoveValueRoot(cx, &senderVal);
-                    }
-                }
+                senderVal.set(OBJECT_TO_JSVAL(proxy->obj));
             }
             else
             {
-                JS::RootedValue callRet(cx);
-                JS_CallFunctionValue(cx, thisObj, jsvalCallback, JS::HandleValueArray::empty(), &callRet);
+                senderVal.set(JS::NullValue());
             }
             
-            // I think the JSCallFuncWrapper isn't needed.
-            // Since an action will be run by a cc.Node, it will be released at the Node::cleanup.
-            // By James Chen
-            // JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
+            if (!jsvalCallback.isNullOrUndefined())
+            {
+                JS::RootedValue retval(cx);
+                
+                jsval valArr[2];
+                valArr[0] = senderVal;
+                valArr[1] = jsvalExtraData;
+
+                JS::HandleValueArray callArgs = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+                JS_CallFunctionValue(cx, thisObj, jsvalCallback, callArgs, &retval);
+            }
         });
         
         js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::CallFunc>(cx, ret);
         args.rval().set(OBJECT_TO_JSVAL(proxy->obj));
         
-        JS_SetReservedSlot(proxy->obj, 0, args.get(0));
-        if(argc > 1) {
-            JS_SetReservedSlot(proxy->obj, 1, args.get(1));
-        }
-//        if(argc == 3) {
-//            JS_SetReservedSlot(proxy->obj, 2, args.get(2));
-//        }
-        
-      //  test->execute();
         return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
@@ -1025,90 +994,69 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
         JSB_PRECONDITION2(action, cx, false, "Invalid Native Object");
         
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-        
+
         std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
-        
-        tmpCobj->setJSCallbackFunc(args.get(0));
+    
+        JS::RootedValue callback(cx, args.get(0));
+        tmpCobj->setJSCallbackFunc(callback);
         if(argc >= 2) {
-            tmpCobj->setJSCallbackThis(args.get(1));
-        } if(argc == 3) {
-            tmpCobj->setJSExtraData(args.get(2));
+            JS::RootedValue thisObj(cx, args.get(1));
+            tmpCobj->setJSCallbackThis(thisObj);
+        }
+        if(argc >= 3) {
+            JS::RootedValue data(cx, args.get(2));
+            tmpCobj->setJSExtraData(data);
         }
         
         action->initWithFunction([=](Node* sender){
-//            const jsval& jsvalThis = tmpCobj->getJSCallbackThis();
-//            const jsval& jsvalCallback = tmpCobj->getJSCallbackFunc();
-//            const jsval& jsvalExtraData = tmpCobj->getJSExtraData();
+            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+            
             JS::RootedValue jsvalThis(cx, tmpCobj->getJSCallbackThis());
+            JS::RootedObject thisObj(cx, jsvalThis.toObjectOrNull());
             JS::RootedValue jsvalCallback(cx, tmpCobj->getJSCallbackFunc());
             JS::RootedValue jsvalExtraData(cx, tmpCobj->getJSExtraData());
             
-            bool hasExtraData = !jsvalExtraData.isUndefined();
-            JS::RootedObject thisObj(cx, jsvalThis.toObjectOrNull());
-            
-            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
-            
-            if(sender)
+            JS::RootedValue senderVal(cx);
+            if (sender)
             {
                 js_proxy_t *senderProxy = js_get_or_create_proxy<cocos2d::Node>(cx, sender);
-            
-                JS::RootedValue retval(cx);
-                if(jsvalCallback != JSVAL_VOID)
-                {
-                    if (hasExtraData)
-                    {
-                        jsval valArr[2];
-                        valArr[0] = OBJECT_TO_JSVAL(senderProxy->obj);
-                        valArr[1] = jsvalExtraData;
-                        
-//                        JS_AddValueRoot(cx, valArr);
-//                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 2, valArr, &retval);
-//                        JS_RemoveValueRoot(cx, valArr);
-
-                        JS::HandleValueArray callArgs = JS::HandleValueArray::fromMarkedLocation(2, valArr);
-                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, callArgs, &retval);
-                    }
-                    else
-                    {
-                        jsval senderVal = OBJECT_TO_JSVAL(senderProxy->obj);
-//                        JS_AddValueRoot(cx, &senderVal);
-//                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, 1, &senderVal, &retval);
-//                        JS_RemoveValueRoot(cx, &senderVal);
-
-                        JS::HandleValueArray callArgs = JS::HandleValueArray::fromMarkedLocation(1, &senderVal);
-                        JS_CallFunctionValue(cx, thisObj, jsvalCallback, callArgs, &retval);
-                    }
-                }
+                senderVal.set(OBJECT_TO_JSVAL(senderProxy->obj));
             }
             else
             {
-                JS::RootedValue ret(cx);
-                JS_CallFunctionValue(cx, thisObj, jsvalCallback, JS::HandleValueArray::empty(), &ret);
+                senderVal.set(JS::NullValue());
             }
             
-            
-            // I think the JSCallFuncWrapper isn't needed.
-            // Since an action will be run by a cc.Node, it will be released at the Node::cleanup.
-            // By James Chen
-            // JSCallFuncWrapper::setTargetForNativeNode(node, (JSCallFuncWrapper *)this);
+            if (!jsvalCallback.isNullOrUndefined())
+            {
+                JS::RootedValue retval(cx);
+                
+                jsval valArr[2];
+                valArr[0] = senderVal;
+                valArr[1] = jsvalExtraData;
+                
+                JS::HandleValueArray callArgs = JS::HandleValueArray::fromMarkedLocation(2, valArr);
+                JS_CallFunctionValue(cx, thisObj, jsvalCallback, callArgs, &retval);
+            }
         });
-        
-        JS_SetReservedSlot(proxy->obj, 0, args.get(0));
-        if(argc > 1) {
-            JS_SetReservedSlot(proxy->obj, 1, args.get(1));
-        }
         return true;
     }
     JS_ReportError(cx, "Invalid number of arguments");
     return false;
 }
 
+JSScheduleWrapper::JSScheduleWrapper()
+: _pTarget(NULL)
+, _priority(0)
+, _isUpdateSchedule(false)
+{
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    _pPureJSTarget.construct(cx);
+}
+
 JSScheduleWrapper::~JSScheduleWrapper()
 {
-    if (_pPureJSTarget.get()) {
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RemoveObjectRoot(cx, &_pPureJSTarget);
-    }
+    _pPureJSTarget.destroyIfConstructed();
 }
 
 void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target) {
@@ -1398,44 +1346,26 @@ void JSScheduleWrapper::scheduleFunc(float dt)
     jsval data = DOUBLE_TO_JSVAL(dt);
 
     JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-
-    //XXX: really need root?
-//    bool ok = JS_AddValueRoot(cx, &data);
-//    if (!ok) {
-//        CCLOG("scheduleFunc: Root value fails.");
-//        return;
-//    }
     
     JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
-    if(!_jsCallback.isNullOrUndefined()) {
+    JS::RootedValue callback(cx, getJSCallbackFunc());
+    if(!callback.isNullOrUndefined()) {
         JS::HandleValueArray args = JS::HandleValueArray::fromMarkedLocation(1, &data);
         JS::RootedValue retval(cx);
-        JS_CallFunctionValue(cx, JS::RootedObject(cx, _jsThisObj.toObjectOrNull()), JS::RootedValue(cx, _jsCallback.get()), args, &retval);
+        JS::RootedObject callbackTarget(cx, getJSCallbackThis().toObjectOrNull());
+        JS_CallFunctionValue(cx, callbackTarget, callback, args, &retval);
     }
-
-//    JS_RemoveValueRoot(cx, &data);
 }
 
 void JSScheduleWrapper::update(float dt)
 {
     jsval data = DOUBLE_TO_JSVAL(dt);
     
-    //XXX: really need root?
-//    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
-    
-//    bool ok = JS_AddValueRoot(cx, &data);
-//    if (!ok) {
-//        CCLOG("scheduleFunc: Root value fails.");
-//        return;
-//    }
-    
-    ScriptingCore::getInstance()->executeFunctionWithOwner(_jsThisObj, "update", 1, &data);
-    
-//    JS_RemoveValueRoot(cx, &data);
+    ScriptingCore::getInstance()->executeFunctionWithOwner(getJSCallbackThis(), "update", 1, &data);
 }
 
-Ref*  JSScheduleWrapper::getTarget()
+Ref* JSScheduleWrapper::getTarget()
 {
     return _pTarget;
 }
@@ -1447,15 +1377,12 @@ void JSScheduleWrapper::setTarget(Ref* pTarget)
 
 void JSScheduleWrapper::setPureJSTarget(JS::HandleObject pPureJSTarget)
 {
-    CCASSERT(_pPureJSTarget == NULL, "The pure js target has been set");
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-    _pPureJSTarget = pPureJSTarget;
-    JS::AddNamedObjectRoot(cx, &_pPureJSTarget, "Pure JS target");
+    _pPureJSTarget.ref() = pPureJSTarget;
 }
 
 JSObject* JSScheduleWrapper::getPureJSTarget()
 {
-    return _pPureJSTarget.get();
+    return _pPureJSTarget.ref().get();
 }
 
 void JSScheduleWrapper::setPriority(int priority)
@@ -1550,8 +1477,8 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         bool ok = true;
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         
-//        JSObject *obj = JS_THIS_OBJECT(cx, vp);
-        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+        JS::RootedValue thisValue(cx, args.thisv());
+        JS::RootedObject obj(cx, thisValue.toObjectOrNull());
         js_proxy_t *proxy = jsb_get_js_proxy(obj);
         cocos2d::Node *node = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
         
@@ -1586,7 +1513,7 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
         {
             tmpCobj = new JSScheduleWrapper();
             tmpCobj->autorelease();
-            tmpCobj->setJSCallbackThis(OBJECT_TO_JSVAL(obj));
+            tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(args.get(0));
             tmpCobj->setTarget(node);
 
@@ -1630,8 +1557,8 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         bool ok = true;
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
         
-//        JSObject *obj = JS_THIS_OBJECT(cx, vp);
-        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+        JS::RootedValue thisValue(cx, args.thisv());
+        JS::RootedObject obj(cx, thisValue.toObjectOrNull());
         js_proxy_t *proxy = jsb_get_js_proxy(obj);
         cocos2d::Node *node = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
         Scheduler *sched = node->getScheduler();
@@ -1679,7 +1606,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
         {
             tmpCobj = new JSScheduleWrapper();
             tmpCobj->autorelease();
-            tmpCobj->setJSCallbackThis(OBJECT_TO_JSVAL(obj));
+            tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(args.get(0));
             tmpCobj->setTarget(node);
             JSScheduleWrapper::setTargetForSchedule(args.get(0), tmpCobj);
@@ -1710,8 +1637,8 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-//    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    JS::RootedValue thisValue(cx, args.thisv());
+    JS::RootedObject obj(cx, thisValue.toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
@@ -1753,7 +1680,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
         {
             tmpCobj = new JSScheduleWrapper();
             tmpCobj->autorelease();
-            tmpCobj->setJSCallbackThis(OBJECT_TO_JSVAL(obj));
+            tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
             tmpCobj->setTarget(cobj);
             tmpCobj->setUpdateSchedule(true);
@@ -1775,7 +1702,6 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
 bool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JSObject *obj = JS_THIS_OBJECT(cx, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
@@ -1785,8 +1711,6 @@ bool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp
     {
         cobj->unscheduleUpdate();
         do {
-//            JSObject *tmpObj = obj;
-            
             __Array *arr = JSScheduleWrapper::getTargetForJSObject(obj);
             // If there aren't any targets, just return true.
             // Otherwise, the for loop will break immediately.
@@ -1817,8 +1741,8 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-//    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    JS::RootedValue thisValue(cx, args.thisv());
+    JS::RootedObject obj(cx, thisValue.toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
@@ -1857,7 +1781,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
         {
             tmpCobj = new JSScheduleWrapper();
             tmpCobj->autorelease();
-            tmpCobj->setJSCallbackThis(OBJECT_TO_JSVAL(obj));
+            tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
             tmpCobj->setTarget(cobj);
             tmpCobj->setUpdateSchedule(true);
