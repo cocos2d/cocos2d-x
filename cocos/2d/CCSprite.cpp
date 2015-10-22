@@ -666,23 +666,25 @@ void Sprite::caculateSlicedVertices()
 {
     if (_type == Type::Sliced) {
         CCLOG("draw sliced sprite");
-        if (_texture == nullptr || _isDefaultTexture)
+        Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
+
+        if (tex == nullptr || _isDefaultTexture)
         {
             return;
         }
-        auto textureSize = _texture->getContentSize();
+        auto atlasWidth = tex->getPixelsWide();
+        auto atlasHeight = tex->getPixelsHigh();
         
-        this->updateBlendFunc();
         //caculate texture coordinate
         float leftWidth = 0, centerWidth = 0, rightWidth = 0;
         float topHeight = 0, centerHeight = 0, bottomHeight = 0;
-        auto capInsets = _capInsetsInternal;
-        auto textureRect = _rect;
-        auto spriteRectSize = _originalSize;
+        auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
+        auto textureRect = CC_RECT_POINTS_TO_PIXELS(_rect);
+        auto spriteRectSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
         if(capInsets.equals(Rect::ZERO))
         {
-            capInsets = Rect(_originalSize.width/3, _originalSize.height/3,
-                             _originalSize.width/3, _originalSize.height/3);
+            capInsets = Rect(spriteRectSize.width/3, spriteRectSize.height/3,
+                             spriteRectSize.width/3, spriteRectSize.height/3);
         }
         
         //handle .9.png
@@ -744,27 +746,27 @@ void Sprite::caculateSlicedVertices()
 
         if (_rectRotated)
         {
-            u0 = textureRect.origin.x / textureSize.width;
-            u1 = (leftWidth + textureRect.origin.x) / textureSize.width;
-            u2 = (leftWidth + centerWidth + textureRect.origin.x) / textureSize.width;
-            u3 = (textureRect.origin.x + textureRect.size.height) / textureSize.width;
+            u0 = textureRect.origin.x / atlasWidth;
+            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+            u3 = (textureRect.origin.x + textureRect.size.height) / atlasWidth;
 
-            v3 = textureRect.origin.y / textureSize.height;
-            v2 = (topHeight + textureRect.origin.y) / textureSize.height;
-            v1 = (topHeight + centerHeight + textureRect.origin.y) / textureSize.height;
-            v0 = (textureRect.origin.y + textureRect.size.width) / textureSize.height;
+            v3 = textureRect.origin.y / atlasHeight;
+            v2 = (topHeight + textureRect.origin.y) / atlasHeight;
+            v1 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+            v0 = (textureRect.origin.y + textureRect.size.width) / atlasHeight;
         }
         else
         {
-            u0 = textureRect.origin.x / textureSize.width;
-            u1 = (leftWidth + textureRect.origin.x) / textureSize.width;
-            u2 = (leftWidth + centerWidth + textureRect.origin.x) / textureSize.width;
-            u3 = (textureRect.origin.x + textureRect.size.width) / textureSize.width;
+            u0 = textureRect.origin.x / atlasWidth;
+            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+            u3 = (textureRect.origin.x + textureRect.size.width) / atlasWidth;
 
-            v0 = textureRect.origin.y / textureSize.height;
-            v1 = (topHeight + textureRect.origin.y) / textureSize.height;
-            v2 = (topHeight + centerHeight + textureRect.origin.y) / textureSize.height;
-            v3 = (textureRect.origin.y + textureRect.size.height) / textureSize.height;
+            v0 = textureRect.origin.y / atlasHeight;
+            v1 = (topHeight + textureRect.origin.y) / atlasHeight;
+            v2 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+            v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
         }
 
         std::vector<float> uvRow = {u0, u1, u2, u3};
@@ -782,6 +784,10 @@ void Sprite::caculateSlicedVertices()
             bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
         }
 
+        leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
+        rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
+        topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
+        bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
         float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
         float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
         float x0,x1,x2,x3;
@@ -1491,10 +1497,12 @@ Sprite::Type Sprite::getType()const
 
 void Sprite::setCapInsets(const cocos2d::Rect &rect)
 {
+    float originalWidthInPixel = _originalSize.width;
+    float originalHeightInPixel = _originalSize.height;
     this->_insetLeft = rect.origin.x;
     this->_insetTop = rect.origin.y;
-    this->_insetRight = _originalSize.width - this->_insetLeft - rect.size.width;
-    this->_insetBottom = _originalSize.height - this->_insetTop - rect.size.height;
+    this->_insetRight = originalWidthInPixel - this->_insetLeft - rect.size.width;
+    this->_insetBottom = originalHeightInPixel - this->_insetTop - rect.size.height;
     _capInsetsInternal = rect;
 
     _capInsetsDirty = true;
@@ -1584,10 +1592,13 @@ void Sprite::setInsetBottom(float insetBottom)
 
 void Sprite::updateCapInset()
 {
+    //capInset are in points not pixels
+    float originalWidthInPixel = _originalSize.width;
+    float originalHeightInPixel = _originalSize.height;
     Rect insets = Rect(_insetLeft,
                       _insetTop,
-                      _originalSize.width-_insetLeft-_insetRight,
-                      _originalSize.height-_insetTop-_insetBottom);
+                      originalWidthInPixel - _insetLeft-_insetRight,
+                      originalHeightInPixel - _insetTop-_insetBottom);
     this->setCapInsets(insets);
 }
 

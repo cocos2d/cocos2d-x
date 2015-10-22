@@ -250,7 +250,6 @@ namespace ui {
                                   const Size &originalSize,
                                   const Rect& capInsets)
     {
-        // updateBlendFunc(sprite?sprite->getTexture():nullptr);
         
         this->setSpriteFrame(sprite->getSpriteFrame());
         _offsetPosition = offset;
