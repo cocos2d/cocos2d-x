@@ -28,6 +28,8 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 #include "ui/UIHelper.h"
 #include <algorithm>
 
@@ -243,7 +245,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 
 void Button::setupNormalTexture()
 {
-    _normalTextureSize = _buttonNormalRenderer->getContentSize();
+    _normalTextureSize = _buttonNormalRenderer->getOriginalSize();
     // force update _customSize, fixed issue:
     // https://github.com/cocos2d/cocos2d-x/issues/12249
     _customSize = _normalTextureSize;
@@ -295,7 +297,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
 
 void Button::setupPressedTexture()
 {
-    _pressedTextureSize = _buttonClickedRenderer->getContentSize();
+    _pressedTextureSize = _buttonClickedRenderer->getOriginalSize();
 
     this->updateChildrenDisplayedRGBA();
 
@@ -332,7 +334,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
 
 void Button::setupDisabledTexture()
 {
-    _disabledTextureSize = _buttonDisabledRenderer->getContentSize();
+    _disabledTextureSize = _buttonDisabledRenderer->getOriginalSize();
 
     this->updateChildrenDisplayedRGBA();
 
@@ -924,18 +926,25 @@ void Button::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
+        //FIXME: encapsulate a functino to determin whether a sprite is using the default texture?
+        auto  defaultTexture = Director::getInstance()->getTextureCache()->getTextureForKey("/cc_2x2_white_image");
+        GLuint defaultTextureName =  defaultTexture->getName();
+        
         auto normalSprite = button->_buttonNormalRenderer->getSprite();
-        if (nullptr != normalSprite)
+        auto textureName = normalSprite->getTexture()->getName();
+        if (textureName != defaultTextureName)
         {
             loadTextureNormal(normalSprite->getSpriteFrame());
         }
         auto clickedSprite = button->_buttonClickedRenderer->getSprite();
-        if (nullptr != clickedSprite)
+        textureName = clickedSprite->getTexture()->getName();
+        if (textureName != defaultTextureName)
         {
             loadTexturePressed(clickedSprite->getSpriteFrame());
         }
         auto disabledSprite = button->_buttonDisabledRenderer->getSprite();
-        if (nullptr != disabledSprite)
+        textureName = disabledSprite->getTexture()->getName();
+        if (textureName != defaultTextureName)
         {
             loadTextureDisabled(disabledSprite->getSpriteFrame());
         }
@@ -964,7 +973,7 @@ Size Button::getNormalSize() const
     Size imageSize;
     if (_buttonNormalRenderer != nullptr)
     {
-        imageSize = _buttonNormalRenderer->getContentSize();
+        imageSize = _buttonNormalRenderer->getOriginalSize();
     }
     float width = titleSize.width > imageSize.width ? titleSize.width : imageSize.width;
     float height = titleSize.height > imageSize.height ? titleSize.height : imageSize.height;

@@ -35,8 +35,8 @@ NS_CC_BEGIN
  */
 
 namespace ui {
-    class Scale9Sprite;
 
+class Scale9Sprite;
 /**
  *@brief Visual indicator of progress in some operation.
  * Displays a bar to the user representing how far the operation has progressed.
@@ -187,6 +187,8 @@ protected:
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
 protected:
+    void updateRendererAnchorPoint();
+    void updateRendererPosition();
     Direction _direction;
     float _percent;
     float _totalLength;

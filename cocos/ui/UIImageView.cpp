@@ -145,7 +145,7 @@ void ImageView::loadTexture(SpriteFrame* spriteframe)
 
 void ImageView::setupTexture()
 {
-    _imageTextureSize = _imageRenderer->getContentSize();
+    _imageTextureSize = _imageRenderer->getOriginalSize();
 
     this->updateChildrenDisplayedRGBA();
 
