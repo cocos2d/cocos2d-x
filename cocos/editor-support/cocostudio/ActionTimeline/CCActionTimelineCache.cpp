@@ -478,17 +478,23 @@ inline ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const coc
         action->addAnimationInfo(info);
     }
 
-    auto timelines = nodeAction->timeLines();
-    int timelineLength = timelines->size();
+    auto timeLines = nodeAction->timeLines();
+    int timelineLength = timeLines->size();
+    std::multimap<std::string, cocostudio::timeline::Timeline*> properTimelineMap;// order the timelines depends property name
     for (int i = 0; i < timelineLength; i++)
     {
-        auto timelineFlatBuf = timelines->Get(i);
+        auto timelineFlatBuf = timeLines->Get(i);
         Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
-        
         if (timeline)
-            action->addTimeline(timeline);
+        {
+            properTimelineMap.insert(std::make_pair(timelineFlatBuf->property()->c_str(), timeline));
+        }
     }
 
+    for (const auto& properTimelinePair : properTimelineMap)
+    {
+        action->addTimeline(properTimelinePair.second);
+    }
     return action;
 }
 
@@ -969,17 +975,22 @@ ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersForSimulator(con
 
     auto timeLines = nodeAction->timeLines();
     int timelineLength = timeLines->size();
+    std::multimap<std::string, cocostudio::timeline::Timeline*> properTimelineMap;// order the timelines depends property name
     for (int i = 0; i < timelineLength; i++)
     {
         auto timelineFlatBuf = timeLines->Get(i);
         Timeline* timeline = loadTimelineWithFlatBuffers(timelineFlatBuf);
-        
         if (timeline)
-            action->addTimeline(timeline);
+        {
+            properTimelineMap.insert(std::make_pair(timelineFlatBuf->property()->c_str(), timeline));
+        }
     }
-    
+
+    for (const auto& properTimelinePair : properTimelineMap)
+    {
+        action->addTimeline(properTimelinePair.second);
+    }
     fbs->deleteFlatBufferBuilder();
-    
     return action;
 }
 
