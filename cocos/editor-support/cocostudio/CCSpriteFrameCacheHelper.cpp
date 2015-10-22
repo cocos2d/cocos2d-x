@@ -105,6 +105,14 @@ SpriteFrameCacheHelper::SpriteFrameCacheHelper()
 
 SpriteFrameCacheHelper::~SpriteFrameCacheHelper()
 {
+    auto i = _usingSpriteFrames.begin();
+    while (i != _usingSpriteFrames.end())
+    {
+        // removeSpriteFrameFromFile will make iterator i invalid
+        // so we increment the value of i first
+        auto j = i++;
+        removeSpriteFrameFromFile(j->first);
+    }
 }
 
 }
