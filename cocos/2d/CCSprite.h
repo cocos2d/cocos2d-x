@@ -491,9 +491,21 @@ public:
     virtual bool isOpacityModifyRGB() const override;
     /// @}
     
-    //methods for sliced sprite
+    /**
+     *@brief Change the rendering type of sprite
+     *@param type  @see Sprite::Type
+     */
     void setType(Type type);
+    
+    /**
+     * Return the rendering type of sprite
+     *@return The actual rendering type of sprite.
+     */
     Type getType()const;
+    
+    /**
+     * Whether is the sprite is using the default 2x2 white texture.
+     */
     bool isUsingDefaultTexture()const;
     /**
      * @brief Change the cap inset size.
@@ -707,8 +719,6 @@ CC_CONSTRUCTOR_ACCESS:
     void setPolygonInfo(const PolygonInfo& info);
 
     
-
-    
 protected:
     void caculateSlicedVertices();
     void updateCapInset();
@@ -718,7 +728,6 @@ protected:
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
-    // TODO: add a Scale9Info structure and make it a pointer.
     Type _type;
     float _insetLeft;
     float _insetRight;

@@ -643,11 +643,7 @@ void Sprite::updateTransform(void)
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
         {
-            if (_type == Type::Simple) {
-                _textureAtlas->updateQuad(&_quad, _atlasIndex);
-            }else if(_type == Type::Sliced){
-                CCLOG("update sliced quad");
-            }
+            _textureAtlas->updateQuad(&_quad, _atlasIndex);
         }
 
         _recursiveDirty = false;
