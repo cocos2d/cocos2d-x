@@ -49,7 +49,7 @@
     CMMotionManager *_motionManager;
 }
 
-+ (id) sharedAccelerometerDispather;
++ (id) sharedAccelerometerDispatcher;
 - (id) init;
 - (void) setAccelerometerEnabled: (bool) isEnabled;
 - (void) setAccelerometerInterval:(float) interval;
@@ -60,7 +60,7 @@
 
 static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
 
-+ (id) sharedAccelerometerDispather
++ (id) sharedAccelerometerDispatcher
 {
     if (s_pAccelerometerDispatcher == nil) {
         s_pAccelerometerDispatcher = [[self alloc] init];
@@ -177,12 +177,12 @@ int Device::getDPI()
 
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
-    [[CCAccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerEnabled:isEnabled];
+    [[CCAccelerometerDispatcher sharedAccelerometerDispatcher] setAccelerometerEnabled:isEnabled];
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
-    [[CCAccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
+    [[CCAccelerometerDispatcher sharedAccelerometerDispatcher] setAccelerometerInterval:interval];
 }
 
 typedef struct
