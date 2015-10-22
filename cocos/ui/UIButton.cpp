@@ -28,8 +28,6 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
-#include "base/CCDirector.h"
-#include "renderer/CCTextureCache.h"
 #include "ui/UIHelper.h"
 #include <algorithm>
 
@@ -926,27 +924,20 @@ void Button::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
-        //FIXME: encapsulate a functino to determin whether a sprite is using the default texture?
-        auto  defaultTexture = Director::getInstance()->getTextureCache()->getTextureForKey("/cc_2x2_white_image");
-        GLuint defaultTextureName =  defaultTexture->getName();
         
-        auto normalSprite = button->_buttonNormalRenderer->getSprite();
-        auto textureName = normalSprite->getTexture()->getName();
-        if (textureName != defaultTextureName)
+        if (!button->_buttonNormalRenderer->isUsingDefaultTexture())
         {
-            loadTextureNormal(normalSprite->getSpriteFrame());
+            loadTextureNormal(button->_buttonNormalRenderer->getSpriteFrame());
         }
-        auto clickedSprite = button->_buttonClickedRenderer->getSprite();
-        textureName = clickedSprite->getTexture()->getName();
-        if (textureName != defaultTextureName)
+        
+        if (!button->_buttonClickedRenderer->isUsingDefaultTexture())
         {
-            loadTexturePressed(clickedSprite->getSpriteFrame());
+            loadTexturePressed(button->_buttonClickedRenderer->getSpriteFrame());
         }
-        auto disabledSprite = button->_buttonDisabledRenderer->getSprite();
-        textureName = disabledSprite->getTexture()->getName();
-        if (textureName != defaultTextureName)
+        
+        if (!button->_buttonDisabledRenderer->isUsingDefaultTexture())
         {
-            loadTextureDisabled(disabledSprite->getSpriteFrame());
+            loadTextureDisabled(button->_buttonDisabledRenderer->getSpriteFrame());
         }
         setCapInsetsNormalRenderer(button->_capInsetsNormal);
         setCapInsetsPressedRenderer(button->_capInsetsPressed);

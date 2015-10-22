@@ -490,6 +490,101 @@ public:
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
+    
+    //methods for sliced sprite
+    void setType(Type type);
+    Type getType()const;
+    bool isUsingDefaultTexture()const;
+    /**
+     * @brief Change the cap inset size.
+     *
+     * @param rect A delimitation zone.
+     */
+    void setCapInsets(const Rect& rect);
+    
+    /**
+     * @brief Query the Scale9Sprite's prefered size.
+     *
+     * @return Scale9Sprite's cap inset.
+     */
+    Rect getCapInsets()const;
+    /**
+     * Change the state of 9-slice sprite.
+     * @see `State`
+     * @param state A enum value in State.
+     * @since v3.9
+     */
+    void setState(State state);
+    
+    /**
+     * Query the current bright state.
+     * @return @see `State`
+     * @since v3.9
+     */
+    State getState()const;
+    
+    /**
+     * @brief Query the sprite's original size.
+     *
+     * @return Sprite size.
+     */
+    Size getOriginalSize() const;
+    /**
+     * @brief Change the left sprite's cap inset.
+     *
+     * @param leftInset The values to use for the cap inset.
+     */
+    void setInsetLeft(float leftInset);
+    
+    /**
+     * @brief Query the left sprite's cap inset.
+     *
+     * @return The left sprite's cap inset.
+     */
+    float getInsetLeft()const;
+    
+    /**
+     * @brief Change the top sprite's cap inset.
+     *
+     * @param topInset The values to use for the cap inset.
+     */
+    void setInsetTop(float topInset);
+    
+    /**
+     * @brief Query the top sprite's cap inset.
+     *
+     * @return The top sprite's cap inset.
+     */
+    float getInsetTop()const;
+    
+    /**
+     * @brief Change the right sprite's cap inset.
+     *
+     * @param rightInset The values to use for the cap inset.
+     */
+    void setInsetRight(float rightInset);
+    
+    /**
+     * @brief Query the right sprite's cap inset.
+     *
+     * @return The right sprite's cap inset.
+     */
+    float getInsetRight()const;
+    
+    /**
+     * @brief Change the bottom sprite's cap inset.
+     *
+     * @param bottomInset The values to use for the cap inset.
+     
+     */
+    void setInsetBottom(float bottomInset);
+    
+    /**
+     * @brief Query the bottom sprite's cap inset.
+     *
+     * @return The bottom sprite's cap inset.
+     */
+    float getInsetBottom()const;
 
 CC_CONSTRUCTOR_ACCESS:
 	/**
@@ -611,99 +706,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     void setPolygonInfo(const PolygonInfo& info);
 
-    void setType(Type type);
-    Type getType()const;
     
-    /**
-     * @brief Change the cap inset size.
-     *
-     * @param rect A delimitation zone.
-     */
-    void setCapInsets(const Rect& rect);
-    
-    /**
-     * @brief Query the Scale9Sprite's prefered size.
-     *
-     * @return Scale9Sprite's cap inset.
-     */
-    Rect getCapInsets()const;
-    /**
-     * Change the state of 9-slice sprite.
-     * @see `State`
-     * @param state A enum value in State.
-     * @since v3.9
-     */
-    void setState(State state);
-
-    /**
-     * Query the current bright state.
-     * @return @see `State`
-     * @since v3.9
-     */
-    State getState()const;
-
-    /**
-     * @brief Query the sprite's original size.
-     *
-     * @return Sprite size.
-     */
-    Size getOriginalSize() const;
-    /**
-     * @brief Change the left sprite's cap inset.
-     *
-     * @param leftInset The values to use for the cap inset.
-     */
-    void setInsetLeft(float leftInset);
-
-    /**
-     * @brief Query the left sprite's cap inset.
-     *
-     * @return The left sprite's cap inset.
-     */
-    float getInsetLeft()const;
-
-    /**
-     * @brief Change the top sprite's cap inset.
-     *
-     * @param topInset The values to use for the cap inset.
-     */
-    void setInsetTop(float topInset);
-
-    /**
-     * @brief Query the top sprite's cap inset.
-     *
-     * @return The top sprite's cap inset.
-     */
-    float getInsetTop()const;
-
-    /**
-     * @brief Change the right sprite's cap inset.
-     *
-     * @param rightInset The values to use for the cap inset.
-     */
-    void setInsetRight(float rightInset);
-
-    /**
-     * @brief Query the right sprite's cap inset.
-     *
-     * @return The right sprite's cap inset.
-     */
-    float getInsetRight()const;
-
-    /**
-     * @brief Change the bottom sprite's cap inset.
-     *
-     * @param bottomInset The values to use for the cap inset.
-
-     */
-    void setInsetBottom(float bottomInset);
-
-    /**
-     * @brief Query the bottom sprite's cap inset.
-     *
-     * @return The bottom sprite's cap inset.
-     */
-    float getInsetBottom()const;
 
     
 protected:

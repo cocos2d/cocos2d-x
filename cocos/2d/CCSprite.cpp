@@ -288,7 +288,6 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 Sprite::Sprite(void)
 : _type(Type::Simple)
 , _brightState(State::NORMAL)
-, _capInsetsDirty(false)
 , _isPatch9(false)
 , _insetLeft(0.0f)
 , _insetRight(0.0f)
@@ -566,7 +565,7 @@ void Sprite::setTextureCoords(Rect rect)
 void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
-
+    
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
@@ -644,7 +643,11 @@ void Sprite::updateTransform(void)
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
         if (_textureAtlas)
         {
-            _textureAtlas->updateQuad(&_quad, _atlasIndex);
+            if (_type == Type::Simple) {
+                _textureAtlas->updateQuad(&_quad, _atlasIndex);
+            }else if(_type == Type::Sliced){
+                CCLOG("update sliced quad");
+            }
         }
 
         _recursiveDirty = false;
@@ -781,7 +784,7 @@ void Sprite::caculateSlicedVertices()
 
             topHeight = capInsets.origin.y;
             centerHeight = capInsets.size.height;
-            bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
+            bottomHeight = spriteRectSize.height - (topHeight + centerHeight);
         }
 
         leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
@@ -926,10 +929,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        if (_capInsetsDirty) {
-            this->caculateSlicedVertices();
-            _capInsetsDirty = false;
-        }
         _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
 
@@ -1183,7 +1182,9 @@ void Sprite::setContentSize(const cocos2d::Size &size)
     {
         _preferredSize = size;
         //TODO: content size change should only update vetices, the texture uv are not changed.
-        _capInsetsDirty = true;
+       
+        this->caculateSlicedVertices();
+        
     }
    
 }
@@ -1485,7 +1486,6 @@ void Sprite::setType(Type type)
     {
         //TODO: optimize the operation
         this->setContentSize(_preferredSize);
-        _capInsetsDirty = true;
     }
 }
 
@@ -1497,6 +1497,9 @@ Sprite::Type Sprite::getType()const
 
 void Sprite::setCapInsets(const cocos2d::Rect &rect)
 {
+    if (rect.equals(_capInsetsInternal)) {
+        return;
+    }
     float originalWidthInPixel = _originalSize.width;
     float originalHeightInPixel = _originalSize.height;
     this->_insetLeft = rect.origin.x;
@@ -1505,7 +1508,7 @@ void Sprite::setCapInsets(const cocos2d::Rect &rect)
     this->_insetBottom = originalHeightInPixel - this->_insetTop - rect.size.height;
     _capInsetsInternal = rect;
 
-    _capInsetsDirty = true;
+    this->caculateSlicedVertices();
 }
 
 Rect Sprite::getCapInsets()const
@@ -1600,6 +1603,11 @@ void Sprite::updateCapInset()
                       originalWidthInPixel - _insetLeft-_insetRight,
                       originalHeightInPixel - _insetTop-_insetBottom);
     this->setCapInsets(insets);
+}
+
+bool Sprite::isUsingDefaultTexture()const
+{
+    return this->_isDefaultTexture;
 }
 
 NS_CC_END

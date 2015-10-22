@@ -699,15 +699,13 @@ void Slider::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = slider->_prevIgnoreSize;
         setScale9Enabled(slider->_scale9Enabled);
-        auto barSprite = slider->_barRenderer->getSprite();
-        if (nullptr != barSprite)
+        if (!slider->_barRenderer->isUsingDefaultTexture())
         {
-            loadBarTexture(barSprite->getSpriteFrame());
+            loadBarTexture(slider->_barRenderer->getSpriteFrame());
         }
-        auto progressSprite = slider->_progressBarRenderer->getSprite();
-        if (nullptr != progressSprite)
+        if (!slider->_progressBarRenderer->isUsingDefaultTexture())
         {
-            loadProgressBarTexture(progressSprite->getSpriteFrame());
+            loadProgressBarTexture(slider->_progressBarRenderer->getSpriteFrame());
         }
         loadSlidBallTextureNormal(slider->_slidBallNormalRenderer->getSpriteFrame());
         loadSlidBallTexturePressed(slider->_slidBallPressedRenderer->getSpriteFrame());

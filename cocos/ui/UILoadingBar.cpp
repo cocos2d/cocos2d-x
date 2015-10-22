@@ -134,6 +134,7 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         return;
     }
     _renderBarTexType = texType;
+    _textureFile = texture;
     switch (_renderBarTexType)
     {
         case TextureResType::LOCAL:
@@ -145,12 +146,6 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         default:
             break;
     }
-    this->setupTexture();
-}
-
-void LoadingBar::loadTexture(SpriteFrame* spriteframe)
-{
-    this->_barRenderer->initWithSpriteFrame(spriteframe);
     this->setupTexture();
 }
     
@@ -375,10 +370,9 @@ void LoadingBar::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = loadingBar->_prevIgnoreSize;
         setScale9Enabled(loadingBar->_scale9Enabled);
-        auto barSprite = loadingBar->_barRenderer->getSprite();
-        if(nullptr != barSprite)
+        if(!loadingBar->_barRenderer->isUsingDefaultTexture())
         {
-            loadTexture(barSprite->getSpriteFrame());
+            loadTexture(loadingBar->_textureFile,loadingBar->_renderBarTexType);
         }
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);

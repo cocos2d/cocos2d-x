@@ -27,6 +27,7 @@
 #include "2d/CCSpriteFrameCache.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
+#include "2d/CCSpriteBatchNode.h"
 
 
 NS_CC_BEGIN
@@ -152,6 +153,37 @@ namespace ui {
         setCapInsets(capInsets);
         
         return bRet;
+    }
+    
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
+                                         const cocos2d::Rect &rect,
+                                         bool rotated,
+                                         const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return updateWithSprite(sprite, rect, false, capInsets);
+    }
+    
+    bool Scale9Sprite::initWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
+                                         const cocos2d::Rect &rect,
+                                         const cocos2d::Rect &capInsets)
+    {
+        auto sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return updateWithSprite(sprite, rect, false, capInsets);
+    }
+    
+    bool Scale9Sprite::updateWithBatchNode(cocos2d::SpriteBatchNode *batchnode,
+                                           const cocos2d::Rect &originalRect,
+                                           bool rotated,
+                                           const cocos2d::Rect &capInsets)
+    {
+        Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
+        return this->updateWithSprite(sprite,
+                                      originalRect,
+                                      rotated,
+                                      Vec2::ZERO,
+                                      originalRect.size,
+                                      capInsets);
     }
     
     bool Scale9Sprite::initWithFile(const Rect& capInsets, const std::string& file)

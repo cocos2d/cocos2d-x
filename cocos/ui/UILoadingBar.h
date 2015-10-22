@@ -180,7 +180,6 @@ protected:
     void barRendererScaleChangedWithSize();
 
     void setupTexture();
-    void loadTexture(SpriteFrame* spriteframe);
     
     virtual void adaptRenderers() override;
     
@@ -199,6 +198,7 @@ protected:
     bool _prevIgnoreSize;
     Rect _capInsets;
     bool _barRendererAdaptDirty;
+    std::string _textureFile;
 };
 
 }
