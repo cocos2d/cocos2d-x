@@ -520,9 +520,6 @@ namespace ui {
         Size _preferredSize;
         bool _isPatch9;
 
-    private:
-        CC_DISALLOW_COPY_AND_ASSIGN(Scale9Sprite);
-
     };
 }
 

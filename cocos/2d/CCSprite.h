@@ -467,6 +467,13 @@ public:
      */
     bool isUsingDefaultTexture()const;
 
+    /**
+     * @brief Query the sprite's original size.
+     *
+     * @return Sprite size.
+     */
+    const Size& getOriginalSize() const;
+
 CC_CONSTRUCTOR_ACCESS:
 	/**
      * @js ctor
@@ -585,12 +592,6 @@ CC_CONSTRUCTOR_ACCESS:
      */
     void setPolygonInfo(const PolygonInfo& info);
 
-    /**
-     * @brief Query the sprite's original size.
-     *
-     * @return Sprite size.
-     */
-    const Size& getOriginalSize() const;
 protected:
     void updateColor() override;
     virtual void setTextureCoords(Rect rect);
