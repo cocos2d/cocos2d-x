@@ -313,6 +313,7 @@ bool RadioButtonGroup::setSelectedButtonWithoutEvent(RadioButton* radioButton)
     {
         _selectedRadioButton->setSelected(true);
     }
+    return true;
 }
 
 std::string RadioButtonGroup::getDescription() const
