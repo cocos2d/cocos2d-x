@@ -111,6 +111,8 @@ public:
     std::string filename;
     TrianglesCommand::Triangles triangles;
     
+    void reset();
+    
 protected:
     bool isVertsOwner;
     

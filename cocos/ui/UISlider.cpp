@@ -176,8 +176,8 @@ void Slider::setupBarTexture()
     this->updateChildrenDisplayedRGBA();
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
-    updateContentSizeWithTextureSize(_barRenderer->getContentSize());
-    _barTextureSize = _barRenderer->getContentSize();
+    updateContentSizeWithTextureSize(_barRenderer->getOriginalSize());
+    _barTextureSize = _barRenderer->getOriginalSize();
 }
 
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
@@ -211,7 +211,7 @@ void Slider::setupProgressBarTexture()
 {
     this->updateChildrenDisplayedRGBA();
     _progressBarRenderer->setAnchorPoint(Vec2(0.0f, 0.5f));
-    _progressBarTextureSize = _progressBarRenderer->getContentSize();
+    _progressBarTextureSize = _progressBarRenderer->getOriginalSize();
     _progressBarRendererDirty = true;
 }
 
@@ -429,11 +429,11 @@ void Slider::setPercent(int percent)
 bool Slider::hitTest(const cocos2d::Vec2 &pt, const Camera *camera, Vec3 *p) const
 {
     Rect rect;
-    rect.size = _slidBallNormalRenderer->getContentSize();
+    rect.size = _slidBallNormalRenderer->getOriginalSize();
     auto w2l = _slidBallNormalRenderer->getWorldToNodeTransform();
 
     Rect sliderBarRect;
-    sliderBarRect.size = this->_barRenderer->getContentSize();
+    sliderBarRect.size = this->_barRenderer->getOriginalSize();
     auto barW2l = this->_barRenderer->getWorldToNodeTransform();
     return isScreenPointInRect(pt, camera, w2l, rect, nullptr) || isScreenPointInRect(pt, camera, barW2l, sliderBarRect, nullptr);
 }
@@ -533,7 +533,7 @@ void Slider::adaptRenderers()
 
 Size Slider::getVirtualRendererSize() const
 {
-    return _barRenderer->getContentSize();
+    return _barRenderer->getOriginalSize();
 }
 
 Node* Slider::getVirtualRenderer()
@@ -699,15 +699,13 @@ void Slider::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = slider->_prevIgnoreSize;
         setScale9Enabled(slider->_scale9Enabled);
-        auto barSprite = slider->_barRenderer->getSprite();
-        if (nullptr != barSprite)
+        if (!slider->_barRenderer->isUsingDefaultTexture())
         {
-            loadBarTexture(barSprite->getSpriteFrame());
+            loadBarTexture(slider->_barRenderer->getSpriteFrame());
         }
-        auto progressSprite = slider->_progressBarRenderer->getSprite();
-        if (nullptr != progressSprite)
+        if (!slider->_progressBarRenderer->isUsingDefaultTexture())
         {
-            loadProgressBarTexture(progressSprite->getSpriteFrame());
+            loadProgressBarTexture(slider->_progressBarRenderer->getSpriteFrame());
         }
         loadSlidBallTextureNormal(slider->_slidBallNormalRenderer->getSpriteFrame());
         loadSlidBallTexturePressed(slider->_slidBallPressedRenderer->getSpriteFrame());

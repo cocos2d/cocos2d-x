@@ -243,7 +243,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
 
 void Button::setupNormalTexture()
 {
-    _normalTextureSize = _buttonNormalRenderer->getContentSize();
+    _normalTextureSize = _buttonNormalRenderer->getOriginalSize();
     // force update _customSize, fixed issue:
     // https://github.com/cocos2d/cocos2d-x/issues/12249
     _customSize = _normalTextureSize;
@@ -295,7 +295,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
 
 void Button::setupPressedTexture()
 {
-    _pressedTextureSize = _buttonClickedRenderer->getContentSize();
+    _pressedTextureSize = _buttonClickedRenderer->getOriginalSize();
 
     this->updateChildrenDisplayedRGBA();
 
@@ -332,7 +332,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
 
 void Button::setupDisabledTexture()
 {
-    _disabledTextureSize = _buttonDisabledRenderer->getContentSize();
+    _disabledTextureSize = _buttonDisabledRenderer->getOriginalSize();
 
     this->updateChildrenDisplayedRGBA();
 
@@ -924,20 +924,20 @@ void Button::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
-        auto normalSprite = button->_buttonNormalRenderer->getSprite();
-        if (nullptr != normalSprite)
+        
+        if (!button->_buttonNormalRenderer->isUsingDefaultTexture())
         {
-            loadTextureNormal(normalSprite->getSpriteFrame());
+            loadTextureNormal(button->_buttonNormalRenderer->getSpriteFrame());
         }
-        auto clickedSprite = button->_buttonClickedRenderer->getSprite();
-        if (nullptr != clickedSprite)
+        
+        if (!button->_buttonClickedRenderer->isUsingDefaultTexture())
         {
-            loadTexturePressed(clickedSprite->getSpriteFrame());
+            loadTexturePressed(button->_buttonClickedRenderer->getSpriteFrame());
         }
-        auto disabledSprite = button->_buttonDisabledRenderer->getSprite();
-        if (nullptr != disabledSprite)
+        
+        if (!button->_buttonDisabledRenderer->isUsingDefaultTexture())
         {
-            loadTextureDisabled(disabledSprite->getSpriteFrame());
+            loadTextureDisabled(button->_buttonDisabledRenderer->getSpriteFrame());
         }
         setCapInsetsNormalRenderer(button->_capInsetsNormal);
         setCapInsetsPressedRenderer(button->_capInsetsPressed);
@@ -964,7 +964,7 @@ Size Button::getNormalSize() const
     Size imageSize;
     if (_buttonNormalRenderer != nullptr)
     {
-        imageSize = _buttonNormalRenderer->getContentSize();
+        imageSize = _buttonNormalRenderer->getOriginalSize();
     }
     float width = titleSize.width > imageSize.width ? titleSize.width : imageSize.width;
     float height = titleSize.height > imageSize.height ? titleSize.height : imageSize.height;

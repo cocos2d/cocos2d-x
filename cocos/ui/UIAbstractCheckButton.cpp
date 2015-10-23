@@ -154,7 +154,7 @@ void AbstractCheckButton::setupBackgroundTexture()
     
     this->updateChildrenDisplayedRGBA();
     
-    updateContentSizeWithTextureSize(_backGroundBoxRenderer->getContentSize());
+    updateContentSizeWithTextureSize(_backGroundBoxRenderer->getOriginalSize());
     _backGroundBoxRendererAdaptDirty = true;
 }
 
@@ -437,7 +437,7 @@ void AbstractCheckButton::adaptRenderers()
 
 Size AbstractCheckButton::getVirtualRendererSize() const
 {
-    return _backGroundBoxRenderer->getContentSize();
+    return _backGroundBoxRenderer->getOriginalSize();
 }
 
 Node* AbstractCheckButton::getVirtualRenderer()
@@ -454,7 +454,7 @@ void AbstractCheckButton::backGroundTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _backGroundBoxRenderer->getContentSize();
+        Size textureSize = _backGroundBoxRenderer->getOriginalSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxRenderer->setScale(1.0f);
@@ -479,7 +479,7 @@ void AbstractCheckButton::backGroundSelectedTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _backGroundSelectedBoxRenderer->getContentSize();
+        Size textureSize = _backGroundSelectedBoxRenderer->getOriginalSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundSelectedBoxRenderer->setScale(1.0f);
@@ -501,7 +501,7 @@ void AbstractCheckButton::frontCrossTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _frontCrossRenderer->getContentSize();
+        Size textureSize = _frontCrossRenderer->getOriginalSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _frontCrossRenderer->setScale(1.0f);
@@ -523,7 +523,7 @@ void AbstractCheckButton::backGroundDisabledTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _backGroundBoxDisabledRenderer->getContentSize();
+        Size textureSize = _backGroundBoxDisabledRenderer->getOriginalSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _backGroundBoxDisabledRenderer->setScale(1.0f);
@@ -545,7 +545,7 @@ void AbstractCheckButton::frontCrossDisabledTextureScaleChangedWithSize()
     }
     else
     {
-        Size textureSize = _frontCrossDisabledRenderer->getContentSize();
+        Size textureSize = _frontCrossDisabledRenderer->getOriginalSize();
         if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
         {
             _frontCrossDisabledRenderer->setScale(1.0f);

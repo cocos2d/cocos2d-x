@@ -66,11 +66,15 @@ struct transformValues_;
  * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
  *
  * Sprite can be created with an image, or with a sub-rectangle of an image.
+ * Sprite comes with two rendering mode.
+ *  - Simple: The original Cocos2D style.
+ *  - Sliced: A new way to draw 9-sliced sprite.
  *
  * To optimize the Sprite rendering, please follow the following best practices:
  *  - Put all your sprites in the same spritesheet (http://www.codeandweb.com/what-is-a-sprite-sheet).
  *  - Use the same blending function for all your sprites.
  *  - ...and the Renderer will automatically "batch" your sprites (will draw all of them in one OpenGL call).
+ *
  *
  *  To gain an additional 5% ~ 10% more in the rendering, you can parent your sprites into a `SpriteBatchNode`.
  *  But doing so carries the following limitations:
@@ -79,12 +83,30 @@ struct transformValues_;
  *  - The Blending function property belongs to `SpriteBatchNode`, so you can't individually set the blending function property.
  *  - `ParallaxNode` is not supported, but can be simulated with a "proxy" sprite.
  *  - Sprites can only have other Sprites (or subclasses of Sprite) as children.
+ *  - Type::Sliced Sprite can't be added as children of SpriteBatchNode
  *
  * The default anchorPoint in Sprite is (0.5, 0.5).
  */
 class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
+    /**
+     * Simple: The classical cocos2d sprite type, you can't change content size to stretch, use scale instead.
+     * Sliced: Sliced aka 9-slice scaling which allows you to specify how scaling is applied
+     *         to specific areas of a sprite. With 9-slice scaling (3x3 grid),
+     *         you can ensure that the sprite does not become distorted when scaled.
+     */
+    enum class Type
+    {
+        Simple,
+        Sliced
+    };
+    
+    enum class State
+    {
+        NORMAL,
+        GRAY
+    };
      /** Sprite invalid index on the SpriteBatchNode. */
     static const int INDEX_NOT_INITIALIZED = -1;
 
@@ -98,6 +120,7 @@ public:
      * @return An autoreleased sprite object.
      */
     static Sprite* create();
+
 
     /**
      * Creates a sprite with an image filename.
@@ -251,6 +274,7 @@ public:
      * Sets a new SpriteFrame to the Sprite.
      */
     virtual void setSpriteFrame(const std::string &spriteFrameName);
+    
     virtual void setSpriteFrame(SpriteFrame* newFrame);
     /** @} */
 
@@ -433,6 +457,16 @@ public:
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
     virtual void setScale(float scaleX, float scaleY) override;
+    virtual void setContentSize(const Size & size) override;
+    /**
+     * Returns the untransformed size of the node when type is Simple.
+     *
+     * @see `setContentSize(const Size&)`
+     *
+     * @return The untransformed size of the node. When type is sliced, the content size is the 
+     *         prefered size.
+     */
+    virtual const Size& getContentSize() const override;
     /**
     * @js  NA
     * @lua NA
@@ -460,6 +494,113 @@ public:
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
+    
+    /**
+     *@brief Change the rendering type of sprite
+     *@param type  @see Sprite::Type
+     */
+    void setType(Type type);
+    
+    /**
+     * Return the rendering type of sprite
+     *@return The actual rendering type of sprite.
+     */
+    Type getType()const;
+    
+    /**
+     * Whether is the sprite is using the default 2x2 white texture.
+     */
+    bool isUsingDefaultTexture()const;
+    /**
+     * @brief Change the cap inset size.
+     *
+     * @param rect A delimitation zone.
+     */
+    void setCapInsets(const Rect& rect);
+    
+    /**
+     * @brief Query the Scale9Sprite's prefered size.
+     *
+     * @return Scale9Sprite's cap inset.
+     */
+    Rect getCapInsets()const;
+    /**
+     * Change the state of 9-slice sprite.
+     * @see `State`
+     * @param state A enum value in State.
+     * @since v3.9
+     */
+    void setState(State state);
+    
+    /**
+     * Query the current bright state.
+     * @return @see `State`
+     * @since v3.9
+     */
+    State getState()const;
+    
+    /**
+     * @brief Query the sprite's original size.
+     *
+     * @return Sprite size.
+     */
+    Size getOriginalSize() const;
+    /**
+     * @brief Change the left sprite's cap inset.
+     *
+     * @param leftInset The values to use for the cap inset.
+     */
+    void setInsetLeft(float leftInset);
+    
+    /**
+     * @brief Query the left sprite's cap inset.
+     *
+     * @return The left sprite's cap inset.
+     */
+    float getInsetLeft()const;
+    
+    /**
+     * @brief Change the top sprite's cap inset.
+     *
+     * @param topInset The values to use for the cap inset.
+     */
+    void setInsetTop(float topInset);
+    
+    /**
+     * @brief Query the top sprite's cap inset.
+     *
+     * @return The top sprite's cap inset.
+     */
+    float getInsetTop()const;
+    
+    /**
+     * @brief Change the right sprite's cap inset.
+     *
+     * @param rightInset The values to use for the cap inset.
+     */
+    void setInsetRight(float rightInset);
+    
+    /**
+     * @brief Query the right sprite's cap inset.
+     *
+     * @return The right sprite's cap inset.
+     */
+    float getInsetRight()const;
+    
+    /**
+     * @brief Change the bottom sprite's cap inset.
+     *
+     * @param bottomInset The values to use for the cap inset.
+     
+     */
+    void setInsetBottom(float bottomInset);
+    
+    /**
+     * @brief Query the bottom sprite's cap inset.
+     *
+     * @return The bottom sprite's cap inset.
+     */
+    float getInsetBottom()const;
 
 CC_CONSTRUCTOR_ACCESS:
 	/**
@@ -526,6 +667,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithSpriteFrame(SpriteFrame *spriteFrame);
 
+
     /**
      * Initializes a sprite with an sprite frame name.
      *
@@ -537,6 +679,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
 
+   
     /**
      * Initializes a sprite with an image filename.
      *
@@ -563,7 +706,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
-    
+
     /**
      * returns a copy of the polygon information associated with this sprite
      * because this is a copy process it is slower than getting the reference, so use wisely
@@ -578,16 +721,31 @@ CC_CONSTRUCTOR_ACCESS:
      * @param PolygonInfo the polygon information object
      */
     void setPolygonInfo(const PolygonInfo& info);
-protected:
 
+    
+protected:
+    void caculateSlicedVertices();
+    void updateCapInset();
     void updateColor() override;
     virtual void setTextureCoords(Rect rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
-
-    
+    Type _type;
+    float _insetLeft;
+    float _insetRight;
+    float _insetBottom;
+    float _insetTop;
+    Rect _capInsetsInternal;
+    Size _originalSize;
+    State _brightState;
+    bool _capInsetsDirty;
+    bool _isPatch9;
+    V3F_C4B_T2F* _sliceVertices;
+    unsigned short* _sliceIndices;
+    bool _isDefaultTexture;
+    Size _preferredSize;
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //

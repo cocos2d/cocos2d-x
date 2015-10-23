@@ -41,7 +41,6 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
-
 NS_CC_BEGIN
 
 // MARK: create, init, dealloc
@@ -120,13 +119,13 @@ Sprite* Sprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
 Sprite* Sprite::createWithSpriteFrameName(const std::string& spriteFrameName)
 {
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
-    
+
 #if COCOS2D_DEBUG > 0
     char msg[256] = {0};
     sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
     CCASSERT(frame != nullptr, msg);
 #endif
-    
+
     return createWithSpriteFrame(frame);
 }
 
@@ -165,7 +164,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect)
 bool Sprite::initWithFile(const std::string& filename)
 {
     CCASSERT(filename.size()>0, "Invalid filename for sprite");
-
+    
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
@@ -173,23 +172,26 @@ bool Sprite::initWithFile(const std::string& filename)
         rect.size = texture->getContentSize();
         return initWithTexture(texture, rect);
     }
-
+    
     // don't release here.
     // when load texture failed, it's better to get a "transparent" sprite then a crashed program
     // this->release();
     return false;
 }
 
+
 bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename");
-
+    
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
-        return initWithTexture(texture, rect);
+        
+        bool ret = initWithTexture(texture, rect);
+        return ret;
     }
-
+    
     // don't release here.
     // when load texture failed, it's better to get a "transparent" sprite then a crashed program
     // this->release();
@@ -199,19 +201,22 @@ bool Sprite::initWithFile(const std::string &filename, const Rect& rect)
 bool Sprite::initWithSpriteFrameName(const std::string& spriteFrameName)
 {
     CCASSERT(spriteFrameName.size() > 0, "Invalid spriteFrameName");
-
+    
     SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
     return initWithSpriteFrame(frame);
 }
 
+
+
 bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 {
     CCASSERT(spriteFrame != nullptr, "spriteFrame can't be nullptr!");
-
+    
     bool bRet = initWithTexture(spriteFrame->getTexture(), spriteFrame->getRect());
     setSpriteFrame(spriteFrame);
-
+    
     return bRet;
+
 }
 
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
@@ -234,38 +239,38 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     if (Node::init())
     {
         _batchNode = nullptr;
-        
+
         _recursiveDirty = false;
         setDirty(false);
-        
+
         _opacityModifyRGB = true;
-        
+
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-        
+
         _flippedX = _flippedY = false;
-        
+
         // default transform anchor: center
         setAnchorPoint(Vec2(0.5f, 0.5f));
-        
+
         // zwoptex default values
         _offsetPosition.setZero();
 
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
-        
+
         // Atlas: Color
         _quad.bl.colors = Color4B::WHITE;
         _quad.br.colors = Color4B::WHITE;
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
-        
+
         // shader state
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 
         // update texture (calls updateBlendFunc)
         setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
-        
+
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
@@ -281,12 +286,22 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 }
 
 Sprite::Sprite(void)
-: _batchNode(nullptr)
+: _type(Type::Simple)
+, _brightState(State::NORMAL)
+, _isPatch9(false)
+, _insetLeft(0.0f)
+, _insetRight(0.0f)
+, _insetTop(0.0f)
+, _insetBottom(0.0f)
+, _batchNode(nullptr)
 , _textureAtlas(nullptr)
 , _shouldBeHidden(false)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
 , _insideBounds(true)
+, _sliceVertices(nullptr)
+, _sliceIndices(nullptr)
+, _isDefaultTexture(false)
 {
 #if CC_SPRITE_DEBUG_DRAW
     _debugDrawNode = DrawNode::create();
@@ -298,6 +313,8 @@ Sprite::~Sprite(void)
 {
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
+    CC_SAFE_DELETE_ARRAY(_sliceIndices);
+    CC_SAFE_DELETE_ARRAY(_sliceVertices);
 }
 
 /*
@@ -342,7 +359,7 @@ void Sprite::setTexture(Texture2D *texture)
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-
+    _isDefaultTexture = false;
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
@@ -358,6 +375,20 @@ void Sprite::setTexture(Texture2D *texture)
 
             texture = Director::getInstance()->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
+        }
+    }
+    //the originalSize is valid when sprite is not in atlas
+    _originalSize = texture->getContentSize();
+    
+    auto  defaultTexture = Director::getInstance()->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+    
+    // If texture wasn't in cache, create it from RAW data.
+    if (defaultTexture != nullptr)
+    {
+        GLuint defaultTextureName =  defaultTexture->getName();
+        if (defaultTextureName == texture->getName())
+        {
+            _isDefaultTexture = true;
         }
     }
 
@@ -413,7 +444,7 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     else
     {
         // self rendering
-        
+
         // Atlas: Vertex
         float x1 = 0.0f + _offsetPosition.x;
         float y1 = 0.0f + _offsetPosition.y;
@@ -426,7 +457,17 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
         _quad.tl.vertices.set(x1, y2, 0.0f);
         _quad.tr.vertices.set(x2, y2, 0.0f);
     }
-    
+
+   if (_texture->isContain9PatchInfo())
+   {
+       auto& parsedCapInset = _texture->getSpriteFrameCapInset(this->getSpriteFrame());
+       if(!parsedCapInset.equals(Rect::ZERO))
+       {
+           this->_isPatch9 = true;
+           _capInsetsInternal = parsedCapInset;
+       }
+   }
+
     _polyInfo.setQuad(&_quad);
 }
 
@@ -524,7 +565,7 @@ void Sprite::setTextureCoords(Rect rect)
 void Sprite::updateTransform(void)
 {
     CCASSERT(_batchNode, "updateTransform is only valid when Sprite is being rendered using an SpriteBatchNode");
-
+    
     // recalculate matrix only if it is dirty
     if( isDirty() ) {
 
@@ -564,7 +605,7 @@ void Sprite::updateTransform(void)
 
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
-            
+
             if (_flippedX)
             {
                 std::swap(x1, x2);
@@ -573,7 +614,7 @@ void Sprite::updateTransform(void)
             {
                 std::swap(y1, y2);
             }
-            
+
             float x = _transformToBatch.m[12];
             float y = _transformToBatch.m[13];
 
@@ -613,11 +654,255 @@ void Sprite::updateTransform(void)
     // recursively iterate over children
 /*    if( _hasChildren )
     {
-        // MARMALADE: CHANGED TO USE Node*
-        // NOTE THAT WE HAVE ALSO DEFINED virtual Node::updateTransform()
+         MARMALADE: CHANGED TO USE Node*
+         NOTE THAT WE HAVE ALSO DEFINED virtual Node::updateTransform()
         arrayMakeObjectsPerformSelector(_children, updateTransform, Sprite*);
     }*/
     Node::updateTransform();
+}
+
+void Sprite::caculateSlicedVertices()
+{
+    if (_type == Type::Sliced) {
+        Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
+
+        if (tex == nullptr || _isDefaultTexture)
+        {
+            return;
+        }
+        auto atlasWidth = tex->getPixelsWide();
+        auto atlasHeight = tex->getPixelsHigh();
+        
+        //caculate texture coordinate
+        float leftWidth = 0, centerWidth = 0, rightWidth = 0;
+        float topHeight = 0, centerHeight = 0, bottomHeight = 0;
+        auto capInsets = CC_RECT_POINTS_TO_PIXELS(_capInsetsInternal);
+        auto textureRect = CC_RECT_POINTS_TO_PIXELS(_rect);
+        auto spriteRectSize = CC_SIZE_POINTS_TO_PIXELS(_originalSize);
+        if(capInsets.equals(Rect::ZERO))
+        {
+            capInsets = Rect(spriteRectSize.width/3, spriteRectSize.height/3,
+                             spriteRectSize.width/3, spriteRectSize.height/3);
+        }
+        
+        //handle .9.png
+        if (_isPatch9)
+        {
+            float offset = 1;
+            if (_rectRotated) {
+                textureRect = Rect(textureRect.origin.x,
+                                 textureRect.origin.y + 2,
+                                 textureRect.size.width,
+                                 textureRect.size.height - 2);
+            }else{
+                textureRect = Rect(textureRect.origin.x +  offset,
+                                 textureRect.origin.y +  offset,
+                                 textureRect.size.width,
+                                 textureRect.size.height);
+            }
+            spriteRectSize = Size(spriteRectSize.width - 2, spriteRectSize.height-2);
+        }
+
+        if (_rectRotated)
+        {
+            rightWidth = capInsets.origin.y;
+            centerWidth = capInsets.size.height;
+            leftWidth = spriteRectSize.height - centerWidth - rightWidth;
+
+            topHeight = capInsets.origin.x;
+            centerHeight = capInsets.size.width;
+            bottomHeight = spriteRectSize.width - (topHeight + centerHeight);
+        }
+        else
+        {
+            leftWidth = capInsets.origin.x;
+            centerWidth = capInsets.size.width;
+            rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
+
+            topHeight = capInsets.origin.y;
+            centerHeight = capInsets.size.height;
+            bottomHeight =spriteRectSize.height - (topHeight + centerHeight);
+        }
+
+        // (0,0)  O = capInsets.origin
+        // v0----------------------
+        // |        |      |      |
+        // |        |      |      |
+        // v1-------O------+------|
+        // |        |      |      |
+        // |        |      |      |
+        // v2-------+------+------|
+        // |        |      |      |
+        // |        |      |      |
+        // v3-------------------- (1,1)  (texture coordinate is flipped)
+        // u0       u1     u2     u3
+
+        //uv computation should take spritesheet into account.
+        float u0, u1, u2, u3;
+        float v0, v1, v2, v3;
+
+
+        if (_rectRotated)
+        {
+            u0 = textureRect.origin.x / atlasWidth;
+            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+            u3 = (textureRect.origin.x + textureRect.size.height) / atlasWidth;
+
+            v3 = textureRect.origin.y / atlasHeight;
+            v2 = (topHeight + textureRect.origin.y) / atlasHeight;
+            v1 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+            v0 = (textureRect.origin.y + textureRect.size.width) / atlasHeight;
+        }
+        else
+        {
+            u0 = textureRect.origin.x / atlasWidth;
+            u1 = (leftWidth + textureRect.origin.x) / atlasWidth;
+            u2 = (leftWidth + centerWidth + textureRect.origin.x) / atlasWidth;
+            u3 = (textureRect.origin.x + textureRect.size.width) / atlasWidth;
+
+            v0 = textureRect.origin.y / atlasHeight;
+            v1 = (topHeight + textureRect.origin.y) / atlasHeight;
+            v2 = (topHeight + centerHeight + textureRect.origin.y) / atlasHeight;
+            v3 = (textureRect.origin.y + textureRect.size.height) / atlasHeight;
+        }
+
+        std::vector<float> uvRow = {u0, u1, u2, u3};
+        std::vector<float> uvColumn = {v3, v2, v1, v0};
+
+        // Recalculate the sizable info
+        if(_rectRotated)
+        {
+            leftWidth = capInsets.origin.x;
+            centerWidth = capInsets.size.width;
+            rightWidth = spriteRectSize.width - (leftWidth + centerWidth);
+
+            topHeight = capInsets.origin.y;
+            centerHeight = capInsets.size.height;
+            bottomHeight = spriteRectSize.height - (topHeight + centerHeight);
+        }
+
+        leftWidth = leftWidth / CC_CONTENT_SCALE_FACTOR();
+        rightWidth = rightWidth / CC_CONTENT_SCALE_FACTOR();
+        topHeight = topHeight / CC_CONTENT_SCALE_FACTOR();
+        bottomHeight = bottomHeight / CC_CONTENT_SCALE_FACTOR();
+        float sizableWidth = _preferredSize.width - leftWidth - rightWidth;
+        float sizableHeight = _preferredSize.height - topHeight - bottomHeight;
+        float x0,x1,x2,x3;
+        float y0,y1,y2,y3;
+        if(sizableWidth >= 0)
+        {
+            x0 = 0;
+            x1 = leftWidth;
+            x2 = leftWidth + sizableWidth;
+            x3 = _preferredSize.width;
+        }
+        else
+        {
+            float xScale = _preferredSize.width / (leftWidth + rightWidth);
+            x0 = 0;
+            x1 = x2 = leftWidth * xScale;
+            x3 = (leftWidth + rightWidth) * xScale;
+        }
+
+        if(sizableHeight >= 0)
+        {
+            y0 = 0;
+            y1 = bottomHeight;
+            y2 = bottomHeight + sizableHeight;
+            y3 = _preferredSize.height;
+        }
+        else
+        {
+            float yScale = _preferredSize.height / (topHeight + bottomHeight);
+            y0 = 0;
+            y1 = y2= bottomHeight * yScale;
+            y3 = (bottomHeight + topHeight) * yScale;
+        }
+
+
+        //
+        // y3----------------------(preferedSize.width, preferedSize.height)
+        // |        |      |      |
+        // |        |      |      |
+        // y2-------O------+------|
+        // |        |      |      |
+        // |        |      |      |
+        // y1-------+------+------|
+        // |        |      |      |
+        // |        |      |      |
+        //x0,y0--------------------
+        //         x1     x2     x3
+
+        float row[4] = { x0, x1, x2, x3};
+        float colum[4] = {y0, y1, y2, y3};
+
+
+        const unsigned short slicedTotalVertexCount = 16;
+        const unsigned short slicedTotalVertices = 54;
+        CC_SAFE_DELETE_ARRAY(_sliceVertices);
+        CC_SAFE_DELETE_ARRAY(_sliceIndices);
+        
+        _sliceVertices = new V3F_C4B_T2F[slicedTotalVertexCount];
+        _sliceIndices = new unsigned short[slicedTotalVertices];
+
+        unsigned short indicesStart = 0;
+        const unsigned short indicesOffset = 6;
+        const unsigned short quadIndices[]={4,0,5, 1,5,0};
+
+        Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+
+        // special opacity for premultiplied textures
+        if (_opacityModifyRGB)
+        {
+            color4.r *= _displayedOpacity/255.0f;
+            color4.g *= _displayedOpacity/255.0f;
+            color4.b *= _displayedOpacity/255.0f;
+        }
+
+        for (int j = 0; j <= 3; ++j)
+        {
+            for (int i = 0; i <= 3; ++i)
+            {
+                V3F_C4B_T2F vertextData;
+                vertextData.vertices.x = row[i];
+                vertextData.vertices.y = colum[j];
+
+                if (_rectRotated)
+                {
+                    vertextData.texCoords.u = uvRow[j];
+                    vertextData.texCoords.v = uvColumn[i];
+                }
+                else
+                {
+                    vertextData.texCoords.u = uvRow[i];
+                    vertextData.texCoords.v = uvColumn[j];
+                }
+
+                vertextData.colors = color4;
+
+                if (i < 3 && j < 3)
+                {
+                    memcpy(_sliceIndices + indicesStart, quadIndices, indicesOffset * sizeof(unsigned short));
+
+                    for (int k = 0; k  < indicesOffset; ++k)
+                    {
+                        unsigned short actualIndex = (i  + j * 3) * indicesOffset;
+                        _sliceIndices[k + actualIndex] = _sliceIndices[k + actualIndex] + j * 4 + i;
+                    }
+                    indicesStart = indicesStart + indicesOffset;
+                }
+
+                memcpy(_sliceVertices + i + j * 4, &vertextData, sizeof(V3F_C4B_T2F));
+            }
+        }
+
+        this->_polyInfo.reset();
+        this->_polyInfo.triangles.vertCount = slicedTotalVertexCount;
+        this->_polyInfo.triangles.indexCount = slicedTotalVertices;
+        this->_polyInfo.triangles.verts = _sliceVertices;
+        this->_polyInfo.triangles.indices = _sliceIndices;
+    }
 }
 
 // draw
@@ -641,8 +926,8 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
-        
-#if CC_SPRITE_DEBUG_DRAW
+
+#if  CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
         auto count = _polyInfo.triangles.indexCount/3;
         auto indices = _polyInfo.triangles.indices;
@@ -653,11 +938,11 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             Vec3 from =verts[indices[i*3]].vertices;
             Vec3 to = verts[indices[i*3+1]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
+
             from =verts[indices[i*3+1]].vertices;
             to = verts[indices[i*3+2]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
+
             from =verts[indices[i*3+2]].vertices;
             to = verts[indices[i*3]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
@@ -692,7 +977,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
 void Sprite::addChild(Node *child, int zOrder, const std::string &name)
 {
     CCASSERT(child != nullptr, "Argument must be non-nullptr");
-    
+
     if (_batchNode)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
@@ -701,7 +986,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
                  "childSprite's texture name should be equal to _textureAtlas's texture name.");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
-        
+
         if (!_reorderChildDirty)
         {
             setReorderChildDirtyRecursively();
@@ -826,7 +1111,7 @@ void Sprite::setPosition(float x, float y)
 void Sprite::setRotation(float rotation)
 {
     Node::setRotation(rotation);
-    
+
     SET_DIRTY_RECURSIVELY();
 }
 
@@ -884,6 +1169,24 @@ void Sprite::setPositionZ(float fVertexZ)
     SET_DIRTY_RECURSIVELY();
 }
 
+void Sprite::setContentSize(const cocos2d::Size &size)
+{
+    Node::setContentSize(size);
+    
+    _preferredSize = size;
+    this->caculateSlicedVertices();
+   
+}
+
+const Size& Sprite::getContentSize()const
+{
+    if(_type == Type::Sliced)
+    {
+        return _preferredSize;
+    }
+    return _contentSize;
+}
+
 void Sprite::setAnchorPoint(const Vec2& anchor)
 {
     Node::setAnchorPoint(anchor);
@@ -907,12 +1210,19 @@ void Sprite::setFlippedX(bool flippedX)
     if (_flippedX != flippedX)
     {
         _flippedX = flippedX;
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.x = _contentSize.width -v.x;
+        if(_type == Type::Simple)
+        {
+            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+                auto& v = _polyInfo.triangles.verts[i].vertices;
+                v.x = _contentSize.width -v.x;
+            }
+            if (_textureAtlas) {
+                setDirty(true);
+            }
         }
-        if (_textureAtlas) {
-            setDirty(true);
+        else if(_type == Type::Sliced)
+        {
+            this->setScaleX(flippedX ? -1 : 1);
         }
     }
 }
@@ -927,12 +1237,19 @@ void Sprite::setFlippedY(bool flippedY)
     if (_flippedY != flippedY)
     {
         _flippedY = flippedY;
-        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-            auto& v = _polyInfo.triangles.verts[i].vertices;
-            v.y = _contentSize.height -v.y;
+        if(_type == Type::Simple)
+        {
+            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+                auto& v = _polyInfo.triangles.verts[i].vertices;
+                v.y = _contentSize.height -v.y;
+            }
+            if (_textureAtlas) {
+                setDirty(true);
+            }
         }
-        if (_textureAtlas) {
-            setDirty(true);
+        else if(_type == Type::Sliced)
+        {
+            this->setScaleY(flippedY ? -1 : 1);
         }
     }
 }
@@ -949,7 +1266,7 @@ bool Sprite::isFlippedY(void) const
 void Sprite::updateColor(void)
 {
     Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
-    
+
     // special opacity for premultiplied textures
     if (_opacityModifyRGB)
     {
@@ -1028,8 +1345,10 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
 
     // update rect
     _rectRotated = spriteFrame->isRotated();
+    _originalSize = spriteFrame->getOriginalSize();
     setTextureRect(spriteFrame->getRect(), _rectRotated, spriteFrame->getOriginalSize());
 }
+
 
 void Sprite::setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex)
 {
@@ -1138,6 +1457,145 @@ PolygonInfo Sprite::getPolygonInfo() const
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
     _polyInfo = info;
+}
+
+void Sprite::setType(Type type)
+{
+    if (_type == type) {
+        return;
+    }
+    
+    this->_type = type;
+    if (type == Type::Simple)
+    {
+        _polyInfo.setQuad(&this->_quad);
+        Node::setContentSize(_originalSize);
+    }
+    else
+    {
+        this->setContentSize(_preferredSize);
+    }
+}
+
+Sprite::Type Sprite::getType()const
+{
+    return this->_type;
+}
+
+
+void Sprite::setCapInsets(const cocos2d::Rect &rect)
+{
+    if (rect.equals(_capInsetsInternal)) {
+        return;
+    }
+    float originalWidthInPixel = _originalSize.width;
+    float originalHeightInPixel = _originalSize.height;
+    this->_insetLeft = rect.origin.x;
+    this->_insetTop = rect.origin.y;
+    this->_insetRight = originalWidthInPixel - this->_insetLeft - rect.size.width;
+    this->_insetBottom = originalHeightInPixel - this->_insetTop - rect.size.height;
+    _capInsetsInternal = rect;
+
+    this->caculateSlicedVertices();
+}
+
+Rect Sprite::getCapInsets()const
+{
+    return _capInsetsInternal;
+}
+
+Sprite::State Sprite::getState()const
+{
+    return this->_brightState;
+}
+
+void Sprite::setState(Sprite::State state)
+{
+    GLProgramState *glState = nullptr;
+    switch (state)
+    {
+    case State::NORMAL:
+    {
+        glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
+    }
+    break;
+    case State::GRAY:
+    {
+        glState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE);
+    }
+    default:
+        break;
+    }
+        
+    this->setGLProgramState(glState);
+    _brightState = state;
+}
+
+Size Sprite::getOriginalSize() const
+{
+    return this->_originalSize;
+}
+
+float Sprite::getInsetLeft()const
+{
+    return this->_insetLeft;
+}
+
+float Sprite::getInsetTop()const
+{
+    return this->_insetTop;
+}
+
+float Sprite::getInsetRight()const
+{
+    return this->_insetRight;
+}
+
+float Sprite::getInsetBottom()const
+{
+    return this->_insetBottom;
+}
+
+
+void Sprite::setInsetLeft(float insetLeft)
+{
+    this->_insetLeft = insetLeft;
+    this->updateCapInset();
+}
+
+void Sprite::setInsetTop(float insetTop)
+{
+    this->_insetTop = insetTop;
+    this->updateCapInset();
+}
+
+void Sprite::setInsetRight(float insetRight)
+{
+    this->_insetRight = insetRight;
+    this->updateCapInset();
+}
+
+void Sprite::setInsetBottom(float insetBottom)
+{
+    this->_insetBottom = insetBottom;
+    this->updateCapInset();
+}
+
+void Sprite::updateCapInset()
+{
+    //capInset are in points not pixels
+    float originalWidthInPixel = _originalSize.width;
+    float originalHeightInPixel = _originalSize.height;
+    Rect insets = Rect(_insetLeft,
+                      _insetTop,
+                      originalWidthInPixel - _insetLeft-_insetRight,
+                      originalHeightInPixel - _insetTop-_insetBottom);
+    this->setCapInsets(insets);
+}
+
+bool Sprite::isUsingDefaultTexture()const
+{
+    return this->_isDefaultTexture;
 }
 
 NS_CC_END
