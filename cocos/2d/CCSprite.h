@@ -460,6 +460,12 @@ public:
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
+    
+
+    /**
+     * Whether is the sprite is using the default 2x2 white texture.
+     */
+    bool isUsingDefaultTexture()const;
 
 CC_CONSTRUCTOR_ACCESS:
 	/**
@@ -578,16 +584,22 @@ CC_CONSTRUCTOR_ACCESS:
      * @param PolygonInfo the polygon information object
      */
     void setPolygonInfo(const PolygonInfo& info);
-protected:
 
+    /**
+     * @brief Query the sprite's original size.
+     *
+     * @return Sprite size.
+     */
+    const Size& getOriginalSize() const;
+protected:
     void updateColor() override;
     virtual void setTextureCoords(Rect rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
-
-    
+    bool _isDefaultTexture;
+    Size _originalSize;
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //

@@ -145,7 +145,7 @@ void ImageView::loadTexture(SpriteFrame* spriteframe)
 
 void ImageView::setupTexture()
 {
-    _imageTextureSize = _imageRenderer->getContentSize();
+    _imageTextureSize = _imageRenderer->getOriginalSize();
 
     this->updateChildrenDisplayedRGBA();
 
@@ -302,10 +302,9 @@ void ImageView::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = imageView->_prevIgnoreSize;
         setScale9Enabled(imageView->_scale9Enabled);
-        auto imageSprite = imageView->_imageRenderer->getSprite();
-        if(nullptr != imageSprite)
+        if(!imageView->_imageRenderer->isUsingDefaultTexture())
         {
-            loadTexture(imageSprite->getSpriteFrame());
+            loadTexture(imageView->_imageRenderer->getSpriteFrame());
         }
         setCapInsets(imageView->_capInsets);
     }
