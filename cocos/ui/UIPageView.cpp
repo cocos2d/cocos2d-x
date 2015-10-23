@@ -41,6 +41,7 @@ _touchMoveDirection(TouchDirection::LEFT),
 _leftBoundaryChild(nullptr),
 _rightBoundaryChild(nullptr),
 _leftBoundary(0.0f),
+_pageSize(0.0f),
 _rightBoundary(0.0f),
 _customScrollThreshold(0.0),
 _usingCustomScrollThreshold(false),
@@ -255,6 +256,17 @@ void PageView::onSizeChanged()
 void PageView::updateAllPagesSize()
 {
     Size selfSize = getContentSize();
+    if(_pageSize!=0){
+      if (_direction == Direction::HORIZONTAL)
+      {
+        selfSize.width = _pageSize;
+      }
+      else
+      {
+       selfSize.height = _pageSize;
+      }
+      
+    }
     for (auto& page : _pages)
     {
         page->setContentSize(selfSize);
@@ -285,14 +297,14 @@ void PageView::updateAllPagesPosition()
 
         if (_direction == Direction::HORIZONTAL)
         {
-            float pageWidth = getContentSize().width;
+          float pageWidth = _pageSize==0? getContentSize().width : _pageSize;
             newPosition =  Vec2((i-_curPageIdx) * pageWidth, 0);
         }
         else if(_direction == Direction::VERTICAL)
         {
-            float pageHeight = getContentSize().height;
+            float pageHeight = _pageSize==0? getContentSize().height : _pageSize;
             newPosition = Vec2(0,(i-_curPageIdx) * pageHeight * -1);
-
+            newPosition += Vec2(0, this->getContentSize().height - pageHeight);
         }
         page->setPosition(newPosition);
     }
@@ -318,7 +330,17 @@ void PageView::scrollToPage(ssize_t idx)
     Layout* curPage = _pages.at(idx);
     if (_direction == Direction::HORIZONTAL)
     {
-        _autoScrollDistance = -(curPage->getPosition().x);
+      // avoid cropping the last item (scroll is alligned to the top items)
+        float lastItemVisibleSize = _rightBoundary - _rightBoundaryChild->getPosition().x;
+        float lastItemInvisibleSize = _pageSize - lastItemVisibleSize;
+        if(_pageSize!=0 && lastItemVisibleSize>0 && lastItemInvisibleSize < lastItemVisibleSize)
+        {
+          _autoScrollDistance = -lastItemInvisibleSize;
+        }else
+        {
+          _autoScrollDistance = -(curPage->getPosition().x);
+        }
+      
         if (_autoScrollDistance > 0)
         {
             _autoScrollDirection = AutoScrollDirection::RIGHT;
@@ -330,7 +352,18 @@ void PageView::scrollToPage(ssize_t idx)
     }
     else if(_direction == Direction::VERTICAL)
     {
-        _autoScrollDistance = -curPage->getPosition().y;
+      
+        // avoid cropping the last item (scroll is alligned to the top items)
+        float lastItemVisibleSize = _rightBoundaryChild->getPosition().y+_pageSize;
+        float lastItemInvisibleSize = _pageSize - lastItemVisibleSize;
+        if(_pageSize!=0 && lastItemVisibleSize>0 && lastItemInvisibleSize < lastItemVisibleSize)
+        {
+          _autoScrollDistance = lastItemInvisibleSize;
+        }else
+        {
+          _autoScrollDistance = _rightBoundary - (curPage->getPosition().y + (_pageSize==0?getContentSize().height:_pageSize));
+        }
+      
         if (_autoScrollDistance > 0)
         {
             _autoScrollDirection = AutoScrollDirection::DOWN;
@@ -352,6 +385,11 @@ void PageView::setDirection(cocos2d::ui::PageView::Direction direction)
 PageView::Direction PageView::getDirection()const
 {
     return this->_direction;
+}
+
+void PageView::setPageSize(float pageSize){
+   this->_pageSize = pageSize;
+  _doLayoutDirty = true;
 }
 
 void PageView::update(float dt)
@@ -491,18 +529,17 @@ bool PageView::scrollPages(Vec2 touchOffset)
     }
     
     Vec2 realOffset = touchOffset;
-    
     switch (_touchMoveDirection)
     {
         case TouchDirection::LEFT: // left
-            if (_rightBoundaryChild->getRightBoundary() + touchOffset.x <= _rightBoundary)
+        if (_rightBoundaryChild->getRightBoundary() + touchOffset.x <= _rightBoundary)
             {
                 realOffset.x = _rightBoundary - _rightBoundaryChild->getRightBoundary();
                 realOffset.y = 0;
                 movePages(realOffset);
                 return false;
             }
-            break;
+        break;
             
         case TouchDirection::RIGHT: // right
             if (_leftBoundaryChild->getLeftBoundary() + touchOffset.x >= _leftBoundary)
@@ -515,18 +552,18 @@ bool PageView::scrollPages(Vec2 touchOffset)
             break;
         case TouchDirection::UP:
         {
-            if (_rightBoundaryChild->getBottomBoundary() + touchOffset.y >= _leftBoundary)
+            if (_rightBoundaryChild->getPosition().y + touchOffset.y >= _leftBoundary)
             {
-                realOffset.y = _leftBoundary - _rightBoundaryChild->getBottomBoundary();
+                realOffset.y = _leftBoundary - _rightBoundaryChild->getPosition().y;
                 realOffset.x = 0;
                 movePages(realOffset);
                 return false;
             }
-           
+          
         }break;
         case TouchDirection::DOWN:
         {
-            if (_leftBoundaryChild->getTopBoundary() + touchOffset.y <= _rightBoundary)
+          if (_leftBoundaryChild->getTopBoundary() + touchOffset.y <= _rightBoundary)
             {
                 realOffset.y = _rightBoundary - _leftBoundaryChild->getTopBoundary();
                 realOffset.x = 0;
@@ -620,13 +657,13 @@ void PageView::handleReleaseLogic(Touch *touch)
         {
             curPagePos.y = 0;
             moveBoundray = curPagePos.x;
-            scrollDistance = contentSize.width / 2.0;
+            scrollDistance = (_pageSize==0 ? contentSize.width : _pageSize) / 2.0;
         }
         else if(_direction == Direction::VERTICAL)
         {
             curPagePos.x = 0;
-            moveBoundray = curPagePos.y;
-            scrollDistance  = contentSize.height / 2.0;
+          moveBoundray = curPagePos.y - (_pageSize==0? 0:contentSize.height-_pageSize);
+            scrollDistance  = (_pageSize==0 ? contentSize.height : _pageSize) / 2.0;
         }
 
         if (!_usingCustomScrollThreshold)
@@ -645,7 +682,8 @@ void PageView::handleReleaseLogic(Touch *touch)
                 }
                 else
                 {
-                    scrollToPage(_curPageIdx+1);
+                    int nextPage = _pageSize==0? 1 : 1 + (-moveBoundray-boundary)/(_pageSize);
+                    scrollToPage(_curPageIdx+nextPage);
                 }
             }
             else if (moveBoundray >= boundary)
@@ -656,7 +694,8 @@ void PageView::handleReleaseLogic(Touch *touch)
                 }
                 else
                 {
-                    scrollToPage(_curPageIdx-1);
+                    int nextPage = _pageSize==0? 1 : 1 + (moveBoundray-boundary)/(_pageSize);
+                    scrollToPage(_curPageIdx-nextPage);
                 }
             }
             else
@@ -670,11 +709,12 @@ void PageView::handleReleaseLogic(Touch *touch)
             {
                 if (_curPageIdx >= pageCount-1)
                 {
-                    scrollPages(curPagePos);
+                      scrollPages(curPagePos);
                 }
                 else
                 {
-                    scrollToPage(_curPageIdx+1);
+                    int nextPage = _pageSize==0? 1 : 1 + (moveBoundray-boundary)/(_pageSize);
+                    scrollToPage(_curPageIdx+nextPage);
                 }
             }
             else if (moveBoundray <= -boundary)
@@ -685,7 +725,8 @@ void PageView::handleReleaseLogic(Touch *touch)
                 }
                 else
                 {
-                    scrollToPage(_curPageIdx-1);
+                    int nextPage = _pageSize==0? 1 : 1 + (-moveBoundray-boundary)/(_pageSize);
+                    scrollToPage(_curPageIdx-nextPage);
                 }
             }
             else
