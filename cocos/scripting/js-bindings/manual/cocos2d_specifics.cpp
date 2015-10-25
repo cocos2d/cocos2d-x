@@ -6129,6 +6129,96 @@ bool js_cocos2dx_ComponentJS_getScriptObject(JSContext *cx, uint32_t argc, jsval
     return false;
 }
 
+bool jsb_check_finalize(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.get(0).toObjectOrNull());
+    const JSClass *the_class = JS_GetClass(obj);
+
+    if (the_class->finalize) {
+        args.rval().set(JSVAL_TRUE);
+    }
+    else {
+        args.rval().set(JSVAL_FALSE);
+    }
+    return true;
+}
+
+static bool js_extended_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    // Collect class, prototype
+    JS::RootedObject callee(cx, &args.callee());
+    JS::RootedValue protoValue(cx);
+    JS_GetProperty(cx, callee, "prototype", &protoValue);
+    JS::RootedObject proto(cx, protoValue.toObjectOrNull());
+    const JSClass *jsclass = JS_GetClass(proto);
+    // Create new object
+    JS::RootedObject obj(cx, JS_NewObject(cx, jsclass, proto, JS::NullPtr()));
+    
+    JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
+    // this.__instanceId = ClassManager.getNewInstanceId();
+    JS::RootedObject classManager(cx);
+    get_or_create_js_obj(cx, global, "ClassManager", &classManager);
+    JS::RootedValue classManagerValue(cx, OBJECT_TO_JSVAL(classManager));
+    if (!classManagerValue.isNullOrUndefined()) {
+        JS::RootedValue retVal(cx);
+        ScriptingCore::getInstance()->executeFunctionWithOwner(classManagerValue, "getNewInstanceId", 0, vp, &retVal);
+        JS_SetProperty(cx, obj, "__instanceId", retVal);
+    }
+    // if (this.ctor) this.ctor.apply(this, arguments);
+    bool ok = false;
+    if (JS_HasProperty(cx, obj, "ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "ctor", args);
+    
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    return true;
+}
+
+// jsb.create_prototype("UserClassName", superProto);
+bool jsb_create_prototype(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    std::string className;
+    
+    if (!jsval_to_std_string(cx, args.get(0), &className))
+    {
+        return false;
+    }
+    JS::RootedObject super_prototype(cx, args.get(1).toObjectOrNull());
+    const JSClass *super_class = JS_GetClass(super_prototype);
+    
+    JS::RootedObject global(cx, ScriptingCore::getInstance()->getGlobalObject());
+    JSClass *js_class;
+    
+    js_class = (JSClass *)calloc(1, sizeof(JSClass));
+    js_class->name = className.c_str();
+    js_class->addProperty = JS_PropertyStub;
+    js_class->delProperty = JS_DeletePropertyStub;
+    js_class->getProperty = JS_PropertyStub;
+    js_class->setProperty = JS_StrictPropertyStub;
+    js_class->enumerate = JS_EnumerateStub;
+    js_class->resolve = JS_ResolveStub;
+    js_class->convert = JS_ConvertStub;
+    // Important!
+    js_class->finalize = super_class->finalize;
+    js_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    
+    JSObject *jsb_prototype = JS_InitClass(cx, global,
+                                           super_prototype,
+                                           js_class,
+                                           js_extended_constructor, 0, // constructor
+                                           NULL, NULL, NULL, NULL);
+    
+    jsval jsret = JSVAL_NULL;
+    if (jsb_prototype) {
+        jsret = OBJECT_TO_JSVAL(jsb_prototype);
+    }
+    args.rval().set(jsret);
+    
+    return true;
+}
+
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
@@ -6137,6 +6227,9 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS::RootedObject tmpObj(cx);
     get_or_create_js_obj(cx, global, "cc", &ccObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
+    
+    JS_DefineFunction(cx, jsbObj, "create_prototype", jsb_create_prototype, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsbObj, "check_finalize", jsb_check_finalize, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     js_register_cocos2dx_PolygonInfo(cx, jsbObj);
     js_register_cocos2dx_AutoPolygon(cx, jsbObj);
