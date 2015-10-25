@@ -260,6 +260,9 @@ private:
     std::string _currentValue;
 };
 
+extern JSClass  *jsb_FinalizeHook_class;
+extern JSObject *jsb_FinalizeHook_prototype;
+
 bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);

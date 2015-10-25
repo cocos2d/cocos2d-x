@@ -48,6 +48,8 @@ JS::Value JavaScriptObjCBridge::convertReturnValue(JSContext *cx, ReturnValue re
             return BOOLEAN_TO_JSVAL(retValue.boolValue);
         case TypeString:
             return c_string_to_jsval(cx, retValue.stringValue->c_str(),retValue.stringValue->size());
+        default:
+            break;
     }
     
     return ret;

@@ -273,22 +273,19 @@ cc.Class.extend = function (prop) {
             prop[name];
     }
 
-    if (_super.__nativeObj) {
-        Class = prototype.constructor;
-    }
-    else {
-        Class = function () {
-            if (!initializing) {
-                this.__instanceId = ClassManager.getNewInstanceId();
-                this.ctor && this.ctor.apply(this, arguments);
+    Class = function () {
+        if (!initializing) {
+            if (this.__is_ref) {
+                this.__hook = new jsb.FinalizeHook(this);
             }
+            this.__instanceId = ClassManager.getNewInstanceId();
+            this.ctor && this.ctor.apply(this, arguments);
         }
-        // Populate our constructed prototype object
-        Class.prototype = prototype;
-
-        // Enforce the constructor to be what we expect
-        Class.prototype.constructor = Class;
     }
+    // Populate our constructed prototype object
+    Class.prototype = prototype;
+    // Enforce the constructor to be what we expect
+    Class.prototype.constructor = Class;
     // And make this class extendable
     Class.extend = cc.Class.extend;
 

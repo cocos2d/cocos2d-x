@@ -5837,7 +5837,6 @@ bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -6028,7 +6027,6 @@ bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp
     CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
     typeClass = typeMapIter->second;
     CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
     JS::RootedObject proto(cx, typeClass->proto.get());
     JS::RootedObject parent(cx, typeClass->parentProto.get());
     JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
@@ -6219,6 +6217,62 @@ bool jsb_create_prototype(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
+JSClass  *jsb_FinalizeHook_class;
+JSObject *jsb_FinalizeHook_prototype;
+
+static bool jsb_FinalizeHook_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    // Create new object
+    JS::RootedObject proto(cx, jsb_FinalizeHook_prototype);
+    JS::RootedObject obj(cx, JS_NewObject(cx, jsb_FinalizeHook_class, proto, JS::NullPtr()));
+    // this.owner = arguments[0];
+    JS_SetProperty(cx, obj, "owner", JS::RootedValue(cx, args.get(0)));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    return true;
+}
+void jsb_FinalizeHook_finalize(JSFreeOp *fop, JSObject *obj) {
+    JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+    JS::RootedValue ownerValue(cx);
+    JS_GetProperty(cx, JS::RootedObject(cx, obj), "owner", &ownerValue);
+    JS::RootedObject owner(cx, ownerValue.toObjectOrNull());
+    CCLOGINFO("jsbindings: finalizing JS object via Finalizehook %p", owner.get());
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(owner);
+    if (jsproxy) {
+        cocos2d::Ref *refObj = static_cast<cocos2d::Ref *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+        
+        jsb_remove_proxy(nproxy, jsproxy);
+        if (refObj) {
+            refObj->release();
+            retainCount--;
+            CCLOG("------RELEASED------ %d ref count: %d", retainCount, refObj->getReferenceCount());
+        }
+    }
+}
+
+void jsb_register_FinalizeHook(JSContext *cx, JS::HandleObject global) {
+    jsb_FinalizeHook_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_FinalizeHook_class->name = "FinalizeHook";
+    jsb_FinalizeHook_class->addProperty = JS_PropertyStub;
+    jsb_FinalizeHook_class->delProperty = JS_DeletePropertyStub;
+    jsb_FinalizeHook_class->getProperty = JS_PropertyStub;
+    jsb_FinalizeHook_class->setProperty = JS_StrictPropertyStub;
+    jsb_FinalizeHook_class->enumerate = JS_EnumerateStub;
+    jsb_FinalizeHook_class->resolve = JS_ResolveStub;
+    jsb_FinalizeHook_class->convert = JS_ConvertStub;
+    jsb_FinalizeHook_class->finalize = jsb_FinalizeHook_finalize;
+    jsb_FinalizeHook_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    
+    jsb_FinalizeHook_prototype = JS_InitClass(cx, global,
+                                                JS::NullPtr(), // parent proto
+                                                jsb_FinalizeHook_class,
+                                                jsb_FinalizeHook_constructor, 0, // constructor
+                                                NULL, NULL, NULL, NULL);
+}
+
 void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
@@ -6228,6 +6282,8 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     get_or_create_js_obj(cx, global, "cc", &ccObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     
+    // Memory management related
+    jsb_register_FinalizeHook(cx, jsbObj);
     JS_DefineFunction(cx, jsbObj, "create_prototype", jsb_create_prototype, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, jsbObj, "check_finalize", jsb_check_finalize, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
