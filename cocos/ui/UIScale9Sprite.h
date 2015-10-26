@@ -37,10 +37,13 @@ namespace ui {
     {
     public:
         /**
-         * Simple: The classical cocos2d sprite type, you can't change content size to stretch, use scale instead.
-         * Sliced: Sliced aka 9-slice scaling which allows you to specify how scaling is applied
-         *         to specific areas of a sprite. With 9-slice scaling (3x3 grid),
-         *         you can ensure that the sprite does not become distorted when scaled.
+         * - Simple: The classical cocos2d sprite type, you can't change content size to stretch,
+         *           use scale instead.
+         *
+         * - Sliced: Sliced aka 9-slice scaling which allows you to specify
+         *           how scaling is applied to specific areas of a sprite.
+         *           With 9-slice scaling (3x3 grid),
+         *           you can ensure that the sprite does not become distorted when scaled.
          */
         enum class Type
         {
@@ -416,14 +419,14 @@ namespace ui {
          * Change the state of 9-slice sprite.
          * @see `State`
          * @param state A enum value in State.
-         * @since v3.9
+         * @since v3.4
          */
         void setState(State state);
 
         /**
          * Query the current bright state.
          * @return @see `State`
-         * @since v3.9
+         * @since v3.4
          */
         State getState()const;
 

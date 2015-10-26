@@ -228,11 +228,11 @@ namespace ui {
     
     Scale9Sprite::Scale9Sprite()
     :_type(Type::Simple)
-    , _brightState(State::NORMAL)
     , _insetLeft(0.0f)
     , _insetRight(0.0f)
-    , _insetTop(0.0f)
     , _insetBottom(0.0f)
+    , _insetTop(0.0f)
+    , _brightState(State::NORMAL)
     , _sliceVertices(nullptr)
     , _sliceIndices(nullptr)
     , _isPatch9(false)
@@ -406,7 +406,8 @@ namespace ui {
 
     void Scale9Sprite::setType(Type type)
     {
-        if (_type == type) {
+        if (_type == type)
+        {
             return;
         }
 
@@ -430,7 +431,8 @@ namespace ui {
 
     void Scale9Sprite::setCapInsets(const cocos2d::Rect &rect)
     {
-        if (rect.equals(_capInsetsInternal)) {
+        if (rect.equals(_capInsetsInternal))
+        {
             return;
         }
         float originalWidthInPixel = _originalSize.width;
@@ -535,7 +537,8 @@ namespace ui {
  
     void Scale9Sprite::caculateSlicedVertices()
     {
-        if (_type == Type::Sliced) {
+        if (_type == Type::Sliced)
+        {
             Texture2D *tex = _batchNode ? _textureAtlas->getTexture() : _texture;
 
             if (tex == nullptr || _isDefaultTexture)
@@ -570,18 +573,12 @@ namespace ui {
             //handle .9.png
             if (_isPatch9)
             {
-                float offset = 1;
-                if (_rectRotated) {
-                    textureRect = Rect(textureRect.origin.x,
-                                       textureRect.origin.y + 2,
-                                       textureRect.size.width,
-                                       textureRect.size.height - 2);
-                }else{
-                    textureRect = Rect(textureRect.origin.x +  offset,
-                                       textureRect.origin.y +  offset,
-                                       textureRect.size.width,
-                                       textureRect.size.height);
-                }
+                //This magic number is used to avoiding artifact with .9.png format.
+                float offset = 1.3f;
+                textureRect = Rect(textureRect.origin.x +  offset,
+                                   textureRect.origin.y +  offset,
+                                   textureRect.size.width - 2,
+                                   textureRect.size.height - 2);
                 spriteRectSize = Size(spriteRectSize.width - 2, spriteRectSize.height-2);
             }
 
@@ -732,7 +729,10 @@ namespace ui {
             const unsigned short indicesOffset = 6;
             const unsigned short quadIndices[]={4,0,5, 1,5,0};
 
-            Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+            Color4B color4( _displayedColor.r,
+                           _displayedColor.g,
+                           _displayedColor.b,
+                           _displayedOpacity );
 
             // special opacity for premultiplied textures
             if (_opacityModifyRGB)
