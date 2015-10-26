@@ -250,7 +250,7 @@ protected:
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
     /** Parses list of space-separated integers */
-    void parseIntegerList(const std::string string, std::vector<int> &res);
+    void parseIntegerList(const std::string &string, std::vector<int> &res);
     
     /** Configures PolygonInfo class with the passed sizes + triangles */
     void initializePolygonInfo(const Size &textureSize,

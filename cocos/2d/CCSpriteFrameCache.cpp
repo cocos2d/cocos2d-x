@@ -80,7 +80,7 @@ SpriteFrameCache::~SpriteFrameCache()
     CC_SAFE_DELETE(_loadedFileNames);
 }
 
-void SpriteFrameCache::parseIntegerList(const std::string string, std::vector<int> &res)
+void SpriteFrameCache::parseIntegerList(const std::string &string, std::vector<int> &res)
 {
     std::string delim(" ");
 
