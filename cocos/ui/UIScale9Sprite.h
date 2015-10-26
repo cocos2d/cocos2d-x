@@ -27,13 +27,19 @@
 #define __cocos2d_libs__UIScale9Sprite__
 
 #include "2d/CCSprite.h"
+#include "ui/GUIExport.h"
+
+/**
+ * @addtogroup ui
+ * @{
+ */
 
 NS_CC_BEGIN
 namespace ui {
     /**
      *   Type::Sliced Sprite can't be added as children of SpriteBatchNode
      */
-    class Scale9Sprite : public cocos2d::Sprite
+    class CC_GUI_DLL Scale9Sprite : public cocos2d::Sprite
     {
     public:
         /**
@@ -524,8 +530,9 @@ namespace ui {
         bool _isPatch9;
 
     };
-}
-
+} //end of ui namespace
+// end of ui group
+/// @}
 NS_CC_END
 
 
