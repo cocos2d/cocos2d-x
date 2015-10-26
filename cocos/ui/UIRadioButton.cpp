@@ -124,7 +124,14 @@ void RadioButton::releaseUpEvent()
 {
     Widget::releaseUpEvent();
     
-    if (!_isSelected)
+    if (_group != nullptr)
+    {
+        if (_group->setSelectedButtonWithoutEvent(this))
+        {
+            dispatchSelectChangedEvent(true);
+        }
+    }
+    else if (!_isSelected)
     {
         setSelected(true);
         dispatchSelectChangedEvent(true);
@@ -262,37 +269,42 @@ int RadioButtonGroup::getSelectedButtonIndex() const
     return (int) _radioButtons.getIndex(_selectedRadioButton);
 }
 
-void RadioButtonGroup::setSelectedButton(int index)
+bool RadioButtonGroup::setSelectedButton(int index)
 {
     CCASSERT(index < _radioButtons.size(), "Out of array index!");
-    setSelectedButton(_radioButtons.at(index));
+    return setSelectedButton(_radioButtons.at(index));
 }
 
-void RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
+bool RadioButtonGroup::setSelectedButton(RadioButton* radioButton)
 {
-    setSelectedButtonWithoutEvent(radioButton);
-    onChangedRadioButtonSelect(_selectedRadioButton);
+    if (setSelectedButtonWithoutEvent(radioButton))
+    {
+        onChangedRadioButtonSelect(_selectedRadioButton);
+        return true;
+    }
+        
+    return false;
 }
 
-void RadioButtonGroup::setSelectedButtonWithoutEvent(int index)
+bool RadioButtonGroup::setSelectedButtonWithoutEvent(int index)
 {
-    setSelectedButtonWithoutEvent(_radioButtons.at(index));
+   return setSelectedButtonWithoutEvent(_radioButtons.at(index));
 }
 
-void RadioButtonGroup::setSelectedButtonWithoutEvent(RadioButton* radioButton)
+bool RadioButtonGroup::setSelectedButtonWithoutEvent(RadioButton* radioButton)
 {
     if(!_allowedNoSelection && radioButton == nullptr)
     {
-        return;
+        return false;
     }
     if(_selectedRadioButton == radioButton)
     {
-        return;
+        return false;
     }
     if(radioButton != nullptr && !_radioButtons.contains(radioButton))
     {
         CCLOGERROR("The radio button does not belong to this group!");
-        return;
+        return false;
     }
     
     deselect();
@@ -301,6 +313,7 @@ void RadioButtonGroup::setSelectedButtonWithoutEvent(RadioButton* radioButton)
     {
         _selectedRadioButton->setSelected(true);
     }
+    return true;
 }
 
 std::string RadioButtonGroup::getDescription() const
