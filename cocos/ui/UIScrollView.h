@@ -67,7 +67,7 @@ typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
 
 /**
  * Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
- * It holds a inner `Layout` container for storing child items hironzontally or vertically.
+ * It holds a inner `Layout` container for storing child items horizontally or vertically.
  */
 class CC_GUI_DLL ScrollView : public Layout
 {

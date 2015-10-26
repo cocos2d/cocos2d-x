@@ -607,9 +607,9 @@ bool Widget::isHighlighted() const
     return _highlight;
 }
 
-void Widget::setHighlighted(bool hilight)
+void Widget::setHighlighted(bool highlight)
 {
-    _highlight = hilight;
+    _highlight = highlight;
     if (_bright)
     {
         if (_highlight)

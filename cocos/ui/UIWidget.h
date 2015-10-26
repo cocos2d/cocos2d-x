@@ -234,18 +234,18 @@ public:
     /**
      * Determines if the widget is highlighted
      *
-     * @return true if the widget is highlighted, false if the widget is not hignlighted .
+     * @return true if the widget is highlighted, false if the widget is not highlighted.
      */
     bool isHighlighted() const;
 
     /**
-     * Sets whether the widget is hilighted
+     * Sets whether the widget is highlighted
      *
-     * The default value is false, a widget is default to not hilighted
+     * The default value is false, a widget is default to not highlighted
      *
-     * @param hilight   true if the widget is hilighted, false if the widget is not hilighted.
+     * @param highlight   true if the widget is highlighted, false if the widget is not highlighted.
      */
-    void setHighlighted(bool hilight);
+    void setHighlighted(bool highlight);
 
     /**
      * Gets the left boundary position of this widget in parent's coordination system.
@@ -371,7 +371,7 @@ public:
     /**
      * Sets whether the widget should be flipped horizontally or not.
      *
-     * @param flippedX true if the widget should be flipped horizaontally, false otherwise.
+     * @param flippedX true if the widget should be flipped horizontally, false otherwise.
      */
     virtual void setFlippedX(bool flippedX);
 
@@ -382,7 +382,7 @@ public:
      * Also, flipping relies on widget's anchor point.
      * Internally, it just use setScaleX(-1) to flip the widget.
      *
-     * @return true if the widget is flipped horizaontally, false otherwise.
+     * @return true if the widget is flipped horizontally, false otherwise.
      */
     virtual bool isFlippedX()const{return _flippedX;};
 
@@ -610,12 +610,12 @@ public:
      * Set true will ignore user defined content size which means 
      * the widget size is always equal to the return value of `getVirtualRendererSize`.
      *
-     * @param ignore set member variabl _ignoreSize to ignore
+     * @param ignore set member variable _ignoreSize to ignore
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
     /**
-     * Query whether the widget ignores user deinfed content size or not
+     * Query whether the widget ignores user defined content size or not
      *
      * @return True means ignore user defined content size, false otherwise.
      */
@@ -852,7 +852,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /*
      * @brief Sends the touch event to widget's parent, if a widget wants to handle touch event under another widget, 
-     *        it must overide this function.
+     *        it must override this function.
      * @param  event  the touch event type, it could be BEGAN/MOVED/CANCELED/ENDED
      * @param parent
      * @param point
@@ -868,7 +868,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * This method is called when a focus change event happens
      *@param widgetLostFocus  The widget which lose its focus
-     *@param widgetGetFocus  The widget whihc get its focus
+     *@param widgetGetFocus  The widget which get its focus
      *@return void
      */
     void onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus);
@@ -876,7 +876,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * Dispatch a EventFocus through a EventDispatcher
      *@param widgetLoseFocus  The widget which lose its focus
-     *@param widgetGetFocus he widget whihc get its focus
+     *@param widgetGetFocus he widget which get its focus
      *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
