@@ -151,7 +151,7 @@
         
 --------------------------------
 -- Query background image scale9 enable status.<br>
--- return Whehter background image is scale9 enabled or not.
+-- return Whether background image is scale9 enabled or not.
 -- @function [parent=#Layout] isBackGroundImageScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
