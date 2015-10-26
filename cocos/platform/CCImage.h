@@ -63,6 +63,7 @@ class CC_DLL Image : public Ref
 {
 public:
     friend class TextureCache;
+    friend class SpriteFrameCache;
     /**
      * @js ctor
      */

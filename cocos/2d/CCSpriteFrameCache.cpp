@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
+#include "base/CCAsyncTaskPool.h"
 #include "base/CCNinePatchImageParser.h"
 
 #include "deprecated/CCString.h"
@@ -186,7 +187,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
             }
-
+            
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
@@ -341,14 +342,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
-            spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
+           spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
             removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
-
+    
     // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {
@@ -460,6 +461,102 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
         }
     }
     return frame;
+}
+
+struct AsyncLoadParam
+{
+    std::function<void(void*, bool)> afterLoadCallback; // callback after load
+    void*                           callbackParam;
+    bool                            resultTexture; // texture load result
+    bool                            resultPList; // plist load result
+    std::string                     plist;
+    std::string                     textureFileName;
+
+    cocos2d::ValueMap               dictionary;
+    cocos2d::Texture2D*             texture;
+    Image*                          image;
+};
+void SpriteFrameCache::addSpriteFramesWithFileAsync(const std::string& plist, const std::string& textureFileName, const std::function<void(void*, bool)>& callback, void* callbackparam)
+{
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
+    {
+        // We already added it
+        callback(callbackparam, true);
+        return;
+    }
+    else
+    {
+        std::string fullPathPList = FileUtils::getInstance()->fullPathForFilename(plist);
+        std::string fullpathTexture = FileUtils::getInstance()->fullPathForFilename(textureFileName);
+
+        if (fullPathPList.empty() || fullpathTexture.empty())
+        {
+            // File(s) not found
+            callback(callbackparam, false);
+            return;
+        }
+
+        AsyncLoadParam* asyncLoadParam = new (std::nothrow) AsyncLoadParam();
+        asyncLoadParam->afterLoadCallback = callback;
+        asyncLoadParam->callbackParam = callbackparam;
+        asyncLoadParam->plist = plist;
+        asyncLoadParam->textureFileName = textureFileName;
+        asyncLoadParam->texture = nullptr;
+        asyncLoadParam->image = nullptr;
+        asyncLoadParam->resultTexture = false;
+        asyncLoadParam->resultPList = false;
+
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, CC_CALLBACK_1(SpriteFrameCache::afterAsyncLoad, this), (void*)asyncLoadParam, [asyncLoadParam, fullPathPList, fullpathTexture]()
+        {
+            // AsyncLoad call TASK_IO thread
+            asyncLoadParam->dictionary = FileUtils::getInstance()->getValueMapFromFile(fullPathPList);
+
+            asyncLoadParam->resultPList = !asyncLoadParam->dictionary.empty();
+            if (asyncLoadParam->resultPList)
+            {
+                // generate image      
+                auto image = new (std::nothrow) Image();
+                if (image && image->initWithImageFileThreadSafe(fullpathTexture))
+                {
+                    asyncLoadParam->image = image;
+                }
+                else
+                {
+                    CC_SAFE_RELEASE(image);
+                    CCLOG("can not load %s", asyncLoadParam->textureFileName.c_str());
+                }
+            }
+        });
+    }
+
+}
+
+void SpriteFrameCache::afterAsyncLoad(void* param)
+{
+    // afterAsyncLoad, call main thread
+    AsyncLoadParam* asyncLoadParam = (AsyncLoadParam*)param;
+
+    if (asyncLoadParam->image)
+    {
+        asyncLoadParam->texture = cocos2d::Director::getInstance()->getTextureCache()->addImage(asyncLoadParam->image, asyncLoadParam->textureFileName);
+        if (asyncLoadParam->texture)
+        {
+            asyncLoadParam->resultTexture = true;
+        }
+        asyncLoadParam->image->release();
+    }
+
+    bool allOk = asyncLoadParam->resultTexture && asyncLoadParam->resultPList;
+    if (allOk)
+    {
+        addSpriteFramesWithDictionary(asyncLoadParam->dictionary, asyncLoadParam->texture);
+
+        _loadedFileNames->insert(asyncLoadParam->plist);
+    }
+
+    asyncLoadParam->afterLoadCallback(asyncLoadParam->callbackParam, allOk);
+
+    delete asyncLoadParam;
 }
 
 NS_CC_END
